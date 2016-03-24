@@ -19865,6 +19865,10 @@
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Hydroponics North";
+	dir = 2
+	},
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -58648,6 +58652,13 @@
 	},
 /turf/space,
 /area/space)
+"coT" = (
+/mob/living/simple_animal/cow{
+	gender = "female";
+	name = "Bessie"
+	},
+/turf/simulated/floor/plasteel,
+/area/hydroponics)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -58759,6 +58770,10 @@
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
+"cpg" = (
+/obj/machinery/incubator,
+/turf/simulated/floor/plasteel,
+/area/hydroponics)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -64289,24 +64304,17 @@
 	},
 /area/crew_quarters/kitchen)
 "cAD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate";
-	dir = 1
-	},
-/area/maintenance/disposal)
-"cAE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/machinery/nest,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/medical/morgue)
+/area/hydroponics)
+"cAE" = (
+/obj/machinery/trough,
+/turf/simulated/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/hydroponics)
 "cAF" = (
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -64329,10 +64337,15 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/turf/simulated/floor/plasteel{
-	icon_state = "dark"
+/mob/living/simple_animal/chicken{
+	gender = "male";
+	name = "Dan"
 	},
-/area/medical/morgue)
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/hydroponics)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64346,8 +64359,15 @@
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/turf/simulated/floor/plating,
-/area/maintenance/asmaint2)
+/mob/living/simple_animal/cow{
+	gender = "male";
+	name = "Ben"
+	},
+/turf/simulated/floor/plasteel{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/hydroponics)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -64357,10 +64377,12 @@
 /turf/simulated/floor/plasteel,
 /area/janitor)
 "cAM" = (
-/turf/simulated/floor/plasteel{
-	icon_state = "floorgrime"
+/mob/living/simple_animal/chicken{
+	gender = "female";
+	name = "Danielle"
 	},
-/area/maintenance/aft)
+/turf/simulated/floor/plasteel,
+/area/hydroponics)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -105476,9 +105498,9 @@ aIq
 aKK
 aMy
 aIp
-aOX
-aQm
-aRJ
+cAD
+cAH
+cAM
 aRJ
 aRJ
 aVK
@@ -105733,12 +105755,12 @@ aIp
 aKI
 aMt
 aIp
-aOW
+cAD
 aQm
 aRJ
+cpg
 aSS
 aUj
-aRJ
 aRJ
 aYQ
 cBg
@@ -105990,12 +106012,12 @@ aIp
 aKI
 aMA
 aIp
-aOX
+cAE
 aQm
 aRJ
+cpg
 aST
 aUk
-aRJ
 aRJ
 aYQ
 bam
@@ -106247,9 +106269,9 @@ aIp
 aKL
 aMz
 aNQ
-aOX
-aQm
-aRJ
+cAE
+cAK
+coT
 aRJ
 aRJ
 aRJ

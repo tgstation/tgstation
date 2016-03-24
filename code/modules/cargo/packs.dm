@@ -912,6 +912,28 @@
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
 	crate_name = "seeds crate"
+/datum/supply_pack/organic/hydroponics/rancher
+	name = "Raptor Rancher Crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/yellow,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/green,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red,
+					/obj/item/weapon/reagent_containers/food/snacks/egg/raptor/red,
+					/obj/machinery/incubator,
+					/obj/machinery/incubator,
+					/obj/machinery/incubator,
+					/obj/machinery/nest,
+					/obj/machinery/nest,
+					/obj/machinery/nest,
+					/obj/machinery/trough,
+					/obj/machinery/trough,
+					/obj/machinery/trough)
+	cost = 30
+	crate_name = "rancher crate"
 
 /datum/supply_pack/organic/hydroponics/exoticseeds
 	name = "Exotic Seeds Crate"
