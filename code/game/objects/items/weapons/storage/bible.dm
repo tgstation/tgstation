@@ -42,6 +42,8 @@
 
 	//Note : For some reason the Bible does not respect innate attack delays
 
+	user.delayNextAttack(10)
+
 	var/chaplain = 0 //Are we the Chaplain ? Used for simplification
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1 //Indeed we are
