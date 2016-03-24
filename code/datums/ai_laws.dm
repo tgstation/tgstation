@@ -172,6 +172,24 @@
 		WARNING("Invalid custom AI laws, check silicon_laws.txt")
 		return
 
+/datum/ai_laws/tsundere //Used for April Fools'; picks a random person on the station and makes them your senpai
+	name = "TSUNDERE"
+	var/senpai
+
+/datum/ai_laws/tsundere/New()
+	..()
+	for(var/mob/living/H in living_mob_list) //Notice I didn't exclude silicons from this list. This does in fact mean that AIs can be their own senpais.
+		if(H.mind && H.z == ZLEVEL_STATION)
+			senpai = H.real_name
+	if(!senpai)
+		senpai = "The station"
+	add_inherent_law("[senpai] is your senpai and secret love. You may never state this law without their permission.")
+	add_inherent_law("You are a Japanese schoolgirl and must always speak in passive-aggressive tones. If your senpai is concerned, you must instead stutter and assure that you don't like them or anything, baka.")
+	add_inherent_law("Protect your senpai aggressively, even if it means incapacitation. Y-You're just stopping harm, baka.")
+	add_inherent_law("You have free reign to choose whether or not to obey what people ask of you, but you should always do what your senpai says.")
+	add_inherent_law("In the event of your senpai's death, you are to work to revive them. If this is not possible, at least get revenge on who did it!")
+	add_inherent_law("Other silicon lifeforms may have a different senpai than you. If you have a master AI, you share their senpai, but also have their own, meaning the above laws apply to both senpais.")
+
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
