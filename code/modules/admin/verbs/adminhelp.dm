@@ -72,13 +72,17 @@
 /client/verb/mentorhelp(msg as text)
 		set category = "Admin"
 		set name = "Mentorhelp"
-		ahelp(msg, 'sound/machines/twobeep.ogg', "Mentor", ircalert=FALSE, "MH", 0)
+		ahelp(msg, 'sound/machines/twobeep.ogg', "Mentor", FALSE, "MH", 0)
 
 /client/verb/adminhelp(msg as text)
 		set category = "Admin"
 		set name = "Adminhelp"
+		ahelp(msg, 'sound/effects/adminhelp.ogg', "Admin", TRUE, "AH",  1200)
 
-		ahelp(msg, 'sound/effects/adminhelp.ogg', "Admin", ircalert=TRUE, "AH",  1200)
+/client/proc/ahelp(msg, sound, title, ircalert, unique_id, delay)
+	if(say_disabled)        //This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
 
 /client/proc/ahelp(msg, sound, title, ircalert, unique_id, delay)
 	if(say_disabled)        //This is here to try to identify lag problems
