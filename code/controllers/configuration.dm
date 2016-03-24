@@ -130,9 +130,6 @@
 	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/health_threshold_crit = 0
-	var/health_threshold_dead = -100
-
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
@@ -398,10 +395,6 @@
 
 		else if(type == "game_options")
 			switch(name)
-				if("health_threshold_crit")
-					config.health_threshold_crit	= text2num(value)
-				if("health_threshold_dead")
-					config.health_threshold_dead	= text2num(value)
 				if("revival_pod_plants")
 					config.revival_pod_plants		= text2num(value)
 				if("revival_cloning")

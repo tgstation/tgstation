@@ -188,7 +188,7 @@ Sorry Giacom. Please don't be mad :(
 	set hidden = 1
 	if (InCritical())
 		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
-		src.adjustOxyLoss(src.health - config.health_threshold_dead)
+		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
@@ -512,7 +512,7 @@ Sorry Giacom. Please don't be mad :(
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
 	. = 1
-	if(health <= config.health_threshold_dead)
+	if(health <= HEALTH_THRESHOLD_DEAD)
 		return 0
 
 /mob/living/proc/update_damage_overlays()
@@ -984,7 +984,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/carbon/human/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
-		if(total_health <= config.health_threshold_crit && !stat)
+		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			src << "<span class='notice'>You're too exhausted to keep going...</span>"
 			Weaken(5)
 			setStaminaLoss(health - 2)

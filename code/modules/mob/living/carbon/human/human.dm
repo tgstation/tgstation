@@ -794,7 +794,7 @@
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
 
-		if(C.health <= config.health_threshold_crit)
+		if(C.health <= HEALTH_THRESHOLD_CRIT)
 			C.cpr_time = world.time
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
