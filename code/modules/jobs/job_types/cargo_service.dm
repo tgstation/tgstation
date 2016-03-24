@@ -25,8 +25,8 @@ Quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
-	l_hand = /obj/item/weapon/clipboard
-	r_hand = /obj/item/weapon/cargo_exporter
+	l_hand = /obj/item/weapon/cargo_exporter
+	r_hand = /obj/item/weapon/clipboard
 
 /*
 Cargo Technician

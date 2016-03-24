@@ -27117,10 +27117,7 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/office)
 "bfn" = (
-/obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
-	id = "packageExternal"
-	},
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel{
 	icon_state = "arrival";
 	dir = 4
@@ -30852,6 +30849,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "bmR" = (
@@ -35828,6 +35826,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "bwa" = (
@@ -37027,6 +37026,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel{
 	dir = 2;
 	icon_state = "brown"
@@ -57783,6 +57783,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel,
 /area/engine/engineering)
 "cnw" = (
@@ -58648,6 +58649,11 @@
 	},
 /turf/space,
 /area/space)
+"coT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel,
+/area/quartermaster/office)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -58759,6 +58765,18 @@
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
+"cpg" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -64289,24 +64307,18 @@
 	},
 /area/crew_quarters/kitchen)
 "cAD" = (
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate";
-	dir = 1
-	},
-/area/maintenance/disposal)
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel,
+/area/security/brig)
 "cAE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "cafeteria"
 	},
-/area/medical/morgue)
+/area/crew_quarters/kitchen)
 "cAF" = (
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -64329,10 +64341,12 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/turf/simulated/floor/plasteel{
-	icon_state = "dark"
+/obj/machinery/conveyor_switch/oneway{
+	convdir = -1;
+	id = "packageExternal"
 	},
-/area/medical/morgue)
+/turf/simulated/floor/plasteel,
+/area/quartermaster/office)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64346,8 +64360,11 @@
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/turf/simulated/floor/plating,
-/area/maintenance/asmaint2)
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel{
+	icon_state = "white"
+	},
+/area/toxins/lab)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -64357,10 +64374,12 @@
 /turf/simulated/floor/plasteel,
 /area/janitor)
 "cAM" = (
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
-	icon_state = "floorgrime"
+	dir = 8;
+	icon_state = "warnwhite"
 	},
-/area/maintenance/aft)
+/area/assembly/robotics)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -87251,7 +87270,7 @@ bkw
 bnE
 bny
 btv
-btv
+coT
 bjv
 btv
 buc
@@ -88784,7 +88803,7 @@ aZK
 bbS
 bbR
 bcJ
-bbR
+cAH
 bkM
 boU
 bbR
@@ -94395,7 +94414,7 @@ agQ
 aie
 aiL
 ajc
-ajI
+cAD
 akp
 akU
 alz
@@ -101643,7 +101662,7 @@ bhh
 bhh
 bpv
 bhh
-bsx
+cpg
 btV
 bvh
 bwF
@@ -102911,7 +102930,7 @@ aJI
 aRC
 aSK
 aVz
-aVz
+cAE
 aVz
 aYL
 aJI
@@ -109864,7 +109883,7 @@ biN
 biL
 bni
 blM
-bni
+cAM
 bni
 bni
 brl
@@ -112947,7 +112966,7 @@ bhE
 biW
 bkv
 blL
-biW
+cAK
 bnh
 biW
 brx

@@ -1,9 +1,13 @@
+var/list/shipping_categories = list("Clothing","Medical","Exports","Machinery","Misc","Weapons","Robotics","Materials")
+
+
 /obj/machinery/computer/cargo_shipping
 	name = "Shipping Price Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "oldcomp"
 	icon_screen = "value_computer"
 	icon_keyboard = "no_keyboard"
+	var/current_category = "Clothing"
 
 /obj/machinery/computer/cargo_shipping/attack_hand(var/mob/user)
 	if(..())
@@ -17,8 +21,14 @@
 	var/dat = "<html><head><title>Market Prices</title>[css]</head><body><h2>Shipping</h2>"
 	dat += "<b>WARNING:</b> Do <b>NOT</b> ship export products in crates, otherwise they're liable to get processed as donations to Central Command.<br>"
 	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a><br>"
+	dat += "<b>Current Category:</b> [current_category]<br>"
+	for(var/C in shipping_categories)
+		dat += "<a href='?src=\ref[src];switch_category=[C]'>[C]</a>"
+	dat += "<br>"
 	for(var/D in SSshuttle.shipping_datums)
 		var/datum/shipping/S = D
+		if(S.category != current_category)
+			continue
 		dat += "<div><td><span class='company'>[S.name]</span></td><td>| [S.value] credits per unit |</td><td><b>Trend: [S.status]</b></td><br>"
 		dat +="<td><span class='company'>Total Exported: </span>[S.amount_sold_total]</td><td>|<span class='company'>Total Profit: </span>[S.profit_made_total]</td></div><br>"
 		if(S.allow_import)
@@ -53,6 +63,10 @@
 		var/datum/shipping/S = locate(href_list["buy"])
 		if (S)
 			buy_object(S, usr)
+	if (href_list["switch_category"])
+		var/C = locate(href_list["switch_category"])
+		if (C)
+			current_category = C
 
 
 	src.add_fingerprint(usr)
@@ -81,6 +95,10 @@
 	if (total > SSshuttle.points)
 		user << "<span class='danger'>Insufficient credits.</span>"
 		return
-	S.buy_obj(amt)
+	var/P
+	P = input(user, "Select a pad to import to", "Import", P) in shipping_pads
+	if(!P)
+		return
+	S.buy_obj(amt, P)
 	user << "<span class='notice'>Bought [amt] of [S.name] for [total] credits.</span>"
 	SSshuttle.add_import_logs(S, amt, total, user)

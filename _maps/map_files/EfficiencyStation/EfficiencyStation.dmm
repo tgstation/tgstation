@@ -22307,6 +22307,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
 	dir = 4;
 	icon_state = "warnwhite"
@@ -23089,6 +23090,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
 	icon_state = "white"
 	},
@@ -33064,6 +33066,7 @@
 	},
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/hand_labeler,
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/storage)
 "bhv" = (
@@ -39796,6 +39799,7 @@
 	c_tag = "Cargo Office";
 	dir = 4
 	},
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/storage)
 "buJ" = (
@@ -45440,6 +45444,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/pen/red,
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel{
 	icon_state = "brown"
 	},
@@ -47795,6 +47800,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel,
 /area/security/brig)
 "bJo" = (
@@ -61952,6 +61958,42 @@
 	},
 /turf/indestructible/opshuttle,
 /area/shuttle/syndicate)
+"ckl" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel,
+/area/engine/engineering)
+"ckk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel,
+/area/quartermaster/storage)
+"ckj" = (
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/crew_quarters/kitchen)
+"cki" = (
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay{
+	name = "Medbay Central"
+	})
+"ckh" = (
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/genetics)
 
 (1,1,1) = {"
 aaa
@@ -84714,7 +84756,7 @@ bgh
 bpc
 bqk
 brY
-brY
+ckk
 buJ
 bwb
 bte
@@ -85714,7 +85756,7 @@ aJT
 aJU
 aMA
 aAe
-aAe
+cki
 aAe
 aRx
 aSq
@@ -86989,7 +87031,7 @@ awO
 awO
 aAn
 aBw
-aAm
+ckh
 aAm
 aAm
 aGl
@@ -93701,7 +93743,7 @@ bft
 bgx
 bhO
 bhO
-bhO
+ckj
 bhO
 blV
 bvb
@@ -107852,7 +107894,7 @@ bzC
 bAN
 bCb
 bDw
-boM
+ckl
 bGs
 bHA
 bIZ

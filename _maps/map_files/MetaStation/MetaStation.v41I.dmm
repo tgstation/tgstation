@@ -13791,6 +13791,7 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel,
 /area/security/brig)
 "awt" = (
@@ -23151,6 +23152,7 @@
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "aLn" = (
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
 	icon_state = "warningcorner";
 	dir = 4
@@ -25910,6 +25912,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/qm)
 "aQp" = (
@@ -33255,6 +33258,7 @@
 	pixel_x = 0;
 	pixel_y = 30
 	},
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel{
 	dir = 9;
 	icon_state = "brown"
@@ -36170,6 +36174,8 @@
 	dir = 4;
 	network = list("SS13")
 	},
+/obj/structure/table,
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "brown"
@@ -36194,6 +36200,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office{
 	name = "\improper Cargo Office"
@@ -39431,6 +39438,8 @@
 	})
 "blX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/cargo_shipping,
 /turf/simulated/floor/plasteel{
 	dir = 2;
 	icon_state = "arrival"
@@ -72110,6 +72119,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
 	icon_state = "white"
 	},
@@ -72311,6 +72321,7 @@
 /area/toxins/lab)
 "cmm" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
 	dir = 8;
 	icon_state = "warnwhite"
@@ -81018,6 +81029,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/shipping_pad,
 /turf/simulated/floor/plasteel{
 	icon_state = "white"
 	},
@@ -100787,18 +100799,22 @@
 	},
 /area/medical/morgue)
 "dfx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/obj/structure/disposalpipe/segment,
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel{
+	icon_state = "cafeteria";
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "dfy" = (
-/turf/simulated/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/obj/machinery/shipping_pad,
+/turf/simulated/floor/plasteel,
+/area/assembly/robotics)
 "dfz" = (
 /obj/machinery/light{
 	dir = 1
@@ -130112,7 +130128,7 @@ cEC
 cFq
 cGy
 cHs
-cHs
+dfy
 cHs
 cKd
 cKY
@@ -135729,7 +135745,7 @@ boG
 bMo
 bOa
 bPN
-bPN
+dfx
 bSS
 bUg
 bVi

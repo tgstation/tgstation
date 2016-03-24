@@ -3,18 +3,21 @@
 	value = 500
 	sell_type = /obj/item/device/mmi
 	amount_on_market = 10
+	category = "Robotics"
 
 /datum/shipping/flashes
 	name = "Flashes"
 	value = 500
 	sell_type = /obj/item/device/assembly/flash
 	amount_on_market = 10
+	category = "Robotics"
 
 /datum/shipping/cyborg_parts
 	name = "borgparts"
 	value = 600
 	abstract = 1
 	amount_on_market = 10
+	category = "Robotics"
 
 /datum/shipping/cyborg_parts/l_arm
 	name = "Cyborg Arm (Left)"

@@ -11,7 +11,7 @@
 		return
 	else
 		if(works_from_distance)
-			if(istype(T))
+			if(istype(T) && get_dist(T,src) <= 7)
 				user.Beam(T.loc,icon_state="cash_beam",icon='icons/effects/effects.dmi',time=5)
 				export(T, user)
 				playsound(src, 'sound/effects/sellaporter.wav', 50, 0)
@@ -20,9 +20,10 @@
 /obj/item/weapon/cargo_exporter/proc/export(atom/movable/O, mob/user)
 	var/datum/shipping/S = SSshuttle.has_shipping_datum(O)
 	if(S)
-		user << "You export [O] for [S.value] credits."
+		user << "You export [O] for [S.value] credits a unit."
 		user.visible_message("[user] exports [O] to the space markets!")
 		S.ship_obj(O)
+		SSshuttle.add_export_logs(S)
 		qdel(O)
 	else
 		user << "There is no market for [O]."

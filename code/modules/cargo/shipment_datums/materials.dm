@@ -7,7 +7,7 @@
 /datum/shipping/raw/iron
 	abstract = 0
 	name = "Iron (Raw)"
-	value = 25
+	value = 50
 	sell_type = /obj/item/weapon/ore/iron
 
 /datum/shipping/material/glass
@@ -19,7 +19,7 @@
 /datum/shipping/raw/glass
 	abstract = 0
 	name = "Sand (Raw)"
-	value = 12.5
+	value = 25
 	sell_type = /obj/item/weapon/ore/glass
 
 /datum/shipping/material/uranium
@@ -31,7 +31,7 @@
 /datum/shipping/raw/uranium
 	abstract = 0
 	name = "Uranium (Raw)"
-	value = 200
+	value = 400
 	sell_type = /obj/item/weapon/ore/uranium
 
 /datum/shipping/material/plasma
@@ -43,7 +43,7 @@
 /datum/shipping/raw/plasma
 	abstract = 0
 	name = "Plasma (Raw)"
-	value = 100
+	value = 200
 	sell_type = /obj/item/weapon/ore/plasma
 
 /datum/shipping/material/silver
@@ -55,7 +55,7 @@
 /datum/shipping/raw/silver
 	abstract = 0
 	name = "Silver (Raw)"
-	value = 75
+	value = 150
 	sell_type = /obj/item/weapon/ore/silver
 
 /datum/shipping/material/gold
@@ -67,7 +67,7 @@
 /datum/shipping/raw/gold
 	abstract = 0
 	name = "Gold (Raw)"
-	value = 150
+	value = 300
 	sell_type = /obj/item/weapon/ore/gold
 
 /datum/shipping/material/diamond
@@ -79,17 +79,17 @@
 /datum/shipping/raw/diamond
 	abstract = 0
 	name = "Diamond (Raw)"
-	value = 500
+	value = 1000
 	sell_type = /obj/item/weapon/ore/diamond
 
 /datum/shipping/material/bananium
 	abstract = 0
 	name = "Bananium (Processed)"
-	value = 6900
+	value = 6969
 	sell_type = /obj/item/stack/sheet/mineral/bananium
 
 /datum/shipping/raw/bananium
 	abstract = 0
 	name = "Bananium (Raw)"
-	value = 4200
+	value = 6969
 	sell_type = /obj/item/weapon/ore/bananium

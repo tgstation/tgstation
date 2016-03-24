@@ -11,6 +11,7 @@
 	var/profit_made = 0
 	var/amount_on_market = 0
 	var/allow_import = 1
+	var/category = "blugh"
 
 /datum/shipping/proc/add_value(var/V)
 	var/original_value = value
@@ -61,22 +62,20 @@
 	amount_on_market++
 	if(prob(25))
 		lower_value(rand(3, 1))
-	SSshuttle.add_export_logs(src)
 
-/datum/shipping/proc/buy_obj(var/amount_purchased)
-	if(shipping_pads.len)
-		var/obj/machinery/shipping_pad/P = pick(shipping_pads)
-		for(var/i in 1 to amount_purchased)
-			if(amount_on_market == 0)
-				break
-			SSshuttle.points -= value
-			amount_on_market--
-			new sell_type(P.loc)
-		playsound(P, 'sound/effects/import_sound.wav', 50, 0)
+/datum/shipping/proc/buy_obj(var/amount_purchased, var/obj/machinery/shipping_pad/P)
+	for(var/i in 1 to amount_purchased)
+		if(amount_on_market == 0)
+			break
+		SSshuttle.points -= value
+		amount_on_market--
+		new sell_type(P.loc)
+	playsound(P, 'sound/effects/import_sound.wav', 50, 0)
 
 /datum/shipping/material
 	abstract = 1
 	amount_on_market = 100
+	category = "Materials"
 
 /datum/shipping/material/ship_obj(var/atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet))
@@ -89,22 +88,20 @@
 		amount_on_market += S.amount
 		if(prob(25))
 			lower_value(rand(3, 1) * S.amount)
-		SSshuttle.add_export_logs(src)
 	return
 
-/datum/shipping/material/buy_obj(var/amount_purchased)
-	if(shipping_pads.len)
-		var/obj/machinery/shipping_pad/P = pick(shipping_pads)
-		var/obj/item/stack/sheet/S = new sell_type(P.loc)
-		for(var/i in 1 to amount_purchased)
-			if(amount_on_market == 0)
-				break
-			SSshuttle.points -= value
-			amount_on_market--
-			S.amount++
-
+/datum/shipping/material/buy_obj(var/amount_purchased, var/obj/machinery/shipping_pad/P)
+	var/obj/item/stack/sheet/S = new sell_type(P.loc)
+	for(var/i in 1 to amount_purchased)
+		if(amount_on_market == 0)
+			break
+		SSshuttle.points -= value
+		amount_on_market--
+		S.amount++
+	playsound(P, 'sound/effects/import_sound.wav', 50, 0)
 
 
 /datum/shipping/raw
 	abstract = 1
 	amount_on_market = 100
+	category = "Materials"
