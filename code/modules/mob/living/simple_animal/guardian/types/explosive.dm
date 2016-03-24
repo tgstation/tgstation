@@ -18,6 +18,8 @@
 					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
 					do_teleport(M, M, 10)
 					for(var/mob/living/L in range(1, M))
+						if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
+							continue
 						if(L != src && L != summoner)
 							L.apply_damage(15, BRUTE)
 					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
@@ -42,7 +44,7 @@
 	name = "bomb"
 	desc = "You shouldn't be seeing this!"
 	var/obj/stored_obj
-	var/mob/living/spawner
+	var/mob/living/simple_animal/hostile/guardian/spawner
 
 
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
@@ -66,7 +68,7 @@
 	qdel(src)
 
 /obj/item/weapon/guardian_bomb/Bump(atom/A)
-	if(isliving(A))
+	if(isliving(A) && !spawner.hasmatchingsummoner(A))
 		detonate(A)
 	else
 		..()

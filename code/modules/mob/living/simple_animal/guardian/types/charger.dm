@@ -52,6 +52,8 @@
 		if(isliving(A) && A != summoner)
 			var/mob/living/L = A
 			var/blocked = 0
+			if(hasmatchingsummoner(A)) //if the summoner matches don't hurt them
+				blocked = 1
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
 				if(H.check_shields(90, "the [name]", src, attack_type = THROWN_PROJECTILE_ATTACK))

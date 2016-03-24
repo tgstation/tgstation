@@ -60,11 +60,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			summoner.dust()
 			ghostize()
 			qdel(src)
-	else
+	/*else
 		src << "<span class='danger'>Your summoner has died!</span>"
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		ghostize()
-		qdel(src)
+		qdel(src)*/
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
@@ -232,6 +232,22 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		src << "<span class='notice'>You deactivate your light.</span>"
 		SetLuminosity(0)
 
+////////parasite tracking/finding procs
+
+/mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
+	. = 0 //return nothing by default
+	var/list/guardians = list()
+	for(var/P in parasites)
+		var/mob/living/simple_animal/hostile/guardian/G = P
+		if(G.summoner == src)
+			guardians |= G
+	return guardians
+
+/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
+	if(istype(G) && G.summoner == summoner)
+		return 1
+	else
+		return 0
 
 ////////Creation
 
@@ -249,12 +265,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
 	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
+	var/allowmultiple = 0
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
-	for(var/mob/living/simple_animal/hostile/guardian/G in living_mob_list)
-		if (G.summoner == user)
-			user << "You already have a [mob_name]!"
-			return
+	if(user.hasparasites() && !allowmultiple)
+		user << "You already have a [mob_name]!"
+		return
 	if(user.mind && user.mind.changeling)
 		user << "[ling_failure]"
 		return
