@@ -1,5 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- rscadd: "When admins reply to prayers, it now shows A) the diety name chosen by the chaplain, B) a deity name of their choosing, or C) the current behavior with it being 'a voice'."
-- rscadd: "When the chaplain chooses a religion/deity it's now announced to everyone, this way you know who the one true god to pray to is."
