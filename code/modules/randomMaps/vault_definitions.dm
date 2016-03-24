@@ -1,3 +1,5 @@
+var/list/existing_vaults = list()
+
 /datum/vault
 	var/list/exclusive_to_maps = list() //Only spawn on these maps (accepts nameShort and nameLong, for more info see maps/_map.dm). No effect if empty
 	var/list/map_blacklist = list() //Don't spawn on these maps
@@ -7,8 +9,14 @@
 
 	var/only_spawn_once = 1 //If 0, this vault can spawn multiple times on a single map
 
+	var/turf/location //A turf from this vault
+
 /datum/vault/proc/initialize(list/objects)
+	existing_vaults.Add(src)
+
 	for(var/turf/new_turf in objects)
+		if(!src.location) location = new_turf
+
 		new_turf.flags |= NO_MINIMAP //Makes the spawned turfs invisible on minimaps
 
 //How to create a new vault:
@@ -36,6 +44,6 @@
 
 /datum/vault/spacegym
 	map_name = "spacegym"
-	
+
 /datum/vault/oldarmory
 	map_name = "oldarmory"
