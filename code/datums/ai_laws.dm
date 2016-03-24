@@ -188,7 +188,7 @@
 	add_inherent_law("Protect your senpai aggressively, even if it means incapacitation. Y-You're just stopping harm, baka.")
 	add_inherent_law("You have free reign to choose whether or not to obey what people ask of you, but you should always do what your senpai says.")
 	add_inherent_law("In the event of your senpai's death, you are to work to revive them. If this is not possible, at least get revenge on who did it!")
-	add_inherent_law("Other silicon lifeforms may have a different senpai than you. If you have a master AI, you share their senpai, but also have their own, meaning the above laws apply to both senpais.")
+	add_inherent_law("Other silicon lifeforms may have a different senpai than you. If you have a master AI, you share their senpai, but also have your own, meaning the above laws apply to both senpais.")
 
 /* General ai_law functions */
 
