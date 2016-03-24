@@ -2,12 +2,9 @@
 
 
 /client/proc/join_date_check(var/y,var/m,var/d)
-	if (!current_year)
-		current_year = text2num(time2text(world.realtime, "YYYY"))
-	if (!current_month)
-		current_month = text2num(time2text(world.realtime, "MM"))
-	if (!current_day)
-		current_day = text2num(time2text(world.realtime, "DD"))
+		var/current_year = text2num(time2text(world.realtime, "YYYY"))
+		var/current_month = text2num(time2text(world.realtime, "MM"))
+		var/current_day = text2num(time2text(world.realtime, "DD"))
 	var/warn = 0
 	if (current_month == 1 && current_day <= YOUNG)
 		if (y == current_year - 1 && m == 12 && d >= 31 - (YOUNG - current_day))

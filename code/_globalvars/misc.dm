@@ -20,7 +20,3 @@ var/map_ready = 0
 	However, using lots of spawn() has a severe performance impact, and often results in spaghetti-code
 	map_ready will be set to 1 when world/New() is called (which happens just after the map is instanced)
 */
-
-var/global/current_year = null
-var/global/current_month = null
-var/global/current_day = null
