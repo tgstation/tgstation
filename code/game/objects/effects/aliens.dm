@@ -183,7 +183,6 @@
 			Life()
 
 /obj/structure/alien/weeds/Destroy()
-	loc = null
 	linked_node = null
 	return ..()
 
