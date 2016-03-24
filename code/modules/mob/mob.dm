@@ -1743,13 +1743,13 @@ mob/proc/on_foot()
 			return 1
 	return 0
 
-/mob/proc/get_subtle_message(var/msg)
-	var/pre_msg = "You hear a voice in your head..."
-	if(mind && mind.assigned_role == "Chaplain")
-		pre_msg = "You hear the voice of [ticker.Bible_deity_name] in your head... "
+/mob/proc/get_subtle_message(var/msg, var/deity = null)
+	if(!deity)
+		deity = "a voice" //sanity
+	var/pre_msg = "You hear [deity] in your head... "
 	if(src.hallucinating()) //If hallucinating, make subtle messages more fun
-		var/adjective = pick("an angry","a funny","a squeaky","a disappointed","your mother's","your father's","[ticker.Bible_deity_name]'s","an annoyed","a brittle","a loud","a very loud","a quiet")
-		var/location = pick(" from above"," from below"," in your head","")
+		var/adjective = pick("an angry","a funny","a squeaky","a disappointed","your mother's","your father's","[ticker.Bible_deity_name]'s","an annoyed","a brittle","a loud","a very loud","a quiet","an evil", "an angelic")
+		var/location = pick(" from above"," from below"," in your head"," from behind you"," from everywhere"," from nowhere in particular","")
 		pre_msg = pick("You hear [adjective] voice[location]...")
 
 	to_chat(src, "<b>[pre_msg] <em>[msg]</em></b>")
