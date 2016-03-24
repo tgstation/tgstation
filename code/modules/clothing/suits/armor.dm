@@ -159,6 +159,7 @@
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone seperated our Research Director from his own head!"
+	slowdown = 1
 	var/tele_range = 6
 	var/rad_amount= 15
 
