@@ -21,7 +21,7 @@
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = 2
 	environment_smash = 0
-	var/list/edibles = list(/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cockroach) //list of atoms, however turfs won't affect AI, but will affect consumption.
+	var/list/edibles = list(/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cockroach,/mob/living/simple_animal/hostile/poison/bees) //list of atoms, however turfs won't affect AI, but will affect consumption.
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
