@@ -156,6 +156,20 @@
 	ammo_type = /obj/item/ammo_casing/a762/enchanted
 
 
+/obj/item/weapon/gun/projectile/shotgun/boltaction/beebee
+	name = "\improper Red Rider BB gun"
+	desc = "You'll shoot your eye out kid!"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/beebee
+
+/obj/item/ammo_box/magazine/internal/boltaction/beebee
+	max_ammo = 50
+	ammo_type = /obj/item/ammo_casing/a762/beebee
+
+/obj/item/ammo_casing/a762/beebee
+	desc = "Bee Capsule. Oh god why"
+	icon_state = "762-casing"
+	caliber = "Angrybee"
+	projectile_type = /mob/living/simple_animal/hostile/poison/bees
 
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
