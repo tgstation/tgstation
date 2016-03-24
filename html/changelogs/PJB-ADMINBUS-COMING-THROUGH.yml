@@ -1,0 +1,8 @@
+author: "PJB3005"
+delete-after: true
+changes:
+  - rscadd: "Shitload of SDQL improvements, you have been warned of extreme bus in the following days."
+  - rscadd: "Allows admins to CALL global procs by doing CALL global.[procname]()"
+  - rscadd: "Allows admins to get ANY object involved in an SDQL statement by doing {POINTER}, the pointer is a hex code and can be found at the top of the VV window."
+  - rscadd: "Adds src, usr, and marked variables to SDQL statements. usr is the mob of the admin executing the statement, src is the object that is currently affected and marked is the admin's marked datum."
+  - rscadd: "Made SDQL not lag if admins fuck up a variable name by preventing runtime errors."
