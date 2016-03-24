@@ -60,11 +60,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			summoner.dust()
 			ghostize()
 			qdel(src)
-	/*else
+	else
 		src << "<span class='danger'>Your summoner has died!</span>"
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		ghostize()
-		qdel(src)*/
+		qdel(src)
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
@@ -244,7 +244,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	return guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
-	if(istype(G) && G.summoner == summoner)
+	if(istype(G) && G.summoner && G.summoner == summoner)
 		return 1
 	else
 		return 0
