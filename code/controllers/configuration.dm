@@ -188,6 +188,8 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
+
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -395,6 +397,8 @@
 
 		else if(type == "game_options")
 			switch(name)
+				if("damage_multiplier")
+					config.damage_multiplier		= text2num(value)
 				if("revival_pod_plants")
 					config.revival_pod_plants		= text2num(value)
 				if("revival_cloning")
