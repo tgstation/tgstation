@@ -235,7 +235,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 ////////parasite tracking/finding procs
 
 /mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
-	. = 0 //return nothing by default
 	var/list/guardians = list()
 	for(var/P in parasites)
 		var/mob/living/simple_animal/hostile/guardian/G = P
@@ -268,7 +267,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/allowmultiple = 0
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
-	if(user.hasparasites() && !allowmultiple)
+	var/list/guardians = user.hasparasites()
+	if(guardians.len && !allowmultiple)
 		user << "You already have a [mob_name]!"
 		return
 	if(user.mind && user.mind.changeling)
