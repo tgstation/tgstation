@@ -1,0 +1,14 @@
+author: Xhuis
+delete-after: True
+changes: 
+  - experiment: "Alcohol has received multiple tweaks."
+  - tweak: "Drunkenness will now be displayed on examine as long as the target's face is not hidden, ranging from a slight flush to being a completely drunken wreck. This also helps to measure alcohol poisoning, although the appearance will remain for thirty seconds after the alcohol leaves the imbiber's bloodstream."
+  - tweak: "Alcohol poisoning now has different effects. It begins with standard things such as confusion, dizziness, and slurring, but eventually escalates to constant vomiting, blacking out, and toxin damage."
+  - tweak: "Drinks now have a wide variety of alcoholism. Grog is barely a drink whatsoever, for instance, but Manly Dorf will completely floor you with too much consumption. Note that drinks based off of whiskey and vodka are the hardest, whereas beer and wine are the softest."
+  - tweak: "The speed of alcohol poisoning has been slightly reduced."
+  - rscadd: "Some drinks have received unique effects. Experiment!"
+  - rscadd: "A new base alcohol joins the lineup! Absinthe has been added, and is very strong."
+  - rscadd: "Whiskey Sour, made with Whiskey, Lemon Juice, and Sugar, simply expands the existing whiskey-based lineup."
+  - rscadd: "Fetching Fizz, made with Nuka-Cola and Iron, will pull all nearby ores in the direction of the imbiber."
+  - rscadd: "Hearty Punch, made with Brave Bull, Syndicate Bomb, and Absinthe, will provide extreme healing in critical condition."
+  - rscadd: "Bacchus' Blessing, made with four of the most powerful alcohols on the station, is over three times stronger than any other alcohol on the station. Consume in small amounts or risk death."
