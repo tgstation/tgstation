@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
@@ -14,21 +14,11 @@
 	//6 = blood, open door
 	//7 = blood, closed door
 	//8 = blood, running
-	var/panel = 0
-	//0 = closed
-	//1 = open
-	var/hacked = 1 //Bleh, screw hacking, let's have it hacked by default.
-	//0 = not hacked
-	//1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
 
-/obj/machinery/washing_machine/verb/start()
-	set name = "Start Washing"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || usr.restrained() || !usr.canmove)
+/obj/machinery/washing_machine/AltClick(mob/user)
+	if(!user.canUseTopic(src))
 		return
 
 	if( state != 4 )
@@ -183,12 +173,9 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	icon_state = "wm_[state][panel]"
+	icon_state = "wm_[state]0"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
-		panel = !panel
-		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
@@ -201,7 +188,7 @@
 		else
 			..()
 	else if(istype(W,/obj/item/weapon/grab))
-		if( (state == 1) && hacked)
+		if(state == 1)
 			var/obj/item/weapon/grab/G = W
 			if(iscorgi(G.affecting))
 				G.affecting.loc = src
@@ -249,9 +236,6 @@
 		if ( istype(W,/obj/item/clothing/head/syndicatefake ) )
 			user << "This item does not fit."
 			return
-//		if ( istype(W,/obj/item/clothing/head/powered ) )
-//			user << "This item does not fit."
-//			return
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			user << "This item does not fit."
 			return

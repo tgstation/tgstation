@@ -9,7 +9,6 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/meat_produced = 0
 	var/ignore_clothing = 0
 	use_power = 1
@@ -97,23 +96,24 @@
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if (istype(P, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = P
-		if(!istype(G.affecting, /mob/living/carbon/))
+		if(!iscarbon(G.affecting))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
-		if(G.affecting.abiotic(1) && !ignore_clothing)
+		var/mob/living/carbon/C = G.affecting
+		if(C.buckled ||C.buckled_mobs.len)
+			user << "<span class='warning'>[C] is attached to something!</span>"
+			return
+		if(C.abiotic(1) && !ignore_clothing)
 			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
 		src.add_fingerprint(user)
-		if(do_after(user, gibtime, target = src) && G && G.affecting && !occupant)
+		if(do_after(user, gibtime, target = src) && G && G.affecting && G.affecting == C && !C.buckled && !C.buckled_mobs.len && !occupant)
 			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
-			var/mob/M = G.affecting
-			if(M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			src.occupant = M
+			C.reset_perspective(src)
+			C.loc = src
+			occupant = C
 			qdel(G)
 			update_icon()
 
@@ -138,7 +138,7 @@
 	set name = "empty gibber"
 	set src in oview(1)
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -159,6 +159,7 @@
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	src.operating = 1
 	update_icon()
+
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	var/sourcename = src.occupant.real_name
@@ -169,22 +170,32 @@
 	var/sourcenutriment = src.occupant.nutrition / 15
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
+	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+	var/typeofskin = /obj/item/stack/sheet/animalhide/human
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/stack/sheet/animalhide/allskin
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
+			typeofskin = gibee.dna.species.skinned_type
 		else
 			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-	else
-		if(iscarbon(occupant))
-			var/mob/living/carbon/C = occupant
-			typeofmeat = C.type_of_meat
-			gibtype = C.gib_type
+			typeofskin = /obj/item/stack/sheet/animalhide/human
+	else if(iscarbon(occupant))
+		var/mob/living/carbon/C = occupant
+		typeofmeat = C.type_of_meat
+		gibtype = C.gib_type
+		if(ismonkey(C))
+			typeofskin = /obj/item/stack/sheet/animalhide/monkey
+		else if(isalien(C))
+			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+
 	for (var/i=1 to meat_produced)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		if(sourcejob)
@@ -192,6 +203,7 @@
 		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
+		allskin = newskin
 
 	add_logs(user, occupant, "gibbed")
 	src.occupant.death(1)
@@ -203,8 +215,11 @@
 		for (var/i=1 to meat_produced)
 			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
+			var/obj/item/skin = allskin
 			meatslab.loc = src.loc
-			meatslab.throw_at(pick(nearby_turfs),i,3)
+			skin.loc = src.loc
+			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
+			skin.throw_at_fast(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced*3)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in viewers(gibturf))

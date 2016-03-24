@@ -42,7 +42,8 @@
 		if(jobban_isbanned(affected_mob, new_form))
 			affected_mob.death(1)
 			return
-		if(affected_mob.notransform)	return
+		if(affected_mob.notransform)
+			return
 		affected_mob.notransform = 1
 		affected_mob.canmove = 0
 		affected_mob.icon = null
@@ -186,8 +187,8 @@
 	severity = BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("You don't feel very well.")
-	stage2	= list("You are turning a little green.")
-	stage3	= list("<span class='danger'>Your limbs are getting oozy.</span>", "<span class='danger'>Your skin begins to peel away.</span>")
+	stage2	= list("Your skin feels a little slimy.")
+	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4	= list("<span class='danger'>You are turning into a slime.</span>")
 	stage5	= list("<span class='danger'>You have become a slime.</span>")
 	new_form = /mob/living/simple_animal/slime
@@ -201,9 +202,8 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna && human.dna.species.id != "slime")
-					hardset_dna(human, null, null, null, null, /datum/species/slime)
-					human.regenerate_icons()
+				if(human.dna.species.id != "slime")
+					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"
@@ -228,3 +228,19 @@
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("Bark!", "AUUUUUU"))
+
+/datum/disease/transformation/morph
+	name = "Gluttony's Blessing"
+	cure_text = "nothing"
+	cures = list("adminordrazine")
+	agent = "Gluttony's Blessing"
+	desc = "A 'gift' from somewhere terrible."
+	stage_prob = 20
+	severity = BIOHAZARD
+	visibility_flags = 0
+	stage1	= list("Your stomach rumbles.")
+	stage2	= list("Your skin feels saggy.")
+	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
+	stage4	= list("<span class='danger'>You're ravenous.</span>")
+	stage5	= list("<span class='danger'>You have become a morph.</span>")
+	new_form = /mob/living/simple_animal/hostile/morph

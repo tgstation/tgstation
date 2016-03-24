@@ -22,7 +22,7 @@
 
 /datum/song/Destroy()
 	instrumentObj = null
-	..()
+	return ..()
 
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
@@ -84,10 +84,10 @@
 
 		for(var/line in lines)
 			//world << line
-			for(var/beat in text2list(lowertext(line), ","))
+			for(var/beat in splittext(lowertext(line), ","))
 				//world << "beat: [beat]"
-				var/list/notes = text2list(beat, "/")
-				for(var/note in text2list(notes[1], "-"))
+				var/list/notes = splittext(beat, "/")
+				for(var/note in splittext(notes[1], "-"))
 					//world << "note: [note]"
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
 						playing = 0
@@ -204,7 +204,7 @@
 
 		//split into lines
 		spawn()
-			lines = text2list(t, "\n")
+			lines = splittext(t, "\n")
 			if(copytext(lines[1],1,6) == "BPM: ")
 				tempo = sanitize_tempo(600 / text2num(copytext(lines[1],6)))
 				lines.Cut(1,2)
@@ -322,7 +322,7 @@
 /obj/structure/piano/Destroy()
 	qdel(song)
 	song = null
-	..()
+	return ..()
 
 /obj/structure/piano/initialize()
 	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
@@ -349,7 +349,7 @@
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
-			if (do_after(user, 20, target = src))
+			if (do_after(user, 20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
 					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
@@ -358,7 +358,7 @@
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
-			if (do_after(user, 40, target = src))
+			if (do_after(user, 40/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
 					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \

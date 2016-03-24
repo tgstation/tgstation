@@ -8,11 +8,14 @@
 #define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
+//indices of values in gas lists. used by listmos.
+#define MOLES			1
+#define ARCHIVE			2
+#define GAS_META		3
+#define META_GAS_SPECIFIC_HEAT	1
+#define META_GAS_NAME			2
+#define META_GAS_OVERLAY		4
+#define META_GAS_MOLES_VISIBLE	3
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -24,9 +27,9 @@
 #define HEATPIPERATE						8		//heat-exch pipe insulation
 #define FLOWFRAC							0.99	//fraction of gas transfered per process
 #define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
-#define TANK_RUPTURE_PRESSURE				(40.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
-#define TANK_FRAGMENT_PRESSURE				(50.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
-#define TANK_FRAGMENT_SCALE	    			(10.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
+#define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
+#define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
+#define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
 #define MINIMUM_AIR_RATIO_TO_SUSPEND		0.005	//Minimum ratio of air that must move to/from a tile to suspend group processing
 #define MINIMUM_AIR_TO_SUSPEND				(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
 #define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND) //Either this must be active
@@ -53,6 +56,8 @@
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
 	//Plasma fire properties
+#define OXYGEN_BURN_RATE_BASE				1.4
+#define PLASMA_BURN_RATE_DELTA				9
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
 #define PLASMA_UPPER_TEMPERATURE			1370+T0C
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
@@ -61,7 +66,12 @@
 #define MIN_PLASMA_DAMAGE					1
 #define MAX_PLASMA_DAMAGE					10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
-
+	//Plasma fusion properties
+#define PLASMA_BINDING_ENERGY				3000000
+#define MAX_CARBON_EFFICENCY				9
+#define PLASMA_FUSED_COEFFICENT				0.08
+#define CARBON_CATALYST_COEFFICENT			0.01
+#define FUSION_PURITY_THRESHOLD				0.9
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -112,3 +122,41 @@
 // Atmos pipe limits
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
+
+//Atmos machinery pipenet stuff
+
+// used for device_type vars; used by DEVICE_TYPE_LOOP
+#define UNARY		1
+#define BINARY 		2
+#define TRINARY		3
+#define QUATERNARY	4
+
+// this is the standard for loop used by all sorts of atmos machinery procs
+#define DEVICE_TYPE_LOOP	var/I in 1 to device_type
+
+// defines for the various machinery lists
+// NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
+
+//  nodes list - all atmos machinery
+#define NODE1	nodes[1]
+#define	NODE2	nodes[2]
+#define NODE3	nodes[3]
+#define NODE4	nodes[4]
+#define NODE_I	nodes[I]
+
+//  airs list - components only
+#define AIR1	airs[1]
+#define AIR2	airs[2]
+#define AIR3	airs[3]
+#define AIR_I	airs[I]
+
+//  parents list - components only
+#define PARENT1		parents[1]
+#define PARENT2		parents[2]
+#define PARENT3		parents[3]
+#define PARENT_I	parents[I]
+
+//Tanks
+#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+#define TANK_MIN_RELEASE_PRESSURE 0
+#define TANK_DEFAULT_RELEASE_PRESSURE 16

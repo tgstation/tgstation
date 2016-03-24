@@ -25,7 +25,7 @@
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinet"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 
 /obj/structure/closet/secure_closet/personal/cabinet/New()
@@ -42,7 +42,8 @@
 			if(src.broken)
 				user << "<span class='danger'>It appears to be broken.</span>"
 				return
-			if(!I || !I.registered_name)	return
+			if(!I || !I.registered_name)
+				return
 			if(src.allowed(user) || !src.registered_name || (istype(I) && (src.registered_name == I.registered_name)))
 				//they can open all lockers, or nobody owns this, or they own this locker
 				src.locked = !( src.locked )

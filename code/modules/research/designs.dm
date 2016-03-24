@@ -24,7 +24,7 @@ Design Guidlines
 reliability_mod (starts at 0, gets improved through experimentation). Example: PACMAN generator. 79 base reliablity + 6 tech
 (3 plasmatech, 3 powerstorage) + 0 (since it's completely new) = 85% reliability. Reliability is the chance it works CORRECTLY.
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
-- A single sheet of anything is 3750 units of material. Materials besides metal/glass require help from other jobs (mining for
+- A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
@@ -40,6 +40,8 @@ other types of metals and chemistry for reagents).
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = ""					//The file path of the object that gets created
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
+	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
+	var/maxstack = 1
 
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
@@ -61,16 +63,13 @@ other types of metals and chemistry for reagents).
 /obj/item/weapon/disk/design_disk
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = 1.0
+	icon_state = "datadisk1"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
@@ -141,7 +140,7 @@ other types of metals and chemistry for reagents).
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) //Yes, a whole diamond is needed.
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
 	category = list("Mining Designs")
@@ -174,8 +173,38 @@ other types of metals and chemistry for reagents).
 	id = "jackhammer"
 	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
+	category = list("Mining Designs")
+
+/datum/design/superaccelerator
+	name = "Super-Kinetic Accelerator"
+	desc = "An upgraded version of the proto-kinetic accelerator, with superior damage, speed and range."
+	id = "superaccelerator"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/super
+	category = list("Mining Designs")
+
+/datum/design/hyperaccelerator
+	name = "Hyper-Kinetic Accelerator"
+	desc = "An upgraded version of the proto-kinetic accelerator, with even more superior damage, speed and range."
+	id = "hyperaccelerator"
+	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
+	category = list("Mining Designs")
+
+/datum/design/superresonator
+	name = "Upgraded Resonator"
+	desc = "An upgraded version of the resonator that allows more fields to be active at once."
+	id = "superresonator"
+	req_tech = list("materials" = 4, "powerstorage" = 3, "engineering" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/weapon/resonator/upgraded
 	category = list("Mining Designs")
 
 /////////////////////////////////////////
@@ -211,7 +240,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
 	reliability = 100
-	build_path = /obj/item/bluespace_crystal/artificial
+	build_path = /obj/item/weapon/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
 
 /datum/design/telesci_gps
@@ -278,6 +307,26 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 1000, MAT_GOLD = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
+	category = list("Equipment")
+
+datum/design/diagnostic_hud
+	name = "Diagnostic HUD"
+	desc = "A HUD used to analyze and determine faults within robotic machinery."
+	id = "dianostic_hud"
+	req_tech = list("magnets" = 3, "engineering" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 50, "$glass" = 50)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic
+	category = list("Equipment")
+
+datum/design/diagnostic_hud_night
+	name = "Night Vision Diagnostic HUD"
+	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
+	id = "dianostic_hud_night"
+	req_tech = list("magnets" = 5, "engineering" = 4, "powerstorage" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$plasma" = 300)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 
 /////////////////////////////////////////
@@ -378,9 +427,39 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list("Equipment")
 
+/datum/design/sci_goggles
+	name = "Science Goggles"
+	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
+	id = "scigoggles"
+	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
+	build_path = /obj/item/clothing/glasses/science
+	category = list("Equipment")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
+
+/datum/design/advmop
+	name = "Advanced Mop"
+	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	id = "advmop"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	build_path = /obj/item/weapon/mop/advanced
+	category = list("Equipment")
+
+/datum/design/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trashabg with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list("materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PLASMA = 1500)
+	build_path = /obj/item/weapon/storage/bag/trash/bluespace
+	category = list("Equipment")
 
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"
@@ -415,3 +494,14 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+
+/datum/design/alienalloy
+	name = "Alien Alloy"
+	desc = "A sheet of reverse-engineered alien alloy."
+	id = "alienalloy"
+	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
+	build_path = /obj/item/stack/sheet/mineral/abductor
+	category = list("Stock Parts")

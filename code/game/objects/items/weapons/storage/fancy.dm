@@ -17,7 +17,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
 
@@ -124,7 +124,7 @@
 		return
 	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(cig)
-		if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
+		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
 			remove_from_storage(W, M)
 			M.equip_to_slot_if_possible(W, slot_wear_mask)
@@ -180,6 +180,7 @@
 	name = "\improper Midori Tabako packet"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims
 	name ="\improper Shady Jim's Super Slims"

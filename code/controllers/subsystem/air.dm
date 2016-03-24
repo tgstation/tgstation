@@ -5,7 +5,9 @@ var/datum/subsystem/air/SSair
 	priority = -1
 	wait = 5
 	dynamic_wait = 1
-	dwait_upper = 50
+	dwait_upper = 300
+	dwait_delta = 7
+	display = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -15,15 +17,12 @@ var/datum/subsystem/air/SSair
 	var/cost_pipenets = 0
 	var/cost_atmos_machinery = 0
 
-	var/obj/effect/overlay/plasma_overlay			//overlay for plasma
-	var/obj/effect/overlay/sleeptoxin_overlay		//overlay for sleeptoxin
-
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
+	var/list/currentrun = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
-
 
 	//Special functions lists
 	var/list/turf/simulated/active_super_conductivity = list()
@@ -32,9 +31,6 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
-
-	plasma_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="plasma"}()
-	sleeptoxin_overlay	= new /obj/effect/overlay{icon='icons/effects/tile_effects.dmi';mouse_opacity=0;layer=5;icon_state="sleeping_agent"}()
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -60,19 +56,24 @@ var/datum/subsystem/air/SSair
 	..()
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
-/datum/subsystem/air/fire()
+/datum/subsystem/air/fire(resumed = 0)
+
 	var/timer = world.timeofday
-	process_pipenets()
-	cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
+	//tick paused, that means we already did this bit
+	if (!resumed)
+		process_pipenets()
+		cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
 
-	timer = world.timeofday
-	process_atmos_machinery()
-	cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
+		timer = world.timeofday
+		process_atmos_machinery()
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
 
-	timer = world.timeofday
-	process_active_turfs()
+		timer = world.timeofday
+
+	process_active_turfs(resumed)
 	cost_turfs = MC_AVERAGE(cost_turfs, (world.timeofday - timer))
-
+	if (paused)
+		return //we paused mid way thru processing turfs due to tick overrun
 	timer = world.timeofday
 	process_excited_groups()
 	cost_groups = MC_AVERAGE(cost_groups, (world.timeofday - timer))
@@ -95,13 +96,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_pipenets()
-	var/i=1
 	for(var/thing in networks)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		networks.Cut(i, i+1)
+		networks.Remove(thing)
 
 
 /datum/subsystem/air/proc/process_atmos_machinery()
@@ -129,15 +128,26 @@ var/datum/subsystem/air/SSair
 	high_pressure_delta.len = 0
 
 
-/datum/subsystem/air/proc/process_active_turfs()
-	for(var/turf/simulated/T in active_turfs)
-		T.process_cell()
+/datum/subsystem/air/proc/process_active_turfs(resumed = 0)
+	//cache for sanic speed
+	var/fire_count = times_fired
+	if (!resumed)
+		src.currentrun = active_turfs.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/turf/simulated/T = currentrun[1]
+		currentrun.Cut(1, 2)
+		if (T)
+			T.process_cell(fire_count)
+		if (MC_TICK_CHECK)
+			return
 
 
 /datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
+	active_turfs -= T
 	if(istype(T))
 		T.excited = 0
-		active_turfs -= T
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
@@ -149,12 +159,8 @@ var/datum/subsystem/air/SSair
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 	else
-		for(var/direction in cardinal)
-			if(!(T.atmos_adjacent_turfs & direction))
-				continue
-			var/turf/simulated/S = get_step(T, direction)
-			if(istype(S))
-				add_to_active(S)
+		for(var/turf/simulated/S in T.atmos_adjacent_turfs)
+			add_to_active(S)
 
 /datum/subsystem/air/proc/process_excited_groups()
 	for(var/datum/excited_group/EG in excited_groups)
@@ -168,32 +174,37 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_allturfs(z_level)
 	var/z_start = 1
 	var/z_finish = world.maxz
+
 	if(1 <= z_level && z_level <= world.maxz)
 		z_level = round(z_level)
 		z_start = z_level
 		z_finish = z_level
+
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		T.excited = 0
 		active_turfs -= T
-		if(!T.blocks_air)
-			T.update_visuals()
-			for(var/direction in cardinal)
-				if(!(T.atmos_adjacent_turfs & direction))
-					continue
-				var/turf/enemy_tile = get_step(T, direction)
-				if(istype(enemy_tile,/turf/simulated/))
-					var/turf/simulated/enemy_simulated = enemy_tile
-					if(!T.air.compare(enemy_simulated.air))
-						T.excited = 1
-						active_turfs |= T
-						break
-				else
-					if(!T.air.check_turf_total(enemy_tile))
-						T.excited = 1
-						active_turfs |= T
-						break
+
+		if(T.blocks_air)
+			continue
+
+		T.update_visuals()
+
+		for(var/tile in T.atmos_adjacent_turfs)
+			var/turf/enemy_tile = tile
+			var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
+
+			var/is_active = T.air.compare(enemy_air)
+
+			if(is_active)
+				testing("Active turf found. Return value of compare(): [is_active]")
+				T.excited = 1
+				active_turfs |= T
+				break
+		CHECK_TICK
+
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
 		for(var/turf/simulated/T in active_turfs)
@@ -204,6 +215,7 @@ var/datum/subsystem/air/SSair
 		if (z_level && AM.z != z_level)
 			continue
 		AM.atmosinit()
+		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
 //	all atmos machinery has to initalize before the first
@@ -213,3 +225,15 @@ var/datum/subsystem/air/SSair
 		if (z_level && AM.z != z_level)
 			continue
 		AM.build_network()
+		CHECK_TICK
+
+/datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
+		AM.atmosinit()
+		CHECK_TICK
+
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
+		AM.build_network()
+		CHECK_TICK

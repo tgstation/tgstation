@@ -37,15 +37,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human/slice, reagents_per_slice)
 	..()
+	slice.subjectname = subjectname
+	slice.subjectjob = subjectjob
 	if(subjectname)
-		slice.subjectname = subjectname
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
-		slice.subjectjob = subjectjob
 		slice.name = "raw [subjectjob] cutlet"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()
+	S.subjectname = subjectname
+	S.subjectjob = subjectjob
 	if(subjectname)
 		S.name = "[subjectname] meatsteak"
 	else if(subjectjob)
@@ -113,6 +115,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat
 	name = "synthmeat"
 	desc = "A synthetic slab of meat."
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
+	name = "meat product"
+	desc = "A slab of station reclaimed and chemically processed meat product."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	name = "monkey meat"

@@ -7,6 +7,7 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
+	pressure_resistance = INFINITY
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/suppressed = 0	//Attack message
@@ -25,7 +26,7 @@
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = "/obj/item/projectile"
-	var/kill_count = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
 	var/weaken = 0
@@ -39,19 +40,15 @@
 	var/jitter = 0
 	var/forcedodge = 0
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
-	var/range = 0
 
 /obj/item/projectile/New()
 	permutated = list()
 	return ..()
 
 /obj/item/projectile/proc/Range()
-	if(range)
-		range--
-		if(range <= 0)
-			on_range()
-	else
-		return
+	range--
+	if(range <= 0 && loc)
+		on_range()
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	qdel(src)
@@ -83,7 +80,7 @@
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -125,22 +122,18 @@
 
 
 /obj/item/projectile/proc/fire()
-	spawn()
-		while(loc)
-			if(kill_count < 1)
-				qdel(src)
-				return
-			if(!paused)
-				kill_count--
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
+	set waitfor = 0
+	while(loc)
+		if(!paused)
+			if((!( current ) || loc == current))
+				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+			step_towards(src, current)
+			if(original && (original.layer>=2.75) || ismob(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original, 1)
 			Range()
-			sleep(1)
+		sleep(1)
 
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.

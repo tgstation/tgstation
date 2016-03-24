@@ -1,11 +1,22 @@
 /obj/effect/decal/cleanable
 	var/list/random_icon_states = list()
+	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
+	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 
 /obj/effect/decal/cleanable/New()
 	if (random_icon_states && length(src.random_icon_states) > 0)
 		src.icon_state = pick(src.random_icon_states)
 	create_reagents(300)
+	if(src.loc && isturf(src.loc))
+		for(var/obj/effect/decal/cleanable/C in src.loc)
+			if(C != src && C.type == src.type)
+				replace_decal(C)
 	..()
+
+
+
+/obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
+	qdel(C)
 
 /obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user,)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
@@ -21,10 +32,10 @@
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
-	if(is_hot(W)) //todo: make heating a reagent holder proc
+	if(W.is_hot()) //todo: make heating a reagent holder proc
 		if(istype(W, /obj/item/clothing/mask/cigarette)) return
 		else
-			var/hotness = is_hot(W)
+			var/hotness = W.is_hot()
 			var/added_heat = (hotness / 100)
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
@@ -41,3 +52,30 @@
 		reagents.chem_temp += 30
 		reagents.handle_reactions()
 	..()
+
+
+//Add "bloodiness" of this blood's type, to the human's shoes
+//This is on /cleanable because fuck this ancient mess
+/obj/effect/decal/cleanable/Crossed(atom/movable/O)
+	if(ishuman(O))
+		var/mob/living/carbon/human/H = O
+		if(H.shoes && blood_state && bloodiness)
+			var/obj/item/clothing/shoes/S = H.shoes
+			var/add_blood = 0
+			if(bloodiness >= BLOOD_GAIN_PER_STEP)
+				add_blood = BLOOD_GAIN_PER_STEP
+			else
+				add_blood = bloodiness
+			bloodiness -= add_blood
+			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
+			S.blood_state = blood_state
+			update_icon()
+			H.update_inv_shoes()
+
+
+
+/obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+		return bloodiness
+	else
+		return 0

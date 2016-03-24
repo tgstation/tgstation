@@ -11,13 +11,13 @@ LINEN BINS
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
-	layer = 4.0
+	layer = 4
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 1.0
+	w_class = 1
 	item_color = "white"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
@@ -175,7 +175,7 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 	var/amount = 10
 	var/list/sheets = list()
@@ -194,9 +194,12 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/update_icon()
 	switch(amount)
-		if(0)		icon_state = "linenbin-empty"
-		if(1 to 5)	icon_state = "linenbin-half"
-		else		icon_state = "linenbin-full"
+		if(0)
+			icon_state = "linenbin-empty"
+		if(1 to 5)
+			icon_state = "linenbin-half"
+		else
+			icon_state = "linenbin-full"
 
 /obj/structure/bedsheetbin/fire_act()
 	if(!amount)

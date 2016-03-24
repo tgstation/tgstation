@@ -92,7 +92,8 @@
 				/obj/item/clothing/head/cone = 1,
 				/obj/item/weapon/coin/silver = 1,
 				/obj/item/weapon/coin/twoheaded = 1,
-				/obj/item/weapon/contraband/poster = 1,
+				/obj/item/weapon/poster/contraband = 1,
+				/obj/item/weapon/poster/legit = 1,
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
@@ -118,7 +119,8 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
-				"" = 11
+				/obj/item/weaponcrafting/reciever = 1,
+				"" = 4
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner

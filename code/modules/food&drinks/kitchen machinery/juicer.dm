@@ -15,6 +15,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = "grapejuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = "grapejuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = "banana",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = "lemonjuice",
@@ -96,7 +98,7 @@
 		beaker_contents = "\The [src]  has attached a beaker with something."
 		is_beaker_ready = 1
 	else
-		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
+		beaker_contents = "\The [src]  has attached a beaker and the beaker is full!"
 
 	var/dat = {"
 <b>Processing chamber contains:</b><br>
@@ -146,10 +148,10 @@
 /obj/machinery/juicer/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
 	if (!istype(O))
 		return 5
-	else if (O.potency == -1)
+	else if (O.seed.potency == -1)
 		return 5
 	else
-		return round(5*sqrt(O.potency))
+		return round(5*sqrt(O.seed.potency))
 
 /obj/machinery/juicer/proc/juice()
 	power_change() //it is a portable machine
@@ -172,12 +174,15 @@
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 

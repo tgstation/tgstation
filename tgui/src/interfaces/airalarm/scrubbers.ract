@@ -1,0 +1,33 @@
+<link rel='ractive' href='./back.ract'>
+
+<ui-display title='Scrubber Controls' button>
+  {{#partial button}}
+    <back/>
+  {{/partial}}
+  {{#each data.scrubbers}}
+    <ui-subdisplay title='{{long_name}}'>
+      <ui-section label='Power'>
+        <ui-button icon='{{power ? "power-off" : "close"}}' style='{{power ? "selected" : null}}'
+          action='power' params='{"id_tag": "{{id_tag}}", "val": {{+!power}}}'>{{power ? "On" : "Off"}}</ui-button>
+      </ui-section>
+      <ui-section label='Mode'>
+        <ui-button icon='{{scrubbing ? "filter" : "sign-in"}}' style='{{scrubbing ? null : "danger"}}'
+          action='scrubbing' params='{"id_tag": "{{id_tag}}", "val": {{+!scrubbing}}}'>{{scrubbing ? "Scrubbing" : "Siphoning"}}</ui-button>
+      </ui-section>
+      <ui-section label='Range'>
+        <ui-button icon='{{widenet ? "expand" : "compress"}}' style='{{widenet ? "selected" : null}}'
+          action='widenet' params='{"id_tag": "{{id_tag}}", "val": {{+!widenet}}}'>{{widenet ? "Expanded" : "Normal"}}</ui-button>
+      </ui-section>
+      <ui-section label='Filters'>
+        <ui-button icon='{{filter_co2 ? "check-square-o" : "square-o"}}' style='{{filter_co2 ? "selected" : null}}'
+          action='co2_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_co2}}}'>CO2</ui-button>
+        <ui-button icon='{{filter_n2o ? "check-square-o" : "square-o"}}' style='{{filter_n2o ? "selected" : null}}'
+          action='n2o_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_n2o}}}'>N2O</ui-button>
+        <ui-button icon='{{filter_toxins ? "check-square-o" : "square-o"}}' style='{{filter_toxins ? "selected" : null}}'
+          action='tox_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_toxins}}}'>Plasma</ui-button>
+      </ui-section>
+    </ui-subdisplay>
+  {{else}}
+    <span class='bad'>Error: No scrubbers connected.</span>
+  {{/each}}
+</ui-display>

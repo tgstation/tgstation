@@ -92,12 +92,6 @@
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/pai/check_eye(mob/user)
-	if (!src.current)
-		return null
-	user.reset_view(src.current)
-	return 1
-
 /mob/living/silicon/pai/blob_act()
 	return 0
 
@@ -138,15 +132,15 @@
 	..()
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (src.stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
-		if(2.0)
+		if(2)
 			if (src.stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
-		if(3.0)
+		if(3)
 			if (src.stat != 2)
 				adjustBruteLoss(30)
 
@@ -155,68 +149,11 @@
 
 // See software.dm for Topic()
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
-
-/mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	usr:cameraFollow = null
-	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
-		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
-
-	// ok, we're alive, camera is good and in our network...
-
-	set_machine(src)
-	current = C
-	reset_view(C)
-	return 1
-
-
-/mob/living/silicon/pai/cancel_camera()
-	set category = "pAI Commands"
-	set name = "Cancel Camera View"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-
 /mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
-/mob/living/silicon/pai/on_forcemove(atom/newloc)
-	if(card)
-		card.loc = newloc
-	else //something went very wrong.
-		CRASH("pAI without card")
-	loc = card
-
-//Addition by Mord_Sith to define AI's network change ability
-/*
-/mob/living/silicon/pai/proc/pai_network_change()
-	set category = "pAI Commands"
-	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-	var/cameralist[0]
-
-	if(usr.stat == 2)
-		usr << "You can't change your camera network because you are dead!"
-		return
-
-	for (var/obj/machinery/camera/C in Cameras)
-		if(!C.status)
-			continue
-		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
-				cameralist[C.network] = C.network
-
-	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "\blue Switched to [src.network] camera network."
-//End of code by Mord_Sith
-*/
-
-
+/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+	return 1
 /*
 // Debug command - Maybe should be added to admin verbs later
 /mob/verb/makePAI(var/turf/t in view())

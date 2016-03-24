@@ -6,7 +6,7 @@ var/list/forbidden_varedit_object_types = list(
 									)
 
 var/list/VVlocked = list("vars", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "step_x", "step_y", "force_ending")
-var/list/VVicon_edit_lock = list("icon", "icon_state", "overlays", "underlays")
+var/list/VVicon_edit_lock = list("icon", "icon_state", "overlays", "underlays", "resize")
 var/list/VVckey_edit = list("key", "ckey")
 
 /*
@@ -28,7 +28,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		src.modify_variables(ticker)
 		feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/mod_list_add_ass() //haha
+/client/proc/mod_list_add_ass(atom/O) //haha
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -49,7 +49,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as null|text
+			var_value = input("Enter new text:","Text") as null|message
 
 		if("num")
 			var_value = input("Enter new number:","Num") as null|num
@@ -73,6 +73,14 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = holder.marked_datum
 
 	if(!var_value) return
+
+	if(istext(var_value))
+		if(findtext(var_value,"\["))
+			var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+			if(process_vars == "Yes")
+				var/list/varsvars = string2listofvars(var_value, O)
+				for(var/V in varsvars)
+					var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
 
 	return var_value
 
@@ -98,7 +106,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as text
+			var_value = input("Enter new text:","Text") as message
 
 		if("num")
 			var_value = input("Enter new number:","Num") as num
@@ -123,19 +131,28 @@ var/list/VVckey_edit = list("key", "ckey")
 
 	if(!var_value) return
 
+	if(istext(var_value))
+		if(findtext(var_value,"\["))
+			var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+			if(process_vars == "Yes")
+				var/list/varsvars = string2listofvars(var_value, O)
+				for(var/V in varsvars)
+					var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
+
+	L += var_value
 	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
 		if("Yes")
-			L += var_value
-			L[var_value] = mod_list_add_ass() //haha
-		if("No")
-			L += var_value
+			L[var_value] = mod_list_add_ass(O) //haha
+	O.on_varedit(objectvar)
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: ADDED=[var_value]"
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar)
-	if(!check_rights(R_VAREDIT))	return
-	if(!istype(L,/list)) src << "Not a List."
+	if(!check_rights(R_VAREDIT))
+		return
+	if(!istype(L,/list))
+		src << "Not a List."
 
 	if(L.len > 1000)
 		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
@@ -176,11 +193,14 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/dir
 
 	if(variable in VVlocked)
-		if(!check_rights(R_DEBUG))	return
+		if(!check_rights(R_DEBUG))
+			return
 	if(variable in VVckey_edit)
-		if(!check_rights(R_SPAWN|R_DEBUG)) return
+		if(!check_rights(R_SPAWN|R_DEBUG))
+			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG)) return
+		if(!check_rights(R_FUN|R_DEBUG))
+			return
 
 	if(isnull(variable))
 		usr << "Unable to determine variable type."
@@ -285,10 +305,19 @@ var/list/VVckey_edit = list("key", "ckey")
 			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]")
 			message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]")
 			L -= variable
+			O.on_varedit(objectvar)
 			return
 
 		if("text")
-			new_var = input("Enter new text:","Text") as text
+			new_var = input("Enter new text:","Text") as message
+
+			if(findtext(new_var,"\["))
+				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+				if(process_vars == "Yes")
+					var/list/varsvars = string2listofvars(new_var, O)
+					for(var/V in varsvars)
+						new_var = replacetext(new_var,"\[[V]]","[O.vars[V]]")
+
 			if(assoc)
 				L[assoc_key] = new_var
 			else
@@ -343,17 +372,18 @@ var/list/VVckey_edit = list("key", "ckey")
 			else
 				L[L.Find(variable)] = new_var
 
+	O.on_varedit(objectvar)
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: [original_var]=[new_var]"
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
-	if(!check_rights(R_VAREDIT))	return
+	if(!check_rights(R_VAREDIT))
+		return
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
-			return
+	if(is_type_in_list(O, forbidden_varedit_object_types))
+		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
+		return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
 		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
@@ -369,11 +399,14 @@ var/list/VVckey_edit = list("key", "ckey")
 			return
 
 		if(param_var_name in VVlocked)
-			if(!check_rights(R_DEBUG))	return
+			if(!check_rights(R_DEBUG))
+				return
 		if(param_var_name in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG)) return
+			if(!check_rights(R_SPAWN|R_DEBUG))
+				return
 		if(param_var_name in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG)) return
+			if(!check_rights(R_FUN|R_DEBUG))
+				return
 
 		variable = param_var_name
 
@@ -427,15 +460,19 @@ var/list/VVckey_edit = list("key", "ckey")
 		names = sortList(names)
 
 		variable = input("Which var?","Var") as null|anything in names
-		if(!variable)	return
+		if(!variable)
+			return
 		var_value = O.vars[variable]
 
 		if(variable in VVlocked)
-			if(!check_rights(R_DEBUG)) return
+			if(!check_rights(R_DEBUG))
+				return
 		if(variable in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG)) return
+			if(!check_rights(R_SPAWN|R_DEBUG))
+				return
 		if(variable in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG)) return
+			if(!check_rights(R_FUN|R_DEBUG))
+				return
 
 	if(!autodetect_class)
 
@@ -535,8 +572,16 @@ var/list/VVckey_edit = list("key", "ckey")
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|text
+			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
 			if(var_new==null) return
+
+			if(findtext(var_new,"\["))
+				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+				if(process_vars == "Yes")
+					var/list/varsvars = string2listofvars(var_new, O)
+					for(var/V in varsvars)
+						var_new = replacetext(var_new,"\[[V]]","[O.vars[V]]")
+
 			O.vars[variable] = var_new
 
 		if("num")
@@ -560,8 +605,14 @@ var/list/VVckey_edit = list("key", "ckey")
 				O.vars[variable] = var_new
 
 		if("type")
-			var/var_new = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
-			if(var_new==null) return
+			var/target_path = input("Enter type:", "Type", O.vars[variable]) as null|text
+			if(!target_path)
+				return
+			var/var_new = text2path(target_path)
+			if(!ispath(var_new))
+				var_new = pick_closest_path(target_path)
+			if(!var_new)
+				return
 			O.vars[variable] = var_new
 
 		if("reference")
@@ -587,6 +638,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum
 
+	O.on_varedit(variable)
 	world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")

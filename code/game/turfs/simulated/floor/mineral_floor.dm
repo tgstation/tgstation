@@ -39,10 +39,10 @@
 		PlasmaBurn()
 
 /turf/simulated/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma flooring was ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma flooring was ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(W))
+		ignite(W.is_hot())
 		return
 	..()
 
@@ -163,10 +163,40 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(1)
+			radiation_pulse(get_turf(src), 3, 3, 1, 0)
 			for(var/turf/simulated/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
 			active = 0
 			return
+
+// ALIEN ALLOY
+/turf/simulated/floor/mineral/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+	floor_tile = /obj/item/stack/tile/mineral/abductor
+	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
+
+/turf/simulated/floor/mineral/abductor/New()
+	..()
+	icon_state = "alienpod[rand(1,9)]"
+
+/turf/simulated/floor/mineral/abductor/break_tile()
+	return //unbreakable
+
+/turf/simulated/floor/mineral/abductor/burn_tile()
+	return //unburnable
+
+/turf/simulated/floor/mineral/abductor/make_plating()
+	return ChangeTurf(/turf/simulated/floor/plating/abductor2)
+
+
+/turf/simulated/floor/plating/abductor2
+	name = "alien plating"
+	icon_state = "alienplating"
+
+/turf/simulated/floor/plating/abductor2/break_tile()
+	return //unbreakable
+
+/turf/simulated/floor/plating/abductor2/burn_tile()
+	return //unburnable

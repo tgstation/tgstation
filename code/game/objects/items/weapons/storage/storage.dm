@@ -8,7 +8,7 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	w_class = 3.0
+	w_class = 3
 	var/silent = 0 // No message on putting items in
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
@@ -73,6 +73,9 @@
 //Object behaviour on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		if(can_be_inserted(I,0,user))
 			src_object.remove_from_storage(I, src)
 	orient2hud(user)
@@ -92,18 +95,17 @@
 
 
 /obj/item/weapon/storage/proc/show_to(mob/user)
+	if(!user.client)
+		return
 	if(user.s_active != src && (user.stat == CONSCIOUS))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
 				return
 	if(user.s_active)
 		user.s_active.hide_from(user)
-	user.client.screen -= boxes
-	user.client.screen -= closer
-	user.client.screen -= contents
-	user.client.screen += boxes
-	user.client.screen += closer
-	user.client.screen += contents
+	user.client.screen |= boxes
+	user.client.screen |= closer
+	user.client.screen |= contents
 	user.s_active = src
 	is_seeing |= user
 
@@ -111,7 +113,6 @@
 /obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin)
 	close_all()
 	return ..()
-
 
 /obj/item/weapon/storage/proc/hide_from(mob/user)
 	if(!user.client)
@@ -194,11 +195,11 @@
 	var/obj/item/sample_object
 	var/number
 
-	New(obj/item/sample)
-		if(!istype(sample))
-			del(src)
-		sample_object = sample
-		number = 1
+/datum/numbered_display/New(obj/item/sample)
+	if(!istype(sample))
+		qdel(src)
+	sample_object = sample
+	number = 1
 
 
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
@@ -232,7 +233,8 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(!istype(W) || (W.flags & ABSTRACT)) return //Not an item
+	if(!istype(W) || (W.flags & ABSTRACT))
+		return //Not an item
 
 	if(loc == W)
 		return 0 //Means the item is already in the storage item
@@ -269,7 +271,7 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "<span class='warning'>[src] is full, make some space!</span>"
+			usr << "<span class='warning'>[W] won't fit in [src], make some space!</span>"
 		return 0
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
@@ -289,7 +291,8 @@
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(usr)
 		if(!usr.unEquip(W))
 			return 0
@@ -309,7 +312,7 @@
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
-				else if(W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
+				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
@@ -321,8 +324,9 @@
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
-	if(!istype(W)) return 0
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
+	if(!istype(W))
+		return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src
@@ -333,7 +337,8 @@
 			M.client.screen -= W
 
 	if(ismob(loc))
-		W.dropped(usr)
+		var/mob/M = loc
+		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.loc = new_location
 
@@ -346,8 +351,14 @@
 	W.on_exit_storage(src)
 	update_icon()
 	W.mouse_opacity = initial(W.mouse_opacity)
+	if(burn)
+		W.fire_act()
 	return 1
 
+
+/obj/item/weapon/storage/empty_object_contents(burn, src.loc)
+	for(var/obj/item/Item in contents)
+		remove_from_storage(Item, src.loc, burn)
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
@@ -363,11 +374,12 @@
 	handle_item_insertion(W, 0 , user)
 	return 1
 
-
-/obj/item/weapon/storage/dropped(mob/user)
-	return
-
 /obj/item/weapon/storage/attack_hand(mob/user)
+	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
+		user.s_active.close(user)
+		close(user)
+		return
+
 	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
@@ -457,13 +469,13 @@
 
 
 /obj/item/weapon/storage/Destroy()
-	for(var/obj/O in contents)
-		O.mouse_opacity = initial(O.mouse_opacity)
+	var/turf = get_turf(src)
+	empty_object_contents(0, turf)
 
 	close_all()
 	qdel(boxes)
 	qdel(closer)
-	..()
+	return ..()
 
 
 /obj/item/weapon/storage/emp_act(severity)
@@ -481,4 +493,5 @@
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
-		remove_from_storage(A,null)
+		usr = null
+		remove_from_storage(A, loc)

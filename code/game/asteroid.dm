@@ -36,6 +36,10 @@ var/global/max_secret_rooms = 6
 
 //////////////
 
+/proc/make_mining_asteroid_secrets()
+	for(var/i in 1 to max_secret_rooms)
+		make_mining_asteroid_secret()
+
 /proc/make_mining_asteroid_secret()
 	var/valid = 0
 	var/turf/T = null
@@ -60,16 +64,16 @@ var/global/max_secret_rooms = 6
 		if("organharvest")
 			walltypes = list(/turf/simulated/wall/r_wall=2,/turf/simulated/wall=2,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/plasteel,/turf/simulated/floor/engine)
-			treasureitems = list(/obj/machinery/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/critter/cat=2)
+			treasureitems = list(/mob/living/simple_animal/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/crate/critter=2, /mob/living/simple_animal/pet/cat/space=1)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/internal/appendix=2,/obj/structure/closet/crate/freezer=2,
-							  /obj/structure/optable=1,/obj/item/weapon/scalpel=1,/obj/item/weapon/storage/firstaid/regular=3,
+							  /obj/structure/table/optable=1,/obj/item/weapon/scalpel=1,/obj/item/weapon/storage/firstaid/regular=3,
 							  /obj/item/weapon/tank/internals/anesthetic=1, /obj/item/weapon/surgical_drapes=2, /obj/item/device/mass_spectrometer/adv=1,/obj/item/clothing/glasses/hud/health=1)
 
 		if("cult")
 			theme = "cult"
 			walltypes = list(/turf/simulated/wall/cult=3,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/plasteel/cult)
-			treasureitems = list(/obj/item/device/soulstone=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
+			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
 			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
 							  /obj/item/organ/internal/heart=2, /obj/effect/decal/cleanable/blood=4,/obj/structure/table/wood=2,/obj/item/weapon/ectoplasm=3,
@@ -87,16 +91,16 @@ var/global/max_secret_rooms = 6
 		if("cavein")
 			theme = "cavein"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/plating/beach/sand)
-			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator=1,
-							/obj/item/weapon/resonator=1, /obj/item/weapon/pickaxe/drill/jackhammer=5)
+			floortypes = list(/turf/simulated/floor/plating/asteroid/basalt, /turf/simulated/floor/plating/beach/sand)
+			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator/hyper=1,
+							/obj/item/weapon/resonator/upgraded=1, /obj/item/weapon/pickaxe/drill/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/chili=1,/obj/item/weapon/tank/internals/oxygen/red=2)
 
 		if("xenoden")
 			theme = "xenoden"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/plating/beach/sand)
+			floortypes = list(/turf/simulated/floor/plating/asteroid/basalt, /turf/simulated/floor/plating/beach/sand)
 			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
 			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
 
@@ -121,9 +125,9 @@ var/global/max_secret_rooms = 6
 
 		if("plantlab")
 			theme = "plantlab"
-			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/novaflowerseed=2,/obj/item/seeds/bluespacetomatoseed=2,/obj/item/seeds/bluetomatoseed=2,
-			/obj/item/seeds/coffee_robusta_seed=2, /obj/item/seeds/cashseed=2)
-			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics=1,
+			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/sunflower/novaflower=2,/obj/item/seeds/tomato/blue/bluespace=2,/obj/item/seeds/tomato/blue=2,
+			/obj/item/seeds/coffee/robusta=2, /obj/item/seeds/cash=2)
+			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics/constructable=1,
 							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
 
@@ -139,7 +143,7 @@ var/global/max_secret_rooms = 6
 	possiblethemes -= theme //once a theme is selected, it's out of the running!
 	var/floor = pick(floortypes)
 
-	turfs = get_area_turfs(/area/mine/unexplored)
+	turfs = get_area_turfs(/area/lavaland/surface/outdoors)
 
 	if(!turfs.len)
 		return 0
@@ -161,21 +165,11 @@ var/global/max_secret_rooms = 6
 		surroundings += range(7, locate(T.x,T.y+y_size,T.z))
 		surroundings += range(7, locate(T.x+x_size,T.y+y_size,T.z))
 
-		if(locate(/area/mine/explored) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/turf/space) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/area/asteroid/artifactroom) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/turf/simulated/floor/plating/asteroid/airless) in range(5,T))//A little less strict than the other checks due to tunnels
-			valid = 0
-			continue
+		for(var/turf/check in surroundings)
+			var/area/new_area = get_area(check)
+			if(!(istype(new_area, /area/lavaland/surface/outdoors)))
+				valid = FALSE
+				break
 
 	if(!T)
 		return 0
@@ -184,10 +178,6 @@ var/global/max_secret_rooms = 6
 
 	if(room)//time to fill it with stuff
 		var/list/emptyturfs = room["floors"]
-		for(var/turf/simulated/floor/A in emptyturfs) //remove pls doesn't fix problem
-			if(istype(A))
-				spawn(2)
-					A.fullUpdateMineralOverlays()
 		T = pick(emptyturfs)
 		if(T)
 			new /obj/effect/glowshroom/single(T) //Just to make it a little more visible

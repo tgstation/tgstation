@@ -37,13 +37,20 @@
 
 			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
-				if(0 to 9)		filling.icon_state = "reagent0"
-				if(10 to 24) 	filling.icon_state = "reagent10"
-				if(25 to 49)	filling.icon_state = "reagent25"
-				if(50 to 74)	filling.icon_state = "reagent50"
-				if(75 to 79)	filling.icon_state = "reagent75"
-				if(80 to 90)	filling.icon_state = "reagent80"
-				if(91 to INFINITY)	filling.icon_state = "reagent100"
+				if(0 to 9)
+					filling.icon_state = "reagent0"
+				if(10 to 24)
+					filling.icon_state = "reagent10"
+				if(25 to 49)
+					filling.icon_state = "reagent25"
+				if(50 to 74)
+					filling.icon_state = "reagent50"
+				if(75 to 79)
+					filling.icon_state = "reagent75"
+				if(80 to 90)
+					filling.icon_state = "reagent80"
+				if(91 to INFINITY)
+					filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
 			overlays += filling
@@ -109,7 +116,7 @@
 					// speed up transfer on blood packs
 					transfer_amount = 10
 				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INGEST, fraction,0) //make reagents reacts, but don't spam messages
+				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
@@ -124,10 +131,10 @@
 
 			var/mob/living/carbon/human/T = attached
 
-			if(!istype(T)) return
-			if(!T.dna)
+			if(!istype(T))
 				return
-			if(NOCLONE in T.mutations)
+
+			if(T.disabilities & NOCLONE)
 				return
 
 			if(NOBLOOD in T.dna.species.specflags)

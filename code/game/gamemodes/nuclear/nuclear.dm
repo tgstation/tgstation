@@ -1,21 +1,21 @@
 /datum/game_mode
 	var/list/datum/mind/syndicates = list()
-
+	var/nukeops_lastname = ""
 
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
+	required_players = 35 // 35 players - 5 players to be the nuke ops = 30 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
-	antag_flag = BE_OPERATIVE
+	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
-
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+
 
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
@@ -43,6 +43,7 @@
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
+
 	return 1
 
 
@@ -70,9 +71,6 @@
 			synd_spawn += get_turf(A)
 			continue
 
-	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
-	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
 	var/agent_number = 1
@@ -99,23 +97,24 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-
-	if(uplinklocker)
-		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
-	if(nuke_spawn && synd_spawn.len > 0)
-		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
-		the_bomb.r_code = nuke_code
-
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	if(nuke)
+		nuke.r_code = nuke_code
 	return ..()
 
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
-		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
+		nukeops_lastname = nukelastname(synd_mind.current)
+		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
 	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
+	synd_mind.current << "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>"
+
+	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
+	synd_mind.current.equip_to_slot_or_del(challenge, slot_r_hand)
 
 	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
 	if(foundIDs.len)
@@ -124,6 +123,10 @@
 			ID.access += access_syndicate_leader
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
+
+	var/obj/item/device/radio/headset/syndicate/alt/A = locate() in synd_mind.current
+	if(A)
+		A.command = TRUE
 
 	if (nuke_code)
 		var/obj/item/weapon/paper/P = new
@@ -136,6 +139,7 @@
 	else
 		nuke_code = "code will be provided later"
 	return
+
 
 
 /datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
@@ -153,39 +157,13 @@
 		obj_count++
 	return
 
+/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
 
-/datum/game_mode/proc/random_radio_frequency()
-	return 1337 // WHY??? -- Doohl
-
-
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
-	var/radio_freq = SYND_FREQ
-
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(synd_mob)
-	R.set_frequency(radio_freq)
-	R.freqlock = 1
-	synd_mob.equip_to_slot_or_del(R, slot_ears)
-
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
-	if(synd_mob.backbag == 1) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
-
-	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
-	U.hidden_uplink.uplink_owner="[synd_mob.key]"
-	U.hidden_uplink.uses = 20
-	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
-
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(synd_mob)
-	W.implant(synd_mob)
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
-	E.implant(synd_mob)
-	synd_mob.faction |= "syndicate"
-	synd_mob.update_icons()
+	if(telecrystals)
+		synd_mob.equipOutfit(/datum/outfit/syndicate)
+	else
+		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
 	return 1
 
 
@@ -193,7 +171,6 @@
 	if (nukes_left == 0)
 		return 1
 	return ..()
-
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
@@ -213,7 +190,7 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in world)
+	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break
@@ -251,7 +228,7 @@
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
 
-	else if ( disk_rescued )
+	else if (disk_rescued)
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
@@ -278,36 +255,18 @@
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
-
 		var/purchases = ""
 		var/TC_uses = 0
-
 		for(var/datum/mind/syndicate in syndicates)
-
-			text += "<br><b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("
-			if(syndicate.current)
-				if(syndicate.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(syndicate.current.real_name != syndicate.name)
-					text += " as <b>[syndicate.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-
-			for(var/obj/item/device/uplink/H in world_uplinks)
-				if(H && H.uplink_owner && H.uplink_owner==syndicate.key)
-					TC_uses += H.used_TC
+			text += printplayer(syndicate)
+			for(var/obj/item/device/uplink/H in uplinks)
+				if(H && H.owner && H.owner == syndicate.key)
+					TC_uses += H.spent_telecrystals
 					purchases += H.purchase_log
-
 		text += "<br>"
-
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
-
-		if(TC_uses==0 && station_was_nuked && !are_operatives_dead())
+		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
-
 		world << text
 	return 1
 
@@ -332,3 +291,64 @@
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
 		synd_mind.current.real_name = synd_mind.name
 	return
+
+/datum/outfit/syndicate
+	name = "Syndicate Operative - Basic"
+
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/weapon/storage/backpack
+	ears = /obj/item/device/radio/headset/syndicate/alt
+	l_pocket = /obj/item/weapon/pinpointer/nukeop
+	id = /obj/item/weapon/card/id/syndicate
+	belt = /obj/item/weapon/gun/projectile/automatic/pistol
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
+
+	var/tc = 30
+
+/datum/outfit/syndicate/no_crystals
+	tc = 0
+
+
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(SYND_FREQ)
+	R.freqlock = 1
+
+	if(tc)
+		var/obj/item/device/radio/uplink/nuclear/U = new(H)
+		U.hidden_uplink.owner = "[H.key]"
+		U.hidden_uplink.telecrystals = tc
+		H.equip_to_slot_or_del(U, slot_in_backpack)
+
+	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
+	W.implant(H)
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
+	E.implant(H)
+	H.faction |= "syndicate"
+	H.update_icons()
+
+/datum/outfit/syndicate/full
+	name = "Syndicate Operative - Full Kit"
+
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+	belt = /obj/item/weapon/storage/belt/military
+	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
+		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
+		/obj/item/weapon/gun/projectile/automatic/pistol=1)
+
+/datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
+	..()
+
+
+	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
+	suit.ToggleHelmet()
+	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
+	helmet.attack_self(H)
+
+	H.internal = H.r_store

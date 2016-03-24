@@ -3,9 +3,9 @@
 	var/status = 1
 	var/list/steps = list()										//Steps in a surgery
 	var/step_in_progress = 0									//Actively performing a Surgery
+	var/can_cancel = 1											//Can cancel this surgery after step 1 with cautery
 	var/list/species = list(/mob/living/carbon/human)			//Acceptable Species
 	var/location = "chest"										//Surgery location
-	var/target_must_be_dead = 0									//Needs to be dead
 	var/requires_organic_bodypart = 1							//Prevents you from performing an operation on robotic limbs
 	var/list/possible_locs = list() 							//Multiple locations -- c0
 	var/ignore_clothes = 0										//This surgery ignores clothes
@@ -19,11 +19,12 @@
 
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
-	if(step_in_progress)	return
+	if(step_in_progress)
+		return
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
-		if(S.try_op(user, target, user.zone_sel.selecting, user.get_active_hand(), src))
+		if(S.try_op(user, target, user.zone_selected, user.get_active_hand(), src))
 			return 1
 	return 0
 

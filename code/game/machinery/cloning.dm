@@ -51,12 +51,24 @@
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "cloning data disk"
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	item_state = "card-id"
-	w_class = 1.0
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
+
+//Disk stuff.
+/obj/item/weapon/disk/data/New()
+	..()
+	icon_state = "datadisk[rand(0,6)]"
+	overlays += "datadisk_gene"
+
+
+/obj/item/weapon/disk/data/attack_self(mob/user)
+	read_only = !read_only
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
+
+/obj/item/weapon/disk/data/examine(mob/user)
+	..()
+	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 
 //Find a dead mob with a brain and client.
@@ -70,26 +82,13 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/brain))
+		if (ishuman(M) && !M.getorgan(/obj/item/organ/internal/brain))
 			continue
 
 		if (M.ckey == find_key)
 			selected = M
 			break
 	return selected
-
-//Disk stuff.
-/obj/item/weapon/disk/data/New()
-	..()
-	icon_state = "datadisk[pick(0,1,2)]"
-
-/obj/item/weapon/disk/data/attack_self(mob/user)
-	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
-
-/obj/item/weapon/disk/data/examine(mob/user)
-	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 //Health Tracker Implant
 
@@ -109,11 +108,10 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_paw(mob/user)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_hand(mob/user)
+//Clonepod
+
+/obj/machinery/clonepod/examine(mob/user)
+	..()
 	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
@@ -121,7 +119,8 @@
 		user << "Current clone cycle is [round(completion)]% complete."
 	return
 
-//Clonepod
+/obj/machinery/clonepod/attack_ai(mob/user)
+	return examine(user)
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
@@ -178,19 +177,17 @@
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
-	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	H.updatehealth()
-
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
-	hardset_dna(H, ui, se, null, null, mrace, features)
-	H.faction |= factions
+	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	if(H)
+		H.faction |= factions
 
-	H.set_cloned_appearance()
+		H.set_cloned_appearance()
 
-	H.suiciding = 0
+		H.suiciding = 0
 	src.attempting = 0
 	return 1
 
@@ -301,36 +298,24 @@
 	return
 
 /obj/machinery/clonepod/proc/go_out()
-	if (src.locked)
+	if (locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
-		src.mess = 0
-		gibs(src.loc)
-		src.icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
+	if (mess) //Clean that mess and dump those gibs!
+		mess = 0
+		gibs(loc)
+		icon_state = "pod_0"
 		return
 
-	if (!(src.occupant))
+	if (!occupant)
 		return
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
 
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	if(occupant.loc == src)
-		src.occupant.loc = src.loc
-	src.icon_state = "pod_0"
-	src.eject_wait = 0 //If it's still set somehow.
-	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
-	src.occupant = null
+	var/turf/T = get_turf(src)
+	occupant.forceMove(T)
+	icon_state = "pod_0"
+	eject_wait = 0 //If it's still set somehow.
+	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
+	occupant = null
 	return
 
 /obj/machinery/clonepod/proc/malfunction()
@@ -355,7 +340,7 @@
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		go_out()
 
 /*
@@ -368,13 +353,8 @@
 
 /obj/item/weapon/storage/box/disks/New()
 	..()
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.

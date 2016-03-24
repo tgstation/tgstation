@@ -2,7 +2,7 @@
 	if(istype(M))
 		var/mob/living/carbon/human/H
 		var/obj/item/organ/limb/affecting
-		var/selected_zone = user.zone_sel.selecting
+		var/selected_zone = user.zone_selected
 
 		if(istype(M, /mob/living/carbon/human))
 			H = M
@@ -18,8 +18,8 @@
 			if(!current_surgery)
 				var/list/all_surgeries = surgeries_list.Copy()
 				var/list/available_surgeries = list()
-				for(var/i in all_surgeries)
-					var/datum/surgery/S = all_surgeries[i]
+
+				for(var/datum/surgery/S in all_surgeries)
 					if(!S.possible_locs.Find(selected_zone))
 						continue
 					if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
@@ -33,7 +33,7 @@
 							break
 
 				var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
-				if(P && user.Adjacent(M) && (I in user))
+				if(P && user && user.Adjacent(M) && (I in user))
 					var/datum/surgery/S = available_surgeries[P]
 					var/datum/surgery/procedure = new S.type
 					if(procedure)
@@ -48,11 +48,21 @@
 						else
 							user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
 
-			else if(current_surgery.status == 1 && !current_surgery.step_in_progress)
-				M.surgeries -= current_surgery
-				user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-					"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
-				qdel(current_surgery)
+			else if(!current_surgery.step_in_progress)
+				if(current_surgery.status == 1)
+					M.surgeries -= current_surgery
+					user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+						"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+					qdel(current_surgery)
+				else if(istype(user.get_inactive_hand(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
+					M.surgeries -= current_surgery
+					user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+						"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+					qdel(current_surgery)
+				else if(current_surgery.can_cancel)
+					user << "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>"
+
+
 			return 1
 	return 0
 
@@ -60,20 +70,20 @@
 
 proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
-	if(locate(/obj/structure/optable, T))
+	if(locate(/obj/structure/table/optable, T))
 		return 1
 	else if(locate(/obj/structure/table, T))
 		return 0.8
-	else if(locate(/obj/structure/stool/bed, T))
+	else if(locate(/obj/structure/bed, T))
 		return 0.7
 	else
 		return 0.5
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations	= 0	//based on body_parts_covered
-	var/face_covered		= 0	//based on flags_inv
-	var/eyesmouth_covered	= 0	//based on flags
+	var/covered_locations = 0	//based on body_parts_covered
+	var/face_covered = 0	//based on flags_inv
+	var/eyesmouth_covered = 0	//based on flags_cover
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))

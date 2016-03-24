@@ -70,7 +70,7 @@
 		/datum/reagent/consumable/soymilk = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 3,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mimana = 1
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/mimana
 	category = CAT_FOOD

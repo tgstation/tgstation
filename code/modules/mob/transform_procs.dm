@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 	//Handle items on mob
@@ -16,8 +16,11 @@
 			int_organs += I
 			I.Remove(src, 1)
 
+	if(tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants-int_organs))
+			unEquip(W)
+
 	//Make mob invisible and spawn animation
-	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	stunned = 1
@@ -35,18 +38,18 @@
 	qdel(animation)
 
 	// hash the original name?
-	if	(tr_flags & TR_HASHNAME)
+	if(tr_flags & TR_HASHNAME)
 		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
 		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
-	if (newname) //if there's a name as an argument, always take that one over the current name
-		O.name = newname
-		O.real_name = newname
 
 	//handle DNA and other attributes
-	if(dna)
-		dna.transfer_identity(O)
-		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
+	dna.transfer_identity(O)
+	O.updateappearance(icon_update=0)
+
+	if(tr_flags & TR_KEEPSE)
+		O.dna.struc_enzymes = dna.struc_enzymes
+		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -59,6 +62,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+			D.holder = O
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -69,9 +73,10 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	for(var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/I in implants)
+			I.loc = O
+			I.implanted = O
 
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
@@ -89,22 +94,18 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 
-	O.update_pipe_vision()
-
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
-	updateappearance(O)
 	. = O
-	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		qdel(src)
 
+	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 	//Handle items on mob
@@ -124,7 +125,7 @@
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants))
+		for(var/obj/item/W in (src.contents-implants-int_organs))
 			unEquip(W)
 			if (client)
 				client.screen -= W
@@ -133,11 +134,7 @@
 				W.dropped(src)
 				W.layer = initial(W.layer)
 
-	//	for(var/obj/item/W in src)
-	//		unEquip(W)
-
 	//Make mob invisible and spawn animation
-	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	stunned = 1
@@ -155,28 +152,21 @@
 		O.equip_to_appropriate_slot(C)
 	qdel(animation)
 
-	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+	dna.transfer_identity(O)
+	O.updateappearance(mutcolor_update=1)
 
-	if(dna)
-		dna.transfer_identity(O)
-		O.update_icons()
-		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
-			domutcheck(O)
-
-	if(!dna.species)
-		hardset_dna(O, null, null, null, null, /datum/species/human)
+	if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+		O.real_name = random_unique_name(O.gender)
+		O.dna.generate_unique_enzymes(O)
 	else
-		hardset_dna(O, null, null, null, null, dna.species.type)
-
-	dna = null
-	if(newname) //if there's a name as an argument, always take that one over the current name
-		O.real_name = newname
-	else
-		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
-			O.dna.real_name = random_unique_name(O.gender)
 		O.real_name = O.dna.real_name
-		O.name = O.real_name
+	O.name = O.real_name
+
+	if(tr_flags & TR_KEEPSE)
+		O.dna.struc_enzymes = dna.struc_enzymes
+		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
+		O.domutcheck()
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -189,6 +179,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+			D.holder = O
 		O.med_hud_set_status()
 
 	//keep damage?
@@ -200,10 +191,11 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	for(var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
-	O.sec_hud_set_implants()
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/I in implants)
+			I.loc = O
+			I.implanted = O
+		O.sec_hud_set_implants()
 
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/obj/item/organ/internal/I in O.internal_organs)
@@ -214,21 +206,21 @@
 
 	if(mind)
 		mind.transfer_to(O)
+		if(O.mind.changeling)
+			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+				mind.changeling.purchasedpowers -= HF
+
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
-	O.update_pipe_vision()
-
-	updateappearance(O)
 	. = O
 
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
-	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		qdel(src)
+	qdel(src)
 
 
 /mob/new_player/AIize()
@@ -259,15 +251,11 @@
 	if(client)
 		stopLobbySound()
 	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
-	O.invisibility = 0
-	O.aiRestorePowerRoutine = 0
 
 	if(mind)
 		mind.transfer_to(O)
 	else
 		O.key = key
-
-	O.update_pipe_vision()
 
 	var/obj/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in landmarks_list)
@@ -299,16 +287,15 @@
 	O << {"Use say ":b to speak to your cyborgs through binary."} //"
 	O << "For department channels, use the following say commands:"
 	O << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
-		O.show_laws()
-		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	O.show_laws()
+	O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 
 	O.job = "AI"
 
-	O.rename_self("ai",1)
+	O.rename_self("ai")
 	. = O
 	qdel(src)
 	return
@@ -331,35 +318,41 @@
 	for(var/t in organs)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
+	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	// cyborgs produced by Robotize get an automatic power cell
-	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
+	R.cell = new(R)
+	R.cell.maxcharge = 7500
+	R.cell.charge = 7500
 
 
-	O.gender = gender
-	O.invisibility = 0
+	R.gender = gender
+	R.invisibility = 0
 
 
 	if(mind)		//TODO
-		mind.transfer_to(O)
+		mind.transfer_to(R)
 		if(mind.special_role)
-			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
-		O.key = key
-
-	O.update_pipe_vision()
+		R.key = key
 
 	if (config.rename_cyborg)
-		O.rename_self("cyborg", 1)
+		R.rename_self("cyborg")
 
-	O.loc = loc
-	O.job = "Cyborg"
-	O.notify_ai(1)
+	if(R.mmi)
+		R.mmi.name = "Man-Machine Interface: [real_name]"
+		if(R.mmi.brain)
+			R.mmi.brain.name = "[real_name]'s brain"
+		if(R.mmi.brainmob)
+			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
+			R.mmi.brainmob.name = real_name
 
-	. = O
+	R.loc = loc
+	R.job = "Cyborg"
+	R.notify_ai(1)
+
+	. = R
 	qdel(src)
 
 //human -> alien
@@ -390,7 +383,6 @@
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
-	new_xeno.update_pipe_vision()
 	. = new_xeno
 	qdel(src)
 
@@ -423,22 +415,33 @@
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
-	new_slime.update_pipe_vision()
 	. = new_slime
 	qdel(src)
 
-/mob/living/carbon/human/proc/Blobize()
-	if (notransform)
-		return
-	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
-	if(!client)
-		for(var/mob/dead/observer/G in player_list)
-			if(ckey == "@[G.ckey]")
-				new_blob.create_overmind(G.client , 1)
-				break
+/mob/proc/become_overmind(mode_made = 0)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made)
+	if(mind)
+		mind.transfer_to(B)
 	else
-		new_blob.create_overmind(src.client , 1)
-	gib(src)
+		B.key = key
+	. = B
+	qdel(src)
+
+
+/mob/proc/become_god(var/side_colour)
+	var/mob/camera/god/G = new /mob/camera/god(loc)
+	G.side = side_colour
+	if(mind)
+		mind.transfer_to(G)
+	else
+		G.key = key
+
+	G.job = "Deity"
+	G.rename_self("deity")
+	G.update_icons()
+
+	. = G
+	qdel(src)
 
 
 
@@ -460,7 +463,6 @@
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
-	new_corgi.update_pipe_vision()
 	. = new_corgi
 	qdel(src)
 
@@ -494,7 +496,6 @@
 
 
 	new_mob << "You suddenly feel more... animalistic."
-	new_mob.update_pipe_vision()
 	. = new_mob
 	qdel(src)
 
@@ -512,7 +513,6 @@
 	new_mob.key = key
 	new_mob.a_intent = "harm"
 	new_mob << "You feel more... animalistic"
-	new_mob.update_pipe_vision()
 
 	. = new_mob
 	qdel(src)
@@ -528,7 +528,7 @@
 	if(!MP)
 		return 0	//Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/construct))
+	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
 		return 0 //Verbs do not appear for players.
 
 //Good mobs!

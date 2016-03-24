@@ -1,7 +1,7 @@
 /*
 //////////////////////////////////////
 
-Stimulant
+Stimulant //gotta go fast
 
 	Noticable.
 	Lowers resistance significantly.

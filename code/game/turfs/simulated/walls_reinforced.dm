@@ -23,6 +23,7 @@
 
 /turf/simulated/wall/r_wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
 	if(M.environment_smash == 3)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -54,7 +55,7 @@
 			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
-			smooth_icon_neighbors(src)
+			queue_smooth_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0
@@ -215,10 +216,10 @@
 /turf/simulated/wall/r_wall/proc/update_icon()
 	if(d_state)
 		icon_state = "r_wall-[d_state]"
-		smooth = 0
-		clear_overlays(src)
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
 	else
-		smooth = 1
+		smooth = SMOOTH_TRUE
 		icon_state = ""
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)

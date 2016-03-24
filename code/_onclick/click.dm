@@ -4,7 +4,22 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
+//This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
 /mob/var/next_click	= 0
+
+// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+/mob/var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
+/mob/var/next_move_modifier = 1 //Value to multiply action/click delays by
+
+
+//Delays the mob's next click/action by num deciseconds
+// eg: 10-3 = 7 deciseconds of delay
+// eg: 10*0.5 = 5 deciseconds of delay
+// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+
+/mob/proc/changeNext_move(num)
+	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
+
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -37,9 +52,10 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
+
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -58,7 +74,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(stat || paralysis || stunned || weakened || sleeping)
 		return
 
 	face_atom(A)
@@ -124,9 +140,6 @@
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
-
-/mob/proc/changeNext_move(num)
-	next_move = world.time + num
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)
@@ -209,12 +222,11 @@
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
-/atom/proc/CtrlClick(mob/user)
-	return
 
-/atom/movable/CtrlClick(mob/user)
-	if(Adjacent(user))
-		user.start_pulling(src)
+/atom/proc/CtrlClick(mob/user)
+	var/mob/living/ML = user
+	if(istype(ML))
+		ML.pulled(src)
 
 /*
 	Alt click
@@ -282,36 +294,38 @@
 	LE.xo = U.x - T.x
 	LE.fire()
 
-/mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
-		..()
-		nutrition = max(nutrition - rand(1,5),0)
-	else
-		src << "<span class='danger'>You're out of energy!  You need food!</span>"
-
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
+	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+		return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)		dir = NORTH
-		else if(A.pixel_y < -16)dir = SOUTH
-		else if(A.pixel_x > 16)	dir = EAST
-		else if(A.pixel_x < -16)dir = WEST
+		if(A.pixel_y > 16)
+			dir = NORTH
+		else if(A.pixel_y < -16)
+			dir = SOUTH
+		else if(A.pixel_x > 16)
+			dir = EAST
+		else if(A.pixel_x < -16)
+			dir = WEST
 		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	dir = NORTH
-		else		dir = SOUTH
+		if(dy > 0)
+			dir = NORTH
+		else
+			dir = SOUTH
 	else
-		if(dx > 0)	dir = EAST
-		else		dir = WEST
+		if(dx > 0)
+			dir = EAST
+		else
+			dir = WEST
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "passage0"
-	layer = 0
+	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
 
@@ -322,5 +336,6 @@
 		C.swap_hand()
 	else
 		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
+		if(T)
+			T.Click(location, control, params)
 	return 1

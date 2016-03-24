@@ -2,13 +2,19 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 100.0
+	w_class = 100
 	item_state = "electronic"
 	flags = CONDUCT
 
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/list/storages = list()
+
+/obj/item/weapon/robot_module/Destroy()
+	modules.Cut()
+	emag = null
+	storages.Cut()
+	return ..()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -32,16 +38,68 @@
 		if((m != R.module_state_1) && (m != R.module_state_2) && (m != R.module_state_3))
 			. += m
 
+/obj/item/weapon/robot_module/proc/get_or_create_estorage(var/storage_type)
+	for(var/datum/robot_energy_storage/S in storages)
+		if(istype(S, storage_type))
+			return S
+
+	return new storage_type(src)
+
+/obj/item/weapon/robot_module/proc/add_module(var/obj/item/I)
+	if(istype(I, /obj/item/stack))
+		var/obj/item/stack/S = I
+
+		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
+			if(S.materials[MAT_METAL])
+				S.cost = S.materials[MAT_METAL] * 0.25
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
+
+		else if(istype(S, /obj/item/stack/sheet/glass))
+			S.cost = 500
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/glass)
+
+		else if(istype(S, /obj/item/stack/medical))
+			S.cost = 250
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/medical)
+
+		else if(istype(S, /obj/item/stack/cable_coil))
+			S.cost = 1
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
+
+		if(S && S.source)
+			S.materials = list()
+			S.is_cyborg = 1
+
+	if(istype(I, /obj/item/weapon/restraints/handcuffs/cable))
+		var/obj/item/weapon/restraints/handcuffs/cable/C = I
+		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/wire)
+
+	I.loc = src
+	modules += I
+	rebuild()
 
 /obj/item/weapon/robot_module/New()
-	modules += new /obj/item/device/flash/cyborg(src)
+	modules += new /obj/item/device/assembly/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 	return
 
+/obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	for(var/datum/robot_energy_storage/st in storages)
+		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
 
-/obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
-	return
+	for(var/obj/item/I in get_usable_modules())
+		if(istype(I, /obj/item/device/assembly/flash))
+			var/obj/item/device/assembly/flash/F = I
+			F.times_used = 0
+			F.crit_fail = 0
+			F.update_icon()
+		if(istype(I, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = I
+			if(B.bcell)
+				B.bcell.charge = B.bcell.maxcharge
+
+	R.toner = R.tonermax
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
 	var/list/temp_list = modules
@@ -62,7 +120,6 @@
 /obj/item/weapon/robot_module/proc/on_emag()
 	return
 
-
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
@@ -70,11 +127,12 @@
 	..()
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
 	modules += new /obj/item/weapon/extinguisher(src)
-	modules += new /obj/item/weapon/wrench(src)
-	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wrench/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
+
 
 
 /obj/item/weapon/robot_module/medical
@@ -96,23 +154,12 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
-	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-	emag.reagents.add_reagent("facid", 250)
-	emag.name = "Fluacid spray"
+	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
-
-	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
-
-	var/obj/item/stack/medical/gauze/cyborg/G = new /obj/item/stack/medical/gauze/cyborg(src)
-	G.source = gauzestore
-	modules += G
-
-	storages += gauzestore
+	emag = new /obj/item/weapon/reagent_containers/borghypo/hacked(src)
 
 	fix_modules()
-
-
 
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
@@ -125,46 +172,26 @@
 	modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
-	modules += new /obj/item/weapon/screwdriver(src)
-	modules += new /obj/item/weapon/wrench(src)
-	modules += new /obj/item/weapon/crowbar(src)
-	modules += new /obj/item/weapon/wirecutters(src)
-	modules += new /obj/item/device/multitool(src)
+	modules += new /obj/item/weapon/screwdriver/cyborg(src)
+	modules += new /obj/item/weapon/wrench/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
+	modules += new /obj/item/weapon/wirecutters/cyborg(src)
+	modules += new /obj/item/device/multitool/cyborg(src)
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
 
-	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
-	var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
-	var/datum/robot_energy_storage/wire/wirestore = new /datum/robot_energy_storage/wire(src)
-
-	var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
-	M.source = metstore
-	modules += M
-
-	var/obj/item/stack/sheet/glass/cyborg/Q = new /obj/item/stack/sheet/glass/cyborg(src)
-	Q.source = glastore
-	modules += Q
+	add_module(new /obj/item/stack/sheet/metal/cyborg())
+	add_module(new /obj/item/stack/sheet/glass/cyborg())
 
 	var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
-	G.metsource = metstore
-	G.glasource = glastore
-	modules += G
+	G.metsource = get_or_create_estorage(/datum/robot_energy_storage/metal)
+	G.glasource = get_or_create_estorage(/datum/robot_energy_storage/glass)
+	add_module(G)
 
-	var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
-	R.source = metstore
-	modules += R
+	add_module(new /obj/item/stack/rods/cyborg())
+	add_module(new /obj/item/stack/tile/plasteel/cyborg())
+	add_module(new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,"red"))
 
-	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,pick("red","yellow","green","blue","pink","orange","cyan","white"))
-	W.source = wirestore
-	modules += W
-
-	var/obj/item/stack/tile/plasteel/cyborg/F = new /obj/item/stack/tile/plasteel/cyborg(src) //"Plasteel" is the normal metal floor tile, Don't be confused - RR
-	F.source = metstore
-	modules += F //'F' for floor tile - RR(src)
-
-	storages += metstore
-	storages += glastore
-	storages += wirestore
 	fix_modules()
 
 /obj/item/weapon/robot_module/security
@@ -179,9 +206,20 @@
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	fix_modules()
 
+/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/gun/advtaser/cyborg) in get_usable_modules()
+	if(T)
+		if(T.power_supply.charge < T.power_supply.maxcharge)
+			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
+			T.power_supply.give(S.e_cost * coeff)
+			T.update_icon()
+		else
+			T.charge_tick = 0
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
+	var/obj/item/weapon/reagent_containers/spray/drying_agent
 
 /obj/item/weapon/robot_module/janitor/New()
 	..()
@@ -190,11 +228,28 @@
 	modules += new /obj/item/weapon/mop/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
+	drying_agent = new(src)
+	drying_agent.reagents.add_reagent("drying_agent", 250)
+	drying_agent.name = "drying agent spray"
+	drying_agent.color = "#A000A0"
+	modules += drying_agent
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
 	emag.name = "lube spray"
 	fix_modules()
+
+/obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in get_usable_modules()
+	if(LR)
+		for(var/i = 1, i <= coeff, i++)
+			LR.Charge(R)
+
+	drying_agent.reagents.add_reagent("drying_agent", 5 * coeff)
+
+	if(R.emagged && istype(emag, /obj/item/weapon/reagent_containers/spray))
+		emag.reagents.add_reagent("lube", 2 * coeff)
 
 
 /obj/item/weapon/robot_module/butler
@@ -208,22 +263,20 @@
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/instrument/violin(src)
 	modules += new /obj/item/device/instrument/guitar(src)
-
-	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
-	M.matter = 30
-	modules += M
-
+	modules += new /obj/item/weapon/rsf{matter = 30}(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
-
-	var/obj/item/weapon/lighter/L = new /obj/item/weapon/lighter(src)
-	L.lit = 1
-	modules += L
-
+	modules += new /obj/item/weapon/lighter{lit = 1}(src)
 	modules += new /obj/item/weapon/storage/bag/tray(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
 	emag = new /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked(src)
 	fix_modules()
 
+/obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+
+	var/obj/item/weapon/reagent_containers/O = locate(/obj/item/weapon/reagent_containers/food/condiment/enzyme) in get_usable_modules()
+	if(O)
+		O.reagents.add_reagent("enzyme", 2 * coeff)
 
 /obj/item/weapon/robot_module/miner
 	name = "miner robot module"
@@ -240,9 +293,8 @@
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
 
-
 /obj/item/weapon/robot_module/syndicate
-	name = "syndicate robot module"
+	name = "syndicate assault robot module"
 
 /obj/item/weapon/robot_module/syndicate/New()
 	..()
@@ -250,10 +302,32 @@
 	modules += new /obj/item/weapon/gun/energy/printer(src)
 	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
-	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
+	fix_modules()
+
+/obj/item/weapon/robot_module/syndicate_medical
+	name = "syndicate medical robot module"
+
+/obj/item/weapon/robot_module/syndicate_medical/New()
+	..()
+	modules += new /obj/item/weapon/reagent_containers/borghypo/syndicate(src)
+	modules += new /obj/item/weapon/twohanded/shockpaddles/syndicate(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/weapon/surgical_drapes(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
+	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
+	modules += new /obj/item/weapon/pinpointer/operative(src)
+	emag = null
+
+	add_module(new /obj/item/stack/medical/gauze/cyborg())
 	fix_modules()
 
 /datum/robot_energy_storage
@@ -262,8 +336,10 @@
 	var/recharge_rate = 1000
 	var/energy
 
-/datum/robot_energy_storage/New()
+/datum/robot_energy_storage/New(var/obj/item/weapon/robot_module/R = null)
 	energy = max_energy
+	if(R)
+		R.storages |= src
 	return
 
 /datum/robot_energy_storage/proc/use_charge(amount)
@@ -289,7 +365,7 @@
 	recharge_rate = 2
 	name = "Wire Synthesizer"
 
-/datum/robot_energy_storage/gauze
+/datum/robot_energy_storage/medical
 	max_energy = 2500
 	recharge_rate = 250
-	name = "Gauze Synthesizer"
+	name = "Medical Synthesizer"

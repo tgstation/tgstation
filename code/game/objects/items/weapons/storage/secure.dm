@@ -23,7 +23,7 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
-	w_class = 3.0
+	w_class = 3
 	max_w_class = 2
 	max_combined_w_class = 14
 
@@ -34,32 +34,33 @@
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/weapon/screwdriver))
-			if (do_after(user, 20, target = src))
+			if (do_after(user, 20/W.toolspeed, target = src))
 				src.open =! src.open
-				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
+				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
+			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100, target = src))
+			if (do_after(usr, 100/W.toolspeed, target = src))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
-					user.show_message(text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)
+					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
 					sleep(80)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message(text("<span class='danger'>Unable to reset internal memory.</span>"), 1)
+					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
-			else	src.l_hacking = 0
+			else
+				src.l_hacking = 0
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
 		return
 
 	// -> storage/attackby() what with handle insertion, etc
-	..()
+	return ..()
 
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)
@@ -149,11 +150,11 @@
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	force = 8.0
+	force = 8
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4.0
+	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
@@ -182,7 +183,7 @@
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie
-	force = 15.0
+	force = 15
 
 /obj/item/weapon/storage/secure/briefcase/syndie/New()
 	for(var/i = 0, i < storage_slots - 2, i++)
@@ -201,10 +202,10 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	force = 8.0
-	w_class = 8.0
+	force = 8
+	w_class = 8
 	max_w_class = 8
-	anchored = 1.0
+	anchored = 1
 	density = 0
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 

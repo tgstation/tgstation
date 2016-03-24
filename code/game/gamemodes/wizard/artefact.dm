@@ -14,7 +14,7 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
-	var/spawn_type = /obj/singularity/narsie/wizard
+	var/spawn_type = /obj/singularity/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
@@ -22,9 +22,9 @@
 
 /obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charges > 0)
-		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message("<span class='boldannounce'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
+		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
@@ -35,7 +35,7 @@
 	icon_state = "rift"
 	density = 1
 	unacidable = 1
-	anchored = 1.0
+	anchored = 1
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
@@ -59,7 +59,7 @@
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
-		user.visible_message("<span class='danger'>[usr] seals \the [src] with \the [I].</span>")
+		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
 		qdel(src)
 		return
 	..()
@@ -81,6 +81,26 @@
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
 
+////TEAR IN REALITY
+
+/obj/singularity/wizard
+	name = "tear in the fabric of reality"
+	desc = "This isn't right."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "singularity_s1"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "reality"
+	pixel_x = -96
+	pixel_y = -96
+	grav_pull = 6
+	consume_range = 3
+	current_size = STAGE_FOUR
+	allowed_size = STAGE_FOUR
+
+/obj/singularity/wizard/process()
+	move()
+	eat()
+	return
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/weapon/scrying
@@ -97,7 +117,7 @@
 
 /obj/item/weapon/scrying/attack_self(mob/user)
 	user << "<span class='notice'>You can see...everything!</span>"
-	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
+	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
 
@@ -118,7 +138,7 @@
 	unlimited = 1
 
 /obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
-	if(!istype(M, /mob/living/carbon/human))
+	if(!istype(M))
 		return ..()
 
 	if(!istype(user) || !user.canUseTopic(M,1))
@@ -137,8 +157,8 @@
 		user << "<span class='warning'>This artifact can only affect three undead at a time!</span>"
 		return
 
-	hardset_dna(M, null, null, null, null, /datum/species/skeleton)
-	M.revive()
+	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
 	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
@@ -204,7 +224,7 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/Destroy()
 	multiverse.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
@@ -243,7 +263,7 @@ var/global/list/multiverse = list()
 					usr.mind.special_role = "[usr.real_name] Prime"
 					evil = FALSE
 		else
-			var/list/candidates = get_candidates(BE_WIZARD)
+			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
 				var/client/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
@@ -261,13 +281,24 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M)
+	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
 	M.mind.name = usr.real_name
 	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
 	M.real_name = usr.real_name
 	M.name = usr.real_name
 	M.faction = list("[usr.real_name]")
+	if(prob(50))
+		var/list/all_species = list()
+		for(var/speciestype in subtypesof(/datum/species))
+			var/datum/species/S = new speciestype()
+			if(!S.dangerous_existence)
+				all_species += speciestype
+		M.set_species(pick(all_species), icon_update=0)
+	M.update_body()
+	M.update_hair()
+	M.update_mutcolor()
+	M.dna.update_dna_identity()
 	equip_copy(M)
 
 	if(evil)
@@ -440,14 +471,6 @@ var/global/list/multiverse = list()
 		else
 			return
 
-	ready_dna(M)
-	if(M.dna && prob(50))
-		var/list/all_species = list()
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
-			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence)
-				all_species += speciestype
-		hardset_dna(M, null, null, null, null, pick(all_species))
 	M.update_icons()
 	M.update_augments()
 
@@ -472,16 +495,16 @@ var/global/list/multiverse = list()
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	burntime = 0
-	burn_state = 0
+	burn_state = FLAMMABLE
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(is_hot(I))
+		if(I.is_hot())
 			target << "<span class='userdanger'>You suddenly feel very hot</span>"
 			target.bodytemperature += 50
 			GiveHint(target)
 		else if(is_pointed(I))
-			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
 			target.Weaken(2)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
@@ -502,25 +525,35 @@ var/global/list/multiverse = list()
 	..()
 
 /obj/item/voodoo/check_eye(mob/user)
-	return src.loc == user
+	if(loc != user)
+		user.reset_perspective(null)
+		user.unset_machine()
 
 /obj/item/voodoo/attack_self(mob/user)
-	if(!target)
+	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
+
+	if(user.zone_selected == "chest")
+		if(link)
+			target = null
+			link.loc = get_turf(src)
+			user << "<span class='notice'>You remove the [link] from the doll.</span>"
+			link = null
+			update_targets()
+			return
+
 	if(target && cooldown < world.time)
-		switch(user.zone_sel.selecting)
+		switch(user.zone_selected)
 			if("mouth")
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
 			if("eyes")
 				user.set_machine(src)
-				if(user.client)
-					user.client.eye = target
-					user.client.perspective = EYE_PERSPECTIVE
+				user.reset_perspective(target)
 				spawn(100)
-					user.reset_view()
+					user.reset_perspective(null)
 					user.unset_machine()
 			if("r_leg","l_leg")
 				user << "<span class='notice'>You move the doll's legs around.</span>"
@@ -529,7 +562,7 @@ var/global/list/multiverse = list()
 			if("r_arm","l_arm")
 				//use active hand on random nearby mob
 				var/list/nearby_mobs = list()
-				for(var/mob/living/L in range(target,1))
+				for(var/mob/living/L in range(1, target))
 					if(L!=target)
 						nearby_mobs |= L
 				if(nearby_mobs.len)
@@ -542,13 +575,6 @@ var/global/list/multiverse = list()
 				target.Dizzy(10)
 				target << "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>"
 				GiveHint(target,user)
-			if("chest")
-				if(link)
-					target = null
-					link.loc = get_turf(src)
-					user << "<span class='notice'>You remove the [link] from the doll.</span>"
-					link = null
-					update_targets()
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()
@@ -573,3 +599,12 @@ var/global/list/multiverse = list()
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
+
+
+//Provides a decent heal, need to pump every 6 seconds
+/obj/item/organ/internal/heart/cursed/wizard
+	pump_delay = 60
+	heal_brute = 25
+	heal_burn = 25
+	heal_oxy = 25
+

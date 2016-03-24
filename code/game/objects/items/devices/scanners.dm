@@ -27,6 +27,14 @@ MASS SPECTROMETER
 	if(on)
 		SSobj.processing |= src
 
+/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
+	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
+	I.alpha = 128
+	var/list/nearby = list()
+	for(var/mob/M in viewers(pipe))
+		if(M.client)
+			nearby |= M.client
+	flick_overlay(I,nearby,8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -37,29 +45,25 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/proc/scan()
 
 	for(var/turf/T in range(2, src.loc) )
-
-		if(!T.intact)
-			continue
-
 		for(var/obj/O in T.contents)
 
 			if(O.level != 1)
 				continue
 
+			var/mob/living/L = locate() in O
+
 			if(O.invisibility == 101)
 				O.invisibility = 0
+				if(L)
+					flick_sonar(O)
 				spawn(10)
 					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 101
-
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
+			else
+				if(L)
+					flick_sonar(O)
 
 
 /obj/item/device/healthanalyzer
@@ -70,7 +74,7 @@ MASS SPECTROMETER
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
@@ -110,13 +114,14 @@ MASS SPECTROMETER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
-
+	if(user.stat || user.eye_blind)
+		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
 	var/tox_loss = M.getToxLoss()
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
-	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[M.health] % healthy</b>")
+	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
 	if(M.status_flags & FAKEDEATH)
 		mob_status = "<span class='alert'>Deceased</span>"
@@ -124,7 +129,7 @@ MASS SPECTROMETER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
+		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
@@ -143,7 +148,7 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/internal/brain))
 		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
@@ -162,8 +167,7 @@ MASS SPECTROMETER
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna)
-			user << "<span class='info'>Species: [H.dna.species.name]</span>"
+		user << "<span class='info'>Species: [H.dna.species.name]</span>"
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
@@ -193,10 +197,11 @@ MASS SPECTROMETER
 
 		var/implant_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
-			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+			if(CI.status == ORGAN_ROBOTIC)
+				implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
-			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
-			user.show_message("<span class='notice'>[implant_detect]</span>")
+			user << "<span class='notice'>Detected cybernetic modifications:</span>"
+			user << "<span class='notice'>[implant_detect]</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))
@@ -235,7 +240,7 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -246,11 +251,13 @@ MASS SPECTROMETER
 
 /obj/item/device/analyzer/attack_self(mob/user)
 
-	if (user.stat)
+	add_fingerprint(user)
+
+	if (user.stat || user.eye_blind)
 		return
 
 	var/turf/location = user.loc
-	if (!( istype(location, /turf) ))
+	if(!istype(location))
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
@@ -258,50 +265,53 @@ MASS SPECTROMETER
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
-	user.show_message("<span class='info'><B>Results:</B></span>", 1)
+	user << "<span class='info'><B>Results:</B></span>"
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
+		user << "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>"
 	else
-		user.show_message("<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
+		user << "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>"
 	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/plasma_concentration = environment.toxins/total_moles
+		var/list/env_gases = environment.gases
 
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+		environment.assert_gases(arglist(hardcoded_gases))
+		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
+		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
+		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
+		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		environment.garbage_collect()
+
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("<span class='info'>Nitrogen: [round(n2_concentration*100)] %</span>", 1)
+			user << "<span class='info'>Nitrogen: [round(n2_concentration*100)] %</span>"
 		else
-			user.show_message("<span class='alert'>Nitrogen: [round(n2_concentration*100)] %</span>", 1)
+			user << "<span class='alert'>Nitrogen: [round(n2_concentration*100)] %</span>"
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("<span class='info'>Oxygen: [round(o2_concentration*100)] %</span>", 1)
+			user << "<span class='info'>Oxygen: [round(o2_concentration*100)] %</span>"
 		else
-			user.show_message("<span class='alert'>Oxygen: [round(o2_concentration*100)] %</span>", 1)
+			user << "<span class='alert'>Oxygen: [round(o2_concentration*100)] %</span>"
 
 		if(co2_concentration > 0.01)
-			user.show_message("<span class='alert'>CO2: [round(co2_concentration*100)] %</span>", 1)
+			user << "<span class='alert'>CO2: [round(co2_concentration*100)] %</span>"
 		else
-			user.show_message("<span class='info'>CO2: [round(co2_concentration*100)] %</span>", 1)
+			user << "<span class='info'>CO2: [round(co2_concentration*100)] %</span>"
 
 		if(plasma_concentration > 0.01)
-			user.show_message("<span class='info'>Plasma: [round(plasma_concentration*100)] %</span>", 1)
+			user << "<span class='info'>Plasma: [round(plasma_concentration*100)] %</span>"
 
-		if(unknown_concentration > 0.01)
-			user.show_message("<span class='alert'>Unknown: [round(unknown_concentration*100)] %</span>", 1)
+		for(var/id in env_gases)
+			if(id in hardcoded_gases)
+				continue
+			var/gas_concentration = env_gases[id][MOLES]/total_moles
+			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+		user << "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>"
 
-		user.show_message("<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>", 1)
-
-	src.add_fingerprint(user)
-	return
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -323,7 +333,7 @@ MASS SPECTROMETER
 		icon_state = initial(icon_state)
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
-	if (user.stat)
+	if (user.stat || user.eye_blind)
 		return
 	if (crit_fail)
 		user << "<span class='warning'>This device has critically failed and is no longer functional!</span>"
@@ -336,7 +346,7 @@ MASS SPECTROMETER
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id != "blood")
 				reagents.clear_reagents()
-				user.show_message("<span class='warning'>The sample was contaminated! Please insert another sample.</span>", 1)
+				user << "<span class='warning'>The sample was contaminated! Please insert another sample.</span>"
 				return
 			else
 				blood_traces = params2list(R.data["trace_chem"])
@@ -363,7 +373,7 @@ MASS SPECTROMETER
 		dat += "</i>"
 		user << dat
 		reagents.clear_reagents()
-	return
+
 
 /obj/item/device/mass_spectrometer/adv
 	name = "advanced mass-spectrometer"
@@ -373,10 +383,11 @@ MASS SPECTROMETER
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
+	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=1"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3
@@ -384,32 +395,34 @@ MASS SPECTROMETER
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 /obj/item/device/slime_scanner/attack(mob/living/M, mob/living/user)
+	if(user.stat || user.eye_blind)
+		return
 	if (!isslime(M))
-		user.show_message("<span class='warning'>This device can only scan slimes!</span>", 1)
+		user << "<span class='warning'>This device can only scan slimes!</span>"
 		return
 	var/mob/living/simple_animal/slime/T = M
-	user.show_message("Slime scan results:", 1)
-	user.show_message(text("[T.colour] [] slime", T.is_adult ? "adult" : "baby"), 1)
-	user.show_message(text("Nutrition: [T.nutrition]/[]", T.get_max_nutrition()), 1)
+	user << "Slime scan results:"
+	user << "[T.colour] [T.is_adult ? "adult" : "baby"] slime"
+	user << "Nutrition: [T.nutrition]/[T.get_max_nutrition()]"
 	if (T.nutrition < T.get_starve_nutrition())
-		user.show_message("<span class='warning'>Warning: slime is starving!</span>", 1)
+		user << "<span class='warning'>Warning: slime is starving!</span>"
 	else if (T.nutrition < T.get_hunger_nutrition())
-		user.show_message("<span class='warning'>Warning: slime is hungry</span>", 1)
-	user.show_message("Electric change strength: [T.powerlevel]", 1)
-	user.show_message("Health: [T.health]", 1)
+		user << "<span class='warning'>Warning: slime is hungry</span>"
+	user << "Electric change strength: [T.powerlevel]"
+	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
 	if (T.slime_mutation[4] == T.colour)
-		user.show_message("This slime does not evolve any further.", 1)
+		user << "This slime does not evolve any further."
 	else
 		if (T.slime_mutation[3] == T.slime_mutation[4])
 			if (T.slime_mutation[2] == T.slime_mutation[1])
-				user.show_message("Possible mutation: [T.slime_mutation[3]]", 1)
-				user.show_message("Genetic destability: [T.mutation_chance/2] % chance of mutation on splitting", 1)
+				user << "Possible mutation: [T.slime_mutation[3]]"
+				user << "Genetic destability: [T.mutation_chance/2] % chance of mutation on splitting"
 			else
-				user.show_message("Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]] (x2)", 1)
-				user.show_message("Genetic destability: [T.mutation_chance] % chance of mutation on splitting", 1)
+				user << "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]] (x2)"
+				user << "Genetic destability: [T.mutation_chance] % chance of mutation on splitting"
 		else
-			user.show_message("Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]", 1)
-			user.show_message("Genetic destability: [T.mutation_chance] % chance of mutation on splitting", 1)
+			user << "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]"
+			user << "Genetic destability: [T.mutation_chance] % chance of mutation on splitting"
 	if (T.cores > 1)
-		user.show_message("Anomalious slime core amount detected", 1)
-	user.show_message("Growth progress: [T.amount_grown]/10", 1)
+		user << "Anomalious slime core amount detected"
+	user << "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"

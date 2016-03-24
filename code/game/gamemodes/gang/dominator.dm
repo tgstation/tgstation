@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = 3.6
 	var/maxhealth = 200
 	var/health = 200
@@ -12,9 +12,13 @@
 	var/operating = 0	//-1=broken, 0=standby, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
 
+/obj/machinery/dominator/tesla_act()
+	qdel(src)
+
 /obj/machinery/dominator/New()
 	..()
 	SetLuminosity(2)
+	poi_list |= src
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -41,10 +45,10 @@
 			if(!warned && (gang.dom_timer < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
-				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [initial(domloc.name)]!")
+				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [domloc.map_name]!")
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(G != gang)
-						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [initial(domloc.name)] must be destroyed!",1,1)
+						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 		else
 			SSmachine.processing -= src
 
@@ -54,7 +58,7 @@
 		iconname += "-[gang.color]"
 		SetLuminosity(3)
 
-	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 
 	health -= damage
 
@@ -109,7 +113,8 @@
 /obj/machinery/dominator/Destroy()
 	if(operating != -1)
 		set_broken()
-	..()
+	poi_list.Remove(src)
+	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
 	healthcheck(100)
@@ -120,11 +125,11 @@
 		qdel(src)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			healthcheck(120)
-		if(3.0)
+		if(3)
 			healthcheck(30)
 	return
 

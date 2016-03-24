@@ -5,28 +5,16 @@
 	icon_state = null
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
-	var/possible_transfer_amounts = list(5,10,15,25,30)
+	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	var/volume = 30
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = 0
 
-/obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
-	set name = "Set transfer amount"
-	set category = "Object"
-	set src in range(0)
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
-	if (N)
-		amount_per_transfer_from_this = N
-
 /obj/item/weapon/reagent_containers/New(location, vol = 0)
 	..()
-	if (!possible_transfer_amounts)
-		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
-	if (vol > 0)
+	if (isnum(vol) && vol > 0)
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)
@@ -37,7 +25,17 @@
 		reagents.add_reagent_list(list_reagents)
 
 /obj/item/weapon/reagent_containers/attack_self(mob/user)
-	return
+	if(possible_transfer_amounts.len)
+		var/i=0
+		for(var/A in possible_transfer_amounts)
+			i++
+			if(A == amount_per_transfer_from_this)
+				if(i<possible_transfer_amounts.len)
+					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
+				else
+					amount_per_transfer_from_this = possible_transfer_amounts[1]
+				user << "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>"
+				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
 	return
@@ -106,5 +104,7 @@
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+		if(qdeleted(src))
+			return
 
 	reagents.clear_reagents()

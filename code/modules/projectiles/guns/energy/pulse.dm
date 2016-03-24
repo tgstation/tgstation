@@ -10,9 +10,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse"
 
-/obj/item/weapon/gun/energy/pulse/attack_self(mob/living/user)
-	select_fire(user)
-
 /obj/item/weapon/gun/energy/pulse/emp_act(severity)
 	return
 

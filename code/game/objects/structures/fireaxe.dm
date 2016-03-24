@@ -49,15 +49,15 @@
 
 /obj/structure/fireaxecabinet/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if(prob(50) && fireaxe)
 				fireaxe.loc = src.loc
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			return
 
 /obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/Proj)
@@ -69,9 +69,9 @@
 		update_icon()
 
 /obj/structure/fireaxecabinet/blob_act()
-	if(prob(75) && fireaxe)
+	if(fireaxe)
 		fireaxe.loc = src.loc
-		qdel(src)
+	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
 	if(open || glass_hp <= 0)
@@ -130,7 +130,7 @@
 		locked = !locked
 		update_icon()
 
-/obj/structure/fireaxecabinet/verb/toggle_open() //nice name, huh? HUH?! -Erro //YEAH -Agouri
+/obj/structure/fireaxecabinet/verb/toggle_open()
 	set name = "Open/Close"
 	set category = "Object"
 	set src in oview(1)

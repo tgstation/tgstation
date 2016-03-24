@@ -94,19 +94,26 @@
 		/obj/item/weapon/grenade/chem_grenade/teargas,
 		/obj/item/weapon/reagent_containers/spray/pepper,
 		/obj/item/weapon/restraints/handcuffs,
-		/obj/item/device/flash/handheld,
+		/obj/item/device/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/weapon/kitchen/knife/combat,
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/classic_baton/telescopic
 		)
 
 /obj/item/weapon/storage/belt/security/full/New()
 	..()
-	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/restraints/handcuffs(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/melee/baton/loaded(src)
+
+
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -120,19 +127,15 @@
 
 /obj/item/weapon/storage/belt/soulstone/full/New()
 	..()
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-
+	for(var/i in 1 to 6)
+		new /obj/item/device/soulstone(src)
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
+	materials = list(MAT_GOLD=400)
 	storage_slots = 1
 	can_hold = list(
 		/obj/item/clothing/mask/luchador
@@ -143,6 +146,58 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "military"
+
+/obj/item/weapon/storage/belt/military/assault
+	name = "assault belt"
+	desc = "A tactical assault belt."
+	icon_state = "assaultbelt"
+	item_state = "security"
+	storage_slots = 6
+
+/obj/item/weapon/storage/belt/grenade
+	name = "grenadier belt"
+	desc = "A belt for holding grenades."
+	icon_state = "grenadebelt"
+	item_state = "security"
+	max_w_class = 0
+	storage_slots = 30
+	can_hold = list(
+		/obj/item/weapon/grenade,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/lighter,
+		/obj/item/device/multitool,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
+		)
+/obj/item/weapon/storage/belt/grenade/full/New()
+	..()
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/chem_grenade/incendiary(src)
+	new /obj/item/weapon/grenade/chem_grenade/incendiary(src)
+	new /obj/item/weapon/grenade/chem_grenade/facid(src)
+	new /obj/item/weapon/grenade/syndieminibomb(src)
+	new /obj/item/weapon/grenade/syndieminibomb(src)
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/belt/wands
 	name = "wand belt"
@@ -180,7 +235,8 @@
 		/obj/item/device/flashlight,
 		/obj/item/weapon/reagent_containers/spray,
 		/obj/item/weapon/soap,
-		/obj/item/weapon/holosign_creator
+		/obj/item/weapon/holosign_creator,
+		/obj/item/key/janitor
 		)
 
 /obj/item/weapon/storage/belt/bandolier
@@ -188,7 +244,7 @@
 	desc = "A bandolier for holding shotgun ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
-	storage_slots = 6
+	storage_slots = 8
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)

@@ -49,7 +49,7 @@
 	eject()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -89,7 +89,7 @@
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-				if(do_after(user,20, target = src))
+				if(do_after(user,20/I.toolspeed, target = src))
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
@@ -98,15 +98,17 @@
 	return 1
 
 // mouse drop another mob or self
-//
+
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
-	if(istype(target) && user == target)
+	if(istype(target))
 		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(target.buckled)
+	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+		return
+	if(target.buckled || target.buckled_mobs.len)
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
@@ -121,10 +123,7 @@
 	if(do_mob(user, target, 20))
 		if (!loc)
 			return
-		if (target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		target.loc = src
+		target.forceMove(src)
 		if(user == target)
 			user.visible_message("[user] climbs into [src].", \
 									"<span class='notice'>You climb into [src].</span>")
@@ -132,6 +131,7 @@
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
+			target.LAssailant = user
 		update()
 
 // can breath normally in the disposal
@@ -154,10 +154,8 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 
-	if (user.client)
-		user.client.eye = user.client.mob
-		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
+	user.reset_perspective(null)
 	update()
 	return
 
@@ -195,8 +193,9 @@
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
+	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in src)
-		AM.loc = src.loc
+		AM.forceMove(T)
 		AM.pipe_eject(0)
 	update()
 
@@ -212,7 +211,7 @@
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
 	sleep(5)
-	if(gc_destroyed)
+	if(qdeleted(src))
 		return
 	var/obj/structure/disposalholder/H = new()
 	newHolderDestination(H)
@@ -246,18 +245,16 @@
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
-
+	var/turf/T = get_turf(src)
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.loc = src.loc
+			AM.forceMove(T)
 			AM.pipe_eject(0)
-			spawn(1)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM.throw_at_fast(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -275,6 +272,9 @@
 //How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		src_object.remove_from_storage(I, src)
 	return 1
 
@@ -303,12 +303,6 @@
 			T.remove_from_storage(O,src)
 		T.update_icon()
 		update()
-		return
-
-	var/obj/item/weapon/grab/G = I
-	if(istype(G))	// handle grabbed mob
-		if(ismob(G.affecting))
-			stuff_mob_in(G.affecting, user)
 		return
 
 	if(!user.drop_item())
@@ -481,6 +475,10 @@
 		update()
 	return
 
+/obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
+	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+
 
 //Delivery Chute
 
@@ -520,7 +518,7 @@
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
 			M << "<span class='warning'>You hit the edge of the chute.</span>"
 			return
-		M.loc = src
+		M.forceMove(src)
 	flush()
 
 /atom/movable/proc/disposalEnterTry()

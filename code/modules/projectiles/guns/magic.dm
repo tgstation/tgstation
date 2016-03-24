@@ -16,7 +16,7 @@
 	var/no_den_usage
 	origin_tech = null
 	clumsy_check = 0
-	trigger_guard = 0
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/device/firing_pin/magic
 
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
@@ -36,7 +36,7 @@
 /obj/item/weapon/gun/magic/can_shoot()
 	return charges
 
-/obj/item/weapon/gun/magic/proc/newshot()
+/obj/item/weapon/gun/magic/newshot()
 	if (charges && chambered)
 		chambered.newshot()
 	return
@@ -55,13 +55,15 @@
 
 
 /obj/item/weapon/gun/magic/Destroy()
-	if(can_charge)	SSobj.processing.Remove(src)
-	..()
+	if(can_charge)
+		SSobj.processing.Remove(src)
+	return ..()
 
 
 /obj/item/weapon/gun/magic/process()
 	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges) return 0
+	if(charge_tick < recharge_rate || charges >= max_charges)
+		return 0
 	charge_tick = 0
 	charges++
 	return 1
@@ -74,6 +76,6 @@
 	return
 
 /obj/item/weapon/gun/magic/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is casting a spell on themself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is twisting the [src.name] above \his head, releasing a magical blast! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, fire_sound, 50, 1, -1)
 	return (FIRELOSS)

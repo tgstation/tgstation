@@ -11,6 +11,7 @@
 	icon_dead = "basic"
 	health = 15
 	maxHealth = 15
+	healable = 0
 	melee_damage_lower = 2
 	melee_damage_upper = 3
 	attacktext = "claws"
@@ -18,9 +19,17 @@
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = list("hivebot")
+	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speak_emote = list("states")
+	gold_core_spawnable = 1
+	del_on_death = 1
+	loot = list(/obj/effect/decal/cleanable/robot_debris)
+
+/mob/living/simple_animal/hostile/hivebot/New()
+	..()
+	deathmessage = "[src] blows apart!"
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "hivebot"
@@ -42,12 +51,7 @@
 	ranged = 1
 
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
-	..(1)
-	visible_message("<span class='warning'>[src] blows apart!</span>")
-	new /obj/effect/decal/cleanable/robot_debris(src.loc)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	ghostize()
-	qdel(src)
-	return
+	..(1)

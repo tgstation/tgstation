@@ -8,15 +8,16 @@
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
-	force = 5.0
-	w_class = 2.0
+	force = 5
+	w_class = 2
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	origin_tech = "magnets=1;engineering=1"
-	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
+	var/obj/machinery/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
+	toolspeed = 1
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
@@ -31,7 +32,7 @@
 
 /obj/item/device/multitool/ai_detect/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/device/multitool/ai_detect/process()
 	if(track_delay > world.time)
@@ -62,3 +63,11 @@
 
 	track_delay = world.time + 10 // 1 second
 	return
+
+
+
+/obj/item/device/multitool/cyborg
+	name = "multitool"
+	desc = "Optimised and stripped-down version of a regular multitool."
+	icon = 'icons/obj/items_cyborg.dmi'
+	toolspeed = 2

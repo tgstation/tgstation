@@ -20,8 +20,7 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 /proc/Ceiling(x)
 	return -round(-x)
 
-/proc/Clamp(val, min, max)
-	return max(min, min(val, max))
+#define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 
 // cotangent
 /proc/Cot(x)
@@ -70,13 +69,15 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 /proc/Lerp(a, b, amount = 0.5)
 	return a + (b - a) * amount
 
-/proc/Mean(...)
-	var/values 	= 0
-	var/sum		= 0
-	for(var/val in args)
-		values++
-		sum += val
-	return sum / values
+//Calculates the sum of a list of numbers.
+/proc/Sum(var/list/data)
+	. = 0
+	for(var/val in data)
+		.+= val
+
+//Calculates the mean of a list of numbers.
+/proc/Mean(var/list/data)
+	. = Sum(data) / (data.len)
 
 
 // Returns the nth root of x.

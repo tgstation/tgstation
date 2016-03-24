@@ -8,11 +8,11 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
 	select_name = "kill"
 
@@ -30,7 +30,7 @@
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/heavylaser
+	projectile_type = /obj/item/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -41,11 +41,11 @@
 	fire_sound = 'sound/weapons/pulse.ogg'
 
 /obj/item/ammo_casing/energy/laser/bluetag
-	projectile_type = /obj/item/projectile/lasertag/bluetag
+	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 
 /obj/item/ammo_casing/energy/laser/redtag
-	projectile_type = /obj/item/projectile/lasertag/redtag
+	projectile_type = /obj/item/projectile/beam/lasertag/redtag
 	select_name = "redtag"
 
 /obj/item/ammo_casing/energy/xray
@@ -110,7 +110,13 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg' // fine spelling there chap
+
+/obj/item/ammo_casing/energy/kinetic/super
+	projectile_type = /obj/item/projectile/kinetic/super
+
+/obj/item/ammo_casing/energy/kinetic/hyper
+	projectile_type = /obj/item/projectile/kinetic/hyper
 
 /obj/item/ammo_casing/energy/disabler
 	projectile_type = /obj/item/projectile/beam/disabler
@@ -121,7 +127,7 @@
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
 	select_name = "plasma burst"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	delay = 15
 	e_cost = 25
 
@@ -160,3 +166,14 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
+
+/obj/item/ammo_casing/energy/instakill
+	projectile_type = /obj/item/projectile/beam/instakill
+	e_cost = 0
+	select_name = "DESTROY"
+
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/item/projectile/beam/instakill/blue
+
+/obj/item/ammo_casing/energy/instakill/red
+	projectile_type = /obj/item/projectile/beam/instakill/red

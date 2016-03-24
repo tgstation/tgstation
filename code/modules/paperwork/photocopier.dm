@@ -11,7 +11,7 @@
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
-	icon_state = "bigscanner"
+	icon_state = "photocopier"
 	anchored = 1
 	density = 1
 	use_power = 1
@@ -228,7 +228,7 @@
 			copy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("bigscanner1", src)
+			flick("photocopier1", src)
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
@@ -240,7 +240,7 @@
 			photocopy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("bigscanner1", src)
+			flick("photocopier1", src)
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
@@ -262,16 +262,11 @@
 			return
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
-		if(do_after(user, 20, target = src))
-			if(gc_destroyed)
+		if(do_after(user, 20/O.toolspeed, target = src))
+			if(qdeleted(src))
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
-
-	else if(istype(O, /obj/item/weapon/grab)) //For ass-copying.
-		var/obj/item/weapon/grab/G = O
-		if(ismob(G.affecting) && G.affecting != ass)
-			MouseDrop_T(G.affecting, user)
 
 /obj/machinery/photocopier/ex_act(severity, target)
 	switch(severity)
@@ -310,7 +305,7 @@
 		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20, target = src))
-		if(!target || target.gc_destroyed || gc_destroyed || !Adjacent(target)) //check if the photocopier/target still exists.
+		if(!target || qdeleted(target) || qdeleted(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
@@ -348,7 +343,7 @@
 		return 1
 
 /obj/machinery/photocopier/proc/copier_blocked()
-	if(gc_destroyed)
+	if(qdeleted(src))
 		return
 	if(loc.density)
 		return 1

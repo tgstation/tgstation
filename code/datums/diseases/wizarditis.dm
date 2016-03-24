@@ -7,7 +7,7 @@
 	cure_chance = 100
 	agent = "Rincewindus Vulgaris"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 0.75
 	desc = "Some speculate, that this virus is the cause of Wizard Federation existance. Subjects affected show the signs of mental retardation, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
 	severity = HARMFUL
@@ -87,12 +87,11 @@ STI KALY - blind
 
 
 /datum/disease/wizarditis/proc/teleport()
-	var/list/theareas = new/list()
-	for(var/area/AR in orange(80, affected_mob))
-		if(theareas.Find(AR) || istype(AR,/area/space)) continue
-		theareas += AR
+	var/list/theareas = get_areas_in_range(80, affected_mob)
+	for(var/area/space/S in theareas)
+		theareas -= S
 
-	if(!theareas)
+	if(!theareas||!theareas.len)
 		return
 
 	var/area/thearea = pick(theareas)

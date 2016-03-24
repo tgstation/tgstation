@@ -23,8 +23,7 @@
 		user << "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		spawn(0)
-			user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
+		user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
 	if(tank)
 		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
 
@@ -36,6 +35,9 @@
 			user << "<span class='warning'>\The [W] is too small for \the [src].</span>"
 			return
 		updateTank(W, 0, user)
+		return
+	if(W.type == type)
+		user << "<span class='warning'>You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption.</span>"
 		return
 	if(istype(W, /obj/item/weapon/wrench))
 		switch(pressureSetting)
@@ -70,9 +72,22 @@
 		return
 
 
-/obj/item/weapon/pneumatic_cannon/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)
-	if(user.a_intent == "harm" || !ishuman(user))
+/obj/item/weapon/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
+	if(istype(target, /obj/item/weapon/storage)) //So you can store it in backpacks
 		return ..()
+	if(istype(target, /obj/structure/closet)) //So you can store it in closets
+		return ..()
+	if(istype(target, /obj/structure/rack)) //So you can store it on racks
+		return ..()
+	if(!istype(user))
+		return ..()
+	Fire(user, target)
+
+
+/obj/item/weapon/pneumatic_cannon/proc/Fire(var/mob/living/carbon/human/user, var/atom/target)
+	if(!istype(user) && !target)
+		return
+	var/discharge = 0
 	if(!loadedItems || !loadedWeightClass)
 		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
 		return
@@ -82,20 +97,29 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		user << "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>"
 		return
-	user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
-			     "<span class='warning'>You fire \the [src]!</span>")
+	if(user.disabilities & CLUMSY && prob(75))
+		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+		user.drop_item()
+		if(prob(10))
+			target = get_turf(user)
+		else
+			var/list/possible_targets = range(3,src)
+			target = pick(possible_targets)
+		discharge = 1
+	if(!discharge)
+		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
+				    		 "<span class='danger'>You fire \the [src]!</span>")
 	add_logs(user, target, "fired at", src)
-	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', (50 * pressureSetting), 1)
+	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
-		spawn(0)
-			loadedItems.Remove(ITD)
-			loadedWeightClass -= ITD.w_class
-			ITD.throw_speed = pressureSetting * 2
-			ITD.loc = get_turf(src)
-			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
-	if(pressureSetting >= 3)
-		user << "<span class='boldannounce'>\The [src]'s recoil knocks you down!</span>"
-		user.Weaken(2)
+		loadedItems.Remove(ITD)
+		loadedWeightClass -= ITD.w_class
+		ITD.throw_speed = pressureSetting * 2
+		ITD.loc = get_turf(src)
+		ITD.throw_at_fast(target, pressureSetting * 5, pressureSetting * 2,user)
+	if(pressureSetting >= 3 && user)
+		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		user.Weaken(3)
 
 
 /obj/item/weapon/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
@@ -103,7 +127,7 @@
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
 	w_class = 3
-	maxWeightClass = 10
+	maxWeightClass = 7
 	gasPerThrow = 5
 
 /datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but

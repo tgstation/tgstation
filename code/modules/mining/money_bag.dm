@@ -5,10 +5,10 @@
 	name = "Money bag"
 	icon_state = "moneybag"
 	flags = CONDUCT
-	force = 10.0
+	force = 10
 	throwforce = 0
-	w_class = 4.0
-	burn_state = 0 //Burnable
+	w_class = 4
+	burn_state = FLAMMABLE
 	burntime = 20
 
 /obj/item/weapon/moneybag/attack_hand(mob/user)

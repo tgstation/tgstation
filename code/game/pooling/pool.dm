@@ -16,8 +16,10 @@ To put a object back in the pool, call PlaceInPool(object)
 This will call destroy on the object, set its loc to null,
 and reset all of its vars to their default
 
-You can override your object's destroy to return QDEL_HINT_PLACEINPOOL
+You can override your object's destroy to return QDEL_HINT_PUTINPOOL
 to ensure its always placed in this pool (this will only be acted on if qdel calls destroy, and destroy will not get called twice)
+
+For almost all pooling purposes, it is better to use the QDEL hint than to pool it directly with PlaceInPool
 
 */
 
@@ -60,7 +62,6 @@ var/global/list/GlobalPool = list()
 
 	var/datum/pooled = pop(GlobalPool[get_type])
 	if(pooled)
-		pooled.ResetVars()
 		var/atom/movable/AM
 		if(istype(pooled, /atom/movable))
 			AM = pooled
@@ -95,15 +96,30 @@ var/global/list/GlobalPool = list()
 
 	diver.ResetVars()
 
+var/list/exclude = list("animate_movement", "contents", "loc", "locs", "parent_type", "vars", "verbs", "type")
+var/list/pooledvariables = list()
+//thanks to clusterfack @ /vg/station for these two procs
+/datum/proc/createVariables()
+	pooledvariables[type] = new/list()
+	var/list/exclude = global.exclude + args
+
+	for(var/key in vars)
+		if(key in exclude)
+			continue
+		if(islist(vars[key]))
+			pooledvariables[type][key] = list()
+		else
+			pooledvariables[type][key] = initial(vars[key])
 
 /datum/proc/ResetVars()
-	var/list/excluded = list("animate_movement", "contents", "loc", "locs", "parent_type", "vars", "verbs", "type")
+	if(!pooledvariables[type])
+		createVariables(args)
 
-	for(var/V in vars)
-		if(V in excluded)
-			continue
-
-		vars[V] = initial(vars[V])
+	for(var/key in pooledvariables[type])
+		if (islist(pooledvariables[type][key]))
+			vars[key] = list()
+		else
+			vars[key] = pooledvariables[type][key]
 
 /atom/movable/ResetVars()
 	..()

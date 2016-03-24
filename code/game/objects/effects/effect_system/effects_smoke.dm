@@ -1,24 +1,23 @@
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
-// direct can be optionally added when set_up, to make the smoke always travel in one direction
-// in case you wanted a vent to always smoke north for example
 /////////////////////////////////////////////
 
-/obj/effect/effect/smoke
+/obj/effect/particle_effect/smoke
 	name = "smoke"
 	icon = 'icons/effects/96x96.dmi'
+	icon_state = "smoke"
 	pixel_x = -32
 	pixel_y = -32
-	icon_state = "smoke"
-	opacity = 1
-	anchored = 0
+	opacity = 0
+	anchored = 1
 	mouse_opacity = 0
-	var/steps = 0
+	animate_movement = 0
+	var/amount = 4
 	var/lifetime = 5
-	var/direction
+	var/opaque = 1 //whether the smoke can block the view when in enough amount
 
 
-/obj/effect/effect/smoke/proc/fade_out(frames = 16)
+/obj/effect/particle_effect/smoke/proc/fade_out(frames = 16)
 	if(alpha == 0) //Handle already transparent case
 		return
 	if(frames == 0)
@@ -28,107 +27,108 @@
 		alpha -= step
 		sleep(world.tick_lag)
 
-/obj/effect/effect/smoke/New()
+/obj/effect/particle_effect/smoke/New()
 	..()
 	create_reagents(500)
 	SSobj.processing |= src
-	lifetime += rand(-1,1)
 
-/obj/effect/effect/smoke/Destroy()
+
+/obj/effect/particle_effect/smoke/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
-/obj/effect/effect/smoke/proc/kill_smoke()
+/obj/effect/particle_effect/smoke/proc/kill_smoke()
 	SSobj.processing.Remove(src)
 	spawn(0)
 		fade_out()
 	spawn(10)
 		qdel(src)
 
-/obj/effect/effect/smoke/process()
+/obj/effect/particle_effect/smoke/process()
 	lifetime--
 	if(lifetime < 1)
 		kill_smoke()
 		return 0
-	if(steps >= 1)
-		step(src,direction)
-		steps--
+	for(var/mob/living/L in range(0,src))
+		smoke_mob(L)
 	return 1
 
-/obj/effect/effect/smoke/Crossed(mob/living/M)
-	if(!istype(M))
-		return
-	smoke_mob(M)
-
-/obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M)
-	if(!istype(M))
+/obj/effect/particle_effect/smoke/proc/smoke_mob(mob/living/carbon/C)
+	if(!istype(C))
 		return 0
 	if(lifetime<1)
 		return 0
-	if(M.internal != null || (M.wear_mask && (M.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
+	if(C.internal != null || C.has_smoke_protection())
 		return 0
-	if(M.smoke_delay)
+	if(C.smoke_delay)
 		return 0
-	M.smoke_delay++
+	C.smoke_delay++
 	spawn(10)
-		if(M)
-			M.smoke_delay = 0
+		if(C)
+			C.smoke_delay = 0
 	return 1
 
+/obj/effect/particle_effect/smoke/proc/spread_smoke()
+	var/turf/t_loc = get_turf(src)
+	var/list/newsmokes = list()
+	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
+		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
+		if(foundsmoke)
+			continue
+		for(var/mob/living/L in T)
+			smoke_mob(L)
+		var/obj/effect/particle_effect/smoke/S = new type(T)
+		reagents.copy_to(S, reagents.total_volume)
+		S.dir = pick(cardinal)
+		S.amount = amount-1
+		S.color = color
+		S.lifetime = lifetime
+		if(S.amount>0)
+			if(opaque)
+				S.opacity = 1
+			newsmokes.Add(S)
+
+	if(newsmokes.len)
+		spawn(1) //the smoke spreads rapidly but not instantly
+			for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
+				SM.spread_smoke()
 
 
-/datum/effect/effect/system/smoke_spread
-	var/direction
-	var/smoke_type = /obj/effect/effect/smoke
+/datum/effect_system/smoke_spread
+	var/amount = 10
+	effect_type = /obj/effect/particle_effect/smoke
 
-/datum/effect/effect/system/smoke_spread/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
+/datum/effect_system/smoke_spread/set_up(radius = 5, loca)
+	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)
-	if(direct)
-		direction = direct
+	amount = radius
 
-/datum/effect/effect/system/smoke_spread/start()
-	for(var/i=0, i<src.number, i++)
-		if(holder)
-			src.location = get_turf(holder)
-		var/obj/effect/effect/smoke/S = PoolOrNew(smoke_type, location)
-		if(!direction)
-			if(src.cardinals)
-				S.direction = pick(cardinal)
-			else
-				S.direction = pick(alldirs)
-		else
-			S.direction = direction
-		S.steps = pick(0,1,1,1,2,2,2,3)
-		S.process()
-
+/datum/effect_system/smoke_spread/start()
+	if(holder)
+		location = get_turf(holder)
+	var/obj/effect/particle_effect/smoke/S = new effect_type(location)
+	S.amount = amount
+	if(S.amount)
+		S.spread_smoke()
 
 
 /////////////////////////////////////////////
 // Bad smoke
 /////////////////////////////////////////////
 
-/obj/effect/effect/smoke/bad
+/obj/effect/particle_effect/smoke/bad
 	lifetime = 8
 
-/obj/effect/effect/smoke/bad/process()
-	if(..())
-		for(var/mob/living/carbon/M in range(1,src))
-			smoke_mob(M)
-
-/obj/effect/effect/smoke/bad/smoke_mob(mob/living/carbon/M)
+/obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
 		M.adjustOxyLoss(1)
 		M.emote("cough")
+		return 1
 
-/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
@@ -137,75 +137,136 @@
 
 
 
-/datum/effect/effect/system/smoke_spread/bad
-	smoke_type = /obj/effect/effect/smoke/bad
+/datum/effect_system/smoke_spread/bad
+	effect_type = /obj/effect/particle_effect/smoke/bad
 
+/////////////////////////////////////////////
+// Nanofrost smoke
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/freezing
+	name = "nanofrost smoke"
+	color = "#B2FFFF"
+	opaque = 0
+
+/datum/effect_system/smoke_spread/freezing
+	effect_type = /obj/effect/particle_effect/smoke/freezing
+	var/blast = 0
+
+/datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
+	if(istype(A, /turf/simulated))
+		var/turf/simulated/T = A
+		if(T.air)
+			var/datum/gas_mixture/G = T.air
+			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
+				G.temperature = 2
+			T.air_update_turf()
+			for(var/obj/effect/hotspot/H in T)
+				qdel(H)
+				var/list/G_gases = G.gases
+				if(G_gases["plasma"])
+					G.assert_gas("n2")
+					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
+					G_gases["plasma"][MOLES] = 0
+					G.garbage_collect()
+		for(var/obj/machinery/atmospherics/components/unary/U in T)
+			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
+				U.welded = 1
+				U.update_icon()
+				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
+		for(var/mob/living/L in T)
+			L.ExtinguishMob()
+		for(var/obj/item/Item in T)
+			Item.extinguish()
+	return
+
+/datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blasting = 0)
+	..()
+	blast = blasting
+
+/datum/effect_system/smoke_spread/freezing/start()
+	if(blast)
+		for(var/turf/T in RANGE_TURFS(2, location))
+			Chilled(T)
+	..()
+
+
+
+/////////////////////////////////////////////
+// Sleep smoke
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/sleeping
+	color = "#9C3636"
+	lifetime = 10
+
+/obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
+	if(..())
+		M.drop_item()
+		M.Sleeping(max(M.sleeping,10))
+		M.emote("cough")
+		return 1
+
+/datum/effect_system/smoke_spread/sleeping
+	effect_type = /obj/effect/particle_effect/smoke/sleeping
 
 /////////////////////////////////////////////
 // Chem smoke
 /////////////////////////////////////////////
 
-/obj/effect/effect/smoke/chem
-	icon = 'icons/effects/chemsmoke.dmi'
-	icon_state = ""
+/obj/effect/particle_effect/smoke/chem
 	lifetime = 10
 
-/obj/effect/effect/smoke/chem/process()
+
+/obj/effect/particle_effect/smoke/chem/process()
 	if(..())
+		var/turf/T = get_turf(src)
 		var/fraction = 1/initial(lifetime)
-		for(var/obj/O in range(1,src))
-			if(O.type == src.type)
+		for(var/atom/movable/AM in T)
+			if(AM.type == src.type)
 				continue
-			reagents.reaction(O, TOUCH, fraction)
+			reagents.reaction(AM, TOUCH, fraction)
 
-		for(var/turf/T in range(1,src))
-			reagents.reaction(T, TOUCH, fraction)
+		reagents.reaction(T, TOUCH, fraction)
+		return 1
 
-		var/hit = 0
-		for(var/mob/living/L in range(1,src))
-			hit += smoke_mob(L)
-		if(hit)
-			lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
-
-/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M)
+/obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)
 	if(lifetime<1)
 		return 0
 	if(!istype(M))
 		return 0
+	var/mob/living/carbon/C = M
+	if(C.internal != null || C.has_smoke_protection())
+		return 0
 	var/fraction = 1/initial(lifetime)
-	reagents.reaction(M, TOUCH, fraction)
-	lifetime--
+	reagents.copy_to(C, fraction*reagents.total_volume)
+	reagents.reaction(M, INGEST, fraction)
 	return 1
 
 
 
-/datum/effect/effect/system/smoke_spread/chem
+/datum/effect_system/smoke_spread/chem
 	var/obj/chemholder
-	smoke_type = /obj/effect/effect/smoke/chem
+	effect_type = /obj/effect/particle_effect/smoke/chem
 
-/datum/effect/effect/system/smoke_spread/chem/New()
+/datum/effect_system/smoke_spread/chem/New()
 	..()
 	chemholder = PoolOrNew(/obj)
 	var/datum/reagents/R = new/datum/reagents(500)
 	chemholder.reagents = R
 	R.my_atom = chemholder
 
-/datum/effect/effect/system/smoke_spread/chem/Destroy()
+/datum/effect_system/smoke_spread/chem/Destroy()
+	qdel(chemholder)
 	chemholder = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	return ..()
 
-/datum/effect/effect/system/smoke_spread/chem/set_up(datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
+/datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0)
 	if(istype(loca, /turf/))
 		location = loca
 	else
 		location = get_turf(loca)
-	if(direct)
-		direction = direct
+	amount = radius
 	carry.copy_to(chemholder, 4*carry.total_volume) //The smoke holds 4 times the total reagents volume for balance purposes.
 
 	if(!silent)
@@ -231,65 +292,18 @@
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 
-/datum/effect/effect/system/smoke_spread/chem/start()
-
+/datum/effect_system/smoke_spread/chem/start()
 	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	if(holder)
+		location = get_turf(holder)
+	var/obj/effect/particle_effect/smoke/chem/S = new effect_type(location)
 
-	for(var/i=0, i<src.number, i++)
-		if(holder)
-			src.location = get_turf(holder)
-		var/obj/effect/effect/smoke/chem/S = PoolOrNew(smoke_type, location)
-		if(!direction)
-			if(src.cardinals)
-				S.direction = pick(cardinal)
-			else
-				S.direction = pick(alldirs)
-		else
-			S.direction = direction
-		if(number == 1)
-			S.steps = 0
-		else if(number<=5)
-			S.steps = pick(0,1,1)
-		else if(number<=10)
-			S.steps = pick(0,1,1,1,2)
-		else
-			S.steps = pick(0,1,1,1,2,2,2,3)
+	if(chemholder.reagents.total_volume > 1) // can't split 1 very well
+		chemholder.reagents.copy_to(S, chemholder.reagents.total_volume)
 
-		if(chemholder.reagents.total_volume > 1) // can't split 1 very well
-			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume/number) // copy reagents to each smoke, divide evenly
+	if(color)
+		S.color = color // give the smoke color, if it has any to begin with
+	S.amount = amount
+	if(S.amount)
+		S.spread_smoke() //calling process right now so the smoke immediately attacks mobs.
 
-		if(color)
-			S.color = color // give the smoke color, if it has any to begin with
-		else
-			// if no color, just use the old smoke icon
-			S.icon = 'icons/effects/96x96.dmi'
-			S.icon_state = "smoke"
-
-		S.process() //calling process right now so the smoke immediately attacks mobs.
-
-/////////////////////////////////////////////
-// Sleep smoke
-/////////////////////////////////////////////
-
-/obj/effect/effect/smoke/sleeping
-	color = "#9C3636"
-	lifetime = 10
-
-/obj/effect/effect/smoke/sleeping/process()
-	if(..())
-		for(var/mob/living/carbon/M in range(1,src))
-			smoke_mob(M)
-
-/obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
-	if(..())
-		if(M.internal != null || (M.wear_mask && (M.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
-			return
-		else
-			M.drop_item()
-			M.sleeping = max(M.sleeping,10)
-			M.emote("cough")
-
-
-/datum/effect/effect/system/smoke_spread/sleeping
-	smoke_type = /obj/effect/effect/smoke/sleeping
-	var/obj/chemholder

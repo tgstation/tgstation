@@ -4,7 +4,7 @@
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = 0
-	if(lying != lying_prev)
+	if(lying != lying_prev && rotate_on_lying)
 		changed++
 		ntransform.TurnTo(lying_prev,lying)
 		if(lying == 0) //Lying to standing
@@ -46,29 +46,35 @@
 		drop_r_hand()
 		return
 	if(r_hand)
-		r_hand.screen_loc = ui_rhand
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			r_hand.screen_loc = ui_rhand
 			client.screen += r_hand
+
 		var/t_state = r_hand.item_state
 		if(!t_state)
 			t_state = r_hand.icon_state
-		overlays_standing[R_HAND_LAYER] = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
+
+		var/image/standing = r_hand.build_worn_icon(state = t_state, default_layer = R_HAND_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		overlays_standing[R_HAND_LAYER] = standing
 
 	apply_overlay(R_HAND_LAYER)
 
 /mob/living/carbon/update_inv_l_hand()
 	remove_overlay(L_HAND_LAYER)
-	if (handcuffed)
+	if(handcuffed)
 		drop_l_hand()
 		return
 	if(l_hand)
-		l_hand.screen_loc = ui_lhand
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			l_hand.screen_loc = ui_lhand
 			client.screen += l_hand
+
 		var/t_state = l_hand.item_state
 		if(!t_state)
 			t_state = l_hand.icon_state
-		overlays_standing[L_HAND_LAYER] = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
+
+		var/image/standing = l_hand.build_worn_icon(state = t_state, default_layer = L_HAND_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		overlays_standing[L_HAND_LAYER] = standing
 
 	apply_overlay(L_HAND_LAYER)
 
@@ -78,11 +84,6 @@
 		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
 
 	apply_overlay(FIRE_LAYER)
-
-/mob/living/carbon/update_hud()
-	if(client)
-		client.screen |= contents
-		return 1
 
 /mob/living/carbon/regenerate_icons()
 	if(notransform)
@@ -96,86 +97,66 @@
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 	if(istype(wear_mask, /obj/item/clothing/mask))
-
-		var/layer2use
-		if(wear_mask.alternate_worn_layer)
-			layer2use = wear_mask.alternate_worn_layer
-		if(!layer2use)
-			layer2use = FACEMASK_LAYER
-
-		var/image/standing
-		if(wear_mask.alternate_worn_icon)
-			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
-
-		overlays_standing[FACEMASK_LAYER]	= standing
-
-		if(wear_mask.blood_DNA && (wear_mask.body_parts_covered & HEAD))
-			standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
-		return wear_mask
+		if(!(head && (head.flags_inv & HIDEMASK)))
+			var/image/standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
+			overlays_standing[FACEMASK_LAYER] = standing
+		update_hud_wear_mask(wear_mask)
+	apply_overlay(FACEMASK_LAYER)
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 	if(back)
-
-		var/layer2use
-		if(back.alternate_worn_layer)
-			layer2use = back.alternate_worn_layer
-		if(!layer2use)
-			layer2use = BACK_LAYER
-
-		var/image/standing
-		if(back.alternate_worn_icon)
-			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-layer2use)
-
+		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		overlays_standing[BACK_LAYER] = standing
-		return back
-
+		update_hud_back(back)
+	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
-
-		var/layer2use
-		if(head.alternate_worn_layer)
-			layer2use = head.alternate_worn_layer
-		if(!layer2use)
-			layer2use = HEAD_LAYER
-
-		var/image/standing
-		if(head.alternate_worn_icon)
-			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-layer2use)
-		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
-		standing.alpha = head.alpha
-
+		var/image/standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		overlays_standing[HEAD_LAYER] = standing
-
-		if(head.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
-		return head
+		update_hud_head(head)
+	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
-	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
-		stop_pulling()	//TODO: should be handled elsewhere
-		if(hud_used)	//hud handcuff icons
-			var/obj/screen/inventory/R = hud_used.r_hand_hud_object
-			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
-			R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
-			L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
-		return 1
-	else
-		if(hud_used)
-			var/obj/screen/inventory/R = hud_used.r_hand_hud_object
-			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
-			R.overlays = null
-			L.overlays = null
+	return
+
+
+//mob HUD updates for items in our inventory
+
+//update whether handcuffs appears on our hud.
+/mob/living/carbon/proc/update_hud_handcuffed()
+	if(hud_used)
+		var/obj/screen/inventory/R = hud_used.r_hand_hud_object
+		var/obj/screen/inventory/L = hud_used.l_hand_hud_object
+		if(R && L)
+			if(handcuffed)	//hud handcuff icons
+				R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
+				L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
+			else
+				R.overlays = null
+				L.overlays = null
+
+//update whether our head item appears on our hud.
+/mob/living/carbon/proc/update_hud_head(obj/item/I)
+	return
+
+//update whether our mask item appears on our hud.
+/mob/living/carbon/proc/update_hud_wear_mask(obj/item/I)
+	return
+
+//update whether our back item appears on our hud.
+/mob/living/carbon/proc/update_hud_back(obj/item/I)
+	return
+
+
+//Overlays for the worn overlay so you can overlay while you overlay
+//eg: ammo counters, primed grenade flashing, etc.
+/obj/item/proc/worn_overlays(var/isinhands = FALSE)
+	. = list()
+
+
+
 
 

@@ -21,6 +21,9 @@
 	is_cyborg = 1
 	cost = 500
 
+/obj/item/stack/sheet/glass/fifty
+	amount = 50
+
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
@@ -56,18 +59,23 @@
 		return ..()
 
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
+	if(!user || !src)
+		return 0
+	if(!istype(user.loc,/turf))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
-	if(zero_amount())	return 0
+	if(zero_amount())
+		return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 
 			var/list/directions = new/list(cardinal)
 			var/i = 0
@@ -101,8 +109,10 @@
 			src.use(1)
 			W.add_fingerprint(user)
 		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
@@ -153,8 +163,10 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
+	if(!user || !src)
+		return 0
+	if(!istype(user.loc,/turf))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
@@ -162,8 +174,10 @@
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			var/list/directions = new/list(cardinal)
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
@@ -197,8 +211,10 @@
 			src.use(1)
 
 		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
@@ -260,14 +276,15 @@
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 10.0
+	w_class = 1
+	force = 5
+	throwforce = 10
 	item_state = "shard-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/cooldown = 0
+	sharpness = IS_SHARP
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -289,7 +306,8 @@
 			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity || !(src in user)) return
+	if(!proximity || !(src in user))
+		return
 	if(isturf(A))
 		return
 	if(istype(A, /obj/item/weapon/storage))
@@ -297,7 +315,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves)
+		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)
@@ -325,7 +343,7 @@
 	..()
 
 /obj/item/weapon/shard/Crossed(mob/AM)
-	if(istype(AM))
+	if(istype(AM) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM

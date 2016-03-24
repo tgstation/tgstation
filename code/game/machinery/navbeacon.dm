@@ -28,15 +28,17 @@
 	var/turf/T = loc
 	hide(T.intact)
 	if(codes["patrol"])
-		navbeacons += src //Register with the patrol list!
+		if(!navbeacons["[z]"])
+			navbeacons["[z]"] = list()
+		navbeacons["[z]"] += src //Register with the patrol list!
 	if(codes["delivery"])
 		deliverybeacons += src
 		deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	navbeacons &= src //Remove from beacon list, if in one.
-	deliverybeacons &= src
-	..()
+	navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	deliverybeacons -= src
+	return ..()
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
@@ -45,7 +47,7 @@
 
 	codes = new()
 
-	var/list/entries = text2list(codes_txt, ";")	// entries are separated by semicolons
+	var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
 
 	for(var/e in entries)
 		var/index = findtext(e, "=")		// format is "key=value"

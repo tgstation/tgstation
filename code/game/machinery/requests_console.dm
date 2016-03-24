@@ -122,7 +122,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	Radio.listening = 0
 
 /obj/machinery/requests_console/attack_hand(mob/user)
-	if(..(user))
+	if(..())
 		return
 	var/dat = ""
 	if(!open)
@@ -211,7 +211,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
 				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if (announceAuth && message)
+				if ((announceAuth || IsAdminGhost(user)) && message)
 					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
@@ -255,7 +255,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
-	if(..())	return
+	if(..())
+		return
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
@@ -291,7 +292,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			screen = 0
 
 	if(href_list["sendAnnouncement"])
-		if(!announcementConsole)	return
+		if(!announcementConsole)
+			return
 		minor_announce(message, "[department] Announcement:")
 		news_network.SubmitArticle(message, department, "Station Announcements", null)
 		log_say("[key_name(usr)] has made a station announcement: [message]")
@@ -334,7 +336,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in world)
+			for (var/obj/machinery/message_server/MS in machines)
 				if(!MS.active) continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
@@ -409,7 +411,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(9)		//authentication
 			screen = 9
 		if(10)		//send announcement
-			if(!announcementConsole)	return
+			if(!announcementConsole)
+				return
 			screen = 10
 		else		//main menu
 			dpt = ""
@@ -422,8 +425,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	//Handle silencing the console
 	switch( href_list["setSilent"] )
 		if(null)	//skip
-		if("1")	silent = 1
-		else	silent = 0
+		if("1")
+			silent = 1
+		else
+			silent = 0
 
 	updateUsrDialog()
 	return

@@ -3,11 +3,11 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
-	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
+	var/obj/item/weapon/circuitboard/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
 	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
@@ -35,23 +35,22 @@
 	if(prob(20/severity)) set_broken()
 	..()
 
-
 /obj/machinery/computer/ex_act(severity, target)
 	if(target == src)
 		qdel(src)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(25))
 				qdel(src)
 				return
 			if (prob(50))
 				verbs.Cut()
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				verbs.Cut()
 				set_broken()
@@ -63,13 +62,6 @@
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			set_broken()
 	..()
-
-
-/obj/machinery/computer/blob_act()
-	if (prob(75))
-		verbs.Cut()
-		set_broken()
-		density = 0
 
 /obj/machinery/computer/update_icon()
 	overlays.Cut()
@@ -97,11 +89,11 @@
 		update_icon()
 	return
 
-/obj/machinery/computer/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
+/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 20/I.toolspeed, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			A.circuit = circuit
 			A.anchored = 1
@@ -118,10 +110,6 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	return
-
-/obj/machinery/computer/attack_hand(user)
-	. = ..()
 	return
 
 /obj/machinery/computer/attack_paw(mob/living/user)

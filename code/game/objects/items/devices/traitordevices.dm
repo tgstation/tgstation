@@ -20,7 +20,7 @@ effective or pretty fucking useless.
 	desc = "A strange device with twin antennas."
 	icon_state = "batterer"
 	throwforce = 5
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
@@ -39,17 +39,16 @@ effective or pretty fucking useless.
 
 	add_logs(user, null, "knocked down people in the area", src)
 
-	for(var/mob/living/carbon/human/M in orange(10, user))
-		spawn()
-			if(prob(50))
+	for(var/mob/living/carbon/human/M in urange(10, user, 1))
+		if(prob(50))
 
-				M.Weaken(rand(10,20))
-				if(prob(25))
-					M.Stun(rand(5,10))
-				M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
+			M.Weaken(rand(10,20))
+			if(prob(25))
+				M.Stun(rand(5,10))
+			M << "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>"
 
-			else
-				M << "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>"
+		else
+			M << "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>"
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
 	user << "<span class='notice'>You trigger [src].</span>"
@@ -77,7 +76,7 @@ effective or pretty fucking useless.
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=400)
@@ -98,7 +97,7 @@ effective or pretty fucking useless.
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
-				M.irradiate(intensity*10)
+				M.rad_act(intensity*10)
 	else
 		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
 
@@ -144,3 +143,66 @@ effective or pretty fucking useless.
 	attack_self(usr)
 	add_fingerprint(usr)
 	return
+
+/obj/item/device/shadowcloak
+	name = "cloaker belt"
+	desc = "Makes you invisible for short periods of time. Recharges in darkness."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "utilitybelt"
+	item_state = "utility"
+	slot_flags = SLOT_BELT
+	attack_verb = list("whipped", "lashed", "disciplined")
+
+	var/mob/living/carbon/human/user = null
+	var/charge = 300
+	var/max_charge = 300
+	var/on = 0
+	var/old_alpha = 0
+	actions_types = list(/datum/action/item_action/toggle)
+
+/obj/item/device/shadowcloak/ui_action_click(mob/user)
+	if(user.get_item_by_slot(slot_belt) == src)
+		if(!on)
+			Activate(usr)
+		else
+			Deactivate()
+	return
+
+/obj/item/device/shadowcloak/item_action_slot_check(slot, mob/user)
+	if(slot == slot_belt)
+		return 1
+
+/obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
+	if(!user)
+		return
+	user << "<span class='notice'>You activate [src].</span>"
+	src.user = user
+	SSobj.processing |= src
+	old_alpha = user.alpha
+	on = 1
+
+/obj/item/device/shadowcloak/proc/Deactivate()
+	user << "<span class='notice'>You deactivate [src].</span>"
+	SSobj.processing.Remove(src)
+	if(user)
+		user.alpha = old_alpha
+	on = 0
+	user = null
+
+/obj/item/device/shadowcloak/dropped(mob/user)
+	..()
+	if(user && user.get_item_by_slot(slot_belt) != src)
+		Deactivate()
+
+/obj/item/device/shadowcloak/process()
+	if(user.get_item_by_slot(slot_belt) != src)
+		Deactivate()
+		return
+	var/turf/simulated/T = get_turf(src)
+	if(on)
+		var/lumcount = T.get_lumcount()
+		if(lumcount > 3)
+			charge = max(0,charge - 25)//Quick decrease in light
+		else
+			charge = min(max_charge,charge + 50) //Charge in the dark
+		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)

@@ -14,15 +14,16 @@
 #define SLOT_DENYPOCKET	4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-
-#define HIDEMASK		1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS		2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
-#define HIDEEYES		4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
-#define HIDEFACE		8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+#define HIDEGLOVES		1
+#define HIDESUITSTORAGE	2
+#define HIDEJUMPSUIT	4	//these first four are only used in exterior suits
+#define HIDESHOES		8
+#define HIDEMASK		16	//these last six are only used in masks and headgear.
+#define HIDEEARS		32	// (ears means headsets and such)
+#define HIDEEYES		64	// Whether eyes and glasses are hidden
+#define HIDEFACE		128	// Whether we appear as unknown.
+#define HIDEHAIR		256
+#define HIDEFACIALHAIR	512
 
 //slots
 #define slot_back			1
@@ -44,6 +45,7 @@
 #define slot_s_store		17
 #define slot_in_backpack	18
 #define slot_legcuffed		19
+#define slot_drone_storage	20
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -94,3 +96,6 @@
 #define HEADCOVERSEYES		4		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		8		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		16
+
+#define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
+#define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

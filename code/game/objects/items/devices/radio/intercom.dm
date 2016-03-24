@@ -3,7 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4.0
+	w_class = 4
 	canhear_range = 2
 	var/number = 0
 	var/anyai = 1
@@ -16,32 +16,28 @@
 
 /obj/item/device/radio/intercom/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
-	src.add_fingerprint(user)
-	spawn (0)
-		attack_self(user)
-
-/obj/item/device/radio/intercom/attack_paw(mob/user)
-	return src.attack_hand(user)
-
+	interact(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	spawn (0)
-		attack_self(user)
+	interact(user)
+
+/obj/item/device/radio/intercom/interact(mob/user)
+	..()
+	ui_interact(user, state = default_state)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
-	if (!on)
+	if(!on)
 		return -1
-	if (isWireCut(WIRE_RECEIVE))
+	if(wires.is_cut(WIRE_RX))
 		return -1
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
 			return -1
-	if (!src.listening)
+	if(!src.listening)
 		return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))
@@ -59,14 +55,11 @@
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
-		if(!src.loc)
+		var/area/A = get_area_master(src)
+		if(!A || emped)
 			on = 0
 		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master || emped)
-				on = 0
-			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
+			on = A.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

@@ -9,11 +9,19 @@
 
 /atom/movable/attackby(obj/item/W, mob/living/user, params)
 	user.do_attack_animation(src)
-	if(W && !(W.flags&NOBLUDGEON))
+	if(W && !(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[user] has hit [src] with [W]!</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
+		var/sharpness = I.is_sharp()
+		if(sharpness)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
+			return
 	I.attack(src, user)
 
 /mob/living/proc/attacked_by(obj/item/I, mob/living/user, def_zone)

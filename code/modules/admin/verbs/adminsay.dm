@@ -2,12 +2,14 @@
 	set category = "Special Verbs"
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)	return
+	if(!msg)
+		return
 
-	log_admin("[key_name(src)] : [msg]")
+	log_adminsay("[key_name(src)] : [msg]")
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
 		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"

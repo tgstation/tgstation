@@ -1,6 +1,7 @@
 /turf/space/transit
 	icon_state = "black"
 	dir = SOUTH
+	baseturf = /turf/space/transit
 
 /turf/space/transit/horizontal
 	dir = WEST

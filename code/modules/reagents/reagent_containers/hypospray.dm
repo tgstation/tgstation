@@ -6,7 +6,7 @@
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
@@ -18,7 +18,7 @@
 	if(!reagents.total_volume)
 		user << "<span class='warning'>[src] is empty!</span>"
 		return
-	if(!istype(M))
+	if(!iscarbon(M))
 		return
 
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
@@ -26,7 +26,7 @@
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction)
+		reagents.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/list/injected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)
@@ -69,19 +69,23 @@
 	flags = null
 	list_reagents = list("epinephrine" = 10)
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/New()
-	..()
-	update_icon()
-	return
-
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
+	if(!reagents.total_volume)
+		user << "<span class='warning'>[src] is empty!</span>"
+		return
 	..()
 	update_icon()
+	spawn(80)
+		if(isrobot(user) && !reagents.total_volume)
+			var/mob/living/silicon/robot/R = user
+			if(R.cell.use(100))
+				reagents.add_reagent_list(list_reagents)
+				update_icon()
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]0"
 
@@ -100,7 +104,19 @@
 	amount_per_transfer_from_this = 20
 	list_reagents = list("ephedrine" = 10, "coffee" = 10)
 
+/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/traitor
+	desc = "A modified stimulants autoinjector for use in combat situations. Has a mild healing effect."
+	list_reagents = list("stimulants" = 10, "omnizine" = 10)
+
 /obj/item/weapon/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list("morphine" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	name = "BVAK autoinjector"
+	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
+	icon_state = "stimpen"
+	volume = 60
+	amount_per_transfer_from_this = 30
+	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)

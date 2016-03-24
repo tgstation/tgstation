@@ -10,6 +10,7 @@
  *		Plant Bag
  *		Sheet Snatcher
  *		Book Bag
+ *      Biowaste Bag
  *
  *	-Sayu
  */
@@ -29,7 +30,7 @@
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "trashbag0"
+	icon_state = "trashbag"
 	item_state = "trashbag"
 
 	w_class = 4
@@ -46,12 +47,12 @@
 
 /obj/item/weapon/storage/bag/trash/update_icon()
 	if(contents.len == 0)
-		icon_state = "trashbag0"
+		icon_state = "[initial(icon_state)]"
 	else if(contents.len < 12)
-		icon_state = "trashbag1"
+		icon_state = "[initial(icon_state)]1"
 	else if(contents.len < 21)
-		icon_state = "trashbag2"
-	else icon_state = "trashbag3"
+		icon_state = "[initial(icon_state)]2"
+	else icon_state = "[initial(icon_state)]3"
 
 /obj/item/weapon/storage/bag/trash/cyborg
 
@@ -62,6 +63,13 @@
 
 /obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
+
+/obj/item/weapon/storage/bag/trash/bluespace
+	name = "trash bag of holding"
+	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
+	icon_state = "bluetrashbag"
+	max_combined_w_class = 60
+	storage_slots = 60
 
 // -----------------------------
 //        Mining Satchel
@@ -103,7 +111,7 @@
 	max_w_class = 3
 	w_class = 1
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 ////////
 
@@ -281,7 +289,7 @@
 	max_w_class = 3
 	w_class = 4 //Bigger than a book because physics
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Trays - Agouri
@@ -292,10 +300,10 @@
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	force = 5
-	throwforce = 10.0
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 4.0
+	w_class = 4
 	flags = CONDUCT
 	materials = list(MAT_METAL=3000)
 	preposition = "on"
@@ -351,4 +359,20 @@
 	w_class = 1
 	preposition = "in"
 	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
+
+/*
+ *  Biowaste bag (mostly for xenobiologists)
+ */
+
+/obj/item/weapon/storage/bag/bio
+	name = "bio bag"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "biobag"
+	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+	storage_slots = 25
+	max_combined_w_class = 200
+	w_class = 1
+	preposition = "in"
+	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse)
+	burn_state = FLAMMABLE

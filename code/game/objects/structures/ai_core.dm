@@ -16,7 +16,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -27,7 +27,7 @@
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start to deconstruct the frame...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -36,7 +36,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -107,26 +107,9 @@
 					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core!</span>"
 					return
 
-			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
-				var/obj/item/weapon/aiModule/core/M = P
-				laws.clear_inherent_laws()
-				laws.clear_zeroth_law(0)
-				for(var/templaw in M.laws)
-					laws.add_inherent_law(templaw)
-				usr << "<span class='notice'>Law module applied.</span>"
-
-			if(istype(P, /obj/item/weapon/aiModule/reset/purge))
-				laws.clear_inherent_laws()
-				laws.clear_zeroth_law(0)
-				usr << "<span class='notice'>Laws cleared applied.</span>"
-
-
-			if(istype(P, /obj/item/weapon/aiModule/supplied/freeform) || istype(P, /obj/item/weapon/aiModule/core/freeformcore))
-				var/obj/item/weapon/aiModule/supplied/freeform/M = P
-				if(M.laws[1] == "")
-					return
-				laws.add_inherent_law(M.laws[1])
-				usr << "<span class='notice'>Added a freeform law.</span>"
+			if(istype(P, /obj/item/weapon/aiModule))
+				var/obj/item/weapon/aiModule/module = P
+				module.install(laws, user)
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
@@ -160,13 +143,10 @@
 				if(!user.drop_item())
 					return
 
-				ticker.mode.remove_cultist(M.brainmob.mind, 1)
-				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
-
+				ticker.mode.remove_antag_for_borging(M.brainmob.mind)
 				M.loc = src
 				brain = M
-				usr << "<span class='notice'>Added a brain.</span>"
+				user << "<span class='notice'>Added a brain.</span>"
 				icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
@@ -248,6 +228,7 @@ atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/
 		AI.loc = loc//To replace the terminal.
 		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
 		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		card.AI = null
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		user << "There is no AI loaded on this terminal!"

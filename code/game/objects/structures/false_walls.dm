@@ -6,6 +6,7 @@
 	desc = "A huge chunk of metal used to separate rooms."
 	anchored = 1
 	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
 	var/mineral = "metal"
 	var/walltype = "metal"
 	var/opening = 0
@@ -19,9 +20,8 @@
 	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	/turf/simulated/wall/rust,
 	/turf/simulated/wall/r_wall/rust)
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
-
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
@@ -30,10 +30,11 @@
 	opening = 1
 	if(density)
 		do_the_flick()
-		sleep(4)
-		density = 0
-		SetOpacity(0)
-		update_icon()
+		sleep(5)
+		if(!qdeleted(src))
+			density = 0
+			SetOpacity(0)
+			update_icon()
 	else
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
@@ -41,23 +42,24 @@
 			return
 		do_the_flick()
 		density = 1
-		sleep(4)
-		SetOpacity(1)
-		update_icon()
+		sleep(5)
+		if(!qdeleted(src))
+			SetOpacity(1)
+			update_icon()
 	opening = 0
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
-		smooth = 0
-		clear_overlays(src)
-		flick("fwall_opening", src)
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
+		icon_state = "fwall_opening"
 	else
-		flick("fwall_closing", src)
+		icon_state = "fwall_closing"
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
-		smooth = 1
-		smooth_icon(src)
+		smooth = SMOOTH_TRUE
+		queue_smooth(src)
 		icon_state = ""
 	else
 		icon_state = "fwall_open"
@@ -149,7 +151,7 @@
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon = 'icons/turf/walls/uranium_wall.dmi'
-	icon_state = ""
+	icon_state = "uranium"
 	mineral = "uranium"
 	walltype = "uranium"
 	var/active = null
@@ -168,8 +170,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(4)
+			radiation_pulse(get_turf(src), 0, 3, 15, 1)
 			for(var/turf/simulated/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -184,7 +185,7 @@
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
 	icon = 'icons/turf/walls/gold_wall.dmi'
-	icon_state = ""
+	icon_state = "gold"
 	mineral = "gold"
 	walltype = "gold"
 	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/simulated/wall/mineral/gold)
@@ -193,7 +194,7 @@
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny."
 	icon = 'icons/turf/walls/silver_wall.dmi'
-	icon_state = ""
+	icon_state = "silver"
 	mineral = "silver"
 	walltype = "silver"
 	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/simulated/wall/mineral/silver)
@@ -202,7 +203,7 @@
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
 	icon = 'icons/turf/walls/diamond_wall.dmi'
-	icon_state = ""
+	icon_state = "diamond"
 	mineral = "diamond"
 	walltype = "diamond"
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/simulated/wall/mineral/diamond)
@@ -211,13 +212,13 @@
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definitely a bad idea."
 	icon = 'icons/turf/walls/plasma_wall.dmi'
-	icon_state = ""
+	icon_state = "plasma"
 	mineral = "plasma"
 	walltype = "plasma"
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/simulated/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_hot(W) > 300)
+	if(W.is_hot() > 300)
 		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
 		burnbabyburn()
@@ -238,7 +239,7 @@
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
-	icon_state = ""
+	icon_state = "bananium"
 	mineral = "bananium"
 	walltype = "bananium"
 	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/simulated/wall/mineral/clown)
@@ -248,7 +249,7 @@
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = ""
+	icon_state = "sandstone"
 	mineral = "sandstone"
 	walltype = "sandstone"
 	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/simulated/wall/mineral/sandstone)
@@ -257,7 +258,25 @@
 	name = "wooden wall"
 	desc = "A wall with wooden plating. Stiff."
 	icon = 'icons/turf/walls/wood_wall.dmi'
-	icon_state = ""
+	icon_state = "wood"
 	mineral = "wood"
 	walltype = "wood"
 	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/simulated/wall/mineral/wood)
+
+/obj/structure/falsewall/iron
+	name = "rough metal wall"
+	desc = "A wall with rough metal plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron"
+	mineral = "metal"
+	walltype = "iron"
+	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/simulated/wall/mineral/iron)
+
+/obj/structure/falsewall/abductor
+	name = "alien wall"
+	desc = "A wall with alien alloy plating."
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor"
+	mineral = "abductor"
+	walltype = "abductor"
+	canSmoothWith = list(/obj/structure/falsewall/abductor, /turf/simulated/wall/mineral/abductor)

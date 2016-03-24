@@ -13,21 +13,24 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
-	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
+	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
 	if (amount)
 		src.amount = amount
+	if(!merge_type)
+		merge_type = src.type
 	return
 
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
-	..()
+	return ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
@@ -183,7 +186,7 @@
 /obj/item/stack/proc/zero_amount()
 	if(is_cyborg)
 		return source.energy < cost
-	if (amount < 1)
+	if(amount < 1)
 		qdel(src)
 		return 1
 	return 0
@@ -208,19 +211,21 @@
 	S.add(transfer)
 
 /obj/item/stack/Crossed(obj/o)
-	if(istype(o, src.type) && !o.throwing)
+	if(istype(o, merge_type) && !o.throwing)
 		merge(o)
 	return ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
-	if(istype(AM, src.type))
+	if(istype(AM, merge_type))
 		merge(AM)
 	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
-		if(zero_amount())	return
-		var/obj/item/stack/F = new src.type( user, 1)
+		if(zero_amount())
+			return
+		var/obj/item/stack/F = new src.type(user, 1)
+		. = F
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)
@@ -233,7 +238,7 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(istype(W, src.type))
+	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
 		merge(S)
 		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
@@ -259,12 +264,13 @@
 	var/time = 0
 	var/one_per_turf = 0
 	var/on_floor = 0
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
-		src.title = title
-		src.result_type = result_type
-		src.req_amount = req_amount
-		src.res_amount = res_amount
-		src.max_res_amount = max_res_amount
-		src.time = time
-		src.one_per_turf = one_per_turf
-		src.on_floor = on_floor
+
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+	src.title = title
+	src.result_type = result_type
+	src.req_amount = req_amount
+	src.res_amount = res_amount
+	src.max_res_amount = max_res_amount
+	src.time = time
+	src.one_per_turf = one_per_turf
+	src.on_floor = on_floor

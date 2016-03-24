@@ -9,7 +9,7 @@
 	invisibility = 101
 
 	density = 0
-	stat = 2
+	stat = DEAD
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
@@ -17,6 +17,11 @@
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
+
+	if(length(newplayer_start))
+		loc = pick(newplayer_start)
+	else
+		loc = locate(1,1,1)
 
 /mob/new_player/proc/new_player_panel()
 
@@ -67,6 +72,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Map:", MAP_NAME)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
@@ -80,7 +86,8 @@
 	if(src != usr)
 		return 0
 
-	if(!client)	return 0
+	if(!client)
+		return 0
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -106,7 +113,8 @@
 	if(href_list["observe"])
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
-			if(!client)	return 1
+			if(!client)
+				return 1
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
@@ -115,7 +123,10 @@
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
 			src << "<span class='notice'>Now teleporting.</span>"
-			observer.loc = O.loc
+			if (O)
+				observer.loc = O.loc
+			else
+				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
 			if(client.prefs.be_random_name)
 				client.prefs.real_name = random_unique_name(gender)
 			if(client.prefs.be_random_body)
@@ -183,7 +194,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid))
+		if(isnum(pollid) && IsInteger(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -191,13 +202,19 @@
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
 		switch(votetype)
-			if("OPTION")
+			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
-				vote_on_poll(pollid, optionid)
-			if("TEXT")
+				if(vote_on_poll(pollid, optionid))
+					usr << "<span class='notice'>Vote successful.</span>"
+				else
+					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
-				log_text_poll_reply(pollid, replytext)
-			if("NUMVAL")
+				if(log_text_poll_reply(pollid, replytext))
+					usr << "<span class='notice'>Feedback logging successful.</span>"
+				else
+					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
+			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
@@ -212,11 +229,14 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating))
+							if(!isnum(rating) || !IsInteger(rating))
 								return
 
-						vote_on_numval_poll(pollid, optionid, rating)
-			if("MULTICHOICE")
+						if(!vote_on_numval_poll(pollid, optionid, rating))
+							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							return
+				usr << "<span class='notice'>Vote successful.</span>"
+			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
@@ -226,7 +246,17 @@
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
-						vote_on_poll(pollid, optionid, 1)
+						var/i = vote_on_multi_poll(pollid, optionid)
+						switch(i)
+							if(0)
+								continue
+							if(1)
+								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								return
+							if(2)
+								usr << "<span class='danger'>Maximum replies reached.</span>"
+								break
+				usr << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -278,7 +308,6 @@
 					continue
 
 	character.loc = D
-	character.lastarea = get_area(loc)
 
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
@@ -318,7 +347,7 @@
 		if(SHUTTLE_ESCAPE)
 			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
 		if(SHUTTLE_CALL)
-			if(SSshuttle.emergency.timeLeft() < 0.5 * initial(SSshuttle.emergencyCallTime)) //Shuttle is past the point of no recall
+			if(!SSshuttle.canRecall())
 				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0
@@ -360,22 +389,17 @@
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
-	new_character.lastarea = get_area(loc)
-
-	create_dna(new_character)
 
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)
-
+	new_character.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 	new_character.name = real_name
-
-	ready_dna(new_character, client.prefs.blood_type)
 
 	new_character.key = key		//Manually transfer the key to log them in
 	new_character.stopLobbySound()

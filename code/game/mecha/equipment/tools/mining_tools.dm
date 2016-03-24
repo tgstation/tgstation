@@ -39,18 +39,18 @@
 			if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 				if(ore_box)
-					for(var/obj/item/weapon/ore/ore in range(chassis,1))
+					for(var/obj/item/weapon/ore/ore in range(1, chassis))
 						if(get_dir(chassis,ore)&chassis.dir)
 							ore.Move(ore_box)
 		else if(istype(target, /turf/simulated/floor/plating/asteroid))
-			for(var/turf/simulated/floor/plating/asteroid/M in range(chassis,1))
+			for(var/turf/simulated/floor/plating/asteroid/M in range(1, chassis))
 				if(get_dir(chassis,M)&chassis.dir)
 					M.gets_dug()
 			log_message("Drilled through [target]")
 			if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 				if(ore_box)
-					for(var/obj/item/weapon/ore/ore in range(chassis,1))
+					for(var/obj/item/weapon/ore/ore in range(1, chassis))
 						if(get_dir(chassis,ore)&chassis.dir)
 							ore.Move(ore_box)
 		else
@@ -108,6 +108,18 @@
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
 	SSobj.processing |= src
 
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
+	..()
+	M.occupant_sight_flags |= SEE_TURFS
+	if(M.occupant)
+		M.occupant.update_sight()
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
+	chassis.occupant_sight_flags &= ~SEE_TURFS
+	if(chassis.occupant)
+		chassis.occupant.update_sight()
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
 		SSobj.processing.Remove(src)
@@ -118,10 +130,10 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/list/occupant = list()
-		occupant |= mecha.occupant
+		var/list/L = list(mecha.occupant)
 		scanning = 1
-		mineral_scan_pulse(occupant,get_turf(loc))
+		mineral_scan_pulse(L,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
+
 

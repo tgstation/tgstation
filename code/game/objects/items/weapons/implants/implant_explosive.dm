@@ -3,7 +3,7 @@
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
 	origin_tech = "materials=2;combat=3;biotech=4;syndicate=4"
-	var/weak = 1.6
+	var/weak = 2
 	var/medium = 0.8
 	var/heavy = 0.4
 	var/delay = 7
@@ -25,7 +25,8 @@
 		activate("death")
 
 /obj/item/weapon/implant/explosive/activate(cause)
-	if(!cause || !imp_in)	return 0
+	if(!cause || !imp_in)
+		return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
 	heavy = round(heavy)
@@ -35,14 +36,15 @@
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
-		imp_in.gib()
+		if(imp_in)
+			imp_in.gib()
 		qdel(src)
 		return
 	timed_explosion()
 
 /obj/item/weapon/implant/explosive/implant(mob/source)
 	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		imp_e.heavy += heavy
 		imp_e.medium += medium
 		imp_e.weak += weak
@@ -81,7 +83,8 @@
 	delay = 70
 
 /obj/item/weapon/implant/explosive/macro/activate(cause)
-	if(!cause || !imp_in)	return 0
+	if(!cause || !imp_in)
+		return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
 	imp_in << "<span class='notice'>You activate your macrobomb implant.</span>"
@@ -89,10 +92,10 @@
 
 /obj/item/weapon/implant/explosive/macro/implant(mob/source)
 	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		return 0
 	imp_e = locate(/obj/item/weapon/implant/explosive) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		heavy += imp_e.heavy
 		medium += imp_e.medium
 		weak += imp_e.weak

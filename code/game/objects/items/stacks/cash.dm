@@ -9,8 +9,8 @@
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 2
-	w_class = 1.0
-	burn_state = 0 //Burnable
+	w_class = 1
+	burn_state = FLAMMABLE
 
 /obj/item/stack/spacecash/c10
 	icon_state = "spacecash10"

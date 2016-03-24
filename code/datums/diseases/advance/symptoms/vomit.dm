@@ -35,23 +35,15 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>"
+				M << "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>"
 			else
 				Vomit(M)
 
 	return
 
-/datum/symptom/vomit/proc/Vomit(mob/living/M)
+/datum/symptom/vomit/proc/Vomit(mob/living/carbon/M)
+	M.vomit(20)
 
-	M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
-
-	M.nutrition -= 20
-	M.adjustToxLoss(-3)
-
-	var/turf/pos = get_turf(M)
-	pos.add_vomit_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 /*
 //////////////////////////////////////
 
@@ -82,17 +74,33 @@ Bonus
 	level = 4
 	severity = 5
 
-/datum/symptom/vomit/blood/Vomit(mob/living/M)
+/datum/symptom/vomit/blood/Vomit(mob/living/carbon/M)
+	M.vomit(0, 1)
 
-	M.Stun(1)
-	M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
-						"<span class='userdanger'>You throw up on the floor!</span>")
 
-	// They lose blood and health.
-	var/brute_dam = M.getBruteLoss()
-	if(brute_dam < 50)
-		M.adjustBruteLoss(3)
+/*
+//////////////////////////////////////
 
-	var/turf/pos = get_turf(M)
-	pos.add_blood_floor(M)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+Projectile Vomiting
+
+	Very Very Noticable.
+	Decreases resistance.
+	Doesn't increase stage speed.
+	Little transmittable.
+	Medium Level.
+
+Bonus
+	As normal vomiting, except it will spread further,
+	likely causing more to walk across the vomit.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/vomit/projectile
+
+	name = "Projectile Vomiting"
+	stealth = -2
+	level = 4
+
+/datum/symptom/vomit/projectile/Vomit(mob/living/carbon/M)
+	M.vomit(6,0,1,5,1)

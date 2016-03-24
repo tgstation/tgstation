@@ -6,11 +6,11 @@
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
 	flags = CONDUCT
-	force = 7.0
-	throwforce = 10.0
+	force = 7
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = 4
 
 	var/charges = list(0, 0, 0)	//how many restocking "charges" the refill has for standard/contraband/coin products
 	var/init_charges = list(0, 0, 0)
@@ -63,11 +63,11 @@
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(25, 2, 3)// of 75 standard, 6 contraband, 9 premium
-	init_charges = list(25, 2, 3)
+	charges = list(27, 2, 3)// of 75 standard, 6 contraband, 9 premium
+	init_charges = list(27, 2, 3)
 
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(29, 2, 2)// of 85 standard, 6 contraband, 6 premium
-	init_charges = list(29, 2, 2)
+	charges = list(30, 2, 3)// of 86 standard, 6 contraband, 9 premium
+	init_charges = list(30, 2, 3)

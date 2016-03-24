@@ -1,5 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
+	block_chance = 50
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -7,7 +8,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 8
+	force = 10
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
@@ -17,8 +18,6 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-/obj/item/weapon/shield/riot/IsShield()
-	return 1
 
 /obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/melee/baton))
@@ -29,11 +28,25 @@
 	else
 		..()
 
+/obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		final_block_chance += 30
+	return ..()
+
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/riot/buckler
+	name = "wooden buckler"
+	desc = "A medieval wooden buckler."
+	icon_state = "buckler"
+	item_state = "buckler"
+	materials = list()
+	burn_state = FLAMMABLE
+	block_chance = 30
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -49,8 +62,8 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/shield/energy/IsShield()
-	return (active)
+/obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()
 	return (active)
@@ -91,8 +104,10 @@
 	w_class = 3
 	var/active = 0
 
-/obj/item/weapon/shield/riot/tele/IsShield()
-	return (active)
+/obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(active)
+		return ..()
+	return 0
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active

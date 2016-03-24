@@ -36,10 +36,9 @@
 			user << "<span class='danger'>Access Denied.</span>"
 			return
 	if(!locked)
-		..()
+		return ..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
-	return
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -54,8 +53,8 @@
 		locked = 0
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("\The [src] has been broken by [] with an electromagnetic card!", user), 1, text("<span class='italics'>You hear a faint electrical spark.</span>"), 2)
+		if(user)
+			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
@@ -82,9 +81,8 @@
 
 /obj/item/weapon/storage/lockbox/loyalty/New()
 	..()
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/loyalty(src)
 	new /obj/item/weapon/implanter/loyalty(src)
 
 
@@ -114,7 +112,6 @@
 	..()
 	new /obj/item/clothing/tie/medal/silver/valor(src)
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/tie/medal/conduct(src)
 	new /obj/item/clothing/tie/medal/gold/captain(src)

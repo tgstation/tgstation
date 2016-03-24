@@ -7,7 +7,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 
@@ -18,7 +18,7 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			sleeping = max(0,sleeping-5)
+			AdjustSleeping(-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -73,7 +73,19 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)

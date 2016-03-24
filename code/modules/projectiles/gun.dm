@@ -11,11 +11,11 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
-	w_class = 3.0
+	w_class = 3
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	force = 5.0
+	force = 5
 	origin_tech = "combat=1"
 	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")
@@ -23,10 +23,11 @@
 	var/fire_sound = "gunshot"
 	var/suppressed = 0					//whether or not a message is displayed when fired
 	var/can_suppress = 0
+	var/can_unsuppress = 1
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = 1				//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	var/trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1					//how large a burst is
@@ -37,6 +38,7 @@
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/reskinned = 0 //whether or not the gun has been reskinned
+	var/current_skin = null
 	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -54,10 +56,20 @@
 	var/flight_x_offset = 0
 	var/flight_y_offset = 0
 
+	//Zooming
+	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
+	var/zoomed = FALSE //Zoom toggle
+	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
+	var/datum/action/toggle_scope_zoom/azoom
+
+
 /obj/item/weapon/gun/New()
 	..()
 	if(pin)
 		pin = new pin(src)
+
+	build_zooming()
+
 
 /obj/item/weapon/gun/CheckParts()
 	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
@@ -94,8 +106,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
-		spawn()
-			shake_camera(user, recoil + 1, recoil)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
@@ -119,49 +130,51 @@
 		O.emp_act(severity)
 
 
-/obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
+/obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(istype(target, /mob/) && target != user && !(target in user.contents)) //We make sure that it is a mob, it's not us or part of us.
-			if(user.a_intent == "harm") //Flogging action
-				return
-		else
+		if(target in user.contents) //can't shoot stuff inside us.
+			return
+		if(!ismob(target) || user.a_intent == "harm") //melee attack
+			return
+		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
 			return
 
-	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check && can_shoot())
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if (M.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
-				process_fire(user,user,0,params)
-				M.drop_item()
-				return
-
-	if(isliving(user))
+	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
 		if(!can_trigger_gun(L))
 			return
+
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+		shoot_with_empty_chamber(user)
+		return
+
+	if(flag)
+		if(user.zone_selected == "mouth")
+			handle_suicide(user, target, params)
+			return
+
+
+	//Exclude lasertag guns from the CLUMSY check.
+	if(clumsy_check)
+		if(istype(user))
+			if (user.disabilities & CLUMSY && prob(40))
+				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				var/shot_leg = pick("l_leg", "r_leg")
+				process_fire(user,user,0,params, zone_override = shot_leg)
+				user.drop_item()
+				return
+
+
 
 	process_fire(target,user,1,params)
 
 
 
-/obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
-	if (!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+/obj/item/weapon/gun/proc/can_trigger_gun(var/mob/living/user)
+
+	if(!handle_pins(user) || !user.can_use_guns(src))
 		return 0
 
-	if(!handle_pins(user))
-		return 0
-
-	if(trigger_guard)
-		if(istype(user) && user.dna)
-			if(user.dna.check_mutation(HULK))
-				user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
-				return 0
-			if(NOGUNS in user.dna.species.specflags)
-				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
-				return 0
 	return 1
 
 
@@ -176,8 +189,10 @@
 		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
+obj/item/weapon/gun/proc/newshot()
+	return
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -191,11 +206,13 @@
 
 	if(burst_size > 1)
 		for(var/i = 1 to burst_size)
+			if(!user)
+				break
 			if(!issilicon(user))
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
 			if(chambered)
-				if(!chambered.fire(target, user, params, , suppressed))
+				if(!chambered.fire(target, user, params, , suppressed, zone_override))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -211,7 +228,7 @@
 			sleep(fire_delay)
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed))
+			if(!chambered.fire(target, user, params, , suppressed, zone_override))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -228,11 +245,12 @@
 		spawn(fire_delay)
 			semicd = 0
 
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
-	feedback_add_details("gun_fired","[src.name]")
+	if(user)
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
+	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
@@ -240,30 +258,27 @@
 	else
 		return
 
-/obj/item/weapon/gun/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = A
+/obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/flashlight/seclite))
+		var/obj/item/device/flashlight/seclite/S = I
 		if(can_flashlight)
 			if(!F)
-				if(user.l_hand != src && user.r_hand != src)
-					user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
-					return
-				if(!user.unEquip(A))
+				if(!user.unEquip(I))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
 				F = S
-				A.loc = src
+				I.loc = src
 				update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+				var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
+				if(loc == user)
+					A.Grant(user)
 
-	if(istype(A, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(F)
-			if(user.l_hand != src && user.r_hand != src)
-				user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
-				return
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
 				F = null
@@ -272,13 +287,13 @@
 				S.update_brightness(user)
 				update_icon()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
+				qdel(TGL)
 
 	if(unique_rename)
-		if(istype(A, /obj/item/weapon/pen))
+		if(istype(I, /obj/item/weapon/pen))
 			rename_gun(user)
-
 	..()
-	return
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
@@ -300,7 +315,6 @@
 
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(F)
-		action_button_name = "Toggle Gunlight"
 		if(F.on)
 			if(loc == user)
 				user.AddLuminosity(F.brightness_on)
@@ -313,31 +327,43 @@
 				SetLuminosity(0)
 		update_icon()
 	else
-		action_button_name = null
 		if(loc == user)
 			user.AddLuminosity(-5)
 		else if(isturf(loc))
 			SetLuminosity(0)
-		return
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
 
 /obj/item/weapon/gun/pickup(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
 			SetLuminosity(0)
+	if(azoom)
+		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
+	..()
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+	zoom(user,FALSE)
+	if(azoom)
+		azoom.Remove(user)
 
 
-/obj/item/weapon/gun/attack_hand(mob/user)
+/obj/item/weapon/gun/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
-		return
-	..()
+
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
@@ -349,6 +375,7 @@
 			icon_state = options[choice] + "-sawn"
 		else
 			icon_state = options[choice]
+		current_skin = icon_state
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		reskinned = 1
 		return
@@ -360,3 +387,107 @@
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return
+
+
+/obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
+	if(!ishuman(user) || !ishuman(target))
+		return
+
+	if(semicd)
+		return
+
+	if(user == target)
+		target.visible_message("<span class='warning'>[user] sticks [src] in their mouth, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
+	else
+		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
+
+	semicd = 1
+
+	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
+		if(user)
+			if(user == target)
+				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
+			else if(target && target.Adjacent(user))
+				target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+		semicd = 0
+		return
+
+	semicd = 0
+
+	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
+
+	if(chambered && chambered.BB)
+		chambered.BB.damage *= 5
+
+	process_fire(target, user, 1, params)
+
+/obj/item/weapon/gun/proc/unlock() //used in summon guns and as a convience for admins
+	if(pin)
+		qdel(pin)
+	pin = new /obj/item/device/firing_pin
+
+/////////////
+// ZOOMING //
+/////////////
+
+/datum/action/toggle_scope_zoom
+	name = "Toggle Scope"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	button_icon_state = "sniper_zoom"
+	var/obj/item/weapon/gun/gun = null
+
+/datum/action/toggle_scope_zoom/Trigger()
+	gun.zoom(owner)
+
+/datum/action/toggle_scope_zoom/IsAvailable()
+	. = ..()
+	if(!. && gun)
+		gun.zoom(owner, FALSE)
+
+/datum/action/toggle_scope_zoom/Remove(mob/living/L)
+	gun.zoom(L, FALSE)
+	..()
+
+
+/obj/item/weapon/gun/proc/zoom(mob/living/user, forced_zoom)
+	if(!user || !user.client)
+		return
+
+	switch(forced_zoom)
+		if(FALSE)
+			zoomed = FALSE
+		if(TRUE)
+			zoomed = TRUE
+		else
+			zoomed = !zoomed
+
+	if(zoomed)
+		var/_x = 0
+		var/_y = 0
+		switch(user.dir)
+			if(NORTH)
+				_y = zoom_amt
+			if(EAST)
+				_x = zoom_amt
+			if(SOUTH)
+				_y = -zoom_amt
+			if(WEST)
+				_x = -zoom_amt
+
+		user.client.pixel_x = world.icon_size*_x
+		user.client.pixel_y = world.icon_size*_y
+	else
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0
+
+
+//Proc, so that gun accessories/scopes/etc. can easily add zooming.
+/obj/item/weapon/gun/proc/build_zooming()
+	if(azoom)
+		return
+
+	if(zoomable)
+		azoom = new()
+		azoom.gun = src

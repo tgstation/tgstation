@@ -6,7 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	spillable = 1
 
@@ -185,7 +185,7 @@
 			if("doctorsdelight")
 				icon_state = "doctorsdelightglass"
 				name = "Doctor's Delight"
-				desc = "A healthy mixture of juices, guaranteed to keep you healthy until the next toolboxing takes place."
+				desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 			if("manlydorf")
 				icon_state = "manlydorfglass"
 				name = "The Manly Dorf"
@@ -512,11 +512,14 @@
 	icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
+	possible_transfer_amounts = list()
 	volume = 15
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
-	if (gulp_size < 15) gulp_size = 15
-	else gulp_size = max(round(reagents.total_volume / 15), 15)
+	if (gulp_size < 15)
+		gulp_size = 15
+	else
+		gulp_size = max(round(reagents.total_volume / 15), 15)
 
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
@@ -572,6 +575,18 @@
 				icon_state = "shotglassbrown"
 				name = "shot of cognac"
 				desc = "You get the feeling this would piss off a rich person somewhere."
+			if ("wine")
+				icon_state = "shotglassred"
+				name = "shot of wine"
+				desc = "What kind of craven oaf would drink wine from a shot glass?"
+			if ("blood")
+				icon_state = "shotglassred"
+				name = "shot of blood"
+				desc = "If you close your eyes it sort of tastes like wine..."
+			if ("liquidgibs")
+				icon_state = "shotglassred"
+				name = "shot of gibs"
+				desc = "...Let's not talk about this."
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of... what?"

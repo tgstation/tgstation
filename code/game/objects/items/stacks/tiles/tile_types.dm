@@ -3,9 +3,9 @@
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
-	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
+	w_class = 3
+	force = 1
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
@@ -21,7 +21,7 @@
 			user << "<span class='warning'>You need at least four tiles to do this!</span>"
 			return
 
-		if(is_hot(WT) && !mineralType)
+		if(WT.is_hot() && !mineralType)
 			user << "<span class='warning'>You can not reform this!</span>"
 			return
 
@@ -70,7 +70,7 @@
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/grass
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 
 //Wood
@@ -81,7 +81,7 @@
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/wood
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 
 //Carpets
@@ -91,7 +91,7 @@
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	turf_type = /turf/simulated/floor/carpet
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 
 /obj/item/stack/tile/fakespace
@@ -100,7 +100,7 @@
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	turf_type = /turf/simulated/floor/fakespace
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -112,8 +112,10 @@
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
 	turf_type = /turf/simulated/floor/noslip
-	origin_tech = "material=3"
+	origin_tech = "materials=3"
 
+/obj/item/stack/tile/noslip/thirty
+	amount = 30
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
@@ -121,9 +123,9 @@
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
-	force = 6.0
-	materials = list(MAT_METAL=937.5)
-	throwforce = 10.0
+	force = 6
+	materials = list(MAT_METAL=500)
+	throwforce = 10
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/plasteel

@@ -11,7 +11,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	flags = OPENCONTAINER
-	possible_transfer_amounts = list(1,5,10)
+	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
 	var/list/possible_states = list(
@@ -24,10 +24,6 @@
 	 "blackpepper" = list("pepermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
-
-
-/obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
-	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
@@ -67,7 +63,7 @@
 			user << "<span class='warning'>[src] is full!</span>"
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
@@ -179,7 +175,7 @@
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10)
+	possible_transfer_amounts = list()
 	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 

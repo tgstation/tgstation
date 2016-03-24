@@ -16,12 +16,14 @@
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
 
+/obj/structure/disposalconstruct/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/disposalconstruct/New(var/loc, var/pipe_type, var/direction = 1)
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
-		if(!is_pipe())    // bins/chutes/outlets are dense
-			density = 1
 	dir = direction
 
 // update iconstate and dpdir due to dir and type
@@ -104,6 +106,16 @@
 	dir = turn(dir, -90)
 	update()
 
+/obj/structure/disposalconstruct/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
+
 /obj/structure/disposalconstruct/verb/flip()
 	set name = "Flip Pipe"
 	set category = "Object"
@@ -185,9 +197,7 @@
 			anchored = 0
 			if(ispipe)
 				level = 2
-				density = 0
-			else
-				density = 1
+			density = 0
 			user << "<span class='notice'>You detach the [nicetype] from the underfloor.</span>"
 		else
 			if(!is_pipe()) // Disposal or outlet
@@ -210,9 +220,7 @@
 			anchored = 1
 			if(ispipe)
 				level = 1 // We don't want disposal bins to disappear under the floors
-				density = 0
-			else
-				density = 1 // We don't want disposal bins or outlets to go density 0
+			density = 0
 			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 		update()
@@ -223,7 +231,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start welding the [nicetype] in place...</span>"
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20/I.toolspeed, target = src))
 					if(!loc || !W.isOn())
 						return
 					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"

@@ -35,11 +35,9 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
-	var/list/theareas = list()
-	for(var/area/AR in orange(100, chassis))
-		if(AR in theareas) continue
-		theareas += AR
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+		return
+	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
 		return
 	var/area/thearea = pick(theareas)
@@ -113,9 +111,9 @@
 		if(2)
 			var/list/atoms = list()
 			if(isturf(target))
-				atoms = range(target,3)
+				atoms = range(3, target)
 			else
-				atoms = orange(target,3)
+				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
 				if(A.anchored) continue
 				spawn(0)
@@ -286,7 +284,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
 	SSobj.processing.Remove(src)
@@ -378,7 +376,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/plasma(src)
@@ -436,13 +434,14 @@
 	if(!T)
 		return
 	var/datum/gas_mixture/GM = new
+	GM.assert_gas("plasma")
 	if(prob(10))
-		GM.toxins += 100
+		GM.gases["plasma"][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.toxins += 5
+		GM.gases["plasma"][MOLES] += 5
 		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
 		T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
@@ -500,10 +499,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		for(var/mob/living/carbon/M in view(chassis))
-			if(istype(M,/mob/living/carbon/human))
-				M.irradiate(rad_per_cycle*3)
-			else
-				M.irradiate(rad_per_cycle)
+		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
 
 

@@ -44,6 +44,31 @@
 	ventcrawler = 2
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+	unique_name = 1
+	gold_core_spawnable = 1
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 4
+	var/playable_spider = FALSE
+    
+/mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
+	if(href_list["activate"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost) && playable_spider)
+			humanize_spider(ghost)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
+	humanize_spider(user)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
+	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
+		return
+	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
+	if(spider_ask == "No" || !src || qdeleted(src))
+		return
+	if(key)
+		user << "<span class='notice'>Someone else already took this spider.</span>"
+		return
+	key = user.key
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -81,7 +106,7 @@
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = 1
-			Goto(pick(orange(20, src)), move_to_delay)
+			Goto(pick(urange(20, src, 1)), move_to_delay)
 			spawn(50)
 				stop_automated_movement = 0
 				walk(src,0)
@@ -153,11 +178,11 @@
 		busy = SPINNING_WEB
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 		stop_automated_movement = 1
-		spawn(40)
+		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/effect/spider/stickyweb(T)
-			busy = 0
-			stop_automated_movement = 0
+		busy = 0
+		stop_automated_movement = 0
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/Wrap()
@@ -184,7 +209,7 @@
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 		stop_automated_movement = 1
 		walk(src,0)
-		spawn(50)
+		if(do_after(src, 50, target = src))
 			if(busy == SPINNING_COCOON)
 				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
 					var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
@@ -214,9 +239,9 @@
 						break
 					if(large_cocoon)
 						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
-			cocoon_target = null
-			busy = 0
-			stop_automated_movement = 0
+		cocoon_target = null
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/LayEggs()
 	set name = "Lay Eggs"
@@ -234,7 +259,7 @@
 		busy = LAYING_EGGS
 		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 		stop_automated_movement = 1
-		spawn(50)
+		if(do_after(src, 50, target = src.loc))
 			if(busy == LAYING_EGGS)
 				E = locate() in get_turf(src)
 				if(!E)
@@ -243,9 +268,10 @@
 						C.player_spiders = 1
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
+					C.faction = faction.Copy()
 					fed--
-			busy = 0
-			stop_automated_movement = 0
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)

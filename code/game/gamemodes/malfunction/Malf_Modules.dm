@@ -1,4 +1,3 @@
-
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -17,15 +16,100 @@
 /datum/AI_Module/small/
 	uses = 5
 
+//////DOOMSDAY DEVICE
+
+/datum/AI_Module/large/nuke_station
+	module_name = "Doomsday Device"
+	mod_pick_name = "nukestation"
+	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay."
+	cost = 130
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/nuke_station
+
+/mob/living/silicon/ai/proc/nuke_station()
+	set category = "Malfunction"
+	set name = "Doomsday Device"
+
+	for(var/N in nuke_tiles)
+		var/turf/T = N
+		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
+
+	src << "<span class='notice'>Nuclear device armed.</span>"
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
+	set_security_level("delta")
+	SSshuttle.emergencyNoEscape = 1
+	nuking = 1
+	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
+	doomsday_device = DOOM
+	verbs -= /mob/living/silicon/ai/proc/nuke_station
+	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+		for(var/mob/living/silicon/ai/A in ai_list)
+			if((A.stat != DEAD) && A.nuking)
+				point.the_disk = A //The pinpointer now tracks the AI core
+
+/obj/machinery/doomsday_device
+	icon = 'icons/obj/machines/nuke_terminal.dmi'
+	name = "doomsday device"
+	icon_state = "nuclearbomb_base"
+	desc = "A weapon which disintegrates all organic life in a large area."
+	anchored = 1
+	density = 1
+	verb_exclaim = "blares"
+	var/timing = 1
+	var/timer = 450
+
+/obj/machinery/doomsday_device/process()
+	var/turf/T = get_turf(src)
+	if(!T || T.z != ZLEVEL_STATION)
+		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+		SSshuttle.emergencyNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile environment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		qdel(src)
+	if(!timing)
+		return
+	if(timer <= 0)
+		timing = 0
+		detonate(T.z)
+		qdel(src)
+	else
+		timer--
+		if(!(timer%60))
+			var/message = "[timer] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+
+
+/obj/machinery/doomsday_device/proc/detonate(z_level = 1)
+	for(var/mob/M in player_list)
+		M << 'sound/machines/Alarm.ogg'
+	sleep(100)
+	for(var/mob/living/L in mob_list)
+		var/turf/T = get_turf(L)
+		if(T.z != z_level)
+			continue
+		if(issilicon(L))
+			continue
+		L << "<span class='danger'><B>The blast wave from the [src] tears you atom from atom!</B></span>"
+		L.dust()
+	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
+	ticker.force_ending = 1
 
 /datum/AI_Module/large/fireproof_core
-	module_name = "Core upgrade"
+	module_name = "Core Upgrade"
 	mod_pick_name = "coreup"
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 	cost = 50
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/fireproof_core
+
+
+
+//////END DOOMSDAY DEVICE
+
 
 /mob/living/silicon/ai/proc/fireproof_core()
 	set category = "Malfunction"
@@ -36,10 +120,10 @@
 	src << "<span class='notice'>Core fireproofed.</span>"
 
 /datum/AI_Module/large/upgrade_turrets
-	module_name = "AI Turret upgrade"
+	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"
 	description = "Improves the power and health of all AI turrets. This effect is permanent."
-	cost = 50
+	cost = 30
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/upgrade_turrets
@@ -52,11 +136,11 @@
 		return
 
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
-	for(var/obj/machinery/porta_turret/turret in machines)
-		if(turret.ai) //Make sure only the AI's turrets are affected.
-			turret.health += 30
-			turret.eprojectile = /obj/item/projectile/beam/heavylaser //Once you see it, you will know what it means to FEAR.
-			turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
+	//Upgrade AI turrets around the world
+	for(var/obj/machinery/porta_turret/ai/turret in machines)
+		turret.health += 30
+		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
+		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
@@ -120,30 +204,35 @@
 
 	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
 
-/datum/AI_Module/large/disable_rcd
-	module_name = "RCD disable"
+/datum/AI_Module/large/destroy_rcd
+	module_name = "Destroy RCDs"
 	mod_pick_name = "rcd"
-	description = "Send a specialised pulse to break all RCD devices on the station."
-	cost = 50
+	description = "Send a specialised pulse to detonate all hand-held and exosuit Rapid Cconstruction Devices on the station."
+	cost = 25
+	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/disable_rcd
 
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
-	set name = "Disable RCDs"
+	set name = "Destroy RCDs"
+	set desc = "Detonate all RCDs on the station, while sparing onboard cyborg RCDs."
 
-	if(!canUseTopic())
+	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
-		if(rcdmod.uses > 0)
-			rcdmod.uses --
-			for(var/obj/item/weapon/rcd/rcd in world)
-				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd in world)
-				rcd.disabled = 1
-			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
-		else src << "<span class='notice'>Out of uses.</span>"
+	for(var/obj/item/RCD in rcd_list)
+		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
+			spawn(50) //5 seconds to get rid of it!
+				if(RCD) //Make sure it still exists (In case of chain-reaction)
+					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
+					qdel(RCD)
+
+	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
+	malf_cooldown = 1
+	spawn(100)
+		malf_cooldown = 0
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
@@ -183,7 +272,7 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/firealarm/F in world)
+	for(var/obj/machinery/firealarm/F in machines)
 		if(F.z != ZLEVEL_STATION)
 			continue
 		F.emagged = 1
@@ -207,25 +296,25 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/alarm/A in world)
-		if(A.z != ZLEVEL_STATION)
+	for(var/obj/machinery/airalarm/AA in machines)
+		if(AA.z != ZLEVEL_STATION)
 			continue
-		A.emagged = 1
+		AA.emagged = 1
 	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 
 
 
 /datum/AI_Module/small/overload_machine
-	module_name = "Machine overload"
+	module_name = "Machine Overload"
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
-	cost = 15
+	cost = 20
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
-/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in world)
+/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 
@@ -246,16 +335,16 @@
 	else src << "<span class='notice'>That's not a machine.</span>"
 
 /datum/AI_Module/small/override_machine
-	module_name = "Machine override"
+	module_name = "Machine Override"
 	mod_pick_name = "override"
 	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4
-	cost = 15
+	cost = 30
 
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
 
-/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in world)
+/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in machines)
 	set name = "Override Machine"
 	set category = "Malfunction"
 
@@ -263,13 +352,15 @@
 		return
 
 	if (istype(M, /obj/machinery))
+		if(!M.can_be_overridden())
+			src << "Can't override this device."
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
 				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
-					if(M && !M.gc_destroyed)
+					if(M && !qdeleted(M))
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
@@ -364,7 +455,7 @@
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in world)
+			for(var/obj/machinery/power/apc/apc in machines)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
@@ -394,7 +485,7 @@
 			var/initial_range = initial(C.view_range) //To prevent calling the proc twice
 			if(camera.uses > 0)
 				if(!C.status)
-					C.deactivate(src, 0) //Reactivates the camera based on status. Badly named proc.
+					C.toggle_cam(src, 0) //Reactivates the camera based on status. Badly named proc.
 					fixedcams++
 					camera.uses--
 				if(C.view_range != initial_range)
@@ -431,6 +522,7 @@
 
 	var/upgradedcams = 0
 	see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
+	update_sight()
 
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		if(C.assembly)
@@ -454,7 +546,7 @@
 
 /datum/module_picker
 	var/temp = null
-	var/processing_time = 100
+	var/processing_time = 50
 	var/list/possible_modules = list()
 
 /datum/module_picker/New()
@@ -519,6 +611,7 @@
 					break
 
 			// Give the power and take away the money.
+			A.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 			A.verbs += AM.power_type
 			A.current_modules += new AM.type
 			temp = AM.description
@@ -529,3 +622,22 @@
 				temp = AM.description
 	src.use(usr)
 	return
+
+
+/datum/AI_Module/large/eavesdrop
+	module_name = "Enhanced Surveillance"
+	mod_pick_name = "eavesdrop"
+	description = "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
+	cost = 30
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/surveillance
+
+/mob/living/silicon/ai/proc/surveillance()
+	set category = "Malfunction"
+	set name = "Enhanced Surveillance"
+
+	if(eyeobj)
+		eyeobj.relay_speech = TRUE
+	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
+	verbs -= /mob/living/silicon/ai/proc/surveillance

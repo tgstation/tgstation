@@ -5,7 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/flash/handheld/bulb = null
+	var/obj/item/device/assembly/flash/handheld/bulb = null
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -22,13 +22,23 @@
 	base_state = "pflash"
 	density = 1
 
-/obj/machinery/flasher/New()
-	bulb = new /obj/item/device/flash/handheld(src)
+/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
+	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
+	if(built)
+		dir = ndir
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
+		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
+	else
+		bulb = new /obj/item/device/assembly/flash/handheld(src)
+
+/obj/machinery/flasher/Move()
+	remove_from_proximity_list(src, range)
+	..()
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
-		if(bulb.broken)
+		if(bulb.crit_fail)
 			icon_state = "[base_state]1-p"
 		else
 			icon_state = "[base_state]1"
@@ -42,13 +52,13 @@
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(do_after(user, 30, target = src) && bulb)
+			if(do_after(user, 30/W.toolspeed, target = src) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.loc = src.loc
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/device/flash/handheld))
+	else if (istype(W, /obj/item/device/assembly/flash/handheld))
 		if (!bulb)
 			if(!user.drop_item())
 				return
@@ -58,6 +68,21 @@
 			power_change()
 		else
 			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
+
+	else if (istype(W, /obj/item/weapon/wrench))
+		if(!bulb)
+			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 40/W.toolspeed, target = src))
+				user << "<span class='notice'>You unsecure the flasher frame.</span>"
+				var/obj/item/wallframe/flasher/F = new(get_turf(src))
+				transfer_fingerprints_to(F)
+				F.id = id
+				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				qdel(src)
+		else
+			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
+
 	add_fingerprint(user)
 
 //Let the AI trigger them directly.
@@ -71,7 +96,7 @@
 	if (!powered() || !bulb)
 		return
 
-	if (bulb.broken || (last_flash && world.time < src.last_flash + 150))
+	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
 		return
 
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
@@ -125,44 +150,31 @@
 			overlays += "[base_state]-s"
 			anchored = 1
 			power_change()
+			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
 			overlays.Cut()
 			anchored = 0
 			power_change()
+			remove_from_proximity_list(src, range)
 
 	else
 		..()
 
-/obj/machinery/flasher_button/attack_ai(mob/user)
-	return attack_hand(user)
 
-/obj/machinery/flasher_button/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/wallframe/flasher
+	name = "mounted flash frame"
+	desc = "Used for building wall-mounted flashers."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "mflash_frame"
+	result_path = /obj/machinery/flasher
+	var/id = null
 
-/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user, params)
-	return attack_hand(user)
+/obj/item/wallframe/flasher/examine(mob/user)
+	..()
+	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
 
-/obj/machinery/flasher_button/attack_hand(mob/user)
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-
-	use_power(5)
-
-	active = 1
-	icon_state = "launcheract"
-
-	for(var/obj/machinery/flasher/M in world)
-		if(M.id == id)
-			spawn()
-				M.flash()
-
-	sleep(50)
-
-	icon_state = "launcherbtt"
-	active = 0
-
-	return
+/obj/item/wallframe/flasher/after_attach(var/obj/O)
+	..()
+	var/obj/machinery/flasher/F = O
+	F.id = id

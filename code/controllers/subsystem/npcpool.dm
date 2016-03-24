@@ -1,8 +1,9 @@
-var/datum/subsystem/npcpool/SSbp
+var/datum/subsystem/npcpool/SSnpc
 
 /datum/subsystem/npcpool
-	name = "NPCPool"
-	priority = 100
+	name = "NPC Pool"
+	priority = 17
+	display = 6
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()
@@ -17,10 +18,18 @@ var/datum/subsystem/npcpool/SSbp
 		botPool_l |= toInsert
 
 /datum/subsystem/npcpool/New()
-	NEW_SS_GLOBAL(SSbp)
+	NEW_SS_GLOBAL(SSnpc)
 
 /datum/subsystem/npcpool/stat_entry()
 	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
+
+
+/datum/subsystem/npcpool/proc/cleanNull()
+		//cleanup nulled bots
+	listclearnulls(botPool_l)
+	listclearnulls(needsDelegate)
+	listclearnulls(canBeUsed)
+	listclearnulls(needsAssistant)
 
 
 /datum/subsystem/npcpool/fire()
@@ -33,6 +42,8 @@ var/datum/subsystem/npcpool/SSbp
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 	var/npcCount = 1
 
+	cleanNull()
+
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
 		if(!check)
@@ -42,7 +53,7 @@ var/datum/subsystem/npcpool/SSbp
 		if(!(locate(check.TARGET) in checkInRange))
 			needsDelegate |= check
 
-		else if(check.isnotfunc(FALSE))
+		else if(check.IsDeadOrIncap(FALSE))
 			needsDelegate |= check
 
 		else if(check.doing & FIGHTING)
@@ -53,6 +64,9 @@ var/datum/subsystem/npcpool/SSbp
 		npcCount++
 
 	if(needsDelegate.len)
+
+		needsDelegate -= pick(needsDelegate) // cheapo way to make sure stuff doesn't pingpong around in the pool forever. delegation runs seperately to each loop so it will work much smoother
+
 		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsDelegate)
 			if(!check)
@@ -74,9 +88,13 @@ var/datum/subsystem/npcpool/SSbp
 						needsDelegate -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "red"
+						candidate.update_icons()
 			npcCount++
 
 	if(needsAssistant.len)
+
+		needsAssistant -= pick(needsAssistant)
+
 		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsAssistant)
 			if(!check)
@@ -98,4 +116,5 @@ var/datum/subsystem/npcpool/SSbp
 						needsAssistant -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "yellow"
+						candidate.update_icons()
 			npcCount++

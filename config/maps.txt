@@ -1,0 +1,45 @@
+This file contains a list of maps for use in map rotation.
+This feature requires you are running a Windows OS (or can other wise run .bat files) and that you are using the tgstation-server toolset in tools/
+#Lines starting with # are ignored.
+Lines not inside map blocks are also ignored
+Duplicated entries use the latter one.
+All whitespace at the start and end of lines is ignored. (including indentation, thats just for show)
+Format:
+#map [map name] (name of .dm file in _maps folder without the .dm part)
+	friendlyname [name] (name shown to players)
+	minplayers [number] (0 or less disables this requirement)
+	maxplayers [number] (0 or less disables this requirement)
+	default (The last map with this defined will get all votes of players who have not explicitly voted for a map)
+	voteweight [number] (How much to count each player vote as, defaults to 1, setting to 0.5 counts each vote as half a vote, 2 as double, etc, Setting to 0 disables the map but allows players to still pick it)
+endmap
+
+map tgstation2
+	friendlyname Box Station
+	default
+	#voteweight 1.5
+endmap
+
+map metastation
+	friendlyname Meta Station
+	minplayers 25
+	#voteweight 0.5
+endmap
+
+#map ministation
+	friendlyname Mini Station
+	maxplayers 30
+	voteweight 0
+endmap
+
+map birdstation
+	friendlyname Bird Boat Station
+	maxplayers 35
+endmap
+
+map dreamstation
+	friendlyname Dream Station
+endmap
+
+map efficiencystation
+	friendlyname Efficiency Station
+endmap

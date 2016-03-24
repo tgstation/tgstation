@@ -7,11 +7,6 @@
  *		effect/acid
  */
 
-#define WEED_NORTH_EDGING "north"
-#define WEED_SOUTH_EDGING "south"
-#define WEED_EAST_EDGING "east"
-#define WEED_WEST_EDGING "west"
-
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
 
@@ -29,7 +24,7 @@
 	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
-	smooth = 1
+	smooth = SMOOTH_TRUE
 
 
 /obj/structure/alien/resin/New(location)
@@ -84,11 +79,11 @@
 
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			health -= 150
-		if(2.0)
+		if(2)
 			health -= 100
-		if(3.0)
+		if(3)
 			health -= 50
 	healthcheck()
 
@@ -158,35 +153,39 @@
 	gender = PLURAL
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
-	icon_state = "weeds"
 	anchored = 1
 	density = 0
-	layer = 2
+	layer = TURF_LAYER + 0.09
+	pixel_x = -4
+	pixel_y = -4 //so the sprites line up right
+	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon_state = "weeds"
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
-	var/static/list/weedImageCache
+	canSmoothWith = list(/obj/structure/alien/weeds, /turf/simulated/wall)
+	smooth = SMOOTH_MORE
 
 
 /obj/structure/alien/weeds/New(pos, node)
 	..()
+	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
+		switch(rand(1,3))//why is there no 1? because we already have the icon set to that
+			if(2)
+				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
+			if(3)
+				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
-	if(icon_state == "weeds")
-		icon_state = pick("weeds", "weeds1", "weeds2")
-	fullUpdateWeedOverlays()
 	spawn(rand(150, 200))
 		if(src)
 			Life()
 
 /obj/structure/alien/weeds/Destroy()
-	var/turf/T = loc
 	loc = null
-	for (var/obj/structure/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
 	linked_node = null
-	..()
+	return ..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
@@ -196,21 +195,15 @@
 		qdel(src)
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
-				continue
+	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
+		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
@@ -224,7 +217,7 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
-	var/damage = I.force / 4.0
+	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
@@ -246,44 +239,11 @@
 		healthcheck()
 
 
-/obj/structure/alien/weeds/proc/updateWeedOverlays()
-
-	overlays.Cut()
-
-	if(!weedImageCache || !weedImageCache.len)
-		weedImageCache = list()
-		weedImageCache.len = 4
-		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
-		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
-		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
-		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
-
-	var/turf/N = get_step(src, NORTH)
-	var/turf/S = get_step(src, SOUTH)
-	var/turf/E = get_step(src, EAST)
-	var/turf/W = get_step(src, WEST)
-	if(!locate(/obj/structure/alien) in N.contents)
-		if(istype(N, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_SOUTH_EDGING]
-	if(!locate(/obj/structure/alien) in S.contents)
-		if(istype(S, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_NORTH_EDGING]
-	if(!locate(/obj/structure/alien) in E.contents)
-		if(istype(E, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_WEST_EDGING]
-	if(!locate(/obj/structure/alien) in W.contents)
-		if(istype(W, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_EAST_EDGING]
-
-
-/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
-	for (var/obj/structure/alien/weeds/W in range(1,src))
-		W.updateWeedOverlays()
-
 //Weed nodes
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
@@ -315,6 +275,7 @@
 	anchored = 1
 	var/health = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	layer = MOB_LAYER
 
 
 /obj/structure/alien/egg/New()
@@ -323,9 +284,15 @@
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()
 
+/obj/structure/alien/egg/Destroy()
+	remove_from_proximity_list(src, 1)
+	..()
 
-/obj/structure/alien/egg/attack_paw(mob/user)
-	if(isalien(user))
+/obj/structure/alien/egg/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/obj/structure/alien/egg/attack_hand(mob/living/user)
+	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -340,25 +307,21 @@
 				Burst(0)
 				return
 	else
-		return attack_hand(user)
-
-
-/obj/structure/alien/egg/attack_hand(mob/user)
-	user << "<span class='notice'>It feels slimy.</span>"
-	user.changeNext_move(CLICK_CD_MELEE)
+		user << "<span class='notice'>It feels slimy.</span>"
+		user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
 	return locate(/obj/item/clothing/mask/facehugger) in contents
 
-
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
 	status = GROWN
-
+	add_to_proximity_list(src, 1)
 
 /obj/structure/alien/egg/proc/Burst(kill = 1)	//drops and kills the hugger if any is remaining
 	if(status == GROWN || status == GROWING)
+		remove_from_proximity_list(src, 1)
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
 		status = BURSTING
@@ -375,6 +338,9 @@
 							child.Attach(M)
 							break
 
+/obj/structure/alien/egg/Move()
+	remove_from_proximity_list(src, 1)
+	..()
 
 /obj/structure/alien/egg/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -421,7 +387,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.status_flags & XENO_HOST)
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(0)
@@ -441,7 +407,6 @@
 	gender = PLURAL
 	name = "acid"
 	desc = "Burbling corrossive stuff."
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "acid"
 	density = 0
 	opacity = 0
@@ -476,9 +441,23 @@
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
 
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/T = target
+			T.dump_contents()
+			qdel(target)
+
+		if(istype(target, /turf/simulated/mineral))
+			var/turf/simulated/mineral/M = target
+			M.ChangeTurf(M.baseturf)
+
+		if(istype(target, /turf/simulated/floor))
+			var/turf/simulated/floor/F = target
+			F.ChangeTurf(F.baseturf)
+
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
+
 		else
 			qdel(target)
 
@@ -502,8 +481,3 @@
 	spawn(1)
 		if(src)
 			tick()
-
-#undef WEED_NORTH_EDGING
-#undef WEED_SOUTH_EDGING
-#undef WEED_EAST_EDGING
-#undef WEED_WEST_EDGING

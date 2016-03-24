@@ -67,7 +67,7 @@
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame...</span>"
-					if(do_after(user, 20, target = src))
+					if(do_after(user, 20/P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 1)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
@@ -80,7 +80,7 @@
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 40/P.toolspeed, target = src))
 					if(state == 1)
 						user << "<span class='notice'>You disassemble the frame.</span>"
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -89,7 +89,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 40/P.toolspeed, target = src))
 					if(state == 1)
 						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 						anchored = !anchored
@@ -98,7 +98,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 40/P.toolspeed, target = src))
 					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 					anchored = !anchored
 
@@ -315,7 +315,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=5;bluespace=5;materials=4"
 	req_components = list(
-							/obj/item/bluespace_crystal = 3,
+							/obj/item/weapon/ore/bluespace_crystal = 3,
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
 /obj/item/weapon/circuitboard/teleporter_station
@@ -324,7 +324,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4;bluespace=4"
 	req_components = list(
-							/obj/item/bluespace_crystal = 2,
+							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
@@ -334,7 +334,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=3;materials=3;bluespace=4"
 	req_components = list(
-							/obj/item/bluespace_crystal = 2,
+							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
@@ -361,9 +361,8 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 4)
 
 /obj/item/weapon/circuitboard/thermomachine
-	name = "circuit board (Freezer)"
-	desc = "Use screwdriver to switch between heating and cooling modes."
-	build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
+	name = "circuit board (Thermomachine)"
+	desc = "You can use a screwdriver to switch between heater and freezer."
 	board_type = "machine"
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -373,15 +372,35 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/thermomachine/attackby(obj/item/I, mob/user, params)
+	var/obj/item/weapon/circuitboard/freezer = /obj/item/weapon/circuitboard/thermomachine/freezer
+	var/obj/item/weapon/circuitboard/heater = /obj/item/weapon/circuitboard/thermomachine/heater
+	var/obj/item/weapon/circuitboard/newtype
+
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(build_path == /obj/machinery/atmospherics/components/unary/cold_sink/freezer)
-			build_path = /obj/machinery/atmospherics/components/unary/heat_reservoir/heater
-			name = "circuit board (Heater)"
-			user << "<span class='notice'>You set the board to heating.</span>"
+		if(build_path == initial(heater.build_path))
+			newtype = freezer
 		else
-			build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
-			name = "circuit board (Freezer)"
-			user << "<span class='notice'>You set the board to cooling.</span>"
+			newtype = heater
+		name = initial(newtype.name)
+		build_path = initial(newtype.build_path)
+
+/obj/item/weapon/circuitboard/thermomachine/freezer
+	name = "circuit board (Freezer)"
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+
+/obj/item/weapon/circuitboard/thermomachine/heater
+	name = "circuit board (Heater)"
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+
+/obj/item/weapon/circuitboard/space_heater
+	name = "circuit board (Space Heater)"
+	build_path = /obj/machinery/space_heater
+	board_type = "machine"
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil = 3)
 
 /obj/item/weapon/circuitboard/biogenerator
 	name = "circuit board (Biogenerator)"
@@ -423,6 +442,22 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/tesla_coil
+	name = "circuit board (Tesla Coil)"
+	build_path = /obj/machinery/power/tesla_coil
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
+/obj/item/weapon/circuitboard/grounding_rod
+	name = "circuit board (Grounding Rod)"
+	build_path = /obj/machinery/power/grounding_rod
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/processor
 	name = "circuit board (Food processor)"
@@ -651,6 +686,14 @@ obj/item/weapon/circuitboard/rdserver
 							/obj/item/weapon/stock_parts/cell = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,)
 
+/obj/item/weapon/circuitboard/recharger
+	name = "circuit board (Weapon Recharger)"
+	build_path = /obj/machinery/recharger
+	board_type = "machine"
+	origin_tech = "powerstorage=3;engineering=3;materials=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1,)
+
 // Telecomms circuit boards:
 
 /obj/item/weapon/circuitboard/telecomms/receiver
@@ -748,3 +791,14 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
+
+/obj/item/weapon/circuitboard/plantgenes
+	name = "circuit board (Plant DNA Manipulator)"
+	build_path = /obj/machinery/plantgenes
+	board_type = "machine"
+	origin_tech = "programming=2;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 1,)

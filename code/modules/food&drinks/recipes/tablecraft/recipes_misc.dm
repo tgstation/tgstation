@@ -21,6 +21,15 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
 	category = CAT_FOOD
 
+/datum/table_recipe/fudgedice
+	name = "Fudge dice"
+	reqs = list(
+		/obj/item/weapon/dice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/fudgedice
+	category = CAT_FOOD
+
 /datum/table_recipe/chocoorange
 	name = "Choco orange"
 	reqs = list(
@@ -147,7 +156,7 @@
 /datum/table_recipe/fuegoburrito
 	name ="Fuego plasma burrito"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
 	)

@@ -6,6 +6,10 @@
 	zone = "chest"
 	slot = "parasite_egg"
 
+/obj/item/organ/internal/body_egg/on_find(mob/living/finder)
+	..()
+	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
+
 /obj/item/organ/internal/body_egg/New(loc)
 	if(iscarbon(loc))
 		src.Insert(loc)
@@ -29,7 +33,8 @@
 	..()
 
 /obj/item/organ/internal/body_egg/process()
-	if(!owner)	return
+	if(!owner)
+		return
 	if(!(src in owner.internal_organs))
 		Remove(owner)
 		return

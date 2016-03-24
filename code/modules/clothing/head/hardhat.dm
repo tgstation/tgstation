@@ -8,33 +8,43 @@
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
 	armor = list(melee = 15, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
-	action_button_name = "Toggle Helmet Light"
-	burn_state = -1 //Won't burn in fires
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	burn_state = FIRE_PROOF
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "hardhat[on]_[item_color]"
-		item_state = "hardhat[on]_[item_color]"
-		user.update_inv_head()	//so our mob-overlays update
+/obj/item/clothing/head/hardhat/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "hardhat[on]_[item_color]"
+	item_state = "hardhat[on]_[item_color]"
+	user.update_inv_head()	//so our mob-overlays update
 
-		if(on)	user.AddLuminosity(brightness_on)
-		else	user.AddLuminosity(-brightness_on)
+	if(on)
+		turn_on(user)
+	else
+		turn_off(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
-	pickup(mob/user)
-		if(on)
-			user.AddLuminosity(brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
-			SetLuminosity(0)
+/obj/item/clothing/head/hardhat/pickup(mob/user)
+	..()
+	if(on)
+		user.AddLuminosity(brightness_on)
+		SetLuminosity(0)
 
-	dropped(mob/user)
-		if(on)
-			user.AddLuminosity(-brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+/obj/item/clothing/head/hardhat/dropped(mob/user)
+	..()
+	if(on)
+		user.AddLuminosity(-brightness_on)
+		SetLuminosity(brightness_on)
 
+/obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
+	user.AddLuminosity(brightness_on)
+
+/obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
+	user.AddLuminosity(-brightness_on)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"
@@ -73,8 +83,8 @@
 	item_color = "atmos"
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
-	flags = STOPSPRESSUREDMAGE
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD

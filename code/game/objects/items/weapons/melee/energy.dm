@@ -6,6 +6,7 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 2
 	var/w_class_on = 4
+	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
@@ -15,11 +16,14 @@
 /obj/item/weapon/melee/energy/rejects_blood()
 	return 1
 
+/obj/item/weapon/melee/energy/is_sharp()
+	return active * sharpness
+
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
 	desc = "An energised battle axe."
 	icon_state = "axe0"
-	force = 40.0
+	force = 40
 	force_on = 150
 	throwforce = 25
 	throwforce_on = 30
@@ -28,35 +32,40 @@
 	throw_range = 5
 	w_class = 3
 	w_class_on = 5
-	flags = CONDUCT | NOSHIELD
+	flags = CONDUCT
+	armour_penetration = 100
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards \his head! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
-	flags = NOSHIELD
+	sharpness = IS_SHARP
+	embed_chance = 75
+	embedded_impact_pain_multiplier = 10
+	armour_penetration = 50
 	origin_tech = "magnets=3;syndicate=4"
+	block_chance = 50
 	var/hacked = 0
 
 /obj/item/weapon/melee/energy/sword/New()
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
-/obj/item/weapon/melee/energy/sword/IsShield()
+/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
-		return 1
+		return ..()
 	return 0
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
@@ -68,6 +77,7 @@
 		force = force_on
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
+		throw_speed = 4
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(!item_color)
@@ -81,6 +91,7 @@
 		force = initial(force)
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
+		throw_speed = initial(throw_speed)
 		if(attack_verb_on.len)
 			attack_verb = list()
 		icon_state = initial(icon_state)
@@ -90,8 +101,11 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/melee/energy/is_hot()
+	return active * heat
+
 /obj/item/weapon/melee/energy/sword/cyborg
-	var/hitcost = 500
+	var/hitcost = 50
 
 /obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
 	if(R.cell)
@@ -102,6 +116,30 @@
 			return
 		..()
 	return
+
+/obj/item/weapon/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
+	name = "energy saw"
+	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
+	icon_state = "esaw"
+	force_on = 30
+	force = 18 //About as much as a spear
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	origin_tech = "materials=3;biotech=3;syndicate=3"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "esaw_0"
+	icon_state_on = "esaw_1"
+	hitcost = 75 //Costs more than a standard cyborg esword
+	item_color = null
+	w_class = 3
+	sharpness = IS_SHARP
+
+/obj/item/weapon/melee/energy/sword/cyborg/saw/New()
+	..()
+	icon_state = "esaw_0"
+	item_color = null
+
+/obj/item/weapon/melee/energy/sword/cyborg/saw/hit_reaction()
+	return 0
 
 /obj/item/weapon/melee/energy/sword/saber
 
@@ -172,17 +210,17 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
-	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD
-	var/datum/effect/effect/system/spark_spread/spark_system
+	w_class = 4//So you can't hide it in your pocket or some such.
+	var/datum/effect_system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/weapon/melee/energy/blade/New()
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 /obj/item/weapon/melee/energy/blade/dropped()
+	..()
 	qdel(src)
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)

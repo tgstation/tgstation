@@ -6,12 +6,13 @@
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensicnew"
-	w_class = 3.0
+	w_class = 3
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
+	origin_tech = "engineering=3;biotech=2"
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -24,7 +25,7 @@
 			var/obj/item/weapon/paper/P = new(get_turf(src))
 			P.name = "paper- 'Scanner Report'"
 			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
-			P.info += list2text(log, "<BR>")
+			P.info += jointext(log, "<BR>")
 			P.info += "<HR><B>Notes:</B><BR>"
 			P.info_links = P.info
 
@@ -82,7 +83,7 @@
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
-			if (istype(H.dna, /datum/dna) && !H.gloves)
+			if(!H.gloves)
 				fingerprints += md5(H.dna.uni_identity)
 
 		else if(!ismob(A))

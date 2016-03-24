@@ -11,7 +11,6 @@
 	var/eatverb
 	var/wrapped = 0
 	var/dried_type = null
-	var/potency = null
 	var/dry = 0
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
@@ -22,13 +21,15 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)	return
+	if(!usr)
+		return
 	if(!reagents.total_volume)
 		usr.unEquip(src)	//so icons update :[
 
 		if(trash)
-			if(ispath(trash,/obj/item/weapon/grown))
-				var/obj/item/TrashItem = new trash(usr,src.potency)
+			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
+				var/obj/item/TrashItem = new trash(usr, G.seed)
 				usr.put_in_hands(TrashItem)
 			else if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)
@@ -150,9 +151,9 @@
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	if(is_sharp(W))
-		var/sharpness = is_sharp(W)
-		if(slice(sharpness, W, user))
+	var/sharp = W.is_sharp()
+	if(sharp)
+		if(slice(sharp, W, user))
 			return 1
 
 //Called when you finish tablecrafting a snack.
@@ -169,14 +170,14 @@
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/structure/optable) in src.loc) && \
+			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		user << "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>"
 		return 1
 
 	var/slices_lost = 0
-	if (accuracy > 1)
+	if (accuracy >= IS_SHARP_ACCURATE)
 		user.visible_message( \
 			"[user] slices [src].", \
 			"<span class='notice'>You slice [src].</span>" \
@@ -223,7 +224,7 @@
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
@@ -259,7 +260,7 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-//	New()																//Don't mess with this.
+///obj/item/weapon/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
 //		..()															//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
@@ -278,7 +279,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(W.w_class <= 2 & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(is_sharp(W))
+		if(W.is_sharp())
 			return 0
 		if(stored_item)
 			return 0

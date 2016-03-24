@@ -39,7 +39,7 @@
 	if(inserted_gps)
 		inserted_gps.loc = loc
 		inserted_gps = null
-	..()
+	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()
@@ -48,14 +48,14 @@
 /obj/machinery/computer/telescience/initialize()
 	..()
 	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
+		crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/bluespace_crystal))
+	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
@@ -142,7 +142,7 @@
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, get_turf(telepad))
 		s.start()
 	else
@@ -200,7 +200,7 @@
 			// use a lot of power
 			use_power(power * 10)
 
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(5, 1, get_turf(telepad))
 			s.start()
 
@@ -211,7 +211,7 @@
 				temp_msg += "Data printed below."
 
 			var/sparks = get_turf(target)
-			var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
 			y.set_up(5, 1, sparks)
 			y.start()
 

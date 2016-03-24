@@ -129,6 +129,13 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
 
+/obj/item/weapon/reagent_containers/food/snacks/pie/grapetart
+	name = "grape tart"
+	desc = "A tasty dessert that reminds you of the wine you didn't make."
+	icon_state = "grapetart"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	list_reagents = list("nutriment" = 4, "vitamin" = 4)
+
 /obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
 	name = "blumpkin pie"
 	desc = "An odd blue pie made with toxic blumpkin."

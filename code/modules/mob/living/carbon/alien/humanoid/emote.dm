@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/emote(act)
+/mob/living/carbon/alien/humanoid/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -7,8 +7,6 @@
 		act = copytext(act, 1, t1)
 
 	var/muzzled = is_muzzled()
-	var/m_type = 1
-	var/message
 
 	switch(act) //Alphabetical please
 		if ("deathgasp","deathgasps")
@@ -24,6 +22,10 @@
 			if(!muzzled)
 				message = "<span class='name'>[src]</span> hisses."
 				m_type = 2
+
+		if ("me")
+			..()
+			return
 
 		if ("moan","moans")
 			message = "<span class='name'>[src]</span> moans!"
@@ -72,6 +74,9 @@
 		log_emote("[name]/[key] : [message]")
 		if (act == "roar")
 			playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
+
+		if (act == "hiss")
+			playsound(src.loc, "hiss", 40, 1, 1)
 
 		if (act == "deathgasp")
 			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)

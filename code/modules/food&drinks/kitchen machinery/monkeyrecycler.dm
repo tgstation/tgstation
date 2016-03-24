@@ -56,23 +56,26 @@
 		if(!user.Adjacent(G.affecting))
 			return
 		var/grabbed = G.affecting
-		if(istype(grabbed, /mob/living/carbon/monkey))
+		if(ismonkey(grabbed))
 			var/mob/living/carbon/monkey/target = grabbed
 			if(target.stat == 0)
-				user << "<span class='danger'>The monkey is struggling far too much to put it in the recycler.</span>"
-			else
-				if(!user.drop_item())
-					return
-				qdel(target)
-				user << "<span class='notice'>You stuff the monkey into the machine.</span>"
-				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-				var/offset = prob(50) ? -2 : 2
-				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-				use_power(500)
-				src.grinded++
-				sleep(50)
-				pixel_x = initial(pixel_x) //return to its spot after shaking
-				user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
+				user << "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>"
+				return
+			if(target.buckled || target.buckled_mobs.len)
+				user << "<span class='warning'>The monkey is attached to something.</span>"
+				return
+			if(!user.drop_item())
+				return
+			qdel(target)
+			user << "<span class='notice'>You stuff the monkey into the machine.</span>"
+			playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+			var/offset = prob(50) ? -2 : 2
+			animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+			use_power(500)
+			grinded++
+			sleep(50)
+			pixel_x = initial(pixel_x) //return to its spot after shaking
+			user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
 
 		else
 			user << "<span class='danger'>The machine only accepts monkeys!</span>"

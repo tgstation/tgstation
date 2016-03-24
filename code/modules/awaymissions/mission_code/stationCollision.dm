@@ -163,7 +163,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
 	move_self = 0 //Contianed narsie does not move!
 	grav_pull = 0 //Contained narsie does not pull stuff in!
-	var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
+	var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/hostile/construct)
 //Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
 /obj/singularity/narsie/sc_Narsie/admin_investigate_setup()
 	return
@@ -181,7 +181,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 		L.gib()
 	else if(istype(A,/obj/))
 		var/obj/O = A
-		O.ex_act(1.0)
+		O.ex_act(1)
 		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A

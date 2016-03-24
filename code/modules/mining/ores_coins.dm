@@ -10,7 +10,7 @@
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(15))
+		if(W.remove_fuel(15) && refined_type)
 			new refined_type(get_turf(src.loc))
 			qdel(src)
 		else if(W.isOn())
@@ -21,7 +21,8 @@
 	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 18
+	points = 30
+	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
@@ -29,6 +30,7 @@
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	points = 1
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/ore/glass
@@ -36,7 +38,9 @@
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	points = 1
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
+	w_class = 1
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
@@ -57,11 +61,35 @@
 	qdel(src)
 	return
 
+/obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
+	if(..() || !ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/C = hit_atom
+	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
+		return
+	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
+		return
+	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+		return
+	C.adjust_blurriness(6)
+	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C.confused += 5
+	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
+	qdel(src)
+
+/obj/item/weapon/ore/glass/basalt
+	name = "volcanic ash"
+	icon_state = "volcanic_sand"
+
 /obj/item/weapon/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
-	origin_tech = "materials=2"
-	points = 36
+	origin_tech = "plasmatech=2;materials=2"
+	points = 15
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I, mob/user, params)
@@ -77,7 +105,8 @@
 	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 18
+	points = 16
+	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
@@ -85,20 +114,23 @@
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 	points = 18
+	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 36
+	points = 50
+	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/bananium
 	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 27
+	points = 60
+	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/weapon/ore/slag
@@ -114,25 +146,28 @@
 	item_state = "Gibtonite ore"
 	w_class = 4
 	throw_range = 0
-	anchored = 1 //Forces people to carry it by hand, no pulling!
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
-	var/datum/wires/explosive/gibtonite/wires
+
+/obj/item/weapon/twohanded/required/gibtonite/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
-		wires = new(src)
+		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
 		overlays += "Gibtonite_igniter"
 		return
 
 	if(wires && !primed)
-		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
-			wires.Interact(user)
+		if(is_wire_tool(I))
+			wires.interact(user)
 			return
 
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
@@ -149,7 +184,7 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
 	if(wires)
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		..()
 
@@ -213,7 +248,7 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
@@ -232,36 +267,43 @@
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 160
+	materials = list(MAT_GOLD = 400)
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 40
+	materials = list(MAT_SILVER = 400)
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 120
+	materials = list(MAT_DIAMOND = 400)
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 20
+	materials = list(MAT_METAL = 400)
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 80
+	materials = list(MAT_PLASMA = 400)
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 160
+	materials = list(MAT_URANIUM = 400)
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
+	materials = list(MAT_BANANIUM = 400)
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
@@ -321,12 +363,17 @@
 
 /obj/item/weapon/coin/attack_self(mob/user)
 	if(cooldown < world.time - 15)
+		if(string_attached) //does the coin have a wire attached
+			user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //Tell user it will not flip
+			return //do not flip the coin
 		var/coinflip = pick(sideslist)
 		cooldown = world.time
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
-		if(do_after(user, 15, target = src))
+		var/oldloc = loc
+		sleep(15)
+		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
-								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-								 "<span class='italics'>You hear the clattering of loose change.</span>")
+ 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+							 "<span class='italics'>You hear the clattering of loose change.</span>")

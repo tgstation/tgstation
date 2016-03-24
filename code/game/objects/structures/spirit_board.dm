@@ -30,7 +30,7 @@
 
 	if(virgin)
 		virgin = 0
-		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!")
+		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
 
 	planchette = input("Choose the letter.", "Seance!") in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
@@ -55,13 +55,8 @@
 	//lighting check
 	var/light_amount = 0
 	var/turf/T = get_turf(src)
-	var/area/A = T.loc
+	light_amount = T.get_lumcount()
 
-	if(A)
-		if(A.lighting_use_dynamic)
-			light_amount = T.lighting_lumcount
-		else
-			light_amount =  10
 
 	if(light_amount > 2)
 		M << "<span class='warning'>It's too bright here to use [src.name]!</span>"

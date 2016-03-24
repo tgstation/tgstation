@@ -12,7 +12,7 @@
 //cut fat
 /datum/surgery_step/cut_fat
 	name = "cut excess fat"
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -37,10 +37,17 @@
 	var/removednutriment = target.nutrition
 	target.nutrition = NUTRITION_LEVEL_WELL_FED
 	removednutriment -= 450 //whatever was removed goes into the meat
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new
+	var/mob/living/carbon/human/H = target
+	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+
+	if(H.dna && H.dna.species)
+		typeofmeat = H.dna.species.meat
+
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new typeofmeat
 	newmeat.name = "fatty meat"
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
+	newmeat.subjectname = H.real_name
+	newmeat.subjectjob = H.job
 	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment
-	var/obj/item/meatslab = newmeat
-	meatslab.loc = target.loc
+	newmeat.loc = target.loc
 	return 1

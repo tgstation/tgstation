@@ -79,7 +79,7 @@
 					var/list/animals = typesof(/mob/living/simple_animal)
 
 					if(mobtype in humans)
-						race = "Human"
+						race = "Humanoid"
 						language = race
 
 					else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
@@ -92,7 +92,7 @@
 
 					else if(mobtype in silicons || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 						race = "Artificial Life"
-						language = race
+						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
 					else if(istype(mobtype, /obj))
 						race = "Machinery"
@@ -108,7 +108,7 @@
 
 					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
-					if(language == "Human" || universal_translate || C.parameters["uspeech"])
+					if(language == "Humanoid" || universal_translate || C.parameters["uspeech"])
 						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
 						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
 						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
@@ -173,7 +173,7 @@
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
-					for(var/obj/machinery/telecomms/server/T in range(25, src))
+					for(var/obj/machinery/telecomms/server/T in urange(25, src))
 						if(T.network == network)
 							servers.Add(T)
 
@@ -197,7 +197,7 @@
 			temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
 
 			SelectedServer.log_entries.Remove(D)
-			del(D)
+			qdel(D)
 
 		else
 			temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
@@ -206,7 +206,7 @@
 
 		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
 
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
 			if(length(newnet) > 15)
 				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
@@ -224,9 +224,3 @@
 	..()
 	src.updateUsrDialog()
 	return
-
-/obj/machinery/computer/telecomms/server/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols.</span>"

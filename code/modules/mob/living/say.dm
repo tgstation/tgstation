@@ -142,7 +142,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type, list/spans)
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans)
 	var/list/listening = get_hearers_in_view(message_range, source)
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
@@ -157,8 +157,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
+	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", MOB_LAYER+1)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		flick_overlay(I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
 	return 0
@@ -208,7 +210,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
-						M << msg
+						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
 					else
 						switch(M.lingcheck())
 							if(2)
@@ -220,6 +222,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
 				return 1
+	if(message_mode == MODE_ALIEN)
+		if(hivecheck())
+			alien_talk(message)
+			return 1
 	return 0
 
 /mob/living/proc/treat_message(message)
@@ -231,6 +237,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(slurring)
 		message = slur(message)
+
+	if(cultslurring)
+		message = cultslur(message)
 
 	message = capitalize(message)
 

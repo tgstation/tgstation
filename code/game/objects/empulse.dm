@@ -9,13 +9,7 @@
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_range > 1)
-		var/obj/effect/overlay/pulse = new/obj/effect/overlay ( epicenter )
-		pulse.icon = 'icons/effects/effects.dmi'
-		pulse.icon_state = "emppulse"
-		pulse.name = "emp pulse"
-		pulse.anchored = 1
-		spawn(20)
-			qdel(pulse)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, epicenter)
 
 	if(heavy_range > light_range)
 		light_range = heavy_range

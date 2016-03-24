@@ -53,31 +53,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 /mob/living/carbon/human/proc/update_base_icon_state()
-	//var/race = dna ? dna.mutantrace : null
-	if(dna)
-		base_icon_state = dna.species.update_base_icon_state(src)
-	else
-		if(disabilities & HUSK)
-			base_icon_state = "husk"
-		else
-			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
-
+	base_icon_state = dna.species.update_base_icon_state(src)
 	icon_state = "[base_icon_state]_s"
-
-
-//UPDATES OVERLAYS FROM OVERLAYS_STANDING
-//TODO: Remove all instances where this proc is called. It used to be the fastest way to swap between standing/lying.
-/mob/living/carbon/human/update_icons()
-
-	update_hud()		//TODO: remove the need for this
-
-	if(overlays.len != overlays_standing.len)
-		overlays.Cut()
-
-		for(var/thing in overlays_standing)
-			if(thing)	overlays += thing
-
-	update_transform()
 
 
 //DAMAGE OVERLAYS
@@ -99,39 +76,21 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()
-	//Reset our hair
-	remove_overlay(HAIR_LAYER)
-
-	if( (disabilities & HUSK) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
-		return
-
-	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
-		return
-
-	if(dna)
-		dna.species.handle_hair(src)
+	dna.species.handle_hair(src)
 
 /mob/living/carbon/human/proc/update_mutcolor()
-	if(dna && !(disabilities & HUSK))
+	if(!(disabilities & HUSK))
 		dna.species.update_color(src)
 
+//used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
-	if(dna)
-		dna.species.handle_mutant_bodyparts(src)
+	dna.species.handle_mutant_bodyparts(src)
 
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
-
-	if(dna)
-		base_icon_state = dna.species.update_base_icon_state(src)
-	else
-		update_base_icon_state()
-
-	icon_state = "[base_icon_state]_s"
-
-	if(dna)	// didn't want to have a duplicate if(dna) here, but due to the ordering of the code this was the only way
-		dna.species.handle_body(src)
+	update_base_icon_state()
+	dna.species.handle_body(src)
 
 /mob/living/carbon/human/update_fire()
 	..("Standing")
@@ -185,10 +144,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 		update_inv_wear_suit()
 		update_inv_pockets()
 		update_transform()
-		//Hud Stuff
-		update_hud()
 		// Mutantrace colors
 		update_mutcolor()
+		//mutations
+		update_mutations_overlay()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
@@ -206,40 +165,23 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
 			return
 
+
 		var/t_color = w_uniform.item_color
-		if(!t_color)		t_color = icon_state
+		if(!t_color)
+			t_color = w_uniform.icon_state
 
 		var/image/standing
-
-		var/iconfile2use //Which icon file to use to generate the overlay and any female alterations.
-		var/layer2use
-
-		if(U.alternate_worn_icon)
-			iconfile2use = U.alternate_worn_icon
-		if(!iconfile2use)
-			iconfile2use = 'icons/mob/uniform.dmi'
-		if(U.alternate_worn_layer)
-			layer2use = U.alternate_worn_layer
-		if(!layer2use)
-			layer2use = UNIFORM_LAYER
-
-		standing = image("icon"=iconfile2use, "icon_state"="[t_color]_s", "layer"=-layer2use)
-
-		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing	= wear_female_version(t_color, iconfile2use, UNIFORM_LAYER, U.fitted)
-				overlays_standing[UNIFORM_LAYER]	= standing
+				standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
 
-		if(w_uniform.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
+		if(!standing)
+			standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
 
-		if(U.hastie)
-			var/tie_color = U.hastie.item_color
-			if(!tie_color) tie_color = U.hastie.icon_state
-			standing.overlays	+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+		overlays_standing[UNIFORM_LAYER]	= standing
+
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
@@ -251,11 +193,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_inv_wear_id()
 	remove_overlay(ID_LAYER)
 	if(wear_id)
-		wear_id.screen_loc = ui_id	//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
+			wear_id.screen_loc = ui_id
 			client.screen += wear_id
 
-		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
+		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
+		var/image/standing = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
+		overlays_standing[ID_LAYER] = standing
 
 	apply_overlay(ID_LAYER)
 
@@ -269,24 +213,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += gloves					//Either way, add the item to the HUD
 
 		var/t_state = gloves.item_state
-		if(!t_state)	t_state = gloves.icon_state
+		if(!t_state)
+			t_state = gloves.icon_state
 
-		var/layer2use
-		if(gloves.alternate_worn_layer)
-			layer2use = gloves.alternate_worn_layer
-		if(!layer2use)
-			layer2use = GLOVES_LAYER
-
-		var/image/standing
-		if(gloves.alternate_worn_icon)
-			standing = image("icon"=gloves.alternate_worn_icon, "icon_state"="[t_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/hands.dmi', "icon_state"="[t_state]", "layer"=-layer2use)
+		var/image/standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
 
 		overlays_standing[GLOVES_LAYER]	= standing
-
-		if(gloves.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
 	else
 		if(blood_DNA)
@@ -305,19 +237,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
-		var/layer2use
-		if(glasses.alternate_worn_layer)
-			layer2use = glasses.alternate_worn_layer
-		if(!layer2use)
-			layer2use = GLASSES_LAYER
+		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 
-		var/image/standing
-		if(glasses.alternate_worn_icon)
-			standing = image("icon"=glasses.alternate_worn_icon, "icon_state"="[glasses.icon_state]","layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/eyes.dmi', "icon_state"="[glasses.icon_state]", "layer"=-layer2use)
-
-		overlays_standing[GLASSES_LAYER] = standing
+			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
+			overlays_standing[GLASSES_LAYER] = standing
 
 	apply_overlay(GLASSES_LAYER)
 
@@ -331,18 +254,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
 			client.screen += ears					//Either way, add the item to the HUD
 
-		var/layer2use
-		if(ears.alternate_worn_layer)
-			layer2use = ears.alternate_worn_layer
-		if(!layer2use)
-			layer2use = EARS_LAYER
-
-		var/image/standing
-		if(ears.alternate_worn_icon)
-			standing = image("icon"=ears.alternate_worn_icon, "icon_state"="[ears.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/ears.dmi', "icon_state"="[ears.icon_state]", "layer"=-layer2use)
-
+		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 		overlays_standing[EARS_LAYER] = standing
 
 	apply_overlay(EARS_LAYER)
@@ -357,21 +269,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
-		var/layer2use
-		if(shoes.alternate_worn_layer)
-			layer2use = shoes.alternate_worn_layer
-		if(!layer2use)
-			layer2use = SHOES_LAYER
-
-		var/image/standing
-		if(shoes.alternate_worn_icon)
-			standing = image("icon"=shoes.alternate_worn_icon, "icon_state"="[shoes.icon_state]","layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-layer2use)
+		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
 		overlays_standing[SHOES_LAYER]	= standing
-
-		if(shoes.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
 	apply_overlay(SHOES_LAYER)
 
@@ -380,12 +279,13 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
-		s_store.screen_loc = ui_sstore1		//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
+			s_store.screen_loc = ui_sstore1
 			client.screen += s_store
 
 		var/t_state = s_store.item_state
-		if(!t_state)	t_state = s_store.icon_state
+		if(!t_state)
+			t_state = s_store.icon_state
 		overlays_standing[SUIT_STORE_LAYER]	= image("icon"='icons/mob/belt_mirror.dmi', "icon_state"="[t_state]", "layer"=-SUIT_STORE_LAYER)
 
 	apply_overlay(SUIT_STORE_LAYER)
@@ -393,39 +293,25 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 /mob/living/carbon/human/update_inv_head()
-	var/obj/item/H = ..()
-	if(H)
-		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)				//if the inventory is open ...
-				H.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
-			client.screen += H						//Either way, add the item to the HUD
-	apply_overlay(HEAD_LAYER)
+	..()
+	update_mutant_bodyparts()
 
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)
 
 	if(belt)
-		belt.screen_loc = ui_belt
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			client.screen += belt
+			belt.screen_loc = ui_belt
 
 		var/t_state = belt.item_state
-		if(!t_state)	t_state = belt.icon_state
+		if(!t_state)
+			t_state = belt.icon_state
 
-		var/layer2use
-		if(belt.alternate_worn_layer)
-			layer2use = belt.alternate_worn_layer
-		if(!layer2use)
-			layer2use = BELT_LAYER
-
-		var/image/standing
-		if(belt.alternate_worn_icon)
-			standing = image("icon"=belt.alternate_worn_icon, "icon_state"="[t_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/belt.dmi', "icon_state"="[t_state]", "layer"=-layer2use)
-
+		var/image/standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
 		overlays_standing[BELT_LAYER] = standing
+
 
 	apply_overlay(BELT_LAYER)
 
@@ -440,89 +326,55 @@ Please contact me on #coderbus IRC. ~Carnie x
 				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
-
-		var/layer2use
-		if(wear_suit.alternate_worn_layer)
-			layer2use = wear_suit.alternate_worn_layer
-		if(!layer2use)
-			layer2use = SUIT_LAYER
-
-		var/image/standing
-		if(wear_suit.alternate_worn_icon)
-			standing = image("icon"=wear_suit.alternate_worn_icon, "icon_state"="[wear_suit.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-layer2use)
+		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			unEquip(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
 
-		if(wear_suit.blood_DNA)
-			var/obj/item/clothing/suit/S = wear_suit
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
-
-	src.update_hair()
-	src.update_mutant_bodyparts()
+	update_hair()
+	update_mutant_bodyparts()
 
 	apply_overlay(SUIT_LAYER)
 
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
-		l_store.screen_loc = ui_storage1	//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			client.screen += l_store
+			l_store.screen_loc = ui_storage1
 	if(r_store)
-		r_store.screen_loc = ui_storage2	//TODO
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			client.screen += r_store
+			r_store.screen_loc = ui_storage2
+
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
-	var/obj/item/clothing/mask/M = ..()
-	if(M)
-		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)				//if the inventory is open ...
-				M.screen_loc = ui_mask	//TODO	//...draw the item in the inventory screen
-			client.screen += M					//Either way, add the item to the HUD
+	..()
 	update_mutant_bodyparts()
-	apply_overlay(FACEMASK_LAYER)
-
-
-/mob/living/carbon/human/update_inv_back()
-	var/obj/item/B = ..()
-	if(B)
-		B.screen_loc = ui_back
-		if(client && hud_used && hud_used.hud_shown)
-			client.screen += B
-	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/human/update_inv_handcuffed()
-	if(..())
+	remove_overlay(HANDCUFF_LAYER)
+	if(handcuffed)
 		overlays_standing[HANDCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
 		apply_overlay(HANDCUFF_LAYER)
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
+	clear_alert("legcuffed")
 	if(legcuffed)
 		overlays_standing[LEGCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
-	apply_overlay(LEGCUFF_LAYER)
+		apply_overlay(LEGCUFF_LAYER)
+		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
-
-/mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
-	if(..())
-		if(hud_used)
-			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
-
-
-/mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer, type)
-	var/index = "[t_color]_s"
+/proc/wear_female_version(t_color, icon, layer, type)
+	var/index = t_color
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
 		generate_female_clothing(index,t_color,icon,type)
-	var/standing	= image("icon"=female_clothing_icons["[t_color]_s"], "layer"=-layer)
+	var/standing	= image("icon"=female_clothing_icons["[t_color]"], "layer"=-layer)
 	return(standing)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
@@ -533,3 +385,88 @@ Please contact me on #coderbus IRC. ~Carnie x
 				continue
 			out += overlays_standing[i]
 	return out
+
+
+//human HUD updates for items in our inventory
+
+//update whether our head item appears on our hud.
+/mob/living/carbon/human/update_hud_head(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		if(hud_used.inventory_shown)
+			I.screen_loc = ui_head
+		client.screen += I
+
+//update whether our mask item appears on our hud.
+/mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		if(hud_used.inventory_shown)
+			I.screen_loc = ui_mask
+		client.screen += I
+
+//update whether our back item appears on our hud.
+/mob/living/carbon/human/update_hud_back(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		I.screen_loc = ui_back
+		client.screen += I
+
+
+/*
+Does everything in relation to building the /image used in the mob's overlays list
+covers:
+ inhands and any other form of worn item
+ centering large images
+ layering images on custom layers
+ building images from custom icon files
+
+By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
+
+state: A string to use as the state, this is FAR too complex to solve in this proc thanks to shitty old code
+so it's specified as an argument instead.
+
+default_layer: The layer to draw this on if no other layer is specified
+
+default_icon_file: The icon file to draw states from if no other icon file is specified
+
+isinhands: If true then alternate_worn_icon is skipped so that default_icon_file is used,
+in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
+
+femalueuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
+generate/load female uniform sprites matching all previously decided variables
+
+
+*/
+/obj/item/proc/build_worn_icon(var/state = "", var/default_layer = 0, var/default_icon_file = null, var/isinhands = FALSE, var/femaleuniform = NO_FEMALE_UNIFORM)
+
+	//Find a valid icon file from variables+arguments
+	var/file2use
+	if(!isinhands && alternate_worn_icon)
+		file2use = alternate_worn_icon
+	if(!file2use)
+		file2use = default_icon_file
+
+	//Find a valid layer from variables+arguments
+	var/layer2use
+	if(alternate_worn_layer)
+		layer2use = alternate_worn_layer
+	if(!layer2use)
+		layer2use = default_layer
+
+	var/image/standing
+	if(femaleuniform)
+		standing = wear_female_version(state,file2use,layer2use,femaleuniform)
+	if(!standing)
+		standing = image("icon"=file2use, "icon_state"=state,"layer"=-layer2use)
+
+	//Get the overlay images for this item when it's being worn
+	//eg: ammo counters, primed grenade flashes, etc.
+	var/list/worn_overlays = worn_overlays(isinhands)
+	if(worn_overlays && worn_overlays.len)
+		standing.overlays.Add(worn_overlays)
+
+	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
+
+	standing.alpha = alpha
+	standing.color = color
+
+	return standing
+

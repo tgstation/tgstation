@@ -23,9 +23,4 @@
 	flying = 1
 
 	faction = list("spooky")
-
-
-/mob/living/simple_animal/hostile/carp/eyeball/death()
-	..(1)
-	ghostize()
-	qdel(src)
+	del_on_death = 1

@@ -119,6 +119,17 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
 	category = CAT_FOOD
 
+/datum/table_recipe/grapetart
+	name = "Grape tart"
+	reqs = list(
+            /datum/reagent/consumable/milk = 5,
+            /datum/reagent/consumable/sugar = 5,
+            /obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
+	        /obj/item/weapon/reagent_containers/food/snacks/grown/grapes = 3
+	        )
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/grapetart
+	category = CAT_FOOD
+
 /datum/table_recipe/blumpkinpie
 	name = "Blumpkin pie"
 	reqs = list(
@@ -135,7 +146,7 @@
 	reqs = list(
 		/datum/reagent/consumable/vanilla = 5,
 		/datum/reagent/water = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato = 2
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
 	category = CAT_FOOD

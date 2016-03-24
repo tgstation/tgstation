@@ -5,7 +5,7 @@
 	icon_state = "stamp-ok"
 	item_state = "stamp"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=60)

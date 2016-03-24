@@ -46,83 +46,58 @@ research holder datum.
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
 
-									//Datum/tech go here.
+											//Datum/tech go here.
 	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
-	var/list/known_tech = list()				//List of locally known tech.
+	var/list/known_tech = list()			//List of locally known tech.
 	var/list/possible_designs = list()		//List of all designs (at base reliability).
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
-	for(var/T in typesof(/datum/tech) - /datum/tech)
+	for(var/T in subtypesof(/datum/tech))
 		possible_tech += new T(src)
-	for(var/D in typesof(/datum/design) - /datum/design)
+	for(var/D in subtypesof(/datum/design))
 		possible_designs += new D(src)
 	RefreshResearch()
-
-
 
 //Checks to see if tech has all the required pre-reqs.
 //Input: datum/tech; Output: 0/1 (false/true)
 /datum/research/proc/TechHasReqs(datum/tech/T)
 	if(T.req_tech.len == 0)
-		return 1
-	var/matches = 0
+		return TRUE
 	for(var/req in T.req_tech)
-		for(var/datum/tech/known in known_tech)
-			if((req == known.id) && (known.level >= T.req_tech[req]))
-				matches++
-				break
-	if(matches == T.req_tech.len)
-		return 1
-	else
-		return 0
+		var/datum/tech/known = known_tech[req]
+		if(!known || known.level < T.req_tech[req])
+			return FALSE
+	return TRUE
 
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
 /datum/research/proc/DesignHasReqs(datum/design/D)//Heavily optimized -Sieve
 	if(D.req_tech.len == 0)
-		return 1
-	for(var/datum/tech/T in known_tech)
-		if((D.req_tech[T.id]) && (T.level < D.req_tech[T.id]))
-			return 0
-	return 1
-
-/*
-//Checks to see if design has all the required pre-reqs.
-//Input: datum/design; Output: 0/1 (false/true)
-/datum/research/proc/DesignHasReqs(var/datum/design/D)
-	if(D.req_tech.len == 0)
-		return 1
-	var/matches = 0
+		return TRUE
 	for(var/req in D.req_tech)
-		for(var/datum/tech/known in known_tech)
-			if((req == known.id) && (known.level >= D.req_tech[req]))
-				matches++
-				break
-	if(matches == D.req_tech.len)
-		return 1
-	else
-		return 0
-*/
+		var/datum/tech/known = known_tech[req]
+		if(!known || known.level < D.req_tech[req])
+			return FALSE
+	return TRUE
+
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
 /datum/research/proc/AddTech2Known(datum/tech/T)
-	for(var/datum/tech/known in known_tech)
-		if(T.id == known.id)
-			if(T.level > known.level)
-				known.level = T.level
-			return
-	known_tech += T
-	return
+	if(known_tech[T.id])
+		var/datum/tech/known = known_tech[T.id]
+		if(T.level > known.level)
+			known.level = T.level
+		return
+	known_tech[T.id] = T
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
-	for(var/datum/design/known in known_designs)
-		if(D.id == known.id)
-			if(D.reliability > known.reliability)
-				known.reliability = D.reliability
-			return
-	known_designs += D
-	return
+	if(known_designs[D.id])
+		var/datum/design/known = known_designs[D.id]
+		if(D.reliability > known.reliability)
+			known.reliability = D.reliability
+		return
+	known_designs[D.id] = D
 
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
@@ -130,46 +105,48 @@ research holder datum.
 	for(var/datum/tech/PT in possible_tech)
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
+
 	for(var/datum/design/PD in possible_designs)
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
-	for(var/datum/tech/T in known_tech)
-		T = Clamp(T.level, 1, 20)
-	for(var/datum/design/D in known_designs)
+
+	for(var/v in known_tech)
+		var/datum/tech/T = known_tech[v]
+		T.level = Clamp(T.level, 0, 20)
+
+	for(var/v in known_designs)
+		var/datum/design/D = known_designs[v]
 		D.CalcReliability(known_tech)
 	return
 
 //Refreshes the levels of a given tech.
 //Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(ID, level)
-	for(var/datum/tech/KT in known_tech)
-		if(KT.id == ID)
-			if(KT.level <= level)
-				KT.level = max((KT.level + 1), (level - 1))
-	return
+	var/datum/tech/KT = known_tech[ID]
+	if(KT)
+		if(KT.level <= level)
+			KT.level = max((KT.level + 1), (level - 1))
 
 /datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
-	for(var/T in temp_tech)
-		if(temp_tech[T] - 1 >= known_tech[T])
-			for(var/datum/design/D in known_designs)
-				if(D.req_tech[T])
-					D.reliability = min(100, D.reliability + 1)
-					if(D.build_path == I.type)
-						D.reliability = min(100, D.reliability + rand(1,3))
-						if(I.crit_fail)
-							D.reliability = min(100, D.reliability + rand(3, 5))
+	for(var/v in known_designs)
+		var/datum/design/D = known_designs[v]
+		var/shared_tech = length(temp_tech & D.req_tech)
+		if(shared_tech)
+			D.reliability = min(100, D.reliability + shared_tech)
+			if(D.build_path == I.type)
+				D.reliability = min(100, D.reliability + shared_tech * rand(1,3))
+				if(I.crit_fail)
+					D.reliability = min(100, D.reliability + shared_tech * rand(3, 5))
 
 /datum/research/proc/FindDesignByID(id)
-	for(var/datum/design/D in known_designs)
-		if(D.id == id)
-			return D
+	return known_designs[id]
 
 
 //Autolathe files
 /datum/research/autolathe/New()
-	for(var/T in (typesof(/datum/tech) - /datum/tech))
+	for(var/T in (subtypesof(/datum/tech)))
 		possible_tech += new T(src)
-	for(var/path in typesof(/datum/design) - /datum/design)
+	for(var/path in subtypesof(/datum/design))
 		var/datum/design/D = new path(src)
 		possible_designs += D
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
@@ -190,6 +167,7 @@ research holder datum.
 	var/desc = "description"			//General description of what it does and what it makes.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
+	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
 
 
@@ -209,6 +187,7 @@ research holder datum.
 	name = "Plasma Research"
 	desc = "Research into the mysterious substance colloqually known as 'plasma'."
 	id = "plasmatech"
+	rare = 3
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
@@ -219,6 +198,7 @@ research holder datum.
 	name = "'Blue-space' Research"
 	desc = "Research into the sub-reality known as 'blue-space'"
 	id = "bluespace"
+	rare = 2
 
 /datum/tech/biotech
 	name = "Biological Technology"
@@ -244,6 +224,14 @@ research holder datum.
 	name = "Illegal Technologies Research"
 	desc = "The study of technologies that violate Nanotrassen regulations."
 	id = "syndicate"
+	rare = 4
+
+/datum/tech/abductor
+	name = "Alien Technologies Research"
+	desc = "The study of technologies used by the advanced alien race known as Abductors."
+	id = "abductor"
+	rare = 5
+	level = 0
 
 /*
 /datum/tech/arcane
@@ -273,16 +261,29 @@ research holder datum.
 */
 
 
+/datum/tech/proc/getCost(var/current_level = null)
+	// Calculates tech disk's supply points sell cost
+	if(!current_level)
+		current_level = initial(level)
+
+	if(current_level >= level)
+		return 0
+
+	var/cost = 0
+	for(var/i=current_level+1, i<=level, i++)
+		if(i == initial(level))
+			continue
+		cost += i*5*rare
+
+	return cost
+
 /obj/item/weapon/disk/tech_disk
 	name = "Technology Disk"
 	desc = "A disk for storing technology data for further research."
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = 1.0
+	icon_state = "datadisk0"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)

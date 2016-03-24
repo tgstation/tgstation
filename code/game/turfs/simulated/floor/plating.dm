@@ -39,7 +39,7 @@
 		else
 			user << "<span class='notice'>You begin reinforcing the floor...</span>"
 			if(do_after(user, 30, target = src))
-				if (R.get_amount() >= 2)
+				if (R.get_amount() >= 2 && !istype(src, /turf/simulated/floor/engine))
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
@@ -78,7 +78,7 @@
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
+	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
 /turf/simulated/floor/engine/break_tile()
@@ -98,7 +98,7 @@
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 30/C.toolspeed, target = src))
 			if(!istype(src, /turf/simulated/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
@@ -108,35 +108,40 @@
 
 /turf/simulated/floor/engine/ex_act(severity,target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(prob(80))
 				ReplaceWithLattice()
 			else if(prob(50))
 				qdel(src)
 			else
 				make_plating(1)
-		if(2.0)
+		if(2)
 			if(prob(50))
 				make_plating(1)
 
+/turf/simulated/floor/engine/n2o
+	name = "n2o floor"
+
+/turf/simulated/floor/engine/n2o/New()
+	..()
+
+	var/datum/gas_mixture/adding = new
+	adding.assert_gas("n2o")
+	adding.gases["n2o"][MOLES] = 6000
+	adding.temperature = T20C
+
+	assume_air(adding)
 
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/New()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
+	..()
+
 /turf/simulated/floor/engine/cult/narsie_act()
 	return
-
-/turf/simulated/floor/engine/n20/New()
-	..()
-	var/datum/gas_mixture/adding = new
-	var/datum/gas/sleeping_agent/trace_gas = new
-
-	trace_gas.moles = 6000
-	adding.trace_gases += trace_gas
-	adding.temperature = T20C
-
-	assume_air(adding)
 
 /turf/simulated/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -159,14 +164,6 @@
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/simulated/floor/plating/lava
-	icon_state = "lava"
-
-/turf/simulated/floor/plating/lava/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
-
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
@@ -174,3 +171,82 @@
 /turf/simulated/floor/plating/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
+
+///LAVA
+
+/turf/simulated/floor/plating/lava
+	name = "lava"
+	icon_state = "lava"
+	baseturf = /turf/simulated/floor/plating/lava //lava all the way down
+	slowdown = 2
+	var/processing = 0
+	luminosity = 1
+
+/turf/simulated/floor/plating/lava/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
+/turf/simulated/floor/plating/lava/Entered(atom/movable/AM)
+	burn_stuff()
+	if(!processing)
+		processing = 1
+		SSobj.processing |= src
+
+/turf/simulated/floor/plating/lava/process()
+	if(!burn_stuff())
+		processing = 0
+		SSobj.processing.Remove(src)
+
+
+/turf/simulated/floor/plating/lava/proc/burn_stuff()
+	. = 0
+	for(var/thing in contents)
+		if(istype(thing, /obj))
+			var/obj/O = thing
+			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
+				qdel(O)
+				continue
+			. = 1
+			if(O.burn_state == FIRE_PROOF)
+				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
+
+			O.fire_act()
+
+
+		else if (istype(thing, /mob/living))
+			. = 1
+			var/mob/living/L = thing
+			if("mining" in L.faction)
+				continue
+			L.adjustFireLoss(20)
+			if(L) //mobs turning into object corpses could get deleted here.
+				L.adjust_fire_stacks(20)
+				L.IgniteMob()
+
+
+/turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+	return
+
+/turf/simulated/floor/plating/lava/break_tile()
+	return
+
+/turf/simulated/floor/plating/lava/burn_tile()
+	return
+
+/turf/simulated/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+	return
+
+/turf/simulated/floor/plating/lava/smooth
+	name = "lava"
+	baseturf = /turf/simulated/floor/plating/lava/smooth
+	icon = 'icons/turf/floors/lava.dmi'
+	icon_state = "unsmooth"
+//	smooth = SMOOTH_BORDER | SMOOTH_TRUE
+	canSmoothWith = list(/turf/simulated/wall, /turf/simulated/mineral, /turf/simulated/floor/plating/lava/smooth, /turf/simulated/floor/plating/lava/smooth/lava_land_surface
+	)
+
+/turf/simulated/floor/plating/lava/smooth/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB

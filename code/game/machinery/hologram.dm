@@ -35,6 +35,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	name = "\improper AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
+	layer = 2.1
 	flags = HEAR
 	languages = ROBOT | HUMAN
 	var/list/masters = list()//List of AIs that use the holopad
@@ -71,7 +72,10 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/hologram/holopad/AltClick(mob/living/carbon/human/user)
+	interact(user)
+
+/obj/machinery/hologram/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
 	if(user.stat || stat & (NOPOWER|BROKEN))
@@ -108,7 +112,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	else if(href_list["mainmenu"])
 		temp = ""
 
-	updateUsrDialog()
+	updateDialog()
 	add_fingerprint(usr)
 
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
@@ -142,13 +146,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				raw_message = master.lang_treat(speaker, message_langs, raw_message, spans)
-				var/name_used = speaker.GetVoice()
-				var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
-				master.show_message(rendered, 2)
+				master.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
-	var/obj/effect/overlay/h = new(T)//Spawn a blank effect at the location.
+	var/obj/effect/overlay/holo_pad_hologram/h = new(T)//Spawn a blank effect at the location.
 	h.icon = A.holo_icon
 	h.mouse_opacity = 0//So you can't click on it.
 	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
@@ -196,9 +197,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
 		step_to(masters[user], user.eyeobj) // So it turns.
-		var/obj/effect/overlay/H = masters[user]
+		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
 		H.loc = get_turf(user.eyeobj)
 		masters[user] = H
+	return 1
+
+
+/obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
 	return 1
 
 /*
@@ -220,54 +225,22 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
-	return
-
-/obj/machinery/hologram/blob_act()
-	qdel(src)
 	return
 
 /obj/machinery/hologram/holopad/Destroy()
 	for (var/mob/living/silicon/ai/master in masters)
 		clear_holo(master)
-	..()
+	return ..()
 
-/*
-Holographic project of everything else.
 
-/mob/verb/hologram_test()
-	set name = "Hologram Debug New"
-	set category = "CURRENT DEBUG"
-
-	var/obj/effect/overlay/hologram = new(loc)//Spawn a blank effect at the location.
-	var/icon/flat_icon = icon(getFlatIcon(src,0))//Need to make sure it's a new icon so the old one is not reused.
-	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
-	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
-	var/input = input("Select what icon state to use in effect.",,"")
-	if(input)
-		var/icon/alpha_mask = new('icons/effects/effects.dmi', "[input]")
-		flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
-		hologram.icon = flat_icon
-
-		world << "Your icon should appear now."
-	return
-*/
-
-/*
- * Other Stuff: Is this even used?
- */
-/obj/machinery/hologram/projector
-	name = "hologram projector"
-	desc = "It makes a hologram appear...with magnets or something..."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "hologram0"
 
 #undef RANGE_BASED
 #undef AREA_BASED

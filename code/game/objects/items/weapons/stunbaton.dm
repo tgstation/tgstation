@@ -23,10 +23,6 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/CheckParts()
-	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
-	update_icon()
-
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
@@ -35,16 +31,14 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
-		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
-			status = 0
-			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
-		if(bcell.use(chrgdeductamt))
-			return 1
-		else
-			return 0
-
-
+		. = bcell.use(chrgdeductamt)
+		if(bcell.charge >= hitcost) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
+			return
+	if(status)
+		status = 0
+		update_icon()
+		playsound(loc, "sparks", 75, 1, -1)
+	return 0
 
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -59,7 +53,7 @@
 	..()
 	if(bcell)
 		user <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
-	if(!bcell)
+	else
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
@@ -122,20 +116,32 @@
 
 	if(user.a_intent != "harm")
 		if(status)
-			user.do_attack_animation(L)
-			baton_stun(L, user)
+			if(baton_stun(L, user))
+				user.do_attack_animation(L)
+				return
 		else
 			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
-			return
 	else
 		if(status)
 			baton_stun(L, user)
 		..()
 
 
-
 /obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(!R || !R.cell || !R.cell.use(hitcost))
+			return 0
+	else
+		if(!deductcharge(hitcost))
+			return 0
+
 	user.lastattacked = L
 	L.lastattacker = user
 
@@ -147,22 +153,15 @@
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		if(R && R.cell)
-			R.cell.use(hitcost)
-	else
-		deductcharge(hitcost)
-
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(hit_appends)
 
 	add_logs(user, L, "stunned")
+	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
-	if(bcell)
-		deductcharge(1000 / severity)
+	if(deductcharge(1000 / severity))
 		if(bcell.reliability != 100 && prob(50/severity))
 			bcell.reliability -= 10 / severity
 	..()
@@ -178,3 +177,12 @@
 	stunforce = 5
 	hitcost = 2500
 	slot_flags = null
+	var/obj/item/device/assembly/igniter/sparkler = 0
+
+/obj/item/weapon/melee/baton/cattleprod/New()
+	..()
+	sparkler = new (src)
+
+/obj/item/weapon/melee/baton/cattleprod/baton_stun()
+	if(sparkler.activate())
+		..()

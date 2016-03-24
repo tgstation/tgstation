@@ -8,7 +8,13 @@
 
 	var/timing = 0
 	var/time = 5
+	var/saved_time = 5
+	var/loop = 0
 
+
+/obj/item/device/assembly/timer/New()
+	..()
+	SSobj.processing |= src
 
 /obj/item/device/assembly/timer/describe()
 	if(timing)
@@ -17,10 +23,11 @@
 
 
 /obj/item/device/assembly/timer/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	timing = !timing
 	update_icon()
-	return 0
+	return 1
 
 
 /obj/item/device/assembly/timer/toggle_secure()
@@ -42,17 +49,18 @@
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
-	return
+		if(loop)
+			timing = 1
+	update_icon()
 
 
 /obj/item/device/assembly/timer/process()
-	if(timing && (time > 0))
+	if(timing)
 		time--
-	if(timing && time <= 0)
-		timing = 0
-		timer_end()
-		time = initial(time)
-	return
+		if(time <= 0)
+			timing = 0
+			timer_end()
+			time = saved_time
 
 
 /obj/item/device/assembly/timer/update_icon()
@@ -63,7 +71,6 @@
 		attached_overlays += "timer_timing"
 	if(holder)
 		holder.update_icon()
-	return
 
 
 /obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
@@ -71,17 +78,17 @@
 		var/second = time % 60
 		var/minute = (time - second) / 60
 		var/dat = "<TT><B>Timing Unit</B>\n[(timing ? "<A href='?src=\ref[src];time=0'>Timing</A>" : "<A href='?src=\ref[src];time=1'>Not Timing</A>")] [minute]:[second]\n<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT>"
+		dat += "<BR><BR><A href='?src=\ref[src];repeat=[(loop ? "0'>Stop repeating" : "1'>Set to repeat")]</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 		var/datum/browser/popup = new(user, "timer", name)
 		popup.set_content(dat)
 		popup.open()
-		return
 
 
 /obj/item/device/assembly/timer/Topic(href, href_list)
 	..()
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=timer")
 		onclose(usr, "timer")
 		return
@@ -94,11 +101,14 @@
 			bombers += timer_message
 			log_game("[key_name(usr)] activated [src] attachment for [loc]")
 		update_icon()
+	if(href_list["repeat"])
+		loop = text2num(href_list["repeat"])
 
 	if(href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		time += tp
 		time = min(max(round(time), 1), 600)
+		saved_time = time
 
 	if(href_list["close"])
 		usr << browse(null, "window=timer")
@@ -107,4 +117,3 @@
 	if(usr)
 		attack_self(usr)
 
-	return

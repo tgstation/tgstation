@@ -8,6 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Optimumtact = Host
+kingofkosmos = Game Master
 MrStonedOne = Game Master
 microscopics = Game Master
 Gun Hog = Game Master
@@ -92,3 +93,19 @@ Dunc = Game Master
 MMMiracles = Game Master
 bear1ake = Game Master
 CoreOverload = Game Master
+Jalleo = Game Master
+Anonus Tanir = Game Master
+FoxPMcCloud = Game Master
+Xhuis = Game Master
+Astralenigma = Game Master
+Tokiko1 = Game Master
+SuperSayu = Game Master
+Lzimann = Game Master
+As334 = Game Master
+neersighted = Game Master
+Swankcookie = Game Master
+Ressler = Game Master
+Folix = Game Master
+Bawhoppennn = Game Master
+Anturke = Host
+Lumipharon = Game Master

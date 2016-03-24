@@ -7,7 +7,7 @@
 	icon_state = "E-W"
 	density = 1
 	layer = 3.1
-	anchored = 1.0
+	anchored = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
 	var/exit_delay = 1
@@ -46,7 +46,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 				return
 			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 35, target = src))
+			if(do_after(user, 35/W.toolspeed, target = src))
 				user << "<span class='notice'>You deattach the [name].</span>"
 				var/obj/structure/R = new tube_construction(src.loc)
 				R.icon_state = src.icon_state
@@ -262,7 +262,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = text2list(text, "-")
+	var/list/split_text = splittext(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually

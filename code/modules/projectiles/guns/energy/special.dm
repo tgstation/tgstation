@@ -51,32 +51,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
-	var/charge_tick = 0
 	ammo_x_offset = 1
-
-/obj/item/weapon/gun/energy/floragun/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/floragun/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-
-/obj/item/weapon/gun/energy/floragun/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	update_icon()
-	return 1
-
-/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
-	select_fire(user)
-	update_icon()
-	return
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -87,28 +63,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
-	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
-
-/obj/item/weapon/gun/energy/meteorgun/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/meteorgun/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-/obj/item/weapon/gun/energy/meteorgun/process()
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-
-/obj/item/weapon/gun/energy/meteorgun/update_icon()
-	return
-
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -120,11 +75,11 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = 1
 
-
 /obj/item/weapon/gun/energy/mindflayer
-	name = "mind flayer"
+	name = "\improper Mind Flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
+	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
@@ -136,32 +91,41 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
 	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
-	var/overheat = 0
 	var/overheat_time = 16
-	var/recent_reload = 1
 	unique_rename = 1
+	origin_tech = "combat=2;powerstorage=1"
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/super
+	name = "super-kinetic accelerator"
+	desc = "An upgraded, superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_u"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
+	overheat_time = 15
+	origin_tech = "combat=3;powerstorage=2"
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper
+	name = "hyper-kinetic accelerator"
+	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
+	icon_state = "kineticgun_h"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
+	overheat_time = 14
+	origin_tech = "combat=4;powerstorage=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
-	overheat = 1
-	spawn(overheat_time)
-		overheat = 0
-		recent_reload = 0
 	..()
+	spawn(overheat_time)
+		reload()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
-	if(overheat || recent_reload)
-		return
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		user << "<span class='warning'>You silently charge [src].<span>"
-	recent_reload = 1
+		loc << "<span class='warning'>[src] silently charges up.<span>"
 	update_icon()
-	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -194,6 +158,13 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
+	shoot_live_shot()
+	return (OXYLOSS)
+
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -205,6 +176,7 @@
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	can_charge = 0
+	heat = 3800
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
@@ -247,9 +219,6 @@
 	item_state = icon_state
 	return
 
-/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user)
-	select_fire(user)
-
 /obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
 	..()
 	select_fire()
@@ -288,35 +257,17 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
-	var/charge_tick = 0
-	var/recharge_time = 5
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/printer/New()
+/obj/item/weapon/gun/energy/printer/emp_act()
+	return
+
+/obj/item/weapon/gun/energy/printer/newshot()
 	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/printer/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-/obj/item/weapon/gun/energy/printer/process()
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//...to recharge the shot
-
-	return 1
+	robocharge()
 
 /obj/item/weapon/gun/energy/temperature
 	name = "temperature gun"
@@ -327,7 +278,26 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
 
-/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user)
-	select_fire(user)
-	update_icon()
+/obj/item/weapon/gun/energy/laser/instakill
+	name = "instakill rifle"
+	icon_state = "instagib"
+	item_state = "instagib"
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
+	force = 60
+	origin_tech = null
+
+/obj/item/weapon/gun/energy/laser/instakill/red
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
+	icon_state = "instagibred"
+	item_state = "instagibred"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
+
+/obj/item/weapon/gun/energy/laser/instakill/blue
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
+	icon_state = "instagibblue"
+	item_state = "instagibblue"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
+
+/obj/item/weapon/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return

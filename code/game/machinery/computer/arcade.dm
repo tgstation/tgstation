@@ -35,6 +35,8 @@
 							/obj/item/toy/griffin									= 2,
 							/obj/item/weapon/coin/antagtoken						= 2,
 							/obj/item/stack/tile/fakespace/loaded					= 2,
+							/obj/item/toy/toy_xeno									= 2,
+							/obj/item/weapon/restraints/handcuffs/fake              = 2
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -42,7 +44,7 @@
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(typesof(/obj/item/weapon/circuitboard/arcade) - /obj/item/weapon/circuitboard/arcade)
+		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/arcade))
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
@@ -296,6 +298,7 @@
 		src.updateUsrDialog()
 
 
+
 // *** THE ORION TRAIL ** //
 
 #define ORION_TRAIL_WINTURN		9
@@ -312,6 +315,10 @@
 #define ORION_TRAIL_SPACEPORT	"Spaceport"
 #define ORION_TRAIL_BLACKHOLE	"BlackHole"
 
+#define ORION_STATUS_START		1
+#define ORION_STATUS_NORMAL		2
+#define ORION_STATUS_GAMEOVER	3
+#define ORION_STATUS_MARKET		4
 
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
@@ -325,8 +332,6 @@
 	var/food = 80
 	var/fuel = 60
 	var/turns = 4
-	var/playing = 0
-	var/gameover = 0
 	var/alive = 4
 	var/eventdat = null
 	var/event = null
@@ -346,6 +351,8 @@
 	var/spaceport_raided = 0
 	var/spaceport_freebie = 0
 	var/last_spaceport_action = ""
+	var/gameStatus = ORION_STATUS_START
+	var/canContinueEvent = 0
 
 /obj/machinery/computer/arcade/orion_trail/New()
 	..()
@@ -378,8 +385,7 @@
 	alive = 4
 	turns = 1
 	event = null
-	playing = 1
-	gameover = 0
+	gameStatus = ORION_STATUS_NORMAL
 	lings_aboard = 0
 
 	//spaceport junk
@@ -391,11 +397,11 @@
 	if(..())
 		return
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
-		gameover = 1
+		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
 	user.set_machine(src)
 	var/dat = ""
-	if(gameover)
+	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
 		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>Forever</b>."
 		if(settlers.len == 0)
@@ -419,14 +425,13 @@
 			user << "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>"
 			user.death()
 			emagged = 0 //removes the emagged status after you lose
-			playing = 0 //also a new game
+			gameStatus = ORION_STATUS_START
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
-
 	else if(event)
 		dat = eventdat
-	else if(playing)
+	else if(gameStatus == ORION_STATUS_NORMAL)
 		var/title = stops[turns]
 		var/subtext = stopblurbs[turns]
 		dat = "<center><h1>[title]</h1></center>"
@@ -464,247 +469,270 @@
 	busy = 1
 
 	if (href_list["continue"]) //Continue your travels
-		if(turns >= ORION_TRAIL_WINTURN)
-			win()
-		else
-			food -= (alive+lings_aboard)*2
-			fuel -= 5
-			if(turns == 2 && prob(30))
-				event = ORION_TRAIL_COLLISION
-				event()
-			else if(prob(75))
-				event = pickweight(events)
-				if(lings_aboard)
-					if(event == ORION_TRAIL_LING || prob(55))
-						event = ORION_TRAIL_LING_ATTACK
-						event()
-			turns += 1
-		if(emagged)
-			var/mob/living/carbon/M = usr //for some vars
-			switch(event)
-				if(ORION_TRAIL_RAIDERS)
-					if(prob(50))
-						usr << "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>"
-						M.hallucination += 30
-					else
-						usr << "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>"
-						M.take_organ_damage(30)
-						playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
-				if(ORION_TRAIL_ILLNESS)
-					var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
-					if(severity == 1)
-						M << "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" //got off lucky
-					if(severity == 2)
-						usr << "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>"
-						M.Stun(3)
-					if(severity >= 3) //you didn't pray hard enough
-						M << "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>"
-						M.Stun(5)
-						sleep(30)
-						say("[M] violently throws up!")
-						playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-						M.nutrition -= 50 //lose a lot of food
-						var/turf/location = usr.loc
-						if(istype(location, /turf/simulated))
-							location.add_vomit_floor(src, 1)
-				if(ORION_TRAIL_FLUX)
-					if(prob(75))
-						M.Weaken(3)
-						say("A sudden gust of powerful wind slams [M] into the floor!")
-						M.take_organ_damage(25)
-						playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-					else
-						M << "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>"
-				if(ORION_TRAIL_COLLISION) //by far the most damaging event
-					if(prob(90))
-						playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
-						var/turf/simulated/floor/F
-						for(F in orange(1, src))
-							F.ChangeTurf(F.baseturf)
-						say("Something slams into the floor around [src], exposing it to space!")
-						if(hull)
-							sleep(10)
-							say("A new floor suddenly appears around [src]. What the hell?")
+		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
+			if(turns >= ORION_TRAIL_WINTURN)
+				win()
+			else
+				food -= (alive+lings_aboard)*2
+				fuel -= 5
+				if(turns == 2 && prob(30))
+					event = ORION_TRAIL_COLLISION
+					event()
+				else if(prob(75))
+					event = pickweight(events)
+					if(lings_aboard)
+						if(event == ORION_TRAIL_LING || prob(55))
+							event = ORION_TRAIL_LING_ATTACK
+					event()
+				turns += 1
+			if(emagged)
+				var/mob/living/carbon/M = usr //for some vars
+				switch(event)
+					if(ORION_TRAIL_RAIDERS)
+						if(prob(50))
+							usr << "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>"
+							M.hallucination += 30
+						else
+							usr << "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>"
+							M.take_organ_damage(30)
+							playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
+					if(ORION_TRAIL_ILLNESS)
+						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+						if(severity == 1)
+							M << "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" //got off lucky
+						if(severity == 2)
+							usr << "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>"
+							M.Stun(3)
+						if(severity >= 3) //you didn't pray hard enough
+							M << "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>"
+							M.Stun(5)
+							sleep(30)
+							M.vomit(50)
+					if(ORION_TRAIL_FLUX)
+						if(prob(75))
+							M.Weaken(3)
+							say("A sudden gust of powerful wind slams [M] into the floor!")
+							M.take_organ_damage(25)
 							playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-							var/turf/space/T
-							for(T in orange(1, src))
-								T.ChangeTurf(/turf/simulated/floor/plating/)
-					else
-						say("Something slams into the floor around [src] - luckily, it didn't get through!")
-						playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
-				if(ORION_TRAIL_MALFUNCTION)
-					playsound(src.loc, 'sound/effects/EMPulse.ogg', 50, 1)
-					src.visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
-					var/oldfood = food
-					var/oldfuel = fuel
-					food = rand(10,80) / rand(1,2)
-					fuel = rand(10,60) / rand(1,2)
-					if(electronics)
-						sleep(10)
-						if(oldfuel > fuel && oldfood > food)
-							src.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
-						else if(oldfuel < fuel || oldfood < food)
-							src.audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
-						food = oldfood
-						fuel = oldfuel
-						playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
+						else
+							M << "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>"
+					if(ORION_TRAIL_COLLISION) //by far the most damaging event
+						if(prob(90))
+							playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
+							var/turf/simulated/floor/F
+							for(F in orange(1, src))
+								F.ChangeTurf(F.baseturf)
+							say("Something slams into the floor around [src], exposing it to space!")
+							if(hull)
+								sleep(10)
+								say("A new floor suddenly appears around [src]. What the hell?")
+								playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
+								var/turf/space/T
+								for(T in orange(1, src))
+									T.ChangeTurf(/turf/simulated/floor/plating/)
+						else
+							say("Something slams into the floor around [src] - luckily, it didn't get through!")
+							playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+					if(ORION_TRAIL_MALFUNCTION)
+						playsound(src.loc, 'sound/effects/EMPulse.ogg', 50, 1)
+						src.visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
+						var/oldfood = food
+						var/oldfuel = fuel
+						food = rand(10,80) / rand(1,2)
+						fuel = rand(10,60) / rand(1,2)
+						if(electronics)
+							sleep(10)
+							if(oldfuel > fuel && oldfood > food)
+								src.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
+							else if(oldfuel < fuel || oldfood < food)
+								src.audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
+							food = oldfood
+							fuel = oldfuel
+							playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 
 	else if(href_list["newgame"]) //Reset everything
-		newgame()
+		if(gameStatus == ORION_STATUS_START)
+			newgame()
 	else if(href_list["menu"]) //back to the main menu
-		playing = 0
-		event = null
-		gameover = 0
-		food = 80
-		fuel = 60
-		settlers = list("Harry","Larry","Bob")
+		if(gameStatus == ORION_STATUS_GAMEOVER)
+			gameStatus = ORION_STATUS_START
+			event = null
+			food = 80
+			fuel = 60
+			settlers = list("Harry","Larry","Bob")
 	else if(href_list["slow"]) //slow down
-		food -= (alive+lings_aboard)*2
-		fuel -= 5
+		if(event == ORION_TRAIL_FLUX)
+			food -= (alive+lings_aboard)*2
+			fuel -= 5
 		event = null
 	else if(href_list["pastblack"]) //slow down
-		food -= ((alive+lings_aboard)*2)*3
-		fuel -= 15
-		turns += 1
-		event = null
-	else if(href_list["useengine"]) //use parts
-		engine -= 1
-		event = null
-	else if(href_list["useelec"]) //use parts
-		electronics -= 1
-		event = null
-	else if(href_list["usehull"]) //use parts
-		hull -= 1
-		event = null
-	else if(href_list["wait"]) //wait 3 days
-		food -= ((alive+lings_aboard)*2)*3
-		event = null
-	else if(href_list["keepspeed"]) //keep speed
-		if(prob(75))
-			event = "Breakdown"
-			event()
-		else
-			event = null
-	else if(href_list["blackhole"]) //keep speed past a black hole
-		if(prob(75))
-			event = ORION_TRAIL_BLACKHOLE
-			event()
-			if(emagged) //has to be here because otherwise it doesn't work
-				playsound(src.loc, 'sound/effects/supermatter.ogg', 100, 1)
-				say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-				usr.Stun(10) //you can't run :^)
-				var/S = new /obj/singularity/academy(usr.loc)
-				emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
-				sleep(50)
-				say("[S] winks out, just as suddenly as it appeared.")
-				qdel(S)
-		else
-			event = null
+		if(turns == 7)
+			food -= ((alive+lings_aboard)*2)*3
+			fuel -= 15
 			turns += 1
+			event = null
+	else if(href_list["useengine"]) //use parts
+		if(event == ORION_TRAIL_BREAKDOWN)
+			engine = max(0, --engine)
+			event = null
+	else if(href_list["useelec"]) //use parts
+		if(event == ORION_TRAIL_MALFUNCTION)
+			electronics = max(0, --electronics)
+			event = null
+	else if(href_list["usehull"]) //use parts
+		if(event == ORION_TRAIL_COLLISION)
+			hull = max(0, --hull)
+			event = null
+	else if(href_list["wait"]) //wait 3 days
+		if(event == ORION_TRAIL_BREAKDOWN || event == ORION_TRAIL_MALFUNCTION || event == ORION_TRAIL_COLLISION)
+			food -= ((alive+lings_aboard)*2)*3
+			event = null
+	else if(href_list["keepspeed"]) //keep speed
+		if(event == ORION_TRAIL_FLUX)
+			if(prob(75))
+				event = "Breakdown"
+				event()
+			else
+				event = null
+	else if(href_list["blackhole"]) //keep speed past a black hole
+		if(turns == 7)
+			if(prob(75))
+				event = ORION_TRAIL_BLACKHOLE
+				event()
+				if(emagged) //has to be here because otherwise it doesn't work
+					playsound(src.loc, 'sound/effects/supermatter.ogg', 100, 1)
+					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
+					usr.Stun(10) //you can't run :^)
+					var/S = new /obj/singularity/academy(usr.loc)
+					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
+					sleep(50)
+					say("[S] winks out, just as suddenly as it appeared.")
+					qdel(S)
+			else
+				event = null
+				turns += 1
 	else if(href_list["holedeath"])
-		gameover = 1
-		event = null
+		if(event == ORION_TRAIL_BLACKHOLE)
+			gameStatus = ORION_STATUS_GAMEOVER
+			event = null
 	else if(href_list["eventclose"]) //end an event
-		event = null
+		if(canContinueEvent)
+			event = null
 
 	else if(href_list["killcrew"]) //shoot a crewmember
-		var/sheriff = remove_crewmember() //I shot the sheriff
-		playsound(loc,'sound/weapons/Gunshot.ogg', 100, 1)
+		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
+			var/sheriff = remove_crewmember() //I shot the sheriff
+			playsound(loc,'sound/weapons/Gunshot.ogg', 100, 1)
 
-		if(settlers.len == 0 || alive == 0)
-			say("The last crewmember [sheriff], shot themselves, GAME OVER!")
-			if(emagged)
-				usr.death(0)
-				emagged = 0
-			gameover = 1
-			event = null
-		else if(emagged)
-			if(usr.name == sheriff)
-				say("The crew of the ship chose to kill [usr.name]!")
-				usr.death(0)
+			if(settlers.len == 0 || alive == 0)
+				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
+				if(emagged)
+					usr.death(0)
+					emagged = 0
+				gameStatus = ORION_STATUS_GAMEOVER
+				event = null
+			else if(emagged)
+				if(usr.name == sheriff)
+					say("The crew of the ship chose to kill [usr.name]!")
+					usr.death(0)
 
-		if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
-			event = null
+			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
+				event = null
 
 	//Spaceport specific interactions
 	//they get a header because most of them don't reset event (because it's a shop, you leave when you want to)
 	//they also call event() again, to regen the eventdata, which is kind of odd but necessary
 	else if(href_list["buycrew"]) //buy a crewmember
-		var/bought = add_crewmember()
-		last_spaceport_action = "You hired [bought] as a new crewmember."
-		fuel -= 10
-		food -= 10
-		event()
+		if(gameStatus == ORION_STATUS_MARKET)
+			if(!spaceport_raided && food >= 10 && fuel >= 10)
+				var/bought = add_crewmember()
+				last_spaceport_action = "You hired [bought] as a new crewmember."
+				fuel -= 10
+				food -= 10
+				event()
 
 	else if(href_list["sellcrew"]) //sell a crewmember
-		var/sold = remove_crewmember()
-		last_spaceport_action = "You sold your crewmember, [sold]!"
-		fuel += 15
-		food += 15
-		event()
+		if(gameStatus == ORION_STATUS_MARKET)
+			if(!spaceport_raided && settlers.len > 1)
+				var/sold = remove_crewmember()
+				last_spaceport_action = "You sold your crewmember, [sold]!"
+				fuel += 7
+				food += 7
+				event()
 
 	else if(href_list["leave_spaceport"])
-		event = null
-		spaceport_raided = 0
-		spaceport_freebie = 0
-		last_spaceport_action = ""
+		if(gameStatus == ORION_STATUS_MARKET)
+			event = null
+			gameStatus = ORION_STATUS_NORMAL
+			spaceport_raided = 0
+			spaceport_freebie = 0
+			last_spaceport_action = ""
 
 	else if(href_list["raid_spaceport"])
-		var/success = min(15 * alive,100) //default crew (4) have a 60% chance
-		spaceport_raided = 1
+		if(gameStatus == ORION_STATUS_MARKET)
+			if(!spaceport_raided)
+				var/success = min(15 * alive,100) //default crew (4) have a 60% chance
+				spaceport_raided = 1
 
-		var/FU = 0
-		var/FO = 0
-		if(prob(success))
-			FU = rand(5,15)
-			FO = rand(5,15)
-			last_spaceport_action = "You successfully raided the spaceport! you gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
-		else
-			FU = rand(-5,-15)
-			FO = rand(-5,-15)
-			last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
+				var/FU = 0
+				var/FO = 0
+				if(prob(success))
+					FU = rand(5,15)
+					FO = rand(5,15)
+					last_spaceport_action = "You successfully raided the spaceport! you gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+				else
+					FU = rand(-5,-15)
+					FO = rand(-5,-15)
+					last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
 
-			//your chance of lose a crewmember is 1/2 your chance of success
-			//this makes higher % failures hurt more, don't get cocky space cowboy!
-			if(prob(success*5))
-				var/lost_crew = remove_crewmember()
-				last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
-				if(emagged)
-					say("WEEWOO WEEWOO, Spaceport Security en route!")
-					for(var/i, i<=3, i++)
-						var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
-						O.target = usr
+					//your chance of lose a crewmember is 1/2 your chance of success
+					//this makes higher % failures hurt more, don't get cocky space cowboy!
+					if(prob(success*5))
+						var/lost_crew = remove_crewmember()
+						last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
+						if(emagged)
+							say("WEEWOO WEEWOO, Spaceport Security en route!")
+							for(var/i, i<=3, i++)
+								var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
+								O.target = usr
 
 
-		fuel += FU
-		food += FO
-		event()
+				fuel += FU
+				food += FO
+				event()
 
 	else if(href_list["buyparts"])
-		switch(text2num(href_list["buyparts"]))
-			if(1) //Engine Parts
-				engine++
-				last_spaceport_action = "Bought Engine Parts"
-			if(2) //Hull Plates
-				hull++
-				last_spaceport_action = "Bought Hull Plates"
-			if(3) //Spare Electronics
-				electronics++
-				last_spaceport_action = "Bought Spare Electronics"
-		fuel -= 5 //they all cost 5
-		event()
+		if(gameStatus == ORION_STATUS_MARKET)
+			if(!spaceport_raided && fuel > 5)
+				switch(text2num(href_list["buyparts"]))
+					if(1) //Engine Parts
+						engine++
+						last_spaceport_action = "Bought Engine Parts"
+					if(2) //Hull Plates
+						hull++
+						last_spaceport_action = "Bought Hull Plates"
+					if(3) //Spare Electronics
+						electronics++
+						last_spaceport_action = "Bought Spare Electronics"
+				fuel -= 5 //they all cost 5
+				event()
 
 	else if(href_list["trade"])
-		switch(text2num(href_list["trade"]))
-			if(1) //Fuel
-				fuel -= 5
-				food += 5
-				last_spaceport_action = "Traded Fuel for Food"
-			if(2) //Food
-				fuel += 5
-				food -= 5
-				last_spaceport_action = "Traded Food for Fuel"
-		event()
+		if(gameStatus == ORION_STATUS_MARKET)
+			if(!spaceport_raided)
+				switch(text2num(href_list["trade"]))
+					if(1) //Fuel
+						if(fuel > 5)
+							fuel -= 5
+							food += 5
+							last_spaceport_action = "Traded Fuel for Food"
+							event()
+					if(2) //Food
+						if(food > 5)
+							fuel += 5
+							food -= 5
+							last_spaceport_action = "Traded Food for Fuel"
+							event()
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
@@ -714,7 +742,7 @@
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
 	eventdat = "<center><h1>[event]</h1></center>"
-
+	canContinueEvent = 0
 	switch(event)
 		if(ORION_TRAIL_RAIDERS)
 			eventdat += "Raiders have come aboard your ship!"
@@ -731,6 +759,7 @@
 				eventdat += "<br>Fortunately you fended them off without any trouble."
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 		if(ORION_TRAIL_FLUX)
 			eventdat += "This region of space is highly turbulent. <br>If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
@@ -744,6 +773,7 @@
 			eventdat += "<br>[deadname] was killed by the disease."
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 		if(ORION_TRAIL_BREAKDOWN)
 			eventdat += "Oh no! The engine has broken down!"
@@ -789,7 +819,7 @@
 
 		if(ORION_TRAIL_LING)
 			eventdat += "Strange reports warn of changelings infiltrating crews on trips to Orion..."
-			if(settlers.len <= 1)
+			if(settlers.len <= 2)
 				eventdat += "<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
@@ -805,6 +835,7 @@
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a crewmember</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Risk it</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 		if(ORION_TRAIL_LING_ATTACK)
 			if(lings_aboard <= 0) //shouldn't trigger, but hey.
@@ -846,9 +877,11 @@
 
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 
 		if(ORION_TRAIL_SPACEPORT)
+			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
 				eventdat += "The Spaceport is on high alert! they wont let you dock since you tried to attack them!"
 				if(last_spaceport_action)
@@ -899,7 +932,7 @@
 
 				//Sell crew
 				if(settlers.len > 1)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];sellcrew=1'>Sell crew for Fuel and Food (+15FU,+15FO)</a></P>"
+					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];sellcrew=1'>Sell crew for Fuel and Food (+7FU,+7FO)</a></P>"
 				else
 					eventdat += "<P ALIGN=Right>Cant afford to sell a Crewmember</P>"
 
@@ -977,7 +1010,7 @@
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()
-	playing = 0
+	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
 		new /obj/item/weapon/orion_ship(src.loc)
@@ -1001,21 +1034,23 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	corpse = /obj/effect/landmark/mobcorpse/orionsecurity
+	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/shield/energy)
 
-/obj/effect/landmark/mobcorpse/orionsecurity
+/obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/combat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseid = 1
-	corpseidjob = "Officer"
-	corpseidaccess = "Syndicate"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	helmet = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/weapon/storage/backpack
+	has_id = 1
+	id_job = "Officer"
+	id_access = "Syndicate"
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
@@ -1054,7 +1089,7 @@
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
 	sleep(3.6)
 	src.visible_message("<span class='userdanger'>[src] explodes!</span>")
-	explosion(src.loc, 1,2,4, flame_range = 3)
+	explosion(src.loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
 
@@ -1069,3 +1104,8 @@
 #undef ORION_TRAIL_COLLISION
 #undef ORION_TRAIL_SPACEPORT
 #undef ORION_TRAIL_BLACKHOLE
+
+#undef ORION_STATUS_START
+#undef ORION_STATUS_NORMAL
+#undef ORION_STATUS_GAMEOVER
+#undef ORION_STATUS_MARKET

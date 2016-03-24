@@ -6,10 +6,10 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Equip/Unequip TED Gun"
+	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
 	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
@@ -17,23 +17,27 @@
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
+	..()
 	if(PA)
 		qdel(PA)
 
 /obj/item/weapon/chrono_eraser/Destroy()
 	dropped()
-	..()
+	return ..()
 
-/obj/item/weapon/chrono_eraser/ui_action_click()
-	var/mob/living/carbon/user = src.loc
-	if(iscarbon(user) && (user.back == src))
-		if(PA)
-			qdel(PA)
-		else
-			PA = new(src)
-			user.put_in_hands(PA)
+/obj/item/weapon/chrono_eraser/ui_action_click(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.back == src)
+			if(PA)
+				qdel(PA)
+			else
+				PA = new(src)
+				user.put_in_hands(PA)
 
-
+/obj/item/weapon/chrono_eraser/item_action_slot_check(slot, mob/user)
+	if(slot == slot_back)
+		return 1
 
 /obj/item/weapon/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -41,9 +45,10 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = 3.0
+	w_class = 3
 	flags = NODROP
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
+	can_charge = 0
 	fire_delay = 50
 	var/obj/item/weapon/chrono_eraser/TED = null
 	var/obj/effect/chrono_field/field = null
@@ -58,6 +63,7 @@
 		qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/dropped()
+	..()
 	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
@@ -74,7 +80,7 @@
 		TED = null
 	if(field)
 		field_disconnect(field)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
@@ -181,7 +187,7 @@
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))
 		gun.field_disconnect(src)
-	..()
+	return ..()
 
 /obj/effect/chrono_field/update_icon()
 	var/ttk_frame = 1 - (tickstokill / initial(tickstokill))
@@ -238,8 +244,9 @@
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.oxygen = MOLES_O2STANDARD
-	GM.nitrogen = MOLES_N2STANDARD
+	GM.assert_gases("o2","n2")
+	GM.gases["o2"][MOLES] = MOLES_O2STANDARD
+	GM.gases["n2"][MOLES] = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 

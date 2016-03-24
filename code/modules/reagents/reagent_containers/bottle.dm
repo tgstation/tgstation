@@ -297,3 +297,15 @@
 	desc = "A small bottle. Contains a sample of Inquisitius."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/fluspanish
+
+/obj/item/weapon/reagent_containers/glass/bottle/tuberculosis
+	name = "Fungal Tuberculosis culture bottle"
+	desc = "A small bottle. Contains a sample of Fungal Tubercle bacillus."
+	icon_state = "bottle3"
+	spawned_disease = /datum/disease/tuberculosis
+
+/obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
+	name = "BVAK bottle"
+	desc = "A small bottle containing Bio Virus Antidote Kit."
+	icon_state = "bottle5"
+	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)

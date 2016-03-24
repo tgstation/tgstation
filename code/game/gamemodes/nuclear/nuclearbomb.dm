@@ -1,8 +1,7 @@
-#define NUKESTATE_INTACT		6
-#define NUKESTATE_OPEN			5
-#define NUKESTATE_OPEN_TRAP		4
-#define NUKESTATE_WIRES_TIED	3
-#define NUKESTATE_CUT_LINES		2
+#define NUKESTATE_INTACT		5
+#define NUKESTATE_UNSCREWED		4
+#define NUKESTATE_PANEL_REMOVED		3
+#define NUKESTATE_WELDED		2
 #define NUKESTATE_CORE_EXPOSED	1
 #define NUKESTATE_CORE_REMOVED	0
 
@@ -33,24 +32,34 @@ var/bomb_set
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
-	var/image/panel = null
 	var/image/interior = null
-	var/image/glow = null
 
 /obj/machinery/nuclearbomb/New()
 	..()
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
+	SSobj.processing -= core
 	update_icon()
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
 	desc = "For when it all gets too much to bear. Do not taunt."
-	icon = 'icons/obj/machines/bignuke.dmi'
+	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = 1 //stops it being moved
 	layer = 4
+
+/obj/machinery/nuclearbomb/syndicate
+
+/obj/machinery/nuclearbomb/syndicate/New()
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
+	if(existing)
+		qdel(src)
+		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
+		return 0
+	tag = "syndienuke"
+	return ..()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
@@ -65,66 +74,68 @@ var/bomb_set
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				user << "<span class='notice'>You start removing the front panel's screws...</span>"
-				if(do_after(user, 100,target=src))
-					deconstruction_state = NUKESTATE_OPEN
-					user << "<span class='notice'>You remove the screws and the front panel slides open.</span>"
+				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
+				if(do_after(user, 60/I.toolspeed,target=src))
+					deconstruction_state = NUKESTATE_UNSCREWED
+					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
 					update_icon()
 				return
-		if(NUKESTATE_OPEN,NUKESTATE_OPEN_TRAP)
-			if((deconstruction_state == NUKESTATE_OPEN) && istype(I, /obj/item/weapon/wirecutters))
-				playsound(loc, 'sound/effects/sparks4.ogg', 100, 1)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 100, 1)
-				user << "<span class='warning'>You must have cut the wrong wire!</span>"
-				for(var/mob/living/L in range(5,src))
-					L.irradiate(200)
-				deconstruction_state = NUKESTATE_OPEN_TRAP //cant cut wires no more
-			else
-				if(istype(I, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/S = I
-					user << "<span class='notice'>You start tying the wires...</span>"
-					if(do_after(user,30,target=src))
-						if(S.use(15))
-							user << "<span class='notice'>You tie the wires with some cable, clearing the insides of [src].</span>"
-							deconstruction_state = NUKESTATE_WIRES_TIED
-							update_icon()
-						else
-							user << "<span class='warning'>You need more cable to do that.</span>"
-				else
-					user << "<span class='warning'>You can't do anything with this tangle of cables in the way.</span>"
-				return
-		if(NUKESTATE_WIRES_TIED)
-			if(istype(I, /obj/item/weapon/pen))
-				user << "<span class='notice'>You start drawing cut lines...</span>"
-				if(do_after(user,30,target=src))
-					user << "<span class='notice'>You draw cut lines inside [src].</span>"
-					deconstruction_state = NUKESTATE_CUT_LINES
+		if(NUKESTATE_UNSCREWED)
+			if(istype(I, /obj/item/weapon/crowbar))
+				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
+				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				if(do_after(user,30/I.toolspeed,target=src))
+					user << "<span class='notice'>You remove [src]'s front panel.</span>"
+					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
 				return
-		if(NUKESTATE_CUT_LINES)
+		if(NUKESTATE_PANEL_REMOVED)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/welder = I
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-				user << "<span class='notice'>You start cutting into [src]'s warhead...</span>"
+				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,50,target=src))
-						playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
-						user << "<span class='notice'>You cut into [src]'s warhead. You can see the core's green glow.</span>"
-						deconstruction_state = NUKESTATE_CORE_EXPOSED
+					if(do_after(user,80/I.toolspeed,target=src))
+						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
+						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
-						SSobj.processing += core
 				return
+		if(NUKESTATE_WELDED)
+			if(istype(I, /obj/item/weapon/crowbar))
+				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
+				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				if(do_after(user,50/I.toolspeed,target=src))
+					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
+					deconstruction_state = NUKESTATE_CORE_EXPOSED
+					update_icon()
+					SSobj.processing += core
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
 				user << "<span class='notice'>You start loading the plutonium core into [core_box]...</span>"
 				if(do_after(user,50,target=src))
-					if(core_box.load(core,src))
+					if(core_box.load(core, user))
 						user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
 						deconstruction_state = NUKESTATE_CORE_REMOVED
 						update_icon()
+						core = null
 					else
 						user << "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>"
+				return
+			if(istype(I, /obj/item/stack/sheet/metal))
+				var/obj/item/stack/sheet/metal/M = I
+				if(M.amount >= 20)
+					user << "<span class='notice'>You begin repairing [src]'s inner metal plate...</span>"
+					if(do_after(user, 100, target=src))
+						if(M.use(20))
+							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
+							deconstruction_state = NUKESTATE_PANEL_REMOVED
+							SSobj.processing -= core
+							update_icon()
+						else
+							user << "<span class='warning'>You need more metal to do that!</span>"
+				else
+					user << "<span class='warning'>You need more metal to do that!</span>"
 				return
 		else
 			..()
@@ -143,6 +154,7 @@ var/bomb_set
 	if(deconstruction_state == NUKESTATE_INTACT)
 		switch(get_nuke_state())
 			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+				icon_state = "nuclearbomb_base"
 				update_icon_interior()
 				update_icon_lights()
 			if(NUKE_ON_TIMING)
@@ -152,51 +164,39 @@ var/bomb_set
 				overlays.Cut()
 				icon_state = "nuclearbomb_exploding"
 	else
+		icon_state = "nuclearbomb_base"
 		update_icon_interior()
 		update_icon_lights()
 
 /obj/machinery/nuclearbomb/proc/update_icon_interior()
 	overlays -= interior
-	overlays -= glow
 	switch(deconstruction_state)
-		if(NUKESTATE_OPEN_TRAP,NUKESTATE_OPEN)
-			glow = null
+		if(NUKESTATE_UNSCREWED)
+			interior = image(icon,"panel-unscrewed")
+		if(NUKESTATE_PANEL_REMOVED)
 			interior = image(icon,"panel-removed")
-		if(NUKESTATE_CORE_REMOVED,NUKESTATE_CUT_LINES,NUKESTATE_WIRES_TIED)
-			glow = null
-			interior = image(icon,"wires-sorted")
+		if(NUKESTATE_WELDED)
+			interior = image(icon,"plate-welded")
 		if(NUKESTATE_CORE_EXPOSED)
-			glow = image(icon,"core-exposed")
-			interior = image(icon,"wires-sorted")
+			interior = image(icon,"plate-removed")
+		if(NUKESTATE_CORE_REMOVED)
+			interior = image(icon,"core-removed")
 		if(NUKESTATE_INTACT)
-			glow = null
-			interior = image(icon,"panel-overlay")
+			interior = null
 	overlays += interior
-	overlays += glow
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
 	overlays -= lights
-	overlays -= panel
-	panel = null
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = image(icon,"lights-off")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-blue")
+			lights = null
 		if(NUKE_OFF_UNLOCKED)
 			lights = image(icon,"lights-safety")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-blue")
 		if(NUKE_ON_TIMING)
 			lights = image(icon,"lights-timing")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-timing")
 		if(NUKE_ON_EXPLODING)
 			lights = image(icon,"lights-exploding")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-exploding")
 	overlays += lights
-	overlays += panel
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
@@ -327,7 +327,7 @@ var/bomb_set
 	return
 
 /obj/machinery/nuclearbomb/blob_act()
-	if (timing == -1.0)
+	if (timing == -1)
 		return
 	else
 		return ..()
@@ -379,7 +379,8 @@ var/bomb_set
 		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
+			spawn()
+				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 			return
 	return
 
@@ -390,8 +391,9 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
 	if(loc == initial(loc))
-		for(var/turf/simulated/floor/bluegrid/T in orange(src, 1))
-			T.icon_state = (timing ? "rcircuitanim" : "gcircuit")
+		for(var/N in nuke_tiles)
+			var/turf/simulated/floor/T = N
+			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
@@ -400,17 +402,25 @@ This is here to make the tiles around the station mininuke change when it's arme
 	..()
 	SetTurfs()
 
+/obj/machinery/nuclearbomb/selfdestruct/set_safety()
+	..()
+	SetTurfs()
+
 //==========DAT FUKKEN DISK===============
+/obj/item/weapon/disk
+	icon = 'icons/obj/module.dmi'
+	w_class = 1
+	item_state = "card-id"
+	icon_state = "datadisk0"
+
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "nucleardisk"
-	item_state = "card-id"
-	w_class = 1.0
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
+	poi_list |= src
 	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
@@ -421,13 +431,11 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
-		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
-		transfer_fingerprints_to(NEWDISK)
+		var/turf/targetturf = get_turf(pick(blobstart))
 		var/turf/diskturf = get_turf(src)
-		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
-		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		return QDEL_HINT_HARDDEL_NOW
+		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
+		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
+		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	else
-		. = QDEL_HINT_LETMELIVE // Cancel destruction
 		throw EXCEPTION("Unable to find a blobstart landmark")
-		return
+	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
