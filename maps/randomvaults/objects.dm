@@ -17,6 +17,8 @@
 
 /area/vault/gym
 
+/area/vault/oldarmory
+
 /area/vault/rust
 	requires_power = 1
 
