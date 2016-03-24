@@ -34,7 +34,7 @@
 
 /obj/item/weapon/melee/lance/proc/lower_lance(mob/user)
 	if(!trigger)
-		trigger = new(null, usr, src)
+		trigger = new(get_step(usr, usr.dir), usr, src)
 		if(user) user.visible_message("<span class='danger'>[user] couches \the [src]!</span>", "<span class='notice'>You couch \the [src] and prepare to charge.</span>")
 		item_state = "lance_lowered"
 		force = initial(force)
@@ -93,8 +93,8 @@
 
 	processing_objects.Add(src)
 	src.owner = owner
-	src.owner.lock_atom(src, y_offset = 1, rotate_offsets = 1) //1 turf in front of the player
 	L = lance
+	src.owner.lock_atom(src, y_offset = 1, rotate_offsets = 1) //1 turf in front of the player
 
 	spawn()
 		amount_of_turfs_charged = 0
@@ -103,8 +103,9 @@
 	processing_objects.Remove(src)
 	owner = null
 
-	L.trigger = null
-	L = null
+	if(L)
+		L.trigger = null
+		L = null
 
 	..()
 
