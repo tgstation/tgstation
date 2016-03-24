@@ -1,11 +1,11 @@
 /obj/item/clothing/gloves/color/yellow
 	desc = "These gloves will protect the wearer from electric shock."
 	name = "insulated gloves"
-	icon_state = "yellow"
-	item_state = "ygloves"
+	icon_state = "orange"
+	item_state = "orangegloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	item_color="yellow"
+	item_color="orange"
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/gloves/color/yellow/fake
