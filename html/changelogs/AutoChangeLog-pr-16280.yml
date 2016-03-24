@@ -1,5 +1,0 @@
-author: Iamgoofball
-delete-after: True
-changes: 
-  - rscadd: "CLF3 now melts, burns, and destroys floors a lot more often, as it should be."
-  - rscadd: "CLF3 now makes 3x3 fireballs on tiles it touches now, instead of a single fireball."
