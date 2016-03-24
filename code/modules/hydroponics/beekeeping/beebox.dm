@@ -183,7 +183,7 @@
 
 
 /obj/structure/beebox/attack_hand(mob/user)
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		if(!user.bee_friendly())
 			//Time to get stung!
 			var/bees = FALSE
