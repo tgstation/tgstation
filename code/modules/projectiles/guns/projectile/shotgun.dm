@@ -169,7 +169,15 @@
 	desc = "Bee Capsule. Oh god why"
 	icon_state = "762-casing"
 	caliber = "Angrybee"
-	projectile_type = /mob/living/simple_animal/hostile/poison/bees
+	projectile_type = /obj/item/projectile/bullet/beebee
+	
+/obj/item/projectile/bullet/beebee
+	damage = 5
+
+/obj/item/projectile/bullet/beebee/on_hit(atom/target, blocked = 0)
+	..()
+	new /mob/living/simple_animal/hostile/poison/bees(target.loc)
+
 
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
