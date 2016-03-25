@@ -334,6 +334,11 @@
 		if(!check_rights(R_BAN))	return
 		addmute(href_list["permamute"], usr.ckey, href_list["chat"])
 
+	else if(href_list["unmutef"])
+		if(!check_rights(R_BAN))	return
+		remove_mute(href_list["unmutef"])
+		mutepanel()
+
 	else if(href_list["showmultiacc"])
 		if(!check_rights(R_ADMIN))	return
 		var/mob/M = locate(href_list["showmultiacc"])
