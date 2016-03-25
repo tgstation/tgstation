@@ -75,6 +75,44 @@
 		SSshuttle.emergency.setTimer(100)
 		emagged = 1
 
+/obj/machinery/computer/emergency_shuttle/proc/alienbreak()
+	stat |= BROKEN
+	update_icon()
+	return
+
+/obj/machinery/computer/emergency_shuttle/attack_alien(mob/living/A)
+	A.do_attack_animation(src)
+	if(istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
+		if(SSshuttle.alienNoEscape == 1)
+			A.visible_message("<span class='danger'>[A.name] smashes the [src.name] with its claws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your claws, breaking the biological detector and forcing the shuttle to launch!.</span>",\
+			"<span class='italics'>You hear a smashing sound.</span>")
+			minor_announce("Critical sensor failure, the shuttle will launch in 10 seconds to avoid undetected biological hazards.", "SYSTEM ERROR:",null,1)
+			SSshuttle.alienNoEscape = 0 //Oh fuck that shit is hijacking the shuttle - Centcom
+			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+				SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.setTimer(100)
+			alienbreak()
+			return
+		else
+			A.visible_message("<span class='danger'>[A.name] uselessly smashes against the [src.name] with its claws.</span>",\
+			"<span class='danger'>You uselessly smash against the [src.name] with your claws.</span>",\
+			"<span class='italics'>You hear a clicking sound.</span>")
+	else
+		A.visible_message("<span class='danger'>[A.name] uselessly smashes against the [src.name] with its claws.</span>",\
+		"<span class='danger'>You uselessly smash against the [src.name] with your claws.</span>",\
+		"<span class='italics'>You hear a clicking sound.</span>")
+
+/obj/machinery/computer/emergency_shuttle/Destroy()
+	if(SSshuttle.alienNoEscape == 1)
+		return QDEL_HINT_LETMELIVE
+/obj/machinery/computer/emergency_shuttle/singularity_pull()
+	if(SSshuttle.alienNoEscape == 1)
+		return
+/obj/machinery/computer/emergency_shuttle/singularity_act()
+	if(SSshuttle.alienNoEscape == 1)
+		return 0
+
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
 	id = "emergency"
@@ -191,7 +229,12 @@
 				sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
 				mode = SHUTTLE_STRANDED
 
-			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
+			if(time_left <= 0 && SSshuttle.alienNoEscape)
+				priority_announce("Hostile alien organisms detected. Departure has been postponed indefinitely to prevent outbreak.", null, 'sound/misc/notice1.ogg', "Priority")
+				sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
+				mode = SHUTTLE_STRANDED
+
+			if(time_left <= 0 && !SSshuttle.emergencyNoEscape && !SSshuttle.alienNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
