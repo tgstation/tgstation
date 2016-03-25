@@ -12,9 +12,11 @@
 	else
 		if(works_from_distance)
 			if(istype(T) && get_dist(T,src) <= works_from_distance)
-				user.Beam(T.loc,icon_state="cash_beam",icon='icons/effects/effects.dmi',time=5)
-				export(T, user)
-				playsound(src, 'sound/effects/sellaporter.wav', 50, 0)
+				user.visible_message("<span class = 'danger'>[user] starts to export [T] to the space markets!</span>")
+				if(do_after(user, 50, target = T))
+					user.Beam(T.loc,icon_state="cash_beam",icon='icons/effects/effects.dmi',time=5)
+					export(T, user)
+					playsound(src, 'sound/effects/sellaporter.wav', 50, 0)
 	return
 
 /obj/item/weapon/cargo_exporter/proc/export(atom/movable/O, mob/user)
