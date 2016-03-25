@@ -74,10 +74,19 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
 					reagents.remove_reagent("nutriment", 0.1)
+				if(reagents.has_reagent("salglu_solution"))	//Salglu restores blood
+					B.volume += 0.4
+					reagents.remove_reagent("nutriment", 0.1)
 				if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
 
+		var/datum/disease/F = new /datum/disease/shock
+		if(blood_volume < 520 && !src.HasDisease(F))
+			if(prob((560-blood_volume)/25))
+				var/datum/disease/D = /datum/disease/shock
+				src.ContractDisease(new D)
+			src << "Your odds of descending into shock are [(560-blood_volume)/25]."
 		//Effects of bloodloss
 		switch(blood_volume)
 			if(BLOOD_VOLUME_SAFE to 10000)
@@ -90,20 +99,20 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					update_body()
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel [word].</span>"
-				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 100)
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 300)
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 50)
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 150)
 				if(prob(5))
 					blur_eyes(6)
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel very [word].</span>"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				oxyloss += 5
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 150)
 				if(prob(15))
-					Paralyse(rand(1,3))
+					//Paralyse(rand(1,3))
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel extremely [word].</span>"
 			if(0 to BLOOD_VOLUME_SURVIVE)

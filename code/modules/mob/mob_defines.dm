@@ -54,6 +54,8 @@
 	var/eye_damage = 0//Living, potentially Carbon
 	var/lastpuke = 0
 
+	var/bleed_ticker = 0
+
 	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0//Living

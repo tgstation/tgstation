@@ -36,6 +36,8 @@
 	if(recentpump)
 		return
 	pump(user)
+	user.visible_message("<span class='danger'>[user] racks the [src].</span>", \
+								"<span class='notice'>You rack the [src].</span>")
 	recentpump = 1
 	spawn(10)
 		recentpump = 0
@@ -105,7 +107,11 @@
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	if(bolt_open)
 		pump_reload(M)
+		//user.visible_message("<span class='danger'>[M] racks open the bolt on the [src].</span>", \
+							"<span class='userdanger'>You rack open the bolt on the [src].</span>")
 	else
+		//user.visible_message("<span class='danger'>[M] racks the bolt on the [src] closed.</span>", \
+							"<span class='userdanger'>You rack the bolt on the [src] closed.</span>")
 		pump_unload(M)
 	bolt_open = !bolt_open
 	update_icon()	//I.E. fix the desc

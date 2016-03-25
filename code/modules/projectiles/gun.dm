@@ -87,6 +87,16 @@
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
 
+/obj/item/weapon/gun/equipped(mob/living/user as mob, slot)
+	..()
+	if(slot == slot_s_store)
+		user.visible_message("<span class='danger'>[user] holsters a gun on their armor.</span>")
+	else if(slot == slot_belt)
+		user.visible_message("<span class='danger'>[user] holsters a gun on their belt.</span>")
+	else if(slot == slot_back)
+		user.visible_message("<span class='danger'>[user] slings a gun around their back.</span>")
+	else
+		user.visible_message("<span class='danger'><b>[user]</b> grabs a gun.</span>")
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0

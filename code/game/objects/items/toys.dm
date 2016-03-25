@@ -171,6 +171,17 @@
 						"<span class='danger'>You fire [src] at [target]!</span>", \
 						 "<span class='italics'>You hear a gunshot!</span>")
 
+/obj/item/toy/gun/equipped(mob/living/user as mob, slot)
+	..()
+	if(slot == slot_s_store)
+		user.visible_message("<span class='danger'>[user] holsters a gun on their armor.</span>")
+	else if(slot == slot_belt)
+		user.visible_message("<span class='danger'>[user] holsters a gun on their belt.</span>")
+	else if(slot == slot_back)
+		user.visible_message("<span class='danger'>[user] slings a gun around their back.</span>")
+	else
+		user.visible_message("<span class='danger'><b>[user]</b> grabs a gun.</span>")
+
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."

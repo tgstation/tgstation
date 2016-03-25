@@ -315,3 +315,4 @@
 	msg += "*---------*</span>"
 
 	user << msg
+	user.visible_message("<b>[user]</b> looks at <b>[src]</b>.")
