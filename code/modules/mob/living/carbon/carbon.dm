@@ -74,6 +74,8 @@
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
+	if(dna && dna.check_mutation(SMES_HUMAN))
+		return 0
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0

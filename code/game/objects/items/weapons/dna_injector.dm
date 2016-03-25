@@ -302,6 +302,14 @@
 	name = "\improper DNA injector (Anti-Laser Eyes)"
 	remove_mutations_static = list(LASEREYES)
 
+/obj/item/weapon/dnainjector/smes_humanmut
+	name = "\improper DNA injector (SMES Human)"
+	add_mutations_static = list(SMES_HUMAN)
+
+/obj/item/weapon/dnainjector/antismes_human
+	name = "\improper DNA injector (Anti-SMES Human)"
+	remove_mutations_static = list(SMES_HUMAN)
+
 /obj/item/weapon/dnainjector/timed
 	var/duration = 600
 
