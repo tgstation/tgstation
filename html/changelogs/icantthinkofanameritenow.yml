@@ -1,0 +1,7 @@
+author: Icantthinkofanameritenow
+
+delete-after: True
+
+changes: 
+- bugfix: Fixes the exposed space tiles in the Syndicate Base vault, along with other mapping issues.
+- tweak: Some of the Syndicate mobs in the vault now use laser guns instead of C-20Rs. 

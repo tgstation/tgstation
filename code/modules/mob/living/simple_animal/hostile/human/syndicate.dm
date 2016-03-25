@@ -93,6 +93,12 @@
 
 	items_to_drop = list(/obj/item/weapon/gun/projectile/automatic/c20r)
 
+/mob/living/simple_animal/hostile/humanoid/syndicate/ranged/laser
+	projectilesound = 'sound/weapons/Laser.ogg'
+	projectiletype = /obj/item/projectile/beam
+
+	items_to_drop = list(/obj/item/weapon/gun/energy/laser)
+	
 /mob/living/simple_animal/hostile/humanoid/syndicate/ranged/space
 	icon_state = "syndicaterangedpsace"
 	icon_living = "syndicaterangedpsace"
