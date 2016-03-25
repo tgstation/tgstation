@@ -15,15 +15,9 @@
 	cracked_base = "fcrack"
 
 /obj/structure/window/full/New(loc)
+
 	..(loc)
 	flags &= ~ON_BORDER
-	for(var/obj/structure/grille/G in loc)
-		G.setfullwindowed()
-
-/obj/structure/window/full/Destroy()
-	for(var/obj/structure/grille/G in loc)
-		G.setfullwindowed()
-	..()
 
 /obj/structure/window/full/CheckExit(atom/movable/O as mob|obj, target as turf)
 

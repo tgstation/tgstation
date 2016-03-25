@@ -12,7 +12,6 @@
 	explosion_resistance = 5
 	var/health = 20 //Relatively "strong" since it's hard to dismantle via brute force
 	var/broken = 0
-	var/fullwindowed = 0 //Because window code sucks
 
 /obj/structure/grille/examine(mob/user)
 
@@ -27,10 +26,6 @@
 	returnToPool(src)
 	..()
 
-/obj/structure/grille/New()
-	..()
-	setfullwindowed()
-
 /obj/structure/grille/proc/healthcheck(var/hitsound = 0) //Note : Doubles as the destruction proc()
 	if(hitsound)
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -42,16 +37,6 @@
 	if(health <= 0) //Dead
 		getFromPool(/obj/item/stack/rods, get_turf(src)) //Drop the second set of rods
 		returnToPool(src)
-
-/obj/structure/grille/proc/setfullwindowed()
-	if(!anchored)
-		fullwindowed = 0
-		return
-	for(var/obj/structure/window/full/F in loc)
-		if(F && F.anchored)
-			fullwindowed = 1
-		else
-			fullwindowed = 0
 
 /obj/structure/grille/ex_act(severity)
 	switch(severity)
@@ -69,10 +54,8 @@
 	healthcheck(hitsound = 1)
 
 /obj/structure/grille/Bumped(atom/user)
-	if(fullwindowed) return
 	if(ismob(user))
 		shock(user, 60) //Give the user the benifit of the doubt
-		return
 
 /obj/structure/grille/attack_paw(mob/user as mob)
 	attack_hand(user)
@@ -159,7 +142,6 @@
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
-			setfullwindowed()
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille [anchored ? "to" : "from"] the floor.</span>", \
 			"<span class='notice'>You [anchored ? "fasten" : "unfasten"] the grille [anchored ? "to" : "from"] the floor.</span>")
 			return
@@ -187,6 +169,7 @@
 		for(var/obj/structure/window/P in loc)
 			if(P.dir == dir_to_set)
 				to_chat(user, "<span class='warning'>There's already a window here.</span>")//You idiot
+
 				return
 		user.visible_message("<span class='notice'>[user] starts placing a window on \the [src].</span>", \
 		"<span class='notice'>You start placing a window on \the [src].</span>")
