@@ -74,6 +74,7 @@
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("chat")		return chatOutput.Topic(href, href_list)
 
 	..()	//redirect to hsrc.Topic()
 	//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
@@ -112,6 +113,9 @@
 	//CONNECT//
 	///////////
 /client/New(TopicData)
+	// world.log << "creating chatOutput"
+	chatOutput = new /datum/chatOutput(src) // Right off the bat.
+	// world.log << "Done creating chatOutput"
 	if(config)
 		winset(src, null, "outputwindow.output.style=[config.world_style_config];")
 		winset(src, null, "window1.msay_output.style=[config.world_style_config];") // it isn't possible to set two window elements in the same winset so we need to call it for each element we're assigning a stylesheet.
@@ -156,6 +160,7 @@
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
+	chatOutput.start()
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")

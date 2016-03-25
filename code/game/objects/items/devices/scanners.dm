@@ -313,7 +313,7 @@ Subject's pulse: ??? BPM"})
 	if(!container || istype(container, /turf))
 		message += "<span class='bnotice'>Results:</span>"
 	else
-		message += "<span class='bnotice'><B>\icon [container] Results of [container] scan:</span>"
+		message += "<span class='bnotice'><B>[bicon(container)] Results of [container] scan:</span></B>"
 	if(total_moles)
 		message += "<br>[human_standard && abs(pressure - ONE_ATMOSPHERE) > 10 ? "<span class='bad'>" : "<span class='notice'>"] Pressure: [round(pressure, 0.1)] kPa</span>"
 		var/o2_concentration = scanned.oxygen/total_moles

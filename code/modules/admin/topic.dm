@@ -2570,7 +2570,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
 				command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-				to_chat(world, sound('sound/AI/granomalies.ogg'))
+				world << sound('sound/AI/granomalies.ogg')
 				var/turf/T = pick(blobstart)
 				var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 				spawn(rand(100, 600))
@@ -2735,7 +2735,7 @@
 				if(answer=="Let's fix it!")
 					message_admins("[key_name_admin(usr)] unleashed the bees onto the crew.", 1)
 					to_chat(world, "<font size='10' color='red'><b>NOT THE BEES!</b></font>")
-					to_chat(world, sound('sound/effects/bees.ogg'))
+					world << sound('sound/effects/bees.ogg')
 					for(var/mob/living/M in player_list)
 						var/mob/living/simple_animal/bee/BEE = new(get_turf(M))
 						BEE.strength = 16
@@ -2794,7 +2794,7 @@
 					W.item_state = "w_suit"
 					W._color = "schoolgirl"
 				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-				to_chat(world, sound('sound/AI/animes.ogg'))
+				world << sound('sound/AI/animes.ogg')
 			if("eagles")//SCRAW
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
@@ -2946,7 +2946,7 @@
 				message_admins("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
 				log_admin("[key_name_admin(usr)] improvised himself as Micheal Bay and triggered [round(choice)] fake explosions.")
 				for(var/i = 1 to choice)
-					to_chat(world, sound('sound/effects/explosionfar.ogg'))
+					world << sound('sound/effects/explosionfar.ogg')
 					sleep(rand(2, 10)) //Sleep 0.2 to 1 second
 			if("massbomber")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2954,7 +2954,7 @@
 				var/choice = alert("Dress every player like Bomberman and give them BBDs?","Bomberman Mode Activation","Confirm","Cancel")
 				if(choice=="Confirm")
 					bomberman_mode = 1
-					to_chat(world, sound('sound/bomberman/start.ogg'))
+					world << sound('sound/bomberman/start.ogg')
 					for(var/mob/living/carbon/human/M in player_list)
 						if(M.wear_suit)
 							var/obj/item/O = M.wear_suit

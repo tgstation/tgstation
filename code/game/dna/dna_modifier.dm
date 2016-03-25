@@ -470,7 +470,7 @@
 		if(user == connected.occupant || user.isUnconscious())
 			return
 	else
-		src.visible_message("\icon[src]<span class='notice'>No scanner connected!<span>")
+		src.visible_message("[bicon(src)]<span class='notice'>No scanner connected!<span>")
 		return
 
 	// this is the data which will be sent to the ui

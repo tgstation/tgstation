@@ -416,10 +416,10 @@ var/list/camera_names=list()
 			if(S.current == src)
 				if(istype(S, /obj/machinery/computer/security/telescreen))
 					for(var/mob/M in viewers(world.view,S))
-						to_chat(M, "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>")
+						to_chat(M, "<span style='color:grey'>[bicon(S)][tv_message(M, speech, rendered_speech)]</span>")
 				else
 					for(var/mob/M in viewers(1,S))
-						to_chat(M, "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>")
+						to_chat(M, "<span style='color:grey'>[bicon(S)][tv_message(M, speech, rendered_speech)]</span>")
 
 /obj/machinery/camera/arena
 	name = "arena camera"

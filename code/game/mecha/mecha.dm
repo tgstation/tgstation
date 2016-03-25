@@ -195,7 +195,7 @@
 	if(equipment && equipment.len)
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "\icon[ME] [ME]")
+			to_chat(user, "[bicon(ME)] [ME]")
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
@@ -438,7 +438,7 @@
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	to_chat(occupant, sound('sound/machines/warning.ogg',wait=0))
+	occupant << sound('sound/machines/warning.ogg',wait=0)
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -1091,7 +1091,7 @@
 		dir = dir_in
 		playsound(src, 'sound/mecha/mechentry.ogg', 50, 1)
 		if(!hasInternalDamage())
-			to_chat(src.occupant, sound('sound/mecha/nominalsyndi.ogg',volume=50))
+			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
 
 		// -- Mode/mind specific stuff goes here
 		if(H.mind)
@@ -1163,7 +1163,7 @@
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!hasInternalDamage())
-			to_chat(src.occupant, sound('sound/mecha/nominalsyndi.ogg',volume=50))
+			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
 		return 1
 	else
 		return 0
@@ -1298,7 +1298,7 @@
 
 /obj/mecha/proc/emergency_eject(var/exit = loc)
 	if (occupant)
-		to_chat(occupant, sound('sound/machines/warning.ogg',wait=0))
+		occupant << sound('sound/machines/warning.ogg',wait=0)
 		log_message("Emergency ejection.",1)
 		occupant_message("<font color='red'>Emergency ejection protocol engaged.</font>")
 		spawn(10)
@@ -1559,7 +1559,7 @@
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
 		if(src.occupant && src.occupant.client)
-			to_chat(src.occupant, "\icon[src] [message]")
+			to_chat(src.occupant, "[bicon(src)] [message]")
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)
@@ -1675,14 +1675,14 @@
 				log_message("Maintenance protocols engaged.")
 				if(occupant)
 					occupant_message("<font color='red'>Maintenance protocols engaged.</font>")
-					to_chat(occupant, sound('sound/mecha/mechlockdown.ogg',wait=0))
+					occupant << sound('sound/mecha/mechlockdown.ogg',wait=0)
 			else if(state==STATE_BOLTSEXPOSED)
 				state = STATE_BOLTSHIDDEN
 				to_chat(user, "The securing bolts are now hidden.")
 				log_message("Maintenance protocols terminated.")
 				if(occupant)
 					occupant_message("Maintenance protocols terminated.")
-					to_chat(occupant, sound('sound/mecha/mechentry.ogg',wait=0))
+					occupant << sound('sound/mecha/mechentry.ogg',wait=0)
 			else
 				to_chat(user, "You can't toggle maintenance mode with the securing bolts unfastened.")
 			output_maintenance_dialog(filter.getObj("id_card"),user)

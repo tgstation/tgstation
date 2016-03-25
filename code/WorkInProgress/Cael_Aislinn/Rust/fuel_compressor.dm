@@ -71,9 +71,9 @@ var/const/max_assembly_amount = 300
 			compressed_matter -= 10
 			ejected = 1
 		if(ejected)
-			to_chat(usr, "<span class='notice'>\icon[src] [src] ejects some compressed matter units.</span>")
+			to_chat(usr, "<span class='notice'>[bicon(src)] [src] ejects some compressed matter units.</span>")
 		else
-			to_chat(usr, "<span class='warning'>\icon[src] there are no more compressed matter units in [src].</span>")
+			to_chat(usr, "<span class='warning'>[bicon(src)] there are no more compressed matter units in [src].</span>")
 
 	if( href_list["activate"] )
 //		to_chat(world, "<span class='notice'>New fuel rod assembly</span>")
@@ -99,7 +99,7 @@ var/const/max_assembly_amount = 300
 		if(fail)
 			del(F)
 			compressed_matter = old_matter
-			to_chat(usr, "<span class='warning'>\icon[src] [src] flashes red: \'Out of matter.\'</span>")
+			to_chat(usr, "<span class='warning'>[bicon(src)] [src] flashes red: \'Out of matter.\'</span>")
 		else
 			F.loc = src.loc//get_step(get_turf(src), src.dir)
 			F.percent_depleted = 0

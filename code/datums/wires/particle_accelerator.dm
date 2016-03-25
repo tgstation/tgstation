@@ -33,7 +33,7 @@ var/const/PARTICLE_LIMIT_POWER_WIRE = 8 // Determines how strong the PA can be.
 			C.interface_control = !C.interface_control
 
 		if(PARTICLE_LIMIT_POWER_WIRE)
-			C.visible_message("\icon[C]<b>[C]</b> makes a large whirring noise.")
+			C.visible_message("[bicon(C)]<b>[C]</b> makes a large whirring noise.")
 
 /datum/wires/particle_acc/control_box/UpdateCut(var/index, var/mended)
 	var/obj/machinery/particle_accelerator/control_box/C = holder

@@ -473,9 +473,9 @@ var/list/mechtoys = list(
 			else
 				to_chat(usr, "<span class='warning'>Please wear an ID with an associated bank account.</span>")
 				return
-			to_chat(usr, "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>")
 			if(account && (account.money < P.cost))
-				to_chat(usr, "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>")
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account
@@ -671,11 +671,11 @@ var/list/mechtoys = list(
 				idrank = I.GetJobName()
 				account = get_card_account(I)
 			else
-				to_chat(usr, "\icon[src]<span class='warning'>Please wear an ID with an associated bank account.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Please wear an ID with an associated bank account.</span>")
 				return
-			to_chat(usr, "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>")
 			if(account && (account.money < P.cost))
-				to_chat(usr, "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>")
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account

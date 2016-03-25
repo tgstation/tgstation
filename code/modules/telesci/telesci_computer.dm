@@ -253,7 +253,7 @@
 	if(prob(5))
 		// HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONK
 		for(var/mob/living/carbon/M in hearers(src, null))
-			to_chat(M, sound('sound/items/AirHorn.ogg'))
+			M << sound('sound/items/AirHorn.ogg')
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.earprot())
@@ -307,12 +307,12 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 		var/area/A=target.loc
 		if(A && A.jammed)
 			if(!telepad.amplifier || A.jammed==SUPER_JAMMED)
-				src.visible_message("<span class='warning'>\icon[src] [src] turns on and the lights dim.  You can see a faint shape, but it loses focus and the telepad shuts off with a buzz.  Perhaps you need more signal strength?", "\icon[src]<span class='warning'>You hear something buzz.</span></span>")
+				src.visible_message("<span class='warning'>[bicon(src)] [src] turns on and the lights dim.  You can see a faint shape, but it loses focus and the telepad shuts off with a buzz.  Perhaps you need more signal strength?", "[bicon(src)]<span class='warning'>You hear something buzz.</span></span>")
 				return
 			if(prob(25))
 				qdel(telepad.amplifier)
 				telepad.amplifier = null
-				src.visible_message("\icon[src]<span class='notice'>You hear something shatter.</span>","\icon[src]<span class='notice'>You hear something shatter.</span>")
+				src.visible_message("[bicon(src)]<span class='notice'>You hear something shatter.</span>","[bicon(src)]<span class='notice'>You hear something shatter.</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, telepad)
 		s.start()

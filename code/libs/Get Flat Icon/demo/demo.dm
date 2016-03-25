@@ -82,7 +82,7 @@ mob
 
 		Output_Icon()
 			set name = "3. Output Icon"
-			to_chat(src, "\icon[getFlatIcon(src)]")
+			to_chat(src, "[bicon(getFlatIcon(src))]")
 			to_chat(src, "-----------------------------------------")
 
 		Output_Fullsize_Icon()

@@ -55,7 +55,7 @@
 			icon_state = "analyser"
 
 			for(var/mob/O in hearers(src, null))
-				O.show_message("\icon[src] <span class='notice'>The [src.name] prints a sheet of paper.</span>", 1)
+				O.show_message("[bicon(src)] <span class='notice'>The [src.name] prints a sheet of paper.</span>", 1)
 	else if(dish && !scanning && !pause)
 		if(dish.virus2 && dish.growth > 50)
 			dish.growth -= 10
@@ -67,7 +67,7 @@
 				dish.loc = src.loc
 				dish = null
 				for(var/mob/M in viewers(src))
-					M.show_message("\icon[src] <span class='notice'>The [src.name] buzzes</span>", 2)
+					M.show_message("[bicon(src)] <span class='notice'>The [src.name] buzzes</span>", 2)
 				pause = 0
 
 

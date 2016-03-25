@@ -202,7 +202,7 @@
 			for(var/sf in audio_sounds)
 				var/sound/voice = sound(sf, wait = 1, channel = VOX_CHANNEL)
 				voice.status = SOUND_STREAM
-				to_chat(world, voice)
+				world << voice
 			lastaudiowarning = world.timeofday - audio_offset
 
 		if(damage > explosion_point)

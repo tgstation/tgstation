@@ -35,7 +35,7 @@ var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 /datum/wires/mulebot/UpdatePulsed(var/index)
 	switch(index)
 		if(WIRE_REMOTE_RX,WIRE_REMOTE_TX,WIRE_BEACON_RX)
-			holder.visible_message("<span class='notice'>\icon[holder] You hear a radio crackle.</span>")
+			holder.visible_message("<span class='notice'>[bicon(holder)] You hear a radio crackle.</span>")
 
 // HELPER PROCS
 

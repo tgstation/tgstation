@@ -73,7 +73,7 @@
 		busy = 1
 		if(do_after(user, src, 40))
 			busy = 0
-			to_chat(user, "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>")
+			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>")
 		else
 			busy = 0
 		return

@@ -132,9 +132,9 @@
 		if ("buy")
 			var/itemID = href_list["chosen_item"]
 			if(!centcomm_store.PlaceOrder(usr,itemID,src))
-				to_chat(usr, "\icon[src]<span class='warning'>Unable to charge your account.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to charge your account.</span>")
 			else
-				to_chat(usr, "\icon[src]<span class='notice'>Transaction complete! Enjoy your product.</span>")
+				to_chat(usr, "[bicon(src)]<span class='notice'>Transaction complete! Enjoy your product.</span>")
 
 	src.updateUsrDialog()
 	return

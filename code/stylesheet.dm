@@ -1,3 +1,4 @@
+// NOTE: If you edit these edit the chat's CSS file (/goon/browserassets/css/browserOutput.css) too.
 #define world_style {"\"body 					{font-family: Verdana, sans-serif;}
 h1, h2, h3, h4, h5, h6	{color: #0000ff;font-family: Georgia, Verdana, sans-serif;}
 em						{font-style: normal;	font-weight: bold;}

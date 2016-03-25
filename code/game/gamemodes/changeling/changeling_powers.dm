@@ -122,7 +122,7 @@
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	H.visible_message("<span class = 'warning'>[src] emits a putrid odor as their torso splits open!</span>")
-	to_chat(world, sound('sound/effects/greaterling.ogg'))
+	world << sound('sound/effects/greaterling.ogg')
 	to_chat(world, "<span class = 'sinister'>A roar pierces the air and makes your blood curdle. Uh oh.</span>")
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'

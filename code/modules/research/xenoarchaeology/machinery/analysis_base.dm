@@ -59,16 +59,16 @@
 		if(scan_process++ > target_scan_ticks)
 			FinishScan()
 		else if(temperature > 400)
-			src.visible_message("<span class='notice'>\icon[src] shuts down from the heat!</span>", 2)
+			src.visible_message("<span class='notice'>[bicon(src)] shuts down from the heat!</span>", 2)
 			scan_process = 0
 		else if(temperature > 350 && prob(10))
-			src.visible_message("<span class='notice'>\icon[src] bleets plaintively.</span>", 2)
+			src.visible_message("<span class='notice'>[bicon(src)] bleets plaintively.</span>", 2)
 			if(temperature > 400)
 				scan_process = 0
 
 		//show we're busy
 		if(prob(5))
-			src.visible_message("<span class='notice'>\icon[src] [pick("whirrs","chuffs","clicks")][pick(" quietly"," softly"," sadly"," excitedly"," energetically"," angrily"," plaintively")].</span>", 2)
+			src.visible_message("<span class='notice'>[bicon(src)] [pick("whirrs","chuffs","clicks")][pick(" quietly"," softly"," sadly"," excitedly"," energetically"," angrily"," plaintively")].</span>", 2)
 
 		use_power = 2
 
@@ -99,7 +99,7 @@
 			removed.temperature = max(TCMB, removed.temperature + heat_added/heat_capacity)
 
 			if(temperature_difference > 10 && prob(5))
-				src.visible_message("<span class='notice'>\icon[src] hisses softly.</span>", 2)
+				src.visible_message("<span class='notice'>[bicon(src)] hisses softly.</span>", 2)
 
 		else
 			//heat up to match the air
@@ -107,7 +107,7 @@
 			removed.temperature = max(TCMB, removed.temperature - heat_added/heat_capacity)
 
 			if(temperature_difference > 10 && prob(5))
-				src.visible_message("<span class='notice'>\icon[src] plinks quietly.</span>", 2)
+				src.visible_message("<span class='notice'>[bicon(src)] plinks quietly.</span>", 2)
 
 		env.merge(removed)
 
@@ -172,14 +172,14 @@ obj/machinery/anomaly/proc/FinishScan()
 
 	//determine the results and print a report
 	if(held_container)
-		src.visible_message("<span class='notice'>\icon[src] makes an insistent chime.</span>", 2)
+		src.visible_message("<span class='notice'>[bicon(src)] makes an insistent chime.</span>", 2)
 		var/obj/item/weapon/paper/P = new(src.loc)
 		P.name = "[src] report #[++report_num]"
 		P.info = "<b>[src] analysis report #[report_num]</b><br><br>" + ScanResults()
 		P.stamped = list(/obj/item/weapon/stamp)
 		P.overlays = list("paper_stamped")
 	else
-		src.visible_message("<span class='notice'>\icon[src] makes a low buzzing noise.</span>", 2)
+		src.visible_message("<span class='notice'>[bicon(src)] makes a low buzzing noise.</span>", 2)
 
 obj/machinery/anomaly/Topic(href, href_list)
 	if(..()) return

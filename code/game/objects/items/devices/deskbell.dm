@@ -43,7 +43,7 @@
 				anchored = !anchored
 				user.visible_message(
 					"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
-					"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+					"<span class='notice'>[bicon(src)] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 					"<span class='notice'>You hear a ratchet.</span>"
 					)
 
@@ -142,7 +142,7 @@
 				anchored = !anchored
 				user.visible_message(
 					"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"]</span>",
-					"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+					"<span class='notice'>[bicon(src)] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 					"<span class='notice'>You hear a ratchet.</span>"
 					)
 		wrenching = 0
@@ -177,7 +177,7 @@
 			if(frequency == ringerdatum.frequency)
 				var/turf/T = get_turf(ring_pda)
 				playsound(T, 'sound/machines/notify.ogg', 50, 1)
-				T.visible_message("\icon[ring_pda] *[src.name]*")
+				T.visible_message("[bicon(ring_pda)] *[src.name]*")
 
 
 		if(!radio_connection) return	//the desk bell also works like a simple send-only signaler.

@@ -66,11 +66,11 @@ var/global/list/taxi_computers = list()
 
 /obj/machinery/computer/taxi_shuttle/proc/broadcast(var/message = "")
 	if(message)
-		src.visible_message("\icon [src]" + message)
+		src.visible_message("[bicon(src)]" + message)
 	else
 		return
 	for(var/obj/machinery/door_control/taxi/TB in connected_buttons)
-		TB.visible_message("\icon [TB]" + message)
+		TB.visible_message("[bicon(TB)]" + message)
 
 /obj/machinery/computer/taxi_shuttle/attackby(obj/item/I as obj, mob/user as mob)
 	if(..())

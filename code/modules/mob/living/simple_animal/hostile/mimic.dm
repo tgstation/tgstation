@@ -425,7 +425,7 @@ var/global/list/item_mimic_disguises = list(
 	else
 		pronoun = "It is"
 
-	to_chat(user, "\icon[src] That's \a [src]. [pronoun] a [s_size] item.")
+	to_chat(user, "[bicon(src)] That's \a [src]. [pronoun] a [s_size] item.")
 	if(desc)
 		to_chat(user, desc)
 

@@ -190,7 +190,7 @@
 		if("Cn9")	soundfile = 'sound/violin/Cn9.mid'
 		else		return
 
-	to_chat(hearers(15, get_turf(src)), sound(soundfile))
+	hearers(15, get_turf(src)) << sound(soundfile)
 
 /obj/item/device/violin/proc/playsong()
 	do

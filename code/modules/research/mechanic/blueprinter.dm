@@ -83,7 +83,7 @@
 	if(!istype(design)) //sanity checks yay
 		return
 	if((use_nano && nano_loaded == 0) || (!use_nano && paper_loaded == 0)) //material checks
-		visible_message("\icon [src]<span class='notice'> \The [src] beeps: 'Out of [use_nano ? "nanopaper" : "paper"]!'</span>")
+		visible_message("[bicon(src)]<span class='notice'> \The [src] beeps: 'Out of [use_nano ? "nanopaper" : "paper"]!'</span>")
 		return
 
 	busy = 1
@@ -96,7 +96,7 @@
 	else
 		new/obj/item/research_blueprint(get_output(), design)
 		paper_loaded -= 1
-	src.visible_message("\icon [src]<span class='notice'>\The [src] beeps: 'Successfully printed the [design.name] design'.</span>")
+	src.visible_message("[bicon(src)]<span class='notice'>\The [src] beeps: 'Successfully printed the [design.name] design'.</span>")
 	spawn(20)
 		overlays -= "[base_state]_ani"
 	return 1

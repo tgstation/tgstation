@@ -240,10 +240,10 @@
 
 		break
 	if(success)
-		src.visible_message("<span class='notice'>\icon[src] a green light flashes on [src].</span>")
+		src.visible_message("<span class='notice'>[bicon(src)] a green light flashes on [src].</span>")
 		updateDialog()
 	else
-		src.visible_message("<span class='warning'>\icon[src] a red light flashes on [src].</span>")
+		src.visible_message("<span class='warning'>[bicon(src)] a red light flashes on [src].</span>")
 
 /obj/machinery/power/rust_fuel_injector/verb/rotate_clock()
 	set category = "Object"

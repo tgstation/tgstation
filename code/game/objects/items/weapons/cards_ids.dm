@@ -205,8 +205,8 @@
 		user.show_message("The fingerprint hash on the card is [fingerprint_hash].",1)
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
-	user.visible_message("[user] shows you: \icon[src] [src.name]: assignment: [src.assignment]",\
-		"You flash your ID card: \icon[src] [src.name]: assignment: [src.assignment]")
+	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]",\
+		"You flash your ID card: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
 	return
 

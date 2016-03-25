@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	var/msg = {"<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>[custom_name ? ", [modtype] [braintype]" : ""]!\n
+	var/msg = {"<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>[custom_name ? ", [modtype] [braintype]" : ""]!\n
 <span class='warning'>"}
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 75)

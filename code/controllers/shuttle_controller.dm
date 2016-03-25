@@ -75,7 +75,7 @@ datum/shuttle_controller/proc/recall()
 			if(timeleft >= 600)
 				return
 			captain_announce("The emergency shuttle has been recalled.")
-			to_chat(world, sound('sound/AI/shuttlerecalled.ogg'))
+			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
 			for(var/area/A in areas)
@@ -244,7 +244,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 				settimeleft(SHUTTLELEAVETIME)
 				send2mainirc("The Emergency Shuttle has docked with the station.")
 				captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-				to_chat(world, sound('sound/AI/shuttledock.ogg'))
+				world << sound('sound/AI/shuttledock.ogg')
 
 				if(universe.name == "Hell Rising")
 					to_chat(world, "___________________________________________________________________")

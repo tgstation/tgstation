@@ -67,7 +67,7 @@
 		user.visible_message("<span class='notice'>[user] begins to open the flatpack...</span>", "<span class='notice'>You begin to open the flatpack...</span>")
 		if(do_after(user, src, rand(10,40)))
 			if(machine)
-				to_chat(user, "<span class='notice'>\icon [src]You successfully unpack \the [machine]!</span>")
+				to_chat(user, "<span class='notice'>[bicon(src)]You successfully unpack \the [machine]!</span>")
 //				overlays += "assembly"
 /*				var/obj/item/weapon/paper/instructions = new (get_turf(src))
 				var/list/inst_list = unpacking.GenerateInstructions()
@@ -82,7 +82,7 @@
 				machine = null
 				qdel(src)
 			else
-				to_chat(user, "<span class='notice'>\icon [src]It seems this [src] was empty...</span>")
+				to_chat(user, "<span class='notice'>[bicon(src)]It seems this [src] was empty...</span>")
 				qdel(src)
 		assembling = 0
 		return

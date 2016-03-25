@@ -185,7 +185,7 @@
 		if(prob(25))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				to_chat(H, sound('sound/items/AirHorn.ogg'))
+				H << sound('sound/items/AirHorn.ogg')
 				to_chat(H, "<font color='red' size='7'>HONK</font>")
 				H.sleeping = 0
 				H.stuttering += 20

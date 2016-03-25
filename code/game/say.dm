@@ -80,7 +80,7 @@ var/list/freqtoname = list(
 	var/radioicon = ""
 	if(speech.frequency)
 		if(speech.radio)
-			radioicon = "\icon[speech.radio]"
+			radioicon = "[bicon(speech.radio)]"
 		freqpart = " [radioicon]\[[get_radio_name(speech.frequency)]\]"
 		speech.wrapper_classes.Add(get_radio_span(speech.frequency))
 	var/pooled=0
@@ -184,7 +184,7 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 		else
 			return speech.speaker.say_quote(rendered)
 	/*else if(message_langs & SPOOKY)
-		return "\icon[ghostimg] <span class='sinister'>Too spooky...</span> \icon[ghostimg]"
+		return "[bicon(ghostimg)] <span class='sinister'>Too spooky...</span> [bicon(ghostimg)]"
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)

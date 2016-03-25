@@ -29,16 +29,16 @@
 
 	if(cur_assembly)
 		if(try_insert_assembly())
-			to_chat(user, "<span class='notice'>\icon[src] [src] inserts it's fuel rod assembly into an injector.</span>")
+			to_chat(user, "<span class='notice'>[bicon(src)] [src] inserts it's fuel rod assembly into an injector.</span>")
 		else
 			if(eject_assembly())
-				to_chat(user, "<span class='warning'>\icon[src] [src] ejects it's fuel assembly. Check the fuel injector status.</span>")
+				to_chat(user, "<span class='warning'>[bicon(src)] [src] ejects it's fuel assembly. Check the fuel injector status.</span>")
 			else if(try_draw_assembly())
-				to_chat(user, "<span class='notice'>\icon[src] [src] draws a fuel rod assembly from an injector.</span>")
+				to_chat(user, "<span class='notice'>[bicon(src)] [src] draws a fuel rod assembly from an injector.</span>")
 	else if(try_draw_assembly())
-		to_chat(user, "<span class='notice'>\icon[src] [src] draws a fuel rod assembly from an injector.</span>")
+		to_chat(user, "<span class='notice'>[bicon(src)] [src] draws a fuel rod assembly from an injector.</span>")
 	else
-		to_chat(user, "<span class='warning'>\icon[src] [src] was unable to draw a fuel rod assembly from an injector.</span>")
+		to_chat(user, "<span class='warning'>[bicon(src)] [src] was unable to draw a fuel rod assembly from an injector.</span>")
 
 /obj/machinery/rust_fuel_assembly_port/proc/try_insert_assembly()
 	var/success = 0

@@ -98,7 +98,7 @@
 		cooldown -= 1
 		if(cooldown <= 0)
 			cooldown = 0
-			src.visible_message("<span class='notice'>\icon[src] [src] chimes.</span>", "<span class='notice'>\icon[src] You hear something chime.</span>")
+			src.visible_message("<span class='notice'>[bicon(src)] [src] chimes.</span>", "<span class='notice'>[bicon(src)] You hear something chime.</span>")
 	else if(activated)
 		if(inserted_battery && inserted_battery.battery_effect)
 			//make sure the effect is active
@@ -134,7 +134,7 @@
 	if(activated)
 		activated = 0
 		timing = 0
-		src.visible_message("<span class='notice'>\icon[src] [src] buzzes.</span>", "\icon[src]<span class='notice'>You hear something buzz.</span>")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] buzzes.</span>", "[bicon(src)]<span class='notice'>You hear something buzz.</span>")
 
 		cooldown = archived_time / 2
 

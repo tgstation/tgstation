@@ -393,7 +393,7 @@
 
 /obj/item/toy/bomb/attack_self(mob/user)
 	var/turf/T = get_turf(src)
-	T.visible_message("\icon[rendered]*beep* *beep*", "*beep* *beep*")
+	T.visible_message("[bicon(rendered)]*beep* *beep*", "*beep* *beep*")
 
 /*
  * Crayons

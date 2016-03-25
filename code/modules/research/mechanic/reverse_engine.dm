@@ -148,7 +148,7 @@
 		else
 			current_design = research_queue[1]
 	if(!research_queue.len)
-		src.visible_message("<span class='notice'>\icon [src] \The [src] beeps: 'Successfully researched all designs.'</span>")
+		src.visible_message("<span class='notice'>[bicon(src)] \The [src] beeps: 'Successfully researched all designs.'</span>")
 
 /obj/machinery/r_n_d/reverse_engine/proc/researchDesign(var/datum/design/design)
 	//message_admins("This researchDesign got called with the [design.design_name].")
@@ -157,7 +157,7 @@
 	if(!istype(design) || !(design in research_queue)) //sanity checking, always good
 		return
 	if(design in ready_queue)
-		src.visible_message("<span class='notice'>\icon [src] \The [src] beeps:'The [design.name] is already researched.'</span>")
+		src.visible_message("<span class='notice'>[bicon(src)] \The [src] beeps:'The [design.name] is already researched.'</span>")
 		research_queue -= design
 		return
 	var/researchtime = ( (REV_ENG_RESEARCHBASE * Tech_Difference(design)) / (scan_rating + cap_rating) )
@@ -169,7 +169,7 @@
 	overlays -= "[base_state]_ani"
 	if(!(design in ready_queue))
 		ready_queue += design
-		src.visible_message("<span class='notice'>\icon [src] \The [src] beeps: 'Successfully researched \the [design.name].'</span>")
+		src.visible_message("<span class='notice'>[bicon(src)] \The [src] beeps: 'Successfully researched \the [design.name].'</span>")
 		return 1
 	return
 

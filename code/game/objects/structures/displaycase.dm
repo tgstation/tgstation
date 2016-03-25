@@ -110,7 +110,7 @@
 	..()
 	var/msg = "<span class='info'>Peering through the glass, you see that it contains:</span>"
 	if(occupant)
-		msg+= "\icon[occupant] <span class='notice'>\A [occupant]</span>"
+		msg+= "[bicon(occupant)] <span class='notice'>\A [occupant]</span>"
 	else
 		msg+= "Nothing."
 	to_chat(user, msg)
@@ -190,9 +190,9 @@
 			return
 		locked = !locked
 		if(!locked)
-			to_chat(user, "\icon[src] <span class='notice'>\The [src] clicks as locks release, and it slowly opens for you.</span>")
+			to_chat(user, "[bicon(src)] <span class='notice'>\The [src] clicks as locks release, and it slowly opens for you.</span>")
 		else
-			to_chat(user, "\icon[src] <span class='notice'>You close \the [src] and swipe your card, locking it.</span>")
+			to_chat(user, "[bicon(src)] <span class='notice'>You close \the [src] and swipe your card, locking it.</span>")
 		update_icon()
 	else if(iscrowbar(W) && (!locked || destroyed))
 		user.visible_message("[user.name] pries \the [src] apart.", \
@@ -272,7 +272,7 @@
 					dump()
 					update_icon()
 				else
-					to_chat(src, "\icon[src] <span class='rose'>\The [src] is empty!</span>")
+					to_chat(src, "[bicon(src)] <span class='rose'>\The [src] is empty!</span>")
 		else
 			user.delayNextAttack(10) // prevent spam
 			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \
