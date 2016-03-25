@@ -4,8 +4,8 @@
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	var/used = 0
-	var/increment = 4
-	var/max = 30
+	var/increment = 5
+	var/max = 15
 	var/prefix = "sharpened"
 	var/requires_sharpness = 0
 
