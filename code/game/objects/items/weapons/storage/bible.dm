@@ -60,7 +60,7 @@
 
 	if(!user.dexterity_check())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
+		return 1
 
 	if(!chaplain) //The user is not a Chaplain. BLASPHEMY !
 		//Using the Bible as a member of the occult will get you smithed, aka holy cleansing fire. You'd have to be stupid to remotely consider it
@@ -77,28 +77,28 @@
 			user.emote("scream",,, 1)
 		else //Literally anyone else than a Cultist using it, at this point it's just a big book
 			..() //WHACK
-		return //Non-chaplains can't use the holy book, at least not properly
+		return 1 //Non-chaplains can't use the holy book, at least not properly
 
 	if((M_CLUMSY in user.mutations) && prob(50)) //Using it while clumsy, let's have some fun
 		user.visible_message("<span class='warning'>\The [src] slips out of [user]'s hands and hits \his head.</span>",
 		"<span class='warning'>\The [src] slips out of your hands and hits your head.</span>")
 		user.apply_damage(10, BRUTE, "head")
 		user.Stun(5)
-		return
+		return 1
 
 	//From this point onwards we are done with the user, let's check whoever is on the receiving end
 	//Let us also note that if we made it this far, the user IS a Chaplain. No need to check
 	//Worthy of note, blessings are done on craniums. I guess this is the best way to send the message across
 
 	if(M == user) //We are trying to smack ourselves
-		return //That's dumb, don't do it
+		return 1 //That's dumb, don't do it
 
 	if(ishuman(M)) //We're forced to do two ishuman() code paragraphs because this one blocks the others
 		var/mob/living/carbon/human/H = M
 		if(istype(H.head, /obj/item/clothing/head/helmet) || istype(H.head, /obj/item/clothing/head/hardhat) || istype(H.head, /obj/item/clothing/head/fedora) || istype(H.head, /obj/item/clothing/head/culthood)) //Blessing blocked
 			user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [H]'s head with \the [src], but their headgear blocks the hit.</span>",
 			"<span class='warning'>You [pick(attack_verb)] [H]'s head with \the [src], but their headgear blocks the blessing. Blasphemy!</span>")
-			return //That's it. Helmets are very haram
+			return 1 //That's it. Helmets are very haram
 
 	if(M.stat == DEAD) //Our target is dead. RIP in peace
 		user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [M]'s lifeless body with \the [src].</span>",
@@ -106,7 +106,7 @@
 		playsound(get_turf(src), "punch", 25, 1, -1)
 
 		//TODO : Way to bring people back from death if they are your followers
-		return //Otherwise, there's so little we can do
+		return 1 //Otherwise, there's so little we can do
 
 	//Our target is alive, prepare the blessing
 	user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [M]'s head with \the [src].</span>",
@@ -120,7 +120,7 @@
 			if(H.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
 				H.mind.vampire.nullified = max(5, H.mind.vampire.nullified + 2)
 			H.mind.vampire.smitecounter += 10 //Better get out of here quickly before the problem shows. Ten hits and you are literal toast
-			return //Don't heal the mob
+			return 1 //Don't heal the mob
 
 		if(H.mind && iscult(H)) //The user is a Cultist. We are thus deconverting him
 			if(prob(20))
@@ -129,13 +129,13 @@
 				ticker.mode.remove_cultist(H.mind)
 			else //We aren't deconverting him this time, give the Cultist a fair warning
 				to_chat(H, "<span class='warning'>The power of [deity_name] is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>")
-			return //Don't heal the mob
+			return 1 //Don't heal the mob
 
 		if(H.mind && H.mind.special_role == "VampThrall")
 			ticker.mode.remove_vampire_mind(H.mind, H.mind)
 			H.visible_message("<span class='notice'>[H] suddenly becomes calm and collected again, \his eyes clear up.</span>",
 			"<span class='notice'>Your blood cools down and you are inhabited by a sensation of untold calmness.</span>")
-			return //That's it, game over
+			return 1 //That's it, game over
 
 		bless_mob(user, H) //Let's outsource the healing code, because we can
 
