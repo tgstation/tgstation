@@ -1,0 +1,4 @@
+author: PKPenguin321
+delete-after: True
+changes: 
+  - tweak: "The RD's reactive teleport armor now has a cooldown between teleports. EMPing it will cause it to shut down and have a longer cooldown applied."
