@@ -69,11 +69,11 @@
 		Upon your target's death, use the modified block of C4 in your satchel to dispose of their corpse, if possible, then use the extraction device - also in your satchel - to return to \
 		headquarters. This will take several seconds and you will be vulnerable during this time."
 		var/list/possible_targets = list()
-		for(var/mob/living/carbon/human/H in living_mob_list)
+		for(var/mob/living/carbon/human/H in (living_mob_list - src))
 			if(H.z == z && H.mind)
 				possible_targets.Add(H)
 		if(!possible_targets.len)
-			src << "<b><i>Something went wrong, and you were sent without a target. You should proceed to extract using the extractor in your satchel.</i></b>"
+			src << "<b><i>Something went wrong, and you were sent without a target. You should extract immediately using the beacon in your satchel.</i></b>"
 		else
 			var/datum/objective/assassinate/A = new
 			A.owner = mind
