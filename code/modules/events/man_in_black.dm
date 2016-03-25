@@ -35,11 +35,11 @@
 	name = real_name
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent, slot_ears)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
-	var/suit_type = /obj/item/clothing/under/suit_jacket/really_black/armored
+	var/suit_type = /obj/item/clothing/under/suit_jacket/really_black/armored //Armored variant of executive suits, very effective against ballistics
 	if(gender == FEMALE)
 		suit_type = /obj/item/clothing/under/suit_jacket/female/armored
 	equip_to_slot_or_del(new suit_type(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/nagant, slot_belt)
+	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/nagant, slot_belt) //Suppressable revolver for maximum tacticool
 	equip_to_slot_or_del(new /obj/item/weapon/suppressor, slot_l_store)
 	equip_to_slot_or_del(new /obj/item/ammo_box/a357, slot_r_store)
 	var/obj/item/weapon/storage/backpack/satchel/satchel = new
@@ -47,13 +47,15 @@
 	new /obj/item/bodybag(satchel)
 	new /obj/item/weapon/soap/nanotrasen(satchel)
 	new /obj/item/weapon/card/emag(satchel)
-	new /obj/item/weapon/c4/nco(satchel)
+	new /obj/item/weapon/c4/nco(satchel) //Can be attached to mobs
 	new /obj/item/device/nco_extractor(satchel)
 	equip_to_slot_or_del(satchel, slot_back)
 	var/obj/item/weapon/card/id/centcom/id = new
 	id.registered_name = real_name
 	id.assignment = "NCO Agent"
 	id.access = get_all_accesses() //All-access
+	id.name = "[real_name]'s Badge"
+	id.desc = "A badge branding the wearer as an agent of the NCO. Provides access to the entirety of most Nanotrasen stations."
 	equip_to_slot_or_del(id, slot_wear_id)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup, slot_shoes)
 	if(mind)
