@@ -930,7 +930,7 @@
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
 	name = "Beekeeping Starter Kit"
-	cost = 40
+	cost = 1500
 	contains = list(/obj/structure/beebox,
 					/obj/item/honey_frame,
 					/obj/item/honey_frame,
@@ -942,7 +942,7 @@
 
 /datum/supply_pack/organic/hydroponics/beekeeping_suits
 	name = "2 Beekeeper suits"
-	cost = 10
+	cost = 1000
 	contains = list(/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit,
 					/obj/item/clothing/head/beekeeper_head,
