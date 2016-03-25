@@ -534,7 +534,7 @@
 	description = "An extremely toxic chemical that will surely end in death."
 	reagent_state = LIQUID
 	color = "#CF3600" //rgb: 207, 54, 0
-	custom_metabolism = 0.39
+	custom_metabolism = 0.01
 	data = 1 //Used as a tally
 
 /datum/reagent/chefspecial/on_mob_life(var/mob/living/M, var/alien)
