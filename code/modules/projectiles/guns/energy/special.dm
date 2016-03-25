@@ -278,6 +278,27 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
 
+/obj/item/weapon/gun/energy/stemperature
+	name = "syndicate temperature gun"
+	icon_state = "sfreezegun"
+	item_state = null
+	desc = "A modified by syndicate version of gun that changes temperatures. Recharges itself."
+	origin_tech = "combat=3;materials=4;powerstorage=5;magnets=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/stemp, /obj/item/ammo_casing/energy/stemp/shot)
+	modifystate = 2
+	selfcharge = 1
+
+/obj/item/weapon/gun/energy/stemperature/process()
+	if(selfcharge)
+		charge_tick++
+		if(charge_tick < charge_delay)
+			return
+		charge_tick = 0
+		if(!power_supply)
+			return
+		power_supply.give(125)
+		update_icon()
+
 /obj/item/weapon/gun/energy/laser/instakill
 	name = "instakill rifle"
 	icon_state = "instagib"
