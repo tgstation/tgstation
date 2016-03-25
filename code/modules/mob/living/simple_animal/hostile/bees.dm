@@ -10,6 +10,22 @@
 #define BEE_POLLINATE_PEST_CHANCE		33
 #define BEE_POLLINATE_POTENTCY_CHANCE	50
 
+// code by Haine from Goonsntation
+/proc/rand_deci(var/num1 = 1, var/num2 = 0, var/num3 = 2, var/num4 = 0)
+	var/output = text2num("[rand(num1, num2)].[rand(num3, num4)]")
+	return output
+
+
+/proc/animate_bumble(var/atom/A, var/loopnum = -1, floatspeed = 10, Y1 = 3, Y2 = -3, var/slightly_random = 1)
+	if (!istype(A))
+		return
+
+	if (slightly_random)
+		floatspeed = floatspeed * rand_deci(1, 0, 1, 4)
+	animate(A, pixel_y = Y1, time = floatspeed, loop = loopnum, easing = LINEAR_EASING)
+	animate(pixel_y = Y2, time = floatspeed, loop = loopnum, easing = LINEAR_EASING)
+	return
+// haine code ends here ? dunno about the above proc's origin tho
 /mob/living/simple_animal/hostile/poison/bees
 	name = "bee"
 	desc = "buzzy buzzy bee, stingy sti- Ouch!"
@@ -22,7 +38,7 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attacktext = "stings"
-	response_help  = "shoos"
+	response_help  = "pets"
 	response_disarm = "swats away"
 	response_harm   = "squashes"
 	maxHealth = 10
@@ -34,6 +50,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	flying = 1
+	density = 0
 	gold_core_spawnable = 1
 	search_objects = 1 //have to find those plant trays!
 
@@ -57,6 +74,9 @@
 /mob/living/simple_animal/hostile/poison/bees/New()
 	..()
 	generate_bee_visuals()
+	pixel_x = rand(-16,16)
+	pixel_y = rand(-16,16)
+	animate_bumble(src)
 
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
