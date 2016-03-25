@@ -12,6 +12,7 @@
 	layer = 2.9
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
+	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -49,7 +50,7 @@
 				var/obj/structure/girder/G = new (loc)
 				transfer_fingerprints_to(G)
 				qdel(src)
-		else if(state == GIRDER_NORMAL)
+		else if(state == GIRDER_NORMAL && can_displace)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>You start unsecuring the girder...</span>"
 			if(do_after(user, 40/W.toolspeed, target = src))
@@ -311,16 +312,22 @@
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 
-/obj/structure/cultgirder
-	icon= 'icons/obj/cult.dmi'
+/obj/structure/girder/cult
+	name = "runed girder"
+	desc = "Framework made of a strange and shockingly cold metal. It doesn't seem to have any bolts."
+	icon = 'icons/obj/cult.dmi'
 	icon_state= "cultgirder"
-	anchored = 1
-	density = 1
-	layer = 2
+	can_displace = FALSE
 
-/obj/structure/cultgirder/attackby(obj/item/W, mob/user, params)
+/obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/tome) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
+		user.visible_message("<span class='warning'>[user] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>")
+		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+		R.amount = 2
+		qdel(src)
+
+	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -329,7 +336,8 @@
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'>You slice apart the girder.</span>"
-				var/obj/effect/decal/remains/human/R = new (get_turf(src))
+				var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+				R.amount = 2
 				transfer_fingerprints_to(R)
 				qdel(src)
 
@@ -338,32 +346,54 @@
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, 30, target = src))
 			user << "<span class='notice'>You slice apart the girder.</span>"
-			var/obj/effect/decal/remains/human/R = new (get_turf(src))
+			var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+			R.amount = 2
 			transfer_fingerprints_to(R)
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		user << "<span class='notice'>Your jackhammer smashes through the girder!</span>"
-		var/obj/effect/decal/remains/human/R = new (get_turf(src))
+		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+		R.amount = 2
 		transfer_fingerprints_to(R)
 		D.playDigSound()
 		qdel(src)
 
-/obj/structure/cultgirder/blob_act()
+	else if(istype(W, /obj/item/stack/sheet/runed_metal))
+		var/obj/item/stack/sheet/runed_metal/R = W
+		if(R.amount < 2)
+			user << "<span class='warning'>You need at least two sheets of runed metal to construct a runed wall!</span>"
+			return 0
+		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
+		if(!do_after(user, 50, target = src))
+			return 0
+		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
+		R.amount -= 2
+		if(R.amount <= 0)
+			user.drop_item()
+			qdel(R)
+		new/turf/simulated/wall/cult(get_turf(src))
+		qdel(src)
+
+	else
+		..()
+
+/obj/structure/girder/cult/blob_act()
 	if(prob(40))
 		qdel(src)
 
-
-/obj/structure/cultgirder/ex_act(severity, target)
+/obj/structure/girder/cult/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			qdel(src)
 		if(2)
 			if(prob(30))
-				new /obj/effect/decal/remains/human(loc)
+				var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+				R.amount = 2
 				qdel(src)
 		if(3)
 			if(prob(5))
-				new /obj/effect/decal/remains/human(loc)
+				var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+				R.amount = 2
 				qdel(src)

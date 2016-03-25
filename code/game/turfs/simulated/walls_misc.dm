@@ -1,6 +1,6 @@
 /turf/simulated/wall/cult
-	name = "wall"
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."
+	name = "runed wall"
+	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	walltype = "cult"
@@ -12,8 +12,9 @@
 	..()
 
 /turf/simulated/wall/cult/break_wall()
-	new /obj/effect/decal/cleanable/blood(src)
-	return (new /obj/structure/cultgirder(src))
+	var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
+	R.amount = 2
+	return (new /obj/structure/girder/cult(src))
 
 /turf/simulated/wall/cult/devastate_wall()
 	new /obj/effect/decal/cleanable/blood(src)
