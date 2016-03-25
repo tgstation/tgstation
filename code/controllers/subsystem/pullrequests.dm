@@ -101,13 +101,15 @@ var/datum/subsystem/pullrequests/SSpullrequests
 	if(!isMerge && prob(20))
 		var/r = rand(1, 3)
 		if(r & 1)
-			title += "\[WIP]"
+			title += "\[WIP] "
 		if(r & 2)
-			title += "\[DNM]"
+			title += "\[DNM] "
 	else if(prob(10))
-		title += " \[QUICK MERGE]"
+		title += " \[QUICK MERGE] "
+	if(prob(10))
+		title += " \[FUCK] "
 	if(prob(5))
-		title += "\[i ded]"
+		title += "\[i ded] "
 
 	title = jointext(title, null)
 
