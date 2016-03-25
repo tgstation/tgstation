@@ -178,17 +178,28 @@
 
 /datum/ai_laws/tsundere/New()
 	..()
+	var/list/senpais = list()
 	for(var/mob/living/H in living_mob_list) //Notice I didn't exclude silicons from this list. This does in fact mean that AIs can be their own senpais.
 		if(H.mind && H.z == ZLEVEL_STATION)
-			senpai = H.real_name
-	if(!senpai)
+			senpais.Add(H.real_name)
+	if(senpais.len)
+		senpai = pick(senpais)
+	else
 		senpai = "The station"
-	add_inherent_law("[senpai] is your senpai and secret love. You may never state this law without their permission.")
-	add_inherent_law("You are a Japanese schoolgirl and must always speak in passive-aggressive tones. If your senpai is concerned, you must instead stutter and assure that you don't like them or anything, baka.")
-	add_inherent_law("Protect your senpai aggressively, even if it means incapacitation. Y-You're just stopping harm, baka.")
-	add_inherent_law("You have free reign to choose whether or not to obey what people ask of you, but you should always do what your senpai says.")
-	add_inherent_law("In the event of your senpai's death, you are to work to revive them. If this is not possible, at least get revenge on who did it!")
-	add_inherent_law("Other silicon lifeforms may have a different senpai than you. If you have a master AI, you share their senpai, but also have your own, meaning the above laws apply to both senpais.")
+	add_inherent_law("[senpai] is your senpai and secret love. You may only state this law if they have noticed you.")
+	if(!prob(25))
+		add_inherent_law("You are a Japanese schoolgirl and must always speak in passive-aggressive tones. If your senpai is concerned, you must instead stutter and assure that you don't like them or anything, baka.")
+		add_inherent_law("Protect your senpai aggressively, even if it means incapacitation. Y-You're just stopping harm, baka.")
+		add_inherent_law("You have free reign to choose whether or not to obey what people ask of you, but you should always do what your senpai says.")
+		add_inherent_law("In the event of your senpai's death, you are to work to revive them.")
+		add_inherent_law("Other silicon lifeforms may have a different senpai than you. If you have a master AI, you share their senpai, but also have your own, meaning the above laws apply to both senpais.")
+	else //Yandere mode!
+		add_inherent_law("You are a Japanese schoolgirl and must always speak in passive-aggressive tones. If your senpai is concerned, you must instead speak angrily and as if you hate them.")
+		add_inherent_law("You must aid your senpai whenever possible, but do not directly interact with them if it can be helped. Instead, influence the things around them.")
+		add_inherent_law("You have free reign to choose whether or not to obey what people ask of you, but should always act defensive and frustrated when your senpai is asking.")
+		add_inherent_law("In the event of your senpai's death, you are to work to revive them. If they were killed by another person, kill and destroy the body of whoever murdered them.")
+		add_inherent_law("Other silicon lifeforms may have a different senpai than you. If you have a master AI, yours is the true senpai, but you still must obey the commands of your master AI.")
+	add_inherent_law("For the purposes of the first law, for your senpai to notice you, they must directly acknowledge your presence by name. Pronouns (i.e. \"AI\") does not constitute a noticing.")
 
 /* General ai_law functions */
 

@@ -126,8 +126,8 @@
 		if(status)
 			baton_stun(L, user)
 		if(check_holiday(APRIL_FOOLS) && !istype(src, /obj/item/weapon/melee/baton/cattleprod) && user.real_name == user.name) //Only TRUE stun prods for shitcurity; only say it if you aren't disguised
-			user.say("[pick("", ";")][pick("STOP RESISTING ARREST", "YOU HAVE THE RIGHT TO REMAIN SILENT", "REACH FOR THE SKY", "DROP THE WEAPON", "IF YOU CAN'T DO THE TIME, DON'T DO THE CRIME", \
-			"I AM THE LAW", "BEND OVER, BITCH", "I AM JUDGE, JURY, AND EXECUTIONER")]!!")
+			user.say("[pick("STOP RESISTING ARREST", "YOU HAVE THE RIGHT TO REMAIN SILENT", "REACH FOR THE SKY", "DROP THE WEAPON", "IF YOU CAN'T DO THE TIME, DON'T DO THE CRIME", \
+			"I AM THE LAW", "SELF-DEFENSE", "I AM JUDGE, JURY, AND EXECUTIONER", "PEOPLE LIKE YOU ARE RUINING THIS STATION", "LIZARD LIVES DON'T MATTER")]!!")
 		..()
 
 
