@@ -41,7 +41,7 @@
 	equip_to_slot_or_del(new suit_type(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/nagant, slot_belt) //Suppressable revolver for maximum tacticool
 	equip_to_slot_or_del(new /obj/item/weapon/suppressor, slot_l_store)
-	equip_to_slot_or_del(new /obj/item/ammo_box/a357, slot_r_store)
+	equip_to_slot_or_del(new /obj/item/ammo_box/n762, slot_r_store)
 	var/obj/item/weapon/storage/backpack/satchel/satchel = new
 	satchel.contents = list()
 	new /obj/item/bodybag(satchel)
