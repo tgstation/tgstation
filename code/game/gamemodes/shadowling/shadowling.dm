@@ -1,6 +1,6 @@
 #define LIGHT_DAM_THRESHOLD 4
-#define LIGHT_HEAL_THRESHOLD 2
-#define LIGHT_DAMAGE_TAKEN 7
+#define LIGHT_HEAL_THRESHOLD 1
+#define LIGHT_DAMAGE_TAKEN 14
 
 /*
 
@@ -46,7 +46,7 @@ Made by Xhuis
 	var/list/datum/mind/shadows = list()
 	var/list/datum/mind/thralls = list()
 	var/list/shadow_objectives = list()
-	var/required_thralls = 15 //How many thralls are needed (hardcoded for now)
+	var/required_thralls = 30 //How many thralls are needed (hardcoded for now)
 	var/shadowling_ascended = 0 //If at least one shadowling has ascended
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
@@ -68,7 +68,7 @@ Made by Xhuis
 	name = "shadowling"
 	config_tag = "shadowling"
 	antag_flag = ROLE_SHADOWLING
-	required_players = 30
+	required_players = 50
 	required_enemies = 2
 	recommended_enemies = 2
 	restricted_jobs = list("AI", "Cyborg")
@@ -271,20 +271,18 @@ Made by Xhuis
 				H << "<span class='userdanger'>The light burns you!</span>" //Message spam to say "GET THE FUCK OUT"
 				H << 'sound/weapons/sear.ogg'
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
-			H.heal_overall_damage(5,5)
-			H.adjustToxLoss(-5)
-			H.adjustBrainLoss(-25) //Shad O. Ling gibbers, "CAN U BE MY THRALL?!!"
+			H.heal_overall_damage(1,1)
+			H.adjustToxLoss(-3)
+			H.adjustBrainLoss(-5) //Shad O. Ling gibbers, "CAN U BE MY THRALL?!!"
 			H.adjustCloneLoss(-1)
-			H.SetWeakened(0)
-			H.SetStunned(0)
 
 /datum/species/shadow/ling/lesser //Empowered thralls. Obvious, but powerful
 	name = "Lesser Shadowling"
 	id = "l_shadowling"
 	say_mod = "chitters"
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
-	burnmod = 1.1
-	heatmod = 1.1
+	burnmod = 1.3
+	heatmod = 1.3
 
 /datum/species/shadow/ling/lesser/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes) H.weakeyes = 1
@@ -296,9 +294,9 @@ Made by Xhuis
 		if(light_amount > LIGHT_DAM_THRESHOLD && !H.incorporeal_move)
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN/2)
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
-			H.heal_overall_damage(2,2)
-			H.adjustToxLoss(-5)
-			H.adjustBrainLoss(-25)
+			H.heal_overall_damage(0.5,0.5)
+			H.adjustToxLoss(-1)
+			H.adjustBrainLoss(-1)
 			H.adjustCloneLoss(-1)
 
 /datum/game_mode/proc/update_shadow_icons_added(datum/mind/shadow_mind)
