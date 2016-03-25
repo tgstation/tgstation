@@ -74,7 +74,7 @@
 
 /obj/item/projectile/stemp
 	name = "freeze beam"
-	icon_state = "ice_1"
+	icon_state = "ice_3"
 	damage = 0
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage_type = BURN
