@@ -63,15 +63,6 @@
 	name = "heat beam"
 	temperature = 400
 
-/obj/item/projectile/meteor
-	name = "meteor"
-	icon = 'icons/obj/meteor.dmi'
-	icon_state = "small1"
-	damage = 0
-	damage_type = BRUTE
-	nodamage = 1
-	flag = "bullet"
-
 /obj/item/projectile/stemp
 	name = "freeze beam"
 	icon_state = "ice_3"
