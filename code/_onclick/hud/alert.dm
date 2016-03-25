@@ -228,6 +228,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
 	icon_state = "alien_noqueen"
 
+//GUARDIANS
+
+/obj/screen/alert/cancharge
+	name = "Charge Ready"
+	desc = "You are ready to charge at a location!"
+	icon_state = "guardian_charge"
+
 //SILICONS
 
 /obj/screen/alert/nocell

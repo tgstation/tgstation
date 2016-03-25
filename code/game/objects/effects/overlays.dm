@@ -73,6 +73,18 @@
 /obj/effect/overlay/temp/guardian/phase/out
 	icon_state = "phaseout"
 
+/obj/effect/overlay/temp/guardian/charge
+	duration = 15
+
+/obj/effect/overlay/temp/decoy/New(loc, atom/mimiced_atom)
+	..()
+	alpha = initial(alpha)
+	if(mimiced_atom)
+		icon = mimiced_atom.icon
+		icon_state = mimiced_atom.icon_state
+		dir = mimiced_atom.dir
+	animate(src, alpha = 0, time = duration)
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10

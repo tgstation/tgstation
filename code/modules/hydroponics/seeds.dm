@@ -33,6 +33,8 @@
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
 
+	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
+	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
 
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
@@ -122,7 +124,7 @@
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
-			return_yield *= parent.yieldmod
+			return_yield *= (parent.yieldmod+innate_yieldmod)
 
 	return return_yield
 

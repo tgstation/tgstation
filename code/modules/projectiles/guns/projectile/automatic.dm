@@ -3,10 +3,20 @@
 	w_class = 3
 	var/alarmed = 0
 	var/select = 1
+	var/tactical = 1
 	can_suppress = 1
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
+
+/obj/item/weapon/gun/projectile/automatic/AltClick(mob/user)
+	..()
+	if(!tactical)
+		tactical = 1
+		user << "<span class='notice'>You will now alert nearby persons of your tactical reloads with this weapon.</span>"
+	else
+		tactical = 0
+		user << "<span class='notice'>You will no longer alert nearby persons of your tactical reloads with this weapon.</span>"
 
 /obj/item/weapon/gun/projectile/automatic/proto
 	name = "\improper NanoTrasen Saber SMG"
@@ -36,6 +46,8 @@
 		var/obj/item/ammo_box/magazine/AM = A
 		if(istype(AM, mag_type))
 			if(magazine)
+				if(tactical)
+					user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!"))
 				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
 				magazine.loc = get_turf(src.loc)
 				magazine.update_icon()

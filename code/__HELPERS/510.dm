@@ -339,7 +339,7 @@
 	while(readPos <= jsonLen)
 		if(curChar == "\"")
 			AdvanceWS
-			return list2text(chars)
+			return jointext(chars)
 		else if(curChar == "\\")
 			Advance
 			switch(curChar)
