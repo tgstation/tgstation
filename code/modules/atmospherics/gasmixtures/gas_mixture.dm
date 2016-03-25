@@ -12,11 +12,11 @@ var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 var/list/gaslist_cache = null
 /proc/gaslist(id)
 	var/list/cached_gas
-	
+
 	//only instantiate the first time it's needed
 	if(!gaslist_cache)
 		gaslist_cache = new(meta_gas_info.len)
-	
+
 	//only setup the individual lists the first time they're needed
 	if(!gaslist_cache[id])
 		if(!meta_gas_info[id])
@@ -179,6 +179,33 @@ var/list/gaslist_cache = null
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
 			*/
+	if(thermal_energy() > PLASMA_BINDING_ENERGY)
+		if(cached_gases["plasma"] && cached_gases["co2"] && cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && cached_gases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY)
+			//world << "pre [temperature, [toxins], [carbon_dioxide]
+			var/old_heat_capacity = heat_capacity()
+			var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
+			var/reaction_energy = thermal_energy()
+			var/moles_impurities = total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
+			var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
+			var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
+			var/oxygen_added = carbon_catalyzed
+			var/nitrogen_added = plasma_fused-oxygen_added
+
+			reaction_energy += ((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY)
+			assert_gases("o2", "n2")
+			cached_gases["plasma"][MOLES] -= plasma_fused
+			cached_gases["co2"][MOLES] -= carbon_catalyzed
+			cached_gases["o2"][MOLES] += oxygen_added
+			cached_gases["n2"][MOLES] += nitrogen_added
+
+			garbage_collect()
+
+			if(reaction_energy > 0)
+				reacting = 1
+				var/new_heat_capacity = heat_capacity()
+				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+					temperature = (temperature*old_heat_capacity + reaction_energy)/new_heat_capacity
+				//world << "post [temperature], [toxins], [carbon_dioxide]
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"
@@ -316,7 +343,7 @@ var/list/gaslist_cache = null
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
-	
+
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
@@ -324,7 +351,7 @@ var/list/gaslist_cache = null
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
 			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
-	
+
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
 	//gas transfer
@@ -398,7 +425,7 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	var/list/cached_gases = gases
-	
+
 	temperature = model.temperature
 	if(model.oxygen)
 		assert_gas("o2")
@@ -486,16 +513,16 @@ var/list/gaslist_cache = null
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
-	
+
 	var/list/unique_gases = cached_gases ^ sharer_gases
 	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	
+
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
-	
+
 
 /datum/gas_mixture/mimic(turf/model, atmos_adjacent_turfs = 4)
 	var/datum/gas_mixture/copied = new
