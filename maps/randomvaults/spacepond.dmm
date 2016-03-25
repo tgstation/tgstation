@@ -1,0 +1,151 @@
+"aa" = (/turf/space,/area/vault/spacepond)
+"ab" = (/turf/simulated/wall/mineral/wood,/area/vault/spacepond)
+"ac" = (/obj/item/weapon/tank/oxygen,/turf/space,/area/vault/spacepond)
+"ad" = (/turf/unsimulated/mineral,/area/vault/spacepond)
+"ae" = (/obj/machinery/cooking,/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"af" = (/obj/structure/closet/secure_closet/freezer/fridge,/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,/obj/item/weapon/reagent_containers/food/snacks/meat/bearmeat,/obj/item/weapon/reagent_containers/food/drinks/flour,/obj/item/weapon/storage/fancy/egg_box,/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"ag" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"ah" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/knife/large/butch,/obj/item/weapon/kitchen/rollingpin,/obj/item/weapon/reagent_containers/food/drinks/americup,/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"ai" = (/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aj" = (/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space,/turf/space,/area/vault/spacepond)
+"ak" = (/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"al" = (/obj/item/weapon/broken_bottle,/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"am" = (/obj/effect/decal/cleanable/flour,/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "cafeteria"},/area/vault/spacepond)
+"an" = (/obj/structure/closet/crate/chest/potential_mimic,/obj/item/stack/sheet/wood,/obj/item/weapon/storage/fancy/matchbox/strike_anywhere,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"ao" = (/obj/machinery/space_heater/campfire/stove/fireplace,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"ap" = (/obj/effect/decal/cleanable/generic,/obj/item/clothing/suit/spaceblanket,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"aq" = (/turf/simulated/floor/wood,/area/vault/spacepond)
+"ar" = (/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken4"},/area/vault/spacepond)
+"as" = (/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken6"},/area/vault/spacepond)
+"at" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/wood,/area/vault/spacepond)
+"au" = (/obj/effect/decal/cleanable/blood/gibs/up,/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human1 (NORTH)"; icon_state = "human1"; dir = 1},/turf/simulated/floor/wood,/area/vault/spacepond)
+"av" = (/obj/item/clothing/shoes/black,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aw" = (/obj/effect/decal/cleanable/blood/gibs/limb,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"ax" = (/obj/map/spawner/space/drinks,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"ay" = (/turf/simulated/floor/carpet,/area/vault/spacepond)
+"az" = (/obj/structure/bed,/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human2 (NORTH)"; icon_state = "human2"; dir = 1},/obj/item/weapon/bedsheet/brown,/turf/simulated/floor/wood,/area/vault/spacepond)
+"aA" = (/obj/structure/window/full/reinforced,/turf/simulated/floor/wood,/area/vault/spacepond)
+"aB" = (/obj/item/clothing/under/overalls,/obj/item/clothing/suit/space,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aC" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aD" = (/obj/effect/decal/cleanable/blood,/obj/effect/landmark/corpse,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aE" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/obj/item/clothing/mask/cigarette/pipe,/obj/item/clothing/glasses/regular/hipster,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"aF" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/carpet,/area/vault/spacepond)
+"aG" = (/obj/effect/decal/cleanable/generic,/obj/structure/hanging_lantern,/turf/simulated/floor/wood,/area/vault/spacepond)
+"aH" = (/obj/structure/coatrack/full,/obj/item/clothing/mask/necklace/xeno_claw,/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken4"},/area/vault/spacepond)
+"aI" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/wood,/area/vault/spacepond)
+"aJ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/closet,/obj/item/clothing/shoes/blue,/obj/item/clothing/under/bluepants,/obj/item/clothing/under/lawyer/bluesuit,/obj/item/clothing/suit/jumper/christmas/blue,/obj/item/clothing/head/hairflower,/obj/item/clothing/head/bearpelt/real,/obj/item/clothing/head/ushanka,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken3"},/area/vault/spacepond)
+"aK" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall/mineral/wood,/area/vault/spacepond)
+"aL" = (/obj/machinery/atmospherics/unary/vent{dir = 8},/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aM" = (/obj/item/stack/medical/ointment,/obj/item/stack/medical/bruise_pack,/turf/simulated/floor/wood,/area/vault/spacepond)
+"aN" = (/obj/item/weapon/harpoon,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/wood,/area/vault/spacepond)
+"aO" = (/obj/structure/hanging_lantern{dir = 1},/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aP" = (/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human2 (NORTH)"; icon_state = "human2"; dir = 1},/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human1 (NORTH)"; icon_state = "human1"; dir = 1},/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aQ" = (/obj/structure/flora/pottedplant,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"aR" = (/obj/structure/bookcase,/obj/item/weapon/storage/bible,/turf/simulated/floor/carpet,/area/vault/spacepond)
+"aS" = (/obj/machinery/door/mineral/wood,/turf/simulated/floor/wood,/area/vault/spacepond)
+"aT" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/wood,/area/vault/spacepond)
+"aU" = (/obj/machinery/alarm{dir = 8; pixel_x = 24},/obj/machinery/atmospherics/unary/tank/air{dir = 8},/turf/simulated/floor/wood,/area/vault/spacepond)
+"aV" = (/mob/living/simple_animal/hostile/carp/baby,/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken3"},/area/vault/spacepond)
+"aW" = (/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken"},/area/vault/spacepond)
+"aX" = (/mob/living/simple_animal/hostile/carp/baby,/turf/simulated/floor/wood,/area/vault/spacepond)
+"aY" = (/obj/effect/decal/cleanable/blood/drip,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"aZ" = (/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human2 (NORTH)"; icon_state = "human2"; dir = 1},/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human1 (WEST)"; icon_state = "human1"; dir = 8},/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"ba" = (/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human2 (WEST)"; icon_state = "human2"; dir = 8},/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human1 (NORTH)"; icon_state = "human1"; dir = 1},/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"bb" = (/obj/structure/window/full/reinforced,/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken"},/area/vault/spacepond)
+"bc" = (/mob/living/simple_animal/hostile/carp,/turf/simulated/floor/wood,/area/vault/spacepond)
+"bd" = (/obj/machinery/door/mineral/wood,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"be" = (/turf/unsimulated/beach/sand,/area/vault/spacepond)
+"bf" = (/obj/structure/flora/ausbushes/reedbush,/turf/unsimulated/beach/sand,/area/vault/spacepond)
+"bg" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/wood,/area/vault/spacepond)
+"bh" = (/turf/unsimulated/beach/water,/area/vault/spacepond)
+"bi" = (/obj/structure/hanging_lantern{dir = 1},/turf/unsimulated/beach/sand,/area/vault/spacepond)
+"bj" = (/mob/living/simple_animal/hostile/carp/baby,/turf/unsimulated/beach/water,/area/vault/spacepond)
+"bk" = (/obj/structure/hanging_lantern{dir = 4},/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"bl" = (/obj/effect/decal/cleanable/campfire,/turf/unsimulated/floor/asteroid,/area/vault/spacepond)
+"bm" = (/obj/structure/hanging_lantern,/turf/unsimulated/beach/sand,/area/vault/spacepond)
+"bn" = (/turf/space,/area)
+"bo" = (/turf/simulated/wall/mineral/wood,/area)
+"bp" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/knife/large/butch,/obj/item/weapon/kitchen/rollingpin,/obj/item/weapon/reagent_containers/food/drinks/americup,/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"bq" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"br" = (/obj/structure/closet/secure_closet/freezer/fridge,/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,/obj/item/weapon/reagent_containers/food/snacks/meat/bearmeat,/obj/item/weapon/reagent_containers/food/drinks/flour,/obj/item/weapon/reagent_containers/food/drinks/milk,/obj/item/weapon/storage/fancy/egg_box,/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"bs" = (/obj/machinery/cooking,/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"bt" = (/turf/unsimulated/mineral,/area)
+"bu" = (/obj/effect/decal/cleanable/flour,/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"bv" = (/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"bw" = (/obj/item/weapon/broken_bottle,/turf/simulated/floor{icon_state = "cafeteria"},/area)
+"bx" = (/obj/effect/decal/cleanable/blood/gibs/up,/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human1 (NORTH)"; icon_state = "human1"; dir = 1},/turf/simulated/floor/wood,/area)
+"by" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/wood,/area)
+"bz" = (/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken6"},/area)
+"bA" = (/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken4"},/area)
+"bB" = (/turf/simulated/floor/wood,/area)
+"bC" = (/obj/effect/decal/cleanable/generic,/obj/item/clothing/suit/spaceblanket,/turf/simulated/floor/carpet,/area)
+"bD" = (/obj/machinery/space_heater/campfire/stove/fireplace,/turf/simulated/floor/carpet,/area)
+"bE" = (/obj/structure/closet/crate/chest/potential_mimic,/obj/item/stack/sheet/wood,/obj/item/weapon/storage/fancy/matchbox/strike_anywhere,/turf/simulated/floor/carpet,/area)
+"bF" = (/obj/structure/window/full/reinforced,/turf/simulated/floor/wood,/area)
+"bG" = (/obj/structure/bed,/obj/effect/decal/cleanable/blood/tracks/footprints{tag = "icon-human2 (NORTH)"; icon_state = "human2"; dir = 1},/turf/simulated/floor/wood,/area)
+"bH" = (/turf/simulated/floor/carpet,/area)
+"bI" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall/mineral/wood,/area)
+"bJ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/closet,/obj/item/clothing/shoes/blue,/obj/item/clothing/under/bluepants,/obj/item/clothing/under/lawyer/bluesuit,/obj/item/clothing/suit/jumper/christmas/blue,/obj/item/clothing/head/hairflower,/obj/item/clothing/head/bearpelt/real,/obj/item/clothing/head/ushanka,/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken3"},/area)
+"bK" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/wood,/area)
+"bL" = (/obj/effect/decal/cleanable/generic,/obj/structure/hanging_lantern,/turf/simulated/floor/wood,/area)
+"bM" = (/obj/structure/coatrack/full,/obj/item/clothing/mask/necklace/xeno_claw,/obj/item/clothing/suit/johnny_coat,/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken4"},/area)
+"bN" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/carpet,/area)
+"bO" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/obj/item/clothing/mask/cigarette/pipe,/obj/item/clothing/glasses/regular/hipster,/turf/simulated/floor/carpet,/area)
+"bP" = (/obj/machinery/atmospherics/unary/tank/air{dir = 1},/obj/machinery/alarm{dir = 4; pixel_x = -23},/turf/simulated/floor/wood,/area)
+"bQ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor/wood,/area)
+"bR" = (/obj/machinery/door/mineral/wood,/turf/simulated/floor/wood,/area)
+"bS" = (/obj/structure/bookcase,/obj/item/weapon/storage/bible,/turf/simulated/floor/carpet,/area)
+"bT" = (/obj/structure/flora/pottedplant,/turf/simulated/floor/carpet,/area)
+"bU" = (/obj/structure/window/full/reinforced,/turf/simulated/floor/wood{broken = 1; icon_state = "wood-broken"},/area)
+"bV" = (/turf/unsimulated/floor/asteroid,/area)
+"bW" = (/turf/unsimulated/beach/sand,/area)
+"bX" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/wood,/area)
+"bY" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/wood,/area)
+"bZ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor/wood,/area)
+"ca" = (/obj/machinery/alarm{dir = 8; pixel_x = 24},/obj/machinery/atmospherics/unary/tank/air{dir = 8},/turf/simulated/floor/wood,/area)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadadabaeafagahabaaaaaaaa
+aaaaaaaiaiaaaaaaaaaaaaaaaaaaajaaaaaaabababababakalakamabaaaaaaaa
+aaaaaiaiaiaaaaaaaaaaaaadaaaaaaaaaiaiabanaoapaqarasatauabaaaaaaaa
+aaaaaaaiaaaaaaaaaaaaaiadadaaaaavawaiabaxayayaqaqaraqazaAaiaaaaaa
+aaaaaaaaaaabababababaiadadaiaBaCaDaiaAaEayaFaGaqaHaIaJaKaLaaaaaa
+aaaaaaaaaaabaMaNarabaiaOaiaiadadaPaiaAaQayaRabaSabaTaUabaiaiaaaa
+aaaaaaaaaaabaVaWaXabaiaiaiaiaiaYaZbaabaAbbababbcabaAababaiaiaaaa
+aaaaaaaaaaababbdababbebebfbebebeaiaiaiaiaibeabbgabbeaiaiaiaaaaaa
+aaaaaaaaaaaaaiaibebebebhbhbhbhbebeaiaiaiaibebibebeaiaiaiaaaaaaaa
+aaaaaaaaaiaiaiaibebfbhbhbhbhbhbhbebebebebebebebeaiaiaiaiaaaaaaaa
+aaaaaaadadaiaibebfbhbhbhbhbhbhbhbhbebebebebeaiaiaiaibeaiaiaaaaaa
+aaaaaaaaadadaibebhbhbjbhbhbhbhbhbhbebeaiaiaiadaiaibebeaiadaaaaaa
+aaaaaaaaaiaibebebhbhbhbhbhbhbjbhbhbeaiaiaibkadadaiaiaiadadadaaaa
+aaaaaaaaaaaibebebebhbhbebhbhbhbebebeaiblaiaiaiadaiaiaiaiaiaaaaaa
+aaadaaaaaaaiaibebebebfbebebebebebeaiaiaiaiaiaiadadaiaaaaaaaaaaaa
+aaaaaaaaaaaiaiaiaiaiaibmbeadaiaiaiaiaiaiaiaiaaaaadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaiaiaiaiaiadadadadaiaiaiaiaaaaaaaaaaadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaiaiadadadaiaiaiaiaiaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
+
+(1,1,2) = {"
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobobobobobobnbnbnbnbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobpbqbrbsbobtbtbnbnbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobubvbwbvbobobobobobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobxbybzbAbBbCbDbEbobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbFbGbBbAbBbBbHbHbHbobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbIbJbKbLbBbMbNbHbObFbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobPbQbobRbobSbHbTbobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobobFbobBbobobUbFbobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbVbVbWbobXbobVbVbVbVbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobobobobobobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbtbtbobsbrbqbpbobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobobobobobvbwbvbubobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobEbDbCbBbAbzbybxbobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobHbHbHbBbBbAbBbGbFbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbFbObHbNbMbBbLbYbJbIbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbFbTbHbSbobRbobZcabobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbobFbUbobobBbobFbobobnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbVbVbVbVbobXbobWbVbVbnbnbnbn
+bnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbnbn
+"}

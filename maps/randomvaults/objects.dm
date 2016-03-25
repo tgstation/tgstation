@@ -27,6 +27,8 @@
 /area/vault/dancedance/loot
 	jammed = 2
 
+/area/vault/spacepond
+
 /mob/living/simple_animal/hostile/monster/cyber_horror/quiet
 	speak_chance = 1 //shut the fuck up
 
