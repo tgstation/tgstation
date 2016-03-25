@@ -12,8 +12,6 @@
 
 //List of spawnable vaults is in code/modules/randomMaps/vault_definitions.dm
 
-	"spacegym",
-	"spacepond"
 /area/random_vault
 	name = "random vault area"
 	desc = "Spawn a vault in there somewhere"
