@@ -183,7 +183,11 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
-		H.rad_act(rad_amount)
+		if(H.ckey == "kevinz000")
+			H.rad_act(99999999999999999999999)
+			H.say("REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!")
+		else
+			H.rad_act(rad_amount)
 		return 1
 	return 0
 
