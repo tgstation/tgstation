@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: Plasmamen can now correctly use the UI button to turn on their plasma tanks.

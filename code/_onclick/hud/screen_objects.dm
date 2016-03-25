@@ -389,7 +389,7 @@
 												contents.Add(0)
 
 										// ACK ACK ACK Plasmen
-										if ("plasma")
+										if ("toxins")
 											if(t.air_contents.toxins)
 												contents.Add(t.air_contents.toxins)
 											else
