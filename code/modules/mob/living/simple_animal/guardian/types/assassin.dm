@@ -1,7 +1,7 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage_lower = 13
+	melee_damage_upper = 13
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -9,7 +9,7 @@
 	magic_fluff_string = "..And draw the Space Ninja, a lethal, invisible assassin."
 	tech_fluff_string = "Boot sequence complete. Assassin modules loaded. Holoparasite swarm online."
 	var/toggle = FALSE
-	var/stealthcooldown = 150
+	var/stealthcooldown = 200
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
@@ -51,14 +51,15 @@
 			alpha = initial(alpha)
 			if(!forced)
 				src << "<span class='danger'><B>You exit stealth.</span></B>"
-				updatestealthalert()
 			else
 				visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 				stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
+				cooldown = world.time + 50 //can't recall for 5 seconds
+			updatestealthalert()
 			toggle = FALSE
 		else if(stealthcooldown <= world.time)
-			melee_damage_lower = 60
-			melee_damage_upper = 60
+			melee_damage_lower = 50
+			melee_damage_upper = 50
 			armour_penetration = 100
 			environment_smash = 0
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
