@@ -471,7 +471,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 1
-	var/uses = 10
+	var/uses = 20
 	var/temp = null
 	var/op = 1
 	var/tab = null
