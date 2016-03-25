@@ -20,6 +20,7 @@
 	var/processing = 0
 	var/chosen = "metal" //which material will be used to make coins
 	var/coinsToProduce = 10
+	speed_process = 1
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src,input_dir)

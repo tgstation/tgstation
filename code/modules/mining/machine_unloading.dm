@@ -9,6 +9,7 @@
 	anchored = 1
 	input_dir = WEST
 	output_dir = EAST
+	speed_process = 1
 
 /obj/machinery/mineral/unloading_machine/process()
 	var/turf/T = get_step(src,input_dir)
@@ -21,8 +22,11 @@
 				limit++
 				if (limit>=10)
 					return
+				CHECK_TICK
+			CHECK_TICK
 		for(var/obj/item/I in T)
 			unload_mineral(I)
 			limit++
 			if (limit>=10)
 				return
+			CHECK_TICK
