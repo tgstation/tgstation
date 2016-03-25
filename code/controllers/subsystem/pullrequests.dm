@@ -65,7 +65,8 @@ var/datum/subsystem/pullrequests/SSpullrequests
 		var/list/punchlines = list("water", "organs", "polyacid", "memes", "taser",
 		                           "stamina damage", "hardsuits", "exploit", "nuke",
 		                           "ponies", "armor", "health", "uplink", "cat",
-		                           "talismans", "metagame", "hats", "run speed")
+		                           "talismans", "metagame", "hats", "run speed",
+		                           "pacemaker", "PDA", "fanfiction", "herpes")
 
 		if(prob(25))
 			title += pick("the [pick("Captain's", "clown's", "HoS's", "janitor's", "changeling's", "AI's", "bloody")] ",
@@ -78,10 +79,12 @@ var/datum/subsystem/pullrequests/SSpullrequests
 			                   "ninja", "blob", "cyborgs", "player references", "lawsets",
 			                   "Asimov", "stuns", "Cogmap2", "wall sprites", "Solarium", "WGW",
 			                   "cult", "Nar-Sie", "gangs", "atmos", "plasma", "CO2", "ERP",
-			                   "security", "R&D", "solars", "telecomms", "roleplay options")
+			                   "security", "R&D", "solars", "telecomms", "roleplay options",
+			                   "OOC", "adminhelp", "pull request announcements", "badmins",
+			                   "permabans", "revolution", "lag", "Ridley", "Temmie", "fun")
 
 		if(prob(25))
-			title += pick("April Fools ", "meme ", "robust ", "stupid ", "sexy ")
+			title += pick("April Fools ", "meme ", "robust ", "stupid ", "sexy ", "OP ", "temporary ")
 
 		title += pick(punchlines)
 
