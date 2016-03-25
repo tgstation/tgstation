@@ -235,13 +235,23 @@
 	if(pale)
 		msg += "[t_He] [t_has] pale skin.\n"
 
+	var/datum/disease/F = new /datum/disease/shock
+	if(src.HasDisease(F))
+		msg += "[t_He] looks dazed and confused.\n"
+
+
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	if(blood_max)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
-		else
+		else if(bleed_ticker > 20)
+			msg += "<B>[t_He] [t_is] gushing blood!</B>\n"
+		else if(bleed_ticker > 10)
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+		else
+			msg += "[t_He] [t_is] bleeding slightly.\n"
+
 
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"

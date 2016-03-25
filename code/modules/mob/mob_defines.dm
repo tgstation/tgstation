@@ -55,6 +55,7 @@
 	var/lastpuke = 0
 
 	var/bleed_ticker = 0
+	var/bandage_suppression = 0
 
 	var/name_archive //For admin things like possession
 

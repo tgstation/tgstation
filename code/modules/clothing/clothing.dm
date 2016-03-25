@@ -313,6 +313,18 @@ BLIND     // can't see anything
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
 
+/obj/item/clothing/under/attack_self(mob/user)
+	if(!can_adjust)
+		user << "<span class='warning'>You cannot tear any cloth off of [src]</span>!"
+		return
+
+	if(!adjusted)
+		rolldown()
+	can_adjust = 0
+
+	user.visible_message("<span class='notice'>[user] tears the sleeves from [src] into strips.</span>", \
+						"<span class='notice'>You tear the sleeves from [src] into strips.</span>")
+	new /obj/item/stack/medical/gauze/improvised(user.loc)
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()

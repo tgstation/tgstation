@@ -959,6 +959,10 @@
 	apply_damage(I.force, I.damtype, affecting, armor_block, H)
 
 	var/bloody = 0
+	if(I.damtype == BRUTE && I.is_sharp())
+		H.bleed_ticker += I.force
+		H << "You're now bleeding [H.bleed_ticker]."
+
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == ORGAN_ORGANIC)
 			I.add_blood(H)	//Make the weapon bloody, not the person.

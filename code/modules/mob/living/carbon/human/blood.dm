@@ -44,11 +44,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(bleedsuppress)
 		return
 	else
-		bleedsuppress = 1
-		spawn(amount)
-			bleedsuppress = 0
-			if(stat != DEAD && blood_max)
-				src << "<span class='warning'>The blood soaks through your bandage.</span>"
+		bleedsuppress = amount
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
@@ -127,17 +123,29 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			listclearnulls(org.embedded_objects)
 			blood_max += 0.5*org.embedded_objects.len
 
+			blood_max += bleed_ticker * 0.02
+
 			if(brutedamage > 30)
 				blood_max += 0.5
 			if(brutedamage > 50)
 				blood_max += 1
 			if(brutedamage > 70)
 				blood_max += 2
-		if(bleedsuppress)
-			blood_max = 0
+		var/blood_stopped = 0
+
+		if(bleedsuppress > 0)
+			blood_stopped = min(blood_max / 2, 1.5)
+			bleed_ticker = max(bleed_ticker - blood_stopped, 0)
+			bleedsuppress = max(bleedsuppress - blood_stopped - 0.75, 0)
+			if(bleedsuppress == 0)
+				src << "<span class='warning'>The blood soaks through your bandage and you remove it.</span>"
+			blood_max = max(blood_max - blood_stopped, 0)
+
 		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
 			blood_max += 3
 		drip(blood_max)
+		bleed_ticker = max(bleed_ticker - 0.5, 0)
+		src << "You bled [blood_max], suppressed [blood_stopped], and have [bleed_ticker] left to bleed. Your bandage has [bleedsuppress] power left."
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(amt as num)

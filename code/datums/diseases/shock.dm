@@ -5,7 +5,7 @@
 	stage_prob = 1
 	spread_text = "Medical complication"
 	spread_flags = NON_CONTAGIOUS
-	cure_text = "Restoring blood count"
+	cure_text = "Epinephrine and restoring blood count"
 	cures = list("salglu_solution")
 	agent = ""
 	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
@@ -48,13 +48,17 @@
 
 	switch(stage)
 		if(1)
+			if(prob(5))
+				affected_mob.emote("pale")
 			if(prob(3))
 				affected_mob << "<span class='warning'>You feel numb...</span>"
 			if((affected_mob.lying || affected_mob.reagents.has_reagent("epinephrine")) && prob(10))
 				affected_mob << "<span class='notice'>You feel better now.</span>"
 				cure()
 				return
-		if(2) //also changes say, see say.dm
+		if(2)
+			if(prob(5))
+				affected_mob.emote("pale")
 			if((affected_mob.lying || affected_mob.reagents.has_reagent("epinephrine")) && prob(10))
 				affected_mob << "<span class='notice'>You feel a little better now.</span>"
 				stage--
@@ -66,21 +70,36 @@
 				affected_mob.confused = 5
 				affected_mob.Jitter(8)
 		if(3)
+			if(prob(5))
+				affected_mob.emote("pale", "sway")
+			if(affected_mob.reagents.has_reagent("epinephrine") && prob(10))
+				affected_mob << "<span class='notice'>You feel a little better now.</span>"
+				stage--
 			if(prob(7))
 				affected_mob << "<span class='warning'>You can't feel anything...</span>"
 			if(prob(4))
 				affected_mob << "<span class='danger'>You can't breathe!</span>"
 				affected_mob.losebreath += 6
 				affected_mob.updatehealth()
-			if(prob(3))
+			if(prob(3) && !affected_mob.reagents.has_reagent("epinephrine"))
 				affected_mob.visible_message("<span class='danger'>[affected_mob] passes out!</span>", \
 												"<span class='userdanger'>You pass out!</span>")
-				affected_mob.Sleeping(10)
+				affected_mob.Sleeping(rand(6, 10))
+			if(prob(5))
+				affected_mob.visible_message("<span class='danger'>[affected_mob] stumbles around dizzily.</span>", \
+								"<span class='userdanger'>Your head spins wildly as you try to stay on your feet.</span>")
+				affected_mob.confused = 8
+				affected_mob.Jitter(8)
 		if(4)
 			if(prob(5))
+				affected_mob.emote("pale", "sway")
+			if(affected_mob.reagents.has_reagent("epinephrine") && prob(10))
+				affected_mob << "<span class='notice'>You feel a little better now.</span>"
+				stage--
+			if(prob(5) && !affected_mob.reagents.has_reagent("epinephrine"))
 				affected_mob.visible_message("<span class='danger'>[affected_mob] passes out!</span>", \
 												"<span class='userdanger'>You pass out!</span>")
-				affected_mob.Sleeping(10)
+				affected_mob.Sleeping(rand(6,10))
 			if(prob(5))
 				affected_mob << "<span class='danger'>You can't breathe!</span>"
 				affected_mob.losebreath += 8
@@ -90,7 +109,7 @@
 				affected_mob.visible_message("<span class='danger'>[affected_mob] clutches at their chest!</span>", \
 													"<span class='userdanger'>You feel a sharp pain in your chest!</span>")
 				affected_mob.losebreath += 10 //lol how 2 heart attak
-				affected_mob.adjustOxyLoss(10)
+				affected_mob.adjustOxyLoss(20)
 				affected_mob.updatehealth()
 	return
 

@@ -104,14 +104,15 @@
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
-	stop_bleeding = 1800
-	self_delay = 80
+	stop_bleeding = 50
+	self_delay = 40
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
-	stop_bleeding = 900
+	stop_bleeding = 25
+	amount = 2
 
 /obj/item/stack/medical/gauze/cyborg/
 	materials = list()
