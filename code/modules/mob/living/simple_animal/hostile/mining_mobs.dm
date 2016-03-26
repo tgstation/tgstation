@@ -768,6 +768,7 @@
 	layer = 2
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
+	anchored = TRUE
 
 /obj/effect/collapse/New()
 	..()
