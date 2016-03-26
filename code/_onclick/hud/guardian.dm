@@ -14,9 +14,19 @@
 	using.screen_loc = ui_lhand
 	static_inventory += using
 
-	using = new /obj/screen/guardian/ToggleMode()
-	using.screen_loc = ui_storage1
-	static_inventory += using
+	switch(owner.type)
+		if(/mob/living/simple_animal/hostile/guardian/ranged,/mob/living/simple_animal/hostile/guardian/healer)
+			using = new /obj/screen/guardian/ToggleMode()
+			using.screen_loc = ui_storage1
+			static_inventory += using
+		if(/mob/living/simple_animal/hostile/guardian/assassin)
+			using = new /obj/screen/guardian/ToggleMode/Assassin()
+			using.screen_loc = ui_storage1
+			static_inventory += using
+		else
+			using = new /obj/screen/guardian/ToggleMode/Inactive()
+			using.screen_loc = ui_storage1
+			static_inventory += using
 
 	using = new /obj/screen/guardian/ToggleLight()
 	using.screen_loc = ui_inventory
@@ -65,6 +75,14 @@
 	if(isguardian(usr))
 		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.ToggleMode()
+
+/obj/screen/guardian/ToggleMode/Inactive
+	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
+
+/obj/screen/guardian/ToggleMode/Assassin
+	icon_state = "stealth"
+	name = "Toggle Stealth"
+	desc = "Enter or exit stealth."
 
 /obj/screen/guardian/Communicate
 	icon_state = "communicate"
