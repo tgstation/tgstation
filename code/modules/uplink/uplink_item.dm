@@ -227,6 +227,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/melee/energy/sword/saber
 	cost = 8
 
+/datum/uplink_item/dangerous/trisword
+	name = "Triple-bladed energy sword"
+	desc = "A very, very dangerous weapon that only the elite of the elite are capable of using. \
+			We found a whole crate of them on an abandoned base, so right now they're very cheap.\
+			Handle with caution."
+	item = /obj/item/weapon/trisword
+	cost = 2
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \

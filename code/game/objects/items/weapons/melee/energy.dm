@@ -225,3 +225,60 @@
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
+
+/obj/item/weapon/trisword
+	name = "triple-bladed energy sword"
+	desc = "Wow, an energy sword with THREE blades! This must be a REALLY good weapon."
+	force = 3
+	throwforce = 5
+	w_class = 2
+	icon_state = "trisaber_off"
+	item_state = "sword0"
+	var/progress = 0
+	var/on = 0
+
+/obj/item/weapon/trisword/attack_self(mob/living/carbon/user)
+	if(on || progress > 5)
+		return
+	if(progress == 0)
+		user << "<span class='notice'>You extend the... Hey, wait a second, how do you turn this thing on?</span>"
+		progress = 1
+		return
+	if(progress == 1)
+		user << "<span class='notice'>No, seriously, what the fuck? Does this thing even have a button on it?</span>"
+		progress = 2
+		return
+	if(progress == 2)
+		user << "<span class='danger'>Okay, you're getting sick of this. You mash random panels on [src], trying to find a way to activate it.</span>"
+		progress = 3
+		return
+	if(progress == 3)
+		user << "<span class='danger'>God dammit, how the fuck do you turn this shit on?</span>"
+		progress = 4
+		return
+	if(progress == 4)
+		user << "<span class='notice'>You find what feels like a button on [src]! Now you just need to press it.</span>"
+		progress = 5
+		return
+	if(progress == 5)
+		user << "<span class='userdanger'>The third blade on [src] extends straight into your gut! God fucking dammit.</span>"
+		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
+		playsound(user, 'sound/weapons/blade1.ogg', 35, 1)
+		on = 1
+		icon_state = "trisaber"
+		if(!remove_item_from_storage(user))
+			user.unEquip(src)
+		user.adjustBruteLoss(110)
+
+/obj/item/weapon/trisword/dropped()
+	..()
+	if(!on)
+		progress = 0
+
+/obj/item/weapon/trisword/attack_hand(mob/living/carbon/user)
+	if(on)
+		user << "<span class='userdanger'>You try to pick up [src], but accidentally grab one of the blades, and quickly drop the whole thing out of pain.</span>"
+		user.adjustBruteLoss(15)
+		playsound(user, 'sound/weapons/blade1.ogg', 35, 1)
+	else
+		..()
