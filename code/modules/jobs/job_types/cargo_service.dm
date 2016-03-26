@@ -187,6 +187,7 @@ Botanist
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
 	suit_store = /obj/item/device/analyzer/plant_analyzer
+	r_hand = /obj/item/weapon/gun/projectile/shotgun/boltaction/beebee
 
 	backpack = /obj/item/weapon/storage/backpack/botany
 	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
