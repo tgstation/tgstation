@@ -142,4 +142,22 @@
 		return 0
 	return ..()
 
+/mob/living/simple_animal/true_demon/attack_ghost(mob/dead/observer/user as mob)
+	if(ascended)
+		var/mob/living/simple_animal/slaughter/S = new(get_turf(loc))
+		S.key = user.key
+		S.mind.assigned_role = "Slaughter Demon"
+		S.mind.special_role = "Slaughter Demon"
+		ticker.mode.traitors += S.mind
+		var/datum/objective/newobjective = new
+		newobjective.explanation_text = "Send everyone that's not a demon to hell."
+		S.mind.objectives += newobjective
+		S << S.playstyle_string
+		S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
+		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
+		return
+	else
+		return ..()
+
+
 

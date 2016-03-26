@@ -252,7 +252,7 @@ var/list/allDemons = list()
 		if(TRUE_DEMON)
 			regress_blood_lizard()
 
-/datum/demoninfo/proc/regress_humanoid()  //TODO LORDPIDEY
+/datum/demoninfo/proc/regress_humanoid()
 	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
@@ -288,7 +288,7 @@ var/list/allDemons = list()
 
 
 
-/datum/demoninfo/proc/increase_true_demon()  //TODO LORDPIDEY: Finish these procs
+/datum/demoninfo/proc/increase_true_demon()
 	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true demon."
 	sleep(50)
 	var/mob/living/simple_animal/true_demon/A = new /mob/living/simple_animal/true_demon(owner.current.loc)
