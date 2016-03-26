@@ -212,10 +212,10 @@
 
 			 //Slowly get that clone healed and finished.
 
-			src.occupant.adjustCloneLoss(Clamp((-(speed_coeff/2)), HEALTH_THRESHOLD_DEAD, 0))
+			src.occupant.adjustCloneLoss(Clamp((-(speed_coeff/2)), HEALTH_THRESHOLD_DEAD - 10, 0))
 
 			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(Clamp((-(speed_coeff/2)), HEALTH_THRESHOLD_DEAD, 0))
+			src.occupant.adjustBrainLoss(Clamp((-(speed_coeff/2)), HEALTH_THRESHOLD_DEAD - 10, 0))
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("salbutamol") < 30)
