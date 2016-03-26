@@ -266,7 +266,7 @@
 
 /datum/supply_pack/security/armory/swat
 	name = "Combat knives crate"
-	cost = 30
+	cost = 3000
 	contains = list(/obj/item/weapon/kitchen/knife/combat,
 					/obj/item/weapon/kitchen/knife/combat,
 					/obj/item/weapon/kitchen/knife/combat)
