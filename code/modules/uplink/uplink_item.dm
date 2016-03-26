@@ -175,6 +175,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/grenadier
+	name = "Grenadier's belt"
+	desc = "A belt of a large variety of lethally dangerous and destructive grenades."
+	item = /obj/item/weapon/storage/belt/grenade/full
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 22
+	surplus = 0
+
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
@@ -634,10 +642,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	name = "Tactical No-Slip Chameleon Shoes"
-	desc = "These allow you to run on wet floors. They do not work on heavily lubricated surfaces, but the \
-			manufacturer guarantees they're somehow better than the normal ones."
+	name = "Stealthy No-Slip Chameleon Shoes"
+	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
+			They do not work on heavily lubricated surfaces. The manufacturer claims they are much more stealthy than the normal brand."
+	item = /obj/item/clothing/shoes/chameleon
 	cost = 4
+	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -703,6 +713,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
 	exclude_modes = list(/datum/game_mode/gang)
+	surplus = 40
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
@@ -854,11 +865,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 10
 
 /datum/uplink_item/device_tools/singularity_beacon
-	name = "Singularity Beacon"
+	name = "Power Beacon"
 	desc = "When screwed to wiring attached to an electric grid and activated, this large device pulls any \
-			active gravitational singularities towards it. This will not work when the singularity is still \
-			in containment. A singularity beacon can cause catastrophic damage to a space station, \
-			leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this \
+			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
+			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14

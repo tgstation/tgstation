@@ -168,7 +168,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					underwear = "Nude"
 
 	if(pref_species && !(pref_species.id in roundstart_species))
-		pref_species = new /datum/species/human()
+		var/rando_race = pick(config.roundstart_races)
+		pref_species = new rando_race()
 
 	if(current_version < 13 || !istext(backbag))
 		switch(backbag)
@@ -299,7 +300,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/newtype = roundstart_species[species_id]
 		pref_species = new newtype()
 	else
-		pref_species = new /datum/species/human()
+		var/rando_race = pick(config.roundstart_races)
+		pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		S["features["mcolor"]"]	<< "#FFF"

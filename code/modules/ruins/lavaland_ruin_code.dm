@@ -52,7 +52,7 @@
 				)
 
 /obj/effect/mob_spawn/human/seed_vault
-	name = "sleeper"
+	name = "vault creature sleeper"
 	mob_name = "Vault Creature"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -62,7 +62,7 @@
 	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper")
+	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 	new_spawn.real_name = plant_name
 
 //Greed
@@ -202,7 +202,7 @@
 	name = "ash walker egg"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
-	mob_species = /datum/species/lizard/ash_walker
+	mob_species = /datum/species/lizard
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
@@ -214,3 +214,132 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	new_spawn << "Drag corpes to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.dna.species.specflags |= NOBREATH
+
+
+
+//Wishgranter Exile
+
+/obj/effect/mob_spawn/human/exile
+	name = "exile sleeper"
+	mob_name = "Penitent Exile"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	mob_species = /datum/species/shadow
+	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
+
+/obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
+	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
+	var/wish = rand(1,4)
+	switch(wish)
+		if(1)
+			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
+		if(2)
+			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
+		if(3)
+			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
+		if(4)
+			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
+
+//Free Golems
+
+/obj/item/weapon/disk/design_disk/golem_shell
+	name = "Golem Creation Disk"
+	desc = "A gift from the Liberator."
+	icon_state = "datadisk1"
+
+/obj/item/weapon/disk/design_disk/golem_shell/New()
+	..()
+	var/datum/design/golem_shell/G = new
+	blueprint = G
+
+/datum/design/golem_shell
+	name = "Golem Shell Construction"
+	desc = "Allows for the construction of a Golem Shell."
+	id = "golem"
+	req_tech = list("materials" = 12)
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 40000)
+	build_path = /obj/item/golem_shell
+	category = list("Imported")
+
+/obj/item/golem_shell
+	name = "empty golem shell"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "construct"
+	desc = "The incomplete body of a golem."
+
+/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
+	..()
+	var/species
+	if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/O = I
+
+		if(istype(O, /obj/item/stack/sheet/metal))
+			species = /datum/species/golem
+
+		if(istype(O, /obj/item/stack/sheet/mineral/plasma))
+			species = /datum/species/golem/plasma
+
+		if(istype(O, /obj/item/stack/sheet/mineral/diamond))
+			species = /datum/species/golem/diamond
+
+		if(istype(O, /obj/item/stack/sheet/mineral/gold))
+			species = /datum/species/golem/gold
+
+		if(istype(O, /obj/item/stack/sheet/mineral/silver))
+			species = /datum/species/golem/silver
+
+		if(istype(O, /obj/item/stack/sheet/mineral/uranium))
+			species = /datum/species/golem/uranium
+
+		if(species)
+			if(O.use(10))
+				user << "You finish up the golem shell with ten sheets of [O]."
+				var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
+				G.mob_species = species
+				qdel(src)
+			else
+				user << "You need at least ten sheets to finish a golem."
+		else
+			user << "You can't build a golem out of this kind of material."
+
+/obj/effect/mob_spawn/human/golem
+	name = "completed golem shell"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "construct"
+	mob_species = /datum/species/golem
+	roundstart = FALSE
+	death = FALSE
+	anchored = 0
+	density = 0
+	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; 'Yeah go do whatever.' Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
+
+
+/obj/effect/mob_spawn/human/golem/New()
+	..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, attack_not_jump = 1)
+
+/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
+	var/golem_name = pick("Quartz", "Crystal", "Boulder", "Mountain", "Rock", "Stalagmite", "Stalagtite", "Sediment", "Geode", "Igneous", "Quarry", "Shale", "Obsidian", "Chasm", "Stone", "Oynx", "Iron", "Quake", "Grotto","Landslide","Mineral", "Slag", "Pebble", "Gravel", "Pyrite", "Flint", "Sand")
+	new_spawn.real_name = golem_name
+	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.set_cloned_appearance()
+
+
+/obj/effect/mob_spawn/human/golem/adamantine
+	name = "golem sleeper"
+	mob_name = "Free Golem"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	anchored = 1
+	density = 1
+	mob_species = /datum/species/golem/adamantine

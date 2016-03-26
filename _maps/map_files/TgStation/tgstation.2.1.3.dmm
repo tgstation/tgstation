@@ -27330,6 +27330,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel{
 	icon_state = "arrival";
 	dir = 4
@@ -31243,6 +31244,7 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen/red,
 /obj/structure/table,
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "bnH" = (
@@ -35048,6 +35050,7 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "buF" = (
@@ -36934,6 +36937,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel{
 	dir = 2;
 	icon_state = "brown"
@@ -79019,7 +79023,7 @@ bgj
 bgj
 bjc
 cAF
-bkA
+cAF
 bja
 aaa
 aaa
@@ -79274,8 +79278,8 @@ beO
 beU
 bgl
 bhL
-cAD
-bkA
+bjc
+cAF
 blV
 beO
 aaa
@@ -84889,7 +84893,7 @@ aaa
 aaa
 aaa
 ali
-alX
+aKY
 ali
 asC
 apQ
@@ -85731,7 +85735,7 @@ bTv
 bCq
 bVC
 bWx
-cAM
+bWy
 bYv
 bZl
 bCq
@@ -90521,7 +90525,7 @@ aaD
 aat
 aat
 aat
-awN
+aat
 abA
 acd
 acd
@@ -91287,7 +91291,7 @@ aag
 aaf
 aaj
 aaq
-amB
+aay
 aaE
 aaJ
 aaN
@@ -94492,7 +94496,7 @@ cii
 cpB
 cqi
 cAP
-cqG
+cAP
 crv
 cqY
 cAl
@@ -102129,7 +102133,7 @@ aGL
 aHM
 aJm
 aKz
-cAA
+aKR
 aND
 aJC
 aPP
@@ -102908,7 +102912,7 @@ aRC
 aSK
 aVz
 aVz
-cAC
+aVz
 aYL
 aJI
 bbz
@@ -103415,7 +103419,7 @@ aIf
 aJA
 aKC
 aKC
-cAB
+aKC
 aON
 aQk
 aRD
@@ -103690,7 +103694,7 @@ bfL
 bhm
 bhm
 bhm
-cAH
+bhm
 bkP
 bmV
 boc
@@ -104717,7 +104721,7 @@ bcq
 bfL
 bhp
 biB
-cAE
+biB
 biB
 bkU
 bmX
@@ -104948,7 +104952,7 @@ anf
 anf
 alP
 arA
-blT
+anf
 alP
 atw
 alP
@@ -106226,7 +106230,7 @@ apz
 aqw
 arr
 asw
-cpA
+asw
 auE
 apC
 awG
@@ -106490,7 +106494,7 @@ awH
 auF
 alP
 aAr
-blT
+anf
 alP
 aaa
 aFq
@@ -111877,14 +111881,14 @@ aaf
 alP
 anf
 apE
-blT
+anf
 anf
 asB
 asB
 asB
 avL
 awR
-cAy
+auI
 azu
 aAz
 asB
@@ -114264,7 +114268,7 @@ bPN
 cbe
 cbY
 bQZ
-cAK
+btp
 ceS
 cae
 bky
@@ -116802,7 +116806,7 @@ aaf
 bky
 bky
 brI
-cAK
+btp
 btp
 bvR
 btp

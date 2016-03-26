@@ -27,7 +27,9 @@
 	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
 
-/obj/effect/mob_spawn/initialize()
+/obj/effect/mob_spawn/spawn_atom_to_world()
+	//We no longer need to spawn mobs, deregister ourself
+	SSobj.atom_spawners -= src
 	if(roundstart)
 		create()
 	else
@@ -35,6 +37,10 @@
 
 /obj/effect/mob_spawn/New()
 	..()
+	if(roundstart)
+		//Add to the atom spawners register for roundstart atom spawning
+		SSobj.atom_spawners += src
+
 	if(instant)
 		create()
 	else

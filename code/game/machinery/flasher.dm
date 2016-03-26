@@ -22,9 +22,14 @@
 	base_state = "pflash"
 	density = 1
 
-/obj/machinery/flasher/New()
+/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	bulb = new /obj/item/device/assembly/flash/handheld(src)
+	if(built)
+		dir = ndir
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
+		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
+	else
+		bulb = new /obj/item/device/assembly/flash/handheld(src)
 
 /obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
@@ -63,6 +68,21 @@
 			power_change()
 		else
 			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
+
+	else if (istype(W, /obj/item/weapon/wrench))
+		if(!bulb)
+			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 40/W.toolspeed, target = src))
+				user << "<span class='notice'>You unsecure the flasher frame.</span>"
+				var/obj/item/wallframe/flasher/F = new(get_turf(src))
+				transfer_fingerprints_to(F)
+				F.id = id
+				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				qdel(src)
+		else
+			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
+
 	add_fingerprint(user)
 
 //Let the AI trigger them directly.
@@ -73,7 +93,6 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
-
 	if (!powered() || !bulb)
 		return
 
@@ -141,3 +160,21 @@
 
 	else
 		..()
+
+
+/obj/item/wallframe/flasher
+	name = "mounted flash frame"
+	desc = "Used for building wall-mounted flashers."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "mflash_frame"
+	result_path = /obj/machinery/flasher
+	var/id = null
+
+/obj/item/wallframe/flasher/examine(mob/user)
+	..()
+	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+
+/obj/item/wallframe/flasher/after_attach(var/obj/O)
+	..()
+	var/obj/machinery/flasher/F = O
+	F.id = id
