@@ -326,9 +326,10 @@ REACTIONARY_EXPLOSIONS
 ## Small (3, 7, 14)
 #BOMBCAP 14
 ## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
-BOMBCAP 20
+#BOMBCAP 20
 ## LagHell (7, 14, 28)
 #BOMBCAP 28
-
+## Petes wet dream
+BOMBCAP 50
 
 

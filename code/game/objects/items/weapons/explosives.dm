@@ -69,8 +69,6 @@
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM))
-		return
 	if(loc == AM)
 		return
 	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
@@ -108,7 +106,7 @@
 		location = get_turf(src)
 	if(location)
 		location.ex_act(2, target)
-		explosion(location,0,0,3)
+		explosion(location,1,3,5)
 	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M, mob/user, def_zone)
