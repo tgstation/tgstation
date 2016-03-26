@@ -31,7 +31,7 @@
 
 /datum/game_mode/proc/finalize_demon(datum/mind/demon_mind)
 	var/mob/living/carbon/human/S = demon_mind.current
-	demon_mind.demonInfo.give_base_spells(1)
+	demon_mind.demoninfo.give_base_spells(1)
 	var/trueName= randomDemonName()
 	var/datum/objective/demon/soulquantity/soulquant = new
 	soulquant.owner = demon_mind
