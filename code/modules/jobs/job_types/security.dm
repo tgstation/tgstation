@@ -322,3 +322,52 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 /obj/item/device/radio/headset/headset_sec/alt/department/sci
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+
+
+
+/datum/job/elo
+	title = "Elite Security Officer"
+	department_head = list("Head of Security")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 5
+	spawn_positions = 5
+	supervisors = "the head of security"
+	selection_color = "#ffeeee"
+	minimal_player_age = 1000000000
+
+	outfit = /datum/outfit/job/elo
+
+	access =  list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
+			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_medical)
+	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
+			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_medical)
+
+/datum/outfit/job/elo
+	name = "Elite Security Officer"
+
+	belt = /obj/item/weapon/storage/belt/military/full
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/security/navyblue
+	shoes = /obj/item/clothing/shoes/combat/swat
+	suit = /obj/item/clothing/suit/armor/laserproof
+	suit_store = /obj/item/weapon/gun/projectile/automatic/ar
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
+	l_pocket = /obj/item/weapon/restraints/handcuffs
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+	backpack_contents = list(/obj/item/weapon/gun/energy=1, /obj/item/weapon/melee/classic_baton=1)
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	
+
+/obj/item/weapon/storage/belt/military/full/New()
+	..()
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/restraints/handcuffs(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/gun/projectile/automatic/pistol/m1911(src)
