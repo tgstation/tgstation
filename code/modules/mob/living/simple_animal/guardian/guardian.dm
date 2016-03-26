@@ -241,18 +241,15 @@ var/global/list/parasites = list() //all currently existing/living guardians
 ////////parasite tracking/finding procs
 
 /mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
-	var/list/guardians = list()
+	. = list()
 	for(var/P in parasites)
 		var/mob/living/simple_animal/hostile/guardian/G = P
 		if(G.summoner == src)
-			guardians |= G
-	return guardians
+			. |= G
 
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
-	if(istype(G) && G.summoner && G.summoner == summoner)
-		return 1
-	else
-		return 0
+	return (istype(G) && G.summoner == summoner)
+
 
 ////////Creation
 
