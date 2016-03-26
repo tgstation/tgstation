@@ -354,7 +354,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 
 /obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	irradiate(10, FALSE)
+	irradiate_induced(15, FALSE)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()

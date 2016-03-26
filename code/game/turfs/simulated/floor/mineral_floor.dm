@@ -163,7 +163,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			irradiate(3, FALSE)
+			irradiate_induced(5, FALSE)
 			for(var/turf/simulated/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time

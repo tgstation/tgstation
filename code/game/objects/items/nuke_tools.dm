@@ -11,7 +11,8 @@
 	var/cooldown = 0
 
 /obj/item/nuke_core/New()
-	SSobj.processing += src
+	..()
+	SSradiation.radiation_sources += src
 
 /obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
 	if(istype(container))
@@ -19,11 +20,9 @@
 	else
 		..()
 
-/obj/item/nuke_core/process()
-	if(cooldown < world.time - 60)
-		cooldown = world.time
-		flick("plutonium_core_pulse", src)
-		irradiate(10, TRUE, name)
+/obj/item/nuke_core/process_irradiate()
+	flick("plutonium_core_pulse", src)
+	irradiate(10, log = TRUE, signature = name)
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -42,7 +41,7 @@
 	icon_state = "core_container_loaded"
 	user << "<span class='warning'>Container is sealing...</span>"
 	spawn(50)
-		SSobj.processing -= core
+		SSradiation.radiation_sources -= core
 		icon_state = "core_container_sealed"
 		playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
 		if(loc == user)

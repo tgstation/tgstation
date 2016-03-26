@@ -250,7 +250,7 @@
 				dna.temporary_mutations.Remove(mut)
 
 	var/turf/T = get_turf(src)
-	rad_act(Clamp(T.radiation*RAD_TRANSFER_PERCENTAGE, 0, 100))
+	rad_act(Clamp(T.get_radiation() * RAD_TRANSFER_PERCENTAGE, 0, 100))
 	if(radiation)
 		switch(radiation)
 			if(0 to 50)

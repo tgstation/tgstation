@@ -38,7 +38,7 @@ var/bomb_set
 	..()
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
-	SSobj.processing -= core
+	SSradiation.radiation_sources -= core
 	update_icon()
 	previous_level = get_security_level()
 

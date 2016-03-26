@@ -176,7 +176,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			irradiate(5, FALSE)
+			irradiate_induced(5, FALSE)
 			last_event = world.time
 			active = null
 			return

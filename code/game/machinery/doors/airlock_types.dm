@@ -147,7 +147,7 @@
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
 		if(prob(50))
-			irradiate(3, FALSE)
+			irradiate_induced(5, FALSE)
 		last_event = world.time
 	..()
 

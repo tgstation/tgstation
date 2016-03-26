@@ -24,7 +24,7 @@
 		if(!T)
 			qdel(src)
 			return
-		rad_act(T.radiation*RAD_TRANSFER_PERCENTAGE)
+		rad_act(T.get_radiation() * RAD_TRANSFER_PERCENTAGE)
 	if(emagged)
 		if(radiation_count < 20)
 			radiation_count++

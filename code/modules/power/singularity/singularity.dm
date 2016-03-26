@@ -35,6 +35,7 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
+	SSradiation.radiation_sources |= src
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -44,6 +45,7 @@
 
 /obj/singularity/Destroy()
 	SSobj.processing.Remove(src)
+	SSradiation.radiation_sources -= src
 	poi_list.Remove(src)
 	return ..()
 
@@ -102,12 +104,13 @@
 		pulse()
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
-		irradiate(20 * current_size, FALSE)
 	eat()
 	dissipate()
 	check_energy()
 
-	return
+/obj/singularity/process_irradiate()
+	if(current_size >= STAGE_TWO)
+		irradiate(20 * current_size, log = FALSE)
 
 
 /obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
@@ -355,6 +358,8 @@
 	switch(numb)
 		if(1)//EMP
 			emp_area()
+		if(2)//induce radiation
+			irradiate_induced(20 * current_size, FALSE)
 		if(4)//Stun mobs who lack optic scanners
 			mezzer()
 		if(5,6) //Sets all nearby mobs on fire
