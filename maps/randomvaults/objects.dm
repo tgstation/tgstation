@@ -9,6 +9,9 @@
 
 /area/vault/asteroid
 
+/area/vault/tommyboyasteroid
+	requires_power = 1
+
 /area/vault/satelite
 
 /area/vault/factory
@@ -82,6 +85,18 @@
 
 /obj/item/device/rcd/matter/engineering/rust_vault
 	name = "\improper Bystroye Stroitel'stvo Ustroystv (BSU)"
+
+/obj/item/weapon/paper/tommyboy
+	name = "failed message transcript"
+	info = {"This is Major Tom to Ground Control<br>
+			I'm stepping through the door<br>
+			And I'm floating in the most peculiar way<br>
+			And the stars look very different today<br>
+			For here am I sitting in my tin can<br>
+			Far above the world<br>
+			Planet Earth is blue<br>
+			And there's nothing I can do.
+			"}
 
 /obj/machinery/atmospherics/binary/msgs/rust_vault
 	name = "\improper Magnitno Priostanovleno Blok Khraneniya Gaza"
