@@ -278,9 +278,7 @@
 	var/species
 	if(istype(I, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/O = I
-		if(O.amount < 10)
-			user << "You need at least 10 sheets of your chosen material to activate the golem."
-			return
+
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
 
@@ -300,13 +298,15 @@
 			species = /datum/species/golem/uranium
 
 		if(species)
-			O.amount -= 10
-			user << "You finish up the golem shell with ten sheets of [O]."
-			var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
-			G.mob_species = species
-			if(O.amount < 1)
-				qdel(O)
-			qdel(src)
+			if(O.use(10))
+				user << "You finish up the golem shell with ten sheets of [O]."
+				var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
+				G.mob_species = species
+				qdel(src)
+			else
+				user << "You need at least ten sheets to finish a golem."
+		else
+			user << "You can't build a golem out of this kind of material."
 
 /obj/effect/mob_spawn/human/golem
 	name = "completed golem shell"
