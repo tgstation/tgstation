@@ -80,7 +80,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	var/temperature = -500
+	var/temperature = -1100
 
 
 /obj/item/projectile/stemp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
