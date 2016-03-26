@@ -1,7 +1,7 @@
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
-	callTime = 1200
+	callTime = 50
 
 	dir = 8
 	travelDir = 90
@@ -91,8 +91,6 @@
 
 	var/pointsEarned = 0
 	var/crates = 0
-	var/plasma = 0
-	var/intel = 0
 
 	var/msg = ""
 	var/sold_atoms = ""
@@ -151,15 +149,6 @@
 								SSshuttle.points += pointsEarned
 								msg += "[pointsEarned]: Station erroneously denied package #[manifest.order_id]."
 
-					// Sell plasma
-					if(istype(thing, /obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/sheet/mineral/plasma/P = thing
-						plasma += P.amount
-
-					// Sell syndicate intel
-					if(istype(thing, /obj/item/documents/syndicate))
-						intel++
-
 					// Sell tech levels
 					if(istype(thing, /obj/item/weapon/disk/tech_disk))
 						var/obj/item/weapon/disk/tech_disk/disk = thing
@@ -209,15 +198,10 @@
 		qdel(AM)
 		sold_atoms += "."
 
-	if(plasma > 0)
-		pointsEarned = round(plasma * SSshuttle.points_per_plasma)
-		msg += "[pointsEarned]: Received [plasma] unit(s) of exotic material."
-		SSshuttle.points += pointsEarned
-
-	if(intel > 0)
-		pointsEarned = round(intel * SSshuttle.points_per_intel)
-		msg += "[pointsEarned]: Received [intel] article(s) of enemy intelligence."
-		SSshuttle.points += pointsEarned
+	for(var/D in SSshuttle.shipping_datums)
+		var/datum/shipping/S = D
+		if(S.amount_sold > 0 && S.profit_made > 0)
+			SSshuttle.add_export_logs(S)
 
 	if(crates > 0)
 		pointsEarned = round(crates * SSshuttle.points_per_crate)

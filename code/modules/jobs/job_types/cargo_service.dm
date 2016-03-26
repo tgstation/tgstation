@@ -25,7 +25,8 @@ Quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
-	l_hand = /obj/item/weapon/clipboard
+	l_hand = /obj/item/weapon/cargo_exporter
+	r_hand = /obj/item/weapon/clipboard
 
 /*
 Cargo Technician
@@ -52,6 +53,7 @@ Cargo Technician
 	belt = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
+	l_hand = /obj/item/weapon/cargo_exporter
 
 
 /*
