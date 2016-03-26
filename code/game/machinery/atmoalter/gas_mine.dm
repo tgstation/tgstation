@@ -50,6 +50,9 @@
 /obj/machinery/atmospherics/miner/attack_ghost(var/mob/user)
 	return
 
+/obj/machinery/atmospherics/miner/attack_ai(var/mob/user)
+	return attack_hand(user)
+
 /obj/machinery/atmospherics/miner/attack_hand(var/mob/user)
 	..()
 	if(!Adjacent(user))
