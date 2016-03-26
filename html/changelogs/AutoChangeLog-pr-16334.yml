@@ -1,6 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Adds assassin holoparasites, which do low damage and take full damage, but can go invisible, causing their next attack to do massive damage and ignore armor."
-  - rscadd: "Assassin holoparasite stealth will be broken by attacking or taking damage, which will briefly prevent the parasite from recalling."
-  - rscadd: "Traitor holoparasite injectors include this parasite type."
