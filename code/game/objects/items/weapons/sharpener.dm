@@ -4,10 +4,10 @@
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	var/used = 0
-	var/increment = 4
-	var/max = 30
+	var/increment = 5
+	var/max = 15
 	var/prefix = "sharpened"
-	var/requires_sharpness = 1
+	var/requires_sharpness = 0
 
 
 /obj/item/weapon/sharpener/attackby(obj/item/I, mob/user, params)
@@ -28,13 +28,7 @@
 		if(TH.wielded)
 			user << "<span class='notice'>[TH] must be unwielded before it can be sharpened.</span>"
 			return
-		if(TH.force_wielded > initial(TH.force_wielded))
-			user << "<span class='notice'>[TH] has already been refined before. It cannot be sharpened further.</span>"
-			return
 		TH.force_wielded = Clamp(TH.force_wielded + increment, 0, max)//wieldforce is increased since normal force wont stay
-	if(I.force > initial(I.force))
-		user << "<span class='notice'>[I] has already been refined before. It cannot be sharpened further.</span>"
-		return
 	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
 	if(!requires_sharpness)
 		I.sharpness = IS_SHARP_ACCURATE
