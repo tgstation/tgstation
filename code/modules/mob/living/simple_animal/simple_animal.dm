@@ -297,7 +297,7 @@
 /mob/living/simple_animal/proc/adjustHealth(amount)
 	if(status_flags & GODMODE)
 		return 0
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
+	bruteloss = Clamp(bruteloss + (amount * config.damage_multiplier), 0, maxHealth)
 	updatehealth()
 	return amount
 
