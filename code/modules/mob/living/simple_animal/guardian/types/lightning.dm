@@ -88,6 +88,8 @@
 		var/turf/T = turf
 		for(var/mob/living/L in T)
 			if(L.stat != DEAD && L != src && L != summoner)
+				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
+					continue
 				if(successfulshocks > 4)
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L

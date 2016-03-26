@@ -31,6 +31,7 @@
 			ranged = 1
 			melee_damage_lower = 10
 			melee_damage_upper = 10
+			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = 13
 			incorporeal_move = 0
@@ -40,6 +41,7 @@
 			ranged = 0
 			melee_damage_lower = 0
 			melee_damage_upper = 0
+			environment_smash = 0
 			alpha = 60
 			range = 255
 			incorporeal_move = 1

@@ -67,6 +67,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		qdel(src)
 	snapback()
 
+/mob/living/simple_animal/hostile/guardian/Stat()
+	..()
+	if(statpanel("Status"))
+		if(cooldown >= world.time)
+			stat(null, "Manifest/Recall Cooldown Remaining: [max(round((cooldown - world.time)*0.1, 0.1), 0)] seconds")
+
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	. = ..()
 	snapback()
@@ -232,6 +238,18 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		src << "<span class='notice'>You deactivate your light.</span>"
 		SetLuminosity(0)
 
+////////parasite tracking/finding procs
+
+/mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
+	. = list()
+	for(var/P in parasites)
+		var/mob/living/simple_animal/hostile/guardian/G = P
+		if(G.summoner == src)
+			. |= G
+
+/mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
+	return (istype(G) && G.summoner == summoner)
+
 
 ////////Creation
 
@@ -247,14 +265,15 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
 	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger")
+	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
+	var/allowmultiple = 0
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
-	for(var/mob/living/simple_animal/hostile/guardian/G in living_mob_list)
-		if (G.summoner == user)
-			user << "You already have a [mob_name]!"
-			return
+	var/list/guardians = user.hasparasites()
+	if(guardians.len && !allowmultiple)
+		user << "You already have a [mob_name]!"
+		return
 	if(user.mind && user.mind.changeling)
 		user << "[ling_failure]"
 		return
@@ -307,6 +326,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("Charger")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/charger
 
+		if("Assassin")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
+
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
 	G.key = key
@@ -356,7 +378,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "The holoparasites recoil in horror. They want nothing to do with a creature like you."
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning")
+	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Assassin")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
@@ -369,15 +391,17 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <br>
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
- <b>Standard</b>:Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
+ <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
  <br>
  <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
  <br>
- <b>Support</b>:Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
+ <b>Support</b>: Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
- <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them.<br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
+ <br>
+ <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
