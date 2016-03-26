@@ -31,7 +31,7 @@
 
 	faction = "pirate"
 
-	attack_sound = "sound/weapons/bloodyslice.ogg"
+	attack_sound = 'sound/weapons/bloodyslice.ogg'
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	attacktext = "slashes"

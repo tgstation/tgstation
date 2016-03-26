@@ -1435,6 +1435,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider\nurse.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider\spiderling.dm"
 #include "code\modules\mob\living\simple_animal\hostile\human\_humanoid.dm"
+#include "code\modules\mob\living\simple_animal\hostile\human\cult.dm"
 #include "code\modules\mob\living\simple_animal\hostile\human\pirate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\human\russian.dm"
 #include "code\modules\mob\living\simple_animal\hostile\human\skellington.dm"
