@@ -2098,6 +2098,7 @@ proc/process_adminbus_teleport_locs()
 		if(Obj:client)
 			mysound.status = SOUND_PAUSED | SOUND_UPDATE
 			Obj << mysound
+	..()
 
 /area/awaymission/beach/proc/process()
 	//set background = 1
