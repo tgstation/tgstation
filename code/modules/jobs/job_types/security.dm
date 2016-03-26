@@ -354,16 +354,12 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	suit_store = /obj/item/weapon/gun/projectile/automatic/ar
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	backpack_contents = list(/obj/item/weapon/gun/energy=1, /obj/item/weapon/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
-
+	
 
 /obj/item/weapon/storage/belt/military/full/New()
 	..()
@@ -372,6 +368,6 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/grenade/syndieminibomb/concussion(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/gun/projectile/automatic/pistol/m1911(src)
