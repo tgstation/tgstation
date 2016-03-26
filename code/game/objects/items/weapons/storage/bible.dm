@@ -40,10 +40,6 @@
 //What happens when you slap things with the Bible in general
 /obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)
 
-	//Note : For some reason the Bible does not respect innate attack delays
-
-	user.delayNextAttack(10)
-
 	var/chaplain = 0 //Are we the Chaplain ? Used for simplification
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1 //Indeed we are
@@ -156,6 +152,7 @@
 
 //We're done working on mobs, let's check if we're blessing something else
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)
+	user.delayNextAttack(5)
 	if(user.mind && (user.mind.assigned_role == "Chaplain")) //Make sure we still are a Chaplain, just in case
 		if(A.reagents && A.reagents.has_reagent("water")) //Blesses all the water in the holder
 			user.visible_message("<span class='notice'>[user] blesses \the [A].</span>",
