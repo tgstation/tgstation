@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: Dionae who evolve while held no longer cause their items to disappear to inside of the person holding them.

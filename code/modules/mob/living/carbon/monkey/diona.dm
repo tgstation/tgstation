@@ -111,14 +111,14 @@
 
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
-		src.loc = L.loc
-		qdel(L)
+		src.forceMove(get_turf(L))
 		L = null
+		qdel(L)
 
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)
-	adult.regenerate_icons()
 
+	adult.regenerate_icons()
 	adult.name = src.name
 	adult.real_name = src.real_name
 	src.mind.transfer_to(adult)
