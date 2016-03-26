@@ -1,4 +1,6 @@
 /proc/check_holiday(holiday)
+	if(holiday == APRIL_FOOLS)
+		return 1
 	if(SSevent.holidays && SSevent.holidays[holiday])
 		return 1
 	return 0
