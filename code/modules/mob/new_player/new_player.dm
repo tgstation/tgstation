@@ -313,6 +313,7 @@
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		AnnounceArrival(character, rank)
+		AddEmploymentContract(character)
 	else
 		character.Robotize()
 
@@ -334,6 +335,13 @@
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
 					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+
+/mob/new_player/proc/AddEmploymentContract(var/mob/living/carbon/human/employee)
+	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
+	sleep(30)
+	for(var/obj/structure/filingcabinet/employment/employmentCabinet in employmentCabinets)
+		employmentCabinet.addFile(employee)
+
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever

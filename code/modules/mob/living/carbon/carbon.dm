@@ -164,6 +164,7 @@
 
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	. = ..()
+
 	var/damage = intensity - check_eye_prot()
 	if(.) // we've been flashed
 		if(visual)
@@ -197,10 +198,15 @@
 						src << "<span class='warning'>You can't see anything!</span>"
 			else
 				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+		if(has_bane(BANE_LIGHT))
+			mind.disrupt_spells(-500)
 		return 1
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
+		if(has_bane(BANE_LIGHT))
+			mind.disrupt_spells(0)
+
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()

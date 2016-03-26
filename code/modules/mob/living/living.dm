@@ -1163,3 +1163,20 @@ Sorry Giacom. Please don't be mad :(
 		disabilities |= BLIND
 		blind_eyes(1)
 		return 1
+
+/mob/living/proc/owns_soul()
+	if(mind)
+		return mind.soulOwner == mind
+	return 1
+
+/mob/living/proc/return_soul()
+	if(mind)
+		mind.soulOwner = mind
+
+/mob/living/proc/has_bane(var/banetype)
+	if(mind)
+		if(mind.demoninfo)
+			return mind.demoninfo.bane == banetype
+		//if(mind.sininfo)
+		//	return mind.sininfo.bane == banetype
+

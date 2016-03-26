@@ -1323,6 +1323,25 @@ var/list/teleportlocs = list()
 	icon_state = "tcomsatlounge"
 
 
+// Hell
+/area/hell
+	name = "Hell Lobby"
+	//icon = "ICON FILENAME"
+	//icon_state = "NAME OF ICON"
+	requires_power = 0
+	music = "music/music.ogg"
+
+/area/hell/trial1
+	name = "Hell Trial1"
+	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
+
+/area/hell/trial1
+	name = "Hell Trial2"
+	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
+
+/area/hell/trial1
+	name = "Hell Trial3"
+	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 
 // Away Missions
 /area/awaymission
