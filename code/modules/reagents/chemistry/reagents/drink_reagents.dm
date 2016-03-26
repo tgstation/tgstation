@@ -534,10 +534,10 @@
 	color = "#2E2E61" // rgb: 46, 46, 97
 
 /datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Weaken(3, 1, 0)
 	M.dizziness +=6
 	switch(current_cycle)
 		if(15 to 45)
+			M.Weaken(3, 1, 0)
 			if(!M.slurring)
 				M.slurring = 1
 			M.slurring += 3

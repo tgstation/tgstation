@@ -366,7 +366,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	metabolization_rate = 0.8
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	M.Stun(2, 0)
+	if(current_cycle >= 15)
+		M.Stun(2, 0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irish_cream
