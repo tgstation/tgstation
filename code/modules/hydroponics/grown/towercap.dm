@@ -14,6 +14,7 @@
 	oneharvest = 1
 	growthstages = 3
 	icon_dead = "towercap-dead"
+	plant_type = PLANT_MUSHROOM
 	mutatelist = list(/obj/item/seeds/tower/steel)
 
 /obj/item/seeds/tower/steel

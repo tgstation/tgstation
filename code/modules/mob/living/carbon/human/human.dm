@@ -952,6 +952,7 @@
 		L.Insert(src)
 	restore_blood()
 	remove_all_embedded_objects()
+	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)

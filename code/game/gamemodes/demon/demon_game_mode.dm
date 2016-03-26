@@ -1,6 +1,7 @@
 /datum/game_mode
 	var/list/datum/mind/sintouched = list()
 	var/list/datum/mind/demons = list()
+	var/demon_ascended = 0 // Number of arch demons on station
 
 /datum/game_mode/proc/auto_declare_completion_sintouched()
 	var/text = ""
@@ -30,10 +31,7 @@
 
 /datum/game_mode/proc/finalize_demon(datum/mind/demon_mind)
 	var/mob/living/carbon/human/S = demon_mind.current
-	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon(null))
-	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
-	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
-	demon_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
+	demon_mind.demonInfo.give_base_spells(1)
 	var/trueName= randomDemonName()
 	var/datum/objective/demon/soulquantity/soulquant = new
 	soulquant.owner = demon_mind

@@ -21,7 +21,7 @@
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.drop_item())
-				pitchfork = new
+				pitchfork = new pitchfork_type
 				C.put_in_hands(pitchfork)
 
 /obj/effect/proc_holder/spell/targeted/summon_pitchfork/Del()

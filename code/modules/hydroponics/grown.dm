@@ -23,7 +23,7 @@
 	else if(ispath(seed))
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
-		seed.potency = 50
+		seed.adjust_potency(50-seed.potency)
 	else // Something is terribly wrong
 		qdel(src)
 		return
@@ -77,7 +77,7 @@
 
 		if(reag_txt)
 			msg += reag_txt
-			msg += "<span class='info'>*---------*</span>"
+			msg += "<br><span class='info'>*---------*</span>"
 		user << msg
 		return
 	return
@@ -128,8 +128,8 @@
 	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
 	if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
 		var/mob/living/carbon/M = AM
-		var/stun = min(seed.potency * S.rate * 2, 1)
-		var/weaken = min(seed.potency * S.rate, 0.5)
+		var/stun = max(seed.potency * S.rate * 2, 1)
+		var/weaken = max(seed.potency * S.rate, 0.5)
 		if(M.slip(stun, weaken, src))
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_slip(src, M)

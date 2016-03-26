@@ -17,16 +17,23 @@
 	ventcrawler = 0
 	density = 0
 	pass_flags =  0
+	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
 	languages = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 0, STAMINA = 0, OXY = 0)
 	var/mob/oldform
+	var/list/demon_overlays[DEMON_TOTAL_LAYERS]
 
+/mob/living/simple_animal/true_demon/proc/convert_to_archdemon()
+	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
+	ascended = 1
+	health = maxHealth
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	icon_state = "arch_demon"
 
-/mob/living/simple_animal/true_demon/New()
-	..()
+/mob/living/simple_animal/true_demon/proc/set_name()
 	name = mind.demoninfo.truename
 	real_name = name
 
@@ -68,15 +75,11 @@
 
 	//Damaged
 	if(stat == DEAD)
-		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"		
+		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
 	else if(health < (maxHealth/10))
 		msg += "<span class='warning'>You can see hellfire inside of it's gaping wounds.</span>\n"
-	else if(health < (maxHealth/2)) //Between 9 and 0
+	else if(health < (maxHealth/2))
 		msg += "<span class='warning'>You can see hellfire inside of it's wounds.</span>\n"
-
-	//Dead
-	if(stat == DEAD)
-		msg += "<span class='deadsay'>The hellfire seems to have</span>\n"
 	msg += "*---------*</span>"
 	user << msg
 
@@ -125,5 +128,18 @@
 
 /mob/living/simple_animal/true_demon/UnarmedAttack(atom/A, proximity)
 	A.attack_hand(src)
+
+/mob/living/simple_animal/true_demon/Process_Spacemove(movement_dir = 0)
+	return 1
+
+/mob/living/simple_animal/true_demon/ex_act(severity)
+	if(ascended)
+		return 0
+	return ..()
+
+/mob/living/simple_animal/true_demon/singularity_act()
+	if(ascended)
+		return 0
+	return ..()
 
 

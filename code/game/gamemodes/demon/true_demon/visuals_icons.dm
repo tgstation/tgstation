@@ -1,13 +1,14 @@
 
-/////////////////
-//DRONE VISUALS//
-/////////////////
-//Drone overlays
-//Drone visuals
+
+/mob/living/simple_animal/true_demon/proc/apply_overlay(cache_index)
+	var/image/I = demon_overlays[cache_index]
+	if(I)
+		overlays += I
 
 
 /mob/living/simple_animal/true_demon/proc/update_inv_hands()
-	//remove_overlay(DEMON_HANDS_LAYER)
+	//TODO LORDPIDEY:  Figure out how to make the hands line up properly.  the l/r_hand_image should use the down sprite when facing down, left, or right, and the up sprite when facing up.
+	remove_overlay(DEMON_HANDS_LAYER)
 	var/list/hands_overlays = list()
 
 	if(r_hand)
@@ -39,6 +40,9 @@
 			l_hand.layer = 20
 			l_hand.screen_loc = ui_lhand
 			client.screen |= l_hand
+	if(hands_overlays.len)
+		demon_overlays[DEMON_HANDS_LAYER] = hands_overlays
+	apply_overlay(DEMON_HANDS_LAYER)
 
 /mob/living/simple_animal/true_demon/update_inv_l_hand()
 	update_inv_hands()
@@ -47,8 +51,7 @@
 /mob/living/simple_animal/true_demon/update_inv_r_hand()
 	update_inv_hands()
 
-/*
 /mob/living/simple_animal/true_demon/proc/remove_overlay(cache_index)
-	if(drone_overlays[cache_index])
-		overlays -= drone_overlays[cache_index]
-		drone_overlays[cache_index] = null*/
+	if(demon_overlays[cache_index])
+		overlays -= demon_overlays[cache_index]
+		demon_overlays[cache_index] = null

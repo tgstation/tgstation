@@ -65,14 +65,15 @@
 			return
 		if(use(1))
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))
-			user.put_in_hands(P)
+			if(user.Adjacent(I))
+				P.add_fingerprint(user)
+				I.add_fingerprint(user)
+				user.put_in_hands(P)
 			I.loc = P
 			var/size = round(I.w_class)
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
-			P.add_fingerprint(user)
-			I.add_fingerprint(user)
 
 	else if(istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target

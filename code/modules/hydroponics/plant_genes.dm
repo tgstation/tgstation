@@ -4,8 +4,12 @@
 /datum/plant_gene/proc/get_name() // Used for manipulator display and gene disk name.
 	return name
 
+/datum/plant_gene/proc/can_add(obj/item/seeds/S)
+	return !istype(S, /obj/item/seeds/sample) // Samples can't accept new genes
+
 /datum/plant_gene/proc/Copy()
 	return new type
+
 
 
 
@@ -15,6 +19,9 @@
 
 /datum/plant_gene/core/get_name()
 	return "[name] [value]"
+
+/datum/plant_gene/core/proc/apply_stat(obj/item/seeds/S)
+	return
 
 /datum/plant_gene/core/New(var/i = null)
 	..()
@@ -26,27 +33,49 @@
 	C.value = value
 	return C
 
+/datum/plant_gene/core/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+	return S.get_gene(src.type)
 
 /datum/plant_gene/core/lifespan
 	name = "Lifespan"
 	value = 25
 
+/datum/plant_gene/core/lifespan/apply_stat(obj/item/seeds/S)
+	S.lifespan = value
+
+
 /datum/plant_gene/core/endurance
 	name = "Endurance"
 	value = 15
+
+/datum/plant_gene/core/endurance/apply_stat(obj/item/seeds/S)
+	S.endurance = value
+
 
 /datum/plant_gene/core/production
 	name = "Production Speed"
 	value = 6
 
+/datum/plant_gene/core/production/apply_stat(obj/item/seeds/S)
+	S.production = value
+
+
 /datum/plant_gene/core/yield
 	name = "Yield"
 	value = 3
+
+/datum/plant_gene/core/yield/apply_stat(obj/item/seeds/S)
+	S.yield = value
+
 
 /datum/plant_gene/core/potency
 	name = "Potency"
 	value = 10
 
+/datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
+	S.potency = value
 
 
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
@@ -79,6 +108,13 @@
 	G.rate = rate
 	return G
 
+/datum/plant_gene/reagent/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+	for(var/datum/plant_gene/reagent/R in S.genes)
+		if(R.reagent_id == reagent_id)
+			return FALSE
+	return TRUE
 
 
 // Various traits affecting the product. Each must be somehow useful.
@@ -86,11 +122,23 @@
 	var/rate = 0.05
 	var/examine_line = ""
 	var/list/origin_tech = null
+	var/trait_id // must be set and equal for any two traits of the same type
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
 	G.rate = rate
 	return G
+
+/datum/plant_gene/trait/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+
+	for(var/datum/plant_gene/trait/R in S.genes)
+		if(trait_id && R.trait_id == trait_id)
+			return FALSE
+		if(type == R.type)
+			return FALSE
+	return TRUE
 
 /datum/plant_gene/trait/proc/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	if(origin_tech) // This ugly code segment adds RnD tech levels to resulting plants.
@@ -179,6 +227,7 @@
 	name = "Bioluminescence"
 	rate = 0.1
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
+	trait_id = "glow"
 
 /datum/plant_gene/trait/glow/proc/get_lum(obj/item/seeds/S)
 	return round(S.potency*rate)
@@ -232,3 +281,13 @@
 /datum/plant_gene/trait/noreact/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	G.flags &= ~NOREACT
 	G.reagents.handle_reactions()
+
+
+/datum/plant_gene/trait/maxchem
+	// 2x to max reagents volume.
+	name = "Densified Chemicals"
+	rate = 2
+
+/datum/plant_gene/trait/maxchem/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
+	..()
+	G.reagents.maximum_volume *= rate

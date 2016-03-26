@@ -7,10 +7,10 @@
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(var/point_rate = base_point_rate, var/override = 0)
-	if(placed)
+/mob/camera/blob/proc/place_blob_core(point_rate = base_point_rate, placement_override = 0)
+	if(placed && placement_override != -1)
 		return 1
-	if(!override)
+	if(!placement_override)
 		for(var/mob/living/M in range(7, src))
 			if("blob" in M.faction)
 				continue
@@ -40,13 +40,16 @@
 		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			src << "<span class='warning'>It is too early to place your blob core!</span>"
 			return 0
-	else if(override == 1)
+	else if(placement_override == 1)
 		var/turf/T = pick(blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
-	var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
-	core.overmind = src
-	blob_core = core
-	core.update_icon()
+	if(placed && blob_core)
+		blob_core.forceMove(loc)
+	else
+		var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		core.overmind = src
+		blob_core = core
+		core.update_icon()
 	update_health_hud()
 	placed = 1
 	return 1
@@ -323,6 +326,6 @@
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
 	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
-	if(!placed)
+	if(!placed && autoplace_max_time <= world.time)
 		src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
 		src << "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the button in the bottom right corner of the screen.</font></span>"

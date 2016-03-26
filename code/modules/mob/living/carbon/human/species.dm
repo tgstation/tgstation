@@ -1049,13 +1049,13 @@
 			if(organ.take_damage(0, damage*burnmod))
 				H.update_damage_overlays(0)
 		if(TOX)
-			H.adjustToxLoss(damage * blocked)
+			H.adjustToxLoss(damage)
 		if(OXY)
-			H.adjustOxyLoss(damage * blocked)
+			H.adjustOxyLoss(damage)
 		if(CLONE)
-			H.adjustCloneLoss(damage * blocked)
+			H.adjustCloneLoss(damage)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage * blocked)
+			H.adjustStaminaLoss(damage)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)

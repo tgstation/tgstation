@@ -14,6 +14,7 @@ var/list/allDemons = list()
 	var/obligation
 	var/ban
 	var/bane
+	var/banish
 	var/truename
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
@@ -25,6 +26,7 @@ var/list/allDemons = list()
 	demon.bane = randomdemonbane()
 	demon.obligation = randomdemonobligation()
 	demon.ban = randomdemonban()
+	demon.banish = randomdemonbanish()
 	return demon
 
 /proc/demonInfo(var/name, var/saveDetails = 1)
@@ -63,6 +65,9 @@ var/list/allDemons = list()
 
 /proc/randomdemonbane()
 	return pick(BANE_SALT, BANE_LIGHT, BANE_IRON, BANE_WHITECLOTHES, BANE_SILVER, BANE_HARVEST, BANE_TOOLBOX)
+
+/proc/randomdemonbanish()
+	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/demoninfo/proc/obligationlaw()
 	switch(obligation)
@@ -165,15 +170,7 @@ var/list/allDemons = list()
 			return "Presenting the labors of a harvest will disrupt the demon."
 		if(BANE_TOOLBOX)
 			return "That which holds the means of creation also holds the means of the demon's undoing."
-		/*if(BANE_DIETYNAME)
-			return "He will recoil at the sound of a diety's name."
-		if(BANE_GOATBLOOD)
-			return "The blood from a goat will surpress his powers."
-		if(BANE_WOOD)
-			return "Wooden weapons will strike him true."*/
 
-
-/* TODO LORDPIDEY:  Actually implement resurrection/banishment
 /datum/demoninfo/proc/banishlaw()
 	switch(banish)
 		if(BANISH_WATER)
@@ -207,122 +204,154 @@ var/list/allDemons = list()
 			return "It's corpse must be utterly destroyed to prevent resurrection."
 		if(BANISH_FUNERAL_GARB)
 			return "Funeral garments will prevent the demon from resurrecting."
-*/
-
-
 
 /datum/demoninfo/proc/add_soul(var/datum/mind/soul)
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	world << "Added a soul, current SOULVALUE is: [SOULVALUE]"
-	if((SOULVALUE)%POWERUPTHRESHOLD == 0)
-		increase_form()
+	switch(SOULVALUE)
+		if(0)
+			owner.current << "<span class='warning'>Your demonic powers have been restored."
+			give_base_spells()
+		if(POWERUPTHRESHOLD)
+			increase_blood_lizard()
+		if(POWERUPTHRESHOLD*2)
+			increase_true_demon()
+		if(POWERUPTHRESHOLD*3)
+			increase_arch_demon()
 
 /datum/demoninfo/proc/remove_soul(var/datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
 
 /datum/demoninfo/proc/check_regression()
-	if((SOULVALUE)<0)
-		//TODO LORDPIDEY: bad things happen when a demon has negative soul power
-		return
-	if((SOULVALUE)%POWERUPTHRESHOLD == POWERUPTHRESHOLD - 1)
-		regress()
-		return
+	if (form == ARCH_DEMON)
+		return //arch demons can't regress
+	switch(SOULVALUE)
+		if(-1)
+			remove_spells()
+			owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
+		if(POWERUPTHRESHOLD-1)
+			regress_humanoid()
+		if(POWERUPTHRESHOLD*2-1)
+			regress_blood_lizard()
 
 /datum/demoninfo/proc/increase_form()
-	world << "MEEP: now increasing form."
 	switch(form)
 		if(BASIC_DEMON)
-			remove_basic()
-			set_blood_lizard()
+			increase_blood_lizard()
 		if(BLOOD_LIZARD)
-			remove_blood_lizard()
-			set_true_demon()
+			increase_true_demon()
 		if(TRUE_DEMON)
-			remove_true_demon()
-			set_arch_demon()
+			increase_arch_demon()
 
 /datum/demoninfo/proc/regress()
 	switch(form)
 		if(BLOOD_LIZARD)
-			remove_blood_lizard()
-			set_basic()
+			regress_humanoid()
 		if(TRUE_DEMON)
-			remove_true_demon()
-			set_blood_lizard()
+			regress_blood_lizard()
 
-/datum/demoninfo/proc/remove_basic()
-/datum/demoninfo/proc/remove_blood_lizard()
-/datum/demoninfo/proc/remove_true_demon()
-/datum/demoninfo/proc/set_basic()
-
-/datum/demoninfo/proc/set_blood_lizard()
-	world << "MEEP: now setting blood lizard traits"
+/datum/demoninfo/proc/regress_humanoid()  //TODO LORDPIDEY
+	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
-		H << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
+		H.set_species(/datum/species/human, 1)
+		H.regenerate_icons()
+	give_base_spells()
+	form = BASIC_DEMON
+
+/datum/demoninfo/proc/regress_blood_lizard()
+	var/mob/living/simple_animal/true_demon/D = owner.current
+	D << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
+	D.oldform.loc = D.loc
+	owner.transfer_to(D.oldform)
+	give_lizard_spells()
+	form = BLOOD_LIZARD
+
+
+/datum/demoninfo/proc/increase_blood_lizard()
+	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
+	sleep(50)
+	if(istype(owner.current, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/lizard, 1)
 		H.underwear = "Nude"
 		H.undershirt = "Nude"
 		H.socks = "Nude"
 		H.dna.features["mcolor"] = "511" //A deep red
-		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
-			owner.RemoveSpell(S)
 		H.regenerate_icons()
+	else //Did the demon get hit by a staff of transmutation?
+		owner.current.color = "#501010"
+	give_lizard_spells()
+	form = BLOOD_LIZARD
 
 
 
-/datum/demoninfo/proc/set_true_demon()  //TODO LORDPIDEY: Finish these procs
-	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a true demon."
+/datum/demoninfo/proc/increase_true_demon()  //TODO LORDPIDEY: Finish these procs
+	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true demon."
 	sleep(50)
 	var/mob/living/simple_animal/true_demon/A = new /mob/living/simple_animal/true_demon(owner.current.loc)
 	A.faction |= "hell"
 	owner.current.loc = A
 	A.oldform = owner.current
 	owner.transfer_to(A)
-	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
-		owner.RemoveSpell(S)
-	//TODO LORDPIDEY: add appropriate spells here.
+	A.set_name()
+	give_true_spells()
+	form = TRUE_DEMON
 
 
-
-
-/datum/demoninfo/proc/set_arch_demon()
-/*
-	var/mob/living/H = user
-	user << "<span class='warning'>You feel as though your form is about to ascend."
+/datum/demoninfo/proc/increase_arch_demon()
+	var/mob/living/simple_animal/true_demon/D = owner.current
+	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
-	H.visible_message("<span class='warning'>[H]'s skin begins to erupt with spikes.</span>", \
+	D.visible_message("<span class='warning'>[D]'s skin begins to erupt with spikes.</span>", \
 		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>")
 	sleep(100)
-	H.visible_message("<span class='warning'>The horns on [H]'s head slowly grow and elongate.</span>", \
+	D.visible_message("<span class='warning'>The horns on [D]'s head slowly grow and elongate.</span>", \
 		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>")
 	sleep(90)
-	H.visible_message("<span class='warning'>[H]'s body begins to violently stretch and contort.</span>", \
+	D.visible_message("<span class='warning'>[D]'s body begins to violently stretch and contort.</span>", \
 		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>")
 	sleep(40)
-	H << "<i><b>Yes!</b></i>"
+	D << "<i><b>Yes!</b></i>"
 	sleep(10)
-	H << "<i><b><span class='big'>YES!!</span></b></i>"
+	D << "<i><b><span class='big'>YES!!</span></b></i>"
 	sleep(10)
-	H << "<i><b><span class='reallybig'>YE--</span></b></i>"
+	D << "<i><b><span class='reallybig'>YE--</span></b></i>"
 	sleep(1)
 	world << "<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>"
 	world << 'sound/hallucinations/veryfar_noise.ogg'
-	var/mob/A = new /mob/living/simple_animal/ascendant_shadowling/arch_demon(H.loc)
-	for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
-		H.mind.remove_spell(S)
-	//TODO LORDPIDEY: add appropriate spells here.
-	H.mind.transfer_to(A)
-	A.name = truename
-	A.real_name = truename
-	H.invisibility = 60
-	H.loc = A
+	give_arch_spells()
+	D.convert_to_archdemon()
 	sleep(50)
 	if(!ticker.mode.demon_ascended)
 		SSshuttle.emergency.request(null, 0.3)
-	ticker.mode.demon_ascended = 1
-	qdel(H)
-	*/
+	ticker.mode.demon_ascended++
+	form = ARCH_DEMON
+
+/datum/demoninfo/proc/remove_spells()
+	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+		if(!istype(S, /obj/effect/proc_holder/spell/targeted/summon_contract))
+			owner.RemoveSpell(S)
+
+/datum/demoninfo/proc/give_base_spells(var/give_summon_contract = 0)
+	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
+	if(give_summon_contract)
+		owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
+
+/datum/demoninfo/proc/give_lizard_spells()
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon(null))
+
+/datum/demoninfo/proc/give_true_spells()
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon(null))
+	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null)) TODO LORDPIDEY add this spell
+
+/datum/demoninfo/proc/give_arch_spells()
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended(null))
+	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null)) TODO LORDPIDEY
