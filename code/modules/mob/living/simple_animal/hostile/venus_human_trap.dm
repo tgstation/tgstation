@@ -5,7 +5,7 @@
 	desc = "a large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
-	layer = 4
+	layer = MOB_LAYER + 0.9
 	opacity = 0
 	canSmoothWith = list()
 	smooth = SMOOTH_FALSE
@@ -49,6 +49,7 @@
 	name = "venus human trap"
 	desc = "now you know how the fly feels"
 	icon_state = "venus_human_trap"
+	layer = MOB_LAYER + 0.9
 	health = 50
 	maxHealth = 50
 	ranged = 1

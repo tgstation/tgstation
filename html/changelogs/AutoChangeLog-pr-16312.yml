@@ -1,0 +1,5 @@
+author: Fox McCloud
+delete-after: True
+changes: 
+  - bugfix: "Fixes Shadowlings not being spaceproof to pressure"
+  - bugfix: "Fixes being able to receive multiple spells as a Lesser Shadowling"

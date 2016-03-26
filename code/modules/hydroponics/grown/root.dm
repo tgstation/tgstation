@@ -89,6 +89,7 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	icon_dead = "whitebeet-dead"
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet

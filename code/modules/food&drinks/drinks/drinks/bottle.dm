@@ -201,6 +201,10 @@
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
+	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
+	list_reagents = list("hellwater" = 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
@@ -230,6 +234,12 @@
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	list_reagents = list("wine" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
+	name = "T&T Extra-Strong Absinthe"
+	desc = "An strong alcoholic drink brewed and distributed by Terb & Tonte Inc."
+	icon_state = "absinthebottle"
+	list_reagents = list("absinthe" = 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 

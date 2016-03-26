@@ -36,7 +36,6 @@
 		world << "<FONT size = 3><B>The staff has won!</B></FONT>"
 		world << "<B>The alien organism has been eradicated from the station</B>"
 		log_game("Blob mode completed with a crew victory.")
-		world << "<span class='notice'>Rebooting in 30s</span>"
 	..()
 	return 1
 

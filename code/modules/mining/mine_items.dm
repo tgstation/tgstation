@@ -188,8 +188,7 @@
 		used = TRUE
 		sleep(50)
 		var/clear = TRUE
-		for(var/unclear in trange(3, src))
-			var/turf/T = unclear
+		for(var/turf/T in range(3,src))
 			if(istype(T, /turf/simulated/mineral) || !T.density)
 				continue
 			clear = FALSE

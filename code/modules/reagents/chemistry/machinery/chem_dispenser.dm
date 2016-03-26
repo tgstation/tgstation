@@ -270,6 +270,7 @@
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
+	desc = "Contains a large reservoir of soft drinks."
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
@@ -291,7 +292,8 @@
 		"sugar",
 		"orangejuice",
 		"limejuice",
-		"tomatojuice"
+		"tomatojuice",
+		"lemonjuice"
 	)
 
 /obj/machinery/chem_dispenser/drinks/attackby(obj/item/I, mob/user)
@@ -311,16 +313,11 @@
 
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
+	desc = "Contains a large reservoir of the good stuff."
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
 	dispensable_reagents = list(
-		"lemon_lime",
-		"sugar",
-		"orangejuice",
-		"limejuice",
-		"sodawater",
-		"tonic",
 		"beer",
 		"kahlua",
 		"whiskey",
@@ -331,5 +328,11 @@
 		"tequila",
 		"vermouth",
 		"cognac",
-		"ale"
+		"ale",
+		"absinthe"
 	)
+
+/obj/machinery/chem_dispenser/mutagen
+	name = "mutagen dispenser"
+	desc = "Creates and dispenses mutagen."
+	dispensable_reagents = list("mutagen")

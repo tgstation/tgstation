@@ -202,7 +202,7 @@
 	name = "ash walker egg"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
-	mob_species = /datum/species/lizard/ash_walker
+	mob_species = /datum/species/lizard
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
@@ -214,3 +214,34 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	new_spawn << "Drag corpes to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.dna.species.specflags |= NOBREATH
+
+
+
+//Wishgranter Exile
+
+/obj/effect/mob_spawn/human/exile
+	name = "exile sleeper"
+	mob_name = "Penitent Exile"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	mob_species = /datum/species/shadow
+	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
+
+/obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
+	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
+	var/wish = rand(1,4)
+	switch(wish)
+		if(1)
+			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
+		if(2)
+			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
+		if(3)
+			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
+		if(4)
+			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
+

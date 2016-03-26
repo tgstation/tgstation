@@ -204,10 +204,16 @@
 		switch(votetype)
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
-				vote_on_poll(pollid, optionid)
+				if(vote_on_poll(pollid, optionid))
+					usr << "<span class='notice'>Vote successful.</span>"
+				else
+					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
-				log_text_poll_reply(pollid, replytext)
+				if(log_text_poll_reply(pollid, replytext))
+					usr << "<span class='notice'>Feedback logging successful.</span>"
+				else
+					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
@@ -226,7 +232,10 @@
 							if(!isnum(rating) || !IsInteger(rating))
 								return
 
-						vote_on_numval_poll(pollid, optionid, rating)
+						if(!vote_on_numval_poll(pollid, optionid, rating))
+							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							return
+				usr << "<span class='notice'>Vote successful.</span>"
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
@@ -237,7 +246,17 @@
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
-						vote_on_poll(pollid, optionid, 1)
+						var/i = vote_on_multi_poll(pollid, optionid)
+						switch(i)
+							if(0)
+								continue
+							if(1)
+								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								return
+							if(2)
+								usr << "<span class='danger'>Maximum replies reached.</span>"
+								break
+				usr << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)

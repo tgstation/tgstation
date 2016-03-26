@@ -24,6 +24,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.visible_message("<span class='warning'>[H]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 							"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
+			var/temp_flags = H.status_flags
+			H.status_flags |= GODMODE //Can't die while hatching
+
 			for(var/obj/item/I in H) //drops all items
 				H.unEquip(I)
 
@@ -35,8 +38,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself afterwards
-			var/temp_flags = H.status_flags
-			H.status_flags |= GODMODE //Can't die while hatching
 
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
 							"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")

@@ -56337,6 +56337,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "ccw" = (
@@ -64329,6 +64330,7 @@
 "csf" = (
 /obj/structure/table,
 /obj/item/device/multitool,
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "csg" = (
@@ -65118,6 +65120,7 @@
 	dir = 6
 	},
 /obj/item/weapon/storage/firstaid/regular,
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel,
 /area/quartermaster/office)
 "ctF" = (
@@ -69026,6 +69029,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen/red,
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/plasteel/darkbrown/corner{
 	tag = "icon-darkbrowncorners (EAST)";
 	icon_state = "darkbrowncorners";
@@ -78113,15 +78117,15 @@
 	},
 /turf/space,
 /area/space)
-"cRB" = (
-/obj/structure/grille,
-/turf/simulated/floor/plating/airless,
+"cRz" = (
+/turf/simulated/wall,
 /area/space)
 "cRA" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
-"cRz" = (
-/turf/simulated/wall,
+"cRB" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating/airless,
 /area/space)
 
 (1,1,1) = {"

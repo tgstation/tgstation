@@ -104,3 +104,93 @@
 				H.heart_attack = 0
 				if(H.stat == CONSCIOUS)
 					H << "<span class='notice'>You feel your heart beating again!</span>"
+
+
+
+
+/obj/item/organ/internal/cyberimp/chest/thrusters
+	name = "implantable thrusters set"
+	desc = "An implantable set of thruster ports. They use the gas from environment or subject's internals for propulsion in zero-gravity areas. \
+	Unlike regular jetpack, this device has no stablilzation system."
+	slot = "thrusters"
+	icon_state = "imp_jetpack"
+	origin_tech = "materials=6;programming=4;magnets=3;biotech=4;engineering=4"
+	implant_overlay = null
+	implant_color = null
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
+	w_class = 3
+	var/on = 0
+	var/datum/effect_system/trail_follow/ion/ion_trail
+
+/obj/item/organ/internal/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(!ion_trail)
+		ion_trail = new
+	ion_trail.set_up(M)
+
+/obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
+	if(on)
+		toggle(silent=1)
+	..()
+
+/obj/item/organ/internal/cyberimp/chest/thrusters/ui_action_click()
+	toggle()
+
+/obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle(silent=0)
+	if(!on)
+		if(crit_fail)
+			if(!silent)
+				owner << "<span class='warning'>Your thrusters set seems to be broken!</span>"
+			return 0
+		on = 1
+		if(allow_thrust(0.01))
+			ion_trail.start()
+			if(!silent)
+				owner << "<span class='notice'>You turn your thrusters set on.</span>"
+	else
+		ion_trail.stop()
+		if(!silent)
+			owner << "<span class='notice'>You turn your thrusters set off.</span>"
+		on = 0
+	update_icon()
+
+/obj/item/organ/internal/cyberimp/chest/thrusters/update_icon()
+	if(on)
+		icon_state = "imp_jetpack-on"
+	else
+		icon_state = "imp_jetpack"
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
+/obj/item/organ/internal/cyberimp/chest/thrusters/proc/allow_thrust(num)
+	if(!on || !owner)
+		return 0
+
+	var/turf/T = get_turf(owner)
+	if(!T) // No more runtimes from being stuck in nullspace.
+		return 0
+
+	// Priority 1: use air from environment.
+	var/datum/gas_mixture/environment = T.return_air()
+	if(environment && environment.return_pressure() > 30)
+		return 1
+
+	// Priority 2: use plasma from internal plasma storage.
+	// (just in case someone would ever use this implant system to make cyber-alien ops with jetpacks and taser arms)
+	if(owner.getPlasma() >= num*100)
+		owner.adjustPlasma(-num*100)
+		return 1
+
+	// Priority 3: use internals tank.
+	var/obj/item/weapon/tank/I = owner.internal
+	if(I && I.air_contents && I.air_contents.total_moles() > num)
+		var/datum/gas_mixture/removed = I.air_contents.remove(num)
+		if(removed.total_moles() > 0.005)
+			T.assume_air(removed)
+			return 1
+		else
+			T.assume_air(removed)
+
+	toggle(silent=1)
+	return 0

@@ -27,7 +27,7 @@
 
 		graytide = shitmin var to make them go psycho
 */
-
+#define NPC_SPEAK_FILE "npc_chatter.json"
 /mob/living/carbon/human/interactive
 	name = "interactive station member"
 	var/doing = 0
@@ -844,17 +844,17 @@
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
-	var/verbs_use = pick_list("npc_chatter.txt","verbs_use")
-	var/verbs_touch = pick_list("npc_chatter.txt","verbs_touch")
-	var/verbs_move = pick_list("npc_chatter.txt","verbs_move")
-	var/nouns_insult = pick_list("npc_chatter.txt","nouns_insult")
-	var/nouns_generic = pick_list("npc_chatter.txt","nouns_generic")
-	var/nouns_objects = pick_list("npc_chatter.txt","nouns_objects")
-	var/nouns_body = pick_list("npc_chatter.txt","nouns_body")
-	var/adjective_insult = pick_list("npc_chatter.txt","adjective_insult")
-	var/adjective_objects = pick_list("npc_chatter.txt","adjective_objects")
-	var/adjective_generic = pick_list("npc_chatter.txt","adjective_generic")
-	var/curse_words = pick_list("npc_chatter.txt","curse_words")
+	var/verbs_use = pick_list(NPC_SPEAK_FILE,"verbs_use")
+	var/verbs_touch = pick_list(NPC_SPEAK_FILE,"verbs_touch")
+	var/verbs_move = pick_list(NPC_SPEAK_FILE,"verbs_move")
+	var/nouns_insult = pick_list(NPC_SPEAK_FILE,"nouns_insult")
+	var/nouns_generic = pick_list(NPC_SPEAK_FILE,"nouns_generic")
+	var/nouns_objects = pick_list(NPC_SPEAK_FILE,"nouns_objects")
+	var/nouns_body = pick_list(NPC_SPEAK_FILE,"nouns_body")
+	var/adjective_insult = pick_list(NPC_SPEAK_FILE,"adjective_insult")
+	var/adjective_objects = pick_list(NPC_SPEAK_FILE,"adjective_objects")
+	var/adjective_generic = pick_list(NPC_SPEAK_FILE,"adjective_generic")
+	var/curse_words = pick_list(NPC_SPEAK_FILE,"curse_words")
 
 	var/chatmsg = ""
 
@@ -892,7 +892,7 @@
 				if(5)
 					var/toSay = ""
 					for(var/i = 0; i < 5; i++)
-						curse_words = pick_list("npc_chatter.txt","curse_words")
+						curse_words = pick_list(NPC_SPEAK_FILE,"curse_words")
 						toSay += "[curse_words] "
 					chatmsg += "Hey [nouns_generic], why dont you go [toSay], you [nouns_insult]!"
 	else
