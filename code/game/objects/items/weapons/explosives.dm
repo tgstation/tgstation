@@ -14,6 +14,12 @@
 	var/atom/target = null
 	var/open_panel = 0
 	var/image_overlay = null
+	var/can_attach_to_mobs = FALSE
+
+/obj/item/weapon/c4/nco
+	name = "shaped C-4"
+	desc = "A modified block of condensed plastic explosive. Can be planted on the dead or dying, which will cause them to absorb the blast and blow apart."
+	can_attach_to_mobs = TRUE
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
@@ -69,7 +75,7 @@
 /obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM))
+	if (ismob(AM) && !can_attach_to_mobs)
 		return
 	if(loc == AM)
 		return
@@ -80,7 +86,7 @@
 		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
 			return
 
-	user << "<span class='notice'>You start planting the bomb...</span>"
+	user << "<span class='notice'>You start planting [src] on [AM]...</span>"
 
 	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
@@ -107,8 +113,16 @@
 	else
 		location = get_turf(src)
 	if(location)
-		location.ex_act(2, target)
-		explosion(location,0,0,3)
+		if(ismob(target))
+			var/mob/M = target
+			M.visible_message("<span class='warning'>[M] absorbs the force of the blast and blows apart!</span>")
+			playsound(get_turf(M), "explosion", 100, 1)
+			playsound(get_turf(M), 'sound/effects/splat.ogg', 100, 1)
+			if(M.stat) //Only unconscious or dead targets are a guaranteed gib
+				M.gib()
+		else
+			location.ex_act(2, target)
+			explosion(location,0,0,3)
 	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M, mob/user, def_zone)

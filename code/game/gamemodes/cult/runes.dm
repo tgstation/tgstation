@@ -287,6 +287,13 @@ var/list/teleport_other_runes = list()
 	color = rgb(255, 0, 0)
 	req_cultists = 2
 
+/obj/effect/rune/convert/New()
+	..()
+	if(check_holiday(APRIL_FOOLS))
+		invocation = "WOLOLOLO"
+	else
+		invocation = "Mah'weyh pleggh at e'ntrath!"
+
 /obj/effect/rune/convert/invoke(mob/living/user)
 	var/list/convertees = list()
 	var/turf/T = get_turf(src)

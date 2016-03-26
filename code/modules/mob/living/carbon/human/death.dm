@@ -29,6 +29,10 @@
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
+	if(check_holiday(APRIL_FOOLS))
+		if(mind && mind.assigned_role == "Clown")
+			playsound(get_turf(src), 'sound/misc/sadtrombone.ogg', 100, 0)
+
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)

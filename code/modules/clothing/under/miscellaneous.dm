@@ -188,12 +188,20 @@
 	item_state = "bl_suit"
 	item_color = "black_suit"
 
+/obj/item/clothing/under/suit_jacket/really_black/armored
+	desc = "A formal black suit and red tie. A light ballistic vest is hidden beneath."
+	armor = list(melee = 20, bullet = 75, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
+
+/obj/item/clothing/under/suit_jacket/female/armored
+	desc = "A formal trouser suit for women. A light ballistic vest is hidden beneath."
+	armor = list(melee = 20, bullet = 75, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"

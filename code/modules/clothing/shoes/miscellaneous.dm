@@ -155,3 +155,17 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	can_hold_items = 1
+
+/obj/item/clothing/shoes/gottagofast
+	name = "hedgehog's shoes"
+	desc = "The footwear of a mythical racer. Legends say that they invoke extreme speed in the wearer."
+	icon_state = "red"
+	slowdown = -INFINITY //yeah you gotta go fast
+	unacidable = 1
+
+/obj/item/clothing/shoes/gottagofast/equipped(mob/user, slot)
+	..()
+	if(slot != slot_shoes)
+		return 0
+	user << "<span class='boldannounce'>[src] clamp down on your feet... you feel a need for <font size=3>SPEED!!!</font></span>"
+	flags |= NODROP //When you go fast, you never go back

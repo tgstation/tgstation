@@ -259,6 +259,16 @@
 	if(reac_volume >= 1)
 		T.MakeSlippery(2)
 
+/datum/reagent/lube/reaction_obj(obj/O)
+	if(check_holiday(APRIL_FOOLS))
+		if(istype(O, /obj/item/clothing/shoes))
+			var/turf/T = get_turf(O)
+			T.visible_message("<span class='warning'>[O] suddenly morph into something... <b>faster!</b></span>")
+			new /obj/item/clothing/shoes/gottagofast (T)
+			qdel(O)
+			return 1
+	..()
+
 /datum/reagent/spraytan
 	name = "Spray Tan"
 	id = "spraytan"
