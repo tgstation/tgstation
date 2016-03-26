@@ -1,0 +1,27 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/simulated/wall/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"c" = (/obj/structure/divine/healingfountain/anyone,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"d" = (/obj/structure/divine/conduit,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"e" = (/obj/structure/divine/sacrificealtar,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"f" = (/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"g" = (/mob/living/simple_animal/butterfly,/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/unpowered)
+"h" = (/turf/simulated/floor/engine/cult{baseturf = /turf/simulated/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/unpowered)
+
+(1,1,1) = {"
+aabbbaa
+bbbcbbb
+bdefedb
+bfgffgb
+bfffffb
+bdfffdb
+bfgfffb
+bfffgfb
+bdfffdb
+bfffffb
+bfffffb
+bdgffdb
+bfffffb
+bfgffgb
+bdfffdb
+bbbhbbb
+"}

@@ -387,7 +387,8 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
-	ranged_cooldown--
+	if(ranged_cooldown)
+		ranged_cooldown--
 	handle_preattack()
 	. = ..()
 
