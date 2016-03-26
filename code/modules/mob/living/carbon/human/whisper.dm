@@ -12,7 +12,7 @@
 		return
 
 
-	message = trim(rhtml_encode(message))
+	message = sanitize_russian(trim(strip_html_properly(message)))
 	if(!can_speak(message))
 		return
 
