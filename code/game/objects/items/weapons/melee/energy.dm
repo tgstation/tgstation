@@ -282,3 +282,9 @@
 		playsound(user, 'sound/weapons/blade1.ogg', 35, 1)
 	else
 		..()
+
+/obj/item/weapon/trisword/attack_tk(mob/living/carbon/user)
+	user << "<span class='danger'>Your mind's eye tries to grasp [src], but can't seem to even comprehend it.</span>"
+	user << "<span class='userdanger'>Your head hurts.</span>"
+	user.adjustBrainLoss(50)
+	user.confused += 15
