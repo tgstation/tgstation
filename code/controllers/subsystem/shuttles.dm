@@ -107,7 +107,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			user << "The emergency shuttle has been disabled by Centcom."
 			return
 
-	call_reason = trim(sanitize_russian(call_reason))
+	call_reason = trim(sanitize_russian(russian_html2text(call_reason)))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
 		user << "You must provide a reason."

@@ -85,7 +85,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Fun"
-	normal_ooc_colour = sanitize_ooccolor(newColor)
+	normal_ooc_colour = newColor
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
@@ -103,7 +103,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
-		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
+		prefs.ooccolor = new_ooccolor
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

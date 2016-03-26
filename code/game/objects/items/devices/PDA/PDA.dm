@@ -202,7 +202,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br>"
 				if(notescanned)
 					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
-				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? note : notehtml)]</font>"
+				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? sanitize_russian(note,1) : sanitize_russian(notehtml,1))]</font>"
 
 			if (2)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
@@ -248,7 +248,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
 
-				dat += tnote
+				dat += sanitize_russian(russian_text2html(tnote),1)
 				dat += "<br>"
 
 			if (3)
@@ -279,7 +279,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(sanitize_russian(dat, 1), "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -389,7 +389,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = sanitize_russian(stripped_multiline_input(U, "Please enter message", name, note))
+				var/n = sanitize_russian(stripped_multiline_input(U, "Please enter message", name, note),1)
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
 						note = n
@@ -601,7 +601,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
 
 /obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg,obj/item/device/pda/source)
-	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[sanitize_russian(msg.message,1)][msg.get_photo_ref()]<br>"
 
 	if (!silent)
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -615,7 +615,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
+		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[russian_html2text(msg.message)]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)
@@ -623,7 +623,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			M << russian_html2text("<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[russian_html2text(msg.message)][msg.get_photo_ref()]</span></span>")
+			M << russian_html2text("<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || qdeleted(P) || P.toff)

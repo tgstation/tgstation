@@ -15,7 +15,7 @@
 	var/bantype_str
 	var/maxadminbancheck	//Used to limit the number of active bans of a certein type that each admin can give. Used to protect against abuse or mutiny.
 	var/announceinirc		//When set, it announces the ban in irc. Intended to be a way to raise an alarm, so to speak.
-	var/blockselfban		//Used to prevent the banning of yourself.
+//	var/blockselfban		//Used to prevent the banning of yourself.
 	var/kickbannedckey		//Defines whether this proc should kick the banned person, if they are connected (if banned_mob is defined).
 							//some ban types kick players after this proc passes (tempban, permaban), but some are specific to db_ban, so
 							//they should kick within this proc.
@@ -24,11 +24,11 @@
 			bantype_str = "PERMABAN"
 			duration = -1
 			bantype_pass = 1
-			blockselfban = 1
+//			blockselfban = 1
 		if(BANTYPE_TEMP)
 			bantype_str = "TEMPBAN"
 			bantype_pass = 1
-			blockselfban = 1
+//			blockselfban = 1
 		if(BANTYPE_JOB_PERMA)
 			bantype_str = "JOB_PERMABAN"
 			duration = -1
@@ -46,14 +46,14 @@
 			bantype_pass = 1
 			maxadminbancheck = 1
 			announceinirc = 1
-			blockselfban = 1
+//			blockselfban = 1
 			kickbannedckey = 1
 		if(BANTYPE_ADMIN_TEMP)
 			bantype_str = "ADMIN_TEMPBAN"
 			bantype_pass = 1
 			maxadminbancheck = 1
 			announceinirc = 1
-			blockselfban = 1
+//			blockselfban = 1
 			kickbannedckey = 1
 	if( !bantype_pass ) return
 	if( !istext(reason) ) return
@@ -76,15 +76,15 @@
 		computerid = bancid
 		ip = banip
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-	query.Execute()
-	var/validckey = 0
-	if(query.NextRow())
-		validckey = 1
-	if(!validckey)
-		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
-			return
+//	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+//	query.Execute()
+//	var/validckey = 0
+//	if(query.NextRow())
+//		validckey = 1
+//	if(!validckey)
+//		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
+//			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
+//			return
 
 	var/a_ckey
 	var/a_computerid
@@ -95,10 +95,10 @@
 		a_computerid = src.owner:computer_id
 		a_ip = src.owner:address
 
-	if(blockselfban)
-		if(a_ckey == ckey)
-			usr << "<span class='danger'>You cannot apply this ban type on yourself.</span>"
-			return
+//	if(blockselfban)
+//		if(a_ckey == ckey)
+//			usr << "<span class='danger'>You cannot apply this ban type on yourself.</span>"
+//			return
 
 	var/who
 	for(var/client/C in clients)
@@ -117,19 +117,22 @@
 	reason = sanitizeSQL(reason)
 
 	if(maxadminbancheck)
-		var/DBQuery/adm_query = dbcon.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
-		adm_query.Execute()
-		if(adm_query.NextRow())
-			var/adm_bans = text2num(adm_query.item[1])
-			if(adm_bans >= MAX_ADMIN_BANS_PER_ADMIN)
-				usr << "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>"
-				return
+		var/datum/admins/A = admin_datums[ckey]
+		if(src.rights != A.rights)	//Check values smaller than 65536
+			if( (src.rights & A.rights) == A.rights )
+				var/DBQuery/adm_query = dbcon.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+				adm_query.Execute()
+				if(adm_query.NextRow())
+					var/adm_bans = text2num(adm_query.item[1])
+					if(adm_bans >= MAX_ADMIN_BANS_PER_ADMIN)
+						usr << "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>"
+						return
 
 	var/sql = "INSERT INTO [format_table_name("ban")] (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	usr << "<span class='adminnotice'>Ban saved to database.</span>"
-	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
+	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize_russian(russian_html2text(reason))]\" to the ban database.",1)
 
 	if(announceinirc)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
@@ -257,7 +260,7 @@
 
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			update_query.Execute()
-			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
+			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [sanitize_russian(russian_html2text(reason))] to [sanitize_russian(russian_html2text(value))]",1)
 		if("duration")
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
@@ -487,4 +490,4 @@
 
 		output += "</table></div>"
 
-	usr << browse(sanitize_russian(output,1),"window=lookupbans;size=900x500")
+	usr << browse(russian_text2html(sanitize_russian(output,1)),"window=lookupbans;size=900x500")

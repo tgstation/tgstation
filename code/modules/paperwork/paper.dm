@@ -255,7 +255,7 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  sanitize_russian(stripped_multiline_input("Enter what you want to write:", "Write"))
+		var/t =  sanitize_russian(stripped_multiline_input("Enter what you want to write:", "Write"),1)
 		if(!t)
 			return
 		var/obj/item/i = usr.get_active_hand()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
@@ -268,7 +268,7 @@
 		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != usr && usr.get_active_hand() != i)	//Some check to see if he's allowed to write
 			return
 
-		t = sanitize_russian(parsepencode(t, i, usr, iscrayon)) // Encode everything from pencode to html
+		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(t != null)	//No input from the user means nothing needs to be added
 			if(id!="end")

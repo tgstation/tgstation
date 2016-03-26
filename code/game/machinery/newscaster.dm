@@ -119,9 +119,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, obj/item/weapon/photo/photo, adminMessage = 0, allow_comments = 1)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
-	newMsg.body = sanitize_russian(msg)
+	newMsg.body = sanitize_russian(msg,1)
 	newMsg.time_stamp = "[worldtime2text()]"
-	newMsg.is_admin_message = sanitize_russian(adminMessage)
+	newMsg.is_admin_message = sanitize_russian(adminMessage,1)
 	newMsg.locked = !allow_comments
 	if(photo)
 		newMsg.img = photo.img

@@ -38,7 +38,7 @@
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
 			P.name = "paper- '[title]'"
-			P.info = text
+			P.info = russian_text2html(sanitize_russian(text,1))
 			C.messagetitle.Add("[title]")
 			C.messagetext.Add(russian_text2html(sanitize_russian(text,1)))
 			P.update_icon()

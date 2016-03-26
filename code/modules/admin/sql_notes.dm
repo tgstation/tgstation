@@ -89,7 +89,7 @@
 		target_ckey = query_find_note_edit.item[1]
 		var/old_note = query_find_note_edit.item[2]
 		var/adminckey = query_find_note_edit.item[3]
-		var/new_note = input("Input new note", "New Note", "[old_note]") as message
+		var/new_note = sanitize_russian(input("Input new note", "New Note", "[old_note]") as message)
 		if(!new_note)
 			return
 		new_note = sanitizeSQL(new_note)
@@ -167,7 +167,7 @@
 	else
 		output += "<center><a href='?_src_=holder;addnoteempty=1'>\[Add Note\]</a></center>"
 		output += ruler
-	usr << browse(output, "window=show_notes;size=900x500")
+	usr << browse(russian_text2html(sanitize_russian(output,1)), "window=show_notes;size=900x500")
 
 #define NOTESFILE "data/player_notes.sav"
 //if the AUTOCONVERT_NOTES is turned on, anytime a player connects this will be run to try and add all their notes to the databas
