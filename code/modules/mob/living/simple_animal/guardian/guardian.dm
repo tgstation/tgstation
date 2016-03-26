@@ -351,7 +351,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("tech")
 			user << "[G.tech_fluff_string]."
 			G.bubble_icon = "holo"
-			colour = pick("Rose", "Peony", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Lilac", "Orchid") //technically not colors, just flowers that can be specific colors
+			colour = pick("Rose", "Peony", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Lotus", "Lilac", "Orchid") //technically not colors, just flowers that can be specific colors
 			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel", "Platinum", "Tellurium", "Palladium", "Rhodium", "Cobalt", "Osmium", "Tungsten", "Iridium")
 
 	G.name = "[picked_name] [colour]"
