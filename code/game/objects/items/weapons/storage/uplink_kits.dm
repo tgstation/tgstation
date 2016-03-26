@@ -1,4 +1,4 @@
-/obj/item/weapon/storage/box/syndicate/
+/obj/item/weapon/storage/box/syndicate/ //Exclusive to the emagged cargo console
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
@@ -90,6 +90,7 @@
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/sbeacondrop/powersink(src)
 			new /obj/item/weapon/cartridge/syndicate(src)
+			return
 
 		if("darklord")
 			new /obj/item/weapon/melee/energy/sword/saber(src)
@@ -103,6 +104,61 @@
 	name = "box"
 	desc = "A sleek, sturdy box"
 	icon_state = "box_of_doom"
+
+/*New Uplink Bundles*/
+/obj/item/weapon/storage/box/syndie_kit/darklord/New() //Now you too can play as darth vader
+	..()
+	new /obj/item/weapon/melee/energy/sword/saber/red(src)
+	new /obj/item/weapon/melee/energy/sword/saber/red(src)
+	new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /obj/item/clothing/mask/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/sleepingcarp/New() //Space Ninjas aren't just admin only anymore.
+	..()
+	new /obj/item/weapon/storage/box/syndie_kit/throwing_weapons(src)
+	new /obj/item/weapon/sleeping_carp_scroll(src)
+	new /obj/item/weapon/twohanded/bostaff(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/head/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+
+/obj/item/weapon/storage/box/syndie_kit/awperative/New() //SYNDIES CALL THE SHUTTLE!
+	..()
+	new /obj/item/clothing/suit/space/hardsuit/syndi(src)
+	new /obj/item/weapon/implanter/explosive(src)
+	new /obj/item/weapon/implanter/weapons_auth(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /obj/item/weapon/c4(src) //Like a cherry on top.
+
+
+/obj/item/weapon/storage/box/syndie_kit/implantbundle/New() //Makes you slippery like a fish. Worse case scenario, just *deathgasp
+	..()
+	new /obj/item/weapon/implanter/freedom(src)
+	//new /obj/item/weapon/implanter/uplink(src)
+	new /obj/item/weapon/implanter/emp(src)
+	new /obj/item/weapon/implanter/adrenalin(src)
+	new /obj/item/weapon/implanter/explosive(src)
+	new /obj/item/weapon/implanter/storage(src)
+
+/obj/item/weapon/storage/box/syndie_kit/awperator/New()
+	..()
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+	new /obj/item/weapon/suppressor(src)
+	new /obj/item/weapon/reagent_containers/syringe/mulligan(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /obj/item/bodybag(src)
+	new /obj/item/weapon/storage/secure/briefcase/syndie(src)
+	new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
+
+
+
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"

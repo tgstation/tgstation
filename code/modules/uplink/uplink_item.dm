@@ -126,6 +126,43 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
 	cost = 30
 
+//Traitor Bundles
+/datum/uplink_item/traitoroffer
+	category = "Special Offers"
+	surplus = 0
+	include_modes = list(/datum/game_mode/traitor)
+
+/datum/uplink_item/traitoroffer/darklord
+	name = "Dark Lord Bundle"
+	desc = "In a galaxy far far away, these are the weapons of choice that they use. Contains: Two red energy swords, a TK injector, a cool black robe, and voice changing mask."
+	item = /obj/item/weapon/storage/box/syndie_kit/darklord
+	cost = 20
+
+/datum/uplink_item/traitoroffer/sleepingcarp
+	name = "Sleeping Carp Bundle"
+	desc = "Bring honor to your clan with these time honored weapons. Includes: The secrets of the sleeping carp, a box of throwing stars, a bo staff, and a ninja costume."
+	item = /obj/item/weapon/storage/box/syndie_kit/sleepingcarp
+	cost = 20
+
+/datum/uplink_item/traitoroffer/awperative
+	name = "Nuclear Operative Bundle"
+	desc = "Get dat disk! This bundle gears you like an a nuclear operative. Includes: A slick blood red hardsuit, an explosive implant, a C-20r, the implant required to used the C-20r, and, to make it really convincing, some C4."
+	item = /obj/item/weapon/storage/box/syndie_kit/awperative
+	cost = 20
+
+/datum/uplink_item/traitoroffer/implantbundle
+	name = "Implant Bundle"
+	desc = "A handful of syndicate implants to turn yourself into the human of the future! Includes: A freedom implant, an adrenaline implant, an explosive implant, a storage implant, and an EMP impant."
+	item = /obj/item/weapon/storage/box/syndie_kit/implantbundle
+	cost = 20
+
+/datum/uplink_item/traitoroffer/awperator
+	name = "Operator Bundle"
+	desc = "Be quick, be courteous, and plan to kill everyone you meet. This bundle will help you make sure your target is dead as cleanly as possible. Includes: A chamelous jumpsuit, a silenced stechkin, a mulligan syring(when things get bumpy), a briefcase of cash, a body bag, and finally some sweet smokes."
+	item = /obj/item/weapon/storage/box/syndie_kit/awperator
+	cost = 20
+
+
 // Dangerous Items
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
@@ -1065,7 +1102,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
-
+/*
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. \
@@ -1074,7 +1111,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
+*/
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
