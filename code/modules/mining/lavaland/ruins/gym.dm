@@ -1,7 +1,7 @@
 /obj/structure/punching_bag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'icons/obj/fitness.dmi'
+	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "punchingbag"
 	anchored = 1
 	layer = MOB_LAYER+1 // TODO LAYER
@@ -41,7 +41,7 @@
 			sleep(3)
 			animate(user, pixel_y = -4, time = 3)
 			sleep(3)
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
 
 		playsound(user, 'sound/machines/click.ogg', 60, 1)
 		in_use = 0
@@ -53,7 +53,7 @@
 /obj/structure/weightlifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/fitness.dmi'
+	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "fitnessweight"
 	density = 1
 	anchored = 1
@@ -68,7 +68,7 @@
 		user.dir = SOUTH
 		user.Stun(4)
 		user.loc = src.loc
-		var/image/W = image('icons/obj/fitness.dmi',"fitnessweight-w")
+		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")
 		W.layer = MOB_LAYER+1
 		overlays += W
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
@@ -83,7 +83,7 @@
 				sleep(3)
 				animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
 
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
 
 		sleep(3)
 		animate(user, pixel_y = 2, time = 3)
