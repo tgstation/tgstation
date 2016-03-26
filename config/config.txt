@@ -233,3 +233,5 @@ ANNOUNCE_ADMIN_LOGOUT
 ## GENERATE_MINIMAPS
 ## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
 #GENERATE_MINIMAPS
+
+FPS 15
