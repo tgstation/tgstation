@@ -344,6 +344,7 @@
 	anchored = 1
 	density = 0
 	layer = MOB_LAYER + 0.8
+	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
