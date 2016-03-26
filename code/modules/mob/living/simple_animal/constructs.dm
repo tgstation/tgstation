@@ -85,7 +85,7 @@
 /mob/living/simple_animal/hostile/construct/armored
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
+	desc = "A lumbering, disgusting beast made of cursed glass that has been filled with what looks like blood. It smiles with a cruel disdain for civilized life."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
 	maxHealth = 250
