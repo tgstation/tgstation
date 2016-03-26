@@ -119,6 +119,9 @@
 		return 0
 	return 1
 
+/datum/species/proc/on_species_gain(mob/living/carbon/C)
+	return
+
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species)
 		if(C.dna.species.exotic_blood)

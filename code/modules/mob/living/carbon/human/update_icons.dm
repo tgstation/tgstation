@@ -62,6 +62,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 
+	if(dna && istype(dna.species, /datum/species/pony))
+		return
+
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	if (gender == FEMALE && dna.species.id == "human")
 		standing = image("icon"='icons/mob/dam_human_f.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
@@ -100,6 +103,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/proc/update_augments()
 	remove_overlay(AUGMENTS_LAYER)
+
+	if(dna && istype(dna.species, /datum/species/pony))
+		return
 
 	var/list/standing	= list()
 	var/g = (gender == FEMALE) ? "f" : "m"
@@ -164,6 +170,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
+
 		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
 			return
 
@@ -183,7 +192,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
-	else
+	else if(!dna || !dna.species || !dna.species.nojumpsuit)
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
 			unEquip(thing)
@@ -198,6 +207,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 			wear_id.screen_loc = ui_id
 			client.screen += wear_id
 
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
+
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
 		var/image/standing = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
 		overlays_standing[ID_LAYER] = standing
@@ -207,11 +219,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
+
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
+
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
 
 		var/t_state = gloves.item_state
 		if(!t_state)
@@ -240,6 +256,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
+
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 
 			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
@@ -259,6 +278,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
 			client.screen += ears					//Either way, add the item to the HUD
 
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
+
 		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 		if (gender == FEMALE && dna.species.id == "human")
 			standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears_f.dmi')
@@ -275,6 +297,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
+
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
 
 		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
 		if (gender == FEMALE && dna.species.id == "human")
@@ -302,6 +327,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 /mob/living/carbon/human/update_inv_head()
+	if(dna && istype(dna.species, /datum/species/pony))
+		remove_overlay(HEAD_LAYER)
+		return
+
 	..()
 	update_mutant_bodyparts()
 
@@ -336,6 +365,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 			if(hud_used.inventory_shown)					//if the inventory is open ...
 				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
 			client.screen += wear_suit						//Either way, add the item to the HUD
+
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
 
 		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 		if (gender == FEMALE && dna.species.id == "human")
