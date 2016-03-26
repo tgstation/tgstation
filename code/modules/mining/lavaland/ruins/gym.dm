@@ -15,7 +15,7 @@
 /obj/structure/stacklifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/fitness.dmi'
+	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
 	anchored = 1
