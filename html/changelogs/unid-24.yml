@@ -33,5 +33,5 @@ delete-after: True
 # If you're using characters such as # ' : - or the like in your changelog, surround the entire change with quotes as shown in the second example. These quotes don't show up on the changelog once it's merged and prevent errors.
 # SCREW ANY OF THIS UP AND IT WON'T WORK.
 changes: 
-- rscadd: Added 2 hostile vox raider NPCs (vox sharpshooter and vox cyber operator), and 2 hostile skellington NPCs (skellington corsair and skellington cannoneer)
+- rscadd: "Added some hostile humanoid NPCs: vox sharpshooters, vox cyber operators, skellington corsairs, skellington cannoneers, tajarans, diona spearmen, diona chemists, cultists, priests of Nar-Sie, champions of Nar-Sie"
 - tweak: Greys can now be spawned by admins with the spawn command
