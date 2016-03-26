@@ -20,11 +20,15 @@
 	var/meteorminutes = (world.time - round_start_time - meteordelay) / 10 / 60
 	
 	
+	if (prob(meteorminutes))
+		wavetype = meteors_threatening
+
 	if (prob(meteorminutes/2))
 		wavetype = meteors_catastrophic
-	else if (prob(meteorminutes))
-		wavetype = meteors_threatening
-	spawn_meteors(Clamp(round(meteorminutes/rampupdelta),1,10), wavetype)
+
+	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
+
+	spawn_meteors(ramp_up_final, wavetype)
 
 
 /datum/game_mode/meteor/declare_completion()
