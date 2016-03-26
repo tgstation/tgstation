@@ -1,7 +1,7 @@
 "a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/simulated/wall/shuttle/smooth{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"c" = (/obj/structure/closet/crate,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/device/flashlight/lantern,/obj/item/weapon/card/id/syndicate,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"d" = (/obj/structure/closet/crate,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/device/flashlight/lantern,/obj/item/weapon/card/id/syndicate,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"b" = (/turf/simulated/wall/shuttle/smooth/nodiagonal{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"c" = (/obj/structure/closet/crate,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/device/flashlight/lantern,/obj/item/weapon/card/id/mining,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"d" = (/obj/structure/closet/crate,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/device/flashlight/lantern,/obj/item/weapon/card/id/mining,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "e" = (/obj/machinery/door/airlock/shuttle,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "f" = (/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "g" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 4},/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
@@ -25,9 +25,10 @@
 "y" = (/obj/machinery/door/airlock/shuttle{name = "automated trading pod"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "z" = (/obj/structure/table/wood,/obj/item/weapon/book/manual/research_and_development{name = "Sacred Text of the Liberator"},/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 "A" = (/obj/item/weapon/resonator/upgraded,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"B" = (/obj/machinery/computer/arcade/orion_trail,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"C" = (/obj/structure/ore_box,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
-"D" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"B" = (/turf/simulated/wall/shuttle/smooth{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/obj/machinery/computer/arcade/orion_trail,/turf/simulated/floor/plasteel/shuttle/purple{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"D" = (/obj/structure/ore_box,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"E" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa
@@ -42,11 +43,11 @@ bbbkkbbbbbbmmvvmmbbb
 bwxmmmmmmmkmmmmmmkmy
 bzxmmmmmmmkmmvvmmkmk
 bbbkkbbbbbbmmmmAmbbb
-aabmmmmnopbmmmmmmkgh
-aabBmmmnopbqrssrmkgh
-aabbbbkkbbbbbbbbbbbb
+aaBmmmmnopbmmmmmmkgh
+aaBCmmmnopbqrssrmkgh
+aaBBBbkkbbbbbbbbbbbb
 aaaaabfffffffffefegh
-aaaaabCCCCCCCDiefegh
+aaaaabDDDDDDDEiefegh
 aaaaabbbbbbbbbbbbbbb
 aaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaa

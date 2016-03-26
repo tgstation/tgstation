@@ -304,6 +304,8 @@
 			user << "You finish up the golem shell with ten sheets of [O]."
 			var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
 			G.mob_species = species
+			if(O.amount < 1)
+				qdel(O)
 			qdel(src)
 
 /obj/effect/mob_spawn/human/golem
@@ -316,6 +318,13 @@
 	anchored = 0
 	density = 0
 	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; 'Yeah go do whatever.' Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
+
+
+/obj/effect/mob_spawn/human/golem/New()
+	..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, attack_not_jump = 1)
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
 	var/golem_name = pick("Quartz", "Crystal", "Boulder", "Mountain", "Rock", "Stalagmite", "Stalagtite", "Sediment", "Geode", "Igneous", "Quarry", "Shale", "Obsidian", "Chasm", "Stone", "Oynx", "Iron", "Quake", "Grotto","Landslide","Mineral", "Slag", "Pebble", "Gravel", "Pyrite", "Flint", "Sand")
