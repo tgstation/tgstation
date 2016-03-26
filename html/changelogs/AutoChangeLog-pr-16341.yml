@@ -1,0 +1,4 @@
+author: CoreOverload
+delete-after: True
+changes: 
+  - tweak: "Sorting junctions now support multiple sorting tags."
