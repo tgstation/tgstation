@@ -97,6 +97,7 @@
 
 /obj/effect/landmark/corpse/vox/crossbow/space
 	corpsesuit = /obj/item/clothing/suit/space/vox/pressure
+	corpsemask = /obj/item/clothing/mask/breath/vox
 	corpsehelmet = /obj/item/clothing/head/helmet/space/vox/pressure
 
 /obj/effect/landmark/corpse/vox/ion
@@ -107,4 +108,5 @@
 
 /obj/effect/landmark/corpse/vox/ion/space
 	corpsesuit = /obj/item/clothing/suit/space/vox/pressure
+	corpsemask = /obj/item/clothing/mask/breath/vox
 	corpsehelmet = /obj/item/clothing/head/helmet/space/vox/pressure
