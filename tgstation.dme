@@ -1080,7 +1080,6 @@
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_soup.dm"
 #include "code\modules\food&drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\games\cards.dm"
-#include "code\modules\holiday\aprilfools.dm"
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holodeck\area_copy.dm"

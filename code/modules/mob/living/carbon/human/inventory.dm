@@ -122,15 +122,14 @@
 			update_inv_w_uniform()
 		update_inv_wear_suit()
 	else if(I == w_uniform)
-		if(!dna || !dna.species || !dna.species.nojumpsuit)
-			if(r_store)
-				unEquip(r_store, 1) //Again, makes sense for pockets to drop.
-			if(l_store)
-				unEquip(l_store, 1)
-			if(wear_id)
-				unEquip(wear_id)
-			if(belt)
-				unEquip(belt)
+		if(r_store)
+			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
+		if(l_store)
+			unEquip(l_store, 1)
+		if(wear_id)
+			unEquip(wear_id)
+		if(belt)
+			unEquip(belt)
 		w_uniform = null
 		update_suit_sensors()
 		update_inv_w_uniform()
