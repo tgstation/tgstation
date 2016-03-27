@@ -30,7 +30,7 @@
 		if(M.client)
 			var/turf/T = get_turf(M)
 			if(T.z == z_level)
-				to_chat(M, 'sound/effects/bumpinthenight.ogg')
+				M << 'sound/effects/bumpinthenight.ogg'
 
 	var/location = pick(LOC_KITCHEN, LOC_ATMOS, LOC_INCIN, LOC_CHAPEL, LOC_LIBRARY, LOC_HYDRO, LOC_VAULT, LOC_TECH)
 	var/spawn_area_type

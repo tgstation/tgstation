@@ -131,7 +131,7 @@
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
 	if(C.prefs.toggles & SOUND_ADMINHELP)
-		to_chat(C, 'sound/effects/adminhelp.ogg')
+		C << 'sound/effects/adminhelp.ogg'
 
 	/*
 	if(C.holder)
@@ -149,7 +149,7 @@
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
 		if(C.prefs.toggles & SOUND_ADMINHELP)
-			to_chat(C, 'sound/effects/adminhelp.ogg')
+			C << 'sound/effects/adminhelp.ogg'
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
@@ -164,7 +164,7 @@
 				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
 
 			//always play non-admin recipients the adminhelp sound
-			to_chat(C, 'sound/effects/adminhelp.ogg')
+			C << 'sound/effects/adminhelp.ogg'
 
 			//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 			if(config.popup_admin_pm)

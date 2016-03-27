@@ -256,4 +256,6 @@ For the main html chat area
 				C.chatOutput.messageQueue.Add(message)
 				return
 
+		message = replacetext(message, "\n", "<br>")
+
 		target << output(url_encode(message), "browseroutput:output")

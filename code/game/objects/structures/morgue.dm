@@ -349,7 +349,7 @@
 				M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
 			else
 				M.show_message("<span class='notice'>You hear chewing as the crematorium consumes its meal.</span>", 1)
-				to_chat(M, 'sound/items/eatfood.ogg')
+				M << 'sound/items/eatfood.ogg'
 
 		locked = 1
 		cremating = 1
