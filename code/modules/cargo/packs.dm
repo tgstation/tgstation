@@ -171,7 +171,7 @@
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"
-	cost = 10
+	cost = 1000
 	contains = list(/obj/item/weapon/storage/box/wall_flash,
 					/obj/item/weapon/storage/box/wall_flash,
 					/obj/item/weapon/storage/box/wall_flash,
