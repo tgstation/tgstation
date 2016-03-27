@@ -28,6 +28,8 @@
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		M << "<span class='notice'>You smash through the wall.</span>"
+		if(istype(M, /mob/living/simple_animal/hostile/construct/armored))
+			M.say("OHHH YEAHHH!!")
 	else
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
