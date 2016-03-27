@@ -264,8 +264,8 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
-/datum/supply_pack/security/armory/swat
-	name = "Combat knives crate"
+/datum/supply_pack/security/armory/combatknives
+	name = "Combat Knives Crate"
 	cost = 3000
 	contains = list(/obj/item/weapon/kitchen/knife/combat,
 					/obj/item/weapon/kitchen/knife/combat,
