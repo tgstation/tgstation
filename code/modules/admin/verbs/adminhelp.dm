@@ -96,7 +96,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			if(X.is_afk())
 				admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
-				to_chat(X, 'sound/effects/adminhelp.ogg')
+				X << 'sound/effects/adminhelp.ogg'
 			if(X.prefs.special_popup)
 				X << output(msg, "window1.msay_output")
 			else

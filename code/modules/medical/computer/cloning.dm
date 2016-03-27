@@ -379,7 +379,7 @@
 	if (!subject.client && subject.mind) //this guy ghosted from his corpse, but he can still come back!
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == subject.mind && ghost.client && ghost.can_reenter_corpse)
-				to_chat(ghost, 'sound/effects/adminhelp.ogg')
+				ghost << 'sound/effects/adminhelp.ogg'
 				to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to clone your corpse. Return to your body if you want to be cloned!</b> \
 					(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
 				scantemp = "Error: Subject's brain is not responding to scanning stimuli, subject may be brain dead. Please try again in five seconds."
