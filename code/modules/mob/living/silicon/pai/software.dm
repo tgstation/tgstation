@@ -202,7 +202,7 @@
 
 				sradio.send_signal("ACTIVATE")
 				for(var/mob/O in hearers(1, src.loc))
-					O.show_message(text("\icon[] *beep* *beep*", src), 1, "*beep* *beep*", 2)
+					O.show_message("[bicon(src)] *beep* *beep*", 1, "*beep* *beep*", 2)
 
 			if(href_list["freq"])
 

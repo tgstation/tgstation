@@ -52,9 +52,9 @@
 		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
-			to_chat(chassis.occupant, sound('sound/mecha/weapdestr.ogg',volume=50))
+			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
 		else
-			to_chat(chassis.occupant, sound('sound/mecha/critdestr.ogg',volume=50))
+			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
 	spawn
 		qdel (src)
 	return
@@ -136,7 +136,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)
 	if(chassis)
-		chassis.occupant_message("\icon[src] [message]")
+		chassis.occupant_message("[bicon(src)] [message]")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/log_message(message)

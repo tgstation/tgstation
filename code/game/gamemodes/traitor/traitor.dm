@@ -182,10 +182,10 @@
 	//We are firing the alert here, because silicons have a special syndicate intro, courtesy of old mysterious content maker
 	if(istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
-		to_chat(traitor.current, sound('sound/voice/AISyndiHack.ogg'))
+		traitor.current << sound('sound/voice/AISyndiHack.ogg')
 	else
 		equip_traitor(traitor.current)
-		to_chat(traitor.current, sound('sound/voice/syndicate_intro.ogg'))
+		traitor.current << sound('sound/voice/syndicate_intro.ogg')
 	return
 
 

@@ -81,5 +81,5 @@
 		transaction_log.Add(T)
 		return 1
 	else
-		to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money!</span>")
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		return 0

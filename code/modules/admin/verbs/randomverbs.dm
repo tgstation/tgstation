@@ -621,7 +621,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("No")
 			to_chat(world, "<span class='warning'>New Nanotrasen Update available at all communication consoles.</span>")
 
-	to_chat(world, sound('sound/AI/commandreport.ogg', volume = 60))
+	world << sound('sound/AI/commandreport.ogg', volume = 60)
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -811,7 +811,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	for (var/content in get_contents_in_object(L))
 		if (content)
-			to_chat(usr, "\icon[content] [content]")
+			to_chat(usr, "[bicon(content)] [content]")
 
 	feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -882,7 +882,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	emergency_shuttle.incall()
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
+	world << sound('sound/AI/shuttlecalled.ogg')
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] admin-called the emergency shuttle.</span>", 1)

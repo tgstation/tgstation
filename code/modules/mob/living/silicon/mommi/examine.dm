@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/mommi/examine(mob/user)
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 
 	msg += {"<p>It's like a crab, but it has a utility tool on one arm and a crude metal claw on the other.  That, and you doubt it'd survive in an ocean for very long.</p><span class='warning'>"}
 	if (src.getBruteLoss())
@@ -17,7 +17,7 @@
 
 	if(tool_state)
 		var/obj/item/I = tool_state
-		msg += "Its utitility claw is gripping \icon[I] [I.gender==PLURAL?"some":"a"] [I.name].\n"
+		msg += "Its utitility claw is gripping [bicon(I)] [I.gender==PLURAL?"some":"a"] [I.name].\n"
 
 	if(opened)
 		msg += "<span class='warning'>Its cover is open and the power cell is [cell ? "installed" : "missing"].</span>\n"

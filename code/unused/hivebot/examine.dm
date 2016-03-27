@@ -1,6 +1,6 @@
 /mob/living/silicon/hivebot/examine(mob/user)
 	to_chat(user, "<span class='notice'>*---------*</span>")
-	to_chat(user, text("<span class='notice'>This is \icon[src] <B>[src.name]</B>!</span>"))
+	to_chat(user, text("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>"))
 	if (src.stat == 2)
 		to_chat(user, text("<span class='warning'>[src.name] is powered-down.</span>"))
 	if (src.getBruteLoss())

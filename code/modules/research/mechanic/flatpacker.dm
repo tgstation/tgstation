@@ -70,7 +70,7 @@
 		FP.update_icon()
 		var/turf/output = get_output()
 		FP.loc = get_turf(output)
-		src.visible_message("\icon [src] \The [src] beeps: \"Succesfully completed \the [being_built.name].\"")
+		src.visible_message("[bicon(src)] \The [src] beeps: \"Succesfully completed \the [being_built.name].\"")
 		src.being_built = null
 
 	src.updateUsrDialog()

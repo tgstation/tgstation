@@ -248,7 +248,7 @@
 		playsound(loc, 'sound/items/shovel.ogg', 50, 1)
 		if(do_after(user, src, 50))
 			user.visible_message(	"<span class='notice'>[user] transplants \the [seed.display_name] into \the [C].</span>",
-									"<span class='notice'>\icon[src] You transplant \the [seed.display_name] into \the [C].</span>",
+									"<span class='notice'>[bicon(src)] You transplant \the [seed.display_name] into \the [C].</span>",
 									"<span class='notice'>You hear a ratchet.</span>")
 
 			var/obj/structure/claypot/S = new(get_turf(C))

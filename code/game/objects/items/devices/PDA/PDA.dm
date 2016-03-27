@@ -1397,12 +1397,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/mob/user = usr
 				var/amount = round(input("How much money do you wish to print?", "Currency Printer", 0) as num)
 				if(!amount || (amount < 0) || (id.virtual_wallet.money <= 0))
-					to_chat(user, "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>")
+					to_chat(user, "[bicon(src)]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>")
 					return
 				if(amount > id.virtual_wallet.money)
 					amount = id.virtual_wallet.money
 				if(amount > 10000) // prevent crashes
-					to_chat(user, "\icon[src]<span class='notice'>The PDA's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>")
+					to_chat(user, "[bicon(src)]<span class='notice'>The PDA's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>")
 					amount = 10000
 
 				id.virtual_wallet.money -= amount
@@ -1717,18 +1717,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				var/amount = round(input("How much money do you wish to transfer to [P.owner]?", "Money Transfer", 0) as num)
 				if(!amount || (amount < 0) || (id.virtual_wallet.money <= 0))
-					to_chat(usr, "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>")
 					return
 				if(amount > id.virtual_wallet.money)
 					amount = id.virtual_wallet.money
 
 				switch(P.receive_funds(owner,amount,name))
 					if(1)
-						to_chat(usr, "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete!'</span>")
+						to_chat(usr, "[bicon(src)]<span class='notice'>The PDA's screen flashes, 'Transaction complete!'</span>")
 					if(2)
-						to_chat(usr, "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete! The recipient will earn the funds once he enters his ID in his PDA.'</span>")
+						to_chat(usr, "[bicon(src)]<span class='notice'>The PDA's screen flashes, 'Transaction complete! The recipient will earn the funds once he enters his ID in his PDA.'</span>")
 					else
-						to_chat(usr, "\icon[src]<span class='warning'>The PDA's screen flashes, 'Error, transaction canceled'</span>")
+						to_chat(usr, "[bicon(src)]<span class='warning'>The PDA's screen flashes, 'Error, transaction canceled'</span>")
 						return
 
 				id.virtual_wallet.money -= amount
@@ -1864,7 +1864,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_id,/obj/item/weapon/storage/wallet))
 			dispense_cash(arbitrary_sum,H.wear_id)
-			to_chat(usr, "\icon[src]<span class='notice'>Funds were transferred into your physical wallet!</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Funds were transferred into your physical wallet!</span>")
 			return
 	dispense_cash(arbitrary_sum,get_turf(src))
 
@@ -1875,7 +1875,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		playsound(U, 'sound/machines/twobeep.ogg', 50, 1)
 
 	for (var/mob/O in hearers(3, U))
-		if(!silent) O.show_message(text("\icon[src] *[src.ttone]*"))
+		if(!silent) O.show_message(text("[bicon(src)] *[src.ttone]*"))
 
 	var/mob/living/L = null
 	if(src.loc && isliving(src.loc))
@@ -1884,7 +1884,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L)
-		to_chat(L, "\icon[src] <b>Money transfer from [creditor_name] ([arbitrary_sum]$) </b>[id ? "" : "Insert your ID in the PDA to receive the funds."]")
+		to_chat(L, "[bicon(src)] <b>Money transfer from [creditor_name] ([arbitrary_sum]$) </b>[id ? "" : "Insert your ID in the PDA to receive the funds."]")
 
 	tnote += "<i><b>&larr; Money transfer from [creditor_name] ([arbitrary_sum]$)<br>"
 
@@ -1925,7 +1925,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mob/living/L = null
 	if(src.loc && isliving(src.loc))
 		L = src.loc
-	to_chat(L, "\icon[src]<span class='notice'> <b>Transactions successfully received! </b></span>")
+	to_chat(L, "[bicon(src)]<span class='notice'> <b>Transactions successfully received! </b></span>")
 
 
 /obj/item/device/pda/proc/remove_id()
@@ -2006,7 +2006,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 		for (var/mob/O in hearers(3, P.loc))
-			if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+			if(!P.silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -2016,7 +2016,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			L = get(P, /mob/living/silicon)
 
 		if(L)
-			L.show_message("\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)", 2)
+			L.show_message("[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)", 2)
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 		P.overlays.len = 0
@@ -2141,7 +2141,7 @@ obj/item/device/pda/AltClick()
 				to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	else if(istype(C,/obj/item/weapon/spacecash))
 		if(!id)
-			to_chat(user, "\icon[src]<span class='warning'>There is no ID in the PDA!</span>")
+			to_chat(user, "[bicon(src)]<span class='warning'>There is no ID in the PDA!</span>")
 			return
 		var/obj/item/weapon/spacecash/dosh = C
 		id.virtual_wallet.money += dosh.worth * dosh.amount

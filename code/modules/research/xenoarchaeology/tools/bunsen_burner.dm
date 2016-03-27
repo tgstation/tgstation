@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='warning'>There is nothing on the [src].</span>")
 
 /obj/machinery/bunsen_burner/proc/try_heating()
-	src.visible_message("<span class='notice'>\icon[src] [src] hisses.</span>")
+	src.visible_message("<span class='notice'>[bicon(src)] [src] hisses.</span>")
 	if(held_container && heating)
 		heated = 1
 		held_container.reagents.handle_reactions()

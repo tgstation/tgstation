@@ -176,7 +176,7 @@ var/global/num_vending_terminals = 1
 				return
 			if (user.loc == user_loc && P.loc == pack_loc && anchored && self_loc == src.loc && !(user.incapacitated()))
 				var/obj/machinery/vending/newmachine = new P.targetvendomat(loc)
-				to_chat(user, "<span class='notice'>\icon[newmachine] You finish filling the vending machine, and use the stickers inside the pack to decorate the frame.</span>")
+				to_chat(user, "<span class='notice'>[bicon(newmachine)] You finish filling the vending machine, and use the stickers inside the pack to decorate the frame.</span>")
 				playsound(newmachine, 'sound/machines/hiss.ogg', 50, 0, 0)
 				newmachine.pack = P.type
 				var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(P.loc)
@@ -205,7 +205,7 @@ var/global/num_vending_terminals = 1
 				if(!user || !P || !src)
 					return
 				if (user.loc == user_loc && P.loc == pack_loc && anchored && self_loc == src.loc && !(user.incapacitated()))
-					to_chat(user, "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>")
+					to_chat(user, "<span class='notice'>[bicon(src)] You finish refilling the vending machine.</span>")
 					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 					for (var/datum/data/vending_product/D in product_records)
 						D.amount = D.original_amount
@@ -411,9 +411,9 @@ var/global/num_vending_terminals = 1
 				var/obj/item/weapon/card/I = W
 				scan_card(I)
 			else
-				to_chat(usr, "\icon[src]<span class='warning'>Unable to connect to linked account.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to connect to linked account.</span>")
 		else
-			to_chat(usr, "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>")*/
+			to_chat(usr, "[bicon(src)]<span class='warning'>Unable to connect to accounts database.</span>")*/
 
 //H.wear_id
 
@@ -439,22 +439,22 @@ var/global/num_vending_terminals = 1
 				D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0)
 				using_account = "Bank Account"
 				if(!D)								//first we check if there IS a bank account in the first place
-					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
-					to_chat(usr, "\icon[src]<span class='warning'>Unable to access your bank account.</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access your bank account.</span>")
 					return 0
 				else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
-					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
-					to_chat(usr, "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money on your virtual wallet!</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>")
 					return 0
 				else if(D.money < transaction_amount)//and lastly we check if there's enough money on it, duh
-					to_chat(usr, "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money on your bank account!</span>")
 					return 0
 
 			//transfer the money
 			D.money -= transaction_amount
 			linked_account.money += transaction_amount
 
-			to_chat(usr, "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>")
+			to_chat(usr, "[bicon(src)]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>")
 
 			//create an entry on the buy's account's transaction log
 			var/datum/transaction/T = new()
@@ -480,7 +480,7 @@ var/global/num_vending_terminals = 1
 			src.vend(src.currently_vending, usr)
 			currently_vending = null
 		else
-			to_chat(usr, "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>")
+			to_chat(usr, "[bicon(src)]<span class='warning'>EFTPOS is not connected to an account.</span>")
 
 /obj/machinery/vending/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -1422,7 +1422,7 @@ var/global/num_vending_terminals = 1
 				if(!user || !O || !src)
 					return
 				if (user.loc == user_loc && O.loc == pack_loc && anchored && self_loc == src.loc && !(user.incapacitated()))
-					to_chat(user, "<span class='notice'>\icon[src] You finish refilling the vending machine.</span>")
+					to_chat(user, "<span class='notice'>[bicon(src)] You finish refilling the vending machine.</span>")
 					playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 					var/obj/machinery/vending/wallmed1/newnanomed = new /obj/machinery/vending/wallmed1(src.loc)
 					newnanomed.name = "Emergency NanoMed"

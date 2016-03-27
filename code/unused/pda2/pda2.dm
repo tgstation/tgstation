@@ -252,7 +252,7 @@
 		if (alert_message)
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, src.loc))
-				O.show_message(text("\icon[src] *[alert_message]*"))
+				O.show_message(text("[bicon(src)] *[alert_message]*"))
 
 		src.overlays.len = 0
 		src.overlays += image('icons/obj/pda.dmi', "pda-r")

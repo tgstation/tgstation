@@ -371,8 +371,8 @@
 			temp_overlay.overlays += spooky_overlay
 
 			C.images += temp_overlay
-			to_chat(L, sound('sound/machines/click.ogg'))
-			to_chat(L, sound('sound/hallucinations/scary.ogg'))
+			L << sound('sound/machines/click.ogg')
+			L << sound('sound/hallucinations/scary.ogg')
 			L.Weaken(5)
 
 			sleep(50)

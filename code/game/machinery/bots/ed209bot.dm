@@ -1118,5 +1118,5 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/declare()
 	var/area/location = get_area(src)
-	declare_message = "<span class='info'>\icon[src] [name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
+	declare_message = "<span class='info'>[bicon(src)] [name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] scumbag <b>[target]</b> in <b>[location]</b></span>"
 	..()

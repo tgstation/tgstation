@@ -259,7 +259,7 @@ var/list/vox_units=list(
 			if(M.client)
 				var/turf/T = get_turf(M)
 				if(T.z == z_level)
-					to_chat(M, voice)
+					M << voice
 	else
-		to_chat(only_listener, voice)
+		only_listener << voice
 	return 1

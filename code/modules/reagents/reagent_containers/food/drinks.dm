@@ -229,7 +229,7 @@
 	if(viewcontents)
 		..()
 	else
-		to_chat(user, "\icon[src] That's \a [src].")
+		to_chat(user, "[bicon(src)] That's \a [src].")
 		to_chat(user, desc)
 		to_chat(user, "<span class='info'>You can't quite make out its content!</span>")
 

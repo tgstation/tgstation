@@ -1216,7 +1216,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	if(masterController && masterController.client && get_dist(masterController,src)<=1)
 //		to_chat(masterController, "<span class='warning'>You were booted from \the [src] by [scanned_user].</span>")
 	masterController = user
-//	to_chat(masterController, "\icon[src] <span class='notice'>Welcome back, [scanned_user]!</span>")
+//	to_chat(masterController, "[bicon(src)] <span class='notice'>Welcome back, [scanned_user]!</span>")
 
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)

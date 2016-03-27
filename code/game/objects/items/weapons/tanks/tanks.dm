@@ -50,7 +50,7 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, user))
-		if (icon == src) to_chat(user, "<span class='notice'>It's \a \icon[icon][src]! If you want any more information you'll need to get closer.</span>")
+		if (icon == src) to_chat(user, "<span class='notice'>It's \a [bicon(icon)][src]! If you want any more information you'll need to get closer.</span>")
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -69,7 +69,7 @@
 	else
 		descriptive = "furiously hot"
 
-	to_chat(user, "<span class='info'>\The \icon[icon][src] feels [descriptive]</span>")
+	to_chat(user, "<span class='info'>\The [bicon(icon)][src] feels [descriptive]</span>")
 
 	if(air_contents.volume * 10 < volume)
 		to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of gas!</span>")
@@ -94,7 +94,7 @@
 		icon = src.loc
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		user.visible_message("<span class='attack'>[user] has used [W] on \icon[icon] [src]</span>", "<span class='attack'>You use \the [W] on \icon[icon] [src]</span>")
+		user.visible_message("<span class='attack'>[user] has used [W] on [bicon(icon)] [src]</span>", "<span class='attack'>You use \the [W] on [bicon(icon)] [src]</span>")
 		var/obj/item/device/analyzer/analyzer = W
 		user.show_message(analyzer.output_gas_scan(src.air_contents, src, 0), 1)
 		src.add_fingerprint(user)

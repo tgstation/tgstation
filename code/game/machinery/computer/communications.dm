@@ -492,11 +492,11 @@ var/shuttle_call/shuttle_calls[0]
 
 	emergency_shuttle.incall()
 	if(!justification)
-		justification = "#??!7E/_1$*/ARR-CON²FAIL!!*$^?" //Can happen for reasons, let's deal with it IC
+		justification = "#??!7E/_1$*/ARR-CONï¿½FAIL!!*$^?" //Can happen for reasons, let's deal with it IC
 	log_game("[key_name(user)] has called the shuttle. Justification given : '[justification]'")
 	message_admins("[key_name_admin(user)] has called the shuttle. Justification given : '[justification]'. You are encouraged to act if that justification is shit", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes. Justification : '[justification]'")
-	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return
 
@@ -603,7 +603,7 @@ var/shuttle_call/shuttle_calls[0]
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()
 
@@ -628,6 +628,6 @@ var/shuttle_call/shuttle_calls[0]
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	to_chat(world, sound('sound/AI/shuttlecalled.ogg'))
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()

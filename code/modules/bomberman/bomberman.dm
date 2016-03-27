@@ -1079,11 +1079,11 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		if(violence)
 			to_chat(M, "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!")
 		if(M.client)
-			to_chat(M.client, sound('sound/bomberman/start.ogg'))
+			M.client << sound('sound/bomberman/start.ogg')
 		to_chat(M, "<b>READY?</b>")
 
 	for(var/obj/machinery/computer/security/telescreen/entertainment/E in machines)
-		E.visible_message("<span style='color:grey'>\icon[E] \The [E] brightens as it appears that a round is starting in [name].</span>")
+		E.visible_message("<span style='color:grey'>[bicon(E)] \The [E] brightens as it appears that a round is starting in [name].</span>")
 		flick("entertainment_arena",E)
 
 	for(var/mob/dead/observer/O in observers)

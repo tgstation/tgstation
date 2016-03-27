@@ -73,15 +73,15 @@
 	active = 0
 	if(failed_task)
 		failed_task = 0
-		visible_message("\icon[src] [src] pings unhappily, flashing a red warning light.")
+		visible_message("[bicon(src)] [src] pings unhappily, flashing a red warning light.")
 	else
-		visible_message("\icon[src] [src] pings happily.")
+		visible_message("[bicon(src)] [src] pings happily.")
 
 	if(eject_disk)
 		eject_disk = 0
 		if(loaded_disk)
 			loaded_disk.forceMove(get_turf(src))
-			visible_message("\icon[src] [src] beeps and spits out [loaded_disk].")
+			visible_message("[bicon(src)] [src] beeps and spits out [loaded_disk].")
 			loaded_disk = null
 
 	nanomanager.update_uis(src)
@@ -207,14 +207,14 @@
 			plant_controller.seeds[loaded_seed.seed.name] = loaded_seed.seed
 
 		loaded_seed.update_seed()
-		visible_message("\icon[src] [src] beeps and spits out [loaded_seed].")
+		visible_message("[bicon(src)] [src] beeps and spits out [loaded_seed].")
 
 		loaded_seed = null
 
 	if(href_list["eject_disk"])
 		if(!loaded_disk) return
 		loaded_disk.forceMove(get_turf(src))
-		visible_message("\icon[src] [src] beeps and spits out [loaded_disk].")
+		visible_message("[bicon(src)] [src] beeps and spits out [loaded_disk].")
 
 		loaded_disk = null
 

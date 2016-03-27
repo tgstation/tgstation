@@ -54,7 +54,7 @@
 				if(!Console.silent)
 					playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 					for (var/mob/O in hearers(5, Console.loc))
-						O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
+						O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
 				Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"
 
 /datum/event/money_hacker/tick()
@@ -110,7 +110,7 @@
 					if(!Console.silent)
 						playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 						for (var/mob/O in hearers(5, Console.loc))
-							O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
+							O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [my_department]'"))
 					Console.messages += "<B><FONT color='red'>High Priority message from [my_department]</FONT></B><BR>[sending]"
 
 		kill()

@@ -78,7 +78,7 @@
 	if(spawning_types.len && powered())
 		spawn_progress++
 		if(spawn_progress > max_spawn_ticks)
-			src.visible_message("<span class='notice'>\icon[src] [src] pings!</span>")
+			src.visible_message("<span class='notice'>[bicon(src)] [src] pings!</span>")
 			var/spawn_type = spawning_types[1]
 			new spawn_type(src.loc)
 
@@ -93,7 +93,7 @@
 			playsound(get_turf(src), 'sound/machines/heps.ogg', 50, 0)
 
 		else if(prob(5))
-			src.visible_message("<span class='notice'>\icon[src] [src] [pick("clicks","whizzes","whirrs","whooshes","clanks","clongs","clonks","bangs")].</span>")
+			src.visible_message("<span class='notice'>[bicon(src)] [src] [pick("clicks","whizzes","whirrs","whooshes","clanks","clongs","clonks","bangs")].</span>")
 
 /obj/machinery/replicator/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet)||istype(Proj,/obj/item/projectile/ricochet))
@@ -140,7 +140,7 @@
 	if(href_list["activate"])
 		var/index = text2num(href_list["activate"])
 		if(index > 0 && index <= construction.len)
-			src.visible_message("<span class='notice'>\icon[src] a [pick("light","dial","display","meter","pad")] on [src]'s front [pick("blinks","flashes")] [pick("red","yellow","blue","orange","purple","green","white")].[isobserver(usr) ? " Spooky." : ""]</span>")
+			src.visible_message("<span class='notice'>[bicon(src)] a [pick("light","dial","display","meter","pad")] on [src]'s front [pick("blinks","flashes")] [pick("red","yellow","blue","orange","purple","green","white")].[isobserver(usr) ? " Spooky." : ""]</span>")
 			spawning_types.Add(construction[construction[index]])
 			spawn_progress = 0
 			use_power = 2

@@ -104,7 +104,7 @@ hi
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] [].", user, src, src.name), 1)
+		O.show_message("[user] shows you: [bicon(src)] [name].", 1)
 	src.add_fingerprint(user)
 
 /obj/item/weapon/clipboard/fluff/smallnote //lexusjjss: Lexus Langg, Zachary Tomlinson

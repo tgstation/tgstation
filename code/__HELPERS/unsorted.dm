@@ -283,7 +283,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
 //				to_chat(world, "<b>[newname] is the AI!</b>")
-//				to_chat(world, sound('sound/AI/newAI.ogg'))
+//				world << sound('sound/AI/newAI.ogg')
 				// Set eyeobj name
 				if(A.eyeobj)
 					A.eyeobj.name = "[newname] (AI Eye)"
@@ -1517,8 +1517,3 @@ Game Mode config tags:
 					found_mode = GM
 					break
 	return found_mode
-
-
-// Use this to send to a client's chat, no exceptions (except this proc itself).
-/proc/to_chat(var/thing, var/output)
-	thing << output

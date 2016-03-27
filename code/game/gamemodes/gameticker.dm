@@ -189,7 +189,7 @@ var/global/datum/controller/gameticker/ticker
 				qdel(obj)
 		stat_collection.death_stats = list() // Get rid of the corpses that spawn on startup.
 		to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
-//		to_chat(world, sound('sound/AI/welcome.ogg'))// Skie //Out with the old, in with the new. - N3X15
+//		world << sound('sound/AI/welcome.ogg')// Skie //Out with the old, in with the new. - N3X15
 
 		if(!config.shut_up_automatic_diagnostic_and_announcement_system)
 			var/welcome_sentence=list('sound/AI/vox_login.ogg')

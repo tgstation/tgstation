@@ -89,7 +89,7 @@
 /obj/machinery/space_heater/examine(mob/user)
 	..()
 	if(!nocell)
-		to_chat(user, "<span class='info'>\icon[src]\The [src.name] is [on ? "on" : "off"] and the hatch is [panel_open ? "open" : "closed"].</span>")
+		to_chat(user, "<span class='info'>[bicon(src)]\The [src.name] is [on ? "on" : "off"] and the hatch is [panel_open ? "open" : "closed"].</span>")
 		if(panel_open)
 			to_chat(user, "<span class='info'>The power cell is [cell ? "installed" : "missing"].</span>")
 		else

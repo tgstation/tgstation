@@ -1299,9 +1299,9 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
 					if(toggles & SOUND_LOBBY)
-						to_chat(user, sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1))
+						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 					else
-						to_chat(user, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))
+						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 				if("jukebox")
 					toggles ^= SOUND_STREAMING

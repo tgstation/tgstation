@@ -67,7 +67,7 @@
 /obj/item/weapon/reagent_containers/chempack/examine(mob/user)
 	..()
 	if(beaker)
-		to_chat(user, "\icon[beaker] There is \a [beaker] in \the [src]'s auxiliary chamber.")
+		to_chat(user, "[bicon(beaker)] There is \a [beaker] in \the [src]'s auxiliary chamber.")
 		to_chat(user, "It contains:")
 		var/obj/item/weapon/reagent_containers/glass/B = beaker
 		if(B.reagents.reagent_list.len)
