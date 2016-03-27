@@ -51,6 +51,13 @@
 	else
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
 
+/mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
+	. = ..()
+	if(istype(., /obj/item/projectile))
+		var/obj/item/projectile/P = .
+		if(namedatum)
+			P.color = namedatum.colour
+
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	if(see_invisible == SEE_INVISIBLE_MINIMUM)
 		src << "<span class='notice'>You deactivate your night vision.</span>"

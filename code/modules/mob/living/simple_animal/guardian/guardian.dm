@@ -35,17 +35,48 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
+	var/datum/guardianname/namedatum
 	var/playstyle_string = "You are a standard Guardian. You shouldn't exist!"
 	var/magic_fluff_string = " You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!"
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
 
-/mob/living/simple_animal/hostile/guardian/New()
+/mob/living/simple_animal/hostile/guardian/New(loc, theme)
 	parasites |= src
+	setthemename(theme)
 	..()
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	parasites -= src
 	return ..()
+
+/mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
+	if(!pickedtheme)
+		pickedtheme = pick("magic", "tech")
+	var/list/possible_names = list()
+	switch(pickedtheme)
+		if("magic")
+			for(var/type in (subtypesof(/datum/guardianname/magic) - namedatum))
+				possible_names += new type
+		if("tech")
+			for(var/type in (subtypesof(/datum/guardianname/tech) - namedatum))
+				possible_names += new type
+	namedatum = pick(possible_names)
+	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
+	real_name = "[name]"
+	icon_living = "[pickedtheme][namedatum.suffixcolour]"
+	icon_state = "[pickedtheme][namedatum.suffixcolour]"
+	icon_dead = "[pickedtheme][namedatum.suffixcolour]"
+	bubble_icon = "[namedatum.theme]"
+
+/mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
+	..()
+	if(mind)
+		mind.name = "[real_name]"
+	if(summoner)
+		src << "You are [real_name], bound to serve [summoner.real_name]."
+		src << "You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there."
+		src << "While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
+	src << "[playstyle_string]"
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
@@ -145,7 +176,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ghostize()
 	qdel(src)
 
-//Manifest, Recall, Communicate
+//MANIFEST, RECALL, TOGGLE MODE/LIGHT
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest()
 	if(cooldown > world.time)
@@ -166,70 +197,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	cooldown = world.time + 10
 	return 1
 
-/mob/living/simple_animal/hostile/guardian/proc/Communicate()
-	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
-	if(!input) return
-
-	var/my_message = "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-	for(var/mob/M in mob_list)
-		if(M == summoner)
-			M << my_message
-		if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
-	src << "[my_message]"
-	log_say("[src.real_name]/[src.key] : [input]")
-
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
 	src << "<span class='danger'><B>You don't have another mode!</span></B>"
-
-
-/mob/living/proc/guardian_comm()
-	set name = "Communicate"
-	set category = "Guardian"
-	set desc = "Communicate telepathically with your guardian."
-	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
-	if(!input) return
-
-	var/my_message = "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-	for(var/mob/M in mob_list)
-		if(istype (M, /mob/living/simple_animal/hostile/guardian))
-			var/mob/living/simple_animal/hostile/guardian/G = M
-			if(G.summoner == src)
-				G << "[my_message]"
-		else if (M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
-	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-	log_say("[src.real_name]/[src.key] : [text]")
-
-
-/mob/living/proc/guardian_recall()
-	set name = "Recall Guardian"
-	set category = "Guardian"
-	set desc = "Forcibly recall your guardian."
-	for(var/mob/living/simple_animal/hostile/guardian/G in mob_list)
-		if(G.summoner == src)
-			G.Recall()
-
-/mob/living/proc/guardian_reset()
-	set name = "Reset Guardian Player (One Use)"
-	set category = "Guardian"
-	set desc = "Re-rolls which ghost will control your Guardian. One use."
-
-	src.verbs -= /mob/living/proc/guardian_reset
-	for(var/mob/living/simple_animal/hostile/guardian/G in mob_list)
-		if(G.summoner == src)
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [G.real_name]?", "pAI", null, FALSE, 100)
-			var/mob/dead/observer/new_stand = null
-			if(candidates.len)
-				new_stand = pick(candidates)
-				G << "Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."
-				src << "Your guardian has been successfully reset."
-				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
-				G.ghostize(0)
-				G.key = new_stand.key
-			else
-				src << "There were no ghosts willing to take control. Looks like you're stuck with your Guardian for now."
-				verbs += /mob/living/proc/guardian_reset
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
 	if(!luminosity)
@@ -238,6 +207,79 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	else
 		src << "<span class='notice'>You deactivate your light.</span>"
 		SetLuminosity(0)
+
+//COMMUNICATION
+
+/mob/living/simple_animal/hostile/guardian/proc/Communicate()
+	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
+	if(!input)
+		return
+
+	var/quoted_message = say_quote(input, get_spans()) //apply message spans to the message
+	var/preliminary_message = "<font color='#35333A'><b>[quoted_message]</b></font>" //apply basic color/bolding
+	var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]</i></font> [preliminary_message]" //add source, color source with the guardian's color
+	if(summoner)
+		summoner << my_message
+		var/list/guardians = summoner.hasparasites()
+		for(var/para in guardians)
+			var/mob/living/simple_animal/hostile/guardian/G = para
+			G << my_message
+		for(var/M in dead_mob_list)
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+		log_say("[src.real_name]/[src.key] : [input]")
+
+/mob/living/proc/guardian_comm()
+	set name = "Communicate"
+	set category = "Guardian"
+	set desc = "Communicate telepathically with your guardian."
+	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
+	if(!input)
+		return
+
+	var/list/guardians = hasparasites()
+	var/quoted_message = say_quote(input, get_spans()) //apply message spans to the message
+	var/preliminary_message = "<font color='#35333A'><b>[quoted_message]</b></font>" //apply basic color/bolding
+	var/my_message = "<font color='#35333A'><b><i>[src]</i></b> [preliminary_message]</font>" //add source, color source with default grey...
+	for(var/para in guardians)
+		var/mob/living/simple_animal/hostile/guardian/G = para
+		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
+	for(var/M in dead_mob_list)
+		M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+	src << my_message
+	log_say("[src.real_name]/[src.key] : [text]")
+
+//FORCE RECALL/RESET
+
+/mob/living/proc/guardian_recall()
+	set name = "Recall Guardian"
+	set category = "Guardian"
+	set desc = "Forcibly recall your guardian."
+	var/list/guardians = hasparasites()
+	for(var/para in guardians)
+		var/mob/living/simple_animal/hostile/guardian/G = para
+		G.Recall()
+
+/mob/living/proc/guardian_reset()
+	set name = "Reset Guardian Player (One Use)"
+	set category = "Guardian"
+	set desc = "Re-rolls which ghost will control your Guardian. One use."
+
+	src.verbs -= /mob/living/proc/guardian_reset
+	var/list/guardians = hasparasites()
+	for(var/para in guardians)
+		var/mob/living/simple_animal/hostile/guardian/G = para
+		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [G.real_name]?", "pAI", null, FALSE, 100)
+		var/mob/dead/observer/new_stand = null
+		if(candidates.len)
+			new_stand = pick(candidates)
+			G << "Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."
+			src << "Your guardian has been successfully reset."
+			message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
+			G.ghostize(0)
+			G.key = new_stand.key
+		else
+			src << "There were no ghosts willing to take control of [G.real_name]. Looks like you're stuck with it for now."
+			verbs += /mob/living/proc/guardian_reset
 
 ////////parasite tracking/finding procs
 
@@ -295,13 +337,17 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 
 /obj/item/weapon/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
-	var/gaurdiantype = "Standard"
+	var/guardiantype = "Standard"
 	if(random)
-		gaurdiantype = pick(possible_guardians)
+		guardiantype = pick(possible_guardians)
 	else
-		gaurdiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
+		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
+		if(!guardiantype)
+			user << "[failure_message]" //they canceled? sure okay don't force them into it
+			used = FALSE
+			return
 	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
-	switch(gaurdiantype)
+	switch(guardiantype)
 
 		if("Chaos")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
@@ -330,38 +376,18 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("Assassin")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
 
-	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
+	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.summoner = user
 	G.key = key
-	G << "You are a [mob_name] bound to serve [user.real_name]."
-	G << "You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there."
-	G << "While personally invincible, you will die if [user.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
-	G << "[G.playstyle_string]"
-	G.faction = user.faction
+	G.faction |= user.faction
+	switch(theme)
+		if("tech")
+			user << "[G.tech_fluff_string]"
+		if("magic")
+			user << "[G.magic_fluff_string]"
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
-
-	var/colour
-	var/picked_name
-	switch(theme)
-		if("magic")
-			user << "[G.magic_fluff_string]."
-			colour = pick("Pink", "Red", "Orange", "Green", "Blue")
-			picked_name = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces")
-		if("tech")
-			user << "[G.tech_fluff_string]."
-			G.bubble_icon = "holo"
-			colour = pick("Rose", "Peony", "Lily", "Daisy", "Zinnia", "Ivy", "Iris", "Petunia", "Violet", "Lotus", "Lilac", "Orchid") //technically not colors, just flowers that can be specific colors
-			picked_name = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel", "Platinum", "Tellurium", "Palladium", "Rhodium", "Cobalt", "Osmium", "Tungsten", "Iridium")
-
-	G.name = "[picked_name] [colour]"
-	G.real_name = "[picked_name] [colour]"
-	G.icon_living = "[theme][colour]"
-	G.icon_state = "[theme][colour]"
-	G.icon_dead = "[theme][colour]"
-
-	G.mind.name = "[G.real_name]"
 
 /obj/item/weapon/guardiancreator/choose
 	random = FALSE

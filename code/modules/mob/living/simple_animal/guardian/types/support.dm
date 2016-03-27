@@ -28,6 +28,9 @@
 				C.adjustFireLoss(-5)
 				C.adjustOxyLoss(-5)
 				C.adjustToxLoss(-5)
+				var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(C))
+				if(namedatum)
+					H.color = namedatum.colour
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
