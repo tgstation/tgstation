@@ -60,7 +60,7 @@ Note: Must be placed west/left of and R&D console to function.
 	materials.max_amount = T * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		T += (M.rating/3)
+		T += (M.rating/2)
 	efficiency_coeff = max(T, 1)
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
