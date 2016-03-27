@@ -37,6 +37,9 @@
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(issilicon(user))
 		return 1
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER | BROKEN))
 		to_chat(user, "<span class='notice'>[src] isn't connected to a power source.</span>")
 		return 1
@@ -66,7 +69,6 @@
 			use_power = 2
 		update_icon()
 		return 1
-	..()
 
 /obj/machinery/recharger/wrenchAnchor(mob/user)
 	if(charging)
