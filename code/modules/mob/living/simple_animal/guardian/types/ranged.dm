@@ -22,6 +22,7 @@
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/list/snares = list()
 	var/toggle = FALSE
 
@@ -31,6 +32,7 @@
 			ranged = 1
 			melee_damage_lower = 10
 			melee_damage_upper = 10
+			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = 13
 			incorporeal_move = 0
@@ -40,6 +42,7 @@
 			ranged = 0
 			melee_damage_lower = 0
 			melee_damage_upper = 0
+			environment_smash = 0
 			alpha = 60
 			range = 255
 			incorporeal_move = 1

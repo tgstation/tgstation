@@ -374,11 +374,12 @@ var/list/airlock_overlays = list()
 		if("closing")
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
-			update_icon(AIRLOCK_DENY)
-			playsound(src,doorDeni,50,0,3)
-			sleep(6)
-			update_icon(AIRLOCK_CLOSED)
-			icon_state = "closed"
+			if(!stat)
+				update_icon(AIRLOCK_DENY)
+				playsound(src,doorDeni,50,0,3)
+				sleep(6)
+				update_icon(AIRLOCK_CLOSED)
+				icon_state = "closed"
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()

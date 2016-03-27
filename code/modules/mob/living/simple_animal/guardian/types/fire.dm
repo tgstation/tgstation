@@ -20,7 +20,7 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	if(..())
-		if(ishuman(target))
+		if(ishuman(target) && target != summoner)
 			spawn(0)
 				new /obj/effect/hallucination/delusion(target.loc,target,force_kind="custom",duration=200,skip_nearby=0, custom_icon = src.icon_state, custom_icon_file = src.icon)
 
@@ -39,6 +39,6 @@
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
-		if(AM != summoner && M.fire_stacks < 7)
+		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
 			M.fire_stacks = 7
 			M.IgniteMob()
