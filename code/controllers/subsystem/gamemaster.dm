@@ -6,8 +6,8 @@ var/datum/subsystem/gamemaster/SSgamemaster
 	var/probability = 0
 	var/probability_increment = 1
 	var/first_announcement = FALSE
-	var/list/event_list = list()
-	var/list/z1_areas = list("bwoink", "singuloth", "el_dorado", "el_honkado", "privacy_windows", "give_guns", "ai_cameras", "ai_cameras",\
+	var/list/z1_areas = list()
+	var/list/event_list = list("bwoink", "singuloth", "el_dorado", "el_honkado", "privacy_windows", "give_guns", "ai_cameras", "ai_cameras",\
 							"communism", "knockdown", "change_dir", "fakespace", "make_antag", "mecha_warfare", "clumsy", "dwarves_n_giants")
 
 /datum/subsystem/gamemaster/New()
@@ -54,6 +54,7 @@ var/datum/subsystem/gamemaster/SSgamemaster
 				clumsy()
 			if("dwarves_n_giants")
 				dwarves_n_giants()
+
 		probability = 0
 		probability_increment /= 2
 	else
@@ -253,9 +254,11 @@ var/datum/subsystem/gamemaster/SSgamemaster
 		M.resize = 0.8
 		M.update_transform()
 		M.pass_flags |= PASSTABLE
+		M << "<span class='notice'>You are now a dwarf.</span>"
 	for(var/V in giants)
 		var/mob/M = V
 		M.resize = 1.5
 		M.update_transform()
 		M.pass_flags |= PASSTABLE
+		M << "<span class='notice'>You are now a giant.</span>"
 	gamemaster_announce("At least none of you are elves.")
