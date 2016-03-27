@@ -792,6 +792,14 @@ obj/item/weapon/circuitboard/rdserver
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
 
+/obj/item/weapon/circuitboard/extraction_point
+	name = "circuit board (Fulton Recovery Beacon)"
+	build_path = /obj/machinery/extraction_point
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
 /obj/item/weapon/circuitboard/plantgenes
 	name = "circuit board (Plant DNA Manipulator)"
 	build_path = /obj/machinery/plantgenes
