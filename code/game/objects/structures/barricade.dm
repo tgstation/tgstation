@@ -28,7 +28,7 @@
 	else if(health >= 0.8*initial(health))
 		to_chat(user, "It has a few splinters and a plank is broken.")
 	else if(health >= 0.5*initial(health))
-		to_chat(user, "It has a fair amount of splinters and broken plants.")
+		to_chat(user, "It has a fair amount of splinters and broken planks.")
 	else if(health >= 0.2*initial(health))
 		to_chat(user, "It has most of its planks broken, you can barely tell how much weight the support beams are bearing.")
 	else
