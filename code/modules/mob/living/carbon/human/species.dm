@@ -125,6 +125,9 @@
 			var/datum/reagent/EB = C.dna.species.exotic_blood
 			C.reagents.del_reagent(initial(EB.id))
 
+/datum/species/proc/on_species_gain(mob/living/carbon/C)
+	return
+
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
