@@ -12,7 +12,7 @@
 	var/amount = 3
 	animate_movement = 0
 	var/metal = 0
-	var/lifetime = 6
+	var/lifetime = 40
 
 
 /obj/effect/particle_effect/foam/metal
