@@ -369,10 +369,7 @@
 		if(!do_after(user, 50, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
-		R.amount -= 2
-		if(R.amount <= 0)
-			user.drop_item()
-			qdel(R)
+		R.use(2)
 		new/turf/simulated/wall/cult(get_turf(src))
 		qdel(src)
 
@@ -389,11 +386,9 @@
 			qdel(src)
 		if(2)
 			if(prob(30))
-				var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
-				R.amount = 2
+				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
 				qdel(src)
 		if(3)
 			if(prob(5))
-				var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
-				R.amount = 2
+				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
 				qdel(src)

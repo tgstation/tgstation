@@ -12,8 +12,7 @@
 	..()
 
 /turf/simulated/wall/cult/break_wall()
-	var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
-	R.amount = 2
+	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
 	return (new /obj/structure/girder/cult(src))
 
 /turf/simulated/wall/cult/devastate_wall()
