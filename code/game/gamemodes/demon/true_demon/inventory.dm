@@ -1,4 +1,4 @@
-/mob/living/simple_animal/true_demon/activate_hand(selhand)
+/mob/living/carbon/true_demon/activate_hand(selhand)
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)
@@ -14,7 +14,7 @@
 		mode()
 
 
-/mob/living/simple_animal/true_demon/swap_hand()
+/mob/living/carbon/true_demon/swap_hand()
 	var/obj/item/held_item = get_active_hand()
 	if(held_item)
 		if(istype(held_item, /obj/item/weapon/twohanded))
@@ -33,14 +33,14 @@
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
 
 
-/mob/living/simple_animal/true_demon/unEquip(obj/item/I, force)
+/mob/living/carbon/true_demon/unEquip(obj/item/I, force)
 	if(..(I,force))
 		update_inv_hands()
 		return 1
 	return 0
 
-/mob/living/simple_animal/true_demon/stripPanelUnequip(obj/item/what, mob/who, where)
+/mob/living/carbon/true_demon/stripPanelUnequip(obj/item/what, mob/who, where)
 	..(what, who, where, 1)
 
-/mob/living/simple_animal/true_demon/stripPanelEquip(obj/item/what, mob/who, where)
+/mob/living/carbon/true_demon/stripPanelEquip(obj/item/what, mob/who, where)
 	..(what, who, where, 1)

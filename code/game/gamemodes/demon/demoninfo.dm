@@ -252,7 +252,7 @@ var/list/allDemons = list()
 		if(TRUE_DEMON)
 			regress_blood_lizard()
 
-/datum/demoninfo/proc/regress_humanoid()
+/datum/demoninfo/proc/regress_humanoid()  //TODO LORDPIDEY
 	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
@@ -262,7 +262,7 @@ var/list/allDemons = list()
 	form = BASIC_DEMON
 
 /datum/demoninfo/proc/regress_blood_lizard()
-	var/mob/living/simple_animal/true_demon/D = owner.current
+	var/mob/living/carbon/true_demon/D = owner.current
 	D << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	D.oldform.loc = D.loc
 	owner.transfer_to(D.oldform)
@@ -291,7 +291,7 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/increase_true_demon()
 	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true demon."
 	sleep(50)
-	var/mob/living/simple_animal/true_demon/A = new /mob/living/simple_animal/true_demon(owner.current.loc)
+	var/mob/living/carbon/true_demon/A = new /mob/living/carbon/true_demon(owner.current.loc)
 	A.faction |= "hell"
 	owner.current.loc = A
 	A.oldform = owner.current
@@ -302,7 +302,7 @@ var/list/allDemons = list()
 
 
 /datum/demoninfo/proc/increase_arch_demon()
-	var/mob/living/simple_animal/true_demon/D = owner.current
+	var/mob/living/carbon/true_demon/D = owner.current
 	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
 	D.visible_message("<span class='warning'>[D]'s skin begins to erupt with spikes.</span>", \

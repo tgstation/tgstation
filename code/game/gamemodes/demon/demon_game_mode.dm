@@ -31,7 +31,6 @@
 
 /datum/game_mode/proc/finalize_demon(datum/mind/demon_mind)
 	var/mob/living/carbon/human/S = demon_mind.current
-	demon_mind.demoninfo.give_base_spells(1)
 	var/trueName= randomDemonName()
 	var/datum/objective/demon/soulquantity/soulquant = new
 	soulquant.owner = demon_mind
@@ -40,8 +39,9 @@
 	demon_mind.objectives += soulqual
 	demon_mind.objectives += soulquant
 	demon_mind.demoninfo = demonInfo(trueName, 1)
-	demon_mind.store_memory("Your demonic true name is [demon_mind.demoninfo.truename]<br>[demon_mind.demoninfo.banlaw()]<br>[demon_mind.demoninfo.banelaw()]<br>[demon_mind.demoninfo.obligationlaw()]<br>")
+	demon_mind.store_memory("Your demonic true name is [demon_mind.demoninfo.truename]<br>[demon_mind.demoninfo.banlaw()]<br>[demon_mind.demoninfo.banelaw()]<br>[demon_mind.demoninfo.obligationlaw()]<br>[demon_mind.demoninfo.banishlaw()]<br>")
 	demon_mind.demoninfo.owner = demon_mind
+	demon_mind.demoninfo.give_base_spells(1)
 	spawn(10)
 		if(demon_mind.assigned_role == "Clown")
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
@@ -50,16 +50,24 @@
 /datum/mind/proc/announceDemonLaws()
 	if(!demoninfo)
 		return
-	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of 		creation for a reason.  A greater  \
-		purpose.  Convince the crew to sin, and embroiden Hell's grasp. \
-		</b></span>"
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of 	creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
 	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
 	current << src.demoninfo.banelaw()
 	current << src.demoninfo.banlaw()
 	current << src.demoninfo.obligationlaw()
+	current << src.demoninfo.banishlaw()
 	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
 	var/obj_count = 1
 	current << "<span class='notice'>Your current objectives:</span>"
 	for(var/datum/objective/objective in objectives)
 		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
+
+/datum/game_mode/proc/printdemoninfo(datum/mind/ply)
+	var/text = "</br>The demon's true name is: [ply.demoninfo.truename]</br>"
+	text += "The demon's bans were:</br>"
+	text += "	[ply.demoninfo.banlore()]</br>"
+	text += "	[ply.demoninfo.banelore()]</br>"
+	text += "	[ply.demoninfo.obligationlore()]</br>"
+	text += "	[ply.demoninfo.banishlore()]</br>"
+	return text

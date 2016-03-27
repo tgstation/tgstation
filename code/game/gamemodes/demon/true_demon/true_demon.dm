@@ -3,7 +3,7 @@
 #define DEMON_TOTAL_LAYERS 2
 
 
-/mob/living/simple_animal/true_demon
+/mob/living/carbon/true_demon
 	name = "True Demon"
 	desc = "A pile of infernal energy, taking a vaguely humanoid form."
 	icon = 'icons/mob/32x64.dmi'
@@ -11,9 +11,6 @@
 	gender = NEUTER
 	health = 350
 	maxHealth = 350
-	unsuitable_atmos_damage = 0
-	wander = 0
-	speed = 0
 	ventcrawler = 0
 	density = 0
 	pass_flags =  0
@@ -22,37 +19,36 @@
 	status_flags = CANPUSH
 	languages = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 0, STAMINA = 0, OXY = 0)
 	var/mob/oldform
 	var/list/demon_overlays[DEMON_TOTAL_LAYERS]
 
-/mob/living/simple_animal/true_demon/proc/convert_to_archdemon()
+/mob/living/carbon/true_demon/proc/convert_to_archdemon()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
 	ascended = 1
 	health = maxHealth
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	icon_state = "arch_demon"
 
-/mob/living/simple_animal/true_demon/proc/set_name()
+/mob/living/carbon/true_demon/proc/set_name()
 	name = mind.demoninfo.truename
 	real_name = name
 
-/mob/living/simple_animal/true_demon/Destroy()
+/mob/living/carbon/true_demon/Destroy()
 	// TODO LORDPIDEY: Make banishment rituals work here.
 	return ..()
 
-/mob/living/simple_animal/true_demon/Login()
+/mob/living/carbon/true_demon/Login()
 	..()
 	mind.announceDemonLaws()
 
 
-/mob/living/simple_animal/true_demon/death(gibbed)
+/mob/living/carbon/true_demon/death(gibbed)
+	mind.demoninfo.beginResurrectionCheck(src)
 	..(gibbed)
 	drop_l_hand()
 	drop_r_hand()
 
 
-/mob/living/simple_animal/true_demon/examine(mob/user)
+/mob/living/carbon/true_demon/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
 
 	//Left hand items
@@ -84,23 +80,20 @@
 	user << msg
 
 
-/mob/living/simple_animal/true_demon/IsAdvancedToolUser()
+/mob/living/carbon/true_demon/IsAdvancedToolUser()
 	return 1
 
 
-/mob/living/simple_animal/true_demon/canUseTopic()
+/mob/living/carbon/true_demon/canUseTopic()
 	if(stat)
 		return
 	return 1
 
 
-/mob/living/simple_animal/true_demon/assess_threat()
+/mob/living/carbon/true_demon/assess_threat()
 	return 666
 
-/mob/living/simple_animal/true_demon/handle_temperature_damage()
-	return
-
-/mob/living/simple_animal/true_demon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/true_demon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(mind && mind.demoninfo.bane == BANE_LIGHT)
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
@@ -108,7 +101,7 @@
 	return
 
 
-/mob/living/simple_animal/true_demon/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/carbon/true_demon/attacked_by(obj/item/I, mob/living/user, def_zone)
 	var/weakness = check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone)
 	var/message_verb = ""
@@ -126,23 +119,23 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 
-/mob/living/simple_animal/true_demon/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/true_demon/UnarmedAttack(atom/A, proximity)
 	A.attack_hand(src)
 
-/mob/living/simple_animal/true_demon/Process_Spacemove(movement_dir = 0)
+/mob/living/carbon/true_demon/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/simple_animal/true_demon/ex_act(severity)
+/mob/living/carbon/true_demon/ex_act(severity)
 	if(ascended)
 		return 0
 	return ..()
 
-/mob/living/simple_animal/true_demon/singularity_act()
+/mob/living/carbon/true_demon/singularity_act()
 	if(ascended)
 		return 0
 	return ..()
 
-/mob/living/simple_animal/true_demon/attack_ghost(mob/dead/observer/user as mob)
+/mob/living/carbon/true_demon/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended)
 		var/mob/living/simple_animal/slaughter/S = new(get_turf(loc))
 		S.key = user.key

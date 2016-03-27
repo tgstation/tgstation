@@ -699,6 +699,7 @@
 		src.loc.visible_message("<span class='danger'>[demon.banelore()]</span>")
 		src.loc.visible_message("<span class='danger'>[demon.obligationlore()]</span>")
 		src.loc.visible_message("<span class='danger'>[demon.banlore()]</span>")
+		src.loc.visible_message("<span class='danger'>[demon.banishlore()]</span>")
 		spawn(60) cooldown = 0
 		return
 	..()
