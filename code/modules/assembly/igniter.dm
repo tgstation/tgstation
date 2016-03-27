@@ -19,15 +19,16 @@
 		var/turf/location = get_turf(loc)
 		if(location)
 			location.hotspot_expose(1000,1000,surfaces=istype(loc,/turf))
+
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+
 		if (istype(src.loc,/obj/item/device/assembly_holder))
 			if (istype(src.loc.loc, /obj/structure/reagent_dispensers/fueltank/))
 				var/obj/structure/reagent_dispensers/fueltank/tank = src.loc.loc
 				if (tank && tank.modded)
 					tank.explode()
-
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
 
 		return 1
 
