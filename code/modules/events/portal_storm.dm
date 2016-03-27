@@ -69,7 +69,7 @@
 	set waitfor = 0
 	playsound_global('sound/magic/lightning_chargeup.ogg', repeat=0, channel=1, volume=100)
 	sleep(80)
-	priority_announce("Attention personnel of [world.name]: incoming portal storm!")
+	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
 	sleep(20)
 	playsound_global('sound/magic/lightningbolt.ogg', repeat=0, channel=1, volume=100)
 

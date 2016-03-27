@@ -126,7 +126,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.buckled || L.buckled_mobs.len)
+		if(L.buckled || L.incorporeal_move || L.buckled_mobs.len)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && !L.lying)
@@ -259,7 +259,7 @@
 						 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 						 	 "<span class='italics'>You hear a loud metal bang.</span>")
 		var/mob/living/L = O
-		if(istype(L))
+		if(istype(L) && !issilicon(L))
 			L.Weaken(2)
 		step_towards(O, loc)
 		close()
