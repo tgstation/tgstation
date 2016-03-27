@@ -97,33 +97,26 @@
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 	if(istype(wear_mask, /obj/item/clothing/mask))
-		update_hud_wear_mask(wear_mask)
-		if(dna && istype(dna.species, /datum/species/pony))
-			return
 		if(!(head && (head.flags_inv & HIDEMASK)))
 			var/image/standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
 			overlays_standing[FACEMASK_LAYER] = standing
+		update_hud_wear_mask(wear_mask)
 	apply_overlay(FACEMASK_LAYER)
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 	if(back)
-		update_hud_back(back)
-		if(dna && istype(dna.species, /datum/species/pony))
-			return
 		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		overlays_standing[BACK_LAYER] = standing
+		update_hud_back(back)
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
-		update_hud_head(head)
-		if(dna && istype(dna.species, /datum/species/pony))
-			return
-
 		var/image/standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		overlays_standing[HEAD_LAYER] = standing
+		update_hud_head(head)
 	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/update_inv_handcuffed()
