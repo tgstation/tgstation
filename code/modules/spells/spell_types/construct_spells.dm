@@ -102,7 +102,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	jaunt_duration = 50 //in deciseconds
+	duration = 50 //in deciseconds
 	centcom_cancast = 0 //Stop people from getting to centcom
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
