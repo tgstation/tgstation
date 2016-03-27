@@ -1,5 +1,5 @@
 
-/datum/hud/guardian/New(mob/owner)
+/datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
 	..()
 	var/obj/screen/using
 
@@ -14,13 +14,7 @@
 	using.screen_loc = ui_lhand
 	static_inventory += using
 
-	switch(owner.type)
-		if(/mob/living/simple_animal/hostile/guardian/ranged,/mob/living/simple_animal/hostile/guardian/healer)
-			using = new /obj/screen/guardian/ToggleMode()
-		if(/mob/living/simple_animal/hostile/guardian/assassin)
-			using = new /obj/screen/guardian/ToggleMode/Assassin()
-		else
-			using = new /obj/screen/guardian/ToggleMode/Inactive()
+	using = new owner.toggle_button_type()
 	using.screen_loc = ui_storage1
 	static_inventory += using
 
