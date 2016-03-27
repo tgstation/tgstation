@@ -661,7 +661,7 @@ Sorry Giacom. Please don't be mad :(
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(canmove && !restrained())
+	if(!restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
