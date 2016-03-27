@@ -31,13 +31,15 @@
 	onclose(user, "radio-recv")
 	return
 
-/obj/machinery/media/receiver/boombox/proc/update_on()
+/obj/machinery/media/receiver/boombox/proc/update_on(var/no_message = FALSE)
 	if(on)
-		visible_message("\The [src] hisses to life!")
+		if(!no_message)
+			visible_message("\The [src] hisses to life!")
 		playing=1
 		connect_frequency()
 	else
-		visible_message("\The [src] falls quiet.")
+		if(!no_message)
+			visible_message("\The [src] falls quiet.")
 		playing=0
 		disconnect_frequency()
 
@@ -86,7 +88,7 @@
 #define SYSTEMISNOTDONE 0
 
 /obj/machinery/media/receiver/boombox/wallmount
-	name = "Sound System"
+	name = "sound system"
 	desc = "This plays music for this room."
 
 	icon='icons/obj/radio.dmi'
@@ -104,12 +106,13 @@
 		dir=ndir
 		on = 0
 	update_icon()
+	update_on(TRUE)
 
 /obj/machinery/media/receiver/boombox/wallmount/Topic(href,href_list)
 	..()
 	relay_area_configuration()
 
-/obj/machinery/media/receiver/boombox/wallmount/update_on()
+/obj/machinery/media/receiver/boombox/wallmount/update_on(var/no_message = FALSE)
 	..()
 	update_icon()
 
@@ -145,6 +148,7 @@
 					buildstage = SYSTEMISDONE
 					to_chat(user, "<span class='notice'>You secure the cover.</span>")
 					update_icon()
+					update_on(TRUE)
 				return 1
 			else if(iswirecutter(W))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
