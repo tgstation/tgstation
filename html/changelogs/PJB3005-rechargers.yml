@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - bugfix: Fixes rechargers being unable to be wrenched back down after being unwrenched.
