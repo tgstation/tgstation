@@ -914,7 +914,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
+	icon_state = "mixer"
 	use_power = 1
 	idle_power_usage = 20
 	var/temphtml = ""
@@ -951,22 +951,22 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 
 /obj/machinery/computer/pandemic/set_broken()
-	icon_state = (src.beaker?"mixer1_b":"mixer0_b")
+	icon_state = "mixer_b"
 	stat |= BROKEN
 
 
 /obj/machinery/computer/pandemic/power_change()
 
 	if(stat & BROKEN)
-		icon_state = (src.beaker?"mixer1_b":"mixer0_b")
+		icon_state = "mixer_b"
 
 	else if(powered())
-		icon_state = (src.beaker?"mixer1":"mixer0")
+		icon_state = "mixer"
 		stat &= ~NOPOWER
 
 	else
 		spawn(rand(0, 15))
-			src.icon_state = (src.beaker?"mixer1_nopower":"mixer0_nopower")
+			icon_state = "mixer_nopower"
 			stat |= NOPOWER
 
 
@@ -1080,8 +1080,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		else
 			beaker.loc = beaker:holder
 	beaker = null
-	icon_state = "mixer0"
+	overlays -= "mixer_overlay"
 	src.updateUsrDialog()
+
 /obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -1203,7 +1204,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		to_chat(user, "You add the beaker to the machine!")
 
 		src.updateUsrDialog()
-		icon_state = "mixer1"
+		overlays += "mixer_overlay"
 
 	else
 		..()
