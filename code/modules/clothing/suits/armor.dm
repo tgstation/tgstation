@@ -127,6 +127,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = 0
+	var/reactivearmor_cooldown = 0//cooldown specific to reactive armor
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
@@ -167,7 +168,10 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+		if(world.time < reactivearmor_cooldown)
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			return
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -184,8 +188,13 @@
 			return
 		H.forceMove(picked)
 		H.rad_act(rad_amount)
+		reactivearmor_cooldown = world.time + 100
 		return 1
 	return 0
+
+/obj/item/clothing/suit/armor/reactive/teleport/emp_act(severity)
+	..()
+	reactivearmor_cooldown = world.time + 200
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
@@ -310,3 +319,87 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+
+
+/obj/item/clothing/suit/armor/dodge // So I can add a less OP variety later. Maybe.
+	name = "Broken nano-bluespace armor"
+	desc = "It's bluespace relays seem disabled, though it still offers excellent protection against some hazards."
+	icon_state = "dodge"
+	item_state = "dodge"
+	blood_overlay_type = "armor"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 100, bio = 100, rad = 100) // It's an admin meme anyway...
+	actions_types = list(/datum/action/item_action/toggle)
+	unacidable = 1
+	var/active = 1
+
+
+/obj/item/clothing/suit/armor/dodge/attack_self(mob/user)
+	src.active = !( src.active )
+	if (src.active)
+		user << "<span class='notice'>[src] dodge mode is now active.</span>"
+		src.icon_state = "punish"
+		src.item_state = "punish"
+	else
+		user << "<span class='notice'>[src] punishment mode is now active.</span>"
+		src.icon_state = "dodge"
+		src.item_state = "dodge"
+		src.add_fingerprint(user)
+	return
+
+/obj/item/clothing/suit/armor/dodge/teleport // Badmin only, to be used in events instead of godmode.
+	name = "Nano-bluespace armor"
+	desc = "A chestplate made out of crytalized plasma, with red lights on the side. "
+	var/dodge_range = 2
+	var/greater_dodge_range = 30
+	hit_reaction_chance = 95 // Keep attacking, can’t dodge forever.
+
+/obj/item/clothing/suit/armor/dodge/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(!active)
+		if(prob(50))
+			var/mob/living/carbon/human/H = owner
+			owner.visible_message("<span class='danger'>[H] sneers before disappearing. You feel hot...</span>")
+			var/list/turfs = new/list()
+			for(var/turf/T in orange(greater_dodge_range, H))
+				if(T.density)
+					continue
+				if(T.x>world.maxx-greater_dodge_range || T.x<greater_dodge_range)
+					continue
+				if(T.y>world.maxy-greater_dodge_range || T.y<greater_dodge_range)
+					continue
+				turfs += T
+			if(!turfs.len)
+				turfs += pick(/turf/simulated/floor in orange(greater_dodge_range, H)) // While you can still end up in a wall/window/door (somehow), you SHOULDN'T be flung into space. Probably.
+			var/turf/picked = pick(turfs)
+			if(!isturf(picked))
+				return
+			var/turf/simulated/T = get_turf(owner)
+			playsound(owner, 'sound/magic/Dodge.ogg', 200, 0, 1)
+			H.forceMove(picked)
+			T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_HEAT|SPAWN_OXYGEN,30000) // Yes, you can end up in your own plasma fire. Stealth balance!
+			T.hotspot_expose(700, 2) // Reminder: Badmin only. This will mess up the station if you give it to someone. Especially if someone re-codes fusion.
+			return
+		return
+	if(prob(hit_reaction_chance))
+		var/mob/living/carbon/human/H = owner
+		owner.visible_message("<span class='danger'>[H] quickly moves aside before [attack_text] hits them!</span>")
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(dodge_range, H))
+			if(T.density)
+				continue
+			if(T.x>world.maxx-dodge_range || T.x<dodge_range)
+				continue
+			if(T.y>world.maxy-dodge_range || T.y<dodge_range)
+				continue
+			turfs += T
+		if(!turfs.len)
+			turfs += pick(/turf/simulated/floor in orange(dodge_range, H))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked))
+			return
+		H.forceMove(picked)
+		playsound(owner, 'sound/magic/Dodge.ogg', 100, 0, 1)
+		if(prob(10))
+			owner.visible_message("<span class='notice'>[H] can't dodge forever, keep attacking.</span>")
+			return
+		return 1
+	return 0
