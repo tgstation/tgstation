@@ -1,5 +1,5 @@
-#define UPGRADE_COOLDOWN	40
-#define UPGRADE_KILL_TIMER	100
+#define UPGRADE_COOLDOWN	100
+#define UPGRADE_KILL_TIMER	150
 
 /obj/item/weapon/grab
 	name = "grab"
@@ -104,13 +104,12 @@
 	var/breathing_tube = affecting.getorganslot("breathing_tube")
 
 	if(state >= GRAB_NECK)
-		affecting.Stun(5)	//It will hamper your voice, being choked and all.
 		if(isliving(affecting) && !breathing_tube)
 			var/mob/living/L = affecting
-			L.adjustOxyLoss(1)
+			L.adjustOxyLoss(0.5)
 
 	if(state >= GRAB_KILL)
-		affecting.Weaken(5)	//Should keep you down unless you get help.
+		affecting.Weaken(2)	//Should keep you down unless you get help.
 		if(!breathing_tube)
 			affecting.losebreath = min(affecting.losebreath + 2, 3)
 
