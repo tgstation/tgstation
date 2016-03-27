@@ -17,16 +17,12 @@
 	switch(owner.type)
 		if(/mob/living/simple_animal/hostile/guardian/ranged,/mob/living/simple_animal/hostile/guardian/healer)
 			using = new /obj/screen/guardian/ToggleMode()
-			using.screen_loc = ui_storage1
-			static_inventory += using
 		if(/mob/living/simple_animal/hostile/guardian/assassin)
 			using = new /obj/screen/guardian/ToggleMode/Assassin()
-			using.screen_loc = ui_storage1
-			static_inventory += using
 		else
 			using = new /obj/screen/guardian/ToggleMode/Inactive()
-			using.screen_loc = ui_storage1
-			static_inventory += using
+	using.screen_loc = ui_storage1
+	static_inventory += using
 
 	using = new /obj/screen/guardian/ToggleLight()
 	using.screen_loc = ui_inventory
