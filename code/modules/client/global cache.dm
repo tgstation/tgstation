@@ -1,7 +1,8 @@
 #define ASSET_CACHE_SEND_TIMEOUT 2.5 SECONDS // Amount of time MAX to send an asset, if this get exceeded we cancel the sleeping.
 
 //List of ALL assets for the above, format is list(filename = asset).
-/var/global/list/asset_cache = list()
+/var/list/asset_cache      = list()
+/var/asset_cache_populated = FALSE
 
 /client
 	var/list/cache = list() // List of all assets sent to this client by the asset cache.
@@ -22,7 +23,13 @@
 
 		else
 			return 0
-	
+
+	while(!global.asset_cache_populated)
+		sleep(5)
+
+	if(!asset_cache.Find(asset_name))
+		CRASH("Attempted to send nonexistant asset [asset_name] to [client.key]!")
+
 	if(client.cache.Find(asset_name) || client.sending.Find(asset_name))
 		return 0
 
@@ -39,7 +46,7 @@
 
 	client.sending |= asset_name
 	var/job = ++client.last_asset_job
-		
+
 	client << browse({"
 	<script>
 		window.location.href="?asset_cache_confirm_arrival=[job]"
@@ -56,7 +63,7 @@
 		client.sending -= asset_name
 		client.cache |= asset_name
 		client.completed_asset_jobs -= job
-	
+
 	return 1
 
 /proc/send_asset_list(var/client/client, var/list/asset_list, var/verify = TRUE)
@@ -82,7 +89,7 @@
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if(!client) // winexist() waits for a response from the client, so we need to make sure the client still exists.
 			return 0
-		
+
 		client.cache += unreceived
 		return 1
 
@@ -91,7 +98,7 @@
 
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
-		
+
 	client << browse({"
 	<script>
 		window.location.href="?asset_cache_confirm_arrival=[job]"
@@ -125,6 +132,8 @@
 		var/datum/asset/A = new type()
 
 		A.register()
+
+	global.asset_cache_populated = TRUE
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 /datum/asset/proc/register()
