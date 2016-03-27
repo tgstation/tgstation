@@ -141,7 +141,7 @@
 //2 = reduced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
 
-#define MINERAL_MATERIAL_AMOUNT 1000
+#define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MAX_STACK_SIZE 50
 //The maximum size of a stack object.
