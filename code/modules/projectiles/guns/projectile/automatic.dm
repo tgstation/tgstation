@@ -40,6 +40,7 @@
 				magazine.loc = get_turf(src.loc)
 				magazine.update_icon()
 				magazine = null
+				user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!", "REEEELOADING!!!"))
 			else
 				user << "<span class='notice'>You insert the magazine into \the [src].</span>"
 			user.remove_from_mob(AM)
