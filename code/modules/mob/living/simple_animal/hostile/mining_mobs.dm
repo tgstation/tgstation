@@ -387,7 +387,8 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
-	ranged_cooldown--
+	if(ranged_cooldown)
+		ranged_cooldown--
 	handle_preattack()
 	. = ..()
 
@@ -767,6 +768,7 @@
 	layer = 2
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
+	anchored = TRUE
 
 /obj/effect/collapse/New()
 	..()

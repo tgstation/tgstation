@@ -178,7 +178,7 @@
 
 /turf/simulated/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
-		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
+		user.visible_message("<span class='notice'>[user] holds [I] to [src]...</span>", "<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
 	..()
 
@@ -616,7 +616,8 @@
 	baseturf = /turf/simulated/chasm/straight_down/lava_land_surface
 
 /turf/simulated/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
-	visible_message("[AM] falls into [src]!")
+	if(!AM.invisibility)
+		visible_message("[AM] falls into [src]!")
 	qdel(AM)
 
 /turf/simulated/mineral/volcanic/lava_land_surface

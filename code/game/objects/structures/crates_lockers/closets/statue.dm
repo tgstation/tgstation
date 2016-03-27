@@ -1,6 +1,6 @@
 /obj/structure/closet/statue
 	name = "statue"
-	desc = "An incredibly lifelike marble carving"
+	desc = "An incredibly lifelike marble carving."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	density = 1
@@ -21,6 +21,7 @@
 		L.loc = src
 		L.disabilities += MUTE
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
+		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
 
 		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		intialTox = L.getToxLoss()
@@ -47,6 +48,10 @@
 
 	SSobj.processing |= src
 	..()
+	icon = L.icon
+	icon_state = L.icon_state
+	overlays = L.overlays
+	color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 
 /obj/structure/closet/statue/process()
 	timer--
@@ -55,6 +60,7 @@
 		M.adjustFireLoss(intialFire - M.getFireLoss())
 		M.adjustBruteLoss(intialBrute - M.getBruteLoss())
 		M.setOxyLoss(intialOxy)
+		M.Stun(1) //So they can't do anything while petrified
 	if(timer <= 0)
 		dump_contents()
 		SSobj.processing -= src
@@ -68,7 +74,8 @@
 		if(S.mind)
 			for(var/mob/M in contents)
 				S.mind.transfer_to(M)
-				M << "As the animating magic wears off you feel yourself coming back to your senses. You are yourself again!"
+				M.Weaken(5)
+				M << "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>"
 				break
 		qdel(S)
 
@@ -153,3 +160,9 @@
 
 /obj/structure/closet/statue/container_resist()
 	return
+
+/mob/living/proc/petrify()
+	if(istype(loc, /obj/structure/closet/statue)) //If they're already petrified
+		return 0
+	new /obj/structure/closet/statue(get_turf(src), src)
+	return 1
