@@ -674,15 +674,15 @@ Sorry Giacom. Please don't be mad :(
 			else
 				if(G.state == GRAB_AGGRESSIVE)
 					if(prob(75))
-						visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s grip!</span>")
+						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
 						if(prob(50))
-							visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s headlock!</span>")
+							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
 							qdel(G)
 		if(resisting)
-			visible_message("<span class='warning'>[src] resists!</span>")
+			visible_message("<span class='danger'>[src] resists!</span>")
 			return
 
 	//unbuckling yourself

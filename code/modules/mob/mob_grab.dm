@@ -132,16 +132,16 @@
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
-		assailant.visible_message("<span class='warning'>[assailant] grabs [affecting] aggressively!</span>")
+		assailant.visible_message("<span class='danger'>[assailant] grabs [affecting] aggressively!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 	else
 		if(state < GRAB_NECK)
 			if(isslime(affecting))
-				assailant << "<span class='warning'>You squeeze [affecting], but nothing interesting happens!</span>"
+				assailant << "<span class='danger'>You squeeze [affecting], but nothing interesting happens!</span>"
 				return
 
-			assailant.visible_message("<span class='warning'>[assailant] moves \his grip to [affecting]'s neck!</span>")
+			assailant.visible_message("<span class='danger'>[assailant] moves \his grip to [affecting]'s neck!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
 			if(!affecting.buckled)
@@ -172,7 +172,7 @@
 						affecting.losebreath += 1
 				else
 					if(assailant)
-						assailant.visible_message("<span class='warning'>[assailant] is unable to tighten \his grip on [affecting]'s neck!</span>")
+						assailant.visible_message("<span class='danger'>[assailant] is unable to tighten \his grip on [affecting]'s neck!</span>")
 						hud.icon_state = "disarm/kill"
 						state = GRAB_NECK
 
