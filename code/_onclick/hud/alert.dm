@@ -229,6 +229,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
 	icon_state = "alien_noqueen"
 
+//BLOBS
+
+/obj/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut_nofactory"
+	timeout = 300
+	alerttooltipstyle = "blob"
+
 //GUARDIANS
 
 /obj/screen/alert/cancharge
