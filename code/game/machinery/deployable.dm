@@ -106,6 +106,20 @@
 	material = WOOD
 
 
+/obj/structure/barricade/sandbags
+	name = "sandbags"
+	desc = "Bags of sand. Self explanatory."
+	icon = 'icons/obj/smooth_structures/sandbags.dmi'
+	icon_state = "sandbags"
+	health = 280
+	maxhealth = 280
+	proj_pass_rate = 25
+	material = null
+	climbable = TRUE
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/simulated/wall, /turf/simulated/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/simulated/wall/rust, /turf/simulated/wall/r_wall/rust, /obj/structure/barricade/security)
+
+
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."

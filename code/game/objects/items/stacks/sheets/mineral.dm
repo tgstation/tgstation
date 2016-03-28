@@ -345,3 +345,9 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 /obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
 	recipes = abductor_recipes
 	..()
+
+/obj/item/stack/sheet/mineral/sandbags
+var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
+	new/datum/stack_recipe("sandbags", /obj/structure/barricade/sandbags, 1, one_per_turf = 1, on_floor = 1), \
+
+	)
