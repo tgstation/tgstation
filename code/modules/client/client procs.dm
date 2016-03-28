@@ -76,6 +76,10 @@
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 		if("chat")		return chatOutput.Topic(href, href_list)
 
+	switch(href_list["action"])
+		if ("openLink")
+			src << link(href_list["link"])
+
 	..()	//redirect to hsrc.Topic()
 	//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
 
