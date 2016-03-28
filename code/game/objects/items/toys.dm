@@ -222,7 +222,7 @@
 	add_fingerprint(user)
 	return
 
-// Copied from /obj/item/weapon/melee/energy/sword/attackby
+// Copied from /obj/item/weapon/toggle/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/toy/sword))

@@ -88,8 +88,8 @@
 	maxHealth = 340
 	health = 340
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+				/obj/item/weapon/toggle/energy/sword/saber/red,
+				/obj/item/weapon/toggle/energy_shield)
 
 ///////////////Guns////////////
 
@@ -129,7 +129,7 @@
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
 				/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
-				/obj/item/weapon/shield/energy)
+				/obj/item/weapon/toggle/energy_shield)
 
 ///////////////Misc////////////
 

@@ -178,7 +178,7 @@ BLIND     // can't see anything
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
 	var/obj/held_item
-	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/toggle/switchblade)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
 
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
