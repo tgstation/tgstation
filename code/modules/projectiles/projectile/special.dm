@@ -63,6 +63,34 @@
 	name = "heat beam"
 	temperature = 400
 
+/obj/item/projectile/stemp
+	name = "freeze beam"
+	icon_state = "ice_3"
+	damage = 0
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage_type = BURN
+	nodamage = 1
+	flag = "energy"
+	var/temperature = -1100
+
+
+/obj/item/projectile/stemp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+	..()
+	if(isliving(target))
+		var/mob/living/M = target
+		M.bodytemperature = M.bodytemperature + temperature
+		if(M.bodytemperature > 500)
+		{
+			M.adjust_fire_stacks(1)
+			M.IgniteMob()
+		}
+	return 1
+
+/obj/item/projectile/stemp/shot
+	name = "heat beam"
+	icon_state = "heat_1"
+	temperature = 400
+
 /obj/item/projectile/meteor
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
