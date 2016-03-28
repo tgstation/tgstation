@@ -166,29 +166,34 @@
 		if(yield <= 0 && plant_type == PLANT_MUSHROOM)
 			yield = 1 // Mushrooms always have a minimum yield of 1.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
-		C.value = yield
+		if(C)
+			C.value = yield
 
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
 	lifespan = Clamp(lifespan + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
-	C.value = lifespan
+	if(C)
+		C.value = lifespan
 
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
 	endurance = Clamp(endurance + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
-	C.value = endurance
+	if(C)
+		C.value = endurance
 
 /obj/item/seeds/proc/adjust_production(adjustamt)
 	if(yield != -1)
 		production = Clamp(production + adjustamt, 2, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
-		C.value = production
+		if(C)
+			C.value = production
 
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
 		potency = Clamp(potency + adjustamt, 0, 100)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
-		C.value = potency
+		if(C)
+			C.value = potency
 
 
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
