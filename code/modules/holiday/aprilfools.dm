@@ -1,8 +1,8 @@
 
-
+/*
 /datum/holiday/april_fools/shouldCelebrate(dd, mm, yy)
 	return 1 // Testing testing
-
+*/
 
 /datum/holiday/april_fools/getStationPrefix()
 	return pick("Friendship","Magic","My Little","Pony")
