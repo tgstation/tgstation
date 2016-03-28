@@ -82,7 +82,8 @@ obj/machinery/recharger/defibcharger/wallcharger/process()
 /obj/machinery/recharger/defibcharger/wallcharger/crowbarDestroy()
 	if(..() == 1)
 		if(charging)
-			charging.loc = src.loc
+			charging.forceMove(src.loc)
+			charging = null
 		return 1
 	return -1
 
@@ -98,5 +99,7 @@ obj/machinery/recharger/defibcharger/wallcharger/attackby(obj/item/weapon/G as o
 			charging = G
 			use_power = 2
 			update_icon()
+	else if (isscrewdriver(G) || iscrowbar(G))
+		..()
 	else
 		to_chat(user, "<span class='warning'>\The [G] isn't a defibrillator, it won't fit!</span>")
