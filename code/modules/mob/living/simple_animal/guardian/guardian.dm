@@ -62,6 +62,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			for(var/type in (subtypesof(/datum/guardianname/tech) - namedatum.type))
 				possible_names += new type
 	namedatum = pick(possible_names)
+	updatetheme()
+
+/mob/living/simple_animal/hostile/guardian/proc/updatetheme() //update the guardian's theme to whatever its datum is; proc for adminfuckery
 	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
 	real_name = "[name]"
 	icon_living = "[namedatum.parasiteicon]"
@@ -79,7 +82,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	src << "<span class='holoparasite'>You are <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>, bound to serve [summoner.real_name].</span>"
 	src << "<span class='holoparasite'>You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there.</span>"
 	src << "<span class='holoparasite'>While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself.</span>"
-	src << "[playstyle_string]"
+	src << playstyle_string
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
@@ -145,7 +148,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(iscarbon(summoner))
 			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
 		else
-			resulthealth = round((summoner.health / summoner.maxHealth) * 100)
+			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
@@ -224,9 +227,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(!input)
 		return
 
-	var/quoted_message = say_quote(input, get_spans()) //apply message spans to the message
-	var/preliminary_message = "<span class='holoparasitebold'>[quoted_message]</span>" //apply basic color/bolding
-	var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]</i></font> [preliminary_message]" //add source, color source with the guardian's color
+	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
+	var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]</i></font>: [preliminary_message]" //add source, color source with the guardian's color
 	if(summoner)
 		summoner << my_message
 		var/list/guardians = summoner.hasparasites()
@@ -246,12 +248,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return
 
 	var/list/guardians = hasparasites()
-	var/quoted_message = say_quote(input, get_spans()) //apply message spans to the message
-	var/preliminary_message = "<span class='holoparasitebold'>[quoted_message]</span>" //apply basic color/bolding
-	var/my_message = "<span class='holoparasitebold'><i>[src]</i> [preliminary_message]</span>" //add source, color source with default grey...
+	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
+	var/my_message = "<span class='holoparasitebold'><i>[src]</i>: [preliminary_message]</span>" //add source, color source with default grey...
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
-		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
+		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]</i></b></font>: [preliminary_message]" //but for guardians, use their color for the source instead
 	for(var/M in dead_mob_list)
 		M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
 	src << my_message
@@ -271,7 +272,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/proc/guardian_reset()
 	set name = "Reset Guardian Player (One Use)"
 	set category = "Guardian"
-	set desc = "Re-rolls which ghost will control your Guardian. One use per Gaurdian."
+	set desc = "Re-rolls which ghost will control your Guardian. One use per Guardian."
 
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
