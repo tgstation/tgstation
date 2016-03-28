@@ -529,12 +529,13 @@
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
 	w_class = 3
-	force = 8
+	force = 15
+
 	throwforce = 10
 	var/cooldown = 0
 	var/fieldsactive = 0
-	var/burst_time = 50
-	var/fieldlimit = 3
+	var/burst_time = 30
+	var/fieldlimit = 4
 	origin_tech = "magnets=2;combat=2"
 
 /obj/item/weapon/resonator/upgraded
@@ -543,7 +544,7 @@
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "magnets=3;combat=3"
-	fieldlimit = 5
+	fieldlimit = 6
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
@@ -593,7 +594,7 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 50
+			resonance_damage = 60
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
@@ -645,6 +646,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	environment_smash = 0
+	check_friendly_fire = 1
 	attacktext = "drills"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	ranged = 1
@@ -810,7 +812,7 @@
 
 /obj/item/device/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
-	name = "mining scanner"
+	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
 	w_class = 2
@@ -841,15 +843,21 @@
 	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
-	name = "advanced mining scanner"
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly. This one has an extended range."
+	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
+	var/range = 7
 	origin_tech = "engineering=3;magnets=3"
+
+/obj/item/device/t_scanner/adv_mining_scanner/lesser
+	name = "automatic mining scanner"
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
+	range = 4
 
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
 	if(!cooldown)
@@ -860,7 +868,7 @@
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
 		if(!mobs.len)
 			return
-		mineral_scan_pulse(mobs, t)
+		mineral_scan_pulse(mobs, t, range)
 
 /proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()

@@ -93,6 +93,7 @@
 	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
 	var/overheat_time = 16
 	unique_rename = 1
+	weapon_weight = WEAPON_HEAVY
 	origin_tech = "combat=2;powerstorage=1"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/super
