@@ -621,29 +621,28 @@
 			usr << "<span class='warning'>You have moved too far away!</span>"
 			return
 		design = designs.Find(switchDesign) - 1
-		if (src.loc == usr)
-			if(design < 5)
-				usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
-			switch(design)
-				if(0)
-					icon_state = "paperbag"
-					item_state = "paperbag"
-					desc = "A sack neatly crafted out of paper."
-				if(1)
-					icon_state = "paperbag_nt"
-					item_state = "paperbag_nt"
-					desc = "A Nanotrasen standard paper lunch sack for loyal employees on the go."
-				if(2)
-					icon_state = "paperbag_syndi"
-					item_state = "paperbag_syndi"
-					desc = "The design on this paper sack is a remnant of the secrative 'SydiSnacks' program."
-				if(3)
-					icon_state = "paperbag_heart"
-					item_state = "paperbag_heart"
-					desc = "A paper sack with a heart etched onto one side."
-				if(4)
-					icon_state = "paperbag_smile"
-					item_state = "paperbag_smile"
-					desc = "A paper sack with a crude smile etched onto on side."
+		if(design < 5)
+			usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		switch(design)
+			if(0)
+				icon_state = "paperbag"
+				item_state = "paperbag"
+				desc = "A sack neatly crafted out of paper."
+			if(1)
+				icon_state = "paperbag_nt"
+				item_state = "paperbag_nt"
+				desc = "A Nanotrasen standard paper lunch sack for loyal employees on the go."
+			if(2)
+				icon_state = "paperbag_syndi"
+				item_state = "paperbag_syndi"
+				desc = "The design on this paper sack is a remnant of the secrative 'SydiSnacks' program."
+			if(3)
+				icon_state = "paperbag_heart"
+				item_state = "paperbag_heart"
+				desc = "A paper sack with a heart etched onto one side."
+			if(4)
+				icon_state = "paperbag_smile"
+				item_state = "paperbag_smile"
+				desc = "A paper sack with a crude smile etched onto on side."
 		return 0
 	return ..()
