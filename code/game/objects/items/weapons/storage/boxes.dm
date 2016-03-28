@@ -639,11 +639,11 @@
 			if(3)
 				icon_state = "paperbag_heart"
 				item_state = "paperbag_heart"
-				desc = "A paper sack with a heart etched onto one side."
+				desc = "A paper sack with a heart etched onto the side."
 			if(4)
 				icon_state = "paperbag_smile"
 				item_state = "paperbag_smile"
-				desc = "A paper sack with a crude smile etched onto on side."
+				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
 	else if(W.is_sharp())
 		if(!contents.len)
