@@ -17,9 +17,9 @@
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
 	range = 13
-	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
-	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
-	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
+	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
+	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
+	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 	toggle_button_type = /obj/screen/guardian/ToggleMode

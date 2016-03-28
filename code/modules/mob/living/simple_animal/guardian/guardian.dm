@@ -31,14 +31,15 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
+	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
-	var/datum/guardianname/namedatum
-	var/playstyle_string = "You are a standard Guardian. You shouldn't exist!"
-	var/magic_fluff_string = " You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!"
-	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
+	var/datum/guardianname/namedatum = new/datum/guardianname()
+	var/playstyle_string = "<span class='holoparasite'>You are a standard Guardian. You shouldn't exist!</span>"
+	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
+	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 
 /mob/living/simple_animal/hostile/guardian/New(loc, theme)
 	parasites |= src
@@ -55,27 +56,29 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/list/possible_names = list()
 	switch(pickedtheme)
 		if("magic")
-			for(var/type in (subtypesof(/datum/guardianname/magic) - namedatum))
+			for(var/type in (subtypesof(/datum/guardianname/magic) - namedatum.type))
 				possible_names += new type
 		if("tech")
-			for(var/type in (subtypesof(/datum/guardianname/tech) - namedatum))
+			for(var/type in (subtypesof(/datum/guardianname/tech) - namedatum.type))
 				possible_names += new type
 	namedatum = pick(possible_names)
 	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
 	real_name = "[name]"
-	icon_living = "[pickedtheme][namedatum.suffixcolour]"
-	icon_state = "[pickedtheme][namedatum.suffixcolour]"
-	icon_dead = "[pickedtheme][namedatum.suffixcolour]"
-	bubble_icon = "[namedatum.theme]"
+	icon_living = "[namedatum.parasiteicon]"
+	icon_state = "[namedatum.parasiteicon]"
+	icon_dead = "[namedatum.parasiteicon]"
+	bubble_icon = "[namedatum.bubbleicon]"
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
 	..()
 	if(mind)
 		mind.name = "[real_name]"
-	if(summoner)
-		src << "You are [real_name], bound to serve [summoner.real_name]."
-		src << "You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there."
-		src << "While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
+	if(!summoner)
+		src << "<span class='holoparasitebold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>"
+		return
+	src << "<span class='holoparasite'>You are <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>, bound to serve [summoner.real_name].</span>"
+	src << "<span class='holoparasite'>You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with them privately there.</span>"
+	src << "<span class='holoparasite'>While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself.</span>"
 	src << "[playstyle_string]"
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
@@ -114,7 +117,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
-			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"
+			src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
 			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 			forceMove(get_turf(summoner))
@@ -176,7 +179,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ghostize()
 	qdel(src)
 
-//MANIFEST, RECALL, TOGGLE MODE/LIGHT
+//MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest()
 	if(cooldown > world.time)
@@ -208,6 +211,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		src << "<span class='notice'>You deactivate your light.</span>"
 		SetLuminosity(0)
 
+/mob/living/simple_animal/hostile/guardian/verb/ShowType()
+	set name = "Check Guardian Type"
+	set category = "Guardian"
+	set desc = "Check what type you are."
+	src << playstyle_string
+
 //COMMUNICATION
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
@@ -216,7 +225,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return
 
 	var/quoted_message = say_quote(input, get_spans()) //apply message spans to the message
-	var/preliminary_message = "<font color='#35333A'><b>[quoted_message]</b></font>" //apply basic color/bolding
+	var/preliminary_message = "<span class='holoparasitebold'>[quoted_message]</span>" //apply basic color/bolding
 	var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]</i></font> [preliminary_message]" //add source, color source with the guardian's color
 	if(summoner)
 		summoner << my_message
@@ -238,8 +247,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 	var/list/guardians = hasparasites()
 	var/quoted_message = say_quote(input, get_spans()) //apply message spans to the message
-	var/preliminary_message = "<font color='#35333A'><b>[quoted_message]</b></font>" //apply basic color/bolding
-	var/my_message = "<font color='#35333A'><b><i>[src]</i></b> [preliminary_message]</font>" //add source, color source with default grey...
+	var/preliminary_message = "<span class='holoparasitebold'>[quoted_message]</span>" //apply basic color/bolding
+	var/my_message = "<span class='holoparasitebold'><i>[src]</i> [preliminary_message]</span>" //add source, color source with default grey...
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
@@ -262,24 +271,42 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/proc/guardian_reset()
 	set name = "Reset Guardian Player (One Use)"
 	set category = "Guardian"
-	set desc = "Re-rolls which ghost will control your Guardian. One use."
+	set desc = "Re-rolls which ghost will control your Guardian. One use per Gaurdian."
 
-	src.verbs -= /mob/living/proc/guardian_reset
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
-		var/mob/living/simple_animal/hostile/guardian/G = para
-		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [G.real_name]?", "pAI", null, FALSE, 100)
-		var/mob/dead/observer/new_stand = null
-		if(candidates.len)
-			new_stand = pick(candidates)
-			G << "Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."
-			src << "Your guardian has been successfully reset."
-			message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
-			G.ghostize(0)
-			G.key = new_stand.key
+		var/mob/living/simple_animal/hostile/guardian/P = para
+		if(P.reset)
+			guardians -= P //clear out guardians that are already reset
+	if(guardians.len)
+		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
+		if(G)
+			src << "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>"
+			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
+			var/mob/dead/observer/new_stand = null
+			if(candidates.len)
+				new_stand = pick(candidates)
+				G << "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>"
+				src << "<span class='holoparasitebold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>"
+				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
+				G.ghostize(0)
+				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
+				G.key = new_stand.key
+				G.reset = 1
+				switch(G.namedatum.theme)
+					if("tech")
+						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>"
+					if("magic")
+						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
+				guardians -= G
+				if(!guardians.len)
+					verbs -= /mob/living/proc/guardian_reset
+			else
+				src << "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>"
 		else
-			src << "There were no ghosts willing to take control of [G.real_name]. Looks like you're stuck with it for now."
-			verbs += /mob/living/proc/guardian_reset
+			src << "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>"
+	else
+		verbs -= /mob/living/proc/guardian_reset
 
 ////////parasite tracking/finding procs
 
@@ -304,10 +331,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/used = FALSE
 	var/theme = "magic"
 	var/mob_name = "Guardian Spirit"
-	var/use_message = "You shuffle the deck..."
-	var/used_message = "All the cards seem to be blank now."
-	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
-	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
+	var/use_message = "<span class='holoparasite'>You shuffle the deck...</span>"
+	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
+	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
+	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
 	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
 	var/allowmultiple = 0
@@ -383,8 +410,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	switch(theme)
 		if("tech")
 			user << "[G.tech_fluff_string]"
+			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>"
 		if("magic")
 			user << "[G.magic_fluff_string]"
+			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
@@ -399,10 +428,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	icon_state = "combat_hypo"
 	theme = "tech"
 	mob_name = "Holoparasite"
-	use_message = "You start to power on the injector..."
-	used_message = "The injector has already been used."
-	failure_message = "<B>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</B>"
-	ling_failure = "The holoparasites recoil in horror. They want nothing to do with a creature like you."
+	use_message = "<span class='holoparasite'>You start to power on the injector...</span>"
+	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
+	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
+	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Assassin")

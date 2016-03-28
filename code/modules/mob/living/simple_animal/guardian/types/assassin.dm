@@ -5,9 +5,9 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	playstyle_string = "As an assassin type you do low damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage."
-	magic_fluff_string = "..And draw the Space Ninja, a lethal, invisible assassin."
-	tech_fluff_string = "Boot sequence complete. Assassin modules loaded. Holoparasite swarm online."
+	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do low damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
+	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
+	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
 	var/stealthcooldown = 200
