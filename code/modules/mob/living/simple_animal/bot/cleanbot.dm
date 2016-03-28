@@ -28,6 +28,8 @@
 	var/next_dest
 	var/next_dest_loc
 
+	var/things_cleaned = 0
+
 /mob/living/simple_animal/bot/cleanbot/New()
 	..()
 	get_targets()
@@ -179,6 +181,7 @@
 	spawn(50)
 		if(mode == BOT_CLEANING)
 			qdel(target)
+			things_cleaned++
 			anchored = 0
 			target = null
 		mode = BOT_IDLE
