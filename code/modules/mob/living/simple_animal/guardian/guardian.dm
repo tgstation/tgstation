@@ -108,6 +108,13 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/Stat()
 	..()
 	if(statpanel("Status"))
+		if(summoner)
+			var/resulthealth
+			if(iscarbon(summoner))
+				resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+			else
+				resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
+			stat(null, "Summoner Health: [resulthealth]%")
 		if(cooldown >= world.time)
 			stat(null, "Manifest/Recall Cooldown Remaining: [max(round((cooldown - world.time)*0.1, 0.1), 0)] seconds")
 
@@ -152,7 +159,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
 
 /mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
-	. =  ..()
+	. = ..()
 	if(summoner)
 		if(loc == summoner)
 			return 0
@@ -223,20 +230,21 @@ var/global/list/parasites = list() //all currently existing/living guardians
 //COMMUNICATION
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
-	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
-	if(!input)
-		return
-
-	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
-	var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]</i></font>: [preliminary_message]" //add source, color source with the guardian's color
 	if(summoner)
+		var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
+		if(!input)
+			return
+
+		var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
+		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
+
 		summoner << my_message
 		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
-			var/mob/living/simple_animal/hostile/guardian/G = para
-			G << my_message
+			para << my_message
 		for(var/M in dead_mob_list)
 			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+
 		log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/proc/guardian_comm()
@@ -247,15 +255,16 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(!input)
 		return
 
-	var/list/guardians = hasparasites()
 	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
-	var/my_message = "<span class='holoparasitebold'><i>[src]</i>: [preliminary_message]</span>" //add source, color source with default grey...
+	var/my_message = "<span class='holoparasitebold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
+
+	src << my_message
+	var/list/guardians = hasparasites()
 	for(var/para in guardians)
-		var/mob/living/simple_animal/hostile/guardian/G = para
-		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]</i></b></font>: [preliminary_message]" //but for guardians, use their color for the source instead
+		para << "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
 	for(var/M in dead_mob_list)
 		M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
-	src << my_message
+
 	log_say("[src.real_name]/[src.key] : [text]")
 
 //FORCE RECALL/RESET
@@ -339,13 +348,14 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
 	var/allowmultiple = 0
+	var/allowling = 0
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		user << "You already have a [mob_name]!"
 		return
-	if(user.mind && user.mind.changeling)
+	if(user.mind && user.mind.changeling && !allowling)
 		user << "[ling_failure]"
 		return
 	if(used == TRUE)
