@@ -29,6 +29,19 @@
 
 	update_icon()
 
+/obj/structure/cage/autoclose/New() //Close when created - catching any creatures on the same turf
+	..()
+
+	spawn()
+		toggle_door() //Open it
+		toggle_door() //Close it again!
+
+/obj/structure/cage/autoclose/cover/New()
+	..()
+
+	spawn()
+		toggle_cover()
+
 /obj/structure/cage/Destroy()
 	for(var/atom/movable/M in contents)
 		M.forceMove(src.loc)

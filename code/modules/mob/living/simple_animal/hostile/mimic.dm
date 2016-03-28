@@ -405,20 +405,21 @@ var/global/list/item_mimic_disguises = list(
 	return //Don't take any items!
 
 /mob/living/simple_animal/hostile/mimic/crate/item/examine(mob/user) //Total override to make the mimics look EXACTLY like items!
-	var/s_size
-	switch(src.size)
-		if(1.0)
-			s_size = "tiny"
-		if(2.0)
-			s_size = "small"
-		if(3.0)
-			s_size = "normal-sized"
-		if(4.0)
-			s_size = "bulky"
-		if(5.0)
-			s_size = "huge"
-		else
-	//if ((M_CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	var/s_size = "normal-sized"
+	if(ispath(copied_object, /obj/item))
+		var/obj/item/I = copied_object
+		switch(initial(I.w_class))
+			if(1.0)
+				s_size = "tiny"
+			if(2.0)
+				s_size = "small"
+			if(3.0)
+				s_size = "normal-sized"
+			if(4.0)
+				s_size = "bulky"
+			if(5.0)
+				s_size = "huge"
+
 	var/pronoun
 	if (src.gender == PLURAL)
 		pronoun = "They are"
