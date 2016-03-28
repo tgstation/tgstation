@@ -148,10 +148,12 @@
 	data["all_centcom_access"] = null
 	data["regions"] = null
 
+	data["head_jobs"] = format_jobs(command_positions)
 	data["engineering_jobs"] = format_jobs(engineering_positions)
 	data["medical_jobs"] = format_jobs(medical_positions)
 	data["science_jobs"] = format_jobs(science_positions)
 	data["security_jobs"] = format_jobs(security_positions)
+	data["cargo_jobs"] = format_jobs(cargo_positions)
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 	data["card_skins"] = format_card_skins(card_skins)

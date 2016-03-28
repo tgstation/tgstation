@@ -134,13 +134,25 @@
           <div id="all-value.jobs" style='display: none;'>
             <table>
               <tr>
-                <th></th><th>Command</th>
-              </tr>
-              <tr>
                 <th>Special</th>
                 <td>
-                  {{:helper.link("Captain", '', {'choice' : 'assign', 'assign_target' : 'Captain'}, data.target_rank == 'Captain' ? 'disabled' : null)}}
                   {{:helper.link("Custom", '', {'choice' : 'assign', 'assign_target' : 'Custom'})}}
+                </td>
+              </tr>             
+			  <tr>
+                <th>Command</th>
+				<td>
+				  {{for data.head_jobs}}
+				    {{:helper.link(value.display_name, '', {'choice' : 'assign', 'assign_target' : value.job}, data.target_rank == value.job ? 'disabled' : null)}}
+				  {{/for}}
+				</td>
+              </tr>
+              <tr>
+                <th style="color: '#B3A292';">Cargo</th>
+                <td>
+                  {{for data.cargo_jobs}}
+                    {{:helper.link(value.display_name, '', {'choice' : 'assign', 'assign_target' : value.job}, data.target_rank == value.job ? 'disabled' : null)}}
+                  {{/for}}
                 </td>
               </tr>
               <tr>
