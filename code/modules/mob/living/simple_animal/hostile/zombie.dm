@@ -77,7 +77,7 @@
 		qdel(src)
 		return
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
-	spawn(rand(800,1200))
+	spawn(rand(600,900))
 		if(src)
 			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
 			revive(full_heal = 1)
