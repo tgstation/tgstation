@@ -110,6 +110,33 @@
 	else
 		alert("Admin jumping disabled")
 
+/client/proc/jumptovault()
+	set category = "Admin"
+	set name = "Jump to Vault"
+
+	if(!check_rights())
+		return
+
+	if(config.allow_admin_jump)
+		var/list/vaults = list()
+
+		for(var/datum/vault/V in existing_vaults)
+			vaults["[V.map_name] at [V.location ? "[V.location.x], [V.location.y], [V.location.z]" : "UNKNOWN"]"] = V
+
+		var/selection = input("Select a vault to teleport to.", "Admin Jumping", null, null) as null|anything in sortList(vaults)
+		if(!selection)
+			return
+
+		var/datum/vault/V = vaults[selection]
+		if(!V.location)
+			to_chat(src, "[V.map_name] doesn't have a location! Report this")
+			return
+
+		usr.forceMove(V.location)
+		feedback_add_details("admin_verb","JV")
+	else
+		alert("Admin jumping disabled")
+
 /client/proc/Getmob(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
