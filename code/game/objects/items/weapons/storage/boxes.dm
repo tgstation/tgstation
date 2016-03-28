@@ -15,6 +15,7 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -593,3 +594,56 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/weapon/storage/box/papersack
+	name = "paper sack"
+	desc = "A sack neatly crafted out of paper."
+	icon_state = "paperbag"
+	item_state = "paperbag"
+	burn_state = FLAMMABLE
+	foldable = null
+	var/design = 0 /* 0 = No design, 1 = Nanotrasen Standard, 2 = Syndisnacks, 3 = Heart, 4 = Smiley Face */
+
+/obj/item/weapon/storage/box/papersack/update_icon()
+	if(contents.len == 0)
+		icon_state = "[item_state]"
+	else icon_state = "[item_state]_closed"
+
+/obj/item/weapon/storage/box/papersack/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/pen))
+		//if a pen is used on the sack, dialogue to change its design appears
+		if(contents.len)
+			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			return
+		var/list/designs = list("None", "Nanotrasen Standard", "SyndiSnacks", "Heart", "Smiley Face", "Cancel")
+		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[design + 1]) in designs
+		if(get_dist(usr, src) > 1)
+			usr << "<span class='warning'>You have moved too far away!</span>"
+			return
+		design = designs.Find(switchDesign) - 1
+		if (src.loc == usr)
+			if(design < 5)
+				usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+			switch(design)
+				if(0)
+					icon_state = "paperbag"
+					item_state = "paperbag"
+					desc = "A sack neatly crafted out of paper."
+				if(1)
+					icon_state = "paperbag_nt"
+					item_state = "paperbag_nt"
+					desc = "A Nanotrasen standard paper lunch sack for loyal employees on the go."
+				if(2)
+					icon_state = "paperbag_syndi"
+					item_state = "paperbag_syndi"
+					desc = "The design on this paper sack is a remnant of the secrative 'SydiSnacks' program."
+				if(3)
+					icon_state = "paperbag_heart"
+					item_state = "paperbag_heart"
+					desc = "A paper sack with a heart etched onto one side."
+				if(4)
+					icon_state = "paperbag_smile"
+					item_state = "paperbag_smile"
+					desc = "A paper sack with a crude smile etched onto on side."
+		return 0
+	return ..()
