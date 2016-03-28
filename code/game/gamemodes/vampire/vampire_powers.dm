@@ -445,7 +445,7 @@
 /client/proc/vampire_jaunt()
 	set category = "Vampire"
 	set name = "Bat Form (30)"
-	set desc = "You become etheral and can travel through walls for a short time, while leaving a scary bat behind."
+	set desc = "You become ethereal and can travel through walls for a short time, while leaving a scary bat behind."
 	var/duration = 5 SECONDS
 	var/datum/mind/M = usr.mind
 	if(!M) return
