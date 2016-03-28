@@ -1975,7 +1975,7 @@
 			to_chat(usr, "This mob type cannot be replied to")
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from The Syndicate", "")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from Central Command", "")
 		if(!input)	return
 
 		to_chat(src.owner, "You sent [input] to [M] via a secure channel.")
@@ -2001,9 +2001,9 @@
 		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their [receive_type].","Outgoing message from The Syndicate", "")
 		if(!input)	return
 
-
 		to_chat(src.owner, "You sent [input] to [M] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(M)]'s Syndicate message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(M)]'s Syndicate message with: \"[input]\"")
 		to_chat(M, "You hear something crackle from your [receive_type] for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["CentcommFaxView"])
