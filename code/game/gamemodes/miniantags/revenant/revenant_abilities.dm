@@ -114,8 +114,8 @@
 				charge_counter = charge_max
 				return
 			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
-			user << "<span class='revenboldnotice'>You transmit to [M]: [msg]</span>"
-			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span><i> [msg]</I>"
+			user << "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>"
+			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>"
 
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
