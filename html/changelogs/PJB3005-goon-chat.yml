@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - experimental: "Ported goon's browser based chat, this has a ton of advantages. <b>CREDITS TO WIRE (goon coder) FOR A TON OF THE WORK</b>"
