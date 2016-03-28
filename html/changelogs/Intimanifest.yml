@@ -1,0 +1,6 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "Cargo is now seperately listed on the crew manifest and jobban menu."
+- bugfix: "You can now once again get jobbanned from mime and clown. Mime and clown are once again listed on the ID computer's list of jobs."
+- bugfix: "There's no longer a floating 'Command' text on the ID computer, it's now properly filled with the command roles."

@@ -20,8 +20,6 @@ var/list/station_departments = list("Command", "Medical", "Engineering", "Scienc
 
 /datum/job/hydro/department = "Civilian"
 
-/datum/job/mining/department = "Civilian"
-
 /datum/job/janitor/department = "Civilian"
 
 /datum/job/librarian/department = "Civilian"
@@ -30,10 +28,16 @@ var/list/station_departments = list("Command", "Medical", "Engineering", "Scienc
 
 /datum/job/chaplain/department = "Civilian"
 
+/datum/job/clown/department = "Civilian"
+
+/datum/job/mime/department = "Civilian"
+
 /datum/job/qm/department = "Cargo"
 /datum/job/qm/head_position = 1
 
 /datum/job/cargo_tech/department = "Cargo"
+
+/datum/job/mining/department = "Cargo"
 
 /datum/job/chief_engineer/department = "Engineering"
 /datum/job/chief_engineer/head_position = 1

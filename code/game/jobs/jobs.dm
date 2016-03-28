@@ -94,14 +94,19 @@ var/list/civilian_positions = list(
 	"Chef",
 	"Janitor",
 	"Librarian",
-	"Quartermaster",
-	"Cargo Technician",
-	"Shaft Miner",
 	"Internal Affairs Agent",
 	"Chaplain",
+	"Clown",
+	"Mime",
 	"Assistant"
 )
 
+var/list/cargo_positions = list(
+	"Head of Personnel",
+	"Quartermaster",
+	"Cargo Technician",
+	"Shaft Miner"
+)
 
 var/list/security_positions = list(
 	"Head of Security",
@@ -109,7 +114,6 @@ var/list/security_positions = list(
 	"Detective",
 	"Security Officer"
 )
-
 
 var/list/nonhuman_positions = list(
 	"AI",

@@ -54,6 +54,7 @@
 	var/list/eng = new()
 	var/list/med = new()
 	var/list/sci = new()
+	var/list/cgo = new()
 	var/list/civ = new()
 	var/list/bot = new()
 	var/list/misc = new()
@@ -108,6 +109,9 @@
 		if(real_rank in science_positions)
 			sci[name] = rank
 			department = 1
+		if(real_rank in cargo_positions)
+			cgo[name] = rank
+			department = 1
 		if(real_rank in civilian_positions)
 			civ[name] = rank
 			department = 1
@@ -121,37 +125,50 @@
 		for(name in heads)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
 	if(sec.len > 0)
 		dat += "<tr><th colspan=3>Security</th></tr>"
 		for(name in sec)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
 	if(eng.len > 0)
 		dat += "<tr><th colspan=3>Engineering</th></tr>"
 		for(name in eng)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
 	if(med.len > 0)
 		dat += "<tr><th colspan=3>Medical</th></tr>"
 		for(name in med)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
 	if(sci.len > 0)
 		dat += "<tr><th colspan=3>Science</th></tr>"
 		for(name in sci)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
+	if(cgo.len > 0)
+		dat += "<tr><th colspan=3>Cargo</th></tr>"
+		for(name in cgo)
+			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[cgo[name]]</td><td>[isactive[name]]</td></tr>"
+			even = !even
+
 	if(civ.len > 0)
 		dat += "<tr><th colspan=3>Civilian</th></tr>"
 		for(name in civ)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
 	// in case somebody is insane and added them to the manifest, why not
 	if(bot.len > 0)
 		dat += "<tr><th colspan=3>Silicon</th></tr>"
 		for(name in bot)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
+
 	// misc guys
 	if(misc.len > 0)
 		dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
@@ -182,6 +199,7 @@ var/global/list/PDA_Manifest = list()
 	var/eng[0]
 	var/med[0]
 	var/sci[0]
+	var/cgo[0]
 	var/civ[0]
 	var/bot[0]
 	var/misc[0]
@@ -191,7 +209,7 @@ var/global/list/PDA_Manifest = list()
 		var/real_rank = t.fields["real_rank"]
 		var/isactive = t.fields["p_stat"]
 		var/department = 0
-		var/depthead = 0 			// Department Heads will be placed at the top of their lists.
+		var/depthead = 0 			// Department Heads will be placed at the top of their lists. Too bad all the procs that get the manifest call get_manifest(), which can't do this without a rewrite.
 		if(real_rank in command_positions)
 			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive)
 			department = 1
@@ -223,6 +241,12 @@ var/global/list/PDA_Manifest = list()
 			if(depthead && sci.len != 1)
 				sci.Swap(1,sci.len)
 
+		if(real_rank in cargo_positions)
+			cgo[++cgo.len] = list("name" = name, "rank" = rank, "active" = isactive)
+			department = 1
+			if(depthead && cgo.len != 1)
+				cgo.Swap(1,cgo.len)
+
 		if(real_rank in civilian_positions)
 			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive)
 			department = 1
@@ -243,6 +267,7 @@ var/global/list/PDA_Manifest = list()
 		"eng" = eng,\
 		"med" = med,\
 		"sci" = sci,\
+		"cgo" = cgo,\
 		"civ" = civ,\
 		"bot" = bot,\
 		"misc" = misc\
