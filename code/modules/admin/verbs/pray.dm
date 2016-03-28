@@ -22,13 +22,7 @@
 	var/image/cross = image('icons/obj/storage.dmi',"bible")
 	msg = "<span class='notice'>[bicon(cross)] <b><font color='purple'>PRAY (DEITY:[ticker.Bible_deity_name]): </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
 
-	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_PRAYER)
-			if(C.prefs.special_popup)
-				C << output(msg, "window1.msay_output")//if i get told to make this a proc imma be fuckin mad
-			else
-				to_chat(C, msg)
-			C << 'sound/effects/prayer.ogg'
+	send_prayer_to_admins(msg,'sound/effects/prayer.ogg')
 
 	if(!stat)
 		usr.whisper(orig_message)
@@ -39,11 +33,18 @@
 /proc/Centcomm_announce(var/text , var/mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='notice'><b><font color=orange>CENTCOMM:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
-	to_chat(admins, msg)
-	admins << 'sound/effects/msn.ogg'
+	send_prayer_to_admins(msg,'sound/effects/msn.ogg')
 
 /proc/Syndicate_announce(var/text , var/mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='notice'><b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
-	to_chat(admins, msg)
-	admins << 'sound/effects/inception.ogg'
+	send_prayer_to_admins(msg,'sound/effects/inception.ogg')
+
+/proc/send_prayer_to_admins(var/msg,var/sound)
+	for(var/client/C in admins)
+		if(C.prefs.toggles & CHAT_PRAYER)
+			if(C.prefs.special_popup)
+				C << output(msg, "window1.msay_output")//if i get told to make this a proc imma be fuckin mad
+			else
+				to_chat(C, msg)
+			C << sound
