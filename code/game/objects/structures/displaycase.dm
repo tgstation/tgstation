@@ -278,3 +278,13 @@
 			user.visible_message("[user.name] gently runs their hands over \the [src] in appreciation of its contents.", \
 				"You gently run your hands over \the [src] in appreciation of its contents.", \
 				"You hear someone streaking glass with their greasy hands.")
+
+
+/obj/structure/displaycase/broken
+	name = "display case"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "glassbox2b"
+	desc = "A display case for prized possessions."
+	density = 0
+	health = 0
+	destroyed = 1

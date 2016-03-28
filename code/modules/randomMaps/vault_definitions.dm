@@ -45,3 +45,6 @@
 
 /datum/vault/spacepond
 	map_name = "spacepond"
+
+/datum/vault/iou_vault
+	map_name = "iou_fort"
