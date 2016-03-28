@@ -47,7 +47,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/changeling/announce()
 	world << "<b>The current game mode is - Changeling!</b>"
-	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
+	world << "<b>There are alien changelings on the station.ch Do not let the changelings succeed!</b>"
 
 /datum/game_mode/changeling/pre_setup()
 
@@ -282,8 +282,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/chem_charges = 20
-	var/chem_storage = 75
-	var/chem_recharge_rate = 1
+	var/chem_storage = 50
+	var/chem_recharge_rate = 0.8
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
 	var/changelingID = "Changeling"
