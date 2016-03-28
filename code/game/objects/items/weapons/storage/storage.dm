@@ -463,7 +463,7 @@
 	boxes.layer = 19
 	closer = new /obj/screen/close()
 	closer.master = src
-	closer.icon_state = "x"
+	closer.icon_state = "backpack_close"
 	closer.layer = 20
 	orient2hud()
 

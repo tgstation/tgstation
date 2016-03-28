@@ -36,6 +36,11 @@
 			user << "<span class='warning'>You cannot glare at allies!</span>"
 			revert_cast()
 			return
+		var/mob/living/L = user
+		if(L.incorporeal_move) //Other abilities can still be used, but glare needed balancing
+			user << "<span class='warning'>You cannot glare while shadow walking!</span>"
+			revert_cast()
+			return
 		var/mob/living/carbon/human/M = target
 		user.visible_message("<span class='warning'><b>[user]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")

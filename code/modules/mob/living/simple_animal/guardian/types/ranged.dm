@@ -22,6 +22,7 @@
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/list/snares = list()
 	var/toggle = FALSE
 
