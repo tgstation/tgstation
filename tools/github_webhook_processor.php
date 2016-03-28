@@ -144,6 +144,7 @@ function checkchangelog($payload, $merge = false) {
 	if (!isset($payload['pull_request']['user']) || !isset($payload['pull_request']['user']['login'])) {
 		return;
 	}
+	if (!isset($payload['pull_request']['base']) || !isset($payload['pull_request']['base']['ref']))
 	$body = $payload['pull_request']['body'];
 	$body = str_replace("\r\n", "\n", $body);
 	$body = explode("\n", $body);
@@ -152,6 +153,8 @@ function checkchangelog($payload, $merge = false) {
 	$changelogbody = array();
 	$currentchangelogblock = array();
 	$foundcltag = false;
+	$target_branch = $payload['pull_request']['base'];
+	$target_branch_ref = $target_branch['ref'];
 	foreach ($body as $line) {
 		$line = trim($line);
 		if (substr($line,0,4) == ':cl:') {
@@ -247,7 +250,7 @@ function checkchangelog($payload, $merge = false) {
 		}
 	}
 	
-	if (!count($changelogbody))
+	if (!count($changelogbody) || $target_branch_ref != "master")
 		return;
 
 	$file = 'author: '.$username."\n";
