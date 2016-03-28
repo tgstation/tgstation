@@ -130,14 +130,12 @@
 
 
 /obj/machinery/detector/power_change()
-	if ( powered() )
+	if (powered())
 		stat &= ~NOPOWER
-		icon_state = "[base_state]1"
-//		src.sd_SetLuminosity(2)
+//		icon_state = "[base_state]1"
 	else
-		stat |= ~NOPOWER
-		icon_state = "[base_state]1"
-//		src.sd_SetLuminosity(0)
+		stat |= NOPOWER
+//		icon_state = "[base_state]1"
 
 /obj/machinery/detector/attackby(obj/item/W, mob/user)
 	if(..(W, user) == 1)
@@ -286,6 +284,7 @@
 
 /obj/machinery/detector/wrenchAnchor(mob/user)
 	if(..() == 1)
+		overlays.len = 0
 		if(anchored)
 			src.overlays += "[base_state]-s"
 
