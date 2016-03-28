@@ -1,0 +1,154 @@
+"aa" = (/turf/space,/area/space)
+"ab" = (/turf/simulated/mineral/random/low_chance,/area/ruin/unpowered/no_grav)
+"ac" = (/turf/simulated/wall/mineral/iron,/area/ruin/powered)
+"ad" = (/obj/structure/closet/cardboard,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ae" = (/obj/structure/closet/cardboard,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/toolbox/drone,/obj/item/weapon/storage/toolbox/drone,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"af" = (/obj/structure/closet/cardboard,/obj/item/stack/sheet/cardboard,/obj/item/stack/cable_coil,/obj/item/stack/sheet/mineral/wood,/obj/item/stack/sheet/mineral/wood,/obj/item/stack/packageWrap,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ag" = (/obj/structure/closet/cardboard,/obj/item/weapon/storage/box/mousetraps,/obj/item/weapon/storage/box/mousetraps,/obj/item/weapon/storage/box/drinkingglasses,/obj/item/weapon/storage/box/zipties,/obj/item/weapon/switchblade,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ah" = (/obj/structure/closet/cardboard,/obj/item/stack/sheet/metal{amount = 50; pixel_x = 2; pixel_y = 2},/obj/item/stack/sheet/metal{amount = 50; pixel_x = 2; pixel_y = 2},/obj/item/stack/sheet/metal{amount = 50; pixel_x = 2; pixel_y = 2},/obj/item/stack/sheet/metal{amount = 50; pixel_x = 2; pixel_y = 2},/obj/item/stack/rods{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/rods{amount = 50},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ai" = (/obj/structure/closet/cardboard,/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/clothing/shoes/combat,/obj/item/clothing/shoes/combat,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aj" = (/obj/structure/closet/cardboard,/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/weapon/shovel,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ak" = (/obj/structure/closet/cardboard,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/tape/random,/obj/item/device/tape/random,/obj/item/device/tape/random,/obj/item/weapon/storage/box/rxglasses,/obj/item/weapon/extinguisher,/obj/item/weapon/extinguisher,/obj/item/clothing/glasses/night,/obj/item/clothing/glasses/night,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"al" = (/obj/structure/closet/cardboard,/obj/item/weapon/storage/box/syringes,/obj/item/weapon/storage/box/syringes,/obj/item/weapon/storage/box/beakers,/obj/item/weapon/storage/box/beakers,/obj/item/weapon/storage/box/matches,/obj/item/weapon/storage/box/bodybags,/obj/item/clothing/glasses/meson/engine,/obj/item/clothing/glasses/meson/engine,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"am" = (/obj/structure/closet/cardboard,/obj/item/weapon/kitchen/knife,/obj/item/weapon/kitchen/knife,/obj/item/weapon/cultivator,/obj/item/weapon/hatchet,/obj/item/weapon/kitchen/rollingpin,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"an" = (/obj/structure/closet/cardboard,/obj/item/weapon/defibrillator,/obj/item/weapon/storage/box/medipens,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ao" = (/obj/structure/closet/cardboard,/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/item/ammo_box/c9mm,/obj/item/ammo_box/c9mm,/obj/item/ammo_box/c9mm,/obj/item/ammo_box/c9mm,/obj/item/ammo_box/c9mm,/obj/item/ammo_box/c9mm,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ap" = (/obj/structure/closet/crate/freezer,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/random,/obj/item/weapon/reagent_containers/blood/random,/obj/item/weapon/reagent_containers/blood/random,/obj/item/weapon/reagent_containers/blood/random,/obj/item/weapon/reagent_containers/blood/random,/obj/item/weapon/reagent_containers/blood/random,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"aq" = (/obj/machinery/iv_drip,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"ar" = (/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"as" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"at" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"au" = (/obj/machinery/door/airlock/highsecurity{name = "Bunker"},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"av" = (/obj/structure/toilet{dir = 4},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"aw" = (/obj/structure/mirror{pixel_x = 30},/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"ax" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/drone,/obj/item/device/flashlight,/obj/item/device/flashlight,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ay" = (/obj/structure/table,/obj/item/weapon/gun/projectile/automatic/wt550{pixel_x = -3; pixel_y = 6},/obj/item/weapon/gun/projectile/automatic/wt550{pixel_x = 2; pixel_y = 0},/obj/structure/reagent_dispensers/peppertank{pixel_y = 30},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"az" = (/obj/structure/table,/obj/item/weapon/storage/backpack/dufflebag/sec{contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical); desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."; name = "dufflebag"; pixel_y = 5},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"aA" = (/obj/structure/table,/obj/item/device/radio{pixel_x = -4},/obj/item/device/radio,/obj/item/device/radio{pixel_x = 4},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aB" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 50; pixel_x = 2; pixel_y = 2},/obj/item/stack/rods{amount = 50},/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aC" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/brute{pixel_x = 4; pixel_y = 4},/obj/item/weapon/storage/firstaid/brute,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aD" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 4; pixel_y = 4},/obj/item/weapon/storage/firstaid/regular,/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aE" = (/obj/structure/closet/crate/radiation,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aF" = (/obj/structure/closet/cardboard,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"aG" = (/obj/machinery/vending/clothing,/turf/simulated/floor/wood,/area/ruin/powered)
+"aH" = (/turf/simulated/floor/wood{tag = "icon-wood-broken3"; icon_state = "wood-broken3"},/area/ruin/powered)
+"aI" = (/obj/structure/bed,/turf/simulated/floor/wood,/area/ruin/powered)
+"aJ" = (/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"aK" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"aL" = (/obj/structure/table,/obj/item/clothing/gloves/combat{pixel_x = -3; pixel_y = 4},/obj/item/clothing/gloves/combat{pixel_x = 3; pixel_y = -2},/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aM" = (/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aN" = (/obj/structure/table,/obj/item/device/mass_spectrometer/adv,/obj/item/device/mass_spectrometer/adv,/obj/item/device/healthanalyzer,/obj/item/device/healthanalyzer,/obj/item/stack/medical/gauze,/obj/item/stack/medical/gauze,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aO" = (/obj/structure/closet/radiation,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aP" = (/obj/structure/closet/cardboard,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"aQ" = (/obj/structure/closet/cardboard,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/item/weapon/reagent_containers/food/snacks/beans,/obj/item/weapon/reagent_containers/food/snacks/beans,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aR" = (/obj/structure/closet/wardrobe/pink,/turf/simulated/floor/wood{tag = "icon-wood-broken"; icon_state = "wood-broken"},/area/ruin/powered)
+"aS" = (/turf/simulated/floor/wood,/area/ruin/powered)
+"aT" = (/obj/structure/bed,/turf/simulated/floor/wood{tag = "icon-wood-broken7"; icon_state = "wood-broken7"},/area/ruin/powered)
+"aU" = (/obj/machinery/shower{dir = 4},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"aV" = (/obj/machinery/shower{dir = 8},/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"aW" = (/obj/machinery/light/small{dir = 8},/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin{pixel_x = 4; pixel_y = 4},/obj/item/weapon/storage/firstaid/toxin,/obj/item/weapon/storage/pill_bottle/charcoal,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aX" = (/obj/structure/table,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare,/obj/item/device/flashlight/flare{pixel_y = 6},/obj/item/device/flashlight/flare,/obj/item/weapon/crowbar/red,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aY" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"aZ" = (/obj/structure/closet/wardrobe/pjs,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/wood,/area/ruin/powered)
+"ba" = (/turf/simulated/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/powered)
+"bb" = (/obj/structure/bed,/turf/simulated/floor/wood{tag = "icon-wood-broken3"; icon_state = "wood-broken3"},/area/ruin/powered)
+"bc" = (/obj/machinery/shower{dir = 4},/obj/item/weapon/soap,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/ruin/powered)
+"bd" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/ruin/powered)
+"be" = (/obj/machinery/door/airlock/highsecurity{name = "Bunker"},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bf" = (/obj/structure/closet/cardboard,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/box/donkpockets,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bg" = (/obj/structure/fireaxecabinet{pixel_y = 30},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bh" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bi" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bj" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bk" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bl" = (/obj/machinery/processor{name = "processor"},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bm" = (/obj/structure/table,/obj/item/weapon/storage/box/matches,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bn" = (/obj/structure/table,/obj/machinery/reagentgrinder,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bo" = (/obj/structure/table,/obj/machinery/recharger,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bp" = (/obj/machinery/light{dir = 1},/obj/machinery/hydroponics/constructable,/turf/simulated/floor/light,/area/ruin/powered)
+"bq" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor/light,/area/ruin/powered)
+"br" = (/obj/machinery/blackbox_recorder,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bs" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/power/port_gen/pacman,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bt" = (/obj/machinery/power/smes/magical{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/obj/structure/cable,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bu" = (/obj/machinery/telecomms/relay/preset/telecomms,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bv" = (/obj/machinery/light/small{dir = 1},/obj/structure/tank_dispenser/oxygen,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bw" = (/obj/machinery/biogenerator,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bx" = (/obj/machinery/light,/obj/machinery/hydroponics/constructable,/turf/simulated/floor/light,/area/ruin/powered)
+"by" = (/obj/machinery/autolathe,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bz" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bA" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bB" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bC" = (/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bD" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bE" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/beans,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bF" = (/obj/structure/chair{dir = 8},/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bG" = (/obj/machinery/seed_extractor,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bH" = (/obj/machinery/power/apc{dir = 8; name = "Bunker APC"; pixel_x = -24; pixel_y = 0},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bI" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bJ" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bK" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bL" = (/obj/structure/table,/obj/item/weapon/kitchen/knife,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bM" = (/obj/structure/table,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bN" = (/obj/structure/table,/obj/item/weapon/kitchen/fork,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bO" = (/obj/machinery/vending/hydronutrients,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bP" = (/obj/machinery/space_heater,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bQ" = (/obj/structure/chair/office/dark{dir = 4},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bR" = (/obj/structure/table/reinforced,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bS" = (/obj/machinery/smartfridge,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bT" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel/bar,/area/ruin/powered)
+"bU" = (/obj/machinery/vending/hydroseeds{slogan_delay = 700},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bV" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bW" = (/obj/structure/chair/office/dark,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bX" = (/obj/structure/computerframe,/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"bY" = (/obj/structure/table/reinforced,/obj/machinery/computer/security/telescreen{dir = 1; name = "Bunker Entrance"; network = list("Bunker1"); pixel_x = 0; pixel_y = 2},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"bZ" = (/obj/structure/computerframe,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"ca" = (/obj/structure/table/reinforced,/obj/machinery/button/door{id = "bunker1"; name = "Inner Doors"; pixel_y = 6},/obj/machinery/button/door{id = "bunker2"; name = "Outer Doors"; pixel_y = -4},/turf/simulated/floor/plasteel/floorgrime,/area/ruin/powered)
+"cb" = (/obj/machinery/door/poddoor{id = "bunker1"; name = "Bunker Door"; tag = "inner"},/turf/simulated/floor/plating,/area/ruin/powered)
+"cc" = (/turf/simulated/floor/plating,/area/ruin/powered)
+"cd" = (/obj/machinery/camera,/turf/simulated/floor/plating,/area/ruin/powered)
+"ce" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/ruin/powered)
+"cf" = (/obj/machinery/door/poddoor{id = "bunker2"; name = "Bunker Door"; tag = "outer"},/turf/simulated/floor/plating,/area/ruin/powered)
+"cg" = (/turf/simulated/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacabaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababacadaeafagahaiacabaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababacajakalamanaoacababaa
+aaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababacapaqararasatacababaa
+aaaaaaaaaaaaaaaaaaababababababababababacacacacacacacacacacacacacauacacacacacabaa
+aaaaaaaaaaaaaaaaabababababababacacacacacavawacaxayazaAaBaCaDacaEaraFaFaFaFacabaa
+aaaaaaaaaaaaaaaaabababababababacaGaHaIacaJaKacaLaraMararaMaNacaOaraPaPaPaQacabaa
+aaaaaaaaaaaaaaababababababababacaRaSaTacaUaVacaWaraMaMaMaraXacaYaMaPaPaPaPacabaa
+aaaaaaaaaaaaaaababababababababacaZbabbacbcaVacacbdbdbebdbdacacaYaMarbfbfbfacabaa
+aaaaaaaaaaaaaaabababababacacacacacbeacacacbeacbgaraMaMaMaMauaMaMararbfbfbfacabaa
+aaaaaaaaaaaaaaabababababacbharacarararbiaMaMaMarararaMaMbjacacacacacacacacacabaa
+aaaaaaaaaaaaaaabababababacbkarauaMaraMaMaMaMaMblbmbnboaMaMacbpbqbqbpacababababaa
+aaaaaaaaaaaaaaaaababababacacacacacacbeacacaraMacacacacaMaMbeaMaMaMaMacabababaaaa
+aaaaaaaaaaaaaaaaababababacbrbsbtbuaMarbvacarararaMaMaraMbwacbxbqbqbxacabababaaaa
+aaaaaaaaaaaaaaabababababacbyarbzaMararbAacbBbCbDbEbFararbGacacacacacacababaaaaaa
+aaaaaaaaaaaaaaabababababacbHbIbJaMaMaMbKacbLbCbMbNbFararbOacabababababababaaaaaa
+aaaaaaaaaaaaaaaaababababacbParaMararbQbRacbSbTbCbCbCaraMbUacabababababababaaaaaa
+aaaaaaaaaaaaaaaaababababacbVaMaraMbWaMbXacacacacacacacacacacababababababaaaaaaaa
+aaaaaaaaaaaaaaabababababacararaMbYbZcabRacabababababababababababababababaaaaaaaa
+aaaaaaaaaaaaababababababaccbcbacacacacacacabababababababababababababaaaaaaaaaaaa
+aaaaaaaaaaabababababababaccccccccdceacabababababababababababababababaaaaaaaaaaaa
+aaabababababababababababacccccccccccacabababababababababababababababaaaaaaaaaaaa
+ababababababababababababacacacaccfcfacababababababababababababababaaaaaaaaaaaaaa
+abababababababababababababcgcgcgcgcgcgabababababababababababaaaaabaaaaaaaaaaaaaa
+aaabababababababababababcgcgcgcgcgcgcgababababababababababababaaaaaaaaaaaaaaaaaa
+aaaaaaabababababababababcgcgcgcgcgcgabababababababababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaabababababababababcgcgcgcgcgcgabababababababababaaaaaaaaaaaaaaaaababaaaa
+aaaaaaaaababababababababababcgcgcgcgcgabababababababababaaaaaaaaaaaaaaabababaaaa
+aaaaaaaaababababababababababcgcgcgcgababababababababababaaaaaaaaaaaaaaababaaaaaa
+aaaaaaaaabababababababcgcgcgcgcgcgcgabababababababababaaaaaaaaaaaaaaaaabaaaaaaaa
+aaaaaaaaaaaaaacgcgcgcgcgcgcgcgcgcgababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaacgcgcgcgcgcgabababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaacgcgabababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaababababaaababababababababaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabababaaaaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

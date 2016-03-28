@@ -1,0 +1,69 @@
+"aa" = (/turf/space,/area/space)
+"ab" = (/turf/simulated/wall/shuttle{icon_state = "swall_s6"; dir = 2},/area/ruin/powered)
+"ac" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/ruin/powered)
+"ad" = (/turf/simulated/wall/shuttle{icon_state = "swall_s10"; dir = 2},/area/ruin/powered)
+"ae" = (/turf/simulated/wall/shuttle{icon_state = "swall3"; dir = 2},/area/ruin/powered)
+"af" = (/obj/structure/closet/crate/secure/loot,/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"ag" = (/obj/structure/closet/crate/secure/loot,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"ah" = (/obj/structure/table,/obj/machinery/button/door{id = "mechaship1"; name = "Mecha Cargo Ship Doors"},/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"ai" = (/obj/structure/table,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"aj" = (/obj/structure/computerframe,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"ak" = (/obj/effect/decal/cleanable/vomit/old,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"al" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"am" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"an" = (/turf/simulated/floor/light{dir = 4},/obj/structure/chair/office/dark{dir = 1},/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"ao" = (/turf/simulated/wall/shuttle{tag = "icon-swall_s6"; icon_state = "swall_s6"; dir = 2},/area/ruin/powered)
+"ap" = (/turf/simulated/wall/shuttle{icon_state = "swall13"; dir = 2},/area/ruin/powered)
+"aq" = (/obj/machinery/door/airlock/hatch{name = "Cockpit"; req_access_txt = "101"},/turf/simulated/floor/plasteel/shuttle,/area/ruin/powered)
+"ar" = (/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/ruin/powered)
+"as" = (/turf/simulated/wall/shuttle{tag = "icon-swall_s10"; icon_state = "swall_s10"; dir = 2},/area/ruin/powered)
+"at" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/ruin/powered)
+"au" = (/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/ruin/powered)
+"av" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/ruin/powered)
+"aw" = (/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/ruin/powered)
+"ax" = (/turf/simulated/wall/shuttle{tag = "icon-swall3"; icon_state = "swall3"; dir = 2},/area/ruin/powered)
+"ay" = (/obj/structure/mecha_wreckage/phazon,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"az" = (/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aA" = (/obj/structure/mecha_wreckage/ripley/firefighter,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aB" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aC" = (/obj/structure/mecha_wreckage/ripley,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aD" = (/obj/mecha/working/ripley,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aE" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aF" = (/obj/effect/decal/cleanable/robot_debris/up,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aG" = (/obj/machinery/door/poddoor{id = "mechaship1"; name = "Cargo Bay Door"},/turf/simulated/floor/plating,/area/ruin/powered)
+"aH" = (/obj/effect/decal/cleanable/robot_debris,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aI" = (/obj/structure/mecha_wreckage/durand,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aJ" = (/obj/item/stack/tile/plasteel,/turf/simulated/floor/plating,/area/ruin/powered)
+"aK" = (/turf/simulated/floor/plating,/area/ruin/powered)
+"aL" = (/obj/structure/lattice,/turf/space,/area/space)
+"aM" = (/obj/item/stack/rods,/turf/simulated/floor/plating{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/ruin/powered)
+"aN" = (/obj/effect/decal/cleanable/robot_debris/gib,/turf/simulated/floor/plating,/area/ruin/powered)
+"aO" = (/obj/effect/decal/cleanable/robot_debris,/obj/item/stack/tile/plasteel,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aP" = (/turf/simulated/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
+"aQ" = (/turf/simulated/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/ruin/powered)
+"aR" = (/obj/structure/mecha_wreckage/odysseus,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
+"aS" = (/obj/item/stack/sheet/metal,/turf/space,/area/space)
+"aT" = (/obj/structure/mecha_wreckage/gygax,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/ruin/powered)
+"aU" = (/obj/item/stack/rods,/turf/simulated/floor/plating,/area/ruin/powered)
+"aV" = (/turf/simulated/wall/shuttle{icon_state = "swall14"; dir = 2},/area/ruin/powered)
+"aW" = (/turf/simulated/wall/shuttle{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/ruin/powered)
+"aX" = (/obj/item/stack/rods,/turf/space,/area/space)
+"aY" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/ruin/powered)
+
+(1,1,1) = {"
+aaabacacacacacadaa
+aaaeafagahaiajaeaa
+aaaeakalamanajaeaa
+aoapaqararararapas
+aeatauavauavavawax
+aeayazazaAaBaCaDax
+aeaEazaFazaCazaBaG
+aeaHaIaJazazazazaG
+aJaKazaIaBaKaBazaG
+aLaMaKazaNaOazaEaG
+aPaKaQaJaRaRazaBaG
+aSaLaLaKauaKaTauax
+aaaPaLaSaUaKaraVaW
+aaaXaaaaaLaaabaead
+aaaaaaaaaaaaaYaYaY
+"}

@@ -1,0 +1,69 @@
+"a" = (/turf/space,/area/space)
+"b" = (/obj/structure/lattice,/turf/space,/area/space)
+"c" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/ruin/unpowered/no_grav)
+"d" = (/turf/simulated/wall/r_wall,/area/ruin/powered)
+"e" = (/obj/structure/table/reinforced,/obj/item/weapon/stock_parts/cell/hyper,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"f" = (/obj/structure/computerframe,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"g" = (/turf/simulated/floor/plasteel,/area/ruin/powered)
+"h" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"i" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating/airless,/area/ruin/powered)
+"j" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plating/airless,/area/ruin/powered)
+"k" = (/turf/simulated/floor/plating/airless,/area/ruin/powered)
+"l" = (/turf/simulated/floor/plating/airless,/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/table/reinforced,/obj/item/weapon/folder,/obj/item/device/radio,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"n" = (/obj/structure/chair/office/dark{dir = 8},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"o" = (/obj/machinery/porta_turret,/turf/simulated/floor/plating/airless,/area/ruin/powered)
+"p" = (/obj/structure/filingcabinet,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"q" = (/obj/machinery/light,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"r" = (/obj/machinery/power/apc{dir = 0; name = "Worn-out APC"; pixel_y = -24},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"s" = (/obj/structure/rack,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"t" = (/obj/item/weapon/rack_parts,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"u" = (/obj/item/weapon/rack_parts,/obj/machinery/light{dir = 1},/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"v" = (/obj/structure/rack,/obj/item/device/firing_pin,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"w" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"x" = (/obj/machinery/door/airlock,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"y" = (/turf/simulated/floor/plasteel{icon_state = "dark"},/area/ruin/powered)
+"z" = (/obj/structure/tank_dispenser/oxygen,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/ruin/powered)
+"A" = (/obj/structure/table/reinforced,/obj/item/clothing/head/ushanka,/turf/simulated/floor/plasteel/darkred,/area/ruin/powered)
+"B" = (/obj/structure/table/reinforced,/obj/structure/reagent_dispensers/peppertank{pixel_y = 32},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"C" = (/obj/structure/table/reinforced,/obj/item/weapon/clipboard,/obj/machinery/light{dir = 1},/obj/item/device/radio,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"D" = (/obj/machinery/vending/clothing,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"E" = (/obj/structure/rack,/obj/item/ammo_box/c9mm,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"F" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/ruin/powered)
+"G" = (/turf/simulated/floor/plasteel/darkred,/area/ruin/powered)
+"H" = (/obj/structure/bed,/obj/item/weapon/bedsheet/orange,/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"I" = (/obj/structure/rack,/obj/item/clothing/head/helmet/swat,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"J" = (/obj/structure/rack,/obj/item/weapon/crowbar/red,/obj/item/weapon/paper/crumpled,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"K" = (/obj/structure/chair/office/dark,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"L" = (/obj/structure/chair/comfy/beige{dir = 4},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"M" = (/obj/structure/bed,/obj/item/weapon/bedsheet/orange,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"N" = (/obj/structure/rack,/obj/item/weapon/grenade/chem_grenade/teargas,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/ruin/powered)
+"O" = (/obj/structure/table/reinforced,/obj/item/weapon/paper/crumpled,/turf/simulated/floor/plasteel/darkred,/area/ruin/powered)
+"P" = (/obj/structure/table/reinforced,/obj/machinery/light,/obj/item/device/camera_bug,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"Q" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"R" = (/obj/structure/table/reinforced,/obj/item/weapon/pen/blue,/turf/simulated/floor/plasteel,/area/ruin/powered)
+"S" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = -4; pixel_y = 4},/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka{pixel_x = 3},/turf/simulated/floor/plasteel,/area/ruin/powered)
+"T" = (/obj/structure/rack,/obj/item/weapon/storage/belt/military,/obj/machinery/light,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"U" = (/obj/structure/rack,/obj/item/clothing/head/helmet/riot,/turf/simulated/floor/plasteel{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/ruin/powered)
+"V" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/breadslice/meat,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaabbab
+aaaaabaabbaaaaabababbb
+aaaaababbacccccccccccc
+aaaaabbbbbcddddddddddd
+aaaaabaaaacdefffghijki
+aaalllllllcdmnggggikki
+aaloddddddcdpqgggrdddd
+aalddstuvdddddwdxddkkc
+aaldtyyyyzdABCgdgDdddc
+aaldsysEyyFGgggdgggHdc
+bbldIysJyyFGgKgdLggMdc
+abldsyyyyNdOPQRdSggMdc
+ablddstTUdddddddVggMdc
+aaloddddddolllcddddddc
+abbllllllllbbacccccccc
+aabbbbbabbbbaabbbaaaba
+aaabaabaaaabaababaaabb
+aaaaaaaaaaaaaabaaaaaaa
+"}

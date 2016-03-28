@@ -26,12 +26,14 @@ z7 = empty space
         #include "map_files\generic\lavaland.dmm"
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
+		#include "map_files\generic\z8.dmm"
+		#include "map_files\generic\z9.dmm"
 
 		#define MAP_PATH "map_files/MetaStation"
         #define MAP_FILE "MetaStation.v41I.dmm"
         #define MAP_NAME "MetaStation"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 

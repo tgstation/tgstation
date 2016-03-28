@@ -26,12 +26,14 @@ z7 = empty space
         #include "map_files\DreamStation\z5.dmm"
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
+		#include "map_files\generic\z8.dmm"
+		#include "map_files\generic\z9.dmm"
 
 		#define MAP_PATH "map_files/DreamStation"
         #define MAP_FILE "dreamstation04.dmm"
         #define MAP_NAME "DreamStation"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 

@@ -1,0 +1,18 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/floor/plasteel,/area/ruin/unpowered/no_grav)
+"c" = (/turf/simulated/wall,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+abbbbbbbbbba
+bccccccccccb
+bccbbbbbbccb
+bcbbbbbbbbcb
+bcbbbbbbbbcb
+bcbbbbbbbbcb
+bcbbbbbbbbcb
+bcbbbbbbbbcb
+bcbbbbbbbbcb
+bccbbbbbbccb
+bccccccccccb
+abbbbbbbbbba
+"}
