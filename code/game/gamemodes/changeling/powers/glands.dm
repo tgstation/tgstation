@@ -9,5 +9,5 @@
 	..()
 	var/datum/changeling/changeling=user.mind.changeling
 	changeling.chem_storage += 25
-	changeling.chem_recharge_rate *=2
+	changeling.chem_recharge_rate *=1.5
 	return
