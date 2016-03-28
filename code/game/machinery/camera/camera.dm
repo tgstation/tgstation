@@ -58,7 +58,7 @@
 	return ..()
 
 /obj/machinery/camera/Destroy()
-	toggle_cam(null, 0) //kick anyone viewing out
+	toggle_cam(null, 0, 0) //kick anyone viewing out, produce no alarms
 	remove_from_proximity_list(src, 1)
 	if(assembly)
 		qdel(assembly)
@@ -245,11 +245,10 @@
 			health = max(0, health - W.force)
 			user.do_attack_animation(src)
 			if(!health && status)
-				triggerCameraAlarm()
 				toggle_cam(user, 1)
 	return
 
-/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
+/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1, producealarm = 1)
 	status = !status
 	if(can_use())
 		cameranet.addCamera(src)
@@ -260,10 +259,11 @@
 	var/change_msg = "deactivates"
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
+		if(producealarm)
+			triggerCameraAlarm()
 	else
 		icon_state = initial(icon_state)
 		change_msg = "reactivates"
-		triggerCameraAlarm()
 		spawn(100)
 			if(!qdeleted(src))
 				cancelCameraAlarm()
@@ -377,7 +377,6 @@
 	if(proj.damage_type == BRUTE)
 		health = max(0, health - proj.damage)
 		if(!health && status)
-			triggerCameraAlarm()
 			toggle_cam(null, 1)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
