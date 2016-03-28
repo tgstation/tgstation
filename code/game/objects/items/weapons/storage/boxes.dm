@@ -645,4 +645,16 @@
 				item_state = "paperbag_smile"
 				desc = "A paper sack with a crude smile etched onto on side."
 		return 0
+	else if(W.is_sharp())
+		if(!contents.len)
+			if(item_state == "paperbag")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
+				new /obj/item/clothing/head/papersack(user.loc)
+				qdel(src)
+				return 0
+			else if(item_state == "paperbag_smile")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
+				new /obj/item/clothing/head/papersack/smiley(user.loc)
+				qdel(src)
+				return 0
 	return ..()
