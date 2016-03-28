@@ -41,6 +41,58 @@ Bonus
 /*
 //////////////////////////////////////
 
+Traitor healing
+
+	Little bit hidden.
+	Lowers resistance.
+	Decreases stage speed.
+	Decreases transmittablity temrendously.
+
+Bonus
+	Heals toxins in the affected mob's blood stream.
+
+Special traitor bonus
+	Heals a very small amount of Brute and Burn damage at stage 5
+	Uses SQRT 26 instead of SQRT 20
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/traitorheal
+
+	name = "Nuclei Apoptosis"
+	stealth = 1
+	resistance = -2
+	stage_speed = -2
+	transmittable = -4
+	level = 9
+
+/datum/symptom/traitorheal/Activate(datum/disease/advance/A)
+	..()
+	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
+		var/mob/living/M = A.affected_mob
+		switch(A.stage)
+			if(3,4)
+				Stage_3_4_heal(M, A)
+			if(5)
+				Stage_5_heal(M, A)
+	return
+
+/datum/symptom/traitorheal/proc/Stage_3_4_heal(mob/living/M, datum/disease/advance/A)
+	var/get_damage = (sqrt(26+A.totalStageSpeed())*(1+rand()))
+	M.adjustToxLoss(-get_damage)
+	return 1
+
+/datum/symptom/traitorheal/proc/Stage_5_heal(mob/living/M, datum/disease/advance/A)
+	var/get_damage = (sqrt(26+A.totalStageSpeed())*(1+rand()))
+	M.adjustToxLoss(-get_damage)
+	M.adjustBruteLoss(-get_damage/5)
+	M.adjustFireLoss(-get_damage/5)
+	return 1
+
+/*
+//////////////////////////////////////
+
 Metabolism
 
 	Little bit hidden.

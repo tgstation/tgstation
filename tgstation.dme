@@ -175,6 +175,7 @@
 #include "code\datums\diseases\gbs.dm"
 #include "code\datums\diseases\magnitis.dm"
 #include "code\datums\diseases\pierrot_throat.dm"
+#include "code\datums\diseases\placeholder_symptom.dm"
 #include "code\datums\diseases\retrovirus.dm"
 #include "code\datums\diseases\rhumba_beat.dm"
 #include "code\datums\diseases\transformation.dm"

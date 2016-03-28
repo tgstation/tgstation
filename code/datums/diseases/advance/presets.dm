@@ -57,3 +57,19 @@
 		name = "Reality Destruction"
 		symptoms = list(new/datum/symptom/sensory_destruction)
 	..(process, D, copy)
+
+// Fournier's gangrenous necrosis
+
+/datum/disease/advance/traitor_flesh_eating/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Fournier's gangrenous necrosis"
+		symptoms = list(new/datum/symptom/traitor_flesh_eating)
+	..(process, D, copy)
+
+// Nuclei Apoptosis
+
+/datum/disease/advance/traitorheal/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Nuclei Apoptosis"
+		symptoms = list(new/datum/symptom/traitorheal)
+	..(process, D, copy)

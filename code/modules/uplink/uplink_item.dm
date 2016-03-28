@@ -567,6 +567,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 6
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/traitor_flesh_eating_bottle
+	name = "Fournier's necrosis bottle"
+	desc = "One bottle containing a highly deadly, but easy to detect virus symptom which eats away at the flesh and deforms the victim."
+	item = /obj/item/weapon/reagent_containers/glass/bottle/traitor_flesh_eating
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+
+/datum/uplink_item/stealthy_weapons/traitorheal_bottle
+	name = "Nuclei Apoptosis bottle"
+	desc = "One bottle containing a useful, but easy to detect virus symptom which causes constant apoptosis, healing the victim."
+	item = /obj/item/weapon/reagent_containers/glass/bottle/traitorheal
+	cost = 12
+	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
