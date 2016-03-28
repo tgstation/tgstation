@@ -144,7 +144,9 @@ function checkchangelog($payload, $merge = false) {
 	if (!isset($payload['pull_request']['user']) || !isset($payload['pull_request']['user']['login'])) {
 		return;
 	}
-	if (!isset($payload['pull_request']['base']) || !isset($payload['pull_request']['base']['ref']))
+	if (!isset($payload['pull_request']['base']) || !isset($payload['pull_request']['base']['ref'])) {
+		return;
+	}
 	$body = $payload['pull_request']['body'];
 	$body = str_replace("\r\n", "\n", $body);
 	$body = explode("\n", $body);
