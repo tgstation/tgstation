@@ -240,16 +240,18 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/pick_ghost_accs()
 	var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,"full accessories", "only directional sprites", "default sprites")
-	switch(new_ghost_accs)
-		if("full accessories")
-			prefs.ghost_accs = GHOST_ACCS_FULL
-		if("only directional sprites")
-			prefs.ghost_accs = GHOST_ACCS_DIR
-		if("default sprites")
-			prefs.ghost_accs = GHOST_ACCS_NONE
-	if(istype(mob, /mob/dead/observer))
-		var/mob/dead/observer/O = mob
-		O.update_icon()
+	if(new_ghost_accs)
+		switch(new_ghost_accs)
+			if("full accessories")
+				prefs.ghost_accs = GHOST_ACCS_FULL
+			if("only directional sprites")
+				prefs.ghost_accs = GHOST_ACCS_DIR
+			if("default sprites")
+				prefs.ghost_accs = GHOST_ACCS_NONE
+		prefs.save_preferences()
+		if(istype(mob, /mob/dead/observer))
+			var/mob/dead/observer/O = mob
+			O.update_icon()
 
 /client/verb/pick_ghost_customization()
 	set name = "Ghost Customization"
@@ -267,20 +269,22 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		pick_ghost_accs()
 
 /client/verb/pick_ghost_others()
-	set name = "Ghost Display Settings"
+	set name = "Ghosts of Others"
 	set category = "Preferences"
 	set desc = "Change display settings for the ghosts of other players."
 	var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,"Their Setting", "Default Sprites", "White Ghost")
-	switch(new_ghost_others)
-		if("Their Setting")
-			prefs.ghost_others = GHOST_OTHERS_THEIR_SETTING
-		if("Default Sprites")
-			prefs.ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
-		if("White Ghost")
-			prefs.ghost_others = GHOST_OTHERS_SIMPLE
-	if(istype(mob, /mob/dead/observer))
-		var/mob/dead/observer/O = mob
-		O.updateghostsight()
+	if(new_ghost_others)
+		switch(new_ghost_others)
+			if("Their Setting")
+				prefs.ghost_others = GHOST_OTHERS_THEIR_SETTING
+			if("Default Sprites")
+				prefs.ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
+			if("White Ghost")
+				prefs.ghost_others = GHOST_OTHERS_SIMPLE
+		prefs.save_preferences()
+		if(istype(mob, /mob/dead/observer))
+			var/mob/dead/observer/O = mob
+			O.updateghostsight()
 
 /client/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"
