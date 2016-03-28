@@ -66,3 +66,9 @@
 	burn_state = FIRE_PROOF
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
+
+/obj/item/trash/fins
+	name = "fins"
+	desc = "some kind of discarded fins"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "fins"
