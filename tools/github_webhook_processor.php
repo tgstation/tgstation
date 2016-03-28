@@ -38,6 +38,7 @@ $servers[1]['address'] = 'game.tgstation13.org';
 $servers[1]['port'] = '2337';
 $servers[1]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
 */
+$base_branch_ref = "master";
 
 //CONFIG END
 set_error_handler(function($severity, $message, $file, $line) {
@@ -252,7 +253,7 @@ function checkchangelog($payload, $merge = false) {
 		}
 	}
 	
-	if (!count($changelogbody) || $target_branch_ref != "master")
+	if (!count($changelogbody) || $target_branch_ref != $base_branch_ref)
 		return;
 
 	$file = 'author: '.$username."\n";
