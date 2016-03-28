@@ -939,19 +939,21 @@
 								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
 	return
 
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, def_zone, obj/item/organ/limb/affecting, hit_area, intent, obj/item/organ/limb/target_limb, target_area, mob/living/carbon/human/H)
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, def_zone, obj/item/organ/limb/affecting, hit_area, intent, obj/item/organ/limb/target_limb, target_area, mob/living/carbon/human/H, crit = FALSE)
 	// Allows you to put in item-specific reactions based on species
+	if(prob(I.crit_chance) && check_holiday(APRIL_FOOLS))
+		crit = TRUE
 	if(user != H)
 		user.do_attack_animation(H)
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
 	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
+		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I][crit ? " - a critical hit":""]!</span>", \
+						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I][crit ? " - a critical hit":""]!</span>")
 	else if(I.force)
-		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
+		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I][crit ? " - a critical hit":""]!</span>", \
+						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I][crit ? " - a critical hit":""]!</span>")
 	else
 		return 0
 
@@ -959,7 +961,7 @@
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-	apply_damage(I.force, I.damtype, affecting, armor_block, H)
+	apply_damage(crit ? I.force * 2 : I.force, I.damtype, affecting, armor_block, H)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
