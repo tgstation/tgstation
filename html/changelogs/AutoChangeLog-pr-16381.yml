@@ -1,4 +1,4 @@
-author: Joan:
+author: Joan
 delete-after: True
 changes: 
   - tweak: "Ghost revival/body creation alerts now use the ghost's hud style."
