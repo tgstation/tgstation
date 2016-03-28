@@ -217,17 +217,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
 	icon_state = "alien_tox"
+	alerttooltipstyle = "alien"
 
 /obj/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Too Hot"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
 	icon_state = "alien_fire"
+	alerttooltipstyle = "alien"
 
 /obj/screen/alert/alien_vulnerable
 	name = "Severed Matriarchy"
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
 	icon_state = "alien_noqueen"
+	alerttooltipstyle = "alien"
 
 //GUARDIANS
 
@@ -299,7 +302,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/notify_cloning
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
-	icon_state = "ghost_frame"
+	icon_state = "template"
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
@@ -310,7 +313,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/notify_jump
 	name = "Body created"
 	desc = "A body was created. You can enter it."
-	icon_state = "ghost_frame"
+	icon_state = "template"
 	timeout = 300
 	var/atom/jump_target = null
 	var/attack_not_jump = null
