@@ -134,6 +134,12 @@
 		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>", \
 			drugged_message = "<span class='warning'>[assailant] has hugged [affecting] passionately!</span>")
 		state = GRAB_AGGRESSIVE
+		assailant.delayNextMove(10)
+		assailant.delayNextAttack(10)
+		hud.icon_state = "!reinforce"
+		spawn(10)
+			if(!disposed)
+				hud.icon_state = "reinforce"
 		icon_state = "grabbed1"
 	else
 		if(state < GRAB_NECK)
@@ -149,8 +155,13 @@
 			affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
 			assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
 			log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) grabbed the neck of [affecting.name] ([affecting.ckey])</font>")
-			hud.icon_state = "disarm/kill"
-			hud.name = "disarm/kill"
+			assailant.delayNextMove(10)
+			assailant.delayNextAttack(10)
+			hud.icon_state = "!reinforce"
+			spawn(10)
+				if(!disposed)
+					hud.icon_state = "disarm/kill"
+					hud.name = "disarm/kill"
 		else
 			if(state < GRAB_UPGRADING)
 				assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>", \
