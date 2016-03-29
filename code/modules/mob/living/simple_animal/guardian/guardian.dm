@@ -379,7 +379,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "The holoparasites recoil in horror. They want nothing to do with a creature like you."
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Assassin")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
