@@ -1143,3 +1143,11 @@ var/list/airlock_overlays = list()
 		locked = 1
 		loseMainPower()
 		loseBackupPower()
+
+/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
+	if(!density) //Already open
+		return
+	if(!open(1)) //Airlock is closed and something prevented it opening (bolts, welding, etc)
+		user << "<span class='warning'>You cannot seem to force this open!</span>" //Extremely generic, aliens only understand the basics of how airlocks work.
+	else //Airlock was closed, and the alien opened it.
+		user.emote("roar") //Slightly increases fear factor!
