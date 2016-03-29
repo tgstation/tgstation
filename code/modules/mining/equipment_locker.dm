@@ -843,7 +843,7 @@
 	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly. This one has an extended range."
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results. This one has an extended range."
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
@@ -856,7 +856,7 @@
 
 /obj/item/device/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
 	range = 4
 
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
@@ -876,16 +876,17 @@
 		if(M.scan_state)
 			minerals += M
 	if(minerals.len)
-		for(var/mob/user in mobs)
-			if(user.client)
-				var/client/C = user.client
-				for(var/turf/simulated/mineral/M in minerals)
-					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
-					C.images += I
-					spawn(30)
-						if(C)
-							C.images -= I
+		for(var/turf/simulated/mineral/M in minerals)
+			var/obj/effect/mining_overlay/C = PoolOrNew(/obj/effect/mining_overlay, M)
+			C.icon_state = M.scan_state
+			spawn(30)
+				qdel(C)
+
+/obj/effect/mining_overlay
+	layer = 20
+	icon = 'icons/turf/smoothrocks.dmi'
+	anchored = 1
+	mouse_opacity = 0
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining
