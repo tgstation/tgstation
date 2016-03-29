@@ -90,7 +90,6 @@
 	var/list/probabilities = list()		// relative probability of each mode
 
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
@@ -186,6 +185,13 @@
 	var/datum/votablemap/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+
+	// Enables random events mid-round when set to 1
+	var/allow_random_events = 0
+
+	// Multipliers for random events minimal starting time and minimal players amounts
+	var/events_min_time_mul = 1
+	var/events_min_players_mul = 1
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
@@ -510,6 +516,12 @@
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
+
+				if("events_min_time_mul")
+					config.events_min_time_mul		= text2num(value)
+				if("events_min_players_mul")
+					config.events_min_players_mul	= text2num(value)
+
 				if("minimal_access_threshold")
 					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
