@@ -394,7 +394,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <br>
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
- <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, briefly stunning and damaging the first target it contacts.<br>
+ <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
