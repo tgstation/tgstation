@@ -578,6 +578,11 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(health < 1 && stat != DEAD)
 		Die()
 
+/mob/living/simple_animal/adjustFireLoss(damage)
+	health = Clamp(health - damage, 0, maxHealth)
+	if(health < 1 && stat != DEAD)
+		Die()
+
 /mob/living/simple_animal/proc/SA_attackable(target)
 	return CanAttack(target)
 

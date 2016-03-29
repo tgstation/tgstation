@@ -527,7 +527,7 @@
 		/obj/item/weapon/coin/silver,
 		/obj/item/weapon/coin/uranium,
 		/obj/item/weapon/dice,
-		/obj/item/weapon/flamethrower/full,
+		/obj/item/weapon/gun/projectile/flamethrower/full,
 		/obj/item/weapon/gun/projectile/deagle/gold,
 		/obj/item/weapon/gun/projectile/russian,
 		/obj/item/weapon/handcuffs,

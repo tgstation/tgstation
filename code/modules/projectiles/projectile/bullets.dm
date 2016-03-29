@@ -426,6 +426,7 @@
 	penetration = -1
 	embed = 0
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
+	penetration_message = 0
 	var/heavy_damage_range = 0
 	var/medium_damage_range = 0
 	var/light_damage_range = 0
@@ -461,4 +462,133 @@
 		bullet_die()
 
 /obj/item/projectile/bullet/blastwave/ex_act()
+	return
+
+/obj/item/projectile/bullet/fire_plume
+	name = "fire plume"
+	icon_state = null
+	damage = 0
+	penetration = -1
+	embed = 0
+	phase_type = PROJREACT_MOBS|PROJREACT_BLOB|PROJREACT_OBJS
+	bounce_sound = null
+	custom_impact = 1
+	penetration_message = 0
+	var/has_O2_in_mix = 0
+	var/datum/gas_mixture/gas_jet = null
+	var/max_range = 10
+	var/stepped_range = 0
+	var/burn_strength = 0
+	var/has_reacted = 0
+	var/burn_damage = 0
+	var/jet_pressure = 0
+	var/original_total_moles = 0
+
+/obj/item/projectile/bullet/fire_plume/OnFired()
+	..()
+	if(!gas_jet)
+		bullet_die()
+	else
+		original_total_moles = gas_jet.total_moles()
+
+/obj/item/projectile/bullet/fire_plume/proc/create_puff()
+	if(gas_jet)
+		if(gas_jet.total_moles())
+			var/total_moles = gas_jet.total_moles()
+			var/o2_concentration = gas_jet.oxygen/total_moles
+			var/n2_concentration = gas_jet.nitrogen/total_moles
+			var/co2_concentration = gas_jet.carbon_dioxide/total_moles
+			var/plasma_concentration = gas_jet.toxins/total_moles
+			var/n2o_concentration = null
+
+			var/datum/gas_mixture/gas_dispersal = gas_jet.remove(original_total_moles/10)
+
+			if(gas_jet.trace_gases.len)
+				for(var/datum/gas/G in gas_jet.trace_gases)
+					if(istype(G, /datum/gas/sleeping_agent))
+						n2o_concentration = G.moles/total_moles
+
+			var/gas_type = null
+
+			if(o2_concentration > 0.5)
+				gas_type = "oxygen"
+			if(n2_concentration > 0.5)
+				gas_type = "nitrogen"
+			if(co2_concentration > 0.5)
+				gas_type = "CO2"
+			if(plasma_concentration > 0.5)
+				gas_type = "plasma"
+			if(n2o_concentration && n2o_concentration > 0.5)
+				gas_type = "N2O"
+
+			new /obj/effect/gas_puff(get_turf(src.loc), gas_dispersal, gas_type)
+
+/obj/item/projectile/bullet/fire_plume/proc/calculate_burn_strength(var/turf/T = null)
+	if(!gas_jet)
+		return
+
+	if(gas_jet.total_moles())
+		var/jet_total_moles = gas_jet.total_moles()
+		var/toxin_concentration = gas_jet.toxins/jet_total_moles
+		if(!(toxin_concentration > 0.01))
+			create_puff()
+			return
+	else
+		return
+
+	if(!has_O2_in_mix && T)
+		var/turf/location = get_turf(src)
+		var/datum/gas_mixture/turf_gases = location.return_air()
+		var/turf_total_moles = turf_gases.total_moles()
+		if(turf_total_moles)
+			var/o2_concentration = turf_gases.oxygen/turf_total_moles
+			if(!(o2_concentration > 0.01))
+				create_puff()
+				return
+		else
+			create_puff()
+			return
+		var/datum/gas_mixture/temp_gas_jet = new()
+		temp_gas_jet.copy_from(gas_jet)
+		temp_gas_jet.merge(turf_gases)
+		if(temp_gas_jet.temperature < 373.15)
+			temp_gas_jet.temperature = 383.15
+			temp_gas_jet.update_values()
+		for(var/i = 1; i <= 20; i++)
+			temp_gas_jet.react()
+		burn_strength = temp_gas_jet.temperature
+
+	else
+		if(!has_reacted)
+			if(gas_jet.temperature < 373.15)
+				gas_jet.temperature = 383.15
+				gas_jet.update_values()
+			for(var/i = 1; i <= 20; i++)
+				gas_jet.react()
+			has_reacted = 1
+		burn_strength = gas_jet.temperature
+
+	var/initial_burn_damage = burn_strength/100
+	burn_damage = ((((-(10 * (0.9**((initial_burn_damage/10) * 5))) + 10) * 0.4) * 20)/5) //Exponential decay function 20*(y=(-(10*(0.9^(x/10)))+10)*0.4)
+	//assuming the target stays in the fire for its duration, the total burn damage will be roughly 5 * burn_damage
+	new /obj/effect/fire_blast(get_turf(src.loc), burn_damage, stepped_range, 1, jet_pressure, burn_strength)
+
+/obj/item/projectile/bullet/fire_plume/process_step()
+	..()
+	if(stepped_range <= max_range)
+		stepped_range++
+	else
+		bullet_die()
+		return
+	var/turf/T = get_turf(src)
+	for(var/obj/effect/E in T)
+		if(istype(E, /obj/effect/blob))
+			stepped_range += 3
+			if(istype(E, /obj/effect/blob/shield)) //The fire can't penetrate through dense blob shields
+				calculate_burn_strength(get_turf(src))
+				bullet_die()
+				return
+	calculate_burn_strength(get_turf(src))
+
+/obj/item/projectile/bullet/fire_plume/ex_act()
 	return

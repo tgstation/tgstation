@@ -262,7 +262,7 @@
 	if((!status) && (istype(W,/obj/item/stack/rods)))
 		var/obj/item/stack/rods/R = W
 		R.use(1)
-		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
+		var/obj/item/weapon/gun/projectile/flamethrower/F = new/obj/item/weapon/gun/projectile/flamethrower(user.loc)
 		src.loc = F
 		F.weldtool = src
 		if (user.client)

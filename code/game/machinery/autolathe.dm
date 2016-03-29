@@ -116,7 +116,7 @@
 		new /obj/item/stack/rods(), \
 		),
 		"Hidden_Items" = list(
-		new /obj/item/weapon/flamethrower/full(), \
+		new /obj/item/weapon/gun/projectile/flamethrower/full(), \
 		new /obj/item/ammo_storage/box/flare(), \
 		new /obj/item/device/rcd/matter/engineering(), \
 		new /obj/item/device/rcd/rpd(),\
