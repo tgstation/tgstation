@@ -188,3 +188,7 @@
 		breakthings = TRUE
 	else if(damage > 25)
 		icon_state = "gauss"
+
+/obj/item/projectile/bullet/sniper/accelerator/laser
+	name = "accelerator beam
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
