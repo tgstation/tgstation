@@ -170,10 +170,12 @@ For the main html chat area
 
 //Global chat procs
 
+/var/list/bicon_cache = list()
+
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(icon, iconKey = "misc")
+/proc/icon2base64(var/icon/icon, var/iconKey = "misc")
 	if (!isicon(icon)) return 0
 
 	iconCache[iconKey] << icon
@@ -181,39 +183,24 @@ For the main html chat area
 	var/list/partial = text2list(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-
-/proc/bicon(obj)
-	if (ispath(obj))
-		obj = new obj()
-
-	var/baseData
+/proc/bicon(var/obj)
+	if (!obj)
+		return
 
 	if (isicon(obj))
-		baseData = icon2base64(obj)
-		return "<img class=\"icon misc\" src=\"data:image/png;base64,[baseData]\" />"
+		if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
+			bicon_cache["\ref[obj]"] = icon2base64(obj)
 
-	if (obj && obj:icon)
-		//Hash the darn dmi path and state
-		var/iconKey = md5("[obj:icon][obj:icon_state]")
-		var/iconData
+		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"
 
-		//See if key already exists in savefile
-		iconData = iconCache.ExportText(iconKey)
-		if (iconData)
-			//It does! Ok, parse out the base64
-			var/list/partial = text2list(iconData, "{")
-			baseData = copytext(partial[2], 3, -5)
-		else
-			//It doesn't exist! Create the icon
-			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
+	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
+	var/atom/A = obj
+	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
+	if (!bicon_cache[key]) // Doesn't exist, make it.
+		var/icon/icon = icon(A.icon, A.icon_state, SOUTH, 1)
+		bicon_cache[key] = icon2base64(icon, key)
 
-			if (!icon)
-				world.log << "Unable to create output icon for: [obj]"
-				return
-
-			baseData = icon2base64(icon, iconKey)
-
-		return "<img class=\"icon [obj:icon_state]\" src=\"data:image/png;base64,[baseData]\" />"
+	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Aliases for bicon
 /proc/bi(obj)
