@@ -2,4 +2,5 @@ author: Unid
 
 delete-after: True
 
-- bugfix: Fixed being able to table somebody while not being adjacent to them.
+changes: 
+- bugfix: Fixed long-distance tabling
