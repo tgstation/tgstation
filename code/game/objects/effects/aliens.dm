@@ -257,16 +257,16 @@
 	var/turf/E = get_step(src, EAST)
 	var/turf/W = get_step(src, WEST)
 	if(!locate(/obj/structure/alien) in N.contents)
-		if(istype(N, /turf/floor))
+		if(istype(N, /turf/open/floor))
 			overlays += weedImageCache[WEED_SOUTH_EDGING]
 	if(!locate(/obj/structure/alien) in S.contents)
-		if(istype(S, /turf/floor))
+		if(istype(S, /turf/open/floor))
 			overlays += weedImageCache[WEED_NORTH_EDGING]
 	if(!locate(/obj/structure/alien) in E.contents)
-		if(istype(E, /turf/floor))
+		if(istype(E, /turf/open/floor))
 			overlays += weedImageCache[WEED_WEST_EDGING]
 	if(!locate(/obj/structure/alien) in W.contents)
-		if(istype(W, /turf/floor))
+		if(istype(W, /turf/open/floor))
 			overlays += weedImageCache[WEED_EAST_EDGING]
 
 
@@ -484,8 +484,8 @@
 			var/turf/mineral/M = target
 			M.ChangeTurf(M.baseturf)
 
-		if(istype(target, /turf/floor))
-			var/turf/floor/F = target
+		if(istype(target, /turf/open/floor))
+			var/turf/open/floor/F = target
 			F.ChangeTurf(F.baseturf)
 
 		if(istype(target, /turf/wall))

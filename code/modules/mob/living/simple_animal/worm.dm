@@ -137,7 +137,7 @@
 	if(istype(target,/turf/wall))
 		if((!istype(target,/turf/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 			var/turf/wall/wall = target
-			wall.ChangeTurf(/turf/floor/plasteel)
+			wall.ChangeTurf(/turf/open/floor/plasteel)
 			new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
 			return 1
 	else if(istype(target,/atom/movable))

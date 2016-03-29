@@ -52,7 +52,7 @@ var/global/max_secret_rooms = 6
 	var/areapoints = 0
 	var/theme = "organharvest"
 	var/list/walltypes = list(/turf/wall=3, /turf/mineral/random=1)
-	var/list/floortypes = list(/turf/floor/plasteel)
+	var/list/floortypes = list(/turf/open/floor/plasteel)
 	var/list/treasureitems = list()//good stuff. only 1 is created per room.
 	var/list/fluffitems = list()//lesser items, to help fill out the room and enhance the theme.
 
@@ -63,7 +63,7 @@ var/global/max_secret_rooms = 6
 	switch(pick(possiblethemes))//what kind of room is this gonna be?
 		if("organharvest")
 			walltypes = list(/turf/wall/r_wall=2,/turf/wall=2,/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/floor/plasteel,/turf/floor/engine)
+			floortypes = list(/turf/open/floor/plasteel,/turf/open/floor/engine)
 			treasureitems = list(/mob/living/simple_animal/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/crate/critter=2, /mob/living/simple_animal/pet/cat/space=1)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/internal/appendix=2,/obj/structure/closet/crate/freezer=2,
 							  /obj/structure/table/optable=1,/obj/item/weapon/scalpel=1,/obj/item/weapon/storage/firstaid/regular=3,
@@ -72,7 +72,7 @@ var/global/max_secret_rooms = 6
 		if("cult")
 			theme = "cult"
 			walltypes = list(/turf/wall/cult=3,/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/floor/plasteel/cult)
+			floortypes = list(/turf/open/floor/plasteel/cult)
 			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
 			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
@@ -82,7 +82,7 @@ var/global/max_secret_rooms = 6
 		if("wizden")
 			theme = "wizden"
 			walltypes = list(/turf/wall/mineral/plasma=3,/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/floor/wood)
+			floortypes = list(/turf/open/floor/wood)
 			treasureitems = list(/obj/item/weapon/veilrender/vealrender=2, /obj/item/weapon/spellbook/oneuse/blind=1,/obj/item/clothing/head/wizard/red=2,
 							/obj/item/weapon/spellbook/oneuse/forcewall=1, /obj/item/weapon/spellbook/oneuse/smoke=1, /obj/structure/constructshell = 1, /obj/item/toy/katana=3,/obj/item/voodoo=3)
 			fluffitems = list(/obj/structure/safe/floor=1,/obj/structure/dresser=1,/obj/item/weapon/storage/belt/soulstone=1,/obj/item/trash/candle=3,
@@ -91,7 +91,7 @@ var/global/max_secret_rooms = 6
 		if("cavein")
 			theme = "cavein"
 			walltypes = list(/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/floor/plating/asteroid/airless, /turf/floor/plating/beach/sand)
+			floortypes = list(/turf/open/floor/plating/asteroid/airless, /turf/open/floor/plating/beach/sand)
 			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator/hyper=1,
 							/obj/item/weapon/resonator/upgraded=1, /obj/item/weapon/pickaxe/drill/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
@@ -100,14 +100,14 @@ var/global/max_secret_rooms = 6
 		if("xenoden")
 			theme = "xenoden"
 			walltypes = list(/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/floor/plating/asteroid/airless, /turf/floor/plating/beach/sand)
+			floortypes = list(/turf/open/floor/plating/asteroid/airless, /turf/open/floor/plating/beach/sand)
 			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
 			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
 
 		if("hitech")
 			theme = "hitech"
 			walltypes = list(/turf/wall/r_wall=5,/turf/mineral/random=1)
-			floortypes = list(/turf/floor/greengrid,/turf/floor/bluegrid)
+			floortypes = list(/turf/open/floor/greengrid,/turf/open/floor/bluegrid)
 			treasureitems = list(/obj/item/weapon/stock_parts/cell/hyper=1, /obj/machinery/chem_dispenser/constructable=1,/obj/machinery/computer/telescience=1, /obj/machinery/r_n_d/protolathe=1,
 								/obj/machinery/biogenerator=1)
 			fluffitems = list(/obj/structure/table/reinforced=2,/obj/item/weapon/stock_parts/scanning_module/phasic=3,
@@ -116,7 +116,7 @@ var/global/max_secret_rooms = 6
 
 		if("speakeasy")
 			theme = "speakeasy"
-			floortypes = list(/turf/floor/plasteel,/turf/floor/wood)
+			floortypes = list(/turf/open/floor/plasteel,/turf/open/floor/wood)
 			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/item/weapon/gun/projectile/revolver/doublebarrel=1,/obj/item/weapon/storage/backpack/satchel_flat=1,
 			/obj/machinery/reagentgrinder=2, /obj/machinery/computer/security/wooden_tv=4, /obj/machinery/vending/coffee=3)
 			fluffitems = list(/obj/structure/table/wood=2,/obj/structure/reagent_dispensers/beerkeg=1,/obj/item/stack/spacecash/c500=4,
@@ -136,7 +136,7 @@ var/global/max_secret_rooms = 6
 			x_size = 5
 			y_size = 5
 			walltypes = list(/turf/wall/mineral/clown)
-			floortypes= list(/turf/floor/engine)
+			floortypes= list(/turf/open/floor/engine)
 			treasureitems = list(/obj/item/weapon/spellbook=1,/obj/mecha/combat/marauder=1,/obj/machinery/wish_granter=1)
 			fluffitems = list(/obj/item/weapon/melee/energy/axe)*/
 
@@ -181,7 +181,7 @@ var/global/max_secret_rooms = 6
 			valid = 0
 			continue
 
-		if(locate(/turf/floor/plating/asteroid/airless) in range(5,T))//A little less strict than the other checks due to tunnels
+		if(locate(/turf/open/floor/plating/asteroid/airless) in range(5,T))//A little less strict than the other checks due to tunnels
 			valid = 0
 			continue
 
@@ -192,7 +192,7 @@ var/global/max_secret_rooms = 6
 
 	if(room)//time to fill it with stuff
 		var/list/emptyturfs = room["floors"]
-		for(var/turf/floor/A in emptyturfs) //remove pls doesn't fix problem
+		for(var/turf/open/floor/A in emptyturfs) //remove pls doesn't fix problem
 			if(istype(A))
 				spawn(2)
 					A.fullUpdateMineralOverlays()

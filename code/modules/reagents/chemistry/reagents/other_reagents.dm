@@ -991,9 +991,9 @@
 	color = "#C8A5DC"
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/floor/plating) || istype(T, /turf/floor/plasteel))
-		var/turf/floor/F = T
-		F.ChangeTurf(/turf/floor/carpet)
+	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.ChangeTurf(/turf/open/floor/carpet)
 	..()
 	return
 

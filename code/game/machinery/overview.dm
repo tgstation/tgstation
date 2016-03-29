@@ -55,14 +55,14 @@
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/floor")
+					if("/turf/open/floor")
 						colour = rgb(150,150,150)
-						var/turf/floor/TF = T
+						var/turf/open/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
 							colour = rgb(130,130,130)
 
-					if("/turf/floor/engine")
+					if("/turf/open/floor/engine")
 						colour = rgb(128,128,128)
 
 					if("/turf/wall")
@@ -203,7 +203,7 @@
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/floor", "/turf/floor/engine")
+					if("/turf/open/floor", "/turf/open/floor/engine")
 						var/datum/gas_mixture/environment = T.return_air()
 						var/turf_total = environment.total_moles()
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175

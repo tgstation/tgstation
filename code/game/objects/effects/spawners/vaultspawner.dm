@@ -22,7 +22,7 @@
 			if(i == lowBoundX || i == hiBoundX || j == lowBoundY || j == hiBoundY)
 				T.ChangeTurf(/turf/wall/vault)
 			else
-				T.ChangeTurf(/turf/floor/vault)
+				T.ChangeTurf(/turf/open/floor/vault)
 			T.icon_state = "[type]vault"
 
 	qdel(src)

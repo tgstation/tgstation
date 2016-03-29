@@ -50,22 +50,22 @@
 	. = 1
 
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/floor/plating))
-		var/turf/floor/plating/F = T
+	if(istype(T, /turf/open/floor/plating))
+		var/turf/open/floor/plating/F = T
 		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
-	if(istype(T, /turf/floor/))
-		var/turf/floor/F = T
+	if(istype(T, /turf/open/floor/))
+		var/turf/open/floor/F = T
 		if(prob(reac_volume/10))
 			F.make_plating()
 		else if(prob(reac_volume))
 			F.burn_tile()
-		if(istype(F, /turf/floor/))
+		if(istype(F, /turf/open/floor/))
 			PoolOrNew(/obj/effect/hotspot, F)
 	if(istype(T, /turf/wall/))
 		var/turf/wall/W = T
 		if(prob(reac_volume/10))
-			W.ChangeTurf(/turf/floor/plating)
+			W.ChangeTurf(/turf/open/floor/plating)
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))

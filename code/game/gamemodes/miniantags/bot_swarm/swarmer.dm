@@ -128,7 +128,7 @@
 /obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
 	return
 
-/turf/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
+/turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return
 
 /obj/machinery/atmospherics/swarmer_act()
@@ -286,8 +286,8 @@
 			var/cycle
 			for(cycle=0,cycle<100,cycle++)
 				var/random_location = locate(rand(37,202),rand(75,192),ZLEVEL_STATION)//Drunk dial a turf in the general ballpark of the station
-				if(istype(random_location, /turf/floor))
-					var/turf/floor/F = random_location
+				if(istype(random_location, /turf/open/floor))
+					var/turf/open/floor/F = random_location
 					if(F.air)
 						var/datum/gas_mixture/A = F.air
 						var/list/A_gases = A.gases

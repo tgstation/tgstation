@@ -70,7 +70,10 @@
 	smooth = SMOOTH_MORE
 	icon_state = "shuttle_nd"
 
-/turf/wall/shuttle/smooth/overspace	icon_state = "overspace"	fixed_underlay = list("space"=1)
+/turf/wall/shuttle/smooth/overspace
+	icon_state = "overspace"
+	fixed_underlay = list("space"=1)
+
 /turf/wall/smooth
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'

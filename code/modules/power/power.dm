@@ -120,7 +120,7 @@
 
 		var/turf/T = user.loc
 
-		if(T.intact || !istype(T, /turf/floor))
+		if(T.intact || !istype(T, /turf/open/floor))
 			return
 
 		if(get_dist(src, user) > 1)

@@ -49,7 +49,7 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-	ChangeTurf(/turf/floor/plating)
+	ChangeTurf(/turf/open/floor/plating)
 
 /turf/wall/proc/break_wall()
 	builtin_sheet.amount = 2
@@ -229,7 +229,7 @@
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 	if(thermite >= 50)
-		var/turf/floor/F = ChangeTurf(/turf/floor/plating)
+		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
 		F.burn_tile()
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)

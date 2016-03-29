@@ -330,7 +330,7 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
-	var/list/validSurfaces = list(/turf/floor)
+	var/list/validSurfaces = list(/turf/open/floor)
 	var/gang = 0 //For marking territory
 	var/edible = 1
 

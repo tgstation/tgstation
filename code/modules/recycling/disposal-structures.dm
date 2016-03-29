@@ -256,8 +256,8 @@
 
 	var/turf/target
 
-	if(istype(T, /turf/floor)) //intact floor, pop the tile
-		var/turf/floor/myturf = T
+	if(istype(T, /turf/open/floor)) //intact floor, pop the tile
+		var/turf/open/floor/myturf = T
 		if(myturf.builtin_tile)
 			myturf.builtin_tile.loc = T
 			myturf.builtin_tile = null

@@ -123,8 +123,9 @@
 
 /turf/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new /obj/structure/girder(src)
-	src.ChangeTurf(/turf/floor/plasteel)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
+	src.ChangeTurf(/turf/open/floor/plasteel)
+	var/turf/open/T = src
+	T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
 
 /turf/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
 	if(exposed_temperature > 300)

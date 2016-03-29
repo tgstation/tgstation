@@ -69,7 +69,7 @@
 	hue = "#aa77aa"
 	quality = POSITIVE
 
-/turf/floor/vines
+/turf/open/floor/vines
 	color = "#aa77aa"
 	icon_state = "vinefloor"
 	broken_states = list()
@@ -77,35 +77,35 @@
 
 //All of this shit is useless for vines
 
-/turf/floor/vines/attackby()
+/turf/open/floor/vines/attackby()
 	return
 
-/turf/floor/vines/burn_tile()
+/turf/open/floor/vines/burn_tile()
 	return
 
-/turf/floor/vines/break_tile()
+/turf/open/floor/vines/break_tile()
 	return
 
-/turf/floor/vines/make_plating()
+/turf/open/floor/vines/make_plating()
 	return
 
-/turf/floor/vines/break_tile_to_plating()
+/turf/open/floor/vines/break_tile_to_plating()
 	return
 
-/turf/floor/vines/ex_act(severity, target)
+/turf/open/floor/vines/ex_act(severity, target)
 	if(severity < 3 || target == src)
 		ChangeTurf(src.baseturf)
 
-/turf/floor/vines/narsie_act()
+/turf/open/floor/vines/narsie_act()
 	if(prob(20))
 		ChangeTurf(src.baseturf) //nar sie eats this shit
 
-/turf/floor/vines/singularity_pull(S, current_size)
+/turf/open/floor/vines/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			ChangeTurf(src.baseturf)
 
-/turf/floor/vines/ChangeTurf(turf/floor/T)
+/turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
 	for(var/obj/effect/spacevine/SV in src)
 		qdel(SV)
 	..()
@@ -114,15 +114,15 @@
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/space))
 		var/turf/spaceturf = holder.loc
-		spaceturf.ChangeTurf(/turf/floor/vines)
+		spaceturf.ChangeTurf(/turf/open/floor/vines)
 
 /datum/spacevine_mutation/space_covering/process_mutation(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/space))
 		var/turf/spaceturf = holder.loc
-		spaceturf.ChangeTurf(/turf/floor/vines)
+		spaceturf.ChangeTurf(/turf/open/floor/vines)
 
 /datum/spacevine_mutation/space_covering/on_death(obj/effect/spacevine/holder)
-	if(istype(holder.loc, /turf/floor/vines))
+	if(istype(holder.loc, /turf/open/floor/vines))
 		var/turf/spaceturf = holder.loc
 		spawn(0)
 			spaceturf.ChangeTurf(/turf/space)
@@ -225,7 +225,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/floor/T = holder.loc
+	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases["o2"])
@@ -240,7 +240,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/floor/T = holder.loc
+	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases["n2"])
@@ -255,7 +255,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/floor/T = holder.loc
+	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases["co2"])
@@ -270,7 +270,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/effect/spacevine/holder)
-	var/turf/floor/T = holder.loc
+	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases["plasma"])

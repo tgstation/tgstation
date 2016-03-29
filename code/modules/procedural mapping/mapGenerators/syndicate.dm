@@ -1,10 +1,10 @@
 // Modules
 
-/turf/floor/plasteel/shuttle/red/syndicate
+/turf/open/floor/plasteel/shuttle/red/syndicate
 	name = "floor" //Not Brig Floor
 
 /datum/mapGeneratorModule/bottomLayer/syndieFloor
-	spawnableTurfs = list(/turf/floor/plasteel/shuttle/red/syndicate = 100)
+	spawnableTurfs = list(/turf/open/floor/plasteel/shuttle/red/syndicate = 100)
 
 /datum/mapGeneratorModule/border/syndieWalls
 	spawnableAtoms = list()

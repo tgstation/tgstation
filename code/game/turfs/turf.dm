@@ -1,23 +1,10 @@
 /turf
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/open/floors.dmi'
 	level = 1
 
-	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
 	var/baseturf = /turf/space
 
-	//Properties for open tiles (/floor)
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-
-
-	//Properties for airtight tiles (/wall)
-	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
-
-	//Properties for both
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
@@ -30,21 +17,23 @@
 
 	var/list/proximity_checkers = list()
 
-	var/wet = 0
-	var/image/wet_overlay = null
 	var/image/obscured	//camerachunks
 
 	var/thermite = 0
 
 /turf/New()
 	..()
+
+	levelupdate()
+	if(smooth)
+		smooth_icon(src)
+	visibilityChanged()
+
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
 /turf/Destroy()
-	// Adds the adjacent turfs to the current atmos processing
-	for(var/turf/T in atmos_adjacent_turfs)
-		SSair.add_to_active(T)
+	visibilityChanged()
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -145,57 +134,61 @@
 	if(istype(W, /turf))
 		W:Assimilate_Air()
 		W.RemoveLattice()
-	W.levelupdate()
-	W.CalculateAdjacentTurfs()
+	W.AfterChange()
+	return W
+
+/turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
+	levelupdate()
+	CalculateAdjacentTurfs()
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
 			C.Deconstruct()
 
 	smooth_icon_neighbors(src)
-	return W
+
+/turf/open/AfterChange()
+	..()
+	RemoveLattice()
+	Assimilate_Air()
 
 //////Assimilate Air//////
-/turf/proc/Assimilate_Air()
-	if(air)
-		var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
-		var/list/total_gases = total.gases
-		var/turf_count = 0
+/turf/open/proc/Assimilate_Air()
+	if(blocks_air)
+		return
 
-		for(var/direction in cardinal)//Only use cardinals to cut down on lag
-			var/turf/T = get_step(src,direction)
+	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
+	var/list/total_gases = total.gases
+	var/turf_count = atmos_adjacent_turfs.len
 
-			if(istype(T,/turf/space))//Counted as no air
-				turf_count++//Considered a valid turf for air calcs
-				continue
+	for(var/T in atmos_adjacent_turfs)
+		var/turf/open/S = T
+		var/list/S_gases = S.air.gases
+		for(var/id in S_gases)
+			total.assert_gas(id)
+			total_gases[id][MOLES] += S_gases[id][MOLES]
+		total.temperature += S.air.temperature
 
-			if(istype(T,/turf/floor))
-				var/turf/S = T
-				if(S.air)//Add the air's contents to the holders
-					var/list/S_gases = S.air.gases
-					for(var/id in S_gases)
-						total.assert_gas(id)
-						total_gases[id][MOLES] += S_gases[id][MOLES]
-					total.temperature += S.air.temperature
-				turf_count++
+	air.copy_from(total)
 
-		air.copy_from(total)
-		if(turf_count) //if there weren't any open turfs, no need to update.
-			var/list/air_gases = air.gases
-			for(var/id in air_gases)
-				air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+	if(!turf_count) //if there weren't any open turfs, no need to update.
+		return
 
-			air.temperature /= turf_count
+	var/list/air_gases = air.gases
+	for(var/id in air_gases)
+		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
-		SSair.add_to_active(src)
+	air.temperature /= turf_count
+
+	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(src.baseturf)
-	new /obj/structure/lattice(locate(src.x, src.y, src.z) )
+	ChangeTurf(baseturf)
+	new /obj/structure/lattice(locate(x, y, z))
 
 /turf/proc/ReplaceWithCatwalk()
-	src.ChangeTurf(src.baseturf)
-	new /obj/structure/lattice/catwalk(locate(src.x, src.y, src.z) )
+	ChangeTurf(baseturf)
+	new /obj/structure/lattice/catwalk(locate(x, y, z))
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
@@ -234,55 +227,9 @@
 //  for bots and anything else that only moves in cardinal dirs.
 /turf/proc/Distance_cardinal(turf/T)
 	if(!src || !T) return 0
-	return abs(src.x - T.x) + abs(src.y - T.y)
+	return abs(x - T.x) + abs(y - T.y)
 
 ////////////////////////////////////////////////////
-
-/turf/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
-	if(!forced)
-		return
-	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
-
-/turf/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
-	if(has_gravity(src))
-		var/obj/buckled_obj
-		var/oldlying = C.lying
-		if(C.buckled)
-			buckled_obj = C.buckled
-			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
-				return 0
-		else
-			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
-				return 0
-			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
-				return 0
-
-		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
-
-		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
-		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-
-		C.accident(C.l_hand)
-		C.accident(C.r_hand)
-
-		var/olddir = C.dir
-		C.Stun(s_amount)
-		C.Weaken(w_amount)
-		C.stop_pulling()
-		if(buckled_obj)
-			buckled_obj.unbuckle_mob(C)
-			step(buckled_obj, olddir)
-		else if(lube&SLIDE)
-			for(var/i=1, i<5, i++)
-				spawn (i)
-					step(C, olddir)
-					C.spin(1,1)
-		if(C.lying != oldlying && lube) //did we actually fall?
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-			C.apply_damage(5, BRUTE, dam_zone)
-		return 1
 
 /turf/singularity_act()
 	if(intact)
@@ -305,33 +252,6 @@
 		cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
-
-/turf/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice
-	if(wet >= wet_setting)
-		return
-	wet = wet_setting
-	if(wet_setting != TURF_DRY)
-		if(wet_overlay)
-			overlays -= wet_overlay
-			wet_overlay = null
-		var/turf/floor/F = src
-		if(istype(F))
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
-		else
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
-		overlays += wet_overlay
-
-	spawn(rand(790, 820)) // Purely so for visual effect
-		if(!istype(src, /turf)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
-			return
-		MakeDry(wet_setting)
-
-/turf/proc/MakeDry(wet_setting = TURF_WET_WATER)
-	if(wet > wet_setting)
-		return
-	wet = TURF_DRY
-	if(wet_overlay)
-		overlays -= wet_overlay
 
 /turf/proc/is_shielded()
 

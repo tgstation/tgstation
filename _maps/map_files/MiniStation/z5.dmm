@@ -3,7 +3,7 @@
 "c" = (/turf/mineral/random/high_chance,/area/space)
 "d" = (/turf/mineral,/area/space)
 "e" = (/turf/mineral/random,/area/space)
-"f" = (/turf/floor/plating/asteroid/airless/cave,/area/space)
+"f" = (/turf/open/floor/plating/asteroid/airless/cave,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

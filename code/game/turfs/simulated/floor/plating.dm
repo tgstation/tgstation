@@ -8,24 +8,24 @@
 // note that plating and engine floor do not call their parent attackby, unlike other flooring
 // this is done in order to avoid inheriting the crowbar attackby
 
-/turf/floor/plating
+/turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
 
-/turf/floor/plating/New()
+/turf/open/floor/plating/New()
 	..()
 	icon_plating = icon_state
 
-/turf/floor/plating/update_icon()
+/turf/open/floor/plating/update_icon()
 	if(!..())
 		return
 	if(!broken && !burnt)
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
-/turf/floor/plating/attackby(obj/item/C, mob/user, params)
+/turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
@@ -39,8 +39,8 @@
 		else
 			user << "<span class='notice'>You begin reinforcing the floor...</span>"
 			if(do_after(user, 30, target = src))
-				if (R.get_amount() >= 2 && !istype(src, /turf/floor/engine))
-					ChangeTurf(/turf/floor/engine)
+				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
+					ChangeTurf(/turf/open/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					user << "<span class='notice'>You reinforce the floor.</span>"
@@ -50,10 +50,10 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/floor/T = ChangeTurf(W.turf_type)
+			var/turf/open/floor/T = ChangeTurf(W.turf_type)
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
-				var/turf/floor/light/F = T
+				var/turf/open/floor/light/F = T
 				F.state = L.state
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
@@ -68,45 +68,43 @@
 				burnt = 0
 				broken = 0
 
-/turf/floor/plating/airless
+/turf/open/floor/plating/airless
 	icon_state = "plating"
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+	initial_gas_mix = "o2=0;n2=0;TEMP=[TCMB]"
 
-/turf/floor/engine
+/turf/open/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
-/turf/floor/engine/break_tile()
+/turf/open/floor/engine/break_tile()
 	return //unbreakable
 
-/turf/floor/engine/burn_tile()
+/turf/open/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/floor/engine/make_plating(force = 0)
+/turf/open/floor/engine/make_plating(force = 0)
 	if(force)
 		..()
 	return //unplateable
 
-/turf/floor/engine/attackby(obj/item/weapon/C, mob/user, params)
+/turf/open/floor/engine/attackby(obj/item/weapon/C, mob/user, params)
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30/C.toolspeed, target = src))
-			if(!istype(src, /turf/floor/engine))
+			if(!istype(src, /turf/open/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
-			ChangeTurf(/turf/floor/plating)
+			ChangeTurf(/turf/open/floor/plating)
 			return
 
 
-/turf/floor/engine/ex_act(severity,target)
+/turf/open/floor/engine/ex_act(severity,target)
 	switch(severity)
 		if(1)
 			if(prob(80))
@@ -119,10 +117,10 @@
 			if(prob(50))
 				make_plating(1)
 
-/turf/floor/engine/n2o
+/turf/open/floor/engine/n2o
 	name = "n2o floor"
 
-/turf/floor/engine/n2o/New()
+/turf/open/floor/engine/n2o/New()
 	..()
 
 	var/datum/gas_mixture/adding = new
@@ -132,18 +130,18 @@
 
 	assume_air(adding)
 
-/turf/floor/engine/cult
+/turf/open/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "cult"
 
-/turf/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
+/turf/open/floor/engine/cult/New()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
 	..()
 
-/turf/floor/engine/cult/narsie_act()
+/turf/open/floor/engine/cult/narsie_act()
 	return
 
-/turf/floor/engine/singularity_pull(S, current_size)
+/turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(builtin_tile)
 			if(prob(30))
@@ -152,54 +150,52 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/floor/engine/vacuum
+/turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/floor/plasteel/airless
+/turf/open/floor/plasteel/airless
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
 
-/turf/floor/plating/abductor
+/turf/open/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
 
-/turf/floor/plating/abductor/New()
+/turf/open/floor/plating/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
 ///LAVA
 
-/turf/floor/plating/lava
+/turf/open/floor/plating/lava
 	name = "lava"
 	icon_state = "lava"
-	baseturf = /turf/floor/plating/lava //lava all the way down
+	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
 	var/processing = 0
 	luminosity = 1
 
-/turf/floor/plating/lava/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+/turf/open/floor/plating/lava/airless
+	initial_gas_mix = "o2=0;n2=0;TEMP=[TCMB]"
 
-/turf/floor/plating/lava/Entered(atom/movable/AM)
+/turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
 	if(!processing)
 		processing = 1
 		SSobj.processing |= src
 
-/turf/floor/plating/lava/process()
+/turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
 		processing = 0
 		SSobj.processing.Remove(src)
 
 
-/turf/floor/plating/lava/proc/burn_stuff()
+/turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
 	for(var/thing in contents)
 		if(istype(thing, /obj))
@@ -223,27 +219,25 @@
 				L.IgniteMob()
 
 
-/turf/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+/turf/open/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
 
-/turf/floor/plating/lava/break_tile()
+/turf/open/floor/plating/lava/break_tile()
 	return
 
-/turf/floor/plating/lava/burn_tile()
+/turf/open/floor/plating/lava/burn_tile()
 	return
 
-/turf/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
+/turf/open/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
 
-/turf/floor/plating/lava/smooth
+/turf/open/floor/plating/lava/smooth
 	name = "lava"
-	baseturf = /turf/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth
 	smooth = SMOOTH_TRUE
-	icon = 'icons/turf/floors/lava.dmi'
+	icon = 'icons/turf/open/floors/lava.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/wall, /turf/mineral, /turf/floor/plating/lava/smooth)
+	canSmoothWith = list(/turf/wall, /turf/mineral, /turf/open/floor/plating/lava/smooth)
 
-/turf/floor/plating/lava/smooth/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+/turf/open/floor/plating/lava/smooth/airless
+	initial_gas_mix = "o2=0;n2=0;TEMP=[TCMB]"

@@ -38,7 +38,7 @@
 #define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself
 #define SMOOTH_DIAGONAL	4 //if atom should smooth diagonally, this should be present in 'smooth' var
 
-#define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
+#define DEFAULT_UNDERLAY_ICON 			'icons/turf/open/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 #define DEFAULT_UNDERLAY_IMAGE			image(DEFAULT_UNDERLAY_ICON, DEFAULT_UNDERLAY_ICON_STATE)
 

@@ -19,7 +19,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/turf/floor/engine/cult)
+	summon_type = list(/turf/open/floor/engine/cult)
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
 

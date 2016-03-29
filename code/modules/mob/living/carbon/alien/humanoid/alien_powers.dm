@@ -146,7 +146,7 @@ Doesn't work on other aliens/AI.*/
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 			// R FLOOR
-			if(istype(T, /turf/floor/engine))
+			if(istype(T, /turf/open/floor/engine))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		else// Not a type we can acid.

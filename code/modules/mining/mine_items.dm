@@ -198,7 +198,7 @@
 	var/x_size = 5
 	var/y_size = 5
 	var/list/walltypes = list(/turf/wall)
-	var/floor_type = /turf/floor/wood
+	var/floor_type = /turf/open/floor/wood
 	var/room
 
 	//Center the room/spawn it
@@ -238,7 +238,7 @@
 	var/area/survivalpod/L = new /area/survivalpod
 
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
-	threshhold.ChangeTurf(/turf/floor/wood)
+	threshhold.ChangeTurf(/turf/open/floor/wood)
 	threshhold.blocks_air = 1 //So the air doesn't leak out
 	threshhold.oxygen = 21
 	threshhold.temperature = 293.15
@@ -251,7 +251,7 @@
 	threshhold.overlays.Cut()
 
 	var/list/turfs = room["floors"]
-	for(var/turf/floor/A in turfs)
+	for(var/turf/open/floor/A in turfs)
 		SSair.remove_from_active(A)
 		A.oxygen = 21
 		A.temperature = 293.15

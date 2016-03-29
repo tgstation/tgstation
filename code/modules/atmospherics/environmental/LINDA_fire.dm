@@ -7,7 +7,7 @@
 	return
 
 
-/turf/hotspot_expose(exposed_temperature, exposed_volume, soh)
+/turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
@@ -66,7 +66,7 @@
 
 
 /obj/effect/hotspot/proc/perform_exposure()
-	var/turf/location = loc
+	var/turf/open/location = loc
 	if(!istype(location) || !(location.air))
 		return 0
 
@@ -99,7 +99,7 @@
 		just_spawned = 0
 		return 0
 
-	var/turf/location = loc
+	var/turf/open/location = loc
 	if(!istype(location))
 		qdel(src)
 		return
@@ -151,7 +151,7 @@
 	SSair.hotspots -= src
 	DestroyTurf()
 	if(istype(loc, /turf))
-		var/turf/T = loc
+		var/turf/open/T = loc
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null

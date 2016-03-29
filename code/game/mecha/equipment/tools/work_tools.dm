@@ -221,10 +221,10 @@
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ChangeTurf(/turf/floor/plating)
+					W.ChangeTurf(/turf/open/floor/plating)
 					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
-			else if (istype(target, /turf/floor))
-				var/turf/floor/F = target
+			else if (istype(target, /turf/open/floor))
+				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -241,18 +241,18 @@
 				var/turf/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.ChangeTurf(/turf/floor/plating)
+					S.ChangeTurf(/turf/open/floor/plating)
 					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
-			else if(istype(target, /turf/floor))
-				var/turf/floor/F = target
+			else if(istype(target, /turf/open/floor))
+				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
 					F.ChangeTurf(/turf/wall)
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
-			if(istype(target, /turf/floor))
+			if(istype(target, /turf/open/floor))
 				occupant_message("Building Airlock...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -385,9 +385,9 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	if(istype(new_turf, /turf/floor))
-		var/turf/floor/T = new_turf
-		if(!istype(T, /turf/floor/plating))
+	if(istype(new_turf, /turf/open/floor))
+		var/turf/open/floor/T = new_turf
+		if(!istype(T, /turf/open/floor/plating))
 			if(!T.broken && !T.burnt)
 				new T.floor_tile(T)
 			T.make_plating()

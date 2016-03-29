@@ -8,7 +8,7 @@
 	layer = 2.3 //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = list(/obj/structure/lattice,
-	/turf/floor,
+	/turf/open/floor,
 	/turf/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE

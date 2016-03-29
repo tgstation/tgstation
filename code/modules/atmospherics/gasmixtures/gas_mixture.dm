@@ -279,6 +279,10 @@ var/list/gaslist_cache = null
 	//Copies all gas info from the turf into the gas list along with temperature
 	//Returns: 1 if we are mutable, 0 otherwise
 
+/datum/gas_mixture/proc/parse_gas_string(gas_string)
+	//Copies variables from a particularly formatted string.
+	//Returns: 1 if we are mutable, 0 otherwise
+
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 	//Returns: amount of gas exchanged (+ if sharer received)
@@ -384,23 +388,42 @@ var/list/gaslist_cache = null
 	return 1
 
 /datum/gas_mixture/copy_from_turf(turf/model)
-	var/list/cached_gases = gases
+	parse_gas_string(model.initial_gas_mix)
 
-	temperature = model.temperature
-	if(model.oxygen)
-		assert_gas("o2")
-		cached_gases["o2"][MOLES]		= model.oxygen
-	if(model.nitrogen)
-		assert_gas("n2")
-		cached_gases["n2"][MOLES]		= model.nitrogen
-	if(model.toxins)
-		assert_gas("plasma")
-		cached_gases["plasma"][MOLES]	= model.toxins
-	if(model.carbon_dioxide)
-		assert_gas("co2")
-		cached_gases["co2"][MOLES]		= model.carbon_dioxide
-	//remove all gases not handled by turfs
-	cached_gases &= hardcoded_gases
+	//acounts for changes in temperature
+	var/turf/model_parent = model.parent_type
+	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
+		temperature = model.temperature
+
+	return 1
+
+/datum/gas_mixture/parse_gas_string(gas_string)
+	//global so that we don't have to make them more than once
+	var/global/regex/R_gas_id
+	var/global/regex/R_gas_value
+	if(!R_gas_id)
+		R_gas_id = regex(".+?(?=\\=)") //matches all characters before equal sign
+	if(!R_gas_value)
+		R_gas_value = regex("(?<=\\=).*") //matches all characters after equal sign
+
+	var/list/values = splittext(gas_string, ";")
+	var/list/gases = list()
+	//populate an associative list of gas -> moles by parsing the string
+	while(values.len)
+		var/value = values[1]
+		values.Cut(1,2)
+		gases[R_gas_id.Find(value)] = R_gas_value.Find(value)
+
+	//deal with the specific case of temperature
+	if("TEMP" in gases)
+		temperature = gases["TEMP"]
+		gases -= "TEMP"
+
+	var/list/cached_gases = src.gases
+	assert_gases(arglist(gases))
+	cached_gases &= gases
+	for(var/id in gases)
+		cached_gases[id][MOLES] = gases[id]
 
 	return 1
 

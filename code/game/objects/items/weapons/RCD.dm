@@ -308,12 +308,12 @@ RCD
 				if(useResource(floorcost, user))
 					user << "<span class='notice'>You start building floor...</span>"
 					activate()
-					S.ChangeTurf(/turf/floor/plating)
+					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
 
-			if(istype(A, /turf/floor))
-				var/turf/floor/F = A
+			if(istype(A, /turf/open/floor))
+				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -325,7 +325,7 @@ RCD
 				return 0
 
 		if(2)
-			if(istype(A, /turf/floor))
+			if(istype(A, /turf/open/floor))
 				if(checkResource(airlockcost, user))
 					var/door_check = 1
 					for(var/obj/machinery/door/D in A)
@@ -375,13 +375,13 @@ RCD
 					if(do_after(user, deconwalldelay, target = A))
 						if(!useResource(deconwallcost, user)) return 0
 						activate()
-						W.ChangeTurf(/turf/floor/plating)
+						W.ChangeTurf(/turf/open/floor/plating)
 						return 1
 				return 0
 
-			if(istype(A, /turf/floor))
-				var/turf/floor/F = A
-				if(istype(F, /turf/floor/engine) && !canRturf)
+			if(istype(A, /turf/open/floor))
+				var/turf/open/floor/F = A
+				if(istype(F, /turf/open/floor/engine) && !canRturf)
 					return 0
 				if(istype(F, F.baseturf))
 					user << "<span class='notice'>You can't dig any deeper!</span>"
@@ -430,7 +430,7 @@ RCD
 					return 0
 
 		if (4)
-			if(istype(A, /turf/floor))
+			if(istype(A, /turf/open/floor))
 				if(checkResource(grillecost, user))
 					for(var/obj/structure/grille/GRILLE in A)
 						user << "<span class='warning'>There is already a grille there!</span>"

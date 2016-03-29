@@ -117,20 +117,21 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_high_pressure_delta()
-	for(var/turf/T in high_pressure_delta)
+	for(var/O in high_pressure_delta)
+		var/turf/open/T = O
 		T.high_pressure_movements()
 		T.pressure_difference = 0
 	high_pressure_delta.len = 0
 
-
 /datum/subsystem/air/proc/process_active_turfs()
 	//cache for sanic speed
 	var/fire_count = times_fired
-	for(var/turf/T in active_turfs)
+	for(var/O in active_turfs)
+		var/turf/open/T = O
 		T.process_cell(fire_count)
 
 
-/datum/subsystem/air/proc/remove_from_active(turf/T)
+/datum/subsystem/air/proc/remove_from_active(turf/open/T)
 	if(istype(T))
 		T.excited = 0
 		active_turfs -= T
@@ -138,7 +139,7 @@ var/datum/subsystem/air/SSair
 			T.excited_group.garbage_collect()
 
 
-/datum/subsystem/air/proc/add_to_active(turf/T, blockchanges = 1)
+/datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
@@ -168,14 +169,16 @@ var/datum/subsystem/air/SSair
 
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 
-	for(var/turf/T in turfs_to_init)
-		T.CalculateAdjacentTurfs()
-		T.excited = 0
-		active_turfs -= T
+	for(var/turf/t in turfs_to_init)
+		t.CalculateAdjacentTurfs()
+		active_turfs -= t
 
-		if(T.blocks_air)
+		if(t.blocks_air)
 			continue
 
+		var/turf/open/T = t
+
+		T.excited = 0
 		T.update_visuals()
 
 		for(var/tile in T.atmos_adjacent_turfs)
