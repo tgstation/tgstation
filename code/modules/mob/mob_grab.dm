@@ -32,6 +32,11 @@
 	hud.name = "reinforce grab"
 	hud.master = src
 
+/obj/item/weapon/grab/preattack()
+	if(!assailant || !affecting) return 1 //Cancel attack
+	if(!assailant.Adjacent(affecting)) return 1 //Cancel attack is assailant isn't near affected mob
+
+	return ..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/toss()
@@ -53,7 +58,8 @@
 
 
 /obj/item/weapon/grab/process()
-	confirm()
+	if(!confirm()) return
+
 	if(!assailant)
 		affecting = null
 		returnToPool(src)

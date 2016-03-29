@@ -1,0 +1,5 @@
+author: Unid
+
+delete-after: True
+
+- bugfix: Fixed being able to table somebody while not being adjacent to them.
