@@ -173,7 +173,7 @@
 	icon_state = ".50"
 
 /obj/item/projectile/bullet/sniper/accelerator
-	icon_state = "gaussweak"
+	icon_state = "scatterlaser"
 	name = "accelerator round"
 	damage = 5
 	stun = 0
@@ -182,13 +182,12 @@
 
 /obj/item/projectile/bullet/sniper/accelerator/Range()
 	..()
-	damage += 5
-	if(damage > 40)
-		icon_state = "gaussstrong"
+	damage += 7
+	transform *= TransformUsingVariable(1.2 , 100)
+	if(damage > 42)
 		breakthings = TRUE
-	else if(damage > 25)
-		icon_state = "gauss"
 
 /obj/item/projectile/bullet/sniper/accelerator/laser
 	name = "accelerator beam"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage_type = BURN
