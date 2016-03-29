@@ -249,7 +249,6 @@
 		var/message
 		switch(impact_point)
 			if("Head") //oh boy
-				message = "[C.name] slips backwards straight onto their head! You hear a"
 				if(istype(C.head,/obj/item/clothing/head))
 					var/obj/item/clothing/head/H = C.head
 					if(H.armor["melee"])
@@ -281,7 +280,7 @@
 				C.apply_damage(5, BRUTE, "chest") //Where's my ass damage zone?
 
 			if("Hands")
-				message = "[C.name] slips forwards, holding on their hands to catch their fall!"
+				message = "[C.name] slips forwards, holding out their hands to catch their fall!"
 				C.accident(C.l_hand)
 				C.accident(C.r_hand)
 
