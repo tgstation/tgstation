@@ -240,6 +240,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[GLOVES_LAYER]	= standing
 
 	else
+		if(dna && istype(dna.species, /datum/species/pony))
+			return
 		if(blood_DNA)
 			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands", "layer"=-GLOVES_LAYER)
 
