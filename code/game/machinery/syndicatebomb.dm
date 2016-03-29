@@ -166,6 +166,20 @@
 /obj/machinery/syndicatebomb/badmin/varplosion
 	payload = /obj/item/weapon/bombcore/badmin/explosion/
 
+/obj/machinery/syndicatebomb/chemical
+	name = "chemical bomb"
+	icon_state = "chem-bomb"
+	desc = "A specialized explosive device designed for application of chemical compounds over a very large area. Payload must be loaded before usage."
+	payload = /obj/item/weapon/bombcore/chemical/
+
+/obj/machinery/syndicatebomb/chemical/New()
+	new /obj/item/weapon/paper/chemical_bomb(loc)
+	..()
+
+/obj/item/weapon/paper/chemical_bomb
+	name = "payload removal instructions"
+	info = "Instructions for removing payload from an explosive device: Remove panel using a screwdriver. Cut all wires. Carefully remove payload using a crowbar. CAUTION: Do not attempt to remove a live payload, as doing so may cause the explosive device to detonate."
+
 ///Bomb Cores///
 
 /obj/item/weapon/bombcore
@@ -291,6 +305,117 @@
 		log_game(adminlog)
 	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
 	qdel(src)
+
+#define MAX_BEAKERS 4
+#define SPREAD_RANGE 7
+
+/obj/item/weapon/bombcore/chemical
+	name = "chemical payload"
+	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. It is able to hold up to four chemical containers, and must be loaded before use."
+	origin_tech = "combat=4;materials=3"
+	icon_state = "chemcore"
+	var/list/beakers = list()
+
+/obj/item/weapon/bombcore/chemical/New()
+	..()
+	create_reagents(500*MAX_BEAKERS)
+
+/obj/item/weapon/bombcore/chemical/detonate()
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
+
+	if(!reagents)
+		return
+
+	var/has_reagents
+	for(var/obj/item/I in beakers)
+		if(I.reagents.total_volume)
+			has_reagents = 1
+
+	if(!has_reagents)
+		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		return
+
+	playsound(loc, 'sound/effects/bamf.ogg', 75, 1)
+
+	mix_reagents()
+
+	if(reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
+		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
+		steam.set_up(10, 0, get_turf(src))
+		steam.attach(src)
+		steam.start()
+
+		var/list/viewable = view(SPREAD_RANGE, get_turf(src))
+		var/list/accessible = can_flood_from(get_turf(src), SPREAD_RANGE)
+		var/list/reactable = accessible
+		var/mycontents = GetAllContents()
+		for(var/turf/T in accessible)
+			for(var/atom/A in T.GetAllContents())
+				if(A in mycontents) continue
+				if(!(A in viewable)) continue
+				reactable |= A
+		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+			qdel(src)
+			return
+		var/fraction = 1/reactable.len
+		for(var/atom/A in reactable)
+			reagents.reaction(A, TOUCH, fraction)
+
+	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+		qdel(loc)
+	qdel(src)
+
+/obj/item/weapon/bombcore/chemical/proc/mix_reagents()
+	var/total_temp
+	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		G.reagents.trans_to(src, G.reagents.total_volume)
+		total_temp += G.reagents.chem_temp
+	reagents.chem_temp = total_temp
+
+/obj/item/weapon/bombcore/chemical/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
+	var/list/reachable = list(myloc)
+	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
+		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
+			if(T in reachable) continue
+			for(var/turf/NT in orange(1, T))
+				if(!(NT in reachable)) continue
+				if(!(get_dir(T,NT) in cardinal)) continue
+				if(!NT.CanAtmosPass(T)) continue
+				reachable |= T
+				break
+	return reachable
+
+/obj/item/weapon/bombcore/chemical/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/crowbar) && beakers.len > 0)
+		for (var/obj/item/B in beakers)
+			B.loc = loc
+			beakers -= B
+		beakers = null
+		return
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) || istype(I, /obj/item/weapon/reagent_containers/glass/bottle))
+		if(beakers.len < MAX_BEAKERS)
+			if(!user.drop_item())
+				return
+			beakers += I
+			user << "<span class='notice'>You load [src] with [I].</span>"
+			I.loc = src
+		else
+			user << "<span class='notice'>The [I] wont fit! The [src] can only hold up to [MAX_BEAKERS] containers.</span>"
+			return
+	..()
+
+#undef MAX_BEAKERS
+#undef SPREAD_RANGE
 
 ///Syndicate Detonator (aka the big red button)///
 
