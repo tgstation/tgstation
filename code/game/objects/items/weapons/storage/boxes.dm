@@ -639,7 +639,7 @@
 			if(NANOTRASEN)
 				desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
 			if(SYNDI)
-				desc = "The design on this paper sack is a remnant of the secrative 'SyndieSnacks' program."
+				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
 			if(HEART)
 				desc = "A paper sack with a heart etched onto the side."
 			if(SMILE)
