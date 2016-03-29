@@ -135,7 +135,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_DIAMOND = 1000)
 	reliability = 79
-	build_path = /obj/machinery/chembomb
+	build_path = /obj/machinery/syndicatebomb/chemical
 	category = list("Weapons")
 
 /datum/design/smg
