@@ -15,6 +15,7 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -593,3 +594,73 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+#define NODESIGN "None"
+#define NANOTRASEN "NanotrasenStandard"
+#define SYNDI "SyndiSnacks"
+#define HEART "Heart"
+#define SMILE "SmileyFace"
+
+/obj/item/weapon/storage/box/papersack
+	name = "paper sack"
+	desc = "A sack neatly crafted out of paper."
+	icon_state = "paperbag_None"
+	item_state = "paperbag_None"
+	burn_state = FLAMMABLE
+	foldable = null
+	var/design = NODESIGN
+
+/obj/item/weapon/storage/box/papersack/update_icon()
+	if(contents.len == 0)
+		icon_state = "[item_state]"
+	else icon_state = "[item_state]_closed"
+
+/obj/item/weapon/storage/box/papersack/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/pen))
+		//if a pen is used on the sack, dialogue to change its design appears
+		if(contents.len)
+			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			return
+		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
+		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
+		if(get_dist(usr, src) > 1)
+			usr << "<span class='warning'>You have moved too far away!</span>"
+			return
+		var/choice = designs.Find(switchDesign)
+		if(design == designs[choice] || designs[choice] == "Cancel")
+			return 0
+		usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		design = designs[choice]
+		icon_state = "paperbag_[design]"
+		item_state = "paperbag_[design]"
+		switch(designs[choice])
+			if(NODESIGN)
+				desc = "A sack neatly crafted out of paper."
+			if(NANOTRASEN)
+				desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
+			if(SYNDI)
+				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
+			if(HEART)
+				desc = "A paper sack with a heart etched onto the side."
+			if(SMILE)
+				desc = "A paper sack with a crude smile etched onto the side."
+		return 0
+	else if(W.is_sharp())
+		if(!contents.len)
+			if(item_state == "paperbag_None")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
+				new /obj/item/clothing/head/papersack(user.loc)
+				qdel(src)
+				return 0
+			else if(item_state == "paperbag_SmileyFace")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
+				new /obj/item/clothing/head/papersack/smiley(user.loc)
+				qdel(src)
+				return 0
+	return ..()
+
+#undef NODESIGN
+#undef NANOTRASEN
+#undef SYNDI
+#undef HEART
+#undef SMILE
