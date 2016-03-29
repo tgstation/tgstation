@@ -178,7 +178,7 @@
 
 	if(istype(W, /obj/item/device/analyzer) && ptank)
 		var/obj/item/device/analyzer/analyzer = W
-		user.visible_message("<span class='notice'>[user] has used the analyzer on \icon[icon]</span>")
+		user.visible_message("<span class='notice'>[user] has used the analyzer on [bicon(icon)]</span>")
 		user.show_message(analyzer.output_gas_scan(ptank.air_contents, src, 0), 1)
 		return
 	..()
