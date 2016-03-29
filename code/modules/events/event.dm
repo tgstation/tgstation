@@ -1,6 +1,6 @@
 //this datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
-	var/name					//The name human-readable name of the event
+	var/name					//The human-readable name of the event
 	var/typepath				//The typepath of the event datum /datum/round_event
 
 	var/weight = 10				//The weight this event has in the random-selection process.
@@ -8,9 +8,10 @@
 								//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
 
 	var/earliest_start = 12000	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
+	var/min_players = 0			//The minimum amount of alive, non-AFK human players on server required to start the event.
 
 	var/occurrences = 0			//How many times this event has occured
-	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
+	var/max_occurrences = 20	//The maximum number of times this event can occur (naturally), it can still be forced.
 								//By setting this to 0 you can effectively disable an event.
 
 	var/holidayID = ""			//string which should be in the SSevents.holidays list if you wish this event to be holiday-specific
@@ -26,10 +27,28 @@
 /datum/round_event_control/wizard
 	wizardevent = 1
 
+// Checks if the event can be spawned. Used by event controller and "false alarm" event.
+// Admin-created events override this.
+/datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
+	if(occurrences >= max_occurrences)
+		return FALSE
+	if(earliest_start >= world.time)
+		return FALSE
+	if(players_amt < min_players)
+		return FALSE
+	if(gamemode_blacklist.len && (gamemode in gamemode_blacklist))
+		return FALSE
+	if(gamemode_whitelist.len && !(gamemode in gamemode_whitelist))
+		return FALSE
+	if(holidayID && (!SSevent.holidays || !SSevent.holidays[holidayID]))
+		return FALSE
+	return TRUE
+
 /datum/round_event_control/proc/runEvent()
 	if(!ispath(typepath,/datum/round_event))
 		return PROCESS_KILL
 	var/datum/round_event/E = new typepath()
+	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
 	feedback_add_details("event_ran","[E]")
 	occurrences++
@@ -47,6 +66,7 @@
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
+	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
