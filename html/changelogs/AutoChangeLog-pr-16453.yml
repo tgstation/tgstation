@@ -1,0 +1,4 @@
+author: RemieRichards
+delete-after: True
+changes: 
+  - bugfix: "fixes shift-clicking action buttons not instantly resetting their location. (I'm only making a changelog for this because apparently barely noone even knows you can move the buttons, let alone reset them...)"
