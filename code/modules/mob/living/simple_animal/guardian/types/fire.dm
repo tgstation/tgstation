@@ -7,10 +7,9 @@
 	attacktext = "sears"
 	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 0.8, CLONE = 0.8, STAMINA = 0, OXY = 0.8)
 	range = 10
-	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you."
-	environment_smash = 1
-	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
-	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Holoparasite swarm online."
+	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you.</span>"
+	magic_fluff_string = "<span class='holoparasite'>..And draw the Wizard, bringer of endless chaos!</span>"
+	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 
 /mob/living/simple_animal/hostile/guardian/fire/Life() //Dies if the summoner dies
 	..()

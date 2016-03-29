@@ -1,0 +1,6 @@
+author: TehZombehz
+delete-after: True
+changes: 
+  - rscadd: "Paper sacks are now craftable by tablecrafting with 5 sheets of paper."
+  - rscadd: "Comes in 5 different designs: Use a pen on a paper sack to change the design."
+  - rscadd: "Certain paper sack designs can be modified with a sharp object to craft a (creepy) paper sack hat."
