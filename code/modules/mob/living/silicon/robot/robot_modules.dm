@@ -283,7 +283,7 @@
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
-	modules += new /obj/item/borg/sight/meson(src)
+	modules += new /obj/item/borg/sight/material(src)
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/storage/bag/ore/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)

@@ -110,12 +110,12 @@
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
 	..()
-	M.occupant_sight_flags |= SEE_TURFS
+	M.occupant_sight_flags |= SEE_OBJS
 	if(M.occupant)
 		M.occupant.update_sight()
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
-	chassis.occupant_sight_flags &= ~SEE_TURFS
+	chassis.occupant_sight_flags &= ~SEE_OBJS
 	if(chassis.occupant)
 		chassis.occupant.update_sight()
 	return ..()

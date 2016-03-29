@@ -287,7 +287,7 @@
 		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     400),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
-		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
+		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/material/mining/gar,					   500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   600),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 600),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
@@ -408,12 +408,13 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Two Survival Capsules", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Kinetic Accelerator")
-			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
+		if("Two Survival Capsules")
+			new /obj/item/weapon/survivalcapsule(src.loc)
+			new /obj/item/weapon/survivalcapsule(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
 		if("Mining Drone")
@@ -530,7 +531,6 @@
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
 	w_class = 3
 	force = 15
-
 	throwforce = 10
 	var/cooldown = 0
 	var/fieldsactive = 0
@@ -811,7 +811,7 @@
 /**********************Mining Scanners**********************/
 
 /obj/item/device/mining_scanner
-	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
+	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
 	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
@@ -850,7 +850,8 @@
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/cooldown = 0
+	var/cooldown = 35
+	var/on_cooldown = 0
 	var/range = 7
 	origin_tech = "engineering=3;magnets=3"
 
@@ -858,12 +859,13 @@
 	name = "automatic mining scanner"
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
 	range = 4
+	cooldown = 50
 
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
-	if(!cooldown)
-		cooldown = 1
-		spawn(35)
-			cooldown = 0
+	if(!on_cooldown)
+		on_cooldown = 1
+		spawn(cooldown)
+			on_cooldown = 0
 		var/turf/t = get_turf(src)
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
 		if(!mobs.len)
