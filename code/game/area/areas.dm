@@ -7,6 +7,8 @@
 	var/uid
 	var/obj/machinery/power/apc/areaapc = null
 	var/list/area_turfs
+	var/turret_protected = 0
+	var/list/turretTargets = list()
 
 /area/New()
 	area_turfs = list()
@@ -417,6 +419,30 @@
 			spawn(600) // Ewww - this is very very bad.
 				if(M && M.client)
 					M.client.ambience_playing = 0
+
+	if(turret_protected)
+		if(isliving(Obj))
+			turretTargets |= Obj
+		else if(istype(Obj, /obj/mecha))
+			var/obj/mecha/Mech = Obj
+			if(Mech.occupant)
+				turretTargets |= Mech
+		// /vg/ vehicles
+		else if(istype(Obj, /obj/structure/bed/chair/vehicle))
+			turretTargets |= Obj
+		return 1
+
+/area/Exited(atom/movable/Obj)
+	if(turret_protected)
+		if(Obj in turretTargets)
+			turretTargets -= Obj
+	..()
+
+/area/proc/subjectDied(target)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat)
+			src.Exited(L)
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
 
