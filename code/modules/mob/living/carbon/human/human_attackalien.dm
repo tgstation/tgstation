@@ -30,7 +30,7 @@
 
 		if(M.a_intent == "disarm")
 			var/randn = rand(1, 100)
-			if (randn <= 80)
+			if (randn <= 100)	// Set to 100 to remove disarm/miss chance
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
 				add_logs(M, src, "tackled")

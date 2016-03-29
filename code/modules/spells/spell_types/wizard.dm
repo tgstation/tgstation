@@ -340,10 +340,10 @@
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/Tail_swing.ogg'
-	charge_max = 150
+	charge_max = 300
 	clothes_req = 0
-	range = 2
-	cooldown_min = 150
+	range = 3
+	cooldown_min = 300
 	invocation_type = "none"
 	animation = "tailsweep"
 	action_icon_state = "tailsweep"
@@ -354,4 +354,36 @@
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	playMagSound()
+	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+
+	for(var/atom/movable/AM in thrownatoms)
+		if(AM == user || AM.anchored) continue
+
+		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		targeteffect.icon_state = animation
+		AM.overlays += targeteffect
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		spawn(10)
+			AM.overlays -= targeteffect
+			qdel(targeteffect)
+		if(distfromcaster == 0)
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(7)
+				M.adjustBruteLoss(20)
+				M << "<span class='userdanger'>You're slammed into the floor by the [user]'s tail!</span>"
+		else
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(5)
+				M.adjustBruteLoss(10)
+				M << "<span class='userdanger'>You're thrown back by the [user]'s tail!</span>"
+			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 	..()

@@ -5,6 +5,7 @@
 	health = 125
 	icon_state = "alienh_s"
 	var/obj/screen/leap_icon = null
+	var/plasma_cost = 0
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
@@ -18,11 +19,14 @@
 //Hunter verbs
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
+	if(pounce_cooldown)
+		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
+		return
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
 	if(message)
-		src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
+		src << "<span class='noticealien'>You will now [leap_on_click ? "metabolize plasma to leap at":"slash at"] enemies!</span>"
 	else
 		return
 
@@ -49,8 +53,9 @@
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
-
-	else //Maybe uses plasma in the future, although that wouldn't make any sense...
+	
+	else // Hoping to add plasma cost for balance plz halp
+		plasma_cost = 15
 		leaping = 1
 		update_icons()
 		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)

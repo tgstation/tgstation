@@ -179,7 +179,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
-	plasma_cost = 50
+	plasma_cost = 30
 	action_icon_state = "alien_neurotoxin"
 
 /obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)

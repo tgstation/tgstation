@@ -51,7 +51,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			owner.adjustToxLoss(10)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
-	if(stage < 5 && prob(3))
+	if(stage < 5 && prob(4))
 		stage++
 		spawn(0)
 			RefreshInfectionImage()
