@@ -108,7 +108,7 @@
 		return
 	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
 		return
-	if(target.buckled || target.buckled_mob)
+	if(target.buckled || target.buckled_mobs.len)
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"

@@ -37,9 +37,11 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(12, 1, src)
 	s.start()
-	if(buckled_mob)
-		buckled_mob.electrocute_act(85, src, 1)
-		buckled_mob << "<span class='userdanger'>You feel a deep shock course through your body!</span>"
-		sleep(1)
-		buckled_mob.electrocute_act(85, src, 1)
+	if(buckled_mobs.len)
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.electrocute_act(85, src, 1)
+			buckled_mob << "<span class='userdanger'>You feel a deep shock course through your body!</span>"
+			spawn(1)
+				buckled_mob.electrocute_act(85, src, 1)
 	visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")

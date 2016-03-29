@@ -4,13 +4,16 @@ maxx = 0
 maxy = 0
 key_length = 1
 
-def merge_map(newfile, backupfile, tgm):
+def reset_globals():
     global key_length
     global maxx
     global maxy
     key_length = 1
-    maxx = 1
-    maxy = 1
+    maxx = 0
+    maxy = 0
+
+def merge_map(newfile, backupfile, tgm):
+    reset_globals()
 
     shitmap = parse_map(newfile)
     shitDict = shitmap["dictionary"] #key to tile data dictionary
@@ -46,7 +49,7 @@ def merge_map(newfile, backupfile, tgm):
             originalData = originalDict[originalKey]
 
             #if new tile data at x,y is the same as original tile data at x,y, add to the pile
-            if frozenset(shitData) == frozenset(originalData):
+            if shitData == originalData:
                 mergeGrid[x,y] = originalKey
                 known_keys[shitKey] = originalKey
                 unused_keys.remove(originalKey)
@@ -192,9 +195,8 @@ def write_grid_coord_small(filename, grid):
             output.write("{}\n\"}}\n".format(grid[x,maxy-1]))
 
 def search_key(dictionary, data):
-    dataset = frozenset(data)
     for key, value in dictionary.items():
-        if frozenset(value) == dataset:
+        if value == data:
             return key
     return None
 
@@ -327,7 +329,7 @@ def parse_map(map_file):
 
                     if char == ")":
                         curr_data.append(curr_datum)
-                        dictionary[curr_key] = curr_data
+                        dictionary[curr_key] = tuple(curr_data)
                         curr_data = list()
                         curr_datum = ""
                         curr_key = ""
@@ -466,8 +468,6 @@ def string_to_num(s):
     except ValueError:
         return -1
 
-#unused functions
-
 #writes a tile data dictionary the same way Dreammaker does
 def write_dictionary(filename, dictionary):
     with open(filename, "w") as output:
@@ -490,7 +490,7 @@ def write_grid(filename, grid):
         output.write("\"}")
         output.write("\n")
 
-#inflated map grid
+#inflated map grid; unused
 def write_grid_coord(filename, grid):
     with open(filename, "a") as output:
         output.write("\n")

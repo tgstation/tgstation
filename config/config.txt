@@ -229,3 +229,7 @@ ANNOUNCE_ADMIN_LOGOUT
 ## AUTOADMIN
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN Game Admin
+
+## GENERATE_MINIMAPS
+## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
+#GENERATE_MINIMAPS

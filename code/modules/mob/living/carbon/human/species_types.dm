@@ -89,6 +89,10 @@ var/regex/lizard_hiSS = new("S+", "g")
 	if(H)
 		H.endTailWag()
 
+/datum/species/lizard/ash_walker
+	id = "ash_walker"
+	specflags = list(MUTCOLORS, NOBREATH, EYECOLOR,LIPS)
+
 /*
  PODPEOPLE
 */
