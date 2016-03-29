@@ -10,7 +10,7 @@
 	var/apply_method = "swallow"
 	var/roundstart = 0
 	var/self_delay = 1	//pills are instant, this is because patches inheret their aplication from pills This low a value doesnt wor for some reason
-	var/no_delay = 1	//crapy workaround is crapy
+	var/has_self_delay = 0	//crapy workaround is crapy
 	
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
@@ -30,7 +30,7 @@
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
-		if(!no_delay)
+		if(has_self_delay)
 			if(!do_mob(user, M, self_delay))
 				return 0
 		M << "<span class='notice'>You [apply_method] [src].</span>"
