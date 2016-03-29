@@ -114,6 +114,7 @@
 	health = 280
 	maxhealth = 280
 	proj_pass_rate = 20
+	pass_flags = LETPASSTHROW
 	material = null
 	climbable = TRUE
 	smooth = SMOOTH_TRUE

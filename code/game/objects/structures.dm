@@ -101,3 +101,14 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		structureclimber.Weaken(2)
 		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
+
+
+/obj/structure/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)
+		return 1
+	else
+		return !density
+
+
+obj/structure/CanAStarPass(ID,dir,caller)
+	. = !density
