@@ -16,4 +16,4 @@ var/global/datum/watchdog/watchdog = new
 /datum/watchdog/proc/signal_ready()
 	var/signal = file(server_signal_file)
 	fdel(signal)
-	to_chat(signal, chosen_map)
+	signal << chosen_map
