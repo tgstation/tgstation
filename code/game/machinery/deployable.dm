@@ -113,7 +113,7 @@
 	icon_state = "sandbags"
 	health = 280
 	maxhealth = 280
-	proj_pass_rate = 25
+	proj_pass_rate = 20
 	material = null
 	climbable = TRUE
 	smooth = SMOOTH_TRUE

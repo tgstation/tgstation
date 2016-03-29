@@ -91,7 +91,7 @@
 			structureclimber = null
 			return 1
 	structureclimber = null
-	return 0
+	return ..()
 
 
 /obj/structure/table/attack_hand(mob/living/user)
