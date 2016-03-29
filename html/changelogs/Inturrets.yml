@@ -1,5 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- tweak: "Turrets that protect areas (AI turrets basically) can now be set to shoot at silicons (except AIs), or to have a faction (which all mobs also have, default is neutral) that it won't shoot other members of."
-- tweak: "Turrets set to stun now shoot mobs it would only shoot at when set to lasers before. It still doesn't stun them, it's just to show the turrets are working."
