@@ -439,7 +439,11 @@ function toggleWasd(state) {
 function wingetMacros(macros) {
 	var idRegex = /.*?\.(?!(?:CRTL|ALT|SHIFT)\+)(.*?)(?:\+REP)?\.command/; // Do NOT match macros which need crtl, alt or shift to be held down (saves a ton of headache because I don't give enough of a fuck).
 	for (key in macros) {
-		macroID = idRegex.exec(key)[1].toUpperCase();
+		match   = idRegex.exec(key)
+		if (match === null)
+			continue
+		macroID = match[1].toUpperCase();
+
 		opts.macros[macroID] = macros[key];
 	}
 }
