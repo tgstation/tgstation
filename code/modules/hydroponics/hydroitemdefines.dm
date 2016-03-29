@@ -162,6 +162,16 @@
 	..()
 	reagents.add_reagent("robustharvestnutriment", 50)
 
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/nutriment
+	name = "bottle of nutriment"
+	desc = "Contains nutrients suitable for plants and animals."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle15"
+
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/nutriment/New()
+	..()
+	reagents.add_reagent("nutriment", 50)
+
 /obj/item/weapon/reagent_containers/glass/bottle/weedkiller
 	name = "bottle of weed killer"
 	icon = 'icons/obj/chemical.dmi'
