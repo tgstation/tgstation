@@ -3,7 +3,7 @@
 	desc = "The part of the gun that makes the laser go pew"
 	caliber = "energy"
 	projectile_type = /obj/item/projectile/energy
-	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
+	e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
 	var/select_name = "energy"
 	fire_sound = 'sound/weapons/Laser.ogg'
 
@@ -94,13 +94,13 @@
 
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/item/projectile/temp
-	select_name = "freeze"
-	e_cost = 250
+	select_name = "temperature"
+	e_cost = 100
+	temperature = 300
 	fire_sound = 'sound/weapons/pulse3.ogg'
-
-/obj/item/ammo_casing/energy/temp/hot
-	projectile_type = /obj/item/projectile/temp/hot
-	select_name = "bake"
+/obj/item/ammo_casing/energy/temp/newshot()
+	..()
+	BB.temperature = temperature
 
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/item/projectile/meteor

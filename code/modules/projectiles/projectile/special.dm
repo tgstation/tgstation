@@ -43,25 +43,61 @@
 	return 1
 
 /obj/item/projectile/temp
-	name = "freeze beam"
+	name = "temperature beam"
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	var/temperature = 100
+	temperature = null
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
+/obj/item/projectile/temp/New()
+	spawn(1)
+		switch(temperature)
+			if(501 to INFINITY)
+				name = "searing beam"	//if emagged
+				icon_state = "temp_8"
+			if(400 to 500)
+				name = "burning beam"	//temp at which mobs start taking HEAT_DAMAGE_LEVEL_2
+				icon_state = "temp_7"
+			if(360 to 400)
+				name = "hot beam"		//temp at which mobs start taking HEAT_DAMAGE_LEVEL_1
+				icon_state = "temp_6"
+			if(335 to 360)
+				name = "warm beam"		//temp at which players get notified of their high body temp
+				icon_state = "temp_5"
+			if(295 to 335)
+				name = "ambient beam"
+				icon_state = "temp_4"
+			if(260 to 295)
+				name = "cool beam"		//temp at which players get notified of their low body temp
+				icon_state = "temp_3"
+			if(200 to 260)
+				name = "cold beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_1
+				icon_state = "temp_2"
+			if(120 to 260)
+				name = "ice beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_2
+				icon_state = "temp_1"
+			if(-INFINITY to 120)
+				name = "freeze beam"	//temp at which mobs start taking COLD_DAMAGE_LEVEL_3
+				icon_state = "temp_0"
+			else
+				name = "temperature beam"//failsafe
+				icon_state = "temp_4"
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
 	..()
-	if(isliving(target))
-		var/mob/M = target
+	if(ismob(target))
+		var/mob/living/M = target
 		M.bodytemperature = temperature
+		if(temperature > 500) //emagged
+			M.adjust_fire_stacks(1)
+			M.IgniteMob()
+			playsound(M.loc, 'sound/effects/bamf.ogg', 50, 0)
+		if(istype(M,/mob/living/simple_animal/slime) && temperature < 50)
+			M.death()
 	return 1
-
-/obj/item/projectile/temp/hot
-	name = "heat beam"
-	temperature = 400
 
 /obj/item/projectile/meteor
 	name = "meteor"
