@@ -186,7 +186,7 @@
 
 /datum/effect_system/smoke_spread/freezing/start()
 	if(blast)
-		for(var/turf/T in trange(2, location))
+		for(var/turf/T in RANGE_TURFS(2, location))
 			Chilled(T)
 	..()
 

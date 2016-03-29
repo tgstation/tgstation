@@ -6,7 +6,6 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	roundstart = 1
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
@@ -55,7 +54,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
@@ -88,7 +86,6 @@ var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-
 /*
  PODPEOPLE
 */
@@ -333,26 +330,52 @@ var/regex/lizard_hiSS = new("S+", "g")
 	name = "Golem"
 	id = "golem"
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	speedmod = 3
+	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	blacklisted = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
+	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-
-
-/*
- ADAMANTINE GOLEMS
-*/
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+
+/datum/species/golem/plasma
+	name = "Plasma Golem"
+	id = "plasma"
+	dangerous_existence = 1
+	blacklisted = 1
+
+/datum/species/golem/diamond
+	name = "Diamond Golem"
+	id = "diamond"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/gold
+	name = "Gold Golem"
+	id = "gold"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/silver
+	name = "Silver Golem"
+	id = "silver"
+	blacklisted = 1
+	dangerous_existence = 1
+
+/datum/species/golem/uranium
+	name = "Uranium Golem"
+	id = "uranium"
+	blacklisted = 1
+	dangerous_existence = 1
+
 
 /*
  FLIES

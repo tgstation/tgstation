@@ -262,7 +262,6 @@ Class Procs:
 			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
 	if(!is_interactable())
-		user << "<span class='danger'>\The [src] seems offline.</span>"
 		return 1
 	if(set_machine)
 		user.set_machine(src)

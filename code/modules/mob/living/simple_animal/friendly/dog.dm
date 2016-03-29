@@ -406,13 +406,73 @@
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
 	gender = MALE
-	desc = "It's a corgi."
+	desc = "It's the HoP's beloved corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	gold_core_spawnable = 0
+	var/age = 0
+	var/record_age = 1
+	var/memory_saved = 0
+	var/saved_head //path
+
+/mob/living/simple_animal/pet/dog/corgi/Ian/New()
+	Read_Memory()
+	if(age == 0)
+		var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(loc)
+		P.name = "Ian"
+		P.real_name = "Ian"
+		P.gender = MALE
+		P.desc = "It's the HoP's beloved corgi puppy."
+		Write_Memory(0)
+		qdel(src)
+	else if(age == record_age)
+		icon_state = "old_corgi"
+		icon_living = "old_corgi"
+		icon_dead = "old_corgi_dead"
+		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
+		turns_per_move = 20
+	..()
+
+/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
+	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory(0)
+	..()
+
+/mob/living/simple_animal/pet/dog/corgi/Ian/death()
+	if(!memory_saved)
+		Write_Memory(1)
+	..()
+
+/mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+	S["age"] 			>> age
+	S["record_age"]		>> record_age
+	S["saved_head"] 	>> saved_head
+
+	if(isnull(age))
+		age = 0
+	if(isnull(record_age))
+		record_age = 1
+
+	if(saved_head)
+		place_on_head(new saved_head)
+
+/mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
+	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+	if(!dead)
+		S["age"] 				<< age + 1
+		if((age + 1) > record_age)
+			S["record_age"]		<< record_age + 1
+		if(inventory_head)
+			S["saved_head"] << inventory_head.type
+	else
+		S["age"] 		<< 0
+		S["saved_head"] << null
+	memory_saved = 1
+
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()

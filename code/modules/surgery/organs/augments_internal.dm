@@ -152,7 +152,7 @@
 /obj/item/organ/internal/cyberimp/mouth/breathing_tube
 	name = "breathing tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
-	icon_state = "breathing_tube"
+	icon_state = "implant_mask"
 	slot = "breathing_tube"
 	w_class = 1
 	origin_tech = "materials=2;biotech=3"

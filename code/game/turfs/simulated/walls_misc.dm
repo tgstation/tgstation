@@ -1,6 +1,6 @@
 /turf/wall/cult
-	name = "wall"
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."
+	name = "runed wall"
+	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	walltype = "cult"
@@ -12,8 +12,8 @@
 	..()
 
 /turf/wall/cult/break_wall()
-	new /obj/effect/decal/cleanable/blood(src)
-	return (new /obj/structure/cultgirder(src))
+	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
+	return (new /obj/structure/girder/cult(src))
 
 /turf/wall/cult/devastate_wall()
 	new /obj/effect/decal/cleanable/blood(src)
@@ -73,14 +73,6 @@
 /turf/wall/shuttle/smooth/overspace
 	icon_state = "overspace"
 	fixed_underlay = list("space"=1)
-
-/turf/wall/smooth
-	name = "smooth wall"
-	icon = 'icons/turf/smooth_wall.dmi'
-	icon_state = "smooth"
-	walltype = "shuttle"
-	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
-	canSmoothWith = null
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move

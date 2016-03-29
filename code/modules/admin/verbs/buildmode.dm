@@ -64,7 +64,7 @@
 	bd.quit()
 	return 1
 
-/obj/screen/buildmode/dir/Click()
+/obj/screen/buildmode/bdir/Click()
 	bd.change_dir()
 	update_icon()
 	return 1

@@ -26,14 +26,17 @@
 	var/plant_type = PLANT_NORMAL	// 0 = PLANT_NORMAL; 1 = PLANT_WEED; 2 = PLANT_MUSHROOM; 3 = PLANT_ALIEN
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
+	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
 	var/list/reagents_add = list()
 	// A list of reagents to add to product.
 	// Format: "reagent_id" = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
 
+	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
+	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
 
-/obj/item/seeds/New(loc, parent)
+/obj/item/seeds/New(loc, nogenes = 0)
 	..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
@@ -47,8 +50,25 @@
 	if(!icon_harvest && plant_type != PLANT_MUSHROOM && yield != -1)
 		icon_harvest = "[species]-harvest"
 
+	if(!nogenes) // not used on Copy()
+		genes += new /datum/plant_gene/core/lifespan(lifespan)
+		genes += new /datum/plant_gene/core/endurance(endurance)
+		if(yield != -1)
+			genes += new /datum/plant_gene/core/yield(yield)
+			genes += new /datum/plant_gene/core/production(production)
+		if(potency != -1)
+			genes += new /datum/plant_gene/core/potency(potency)
+
+		for(var/p in genes)
+			if(ispath(p))
+				genes -= p
+				genes += new p
+
+		for(var/reag_id in reagents_add)
+			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
+
 /obj/item/seeds/proc/Copy()
-	var/obj/item/seeds/S = new type
+	var/obj/item/seeds/S = new type(null, 1)
 	// Copy all the stats
 	S.lifespan = lifespan
 	S.endurance = endurance
@@ -56,10 +76,31 @@
 	S.production = production
 	S.yield = yield
 	S.potency = potency
+	S.genes = list()
+	for(var/g in genes)
+		var/datum/plant_gene/G = g
+		S.genes += G.Copy()
+	S.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	return S
 
+/obj/item/seeds/proc/get_gene(typepath)
+	return (locate(typepath) in genes)
+
+/obj/item/seeds/proc/reagents_from_genes()
+	reagents_add = list()
+	for(var/datum/plant_gene/reagent/R in genes)
+		reagents_add[R.reagent_id] = R.rate
+
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25)
+	adjust_lifespan(rand(-lifemut,lifemut))
+	adjust_endurance(rand(-endmut,endmut))
+	adjust_production(rand(-productmut,productmut))
+	adjust_yield(rand(-yieldmut,yieldmut))
+	adjust_potency(rand(-potmut,potmut))
+
+
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
-	if(istype(Proj ,/obj/item/projectile/energy/florayield))
+	if(istype(Proj, /obj/item/projectile/energy/florayield))
 
 		var/rating = 1
 		if(istype(loc, /obj/machinery/hydroponics))
@@ -83,7 +124,7 @@
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
-			return_yield *= parent.yieldmod
+			return_yield *= (parent.yieldmod+innate_yieldmod)
 
 	return return_yield
 
@@ -95,7 +136,6 @@
 	var/product_name
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
-		prepare_result(t_prod)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)
 			return
@@ -111,10 +151,10 @@
 	if(T.reagents)
 		for(var/reagent_id in reagents_add)
 			if(reagent_id == "blood") // Hack to make blood in plants always O-
-				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), list("blood_type"="O-"))
+				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
 				continue
 
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]))
+			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), 1)
 		return 1
 
 
@@ -125,18 +165,35 @@
 
 		if(yield <= 0 && plant_type == PLANT_MUSHROOM)
 			yield = 1 // Mushrooms always have a minimum yield of 1.
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
+		if(C)
+			C.value = yield
 
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
 	lifespan = Clamp(lifespan + adjustamt, 10, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
+	if(C)
+		C.value = lifespan
 
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
 	endurance = Clamp(endurance + adjustamt, 10, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
+	if(C)
+		C.value = endurance
 
 /obj/item/seeds/proc/adjust_production(adjustamt)
-	production = Clamp(production + adjustamt, 2, 10)
+	if(yield != -1)
+		production = Clamp(production + adjustamt, 2, 10)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
+		if(C)
+			C.value = production
 
 /obj/item/seeds/proc/adjust_potency(adjustamt)
-	potency = Clamp(potency + adjustamt, 0, 100)
+	if(potency != -1)
+		potency = Clamp(potency + adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
+		if(C)
+			C.value = potency
 
 
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
@@ -155,7 +212,8 @@
 	if(yield != -1)
 		text += "- Yield: [yield]\n"
 	text += "- Maturation speed: [maturation]\n"
-	text += "- Production speed: [production]\n"
+	if(yield != -1)
+		text += "- Production speed: [production]\n"
 	text += "- Endurance: [endurance]\n"
 	text += "- Lifespan: [lifespan]\n"
 	if(rarity)
@@ -188,7 +246,7 @@
 // Maybe some day it would be used as unit test.
 /proc/check_plants_growth_stages_icons()
 	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
-	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds
+	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
 
 	for(var/seedpath in paths)
 		var/obj/item/seeds/seed = new seedpath

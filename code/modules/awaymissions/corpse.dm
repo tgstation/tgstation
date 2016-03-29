@@ -16,24 +16,39 @@
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	density = 1
+	anchored = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING)
+	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(ghost_role == "No")
+	if(ghost_role == "No" || !loc)
 		return
 	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
 
-/obj/effect/mob_spawn/initialize()
+/obj/effect/mob_spawn/spawn_atom_to_world()
+	//We no longer need to spawn mobs, deregister ourself
+	SSobj.atom_spawners -= src
 	if(roundstart)
 		create()
+	else
+		poi_list |= src
 
 /obj/effect/mob_spawn/New()
 	..()
+	if(roundstart)
+		//Add to the atom spawners register for roundstart atom spawning
+		SSobj.atom_spawners += src
+
 	if(instant)
 		create()
+	else
+		poi_list |= src
+
+/obj/effect/mob_spawn/Destroy()
+	poi_list.Remove(src)
+	..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -149,6 +164,9 @@
 /obj/effect/mob_spawn/human/corpse
 	roundstart = FALSE
 	instant = TRUE
+
+/obj/effect/mob_spawn/human/corpse/damaged
+	brute_damage = 1000
 
 /obj/effect/mob_spawn/human/alive
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -363,7 +381,6 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	helmet = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/weapon/storage/backpack/security
@@ -410,7 +427,7 @@
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"
-	mob_name = "???"
+	mob_name = "alien"
 	mob_species = /datum/species/abductor
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
@@ -430,10 +447,6 @@
 	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "syndicate collaboration", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
+	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 	new_spawn << "You were convincted of: [crime]."
-
-
-//NEWCODE
-
 

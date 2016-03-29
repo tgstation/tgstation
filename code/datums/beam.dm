@@ -114,6 +114,7 @@
 
 		X.pixel_x = Pixel_x
 		X.pixel_y = Pixel_y
+		CHECK_TICK
 
 
 /obj/effect/ebeam

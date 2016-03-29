@@ -55,7 +55,7 @@
 			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
-			smooth_icon_neighbors(src)
+			queue_smooth_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0

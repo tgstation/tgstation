@@ -1,14 +1,18 @@
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
+	var/self_visible = 1
 
-/datum/atom_hud/antag/proc/join_hud(mob/M, var/sees_hud = 1)
+/datum/atom_hud/antag/hidden
+	self_visible = 0
+
+/datum/atom_hud/antag/proc/join_hud(mob/M)
 	//sees_hud should be set to 0 if the mob does not get to see it's own hud type.
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
 	if(M.mind.antag_hud) //note: please let this runtime if a mob has no mind, as mindless mobs shouldn't be getting antagged
 		M.mind.antag_hud.leave_hud(M)
 	add_to_hud(M)
-	if(sees_hud)
+	if(self_visible)
 		add_hud_to(M)
 	M.mind.antag_hud = src
 

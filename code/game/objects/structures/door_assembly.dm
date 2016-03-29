@@ -292,15 +292,27 @@
 	anchored = 1
 	state = 1
 
-/obj/structure/door_assembly/door_assembly_abductor
-	name = "alien airlock assembly"
-	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
-	typetext = "abductor"
-	icontext = "abductor"
-	airlock_type = /obj/machinery/door/airlock/abductor
+/obj/structure/door_assembly/door_assembly_cult
+	name = "cult airlock assembly"
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	typetext = "cult"
+	icontext = "cult"
+	airlock_type = /obj/machinery/door/airlock/cult
 	anchored = 1
 	state = 1
+
+/obj/structure/door_assembly/door_assembly_cult/glass
+	mineral = "glass"
+	material = "glass"
+
+/obj/structure/door_assembly/door_assembly_cult/unruned
+	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
+
+/obj/structure/door_assembly/door_assembly_cult/unruned/glass
+	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_wood
 	name = "wooden airlock assembly"

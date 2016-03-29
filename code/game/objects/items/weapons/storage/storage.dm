@@ -375,6 +375,11 @@
 	return 1
 
 /obj/item/weapon/storage/attack_hand(mob/user)
+	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
+		user.s_active.close(user)
+		close(user)
+		return
+
 	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
@@ -458,7 +463,7 @@
 	boxes.layer = 19
 	closer = new /obj/screen/close()
 	closer.master = src
-	closer.icon_state = "x"
+	closer.icon_state = "backpack_close"
 	closer.layer = 20
 	orient2hud()
 

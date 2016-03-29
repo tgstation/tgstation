@@ -182,6 +182,7 @@
 /atom/proc/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
+		CHECK_TICK
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -356,6 +357,10 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
+//effects at world start up without causing runtimes
+/atom/proc/spawn_atom_to_world()
 
 //This will be called after the map and objects are loaded
 /atom/proc/initialize()

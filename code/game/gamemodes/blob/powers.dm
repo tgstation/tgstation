@@ -7,6 +7,53 @@
 
 // Power verbs
 
+/mob/camera/blob/proc/place_blob_core(point_rate = base_point_rate, placement_override = 0)
+	if(placed && placement_override != -1)
+		return 1
+	if(!placement_override)
+		for(var/mob/living/M in range(7, src))
+			if("blob" in M.faction)
+				continue
+			if(M.client)
+				src << "<span class='warning'>There is someone too close to place your blob core!</span>"
+				return 0
+		for(var/mob/living/M in view(13, src))
+			if("blob" in M.faction)
+				continue
+			if(M.client)
+				src << "<span class='warning'>Someone could see your blob core from here!</span>"
+				return 0
+		var/turf/T = get_turf(src)
+		if(T.density)
+			src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+			return 0
+		for(var/obj/O in T)
+			if(istype(O, /obj/effect/blob))
+				if(istype(O, /obj/effect/blob/normal))
+					qdel(O)
+				else
+					src << "<span class='warning'>There is already a blob here!</span>"
+					return 0
+			if(O.density)
+				src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
+				return 0
+		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+			src << "<span class='warning'>It is too early to place your blob core!</span>"
+			return 0
+	else if(placement_override == 1)
+		var/turf/T = pick(blobstart)
+		loc = T //got overrided? you're somewhere random, motherfucker
+	if(placed && blob_core)
+		blob_core.forceMove(loc)
+	else
+		var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		core.overmind = src
+		blob_core = core
+		core.update_icon()
+	update_health_hud()
+	placed = 1
+	return 1
+
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Jump to Core"
@@ -27,7 +74,7 @@
 		if(chosen_node)
 			src.loc = chosen_node.loc
 
-/mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, turf/T)
+/mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
@@ -37,6 +84,10 @@
 	if(!istype(B, /obj/effect/blob/normal))
 		src << "<span class='warning'>Unable to use this blob, find a normal one.</span>"
 		return
+	if(needsNode && nodes_required)
+		if(!(locate(/obj/effect/blob/node) in orange(3, T)) && !(locate(/obj/effect/blob/core) in orange(4, T)))
+			src << "<span class='warning'>You need to place this blob closer to a node or core!</span>"
+			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/effect/blob/L in orange(nearEquals, T))
 			if(L.type == blobType)
@@ -47,6 +98,16 @@
 	var/obj/effect/blob/N = B.change_to(blobType, src)
 	return N
 
+/mob/camera/blob/verb/toggle_node_req()
+	set category = "Blob"
+	set name = "Toggle Node Requirement"
+	set desc = "Toggle requiring nodes to place resource and factory blobs."
+	nodes_required = !nodes_required
+	if(nodes_required)
+		src << "<span class='warning'>You now require a nearby node or core to place factory and resource blobs.</span>"
+	else
+		src << "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>"
+
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Create Shield Blob (10)"
@@ -54,25 +115,25 @@
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
-	createSpecial(10, /obj/effect/blob/shield, 0, T)
+	createSpecial(10, /obj/effect/blob/shield, 0, 0, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/effect/blob/resource, 4)
+	createSpecial(40, /obj/effect/blob/resource, 4, 1)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (60)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(60, /obj/effect/blob/node, 5)
+	createSpecial(60, /obj/effect/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/effect/blob/factory, 7)
+	createSpecial(60, /obj/effect/blob/factory, 7, 1)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
@@ -94,7 +155,6 @@
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-	B.spore_delay = world.time + 600 //one minute before it can spawn spores again
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 	flick("blobbernaut_produce", blobber)
@@ -180,9 +240,9 @@
 				continue
 			if(L.stat != DEAD)
 				attacksuccess = TRUE
-				var/mob_protection = L.get_permeability_protection()
-				blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
-				blob_reagent_datum.send_message(L)
+			var/mob_protection = L.get_permeability_protection()
+			blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
+			blob_reagent_datum.send_message(L)
 		var/obj/effect/blob/B = locate() in T
 		if(B)
 			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
@@ -206,8 +266,8 @@
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in living_mob_list)
-		if(BS.overmind == src && isturf(BS.loc) && get_dist(BS, T) <= 35)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
@@ -220,28 +280,31 @@
 		return
 	else
 		src << "You broadcast with your minions, <B>[speak_text]</B>"
-	for(var/mob/living/simple_animal/hostile/blob/blob_minion in blob_mobs)
-		if(blob_minion.overmind == src && blob_minion.stat == CONSCIOUS)
-			blob_minion.say(speak_text)
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		if(BM.stat == CONSCIOUS)
+			BM.say(speak_text)
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
 	set name = "Reactive Chemical Adaptation (40)"
 	set desc = "Replaces your chemical with a random, different one."
-	if(!can_buy(40))
-		return
-	set_chemical()
+	if(free_chem_rerolls || can_buy(40))
+		set_chemical()
+		if(free_chem_rerolls)
+			free_chem_rerolls--
 
 /mob/camera/blob/proc/set_chemical()
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
-	for(var/obj/effect/blob/BL in blobs)
-		BL.update_icon()
-	for(var/mob/living/simple_animal/hostile/blob/BLO)
-		BLO.update_icons()
-		if(BLO.overmind == src) //If it's getting a new chemical, tell it what it does!
-			BLO << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
-			BLO << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
+	for(var/BL in blobs)
+		var/obj/effect/blob/B = BL
+		B.update_icon()
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		BM.update_icons() //If it's getting a new chemical, tell it what it does!
+		BM << "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+		BM << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
 
@@ -263,32 +326,6 @@
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
 	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
-
-/datum/action/innate/blob
-	background_icon_state = "bg_alien"
-
-/datum/action/innate/blob/earlyhelp
-	name = "Blob Help"
-	button_icon_state = "blob"
-
-/datum/action/innate/blob_earlyhelp/Activate()
-	owner << "<b>You are a blob!</b>"
-	owner << "You will shortly burst, and should find a quiet place to do so, out of sight of the station."
-	owner << "Alternatively, you could burst near a place that would hinder the station, such as telecomms or science."
-	owner << "Once you burst, you can get additional information by <b>pressing this button again.</b>"
-
-/datum/action/innate/blob/earlycomm
-	name = "Blob Communication"
-	button_icon_state = "blob_comm"
-
-/datum/action/innate/blob/earlycomm/Activate()
-	var/msg = stripped_input(owner, "What do you wish to tell your fellow blobs?", null, "")
-	if(msg && owner)
-		var/mob/living/carbon/human/O = owner
-		var/spanned_message = O.say_quote(msg, O.get_spans())
-		var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [O.real_name]</b> [spanned_message]</font></span>"
-		var/datum/game_mode/blob/B = ticker.mode
-		B.show_message("[rendered]")
-		for(var/mob/M in mob_list)
-			if(isobserver(M))
-				M << "<a href='?src=\ref[M];follow=\ref[O]'>(F)</a> [rendered]"
+	if(!placed && autoplace_max_time <= world.time)
+		src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
+		src << "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the button in the bottom right corner of the screen.</font></span>"

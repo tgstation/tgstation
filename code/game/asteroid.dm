@@ -90,18 +90,14 @@ var/global/max_secret_rooms = 6
 
 		if("cavein")
 			theme = "cavein"
-			walltypes = list(/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/open/floor/plating/asteroid/airless, /turf/open/floor/plating/beach/sand)
-			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator/hyper=1,
+			walltypes = list(/turf/closed/mineral/random/high_chance=1)			floortypes = list(/turf/open/floor/plating/asteroid/basalt, /turf/open/floor/plating/beach/sand)			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator/hyper=1,
 							/obj/item/weapon/resonator/upgraded=1, /obj/item/weapon/pickaxe/drill/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/chili=1,/obj/item/weapon/tank/internals/oxygen/red=2)
 
 		if("xenoden")
 			theme = "xenoden"
-			walltypes = list(/turf/mineral/random/high_chance=1)
-			floortypes = list(/turf/open/floor/plating/asteroid/airless, /turf/open/floor/plating/beach/sand)
-			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
+			walltypes = list(/turf/closed/mineral/random/high_chance=1)			floortypes = list(/turf/open/floor/plating/asteroid/basalt, /turf/open/floor/plating/beach/sand)			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
 			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
 
 		if("hitech")
@@ -143,7 +139,7 @@ var/global/max_secret_rooms = 6
 	possiblethemes -= theme //once a theme is selected, it's out of the running!
 	var/floor = pick(floortypes)
 
-	turfs = get_area_turfs(/area/mine/unexplored)
+	turfs = get_area_turfs(/area/lavaland/surface/outdoors)
 
 	if(!turfs.len)
 		return 0
@@ -165,25 +161,11 @@ var/global/max_secret_rooms = 6
 		surroundings += range(7, locate(T.x,T.y+y_size,T.z))
 		surroundings += range(7, locate(T.x+x_size,T.y+y_size,T.z))
 
-		if(locate(/area/mine/explored) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/area/mine/abandoned) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/turf/space) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/area/asteroid/artifactroom) in surroundings)
-			valid = 0
-			continue
-
-		if(locate(/turf/open/floor/plating/asteroid/airless) in range(5,T))//A little less strict than the other checks due to tunnels
-			valid = 0
-			continue
+		for(var/turf/check in surroundings)
+			var/area/new_area = get_area(check)
+			if(!(istype(new_area, /area/lavaland/surface/outdoors)))
+				valid = FALSE
+				break
 
 	if(!T)
 		return 0
@@ -192,10 +174,6 @@ var/global/max_secret_rooms = 6
 
 	if(room)//time to fill it with stuff
 		var/list/emptyturfs = room["floors"]
-		for(var/turf/open/floor/A in emptyturfs) //remove pls doesn't fix problem
-			if(istype(A))
-				spawn(2)
-					A.fullUpdateMineralOverlays()
 		T = pick(emptyturfs)
 		if(T)
 			new /obj/effect/glowshroom/single(T) //Just to make it a little more visible

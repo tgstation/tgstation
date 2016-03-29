@@ -113,8 +113,8 @@
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
-/turf/open/proc/process_cell(fire_count)
-	if(archived_cycle < fire_count) //archive self if not already done
+/turf/proc/process_cell(fire_count)	SSair.remove_from_active(src)
+/turf/open/process_cell(fire_count)	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
 	current_cycle = fire_count
@@ -273,10 +273,7 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		var/T_gases = T.air.gases
-
-		for(var/id in A_gases)
-			T.air.assert_gas(id)
-			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
+		for(var/id in A_gases)			T.air.assert_gas(id)			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()
 

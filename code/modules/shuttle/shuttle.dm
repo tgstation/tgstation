@@ -282,7 +282,7 @@
 
 	//resmooth if need be.
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 
 	//rotate the pixel offsets too.
 	if (pixel_x || pixel_y)
@@ -455,12 +455,15 @@
 	for(var/turf/T in L)
 		for(var/atom/movable/AM in T)
 			if(ismob(AM))
-				if(istype(AM, /mob/living))
+				if(ishuman(AM))
 					var/mob/living/M = AM
 					M.Paralyse(10)
-					M.take_organ_damage(80)
+					M.apply_damage(60, BRUTE, "chest")
+					M.apply_damage(60, BRUTE, "head")
 					M.anchored = 0
 				else
+					var/mob/M = AM
+					M.gib()
 					continue
 
 			if(!AM.anchored)

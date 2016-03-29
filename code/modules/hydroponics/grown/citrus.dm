@@ -30,7 +30,7 @@
 
 // Orange
 /obj/item/seeds/orange
-	name = "pack of orange seed"
+	name = "pack of orange seeds"
 	desc = "Sour seeds."
 	icon_state = "seed-orange"
 	species = "orange"

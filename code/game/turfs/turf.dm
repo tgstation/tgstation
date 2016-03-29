@@ -145,7 +145,7 @@
 		for(var/obj/structure/cable/C in contents)
 			C.Deconstruct()
 
-	smooth_icon_neighbors(src)
+	queue_smooth_neighbors(src)
 
 /turf/open/AfterChange()
 	..()
@@ -299,7 +299,7 @@
 /turf/indestructible/riveted/New()
 	..()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 		icon_state = ""
 
 /turf/indestructible/riveted/uranium

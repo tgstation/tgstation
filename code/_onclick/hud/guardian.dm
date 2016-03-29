@@ -1,5 +1,5 @@
 
-/datum/hud/guardian/New(mob/owner)
+/datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
 	..()
 	var/obj/screen/using
 
@@ -14,7 +14,7 @@
 	using.screen_loc = ui_lhand
 	static_inventory += using
 
-	using = new /obj/screen/guardian/ToggleMode()
+	using = new owner.toggle_button_type()
 	using.screen_loc = ui_storage1
 	static_inventory += using
 
@@ -65,6 +65,14 @@
 	if(isguardian(usr))
 		var/mob/living/simple_animal/hostile/guardian/G = usr
 		G.ToggleMode()
+
+/obj/screen/guardian/ToggleMode/Inactive
+	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
+
+/obj/screen/guardian/ToggleMode/Assassin
+	icon_state = "stealth"
+	name = "Toggle Stealth"
+	desc = "Enter or exit stealth."
 
 /obj/screen/guardian/Communicate
 	icon_state = "communicate"

@@ -10,6 +10,8 @@
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	if(M.stat == DEAD)
+		return 0 //the dead don't cause reactions
 	if(istype(M, /mob/living/simple_animal/hostile/blob))
 		return 0 //the blob mobs do not cause effects when hitting themselves or other blob mobs
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
@@ -102,12 +104,12 @@
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(istype(B, /obj/effect/blob/normal) || istype(B, /obj/effect/blob/shield))
+	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(20)))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
 
 /datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(cause && prob(40))
+	if(cause && damage > 0 && original_health - damage > 0 && prob(40))
 		var/list/blobstopick = list()
 		for(var/obj/effect/blob/OB in orange(1, B))
 			if((istype(OB, /obj/effect/blob/normal) || istype(OB, /obj/effect/blob/shield)) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
@@ -156,12 +158,12 @@
 	M.adjust_fire_stacks(round(reac_volume/12))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.4*reac_volume, BURN)
+		M.apply_damage(0.5*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
 /datum/reagent/blob/boiling_oil/extinguish_reaction(obj/effect/blob/B)
-	B.take_damage(rand(2, 3), BURN)
+	B.take_damage(rand(1, 3), BURN)
 
 //does burn and toxin damage, explodes into flame when hit with burn damage
 /datum/reagent/blob/flammable_goo
@@ -177,6 +179,7 @@
 
 /datum/reagent/blob/flammable_goo/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
+	M.adjust_fire_stacks(round(reac_volume/10)) //apply, but don't ignite
 	M.apply_damage(0.4*reac_volume, TOX)
 	if(M)
 		M.apply_damage(0.2*reac_volume, BURN)
@@ -184,7 +187,7 @@
 /datum/reagent/blob/flammable_goo/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(cause && damage_type == BURN)
 		for(var/turf/T in range(1, B))
-			if(prob(80))
+			if(!(locate(/obj/effect/blob) in T) && prob(80))
 				PoolOrNew(/obj/effect/hotspot, T)
 		return damage * 1.5
 	return ..()
@@ -437,7 +440,7 @@
 
 /datum/reagent/blob/electromagnetic_web/death_reaction(obj/effect/blob/B, cause)
 	if(cause)
-		empulse(B.loc, 1, 2) //less than screen range, so you can stand out of range to avoid it
+		empulse(B.loc, 1, 3) //less than screen range, so you can stand out of range to avoid it
 
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
 /datum/reagent/blob/synchronous_mesh

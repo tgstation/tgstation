@@ -188,13 +188,10 @@
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
-	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
-		A = console.pad.teleport_target
-		if(A.safe) // right now crew areas are safe - being locked behind closed doors is not fun
-			TeleportToArea(H,A)
-			H.uncuff()
-			return
+		H.forceMove(console.pad.teleport_target)
+		H.uncuff()
+		return
 	//Area not chosen / It's not safe area - teleport to arrivals
 	H.forceMove(pick(latejoin))
 	H.uncuff()

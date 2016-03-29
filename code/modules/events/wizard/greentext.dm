@@ -19,7 +19,7 @@
 	H << "<font color='green'>The mythical greentext appear at your feet! Pick it up if you dare...</font>"
 
 
-/obj/item/weapon/greentext/
+/obj/item/weapon/greentext
 	name = "greentext"
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
 	w_class = 4
@@ -28,6 +28,10 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
+
+/obj/item/weapon/greentext/New()
+	..()
+	poi_list |= src
 
 /obj/item/weapon/greentext/equipped(mob/living/user as mob)
 	user << "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>"
@@ -71,6 +75,7 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/weapon/greentext/Destroy()
+	poi_list.Remove(src)
 	for(var/mob/M in mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)

@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
-	if(ranged)
+	if(ranged && ranged_cooldown)
 		ranged_cooldown--
 	if(!.) //dead
 		walk(src, 0) //stops walking
@@ -159,7 +159,7 @@
 					return 0
 			return 1
 	if(isobj(the_target))
-		if(the_target.type in wanted_objects)
+		if(is_type_in_list(the_target, wanted_objects))
 			return 1
 	return 0
 
@@ -301,6 +301,7 @@
 			newtonian_move(get_dir(targeted_atom, targets_from))
 		P.original = targeted_atom
 		P.fire()
+		return P
 
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
