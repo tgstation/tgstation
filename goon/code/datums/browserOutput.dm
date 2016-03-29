@@ -16,7 +16,6 @@ For the main html chat area
 
 //Precaching a bunch of shit
 /var/savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons for the browser output
-/var/chatDebug = file("data/chatDebug.log")
 
 //On client, created on login
 /datum/chatOutput
@@ -161,8 +160,7 @@ For the main html chat area
 
 //Called by js client on js error
 /datum/chatOutput/proc/debug(error)
-	error = "\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]"
-	chatDebug << error
+	world.log <<"\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]"
 
 /client/verb/debug_chat()
 	set hidden = 1
