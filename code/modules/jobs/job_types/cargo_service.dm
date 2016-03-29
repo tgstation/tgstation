@@ -147,6 +147,7 @@ Cook
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
+	backpack_contents = list(/obj/item/weapon/storage/box/ingredients=1)
 	head = /obj/item/clothing/head/chefhat
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
