@@ -190,5 +190,5 @@
 		icon_state = "gauss"
 
 /obj/item/projectile/bullet/sniper/accelerator/laser
-	name = "accelerator beam
+	name = "accelerator beam"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
