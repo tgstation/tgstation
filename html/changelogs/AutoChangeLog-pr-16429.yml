@@ -1,0 +1,9 @@
+author: Joan
+delete-after: True
+changes: 
+  - imageadd: "Support holoparasites now have a healing effect with their color when successfully healing a target."
+  - tweak: "Ranged holoparasite projectiles now take on the color of the holoparasite."
+  - bugfix: "Holoparasite communication(holo->summoner) now sends the message to all holoparasites the summoner has."
+  - bugfix: "If you have multiple holoparasites for some reason, Reset Guardian allows you to choose which to reset."
+  - tweak: "Resetting a holoparasite also resets its color and name, to make it more obvious it's a new player."
+  - rscadd: "Holoparasites can now see their summoner's health and various ability cooldowns from the status panel."
