@@ -117,8 +117,8 @@
 	current_range = 14
 	spray_range = 7
 	stream_range = 14
-	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = list(25,50,100)
+	stream_amount = 20
+	amount_per_transfer_from_this = 10
 	volume = 1000
 	flags = NODROP | OPENCONTAINER | NOBLUDGEON
 
@@ -188,7 +188,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
-	amount_per_transfer_from_this = 5
+	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list()
 
 /obj/item/weapon/watertank/janitor/make_noz()
