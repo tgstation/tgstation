@@ -6,11 +6,13 @@
 	var/bubbleicon = "holo" //the speechbubble icon of the guardian
 	var/theme = "tech" //what the actual theme of the guardian is
 	var/colour = "#C3C3C3" //what color the guardian's name is in chat and what color is used for effects from the guardian
+	var/stainself = 0 //whether to use the color var to literally dye ourself our chosen colour, for lazy spriting
 
 /datum/guardianname/carp
 	bubbleicon = "guardian"
 	theme = "carp"
 	parasiteicon = "holocarp"
+	stainself = 1
 
 /datum/guardianname/carp/New()
 	prefixname = pick(carp_names)

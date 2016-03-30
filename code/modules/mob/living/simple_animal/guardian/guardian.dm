@@ -77,6 +77,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	icon_dead = "[namedatum.parasiteicon]"
 	bubble_icon = "[namedatum.bubbleicon]"
 
+	if (namedatum.stainself)
+		color = namedatum.colour
+
 	//Special case holocarp, because #snowflake code
 	if(theme == "carp")
 		icon = 'icons/mob/animal.dmi'
