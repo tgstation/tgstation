@@ -744,7 +744,7 @@
 	access = access_rd
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
-	crate_name = "tank transfer valves crate crate"
+	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
@@ -802,7 +802,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer)
-	crate_name = "party equipment"
+	crate_name = "party equipment crate"
 
 /datum/supply_pack/organic/critter
 	crate_type = /obj/structure/closet/crate/critter
@@ -955,7 +955,7 @@
 					/obj/item/clothing/suit/beekeeper_suit,
 					/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit)
-	crate_name = "beekeper suits"
+	crate_name = "beekeeper suits"
 
 /datum/supply_pack/organic/vending
 	name = "Bartending Supply Crate"
@@ -982,7 +982,7 @@
 	contains = list(/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola)
-	crate_name = "softdrinks supply crate"
+	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/organic/vending/cigarette
 	name = "Cigarette Supply Crate"
@@ -1193,7 +1193,7 @@
 	name = "High-traction Floor Tiles"
 	cost = 2000
 	contains = list(/obj/item/stack/tile/noslip/thirty)
-	crate_name = "high-traction floor tiles"
+	crate_name = "high-traction floor tiles crate"
 
 /datum/supply_pack/misc/plasmaman
 	name = "Plasmaman Supply Kit"
