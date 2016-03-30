@@ -143,7 +143,9 @@
 			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A><A href='?src=\ref[src];create=cream;amount=5'>x5</A> ([30/efficiency])<BR>"
 			dat += "Milk Carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
 			dat += "Cream Carton: <A href='?src=\ref[src];create=ccream;amount=1'>Make</A><A href='?src=\ref[src];create=ccream;amount=5'>x5</A> ([300/efficiency])<BR>"
-			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A><A href='?src=\ref[src];create=meat;amount=5'>x5</A> ([250/efficiency])"
+			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A><A href='?src=\ref[src];create=meat;amount=5'>x5</A> ([250/efficiency])<BR>"
+			dat += "10 nutriment: <A href='?src=\ref[src];create=nutriment;amount=1'>Make</A><A href='?src=\ref[src];create=nutriment;amount=5'>x5</A> ([100])<BR>"
+			dat += "Nutriment bottle: <A href='?src=\ref[src];create=bnutriment;amount=1'>Make</A><A href='?src=\ref[src];create=bnutriment;amount=5'>x5</A> ([500])"
 			dat += "</div>"
 			dat += "<h3>Botany Chemicals:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -247,6 +249,13 @@
 		if("meat")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+		if("nutriment")
+			if(check_container_volume(10)) return 0
+			else if (check_cost(100)) return 0
+			else beaker.reagents.add_reagent("nutriment",10)
+		if("bnutriment")
+			if (check_cost(500)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/nutriment(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
