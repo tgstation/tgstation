@@ -38,9 +38,3 @@
 		update_inv_hands()
 		return 1
 	return 0
-
-/mob/living/carbon/true_demon/stripPanelUnequip(obj/item/what, mob/who, where)
-	..(what, who, where, 1)
-
-/mob/living/carbon/true_demon/stripPanelEquip(obj/item/what, mob/who, where)
-	..(what, who, where, 1)

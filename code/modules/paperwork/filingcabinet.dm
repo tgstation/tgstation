@@ -188,7 +188,6 @@ var/list/employmentCabinets = list()
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	world << "FillCurrent on a filing cabinet."
 	for(var/datum/data/record/G in data_core.locked)
 		if(!G)
 			continue

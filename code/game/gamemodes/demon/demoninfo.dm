@@ -377,6 +377,8 @@ var/list/allDemons = list()
 				return -1
 		else
 			body << "<span class='danger'> You seem to have resurrected without your infernal powers.</span>"
+	else
+		body << "<span class='userdanger'>Your infernal powers are too weak to resurrect yourself.</span>"
 
 /datum/demoninfo/proc/check_banishment(mob/living/body)
 	switch(banish)

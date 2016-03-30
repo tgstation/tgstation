@@ -81,11 +81,10 @@
 	name = "paper- infernal contract"
 	contractType = CONTRACT_UNWILLING
 
-/obj/item/weapon/paper/contract/infernal/New(atom/loc, mob/living/nTarget, var/incType, datum/mind/nOwner)
+/obj/item/weapon/paper/contract/infernal/New(atom/loc, mob/living/nTarget, datum/mind/nOwner)
 	..()
 	owner = nOwner
 	target = nTarget
-	contractType = incType
 	update_text()
 
 /obj/item/weapon/paper/contract/infernal/
@@ -153,23 +152,27 @@
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
 
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user) //TODO LORDPIDEY:  this doesn't work ever since switching contracts to work with minds.  Fix it.
-	if (target == M && M.stat == DEAD && M.mind.soulOwner == M.mind)
+	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		var/mob/living/carbon/human/H = M
 		var/mob/dead/observer/ghost = H.get_ghost()
+		var/response = "No"
 		if(ghost)
 			ghost.notify_cloning("A demon has offered you revival, at the cost of your soul.",'sound/effects/genetics.ogg', H)
-			var/response = tgalert(ghost, "A demon is offering you another chance at life, at the price of your soul, do you accept?", "Infernal Resurrection", "Yes", "No", "Never for this round", 0, 200)
+			response = tgalert(ghost, "A demon is offering you another chance at life, at the price of your soul, do you accept?", "Infernal Resurrection", "Yes", "No", "Never for this round", 0, 200)
 			if(!ghost)
 				return		//handle logouts that happen whilst the alert is waiting for a response.
-			if(response == "Yes")
-				H.revive(1,0)
-				add_logs(user, H, "demonically revived")
-				user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
-				H.adjust_fire_stacks(20)
-				FulfillContract(H)
-				sleep(10)
-				H.ExtinguishMob()
-				H.adjustFireLoss(0)
+		else
+			response = tgalert(target.current, "A demon is offering you another chance at life, at the price of your soul, do you accept?", "Infernal Resurrection", "Yes", "No", "Never for this round", 0, 200)
+		if(response == "Yes")
+			H.revive(1,0)
+			add_logs(user, H, "demonically revived")
+			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
+			H.adjust_fire_stacks(20)
+			H.IgniteMob()
+			FulfillContract(H)
+			sleep(5)
+			H.ExtinguishMob()
+			H.adjustFireLoss(0)
 	else
 		..()
 
@@ -241,3 +244,4 @@
 	for(var/datum/atom_hud/H in huds)
 		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 			H.add_hud_to(usr)
+	return ..()

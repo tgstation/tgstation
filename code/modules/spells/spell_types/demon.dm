@@ -50,29 +50,27 @@
 	action_icon_state = "spell_default" //TODO: set icon
 
 /obj/effect/proc_holder/spell/targeted/summon_contract/cast(list/targets, mob/user = usr)
-	var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Revive", "Knowledge")
-	var/contractType = CONTRACT_POWER
-	switch(contractTypeName)
-		if("Power")
-			contractType = CONTRACT_POWER
-		if("Wealth")
-			contractType = CONTRACT_WEALTH
-		if("Prestige")
-			contractType = CONTRACT_PRESTIGE
-		if("Magic")
-			contractType = CONTRACT_MAGIC
-		if("Revive")
-			contractType = CONTRACT_REVIVE
-		if("Knowledge")
-			contractType = CONTRACT_KNOWLEDGE
 	for(var/mob/living/carbon/C in targets)
 		if(C.mind && user.mind)
-			if(user.drop_item())
-				var/obj/item/weapon/paper/contract/infernal/contract = new(user.loc, C.mind, contractType, user.mind)
-				if(contractType == CONTRACT_REVIVE)
+			if(C.stat == DEAD)
+				if(user.drop_item())
+					var/obj/item/weapon/paper/contract/infernal/revive/contract = new(user.loc, C.mind, user.mind)
 					user.put_in_hands(contract)
-				else
-					C.put_in_hands(contract)
+			else
+				var/obj/item/weapon/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
+				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge")
+				switch(contractTypeName)
+					if("Power")
+						contract = new /obj/item/weapon/paper/contract/infernal/power(C.loc, C.mind, user.mind)
+					if("Wealth")
+						contract = new /obj/item/weapon/paper/contract/infernal/wealth(C.loc, C.mind, user.mind)
+					if("Prestige")
+						contract = new /obj/item/weapon/paper/contract/infernal/prestige(C.loc, C.mind, user.mind)
+					if("Magic")
+						contract = new /obj/item/weapon/paper/contract/infernal/magic(C.loc, C.mind, user.mind)
+					if("Knowledge")
+						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
+				C.put_in_hands(contract)
 		else
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
 
