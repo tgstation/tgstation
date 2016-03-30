@@ -961,4 +961,6 @@
 	body_parts_covered = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)

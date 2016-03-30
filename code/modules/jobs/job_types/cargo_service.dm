@@ -85,6 +85,7 @@ Shaft Miner
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
+		/obj/item/weapon/kitchen/knife/combat/survival=1,\
 		/obj/item/weapon/mining_voucher=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
