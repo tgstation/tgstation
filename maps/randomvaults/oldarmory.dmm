@@ -3,23 +3,23 @@
 "ac" = (/obj/structure/catwalk{icon_state = "catwalk12"},/obj/effect/decal/cleanable/blood,/turf/space,/area/vault/oldarmory)
 "ad" = (/obj/structure/catwalk{icon_state = "catwalk8"},/turf/space,/area/vault/oldarmory)
 "ae" = (/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 1},/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/window/full/plasma,/turf/space,/area/vault/oldarmory)
-"af" = (/obj/machinery/door/airlock/highsecurity{name = "SECURE FACILITY"},/turf/space,/area/vault/oldarmory)
+"af" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/vault/oldarmory)
 "ag" = (/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 1},/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/window/full/plasma,/turf/space,/area/vault/oldarmory)
 "ah" = (/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/window/full/plasma,/turf/space,/area/vault/oldarmory)
-"ai" = (/obj/structure/catwalk{icon_state = "catwalk2"},/obj/effect/decal/cleanable/blood/drip,/turf/space,/area/vault/oldarmory)
+"ai" = (/obj/machinery/door/airlock{name = "Canteen"},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aj" = (/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/window/full/plasma,/turf/space,/area/vault/oldarmory)
 "ak" = (/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/window/full/plasma,/obj/structure/sign/vacuum,/turf/space,/area/vault/oldarmory)
-"al" = (/obj/structure/catwalk{icon_state = "catwalk3"},/obj/effect/decal/cleanable/blood/drip,/turf/space,/area/vault/oldarmory)
+"al" = (/obj/effect/decal/cleanable/blood/drip,/turf/simulated/floor/plating,/area/vault/oldarmory)
 "am" = (/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/window/full/plasma,/obj/structure/sign/vacuum,/turf/space,/area/vault/oldarmory)
-"an" = (/obj/structure/catwalk{icon_state = "catwalk3"},/obj/effect/decal/remains/human,/turf/space,/area/vault/oldarmory)
+"an" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "diagonalWall3"},/area/vault/oldarmory)
 "ao" = (/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/grille,/obj/structure/window/reinforced/plasma,/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/window/full/plasma,/turf/space,/area/vault/oldarmory)
-"ap" = (/obj/structure/catwalk{icon_state = "catwalk1"},/turf/space,/area/vault/oldarmory)
+"ap" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/vault/oldarmory)
 "aq" = (/obj/structure/window/reinforced/plasma{dir = 8},/obj/structure/grille,/obj/structure/window/reinforced/plasma,/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/window/full/plasma,/turf/space,/area/vault/oldarmory)
-"ar" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area)
+"ar" = (/mob/living/simple_animal/hostile/humanoid/syndicate/rangedlaser,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "as" = (/turf/simulated/wall/invulnerable,/area/vault/oldarmory)
 "at" = (/obj/structure/sign/securearea,/turf/simulated/wall/invulnerable,/area/vault/oldarmory)
-"au" = (/obj/machinery/door/airlock/highsecurity{locked = 1; name = "SECURE FACILITY"},/turf/space,/area/vault/oldarmory)
-"av" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "diagonalWall3"},/area)
+"au" = (/obj/machinery/porta_turret{dir = 4; emagged = 1},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
+"av" = (/turf/simulated/floor/plating,/area/vault/oldarmory)
 "aw" = (/obj/machinery/sweet,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "ax" = (/obj/machinery/vending/nuka,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "ay" = (/obj/machinery/vending/snack,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
@@ -33,7 +33,7 @@
 "aG" = (/obj/machinery/light{dir = 1},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aH" = (/obj/structure/painting/random,/turf/simulated/wall/invulnerable,/area/vault/oldarmory)
 "aI" = (/obj/structure/bed/chair,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
-"aJ" = (/obj/structure/bed/chair,/mob/living/simple_animal/hostile/humanoid/syndicate/ranged,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
+"aJ" = (/obj/machinery/door/airlock/highsecurity{locked = 1; name = "SECURE FACILITY"},/turf/simulated/floor/plating,/area/vault/oldarmory)
 "aK" = (/obj/item/trash/syndi_cakes,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aL" = (/obj/structure/bed/chair/wood/normal,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aM" = (/obj/machinery/light{dir = 4},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
@@ -46,7 +46,7 @@
 "aT" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aU" = (/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aV" = (/obj/structure/table/woodentable/poker,/obj/item/toy/cards/wizard/full,/obj/item/toy/cards/wizard/full,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
-"aW" = (/obj/machinery/door/airlock/glass{name = "Canteen"},/turf/simulated/wall,/area/vault/oldarmory)
+"aW" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/vault/oldarmory)
 "aX" = (/obj/machinery/vending/cola,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aY" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "aZ" = (/obj/structure/bed/chair/wood/normal{dir = 1},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
@@ -105,7 +105,7 @@
 "ca" = (/obj/machinery/door/airlock{name = "Disguises"},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cb" = (/obj/structure/closet/gimmick/tacticool,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cc" = (/obj/structure/closet,/obj/item/clothing/head/helmet/volnutthelmet,/obj/item/clothing/suit/armor/volnutt,/obj/item/weapon/gun/energy/mmlbuster,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
-"cd" = (/obj/machinery/porta_turret{emagged = 1},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
+"cd" = (/obj/structure/bed/chair,/mob/living/simple_animal/hostile/humanoid/syndicate/rangedlaser,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "ce" = (/obj/structure/sign/securearea,/turf/simulated/wall/r_wall,/area/vault/oldarmory)
 "cf" = (/obj/structure/painting/random,/turf/simulated/wall/r_wall,/area/vault/oldarmory)
 "cg" = (/obj/machinery/door/airlock/command{name = "Computer Chamber"},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
@@ -117,7 +117,7 @@
 "cm" = (/obj/machinery/syndicate_beacon{desc = "This seems to be what the Syndicate agents here are using to communicate with their leaders. Maybe they'd be willing to hire you?"; name = "Syndicate Communications Relay"},/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cn" = (/obj/structure/bed/chair,/mob/living/simple_animal/hostile/humanoid/syndicate/ranged/space,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "co" = (/obj/machinery/vending/hatdispenser,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
-"cp" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area)
+"cp" = (/obj/machinery/door/airlock/highsecurity{name = "SECURE FACILITY"},/turf/simulated/floor/plating,/area/vault/oldarmory)
 "cq" = (/obj/machinery/light,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cr" = (/obj/structure/table/reinforced,/obj/machinery/recharger,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cs" = (/obj/machinery/computer/security/engineering,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
@@ -129,37 +129,38 @@
 "cy" = (/obj/machinery/computer/security/advanced,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cz" = (/obj/structure/rack,/obj/item/clothing/mask/fakemoustache,/obj/item/clothing/mask/fakemoustache,/obj/item/clothing/mask/fakemoustache,/obj/item/clothing/mask/fakemoustache,/obj/item/clothing/mask/fakemoustache,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "cA" = (/obj/structure/rack,/obj/item/clothing/head/helmet/doomguy,/obj/item/clothing/shoes/doomguy,/obj/item/clothing/suit/armor/doomguy,/obj/item/clothing/under/doomguy,/obj/item/weapon/storage/belt/security/doomguy,/obj/item/clothing/gloves/doomguy,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
-"cB" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area)
+"cB" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/vault/oldarmory)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaabacadaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaeafagaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaahaiajaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaecpagaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaahalajaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaakalamaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaahalajaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaahanajaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaoapaqaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaarasasasasasasasatauatasasasasasasavaaaaaaaaaaaa
-aaaaaaaaaaarasawaxayazaAaBaCaDaEaDaCaEaFaGaFaHasavaaaaaaaaaa
-aaaaaaaaarasaEaIaJaKaEaLaMaCaNaEaMaCaOaFaEaFaEaPasavaaaaaaaa
-aaaaaaarasaQaRaSaTaUaEaVaEaWaEaEaEaCaEaFaEaFaEaEaEasavaaaaaa
-aaaaarasasaXaEaYaYaEaEaZaEaCaEaEbaaCaEaFaEaFaEbbbcasasavaaaa
-aaarasasaCaCbdaCaCaWbebdbfbgaEaEaEbgaEaEaEaEaEbcbcbhasasavaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaahapajaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaoavaqaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaafasasasasasasasataJatasasasasasasanaaaaaaaaaaaa
+aaaaaaaaaaafasawaxayazaAaBaCaDaEaDaCaEaFaGaFaHasanaaaaaaaaaa
+aaaaaaaaafasaEaIcdaKaEaLaMaCaNaEaMaCaOaFaEaFaEaPasanaaaaaaaa
+aaaaaaafasaQaRaSaTaUaEaVaEaiaEaEaEaCaEaFaEaFaEaEaEasanaaaaaa
+aaaaafasasaXaEaYaYaEaEaZaEaCaEaEbaaCaEaFaEaFaEbbbcasasanaaaa
+aaafasasaCaCbdaCaCaibebdbfbgaEaEaEbgaEaEaEaEaEbcbcbhasasanaa
 aaasasbibjaEaEaEaGaEaEaEaEaEbkaEbkaCaCblbmblaCaCaCaCaCasasaa
-aaasbnaEaEaEaEaEaEaEaEaEaEaEaEaEaEaEaGaEaEaEaEbobpbqbrbsasaa
+aaasbnaEaEaEaraEaEaEaEaEaEaEaEaEaEaEaGaEaEaEaEbobpbqbrbsasaa
 aaasaNaEaEaEaEaEaEaEaEbtaEaEaEaEaEaEaEbtaEaEaEbubvbwaCaCasaa
 aaasbxbxbybzbAbxbBbxbybzbAbxbxbxbCbxbDbxbxbxbxaCbvbvbEbFasaa
 aaasbGaEaEaEaEaEaEaEaEaEaEbxaEaGaEaDaEaDaEaGaEbobpbHaCaCasaa
-aaasbIaEbJaEaEaEaEaEaEaEaMbxaEaEaEbKbKaEaEaEaEaCaCaCaCaEasaa
+aaasbIaEbJaEaEaEaEaEaEaraMbxaEaEaEbKbKaEaEaEaEaCaCaCaCaEasaa
 aaasbLbMaEbMaEbJaEaEaEaEaEbxaEaEaRbNbOaUaEaEaEbPaEbQaEbRasaa
 aaasaEaEaEaEaEaEaEbSbTbUbVbxaEaEbWbXbYbZaEaEaEcaaEaEaEcbasaa
-aaasbxbxbxbxbxbxbxbxbxbxbxbxaEaEaEaEaEaEaEaEaEaCaEaEaEccasaa
-aaasaEaEaEaEcdaEaGaEaEcdaEcebxbxcfbxcgbxbxchbxaCaNaEaEciasaa
+aaasbxbxbxbxbxbxbxbxbxbxbxbxaEaEaEaEaEaEaEaEaEaCaEaEarccasaa
+aaasaEaEaEaEauaEaGaEaEauaEcebxbxcfbxcgbxbxchbxaCaNaEaEciasaa
 aaasaEcjaEaEaEaEaEaEaEaEaEckaEaEaEaEaEaEaEaEaEaCaEaEaEclasaa
 aaasasaEaEcmaEaEaEaEaEaEaEceaNaIaIbKcnaIaIaIaMaCaEaEcoasasaa
-aacpasasaEaEcdaEcqaEaEcdaEbxcrcsctcucvcwcxcyaEaCczcAasascBaa
-aaaacpasasasasasasasasasasasasasasasasasasasasasasasascBaaaa
+aaaWasasaEaEauaEcqaEaEauaEbxcrcsctcucvcwcxcyaEaCczcAasascBaa
+aaaaaWasasasasasasasasasasasasasasasasasasasasasasasascBaaaa
 "}
+
