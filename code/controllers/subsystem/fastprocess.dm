@@ -31,6 +31,6 @@ var/datum/subsystem/fastprocess/SSfastprocess
 		if(thing)
 			thing.process(wait)
 		else
-			SSfastprocess.processing.Remove(thing)
+			SSfastprocess.processing -= thing
 		if (MC_TICK_CHECK)
 			return
