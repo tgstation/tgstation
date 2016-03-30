@@ -36,7 +36,7 @@
 	colour = "#BCD4E6"
 
 /datum/guardianname/carp/hookergreen
-	suffixcolour = "Hooker's Green"
+	suffixcolour = "Hooker Green"
 	colour = "#49796B"
 
 /datum/guardianname/magic
