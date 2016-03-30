@@ -4,9 +4,6 @@
 	return 1 // Testing testing
 */
 
-/datum/holiday/april_fools/getStationPrefix()
-	return pick("Friendship","Magic","My Little","Pony")
-
 /datum/holiday/april_fools/celebrate()
 	// Here we go...
 	spawn(40)
