@@ -45,6 +45,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/New(loc, theme)
 	parasites |= src
 	setthemename(theme)
+
+	//Special case holocarp, because #snowflake code
+	if(theme == "carp")
+		icon = "icons/mob/animal.dmi"
+		speak_emote = list("gnashes")
+
 	..()
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
@@ -53,7 +59,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
 	if(!pickedtheme)
-		pickedtheme = pick("magic", "tech")
+		pickedtheme = pick("magic", "tech", "carp")
 	var/list/possible_names = list()
 	switch(pickedtheme)
 		if("magic")
@@ -61,6 +67,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 				possible_names += new type
 		if("tech")
 			for(var/type in (subtypesof(/datum/guardianname/tech) - namedatum.type))
+				possible_names += new type
+		if("carp")
+			for(var/type in (subtypesof(/datum/guardianname/carp) - namedatum.type))
 				possible_names += new type
 	namedatum = pick(possible_names)
 	updatetheme()
