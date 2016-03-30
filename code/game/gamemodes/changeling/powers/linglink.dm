@@ -14,11 +14,14 @@
 	if(changeling.islinking)
 		user << "<span class='warning'>We have already formed a link with the victim!</span>"
 		return
-  if(!target.mind)
-    user << "<span class='warning'>The victim has no mind to link to!</span>"
+	if(!target.mind)
+		user << "<span class='warning'>The victim has no mind to link to!</span>"
+		return
+	if(target.stat == DEAD)
+		user << "<span class='warning'>The victim is dead, you cannot link to a dead mind!</span>"
 		return
 	if(target.mind.changeling)
-	  user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
+		user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
 		return	
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
