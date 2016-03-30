@@ -52,6 +52,7 @@
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
+	var/datum/linglink			//linked hivemind victims, just a flag to let them speak in hivemind
 
 	var/miming = 0 // Mime's vow of silence
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
