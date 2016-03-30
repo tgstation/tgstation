@@ -9,9 +9,9 @@
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 100
-	health = 100
-	speed = 1
+	maxHealth = 180
+	health = 180
+	speed = 2
 	harm_intent_damage = 8
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -51,6 +51,19 @@
 			visible_message("<span class='danger'>[src] tears [L] to pieces!</span>")
 			src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
 			revive(full_heal = 1)
+			
+	if(istype(target, /obj/machinery/door/airlock))
+		src << "<span class='notice'>You start tearing apart the airlock...</span>"
+		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+		if(do_after(src, 250, target))
+			playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+			qdel(target)
+			var/obj/machinery/door/airlock/A = target
+			var/obj/structure/door_assembly/door = new A.doortype(target.loc)
+			door.density = 0
+			door.anchored = 1
+			door.name = "ravaged airlock"
+			door.desc = "An airlock that has been torn apart. Looks like it wont be keeping much out now."
 
 /mob/living/simple_animal/hostile/zombie/death()
 	..()
@@ -64,7 +77,7 @@
 		qdel(src)
 		return
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
-	spawn(rand(800,1200))
+	spawn(rand(600,900))
 		if(src)
 			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
 			revive(full_heal = 1)
