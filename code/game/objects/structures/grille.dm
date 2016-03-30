@@ -268,8 +268,16 @@
 	if(ismob(AM))
 		tforce = 5
 	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = max(0, I.throwforce * 0.5)
+		if(prob(50))
+			var/obj/item/I = AM
+			tforce = max(0, I.throwforce * 0.5)
+		else
+			if(prob(25))
+				var/turf/T = get_turf(src)
+				var/obj/structure/cable/C = T.get_cable_node()
+				var/datum/powernet/powernet/R = C.powernet
+				var/P = R.avail
+				tesla_zap(src, zap_range = 3, P) //ZAP
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	health = max(0, health - tforce)
 	healthcheck()
