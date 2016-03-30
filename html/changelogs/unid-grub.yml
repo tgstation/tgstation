@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-- bugfix: Fixed long-distance tabling
