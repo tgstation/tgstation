@@ -16,11 +16,7 @@
 		for(var/atom/m in mob_list)
 			if(m)
 				if(m.timestopped) continue
-				try
-					m:Life()
-				catch(var/exception/e)
-					world.Error(e)
-					continue
+				m:Life()
 				scheck()
 				continue
 			mob_list -= m

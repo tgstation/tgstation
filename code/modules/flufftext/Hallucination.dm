@@ -394,7 +394,7 @@ proc/check_panel(mob/M)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	to_chat(my_target, currentimage)
+	my_target << currentimage
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
@@ -440,7 +440,7 @@ proc/check_panel(mob/M)
 	var/obj/effect/overlay/O = getFromPool(/obj/effect/overlay,target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	to_chat(target, I)
+	target << I
 	spawn(300)
 		returnToPool(O)
 
