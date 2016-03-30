@@ -271,6 +271,6 @@
 	name = "honey bun"
 	desc = "A sticky pastry bun glazed with honey."
 	icon_state = "honeybun"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 5, "vitamin" = 2)
+	bonus_reagents = list("nutriment" = 1, "honey" = 1)
+	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
