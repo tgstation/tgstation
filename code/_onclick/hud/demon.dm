@@ -63,7 +63,7 @@
 /datum/hud/demon/persistant_inventory_update()
 	if(!mymob)
 		return
-	var/mob/living/carbon/demon/D = mymob
+	var/mob/living/carbon/true_demon/D = mymob
 
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(D.r_hand)
@@ -78,6 +78,6 @@
 		if(D.l_hand)
 			D.l_hand.screen_loc = null
 
-/mob/living/carbon/demon/create_mob_hud()
+/mob/living/carbon/true_demon/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/demon(src, ui_style2icon(client.prefs.UI_style))
