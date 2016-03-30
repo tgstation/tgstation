@@ -171,7 +171,7 @@
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"
-	cost = 10
+	cost = 1000
 	contains = list(/obj/item/weapon/storage/box/wall_flash,
 					/obj/item/weapon/storage/box/wall_flash,
 					/obj/item/weapon/storage/box/wall_flash,
@@ -256,13 +256,21 @@
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/suit/space/swat,
 					/obj/item/clothing/suit/space/swat,
-					/obj/item/weapon/kitchen/knife/combat,
-					/obj/item/weapon/kitchen/knife/combat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/weapon/storage/belt/military/assault,
-					/obj/item/weapon/storage/belt/military/assault)
+					/obj/item/weapon/storage/belt/military/assault,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
+
+/datum/supply_pack/security/armory/combatknives
+	name = "Combat Knives Crate"
+	cost = 3000
+	contains = list(/obj/item/weapon/kitchen/knife/combat,
+					/obj/item/weapon/kitchen/knife/combat,
+					/obj/item/weapon/kitchen/knife/combat)
+	crate_name = "combat knife crate"
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"

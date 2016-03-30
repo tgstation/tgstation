@@ -374,7 +374,8 @@
 	if(subject.dna.species)
 		R.fields["mrace"] = subject.dna.species.type
 	else
-		R.fields["mrace"] = /datum/species/human
+		var/datum/species/rando_race = pick(config.roundstart_races)
+		R.fields["mrace"] = rando_race.type
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)

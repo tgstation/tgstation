@@ -12,6 +12,7 @@
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/auto_door_open = TRUE
+	var/view_range = 7
 
 	//Pixels
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
@@ -70,6 +71,8 @@
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
+		if(buckled_mob.client)
+			buckled_mob.client.view = world.view
 	. = ..()
 
 
@@ -83,6 +86,8 @@
 	M.loc = get_turf(src)
 	..()
 	handle_vehicle_offsets()
+	if(user.client)
+		user.client.view = view_range
 
 
 //MOVEMENT

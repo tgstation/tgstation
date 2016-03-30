@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	13
+#define SAVEFILE_VERSION_MAX	14
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -168,7 +168,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					underwear = "Nude"
 
 	if(pref_species && !(pref_species.id in roundstart_species))
-		pref_species = new /datum/species/human()
+		var/rando_race = pick(config.roundstart_races)
+		pref_species = new rando_race()
 
 	if(current_version < 13 || !istext(backbag))
 		switch(backbag)
@@ -217,6 +218,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]			>> toggles
 	S["ghost_form"]			>> ghost_form
 	S["ghost_orbit"]		>> ghost_orbit
+	S["ghost_accs"]			>> ghost_accs
+	S["ghost_others"]		>> ghost_others
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
@@ -238,6 +241,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
+	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
+	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 
 	return 1
 
@@ -264,6 +269,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_form"]			<< ghost_form
 	S["ghost_orbit"]		<< ghost_orbit
+	S["ghost_accs"]			<< ghost_accs
+	S["ghost_others"]		<< ghost_others
 	S["preferred_map"]		<< preferred_map
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
@@ -299,7 +306,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/newtype = roundstart_species[species_id]
 		pref_species = new newtype()
 	else
-		pref_species = new /datum/species/human()
+		var/rando_race = pick(config.roundstart_races)
+		pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		S["features["mcolor"]"]	<< "#FFF"
