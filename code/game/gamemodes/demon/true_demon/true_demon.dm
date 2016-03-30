@@ -38,6 +38,7 @@
 
 
 /mob/living/carbon/true_demon/death(gibbed)
+	stat = DEAD
 	..(gibbed)
 	drop_l_hand()
 	drop_r_hand()
