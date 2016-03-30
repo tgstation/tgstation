@@ -23,6 +23,7 @@
 /obj/item/weapon/paper/contract/employment/update_text()
 	name = "paper- [target] employment contract"
 	info = "<center><B>Official copy of Nanotransen employment agreement</B></center><BR><BR><BR>Contract for [target]<BR><BR><BR>Placeholder text"
+	// TODO LORDPIDEY:  Make better text here.
 
 
 /obj/item/weapon/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
