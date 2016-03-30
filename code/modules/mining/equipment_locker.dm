@@ -944,8 +944,8 @@
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
-	icon_state = "explorer"
-	item_state = "explorer"
+	icon_state = "explorer_t"
+	item_state = "explorer_t"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hooded = 1
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
