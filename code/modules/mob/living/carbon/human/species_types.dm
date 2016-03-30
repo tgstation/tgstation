@@ -784,3 +784,23 @@ SYNDICATE BLACK OPS
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
 	sexes = 0
 
+/datum/species/parrot
+	name = "Parrot"
+	id = "parrot"
+	say_mod = "squawks"
+	specflags = list()
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	sexes = 0
+	var/list/speech_buffer = list()
+
+/datum/species/parrot/spec_life(mob/living/carbon/human/H)
+	if(speech_buffer.len < 1)
+		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+		S["phrases"] >> speech_buffer
+	if(prob(5))
+		H.say(pick(speech_buffer))
+	if(prob(3))
+		new /obj/item/weapon/reagent_containers/food/snacks/egg(H.loc)
+	..()
