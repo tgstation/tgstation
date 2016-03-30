@@ -7,11 +7,7 @@
 /datum/controller/process/nanoui/doWork()
 	for(var/p in nanomanager.processing_uis)
 		if(p)
-			try
-				p:process()
-			catch(var/exception/e)
-				world.Error(e)
-				continue
+			p:process()
 			scheck()
 			continue
 		nanomanager.processing_uis -= p

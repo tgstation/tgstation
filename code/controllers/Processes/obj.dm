@@ -17,11 +17,7 @@ var/global/list/processing_objects = list()
 		for(var/atom/o in processing_objects)
 			if(o)
 				if(o.timestopped) continue
-				try
-					o:process()
-				catch(var/exception/e)
-					world.Error(e)
-					continue
+				o:process()
 				scheck()
 				continue
 			processing_objects -= o
