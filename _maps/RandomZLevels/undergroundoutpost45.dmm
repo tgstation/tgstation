@@ -1,5 +1,5 @@
 "aa" = (/turf/open/space,/area/space)
-"ab" = (/turf/indestructible/riveted,/area/awaycontent/a7{always_unpowered = 1; has_gravity = 1; name = "UO45 Caves"; power_environ = 0; power_equip = 0; power_light = 0; poweralm = 0})
+"ab" = (/turf/closed/indestructible/riveted,/area/awaycontent/a7{always_unpowered = 1; has_gravity = 1; name = "UO45 Caves"; power_environ = 0; power_equip = 0; power_light = 0; poweralm = 0})
 "ac" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel{broken = 1; dir = 8; heat_capacity = 1e+006; icon_state = "damaged2"},/area/awaycontent/a1{has_gravity = 1; name = "UO45 Central Hall"})
 "ad" = (/turf/closed/mineral/random/labormineral,/area/awaycontent/a7{always_unpowered = 1; has_gravity = 1; name = "UO45 Caves"; power_environ = 0; power_equip = 0; power_light = 0; poweralm = 0})
 "ae" = (/turf/closed/wall/r_wall,/area/awaycontent/a1{has_gravity = 1; name = "UO45 Central Hall"})

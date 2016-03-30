@@ -422,7 +422,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 0
 	},
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "abe" = (
 /turf/closed/wall/shuttle{
@@ -3377,7 +3377,7 @@
 /area/shuttle/syndicate)
 "afN" = (
 /obj/structure/sign/bluecross_2,
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "afO" = (
 /obj/machinery/door/window{
@@ -61950,7 +61950,7 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 4
 	},
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 
 (1,1,1) = {"

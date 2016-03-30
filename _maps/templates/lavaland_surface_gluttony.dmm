@@ -1,7 +1,7 @@
 "a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
 "b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "c" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
-"d" = (/turf/indestructible/riveted/uranium{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"d" = (/turf/closed/indestructible/riveted/uranium{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "e" = (/turf/open/floor/plating/lava/smooth,/area/ruin/powered)
 "f" = (/obj/item/weapon/reagent_containers/syringe/gluttony,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "g" = (/obj/effect/gluttony,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)

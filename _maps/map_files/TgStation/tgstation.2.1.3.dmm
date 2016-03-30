@@ -16,7 +16,7 @@
 /turf/open/space,
 /area/space)
 "aac" = (
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "aad" = (
 /turf/closed/wall/shuttle{
@@ -43991,7 +43991,7 @@
 /turf/open/floor/plating/airless,
 /area/toxins/test_area)
 "bLq" = (
-/turf/indestructible{
+/turf/closed/indestructible{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
 	icon_state = "riveted";
 	name = "hyper-reinforced wall"
@@ -57162,7 +57162,7 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 4
 	},
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "cmq" = (
 /obj/effect/landmark{
@@ -57613,7 +57613,7 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 0
 	},
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "cnj" = (
 /obj/structure/grille,
@@ -58060,7 +58060,7 @@
 /area/engine/engine_smes)
 "cnT" = (
 /obj/structure/sign/bluecross_2,
-/turf/indestructible/opshuttle,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "cnU" = (
 /obj/structure/cable{

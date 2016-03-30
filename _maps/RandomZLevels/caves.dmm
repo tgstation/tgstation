@@ -1,4 +1,4 @@
-"aa" = (/turf/indestructible/rock,/area/space)
+"aa" = (/turf/closed/indestructible/rock,/area/space)
 "ab" = (/turf/open/space,/area/space)
 "ac" = (/turf/closed/mineral/volcanic,/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 3"})
 "ad" = (/turf/open/floor/plating/lava/smooth{baseturf = /turf/open/floor/plating/lava/smooth; desc = "Looks hot."; luminosity = 5; name = "lava"; nitrogen = 23; oxygen = 14},/area/awaymission/BMPship{name = "\improper BMP Asteroid Level 4"})

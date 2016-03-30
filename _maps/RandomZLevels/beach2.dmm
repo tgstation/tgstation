@@ -1,5 +1,5 @@
 "aa" = (/turf/open/space,/area/space)
-"ab" = (/turf/indestructible/rock,/area/awaymission/beach)
+"ab" = (/turf/closed/indestructible/rock,/area/awaymission/beach)
 "ac" = (/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
 "ad" = (/obj/machinery/gateway{dir = 9},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)
 "ae" = (/obj/machinery/gateway{dir = 1},/turf/open/floor/plating/beach/sand,/area/awaymission/beach)

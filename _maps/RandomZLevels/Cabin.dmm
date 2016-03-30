@@ -1,5 +1,5 @@
-"aa" = (/turf/indestructible/rock/snow,/area/space)
-"ab" = (/turf/indestructible/rock/snow,/area/awaymission/snowforest)
+"aa" = (/turf/closed/indestructible/rock/snow,/area/space)
+"ab" = (/turf/closed/indestructible/rock/snow,/area/awaymission/snowforest)
 "ac" = (/turf/open/floor/plating/asteroid/snow/temperate,/area/awaymission/snowforest)
 "ad" = (/turf/closed/wall/mineral/wood,/area/awaymission/snowforest/lumbermill)
 "ae" = (/obj/item/weapon/grown/log/tree,/turf/open/floor/plating/asteroid/snow/temperate,/area/awaymission/snowforest)

@@ -5540,7 +5540,7 @@
 "ccD" = (/obj/machinery/door/poddoor{id = "disvent"; name = "Incinerator Vent"},/turf/open/floor/engine/vacuum,/area/maintenance/incinerator)
 "ccE" = (/obj/structure/lattice,/turf/open/space,/area/maintenance/incinerator)
 "ccF" = (/obj/machinery/camera{c_tag = "Toxins Test Chamber Port"; dir = 4; network = list("SS13","Test")},/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/airless,/area/toxins/test_area)
-"ccG" = (/turf/indestructible/riveted{name = "Super Reinforced Wall"},/area/toxins/test_area)
+"ccG" = (/turf/closed/indestructible/riveted{name = "Super Reinforced Wall"},/area/toxins/test_area)
 "ccH" = (/obj/item/device/radio/beacon,/obj/machinery/light/small{dir = 8},/turf/open/floor/plating/airless,/area/toxins/test_area)
 "ccI" = (/obj/machinery/door/poddoor{id = "toxinsdriver"; name = "Toxins Launcher Bay Door"},/turf/open/floor/plating/airless,/area/toxins/test_area)
 "ccJ" = (/obj/machinery/door/poddoor{id = "toxinsdriver"; name = "Toxins Launcher Bay Door"},/turf/open/floor/plating{icon_state = "warnplate"; dir = 4},/area/maintenance/asmaint2{icon_state = "toxtest"; name = "Toxins Launch Room"})
