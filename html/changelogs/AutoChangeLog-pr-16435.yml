@@ -1,5 +1,0 @@
-author: Ricotez
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where the toggles for Ghost Accessories and Ghosts of Others in the Preferences menu wouldn't save your preference update to your save file."
-  - bugfix: "Renamed the \"Ghost Display Settings\" preference toggle button to \"Ghosts of Others\", so it fits with the name the preference has everywhere else."

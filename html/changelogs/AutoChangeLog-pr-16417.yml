@@ -1,6 +1,0 @@
-author: Xhuis
-delete-after: True
-changes: 
-  - bugfix: "Wall-mounted flasher crates now have the proper price."
-  - bugfix: "Wall-mounted flasher frames now have icons."
-  - bugfix: "Upgraded resonators now have an inhand sprite."
