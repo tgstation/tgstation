@@ -53,7 +53,7 @@
 	inv_box.name = "mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
-	inv_box.icon_full = "template"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_mask
 	inv_box.slot_id = slot_wear_mask
 	static_inventory += inv_box
@@ -62,7 +62,7 @@
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
-	inv_box.icon_full = "template"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_head
 	inv_box.slot_id = slot_head
 	static_inventory += inv_box
