@@ -4877,7 +4877,7 @@
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/open/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "dark"
 	},
 /area/shuttle/arrival)
@@ -5016,14 +5016,14 @@
 	icon_state = "burst_l"
 	},
 /turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/open/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "dark"
 	},
 /area/shuttle/arrival)
 "akn" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/open/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "dark"
 	},
 /area/shuttle/arrival)
@@ -5032,7 +5032,7 @@
 	icon_state = "burst_r"
 	},
 /turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/open/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "dark"
 	},
 /area/shuttle/arrival)

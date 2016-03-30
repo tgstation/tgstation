@@ -14295,7 +14295,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/open/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "dark"
 	},
 /area/shuttle/labor)
@@ -14308,7 +14308,7 @@
 	output_dir = 1
 	},
 /turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/open/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "dark"
 	},
 /area/shuttle/labor)
