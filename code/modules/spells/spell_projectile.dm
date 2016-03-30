@@ -54,7 +54,7 @@
 /obj/item/projectile/spell_projectile/seeking
 	name = "seeking spell"
 
-/obj/item/projectile/spell_projectile/seeking/choose_prox_targets()
+/obj/item/projectile/spell_projectile/seeking/choose_prox_targets(user = carried.holder, spell_holder = src)
 	if(Adjacent(original))
 		return list(original)
 	else
