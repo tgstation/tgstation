@@ -608,8 +608,8 @@
 /obj/item/weapon/storage/box/ingredients/italian
 	item_state = "italian"
 
-/obj/item/weapon/storage/box/ingredients/vegitarian
-	item_state = "vegitarian"
+/obj/item/weapon/storage/box/ingredients/vegetarian
+	item_state = "vegetarian"
 
 /obj/item/weapon/storage/box/ingredients/sweets
 	item_state = "sweets"
@@ -623,7 +623,7 @@
 /obj/item/weapon/storage/box/ingredients/New()
 	..()
 	if (item_state == null)
-		item_state = pick("wildcard", "fiesta", "italian", "vegitarian", "sweets", "carnivore", "exotic")
+		item_state = pick("wildcard", "fiesta", "italian", "vegetarian", "sweets", "carnivore", "exotic")
 	desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
 	switch(item_state)
 		if("wildcard")
@@ -662,7 +662,7 @@
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
 			new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
-		if("vegitarian")
+		if("vegetarian")
 			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
 			new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
