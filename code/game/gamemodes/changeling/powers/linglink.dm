@@ -28,7 +28,7 @@
 		user << "<span class='warning'>We must be tightly grabbing a creature in our active hand to link with them!</span>"
 		return
 	if(G.state <= GRAB_NECK)
-		user << "<span class='warning'>We must have a tighter grip to absorb this creature!</span>"
+		user << "<span class='warning'>We must have a tighter grip to link with this creature!</span>"
 		return
 
 	var/mob/living/carbon/target = G.affecting
@@ -49,11 +49,12 @@
 				user << "<span class='notice'>We stealthily stab [target] with a minor proboscis...</span>")
 				target << "<span class='userdanger'>You experience a stabbing sensation and your ears begin to ring...</span>"
 			if(3)
-        user << "<span class='notice'>You mold the [target]'s mind like clay, they can now speak in the hivemind!</span>")
+				user << "<span class='notice'>You mold the [target]'s mind like clay, they can now speak in the hivemind!</span>")
 				target << "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>"
 				var/datum/mind/linglink = target.mind
 				linglinkID = target.name
 				target << "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>"
+				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
 				
 		feedback_add_details("changeling_powers","A[stage]")
