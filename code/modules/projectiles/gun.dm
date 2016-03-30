@@ -2,9 +2,9 @@
  #define SAWN_OFF     1
  #define SAWN_SAWING -1
 
- #define WEAPON_LIGHT 1
- #define WEAPON_MEDIUM 2
- #define WEAPON_HEAVY 3
+ #define WEAPON_LIGHT 0
+ #define WEAPON_MEDIUM 1
+ #define WEAPON_HEAVY 2
 
 /obj/item/weapon/gun
 	name = "gun"
@@ -123,7 +123,7 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
-	if(weapon_weight == WEAPON_MEDIUM)
+	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_hand())
 			if(prob(15))
 				if(user.drop_item())
