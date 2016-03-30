@@ -60,8 +60,8 @@
 	storage_type = /obj/item/weapon/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
-	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
-	mask_type = /obj/item/clothing/mask/breath
+	suit_type = /obj/item/clothing/suit/hooded/explorer
+	mask_type = /obj/item/clothing/mask/gas
 
 /obj/machinery/suit_storage_unit/cmo
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical

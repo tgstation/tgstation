@@ -935,3 +935,27 @@
 	C.preserved = 1
 	user << "<span class='notice'>You inject the hivelord core with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
+
+
+
+/****************Explorer's Suit**************************/
+
+/obj/item/clothing/suit/hooded/explorer
+	name = "explorer suit"
+	desc = "An armoured suit for exploring harsh environments."
+	icon_state = "explorer"
+	item_state = "explorer"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	hooded = 1
+	hoodtype = /obj/item/clothing/head/explorer
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
+
+/obj/item/clothing/head/explorer
+	name = "explorer hood"
+	desc = "An armoured hood for exploring harsh environments."
+	icon_state = "explorer"
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)

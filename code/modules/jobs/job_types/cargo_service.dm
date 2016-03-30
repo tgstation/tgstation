@@ -78,15 +78,17 @@ Shaft Miner
 
 	belt = /obj/item/device/pda/shaftminer
 	ears = /obj/item/device/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/miner
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/color/black
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/weapon/mining_voucher=1)
 
-	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
+	backpack = /obj/item/weapon/storage/backpack/security
+	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/security
 	box = /obj/item/weapon/storage/box/engineer
 
 /*

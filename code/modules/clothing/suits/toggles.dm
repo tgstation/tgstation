@@ -31,7 +31,6 @@
 	..()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
-	src.icon_state = "[initial(icon_state)]"
 	suittoggled = 0
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
@@ -59,7 +58,6 @@
 			else
 				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
 				suittoggled = 1
-				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
 				for(var/X in actions)
 					var/datum/action/A = X
