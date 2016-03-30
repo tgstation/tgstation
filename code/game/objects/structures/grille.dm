@@ -268,8 +268,11 @@
 	if(ismob(AM))
 		tforce = 5
 	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = max(0, I.throwforce * 0.5)
+		if(prob(25))
+			var/obj/item/I = AM
+			tforce = max(0, I.throwforce * 0.5)
+		else
+			AM.visible_message("<span class='warning'>The [AM] bounces harmlessly off the grill!</span>")
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	health = max(0, health - tforce)
 	healthcheck()
