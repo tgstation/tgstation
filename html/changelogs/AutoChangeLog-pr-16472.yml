@@ -1,4 +1,0 @@
-author: Coiax
-delete-after: True
-changes: 
-  - rscadd: "Geiger counters can now be stored in the suit storage of radiation suits"
