@@ -33,7 +33,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
-	
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting
@@ -84,7 +84,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
-	
+
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
@@ -219,6 +219,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
+		CHECK_TICK
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)

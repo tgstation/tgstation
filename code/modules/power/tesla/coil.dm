@@ -47,7 +47,7 @@
 	flick("coilhit", src)
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_produced)
-	addtimer(src, "reset_shocked", 10)
+	addtimer(src, "reset_shocked", 1)
 
 /obj/machinery/power/grounding_rod
 	name = "Grounding Rod"
