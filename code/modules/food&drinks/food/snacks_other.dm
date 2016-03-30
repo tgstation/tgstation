@@ -320,3 +320,11 @@
 	filling_color = "#FFD700"
 	volume = 80
 	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/honeybar
+	name = "honey nut bar"
+	desc = "Oats and nuts compressed together into a bar, held together with a honey glaze."
+	icon_state = "honeybar"
+	bonus_reagents = list("nutriment" = 2, "honey" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 5, "honey" = 5)
+	filling_color = "#F2CE91"
