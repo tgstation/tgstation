@@ -181,12 +181,16 @@ var/datum/subsystem/air/SSair
 
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 
-	for(var/turf/t in turfs_to_init)
+	for(var/thing in turfs_to_init)
+		var/turf/t = thing
 		t.CalculateAdjacentTurfs()
 		active_turfs -= t
 
 		if(t.blocks_air)
 			continue
+
+		if(istype(t, /turf/open/space))
+			continue //don't need to initialize these; just slows down roundstart without any real benefit
 
 		var/turf/open/T = t
 
@@ -200,7 +204,7 @@ var/datum/subsystem/air/SSair
 			var/is_active = T.air.compare(enemy_air)
 
 			if(is_active)
-				testing("Active turf found. Return value of compare(): [is_active]")
+				//testing("Active turf found. Return value of compare(): [is_active]")
 				T.excited = 1
 				active_turfs |= T
 				break

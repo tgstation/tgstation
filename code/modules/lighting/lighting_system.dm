@@ -312,9 +312,8 @@
 		redraw_lighting(1)
 
 /turf/open/space/init_lighting()
-	. = ..()
-	if(config.starlight)
-		update_starlight()
+	..()
+	update_starlight()
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)

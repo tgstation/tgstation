@@ -132,9 +132,6 @@
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
-	if(istype(W, /turf))
-		W:Assimilate_Air()
-		W.RemoveLattice()
 	W.AfterChange()
 	return W
 
