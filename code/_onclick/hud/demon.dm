@@ -80,4 +80,4 @@
 
 /mob/living/carbon/demon/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/drone(src, ui_style2icon(client.prefs.UI_style))
+		hud_used = new /datum/hud/demon(src, ui_style2icon(client.prefs.UI_style))
