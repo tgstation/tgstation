@@ -46,12 +46,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	parasites |= src
 	setthemename(theme)
 
-	//Special case holocarp, because #snowflake code
-	if(theme == "carp")
-		icon = 'icons/mob/animal.dmi'
-		speak_emote = list("gnashes")
-		desc = "A mysterious fish that stands by its charge, ever vigilant."
-
 	..()
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
@@ -73,15 +67,25 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			for(var/type in (subtypesof(/datum/guardianname/carp) - namedatum.type))
 				possible_names += new type
 	namedatum = pick(possible_names)
-	updatetheme()
+	updatetheme(pickedtheme)
 
-/mob/living/simple_animal/hostile/guardian/proc/updatetheme() //update the guardian's theme to whatever its datum is; proc for adminfuckery
+/mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
 	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
 	real_name = "[name]"
 	icon_living = "[namedatum.parasiteicon]"
 	icon_state = "[namedatum.parasiteicon]"
 	icon_dead = "[namedatum.parasiteicon]"
 	bubble_icon = "[namedatum.bubbleicon]"
+
+	//Special case holocarp, because #snowflake code
+	if(theme == "carp")
+		icon = 'icons/mob/animal.dmi'
+		speak_emote = list("gnashes")
+		desc = "A mysterious fish that stands by its charge, ever vigilant."
+
+		attacktext = "bites"
+		attack_sound = 'sound/weapons/bite.ogg'
+
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
 	..()
