@@ -7,6 +7,8 @@
 
 #define SOULVALUE soulsOwned.len-reviveNumber
 
+#define DEMONRESURRECTTIME 600
+
 var/list/allDemons = list()
 
 /datum/demoninfo/
@@ -252,7 +254,7 @@ var/list/allDemons = list()
 		if(TRUE_DEMON)
 			regress_blood_lizard()
 
-/datum/demoninfo/proc/regress_humanoid()  //TODO LORDPIDEY
+/datum/demoninfo/proc/regress_humanoid()
 	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
@@ -324,6 +326,9 @@ var/list/allDemons = list()
 	world << 'sound/hallucinations/veryfar_noise.ogg'
 	give_arch_spells()
 	D.convert_to_archdemon()
+	var/area/A = get_area(owner.current)
+	if(A)
+		notify_ghosts("An arch demon has ascended in \the [A.name]. Reach out to the demon to be given a new shell for your soul.", source = owner.current, attack_not_jump = 1)
 	sleep(50)
 	if(!ticker.mode.demon_ascended)
 		SSshuttle.emergency.request(null, 0.3)
@@ -355,3 +360,87 @@ var/list/allDemons = list()
 /datum/demoninfo/proc/give_arch_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended(null))
 	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null)) TODO LORDPIDEY
+
+/datum/demoninfo/proc/beginResurrectionCheck(mob/living/body)
+	if(SOULVALUE>0)
+		body<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
+		sleep(DEMONRESURRECTTIME)
+		if (body.stat == DEAD)
+			if(SOULVALUE>0)
+				if(check_banishment(body))
+					body<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
+					return -1
+				else
+					return demonic_resurrection(body)
+			else
+				body<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
+				return -1
+		else
+			body << "<span class='danger'> You seem to have resurrected without your infernal powers.</span>"
+
+/datum/demoninfo/proc/check_banishment(mob/living/body)
+	switch(banish)
+		if(BANISH_WATER)
+			if(istype(body, /mob/living/carbon))
+				var/mob/living/carbon/H = body
+				return H.reagents.has_reagent("holy water")
+			return 0
+		if(BANISH_COFFIN)
+			return (body && istype(body.loc, /obj/structure/closet/coffin))
+		if(BANISH_FORMALDYHIDE)
+			if(istype(body, /mob/living/carbon))
+				var/mob/living/carbon/H = body
+				return H.reagents.has_reagent("formaldehide")
+			return 0
+		if(BANISH_RUNES)
+			if(body)
+				for(var/obj/effect/decal/cleanable/crayon/R in range(0,body))
+					if (R.name == "rune")
+						return 1
+			return 0
+		if(BANISH_CANDLES)
+			if(body)
+				var/count = 0
+				for(var/obj/item/candle/C in range(1,body))
+					count += C.lit
+				if(count>=4)
+					return 1
+			return 0
+		if(BANISH_DESTRUCTION)
+			if(body)
+				return 0
+			return 1
+		if(BANISH_FUNERAL_GARB)
+			if(istype(body, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = body
+				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
+					return 1
+			return 0
+
+/datum/demoninfo/proc/demonic_resurrection(mob/living/body)
+	if(blobstart.len > 0)
+		var/turf/targetturf = get_turf(pick(blobstart))
+		message_admins("[owner.name] (demonic name is: [truename]) is resurrecting using demonic energy.</a>).")
+		reviveNumber++
+		if(body)
+			body.revive(1,0)
+		else
+			owner.current.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
+			var/mob/living/carbon/human/H  = owner.current
+			if(SOULVALUE>=POWERUPTHRESHOLD)
+				H.set_species(/datum/species/lizard, 1)
+				H.underwear = "Nude"
+				H.undershirt = "Nude"
+				H.socks = "Nude"
+				H.dna.features["mcolor"] = "511"
+				H.regenerate_icons()
+			if(SOULVALUE>=POWERUPTHRESHOLD*2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+				var/mob/living/carbon/true_demon/A = new /mob/living/carbon/true_demon(targetturf)
+				A.faction |= "hell"
+				H.loc = A
+				A.oldform = H
+				A.set_name()
+				owner.transfer_to(A)
+	else
+		throw EXCEPTION("Unable to find a blobstart landmark for demonic resurrection")
+	check_regression()

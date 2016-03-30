@@ -162,7 +162,7 @@
 			if(!ghost)
 				return		//handle logouts that happen whilst the alert is waiting for a response.
 			if(response == "Yes")
-				H.revive()
+				H.revive(1,0)
 				add_logs(user, H, "demonically revived")
 				user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 				H.adjust_fire_stacks(20)

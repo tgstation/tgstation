@@ -32,20 +32,17 @@
 	name = mind.demoninfo.truename
 	real_name = name
 
-/mob/living/carbon/true_demon/Destroy()
-	// TODO LORDPIDEY: Make banishment rituals work here.
-	return ..()
-
 /mob/living/carbon/true_demon/Login()
 	..()
 	mind.announceDemonLaws()
 
 
 /mob/living/carbon/true_demon/death(gibbed)
-	mind.demoninfo.beginResurrectionCheck(src)
 	..(gibbed)
 	drop_l_hand()
 	drop_r_hand()
+	spawn (0)
+		mind.demoninfo.beginResurrectionCheck(src)
 
 
 /mob/living/carbon/true_demon/examine(mob/user)
