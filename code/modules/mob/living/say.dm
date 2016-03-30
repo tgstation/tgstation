@@ -206,7 +206,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(3)
-				var/msg = "<i><font color=#800040><b>[mind.linglink.linglinkID]:</b> [message]</font></i>"
+				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
