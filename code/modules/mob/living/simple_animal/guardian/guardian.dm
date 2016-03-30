@@ -48,8 +48,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 	//Special case holocarp, because #snowflake code
 	if(theme == "carp")
-		icon = "icons/mob/animal.dmi"
+		icon = 'icons/mob/animal.dmi'
 		speak_emote = list("gnashes")
+		desc = "A mysterious fish that stands by its charge, ever vigilant."
 
 	..()
 
