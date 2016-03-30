@@ -84,11 +84,12 @@ Shaft Miner
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
 		/obj/item/weapon/storage/bag/ore=1,\
+		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/mining_voucher=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/security
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/engineer
 
 /*
