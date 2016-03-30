@@ -38,6 +38,10 @@
 	if(mind && species && (species.name == "Manifested") && (mind in ticker.mode.cult))//manifested ghosts are removed from the cult once their bodies are destroyed
 		ticker.mode.update_cult_icons_removed(mind)
 		ticker.mode.cult -= mind
+
+	for(var/obj/Overlays/O in obj_overlays)
+		returnToPool(O)
+
 	..()
 
 /mob/living/carbon/human/death(gibbed)
