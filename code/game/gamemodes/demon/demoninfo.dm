@@ -341,23 +341,27 @@ var/list/allDemons = list()
 			owner.RemoveSpell(S)
 
 /datum/demoninfo/proc/give_base_spells(var/give_summon_contract = 0)
+	remove_spells
 	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
 	if(give_summon_contract)
 		owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
 
 /datum/demoninfo/proc/give_lizard_spells()
+	remove_spells
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon(null))
 
 /datum/demoninfo/proc/give_true_spells()
+	remove_spells
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon(null))
 	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null)) TODO LORDPIDEY add this spell
 
 /datum/demoninfo/proc/give_arch_spells()
+	remove_spells
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended(null))
 	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null)) TODO LORDPIDEY
 
