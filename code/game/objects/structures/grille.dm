@@ -275,7 +275,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			var/datum/powernet/R = C.powernet
-			P = R.avail
+			var/P = R.avail
 			playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 			tesla_zap(src, 3, P * 0.08) //ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
