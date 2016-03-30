@@ -2,6 +2,7 @@
 	If a specific field doesn't apply, remove it!
 	Anything inside tags like these is a comment and will not be displayed in the final issue.
 	Be careful not to write inside them!
+	Joke or spammed issues can and will result in punishment. Don't be a dick.
 -->
 
 #### Description of issue
