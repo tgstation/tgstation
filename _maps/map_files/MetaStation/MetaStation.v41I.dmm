@@ -16094,13 +16094,13 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/filingcabinet,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/light_switch{
 	pixel_y = 25
 	},
+/obj/structure/filingcabinet/employment,
 /turf/simulated/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -59451,6 +59451,7 @@
 	pixel_y = 0
 	},
 /obj/item/clothing/under/suit_jacket/red,
+/obj/item/weapon/book/demonomicon,
 /turf/simulated/floor/plasteel{
 	icon_state = "cult";
 	dir = 2
