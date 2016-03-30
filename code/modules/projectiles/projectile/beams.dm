@@ -47,11 +47,19 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 36
+	damage = 0
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
+
+/obj/item/projectile/beam/disabler/on_hit(atom/target, blocked = 0)
+	. = ..()
+	var/mob/living/C = target
+	if(iscarbon(C))
+		C.apply_damage(36, STAMINA, null)
+	if (C.circulatory) // Some simple mobs will be unable to recover from disabler beams
+		C.apply_damage(7, BRUTE, "chest")
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"

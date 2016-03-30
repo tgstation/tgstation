@@ -24,3 +24,4 @@
 	minbodytemp = 150
 	maxbodytemp = 500
 	gold_core_spawnable = 1
+	circulatory = 1 // Takes damage from disabler bolts
