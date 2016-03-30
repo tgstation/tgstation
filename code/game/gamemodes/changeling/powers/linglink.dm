@@ -52,7 +52,6 @@
 				user << "<span class='notice'>You mold the [target]'s mind like clay, they can now speak in the hivemind!</span>")
 				target << "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>"
 				var/datum/mind/linglink = target.mind
-				linglinkID = target.name
 				target << "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>"
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
