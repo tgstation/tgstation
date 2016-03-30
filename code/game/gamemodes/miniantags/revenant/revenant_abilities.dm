@@ -244,12 +244,12 @@
 					floor.broken = 0
 					floor.burnt = 0
 					floor.make_plating(1)
-				if(T.type == /turf/wall && prob(15))
+				if(T.type == /turf/closed/wall && prob(15))
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-					T.ChangeTurf(/turf/wall/rust)
-				if(T.type == /turf/wall/r_wall && prob(10))
+					T.ChangeTurf(/turf/closed/wall/rust)
+				if(T.type == /turf/closed/wall/r_wall && prob(10))
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-					T.ChangeTurf(/turf/wall/r_wall/rust)
+					T.ChangeTurf(/turf/closed/wall/r_wall/rust)
 				for(var/obj/structure/closet/closet in T.contents)
 					closet.open()
 				for(var/obj/structure/bodycontainer/corpseholder in T.contents)

@@ -3,7 +3,7 @@
 
 /datum/mapGeneratorModule/border/shuttleWalls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/wall/shuttle = 100)
+	spawnableTurfs = list(/turf/closed/wall/shuttle = 100)
 // Generators
 
 /datum/mapGenerator/shuttle/full

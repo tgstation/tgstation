@@ -3,18 +3,18 @@
 	spawnableTurfs = list(/turf/open/floor/plating/asteroid = 100)
 
 /datum/mapGeneratorModule/bottomLayer/asteroidWalls
-	spawnableTurfs = list(/turf/mineral = 100)
+	spawnableTurfs = list(/turf/closed/mineral = 100)
 
 //Border walls
 /datum/mapGeneratorModule/border/asteroidWalls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/mineral = 100)
+	spawnableTurfs = list(/turf/closed/mineral = 100)
 
 //Random walls
 /datum/mapGeneratorModule/splatterLayer/asteroidWalls
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/mineral = 30)
+	spawnableTurfs = list(/turf/closed/mineral = 30)
 
 //Monsters
 /datum/mapGeneratorModule/splatterLayer/asteroidMonsters

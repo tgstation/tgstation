@@ -1,6 +1,6 @@
 /turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
 	name = "mech bay recharge station"                      //        Recharging turfs
-	icon = 'icons/turf/open/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
+	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
 /turf/open/floor/mech_bay_recharge_floor/break_tile()
@@ -8,7 +8,7 @@
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=[TCMB]"
+	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"

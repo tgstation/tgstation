@@ -76,7 +76,7 @@
 			continue
 
 		if(platingRequired)
-			if(istype(B, /turf/space))
+			if(istype(B, /turf/open/space))
 				continue
 
 		var/old_dir1 = T.dir
@@ -101,7 +101,9 @@
 		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
 		for(var/V in T.vars - forbidden_vars)
 			if(V == "air")
-				X.air.copy_from(T.air)
+				var/turf/open/O1 = X
+				var/turf/open/O2 = T
+				O1.air.copy_from(O2.air)
 				continue
 			X.vars[V] = T.vars[V]
 		toupdate += X

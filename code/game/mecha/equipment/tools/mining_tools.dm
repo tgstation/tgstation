@@ -40,7 +40,7 @@
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	return
 
-/turf/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+/turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	if(istype(drill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
 		if(drill.do_after_cooldown(src))//To slow down how fast mechs can drill through the station
 			drill.log_message("Drilled through [src]")
@@ -48,8 +48,8 @@
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
 
-/turf/wall/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/mineral/M in range(drill.chassis,1))
+/turf/closed/wall/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/closed/mineral/M in range(drill.chassis,1))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
 			M.gets_drilled(drill.chassis.occupant)
 	drill.log_message("Drilled through [src]")

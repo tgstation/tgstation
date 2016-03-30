@@ -1,10 +1,10 @@
 "a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/wall/r_wall,/area/ruin/powered)
+"b" = (/turf/closed/wall/r_wall,/area/ruin/powered)
 "c" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "e" = (/turf/open/floor/plating/beach/sand,/area/ruin/powered)
 "f" = (/obj/effect/overlay/palmtree_l,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
-"g" = (/turf/wall/mineral/sandstone,/area/ruin/powered)
+"g" = (/turf/closed/wall/mineral/sandstone,/area/ruin/powered)
 "h" = (/obj/effect/overlay/palmtree_r,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
 "i" = (/obj/structure/table,/obj/item/weapon/storage/box/drinkingglasses,/obj/item/weapon/storage/box/drinkingglasses,/obj/item/weapon/reagent_containers/food/drinks/shaker,/obj/item/weapon/storage/box/beakers,/turf/open/floor/wood,/area/ruin/powered)
 "j" = (/obj/structure/table,/obj/machinery/reagentgrinder,/turf/open/floor/wood,/area/ruin/powered)
@@ -26,7 +26,7 @@
 "z" = (/turf/open/floor/plating/beach/sand{density = 1; opacity = 1},/area/ruin/powered)
 "A" = (/obj/machinery/door/airlock/sandstone,/turf/open/floor/wood,/area/ruin/powered)
 "B" = (/obj/structure/closet/secure_closet/freezer/kitchen,/turf/open/floor/wood,/area/ruin/powered)
-"C" = (/obj/structure/sign/barsign,/turf/wall/mineral/sandstone,/area/ruin/powered)
+"C" = (/obj/structure/sign/barsign,/turf/closed/wall/mineral/sandstone,/area/ruin/powered)
 "D" = (/mob/living/simple_animal/crab,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
 "E" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
 "F" = (/turf/open/floor/plating/beach/sand,/obj/structure/closet/athletic_mixed,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
@@ -40,7 +40,7 @@
 "N" = (/turf/open/floor/plating/beach/coastline_t,/area/ruin/powered)
 "O" = (/turf/open/floor/plating/beach/coastline_b,/area/ruin/powered)
 "P" = (/turf/open/floor/plating/beach/water,/area/ruin/powered)
-"Q" = (/turf/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"Q" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

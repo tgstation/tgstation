@@ -175,8 +175,8 @@
 			else
 				wash_obj(G)
 	else
-		if(istype(loc, /turf))
-			var/turf/tile = loc
+		if(istype(loc, /turf/open))
+			var/turf/open/tile = loc
 			tile.MakeSlippery()
 
 

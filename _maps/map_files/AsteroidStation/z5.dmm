@@ -1,5 +1,5 @@
-"a" = (/turf/space,/area/space)
-"b" = (/turf/mineral/random/high_chance,/area/mine/explored)
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/mineral/random/high_chance,/area/mine/explored)
 "c" = (/turf/open/floor/plating/asteroid/airless,/area/mine/explored)
 
 (1,1,1) = {"

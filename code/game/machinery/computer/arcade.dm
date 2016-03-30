@@ -527,7 +527,7 @@
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
 								playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-								var/turf/space/T
+								var/turf/open/space/T
 								for(T in orange(1, src))
 									T.ChangeTurf(/turf/open/floor/plating/)
 						else

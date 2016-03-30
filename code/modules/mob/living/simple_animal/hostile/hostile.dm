@@ -309,7 +309,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(targets_from, dir)
-			if(istype(T, /turf/wall) || istype(T, /turf/mineral))
+			if(istype(T, /turf/closed/wall) || istype(T, /turf/closed/mineral))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)

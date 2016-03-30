@@ -36,7 +36,7 @@
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
 
-	summon_type = list(/turf/wall/cult)
+	summon_type = list(/turf/closed/wall/cult)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
@@ -49,7 +49,7 @@
 	invocation_type = "none"
 	range = 0
 
-	summon_type = list(/turf/wall/r_wall)
+	summon_type = list(/turf/closed/wall/r_wall)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"

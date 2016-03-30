@@ -189,7 +189,7 @@
 		sleep(50)
 		var/clear = TRUE
 		for(var/turf/T in range(3,src))
-			if((!istype(T, /turf/simulated/mineral)) && T.density)
+			if((!istype(T, /turf/closed/mineral)) && T.density)
 				clear = FALSE
 				break
 		if(!clear)
@@ -207,7 +207,7 @@
 	var/turf/cur_turf
 	var/x_size = 5
 	var/y_size = 5
-	var/list/walltypes = list(/turf/wall)
+	var/list/walltypes = list(/turf/closed/wall)
 	var/floor_type = /turf/open/floor/wood
 	var/room
 
@@ -250,11 +250,7 @@
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	threshhold.ChangeTurf(/turf/open/floor/wood)
 	threshhold.blocks_air = 1 //So the air doesn't leak out
-	threshhold.oxygen = 21
-	threshhold.temperature = 293.15
-	threshhold.nitrogen = 82
-	threshhold.carbon_dioxide = 0
-	threshhold.toxins = 0
+	threshhold.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
 	var/area/ZZ = get_area(threshhold)
 	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold

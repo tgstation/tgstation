@@ -408,8 +408,8 @@
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/mineral))
-		var/turf/mineral/M = turftype
+	if(istype(turftype, /turf/closed/mineral))
+		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
 	spawn(10)
 		Trip()
@@ -781,7 +781,7 @@
 		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
-				T.ChangeTurf(/turf/simulated/chasm/straight_down/lava_land_surface)
+				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
 		qdel(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath

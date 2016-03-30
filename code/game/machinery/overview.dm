@@ -51,7 +51,7 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
-					if("/turf/space")
+					if("/turf/open/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -65,10 +65,10 @@
 					if("/turf/open/floor/engine")
 						colour = rgb(128,128,128)
 
-					if("/turf/wall")
+					if("/turf/closed/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/wall/r_wall")
+					if("/turf/closed/wall/r_wall")
 						colour = rgb(128,96,96)
 
 					else
@@ -199,7 +199,7 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
-					if("/turf/space")
+					if("/turf/open/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -214,10 +214,10 @@
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
-					if("/turf/wall")
+					if("/turf/closed/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/wall/r_wall")
+					if("/turf/closed/wall/r_wall")
 						colour = rgb(128,96,96)
 
 					else

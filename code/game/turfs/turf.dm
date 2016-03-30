@@ -1,9 +1,9 @@
 /turf
-	icon = 'icons/turf/open/floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	level = 1
 
 	var/intact = 1
-	var/baseturf = /turf/space
+	var/baseturf = /turf/open/space
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -18,8 +18,6 @@
 	var/list/proximity_checkers = list()
 
 	var/image/obscured	//camerachunks
-
-	var/thermite = 0
 
 /turf/New()
 	..()
@@ -89,6 +87,9 @@
 	for(var/A in proximity_checkers)
 		var/atom/B = A
 		B.HasProximity(AM)
+
+/turf/open/Entered(atom/movable/AM)
+	..()
 	//slipping
 	if (istype(AM,/mob/living/carbon))
 		var/mob/living/carbon/M = AM
@@ -110,7 +111,7 @@
 			O.hide(src.intact)
 
 // override for space turfs, since they should never hide anything
-/turf/space/levelupdate()
+/turf/open/space/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
 			O.hide(0)

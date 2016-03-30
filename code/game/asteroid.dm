@@ -51,7 +51,7 @@ var/global/max_secret_rooms = 6
 
 	var/areapoints = 0
 	var/theme = "organharvest"
-	var/list/walltypes = list(/turf/wall=3, /turf/mineral/random=1)
+	var/list/walltypes = list(/turf/closed/wall=3, /turf/closed/mineral/random=1)
 	var/list/floortypes = list(/turf/open/floor/plasteel)
 	var/list/treasureitems = list()//good stuff. only 1 is created per room.
 	var/list/fluffitems = list()//lesser items, to help fill out the room and enhance the theme.
@@ -62,7 +62,7 @@ var/global/max_secret_rooms = 6
 
 	switch(pick(possiblethemes))//what kind of room is this gonna be?
 		if("organharvest")
-			walltypes = list(/turf/wall/r_wall=2,/turf/wall=2,/turf/mineral/random/high_chance=1)
+			walltypes = list(/turf/closed/wall/r_wall=2,/turf/closed/wall=2,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/plasteel,/turf/open/floor/engine)
 			treasureitems = list(/mob/living/simple_animal/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/crate/critter=2, /mob/living/simple_animal/pet/cat/space=1)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/internal/appendix=2,/obj/structure/closet/crate/freezer=2,
@@ -71,7 +71,7 @@ var/global/max_secret_rooms = 6
 
 		if("cult")
 			theme = "cult"
-			walltypes = list(/turf/wall/cult=3,/turf/mineral/random/high_chance=1)
+			walltypes = list(/turf/closed/wall/cult=3,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/plasteel/cult)
 			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
@@ -81,7 +81,7 @@ var/global/max_secret_rooms = 6
 
 		if("wizden")
 			theme = "wizden"
-			walltypes = list(/turf/wall/mineral/plasma=3,/turf/mineral/random/high_chance=1)
+			walltypes = list(/turf/closed/wall/mineral/plasma=3,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/wood)
 			treasureitems = list(/obj/item/weapon/veilrender/vealrender=2, /obj/item/weapon/spellbook/oneuse/blind=1,/obj/item/clothing/head/wizard/red=2,
 							/obj/item/weapon/spellbook/oneuse/forcewall=1, /obj/item/weapon/spellbook/oneuse/smoke=1, /obj/structure/constructshell = 1, /obj/item/toy/katana=3,/obj/item/voodoo=3)
@@ -90,19 +90,23 @@ var/global/max_secret_rooms = 6
 
 		if("cavein")
 			theme = "cavein"
-			walltypes = list(/turf/closed/mineral/random/high_chance=1)			floortypes = list(/turf/open/floor/plating/asteroid/basalt, /turf/open/floor/plating/beach/sand)			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator/hyper=1,
+			walltypes = list(/turf/closed/mineral/random/high_chance=1)
+			floortypes = list(/turf/open/floor/plating/asteroid/basalt, /turf/open/floor/plating/beach/sand)
+			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator/hyper=1,
 							/obj/item/weapon/resonator/upgraded=1, /obj/item/weapon/pickaxe/drill/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/chili=1,/obj/item/weapon/tank/internals/oxygen/red=2)
 
 		if("xenoden")
 			theme = "xenoden"
-			walltypes = list(/turf/closed/mineral/random/high_chance=1)			floortypes = list(/turf/open/floor/plating/asteroid/basalt, /turf/open/floor/plating/beach/sand)			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
+			walltypes = list(/turf/closed/mineral/random/high_chance=1)
+			floortypes = list(/turf/open/floor/plating/asteroid/basalt, /turf/open/floor/plating/beach/sand)
+			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
 			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
 
 		if("hitech")
 			theme = "hitech"
-			walltypes = list(/turf/wall/r_wall=5,/turf/mineral/random=1)
+			walltypes = list(/turf/closed/wall/r_wall=5,/turf/closed/mineral/random=1)
 			floortypes = list(/turf/open/floor/greengrid,/turf/open/floor/bluegrid)
 			treasureitems = list(/obj/item/weapon/stock_parts/cell/hyper=1, /obj/machinery/chem_dispenser/constructable=1,/obj/machinery/computer/telescience=1, /obj/machinery/r_n_d/protolathe=1,
 								/obj/machinery/biogenerator=1)
@@ -131,7 +135,7 @@ var/global/max_secret_rooms = 6
 			theme = "poly"
 			x_size = 5
 			y_size = 5
-			walltypes = list(/turf/wall/mineral/clown)
+			walltypes = list(/turf/closed/wall/mineral/clown)
 			floortypes= list(/turf/open/floor/engine)
 			treasureitems = list(/obj/item/weapon/spellbook=1,/obj/mecha/combat/marauder=1,/obj/machinery/wish_granter=1)
 			fluffitems = list(/obj/item/weapon/melee/energy/axe)*/

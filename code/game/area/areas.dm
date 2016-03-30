@@ -350,7 +350,7 @@
 	if(!T)
 		T = get_turf(AT)
 	var/area/A = get_area(T)
-	if(istype(T, /turf/space)) // Turf never has gravity
+	if(istype(T, /turf/open/space)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity
 		return 1

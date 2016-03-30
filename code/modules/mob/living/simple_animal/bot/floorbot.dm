@@ -143,16 +143,16 @@
 		if(targetdirection != null) //The bot is in bridge mode.
 			//Try to find a space tile immediately in our selected direction.
 			var/turf/T = get_step(src, targetdirection)
-			if(istype(T, /turf/space))
+			if(istype(T, /turf/open/space))
 				target = T
 
 			else //Find a space tile farther way!
-				target = scan(/turf/space)
+				target = scan(/turf/open/space)
 			process_type = BRIDGE_MODE
 
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
-			target = scan(/turf/space)
+			target = scan(/turf/open/space)
 
 		if(!target && replacetiles) //Finds a floor without a tile and gives it one.
 			process_type = REPLACE_TILE //The target must be the floor and not a tile. The floor must not already have a floortile.
@@ -255,7 +255,7 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
-	if(istype(target_turf, /turf/space/))
+	if(istype(target_turf, /turf/open/space/))
 		 //Must be a hull breach or in bridge mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
 			target = null
@@ -264,7 +264,7 @@
 		return
 	anchored = 1
 	icon_state = "floorbot-c"
-	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
+	if(istype(target_turf, /turf/open/space/)) //If we are fixing an area not part of pure space, it is
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		spawn(50)

@@ -171,32 +171,32 @@
 			return
 
 // ALIEN ALLOY
-/turf/simulated/floor/mineral/abductor
+/turf/open/floor/mineral/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 
-/turf/simulated/floor/mineral/abductor/New()
+/turf/open/floor/mineral/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
-/turf/simulated/floor/mineral/abductor/break_tile()
+/turf/open/floor/mineral/abductor/break_tile()
 	return //unbreakable
 
-/turf/simulated/floor/mineral/abductor/burn_tile()
+/turf/open/floor/mineral/abductor/burn_tile()
 	return //unburnable
 
-/turf/simulated/floor/mineral/abductor/make_plating()
-	return ChangeTurf(/turf/simulated/floor/plating/abductor2)
+/turf/open/floor/mineral/abductor/make_plating()
+	return ChangeTurf(/turf/open/floor/plating/abductor2)
 
 
-/turf/simulated/floor/plating/abductor2
+/turf/open/floor/plating/abductor2
 	name = "alien plating"
 	icon_state = "alienplating"
 
-/turf/simulated/floor/plating/abductor2/break_tile()
+/turf/open/floor/plating/abductor2/break_tile()
 	return //unbreakable
 
-/turf/simulated/floor/plating/abductor2/burn_tile()
+/turf/open/floor/plating/abductor2/burn_tile()
 	return //unburnable

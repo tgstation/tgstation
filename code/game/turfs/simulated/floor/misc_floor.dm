@@ -9,7 +9,7 @@
 	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/open/floor/bluegrid
-	icon = 'icons/turf/open/floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
@@ -22,7 +22,7 @@
 	return ..()
 
 /turf/open/floor/greengrid
-	icon = 'icons/turf/open/floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 

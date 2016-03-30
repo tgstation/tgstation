@@ -70,7 +70,7 @@
 
 /turf/open/floor/plating/airless
 	icon_state = "plating"
-	initial_gas_mix = "o2=0;n2=0;TEMP=[TCMB]"
+	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
 
 /turf/open/floor/engine
 	name = "reinforced floor"
@@ -181,7 +181,7 @@
 	luminosity = 1
 
 /turf/open/floor/plating/lava/airless
-	initial_gas_mix = "o2=0;n2=0;TEMP=[TCMB]"
+	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
@@ -236,8 +236,9 @@
 /turf/open/floor/plating/lava/smooth
 	name = "lava"
 	baseturf = /turf/open/floor/plating/lava/smooth
-	icon = 'icons/turf/open/floors/lava.dmi'
-	icon_state = "unsmooth"	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/closed/floor/plating/lava/smooth, /turf/closed/floor/plating/lava/smooth/lava_land_surface
+	icon = 'icons/turf/floors/lava.dmi'
+	icon_state = "unsmooth"
+	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/open/floor/plating/lava/smooth, /turf/open/floor/plating/lava/smooth/lava_land_surface
 	)
 /turf/open/floor/plating/lava/smooth/airless
-	initial_gas_mix = "o2=0;n2=0;TEMP=[TCMB]"
+	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"

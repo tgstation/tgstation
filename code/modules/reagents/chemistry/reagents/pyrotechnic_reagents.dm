@@ -7,9 +7,9 @@
 	color = "#673910" // rgb: 103, 57, 16
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && istype(T, /turf/wall))
-		var/turf/wall/Wall = T
-		if(istype(Wall, /turf/wall/r_wall))
+	if(reac_volume >= 1 && istype(T, /turf/closed/wall))
+		var/turf/closed/wall/Wall = T
+		if(istype(Wall, /turf/closed/wall/r_wall))
 			Wall.thermite = Wall.thermite+(reac_volume*2.5)
 		else
 			Wall.thermite = Wall.thermite+(reac_volume*10)
@@ -63,8 +63,8 @@
 		if(istype(F, /turf/open/floor/))
 			for(var/turf/turf in range(1,F))
 				PoolOrNew(/obj/effect/hotspot, F)
-	if(istype(T, /turf/wall/))
-		var/turf/wall/W = T
+	if(istype(T, /turf/closed/wall/))
+		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
 

@@ -296,15 +296,15 @@ RCD
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return 0
-	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
 	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
 		return 0
 
 	switch(mode)
 		if(1)
-			if(istype(A, /turf/space))
-				var/turf/space/S = A
+			if(istype(A, /turf/open/space))
+				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
 					user << "<span class='notice'>You start building floor...</span>"
 					activate()
@@ -320,7 +320,7 @@ RCD
 					if(do_after(user, walldelay, target = A))
 						if(!useResource(wallcost, user)) return 0
 						activate()
-						F.ChangeTurf(/turf/wall)
+						F.ChangeTurf(/turf/closed/wall)
 						return 1
 				return 0
 
@@ -365,9 +365,9 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(A, /turf/wall))
-				var/turf/wall/W = A
-				if(istype(W, /turf/wall/r_wall) && !canRturf)
+			if(istype(A, /turf/closed/wall))
+				var/turf/closed/wall/W = A
+				if(istype(W, /turf/closed/wall/r_wall) && !canRturf)
 					return 0
 				if(checkResource(deconwallcost, user))
 					user << "<span class='notice'>You start deconstructing wall...</span>"

@@ -46,7 +46,7 @@
 
 /turf/open/floor/carpet
 	name = "Carpet"
-	icon = 'icons/turf/open/floors/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")

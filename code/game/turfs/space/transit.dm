@@ -1,12 +1,12 @@
-/turf/space/transit
+/turf/open/space/transit
 	icon_state = "black"
 	dir = SOUTH
-	baseturf = /turf/space/transit
+	baseturf = /turf/open/space/transit
 
-/turf/space/transit/horizontal
+/turf/open/space/transit/horizontal
 	dir = WEST
 
-/turf/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	if(!AM)
 		return
 	var/max = world.maxx-TRANSITIONEDGE
@@ -39,14 +39,14 @@
 
 
 //Overwrite because we dont want people building rods in space.
-/turf/space/transit/attackby()
+/turf/open/space/transit/attackby()
 	return
 
-/turf/space/transit/New()
+/turf/open/space/transit/New()
 	update_icon()
 	..()
 
-/turf/space/transit/update_icon()
+/turf/open/space/transit/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1

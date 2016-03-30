@@ -324,7 +324,7 @@
 		return
 	if(istype(AM, /turf/open/floor)) //So you can actually melee with it
 		return
-	if(istype(AM, /turf/space)) //So you can actually melee with it
+	if(istype(AM, /turf/open/space)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")

@@ -15,7 +15,7 @@
 
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
-	var/initial_gas_mix = "o2=[MOLES_O2STANDARD];n2=[MOLES_N2STANDARD];TEMP=[T20C]"
+	var/initial_gas_mix = "o2=22;n2=82;TEMP=293.15" //approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 
 /turf/open
 	//used for spacewind
@@ -113,8 +113,11 @@
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
-/turf/proc/process_cell(fire_count)	SSair.remove_from_active(src)
-/turf/open/process_cell(fire_count)	if(archived_cycle < fire_count) //archive self if not already done
+/turf/proc/process_cell(fire_count)
+	SSair.remove_from_active(src)
+
+/turf/open/process_cell(fire_count)
+	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
 
 	current_cycle = fire_count
@@ -273,7 +276,10 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		var/T_gases = T.air.gases
-		for(var/id in A_gases)			T.air.assert_gas(id)			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
+
+		for(var/id in A_gases)
+			T.air.assert_gas(id)
+			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()
 
@@ -304,11 +310,11 @@
 		return ..()
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src, direction)
-		if(!(T in atmos_adjacent_turfs) && !(atmos_superconductivity & direction))
+		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
 
-/turf/proc/neighbor_conduct_with_src(turf/other)
-	if(other.blocks_air) //Open but neighbor is solid
+/turf/proc/neighbor_conduct_with_src(turf/open/other)
+	if(!other.blocks_air) //Open but neighbor is solid
 		other.temperature_share_open_to_solid(src)
 	else //Both tiles are solid
 		other.share_temperature_mutual_solid(src, thermal_conductivity)

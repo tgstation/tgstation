@@ -1,6 +1,6 @@
-"a" = (/turf/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
 "b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"c" = (/turf/wall/r_wall,/area/ruin/powered)
+"c" = (/turf/closed/wall/r_wall,/area/ruin/powered)
 "d" = (/obj/structure/closet,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "e" = (/obj/structure/closet,/mob/living/simple_animal/hostile/zombie,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "f" = (/obj/structure/punching_bag,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)

@@ -1138,7 +1138,7 @@
 
 	for(var/mob/living/carbon/human/C in rangeCheck)
 		var/pranksNearby = 100
-		for(var/turf/T in orange(1,C))
+		for(var/turf/open/T in orange(1,C))
 			for(var/obj/item/A in T)
 				if(istype(A,/obj/item/weapon/soap) || istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana) || istype(A,/obj/item/weapon/grown/bananapeel))
 					pranksNearby--

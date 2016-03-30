@@ -338,7 +338,7 @@
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
 		return
-	var/turf/T = get_turf(holder.my_atom)
+	var/turf/open/T = get_turf(holder.my_atom)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
 	holder.clear_reagents()

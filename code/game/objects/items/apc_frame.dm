@@ -51,7 +51,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
-		if(istype(T, /turf/wall))
+		if(istype(T, /turf/closed/wall))
 			T.attackby(src, user, params)
 
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)

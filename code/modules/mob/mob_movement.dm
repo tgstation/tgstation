@@ -328,7 +328,7 @@
 			continue
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(istype(turf,/turf/open/space))
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue

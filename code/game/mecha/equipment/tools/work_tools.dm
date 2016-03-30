@@ -205,7 +205,7 @@
  	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
-	if(istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
 		return
 
 	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
@@ -216,8 +216,8 @@
 
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/wall))
-				var/turf/wall/W = target
+			if (istype(target, /turf/closed/wall))
+				var/turf/closed/wall/W = target
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
@@ -237,8 +237,8 @@
 					qdel(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(1)
-			if(istype(target, /turf/space))
-				var/turf/space/S = target
+			if(istype(target, /turf/open/space))
+				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
 					S.ChangeTurf(/turf/open/floor/plating)
@@ -248,7 +248,7 @@
 				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
-					F.ChangeTurf(/turf/wall)
+					F.ChangeTurf(/turf/closed/wall)
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)

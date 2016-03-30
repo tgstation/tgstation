@@ -112,20 +112,20 @@
 	UpdateAffectingLights()
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
-	if(istype(holder.loc, /turf/space))
-		var/turf/spaceturf = holder.loc
+	if(istype(holder.loc, /turf/open/space))
+		var/turf/open/spaceturf = holder.loc
 		spaceturf.ChangeTurf(/turf/open/floor/vines)
 
 /datum/spacevine_mutation/space_covering/process_mutation(obj/effect/spacevine/holder)
-	if(istype(holder.loc, /turf/space))
-		var/turf/spaceturf = holder.loc
+	if(istype(holder.loc, /turf/open/space))
+		var/turf/open/spaceturf = holder.loc
 		spaceturf.ChangeTurf(/turf/open/floor/vines)
 
 /datum/spacevine_mutation/space_covering/on_death(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/open/floor/vines))
-		var/turf/spaceturf = holder.loc
+		var/turf/open/spaceturf = holder.loc
 		spawn(0)
-			spaceturf.ChangeTurf(/turf/space)
+			spaceturf.ChangeTurf(/turf/open/space)
 
 /datum/spacevine_mutation/bluespace
 	name = "bluespace"

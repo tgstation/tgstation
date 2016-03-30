@@ -1,4 +1,4 @@
-"a" = (/turf/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
 "b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/turf/indestructible/abductor{icon_state = "alien20"},/area/lavaland/surface/outdoors)
 "d" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/turf/indestructible/abductor{icon_state = "alien21"},/area/ruin/unpowered)

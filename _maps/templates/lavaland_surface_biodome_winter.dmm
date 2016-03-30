@@ -1,12 +1,12 @@
 "a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"b" = (/turf/wall/r_wall,/area/ruin/powered)
+"b" = (/turf/closed/wall/r_wall,/area/ruin/powered)
 "c" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "e" = (/turf/open/floor/plating/ice,/area/ruin/powered)
 "f" = (/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "g" = (/obj/structure/flora/rock/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "h" = (/obj/structure/flora/bush,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"i" = (/turf/wall/mineral/wood,/area/ruin/powered)
+"i" = (/turf/closed/wall/mineral/wood,/area/ruin/powered)
 "j" = (/obj/structure/dresser,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "k" = (/obj/structure/bed,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "l" = (/obj/structure/bookcase/random,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
@@ -18,7 +18,7 @@
 "r" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (EAST)"; icon_state = "comfychair"; dir = 4},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "s" = (/obj/structure/table/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "t" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (WEST)"; icon_state = "comfychair"; dir = 8},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
-"u" = (/turf/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"u" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "v" = (/obj/structure/displaycase/captain,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "w" = (/obj/structure/bed/dogbed,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered)
 "x" = (/obj/structure/flora/tree/pine/xmas,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
@@ -26,7 +26,7 @@
 "z" = (/obj/machinery/door/airlock/silver,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "A" = (/obj/structure/flora/rock/pile/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "B" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "bridge"},/area/ruin/powered)
-"C" = (/turf/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

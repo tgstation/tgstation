@@ -582,8 +582,8 @@
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
-	if(istype(proj_turf, /turf/mineral))
-		var/turf/mineral/M = proj_turf
+	if(istype(proj_turf, /turf/closed/mineral))
+		var/turf/closed/mineral/M = proj_turf
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			M.gets_drilled(creator)
@@ -835,7 +835,7 @@
 /obj/item/device/mining_scanner/admin
 
 /obj/item/device/mining_scanner/admin/attack_self(mob/user)
-	for(var/turf/mineral/M in world)
+	for(var/turf/closed/mineral/M in world)
 		if(M.scan_state)
 			M.icon_state = M.scan_state
 	qdel(src)
@@ -864,14 +864,14 @@
 
 /proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()
-	for(var/turf/mineral/M in range(range, T))
+	for(var/turf/closed/mineral/M in range(range, T))
 		if(M.scan_state)
 			minerals += M
 	if(minerals.len)
 		for(var/mob/user in mobs)
 			if(user.client)
 				var/client/C = user.client
-				for(var/turf/mineral/M in minerals)
+				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
 					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
 					C.images += I

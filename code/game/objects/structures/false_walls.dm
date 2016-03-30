@@ -14,12 +14,12 @@
 	opacity = 1
 
 	canSmoothWith = list(
-	/turf/wall,
-	/turf/wall/r_wall,
+	/turf/closed/wall,
+	/turf/closed/wall/r_wall,
 	/obj/structure/falsewall,
 	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	/turf/wall/rust,
-	/turf/wall/r_wall/rust)
+	/turf/closed/wall/rust,
+	/turf/closed/wall/r_wall/rust)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 
@@ -67,9 +67,9 @@
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
 	if(!walltype || walltype == "metal")
-		T.ChangeTurf(/turf/wall)
+		T.ChangeTurf(/turf/closed/wall)
 	else
-		T.ChangeTurf(text2path("/turf/wall/mineral/[walltype]"))
+		T.ChangeTurf(text2path("/turf/closed/wall/mineral/[walltype]"))
 	if(delete)
 		qdel(src)
 	return T
@@ -138,7 +138,7 @@
 
 /obj/structure/falsewall/reinforced/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
-	T.ChangeTurf(/turf/wall/r_wall)
+	T.ChangeTurf(/turf/closed/wall/r_wall)
 	if(delete)
 		qdel(src)
 	return T
@@ -156,7 +156,7 @@
 	walltype = "uranium"
 	var/active = null
 	var/last_event = 0
-	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/wall/mineral/uranium)
+	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/closed/wall/mineral/uranium)
 
 /obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
@@ -171,7 +171,7 @@
 		if(world.time > last_event+15)
 			active = 1
 			radiation_pulse(get_turf(src), 0, 3, 15, 1)
-			for(var/turf/wall/mineral/uranium/T in orange(1,src))
+			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
 			active = null
@@ -188,7 +188,7 @@
 	icon_state = "gold"
 	mineral = "gold"
 	walltype = "gold"
-	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/wall/mineral/gold)
+	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/closed/wall/mineral/gold)
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
@@ -197,7 +197,7 @@
 	icon_state = "silver"
 	mineral = "silver"
 	walltype = "silver"
-	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/wall/mineral/silver)
+	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/closed/wall/mineral/silver)
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
@@ -206,7 +206,7 @@
 	icon_state = "diamond"
 	mineral = "diamond"
 	walltype = "diamond"
-	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/wall/mineral/diamond)
+	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"
@@ -215,7 +215,7 @@
 	icon_state = "plasma"
 	mineral = "plasma"
 	walltype = "plasma"
-	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/wall/mineral/plasma)
+	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/closed/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)
@@ -242,7 +242,7 @@
 	icon_state = "bananium"
 	mineral = "bananium"
 	walltype = "bananium"
-	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/wall/mineral/clown)
+	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/closed/wall/mineral/clown)
 
 
 /obj/structure/falsewall/sandstone
@@ -252,7 +252,7 @@
 	icon_state = "sandstone"
 	mineral = "sandstone"
 	walltype = "sandstone"
-	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/wall/mineral/sandstone)
+	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/closed/wall/mineral/sandstone)
 
 /obj/structure/falsewall/wood
 	name = "wooden wall"
@@ -261,7 +261,7 @@
 	icon_state = "wood"
 	mineral = "wood"
 	walltype = "wood"
-	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/wall/mineral/wood)
+	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood)
 
 /obj/structure/falsewall/iron
 	name = "rough metal wall"

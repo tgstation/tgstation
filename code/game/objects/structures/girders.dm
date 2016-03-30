@@ -86,7 +86,7 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack))
-		if (istype(src.loc, /turf/wall))
+		if (istype(src.loc, /turf/closed/wall))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
 		if (!istype(src.loc, /turf/open/floor))
@@ -122,7 +122,7 @@
 					S.use(5)
 					user << "<span class='notice'>You add the plating.</span>"
 					var/turf/T = get_turf(src)
-					T.ChangeTurf(/turf/wall/mineral/iron)
+					T.ChangeTurf(/turf/closed/wall/mineral/iron)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -156,7 +156,7 @@
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
 					var/turf/T = get_turf(src)
-					T.ChangeTurf(/turf/wall)
+					T.ChangeTurf(/turf/closed/wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -186,7 +186,7 @@
 						S.use(1)
 						user << "<span class='notice'>You fully reinforce the wall.</span>"
 						var/turf/T = get_turf(src)
-						T.ChangeTurf(/turf/wall/r_wall)
+						T.ChangeTurf(/turf/closed/wall/r_wall)
 						transfer_fingerprints_to(T)
 						qdel(src)
 					return
@@ -227,7 +227,7 @@
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
 					var/turf/T = get_turf(src)
-					T.ChangeTurf(text2path("/turf/wall/mineral/[M]"))
+					T.ChangeTurf(text2path("/turf/closed/wall/mineral/[M]"))
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -370,7 +370,7 @@
 			return 0
 		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
 		R.use(2)
-		new/turf/simulated/wall/cult(get_turf(src))
+		new/turf/closed/wall/cult(get_turf(src))
 		qdel(src)
 
 	else

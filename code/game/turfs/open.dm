@@ -63,7 +63,7 @@
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
-		var/turf/floor/F = src
+		var/turf/open/floor/F = src
 		if(istype(F))
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		else

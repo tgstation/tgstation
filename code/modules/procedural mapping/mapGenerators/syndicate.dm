@@ -8,7 +8,7 @@
 
 /datum/mapGeneratorModule/border/syndieWalls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/wall/r_wall = 100)
+	spawnableTurfs = list(/turf/closed/wall/r_wall = 100)
 
 
 /datum/mapGeneratorModule/syndieFurniture

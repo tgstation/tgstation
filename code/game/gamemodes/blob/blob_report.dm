@@ -63,13 +63,13 @@
 			else
 				src.floor += 1
 
-		if(istype(T, /turf/wall))
+		if(istype(T, /turf/closed/wall))
 			if(T:intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
-		if(istype(T, /turf/wall/r_wall))
+		if(istype(T, /turf/closed/wall/r_wall))
 			if(T:intact)
 				src.r_wall += 2
 			else

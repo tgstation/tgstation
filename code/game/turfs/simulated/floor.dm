@@ -18,7 +18,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	//- floor_tile is now a path, and not a tile obj
 	//- builtin_tile should be dropped if needed for performance reasons (eg singularity_act())
 	name = "floor"
-	icon = 'icons/turf/open/floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"

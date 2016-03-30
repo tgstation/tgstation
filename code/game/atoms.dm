@@ -319,7 +319,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
+	if(istype(get_turf(src), /turf/open/space))
 		return 1
 	else
 		return 0
