@@ -19,7 +19,10 @@
 
 /obj/item/weapon/gun/projectile/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
+	if(reskinned && current_skin)
+		icon_state = "[current_skin][suppressed ? "-suppressed" : ""]"
+	else
+		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
 
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 //	if(in_chamber)

@@ -1,0 +1,52 @@
+"a" = (/turf/simulated/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/turf/simulated/wall/r_wall,/area/ruin/powered)
+"d" = (/obj/structure/closet,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"e" = (/obj/structure/closet,/mob/living/simple_animal/hostile/zombie,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"f" = (/obj/structure/punching_bag,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"g" = (/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"h" = (/obj/structure/window{icon_state = "window"; dir = 1},/obj/item/weapon/shard{icon_state = "medium"},/mob/living/simple_animal/hostile/zombie{name = "Boss of This Gym"},/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"i" = (/obj/structure/window{icon_state = "window"; dir = 1},/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"j" = (/obj/structure/window{icon_state = "window"; dir = 1},/obj/structure/window{icon_state = "window"; dir = 4},/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"k" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"l" = (/obj/structure/weightlifter,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"m" = (/obj/structure/window{icon_state = "window"; dir = 8},/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"n" = (/obj/structure/window{icon_state = "window"; dir = 4},/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"o" = (/obj/structure/stacklifter,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"p" = (/obj/structure/window,/obj/structure/window{icon_state = "window"; dir = 8},/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"q" = (/obj/structure/window,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"r" = (/obj/structure/window,/obj/item/weapon/shard,/mob/living/simple_animal/hostile/zombie{name = "Leatherhead"},/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"s" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-splatter4 (NORTH)"; icon_state = "splatter4"; dir = 1},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"t" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-splatter6 (EAST)"; icon_state = "splatter6"; dir = 4},/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTH)"; icon_state = "tracks"; dir = 1},/obj/effect/decal/cleanable/blood/tracks{tag = "icon-gib3"; icon_state = "gib3"},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"u" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"v" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHEAST)"; icon_state = "tracks"; dir = 5},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"w" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHEAST)"; icon_state = "tracks"; dir = 6},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"x" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-splatter5"; icon_state = "splatter5"},/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"y" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-splatter4 (NORTH)"; icon_state = "splatter4"; dir = 1},/obj/effect/decal/cleanable/blood/tracks{tag = "icon-splatter6 (NORTH)"; icon_state = "splatter6"; dir = 1},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"z" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-splatter5"; icon_state = "splatter5"},/turf/simulated/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"A" = (/mob/living/simple_animal/hostile/zombie,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"B" = (/obj/structure/window{icon_state = "window"; dir = 1},/obj/machinery/shower,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/obj/structure/window{icon_state = "window"; dir = 1},/obj/machinery/shower,/mob/living/simple_animal/hostile/zombie,/turf/simulated/floor/plasteel/freezer{baseturf = /turf/simulated/floor/plating/lava/smooth},/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabab
+aaaaaccccccccccccbbb
+aaaaacdeddddddedcbbb
+aaaaacfgghiijkglcbaa
+aaaaacfggmgkngglcbbb
+aaaaacfggmggnggocbbb
+aaaaacfggpqqrggocstb
+aaaaacgkgggggggkuvwx
+aaaaacuucccccccccyzb
+aaaaacgAgggggggAcbbb
+aaaaacggggggAgggcbbb
+aaaaacBCBBggBBBBcbaa
+aaaaacgggggggAggcbaa
+aaaaaccccccccccccbaa
+aaaaaaaaaaaaaaaaaabb
+aaaaaaaaaaaaaaaabbbb
+aaaaaaaaaaaaaaaabbba
+"}

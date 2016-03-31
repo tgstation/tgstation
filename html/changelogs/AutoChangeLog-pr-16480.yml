@@ -1,0 +1,5 @@
+author: Erwgd
+delete-after: True
+changes: 
+  - bugfix: "Weed Killer bottles and Pest Killer bottles now contain 50 units."
+  - rscadd: "The biogenerator can now make empty bottles and black pepper."

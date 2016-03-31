@@ -105,8 +105,11 @@
 				say("The supply shuttle has been loaned to Centcom.")
 				. = TRUE
 		if("add")
-			var/id = params["id"]
-			if(!SSshuttle.supply_packs[id])
+			var/id = text2path(params["id"])
+			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
+			if(!istype(pack))
+				return
+			if((pack.hidden && !emagged) || (pack.contraband && !contraband))
 				return
 
 			var/name = "*None Provided*"
@@ -127,7 +130,7 @@
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(id, name, rank, ckey, reason)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			SO.generateRequisition(T)
 			if(requestonly)
 				SSshuttle.requestlist += SO

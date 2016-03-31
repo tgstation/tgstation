@@ -90,6 +90,7 @@
 
 	if(breath)
 		loc.assume_air(breath)
+		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
 	return 0
@@ -100,9 +101,13 @@
 	if((status_flags & GODMODE))
 		return
 
+	var/lungs = getorganslot("lungs")
+	if(!lungs)
+		adjustOxyLoss(2)
+
 	//CRIT
-	if(!breath || (breath.total_moles() == 0))
-		if(reagents.has_reagent("epinephrine"))
+	if(!breath || (breath.total_moles() == 0) || !lungs)
+		if(reagents.has_reagent("epinephrine") && lungs)
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
@@ -197,6 +202,9 @@
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if(internal.loc != src)
+			internal = null
+			update_internals_hud_icon(0)
+		else if ((!wear_mask || !(wear_mask.flags & MASKINTERNALS)) && !getorganslot("breathing_tube"))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -356,6 +364,9 @@
 
 	if(slurring)
 		slurring = max(slurring-1,0)
+
+	if(cultslurring)
+		cultslurring = max(cultslurring-1, 0)
 
 	if(silent)
 		silent = max(silent-1, 0)

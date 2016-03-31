@@ -176,6 +176,8 @@
 		if(3)
 			take_damage(60)
 
+/obj/machinery/door/window/narsie_act()
+	color = "#7D1919"
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)

@@ -1034,23 +1034,23 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	loot = list(/obj/effect/landmark/mobcorpse/orionsecurity,
+	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
 
-/obj/effect/landmark/mobcorpse/orionsecurity
+/obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/combat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseid = 1
-	corpseidjob = "Officer"
-	corpseidaccess = "Syndicate"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	helmet = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/weapon/storage/backpack
+	has_id = 1
+	id_job = "Officer"
+	id_access = "Syndicate"
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
@@ -1089,7 +1089,7 @@
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
 	sleep(3.6)
 	src.visible_message("<span class='userdanger'>[src] explodes!</span>")
-	explosion(src.loc, 1,2,4, flame_range = 3)
+	explosion(src.loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
 

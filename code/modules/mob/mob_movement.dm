@@ -11,7 +11,7 @@
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
 			return 1
-		if (mover == buckled_mob)
+		if (mover in buckled_mobs)
 			return 1
 	return (!mover.density || !density || lying)
 
@@ -207,7 +207,7 @@
 ///Called by client/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
 /client/proc/Process_Grab()
-	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+	if(mob.grabbed_by.len)
 		var/list/grabbing = list()
 
 		if(istype(mob.l_hand, /obj/item/weapon/grab))
@@ -218,25 +218,28 @@
 			var/obj/item/weapon/grab/G = mob.r_hand
 			grabbing += G.affecting
 
-		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
-			if(G.state == GRAB_PASSIVE && !grabbing.Find(G.assailant))
-				qdel(G)
+		for(var/X in mob.grabbed_by)
+			var/obj/item/weapon/grab/G = X
+			switch(G.state)
 
-			if(G.state == GRAB_AGGRESSIVE)
-				move_delay = world.time + 10
-				if(!prob(25))
-					return 1
-				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
-				qdel(G)
+				if(GRAB_PASSIVE)
+					if(!grabbing.Find(G.assailant)) //moving always breaks a passive grab unless we are also grabbing our grabber.
+						qdel(G)
 
-			if(G.state == GRAB_NECK)
-				move_delay = world.time + 10
-				if(!prob(5))
-					return 1
-				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
-				qdel(G)
+				if(GRAB_AGGRESSIVE)
+					move_delay = world.time + 10
+					if(!prob(50))
+						return 1
+					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s grip!</span>")
+					qdel(G)
+
+				if(GRAB_NECK)
+					move_delay = world.time + 10
+					if(!prob(15))
+						return 1
+					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s headlock!</span>")
+					qdel(G)
 	return 0
-
 
 ///Process_Incorpmove
 ///Called by client/Move()

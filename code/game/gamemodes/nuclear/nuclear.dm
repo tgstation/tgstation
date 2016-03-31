@@ -5,7 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
+	required_players = 35 // 35 players - 5 players to be the nuke ops = 30 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
@@ -43,10 +43,6 @@
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
-			var/mob/living/carbon/human/human = synd_mind.current
-			if(human.dna && human.dna.species.dangerous_existence)
-				human.set_species(/datum/species/human)
 
 	return 1
 
@@ -162,6 +158,8 @@
 	return
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+
 	if(telecrystals)
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else

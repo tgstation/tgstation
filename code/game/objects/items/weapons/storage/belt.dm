@@ -107,7 +107,13 @@
 
 /obj/item/weapon/storage/belt/security/full/New()
 	..()
-	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/restraints/handcuffs(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/melee/baton/loaded(src)
+
+
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -148,6 +154,50 @@
 	item_state = "security"
 	storage_slots = 6
 
+/obj/item/weapon/storage/belt/grenade
+	name = "grenadier belt"
+	desc = "A belt for holding grenades."
+	icon_state = "grenadebelt"
+	item_state = "security"
+	max_w_class = 0
+	storage_slots = 30
+	can_hold = list(
+		/obj/item/weapon/grenade,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/lighter,
+		/obj/item/device/multitool,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
+		)
+/obj/item/weapon/storage/belt/grenade/full/New()
+	..()
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/syndieminibomb/concussion/frag(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/gluon(src)
+	new /obj/item/weapon/grenade/chem_grenade/incendiary(src)
+	new /obj/item/weapon/grenade/chem_grenade/incendiary(src)
+	new /obj/item/weapon/grenade/chem_grenade/facid(src)
+	new /obj/item/weapon/grenade/syndieminibomb(src)
+	new /obj/item/weapon/grenade/syndieminibomb(src)
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/belt/wands
 	name = "wand belt"

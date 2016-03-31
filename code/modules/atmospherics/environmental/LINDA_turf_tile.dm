@@ -44,7 +44,7 @@
 	..()
 	levelupdate()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 	visibilityChanged()
 	if(!blocks_air)
 		air = new
@@ -117,13 +117,11 @@
 		sharer.temperature += heat/sharer.heat_capacity
 
 
+/turf/proc/process_cell(fire_count)
+	SSair.remove_from_active(src)
 
 
-
-
-
-
-/turf/simulated/proc/process_cell(fire_count)
+/turf/simulated/process_cell(fire_count)
 
 	if(archived_cycle < fire_count) //archive self if not already done
 		archive()
@@ -327,7 +325,8 @@
 
 	for(var/turf/simulated/T in turf_list)
 		var/T_gases = T.air.gases
-		for(var/id in T_gases)
+		for(var/id in A_gases)
+			T.air.assert_gas(id)
 			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()

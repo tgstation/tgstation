@@ -78,7 +78,7 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
+	desc = "A suit of armor with heavy padding to protect against melee attacks."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -127,6 +127,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = 0
+	var/reactivearmor_cooldown = 0//cooldown specific to reactive armor
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
@@ -167,7 +168,10 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text]!</span>")
+		if(world.time < reactivearmor_cooldown)
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			return
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -184,8 +188,13 @@
 			return
 		H.forceMove(picked)
 		H.rad_act(rad_amount)
+		reactivearmor_cooldown = world.time + 100
 		return 1
 	return 0
+
+/obj/item/clothing/suit/armor/reactive/teleport/emp_act(severity)
+	..()
+	reactivearmor_cooldown = world.time + 200
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"

@@ -92,13 +92,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
 	cost = 14 // normally 16
 
-/datum/uplink_item/nukeoffer/m90gl
-	name = "M-90gl bundle"
-	desc = "A premium offer: Pick up the M-90gl, along with a magazine, some grenades, and a pack of cigarettes \
-			for a 'killer' price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/m90glbundle
-	cost = 15 // normally 18
-
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimised for people that want to get up close and personal. Contains the popular \
@@ -127,12 +120,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
 
-/datum/uplink_item/nukeoffer/ammo
-	name = "Fireteam bundle"
-	desc = "For the team player: A duffelbag filled with enough ammo to kit out a fireteam; four .45 magazines, \
-			three 5.56 magazines, a box of 40mm grenades, and a magazine of sniper ammunition; all at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/fireteam
-	cost = 24 // normally ??
+/datum/uplink_item/nukeoffer/firestarter
+	name = "Spetsnaz Pyro bundle"
+	desc = "For systematic suppression of carbon lifeforms in close range: Contains a specialist Pyrotechnic equipment, foreign pistol, two magazines, a pipebomb, and a stimulant syringe."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
+	cost = 30
 
 // Dangerous Items
 /datum/uplink_item/dangerous
@@ -174,19 +166,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
-/datum/uplink_item/dangerous/carbine
-	name = "M-90gl Carbine"
-	desc = "A fully-loaded, specialized three-round burst carbine that fires 30-round 5.56mm magazines with a togglable \
-			underslung 40mm grenade launcher."
-	item = /obj/item/weapon/gun/projectile/automatic/m90
-	cost = 12
-	surplus = 50
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/carbine/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
-	include_modes = list(/datum/game_mode/gang)
-
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
@@ -195,6 +174,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/grenadier
+	name = "Grenadier's belt"
+	desc = "A belt of a large variety of lethally dangerous and destructive grenades."
+	item = /obj/item/weapon/storage/belt/grenade/full
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 22
+	surplus = 0
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
@@ -310,43 +297,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/dangerous/gygax
-	name = "Gygax Exosuit"
-	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. This model lacks a method of space propulsion, and therefore it is \
-			advised to utilize the drop pod if you wish to make use of it."
-	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 80
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/mauler
-	name = "Mauler Exosuit"
-	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targetting, thrust vectoring, \
-			and deployable smoke."
-	item = /obj/mecha/combat/marauder/mauler/loaded
-	cost = 140
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/reinforcement/syndieborg
-	name = "Syndicate Cyborg"
-	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
-	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
-	cost = 80
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/reinforcement
-	name = "Reinforcements"
-	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals \
-			to arm them as well."
-	item = /obj/item/weapon/antag_spawner/nuke_ops
-	cost = 25
-	refundable = TRUE
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
@@ -439,22 +389,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/carbine
-	name = "5.56 Toploader Magazine"
-	desc = "An additional 30-round 5.56 magazine; sutable for use with the M-90gl carbine. \
-			These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
-	item = /obj/item/ammo_box/magazine/m556
-	cost = 4
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
-/datum/uplink_item/ammo/a40mm
-	name = "40mm Grenade Box"
-	desc = "A box of 4 additional 40mm HE grenades for use with the M-90gl's underbarrel grenade launcher. \
-			Your teammates will ask you to not shoot these down small hallways."
-	item = /obj/item/ammo_box/a40mm
-	cost = 5
-	include_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/ammo/machinegun
 	cost = 6
 	surplus = 0
@@ -539,6 +473,41 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
+//Support and Mechs
+/datum/uplink_item/support
+	category = "Support and Mechanized Exosuits"
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/support/reinforcement
+	name = "Reinforcements"
+	desc = "Call in an additional team member. They won't come with any gear, so you'll have to save some telecrystals \
+			to arm them as well."
+	item = /obj/item/weapon/antag_spawner/nuke_ops
+	cost = 25
+	refundable = TRUE
+
+/datum/uplink_item/support/reinforcement/syndieborg
+	name = "Syndicate Cyborg"
+	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
+	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
+	cost = 80
+
+/datum/uplink_item/support/gygax
+	name = "Gygax Exosuit"
+	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
+			for hit-and-run style attacks. This model lacks a method of space propulsion, and therefore it is \
+			advised to utilize the drop pod if you wish to make use of it."
+	item = /obj/mecha/combat/gygax/dark/loaded
+	cost = 80
+
+/datum/uplink_item/support/mauler
+	name = "Mauler Exosuit"
+	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targetting, thrust vectoring, \
+			and deployable smoke."
+	item = /obj/mecha/combat/marauder/mauler/loaded
+	cost = 140
+
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
@@ -551,12 +520,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 17
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/stealthy_weapons/throwingstars
-	name = "Box of Throwing Stars"
-	desc = "A box of shurikens from ancient Earth martial arts. They are highly effective throwing weapons, \
-			and will embed into limbs when possible."
-	item = /obj/item/weapon/storage/box/throwing_stars
-	cost = 6
+/datum/uplink_item/stealthy_weapons/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -673,10 +642,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	name = "Tactical No-Slip Chameleon Shoes"
-	desc = "These allow you to run on wet floors. They do not work on heavily lubricated surfaces, but the \
-			manufacturer guarantees they're somehow better than the normal ones."
+	name = "Stealthy No-Slip Chameleon Shoes"
+	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
+			They do not work on heavily lubricated surfaces. The manufacturer claims they are much more stealthy than the normal brand."
+	item = /obj/item/clothing/shoes/chameleon
 	cost = 4
+	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -738,6 +709,48 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	surplus = 30
 
+//Space Suits and Hardsuits
+/datum/uplink_item/suits
+	category = "Space Suits and Hardsuits"
+	exclude_modes = list(/datum/game_mode/gang)
+	surplus = 40
+
+/datum/uplink_item/suits/space_suit
+	name = "Syndicate Space Suit"
+	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
+			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit \
+			sightings, however."
+	item = /obj/item/weapon/storage/box/syndie_kit/space
+	cost = 4
+
+/datum/uplink_item/suits/hardsuit
+	name = "Syndicate Hardsuit"
+	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
+			that runs off standard atmospheric tanks. When the built in helmet is deployed your identity will be \
+			protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit in and out of \
+			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
+			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
+			Nanotrasen crew who spot these suits are known to panic."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi
+	cost = 8
+	exclude_modes = list(/datum/game_mode/nuclear) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+
+/datum/uplink_item/suits/hardsuit/elite
+	name = "Elite Syndicate Hardsuit"
+	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate Hardsuit."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	cost = 8
+	include_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list()
+
+/datum/uplink_item/suits/hardsuit/shielded
+	name = "Shielded Hardsuit"
+	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
+	cost = 30
+	include_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list()
+
 // Devices and Tools
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
@@ -779,40 +792,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 9
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
-
-/datum/uplink_item/device_tools/space_suit
-	name = "Syndicate Space Suit"
-	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit \
-			sightings, however."
-	item = /obj/item/weapon/storage/box/syndie_kit/space
-	cost = 4
-	exclude_modes = list(/datum/game_mode/gang)
-
-/datum/uplink_item/device_tools/hardsuit
-	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
-			that runs off standard atmospheric tanks. When the built in helmet is deployed your identity will be \
-			protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit in and out of \
-			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
-			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
-			Nanotrasen crew who spot these suits are known to panic."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/device_tools/hardsuit/elite
-	name = "Elite Syndicate Hardsuit"
-	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate Hardsuit."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	cost = 8
-
-/datum/uplink_item/device_tools/hardsuit/shielded
-	name = "Shielded Hardsuit"
-	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
-	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
-	cost = 30
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -886,11 +865,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 10
 
 /datum/uplink_item/device_tools/singularity_beacon
-	name = "Singularity Beacon"
+	name = "Power Beacon"
 	desc = "When screwed to wiring attached to an electric grid and activated, this large device pulls any \
-			active gravitational singularities towards it. This will not work when the singularity is still \
-			in containment. A singularity beacon can cause catastrophic damage to a space station, \
-			leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this \
+			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
+			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14

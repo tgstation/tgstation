@@ -8,8 +8,7 @@
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor was penetrated!</span>"
-
-	if(armor >= 100)
+	else if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
@@ -197,7 +196,7 @@
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	if(!supress_message)
-		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+		visible_message("<span class='danger'>[user] has grabbed [src] passively!</span>")
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
@@ -206,7 +205,7 @@
 		return
 
 	if(M.buckled)
-		if(M == buckled_mob)
+		if(M in buckled_mobs)
 			M.Feedstop()
 		return // can't attack while eating!
 

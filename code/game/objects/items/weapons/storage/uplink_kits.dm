@@ -198,6 +198,9 @@
 	..()
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/implanter/emp(src)
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
@@ -258,3 +261,16 @@
 	new /obj/item/weapon/stamp/chameleon(src)
 	new /obj/item/device/pda/chameleon(src)
 	new /obj/item/weapon/gun/energy/laser/chameleon(src)
+
+//5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
+//Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
+/obj/item/weapon/storage/box/syndie_kit/throwing_weapons/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/throwing_star(src)
+	new /obj/item/weapon/restraints/legcuffs/bola/tactical(src)
+	new /obj/item/weapon/restraints/legcuffs/bola/tactical(src)

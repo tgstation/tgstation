@@ -2,6 +2,12 @@
 /obj/screen/blob
 	icon = 'icons/mob/blob.dmi'
 
+/obj/screen/blob/MouseEntered(location,control,params)
+	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
+
+/obj/screen/blob/MouseExited()
+	closeToolTip(usr)
+
 /obj/screen/blob/BlobHelp
 	icon_state = "ui_help"
 	name = "Blob Help"
@@ -27,15 +33,25 @@
 	name = "Jump to Core"
 	desc = "Moves your camera to your blob core."
 
+/obj/screen/blob/JumpToCore/MouseEntered(location,control,params)
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		if(!B.placed)
+			openToolTip(usr,src,params,title = "Place Blob Core",content = "Attempt to place your blob core at this location.", theme = "blob")
+		else
+			..()
+
 /obj/screen/blob/JumpToCore/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
+		if(!B.placed)
+			B.place_blob_core()
 		B.transport_core()
 
 /obj/screen/blob/Blobbernaut
 	icon_state = "ui_blobbernaut"
 	name = "Produce Blobbernaut (30)"
-	desc = "Produces a blobbernaut for 30 points."
+	desc = "Produces a strong, smart blobbernaut from a factory blob for 30 points.<br>The factory blob used will become fragile and briefly unable to produce spores."
 
 /obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))
@@ -45,7 +61,7 @@
 /obj/screen/blob/ResourceBlob
 	icon_state = "ui_resource"
 	name = "Produce Resource Blob (40)"
-	desc = "Produces a resource blob for 40 points."
+	desc = "Produces a resource blob for 40 points.<br>Resource blobs will give you points every few seconds."
 
 /obj/screen/blob/ResourceBlob/Click()
 	if(isovermind(usr))
@@ -55,7 +71,7 @@
 /obj/screen/blob/NodeBlob
 	icon_state = "ui_node"
 	name = "Produce Node Blob (60)"
-	desc = "Produces a node blob for 60 points."
+	desc = "Produces a node blob for 60 points.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /obj/screen/blob/NodeBlob/Click()
 	if(isovermind(usr))
@@ -65,7 +81,7 @@
 /obj/screen/blob/FactoryBlob
 	icon_state = "ui_factory"
 	name = "Produce Factory Blob (60)"
-	desc = "Produces a resource blob for 60 points."
+	desc = "Produces a factory blob for 60 points.<br>Factory blobs will produce spores every few seconds."
 
 /obj/screen/blob/FactoryBlob/Click()
 	if(isovermind(usr))
@@ -76,6 +92,14 @@
 	icon_state = "ui_chemswap"
 	name = "Readapt Chemical (40)"
 	desc = "Randomly rerolls your chemical for 40 points."
+
+/obj/screen/blob/ReadaptChemical/MouseEntered(location,control,params)
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		if(B.free_chem_rerolls)
+			openToolTip(usr,src,params,title = "Readapt Chemical (FREE)",content = "Randomly rerolls your chemical for free.", theme = "blob")
+		else
+			..()
 
 /obj/screen/blob/ReadaptChemical/Click()
 	if(isovermind(usr))
@@ -105,10 +129,10 @@
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()
-	static_inventory += healths
+	infodisplay += healths
 
 	using = new /obj/screen/blob/BlobHelp()
-	using.screen_loc = "NORTH:-6,WEST:6"
+	using.screen_loc = "WEST:6,NORTH:-3"
 	static_inventory += using
 
 	using = new /obj/screen/blob/JumpToNode()

@@ -407,13 +407,16 @@ This is here to make the tiles around the station mininuke change when it's arme
 	SetTurfs()
 
 //==========DAT FUKKEN DISK===============
+/obj/item/weapon/disk
+	icon = 'icons/obj/module.dmi'
+	w_class = 1
+	item_state = "card-id"
+	icon_state = "datadisk0"
+
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "nucleardisk"
-	item_state = "card-id"
-	w_class = 1
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
@@ -428,14 +431,17 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
-		poi_list.Remove(src)
-		var/obj/item/weapon/disk/nuclear/NEWDISK = new(pick(blobstart))
-		transfer_fingerprints_to(NEWDISK)
+		var/turf/targetturf = get_turf(pick(blobstart))
 		var/turf/diskturf = get_turf(src)
-		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
-		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		return QDEL_HINT_HARDDEL_NOW
+		if(ismob(loc))
+			var/mob/M = loc
+			M.remove_from_mob(src)
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = loc
+			S.remove_from_storage(src, diskturf)
+		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
+		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
+		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	else
-		. = QDEL_HINT_LETMELIVE // Cancel destruction
 		throw EXCEPTION("Unable to find a blobstart landmark")
-		return
+	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success

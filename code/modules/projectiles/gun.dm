@@ -27,7 +27,7 @@
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = 1				//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	var/trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1					//how large a burst is
@@ -38,6 +38,7 @@
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/reskinned = 0 //whether or not the gun has been reskinned
+	var/current_skin = null
 	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -374,6 +375,7 @@ obj/item/weapon/gun/proc/newshot()
 			icon_state = options[choice] + "-sawn"
 		else
 			icon_state = options[choice]
+		current_skin = icon_state
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
 		reskinned = 1
 		return

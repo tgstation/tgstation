@@ -382,8 +382,8 @@
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
 			dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
 			for(var/datum/mind/N in ticker.mode.get_living_heads())
 				var/mob/M = N.current
@@ -588,7 +588,7 @@
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			if(istype(ticker.mode,/datum/game_mode/blob))
 				var/datum/game_mode/blob/mode = ticker.mode
-				blob_minds |= mode.infected_crew
+				blob_minds |= mode.blob_overminds
 				dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
 
 			for(var/datum/mind/blob in blob_minds)

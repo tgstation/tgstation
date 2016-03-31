@@ -144,7 +144,7 @@
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
 
-	if(make_from && !make_from.gc_destroyed)
+	if(make_from && !qdeleted(make_from))
 		base_icon_state = make_from.base_state
 		dir = make_from.dir
 		dpdir = make_from.dpdir
@@ -462,18 +462,26 @@
 
 //a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
-
+	desc = "An underfloor disposal pipe with a package sorting mechanism."
 	icon_state = "pipe-j1s"
-	var/sortType = 0	//Look at the list called TAGGERLOCATIONS in setup.dm
+	var/sortType = 0
+	// To be set in map editor.
+	// Supports both singular numbers and strings of numbers similar to access level strings.
+	// Look at the list called TAGGERLOCATIONS in /_globalvars/lists/flavor_misc.dm
+	var/list/sortTypes = list()
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
 
-/obj/structure/disposalpipe/sortjunction/proc/updatedesc()
-	desc = "An underfloor disposal pipe with a package sorting mechanism."
-	if(sortType>0)
-		var/tag = uppertext(TAGGERLOCATIONS[sortType])
-		desc += "\nIt's tagged with [tag]"
+/obj/structure/disposalpipe/sortjunction/examine(mob/user)
+	..()
+	if(sortTypes.len>0)
+		user << "It is tagged with the following tags:"
+		for(var/t in sortTypes)
+			user << TAGGERLOCATIONS[t]
+	else
+		user << "It has no sorting tags set."
+
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedir()
 	posdir = dir
@@ -489,8 +497,19 @@
 
 /obj/structure/disposalpipe/sortjunction/New()
 	..()
+
+	// Generate a list of soring tags.
+	if(sortType)
+		if(isnum(sortType))
+			sortTypes |= sortType
+		else if(istext(sortType))
+			var/list/sorts = splittext(sortType,";")
+			for(var/x in sorts)
+				var/n = text2num(x)
+				if(n)
+					sortTypes |= n
+
 	updatedir()
-	updatedesc()
 	update()
 	return
 
@@ -502,11 +521,13 @@
 		var/obj/item/device/destTagger/O = I
 
 		if(O.currTag > 0)// Tag set
-			sortType = O.currTag
+			if(O.currTag in sortTypes)
+				sortTypes -= O.currTag
+				user << "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+			else
+				sortTypes |= O.currTag
+				user << "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
-			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='warning'>Changed filter to [tag].</span>"
-			updatedesc()
 
 
 // next direction to move
@@ -518,7 +539,7 @@
 	//var/flipdir = turn(fromdir, 180)
 	if(fromdir != sortdir)	// probably came from the negdir
 
-		if(src.sortType == sortTag) //if destination matches filtered type...
+		if(sortTag in sortTypes) //if destination matches filtered type...
 			return sortdir		// exit through sortdirection
 		else
 			return posdir

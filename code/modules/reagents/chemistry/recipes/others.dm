@@ -133,6 +133,48 @@
 	required_reagents = list("water" = 5, "milk" = 5)
 	result_amount = 15
 
+/datum/chemical_reaction/virus_food_mutagen
+	name = "mutagenic agar"
+	id = "mutagenvirusfood"
+	result = "mutagenvirusfood"
+	required_reagents = list("mutagen" = 1, "virusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_synaptizine
+	name = "virus rations"
+	id = "synaptizinevirusfood"
+	result = "synaptizinevirusfood"
+	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_plasma
+	name = "virus plasma"
+	id = "plasmavirusfood"
+	result = "plasmavirusfood"
+	required_reagents = list("plasma" = 1, "virusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_plasma_synaptizine
+	name = "weakened virus plasma"
+	id = "weakplasmavirusfood"
+	result = "weakplasmavirusfood"
+	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/virus_food_mutagen_sugar
+	name = "sucrose agar"
+	id = "sugarvirusfood"
+	result = "sugarvirusfood"
+	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/virus_food_mutagen_salineglucose
+	name = "sucrose agar"
+	id = "salineglucosevirusfood"
+	result = "sugarvirusfood"
+	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
 	id = "mixvirus"
@@ -166,6 +208,54 @@
 	required_reagents = list("plasma" = 1)
 	level_min = 4
 	level_max = 6
+
+/datum/chemical_reaction/mix_virus/mix_virus_4
+
+	name = "Mix Virus 4"
+	id = "mixvirus4"
+	required_reagents = list("uranium" = 1)
+	level_min = 5
+	level_max = 6
+
+/datum/chemical_reaction/mix_virus/mix_virus_5
+
+	name = "Mix Virus 5"
+	id = "mixvirus5"
+	required_reagents = list("mutagenvirusfood" = 1)
+	level_min = 3
+	level_max = 3
+
+/datum/chemical_reaction/mix_virus/mix_virus_6
+
+	name = "Mix Virus 6"
+	id = "mixvirus6"
+	required_reagents = list("sugarvirusfood" = 1)
+	level_min = 4
+	level_max = 4
+
+/datum/chemical_reaction/mix_virus/mix_virus_7
+
+	name = "Mix Virus 7"
+	id = "mixvirus7"
+	required_reagents = list("weakplasmavirusfood" = 1)
+	level_min = 5
+	level_max = 5
+
+/datum/chemical_reaction/mix_virus/mix_virus_8
+
+	name = "Mix Virus 8"
+	id = "mixvirus8"
+	required_reagents = list("plasmavirusfood" = 1)
+	level_min = 6
+	level_max = 6
+
+/datum/chemical_reaction/mix_virus/mix_virus_9
+
+	name = "Mix Virus 9"
+	id = "mixvirus9"
+	required_reagents = list("synaptizinevirusfood" = 1)
+	level_min = 1
+	level_max = 1
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
@@ -420,3 +510,10 @@
 	result = "lye"
 	required_reagents = list("ash" = 1, "water" = 1)
 	result_amount = 2
+
+/datum/chemical_reaction/royal_bee_jelly
+	name = "royal bee jelly"
+	id = "royal_bee_jelly"
+	result = "royal_bee_jelly"
+	required_reagents = list("mutagen" = 10, "honey" = 40)
+	result_amount = 5

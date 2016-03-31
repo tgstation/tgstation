@@ -1,6 +1,6 @@
 /turf/simulated/wall/cult
-	name = "wall"
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."
+	name = "runed wall"
+	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	walltype = "cult"
@@ -12,8 +12,8 @@
 	..()
 
 /turf/simulated/wall/cult/break_wall()
-	new /obj/effect/decal/cleanable/blood(src)
-	return (new /obj/structure/cultgirder(src))
+	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
+	return (new /obj/structure/girder/cult(src))
 
 /turf/simulated/wall/cult/devastate_wall()
 	new /obj/effect/decal/cleanable/blood(src)
@@ -70,37 +70,9 @@
 	smooth = SMOOTH_MORE
 	icon_state = "shuttle_nd"
 
-/turf/simulated/wall/shuttle/smooth/overplating
-	icon_state = "overplating"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="plating")
-
-/turf/simulated/wall/shuttle/smooth/overblue
-	icon_state = "overblue"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor")
-
-/turf/simulated/wall/shuttle/smooth/overwhite
-	icon_state = "overwhite"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor3")
-
-/turf/simulated/wall/shuttle/smooth/overred
-	icon_state = "overred"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor4")
-
-/turf/simulated/wall/shuttle/smooth/overpurple
-	icon_state = "overpurple"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor5")
-
-/turf/simulated/wall/shuttle/smooth/overyellow
-	icon_state = "overyellow"
-	fixed_underlay = list("icon"='icons/turf/floors.dmi', "icon_state"="shuttlefloor2")
-
-/turf/simulated/wall/smooth
-	name = "smooth wall"
-	icon = 'icons/turf/smooth_wall.dmi'
-	icon_state = "smooth"
-	walltype = "shuttle"
-	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
-	canSmoothWith = null
+/turf/simulated/wall/shuttle/smooth/overspace
+	icon_state = "overspace"
+	fixed_underlay = list("space"=1)
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move

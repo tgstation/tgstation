@@ -51,15 +51,18 @@
 				return
 
 			playsound(loc, "rustle", 50, 1, -5)
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
+
+
+			if(istype(over_object, /obj/screen/inventory/hand))
+				var/obj/screen/inventory/hand/H = over_object
+				if(!M.unEquip(src))
+					return
+				switch(H.slot_id)
+					if(slot_r_hand)
+						M.put_in_r_hand(src)
+					if(slot_l_hand)
+						M.put_in_l_hand(src)
+
 			add_fingerprint(usr)
 
 //Check if this storage can dump the items
@@ -375,6 +378,11 @@
 	return 1
 
 /obj/item/weapon/storage/attack_hand(mob/user)
+	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
+		user.s_active.close(user)
+		close(user)
+		return
+
 	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
@@ -458,7 +466,7 @@
 	boxes.layer = 19
 	closer = new /obj/screen/close()
 	closer.master = src
-	closer.icon_state = "x"
+	closer.icon_state = "backpack_close"
 	closer.layer = 20
 	orient2hud()
 

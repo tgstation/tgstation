@@ -40,8 +40,8 @@
 
 /obj/structure/table/update_icon()
 	if(smooth)
-		smooth_icon(src)
-		smooth_icon_neighbors(src)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
 	switch(severity)
@@ -60,6 +60,10 @@
 	if(prob(75))
 		table_destroy(1)
 		return
+
+/obj/structure/table/narsie_act()
+	if(prob(20))
+		new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
@@ -91,6 +95,7 @@
 	return 1
 
 /obj/structure/table/attack_hand(mob/living/user)
+	. = ..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(tableclimber && tableclimber != user)
 		tableclimber.Weaken(2)
@@ -331,6 +336,9 @@
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
 
+/obj/structure/table/wood/narsie_act()
+	return
+
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
@@ -338,6 +346,9 @@
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
+
+/obj/structure/table/wood/poker/narsie_act()
+	new /obj/structure/table/wood(src.loc)
 
 /*
  * Reinforced tables

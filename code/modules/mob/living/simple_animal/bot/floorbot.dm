@@ -19,10 +19,7 @@
 
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	var/targetdirection
-	var/amount = 10
 	var/replacetiles = 0
-	var/eattiles = 0
-	var/maketiles = 0
 	var/fixfloors = 0
 	var/autotile = 0
 	var/nag_on_empty = 1
@@ -44,6 +41,9 @@
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
+
+/mob/living/simple_animal/bot/floorbot/Process_Spacemove(movement_dir = 0)
+	return 1
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
@@ -74,14 +74,10 @@
 	dat += "<TT><B>Floor Repairer Controls v1.1</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
-	dat += "Tiles left: [amount]<BR>"
 	dat += "Behvaiour controls are [locked ? "locked" : "unlocked"]<BR>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "Add tiles to new hull plating: <A href='?src=\ref[src];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
 		dat += "Replace floor tiles: <A href='?src=\ref[src];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
-		dat += "Finds tiles: <A href='?src=\ref[src];operation=tiles'>[eattiles ? "Yes" : "No"]</A><BR>"
-		dat += "Make pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[maketiles ? "Yes" : "No"]</A><BR>"
-		dat += "Transmit notice when empty: <A href='?src=\ref[src];operation=emptynag'>[nag_on_empty ? "Yes" : "No"]</A><BR>"
 		dat += "Repair damaged tiles and platings: <A href='?src=\ref[src];operation=fix'>[fixfloors ? "Yes" : "No"]</A><BR>"
 		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
@@ -94,23 +90,6 @@
 
 	return dat
 
-
-/mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
-	if(istype(W, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/T = W
-		if(amount >= 50)
-			return
-		var/loaded = min(50-amount, T.amount)
-		T.use(loaded)
-		amount += loaded
-		if(loaded > 0)
-			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [amount] tiles.</span>"
-			nagged = 0
-			update_icon()
-		else
-			user << "<span class='warning'>You need at least one floor tile to put into [src]!</span>"
-	else
-		..()
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
@@ -125,10 +104,6 @@
 	switch(href_list["operation"])
 		if("replace")
 			replacetiles = !replacetiles
-		if("tiles")
-			eattiles = !eattiles
-		if("make")
-			maketiles = !maketiles
 		if("fix")
 			fixfloors = !fixfloors
 		if("autotile")
@@ -160,24 +135,11 @@
 	if(mode == BOT_REPAIRING)
 		return
 
-	if(amount <= 0 && !target) //Out of tiles! We must refill!
-		if(eattiles) //Configured to find and consume floortiles!
-			target = scan(/obj/item/stack/tile/plasteel)
-			process_type = null
-
-		if(!target && maketiles) //We did not manage to find any floor tiles! Scan for metal stacks and make our own!
-			target = scan(/obj/item/stack/sheet/metal)
-			process_type = null
-			return
-		else
-			if(nag_on_empty) //Floorbot is empty and cannot acquire more tiles, nag the engineers for more!
-				nag()
-
 	if(prob(5))
 		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
-	if(!target && emagged < 2 && amount > 0)
+	if(!target && emagged < 2)
 		if(targetdirection != null) //The bot is in bridge mode.
 			//Try to find a space tile immediately in our selected direction.
 			var/turf/T = get_step(src, targetdirection)
@@ -233,23 +195,15 @@
 			return
 
 		if(loc == target || loc == target.loc)
-			if(istype(target, /obj/item/stack/tile/plasteel))
-				eattile(target)
-			else if(istype(target, /obj/item/stack/sheet/metal))
-				maketile(target)
-			else if(istype(target, /turf/) && emagged < 2)
+			if(istype(target, /turf/) && emagged < 2)
 				repair(target)
 			else if(emagged == 2 && istype(target,/turf/simulated/floor))
 				var/turf/simulated/floor/F = target
 				anchored = 1
 				mode = BOT_REPAIRING
-				if(prob(90))
-					F.break_tile_to_plating()
-				else
-					F.ReplaceWithLattice()
+				F.ReplaceWithLattice()
 				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
-				spawn(50)
-					amount ++
+				spawn(5)
 					anchored = 0
 					mode = BOT_IDLE
 					target = null
@@ -308,10 +262,6 @@
 			return
 	else if(!istype(target_turf, /turf/simulated/floor))
 		return
-	if(amount <= 0)
-		mode = BOT_IDLE
-		target = null
-		return
 	anchored = 1
 	icon_state = "floorbot-c"
 	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
@@ -324,7 +274,6 @@
 				else //Build a hull plating without a floor tile.
 					target_turf.ChangeTurf(/turf/simulated/floor/plating)
 				mode = BOT_IDLE
-				amount -= 1
 				update_icon()
 				anchored = 0
 				target = null
@@ -338,57 +287,13 @@
 				F.burnt = 0
 				F.ChangeTurf(/turf/simulated/floor/plasteel)
 				mode = BOT_IDLE
-				amount -= 1
 				update_icon()
 				anchored = 0
 				target = null
 
-/mob/living/simple_animal/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
-	if(!istype(T, /obj/item/stack/tile/plasteel))
-		return
-	visible_message("<span class='notice'>[src] begins to collect tiles.</span>")
-	mode = BOT_REPAIRING
-	spawn(20)
-		if(isnull(T))
-			target = null
-			mode = BOT_IDLE
-			return
-		if(amount + T.amount > 50)
-			var/i = 50 - amount
-			amount += i
-			T.amount -= i
-		else
-			amount += T.amount
-			qdel(T)
-		update_icon()
-		target = null
-		mode = BOT_IDLE
-
-/mob/living/simple_animal/bot/floorbot/proc/maketile(obj/item/stack/sheet/metal/M)
-	if(!istype(M, /obj/item/stack/sheet/metal))
-		return
-	visible_message("<span class='notice'>[src] begins to create tiles.</span>")
-	mode = BOT_REPAIRING
-	spawn(20)
-		if(isnull(M))
-			target = null
-			mode = BOT_IDLE
-			return
-		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
-		T.amount = 4
-		T.loc = M.loc
-		if(M.amount > 1)
-			M.amount--
-		else
-			qdel(M)
-		target = null
-		mode = BOT_IDLE
-
 /mob/living/simple_animal/bot/floorbot/update_icon()
-	if(amount > 0)
-		icon_state = "floorbot[on]"
-	else
-		icon_state = "floorbot[on]e"
+	icon_state = "floorbot[on]"
+
 
 /mob/living/simple_animal/bot/floorbot/explode()
 	on = 0
@@ -403,15 +308,8 @@
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	while(amount)//Dumps the tiles into the appropriate sized stacks
-		if(amount >= 16)
-			var/obj/item/stack/tile/plasteel/T = new (Tsec)
-			T.amount = 16
-			amount -= 16
-		else
-			var/obj/item/stack/tile/plasteel/T = new (Tsec)
-			T.amount = amount
-			amount = 0
+	var/obj/item/stack/tile/plasteel/T = new (Tsec)
+	T.amount = 1
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
@@ -424,9 +322,5 @@
 /mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
 	if(isturf(A))
 		repair(A)
-	else if(istype(A,/obj/item/stack/tile/plasteel))
-		eattile(A)
-	else if(istype(A,/obj/item/stack/sheet/metal))
-		maketile(A)
 	else
 		..()

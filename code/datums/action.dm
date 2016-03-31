@@ -163,7 +163,7 @@
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
-				button.icon_state = "bg_internals_on"
+				button.icon_state = "bg_default_on"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
@@ -215,8 +215,17 @@
 /datum/action/item_action/toggle_helmet
 	name = "Toggle Helmet"
 
-/datum/action/item_action/jetpack_mode
-	name = "Jetpack Mode"
+/datum/action/item_action/toggle_jetpack
+	name = "Toggle Jetpack"
+
+/datum/action/item_action/jetpack_stabilization
+	name = "Toggle Jetpack Stabilization"
+
+/datum/action/item_action/jetpack_stabilization/IsAvailable()
+	var/obj/item/weapon/tank/jetpack/J = target
+	if(!istype(J) || !J.on)
+		return 0
+	return ..()
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_CONSCIOUS

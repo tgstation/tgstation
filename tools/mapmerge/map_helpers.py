@@ -4,13 +4,16 @@ maxx = 0
 maxy = 0
 key_length = 1
 
-def merge_map(newfile, backupfile, tgm):
+def reset_globals():
     global key_length
     global maxx
     global maxy
     key_length = 1
-    maxx = 1
-    maxy = 1
+    maxx = 0
+    maxy = 0
+
+def merge_map(newfile, backupfile, tgm):
+    reset_globals()
 
     shitmap = parse_map(newfile)
     shitDict = shitmap["dictionary"] #key to tile data dictionary
@@ -46,17 +49,26 @@ def merge_map(newfile, backupfile, tgm):
             originalData = originalDict[originalKey]
 
             #if new tile data at x,y is the same as original tile data at x,y, add to the pile
-            if set(shitData) == frozenset(originalData):
+            if shitData == originalData:
                 mergeGrid[x,y] = originalKey
                 known_keys[shitKey] = originalKey
                 unused_keys.remove(originalKey)
             else:
                 #search for the new tile data in the original dictionary, if a key is found add it to the pile, else generate a new key
-                newKey = search_data(originalDict, shitData)
+                newKey = search_key(originalDict, shitData)
                 if newKey != None:
+                    try:
+                        unused_keys.remove(newKey)
+                    except ValueError: #caused by a duplicate entry
+                        print("WARNING: Correcting duplicate dictionary entry. ({})".format(shitKey))
                     mergeGrid[x,y] = newKey
-                    known_keys[shitKey] = newKey
-                    unused_keys.remove(newKey)
+                    known_keys[shitKey] = newKey    
+                #if data at original x,y no longer exists we reuse the key immediately
+                elif search_key(shitDict, originalData) == None:
+                    mergeGrid[x,y] = originalKey
+                    originalDict[originalKey] = shitData
+                    unused_keys.remove(originalKey)
+                    known_keys[shitKey] = originalKey
                 else:
                     if len(tempDict) == 0:
                         newKey = generate_new_key(originalDict)
@@ -123,7 +135,7 @@ def merge_map(newfile, backupfile, tgm):
         write_grid_coord_small(newfile, mergeGrid)
     else:
         write_dictionary(newfile, originalDict)
-        write_grid(newfile, originalDict)
+        write_grid(newfile, mergeGrid)
     return 1
 
 #write dictionary in tgm format
@@ -136,7 +148,6 @@ def write_dictionary_tgm(filename, dictionary):
             for thing in list_:
                 buffer = ""
                 in_quote_block = False
-                escaping_quote = False
                 in_varedit_block = False
                 for char in thing:
                     
@@ -183,13 +194,11 @@ def write_grid_coord_small(filename, grid):
                 output.write("{}\n".format(grid[x,y]))
             output.write("{}\n\"}}\n".format(grid[x,maxy-1]))
 
-def search_data(dictionary, data):
-    found_data = None
-    try:
-        found_data = dictionary.values()[list(dictionary.keys()).index(data)]
-    except:
-        pass
-    return found_data
+def search_key(dictionary, data):
+    for key, value in dictionary.items():
+        if value == data:
+            return key
+    return None
 
 def generate_new_key(dictionary):
     last_key = next(reversed(dictionary))
@@ -226,13 +235,12 @@ def parse_map(map_file):
         characters = map_input.read()
 
         in_quote_block = False
-        escaping_quote = False
         in_key_block = False
         in_data_block = False
         in_varedit_block = False
         after_data_block = False
-        escaping_parenthesis = 0
         escaping = False
+        skip_whitespace = False
 
         dictionary = collections.OrderedDict()
         curr_key = ""
@@ -285,10 +293,20 @@ def parse_map(map_file):
 
                             curr_datum = curr_datum + char
                             continue
+
+                        if skip_whitespace and char == " ":
+                            skip_whitespace = False
+                            continue
+                        skip_whitespace = False
                             
                         if char == "\"":
                             curr_datum = curr_datum + char
                             in_quote_block = True
+                            continue
+
+                        if char == ";":
+                            skip_whitespace = True
+                            curr_datum = curr_datum + char
                             continue
 
                         if char == "}":
@@ -311,7 +329,7 @@ def parse_map(map_file):
 
                     if char == ")":
                         curr_data.append(curr_datum)
-                        dictionary[curr_key] = curr_data
+                        dictionary[curr_key] = tuple(curr_data)
                         curr_data = list()
                         curr_datum = ""
                         curr_key = ""
@@ -450,8 +468,6 @@ def string_to_num(s):
     except ValueError:
         return -1
 
-#unused functions
-
 #writes a tile data dictionary the same way Dreammaker does
 def write_dictionary(filename, dictionary):
     with open(filename, "w") as output:
@@ -474,7 +490,7 @@ def write_grid(filename, grid):
         output.write("\"}")
         output.write("\n")
 
-#inflated map grid
+#inflated map grid; unused
 def write_grid_coord(filename, grid):
     with open(filename, "a") as output:
         output.write("\n")

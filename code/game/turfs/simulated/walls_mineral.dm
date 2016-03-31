@@ -174,3 +174,15 @@
 	hardness = 80
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
+
+/turf/simulated/wall/mineral/abductor
+	name = "alien wall"
+	desc = "A wall with alien alloy plating."
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor"
+	walltype = "abductor"
+	mineral = "abductor"
+	sheet_type = /obj/item/stack/sheet/mineral/abductor
+	slicing_duration = 200   //alien wall takes twice as much time to slice
+	explosion_block = 3
+	canSmoothWith = list(/turf/simulated/wall/mineral/abductor, /obj/structure/falsewall/abductor)

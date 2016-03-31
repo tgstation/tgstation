@@ -1,5 +1,0 @@
-author: PKPenguin321
-delete-after: True
-changes: 
-  - rscadd: "The kitchen vendor now contains two sharpening blocks."
-  - rscadd: "Only items that are already sharp (such as fire axes, knives, etc) can be sharpened. Items used on sharpening blocks become sharper and deadlier. The sharpening blocks themselves can only be used once, and you can only sharpen items once."

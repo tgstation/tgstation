@@ -125,9 +125,6 @@ var/global/list/RPD_recipes=list(
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rpd"
-	opacity = 0
-	density = 0
-	anchored = 0
 	flags = CONDUCT
 	force = 10
 	throwforce = 10
@@ -138,12 +135,11 @@ var/global/list/RPD_recipes=list(
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/p_type = 0
-	var/p_conntype = 0
+	var/p_type = PIPE_SIMPLE
+	var/p_conntype = PIPE_BENDABLE
 	var/p_dir = 1
 	var/p_flipped = 0
 	var/p_class = ATMOS_MODE
-	var/p_disposal = 0
 	var/list/paint_colors = list(
 		"grey"		= rgb(255,255,255),
 		"red"		= rgb(255,0,0),
@@ -530,7 +526,7 @@ var/global/list/RPD_recipes=list(
 
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-	
+
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = p_type
 	var/queued_p_dir = p_dir

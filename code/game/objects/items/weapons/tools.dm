@@ -34,6 +34,12 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wrench/cyborg
+	name = "automatic wrench"
+	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
+	icon = 'icons/obj/items_cyborg.dmi'
+	toolspeed = 2
+
 /*
  * Screwdriver
  */
@@ -99,6 +105,17 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/cyborg
+	name = "powered screwdriver"
+	desc = "An electrical screwdriver, designed to be both precise and quick."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "screwdriver"
+	item_state = "screwdriver_brown"
+	toolspeed = 2
+
+/obj/item/weapon/screwdriver/cyborg/New(loc, var/param_color = null)
+	return ..(loc, "cyborg")
+
 /*
  * Wirecutters
  */
@@ -131,7 +148,7 @@
 		qdel(C.handcuffed)
 		C.handcuffed = null
 		if(C.buckled && C.buckled.buckle_requires_restraints)
-			C.buckled.unbuckle_mob()
+			C.buckled.unbuckle_mob(C)
 		C.update_handcuffed()
 		return
 	else
@@ -141,6 +158,16 @@
 	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+
+/obj/item/weapon/wirecutters/cyborg
+	name = "wirecutters"
+	desc = "This cuts wires."
+	icon = 'icons/obj/items_cyborg.dmi'
+	toolspeed = 2
+
+/obj/item/weapon/wirecutters/cyborg/New(loc, var/param_color = null)
+	return ..(loc, "cyborg")
 
 /*
  * Welding Tool
@@ -396,6 +423,11 @@
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
+	name = "integrated welding tool"
+	desc = "An advanced welder designed to be used in robotic systems."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "indwelder"
+	toolspeed = 2
 
 /obj/item/weapon/weldingtool/largetank/flamethrower_screwdriver()
 	return
@@ -493,4 +525,11 @@
 	throw_range = 3
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
+	toolspeed = 2
+
+/obj/item/weapon/crowbar/cyborg
+	name = "hydraulic crowbar"
+	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
+	icon = 'icons/obj/items_cyborg.dmi'
+	force = 10
 	toolspeed = 2

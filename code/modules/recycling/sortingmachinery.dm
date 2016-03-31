@@ -5,21 +5,14 @@
 	icon_state = "deliverycloset"
 	density = 1
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/obj/wrapped = null
 	var/giftwrapped = 0
 	var/sortTag = 0
-
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = (get_turf(loc))
-		if(istype(wrapped, /obj/structure/closet))
-			var/obj/structure/closet/O = wrapped
-			O.welded = 0
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
 		AM.loc = T
@@ -48,36 +41,45 @@
 		if(WP.use(3))
 			user.visible_message("[user] wraps the package in festive paper!")
 			giftwrapped = 1
-			if(istype(wrapped, /obj/structure/closet/crate))
-				icon_state = "giftcrate"
-			else
-				icon_state = "giftcloset"
-			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
-				new /obj/item/weapon/c_tube( get_turf(user) )
+			icon_state = "gift[icon_state]"
 		else
 			user << "<span class='warning'>You need more paper!</span>"
+
+/obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
+	if(istype(loc, /atom/movable))
+		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
+		AM.relay_container_resist(user, O)
+		return
+	user << "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>"
+	if(do_after(user, 50, target = O))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
+			return
+		user << "<span class='notice'>You successfully removed [O]'s wrapping !</span>"
+		O.loc = loc
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		qdel(src)
+	else
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			user << "<span class='warning'>You fail to remove [O]'s wrapping!</span>"
+
 
 
 /obj/item/smallDelivery
 	name = "small parcel"
 	desc = "A small wrapped package."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "deliverycrateSmall"
-	var/obj/item/wrapped = null
+	icon_state = "deliverypackage3"
 	var/giftwrapped = 0
 	var/sortTag = 0
 
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	if(wrapped && wrapped.loc) //sometimes items can disappear. For example, bombs. --rastaf0
-		wrapped.loc = user.loc
-		if(ishuman(user))
-			user.put_in_hands(wrapped)
-		else
-			wrapped.loc = get_turf(src)
+	user.unEquip(src)
+	for(var/X in contents)
+		var/atom/movable/AM = X
+		user.put_in_hands(AM)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
-
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/destTagger))
@@ -100,92 +102,11 @@
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(1))
-			icon_state = "giftcrate[wrapped.w_class]"
+			icon_state = "gift[icon_state]"
 			giftwrapped = 1
 			user.visible_message("[user] wraps the package in festive paper!")
-			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
-				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
 			user << "<span class='warning'>You need more paper!</span>"
-
-
-
-/obj/item/stack/packageWrap
-	name = "package wrapper"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "deliveryPaper"
-	flags = NOBLUDGEON
-	amount = 25
-	max_amount = 25
-	burn_state = FLAMMABLE
-
-
-/obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return
-	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
-		return
-	if(istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-	|| istype(target, /obj/item/weapon/evidencebag) || istype(target, /obj/structure/closet/body_bag))
-		return
-	if(target.anchored)
-		return
-	if(target in user)
-		return
-
-
-
-	if(istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
-		var/obj/item/O = target
-		if(use(1))
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
-			if(!istype(O.loc, /turf))
-				if(user.client)
-					user.client.screen -= O
-			P.wrapped = O
-			O.loc = P
-			var/i = round(O.w_class)
-			if(i in list(1,2,3,4,5))
-				P.icon_state = "deliverycrate[i]"
-				P.w_class = i
-			P.add_fingerprint(usr)
-			O.add_fingerprint(usr)
-			add_fingerprint(usr)
-		else
-			return
-	else if(istype(target, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/O = target
-		if(O.opened)
-			return
-		if(use(3))
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			P.icon_state = "deliverycrate"
-			P.wrapped = O
-			O.loc = P
-		else
-			user << "<span class='warning'>You need more paper!</span>"
-			return
-	else if(istype (target, /obj/structure/closet))
-		var/obj/structure/closet/O = target
-		if(O.opened)
-			return
-		if(use(3))
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			P.wrapped = O
-			O.welded = 1
-			O.loc = P
-		else
-			user << "<span class='warning'>You need more paper!</span>"
-			return
-	else
-		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
-		return
-
-	user.visible_message("[user] wraps [target].")
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
-
-	if(amount <= 0 && !src.loc) //if we used our last wrapping paper, drop a cardboard tube
-		new /obj/item/weapon/c_tube( get_turf(user) )
-	return
 
 
 /obj/item/device/destTagger
@@ -229,14 +150,3 @@
 		var/n = text2num(href_list["nextTag"])
 		currTag = n
 	openwindow(usr)
-
-
-/obj/item/weapon/c_tube
-	name = "cardboard tube"
-	desc = "A tube... of cardboard."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "c_tube"
-	throwforce = 0
-	w_class = 1
-	throw_speed = 3
-	throw_range = 5

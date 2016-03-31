@@ -25,7 +25,8 @@
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR><BR>
+			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
@@ -346,11 +347,9 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
 
-			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be between 4 and 128)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
+			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
 			if (newBombCap < 4)
 				return
-			if (newBombCap > 128)
-				newBombCap = 128
 
 			MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
 			MAX_EX_HEAVY_RANGE = round(newBombCap/2)
@@ -527,6 +526,16 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+
+		if("ctfbutton")
+			if(!check_rights(R_ADMIN))
+				return
+			var/ctf_enabled = 0
+			for(var/obj/machinery/capture_the_flag/CTF in machines)
+				ctf_enabled = !CTF.ctf_enabled
+				CTF.ctf_enabled = !CTF.ctf_enabled
+			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+
 	if(E)
 		E.processing = 0
 		if(E.announceWhen>0)

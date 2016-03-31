@@ -167,6 +167,9 @@
 	var/used = 0
 	var/rigged = -1
 
+/obj/item/weapon/dice/d20/fate/one_use
+	reusable = 0
+
 /obj/item/weapon/dice/d20/fate/diceroll(mob/user)
 	..()
 	if(!used)

@@ -20,6 +20,7 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -71,17 +72,10 @@
 
 	if (getBrainLoss() >= 60 && stat != DEAD)
 		if (prob(3))
-			switch(pick(1,2,3,4,5))
-				if(1)
-					say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse","kamelien","eksrey","glowey skin")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#", "shiggey diggey!!", "A PIRATE APPEAR"))
-				if(2)
-					say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!", "port ba[pick("y", "i", "e")] med!!!!", "REVIRT GON CHEM!!!!!!!!", "youed call her a toeugh bithc", "closd for merbegging", "pray can u [pick("spawn", "MAke me", "creat")] [pick("zenomorfs", "ayleins", "treaitors", "sheadow linkgs", "ubdoocters")]???"))
-				if(3)
-					say(pick("GEY AWAY FROM ME U GREIFING PRICK!!!!", "ur a fuckeing autist!", ";HELP SHITECIRTY MURDERIN  MEE!!!", "hwat dose tha [pick("g", "squid", "r")] mean?????", "CAL; TEH SHUTTLE!!!!!", "wearnig siNGUARLTY IS .... FIne xDDDDDDDDD", "AI laW 22 Open door", "this SI mY stATIon......", "who the HELL do u thenk u r?!!!!", "geT THE FUCK OUTTTT", "H U G B O X", ";;CRAGING THIS STTAYTION WITH NIO SURVIVROS", "[pick("bager", "syebl")] is down11!!!!!!!!!!!!!!!!!", "PSHOOOM"))
-				if(4)
-					emote("drool")
-				if(5)
-					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best", "Tajaran has warrrres, if you have coin"))
+			if(prob(25))
+				emote("drool")
+			else
+				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
@@ -317,5 +311,75 @@
 			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
+
+/*
+Alcohol Poisoning Chart
+Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
+In addition, severe effects won't always trigger unless the drink is poisonously strong
+All effects don't start immediately, but rather get worse over time; the rate is affected by the imbiber's alcohol tolerance
+
+0: Non-alcoholic
+1-10: Barely classifiable as alcohol - occassional slurring
+11-20: Slight alcohol content - slurring
+21-30: Below average - imbiber begins to look slightly drunk
+31-40: Just below average - no unique effects
+41-50: Average - mild disorientation, imbiber begins to look drunk
+51-60: Just above average - disorientation, vomiting, imbiber begins to look heavily drunk
+61-70: Above average - small chance of blurry vision, imbiber begins to look smashed
+71-80: High alcohol content - blurry vision, imbiber completely shitfaced
+81-90: Extremely high alcohol content - light brain damage, passing out
+91-100: Dangerously toxic - swift death
+*/
+
+/mob/living/carbon/human/handle_status_effects()
+	..()
+	if(drunkenness)
+		if(sleeping)
+			drunkenness = max(drunkenness - 1.5, 0)
+		else
+			drunkenness = max(drunkenness - 0.2, 0)
+
+		if(drunkenness >= 6)
+			if(prob(25))
+				slurring += 2
+			jitteriness = max(jitteriness - 3, 0)
+
+		if(drunkenness >= 11 && slurring < 5)
+			slurring += 1.2
+
+		if(drunkenness >= 41)
+			if(prob(25))
+				confused += 2
+			Dizzy(10)
+
+		if(drunkenness >= 51)
+			if(prob(5))
+				confused += 10
+				vomit()
+			Dizzy(25)
+
+		if(drunkenness >= 61)
+			if(prob(50))
+				blur_eyes(5)
+
+		if(drunkenness >= 71)
+			blur_eyes(5)
+
+		if(drunkenness >= 81)
+			adjustToxLoss(0.2)
+			if(prob(5) && !stat)
+				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+
+		if(drunkenness >= 91)
+			adjustBrainLoss(0.4)
+			if(prob(20) && !stat)
+				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
+					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+				else
+					src << "<span class='warning'>Just a quick nap...</span>"
+					Sleeping(45)
+
+		if(drunkenness >= 101)
+			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
 #undef HUMAN_MAX_OXYLOSS

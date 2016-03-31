@@ -901,8 +901,8 @@ var/list/WALLITEMS_INVERSE = list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
@@ -964,7 +964,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/IsValidSrc(A)
 	if(istype(A, /datum))
 		var/datum/B = A
-		return !B.gc_destroyed
+		return !qdeleted(B)
 	if(istype(A, /client))
 		return 1
 	return 0
@@ -1194,6 +1194,59 @@ B --><-- A
 
 	return L
 
+//similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+	if(!dist)
+		if(!orange)
+			return list(center)
+		else
+			return list()
+
+	var/turf/t_center = get_turf(center)
+	if(!t_center)
+		return list()
+
+	var/list/L = list()
+	var/turf/T
+	var/y
+	var/x
+	var/c_dist = 1
+
+	if(!orange)
+		L += t_center
+
+	while( c_dist <= dist )
+		y = t_center.y + c_dist
+		x = t_center.x - c_dist + 1
+		for(x in x to t_center.x+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y + c_dist - 1
+		x = t_center.x + c_dist
+		for(y in t_center.y-c_dist to y)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y - c_dist
+		x = t_center.x + c_dist - 1
+		for(x in t_center.x-c_dist to x)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+
+		y = t_center.y - c_dist + 1
+		x = t_center.x - c_dist
+		for(y in y to t_center.y+c_dist)
+			T = locate(x,y,t_center.z)
+			if(T)
+				L += T
+		c_dist++
+
+	return L
+
 /atom/proc/contains(var/atom/A)
 	if(!A)
 		return 0
@@ -1287,3 +1340,22 @@ proc/pick_closest_path(value)
 			return
 	chosen = matches[chosen]
 	return chosen
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
+
+//Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
+/proc/stoplag()
+	. = 1
+	sleep(world.tick_lag)
+#if DM_VERSION >= 510
+	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
+		. += 2
+		sleep(world.tick_lag*2)
+		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
+			. += 4
+			sleep(world.tick_lag*4)
+			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
+			//	not worth it.
+#endif

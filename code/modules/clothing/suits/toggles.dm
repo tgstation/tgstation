@@ -1,6 +1,7 @@
 //Hoods for winter coats and chaplain hoodie etc
 
 /obj/item/clothing/suit/hooded
+	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
 

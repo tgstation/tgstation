@@ -54,7 +54,7 @@
 	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
-	var/childtype = null
+	var/list/childtype = null
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
@@ -81,6 +81,8 @@
 	verbs -= /mob/verb/observe
 	if(!real_name)
 		real_name = name
+	if(!loc)
+		stack_trace("Simple animal being instantiated in nullspace")
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -487,7 +489,7 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !species || ticker.current_state != GAME_STATE_PLAYING)
 		return
 	scan_ready = 0
 	spawn(400)
@@ -495,7 +497,7 @@
 	var/alone = 1
 	var/mob/living/simple_animal/partner
 	var/children = 0
-	for(var/mob/M in oview(7, src))
+	for(var/mob/M in view(7, src))
 		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
 			continue
 		else if(istype(M, childtype)) //Check for children FIRST.
@@ -509,7 +511,8 @@
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
-		new childtype(loc)
+		var/childspawn = pickweight(childtype)
+		new childspawn(loc)
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)

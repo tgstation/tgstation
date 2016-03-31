@@ -34,11 +34,11 @@ var/datum/controller/failsafe/Failsafe
 				new /datum/controller/master()
 			// Only poke it if overrides are not in effect.
 			if(processing_interval > 0)
-				if(Master.processing_interval > 0)
+				if(Master.processing)
 					// Check if processing is done yet.
 					if(Master.iteration == master_iteration)
 						switch(defcon)
-							if(1 to 2)
+							if(0 to 2)
 								++defcon
 							if(3)
 								admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [defcon * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
