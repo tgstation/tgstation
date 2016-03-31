@@ -305,14 +305,13 @@
 /mob/living/simple_animal/hostile/proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 	if(target == start)
 		return
+	if(!istype(target, /turf))
+		return
 
 	var/obj/item/projectile/A = new projectiletype(user:loc)
 	playsound(user, projectilesound, 100, 1)
 	if(!A)	return
 
-	if (!istype(target, /turf))
-		del(A)
-		return
 	A.current = target
 
 	var/turf/T = get_turf(src)

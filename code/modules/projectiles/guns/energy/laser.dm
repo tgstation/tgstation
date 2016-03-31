@@ -162,6 +162,13 @@ obj/item/weapon/gun/energy/laser/retro
 	isHandgun()
 		return 0
 
+/obj/item/weapon/gun/energy/lasercannon/empty/New()
+	..()
+
+	if(power_supply)
+		power_supply.charge = 0
+		update_icon()
+
 /obj/item/weapon/gun/energy/lasercannon/cyborg/process_chambered()
 	if(in_chamber)
 		return 1

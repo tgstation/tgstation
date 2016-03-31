@@ -10,8 +10,8 @@
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 2
+	melee_damage_upper = 7
 	attacktext = "punches"
 	a_intent = I_HURT
 
@@ -29,6 +29,15 @@
 
 	var/obj/effect/landmark/corpse/corpse = /obj/effect/landmark/corpse
 	var/list/items_to_drop = list()
+
+	var/list/visible_items = list()
+
+/mob/living/simple_animal/hostile/humanoid/New()
+	..()
+
+	for(var/I in visible_items)
+		var/image/new_img = image(I, icon_state = visible_items[I], layer = MOB_LAYER)
+		overlays.Add(new_img)
 
 /mob/living/simple_animal/hostile/humanoid/Die()
 	..()
