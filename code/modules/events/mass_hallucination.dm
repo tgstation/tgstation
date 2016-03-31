@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/mass_hallucination
 	weight = 7
 	max_occurrences = 2
+	min_players = 1
 
 /datum/round_event/mass_hallucination/start()
 	for(var/mob/living/carbon/C in living_mob_list)
