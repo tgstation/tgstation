@@ -3,4 +3,6 @@ author: Nullbear
 delete-after: True
 
 changes: 
-  - rscadd: "Added Chemical Bombs to RnD."
+  - rscadd: "Added Chemical Bomb."
+  - rscadd: "Made Bomb Assemblies Craftable using Plasteel."
+  - rscadd: "Added Chemical Bomb Payload to Tablecrafting Recipes."
