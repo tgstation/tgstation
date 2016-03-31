@@ -1,5 +1,5 @@
 var/round_start_time = 0
-var/list/donator_icons 
+var/list/donator_icons
 var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
@@ -338,11 +338,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
-		var/resistlead = findtext(player.real_name, "Connor")
 		if(player && player.mind && player.mind.assigned_role)
-			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
-				if(resistlead == 0 && prob(70))
-					player.mind.assigned_role = "Cyborg"
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
