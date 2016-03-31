@@ -243,7 +243,7 @@
 		if(C.dna)
 			if(C.dna.features["tail_human"] == "Cat" && C.dna.features["ears"] == "Cat")
 				C.SpinAnimation(7,1)
-				visible_message("<span class='notice'>[C.name] slips... but manages to stick the landing with their cat like reflexs!</span>")
+				visible_message("<span class='notice'>[C.name] slips... but manages to stick the landing with their cat like reflexes!</span>")
 				return 0
 		var/list/impact_point = pick("Head", "Chest", "Back", "Ass", "Hands", "Groin")
 		var/message
