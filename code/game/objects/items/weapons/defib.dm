@@ -91,22 +91,19 @@
 /obj/item/weapon/defibrillator/MouseDrop(obj/over_object)
 	if(ismob(src.loc))
 		var/mob/M = src.loc
-		if(istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
-
-			switch(H.slot_id)
-				if(slot_r_hand)
-					if(M.r_hand)
-						return
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if(slot_l_hand)
-					if(M.l_hand)
-						return
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
+		switch(over_object.name)
+			if("r_hand")
+				if(M.r_hand)
+					return
+				if(!M.unEquip(src))
+					return
+				M.put_in_r_hand(src)
+			if("l_hand")
+				if(M.l_hand)
+					return
+				if(!M.unEquip(src))
+					return
+				M.put_in_l_hand(src)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
