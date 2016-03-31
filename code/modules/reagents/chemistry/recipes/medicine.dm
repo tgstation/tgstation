@@ -221,9 +221,9 @@
 	result_amount = 5
 
 /datum/chemical_reaction/bicardine
-	name = "Bicardine"
-	id = "bicardine"
-	result = "bicardine"
+	name = "Bicaridine"
+	id = "bicaridine"
+	result = "bicaridine"
 	required_reagents = list("carbon" = 1, "oxygen" = 1, "sugar" = 1)
 	result_amount = 3
 
@@ -243,8 +243,8 @@
 	result_amount = 3
 
 /datum/chemical_reaction/tricordazine
-	name = "Tricordazine"
-	id = "tricordazine"
-	result = "tricordazine"
+	name = "Tricordrazine"
+	id = "tricordrazine"
+	result = "tricordrazine"
 	required_reagents = list("bicardine" = 1, "kelotane" = 1, "antitoxin" = 1)
 	result_amount = 3
