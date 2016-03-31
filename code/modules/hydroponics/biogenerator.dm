@@ -143,7 +143,7 @@
 			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A><A href='?src=\ref[src];create=cream;amount=5'>x5</A> ([30/efficiency])<BR>"
 			dat += "Milk carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
 			dat += "Cream carton: <A href='?src=\ref[src];create=ccream;amount=1'>Make</A><A href='?src=\ref[src];create=ccream;amount=5'>x5</A> ([300/efficiency])<BR>"
-			dat += "10 black pepper: <A href='?src=\ref[src];create=bpepper;amount=1'>Make</A><A href='?src=\ref[src];create=bpepper;amount=5'>x5</A> ([25/efficiency])<BR>"
+			dat += "10u black pepper: <A href='?src=\ref[src];create=bpepper;amount=1'>Make</A><A href='?src=\ref[src];create=bpepper;amount=5'>x5</A> ([25/efficiency])<BR>"
 			dat += "Pepper mill: <A href='?src=\ref[src];create=mpepper;amount=1'>Make</A><A href='?src=\ref[src];create=mpepper;amount=5'>x5</A> ([50/efficiency])<BR>"
 			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A><A href='?src=\ref[src];create=meat;amount=5'>x5</A> ([250/efficiency])"
 			dat += "</div>"
@@ -238,7 +238,8 @@
 			else if (check_cost(20/efficiency)) return 0
 			else beaker.reagents.add_reagent("milk",10)
 		if("bpepper")
-			if(check_container_volume(10)) return 0
+			if(check_container_volume(10))
+				return 0
 			else if (check_cost(25/efficiency)) return 0
 			else beaker.reagents.add_reagent("blackpepper",10)
 		if("cream")
@@ -249,7 +250,8 @@
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/condiment/milk(src.loc)
 		if("mpepper")
-			if (check_cost(50/efficiency)) return 0
+			if (check_cost(50/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/food/condiment/peppermill(src.loc)
 		if("ccream")
 			if (check_cost(300/efficiency)) return 0
@@ -273,7 +275,8 @@
 			if (check_cost(50/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller(src.loc)
 		if("empty")
-			if (check_cost(5/efficiency)) return 0
+			if (check_cost(5/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
