@@ -166,19 +166,15 @@
 /obj/machinery/syndicatebomb/badmin/varplosion
 	payload = /obj/item/weapon/bombcore/badmin/explosion/
 
-/obj/machinery/syndicatebomb/chemical
-	name = "chemical bomb"
-	icon_state = "chem-bomb"
-	desc = "A specialized explosive device designed for application of chemical compounds over a very large area. Payload must be loaded before usage."
-	payload = /obj/item/weapon/bombcore/chemical/
+/obj/machinery/syndicatebomb/empty
+	name = "bomb assembly"
+	icon_state = "base-bomb"
+	desc = "An ominous looking device designed to detonate a highly explosive payload. Can be bolted down using a wrench."
+	payload = null
 
-/obj/machinery/syndicatebomb/chemical/New()
-	new /obj/item/weapon/paper/chemical_bomb(loc)
-	..()
-
-/obj/item/weapon/paper/chemical_bomb
-	name = "payload removal instructions"
-	info = "Instructions for removing payload from an explosive device: Remove panel using a screwdriver. Cut all wires. Carefully remove payload using a crowbar. CAUTION: Do not attempt to remove a live payload, as doing so may cause the explosive device to detonate."
+/obj/item/weapon/paper/payload_info
+	name = "payload installation instructions"
+	info = "Instructions for installing payload: Remove panel using a screwdriver. Cut all wires. Carefully insert payload and mend wires. CAUTION: Do not attempt to remove a live payload, as doing so may cause the explosive device to detonate."
 
 ///Bomb Cores///
 
@@ -194,11 +190,18 @@
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
-	detonate()
+	if(prob(50))
+		detonate()
+	else
+		qdel(src)
 
 /obj/item/weapon/bombcore/burn()
-	detonate()
-	..()
+	if(prob(50))
+		detonate()
+		..()
+	else
+		qdel(src)
+		..()
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
@@ -318,7 +321,7 @@
 
 /obj/item/weapon/bombcore/chemical/New()
 	..()
-	create_reagents(500*MAX_BEAKERS)
+	create_reagents(300*MAX_BEAKERS)
 
 /obj/item/weapon/bombcore/chemical/detonate()
 	if(adminlog)
@@ -410,7 +413,7 @@
 			user << "<span class='notice'>You load [src] with [I].</span>"
 			I.loc = src
 		else
-			user << "<span class='notice'>The [I] wont fit! The [src] can only hold up to [MAX_BEAKERS] containers.</span>"
+			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [MAX_BEAKERS] containers.</span>"
 			return
 	..()
 
