@@ -258,7 +258,7 @@
 
 /obj/item/weapon/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A holster to carry a carried handgun and ammo. WARNING: Badasses only."
+	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
 	icon_state = "holster"
 	item_state = "holster"
 	storage_slots = 3
