@@ -246,7 +246,6 @@ Pipelines + Other Objects -> Pipe network
 									"You hear a ratchet.")
 				var/datum/gas_mixture/internal_removed = int_air.remove(int_air.total_moles()*starting_volume/int_air.volume)
 				env_air.merge(internal_removed)
-				return
 		else
 			to_chat(user, "<span class='warning'>You cannot unwrench this [src], it's too exerted due to internal pressure.</span>")
 			return 1
