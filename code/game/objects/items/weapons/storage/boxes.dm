@@ -770,5 +770,5 @@
 
 /obj/item/weapon/storage/box/ingredients/New()
 	..()
-	if (item_state != null)
+	if(item_state)
 		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
