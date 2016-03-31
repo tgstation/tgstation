@@ -955,7 +955,7 @@
 					/obj/item/clothing/suit/beekeeper_suit,
 					/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit)
-	crate_name = "beekeper suits"
+	crate_name = "beekeeper suits"
 
 /datum/supply_pack/organic/vending
 	name = "Bartending Supply Crate"
