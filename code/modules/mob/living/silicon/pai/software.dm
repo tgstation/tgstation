@@ -381,7 +381,7 @@
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
-	dat += {"<h2>CentComm pAI Module Subversion Network</h2><br>
+	dat += {"<h2>CentComm pAI Module CVS Network</h2><br>
 		<pre>Remaining Available Memory: [src.ram]</pre><br>
 		<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"}
 	for(var/s in available_software)
