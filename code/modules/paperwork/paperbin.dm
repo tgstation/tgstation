@@ -31,15 +31,15 @@
 	if(over_object == M)
 		M.put_in_hands(src)
 
-	else if(istype(over_object, /obj/screen))
-		switch(over_object.name)
-			if("r_hand")
-				if(!remove_item_from_storage(M))
-					M.unEquip(src)
+	else if(istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		if(!remove_item_from_storage(M))
+			if(!M.unEquip(src))
+				return
+		switch(H.slot_id)
+			if(slot_r_hand)
 				M.put_in_r_hand(src)
-			if("l_hand")
-				if(!remove_item_from_storage(M))
-					M.unEquip(src)
+			if(slot_l_hand)
 				M.put_in_l_hand(src)
 
 	add_fingerprint(M)

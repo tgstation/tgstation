@@ -18,6 +18,7 @@
 	icon_state = "skub"
 	w_class = 4
 	attack_verb = list("skubbed")
+
 /obj/item/weapon/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
