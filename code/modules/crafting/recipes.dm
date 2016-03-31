@@ -319,7 +319,9 @@
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin/super = 1,
 		/obj/item/weapon/c4 = 1
+		// /obj/item/weapon/grenade/chem_grenade = 2 // Not worth the effort.
 	)
+	// parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
 	time = 30
 	category = CAT_WEAPON
 
@@ -329,7 +331,8 @@
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin/super = 1,
 		/obj/item/weapon/twohanded/required/gibtonite = 1
+		// /obj/item/weapon/grenade/chem_grenade = 2
 	)
+	// parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
 	time = 50
 	category = CAT_WEAPON
-
