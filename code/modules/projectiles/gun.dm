@@ -170,6 +170,7 @@
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_hand())
 		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
+		return
 
 	process_fire(target,user,1,params)
 
