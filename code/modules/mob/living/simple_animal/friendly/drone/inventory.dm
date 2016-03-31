@@ -34,12 +34,13 @@
 				return
 
 	hand = !hand
-	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
-		var/obj/screen/inventory/hand/H
-		H = hud_used.inv_slots[slot_l_hand]
-		H.update_icon()
-		H = hud_used.inv_slots[slot_r_hand]
-		H.update_icon()
+	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
+		if(hand)
+			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
+		else
+			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
 
 
 /mob/living/simple_animal/drone/unEquip(obj/item/I, force)

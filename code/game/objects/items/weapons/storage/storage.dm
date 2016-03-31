@@ -51,18 +51,15 @@
 				return
 
 			playsound(loc, "rustle", 50, 1, -5)
-
-
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
-				if(!M.unEquip(src))
-					return
-				switch(H.slot_id)
-					if(slot_r_hand)
-						M.put_in_r_hand(src)
-					if(slot_l_hand)
-						M.put_in_l_hand(src)
-
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 
 //Check if this storage can dump the items
