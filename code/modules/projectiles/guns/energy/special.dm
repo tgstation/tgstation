@@ -145,6 +145,7 @@
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+	weapon_weight = WEAPON_LIGHT
 	unique_rename = 0
 	overheat_time = 20
 

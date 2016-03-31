@@ -284,10 +284,9 @@
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
+		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     800),
 		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     400),
-		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/material/mining/gar,					   500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   600),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 600),
@@ -301,6 +300,11 @@
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2500),
 		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  3000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
+		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    800),
+		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_ugprade,      			   			   500),
+		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_ugprade/health,      			   	       600),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   600),
+		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      1500),
 		)
 
 /datum/data/mining_equipment/
@@ -651,6 +655,7 @@
 	attacktext = "drills"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	ranged = 1
+	sentience_type = SENTIENCE_MINEBOT
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
@@ -750,6 +755,65 @@
 	if(search_objects)
 		SetOffenseBehavior()
 	. = ..()
+
+/**********************Minebot Upgrades**********************/
+
+//Melee
+
+/obj/item/device/mine_bot_ugprade
+	name = "minebot melee upgrade"
+	desc = "A minebot upgrade."
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+
+/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if(!istype(M))
+		return
+	upgrade_bot(M, user)
+
+/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if(M.melee_damage_upper != initial(M.melee_damage_upper))
+		user << "[src] already has a combat upgrade installed!"
+		return
+	M.melee_damage_lower = 22
+	M.melee_damage_upper = 22
+	qdel(src)
+
+//Health
+
+/obj/item/device/mine_bot_ugprade/health
+	name = "minebot chassis upgrade"
+
+/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if(M.maxHealth != initial(M.maxHealth))
+		user << "[src] already has a reinforced chassis!"
+		return
+	M.maxHealth = 170
+	qdel(src)
+
+
+//Cooldown
+
+/obj/item/device/mine_bot_ugprade/cooldown
+	name = "minebot cooldown upgrade"
+
+/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	name = "minebot cooldown upgrade"
+	if(M.ranged_cooldown_cap != initial(M.ranged_cooldown_cap))
+		user << "[src] already has a decreased weapon cooldown!"
+		return
+	M.ranged_cooldown_cap = 1
+	qdel(src)
+
+
+//AI
+/obj/item/slimepotion/sentience/mining
+	name = "minebot AI upgrade"
+	desc = "Can be used to grant sentience to minebots."
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+	sentience_type = SENTIENCE_MINEBOT
+
 
 /**********************Lazarus Injector**********************/
 
