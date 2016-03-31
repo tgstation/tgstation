@@ -1,5 +1,5 @@
 var/round_start_time = 0
-
+var/list/donator_icons 
 var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
@@ -51,7 +51,7 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
-
+	donator_icons = icon_states('icons/donator.dmi')
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/title3.ogg' =31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
