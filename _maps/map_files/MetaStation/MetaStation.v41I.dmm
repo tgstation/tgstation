@@ -51210,13 +51210,13 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bEH" = (
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bEI" = (
@@ -52104,7 +52104,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bGj" = (
@@ -52113,7 +52113,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bGk" = (
@@ -53539,7 +53539,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bIi" = (
@@ -53552,7 +53552,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bIj" = (
@@ -72593,7 +72593,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "cmX" = (
@@ -72603,7 +72603,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "cmY" = (
@@ -73455,7 +73455,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "cor" = (
@@ -84862,7 +84862,7 @@
 	dir = 4;
 	icon_state = "warnplate";
 	luminosity = 2;
-	intial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	temperature = 2.7
 	},
 /area/toxins/test_area)
