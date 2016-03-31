@@ -108,8 +108,8 @@ var/last_irc_status = 0
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count()
 		s["players"] = clients.len
-		s["revision"] = revdata.commit
-		s["revision_date"] = revdata.date
+//		s["revision"] = revdata.commit
+//		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
 		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
@@ -149,8 +149,8 @@ var/last_irc_status = 0
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
 	sleep(delay)
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
+//	if(blackbox)
+//		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return

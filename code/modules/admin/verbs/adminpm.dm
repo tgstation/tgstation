@@ -37,6 +37,11 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
+
+	if(ahmuted(ckey))
+		src << "<span class='danger'><big><b>No way for you, dick.</b></big></span>"
+		return
+
 	var/client/C
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))

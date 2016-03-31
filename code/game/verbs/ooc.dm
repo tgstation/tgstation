@@ -12,6 +12,10 @@
 		src << "Guests may not use OOC."
 		return
 
+	if(oocmuted(ckey))
+		src << "<span class='danger'><big><b>No way for you, dick.</b></big></span>"
+		return
+
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
