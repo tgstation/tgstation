@@ -239,7 +239,7 @@
 	name = "Antitoxin"
 	id = "antitoxin"
 	result = "antitoxin"
-	required_reagents = list("nitrogen" = 1, "silicon" = 1, "potassium")
+	required_reagents = list("nitrogen" = 1, "silicon" = 1, "potassium" =1)
 	result_amount = 3
 
 /datum/chemical_reaction/tricordazine
