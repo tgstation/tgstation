@@ -342,7 +342,7 @@ var/datum/subsystem/ticker/ticker
 		if(player && player.mind && player.mind.assigned_role)
 			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 				if(resistlead == 0 && prob(70))
-					SSjob.EquipRank(player, "Cyborg", 0)
+					player.mind.assigned_role = "Cyborg"
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
