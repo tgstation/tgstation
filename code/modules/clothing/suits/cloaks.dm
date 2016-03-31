@@ -35,14 +35,14 @@
 	name = "chief engineer's cloak"
 	desc = "Worn by Engitopia, wielders of an unlimited power. It's slightly shielded against radiation."
 	icon_state = "cecloak"
-	allowed = list(/obj/item/weapon/rcd)
+	allowed = list(/obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/suit/cloak/rd
 	name = "research director's cloak."
 	desc = "Worn by Sciencia, thaumaturges and researchers of the universe. It's slightly shielded from contaminants."
 	icon_state = "rdcloak"
-	allowed = list(/obj/item/weapon/hand_tele)
+	allowed = list(/obj/item/weapon/hand_tele, /obj/item/weapon/storage/part_replacer)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/cloak/cap
