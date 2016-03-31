@@ -37579,18 +37579,14 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bzu" = (
 /obj/machinery/r_n_d/server/robotics,
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bzv" = (
@@ -38143,9 +38139,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bAz" = (
@@ -38160,9 +38154,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bAA" = (
@@ -38899,18 +38891,14 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bBT" = (
 /obj/machinery/r_n_d/server/core,
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/server)
 "bBU" = (
@@ -44016,8 +44004,7 @@
 	dir = 4;
 	icon_state = "warnplate";
 	luminosity = 2;
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/toxins/test_area)
 "bLs" = (
@@ -45823,8 +45810,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bPl" = (
@@ -45841,15 +45827,13 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bPm" = (
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bPn" = (
@@ -46419,8 +46403,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bQC" = (
@@ -46429,8 +46412,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bQD" = (
@@ -46948,8 +46930,7 @@
 	},
 /turf/open/floor/engine{
 	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /area/atmos)
 "bRM" = (
@@ -49272,9 +49253,7 @@
 "bWB" = (
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bWC" = (
@@ -49282,9 +49261,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bWD" = (
@@ -49292,9 +49269,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bWE" = (
@@ -49302,9 +49277,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bWF" = (
@@ -49324,9 +49297,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bWG" = (
@@ -49334,9 +49305,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bWH" = (
@@ -49855,9 +49824,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bXA" = (
@@ -49865,9 +49832,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bXB" = (
@@ -49875,9 +49840,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bXC" = (
@@ -49888,9 +49851,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bXD" = (
@@ -49898,9 +49859,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bXE" = (
@@ -50064,11 +50023,8 @@
 /area/atmos)
 "bXW" = (
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bXX" = (
@@ -50084,11 +50040,8 @@
 	pump_direction = 0
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bXY" = (
@@ -50097,11 +50050,8 @@
 	pixel_x = -1
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bXZ" = (
@@ -50357,9 +50307,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bYA" = (
@@ -50367,9 +50315,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bYB" = (
@@ -50377,9 +50323,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bYC" = (
@@ -50387,9 +50331,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bYD" = (
@@ -50518,11 +50460,8 @@
 "bYU" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bYV" = (
@@ -50531,11 +50470,8 @@
 	id_tag = "tox_sensor"
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bYW" = (
@@ -50543,11 +50479,8 @@
 	dir = 4
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bYX" = (
@@ -50683,9 +50616,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bZo" = (
@@ -50696,9 +50627,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bZp" = (
@@ -50714,9 +50643,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "bZq" = (
@@ -50926,11 +50853,8 @@
 	pixel_y = 1
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 0;
 	name = "plasma floor";
-	nitrogen = 0;
-	oxygen = 0;
-	toxins = 70000
+	initial_gas_mix = "plasma=70000"
 	},
 /area/atmos)
 "bZM" = (
@@ -51118,9 +51042,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cah" = (
@@ -51131,9 +51053,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cai" = (
@@ -51146,9 +51066,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "caj" = (
@@ -51159,9 +51077,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cak" = (
@@ -51170,9 +51086,7 @@
 	dir = 8;
 	icon_state = "vault";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cal" = (
@@ -51203,9 +51117,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "can" = (
@@ -51746,9 +51658,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cbm" = (
@@ -51967,10 +51877,8 @@
 /area/atmos)
 "cbH" = (
 /turf/open/floor/engine{
-	carbon_dioxide = 50000;
 	name = "co2 floor";
-	nitrogen = 0;
-	oxygen = 0
+	initial_gas_mix = "co2=50000"
 	},
 /area/atmos)
 "cbI" = (
@@ -51986,10 +51894,8 @@
 	pump_direction = 0
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 50000;
 	name = "co2 floor";
-	nitrogen = 0;
-	oxygen = 0
+	initial_gas_mix = "co2=50000"
 	},
 /area/atmos)
 "cbJ" = (
@@ -52227,9 +52133,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "ccg" = (
@@ -52237,9 +52141,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cch" = (
@@ -52247,9 +52149,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cci" = (
@@ -52454,10 +52354,8 @@
 "ccB" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine{
-	carbon_dioxide = 50000;
 	name = "co2 floor";
-	nitrogen = 0;
-	oxygen = 0
+	initial_gas_mix = "co2=50000"
 	},
 /area/atmos)
 "ccC" = (
@@ -52466,10 +52364,8 @@
 	id_tag = "co2_sensor"
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 50000;
 	name = "co2 floor";
-	nitrogen = 0;
-	oxygen = 0
+	initial_gas_mix = "co2=50000"
 	},
 /area/atmos)
 "ccD" = (
@@ -52477,10 +52373,8 @@
 	dir = 4
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 50000;
 	name = "co2 floor";
-	nitrogen = 0;
-	oxygen = 0
+	initial_gas_mix = "co2=50000"
 	},
 /area/atmos)
 "ccE" = (
@@ -52706,9 +52600,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cdd" = (
@@ -52716,9 +52608,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cde" = (
@@ -52726,9 +52616,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cdf" = (
@@ -52736,9 +52624,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cdg" = (
@@ -52990,10 +52876,8 @@
 	pixel_y = 1
 	},
 /turf/open/floor/engine{
-	carbon_dioxide = 50000;
 	name = "co2 floor";
-	nitrogen = 0;
-	oxygen = 0
+	initial_gas_mix = "co2=50000"
 	},
 /area/atmos)
 "cdE" = (
@@ -53203,9 +53087,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cea" = (
@@ -53213,9 +53095,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "ceb" = (
@@ -53223,9 +53103,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cec" = (
@@ -53235,9 +53113,7 @@
 /obj/machinery/light,
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "ced" = (
@@ -53245,9 +53121,7 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
 "cee" = (
@@ -53789,9 +53663,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "cfs" = (
@@ -54177,9 +54049,7 @@
 "cgi" = (
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "cgj" = (
@@ -54208,9 +54078,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "cgm" = (
@@ -54750,9 +54618,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "chp" = (
@@ -54770,9 +54636,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "chr" = (
@@ -54791,9 +54655,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+	initial_gas_mix = "n2=500;TEMP=80"
 	},
 /area/toxins/xenobiology)
 "cht" = (
@@ -56497,8 +56359,7 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	nitrogen = 100000;
-	oxygen = 0
+	initial_gas_mix = "n2=100000"
 	},
 /area/atmos)
 "ckV" = (
@@ -56509,8 +56370,7 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	nitrogen = 100000;
-	oxygen = 0
+	initial_gas_mix = "n2=100000"
 	},
 /area/atmos)
 "ckW" = (
@@ -56527,8 +56387,7 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	nitrogen = 100000;
-	oxygen = 0
+	initial_gas_mix = "n2=100000"
 	},
 /area/atmos)
 "ckX" = (
@@ -56538,8 +56397,7 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 100000
+	initial_gas_mix = "o2=100000"
 	},
 /area/atmos)
 "ckY" = (
@@ -56550,8 +56408,7 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 100000
+	initial_gas_mix = "o2=100000"
 	},
 /area/atmos)
 "ckZ" = (
@@ -56568,8 +56425,7 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 100000
+	initial_gas_mix = "o2=100000"
 	},
 /area/atmos)
 "cla" = (
@@ -56579,8 +56435,7 @@
 	},
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "clb" = (
@@ -56591,8 +56446,7 @@
 	},
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "clc" = (
@@ -56609,8 +56463,7 @@
 	},
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "cld" = (
@@ -57000,30 +56853,26 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine{
 	name = "n2 floor";
-	nitrogen = 100000;
-	oxygen = 0
+	initial_gas_mix = "n2=100000"
 	},
 /area/atmos)
 "clU" = (
 /turf/open/floor/engine{
 	name = "n2 floor";
-	nitrogen = 100000;
-	oxygen = 0
+	initial_gas_mix = "n2=100000"
 	},
 /area/atmos)
 "clV" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine{
 	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 100000
+	initial_gas_mix = "o2=100000"
 	},
 /area/atmos)
 "clW" = (
 /turf/open/floor/engine{
 	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 100000
+	initial_gas_mix = "o2=100000"
 	},
 /area/atmos)
 "clX" = (
@@ -57039,15 +56888,13 @@
 	},
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "clZ" = (
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "cma" = (
@@ -57474,24 +57321,21 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "n2 floor";
-	nitrogen = 100000;
-	oxygen = 0
+	initial_gas_mix = "n2=100000"
 	},
 /area/atmos)
 "cmV" = (
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 100000
+	initial_gas_mix = "o2=100000"
 	},
 /area/atmos)
 "cmW" = (
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "cmX" = (
@@ -64913,8 +64757,7 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/atmos)
 "cBQ" = (

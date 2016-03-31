@@ -34,9 +34,9 @@
 "H" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "I" = (/obj/structure/mineral_door/iron,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/unpowered)
 "J" = (/turf/closed/wall/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
-"K" = (/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; nitrogen = 24; oxygen = 13; temperature = 300},/area/lavaland/surface/outdoors)
+"K" = (/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors)
 "L" = (/obj/item/weapon/twohanded/spear,/obj/structure/table,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"M" = (/obj/item/weapon/pickaxe,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; nitrogen = 24; oxygen = 13; temperature = 300},/area/lavaland/surface/outdoors)
+"M" = (/obj/item/weapon/pickaxe,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors)
 "N" = (/obj/structure/ore_box,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

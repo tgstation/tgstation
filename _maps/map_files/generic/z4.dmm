@@ -671,7 +671,7 @@
 "nk" = (/obj/machinery/power/apc{dir = 8; name = "Worn-out APC"; pixel_x = -24; pixel_y = 0},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/open/floor/plasteel/airless,/area/derelict/bridge/ai_upload)
 "nl" = (/obj/structure/computerframe,/turf/open/floor/plasteel/airless,/area/derelict/bridge/ai_upload)
 "nm" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel,/area/derelict/solar_control)
-"nn" = (/turf/open/floor/plasteel{icon_state = "damaged2"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/derelict/atmospherics)
+"nn" = (/turf/open/floor/plasteel{icon_state = "damaged2"; initial_gas_mix = "TEMP=2.7"},/area/derelict/atmospherics)
 "no" = (/turf/open/floor/plasteel/airless{icon_state = "damaged4"},/area/derelict/atmospherics)
 "np" = (/obj/structure/rack,/obj/item/weapon/circuitboard/cryo_tube,/turf/open/floor/plasteel,/area/derelict/bridge/ai_upload)
 "nq" = (/obj/machinery/light,/turf/open/floor/plasteel/airless,/area/derelict/bridge/ai_upload)
