@@ -34,6 +34,8 @@
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
 	density = 0
+	health = 1000
+	maxHealth = 1000
 	pass_flags = PASSTABLE | PASSMOB
 
 	speak = list("Hi!","Hello!","Cracker?","BAWWWWK george mellons griffing me!")
@@ -892,6 +894,16 @@
 	..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
+
+	if(prob(25))
+		for(var/mob/living/carbon/human/H in range(3,src))
+			if(H.dna && H.dna.species && H.dna.species.id == "parrot")
+				continue
+			visible_message("<span class='caution'>[src] stares intensely at [H] with its beady little eyes.</span>")
+			H.set_species(/datum/species/parrot)
+			H << "<span class='userdanger'>You suddenly realize that the bird is the word!</span>"
+			break
+
 	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
