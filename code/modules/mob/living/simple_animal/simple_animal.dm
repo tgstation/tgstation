@@ -322,7 +322,8 @@
 		. = adjustHealth(amount*damage_coeff[CLONE])
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
-	return
+	if(damage_coeff[STAMINA])
+		. = adjustHealth(amount*damage_coeff[STAMINA])
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
 	..()

@@ -48,8 +48,9 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.33, OXY = 1)
 	var/playable_spider = FALSE
-    
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
