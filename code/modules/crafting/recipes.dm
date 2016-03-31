@@ -312,27 +312,3 @@
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
 	category = CAT_MISC
-
-/datum/table_recipe/chemical_payload
-	name = "Chemical Bomb Core (C4)"
-	result = /obj/item/weapon/bombcore/chemical
-	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin/super = 1,
-		/obj/item/weapon/c4 = 1
-		// /obj/item/weapon/grenade/chem_grenade = 2 // Not worth the effort.
-	)
-	// parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
-	time = 30
-	category = CAT_WEAPON
-
-/datum/table_recipe/chemical_payload2
-	name = "Chemical Bomb Core (gibtonite)"
-	result = /obj/item/weapon/bombcore/chemical
-	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin/super = 1,
-		/obj/item/weapon/twohanded/required/gibtonite = 1
-		// /obj/item/weapon/grenade/chem_grenade = 2
-	)
-	// parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
-	time = 50
-	category = CAT_WEAPON

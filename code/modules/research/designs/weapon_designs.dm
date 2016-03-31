@@ -127,6 +127,17 @@
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 	category = list("Weapons")
 
+/datum/design/chembomb
+	name = "Chemical Bomb"
+	desc = "A large explosive device that affects a very large area, and can store up to 4 reagent containers."
+	id = "chembomb"
+	req_tech = list("combat" = 4, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_DIAMOND = 2000)
+	reliability = 79
+	build_path = /obj/machinery/syndicatebomb/chemical
+	category = list("Weapons")
+
 /datum/design/smg
 	name = "NanoTrasen Saber SMG"
 	desc = "A prototype advancment over the WT-550 auto rifle made using lightweight materials on a traditional frame, designed to fire standard 9mm rounds."
