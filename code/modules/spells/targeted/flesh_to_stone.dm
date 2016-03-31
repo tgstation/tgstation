@@ -5,7 +5,7 @@
 	school = "transmutation"
 	charge_max = 600
 	spell_flags = NEEDSCLOTHES | SELECTABLE
-	range = 3
+	range = 1
 	max_targets = 1
 	invocation = "STAUN EI"
 	invocation_type = SpI_SHOUT
