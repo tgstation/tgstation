@@ -1,12 +1,6 @@
-#define RAD_LEVEL_NORMAL 10
-#define RAD_LEVEL_MODERATE 30
-#define RAD_LEVEL_HIGH 75
-#define RAD_LEVEL_VERY_HIGH 125
-#define RAD_LEVEL_CRITICAL 200
-
 /obj/item/device/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "geiger counter"
-	desc = "A handheld device used for detecting and measuring radiation pulses."
+	desc = "A handheld device used for detecting and measuring radiation."
 	icon_state = "geiger_off"
 	item_state = "multitool"
 	w_class = 2
@@ -21,17 +15,21 @@
 	SSobj.processing |= src
 
 /obj/item/device/geiger_counter/Destroy()
-	SSobj.processing.Remove(src)
-	..()
+	SSobj.processing -= src
+	return ..()
 
 /obj/item/device/geiger_counter/process()
+	if(!ismob(loc))
+		var/turf/T = get_turf(src)
+		if(!T)
+			qdel(src)
+			return
+		rad_act(T.get_radiation() * RAD_TRANSFER_PERCENTAGE)
 	if(emagged)
 		if(radiation_count < 20)
 			radiation_count++
-		return 0
-	if(radiation_count > 0)
-		radiation_count--
-		update_icon()
+	else
+		radiation_count = 0
 
 /obj/item/device/geiger_counter/examine(mob/user)
 	..()
@@ -44,15 +42,15 @@
 	switch(radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
 			user << "<span class='notice'>Ambient radiation level count reports that all is well.</span>"
-		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
+		if(RAD_LEVEL_NORMAL to RAD_LEVEL_MODERATE)
 			user << "<span class='disarm'>Ambient radiation levels slightly above average.</span>"
-		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
+		if(RAD_LEVEL_MODERATE to RAD_LEVEL_HIGH)
 			user << "<span class='warning'>Ambient radiation levels above average.</span>"
-		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
+		if(RAD_LEVEL_HIGH to RAD_LEVEL_VERY_HIGH)
 			user << "<span class='danger'>Ambient radiation levels highly above average.</span>"
-		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
+		if(RAD_LEVEL_VERY_HIGH to RAD_LEVEL_CRITICAL)
 			user << "<span class='suicide'>Ambient radiation levels nearing critical level.</span>"
-		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
+		if(RAD_LEVEL_CRITICAL to INFINITY)
 			user << "<span class='boldannounce'>Ambient radiation levels above critical level!</span>"
 
 /obj/item/device/geiger_counter/update_icon()
@@ -65,31 +63,31 @@
 	switch(radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
 			icon_state = "geiger_on_1"
-		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
+		if(RAD_LEVEL_NORMAL to RAD_LEVEL_MODERATE)
 			icon_state = "geiger_on_2"
-		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
+		if(RAD_LEVEL_MODERATE to RAD_LEVEL_HIGH)
 			icon_state = "geiger_on_3"
-		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
+		if(RAD_LEVEL_HIGH to RAD_LEVEL_VERY_HIGH)
 			icon_state = "geiger_on_4"
-		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
+		if(RAD_LEVEL_VERY_HIGH to RAD_LEVEL_CRITICAL)
 			icon_state = "geiger_on_4"
-		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
+		if(RAD_LEVEL_CRITICAL to INFINITY)
 			icon_state = "geiger_on_5"
 	..()
 
 /obj/item/device/geiger_counter/rad_act(amount)
-	if(!amount && scanning)
+	if(!amount || !scanning)
 		return 0
 	if(emagged)
 		amount = Clamp(amount, 0, 25) //Emagged geiger counters can only accept 25 radiation at a time
 	radiation_count += amount
-	if(isliving(loc))
+	if(isliving(loc) && amount)
 		var/mob/living/M = loc
 		if(!emagged)
-			M << "<span class='boldannounce'>\icon[src] RADIATION PULSE DETECTED.</span>"
+			M << "<span class='boldannounce'>\icon[src] RADIATION DETECTED.</span>"
 			M << "<span class='boldannounce'>\icon[src] Severity: [amount]</span>"
 		else
-			M << "<span class='boldannounce'>\icon[src] !@%$AT!(N P!LS! D/TEC?ED.</span>"
+			M << "<span class='boldannounce'>\icon[src] !@%$AT!(N D/TEC?ED.</span>"
 			M << "<span class='boldannounce'>\icon[src] &!F2rity: <=[amount]#1</span>"
 	update_icon()
 

@@ -35,6 +35,7 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
+	SSradiation.radiation_sources |= src
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -44,6 +45,7 @@
 
 /obj/singularity/Destroy()
 	SSobj.processing.Remove(src)
+	SSradiation.radiation_sources -= src
 	poi_list.Remove(src)
 	return ..()
 
@@ -106,7 +108,9 @@
 	dissipate()
 	check_energy()
 
-	return
+/obj/singularity/process_irradiate()
+	if(current_size >= STAGE_TWO)
+		irradiate(20 * current_size, log = FALSE)
 
 
 /obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
@@ -354,8 +358,8 @@
 	switch(numb)
 		if(1)//EMP
 			emp_area()
-		if(2,3)//tox damage all carbon mobs in area
-			toxmob()
+		if(2)//induce radiation
+			irradiate_induced(20 * current_size, FALSE)
 		if(4)//Stun mobs who lack optic scanners
 			mezzer()
 		if(5,6) //Sets all nearby mobs on fire
@@ -366,18 +370,6 @@
 			return 0
 	return 1
 
-
-/obj/singularity/proc/toxmob()
-	var/toxrange = 10
-	var/radiation = 15
-	var/radiationmin = 3
-	if (energy>200)
-		radiation += round((energy-150)/10,1)
-		radiationmin = round((radiation/5),1)
-	for(var/mob/living/M in view(toxrange, src.loc))
-		M.rad_act(rand(radiationmin,radiation))
-
-
 /obj/singularity/proc/combust_mobs()
 	for(var/mob/living/carbon/C in urange(20, src, 1))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
@@ -385,7 +377,6 @@
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
 	return
-
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))

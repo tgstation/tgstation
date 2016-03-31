@@ -61,9 +61,9 @@
 	if(msg && ishuman(wearer))
 		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
 
-/obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
+/obj/item/clothing/head/helmet/space/hardsuit/rad_act(amount)
 	..()
-	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+	display_visor_message("Radiation detected! Intensity: <span class='green'>[amount]</span> RADs.")
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	..()

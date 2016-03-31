@@ -237,7 +237,7 @@
 	..(heavy)
 	explosion(src.loc, 0, 0, 4, 3, 0)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
-	radiation_pulse(get_turf(src), 2, 5, 50, 1)
+	irradiate_induced(25, TRUE, name)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
