@@ -105,13 +105,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
-	dat += "<a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"
+	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
 	if ((!isnull(cartridge)) && (mode == 0))
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
 	if (mode)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
-	dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
 	dat += "<br>"
 
@@ -279,7 +278,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -287,7 +286,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -295,10 +294,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //BASIC FUNCTIONS===================================
 
-			if("Close")//Self explanatory
-				U.unset_machine()
-				U << browse(null, "window=pda")
-				return
 			if("Refresh")//Refresh, goes to the end of the proc.
 			if("Return")//Return
 				if(mode<=9)

@@ -83,7 +83,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/suit/cultrobes/alt
-	name = "cultist hood"
+	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"

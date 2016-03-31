@@ -9,6 +9,7 @@
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
 	var/roundstart = 0
+	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
@@ -22,19 +23,21 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone, self_delay)
 	if(!canconsume(M, user))
 		return 0
 
 	if(M == user)
+		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
+		if(!do_mob(user, M, self_delay))
+			return 0
 		M << "<span class='notice'>You [apply_method] [src].</span>"
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
-
-		if(!do_mob(user, M)) return
-
+		if(!do_mob(user, M))
+			return 0
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 

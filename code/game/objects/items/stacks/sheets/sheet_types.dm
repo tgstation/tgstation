@@ -114,6 +114,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
+	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
+	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	)
 
 /obj/item/stack/sheet/mineral/wood
@@ -179,6 +181,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
  */
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
+	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 6, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 4, time = 40, one_per_turf = 1, on_floor = 1), \

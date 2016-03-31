@@ -320,3 +320,10 @@
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
 	category = CAT_MISC
+
+/datum/table_recipe/papersack
+	name = "Paper Sack"
+	result = /obj/item/weapon/storage/box/papersack
+	time = 10
+	reqs = list(/obj/item/weapon/paper = 5)
+	category = CAT_MISC
