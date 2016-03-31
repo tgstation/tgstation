@@ -371,7 +371,7 @@ proc/CallMaterialName(ID)
 
 					var/list/efficient_mats = list()
 					for(var/MAT in being_built.materials)
-						efficient_mats[MAT] = being_built.materials[MAT] / coeff
+						efficient_mats[MAT] = being_built.materials[MAT] * coeff
 
 					if(!linked_lathe.materials.has_materials(efficient_mats, amount))
 						src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
@@ -379,7 +379,7 @@ proc/CallMaterialName(ID)
 						g2g = 0
 					else
 						for(var/R in being_built.reagents)
-							if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]/coeff))
+							if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]*coeff))
 								src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough reagents to complete prototype.\"</span>")
 								enough_materials = 0
 								g2g = 0
@@ -387,11 +387,11 @@ proc/CallMaterialName(ID)
 					if(enough_materials)
 						linked_lathe.materials.use_amount(efficient_mats, amount)
 						for(var/R in being_built.reagents)
-							linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]/coeff)
+							linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]*coeff)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
-					spawn(32*amount/coeff)
+					spawn(32*coeff*amount**0.8) // making more takes less time per item
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
 							var/already_logged = 0
 							for(var/i = 0, i<amount, i++)
@@ -823,18 +823,18 @@ proc/CallMaterialName(ID)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
+						temp_material += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				for(var/R in D.reagents)
 					t = linked_lathe.check_mat(D, R)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.reagents[R]/coeff] [CallMaterialName(R)]</span>"
+						temp_material += "<span class='bad'>[D.reagents[R]*coeff] [CallMaterialName(R)]</span>"
 					else
-						temp_material += " [D.reagents[R]/coeff] [CallMaterialName(R)]"
+						temp_material += " [D.reagents[R]*coeff] [CallMaterialName(R)]"
 					c = min(c,t)
 
 				if (c >= 1)
@@ -865,9 +865,9 @@ proc/CallMaterialName(ID)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
+						temp_material += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				if (c >= 1)
