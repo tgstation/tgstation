@@ -429,11 +429,6 @@
 	projectile_energy_cost = 50
 	equip_cooldown = 10
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas/can_attach(obj/mecha/combat/gygax/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas/action(target)
 	if(!action_checks(target)) return
