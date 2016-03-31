@@ -6,6 +6,7 @@
 	playstyle_string = "<span class='holoparasite'>As a <b>protector</b> type you have very high damage resistance, a decent attack, and cause your summoner to leash to you instead of you leashing to them.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Guardian, a stalwart protector that never leaves the side of its charge.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Protector modules loaded. Holoparasite swarm online.</span>"
+	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! Wait, no... it caught you! The fisher has become the fishy.</span>"
 
 /mob/living/simple_animal/hostile/guardian/protector/snapback() //snap to what? snap to the guardian!
 	if(summoner)

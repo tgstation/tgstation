@@ -9,6 +9,7 @@
 	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online.</span>"
+	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught a support carp. It's a kleptocarp!</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/turf/simulated/floor/beacon
 	var/beacon_cooldown = 0

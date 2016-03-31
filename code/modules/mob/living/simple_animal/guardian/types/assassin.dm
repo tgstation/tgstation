@@ -8,6 +8,8 @@
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do low damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
+	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an assassin carp! Stab goes the fishy.</span>"
+
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
 	var/stealthcooldown = 200
