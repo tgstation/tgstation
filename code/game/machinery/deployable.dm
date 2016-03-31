@@ -80,6 +80,10 @@
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
 		return 1
+	if(density == 0)
+		return 1
+	if(locate(/obj/structure/barricade) in get_turf(mover))
+		return 1
 	if(istype(mover, /obj/item/projectile))
 		if(!anchored)
 			return 1

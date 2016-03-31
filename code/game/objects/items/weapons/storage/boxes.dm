@@ -593,3 +593,16 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/weapon/storage/box/emptysandbags
+	name = "box of empty sandbags"
+
+/obj/item/weapon/storage/box/emptysandbags/New()
+	..()
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
