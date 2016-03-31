@@ -25,7 +25,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -37,6 +37,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(!z_offset)
 		z_offset = world.maxz + 1
 
+	var/list/bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/list/grid_models = list()
 	var/key_len = 0
 
@@ -53,7 +54,8 @@ var/global/dmm_suite/preloader/_preloader = new
 					key_len = length(key)
 				else
 					throw EXCEPTION("Inconsistant key length in DMM")
-			grid_models[key] = dmmRegex.group[2]
+			if(!measureOnly)
+				grid_models[key] = dmmRegex.group[2]
 
 		// (1,1,1) = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
 		else if(dmmRegex.group[3]) // Coords
@@ -72,6 +74,10 @@ var/global/dmm_suite/preloader/_preloader = new
 				else
 					world.maxz = zcrd //create a new z_level if needed
 
+			bounds[1] = min(bounds[1], xcrdStart) // Update the min-x
+			bounds[3] = min(bounds[3], zcrd) // Update the min-z
+			bounds[6] = max(bounds[6], zcrd) // Update the max-z
+
 			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
 
 			var/leadingBlanks = 0
@@ -85,34 +91,50 @@ var/global/dmm_suite/preloader/_preloader = new
 			if(gridLines.len && gridLines[gridLines.len] == "")
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
+			bounds[2] = min(bounds[2], ycrd) // Update the min-y
 			ycrd += gridLines.len - 1 // Start at the top and work down
 
 			if(!cropMap && ycrd > world.maxy)
-				world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+				if(!measureOnly)
+					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+				bounds[5] = max(bounds[5], ycrd) // Update the max-y
+			else
+				bounds[5] = max(bounds[5], min(ycrd, world.maxy)) // Update the max-y
 
-			for(var/line in gridLines)
-				if(ycrd <= world.maxy && ycrd >= 1)
-					xcrd = xcrdStart
-					for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-						if(xcrd > world.maxx)
-							if(cropMap)
-								break
-							else
-								world.maxx = xcrd
+			var/maxx = xcrdStart
+			if(measureOnly)
+				for(var/line in gridLines)
+					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
+			else
+				for(var/line in gridLines)
+					if(ycrd <= world.maxy && ycrd >= 1)
+						xcrd = xcrdStart
+						for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+							if(xcrd > world.maxx)
+								if(cropMap)
+									break
+								else
+									world.maxx = xcrd
 
-						if(xcrd >= 1)
-							var/model_key = copytext(line, tpos, tpos + key_len)
-							if(!grid_models[model_key])
-								throw EXCEPTION("Undefined model key in DMM.")
-							parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
-							sleep(-1)
+							if(xcrd >= 1)
+								var/model_key = copytext(line, tpos, tpos + key_len)
+								if(!grid_models[model_key])
+									throw EXCEPTION("Undefined model key in DMM.")
+								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
+								CHECK_TICK
 
-						++xcrd
-				--ycrd
+							maxx = max(maxx, xcrd)
+							++xcrd
+					--ycrd
+
+			bounds[4] = max(bounds[4], cropMap ? min(maxx, world.maxx) : maxx) // Update the max-x
 
 		CHECK_TICK
 
-	return 1
+	if(bounds[1] == 1.#INF)
+		return list(0, 0, 0, 0, 0, 0)
+	else
+		return bounds
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
