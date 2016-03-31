@@ -278,20 +278,27 @@
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
 		if(U)
-			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+			if(H.dna.species.sexes && H.dna.species.id == "human" && H.gender == FEMALE)
+				standing	+= image("icon"='icons/mob/underwear_f.dmi', "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+			else
+				standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
+
 
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
-			if(H.dna.species.sexes && H.gender == FEMALE)
-				standing	+=	wear_female_version("[U2.icon_state]_s", U2.icon, BODY_LAYER)
+			if(H.dna.species.sexes && H.dna.species.id == "human" && H.gender == FEMALE)
+				standing	+= image("icon"='icons/mob/underwear_f.dmi', "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(H.socks)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
-			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
+			if(H.dna.species.sexes && H.dna.species.id == "human" && H.gender == FEMALE)
+				standing	+= image("icon"='icons/mob/underwear_f.dmi', "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
+			else
+				standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing

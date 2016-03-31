@@ -67,7 +67,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	if (gender == FEMALE && dna.species.id == "human")
-		standing = image("icon"='icons/mob/dam_human_f.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
+		standing	= image("icon"='icons/mob/dam_human_f.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER]	= standing
 
 	for(var/obj/item/organ/limb/O in organs)
@@ -243,8 +243,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 		if(dna && istype(dna.species, /datum/species/pony))
 			return
 		if(blood_DNA)
-			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands", "layer"=-GLOVES_LAYER)
-
+			if (gender == FEMALE && dna.species.id == "human")
+				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands_f", "layer"=-GLOVES_LAYER)
+			else
+				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands", "layer"=-GLOVES_LAYER)
 	apply_overlay(GLOVES_LAYER)
 
 
