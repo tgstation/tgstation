@@ -234,6 +234,7 @@ var/list/admin_verbs_hideable = list(
 
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
+		verbs += admin_verbs_sounds
 		if(rights & R_BUILDMODE)
 			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
@@ -254,8 +255,6 @@ var/list/admin_verbs_hideable = list(
 			verbs += /client/proc/stealth
 		if(rights & R_REJUVINATE)
 			verbs += admin_verbs_rejuv
-		if(rights & R_SOUNDS)
-			verbs += admin_verbs_sounds
 		if(rights & R_SPAWN)
 			verbs += admin_verbs_spawn
 
