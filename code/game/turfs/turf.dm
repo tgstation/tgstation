@@ -226,9 +226,8 @@
 		playsound(src, "bodyfall", 50, 1)
 
 /turf/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
-	if(has_gravity(src))
+	if(has_gravity(src) && C.lying)
 		var/obj/buckled_obj
-		var/oldlying = C.lying
 		if(C.buckled)
 			buckled_obj = C.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
@@ -241,11 +240,61 @@
 
 		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
+		if(C.dna)
+			if(C.dna.features["tail_human"] == "Cat" && C.dna.features["ears"] == "Cat")
+				C.SpinAnimation(7,1)
+				visible_message("<span class='notice'>[C.name] slips... but manages to stick the landing with their cat like reflexes!</span>")
+				return 0
+		var/list/impact_point = pick("Head", "Chest", "Back", "Ass", "Hands", "Groin")
+		var/message
+		switch(impact_point)
+			if("Head") //oh boy
+				if(istype(C.head,/obj/item/clothing/head))
+					var/obj/item/clothing/head/H = C.head
+					if(H.armor["melee"])
+						playsound(C, 'sound/effects/woodhit.ogg', 30, 1)
+						message = "[C.name] slips backwards straight onto their head! You hear a crack as their [H.name] takes the impact!"
+						H.armor["melee"] = 0
+						H.desc += " A nasty looking crack runs right up the middle, this won't be good for stopping impacts anymore."
+				if(!message) //Should have worn your helmet!
+					if(prob(25))
+						playsound(C, 'sound/effects/blobattack.ogg', 30, 1)
+						message = "[C.name] slips backwards straight onto their head! You hear a sickening crack as their skull splits open!"
+						C.apply_damage(75, BRUTE, "head")
+						C.setBrainLoss(50)
+					else
+						playsound(C, 'sound/effects/bang.ogg', 30, 1)
+						message = "[C.name] slips backwards straight onto their head! You hear an unnerving whump as their head bounces off the floor!"
+						C.apply_damage(20, BRUTE, "head")
+						C.setBrainLoss(10)
+			if("Chest")
+				message = "[C.name] slips fowards flat onto their chest, knocking the air out of their lungs!"
+				C.setOxyLoss(50)
+
+			if("Back")
+				message = "[C.name] slips backwards flat on their back!"
+				C.apply_damage(10, BRUTE, "chest")
+
+			if("Ass") //Tactically speaking, this is the best place to land
+				message = "[C.name] slips, landing squarely on their ass!"
+				C.apply_damage(5, BRUTE, "chest") //Where's my ass damage zone?
+
+			if("Hands")
+				message = "[C.name] slips forwards, holding out their hands to catch their fall!"
+				C.accident(C.l_hand)
+				C.accident(C.r_hand)
+
+			if("Groin")
+				message = "[C.name] slips into a split, smacking into the ground in the most unfortunate way possible!"
+				if(C.gender == MALE)
+					playsound(C, 'sound/items/bikehorn.ogg', 30, 1)
+				C.Stun(s_amount)
+				C.Weaken(w_amount)
+
+		visible_message("<span class='danger'>[message]</span>")
+
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-
-		C.accident(C.l_hand)
-		C.accident(C.r_hand)
 
 		var/olddir = C.dir
 		C.Stun(s_amount)
@@ -259,9 +308,6 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
-		if(C.lying != oldlying && lube) //did we actually fall?
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/singularity_act()
