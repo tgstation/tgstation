@@ -25,6 +25,15 @@
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 
+/turf/simulated/mineral/New()
+	..()
+	if (mineralType && mineralAmt && spread && spreadChance)
+		for(var/dir in cardinal)
+			if(prob(spreadChance))
+				var/turf/T = get_step(src, dir)
+				if(istype(T, /turf/simulated/mineral/random))
+					Spread(T)
+
 /turf/simulated/mineral/volcanic
 	environment_type = "basalt"
 	turf_type = /turf/simulated/floor/plating/asteroid/basalt
@@ -61,13 +70,6 @@
 
 /turf/simulated/mineral/random/New()
 	..()
-
-	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in cardinal)
-			if(prob(spreadChance))
-				var/turf/T = get_step(src, dir)
-				if(istype(T, /turf/simulated/mineral/random))
-					Spread(T)
 
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
