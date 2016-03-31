@@ -11,7 +11,11 @@ var/sound/admin_sound
 
 	log_admin("[key_name(src)] played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]")
-
+	
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+		admin_sound.frequency = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
+		src << "You feel the Honkmother messing with your song..."
+		
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
