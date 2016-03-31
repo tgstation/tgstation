@@ -653,18 +653,33 @@
 	icon_state = "donkpocket"
 	food_flags = FOOD_MEAT
 
-	New()
-		..()
-		reagents.add_reagent("nutriment", 4)
-
 	var/warm = 0
-	proc/cooltime() //Not working, derp?
-		if(warm)
-			spawn(4200)	//ew
-				warm = 0
-				reagents.del_reagent("tricordrazine")
-				name = initial(name)
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/New()
+	..()
+	reagents.add_reagent("nutriment", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/process()
+	if(warm <= 0)
+		warm = 0
+		name = initial(name)
+		reagents.del_reagent("tricordrazine")
+		processing_objects.Remove(src)
 		return
+
+	warm--
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/Destroy()
+	processing_objects.Remove(src)
+
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/warm_up()
+	warm = 80
+	reagents.add_reagent("tricordrazine", 5)
+	bitesize = 6
+	name = "warm [name]"
+	processing_objects.Add(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
 	name = "brainburger"
