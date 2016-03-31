@@ -9063,10 +9063,10 @@
 /turf/simulated/floor/carpet,
 /area/security/detectives_office)
 "arV" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/filingcabinet/employment,
 /turf/simulated/floor/wood,
 /area/lawoffice)
 "arW" = (
@@ -20519,6 +20519,7 @@
 "aQs" = (
 /obj/structure/cult/tome,
 /obj/item/clothing/under/suit_jacket/red,
+/obj/item/weapon/book/demonomicon,
 /turf/simulated/floor/plasteel{
 	icon_state = "cult";
 	dir = 2

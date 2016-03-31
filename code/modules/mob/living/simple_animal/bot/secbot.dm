@@ -224,6 +224,7 @@ Auto Patrol: []"},
 		C.Weaken(5)
 		C.stuttering = 5
 		C.Stun(5)
+		threat = C.assess_threat()
 	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
