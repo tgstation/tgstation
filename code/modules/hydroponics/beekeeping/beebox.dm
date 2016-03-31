@@ -123,19 +123,22 @@
 	..()
 
 	if(!queen_bee)
-		user << "<span class='warning'>There is no queen bee!</span>"
+		user << "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>"
 
 	var/half_bee = get_max_bees()*0.5
 	if(half_bee && (bees.len >= half_bee))
-		user << "This place is a BUZZ with activity..."
+		user << "<span class='notice'>This place is a BUZZ with activity... there are lots of bees!</span>"
 
-	if(bee_resources)
-		user << "[bee_resources]/100 resource supply."
-		user << "[bee_resources]% towards a new honeycomb."
-		user << "[bee_resources*2]% towards a new bee."
+	user << "<span class='notice'>[bee_resources]/100 resource supply.</span>"
+	user << "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>"
+	user << "<span class='notice'>[bee_resources*2]% towards a new bee.</span>"
+
+	if(honeycombs.len)
+		var/plural = honeycombs.len > 1
+		user << "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>"
 
 	if(honeycombs.len >= get_max_honeycomb())
-		user << "there's no room for more honeycomb!"
+		user << "<span class='warning'>there's no room for more honeycomb!</span>"
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
@@ -154,6 +157,10 @@
 			return
 
 	if(istype(I, /obj/item/queen_bee))
+		if(queen_bee)
+			user << "<span class='warning'>This hive already has a queen!</span>"
+			return
+
 		var/obj/item/queen_bee/qb = I
 		user.unEquip(qb)
 
@@ -223,10 +230,10 @@
 								fallen++
 						if(fallen)
 							var/multiple = fallen > 1
-							visible_message("<span class='notice'>[user] scapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>")
+							visible_message("<span class='notice'>[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>")
 
 				if("Remove the Queen Bee")
-					if(!queen_bee)
+					if(!queen_bee || queen_bee.loc != src)
 						user << "<span class='warning'>There is no queen bee to remove!</span>"
 						return
 					var/obj/item/queen_bee/QB = new()
@@ -237,3 +244,4 @@
 					if(!user.put_in_active_hand(QB))
 						QB.loc = get_turf(src)
 					visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
+					queen_bee = null

@@ -4,7 +4,7 @@
 	desc = "a hexagonal mesh of honeycomb"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "honeycomb"
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	spillable = 0
 	disease_amount = 0
 	volume = 10
