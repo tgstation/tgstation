@@ -297,7 +297,7 @@ Subject's pulse: ??? BPM"})
 
 	var/datum/gas_mixture/environment = location.return_air()
 
-	user << output_gas_scan(environment, location, 1)
+	to_chat(output_gas_scan(environment, location, 1))
 
 	src.add_fingerprint(user)
 	return
