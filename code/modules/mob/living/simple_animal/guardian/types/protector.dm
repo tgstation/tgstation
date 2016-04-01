@@ -10,6 +10,14 @@
 	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/toggle = FALSE
 
+/mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)
+	if(severity == 1)
+		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
+	else
+		..()
+	if(toggle && summoner)
+		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
+
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
 	if(cooldown > world.time)
 		return 0
