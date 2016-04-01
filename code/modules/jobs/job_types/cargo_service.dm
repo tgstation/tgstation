@@ -158,6 +158,12 @@ Cook
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
 
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+    ..()
+    var/list/possible_boxes = subtypesof(/obj/item/weapon/storage/box/ingredients)
+    var/chosen_box = pick(possible_boxes)
+    var/obj/item/weapon/storage/box/I = new chosen_box(src)
+    H.equip_to_slot_or_del(I,slot_in_backpack)
 
 /*
 Botanist

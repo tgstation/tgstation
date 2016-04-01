@@ -107,6 +107,11 @@
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
+
+	if(client && hud_used && hud_used.inv_slots[slot_back])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_back]
+		inv.update_icon()
+
 	if(back)
 		update_hud_back(back)
 		if(dna && istype(dna.species, /datum/species/pony))
@@ -135,15 +140,11 @@
 //update whether handcuffs appears on our hud.
 /mob/living/carbon/proc/update_hud_handcuffed()
 	if(hud_used)
-		var/obj/screen/inventory/R = hud_used.r_hand_hud_object
-		var/obj/screen/inventory/L = hud_used.l_hand_hud_object
+		var/obj/screen/inventory/R = hud_used.inv_slots[slot_r_hand]
+		var/obj/screen/inventory/L = hud_used.inv_slots[slot_l_hand]
 		if(R && L)
-			if(handcuffed)	//hud handcuff icons
-				R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
-				L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
-			else
-				R.overlays = null
-				L.overlays = null
+			R.update_icon()
+			L.update_icon()
 
 //update whether our head item appears on our hud.
 /mob/living/carbon/proc/update_hud_head(obj/item/I)

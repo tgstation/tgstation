@@ -14,6 +14,7 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	unique_name = 1
+	a_intent = "harm"
 	var/mob/camera/blob/overmind = null
 	var/obj/effect/blob/factory/factory = null
 

@@ -1,0 +1,4 @@
+author: Shadowlight213
+delete-after: True
+changes: 
+  - rscadd: "Clients now have a volume preference for admin-played sounds."

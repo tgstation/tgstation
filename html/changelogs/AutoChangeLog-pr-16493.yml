@@ -1,0 +1,4 @@
+author: Isratosh
+delete-after: True
+changes: 
+  - rscadd: "Added an admin jump button to explosion logs."

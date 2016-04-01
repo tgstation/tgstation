@@ -62,11 +62,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	switch(M)
 		if(MAT_GLASS)
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
+			return (g_amount - (being_built.materials[M]) >= 0)
 		if(MAT_GOLD)
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
+			return (gold_amount - (being_built.materials[M]) >= 0)
 		if(MAT_DIAMOND)
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
+			return (diamond_amount - (being_built.materials[M]) >= 0)
 		else
 			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0)
 

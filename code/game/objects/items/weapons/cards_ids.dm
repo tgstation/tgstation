@@ -308,3 +308,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
+
+/obj/item/weapon/card/id/mining
+	name = "mining ID"
+	access = list(access_mining, access_mining_station, access_mineral_storeroom)

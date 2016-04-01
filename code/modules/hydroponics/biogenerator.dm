@@ -141,8 +141,10 @@
 			dat += "<div class='statusDisplay'>"
 			dat += "10 milk: <A href='?src=\ref[src];create=milk;amount=1'>Make</A><A href='?src=\ref[src];create=milk;amount=5'>x5</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A><A href='?src=\ref[src];create=cream;amount=5'>x5</A> ([30/efficiency])<BR>"
-			dat += "Milk Carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
-			dat += "Cream Carton: <A href='?src=\ref[src];create=ccream;amount=1'>Make</A><A href='?src=\ref[src];create=ccream;amount=5'>x5</A> ([300/efficiency])<BR>"
+			dat += "Milk carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
+			dat += "Cream carton: <A href='?src=\ref[src];create=ccream;amount=1'>Make</A><A href='?src=\ref[src];create=ccream;amount=5'>x5</A> ([300/efficiency])<BR>"
+			dat += "10u black pepper: <A href='?src=\ref[src];create=bpepper;amount=1'>Make</A><A href='?src=\ref[src];create=bpepper;amount=5'>x5</A> ([25/efficiency])<BR>"
+			dat += "Pepper mill: <A href='?src=\ref[src];create=mpepper;amount=1'>Make</A><A href='?src=\ref[src];create=mpepper;amount=5'>x5</A> ([50/efficiency])<BR>"
 			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A><A href='?src=\ref[src];create=meat;amount=5'>x5</A> ([250/efficiency])"
 			dat += "</div>"
 			dat += "<h3>Botany Chemicals:</h3>"
@@ -152,6 +154,7 @@
 			dat += "Robust Harvest: <A href='?src=\ref[src];create=rh;amount=1'>Make</A><A href='?src=\ref[src];create=rh;amount=5'>x5</A> ([25/efficiency])<BR>"
 			dat += "Weed Killer: <A href='?src=\ref[src];create=wk;amount=1'>Make</A><A href='?src=\ref[src];create=wk;amount=5'>x5</A> ([50/efficiency])<BR>"
 			dat += "Pest Killer: <A href='?src=\ref[src];create=pk;amount=1'>Make</A><A href='?src=\ref[src];create=pk;amount=5'>x5</A> ([50/efficiency])<BR>"
+			dat += "Empty bottle: <A href='?src=\ref[src];create=empty;amount=1'>Make</A><A href='?src=\ref[src];create=empty;amount=5'>x5</A> ([5/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Leather and Cloth:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -168,10 +171,10 @@
 			dat += "Janitorial belt: <A href='?src=\ref[src];create=jbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Bandolier belt: <A href='?src=\ref[src];create=bbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Shoulder holster: <A href='?src=\ref[src];create=sholster;amount=1'>Make</A> ([400/efficiency])<BR>"
-			dat += "Leather Satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
-			dat += "Leather Jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
-			dat += "Leather Overcoat: <A href='?src=\ref[src];create=overcoat;amount=1'>Make</A> ([1000/efficiency])<BR>"
-			dat += "Rice Hat: <A href='?src=\ref[src];create=rice_hat;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Leather satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
+			dat += "Leather jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
+			dat += "Leather overcoat: <A href='?src=\ref[src];create=overcoat;amount=1'>Make</A> ([1000/efficiency])<BR>"
+			dat += "Rice hat: <A href='?src=\ref[src];create=rice_hat;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -231,87 +234,130 @@
 /obj/machinery/biogenerator/proc/create_product(create)
 	switch(create)
 		if("milk")
-			if(check_container_volume(10)) return 0
-			else if (check_cost(20/efficiency)) return 0
+			if(check_container_volume(10))
+				return 0
+			else if (check_cost(20/efficiency))
+				return 0
 			else beaker.reagents.add_reagent("milk",10)
+		if("bpepper")
+			if(check_container_volume(10))
+				return 0
+			else if (check_cost(25/efficiency))
+				return 0
+			else beaker.reagents.add_reagent("blackpepper",10)
 		if("cream")
-			if(check_container_volume(10)) return 0
-			else if (check_cost(30/efficiency)) return 0
+			if(check_container_volume(10))
+				return 0
+			else if (check_cost(30/efficiency))
+				return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("cmilk")
-			if (check_cost(100/efficiency)) return 0
+			if (check_cost(100/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/food/condiment/milk(src.loc)
+		if("mpepper")
+			if (check_cost(50/efficiency))
+				return 0
+			else new/obj/item/weapon/reagent_containers/food/condiment/peppermill(src.loc)
 		if("ccream")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/food/drinks/bottle/cream(src.loc)
 		if("meat")
-			if (check_cost(250/efficiency)) return 0
+			if (check_cost(250/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
-			if (check_cost(10/efficiency)) return 0
+			if (check_cost(10/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
 		if("l4z")
-			if (check_cost(20/efficiency)) return 0
+			if (check_cost(20/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
 		if("rh")
-			if (check_cost(25/efficiency)) return 0
+			if (check_cost(25/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
 		if("wk")
-			if (check_cost(50/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/weedkiller(src.loc)
+			if (check_cost(50/efficiency))
+				return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/killer/weedkiller(src.loc)
 		if("pk")
-			if (check_cost(50/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/pestkiller(src.loc)
+			if (check_cost(50/efficiency))
+				return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller(src.loc)
+		if("empty")
+			if (check_cost(5/efficiency))
+				return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty(src.loc)
 		if("wallet")
-			if (check_cost(100/efficiency)) return 0
+			if (check_cost(100/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
 		if("bkbag")
-			if (check_cost(200/efficiency)) return 0
+			if (check_cost(200/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/bag/books(src.loc)
 		if("ptbag")
-			if (check_cost(200/efficiency)) return 0
+			if (check_cost(200/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/bag/plants(src.loc)
 		if("mnbag")
-			if (check_cost(200/efficiency)) return 0
+			if (check_cost(200/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/bag/ore(src.loc)
 		if("chbag")
-			if (check_cost(200/efficiency)) return 0
+			if (check_cost(200/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
 		if("rag")
-			if (check_cost(200/efficiency)) return 0
+			if (check_cost(200/efficiency))
+				return 0
 			else new/obj/item/weapon/reagent_containers/glass/rag(src.loc)
 		if("gloves")
-			if (check_cost(250/efficiency)) return 0
+			if (check_cost(250/efficiency))
+				return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("tbelt")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/belt/utility(src.loc)
 		if("sbelt")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/belt/security(src.loc)
 		if("mbelt")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/belt/medical(src.loc)
 		if("jbelt")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/belt/janitor(src.loc)
 		if("bbelt")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/belt/bandolier(src.loc)
 		if("sholster")
-			if (check_cost(400/efficiency)) return 0
+			if (check_cost(400/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/belt/holster(src.loc)
 		if("satchel")
-			if (check_cost(400/efficiency)) return 0
+			if (check_cost(400/efficiency))
+				return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("jacket")
-			if (check_cost(500/efficiency)) return 0
+			if (check_cost(500/efficiency))
+				return 0
 			else new/obj/item/clothing/suit/jacket/leather(src.loc)
 		if("overcoat")
-			if (check_cost(1000/efficiency)) return 0
+			if (check_cost(1000/efficiency))
+				return 0
 			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
 		if("rice_hat")
-			if (check_cost(300/efficiency)) return 0
+			if (check_cost(300/efficiency))
+				return 0
 			else new/obj/item/clothing/head/rice_hat(src.loc)
 	processing = 0
 	menustat = "complete"

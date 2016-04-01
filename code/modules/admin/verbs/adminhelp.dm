@@ -1,4 +1,3 @@
-
 /proc/keywords_lookup(msg)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
@@ -69,62 +68,56 @@
 	src.verbs |= /client/verb/adminhelp
 	adminhelptimerid = 0
 
-/client/verb/mentorhelp(msg as text)
-		set category = "Admin"
-		set name = "Mentorhelp"
-		ahelp(msg, 'sound/machines/twobeep.ogg', "Mentor", FALSE, "MH", 0)
-
 /client/verb/adminhelp(msg as text)
-		set category = "Admin"
-		set name = "Adminhelp"
-		ahelp(msg, 'sound/effects/adminhelp.ogg', "Admin", TRUE, "AH",  1200)
+	set category = "Admin"
+	set name = "Adminhelp"
 
-/client/proc/ahelp(msg, sound, title, ircalert, unique_id, delay)
-	if(say_disabled)        //This is here to try to identify lag problems
+	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-//handle muting and automuting
+	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<span class='danger'>Error: [title]-PM: You cannot send adminhelps (Muted).</span>"
+		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-//clean the input msg
+	//clean the input msg
 	if(!msg)
 		return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)        return
+	if(!msg)	return
 	var/original_msg = msg
 
-//remove our adminhelp verb temporarily to prevent spamming of admins.
+	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src, "giveadminhelpverb", delay, FALSE) //2 minute cooldown of admin helps
+	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, FALSE) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
 
 	if(!mob)
-		return                                                //this doesn't happen
+		return						//this doesn't happen
 
 	var/ref_mob = "\ref[mob]"
 	var/ref_client = "\ref[src]"
 	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>):</b> [msg]</span>"
-//send this msg to all admins
+
+	//send this msg to all admins
+
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << sound
+			X << 'sound/effects/adminhelp.ogg'
 		X << msg
 
-//show it to the person adminhelping too
-	src << "<span class='adminnotice'>PM to-<b>[title]s</b>: [original_msg]</span>"
 
-//send it to irc if nobody is on and tell us how many were on
+	//show it to the person adminhelping too
+	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
 
-	if(ircalert)
-		var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-		log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-	feedback_add_details("admin_verb",unique_id)//If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	//send it to irc if nobody is on and tell us how many were on
+	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /proc/get_admin_counts(requiredflags = R_BAN)
