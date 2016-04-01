@@ -15,6 +15,7 @@
 	var/permanent = FALSE	//Set to true for infinite mob spawn I guess.
 	var/random = FALSE		//Don't set a name or gender, just go random
 	var/objectives = null
+	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	density = 1
@@ -22,6 +23,9 @@
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
+		return
+	if(uses == 0)
+		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -80,7 +84,9 @@
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
-	if(!permanent)
+	if(uses > 0)
+		uses--
+	if(!permanent && (uses == 0))
 		qdel(src)
 
 // Base version - place these on maps/templates.
@@ -460,6 +466,7 @@
 	mob_name = "Bar patron"
 	random = TRUE
 	permanent = TRUE
+	uses = -1
 	uniform = /obj/item/clothing/under/rank/bartender
 	back = /obj/item/weapon/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
