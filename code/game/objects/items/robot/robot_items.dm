@@ -174,6 +174,10 @@
 	sight_mode = BORGMESON
 	icon_state = "meson"
 
+/obj/item/borg/sight/material
+	name = "\proper material vision"
+	sight_mode = BORGMATERIAL
+	icon_state = "material"
 
 /obj/item/borg/sight/hud
 	name = "hud"
