@@ -799,7 +799,7 @@ SYNDICATE BLACK OPS
 	if(speech_buffer.len < 1)
 		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 		S["phrases"] >> speech_buffer
-	if(!stat)
+	if(!H.stat)
 		if(prob(5))
 			H.say(pick(speech_buffer))
 		if(prob(3))
