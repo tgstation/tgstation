@@ -36,7 +36,7 @@
 	// Weaker than humans
 
 	// species flags. these can be found in flags.dm
-	specflags = list(MUTCOLORS, HAIR, EYECOLOR, NOBLOOD, HARDFEET)
+	specflags = list(MUTCOLORS, HAIR, EYECOLOR, NOBLOOD, PIERCEIMMUNE)
 
 	attack_verb = "kick"
 	ignored_by = list()	// list of mobs that will ignore this species
