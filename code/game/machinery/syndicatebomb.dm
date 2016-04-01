@@ -401,9 +401,8 @@
 /obj/item/weapon/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar) && beakers.len > 0)
 		for (var/obj/item/B in beakers)
-			B.loc = loc
+			B.loc = get_turf(src)
 			beakers -= B
-		beakers = null
 		return
 	else if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) || istype(I, /obj/item/weapon/reagent_containers/glass/bottle))
 		if(beakers.len < MAX_BEAKERS)
@@ -416,6 +415,18 @@
 			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [MAX_BEAKERS] containers.</span>"
 			return
 	..()
+
+/obj/item/weapon/bombcore/chemical/CheckParts()
+	for(var/obj/item/weapon/grenade/chem_grenade/G in src)
+		for(var/obj/item/weapon/reagent_containers/glass/B in G)
+			if(beakers.len < MAX_BEAKERS)
+				beakers += B
+				B.loc = src
+			else
+				B.loc = get_turf(src)
+		qdel(G)
+	return
+
 
 #undef MAX_BEAKERS
 #undef SPREAD_RANGE
