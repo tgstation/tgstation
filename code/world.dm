@@ -183,7 +183,7 @@ var/inerror = 0
 	inerror = 1
 	//newline at start is because of the "runtime error" byond prints that can't be timestamped.
 	e.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][e.name]"
-	
+
 	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
 	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
 	var/list/split = splittext(e.desc, "\n")
@@ -193,7 +193,7 @@ var/inerror = 0
 	e.desc = jointext(split, "\n")
 	inerror = 0
 	return ..(e)
-	
+
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
@@ -230,10 +230,8 @@ var/inerror = 0
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
+	s += "[game_version]"
+
 	s += ")"
 
 	var/list/features = list()
@@ -272,7 +270,7 @@ var/inerror = 0
 	*/
 
 	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
+		features += "hosted by Jagger"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"

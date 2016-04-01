@@ -2,7 +2,7 @@
 # SERVERNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+STATIONNAME AIStation
 
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
@@ -157,7 +157,7 @@ ALLOW_HOLIDAYS
 #USEIRCBOT
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.9
+TICKLAG 0.5
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
