@@ -40,6 +40,7 @@
 	item_state = "glasses"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = "#49E20E"
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
@@ -90,6 +91,7 @@
 	icon_state = "securityhudnight"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = "#49E20E"
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "HUD gar glasses"

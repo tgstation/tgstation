@@ -51,6 +51,7 @@
 	var/emagged = 0
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
+	var/color_tint = null
 	strip_delay = 20
 	put_on_delay = 25
 	burn_state = FIRE_PROOF
@@ -78,7 +79,6 @@ BLIND     // can't see anything
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	put_on_delay = 40
-
 
 /obj/item/clothing/gloves/worn_overlays(var/isinhands = FALSE)
 	. = list()
