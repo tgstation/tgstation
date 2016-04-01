@@ -97,6 +97,7 @@
 	icon_state = "brutepack"
 	heal_brute = 40
 	origin_tech = "biotech=1"
+	self_delay = 20
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -105,7 +106,7 @@
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	stop_bleeding = 1800
-	self_delay = 80
+	self_delay = 20
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
@@ -126,3 +127,4 @@
 	icon_state = "ointment"
 	heal_burn = 40
 	origin_tech = "biotech=1"
+	self_delay = 20

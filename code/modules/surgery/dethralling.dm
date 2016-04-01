@@ -17,7 +17,7 @@
 /datum/surgery_step/dethrall/success(mob/user, mob/living/carbon/target, target_zone, datum/surgery/surgery)
 	if(target.dna.species.id == "l_shadowling") //Empowered thralls cannot be deconverted
 		target << "<span class='shadowling'><b><i>NOT LIKE THIS!</i></b></span>"
-		user.visible_message("<span class='warning'><b>[target] suddenly slams upward and knocks down [user]!</span>", \
+		user.visible_message("<span class='danger'>[target] suddenly slams upward and knocks down [user]!</span>", \
 							 "<span class='userdanger'>[target] suddenly bolts up and slams you with tremendous force!</span>")
 		user.resting = 0 //Remove all stuns
 		user.SetSleeping(0)

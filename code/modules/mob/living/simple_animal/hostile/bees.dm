@@ -75,6 +75,13 @@
 	..()
 
 
+/mob/living/simple_animal/hostile/poison/bees/examine(mob/user)
+	..()
+
+	if(!beehome)
+		user << "<span class='warning'>This bee is homeless!</span>"
+
+
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
 	overlays.Cut()
 
@@ -228,7 +235,7 @@
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)
 		return 0
-	if(B.beegent && beegent && B.beegent.id != beegent.id || B.beegent && beegent || !B.beegent && beegent)
+	if(B.beegent && beegent && B.beegent.id != beegent.id || B.beegent && !beegent || !B.beegent && beegent)
 		return 1
 	return 0
 
@@ -245,11 +252,26 @@
 /obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
-		var/datum/reagent/R = chemical_reagents_list[S.reagents.get_master_reagent_id()]
-		if(R)
-			queen.assign_reagent(R)
-			user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating it's DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating it's DNA!</span>")
-			name = queen.name
+		if(S.reagents.has_reagent("royal_bee_jelly")) //checked twice, because I really don't want royal bee jelly to be duped
+			if(S.reagents.has_reagent("royal_bee_jelly",5))
+				S.reagents.remove_reagent("royal_bee_jelly", 5)
+				var/obj/item/queen_bee/qb = new(get_turf(user))
+				qb.queen = new(qb)
+				if(queen && queen.beegent)
+					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
+				user.put_in_active_hand(qb)
+				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class ='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
+			else
+				user << "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>"
+		else
+			var/datum/reagent/R = chemical_reagents_list[S.reagents.get_master_reagent_id()]
+			if(R && S.reagents.has_reagent(R.id, 5))
+				S.reagents.remove_reagent(R.id,5)
+				queen.assign_reagent(R)
+				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating it's DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating it's DNA!</span>")
+				name = queen.name
+			else
+				user << "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>"
 	..()
 
 
@@ -261,3 +283,4 @@
 /obj/item/queen_bee/Destroy()
 	qdel(queen)
 	return ..()
+

@@ -662,7 +662,7 @@ Sorry Giacom. Please don't be mad :(
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(canmove && !restrained())
+	if(!restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
@@ -674,16 +674,16 @@ Sorry Giacom. Please don't be mad :(
 				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
-					if(prob(25))
-						visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s grip!</span>")
+					if(prob(75))
+						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
-						if(prob(5))
-							visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s headlock!</span>")
+						if(prob(50))
+							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
 							qdel(G)
 		if(resisting)
-			visible_message("<span class='warning'>[src] resists!</span>")
+			visible_message("<span class='danger'>[src] resists!</span>")
 			return
 
 	//unbuckling yourself

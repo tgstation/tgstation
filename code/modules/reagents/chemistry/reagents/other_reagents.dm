@@ -1197,3 +1197,16 @@ datum/reagent/shadowling_blindness_smoke
 		M.adjustToxLoss(-2, 0)
 		. = 1
 	return ..() || .
+
+
+
+/datum/reagent/royal_bee_jelly
+	name = "royal bee jelly"
+	id = "royal_bee_jelly"
+	description = "Royal Bee Jelly, if injected into a Queen Space Bee said bee will split into two bees."
+	color = "#00ff80"
+
+/datum/reagent/royal_bee_jelly/on_mob_life(mob/living/M)
+	if(prob(2))
+		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
+	..()

@@ -653,6 +653,7 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2)
 	stat_attack = 1
 	robust_searching = 1
 
@@ -768,6 +769,7 @@
 	layer = 2
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
+	anchored = TRUE
 
 /obj/effect/collapse/New()
 	..()
