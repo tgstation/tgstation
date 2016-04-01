@@ -5,7 +5,6 @@
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 0
-	restricted_jobs = list()
 	protected_jobs = list()
 	num_modifier = 6000000000 // Six billion additional traitors
 
