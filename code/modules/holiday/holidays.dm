@@ -143,7 +143,7 @@
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
 	begin_day = 1
-	end_day = 2
+	end_day = 3
 	begin_month = APRIL
 
 /datum/holiday/fourtwenty
