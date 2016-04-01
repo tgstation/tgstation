@@ -1,2 +1,11 @@
 author: DrCelt
-changes: []
+changes:
+- rscadd: Added hyperthermia or heat stroke, which occurs when the body absorbs too much heat.
+- rscadd: An early stage of hyperthermia symptoms include heavy sweating, rapid breathing and a fast, weak pulse. 
+- rscadd: Other signs and symptoms vary. Accompanying dehydration can produce nausea, vomiting, headaches, and low blood pressure leading to fainting or dizziness.
+- rscadd: In severe heat stroke, there may be confused, hostile, or seemingly intoxicated behavior, directional movement may be different and will have a chance to not be able to use machinery.
+- rscadd: Eventually, Organ failure, unconciousness, and death will result.
+- tweak: Tweaked plasmafloods slightly in order to allow for this to not be imbalanced
+- rscadd: You will now sweat to cool your body down.
+- experimental: Added system of dehydration that occurs after too much sweating.
+- experimental: Added new machine, like the mancrowave, but named the coolman, in order to cool down your body temperature to 37C incase you overheat too much and cannot sweat it off.
