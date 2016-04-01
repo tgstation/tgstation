@@ -36,6 +36,7 @@
 	var/atom/movable/following = null
 	var/mob/canclone = null
 	incorporeal_move = INCORPOREAL_GHOST
+	var/movespeed = 0.75
 
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -911,3 +912,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Logout()
 	observers -= src
 	..()
+
+/mob/dead/observer/verb/modify_movespeed()
+	set name = "Change Speed"
+	set category = "Ghost"
+	var/speed = input(usr,"What speed would you like to move at?","Observer Move Speed") in list("100%","125%","150%","175%","200%")
+	speed = text2num(copytext(speed,1,4))/100
+	movespeed = 1/speed
