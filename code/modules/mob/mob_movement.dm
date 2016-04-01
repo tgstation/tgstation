@@ -395,6 +395,11 @@
 				else
 					mob.forceEnter(get_step(mob, direct))
 					mob.dir = direct
+			if(isobserver(mob))
+				var/mob/dead/observer/observer = mob
+				mob.delayNextMove(observer.movespeed)
+			else
+				mob.delayNextMove(1)
 		if(INCORPOREAL_NINJA)
 			if(prob(50))
 				var/locx
@@ -433,6 +438,7 @@
 				anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,mob.dir)
 				mob.forceEnter(get_step(mob, direct))
 			mob.dir = direct
+			mob.delayNextMove(1)
 		if(INCORPOREAL_ETHEREAL) //Jaunting, without needing to be done through relaymove
 			var/turf/newLoc = get_step(mob,direct)
 			if(!(newLoc.flags & NOJAUNT))
@@ -446,7 +452,6 @@
 	for(var/obj/S in mob.loc)
 		if(istype(S,/obj/effect/step_trigger) || istype(S,/obj/effect/beam))
 			S.Crossed(mob)
-	mob.delayNextMove(1)
 
 	return 1
 
