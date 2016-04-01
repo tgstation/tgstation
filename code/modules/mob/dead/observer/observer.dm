@@ -916,6 +916,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/modify_movespeed()
 	set name = "Change Speed"
 	set category = "Ghost"
-	var/speed = input(usr,"What speed would you like to move at?","Observer Move Speed") in list("100%","125%","150%","175%","200%")
+	var/speed = input(usr,"What speed would you like to move at?","Observer Move Speed") in list("100%","125%","150%","175%","200%","FUCKING HYPERSPEED")
+	if(speed == "FUCKING HYPERSPEED") //April fools
+		client.move_delayer.min_delay = 0
+		movespeed = 0
+		return
 	speed = text2num(copytext(speed,1,4))/100
 	movespeed = 1/speed
