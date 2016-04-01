@@ -283,6 +283,7 @@
 /obj/structure/girder/narsie_act()
 	if(prob(25))
 		new /obj/structure/girder/cult(loc)
+		qdel(src)
 
 /obj/structure/girder/displaced
 	name = "displaced girder"
