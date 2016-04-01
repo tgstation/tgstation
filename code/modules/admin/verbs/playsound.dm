@@ -24,7 +24,8 @@ var/sound/admin_sound
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			var/vol = M.client.prefs.adminmusicvolume
-			M << sound(admin_sound,channel = SOUND_CHANNEL_ADMIN,volume=vol)
+			admin_sound.volume = vol
+			M << admin_sound
 
 	admin_sound.frequency = 1 //Remove this line when the AFD stuff above is gone
 	admin_sound.wait = 0
