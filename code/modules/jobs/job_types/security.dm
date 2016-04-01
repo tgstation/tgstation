@@ -334,7 +334,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	spawn_positions = 5
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	minimal_player_age = 1000000000
+	minimal_player_age = 1
 
 	outfit = /datum/outfit/job/elo
 
@@ -359,7 +359,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	backpack_contents = list(/obj/item/weapon/gun/energy=1, /obj/item/weapon/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	
+
 
 /obj/item/weapon/storage/belt/military/full/New()
 	..()
