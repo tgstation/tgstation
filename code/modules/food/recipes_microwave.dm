@@ -275,6 +275,13 @@
 
 // Pastries ////////////////////////////////////////////////////
 
+/datum/recipe/eclair
+	reagents = list("flour" = 5, "cream" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/eclair
+
 /datum/recipe/waffles
 	reagents = list("flour" = 10)
 	items = list(

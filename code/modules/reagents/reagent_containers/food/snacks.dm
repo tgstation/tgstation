@@ -3958,3 +3958,13 @@
 /obj/item/weapon/reagent_containers/food/snacks/eucharist/New()
 	..()
 	reagents.add_reagent("holywater", 5)
+	
+/obj/item/weapon/reagent_containers/food/snacks/eclair
+	name = "\improper eclair"
+	desc = "Plus doux que ses lèvres."
+	icon_state = "eclair"
+	bitesize = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("cream", 2)
