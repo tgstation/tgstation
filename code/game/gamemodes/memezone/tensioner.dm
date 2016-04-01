@@ -11,7 +11,7 @@
 
 /datum/game_mode/tensioner/process()
 	doctor_incomings_mean_meme_machine++
-	if(doctor_incomings_mean_meme_machine > 500 * If_there_were_two_guys_on_the_moon_and_one_killed_the_other_with_a_rock_would_that_be_fucked_up_or_what)
+	if(doctor_incomings_mean_meme_machine > 100 * If_there_were_two_guys_on_the_moon_and_one_killed_the_other_with_a_rock_would_that_be_fucked_up_or_what)
 		if(Do_Something())
 			If_there_were_two_guys_on_the_moon_and_one_killed_the_other_with_a_rock_would_that_be_fucked_up_or_what++
 			doctor_incomings_mean_meme_machine = 0
