@@ -142,7 +142,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
  	desc = "Upgraded version of temperature gun. Decreases or increases target temperature with every shot. In heat mode \
  			sets target on fire if temperature of it is high enough. In freeze mode slows target. Recharges itself."
  	item = /obj/item/weapon/gun/energy/stemperature
- 	cost = 14
+ 	cost = 12
  	surplus = 25
 
 /datum/uplink_item/dangerous/revolver
