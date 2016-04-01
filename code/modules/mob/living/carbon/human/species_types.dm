@@ -799,8 +799,9 @@ SYNDICATE BLACK OPS
 	if(speech_buffer.len < 1)
 		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 		S["phrases"] >> speech_buffer
-	if(prob(5))
-		H.say(pick(speech_buffer))
-	if(prob(3))
-		new /obj/item/weapon/reagent_containers/food/snacks/egg(H.loc)
+	if(!stat)
+		if(prob(5))
+			H.say(pick(speech_buffer))
+		if(prob(3))
+			new /obj/item/weapon/reagent_containers/food/snacks/egg(H.loc)
 	..()
