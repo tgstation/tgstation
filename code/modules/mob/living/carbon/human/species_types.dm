@@ -787,6 +787,7 @@ SYNDICATE BLACK OPS
 	id = "parrot"
 	say_mod = "squawks"
 	specflags = list()
+	mutant_bodyparts = list("tail_parrot")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'

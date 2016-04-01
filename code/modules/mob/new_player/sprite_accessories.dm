@@ -1157,6 +1157,12 @@
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
+/var/datum/sprite_accessory/tails/parrot/tail_parrot_accessory = new
+/datum/sprite_accessory/tails/parrot
+	name = "Parrot"
+	icon_state = "parrot"
+	color_src = 0
+
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
 	icon_state = "smooth"
