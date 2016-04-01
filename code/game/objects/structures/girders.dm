@@ -280,6 +280,10 @@
 				new remains(loc)
 				qdel(src)
 
+/obj/structure/girder/narsie_act()
+	if(prob(25))
+		new /obj/structure/girder/cult(loc)
+
 /obj/structure/girder/displaced
 	name = "displaced girder"
 	icon_state = "displaced"
@@ -376,9 +380,8 @@
 	else
 		..()
 
-/obj/structure/girder/cult/blob_act()
-	if(prob(40))
-		qdel(src)
+/obj/structure/girder/cult/narsie_act()
+	return
 
 /obj/structure/girder/cult/ex_act(severity, target)
 	switch(severity)

@@ -57,6 +57,10 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/narsie_act()
+	if(prob(20))
+		new /obj/item/stack/sheet/runed_metal(loc, amount)
+
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
 
