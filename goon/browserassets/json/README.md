@@ -1,0 +1,1 @@
+ - `emotes.all.json`: taken from [irccloud-twitch-emoticons](https://github.com/dogancelik/irccloud-twitch-emoticons), MIT license.
