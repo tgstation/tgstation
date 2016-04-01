@@ -83,10 +83,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 			var/mob/living/carbon/human/body_human = body
 			if(HAIR in body_human.dna.species.specflags)
 				hair_style = body_human.hair_style
-				hair_color = brighten_color(body_human.hair_color)
+				hair_color = whiten_color()
 			if(FACEHAIR in body_human.dna.species.specflags)
 				facial_hair_style = body_human.facial_hair_style
-				facial_hair_color = brighten_color(body_human.facial_hair_color)
+				facial_hair_color = whiten_color()
 
 	update_icon()
 
@@ -205,8 +205,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	b_val += (255 - b_val) * 0.4
 	if(b_val > 255)
 		b_val = 255
-
+	
 	return num2hex(r_val, 2) + num2hex(g_val, 2) + num2hex(b_val, 2)
+
+/mob/proc/whiten_color() 
+	var r_val = 246
+	var g_val = 246
+	var b_val = 246
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
