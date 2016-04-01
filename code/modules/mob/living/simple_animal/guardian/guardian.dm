@@ -98,11 +98,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			summoner.dust()
 			ghostize()
 			qdel(src)
-	else
+	/*else
 		src << "<span class='danger'>Your summoner has died!</span>"
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		ghostize()
-		qdel(src)
+		qdel(src)*/
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Stat()
@@ -451,7 +451,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
@@ -471,6 +471,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
+ <br>
+ <b>Protector</b>: Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage and forces you to leash to it in a shorter range.<br>
  <br>
  <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
  <br>
