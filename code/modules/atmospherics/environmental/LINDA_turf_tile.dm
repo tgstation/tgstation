@@ -306,12 +306,14 @@
 		for(var/turf/simulated/T in E.turf_list)
 			T.excited_group = src
 			turf_list += T
+			self_breakdown()
 			reset_cooldowns()
 	else
 		SSair.excited_groups -= src
 		for(var/turf/simulated/T in turf_list)
 			T.excited_group = E
 			E.turf_list += T
+			self_breakdown()
 			E.reset_cooldowns()
 
 /datum/excited_group/proc/reset_cooldowns()
