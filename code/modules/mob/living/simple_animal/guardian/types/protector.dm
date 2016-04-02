@@ -15,8 +15,20 @@
 		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
 	else
 		..()
-	if(toggle && summoner)
+	if(toggle)
 		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
+
+/mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount)
+	. = ..()
+	if(0 < . && toggle)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client)
+				viewing += M.client
+		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(cardinal))
+		if(namedatum)
+			I.color = namedatum.colour
+		flick_overlay(I, viewing, 5)
 
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
 	if(cooldown > world.time)
