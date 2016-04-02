@@ -46,7 +46,7 @@ proc/list_frozen()
 		"industry" = list("industry", "sector"), \
 		"industrial" = list("industrial"), \
 		"jobs" = list("workers"), \
-		"negative_outcome" = list("it's not leaving the shelves", "nobody seems to have taken note", "it's a huge money sink", "it's beginning to look like a huge failure"), \
+		"negative_outcome" = list("it's not leaving the shelves", "nobody seems to care", "it's a huge money sink", "they have already pulled all advertising and marketing support"), \
 		"neutral_outcome" = list("it's not lifting off as expected", "it's not selling according to expectations", "it's only generating enough profit to cover the marketing and manufacturing costs", "it does not look like it will become a massive success", "it's experiencing modest sales"), \
 		"positive_outcome" = list("it's already sold out", "it has already sold over one billion units", "suppliers cannot keep up with the wild demand", "several companies using this new technology are already reporting a projected increase in profits"), \
 		"resounding" = list("resounding", "tremendous", "total", "massive", "terrific", "colossal"), \

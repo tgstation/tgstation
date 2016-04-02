@@ -4,15 +4,18 @@
 
 	var/list/title_templates = list("The brand new %product_name% by %company_name% will revolutionize %industry%", \
 									"%jobs% rejoice as %product_name% hits shelves", \
-									"Does %product_name% threaten to reorganize the %industrial% status quo?")
+									"Does %product_name% threaten to reorganize the %industrial% status quo?", \
+									"%company_name% headed toward corporate renaissance with %product_name%")
 
 	var/list/title_templates_neutral = list("%product_name%: as if nothing happened", \
 											"Nothing new but the name: %product_name% not quite exciting %jobs%", \
-											"Same old %company_name%, same old product")
+											"Same old %company_name%, same old product", \
+											"%product_name% underwhelms, but sells")
 
 	var/list/title_templates_bad = list("%product_name% shaping up to be the disappointment of the century", \
 										"Recipe for disaster: %company_name% releases %product_name%", \
-										"Atrocious quality - %jobs% boycott %product_name%")
+										"Atrocious quality - %jobs% boycott %product_name%", \
+										"%product_name%: Inside the worst product launch in recent history")
 
 	var/list/title_templates_ooc = list("%company_name% is looking to enter the %industry% playing field with %product_name%", \
 										"%company_name% broadens spectrum, %product_name% is their latest and greatest")
@@ -125,8 +128,8 @@
 		return "[latin_number(n - (n % 10))] [lowertext(latin_number(n % 10))]"
 
 /datum/industry/it/generateProductName(var/company_name)
-	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech")
-	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
+	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech", "capacitor", "cell")
+	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", "the bluespace-powered ", null)
 	var/L = pick(consonant(), "Seed ", "Radiant ", "Robust ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
 	var/N = rand(0,99)
 	var/prefix2 = "[L][N][prob(5) ? " " + latin_number(N) : null]"
@@ -135,13 +138,13 @@
 /datum/industry/communications
 	name = "Communications"
 	tokens = list( \
-		"industry" = list("telecommunications"), \
+		"industry" = list("telecommunications", "telecomms"), \
 		"industrial" = list("telecommunicational"), \
-		"jobs" = list("electrical engineers", "microengineers")
+		"jobs" = list("electrical engineers", "microengineers", "developers")
 	)
 
 /datum/industry/communications/generateProductName(var/company_name)
-	var/list/products = list("mobile phone", "PDA", "tablet computer")
+	var/list/products = list("mobile phone", "PDA", "tablet computer", "newscaster", "social network")
 	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
 	var/L = pick("[lowertext(consonant())]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[consonant()]")
 	var/N = rand(1,99)
@@ -153,13 +156,13 @@
 	tokens = list( \
 		"industry" = list("medicine"), \
 		"industrial" = list("medicinal"), \
-		"jobs" = list("medical doctors", "nurses", "paramedics", "psychologists", "psychiatrists")
+		"jobs" = list("medical doctors", "nurses", "paramedics", "psychologists", "psychiatrists", "chemists")
 	)
 
 /datum/industry/health/generateProductName(var/company_name)
-	var/list/prefix = list("amino", "nucleo", "nitro", "panto", "meth", "eth", "as", "algo", "coca", "hero", "lotsu", "morph", "trinitro", "prop", "but", "acet", "acyclo", "lansop", "dyclo", "hydro", "oxycod", "vicod", "cryo", "dex", "chloro")
-	var/list/suffix = list("phen", "pirin", "pyrine", "ane", "amphetamine", "prazoline", "ine", "yl", "amine", "aminophen", "one", "ide", "phenate", "anol", "toulene", "glycerine", "vir", "tol", "trinic")
-	var/list/uses = list("antidepressant", "analgesic", "anesthetic", "antiretroviral", "antiviral", "antibiotic", "cough drop", "depressant", "hangover cure", "homeopathic", "fertility drug", "hypnotic", "narcotic", "laxative", "multivitamin", "purgative", "relaxant", "steroid", "sleeping pill", "suppository", "tranquilizer")
+	var/list/prefix = list("amino", "nucleo", "nitro", "panto", "meth", "eth", "as", "algo", "coca", "hero", "lotsu", "opiod", "morph", "trinitro", "prop", "but", "acet", "acyclo", "lansop", "dyclo", "hydro", "oxycod", "vicod", "cannabi", "cryo", "dex", "chloro")
+	var/list/suffix = list("phen", "pirin", "pyrine", "ane", "amphetamine", "prazoline", "ine", "yl", "amine", "aminophen", "one", "ide", "phenate", "anol", "toulene", "glycerine", "vir", "tol", "trinic", "oxide")
+	var/list/uses = list("antidepressant", "analgesic", "anesthetic", "antiretroviral", "antiviral", "antibiotic", "cough drop", "depressant", "hangover cure", "homeopathic", "fertility drug", "hypnotic", "narcotic", "laxative", "multivitamin", "patch", "purgative", "relaxant", "steroid", "sleeping pill", "suppository", "tranquilizer")
 	return "[pick(prefix)][pick(suffix)], the [pick(uses)]"
 
 /datum/industry/consumer
@@ -167,7 +170,7 @@
 	tokens = list( \
 		"industry" = list("shops", "stores"), \
 		"industrial" = list("consumer industrial"), \
-		"jobs" = list("shopkeepers", "assistants", "manual daytime hygiene engineers", "janitors")
+		"jobs" = list("shopkeepers", "assistants", "manual daytime hygiene engineers", "janitors", "chefs", "cooks")
 	)
 
 /datum/industry/consumer/generateProductName(var/company)
@@ -188,5 +191,15 @@
 	var/list/material = list("mauxite", "pharosium", "molitz", "adamantium", "mithril", "cobryl", "bohrum", "claretine", "viscerite", "syreline", "cerenkite", "plasmastone", "gold", "koshmarite", "phoron", "carbon dioxide")
 	return "the [pick(material)] [pick(equipment)]"
 
+/datum/industry/defense
+	name = "Defense"
+	tokens = list ( \
+		"industry" = list("defense", "warfare", "security", "law enforcement"), \
+		"industrial" = list("defense"), \
+		"jobs" = list("security officers", "government officials", "soldiers", "weapons engineers")
+	)
 
-
+/datum/industry/defense/generateProductName(var/company)
+	var/list/equipment = list("energy gun", "laser gun", "machine gun", "grenade", "stun baton", "artillery", "bomb", "attack drone", "missile", "chem sprayer")
+	var/list/material = list("bluespace", "stealth", "heat-seeking", "crime-seeking", "wide-range", "bioterror", "auto-reloading", "smart", "sentient", "rapid-fire", "species-targeting", "gibtonite", "mass-market", "perpetual-motion", "nuclear", "fission", "fusion")
+	return "the [pick(material)] [pick(equipment)]"
