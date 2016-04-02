@@ -150,6 +150,7 @@
 		if(I && I.damage > 0)
 			I.take_damage(dam_amt,0)
 
+/*
 //////FIX ORGAN CANCER////
 /datum/surgery_step/internal/fix_organ_cancer
 	allowed_tools = list(
@@ -210,6 +211,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, getting mess on and tearing the inside of [target]'s [affected.display_name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, getting mess on and tearing the inside of [target]'s [affected.display_name] with \the [tool]!</span>")
 	affected.createwound(CUT, 10)
+*/
 
 //////FIX ORGAN ROBOTIC/////
 /datum/surgery_step/internal/fix_organ_robotic //For artificial organs

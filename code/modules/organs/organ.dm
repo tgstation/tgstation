@@ -230,12 +230,12 @@
 	//List of reagents which will affect cancerous growth
 	//Phalanximine and Medical Nanobots are the only reagent which can reverse cancerous growth in high doses, the others can stall it, some can even accelerate it
 	//Every "unit" here corresponds to a tick of cancer growth, so for example 20 units of Phalanximine counters one unit of cancer growth
-	var/phalanximine = owner.reagents.get_reagent_amount("phalanximine") / 20 //Phalanximine only works in large doses, but can actually cure cancer past the threshold unlike all other reagents below
-	var/medbots = owner.reagents.get_reagent_amount("mednanobots") //Medical nanobots for a cancer-free future tomorrow. Try not to overdose them, powerful enough to not risk going above 5u
+	var/phalanximine = owner.reagents.get_reagent_amount("phalanximine") / 5 //Phalanximine only works in large doses, but can actually cure cancer past the threshold unlike all other reagents below
+	var/medbots = owner.reagents.get_reagent_amount("mednanobots") * 2 //Medical nanobots for a cancer-free future tomorrow. Try not to overdose them, powerful enough to not risk going above 5u
 	var/hardcores = owner.reagents.get_reagent_amount("bustanut") //Bustanuts contain the very essence of Bustatime, stalling even the most robust ailments with a small dose
 	var/ryetalyn = owner.reagents.get_reagent_amount("ryetalyn") //Ryetalin will very easily suppress the rogue DNA in cancer cells, but cannot actually cure it, you need to destroy the cells
 	var/holywater = owner.reagents.get_reagent_amount("holywater") / 10 //Holy water has very potent effects with stalling cancer
-	var/mutagen = owner.reagents.get_reagent_amount("mutagen") / 10 //Mutagen will cause disastrous cancer growth if there already is one. It's the virus food of tumors
+	var/mutagen = owner.reagents.get_reagent_amount("mutagen") / 5 //Mutagen will cause disastrous cancer growth if there already is one. It's the virus food of tumors
 
 	var/cancerous_growth = 1 //Every tick, cancer grows by one tick, without any external factors
 

@@ -338,6 +338,7 @@
 	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s [affected.display_name] with \the [tool]!</span>")
 	target.apply_damage(3, BURN, affected)
 
+/*
 ////////FIX LIMB CANCER////////
 
 /datum/surgery_step/generic/fix_limb_cancer
@@ -394,6 +395,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, getting mess in and tearing the inside of [target]'s [affected.display_name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, getting mess in and tearing the inside of [target]'s [affected.display_name] with \the [tool]!</span>")
 	affected.createwound(CUT, 10)
+*/
 
 ////////CUT LIMB/////////
 /datum/surgery_step/generic/cut_limb

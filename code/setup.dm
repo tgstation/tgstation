@@ -1482,5 +1482,5 @@ var/proccalls = 1
 //Cancer defines for the scanners
 #define CANCER_STAGE_BENIGN 1 //Not 100 % medically correct, but we'll assume benign cancer never fails to worsen. No effect, but can be detected before it fucks you up. Instant
 #define CANCER_STAGE_SMALL_TUMOR 300 //Cancer starts to have small effects depending on what the affected limb is, generally inconclusive ones. 5 minutes
-#define CANCER_STAGE_LARGE_TUMOR 900 //Cancer starts to have serious effects depending on what the affected limb is, generally obvious one, up to visible tumor growth. 15 minutes
-#define CANCER_STAGE_METASTASIS 1800 //Cancer has maximal effects, growing out of control in the organ, and can start "colonizing" other organs very quickly, dooming the patient. 30 minutes
+#define CANCER_STAGE_LARGE_TUMOR 600 //Cancer starts to have serious effects depending on what the affected limb is, generally obvious one, up to visible tumor growth. 15 minutes
+#define CANCER_STAGE_METASTASIS 1200 //Cancer has maximal effects, growing out of control in the organ, and can start "colonizing" other organs very quickly, dooming the patient. 30 minutes
