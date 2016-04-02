@@ -1,6 +1,6 @@
 /world
 	mob = /mob/new_player
-	turf = /turf/open/space
+	turf = /turf/space
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
@@ -77,7 +77,7 @@ var/last_irc_status = 0
 		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
-	var/key_valid = (input["key"] == global.comms_key)
+	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 
 	if("ping" in input)
 		var/x = 1
@@ -120,6 +120,7 @@ var/last_irc_status = 0
 		s["gamestate"] = 1
 		if(ticker)
 			s["gamestate"] = ticker.current_state
+
 		s["map_name"] = map_name ? map_name : "Unknown"
 
 		if(key_valid && ticker && ticker.mode)
@@ -139,14 +140,13 @@ var/last_irc_status = 0
 		return list2params(s)
 
 	else if("announce" in input)
-		if(global.comms_allowed)
-			if(!key_valid)
-				return "Bad Key"
-			else
+		if(!key_valid)
+			return "Bad Key"
+		else
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-				for(var/client/C in clients)
-					if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-						C << "<span class='announce'>PR: [input["announce"]]</span>"
+			for(var/client/C in clients)
+				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
+					C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
@@ -201,7 +201,7 @@ var/inerror = 0
 	inerror = 1
 	//newline at start is because of the "runtime error" byond prints that can't be timestamped.
 	e.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][e.name]"
-	
+
 	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
 	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
 	var/list/split = splittext(e.desc, "\n")
@@ -211,7 +211,7 @@ var/inerror = 0
 	e.desc = jointext(split, "\n")
 	inerror = 0
 	return ..(e)
-	
+
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
