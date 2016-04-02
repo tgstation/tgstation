@@ -226,6 +226,25 @@
 	item_state = "fannypack_leather"
 	storage_slots = 3
 	max_w_class = 2
+	
+/obj/item/weapon/storage/belt/military/sec/full
+	name = "Elite Security Belt"
+	desc = "A Belt used by Nanotransen Elite Security forces"
+	icon_state = "militarybelt"
+	item_state = "military"
+	storage_slots = 8
+	max_w_class = 4 // So shit can fit in this belt
+	
++/obj/item/weapon/storage/belt/military/full/New()
++	..()
++	new /obj/item/weapon/reagent_containers/spray/pepper(src)
++	new /obj/item/weapon/restraints/handcuffs(src)
++	new /obj/item/weapon/restraints/handcuffs(src)
++	new /obj/item/weapon/grenade/flashbang(src)
++	new /obj/item/device/assembly/flash/handheld(src)
++	new /obj/item/weapon/melee/baton/loaded(src)
++	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
++	new /obj/item/weapon/shield/riot/tele(src)
 
 /obj/item/weapon/storage/belt/fannypack/black
 	name = "black fannypack"
