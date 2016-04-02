@@ -29,7 +29,7 @@ var/datum/subsystem/tgui/SStgui
 /datum/subsystem/tgui/fire(resumed = 0)
 	if(!resumed)
 		src.currentrun = processing_uis.Copy()
-	var/currentrun = src.currentrun
+	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/datum/tgui/ui = currentrun[1]
 		currentrun.Cut(1, 2)
