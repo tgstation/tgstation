@@ -40,7 +40,7 @@
 
 Please check whatever applies. More checkboxes checked increase your chances of not being yelled at by every contributor.
 
-<!-- Check these by writing an x inside the [ ] -->
+<!-- Check these by writing an x inside the [ ] (like this: [x])-->
 - [ ] Issue could be reproduced at least once
 - [ ] Issue could be reproduced by different players
 - [ ] Issue could be reproduced in multiple rounds
