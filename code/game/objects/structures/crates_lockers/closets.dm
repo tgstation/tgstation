@@ -250,11 +250,12 @@
 	if(user == O)
 		return
 
+	var/lockerloc = loc
 	add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] tries to stuff [O] into [src].</span>", \
 				 	 	"<span class='warning'>You try to stuff [O] into [src].</span>", \
 				 	 	"<span class='italics'>You hear clanging.</span>")
-	if(do_after(user, 40, target = src))
+	if(do_mob(user, O, 40) && loc == lockerloc)
 		user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
 						 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 						 	 "<span class='italics'>You hear a loud metal bang.</span>")
