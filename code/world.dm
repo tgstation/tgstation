@@ -73,31 +73,36 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 var/last_irc_status = 0
 
 /world/Topic(T, addr, master, key)
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+	if(config && config.log_world_topic)
+		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	if(T == "ping")
+	var/list/input = params2list(T)
+	var/key_valid = (input["key"] == global.comms_key)
+
+	if("ping" in input)
 		var/x = 1
 		for (var/client/C in clients)
 			x++
 		return x
 
-	else if(T == "players")
+	else if("players" in input)
 		var/n = 0
 		for(var/mob/M in player_list)
 			if(M.client)
 				n++
 		return n
 
-	else if(T == "ircstatus")
+	else if("ircstatus" in input)
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
 		var/list/adm = get_admin_counts()
-		send2irc("Status", "Admins: [Sum(adm)] (Active: [adm["admins"]] AFK: [adm["afkadmins"]] Stealth: [adm["stealthadmins"]] Skipped: [adm["noflagadmins"]]). Players: [clients.len] (Active: [get_active_player_count()]). Mode: [master_mode].")
+		var/status = "Admins: [Sum(adm)] (Active: [adm["admins"]] AFK: [adm["afkadmins"]] Stealth: [adm["stealthadmins"]] Skipped: [adm["noflagadmins"]]). "
+		status += "Players: [clients.len] (Active: [get_active_player_count()]). Mode: [master_mode]."
+		send2irc("Status", status)
 		last_irc_status = world.time
 
-	else if(T == "status")
+	else if("status" in input)
 		var/list/s = list()
-		// Please add new status indexes under the old ones, for the server banner (until that gets reworked)
 		s["version"] = game_version
 		s["mode"] = master_mode
 		s["respawn"] = config ? abandon_allowed : 0
@@ -117,12 +122,25 @@ var/last_irc_status = 0
 			s["gamestate"] = ticker.current_state
 		s["map_name"] = map_name ? map_name : "Unknown"
 
+		if(key_valid && ticker && ticker.mode)
+			s["real_mode"] = ticker.mode.name
+			// Key-authed callers may know the truth behind the "secret"
+
+		s["security_level"] = get_security_level()
+		s["round_duration"] = round(world.time/10)
+		// Amount of world's ticks in seconds, useful for calculating round duration
+
+		if(SSshuttle && SSshuttle.emergency)
+			s["shuttle_mode"] = SSshuttle.emergency.mode
+			// Shuttle status, see /__DEFINES/stat.dm
+			s["shuttle_timer"] = SSshuttle.emergency.timeLeft()
+			// Shuttle timer, in seconds
+
 		return list2params(s)
 
-	else if(copytext(T,1,9) == "announce")
-		var/input[] = params2list(T)
+	else if("announce" in input)
 		if(global.comms_allowed)
-			if(input["key"] != global.comms_key)
+			if(!key_valid)
 				return "Bad Key"
 			else
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
