@@ -36,9 +36,14 @@
 
 /*
 	Hides the alternate_appearance
+	hideFrom - optional list of MOBS to hide it from the list's mobs specifically
 */
-/datum/alternate_appearance/proc/hide()
-	for(var/m in viewers)
+/datum/alternate_appearance/proc/hide(list/hideFrom)
+	var/list/hiding = viewers
+	if(hideFrom)
+		hiding = hideFrom
+
+	for(var/m in hiding)
 		var/mob/M = m
 		if(M.client)
 			M.client.images -= img
@@ -139,13 +144,14 @@
 	Hides an alternate appearance from src's alternate_appearances list
 	Wrapper for: alternate_appearance/hide()
 	key - the key to the assoc list of key = /datum/alternate_appearance
+	hideFrom - optional list of MOBS to hide it from the list's mobs specifically
 */
-/atom/proc/hide_alt_appearance(key)
+/atom/proc/hide_alt_appearance(key, list/hideFrom)
 	if(!alternate_appearances || !key)
 		return
 	var/datum/alternate_appearance/AA = alternate_appearances[key]
 	if(!AA)
 		return
-	AA.hide()
+	AA.hide(hideFrom)
 
 
