@@ -313,7 +313,7 @@
 		for(var/turf/simulated/T in turf_list)
 			T.excited_group = E
 			E.turf_list += T
-			self_breakdown()
+			E.self_breakdown()
 			E.reset_cooldowns()
 
 /datum/excited_group/proc/reset_cooldowns()
