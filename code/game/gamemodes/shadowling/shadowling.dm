@@ -68,9 +68,9 @@ Made by Xhuis
 	name = "shadowling"
 	config_tag = "shadowling"
 	antag_flag = ROLE_SHADOWLING
-	required_players = 30
+	required_players = 15
 	required_enemies = 2
-	recommended_enemies = 2
+	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 

@@ -14,7 +14,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	config_tag = "blob"
 	antag_flag = ROLE_BLOB
 
-	required_players = 25
+	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -26,7 +26,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/players_per_core = 20
 	var/blob_point_rate = 3
 
-	var/blobwincount = 350
+	var/blobwincount = 900
 
 	var/messagedelay_low = 2400 //in deciseconds
 	var/messagedelay_high = 3600 //blob report will be sent after a random value between these (minimum 4 minutes, maximum 6 minutes)

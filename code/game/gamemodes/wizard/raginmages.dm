@@ -1,7 +1,7 @@
 /datum/game_mode/wizard/raginmages
 	name = "ragin' mages"
 	config_tag = "raginmages"
-	required_players = 20
+	required_players = 15
 	use_huds = 1
 	var/max_mages = 0
 	var/making_mage = 0
@@ -152,7 +152,7 @@
 /datum/game_mode/wizard/raginmages/bullshit
 	name = "very ragin' bullshit mages"
 	config_tag = "veryraginbullshitmages"
-	required_players = 20
+	required_players = 15
 	use_huds = 1
 	bullshit_mode = 1
 	time_check = 250

@@ -1,7 +1,7 @@
 /datum/game_mode/traitor/double_agents
 	name = "double agents"
 	config_tag = "double_agents"
-	required_players = 25
+	required_players = 15
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0

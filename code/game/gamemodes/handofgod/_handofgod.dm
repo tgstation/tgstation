@@ -24,7 +24,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	config_tag = "handofgod"
 	antag_flag = ROLE_HOG_CULTIST		//Followers use ROLE_HOG_CULTIST, Gods are picked later on with ROLE_HOG_GOD
 
-	required_players = 25
+	required_players = 15
 	required_enemies = 8
 	recommended_enemies = 8
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
