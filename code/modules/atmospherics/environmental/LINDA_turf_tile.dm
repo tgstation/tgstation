@@ -215,6 +215,8 @@
 /turf/open/proc/last_share_check()
 	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
 		excited_group.reset_cooldowns()
+	else if(air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
+		excited_group.dismantle_cooldown = 0
 
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
@@ -236,6 +238,7 @@
 /datum/excited_group
 	var/list/turf_list = list()
 	var/breakdown_cooldown = 0
+	var/dismantle_cooldown = 0
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -264,6 +267,7 @@
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
+	dismantle_cooldown = 0
 
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
@@ -282,6 +286,7 @@
 			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
 
 		T.update_visuals()
+		breakdown_cooldown = 0
 
 /datum/excited_group/proc/dismantle()
 	for(var/t in turf_list)
