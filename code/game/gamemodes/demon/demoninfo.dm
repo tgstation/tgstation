@@ -201,7 +201,7 @@ var/list/allDemons = list()
 		if(BANISH_RUNES)
 			return "This demon will resurrect after death, unless it's remains are within a rune."
 		if(BANISH_CANDLES)
-			return "A large number of candles will prevent it fromr resurrecting."
+			return "A large number of candles will prevent it from resurrecting."
 		if(BANISH_DESTRUCTION)
 			return "It's corpse must be utterly destroyed to prevent resurrection."
 		if(BANISH_FUNERAL_GARB)

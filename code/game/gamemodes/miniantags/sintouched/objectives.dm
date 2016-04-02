@@ -23,19 +23,10 @@
 	explanation_text = "You just get tired randomly.  Go take a nap at a time that would inconvenience other people."
 
 /datum/objective/sintouched/wrath
-	explanation_text = "You are on edge and just want to PUNCH somebody.  Make sure people know this, through either your words or your fists."
+	explanation_text = "What have your coworkers ever done for you? Don't offer to help them in any matter, and refuse if asked."
 
 /datum/objective/sintouched/envy
-	explanation_text = "You want something, but can't have it.  Break it instead."
-
-/datum/objective/sintouched/envy/New()
-	var/list/jobs = SSjob.occupations.Copy()
-	for(var/datum/job/J in jobs)
-		if(J.current_positions < 1)
-			jobs -= J
-	if(jobs.len > 0)
-		var/datum/job/target = pick(jobs)
-		explanation_text = "Those [target.title]s are always showing off their newest work.  Go knock them down a peg or two, without physically harming them."
+	explanation_text = "Why should you be stuck with your rank? Show everyone you can do other jobs too, and don't let anyone stop you, least of all because you have no training"
 
 /datum/objective/sintouched/pride
 	explanation_text = "You are the BEST thing on the station.  Make sure everyone knows it."
