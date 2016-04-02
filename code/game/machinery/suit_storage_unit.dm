@@ -219,6 +219,8 @@
 			for(var/obj/item/I in src)
 				I.clean_blood()
 		open_machine()
+		if(occupant)
+			dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -326,7 +328,9 @@
 			if(state_open)
 				close_machine()
 			else
-				open_machine(!!occupant) // Dump out contents if someone is in there.
+				open_machine()
+				if(occupant)
+					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE
 		if("lock")
 			locked = !locked
