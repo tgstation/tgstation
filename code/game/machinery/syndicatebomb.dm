@@ -35,7 +35,8 @@
 
 /obj/machinery/syndicatebomb/New()
 	wires 	= new /datum/wires/syndicatebomb(src)
-	payload = new payload(src)
+	if(src.payload)
+		payload = new payload(src)
 	update_icon()
 	..()
 
@@ -99,6 +100,25 @@
 			payload.loc = src
 		else
 			user << "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>"
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		if(payload || !wires.is_all_cut() || !open_panel)
+			return
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.isOn())
+			return
+		if(WT.get_fuel() < 5) //uses up 5 fuel.
+			user << "<span class='warning'>You need more fuel to complete this task!</span>"
+			return
+
+		playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+		user << "<span class='notice'>You start to cut the [src] apart...</span>"
+		if(do_after(user, 20/I.toolspeed, target = src))
+			if(!WT.isOn() || !WT.remove_fuel(5, user))
+				return
+			user << "<span class='notice'>You cut the [src] apart.</span>"
+			new /obj/item/stack/sheet/plasteel( loc, 5)
+			qdel(src)
+			return
 	else
 		..()
 
@@ -167,14 +187,15 @@
 	payload = /obj/item/weapon/bombcore/badmin/explosion/
 
 /obj/machinery/syndicatebomb/empty
-	name = "bomb assembly"
+	name = "bomb"
 	icon_state = "base-bomb"
-	desc = "An ominous looking device designed to detonate a highly explosive payload. Can be bolted down using a wrench."
+	desc = "An ominous looking device designed to detonate an explosive payload. Can be bolted down using a wrench."
 	payload = null
+	open_panel = TRUE
 
-/obj/item/weapon/paper/payload_info
-	name = "payload installation instructions"
-	info = "Instructions for installing payload: Remove panel using a screwdriver. Cut all wires. Carefully insert payload and mend wires. CAUTION: Do not attempt to remove a live payload, as doing so may cause the explosive device to detonate."
+/obj/machinery/syndicatebomb/empty/New()
+	..()
+	wires.cut_all()
 
 ///Bomb Cores///
 
@@ -196,12 +217,12 @@
 		qdel(src)
 
 /obj/item/weapon/bombcore/burn()
-	if(prob(50))
+	if(prob(25))
 		detonate()
 		..()
 	else
-		qdel(src)
 		..()
+		qdel(src)
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
