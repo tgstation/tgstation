@@ -268,6 +268,7 @@
 
 		body += {"<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>
 			<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>
+			<option value='?_src_=vars;addcancer=\ref[D]'>Inflict Cancer</option>
 			<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>
 			<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>
 			<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>
@@ -540,6 +541,21 @@ body
 
 		src.give_disease(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
+
+	else if(href_list["addcancer"])
+		if(!check_rights(R_ADMIN|R_FUN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["addcancer"])
+		if(!ishuman(H))
+			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
+			return
+
+		if(alert(usr, "Are you sure you wish to inflict cancer upon [key_name(H)]?",  "Confirm Cancer?" , "Yes" , "No") != "Yes")
+			return
+
+		log_admin("[key_name(H)] was inflicted with cancer, courtesy of [key_name(usr)]")
+		message_admins("[key_name(H)] was inflicted with cancer, courtesy of [key_name(usr)]")
+		H.add_cancer()
 
 	else if(href_list["godmode"])
 		if(!check_rights(R_REJUVINATE))	return

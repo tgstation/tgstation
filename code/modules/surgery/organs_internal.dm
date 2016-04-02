@@ -150,7 +150,66 @@
 		if(I && I.damage > 0)
 			I.take_damage(dam_amt,0)
 
+//////FIX ORGAN CANCER////
+/datum/surgery_step/internal/fix_organ_cancer
+	allowed_tools = list(
+		/obj/item/weapon/FixOVein = 100,
+		/obj/item/stack/cable_coil = 75,
+		)
 
+	priority = 4 //Maximum priority, even higher than fixing brain hematomas
+	min_duration = 90
+	max_duration = 110
+	blood_level = 1
+
+/datum/surgery_step/internal/fix_organ_cancer/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
+	if(!hasorgans(target))
+		return
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+
+	var/cancer_found = 0
+	for(var/datum/organ/internal/I in affected.internal_organs)
+		if(I.cancer_stage >= 1)
+			cancer_found = 1
+			break
+	return ..() && cancer_found
+
+/datum/surgery_step/internal/fix_organ_cancer/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
+	if(!hasorgans(target))
+		return
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+
+	for(var/datum/organ/internal/I in affected.internal_organs)
+		if(I && I.cancer_stage >= 1)
+			user.visible_message("[user] starts carefully removing the cancerous growths in [target]'s [I.name] with \the [tool].", \
+			"You start carefully removing the cancerous growths in [target]'s [I.name] with \the [tool]." )
+
+	target.custom_pain("The pain in your [affected.display_name] is living hell!", 1)
+	..()
+
+/datum/surgery_step/internal/fix_organ_cancer/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
+	if(!hasorgans(target))
+		return
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+
+	for(var/datum/organ/internal/I in affected.internal_organs)
+		if(I && I.cancer_stage >= 1)
+			user.visible_message("[user] carefully removes and mends the area around the cancerous growths in [target]'s [I.name] with \the [tool].", \
+			"You carefully remove and mends the area around the cancerous growths in [target]'s [I.name] with \the [tool]." )
+			I.cancer_stage = 0
+
+/datum/surgery_step/internal/fix_organ_cancer/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
+	if(!hasorgans(target))
+		return
+	var/datum/organ/external/affected = target.get_organ(target_zone)
+
+	user.visible_message("<span class='warning'>[user]'s hand slips, getting mess on and tearing the inside of [target]'s [affected.display_name] with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, getting mess on and tearing the inside of [target]'s [affected.display_name] with \the [tool]!</span>")
+	affected.createwound(CUT, 10)
 
 //////FIX ORGAN ROBOTIC/////
 /datum/surgery_step/internal/fix_organ_robotic //For artificial organs

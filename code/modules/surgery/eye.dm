@@ -123,8 +123,6 @@
 	target.apply_damage(10, BRUTE, affected)
 	eyes.take_damage(5, 0)
 
-
-
 //////CAUTERIZE///////
 /datum/surgery_step/eye/cauterize/tool_quality(obj/item/tool)
 	if(tool.is_hot())

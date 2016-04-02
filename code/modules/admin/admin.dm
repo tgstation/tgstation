@@ -201,6 +201,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome Red</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
+			<A href='?src=\ref[src];addcancer=\ref[M]'>Inflict Cancer</A> |
 		"}
 
 	// language toggles

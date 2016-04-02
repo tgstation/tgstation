@@ -349,3 +349,19 @@ This function restores all organs.
 				update_icon = 1
 			qdel(F)
 	return 1
+
+//Adds cancer, including stage of cancer and limb
+//Right now cancer is adminbus only. You can inflict it via the full (old) Player Panel and all "prayer types" (includes Centcomm message)
+//Of course, should it ever come back for realsies, that's the right way to do it. But let's not be silly now
+//IMPORTANT NOTE: Currently only works on external organs, because the person who wrote organ code has brain cancer, hopefully I will sweep back to fix this in a later PR
+//Since I'd have to change hundreds of procs going through organs, that's not something I'll do now
+/mob/living/carbon/human/proc/add_cancer(var/stage = 1, var/target)
+
+	var/datum/organ/picked_organ
+	if(target)
+		picked_organ = organs_by_name["[target]"]
+	else
+		picked_organ = pick(organs)
+
+	if(picked_organ)
+		picked_organ.cancer_stage += stage //This can pick a limb which already has cancer, in which case it will add to it

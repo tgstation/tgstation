@@ -1917,6 +1917,21 @@
 		feedback_inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='notice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
 
+	else if(href_list["addcancer"])
+		if(!check_rights(R_ADMIN|R_FUN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["addcancer"])
+		if(!ishuman(H))
+			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
+			return
+
+		if(alert(src.owner, "Are you sure you wish to inflict cancer upon [key_name(H)]?",  "Confirm Cancer?" , "Yes" , "No") != "Yes")
+			return
+
+		log_admin("[key_name(H)] was inflicted with cancer, courtesy of [key_name(src.owner)]")
+		message_admins("[key_name(H)] was inflicted with cancer, courtesy of [key_name(src.owner)]")
+		H.add_cancer()
+
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
 

@@ -9,6 +9,7 @@
 									  //Links chemical IDs to number of ticks for which they'll stay in the blood
 
 	var/germ_level = 0 //INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
+	var/cancer_stage = 0 //Cancer growth inside the organ, anything above 0 is very bad. See handle_cancer() below
 
 /datum/organ/proc/CanInsert(var/mob/living/carbon/human/H, var/mob/surgeon=null, var/quiet=0)
 	return 1
@@ -92,7 +93,6 @@
 //Takes care of organ related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_organs()
 
-
 	number_wounds = 0
 	var/stand_broken = 0 //We cannot stand because one of our legs or foot is completely broken and unsplinted, or missing
 	var/force_process = 0
@@ -100,14 +100,20 @@
 	if(damage_this_tick > last_dam)
 		force_process = 1
 	last_dam = damage_this_tick
-	if(force_process)
-		bad_external_organs.len = 0
-		for(var/datum/organ/external/Ex in organs)
-			bad_external_organs += Ex
 
 	//Processing internal organs is pretty cheap, do that first.
 	for(var/datum/organ/internal/I in internal_organs)
 		I.process()
+
+	if(force_process) //Force all limbs to be updated, period
+		bad_external_organs.len = 0
+		for(var/datum/organ/external/Ex in organs)
+			bad_external_organs += Ex
+
+	//Cancer check
+	for(var/datum/organ/external/Ec in organs)
+		if(Ec.cancer_stage)
+			Ec.handle_cancer()
 
 	//Also handles some internal organ processing when the organs are missing completely.
 	//Only handles missing liver and kidneys for now.
@@ -122,12 +128,13 @@
 		if(!kidney || kidney.status & ORGAN_CUT_AWAY)
 			reagents.add_reagent("toxin", rand(1, 3))
 
-	if(!force_process && !bad_external_organs.len)
+	if(!force_process && !bad_external_organs.len) //Nothing to update, just drop it
 		return
 
 	for(var/datum/organ/external/E in bad_external_organs)
 		if(!E)
 			continue
+
 		if(!E.need_process())
 			bad_external_organs -= E
 			continue
@@ -206,3 +213,36 @@
 	//Has limbs to move around if at least one arm or leg is at least partially there
 	can_stand = (canstand_l && canstand_r)
 	has_limbs = hasleg_l || hasleg_r || hasarm_l || hasarm_r
+
+//Cancer, right now adminbus only
+//When triggered, cancer starts growing inside the affected organ. Once it grows worse enough, you start having really serious effects
+//When it grows REALLY bad, it just metastates, and then you die really hard. Takes 30 minutes, 25 from firs visible symptoms, so no way you can't anticipate
+//For limb-specific effects, check each limb for sub-procs
+
+/datum/organ/proc/handle_cancer()
+
+	if(!cancer_stage) //This limb isn't cancerous, nothing to do in here
+		return 0
+
+	if(cancer_stage < CANCER_STAGE_BENIGN) //Abort immediately if the cancer has been suppresed
+		return 0
+
+	//List of reagents which will affect cancerous growth
+	//Phalanximine and Medical Nanobots are the only reagent which can reverse cancerous growth in high doses, the others can stall it, some can even accelerate it
+	//Every "unit" here corresponds to a tick of cancer growth, so for example 20 units of Phalanximine counters one unit of cancer growth
+	var/phalanximine = owner.reagents.get_reagent_amount("phalanximine") / 20 //Phalanximine only works in large doses, but can actually cure cancer past the threshold unlike all other reagents below
+	var/medbots = owner.reagents.get_reagent_amount("mednanobots") //Medical nanobots for a cancer-free future tomorrow. Try not to overdose them, powerful enough to not risk going above 5u
+	var/hardcores = owner.reagents.get_reagent_amount("bustanut") //Bustanuts contain the very essence of Bustatime, stalling even the most robust ailments with a small dose
+	var/ryetalyn = owner.reagents.get_reagent_amount("ryetalyn") //Ryetalin will very easily suppress the rogue DNA in cancer cells, but cannot actually cure it, you need to destroy the cells
+	var/holywater = owner.reagents.get_reagent_amount("holywater") / 10 //Holy water has very potent effects with stalling cancer
+	var/mutagen = owner.reagents.get_reagent_amount("mutagen") / 10 //Mutagen will cause disastrous cancer growth if there already is one. It's the virus food of tumors
+
+	var/cancerous_growth = 1 //Every tick, cancer grows by one tick, without any external factors
+
+	cancerous_growth -= min(1, hardcores + holywater + ryetalyn - mutagen) + phalanximine + medbots //Simple enough, mut helps cancer growth, hardcores and holywater stall it, phalanx and medbots cure it
+	cancer_stage += cancerous_growth
+
+	//Cancer has a single universal sign. Coughing. Has a chance to happen every tick
+	//Most likely not medically accurate, but whocares.ru
+	if(prob(1))
+		owner.emote("cough")

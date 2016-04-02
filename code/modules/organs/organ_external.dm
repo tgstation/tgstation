@@ -206,6 +206,8 @@
 	perma_injury = 0
 	brute_dam = 0
 	burn_dam = 0
+	cancer_stage = 0
+	germ_level = 0
 
 	//Handle internal organs
 	for(var/datum/organ/internal/current_organ in internal_organs)
@@ -294,6 +296,7 @@
 	return 0
 
 /datum/organ/external/process()
+
 	//Process wounds, doing healing etc. Only do this every few ticks to save processing power
 	if(owner.life_tick % wound_update_accuracy == 0)
 		update_wounds()
@@ -310,6 +313,7 @@
 		if(!destspawn && config.limbs_can_break)
 			droplimb()
 		return
+
 	if(parent)
 		if(parent.status & ORGAN_DESTROYED)
 			status |= ORGAN_DESTROYED
@@ -323,7 +327,30 @@
 		perma_injury = 0
 
 	update_germs()
-	return
+
+//Cancer growth for external organs is simple, it grows, hurts, damages, and suddenly grows out of control
+//Limb cancer is relatively benign until it grows large, then it cripples you and metastases
+/datum/organ/external/handle_cancer()
+
+	..()
+
+	switch(cancer_stage)
+		if(CANCER_STAGE_SMALL_TUMOR to CANCER_STAGE_LARGE_TUMOR) //Small tumors will not damage your limb, but might flash pain
+			if(prob(1))
+				owner.custom_pain("You feel a stabbing pain in your [display_name]!", 1)
+		if(CANCER_STAGE_LARGE_TUMOR to CANCER_STAGE_METASTASIS) //Large tumors will start damaging your limb and give the owner DNA damage (bodywide, can't go per limb)
+			if(prob(20))
+				take_damage(0.5, 0, 0, used_weapon = "tumor growth")
+				owner.custom_pain("You feel a stabbing pain in your [display_name]!", 1)
+			if(prob(1))
+				owner.apply_damage(0.5, CLONE, src)
+		if(CANCER_STAGE_METASTASIS to INFINITY) //Metastasis achieved, limb will start breaking down very rapidly, and cancer will spread to all other limbs in short order through bloodstream
+			if(prob(50))
+				take_damage(0.5, 0, 0, used_weapon = "tumor metastasis")
+			if(prob(20))
+				owner.apply_damage(0.5, CLONE, src)
+			if(prob(1))
+				owner.add_cancer() //Add a new cancerous growth
 
 //Updating germ levels. Handles organ germ levels and necrosis.
 /*
@@ -344,6 +371,7 @@ INFECTION_LEVEL_THREE	above this germ level the player will take additional toxi
 
 Note that amputating the affected organ does in fact remove the infection from the player's body.
 */
+
 /datum/organ/external/proc/update_germs()
 	if(!is_existing() || !is_organic()) //Needs to be organic and existing
 		germ_level = 0

@@ -237,6 +237,9 @@ Subject's pulse: ??? BPM"})
 				if(W.internal)
 					message += text("<br><span class='danger'>Internal bleeding detected. Advanced scan required for location.</span>")
 					break
+			if(e.cancer_stage > CANCER_STAGE_LARGE_TUMOR) //Health analyzers can detect large tumors and above in external limbs, if all else fails
+				message += text("<br><span class='danger'>Serious cancerous growth detected. Advanced scan required for location.</span>")
+				break
 		if(H.vessel)
 			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 			var/blood_percent =  round((blood_volume / 560) * 100)
