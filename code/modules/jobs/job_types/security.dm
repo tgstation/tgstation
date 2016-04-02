@@ -352,16 +352,16 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
-	backpack_contents = list(/obj/item/weapon/gun/energy=1, /obj/item/weapon/melee/classic_baton=1, /obj/item/ammo_box/magazine/m45)
+	backpack_contents = list(/obj/item/weapon/gun/energy=1, /obj/item/weapon/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	
 /obj/item/weapon/storage/belt/military/full/New()
 	..()
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/restraints/handcuffs(src)
+	new /obj/item/weapon/restraints/handcuffs
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 	new /obj/item/weapon/shield/riot/tele(src)
-	new /obj/item/weapon/gun/projectile/automatic/pistol/m1911(src)
