@@ -849,6 +849,14 @@ $(function() {
 		}
 		setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
 	});
+	
+	$('.toggleEmotes').click(function(e) {
+		if(opts.enableTwitchify) {
+			opts.enableTwitchify = false;
+		} else {
+			opts.enableTwitchify = true;
+		}
+	});
 
 	$('#saveLog').click(function(e) {
 		var saved = '';
