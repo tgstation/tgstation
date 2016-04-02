@@ -114,6 +114,7 @@
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
 	update_spooky_icon()
 	update_health_hud()
+	update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
 	..()
 
 /mob/living/simple_animal/revenant/Stat()
