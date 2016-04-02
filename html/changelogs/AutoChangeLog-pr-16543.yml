@@ -1,0 +1,4 @@
+author: Isratosh
+delete-after: True
+changes: 
+  - rscadd: "Admin logs for bluespace capsules not activated on the mining Z level."
