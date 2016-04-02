@@ -14,6 +14,7 @@ var/datum/subsystem/tgui/SStgui
 	can_fire = 1 // This needs to fire before round start.
 
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.
+	var/list/currentrun = list() // list of what things still need to be processed
 	var/list/processing_uis = list() // A list of processing UIs, ungrouped.
 	var/basehtml // The HTML base used for all UIs.
 
@@ -25,10 +26,16 @@ var/datum/subsystem/tgui/SStgui
 /datum/subsystem/tgui/stat_entry()
 	..("P:[processing_uis.len]")
 
-/datum/subsystem/tgui/fire()
-	for(var/thing in processing_uis)
-		var/datum/tgui/ui = thing
+/datum/subsystem/tgui/fire(resumed = 0)
+	if(!resumed)
+		src.currentrun = processing_uis.Copy()
+	var/currentrun = src.currentrun
+	while(currentrun.len)
+		var/datum/tgui/ui = currentrun[1]
+		currentrun.Cut(1, 2)
 		if(ui && ui.user && ui.src_object)
 			ui.process()
-			continue
-		processing_uis.Remove(ui)
+		else
+			processing_uis.Remove(ui)
+		if(MC_TICK_CHECK)
+			return
