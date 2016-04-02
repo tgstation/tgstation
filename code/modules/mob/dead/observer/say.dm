@@ -11,6 +11,10 @@
 			src << "<span class='danger'>You cannot talk in deadchat (muted).</span>"
 			return
 
+	if(jobban_isbanned(src, "OOC"))
+		src << "<span class='danger'>You have been banned from deadchat.</span>"
+		return
+
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
