@@ -13,7 +13,6 @@
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/pass_flags = 0
-	glide_size = 8
 	appearance_flags = TILE_BOUND
 
 
