@@ -46,7 +46,9 @@
 	return ..()
 
 /obj/machinery/syndicatebomb/emag_act(mob/user)
+	if(active && !emagged)
 		emagged = 1
+		timer = 60	// An emag can be used to reduce the timer, or give you more time, depending on when you use it.
 		if(user)
 			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
 								"<span class='notice'>You emag the [src], causing the timing mechanism to malfunction.</span>")
