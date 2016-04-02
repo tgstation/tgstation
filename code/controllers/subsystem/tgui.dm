@@ -32,4 +32,3 @@ var/datum/subsystem/tgui/SStgui
 			ui.process()
 			continue
 		processing_uis.Remove(ui)
-		CHECK_TICK
