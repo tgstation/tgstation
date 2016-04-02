@@ -2,7 +2,12 @@ var/datum/subsystem/tgui/SStgui
 
 /datum/subsystem/tgui
 	name = "tgui"
-	wait = 10
+	wait = 1
+	dynamic_wait = 1
+	dwait_delta = 4
+	dwait_buffer = 0.1
+	dwait_lower = 1
+	dwait_upper = 5
 	priority = 16
 	display = 6
 
@@ -27,3 +32,4 @@ var/datum/subsystem/tgui/SStgui
 			ui.process()
 			continue
 		processing_uis.Remove(ui)
+		CHECK_TICK
