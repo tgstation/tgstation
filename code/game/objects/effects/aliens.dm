@@ -156,9 +156,7 @@
 	anchored = 1
 	density = 0
 	layer = TURF_LAYER + 0.09
-	pixel_x = -4
-	pixel_y = -4 //so the sprites line up right
-	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon = 'icons/mob/alien.dmi'
 	icon_state = "weeds"
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
@@ -167,9 +165,13 @@
 
 
 /obj/structure/alien/weeds/New(pos, node)
+	pixel_x = -4
+	pixel_y = -4 //so the sprites line up right, even when in the map editor
 	..()
 	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
-		switch(rand(1,3))//why is there no 1? because we already have the icon set to that
+		switch(rand(1,3))
+			if(1)
+				icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 			if(2)
 				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
 			if(3)
@@ -242,13 +244,13 @@
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
 
 
 /obj/structure/alien/weeds/node/New()
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	..(loc, src)
 
 #undef NODERANGE

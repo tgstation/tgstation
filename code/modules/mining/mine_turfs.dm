@@ -2,7 +2,7 @@
 
 /turf/simulated/mineral //wall piece
 	name = "rock"
-	icon = 'icons/turf/smoothrocks.dmi'
+	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list (/turf/simulated/mineral, /turf/simulated/wall)
@@ -11,8 +11,6 @@
 	nitrogen = 0
 	opacity = 1
 	density = 1
-	pixel_y = -4
-	pixel_x = -4
 	blocks_air = 1
 	layer = MOB_LAYER + 0.05
 	temperature = TCMB
@@ -26,6 +24,9 @@
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 
 /turf/simulated/mineral/New()
+	pixel_y = -4
+	pixel_x = -4
+	icon = 'icons/turf/smoothrocks.dmi' //so that map placement works properly
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -59,8 +60,6 @@
 	new src.type(T)
 
 /turf/simulated/mineral/random
-	name = "rock"
-	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		/turf/simulated/mineral/uranium = 5, /turf/simulated/mineral/diamond = 1, /turf/simulated/mineral/gold = 10,
 		/turf/simulated/mineral/silver = 12, /turf/simulated/mineral/plasma = 20, /turf/simulated/mineral/iron = 40,
@@ -139,7 +138,6 @@
 	scan_state = "rock_Silver"
 
 /turf/simulated/mineral/plasma
-	icon_state = "rock_Plasma"
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
 	spread = 1
@@ -153,7 +151,6 @@
 	scan_state = "rock_Clown"
 
 /turf/simulated/mineral/bscrystal
-	icon_state = "rock_BScrystal"
 	mineralType = /obj/item/weapon/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
@@ -163,7 +160,6 @@
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
 	name = "gibtonite deposit"
-	icon_state = "rock_Gibtonite"
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
