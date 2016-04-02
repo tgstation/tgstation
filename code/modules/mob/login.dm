@@ -66,6 +66,7 @@
 		winset(src, null, "mainwindow.macro=[macro_default] input.focus=true input.background-color=#d3b5b5")
 
 	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
-		for(var/aa in viewing_alternate_appearances)
-			var/datum/alternate_appearance/AA = aa
-			AA.display_to(list(src))
+		for(var/aakey in viewing_alternate_appearances)
+			var/datum/alternate_appearance/AA = viewing_alternate_appearances[aakey]
+			if(AA)
+				AA.display_to(list(src))
