@@ -27,7 +27,7 @@
 /datum/objective/demon/soulquality/New()
 	contractType = pick(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
 	var/contractName
-	var/quantity = pick(1,2)
+	quantity = pick(1,2)
 	switch(contractType)
 		if(CONTRACT_POWER)
 			contractName = "for power"
@@ -36,7 +36,7 @@
 		if(CONTRACT_PRESTIGE)
 			contractName = "for prestige"
 		if(CONTRACT_MAGIC)
-			contractName = "for arcane power"
+			contractName = "for magic"
 		if(CONTRACT_REVIVE)
 			contractName = "of revival"
 		if(CONTRACT_KNOWLEDGE)
