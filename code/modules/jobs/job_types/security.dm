@@ -359,7 +359,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	..()
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/restraints/handcuffs(src)
-	new /obj/item/weapon/restraints/handcuffs
+	new /obj/item/weapon/restraints/handcuffs(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
