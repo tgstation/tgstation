@@ -552,7 +552,7 @@ proc/russian_text2html(msg)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = splittext(msg, "y")
+	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
 	var/out = ""
@@ -570,7 +570,7 @@ proc/russian_text2html(msg)
 		rep = "&#x44F;"
 	else
 		rep = "&#255;"
-	var/list/c = splittext(msg, "y")
+	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
 	var/out = ""
