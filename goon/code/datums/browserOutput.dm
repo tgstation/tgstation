@@ -11,7 +11,10 @@ For the main html chat area
 	"goon/browserassets/css/fonts/fontawesome-webfont.ttf",
 	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
 	"goon/browserassets/css/font-awesome.css",
-	"goon/browserassets/css/browserOutput.css"
+	"goon/browserassets/css/browserOutput.css",
+	// Twitchify assets
+	"goon/browserassets/css/twitchify.css",
+	"goon/browserassets/json/emotes.all.json"
 )
 
 //Precaching a bunch of shit
