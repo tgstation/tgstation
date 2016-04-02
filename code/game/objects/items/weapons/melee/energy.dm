@@ -107,16 +107,55 @@
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
 	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword))
-		if(W == src)
-			to_chat(user, "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>")
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
-			new /obj/item/weapon/dualsaber(user.loc)
-			qdel(W)
-			W = null
-			qdel(src)
+		to_chat(user, "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>")
+		new /obj/item/weapon/dualsaber(user.loc)
+		qdel(W)
+		W = null
+		qdel(src)
+
+
+/obj/item/weapon/melee/energy/sword/bsword
+	name = "banana"
+	desc = "It's yellow."
+	base_state = "bsword0"
+	active_state = "bsword1"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+	flags = FPRINT
+	origin_tech = "magnets=3;syndicate=4"
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+
+/obj/item/weapon/melee/energy/sword/bsword/IsShield()
+	if(active)
+		return 1
+	return 0
+
+/obj/item/weapon/melee/energy/sword/bsword/attack_self(mob/living/user as mob)
+	toggleActive(user)
+	add_fingerprint(user)
+	return
+
+/obj/item/weapon/melee/energy/sword/bsword/update_icon()
+	if(active)
+		icon_state = active_state
+		name = "energized bananium sword"
+		desc = "Advanced technology from a long forgotten clown civilization."
+	else
+		icon_state = "[base_state]"
+		name = "banana"
+		desc = "It's yellow."
+
+/obj/item/weapon/melee/energy/sword/bsword/attackby(obj/item/weapon/W, mob/living/user)
+	if(istype(W, /obj/item/weapon/melee/energy/sword/bsword))
+		to_chat(user, "<span class='notice'>You attach the ends of the two energized bananium swords, making a bushel bruiser! That's dangerous.</span>")
+		new /obj/item/weapon/dualsaber/bananabunch(user.loc)
+		qdel(W)
+		qdel(src)
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
