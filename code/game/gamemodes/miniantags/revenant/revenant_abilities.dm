@@ -54,8 +54,9 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=46)
+				var/datum/beam/B = Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=46)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+					qdel(B)
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
@@ -70,6 +71,7 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
+					qdel(B)
 					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
 					draining = 0
 					essence_drained = 0
@@ -114,8 +116,8 @@
 				charge_counter = charge_max
 				return
 			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
-			user << "<span class='revennotice'><b>You transmit to [M]:</b> [msg]</span>"
-			M << "<span class='revennotice'><b>An alien voice resonates from all around...</b></span><i> [msg]</I>"
+			user << "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>"
+			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>"
 
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant

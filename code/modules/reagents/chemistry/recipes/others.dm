@@ -510,3 +510,10 @@
 	result = "lye"
 	required_reagents = list("ash" = 1, "water" = 1)
 	result_amount = 2
+
+/datum/chemical_reaction/royal_bee_jelly
+	name = "royal bee jelly"
+	id = "royal_bee_jelly"
+	result = "royal_bee_jelly"
+	required_reagents = list("mutagen" = 10, "honey" = 40)
+	result_amount = 5

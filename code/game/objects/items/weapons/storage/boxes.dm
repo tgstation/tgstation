@@ -15,6 +15,7 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -593,3 +594,181 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+#define NODESIGN "None"
+#define NANOTRASEN "NanotrasenStandard"
+#define SYNDI "SyndiSnacks"
+#define HEART "Heart"
+#define SMILE "SmileyFace"
+
+/obj/item/weapon/storage/box/papersack
+	name = "paper sack"
+	desc = "A sack neatly crafted out of paper."
+	icon_state = "paperbag_None"
+	item_state = "paperbag_None"
+	burn_state = FLAMMABLE
+	foldable = null
+	var/design = NODESIGN
+
+/obj/item/weapon/storage/box/papersack/update_icon()
+	if(contents.len == 0)
+		icon_state = "[item_state]"
+	else icon_state = "[item_state]_closed"
+
+/obj/item/weapon/storage/box/papersack/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/pen))
+		//if a pen is used on the sack, dialogue to change its design appears
+		if(contents.len)
+			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			return
+		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
+		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
+		if(get_dist(usr, src) > 1)
+			usr << "<span class='warning'>You have moved too far away!</span>"
+			return
+		var/choice = designs.Find(switchDesign)
+		if(design == designs[choice] || designs[choice] == "Cancel")
+			return 0
+		usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		design = designs[choice]
+		icon_state = "paperbag_[design]"
+		item_state = "paperbag_[design]"
+		switch(designs[choice])
+			if(NODESIGN)
+				desc = "A sack neatly crafted out of paper."
+			if(NANOTRASEN)
+				desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
+			if(SYNDI)
+				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
+			if(HEART)
+				desc = "A paper sack with a heart etched onto the side."
+			if(SMILE)
+				desc = "A paper sack with a crude smile etched onto the side."
+		return 0
+	else if(W.is_sharp())
+		if(!contents.len)
+			if(item_state == "paperbag_None")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
+				new /obj/item/clothing/head/papersack(user.loc)
+				qdel(src)
+				return 0
+			else if(item_state == "paperbag_SmileyFace")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
+				new /obj/item/clothing/head/papersack/smiley(user.loc)
+				qdel(src)
+				return 0
+	return ..()
+
+#undef NODESIGN
+#undef NANOTRASEN
+#undef SYNDI
+#undef HEART
+#undef SMILE
+
+/obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+	name = "ingredients box"
+	icon_state = "donk_kit"
+	item_state = null
+
+/obj/item/weapon/storage/box/ingredients/wildcard
+	item_state = "wildcard"
+
+/obj/item/weapon/storage/box/ingredients/wildcard/New()
+	..()
+	for(var/i in 1 to 6)
+		//Pick common ingredients
+		var/randomFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+				  			  /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+							  /obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/corn)
+		new randomFood(src)
+	//Pick one random rare ingredient
+	var/randomRareFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+						      /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold,
+			 				  /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+	new randomRareFood(src)
+
+/obj/item/weapon/storage/box/ingredients/fiesta
+	item_state = "fiesta"
+
+/obj/item/weapon/storage/box/ingredients/fiesta/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/weapon/storage/box/ingredients/italian
+	item_state = "italian"
+
+/obj/item/weapon/storage/box/ingredients/italian/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+
+/obj/item/weapon/storage/box/ingredients/vegetarian
+	item_state = "vegetarian"
+
+/obj/item/weapon/storage/box/ingredients/vegetarian/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+
+/obj/item/weapon/storage/box/ingredients/sweets
+	item_state = "sweets"
+
+/obj/item/weapon/storage/box/ingredients/sweets/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cherries(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/icecream(src)
+
+/obj/item/weapon/storage/box/ingredients/carnivore
+	item_state = "carnivore"
+
+/obj/item/weapon/storage/box/ingredients/carnivore/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
+
+/obj/item/weapon/storage/box/ingredients/exotic
+	item_state = "exotic"
+
+/obj/item/weapon/storage/box/ingredients/exotic/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/condiment/soysauce(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage(src)
+		new	/obj/item/weapon/reagent_containers/food/snacks/soydope(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+
+/obj/item/weapon/storage/box/ingredients/New()
+	..()
+	if(item_state)
+		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."

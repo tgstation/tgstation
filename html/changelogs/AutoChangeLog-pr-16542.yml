@@ -1,0 +1,4 @@
+author: Isratosh
+delete-after: True
+changes: 
+  - bugfix: "Fixed rudimentary transform not working properly on ghosts with minds."

@@ -179,9 +179,16 @@ ALLOW_LATEJOIN_ANTAGONISTS
 #SHOW_GAME_TYPE_ODDS
 
 ### RANDOM EVENTS ###
-
 ## Comment this to disable random events during the round.
 ALLOW_RANDOM_EVENTS
+
+## Multiplier for earliest start time of dangerous events.
+## Set to 0 to make dangerous events avaliable from round start.
+EVENTS_MIN_TIME_MUL 1
+
+## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start. 
+## Set to 0 to make dangerous events avaliable for all populations.
+EVENTS_MIN_PLAYERS_MUL 1
 
 
 ### AI ###
