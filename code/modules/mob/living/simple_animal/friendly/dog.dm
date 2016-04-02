@@ -16,9 +16,9 @@
 	. = ..()
 	if(.)
 		if(prob(2))
-			playsound(loc, "sound/speech/arf.ogg", 50, 1, 1)
+			playsound(loc, "sound/voice/speech/arf.ogg", 50, 1, 1)
 		else
-			playsound(loc, "sound/speech/bark.ogg", 50, 1, 1)
+			playsound(loc, "sound/voice/speech/bark.ogg", 50, 1, 1)
 
 //Corgis and pugs are now under one dog subtype
 

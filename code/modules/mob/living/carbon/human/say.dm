@@ -11,7 +11,7 @@
 	message = dna.species.handle_speech(message,src)
 	var/list/temp_message = splittext(message, " ") //List each word in the message. We use this for determining speech words and stupid honk disease stuff.
 	var/speechwords = min(round(temp_message.len), 5)
-	playsound(loc, "sound/speech/[gender][speechwords].ogg", vol = 75, vary = 1, extrarange = 0, falloff = 1, surround = 1)
+	playsound(loc, "sound/voice/speech/[gender][speechwords].ogg", vol = 75, vary = 0, extrarange = 0, falloff = 1, surround = 1)
 
 	if(viruses.len)
 		for(var/datum/disease/pierrot_throat/D in viruses)
