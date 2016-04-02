@@ -15,23 +15,23 @@ z7 = empty space
 
 #if !defined(MAP_FILE)
 
-		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
+	#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
-		#define LAVALAND_ENABLED 1
+	#define LAVALAND_ENABLED 0
 
-        #include "map_files\DreamStation\dreamstation04.dmm"
-        #include "map_files\generic\z2.dmm"
-        #include "map_files\generic\z3.dmm"
-        #include "map_files\generic\z4.dmm"
-        #include "map_files\generic\lavaland.dmm"
-        #include "map_files\generic\z6.dmm"
-        #include "map_files\generic\z7.dmm"
+	#include "map_files\DreamStation\dreamstation04.dmm"
+	#include "map_files\generic\z2.dmm"
+	#include "map_files\generic\z3.dmm"
+	#include "map_files\generic\z4.dmm"
+	#include "map_files\DreamStation\z5.dmm"
+	#include "map_files\generic\z6.dmm"
+	#include "map_files\generic\z7.dmm"
 
-		#define MAP_PATH "map_files/DreamStation"
-        #define MAP_FILE "dreamstation04.dmm"
-        #define MAP_NAME "DreamStation"
+	#define MAP_PATH "map_files/DreamStation"
+	#define MAP_FILE "dreamstation04.dmm"
+	#define MAP_NAME "DreamStation"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+	#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 
