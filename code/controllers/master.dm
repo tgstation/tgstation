@@ -79,8 +79,8 @@ var/global/datum/controller/master/Master = new()
 	createRandomZlevel()
 	// Generate mining.
 
-	var/mining_type = MINETYPE
-	if(mining_type == "lavaland")
+	var/is_lavaland = LAVALAND_ENABLED
+	if(is_lavaland)
 		seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
 	else

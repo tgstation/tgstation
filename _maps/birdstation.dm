@@ -10,7 +10,7 @@ A small map intended for lowpop(40 players and less).
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
-		#define MINETYPE "mining"
+		#define LAVALAND_ENABLED 0
 
         #include "map_files\BirdStation\BirdStation.dmm"
         #include "map_files\generic\z2.dmm"

@@ -59,13 +59,28 @@
 	mask_type = /obj/item/clothing/mask/gas
 	storage_type = /obj/item/weapon/watertank/atmos
 
+
+// This one uses the magic of preprocessing to spawn suits that fit the mining type.
+// Use subtypes to always spawn EVA or surface mining suit.
+#if (LAVALAND_ENABLED == 1)
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
 	mask_type = /obj/item/clothing/mask/gas
+#else
+/obj/machinery/suit_storage_unit/mining
+	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
+	mask_type = /obj/item/clothing/mask/breath
+#endif
+
 
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
 	mask_type = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/mining/surface
+	suit_type = /obj/item/clothing/suit/hooded/explorer
+	mask_type = /obj/item/clothing/mask/gas
+
 
 /obj/machinery/suit_storage_unit/cmo
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
@@ -79,6 +94,7 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	storage_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+
 
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
