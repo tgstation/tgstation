@@ -171,7 +171,7 @@
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"
-	cost = 10
+	cost = 1000
 	contains = list(/obj/item/weapon/storage/box/wall_flash,
 					/obj/item/weapon/storage/box/wall_flash,
 					/obj/item/weapon/storage/box/wall_flash,
@@ -256,13 +256,21 @@
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/suit/space/swat,
 					/obj/item/clothing/suit/space/swat,
-					/obj/item/weapon/kitchen/knife/combat,
-					/obj/item/weapon/kitchen/knife/combat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/weapon/storage/belt/military/assault,
-					/obj/item/weapon/storage/belt/military/assault)
+					/obj/item/weapon/storage/belt/military/assault,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
+
+/datum/supply_pack/security/armory/combatknives
+	name = "Combat Knives Crate"
+	cost = 3000
+	contains = list(/obj/item/weapon/kitchen/knife/combat,
+					/obj/item/weapon/kitchen/knife/combat,
+					/obj/item/weapon/kitchen/knife/combat)
+	crate_name = "combat knife crate"
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
@@ -736,7 +744,7 @@
 	access = access_rd
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
-	crate_name = "tank transfer valves crate crate"
+	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
@@ -794,7 +802,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer)
-	crate_name = "party equipment"
+	crate_name = "party equipment crate"
 
 /datum/supply_pack/organic/critter
 	crate_type = /obj/structure/closet/crate/critter
@@ -928,6 +936,27 @@
 					/obj/item/seeds/eggplant/eggy)
 	crate_name = "exotic seeds crate"
 
+/datum/supply_pack/organic/hydroponics/beekeeping_fullkit
+	name = "Beekeeping Starter Kit"
+	cost = 1500
+	contains = list(/obj/structure/beebox,
+					/obj/item/honey_frame,
+					/obj/item/honey_frame,
+					/obj/item/honey_frame,
+					/obj/item/queen_bee/bought,
+					/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/suit/beekeeper_suit)
+	crate_name = "beekeeping starter kit"
+
+/datum/supply_pack/organic/hydroponics/beekeeping_suits
+	name = "2 Beekeeper suits"
+	cost = 1000
+	contains = list(/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/clothing/head/beekeeper_head,
+					/obj/item/clothing/suit/beekeeper_suit)
+	crate_name = "beekeeper suits"
+
 /datum/supply_pack/organic/vending
 	name = "Bartending Supply Crate"
 	cost = 2000
@@ -953,7 +982,7 @@
 	contains = list(/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola)
-	crate_name = "softdrinks supply crate"
+	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/organic/vending/cigarette
 	name = "Cigarette Supply Crate"
@@ -1164,7 +1193,7 @@
 	name = "High-traction Floor Tiles"
 	cost = 2000
 	contains = list(/obj/item/stack/tile/noslip/thirty)
-	crate_name = "high-traction floor tiles"
+	crate_name = "high-traction floor tiles crate"
 
 /datum/supply_pack/misc/plasmaman
 	name = "Plasmaman Supply Kit"

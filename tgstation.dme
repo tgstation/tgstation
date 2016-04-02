@@ -991,7 +991,6 @@
 #include "code\modules\events\disease_outbreak.dm"
 #include "code\modules\events\dust.dm"
 #include "code\modules\events\electrical_storm.dm"
-#include "code\modules\events\event.dm"
 #include "code\modules\events\false_alarm.dm"
 #include "code\modules\events\immovable_rod.dm"
 #include "code\modules\events\ion_storm.dm"

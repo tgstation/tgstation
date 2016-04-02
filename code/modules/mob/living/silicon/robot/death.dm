@@ -22,7 +22,7 @@
 	if(stat == DEAD)
 		return
 	if(!gibbed)
-		emote("deathgasp")
+		visible_message("<b>[src]</b> shudders violently for a moment before falling still, its eyes slowly darkening.")
 	locked = 0 //unlock cover
 	stat = DEAD
 	update_canmove()

@@ -4,10 +4,16 @@
 	melee_damage_upper = 15
 	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
-	playstyle_string = "As an explosive type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click."
-	magic_fluff_string = "..And draw the Scientist, master of explosive death."
-	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
+	playstyle_string = "<span class='holoparasite'>As an <b>explosive</b> type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click.</span>"
+	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
+	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
 	var/bomb_cooldown = 0
+
+/mob/living/simple_animal/hostile/guardian/bomb/Stat()
+	..()
+	if(statpanel("Status"))
+		if(bomb_cooldown >= world.time)
+			stat(null, "Bomb Cooldown Remaining: [max(round((bomb_cooldown - world.time)*0.1, 0.1), 0)] seconds")
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	if(..())
@@ -18,6 +24,8 @@
 					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
 					do_teleport(M, M, 10)
 					for(var/mob/living/L in range(1, M))
+						if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
+							continue
 						if(L != src && L != summoner)
 							L.apply_damage(15, BRUTE)
 					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
@@ -42,7 +50,7 @@
 	name = "bomb"
 	desc = "You shouldn't be seeing this!"
 	var/obj/stored_obj
-	var/mob/living/spawner
+	var/mob/living/simple_animal/hostile/guardian/spawner
 
 
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
@@ -66,7 +74,7 @@
 	qdel(src)
 
 /obj/item/weapon/guardian_bomb/Bump(atom/A)
-	if(isliving(A))
+	if(isliving(A) && !spawner.hasmatchingsummoner(A))
 		detonate(A)
 	else
 		..()

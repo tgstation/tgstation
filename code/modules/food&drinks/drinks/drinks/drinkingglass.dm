@@ -486,6 +486,26 @@
 				icon_state = "gibbfloats"
 				name = "Gibbfloat"
 				desc = "Dr. Gibb with ice cream on top."
+			if("whiskey_sour")
+				icon_state = "whiskey_sour"
+				name = "Whiskey Sour"
+				desc = "Lemon juice mixed with whiskey and a dash of sugar. Surprisingly satisfying."
+			if("fetching_fizz")
+				icon_state = "fetching_fizz"
+				name = "Fetching Fizz"
+				desc = "Induces magnetism in the imbiber. Started as a barroom prank but evolved to become popular with miners and scrappers. Metallic aftertaste."
+			if("hearty_punch")
+				icon_state = "hearty_punch"
+				name = "Hearty Punch"
+				desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
+			if("absinthe")
+				icon_state = "absinthe"
+				name = "glass of absinthe"
+				desc = "It's as strong as it smells."
+			if("bacchus_blessing")
+				icon_state = "glass_brown2"
+				name = "Bacchus' Blessing"
+				desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")

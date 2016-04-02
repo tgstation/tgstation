@@ -30,10 +30,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum", "marked datum ([holder.marked_datum.type])")
 	else
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum")
 
 	if(!class)
 		return
@@ -69,6 +69,14 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("marked datum")
 			var_value = holder.marked_datum
 
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			var_value = new type()
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var_value = new type()
+
 	if(!var_value) return
 
 	if(istext(var_value))
@@ -87,10 +95,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum","marked datum ([holder.marked_datum.type])")
 	else
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum")
 
 	if(!class)
 		return
@@ -125,6 +133,14 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("marked datum")
 			var_value = holder.marked_datum
+
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			var_value = new type()
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var_value = new type()
 
 	if(!var_value) return
 
@@ -264,10 +280,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])", "DELETE FROM LIST")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum","marked datum ([holder.marked_datum.type])", "DELETE FROM LIST")
 	else
 		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "DELETE FROM LIST")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum", "DELETE FROM LIST")
 
 	if(!class)
 		return
@@ -364,6 +380,22 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("marked datum")
 			new_var = holder.marked_datum
+			if(assoc)
+				L[assoc_key] = new_var
+			else
+				L[L.Find(variable)] = new_var
+
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			new_var = new type()
+			if(assoc)
+				L[assoc_key] = new_var
+			else
+				L[L.Find(variable)] = new_var
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			new_var = new type()
 			if(assoc)
 				L[assoc_key] = new_var
 			else
@@ -538,10 +570,10 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if(src.holder && src.holder.marked_datum)
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum", "marked datum ([holder.marked_datum.type])")
 		else
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum")
 
 		if(!class)
 			return
@@ -634,6 +666,18 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum
+
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			var/var_new = new type()
+			if(var_new==null) return
+			O.vars[variable] = var_new
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var/var_new = new type()
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 	O.on_varedit(variable)
 	world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
