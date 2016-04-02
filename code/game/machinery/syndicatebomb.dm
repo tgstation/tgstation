@@ -9,7 +9,7 @@
 	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
-	var/timer = 60
+	var/timer = 120
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
@@ -45,9 +45,19 @@
 	wires = null
 	return ..()
 
+/obj/machinery/syndicatebomb/emag_act(mob/user)
+		emagged = 1
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+								"<span class='notice'>You emag the [src], causing the timing mechanism to malfunction.</span>")
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	user << "A digital display on it reads \"[timer]\"."
+	if(emagged)
+		user << "A digital display on it reads \"[rand(-1, 60)]\"."
+	else
+		user << "A digital display on it reads \"[timer]\"."
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -140,7 +150,7 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 60, 60000)
+	newtime = Clamp(newtime, 120, 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
