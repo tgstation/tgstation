@@ -22,6 +22,7 @@
 
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/empty_sound = 'sound/weapons/empty.ogg'
+	var/fire_volume = 50 //the volume of the fire_sound
 	var/obj/item/projectile/in_chamber = null
 	var/list/caliber //the ammo the gun will accept. Now multiple types (make sure to set them to =1)
 	var/silenced = 0
@@ -199,10 +200,14 @@
 
 	if(silenced)
 		if(fire_sound)
-			playsound(user, fire_sound, 10, 1)
+			playsound(user, fire_sound, fire_volume/5, 1)
+		else if (in_chamber.fire_sound)
+			playsound(user, in_chamber.fire_sound, fire_volume/5, 1)
 	else
 		if(fire_sound)
-			playsound(user, fire_sound, 50, 1)
+			playsound(user, fire_sound, fire_volume, 1)
+		else if (in_chamber.fire_sound)
+			playsound(user, in_chamber.fire_sound, fire_volume, 1)
 		user.visible_message("<span class='warning'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
 		"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
 		"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
@@ -271,10 +276,14 @@
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
 				if(fire_sound)
-					playsound(user, fire_sound, 10, 1)
+					playsound(user, fire_sound, fire_volume/5, 1)
+				else if (in_chamber.fire_sound)
+					playsound(user, in_chamber.fire_sound, fire_volume/5, 1)
 			else
 				if(fire_sound)
-					playsound(user, fire_sound, 50, 1)
+					playsound(user, fire_sound, fire_volume, 1)
+				else if (in_chamber.fire_sound)
+					playsound(user, in_chamber.fire_sound, fire_volume, 1)
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
 				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")

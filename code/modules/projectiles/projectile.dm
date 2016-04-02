@@ -97,6 +97,7 @@ var/list/impact_master = list()
 	var/linear_movement = 1
 
 	var/penetration_message = 1 //Message that is shown when a projectile penetrates an object
+	var/fire_sound = 'sound/weapons/Gunshot.ogg' //sound that plays when the projectile is fired
 
 /obj/item/projectile/proc/on_hit(var/atom/atarget, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block

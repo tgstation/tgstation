@@ -110,23 +110,26 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 /**
  * Helper proc to handle reagent splashes. A negative `amount` will splash all the reagents.
  */
-/proc/splash_sub(var/datum/reagents/reagents, var/atom/target, var/amount, var/mob/user)
+/proc/splash_sub(var/datum/reagents/reagents, var/atom/target, var/amount, var/mob/user = null)
 	if (amount == 0 || reagents.is_empty())
-		to_chat(user, "<span class='warning'>There's nothing to splash with!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>There's nothing to splash with!</span>")
 		return -1
 
 	reagents.reaction(target, TOUCH)
 
 	if (amount > 0)
 		reagents.remove_any(amount)
-		if(user.Adjacent(target))
-			user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
-		                     "<span class='notice'>You splash some of the solution onto \the [target].</span>")
+		if(user)
+			if(user.Adjacent(target))
+				user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
+			                     "<span class='notice'>You splash some of the solution onto \the [target].</span>")
 	else
 		reagents.clear_reagents()
-		if(user.Adjacent(target))
-			user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
-		                     "<span class='notice'>You splash the solution onto \the [target].</span>")
+		if(user)
+			if(user.Adjacent(target))
+				user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
+			                     "<span class='notice'>You splash the solution onto \the [target].</span>")
 
 /**
  * Transfers reagents to other containers/from dispensers. Handles splashing as well.

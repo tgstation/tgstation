@@ -6,6 +6,7 @@
 	nodamage = 1
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_MOBS|PROJREACT_BLOB
 	penetration = -1
+	fire_sound = 'sound/weapons/wave.ogg'
 
 /obj/item/projectile/gravitywell/bresenham_step(var/distA, var/distB, var/dA, var/dB)
 	if(..())

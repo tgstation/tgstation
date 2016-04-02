@@ -7,6 +7,7 @@
 	phase_type = PROJREACT_WINDOWS
 	penetration = 5 //bullets can now by default move through up to 5 windows, or 2 reinforced windows, or 1 plasma window. (reinforced plasma windows still have enough dampening to completely block them)
 	flag = "bullet"
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/embed = 1
 
 /obj/item/projectile/bullet/on_hit(var/atom/target, var/blocked = 0)
@@ -23,12 +24,14 @@
 	weaken = 5
 
 /obj/item/projectile/bullet/weakbullet
+	name = "weak bullet"
 	icon_state = "bbshell"
 	damage = 10
 	stun = 5
 	weaken = 5
 	embed = 0
 /obj/item/projectile/bullet/weakbullet/booze
+	name = "booze bullet"
 	on_hit(var/atom/target, var/blocked = 0)
 		if(..(target, blocked))
 			var/mob/living/M = target
@@ -56,6 +59,7 @@
 	damage = 20
 	stun = 5
 	weaken = 5
+	fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 
 /obj/item/projectile/bullet/midbullet/lawgiver
 	damage = 10
@@ -66,7 +70,7 @@
 	damage = 25
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
-	name = "co bullet"
+	name = "CO2 bullet"
 	damage = 20
 	damage_type = OXY
 
@@ -111,6 +115,7 @@
 	animate_movement = 2
 	custom_impact = 1
 	linear_movement = 0
+	fire_sound = 'sound/weapons/spur_high.ogg'
 
 /obj/item/projectile/spur/OnFired()
 	..()
@@ -216,11 +221,14 @@
 
 
 /obj/item/projectile/bullet/gatling
+	name = "gatling bullet"
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "minigun"
 	damage = 30
+	fire_sound = 'sound/weapons/gatling_fire.ogg'
 
 /obj/item/projectile/bullet/osipr
+	name = "\improper OSIPR bullet"
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "osipr"
 	damage = 50
@@ -229,6 +237,7 @@
 	destroy = 1
 	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
 	bounces = 1
+	fire_sound = 'sound/weapons/osipr_fire.ogg'
 
 /obj/item/projectile/bullet/hecate
 	name = "high penetration bullet"
@@ -242,6 +251,7 @@
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
 	penetration = 20//can hit 3 mobs at once, or go through a wall and hit 2 more mobs, or go through an rwall/blast door and hit 1 mob
 	var/superspeed = 1
+	fire_sound = 'sound/weapons/hecate_fire.ogg'
 
 /obj/item/projectile/bullet/hecate/OnFired()
 	..()
@@ -270,6 +280,7 @@
 		return 0
 
 /obj/item/projectile/bullet/a762x55
+	name = "a762x55 round"
 	damage = 65
 	stun = 5
 	weaken = 5
@@ -277,6 +288,7 @@
 	penetration = 10
 
 /obj/item/projectile/bullet/beegun
+	name = "bee"
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "beegun"
 	damage = 5
@@ -364,6 +376,7 @@
 	damage = 5
 	damage_type = TOX
 	flag = "bio"
+	fire_sound = 'sound/weapons/hivehand.ogg'
 
 /obj/item/projectile/bullet/stinger/OnFired()
 	var/choice = rand(1,4)
@@ -394,11 +407,23 @@
 		vial = null
 	if(user)
 		user = null
+	..()
+
+/obj/item/projectile/bullet/vial/Bump(atom/A as mob|obj|turf|area) //to allow vials to splash onto walls
+	if(!A)
+		return
+	if(vial)
+		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = vial
+		if(!V.is_open_container())
+			V.flags |= OPENCONTAINER
+		if(istype(A, /turf/simulated/wall))
+			splash_sub(V.reagents, A, V.reagents.total_volume)
+			bullet_die()
+			return 1
+	..()
 
 /obj/item/projectile/bullet/vial/on_hit(var/atom/atarget, var/blocked = 0)
 	..()
-	if(!user)
-		return
 	if(vial)
 		var/obj/item/weapon/reagent_containers/glass/beaker/vial/V = vial
 		if(!V.is_open_container())
@@ -408,7 +433,7 @@
 			atarget.visible_message("<span class='warning'>\The [V] shatters, dousing [atarget] in its contents!</span>",
 								"<span class='warning'>\The [V] shatters, dousing you in its contents!</span>")
 
-		V.transfer(atarget, user, TRUE, FALSE, V.reagents.total_volume)
+		splash_sub(V.reagents, atarget, V.reagents.total_volume)
 
 		qdel(V)
 		vial = null
@@ -430,6 +455,24 @@
 	var/heavy_damage_range = 0
 	var/medium_damage_range = 0
 	var/light_damage_range = 0
+	fire_sound = 'sound/effects/Explosion1.ogg'
+
+/obj/item/projectile/bullet/blastwave/New()
+	..()
+	var/sound = rand(1,6)
+	switch(sound)
+		if(1)
+			fire_sound = 'sound/effects/Explosion1.ogg'
+		if(2)
+			fire_sound = 'sound/effects/Explosion2.ogg'
+		if(3)
+			fire_sound = 'sound/effects/Explosion3.ogg'
+		if(4)
+			fire_sound = 'sound/effects/Explosion4.ogg'
+		if(5)
+			fire_sound = 'sound/effects/Explosion5.ogg'
+		if(6)
+			fire_sound = 'sound/effects/Explosion6.ogg'
 
 /obj/item/projectile/bullet/blastwave/OnFired()
 	..()

@@ -6,6 +6,7 @@
 	nodamage = 1
 	layer = 13
 	flag = "energy"
+	fire_sound = 'sound/weapons/ion.ogg'
 
 /obj/item/projectile/ion/Bump(atom/A as mob|obj|turf|area)
 	if(!bumped && ((A != firer) || reflected))
@@ -31,6 +32,7 @@
 	layer = 13
 	flag = "energy"
 	var/temperature = 300
+	fire_sound = 'sound/weapons/pulse3.ogg'
 
 /obj/item/projectile/temp/OnFired()
 	..()
@@ -38,6 +40,8 @@
 	var/obj/item/weapon/gun/energy/temperature/T = shot_from
 	if(istype(T))
 		src.temperature = T.temperature
+	else
+		temperature = rand(100,600) //give it a random temp value if it's not fired from a temp gun
 
 	switch(temperature)
 		if(501 to INFINITY)
@@ -130,6 +134,7 @@
 	nodamage = 1
 	flag = "energy"
 	var/mutstrength = 10
+	fire_sound = 'sound/effects/stealthoff.ogg'
 
 /obj/item/projectile/energy/floramut/on_hit(var/atom/target, var/blocked = 0)
 	var/mob/living/M = target
@@ -176,6 +181,7 @@
 	damage_type = TOX
 	nodamage = 1
 	flag = "energy"
+	fire_sound = 'sound/effects/stealthoff.ogg'
 
 /obj/item/projectile/energy/florayield/on_hit(var/atom/target, var/blocked = 0)
 	var/mob/M = target
@@ -208,6 +214,7 @@
 	damage_type = BRUTE
 	flag = "energy"
 	var/range = 2
+	fire_sound = 'sound/weapons/Taser.ogg'
 
 obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)

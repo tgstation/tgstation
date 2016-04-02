@@ -37,7 +37,8 @@
 #define ARCHAEO_DICE 36
 #define ARCHAEO_SPACESUIT 37
 #define ARCHAEO_LANCE 38
-#define MAX_ARCHAEO 38
+#define ARCHAEO_ROULETTE 39
+#define MAX_ARCHAEO 39
 //eggs
 //droppings
 //footprints

@@ -33,7 +33,8 @@
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
 		if(has_sound)
-			playsound(get_turf(src), sound_on, 50, 1)
+			if(get_turf(src))
+				playsound(get_turf(src), sound_on, 50, 1)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)

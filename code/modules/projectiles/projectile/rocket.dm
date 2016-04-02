@@ -9,6 +9,7 @@
 	flag = "bullet"
 	var/embed = 1
 	var/picked_up_speed = 5
+	fire_sound = 'sound/weapons/rocket.ogg'
 
 /obj/item/projectile/rocket/process_step()
 	if(src.loc)

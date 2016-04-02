@@ -1574,6 +1574,7 @@
 #include "code\modules\projectiles\guns\projectile\pneumatic.dm"
 #include "code\modules\projectiles\guns\projectile\revolver.dm"
 #include "code\modules\projectiles\guns\projectile\rocketlauncher.dm"
+#include "code\modules\projectiles\guns\projectile\roulette.dm"
 #include "code\modules\projectiles\guns\projectile\shotgun.dm"
 #include "code\modules\projectiles\guns\projectile\sniper.dm"
 #include "code\modules\projectiles\guns\projectile\stickylauncher.dm"

@@ -775,3 +775,68 @@
 			reagents.add_reagent("toxin", 1 + round(potency/10, 1))
 			reagents.add_reagent("spiritbreaker", 10)
 			bitesize = 1+round(reagents.total_volume/2, 1)*/
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit
+	name = "no-fruit"
+	desc = "Any plant you want, at your fingertips."
+	icon_state = "nofruit"
+	potency = 15
+	filling_color = "#FFFCCC"
+	plantname = "nofruit"
+	var/list/available_fruits = list()
+	var/switching = 0
+	var/current_path = null
+	var/counter = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit/New()
+	..()
+	available_fruits = existing_typesof(/obj/item/weapon/reagent_containers/food/snacks/grown)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit/verb/pick_leaf()
+	set name = "Pick no-fruit leaf"
+	set category = "Object"
+	set src in range(1)
+
+	if(usr.isUnconscious())
+		to_chat(usr, "You can't do that while unconscious.")
+		return
+
+	verbs -= /obj/item/weapon/reagent_containers/food/snacks/grown/nofruit/verb/pick_leaf
+
+	randomize()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit/attackby(obj/item/weapon/W, mob/user)
+	if(switching)
+		if(!current_path)
+			return
+		switching = 0
+		var/N = rand(1,3)
+		switch(N)
+			if(1)
+				playsound(user, 'sound/weapons/genhit1.ogg', 50, 1)
+			if(2)
+				playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
+			if(3)
+				playsound(user, 'sound/weapons/genhit3.ogg', 50, 1)
+		user.visible_message("[user] smacks \the [src] with \the [W].","You smack \the [src] with \the [W].")
+		if(src.loc == user)
+			user.drop_item(src, force_drop = 1)
+			var/I = new current_path(get_turf(user))
+			user.put_in_hands(I)
+		else
+			new current_path(get_turf(src))
+		qdel(src)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit/proc/randomize()
+	switching = 1
+	spawn()
+		while(switching)
+			current_path = available_fruits[counter]
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/G = current_path
+			icon_state = initial(G.icon_state)
+			playsound(src, 'sound/misc/click.ogg', 50, 1)
+			sleep(1)
+			if(counter == available_fruits.len)
+				counter = 0
+			counter++

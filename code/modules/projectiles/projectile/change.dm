@@ -6,6 +6,7 @@
 	nodamage = 1
 	flag = "energy"
 	var/changetype=null
+	fire_sound = 'sound/weapons/radgun.ogg'
 
 /obj/item/projectile/change/on_hit(var/atom/change)
 	var/type = changetype

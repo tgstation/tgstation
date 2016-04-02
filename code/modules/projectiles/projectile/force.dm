@@ -4,6 +4,7 @@
 	icon_state = "ice_1"
 	damage = 25
 	flag = "energy"
+	fire_sound = 'sound/weapons/radgun.ogg'
 
 /obj/item/projectile/forcebolt/strong
 	name = "force bolt"

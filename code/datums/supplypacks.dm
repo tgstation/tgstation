@@ -1409,7 +1409,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/seeds/random,
 					/obj/item/seeds/random,
 					/obj/item/seeds/random,
-					/obj/item/seeds/kudzuseed)
+					/obj/item/seeds/kudzuseed,
+					/obj/item/seeds/nofruitseed)
 	cost = 15
 	containertype = /obj/structure/closet/crate/secure/hydrosec
 	containername = "Exotic Seeds crate"

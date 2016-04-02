@@ -308,6 +308,10 @@
 	seed_type = "cinnamomum"
 	vending_cat = "trees"
 
+/obj/item/seeds/nofruitseed
+	seed_type = "nofruit"
+	vending_cat = "fruits"
+
 // Chili plants/variants.
 /datum/seed/chili
 
@@ -1424,3 +1428,22 @@
 	production = 1
 	yield = 1
 	potency = 1
+
+/datum/seed/nofruit
+	name = "nofruit"
+	seed_name = "no-fruit"
+	display_name = "no-fruit vine"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	packet_icon = "seed-nofruit"
+	plant_icon = "nofruit"
+	chems = list("nothing" = list(1,20))
+
+	lifespan = 30
+	maturation = 5
+	production = 5
+	yield = 1
+	potency = 10
+	water_consumption = 6
+	nutrient_consumption = 0.10
+	growth_stages = 4

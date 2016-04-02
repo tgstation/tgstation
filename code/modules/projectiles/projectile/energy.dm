@@ -5,6 +5,7 @@
 	layer = 13
 	damage_type = BURN
 	flag = "energy"
+	fire_sound = 'sound/weapons/Taser.ogg'
 
 
 /obj/item/projectile/energy/electrode
@@ -24,12 +25,13 @@
 
 
 /obj/item/projectile/energy/declone
-	name = "declone"
+	name = "decloner bolt"
 	icon_state = "declone"
 	damage = 12
 	nodamage = 0
 	damage_type = CLONE
 	irradiate = 40
+	fire_sound = 'sound/weapons/pulse3.ogg'
 
 /obj/item/projectile/energy/bolt
 	name = "bolt"
@@ -42,13 +44,14 @@
 
 
 /obj/item/projectile/energy/bolt/large
-	name = "largebolt"
+	name = "large bolt"
 	damage = 20
 
 /obj/item/projectile/energy/plasma
-	name = "plasma"
+	name = "plasma bolt"
 	icon_state = "plasma"
 	var/knockdown_chance = 0
+	fire_sound = 'sound/weapons/elecfire.ogg'
 
 /obj/item/projectile/energy/plasma/on_hit(var/atom/target, var/blocked = 0)
 	if (..(target, blocked))
@@ -87,20 +90,21 @@
 	icon_state = "plasma3"
 
 /obj/item/projectile/energy/neurotoxin
-	name = "neuro"
+	name = "neurotoxin bolt"
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
 	weaken = 5
 
 /obj/item/projectile/energy/rad
-	name = "rad"
+	name = "radiation bolt"
 	icon_state = "rad"
 	damage = 30
 	damage_type = TOX
 	nodamage = 0
 	weaken = 10
 	stutter = 10
+	fire_sound = 'sound/weapons/radgun.ogg'
 
 	on_hit(var/atom/hit)
 		if(ishuman(hit))
@@ -120,11 +124,13 @@
 	nodamage = 0
 	damage = 20
 	damage_type = BURN
+	fire_sound = 'sound/weapons/mmlbuster.ogg'
 
 /obj/item/projectile/energy/megabuster
 	name = "buster pellet"
 	icon_state = "megabuster"
 	nodamage = 1
+	fire_sound = 'sound/weapons/megabuster.ogg'
 
 /obj/item/projectile/energy/osipr
 	name = "dark energy ball"
@@ -142,6 +148,7 @@
 	bounces = -1
 	phase_type = PROJREACT_OBJS|PROJREACT_MOBS
 	penetration = -1
+	fire_sound = 'sound/weapons/osipr_altfire.ogg'
 
 /obj/item/projectile/energy/osipr/Destroy()
 	var/turf/T = loc

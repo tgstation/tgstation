@@ -3,7 +3,7 @@
 #define MAGAZINE 2 //the gun takes a magazine into gun storage
 
 /obj/item/weapon/gun/projectile
-	desc = "A classic revolver. Uses 357 ammo"
+	desc = "A classic revolver. Uses 357 ammo."
 	name = "revolver"
 	icon_state = "revolver"
 	caliber = list("357" = 1)

@@ -786,6 +786,11 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
 
+/datum/recipe/nofruitpie
+	reagents = list("flour" = 10)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/nofruit)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/nofruitpie
+
 // Kebabs //////////////////////////////////////////////////////
 
 /datum/recipe/syntikabob

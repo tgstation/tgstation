@@ -42,7 +42,7 @@
 	new /obj/item/projectile/immovablerod(locate(startx, starty, 1), locate(endx, endy, 1))
 
 /obj/item/projectile/immovablerod
-	name = "Immovable Rod"
+	name = "\improper Immovable Rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"

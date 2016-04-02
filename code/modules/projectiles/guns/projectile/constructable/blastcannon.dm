@@ -13,6 +13,7 @@
 	caliber = null
 	ammo_type = null
 	fire_sound = null
+	fire_volume = 500
 	conventional_firearm = 0
 	silenced = 1
 	var/obj/item/device/transfer_valve/bomb = null
@@ -149,20 +150,6 @@
 			bomb_air_contents_2 = null
 
 			user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [A]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [A]!</span>")
-			var/sound = rand(1,6)
-			switch(sound)
-				if(1)
-					playsound(user, 'sound/effects/Explosion1.ogg', 100, 1)
-				if(2)
-					playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
-				if(3)
-					playsound(user, 'sound/effects/Explosion3.ogg', 100, 1)
-				if(4)
-					playsound(user, 'sound/effects/Explosion4.ogg', 100, 1)
-				if(5)
-					playsound(user, 'sound/effects/Explosion5.ogg', 100, 1)
-				if(6)
-					playsound(user, 'sound/effects/Explosion6.ogg', 100, 1)
 
 			heavy_damage_range = round(range*0.25)
 			medium_damage_range = round(range*0.5)
