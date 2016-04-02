@@ -1054,6 +1054,7 @@
 #include "code\modules\events\carp_migration.dm"
 #include "code\modules\events\comms_blackout.dm"
 #include "code\modules\events\communications_blackout.dm"
+#include "code\modules\events\mob_swarm.dm"
 #include "code\modules\events\disease_outbreak.dm"
 #include "code\modules\events\electrical_storm.dm"
 #include "code\modules\events\event.dm"
