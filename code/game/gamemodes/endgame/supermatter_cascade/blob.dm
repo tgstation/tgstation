@@ -10,7 +10,6 @@
 	//light_color="#0066FF"
 	layer = LIGHTING_LAYER + 1
 
-	var/spawned=0 // DIR mask
 	var/next_check=0
 	var/list/avail_dirs = list(NORTH,SOUTH,EAST,WEST)
 
@@ -40,6 +39,9 @@
 	var/pdir = pick(avail_dirs)
 	avail_dirs -= pdir
 	var/turf/T=get_step(src,pdir)
+	if(istype(T, /turf/unsimulated/wall/supermatter/))
+		avail_dirs -= pdir
+		return
 
 	// EXPAND DONG
 	if(isturf(T))
@@ -58,10 +60,9 @@
 					A = null
 				tcheck(80,1)
 			T.ChangeTurf(type)
-
-	if((spawned & (NORTH|SOUTH|EAST|WEST)) == (NORTH|SOUTH|EAST|WEST))
-		processing_objects -= src
-		return
+			var/turf/unsimulated/wall/supermatter/SM = T
+			if(SM.avail_dirs)
+				SM.avail_dirs -= get_dir(T, src)
 
 /turf/unsimulated/wall/supermatter/attack_paw(mob/user as mob)
 	return attack_hand(user)
