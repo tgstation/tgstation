@@ -62,7 +62,7 @@
 //			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 	var/donator_icon = ""
 	if(is_donator(key) && !holder.fakekey)
-		donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
+		donator_icon = " <img class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
 	if(holder)
 		if(holder.fakekey && is_donator(holder.fakekey))
 			donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[holder.fakekey]'>"
@@ -71,13 +71,13 @@
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
-						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC: [donator_icon]</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:[donator_icon]</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 					else
-						C << "<span class='adminobserverooc'><span class='prefix'>OOC: [donator_icon]</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+						C << "<span class='adminobserverooc'><span class='prefix'>OOC:[donator_icon]</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC: [donator_icon]</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:[donator_icon]</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
 			else if(!(key in C.prefs.ignoring))
-				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC: [donator_icon]</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:[donator_icon]</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
