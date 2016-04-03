@@ -664,3 +664,123 @@
 #undef SYNDI
 #undef HEART
 #undef SMILE
+
+/obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+	name = "ingredients box"
+	icon_state = "donk_kit"
+	item_state = null
+
+/obj/item/weapon/storage/box/ingredients/wildcard
+	item_state = "wildcard"
+
+/obj/item/weapon/storage/box/ingredients/wildcard/New()
+	..()
+	for(var/i in 1 to 6)
+		//Pick common ingredients
+		var/randomFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+				  			  /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+							  /obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/corn)
+		new randomFood(src)
+	//Pick one random rare ingredient
+	var/randomRareFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+						      /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold,
+			 				  /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili,
+				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+	new randomRareFood(src)
+
+/obj/item/weapon/storage/box/ingredients/fiesta
+	item_state = "fiesta"
+
+/obj/item/weapon/storage/box/ingredients/fiesta/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/weapon/storage/box/ingredients/italian
+	item_state = "italian"
+
+/obj/item/weapon/storage/box/ingredients/italian/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+
+/obj/item/weapon/storage/box/ingredients/vegetarian
+	item_state = "vegetarian"
+
+/obj/item/weapon/storage/box/ingredients/vegetarian/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+
+/obj/item/weapon/storage/box/ingredients/sweets
+	item_state = "sweets"
+
+/obj/item/weapon/storage/box/ingredients/sweets/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cherries(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/icecream(src)
+
+/obj/item/weapon/storage/box/ingredients/carnivore
+	item_state = "carnivore"
+
+/obj/item/weapon/storage/box/ingredients/carnivore/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
+
+/obj/item/weapon/storage/box/ingredients/exotic
+	item_state = "exotic"
+
+/obj/item/weapon/storage/box/ingredients/exotic/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/condiment/soysauce(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage(src)
+		new	/obj/item/weapon/reagent_containers/food/snacks/soydope(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+
+/obj/item/weapon/storage/box/ingredients/New()
+	..()
+	if(item_state)
+		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
+/obj/item/weapon/storage/box/emptysandbags
+	name = "box of empty sandbags"
+
+/obj/item/weapon/storage/box/emptysandbags/New()
+	..()
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)

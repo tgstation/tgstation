@@ -1217,6 +1217,11 @@
 		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
 		see_in_dark = 1
 
+	if(sight_mode & BORGMATERIAL)
+		sight |= SEE_OBJS
+		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		see_in_dark = 1
+
 	if(sight_mode & BORGXRAY)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_invisible = SEE_INVISIBLE_LIVING

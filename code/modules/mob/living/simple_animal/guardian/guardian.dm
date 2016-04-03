@@ -354,7 +354,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
-		user << "You already have a [mob_name]!"
+		user << "<span class='holoparasite'>You already have a [mob_name]!</span>"
 		return
 	if(user.mind && user.mind.changeling && !allowling)
 		user << "[ling_failure]"
@@ -415,6 +415,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("Assassin")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
 
+	var/list/guardians = user.hasparasites()
+	if(guardians.len && !allowmultiple)
+		user << "<span class='holoparasite'>You already have a [mob_name]!</span>" //nice try, bucko
+		used = FALSE
+		return
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.summoner = user
 	G.key = key
@@ -446,7 +451,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Assassin")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
@@ -457,19 +462,22 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
+ <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <br>
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
- <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
- <br>
- <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
- <br>
- <b>Support</b>: Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
+ <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
- <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br
+ <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
+ <br>
+ <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
+ <br>
+ <b>Support</b>: Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
+ <br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()

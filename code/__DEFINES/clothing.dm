@@ -47,6 +47,8 @@
 #define slot_legcuffed		19
 #define slot_drone_storage	20
 
+#define slots_amt			20 // Keep this up to date!
+
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts - also used for limbs

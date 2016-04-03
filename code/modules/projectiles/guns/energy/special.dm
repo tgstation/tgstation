@@ -93,6 +93,7 @@
 	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
 	var/overheat_time = 16
 	unique_rename = 1
+	weapon_weight = WEAPON_HEAVY
 	origin_tech = "combat=2;powerstorage=1"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/super
@@ -144,6 +145,7 @@
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+	weapon_weight = WEAPON_LIGHT
 	unique_rename = 0
 	overheat_time = 20
 

@@ -14,67 +14,61 @@
 	pull_icon.screen_loc = ui_drone_pull
 	static_inventory += pull_icon
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "right hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand) //Hand being true means the LEFT hand is active
-		inv_box.icon_state = "hand_r_active"
+	inv_box.icon_state = "hand_r"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
-	inv_box.layer = 19
-	r_hand_hud_object = inv_box
 	static_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "left hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand) //Hand being true means the LEFT hand is active
-		inv_box.icon_state = "hand_l_active"
+	inv_box.icon_state = "hand_l"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
-	inv_box.layer = 19
-	l_hand_hud_object = inv_box
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "internal storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_storage
 	inv_box.slot_id = slot_drone_storage
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "head/mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_head
 	inv_box.slot_id = slot_head
-	inv_box.layer = 19
 	static_inventory += inv_box
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1_m"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
 	static_inventory += using
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
 	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.update_icon(mymob)
+
+	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[inv.slot_id] = inv
+			inv.update_icon()
 
 
 /datum/hud/drone/persistant_inventory_update()

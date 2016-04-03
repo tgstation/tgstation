@@ -87,6 +87,8 @@
 /datum/weather/ash_storm/storm_act(mob/living/L)
 	if("mining" in L.faction)
 		return
+	if(istype(L.loc, /obj/mecha))
+		return
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/thermal_protection = H.get_thermal_protection()
