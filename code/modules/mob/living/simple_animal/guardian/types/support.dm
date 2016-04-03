@@ -107,6 +107,10 @@
 		do_attack_animation(A)
 		if(do_mob(src, A, 60)) //now start the channel
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, T)
+			if(isliving(A))
+				var/mob/living/L = A
+				L.flash_eyes()
+			A.visible_message("<span class='danger'>[A] disappears in a flash of light!</span>", "<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
 			do_teleport(A, beacon, 0)
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))
 		else

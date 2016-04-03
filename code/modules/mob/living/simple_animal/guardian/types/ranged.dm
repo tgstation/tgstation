@@ -98,7 +98,7 @@
 
 
 /obj/item/effect/snare/Crossed(AM as mob|obj)
-	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !hasmatchingsummoner(AM))
+	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
 		spawner.summoner << "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>"
 		var/list/guardians = spawner.summoner.hasparasites()
 		for(var/para in guardians)
