@@ -71,3 +71,33 @@
 	text += "	[ply.demoninfo.obligationlore()]</br>"
 	text += "	[ply.demoninfo.banishlore()]</br>"
 	return text
+
+/datum/game_mode/proc/update_demon_icons_added(datum/mind/demon_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEMON]
+	hud.join_hud(demon_mind.current)
+	set_antag_hud(demon_mind.current, "demon")
+
+/datum/game_mode/proc/update_demon_icons_removed(datum/mind/demon_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEMON]
+	hud.leave_hud(demon_mind.current)
+	set_antag_hud(demon_mind.current, null)
+
+/datum/game_mode/proc/update_sintouch_icons_added(datum/mind/sin_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SINTOUCHED]
+	hud.join_hud(sin_mind.current)
+	set_antag_hud(sin_mind.current, "sintouched")
+
+/datum/game_mode/proc/update_sintouch_icons_removed(datum/mind/sin_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SINTOUCHED]
+	hud.leave_hud(sin_mind.current)
+	set_antag_hud(sin_mind.current, null)
+
+/datum/game_mode/proc/update_soulless_icons_added(datum/mind/soulless_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SOULLESS]
+	hud.join_hud(soulless_mind.current)
+	set_antag_hud(soulless_mind.current, "soulless")
+
+/datum/game_mode/proc/update_soulless_icons_removed(datum/mind/soulless_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SOULLESS]
+	hud.leave_hud(soulless_mind.current)
+	set_antag_hud(soulless_mind.current, null)
