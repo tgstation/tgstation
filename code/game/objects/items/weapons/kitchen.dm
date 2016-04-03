@@ -65,7 +65,7 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP_ACCURATE
 
-/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
 		if(user.disabilities & CLUMSY && prob(50))
 			M = user
