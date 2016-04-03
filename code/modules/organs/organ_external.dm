@@ -332,7 +332,12 @@
 //Limb cancer is relatively benign until it grows large, then it cripples you and metastases
 /datum/organ/external/handle_cancer()
 
-	..()
+	if(..())
+		return 1
+
+	if(!is_existing()) //Limb has been destroyed or amputated, cancer's over as far as we are concerned since there is no limb to grow on anymore
+		cancer_stage = 0
+		return 1
 
 	switch(cancer_stage)
 		if(CANCER_STAGE_SMALL_TUMOR to CANCER_STAGE_LARGE_TUMOR) //Small tumors will not damage your limb, but might flash pain
@@ -351,6 +356,11 @@
 				owner.apply_damage(0.5, CLONE, src)
 			if(prob(1))
 				owner.add_cancer() //Add a new cancerous growth
+
+	//Cancer has a single universal sign. Coughing. Has a chance to happen every tick
+	//Most likely not medically accurate, but whocares.ru
+	if(prob(1))
+		owner.emote("cough")
 
 //Updating germ levels. Handles organ germ levels and necrosis.
 /*
@@ -643,6 +653,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 			owner.visible_message("<span class='danger'>[owner.name]'s [display_name] flies off in an arc.</span>", \
 			"<span class='danger'>Your [display_name] goes flying off!</span>", \
 			"<span class='danger'>You hear a terrible sound of ripping tendons and flesh.</span>")
+
+			//Here, we assign the organ health facts from its old position on the body
+			//Type check to avoid to rewrite everything else, for now
+			if(istype(organ, /obj/item/weapon/organ))
+				var/obj/item/weapon/organ/O = organ
+				O.cancer_stage = cancer_stage
 
 			//Throw organs around
 			var/randomdir = pick(cardinal)
@@ -1160,6 +1176,9 @@ obj/item/weapon/organ
 	//They are transferred from the mob from which the organ was removed.
 	//Currently the only "butchering drops" which are going to be stored here are teeth
 	var/list/butchering_drops = list()
+
+	//Store health facts. Right now limited exclusively to cancer, but should likely include all limb stats eventually
+	var/cancer_stage = 0
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)

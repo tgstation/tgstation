@@ -215,6 +215,8 @@
 			target.butchering_drops += BP //Transfer
 			B.butchering_drops -= BP
 
+	affected.cancer_stage = B.cancer_stage
+
 	var/datum/organ/internal/brain/copied
 	if(B.organ_data)
 		var/datum/organ/internal/I = B.organ_data
