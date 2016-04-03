@@ -73,7 +73,7 @@
 		if(!curr && active)
 			last.expel(src, loc, dir)
 
-		sleep(1)
+		stoplag()
 		if(!(count--))
 			active = 0
 	return
