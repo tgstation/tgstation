@@ -2,7 +2,7 @@
 /obj/item/mounted/poster
 	name = "rolled-up poster"
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/obj/posters.dmi'
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	w_type=RECYK_MISC
@@ -46,7 +46,7 @@
 obj/structure/sign/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper. "
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/obj/posters.dmi'
 	anchored = 1
 	var/serial_number	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = 0
@@ -60,7 +60,6 @@ obj/structure/sign/poster/New(var/serial)
 		name += "Award of Sufficiency"
 		desc += "The mere sight of it makes you very proud."
 		icon_state = "goldstar"
-
 	else
 		if(serial_number == loc)
 			serial_number = rand(1, poster_designs.len)	//This is for the mappers that want individual posters without having to use rolled posters.

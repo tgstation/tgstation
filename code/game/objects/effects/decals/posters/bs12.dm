@@ -1,5 +1,5 @@
 // baystation12 posters
-/datum/poster/bay_1
+/datum/poster/bay_1 //serial_number ends up 1
 	icon_state="bsposter1"
 	name = "Unlucky Space Explorer"
 	desc = "This particular one depicts a skeletal form within a space suit."
@@ -143,8 +143,3 @@
 	icon_state="bsposter29"
 	name = "Winter Is Coming"
 	desc = "On the poster is a frighteningly large wolf, he warns: \"Only YOU can keep the station from freezing during planetary occultation!\""
-
-/datum/poster/bay_30
-	icon_state="bsposter30"
-	name = "Kill Catbeasts"
-	desc = "This poster has large text reading \"KILL CAT BEAST\", as well as two small images of freaks of nature. The official Nanotrasen seal can be seen at the bottom."
