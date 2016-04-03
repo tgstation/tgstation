@@ -102,10 +102,11 @@
 
 	var/turf/T = get_turf(A)
 	if(beacon.z != T.z)
-		src << "<span class='danger'><B>You begin to warp [A]</span></B>"
+		src << "<span class='danger'><B>You begin to warp [A].</span></B>"
+		A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", "<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
 		do_attack_animation(A)
 		if(do_mob(src, A, 60)) //now start the channel
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(T))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, T)
 			do_teleport(A, beacon, 0)
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))
 		else
