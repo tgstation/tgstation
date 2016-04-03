@@ -1,0 +1,8 @@
+author: Nullbear
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added Chemical Bombs."
+  - tweak: "Nerfed Bombs."
+  - rscadd: "Made Bombs Emaggable."
