@@ -16,8 +16,8 @@
 	blocks_air = 1
 	layer = MOB_LAYER + 0.05
 	temperature = TCMB
-	var/environment_type = "basalt"
-	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid/basalt/lava_land_surface //For basalt vs normal asteroid
+	var/environment_type = "asteroid" //"basalt"
+	var/turf/simulated/floor/plating/asteroid/turf_type = /turf/simulated/floor/plating/asteroid //turf/simulated/floor/plating/asteroid/basalt/lava_land_surface //For basalt vs normal asteroid
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?

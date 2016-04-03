@@ -272,7 +272,7 @@
 	dwidth = 1
 	width = 3
 	height = 4
-	var/target_area = /area/lavaland/surface/outdoors
+	var/target_area = /area/mine/unexplored //area/lavaland/surface/outdoors
 
 /obj/docking_port/stationary/random/initialize()
 	..()
