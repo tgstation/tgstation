@@ -734,7 +734,75 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
 
+//Lavaland Surface Boss Gol'goth-Een the Ancient
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/boss
+	name = "Gol'goth-Een the Ancient"
+	desc = "If a goliath is massive... this thing is bigger than massive."
+	damage_coeff = list(BRUTE = 0, BURN = 0, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //Our weapons are useless!
+	//Health not listed because it can not be defeated through damage
+	melee_damage_lower = 40
+	melee_damage_upper = 40
+	del_on_death = 1
+	var/obj/structure/lavaland_door/gate
+	var/tendrilSpawnCooldown = 0
+	var/currentSpawnTime = 10
+	var/TENDRILSPAWNTIMEMAX = 15
+	var/TENDRILSPAWNTIMEMIN = 10
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/boss/New()
+	..()
+	transform *= 2
+	for(var/Pl in player_list)
+		var/mob/P = Pl
+		if(P.z == z)
+			P.show_message("<span class='danger'><B>You here a massive roar in the distance.</B></span>", 2,"<span class='danger'><B>You feel the force of a shockwave.</B></span>", 1)
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/boss/Life()
+	tendrilSpawnCooldown++
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/boss/OpenFire()
+	if(tendrilSpawnCooldown > currentSpawnTime)
+		visible_message("<span class='danger'>[src] slams the ground causing a tendril to come up beneath [target]!</span>")
+		new /mob/living/simple_animal/hostile/spawner/lavalandBoss(get_turf(target))
+		tendrilSpawnCooldown = 0
+		currentSpawnTime = rand(TENDRILSPAWNTIMEMIN,TENDRILSPAWNTIMEMAX)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/boss/Destroy()
+	LavalandGate.Open()
+	..()
+
 //Nests
+
+/mob/living/simple_animal/hostile/spawner/lavalandBoss
+	name = "necropolis tendril"
+	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "tendril"
+	icon_living = "tendril"
+	icon_dead = "tendril"
+	faction = list("mining")
+	health = 150
+	maxHealth = 150
+	max_mobs = 5
+	spawn_time = 30 //3 seconds default
+	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+	spawn_text = "emerges from"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	layer = MOB_LAYER-0.1
+	loot = list(/obj/effect/collapse)
+
+/mob/living/simple_animal/hostile/spawner/lavalandBoss/New()
+	..()
+	mob_type = pick(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,/mob/living/simple_animal/hostile/asteroid/goliath/beast,/mob/living/simple_animal/hostile/asteroid/hivelord/legion)
+
+
+
 
 /mob/living/simple_animal/hostile/spawner/lavaland
 	name = "necropolis tendril"
@@ -758,10 +826,20 @@
 	del_on_death = 1
 	var/gps = null
 
+
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
 	gps = new /obj/item/device/gps/internal(src)
 
+
+/mob/living/simple_animal/hostile/spawner/lavaland/initialize()
+	LavalandGate.tendrils |= src
+
+
+/mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
+	LavalandGate.tendrils -= src
+	LavalandGate.check_tendrils()
+	..()
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"

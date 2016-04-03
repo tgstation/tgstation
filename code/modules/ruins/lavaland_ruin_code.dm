@@ -1,3 +1,8 @@
+#define TENDRILS "tendrils"
+#define BOSS "boss"
+#define OPEN "open"
+
+var/global/obj/structure/lavaland_door/LavalandGate
 /obj/structure/lavaland_door
 	name = "necropolis gate"
 	desc = "An imposing, seemingly impenetrable door."
@@ -9,12 +14,35 @@
 	bound_height = 96
 	burn_state = LAVA_PROOF
 	luminosity = 1
+	var/list/tendrils = list()
+	var/state = TENDRILS //Possible states: TENDRILS, tendrils are active and need defeating, BOSS, Boss is spawned and needs defeating, OPEN, all enemies defeated, gate is open
+	var/mob/living/simple_animal/hostile/asteroid/goliath/beast/boss/boss = /mob/living/simple_animal/hostile/asteroid/goliath/beast/boss
+
+/obj/structure/lavaland_door/New()
+	..()
+	LavalandGate = src
+
+
+/obj/structure/lavaland_door/proc/check_tendrils()
+	if(state != TENDRILS) //were either open or in the boss phase
+		return
+	if(!tendrils.len)
+		new boss(locate(x,y-2,z))
+		state = BOSS
+
+/obj/structure/lavaland_door/proc/Open()
+	state = OPEN
+	world << "<span class='cultlarge'>The gate of the necropolis has been opened... but it got stuck!</span>" //Gate gets stuck every time.
 
 /obj/structure/lavaland_door/singularity_pull()
 	return 0
 
 /obj/structure/lavaland_door/Destroy()
 	return QDEL_HINT_LETMELIVE
+
+#undef TENDRILS
+#undef BOSS
+#undef OPEN
 
 /obj/machinery/lavaland_controller
 	name = "weather control machine"
