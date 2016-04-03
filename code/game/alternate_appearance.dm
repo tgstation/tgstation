@@ -48,7 +48,6 @@
 		if(M.client)
 			M.client.images -= img
 		if(M.viewing_alternate_appearances && M.viewing_alternate_appearances.len)
-			M.viewing_alternate_appearances[key] = null
 			M.viewing_alternate_appearances -= key
 			if(!M.viewing_alternate_appearances.len)
 				M.viewing_alternate_appearances = null
@@ -61,7 +60,6 @@
 /datum/alternate_appearance/proc/remove()
 	hide()
 	if(owner && owner.alternate_appearances)
-		owner.alternate_appearances[key] = null
 		owner.alternate_appearances -= key
 		if(!owner.alternate_appearances.len)
 			owner.alternate_appearances = null
