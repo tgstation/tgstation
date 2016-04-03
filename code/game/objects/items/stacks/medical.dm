@@ -60,6 +60,12 @@
 	icon_state = "brutepack"
 	origin_tech = "biotech=1"
 
+/obj/item/stack/medical/bruise_pack/bandaid
+	name = "small bandage"
+	desc = "A small bandage to stop bleeding."
+	amount = 1
+	max_amount = 1
+
 /obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(..())
 		return 1

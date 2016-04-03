@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscadd: "Survival boxes (the ones you spawn with) now have a single use bruisepack in them. They're also now named survival box."
