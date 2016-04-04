@@ -81,8 +81,8 @@
 /obj/item/organ/limb/proc/take_damage(brute, burn)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
-	brute	= max(brute,0)
-	burn	= max(burn,0)
+	brute	= max(brute * config.damage_multiplier,0)
+	burn	= max(burn * config.damage_multiplier,0)
 
 
 	if(status == ORGAN_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger

@@ -664,7 +664,7 @@
 	if(!client)
 		return
 
-	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
+	if(stat == UNCONSCIOUS && health <= HEALTH_THRESHOLD_CRIT)
 		var/severity = 0
 		switch(health)
 			if(-20 to -10) severity = 1
@@ -742,10 +742,10 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health<= HEALTH_THRESHOLD_DEAD || !getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

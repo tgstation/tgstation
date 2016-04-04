@@ -1083,7 +1083,7 @@
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
-		if(H.health >= config.health_threshold_crit)
+		if(H.health >= HEALTH_THRESHOLD_CRIT)
 			if(NOBREATH in specflags)
 				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -1229,7 +1229,7 @@
 	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
 		return 0
 
-	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
+	if(!(NOBREATH in specflags) || (H.health <= HEALTH_THRESHOLD_CRIT))
 		if(prob(20))
 			H.emote("gasp")
 		if(breath_pp > 0)
