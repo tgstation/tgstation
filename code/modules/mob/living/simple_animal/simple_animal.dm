@@ -46,6 +46,7 @@
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
+	var/resisttext = "It had no effect."
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -304,26 +305,38 @@
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
 		. = adjustHealth(amount*damage_coeff[BRUTE])
+	else
+		visible_message(resisttext)
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
 		. = adjustHealth(amount*damage_coeff[BURN])
+	else
+		visible_message(resisttext)
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
 		. = adjustHealth(amount*damage_coeff[OXY])
+	else
+		visible_message(resisttext)
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
 		. = adjustHealth(amount*damage_coeff[TOX])
+	else
+		visible_message(resisttext)
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
 		. = adjustHealth(amount*damage_coeff[CLONE])
+	else
+		visible_message(resisttext)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	if(damage_coeff[STAMINA])
 		. = adjustHealth(amount*damage_coeff[STAMINA])
+	else
+		visible_message(resisttext)
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
 	..()
