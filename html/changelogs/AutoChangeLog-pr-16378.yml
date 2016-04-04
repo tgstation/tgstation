@@ -1,6 +1,0 @@
-author: Bawhoppen
-delete-after: True
-changes: 
-  - rscdel: "SWAT crates no longer contain combat knives."
-  - rscadd: "SWAT crates now contain combat gloves."
-  - rscadd: "Combat knives now can be ordered in their own crate."

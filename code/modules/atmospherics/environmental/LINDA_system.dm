@@ -1,12 +1,16 @@
 /turf/proc/CanAtmosPass(turf/T)
-	if(!istype(T))
-		return 0
+
+/turf/closed/CanAtmosPass(turf/T)
+	return 0
+
+/turf/open/CanAtmosPass(turf/T)
 	var/R
 	if(blocks_air || T.blocks_air)
 		R = 1
 
-	for(var/obj/O in contents)
-		if(!O.CanAtmosPass(T))
+	for(var/obj/O in contents+T.contents)
+		var/turf/other = (O in contents ? T : src)
+		if(!O.CanAtmosPass(other))
 			R = 1
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
 				var/D = get_dir(src, T)
@@ -15,23 +19,10 @@
 				T.atmos_supeconductivity |= D
 				return 0						//no need to keep going, we got all we asked
 
-	for(var/obj/O in T.contents)
-		if(!O.CanAtmosPass(src))
-			R = 1
-			if(O.BlockSuperconductivity())
-				var/D = get_dir(src, T)
-				atmos_supeconductivity |= D
-				D = get_dir(T, src)
-				T.atmos_supeconductivity |= D
-				return 0
+	atmos_supeconductivity &= ~get_dir(src, T)
+	T.atmos_supeconductivity &= ~get_dir(T, src)
 
-	var/D = get_dir(src, T)
-	atmos_supeconductivity &= ~D
-	D = get_dir(T, src)
-	T.atmos_supeconductivity &= ~D
-
-	if(!R)
-		return 1
+	return !R
 
 /atom/movable/proc/CanAtmosPass()
 	return 1
@@ -63,7 +54,7 @@
 
 /turf/proc/CalculateAdjacentTurfs()
 	for(var/direction in cardinal)
-		var/turf/T = get_step(src, direction)
+		var/turf/open/T = get_step(src, direction)
 		if(!istype(T))
 			continue
 		if(CanAtmosPass(T))
@@ -77,20 +68,17 @@
 //alldir includes adjacent diagonal tiles that can share
 //	air with both of the related adjacent cardinal tiles
 /turf/proc/GetAtmosAdjacentTurfs(alldir = 0)
-	if (!istype(src, /turf/simulated))
-		return list()
-	
 	var/adjacent_turfs = atmos_adjacent_turfs.Copy()
 	if (!alldir)
 		return adjacent_turfs
-	var/turf/simulated/curloc = src
+	var/turf/curloc = src
 
 	for (var/direction in diagonals)
 		var/matchingDirections = 0
-		var/turf/simulated/S = get_step(curloc, direction)
+		var/turf/S = get_step(curloc, direction)
 
 		for (var/checkDirection in cardinal)
-			var/turf/simulated/checkTurf = get_step(S, checkDirection)
+			var/turf/checkTurf = get_step(S, checkDirection)
 			if(!(checkTurf in S.atmos_adjacent_turfs))
 				continue
 
@@ -120,7 +108,7 @@
     air_update_turf(1)
 
 /atom/movable/proc/atmos_spawn_air(text, amount) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
-	var/turf/simulated/T = get_turf(src)
+	var/turf/open/T = get_turf(src)
 	if(!istype(T))
 		return
 	T.atmos_spawn_air(text, amount)
@@ -136,7 +124,7 @@ var/const/SPAWN_N2O = 64
 
 var/const/SPAWN_AIR = 256
 
-/turf/simulated/proc/atmos_spawn_air(flag, amount)
+/turf/open/proc/atmos_spawn_air(flag, amount)
 	if(!text || !amount || !air)
 		return
 

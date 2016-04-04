@@ -49,8 +49,8 @@
 
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user)
-	if(istype(loc, /turf/simulated))
-		var/turf/simulated/T = loc
+	if(istype(loc, /turf))
+		var/turf/T = loc
 		if(T.intact)
 			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return

@@ -172,6 +172,14 @@
 	time = 10
 	category = CAT_WEAPON
 
+/datum/table_recipe/sandbags
+	name = "Sandbags"
+	result = /obj/item/stack/sheet/mineral/sandbags
+	reqs = list(/obj/item/weapon/ore/glass = 5,
+			/obj/item/weapon/emptysandbag = 1)
+	time = 10
+	category = CAT_WEAPON
+
 /datum/table_recipe/meteorshot
 	name = "Meteorshot Shell"
 	result = /obj/item/ammo_casing/shotgun/meteorshot
@@ -311,4 +319,11 @@
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
+	category = CAT_MISC
+
+/datum/table_recipe/papersack
+	name = "Paper Sack"
+	result = /obj/item/weapon/storage/box/papersack
+	time = 10
+	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC

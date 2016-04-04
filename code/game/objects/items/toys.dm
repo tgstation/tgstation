@@ -330,7 +330,7 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/dat
-	var/list/validSurfaces = list(/turf/simulated/floor)
+	var/list/validSurfaces = list(/turf/open/floor)
 	var/gang = 0 //For marking territory
 	var/edible = 1
 
@@ -864,17 +864,17 @@
 			M.put_in_hands(src)
 			usr << "<span class='notice'>You pick up the deck.</span>"
 
-		else if(istype(over_object, /obj/screen))
-			switch(over_object.name)
-				if("l_hand")
-					if(!remove_item_from_storage(M))
-						M.unEquip(src)
-					M.put_in_l_hand(src)
-				else if("r_hand")
-					if(!remove_item_from_storage(M))
-						M.unEquip(src)
+		else if(istype(over_object, /obj/screen/inventory/hand))
+			var/obj/screen/inventory/hand/H = over_object
+			if(!remove_item_from_storage(M))
+				M.unEquip(src)
+			switch(H.slot_id)
+				if(slot_r_hand)
 					M.put_in_r_hand(src)
-				usr << "<span class='notice'>You pick up the deck.</span>"
+				if(slot_l_hand)
+					M.put_in_l_hand(src)
+			usr << "<span class='notice'>You pick up the deck.</span>"
+
 	else
 		usr << "<span class='warning'>You can't reach it from here!</span>"
 

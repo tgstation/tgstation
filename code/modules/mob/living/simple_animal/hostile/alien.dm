@@ -105,7 +105,7 @@
 			LayEggs()
 
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
-	if(!isturf(loc) || istype(loc, /turf/space))
+	if(!isturf(loc) || istype(loc, /turf/open/space))
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
@@ -113,7 +113,7 @@
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
-	if(!isturf(loc) || istype(loc, /turf/space))
+	if(!isturf(loc) || istype(loc, /turf/open/space))
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return

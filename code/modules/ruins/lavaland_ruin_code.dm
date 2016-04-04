@@ -130,8 +130,8 @@
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as their hand leaves the mirror!</B></span>")
 	var/turf/T = get_turf(user)
-	T.ChangeTurf(/turf/simulated/chasm/straight_down)
-	var/turf/simulated/chasm/straight_down/C = T
+	T.ChangeTurf(/turf/open/chasm/straight_down)
+	var/turf/open/chasm/straight_down/C = T
 	C.drop(user)
 
 //Sloth - I'll finish this item later
@@ -327,8 +327,26 @@
 		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, attack_not_jump = 1)
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_name = pick("Quartz", "Crystal", "Boulder", "Mountain", "Rock", "Stalagmite", "Stalagtite", "Sediment", "Geode", "Igneous", "Quarry", "Shale", "Obsidian", "Chasm", "Stone", "Oynx", "Iron", "Quake", "Grotto","Landslide","Mineral", "Slag", "Pebble", "Gravel", "Pyrite", "Flint", "Sand")
-	new_spawn.real_name = golem_name
+	var/golem_surname = pick(golem_names)
+	// 3% chance that our golem has a human surname, because
+	// cultural contamination
+	if(prob(3))
+		golem_surname = pick(last_names)
+
+	var/datum/species/X = mob_species
+	var/golem_forename = initial(X.id)
+
+	// The id of golem species is either their material "diamond","gold",
+	// or just "golem" for the plain ones. So we're using it for naming.
+
+	if(golem_forename == "golem")
+		golem_forename = "iron"
+
+	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
+	// This means golems have names like Iron Forge, or Diamond Quarry
+	// also a tiny chance of being called "Plasma Meme"
+	// which is clearly a feature
+
 	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn

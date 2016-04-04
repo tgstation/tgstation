@@ -60,12 +60,12 @@
 /datum/guardianname/tech/daisy
 	suffixcolour = "Daisy"
 	parasiteicon = "techDaisy"
-	colour = "#F6F446"
+	colour = "#ECCD39"
 
 /datum/guardianname/tech/zinnia
 	suffixcolour = "Zinnia"
 	parasiteicon = "techZinnia"
-	colour = "#BFF62C"
+	colour = "#89F62C"
 
 /datum/guardianname/tech/ivy
 	suffixcolour = "Ivy"

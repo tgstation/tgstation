@@ -1,8 +1,8 @@
-"a" = (/turf/space,/area/space)
-"b" = (/turf/simulated/floor/plating/airless,/area/space)
-"c" = (/turf/simulated/wall,/area/space)
-"d" = (/obj/structure/lattice,/turf/space,/area/space)
-"e" = (/obj/structure/lattice,/obj/structure/lattice,/turf/space,/area/space)
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/open/floor/plating/airless,/area/space)
+"c" = (/turf/closed/wall,/area/space)
+"d" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"e" = (/obj/structure/lattice,/obj/structure/lattice,/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

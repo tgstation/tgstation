@@ -109,7 +109,7 @@
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
 	new door_type(T)
-	T.ChangeTurf(/turf/simulated/floor/plating)
+	T.ChangeTurf(/turf/open/floor/plating)
 
 
 /obj/item/projectile/magic/change
@@ -302,6 +302,9 @@
 				S.name = "statue of [H.name]"
 				S.faction = list("\ref[firer]")
 				S.icon = change.icon
+				S.icon_state = change.icon_state
+				S.overlays = change.overlays
+				S.color = change.color
 				if(H.mind)
 					H.mind.transfer_to(S)
 					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"

@@ -28,7 +28,7 @@
 	var/environment_temperature = 0
 	var/datum/gas_mixture/pipe_air = return_air()
 
-	var/turf/simulated/T = loc
+	var/turf/T = loc
 	if(istype(T))
 		if(T.blocks_air)
 			environment_temperature = T.temperature
