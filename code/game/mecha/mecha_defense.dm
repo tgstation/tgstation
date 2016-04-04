@@ -1,7 +1,14 @@
+/obj/mecha/proc/get_armour_facing(srcdir,adir)
+	var/facing_hit = armour_facings["[srcdir]"]["[adir]"]
+	var/damage_modifier = facing_modifiers[facing_hit]
+	return damage_modifier
 
-/obj/mecha/proc/take_damage(amount, type="brute")
+/obj/mecha/proc/take_damage(amount, type="brute", adir = 0)
 	if(amount)
 		var/damage = absorbDamage(amount,type)
+		if(adir)
+			var/modifier = get_armour_facing(src.dir,adir)
+			damage = damage/modifier
 		health -= damage
 		update_health()
 		occupant_message("<span class='userdanger'>Taking damage!</span>")
@@ -23,7 +30,7 @@
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	if(!prob(src.deflect_chance))
 		..(user, 1)
-		take_damage(15)
+		take_damage(15, "brute", user.dir)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		user.visible_message("<span class='danger'>[user] hits [src.name], doing some damage.</span>", "<span class='danger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
 		occupant_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>")
@@ -47,7 +54,7 @@
 	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
 	user.do_attack_animation(src)
 	if(!prob(src.deflect_chance))
-		take_damage(15)
+		take_damage(15, "brute", user.dir)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		visible_message("<span class='danger'>The [user] slashes at [src.name]'s armor!</span>")
@@ -68,7 +75,7 @@
 		user.do_attack_animation(src)
 		if(!prob(src.deflect_chance))
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-			take_damage(damage)
+			take_damage(damage, "brute", user.dir)
 			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 			visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
 			add_logs(user, src, "attacked")
@@ -124,6 +131,13 @@
 			deflection *= B.deflect_coeff
 			dam_coeff *= B.damage_coeff
 			break
+/*
+
+	var/facing_modifier = get_armour_facing(src.dir,Proj.dir)
+
+	deflection *= facing_modifier
+	dam_coeff = dam_coeff/facing_modifier
+*/
 	if(prob(deflection))
 		visible_message("The [src.name] armor deflects the projectile")
 		log_append_to_last("Armor saved.")
@@ -135,7 +149,7 @@
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
 		ignore_threshold = 1
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		take_damage(Proj.damage*dam_coeff,Proj.flag)
+		take_damage(Proj.damage*dam_coeff,Proj.flag, Proj.dir)
 		visible_message("<span class='danger'>[src.name] is hit by [Proj].</span>")
 		check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
 	Proj.on_hit(src)
@@ -169,7 +183,7 @@
 /obj/mecha/emp_act(severity)
 	if(get_charge())
 		use_power((cell.charge/2)/severity)
-		take_damage(50 / severity,"energy")
+		take_damage(30 / severity,"energy")
 	src.log_message("EMP detected",1)
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
@@ -315,7 +329,7 @@
 			return 0
 		else
 			user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
-			take_damage(round(W.force*dam_coeff),W.damtype)
+			take_damage(round(W.force*dam_coeff),W.damtype, user.dir)
 			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 			return 1
 
@@ -340,6 +354,6 @@
 	else
 		return
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-	take_damage(M.force, damtype)
+	take_damage(M.force, damtype, M.dir)
 	add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	return
