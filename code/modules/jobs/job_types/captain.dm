@@ -34,7 +34,7 @@ Captain
 	uniform =  /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/caphat
+	head = /obj/item/clothing/head/soft/caphat
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/weapon/storage/backpack/captain
@@ -97,7 +97,7 @@ Head of Personnel
 	ears = /obj/item/device/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/head_of_personnel
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/hopcap
+	head = /obj/item/clothing/head/soft/hopcap
 	backpack_contents = list(/obj/item/weapon/storage/box/ids=1,\
 		/obj/item/weapon/melee/classic_baton/telescopic=1)
 
