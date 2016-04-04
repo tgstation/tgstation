@@ -174,7 +174,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 		..()
 
 /obj/item/stack/sheet/mineral/plasma/fire_act()
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, amount*10)
+	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
 	qdel(src)
 
 /*
