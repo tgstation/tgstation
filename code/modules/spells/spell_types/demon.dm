@@ -12,6 +12,7 @@
 	charge_max = 150
 	cooldown_min = 10
 	action_icon_state = "pitchfork"
+	action_background_icon_state = "bg_demon"
 
 
 
@@ -47,7 +48,8 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
-	action_icon_state = "spell_default" //TODO: set icon
+	action_icon_state = "spell_default" //TODO LORDPIDEY: set icon
+	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/C in targets)
@@ -93,53 +95,72 @@
 	proj_lifespan = 200
 	proj_step_delay = 1
 
-	action_icon_state = "fireball"
-	sound = "sound/magic/Fireball.ogg"
+	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/turf/fireball/demon/cast(turf/T,mob/user = usr)
 	explosion(T, -1, -1, 1, 4, 0, flame_range = 5)
 
-
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon
-	name = "Infernal appearance"
-	desc = "Allows you to disappear and re-appear in a flash of fire."
-
-	school = "transmutation"
+/obj/effect/proc_holder/spell/targeted/infernal_jaunt
+	name = "Infernal Jaunt"
+	desc = "Use pools of blood to phase out of existence."
 	charge_max = 10
 	clothes_req = 0
-	invocation = "none"
-	invocation_type = "none"
+	selection_type = "range"
 	range = -1
-	jaunt_duration = 300
-	action_icon_state = "jaunt" //TODO: better icon
+	cooldown_min = 0
+	overlay = null
+	include_user = 1
+	action_icon_state = "jaunt"
+	action_background_icon_state = "bg_demon"
 
-
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon/cast(list/targets,mob/user = usr)
-	if(!in_jaunt)
-		playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
-		for(var/mob/living/target in targets)
-			target.notransform = 1
-			sleep(30)
-			mobloc = get_turf(target.loc)
-			holder = new /obj/effect/dummy/spell_jaunt( mobloc )
-			animation = new /atom/movable/overlay( mobloc )
-			enter_jaunt(target)
-			in_jaunt = 1
-	else
-		for(var/mob/living/target in targets)
+/obj/effect/proc_holder/spell/targeted/infernal_jaunt/cast(list/targets, mob/living/user = usr)
+	if(istype(user))
+		if(istype(user.loc, /obj/effect/dummy/slaughter/))
 			var/continuing = 0
-			for(var/mob/living/C in orange(2, get_turf(target.loc)))
+			for(var/mob/living/C in orange(2, get_turf(user.loc)))
 				if (C.mind && C.mind.soulOwner == C.mind)
 					continuing = 1
 					break
 			if(continuing)
-				in_jaunt = 0
-				var/turf/mobloc = get_turf(target.loc)
-				var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
-				var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
-				exit_jaunt(target, mobloc, holder, animation, user)
+				user.infernalphasein()
 			else
-				target << "<<span class='warning'>You can only re-appear near a potential signer."
+				user << "<span class='warning'>You can only re-appear near a potential signer."
 				revert_cast()
 				return ..()
-	return ..()
+		else
+			user.infernalphaseout()
+		start_recharge()
+		return
+	revert_cast()
+
+
+/mob/living/proc/infernalphaseout()
+	var/turf/mobloc = get_turf(src.loc)
+	src.notransform = 1
+	spawn(0)
+		src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+		var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+		src.ExtinguishMob()
+		if(buckled)
+			buckled.unbuckle_mob(src,force=1)
+		if(buckled_mobs.len)
+			unbuckle_all_mobs(force=1)
+		if(pulledby)
+			pulledby.stop_pulling()
+		if(pulling)
+			stop_pulling()
+		src.loc = holder
+		src.holder = holder
+		src.notransform = 0
+	return 1
+
+/mob/living/proc/infernalphasein()
+	if(src.notransform)
+		src << "<span class='warning'>You're too busy to jaunt in.</span>"
+		return 0
+	src.loc = get_turf(src)
+	src.client.eye = src
+	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
+	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	return 1

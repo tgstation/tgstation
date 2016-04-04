@@ -8,7 +8,7 @@
 	school = "conjuration"
 	charge_max = 100
 	cooldown_min = 10
-	action_icon_state = "bolt_action" //TODO: set icon
+	action_icon_state = "bolt_action" //TODO LORDPIDEY: set icon
 
 
 /obj/effect/proc_holder/spell/targeted/summon_wealth/cast(list/targets, mob/user = usr)

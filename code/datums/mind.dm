@@ -1197,7 +1197,7 @@
 					ticker.mode.demons -= src
 					special_role = null
 					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a demon!</span>"
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/demon)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
 					RemoveSpell(/obj/effect/proc_holder/spell/dumbfire/fireball/demonic)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
