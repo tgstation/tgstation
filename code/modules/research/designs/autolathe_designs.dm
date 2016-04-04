@@ -97,13 +97,13 @@
 	materials = list(MAT_METAL = 1750, MAT_GLASS = 400)
 	build_path = /obj/item/clothing/head/welding
 	category = list("initial","Tools")
-	
+
 /datum/design/cable_coil
 	name = "Cable coil"
 	id = "cable_coil"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
-	build_path = /obj/item/stack/cable_coil/random 
+	build_path = /obj/item/stack/cable_coil/random
 	category = list("initial","Tools")
 	maxstack = 30
 
@@ -213,6 +213,38 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/weapon/kitchen/knife
+	category = list("initial","Misc")
+
+/datum/design/cultivator
+	name = "Cultivator"
+	id = "cultivator"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL=50)
+	build_path = /obj/item/weapon/cultivator
+	category = list("initial","Misc")
+
+/datum/design/plant_analyzer
+	name = "Plant analyzer"
+	id = "plant_analyzer"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
+	build_path = /obj/item/device/analyzer/plant_analyzer
+	category = list("initial","Misc")
+
+/datum/design/shovel
+	name = "Shovel"
+	id = "shovel"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50)
+	build_path = /obj/item/weapon/shovel/
+	category = list("initial","Misc")
+
+/datum/design/spade
+	name = "Spade"
+	id = "spade"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50)
+	build_path = /obj/item/weapon/shovel/spade
 	category = list("initial","Misc")
 
 /datum/design/scalpel
