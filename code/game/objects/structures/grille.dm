@@ -151,7 +151,7 @@
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			Deconstruct()
-	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf/simulated) || anchored))
+	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored
@@ -169,7 +169,7 @@
 			icon_state = "grille"
 			R.use(1)
 			return
-	else if(istype(W, /obj/item/weapon/rcd) && istype(loc, /turf/simulated)) //Do not attack the grille if the user is holding an RCD
+	else if(istype(W, /obj/item/weapon/rcd) && istype(loc, /turf)) //Do not attack the grille if the user is holding an RCD
 		return
 
 //window placing begin

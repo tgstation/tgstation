@@ -12,7 +12,7 @@
 	var/list/current_state
 	var/width = 10
 	var/height = 10
-	var/list/type_map = list(/turf/simulated/floor/plating,/turf/simulated/wall)
+	var/list/type_map = list(/turf/open/floor/plating,/turf/closed/wall)
 	var/turf/start = null
 
 /datum/mapGenerator/ca/defineRegion(turf/Start, turf/End, replace = 0)
@@ -34,16 +34,16 @@
 		old_state[i] = new/list(height)
 		for(var/j = 1,j<=height,j++)
 			old_state[i][j] = rand(0,1)
-	
+
 	current_state = old_state.Copy()
 
 /datum/mapGenerator/ca/generate()
 	set background = 1
 
-	//Abandon all hope for efficency all who enter here	
+	//Abandon all hope for efficency all who enter here
 	//Maybe some less basic implemetation later, but this is just simple admin tool
 	initialize()
-	
+
 	for(var/generation = 0,generation<iterations,generation++)
 		for(var/i = 1,i<=width,i++)
 			for(var/j = 1,j<=height,j++)
@@ -88,7 +88,7 @@
 /datum/mapGenerator/ca/caves
 	b_rule = list(5,6,7,8)
 	s_rule = list(4)
-	type_map = list(/turf/simulated/floor/plating/asteroid/basalt,/turf/simulated/mineral/volcanic)
+	type_map = list(/turf/open/floor/plating/asteroid/basalt,/turf/closed/mineral/volcanic)
 	iterations = 5
 
 /datum/mapGenerator/ca/maze

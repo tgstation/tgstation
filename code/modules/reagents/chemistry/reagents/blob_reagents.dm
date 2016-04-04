@@ -522,8 +522,8 @@
 
 /datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	var/turf/simulated/T = get_turf(M)
-	if(istype(T, /turf/simulated) && prob(reac_volume))
+	var/turf/open/T = get_turf(M)
+	if(istype(T) && prob(reac_volume))
 		T.MakeSlippery(TURF_WET_WATER)
 	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
@@ -532,7 +532,7 @@
 		M.adjustStaminaLoss(0.4*reac_volume)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	for(var/turf/simulated/T in range(1, B))
+	for(var/turf/open/T in range(1, B))
 		if(prob(damage))
 			T.MakeSlippery(TURF_WET_WATER)
 	return ..()
@@ -540,7 +540,7 @@
 /datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
 	if(!isnull(cause))
 		B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
-	for(var/turf/simulated/T in range(1, B))
+	for(var/turf/open/T in range(1, B))
 		if(prob(50))
 			T.MakeSlippery(TURF_WET_WATER)
 

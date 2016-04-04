@@ -287,7 +287,7 @@
 	lighting_object = locate() in src
 	init_lighting()
 
-	for(var/turf/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
 /turf/proc/update_lumcount(amount)
@@ -296,12 +296,12 @@
 		SSlighting.changed_turfs += src
 		lighting_changed = 1
 
-/turf/space/update_lumcount(amount) //Keep track in case the turf becomes a floor at some point, but don't process.
+/turf/open/space/update_lumcount(amount) //Keep track in case the turf becomes a floor at some point, but don't process.
 	lighting_lumcount += amount
 
 /turf/proc/init_lighting()
 	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(A) || istype(src, /turf/space))
+	if(!IS_DYNAMIC_LIGHTING(A) || istype(src, /turf/open/space))
 		lighting_changed = 0
 		if(lighting_object)
 			lighting_object.alpha = 0
@@ -311,10 +311,9 @@
 			lighting_object = new (src)
 		redraw_lighting(1)
 
-/turf/space/init_lighting()
-	. = ..()
-	if(config.starlight)
-		update_starlight()
+/turf/open/space/init_lighting()
+	..()
+	update_starlight()
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
