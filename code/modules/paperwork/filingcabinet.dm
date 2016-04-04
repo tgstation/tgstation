@@ -176,10 +176,10 @@ var/list/employmentCabinets = list()
 /obj/structure/filingcabinet/employment
 	var/cooldown = 0
 	icon_state = "employmentcabinet"
+	var/virgin = 1
 
 /obj/structure/filingcabinet/employment/New()
 	employmentCabinets += src
-	fillCurrent()
 	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
@@ -198,9 +198,11 @@ var/list/employmentCabinets = list()
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
 	new /obj/item/weapon/paper/contract/employment(src, employee)
 
-
 /obj/structure/filingcabinet/employment/attack_hand(mob/user)
 	if(!cooldown)
+		if(virgin)
+			fillCurrent()
+			virgin = 0
 		cooldown = 1
 		..()
 		sleep(100) // prevents the demon from just instantly emptying the cabinet, ensuring an easy win.

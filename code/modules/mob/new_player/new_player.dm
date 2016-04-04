@@ -347,7 +347,8 @@
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	sleep(30)
 	for(var/obj/structure/filingcabinet/employment/employmentCabinet in employmentCabinets)
-		employmentCabinet.addFile(employee)
+		if(!employmentCabinet.virgin)
+			employmentCabinet.addFile(employee)
 
 
 /mob/new_player/proc/LateChoices()
