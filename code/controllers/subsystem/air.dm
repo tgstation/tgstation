@@ -275,7 +275,8 @@ var/datum/subsystem/air/SSair
 			continue
 
 		var/turf/open/T = t
-
+		if(!istype(T))
+			continue
 		T.excited = 0
 		T.update_visuals()
 

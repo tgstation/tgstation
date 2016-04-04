@@ -271,22 +271,25 @@
 
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
+
+	//make local for sanic speed
 	var/list/A_gases = A.gases
+	var/list/turf_list = src.turf_list
+	var/turflen = turf_list.len
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		A.merge(T.air)
 
+	for(var/id in A_gases)
+		A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
+
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		var/T_gases = T.air.gases
-
-		for(var/id in A_gases)
-			T.air.assert_gas(id)
-			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
-
+		T.air.copy_from(A)
 		T.update_visuals()
-		breakdown_cooldown = 0
+
+	breakdown_cooldown = 0
 
 /datum/excited_group/proc/dismantle()
 	for(var/t in turf_list)
