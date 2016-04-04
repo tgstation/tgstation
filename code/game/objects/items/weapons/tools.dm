@@ -514,7 +514,7 @@
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
-	force = 8
+	force = 12
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
