@@ -971,11 +971,11 @@
 //For use with material scanners
 /proc/mineral_scan_pulse_material(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()
-	for(var/turf/simulated/mineral/M in range(range, T))
+	for(var/turf/closed/mineral/M in range(range, T))
 		if(M.scan_state)
 			minerals += M
 	if(minerals.len)
-		for(var/turf/simulated/mineral/M in minerals)
+		for(var/turf/closed/mineral/M in minerals)
 			var/obj/effect/overlay/temp/mining_overlay/C = PoolOrNew(/obj/effect/overlay/temp/mining_overlay, M)
 			C.icon_state = M.scan_state
 

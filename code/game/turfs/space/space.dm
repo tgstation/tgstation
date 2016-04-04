@@ -12,7 +12,8 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
-	var/global/list/turf/open/space/space_turfs = list()
+
+var/global/list/turf/open/space/space_turfs = list() //i hate everything
 
 /turf/open/space/New()
 	update_icon()
