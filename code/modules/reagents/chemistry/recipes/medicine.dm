@@ -246,5 +246,5 @@
 	name = "Tricordrazine"
 	id = "tricordrazine"
 	result = "tricordrazine"
-	required_reagents = list("bicardine" = 1, "kelotane" = 1, "antitoxin" = 1)
+	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
 	result_amount = 3
