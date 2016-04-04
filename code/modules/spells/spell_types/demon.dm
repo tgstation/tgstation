@@ -48,7 +48,7 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
-	action_icon_state = "spell_default" //TODO LORDPIDEY: set icon
+	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract/cast(list/targets, mob/user = usr)
