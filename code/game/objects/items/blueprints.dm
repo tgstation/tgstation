@@ -28,7 +28,7 @@
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
 		if(AREA_SPACE)
-			text += "<p>According to the [src.name], you are now in <b>outer space</b>.  Hold your breath.</p> \
+			text += "<p>According to the [src.name], you are now in an unclaimed territory.</p> \
 			<p><a href='?src=\ref[src];create_area=1'>Mark this place as new area.</a></p>"
 		if(AREA_SPECIAL)
 			text += "<p>This place is not noted on the [src.name].</p>"
@@ -112,7 +112,6 @@
 
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
-	if (istype(A,/area/space))
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,

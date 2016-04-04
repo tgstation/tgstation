@@ -40,6 +40,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/requires_power = 1
 	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
 
+	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+
 	var/power_equip = 1
 	var/power_light = 1
 	var/power_environ = 1
@@ -100,6 +102,7 @@ var/list/teleportlocs = list()
 	power_equip = 0
 	power_environ = 0
 	valid_territory = 0
+	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
@@ -223,6 +226,7 @@ var/list/teleportlocs = list()
 	name = "Asteroid - Underground"
 	icon_state = "cave"
 	requires_power = 0
+	outdoors = 1
 
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
