@@ -19,7 +19,6 @@
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
 	if(has_gravity(src))
 		var/obj/buckled_obj
-		var/oldlying = C.lying
 		if(C.buckled)
 			buckled_obj = C.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
@@ -50,9 +49,6 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
-		if(C.lying != oldlying && lube) //did we actually fall?
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice

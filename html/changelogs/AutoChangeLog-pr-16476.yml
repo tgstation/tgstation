@@ -1,5 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Traitors can now buy charger holoparasites."
-  - rscadd: "Charger holoparasites move extremely fast, do medium damage, and can charge at a location, damaging the first target it hits and forcing them to drop any items they're holding."

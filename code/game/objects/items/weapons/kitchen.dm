@@ -98,6 +98,12 @@
 	origin_tech = "materials=2;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 
+
+/obj/item/weapon/kitchen/knife/combat/survival
+	name = "survival knife"
+	force = 15
+	throwforce = 15
+
 /obj/item/weapon/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'

@@ -26,7 +26,7 @@ var/datum/subsystem/air/SSair
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
-	var/list/turf/high_pressure_delta = list()
+	var/list/turf/open/high_pressure_delta = list()
 
 
 /datum/subsystem/air/New()
@@ -179,7 +179,8 @@ var/datum/subsystem/air/SSair
 		z_start = z_level
 		z_finish = z_level
 
-	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+	var/turf/open/space/S = /turf/open/space
+	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish)) - S.space_turfs
 
 	for(var/thing in turfs_to_init)
 		var/turf/t = thing
@@ -188,9 +189,6 @@ var/datum/subsystem/air/SSair
 
 		if(t.blocks_air)
 			continue
-
-		if(istype(t, /turf/open/space))
-			continue //don't need to initialize these; just slows down roundstart without any real benefit
 
 		var/turf/open/T = t
 
