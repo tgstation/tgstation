@@ -63,6 +63,7 @@
 /obj/item/stack/medical/bruise_pack/bandaid
 	name = "small bandage"
 	desc = "A small bandage to stop bleeding."
+	icon_state = "bandaid"
 	amount = 1
 	max_amount = 1
 
