@@ -306,6 +306,7 @@
 #include "code\game\gamemodes\demon\demon_game_mode.dm"
 #include "code\game\gamemodes\demon\demoninfo.dm"
 #include "code\game\gamemodes\demon\objectives.dm"
+#include "code\game\gamemodes\demon\imp\imp.dm"
 #include "code\game\gamemodes\demon\true_demon\_true_demon.dm"
 #include "code\game\gamemodes\demon\true_demon\inventory.dm"
 #include "code\game\gamemodes\demon\true_demon\life.dm"

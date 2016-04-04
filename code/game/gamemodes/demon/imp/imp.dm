@@ -10,8 +10,8 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "daemon"
-	icon_living = "daemon" //TODO LORDPIDEY: Make a better icon for it.
+	icon_state = "imp"
+	icon_living = "imp"
 	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
