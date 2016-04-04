@@ -38,7 +38,7 @@
         var/turf/targetTurf = pick(turfs)
         if(!targetTurf) // If all else goes wrong for SOME REASON
             targetTurf = get_turf(pick(target_area.contents)) // Areas contain more than turfs
-        var/mob/mobber = new mob_to_spawn(targetTurf)
+        new mob_to_spawn(targetTurf)
         var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
         sparks.set_up(3,0,targetTurf)
         sparks.start()
