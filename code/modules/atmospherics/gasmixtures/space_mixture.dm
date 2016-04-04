@@ -21,6 +21,10 @@
 /datum/gas_mixture/space/remove_ratio()
 	return copy() //we're immutable, so we can just return a copy.
 
+/datum/gas_mixture/space/share()
+	..()
+	gases.Cut() //keep the part where it removes gas from the other mixture, but remove all our gases after the fact
+
 /datum/gas_mixture/space/copy()
 	return new /datum/gas_mixture/space //we're immutable, so we can just return a new instance.
 
@@ -28,6 +32,9 @@
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/copy_from_turf()
+	return 0 //we're immutable.
+
+/datum/gas_mixture/space/parse_gas_string()
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/temperature_share()
