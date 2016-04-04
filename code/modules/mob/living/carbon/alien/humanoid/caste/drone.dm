@@ -16,7 +16,6 @@
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()
-	. += 1
 
 /obj/effect/proc_holder/alien/evolve
 	name = "Evolve to Praetorian"
