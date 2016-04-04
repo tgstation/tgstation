@@ -378,7 +378,8 @@ var/const/INJECT = 5 //injection
 					var/list/seen = viewers(4, get_turf(my_atom))
 
 					if(!istype(my_atom, /mob)) // No bubbling mobs
-						playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
+						if(C.mix_sound)
+							playsound(get_turf(my_atom), C.mix_sound, 80, 1)
 						for(var/mob/M in seen)
 							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
 

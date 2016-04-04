@@ -7,6 +7,7 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		moved = 0
+		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?
 		return

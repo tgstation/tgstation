@@ -68,7 +68,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 
-/datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 	return

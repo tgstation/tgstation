@@ -117,16 +117,23 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
 	..()
 	machines += src
-	SSmachine.processing += src
+	if(!speed_process)
+		SSmachine.processing += src
+	else
+		SSfastprocess.processing += src
 	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
-	SSmachine.processing -= src
+	if(!speed_process)
+		SSmachine.processing -= src
+	else
+		SSfastprocess.processing -= src
 	dropContents()
 	return ..()
 
@@ -262,7 +269,6 @@ Class Procs:
 			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
 	if(!is_interactable())
-		user << "<span class='danger'>\The [src] seems offline.</span>"
 		return 1
 	if(set_machine)
 		user.set_machine(src)

@@ -147,8 +147,7 @@ Bonus
 	level = 5
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-
-	var/amt_healed = (sqrt(20+A.totalStageSpeed()*3))-(sqrt(16+A.totalStealth()*(1+rand())))
+	var/amt_healed = (sqrt(20+A.totalStageSpeed()*(3+rand())))-(sqrt(16+A.totalStealth()*rand()))
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]

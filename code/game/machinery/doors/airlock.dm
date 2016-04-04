@@ -105,6 +105,26 @@ var/list/airlock_overlays = list()
 	playsound(src,boltUp,30,0,3)
 	update_icon()
 
+/obj/machinery/door/airlock/narsie_act()
+	var/turf/T = get_turf(src)
+	var/runed = prob(20)
+	if(prob(20))
+		if(glass)
+			if(runed)
+				new/obj/machinery/door/airlock/cult/glass(T)
+			else
+				new/obj/machinery/door/airlock/cult/unruned/glass(T)
+		else
+			if(runed)
+				new/obj/machinery/door/airlock/cult(T)
+			else
+				new/obj/machinery/door/airlock/cult/unruned(T)
+		if(runed)
+			PoolOrNew(/obj/effect/overlay/temp/cult/door, T)
+		else
+			PoolOrNew(/obj/effect/overlay/temp/cult/door/unruned, T)
+		qdel(src)
+
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
@@ -354,11 +374,12 @@ var/list/airlock_overlays = list()
 		if("closing")
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
-			update_icon(AIRLOCK_DENY)
-			playsound(src,doorDeni,50,0,3)
-			sleep(6)
-			update_icon(AIRLOCK_CLOSED)
-			icon_state = "closed"
+			if(!stat)
+				update_icon(AIRLOCK_DENY)
+				playsound(src,doorDeni,50,0,3)
+				sleep(6)
+				update_icon(AIRLOCK_CLOSED)
+				icon_state = "closed"
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
@@ -927,7 +948,7 @@ var/list/airlock_overlays = list()
 		newCharge.loc = src
 		charge = newCharge
 		return
-	else if(istype(C, /obj/item/weapon/rcd)&& istype(loc, /turf/simulated)) //Do not attack the airlock if the user is holding an RCD
+	else if(istype(C, /obj/item/weapon/rcd)) //Do not attack the airlock if the user is holding an RCD
 		return
 	else
 		..()

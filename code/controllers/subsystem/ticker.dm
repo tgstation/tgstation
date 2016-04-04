@@ -207,7 +207,6 @@ var/datum/subsystem/ticker/ticker
 
 	return 1
 
-
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
 	if( cinematic )

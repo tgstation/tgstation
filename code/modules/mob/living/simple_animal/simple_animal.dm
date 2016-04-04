@@ -206,8 +206,8 @@
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
 			bodytemperature += diff
 
-		if(istype(T,/turf/simulated))
-			var/turf/simulated/ST = T
+		if(istype(T,/turf/open))
+			var/turf/open/ST = T
 			if(ST.air)
 				var/ST_gases = ST.air.gases
 				ST.air.assert_gases(arglist(hardcoded_gases))
@@ -497,7 +497,7 @@
 	var/alone = 1
 	var/mob/living/simple_animal/partner
 	var/children = 0
-	for(var/mob/M in oview(7, src))
+	for(var/mob/M in view(7, src))
 		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
 			continue
 		else if(istype(M, childtype)) //Check for children FIRST.

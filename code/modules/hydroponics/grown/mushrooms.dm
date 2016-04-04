@@ -74,7 +74,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.8, "nutriment" = 0)
+	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
@@ -149,7 +149,7 @@
 	maturation = 5
 	yield = 1
 	mutatelist = list()
-	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.12)
+	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.15)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
@@ -160,7 +160,7 @@
 	filling_color = "#9370DB"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	M.maxHealth += round(seed.endurance / 4)
@@ -219,7 +219,7 @@
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/glow)
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
-	reagents_add = list("radium" = 0.05, "nutriment" = 0.04)
+	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = /obj/item/seeds/glowshroom
@@ -230,7 +230,7 @@
 	var/effect_path = /obj/effect/glowshroom
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/obj/effect/glowshroom/planted = new effect_path(user.loc)
 	planted.delay = planted.delay - seed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
@@ -254,7 +254,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge)
 	mutatelist = list()
-	reagents_add = list("teslium" = 0.01, "nutriment" = 0.04)
+	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap

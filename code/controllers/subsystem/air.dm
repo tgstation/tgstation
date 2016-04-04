@@ -25,8 +25,8 @@ var/datum/subsystem/air/SSair
 	var/list/obj/machinery/atmos_machinery = list()
 
 	//Special functions lists
-	var/list/turf/simulated/active_super_conductivity = list()
-	var/list/turf/simulated/high_pressure_delta = list()
+	var/list/turf/active_super_conductivity = list()
+	var/list/turf/open/high_pressure_delta = list()
 
 
 /datum/subsystem/air/New()
@@ -112,7 +112,7 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_super_conductivity()
-	for(var/turf/simulated/T in active_super_conductivity)
+	for(var/turf/T in active_super_conductivity)
 		T.super_conduct()
 
 
@@ -122,11 +122,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_high_pressure_delta()
-	for(var/turf/T in high_pressure_delta)
+	for(var/O in high_pressure_delta)
+		var/turf/open/T = O
 		T.high_pressure_movements()
 		T.pressure_difference = 0
 	high_pressure_delta.len = 0
-
 
 /datum/subsystem/air/proc/process_active_turfs(resumed = 0)
 	//cache for sanic speed
@@ -136,30 +136,29 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/simulated/T = currentrun[1]
+		var/turf/open/T = currentrun[1]
 		currentrun.Cut(1, 2)
 		if (T)
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
 
-
-/datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
+/datum/subsystem/air/proc/remove_from_active(turf/open/T)
+	active_turfs -= T
 	if(istype(T))
 		T.excited = 0
-		active_turfs -= T
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
 
-/datum/subsystem/air/proc/add_to_active(turf/simulated/T, blockchanges = 1)
+/datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 	else
-		for(var/turf/simulated/S in T.atmos_adjacent_turfs)
+		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 
 /datum/subsystem/air/proc/process_excited_groups()
@@ -180,16 +179,19 @@ var/datum/subsystem/air/SSair
 		z_start = z_level
 		z_finish = z_level
 
-	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish)) - space_turfs
 
-	for(var/turf/simulated/T in turfs_to_init)
-		T.CalculateAdjacentTurfs()
-		T.excited = 0
-		active_turfs -= T
+	for(var/thing in turfs_to_init)
+		var/turf/t = thing
+		t.CalculateAdjacentTurfs()
+		active_turfs -= t
 
-		if(T.blocks_air)
+		if(t.blocks_air)
 			continue
 
+		var/turf/open/T = t
+
+		T.excited = 0
 		T.update_visuals()
 
 		for(var/tile in T.atmos_adjacent_turfs)
@@ -199,7 +201,7 @@ var/datum/subsystem/air/SSair
 			var/is_active = T.air.compare(enemy_air)
 
 			if(is_active)
-				testing("Active turf found. Return value of compare(): [is_active]")
+				//testing("Active turf found. Return value of compare(): [is_active]")
 				T.excited = 1
 				active_turfs |= T
 				break
@@ -207,7 +209,7 @@ var/datum/subsystem/air/SSair
 
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
-		for(var/turf/simulated/T in active_turfs)
+		for(var/turf/T in active_turfs)
 			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
 
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)

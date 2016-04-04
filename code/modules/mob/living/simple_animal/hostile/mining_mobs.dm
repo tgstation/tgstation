@@ -376,7 +376,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf/simulated)))
+	if(!(istype(tturf, /turf)))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
@@ -387,7 +387,8 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
-	ranged_cooldown--
+	if(ranged_cooldown)
+		ranged_cooldown--
 	handle_preattack()
 	. = ..()
 
@@ -403,11 +404,12 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Goliath_tentacle"
 	var/latched = 0
+	anchored = 1
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = turftype
+	if(istype(turftype, /turf/closed/mineral))
+		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
 	spawn(10)
 		Trip()
@@ -450,11 +452,11 @@
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/suit/hooded/explorer))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor.["melee"] < 80)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
+			if(current_armor.["melee"] < 60)
+				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 			else
@@ -623,7 +625,7 @@
 	icon_state = "watcher"
 	icon_living = "watcher"
 	icon_aggro = "watcher"
-	icon_dead = "Basilisk_dead"
+	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
@@ -651,6 +653,7 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2)
 	stat_attack = 1
 	robust_searching = 1
 
@@ -751,8 +754,36 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	layer = MOB_LAYER-0.1
-	loot = list(/obj/effect/gibspawner)
+	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
+	var/gps = null
+
+/mob/living/simple_animal/hostile/spawner/lavaland/New()
+	..()
+	gps = new /obj/item/device/gps/internal(src)
+
+
+/obj/effect/collapse
+	name = "collapsing necropolis tendril"
+	desc = "Get clear!"
+	layer = 2
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "tendril"
+	anchored = TRUE
+
+/obj/effect/collapse/New()
+	..()
+	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
+	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	spawn(50)
+		for(var/mob/M in range(7,src))
+			shake_camera(M, 15, 1)
+		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
+		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		for(var/turf/T in range(2,src))
+			if(!T.density)
+				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast

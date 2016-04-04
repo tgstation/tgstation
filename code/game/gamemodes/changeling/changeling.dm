@@ -107,7 +107,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character.client, ROLE_CHANGELING) && !jobban_isbanned(character.client, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
@@ -504,7 +504,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/proc/update_changeling_icons_added(datum/mind/changling_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
-	hud.join_hud(changling_mind.current, 0)
+	hud.join_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, "changling")
 
 /datum/game_mode/proc/update_changeling_icons_removed(datum/mind/changling_mind)

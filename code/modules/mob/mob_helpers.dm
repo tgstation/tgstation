@@ -400,6 +400,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(source)
 				var/obj/screen/alert/notify_jump/A = O.throw_alert("\ref[source]_notify_jump", /obj/screen/alert/notify_jump)
 				if(A)
+					if(O.client.prefs && O.client.prefs.UI_style)
+						A.icon = ui_style2icon(O.client.prefs.UI_style)
 					A.desc = message
 					A.attack_not_jump = attack_not_jump
 					A.jump_target = source

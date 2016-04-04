@@ -254,7 +254,7 @@ var/list/blood_splatter_icons = list()
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/add_blood(mob/living/carbon/human/M)
 	if(!..())
 		return 0
 
@@ -279,7 +279,7 @@ var/list/blood_splatter_icons = list()
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(src, /turf/simulated))
+	if(istype(src, /turf))
 		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)
@@ -319,7 +319,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
+	if(istype(get_turf(src), /turf/open/space))
 		return 1
 	else
 		return 0
@@ -358,6 +358,10 @@ var/list/blood_splatter_icons = list()
 	. = ..()
 	sleep(1)
 
+//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
+//effects at world start up without causing runtimes
+/atom/proc/spawn_atom_to_world()
+
 //This will be called after the map and objects are loaded
 /atom/proc/initialize()
 	return
@@ -371,7 +375,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf/simulated) )
+	if(istype(src,/turf) )
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
 		// Make toxins vomit look different
 		if(toxvomit)

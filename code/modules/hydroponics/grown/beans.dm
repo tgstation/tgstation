@@ -34,7 +34,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
 	potency = 10
 	mutatelist = list()
-	reagents_add = list("carpotoxin" = 0.05, "vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("carpotoxin" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans

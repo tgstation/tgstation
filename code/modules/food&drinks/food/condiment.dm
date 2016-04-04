@@ -11,7 +11,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	flags = OPENCONTAINER
-	possible_transfer_amounts = list(1,5,10)
+	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
 	var/list/possible_states = list(
@@ -163,6 +163,13 @@
 	icon_state = "rice"
 	item_state = "flour"
 	list_reagents = list("rice" = 30)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/soysauce
+	name = "soy sauce"
+	desc = "A salty soy-based flavoring."
+	icon_state = "soysauce"
+	list_reagents = list("soysauce" = 50)
 	possible_states = list()
 
 

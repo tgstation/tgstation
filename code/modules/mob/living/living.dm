@@ -608,7 +608,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/movement_delay()
 	. = ..()
 	if(isturf(loc))
-		var/turf/T = loc
+		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
 		if("run")
@@ -629,7 +629,7 @@ Sorry Giacom. Please don't be mad :(
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (istype(M.loc, /turf) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -661,7 +661,7 @@ Sorry Giacom. Please don't be mad :(
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(canmove && !restrained())
+	if(!restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
@@ -673,16 +673,16 @@ Sorry Giacom. Please don't be mad :(
 				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
-					if(prob(25))
-						visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s grip!</span>")
+					if(prob(75))
+						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
-						if(prob(5))
-							visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s headlock!</span>")
+						if(prob(50))
+							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
 							qdel(G)
 		if(resisting)
-			visible_message("<span class='warning'>[src] resists!</span>")
+			visible_message("<span class='danger'>[src] resists!</span>")
 			return
 
 	//unbuckling yourself
@@ -797,6 +797,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/narsie_act()
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+	else
+		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return
@@ -887,7 +889,7 @@ Sorry Giacom. Please don't be mad :(
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/space))
+	else if(istype(get_turf(src), /turf/open/space))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 

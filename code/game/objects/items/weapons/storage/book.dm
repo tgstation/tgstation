@@ -186,7 +186,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if (istype(A, /turf/simulated/floor))
+	if (istype(A, /turf/open/floor))
 		user << "<span class='notice'>You hit the floor with the bible.</span>"
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			for(var/obj/effect/rune/R in orange(2,user))
