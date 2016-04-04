@@ -21,3 +21,4 @@
 #define BORGMESON 1
 #define BORGTHERM 2
 #define BORGXRAY  4
+#define BORGMATERIAL 8
