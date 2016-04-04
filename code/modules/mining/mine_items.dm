@@ -85,6 +85,7 @@
 	origin_tech = "materials=3;engineering=2"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
@@ -93,6 +94,7 @@
 	origin_tech = "materials=4;engineering=3"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
+
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
