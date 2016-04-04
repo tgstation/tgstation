@@ -181,10 +181,6 @@ var/datum/subsystem/air/SSair
 
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish)) - space_turfs
 
-	for(var/turf/open/space in turfs_to_init)
-		world << "there's a space turf the -= didn't work dunc"
-		break
-	world << "if nothing else showed up then we gucci"
 	for(var/thing in turfs_to_init)
 		var/turf/t = thing
 		t.CalculateAdjacentTurfs()
