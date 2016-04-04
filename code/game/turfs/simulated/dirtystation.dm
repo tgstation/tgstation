@@ -39,12 +39,12 @@
 
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
-/turf/simulated/floor/proc/MakeDirty()
+/turf/open/floor/proc/MakeDirty()
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
 	// These look weird if you make them dirty
-	if(istype(src, /turf/simulated/floor/carpet) || istype(src, /turf/simulated/floor/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor)|| istype(src, /turf/simulated/floor/plating/ironsand))
+	if(istype(src, /turf/open/floor/carpet) || istype(src, /turf/open/floor/grass) || istype(src, /turf/open/floor/plating/beach) || istype(src, /turf/open/floor/holofloor)|| istype(src, /turf/open/floor/plating/ironsand))
 		return
 
 	if(locate(/obj/structure/grille) in contents)

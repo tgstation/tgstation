@@ -524,7 +524,7 @@ var/global/list/RPD_recipes=list(
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 
-	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
 
 	//So that changing the menu settings doesn't affect the pipes already being built.

@@ -1,9 +1,9 @@
-"a" = (/turf/space,/area/space)
-"b" = (/turf/simulated/floor/plating/asteroid/airless,/area/space)
-"c" = (/turf/simulated/mineral,/area/space)
-"d" = (/turf/simulated/mineral/random/high_chance,/area/space)
-"e" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating/asteroid/airless,/area/space)
-"f" = (/obj/item/weapon/pickaxe/diamond,/turf/simulated/floor/plating/asteroid/airless,/area/space)
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/open/floor/plating/asteroid/airless,/area/space)
+"c" = (/turf/closed/mineral,/area/space)
+"d" = (/turf/closed/mineral/random/high_chance,/area/space)
+"e" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/airless,/area/space)
+"f" = (/obj/item/weapon/pickaxe/diamond,/turf/open/floor/plating/asteroid/airless,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa

@@ -29,7 +29,7 @@
 		if(!storedorgan)
 			user << "<span class='notice'>There's no implant in [src] for you to remove.</span>"
 		else
-			var/turf/floorloc = get_turf(user)
+			var/turf/open/floorloc = get_turf(user)
 			floorloc.contents += contents
 			user << "<span class='notice'>You remove the [storedorgan] from [src].</span>"
 			playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)

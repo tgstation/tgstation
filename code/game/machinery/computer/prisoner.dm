@@ -57,7 +57,7 @@
 
 			var/loc_display = "Unknown"
 			var/mob/living/carbon/M = T.imp_in
-			if(Tr.z == ZLEVEL_STATION && !istype(M.loc, /turf/space))
+			if(Tr.z == ZLEVEL_STATION && !istype(M.loc, /turf/open/space))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
 
