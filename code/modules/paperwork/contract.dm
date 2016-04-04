@@ -237,9 +237,6 @@
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 
-/obj/item/weapon/paper/contract/infernal/revive/FulfillContract(mob/living/carbon/human/user = target.current)
-	return -1 //can't be signed by hand, it must be used on a corpse
-
 /obj/item/weapon/paper/contract/infernal/knowledge/FulfillContract(mob/living/carbon/human/user = target.current)
 	user.dna.add_mutation(XRAY)
 	for(var/datum/atom_hud/H in huds)
