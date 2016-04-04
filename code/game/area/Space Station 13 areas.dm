@@ -54,6 +54,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/has_gravity = 0
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
+	var/blacklisted = 0			//Rejects ghosts
+
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
