@@ -112,6 +112,7 @@
 
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
+	if(A.outdoors)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
