@@ -497,7 +497,7 @@
 	icon_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
+	force = 12
 	throwforce = 7
 	item_state = "crowbar"
 	w_class = 2
