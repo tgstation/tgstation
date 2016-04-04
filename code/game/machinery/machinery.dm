@@ -291,7 +291,7 @@ Class Procs:
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
 
