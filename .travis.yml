@@ -12,7 +12,6 @@ env:
     - DM_MAPFILE="ministation"
     - DM_MAPFILE="dreamstation"
     - DM_MAPFILE="birdstation"
-    - DM_MAPFILE="asteroidstation"
     - DM_MAPFILE="efficiencystation"
 
 

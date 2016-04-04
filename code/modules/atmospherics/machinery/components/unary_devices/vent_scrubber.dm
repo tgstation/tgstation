@@ -22,7 +22,7 @@
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
-	var/list/turf/simulated/adjacent_turfs = list()
+	var/list/turf/adjacent_turfs = list()
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -147,10 +147,10 @@
 		return 0
 	scrub(loc)
 	if(widenet)
-		for (var/turf/simulated/tile in adjacent_turfs)
+		for (var/turf/tile in adjacent_turfs)
 			scrub(tile)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/simulated/tile)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/tile)
 	if (!istype(tile))
 		return 0
 

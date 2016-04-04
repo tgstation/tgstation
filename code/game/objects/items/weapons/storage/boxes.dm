@@ -772,3 +772,15 @@
 	..()
 	if(item_state)
 		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
+/obj/item/weapon/storage/box/emptysandbags
+	name = "box of empty sandbags"
+
+/obj/item/weapon/storage/box/emptysandbags/New()
+	..()
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)

@@ -546,10 +546,10 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor/bluespace
+	turf_type = /turf/open/floor/bluespace
 
 
-/turf/simulated/floor/bluespace
+/turf/open/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
@@ -569,10 +569,10 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor/sepia
+	turf_type = /turf/open/floor/sepia
 
 
-/turf/simulated/floor/sepia
+/turf/open/floor/sepia
 	slowdown = 2
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"

@@ -10,7 +10,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode
-	var/turf/simulated/floor/beacon
+	var/turf/open/floor/beacon
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
 
@@ -66,15 +66,15 @@
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work in unfavorable atmospheric conditions."
 	if(beacon_cooldown<world.time)
 		var/turf/beacon_loc = get_turf(src.loc)
-		if(istype(beacon_loc, /turf/simulated/floor))
-			var/turf/simulated/floor/F = beacon_loc
+		if(istype(beacon_loc, /turf/open/floor))
+			var/turf/open/floor/F = beacon_loc
 			F.icon = 'icons/turf/floors.dmi'
 			F.name = "bluespace recieving pad"
 			F.desc = "A recieving zone for bluespace teleportations. Building a wall over it should disable it."
 			F.icon_state = "light_on-w"
 			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Alt+Click. </span></B>"
 			if(beacon)
-				beacon.ChangeTurf(/turf/simulated/floor/plating)
+				beacon.ChangeTurf(/turf/open/floor/plating)
 			beacon = F
 			beacon_cooldown = world.time+3000
 

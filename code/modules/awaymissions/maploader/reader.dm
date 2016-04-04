@@ -32,7 +32,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/lpos = 1 // the models definition index
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	//first let's map model keys (e.g "aa") to their contents (e.g /turf/space{variables})
+	//first let's map model keys (e.g "aa") to their contents (e.g /turf/open/space{variables})
 	///////////////////////////////////////////////////////////////////////////////////////
 	var/list/grid_models = list()
 	var/key_len = length(copytext(tfile,2,findtext(tfile,quote,2,0)))//the length of the model key (e.g "aa" or "aba")
