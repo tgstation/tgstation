@@ -1,0 +1,8 @@
+author: TechnoAlchemisto
+delete-after: True
+changes: 
+  - rscadd: "The recipes for some Trekchems are now back in the game"
+  - rscadd: "Bicaridine can be made with carbon, oxygen, and sugar."
+  - rscadd: "Kelotane can be made with silicon and carbon."
+  - rscadd: "Antitoxin can be made with nitrogen, silicon, and potassium"
+  - rscadd: "tricordrazine can be made by combining all three."
