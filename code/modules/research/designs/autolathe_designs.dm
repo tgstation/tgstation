@@ -97,15 +97,23 @@
 	materials = list(MAT_METAL = 1750, MAT_GLASS = 400)
 	build_path = /obj/item/clothing/head/welding
 	category = list("initial","Tools")
-	
+
 /datum/design/cable_coil
 	name = "Cable coil"
 	id = "cable_coil"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
-	build_path = /obj/item/stack/cable_coil/random 
+	build_path = /obj/item/stack/cable_coil/random
 	category = list("initial","Tools")
 	maxstack = 30
+
+/datum/design/toolbox
+	name = "Toolbox"
+	id = "tool_box"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/weapon/storage/toolbox
+	category = list("initial","Tools")
 
 /datum/design/console_screen
 	name = "Console screen"
