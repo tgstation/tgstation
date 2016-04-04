@@ -499,6 +499,3 @@
 		existant =	0
 		cooldown = 1
 		spawn(30) cooldown = 0
-
-
-
