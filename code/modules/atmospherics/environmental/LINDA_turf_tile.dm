@@ -29,7 +29,7 @@
 
 	var/obj/effect/hotspot/active_hotspot
 
-	var/atmos_overlay_types = list() //gas IDs of current active gas overlays
+	var/list/atmos_overlay_types = list() //gas IDs of current active gas overlays
 
 /turf/open/New()
 	..()
