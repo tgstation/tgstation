@@ -7,6 +7,7 @@
 	var/emp_damage = 0//Handles a type of MMI damage
 	has_limbs = 0
 	stat = DEAD //we start dead by default
+	see_invisible = SEE_INVISIBLE_MINIMUM
 
 /mob/living/carbon/brain/New(loc)
 	..()
@@ -56,3 +57,6 @@
 	. = 1
 	if(!container || health <= HEALTH_THRESHOLD_DEAD)
 		return 0
+
+/mob/living/carbon/brain/update_sight()
+	return

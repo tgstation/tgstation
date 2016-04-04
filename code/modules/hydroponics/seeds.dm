@@ -33,6 +33,8 @@
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
 
+	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
+	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
 
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
@@ -122,7 +124,7 @@
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
-			return_yield *= parent.yieldmod
+			return_yield *= (parent.yieldmod+innate_yieldmod)
 
 	return return_yield
 
@@ -164,29 +166,34 @@
 		if(yield <= 0 && plant_type == PLANT_MUSHROOM)
 			yield = 1 // Mushrooms always have a minimum yield of 1.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
-		C.value = yield
+		if(C)
+			C.value = yield
 
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
 	lifespan = Clamp(lifespan + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
-	C.value = lifespan
+	if(C)
+		C.value = lifespan
 
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
 	endurance = Clamp(endurance + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
-	C.value = endurance
+	if(C)
+		C.value = endurance
 
 /obj/item/seeds/proc/adjust_production(adjustamt)
 	if(yield != -1)
 		production = Clamp(production + adjustamt, 2, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
-		C.value = production
+		if(C)
+			C.value = production
 
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
 		potency = Clamp(potency + adjustamt, 0, 100)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
-		C.value = potency
+		if(C)
+			C.value = potency
 
 
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer

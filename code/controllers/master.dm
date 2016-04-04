@@ -148,7 +148,7 @@ var/global/datum/controller/master/Master = new()
 				//this is a queue for any SS skipped or paused for tick reasons, to be ran first next tick
 				if (priority_queue.len)
 					priorityrunning = priority_queue.len
-					subsystemstorun = priority_queue | subsystems
+					subsystemstorun = priority_queue | subsystemstorun
 #endif
 				var/ran_subsystems = 0
 				while(subsystemstorun.len)

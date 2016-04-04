@@ -27,3 +27,4 @@ _maps/templates/lavaland_surface_ufo_crash.dmm
 _maps/templates/lavaland_surface_ww_vault.dmm
 _maps/templates/lavaland_surface_automated_trade_outpost.dmm
 _maps/templates/lavaland_surface_xeno_nest.dmm
+_maps/templates/lavaland_gym.dmm

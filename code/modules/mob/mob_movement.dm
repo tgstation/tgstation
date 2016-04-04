@@ -228,16 +228,16 @@
 
 				if(GRAB_AGGRESSIVE)
 					move_delay = world.time + 10
-					if(!prob(25))
+					if(!prob(50))
 						return 1
-					mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>")
+					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s grip!</span>")
 					qdel(G)
 
 				if(GRAB_NECK)
 					move_delay = world.time + 10
-					if(!prob(5))
+					if(!prob(15))
 						return 1
-					mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>")
+					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s headlock!</span>")
 					qdel(G)
 	return 0
 

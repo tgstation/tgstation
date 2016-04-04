@@ -15,7 +15,7 @@
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
 	mutatelist = list(/obj/item/seeds/grass/carpet)
-	reagents_add = list("nutriment" = 0.02)
+	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass
