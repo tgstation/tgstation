@@ -14,28 +14,20 @@
 	pull_icon.screen_loc = ui_drone_pull
 	static_inventory += pull_icon
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "right hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand) //Hand being true means the LEFT hand is active
-		inv_box.icon_state = "hand_r_active"
+	inv_box.icon_state = "hand_r"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
-	inv_box.layer = 19
-	r_hand_hud_object = inv_box
 	static_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "left hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand) //Hand being true means the LEFT hand is active
-		inv_box.icon_state = "hand_l_active"
+	inv_box.icon_state = "hand_l"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
-	inv_box.layer = 19
-	l_hand_hud_object = inv_box
 	static_inventory += inv_box
 
 	using = new /obj/screen/inventory()
