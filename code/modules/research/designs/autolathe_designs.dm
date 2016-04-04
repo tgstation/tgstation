@@ -236,7 +236,7 @@
 	id = "shovel"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50)
-	build_path = /obj/item/weapon/shovel/
+	build_path = /obj/item/weapon/shovel
 	category = list("initial","Misc")
 
 /datum/design/spade
@@ -245,6 +245,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50)
 	build_path = /obj/item/weapon/shovel/spade
+	category = list("initial","Misc")
+
+/datum/design/hatchet
+	name = "Hatchet"
+	id = "hatchet"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000)
+	build_path = /obj/item/weapon/hatchet
 	category = list("initial","Misc")
 
 /datum/design/scalpel
