@@ -98,11 +98,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			summoner.dust()
 			ghostize()
 			qdel(src)
-	else
+	/*else
 		src << "<span class='danger'>Your summoner has died!</span>"
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		ghostize()
-		qdel(src)
+		qdel(src)*/
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Stat()
