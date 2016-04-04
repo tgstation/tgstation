@@ -9,7 +9,7 @@
 	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
-	var/timer = 60
+	var/timer = 120
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
@@ -35,7 +35,8 @@
 
 /obj/machinery/syndicatebomb/New()
 	wires 	= new /datum/wires/syndicatebomb(src)
-	payload = new payload(src)
+	if(src.payload)
+		payload = new payload(src)
 	update_icon()
 	..()
 
@@ -44,9 +45,21 @@
 	wires = null
 	return ..()
 
+/obj/machinery/syndicatebomb/emag_act(mob/user)
+	if(active && !emagged)
+		emagged = 1
+		timer = 60	// An emag can be used to reduce the timer, or give you more time, depending on when you use it.
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+								"<span class='notice'>You emag the [src], causing the timing mechanism to malfunction.</span>")
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	user << "A digital display on it reads \"[timer]\"."
+	if(emagged)
+		user << "A digital display on it reads \"[rand(-1, 60)]\"."
+	else
+		user << "A digital display on it reads \"[timer]\"."
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -54,7 +67,7 @@
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/open/space))
+			if(!isturf(src.loc) || istype(src.loc, /turf/space))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
 				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
@@ -99,6 +112,25 @@
 			payload.loc = src
 		else
 			user << "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>"
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		if(payload || !wires.is_all_cut() || !open_panel)
+			return
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.isOn())
+			return
+		if(WT.get_fuel() < 5) //uses up 5 fuel.
+			user << "<span class='warning'>You need more fuel to complete this task!</span>"
+			return
+
+		playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+		user << "<span class='notice'>You start to cut the [src] apart...</span>"
+		if(do_after(user, 20/I.toolspeed, target = src))
+			if(!WT.isOn() || !WT.remove_fuel(5, user))
+				return
+			user << "<span class='notice'>You cut the [src] apart.</span>"
+			new /obj/item/stack/sheet/plasteel( loc, 5)
+			qdel(src)
+			return
 	else
 		..()
 
@@ -120,7 +152,7 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 60, 60000)
+	newtime = Clamp(newtime, 120, 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
@@ -166,6 +198,17 @@
 /obj/machinery/syndicatebomb/badmin/varplosion
 	payload = /obj/item/weapon/bombcore/badmin/explosion/
 
+/obj/machinery/syndicatebomb/empty
+	name = "bomb"
+	icon_state = "base-bomb"
+	desc = "An ominous looking device designed to detonate an explosive payload. Can be bolted down using a wrench."
+	payload = null
+	open_panel = TRUE
+
+/obj/machinery/syndicatebomb/empty/New()
+	..()
+	wires.cut_all()
+
 ///Bomb Cores///
 
 /obj/item/weapon/bombcore
@@ -180,11 +223,18 @@
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
-	detonate()
+	if(prob(50))
+		detonate()
+	else
+		qdel(src)
 
 /obj/item/weapon/bombcore/burn()
-	detonate()
-	..()
+	if(prob(25))
+		detonate()
+		..()
+	else
+		..()
+		qdel(src)
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
@@ -292,6 +342,128 @@
 	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
 	qdel(src)
 
+#define MAX_BEAKERS 4
+#define SPREAD_RANGE 7
+
+/obj/item/weapon/bombcore/chemical
+	name = "chemical payload"
+	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. It is able to hold up to four chemical containers, and must be loaded before use."
+	origin_tech = "combat=4;materials=3"
+	icon_state = "chemcore"
+	var/list/beakers = list()
+
+/obj/item/weapon/bombcore/chemical/New()
+	..()
+	create_reagents(300*MAX_BEAKERS)
+
+/obj/item/weapon/bombcore/chemical/detonate()
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
+
+	if(!reagents)
+		return
+
+	var/has_reagents
+	for(var/obj/item/I in beakers)
+		if(I.reagents.total_volume)
+			has_reagents = 1
+
+	if(!has_reagents)
+		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		return
+
+	playsound(loc, 'sound/effects/bamf.ogg', 75, 1)
+
+	mix_reagents()
+
+	if(reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
+		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
+		steam.set_up(10, 0, get_turf(src))
+		steam.attach(src)
+		steam.start()
+
+		var/list/viewable = view(SPREAD_RANGE, get_turf(src))
+		var/list/accessible = can_flood_from(get_turf(src), SPREAD_RANGE)
+		var/list/reactable = accessible
+		var/mycontents = GetAllContents()
+		for(var/turf/T in accessible)
+			for(var/atom/A in T.GetAllContents())
+				if(A in mycontents) continue
+				if(!(A in viewable)) continue
+				reactable |= A
+		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+			qdel(src)
+			return
+		var/fraction = 1/reactable.len
+		for(var/atom/A in reactable)
+			reagents.reaction(A, TOUCH, fraction)
+
+	if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+		qdel(loc)
+	qdel(src)
+
+/obj/item/weapon/bombcore/chemical/proc/mix_reagents()
+	var/total_temp
+	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		G.reagents.trans_to(src, G.reagents.total_volume)
+		total_temp += G.reagents.chem_temp
+	reagents.chem_temp = total_temp
+
+/obj/item/weapon/bombcore/chemical/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
+	var/list/reachable = list(myloc)
+	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
+		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
+			if(T in reachable) continue
+			for(var/turf/NT in orange(1, T))
+				if(!(NT in reachable)) continue
+				if(!(get_dir(T,NT) in cardinal)) continue
+				if(!NT.CanAtmosPass(T)) continue
+				reachable |= T
+				break
+	return reachable
+
+/obj/item/weapon/bombcore/chemical/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/crowbar) && beakers.len > 0)
+		for (var/obj/item/B in beakers)
+			B.loc = get_turf(src)
+			beakers -= B
+		return
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) || istype(I, /obj/item/weapon/reagent_containers/glass/bottle))
+		if(beakers.len < MAX_BEAKERS)
+			if(!user.drop_item())
+				return
+			beakers += I
+			user << "<span class='notice'>You load [src] with [I].</span>"
+			I.loc = src
+		else
+			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [MAX_BEAKERS] containers.</span>"
+			return
+	..()
+
+/obj/item/weapon/bombcore/chemical/CheckParts()
+	for(var/obj/item/weapon/grenade/chem_grenade/G in src)
+		for(var/obj/item/weapon/reagent_containers/glass/B in G)
+			if(beakers.len < MAX_BEAKERS)
+				beakers += B
+				B.loc = src
+			else
+				B.loc = get_turf(src)
+		qdel(G)
+	return
+
+
+#undef MAX_BEAKERS
+#undef SPREAD_RANGE
+
 ///Syndicate Detonator (aka the big red button)///
 
 /obj/item/device/syndicatedetonator
@@ -327,6 +499,3 @@
 		existant =	0
 		cooldown = 1
 		spawn(30) cooldown = 0
-
-
-
