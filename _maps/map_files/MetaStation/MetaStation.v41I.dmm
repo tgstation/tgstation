@@ -61721,8 +61721,14 @@
 /area/library)
 "bVL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper,
 /obj/machinery/light,
+/obj/item/weapon/deck/cas{
+	step_x = 3;
+	step_y = 2
+	},
+/obj/item/weapon/deck/cas/black{
+	step_y = 8
+	},
 /turf/open/floor/wood,
 /area/library)
 "bVM" = (
@@ -63119,7 +63125,6 @@
 	dir = 4
 	},
 /turf/open/floor/engine{
-
 	name = "co2 floor";
 	initial_gas_mix = "co2=50000"
 	},
@@ -84862,7 +84867,7 @@
 	dir = 4;
 	icon_state = "warnplate";
 	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01";
 	temperature = 2.7
 	},
 /area/toxins/test_area)

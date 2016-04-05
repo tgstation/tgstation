@@ -58603,6 +58603,18 @@
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
+"cpg" = (
+/obj/structure/table/wood,
+/obj/structure/disposalpipe/segment,
+/obj/item/weapon/deck/cas{
+	step_x = 2;
+	step_y = 1
+	},
+/obj/item/weapon/deck/cas/black{
+	step_y = 7
+	},
+/turf/open/floor/wood,
+/area/library)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -108400,7 +108412,7 @@ aFu
 aHc
 aIw
 aJS
-aJS
+cpg
 aMJ
 aNP
 aOS
