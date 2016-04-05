@@ -6,3 +6,5 @@ changes:
   - rscadd: "Added Chemical Bombs."
   - tweak: "Nerfed Bombs."
   - rscadd: "Made Bombs Emaggable."
+  - rscadd: "Large Grenades are now 10% Larger!"
+  - tweak: "Grenades now heat up their ingredients slightly upon exploding." 
