@@ -531,11 +531,11 @@ var/list/gaslist_cache = null
 		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
 		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
 		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
-		if(delta > MINIMUM_AIR_TO_SUSPEND && \
-			delta > gas_moles * MINIMUM_AIR_RATIO_TO_SUSPEND)
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
+			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 
-	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
+	if(total_moles() > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/temp
 		var/sample_temp
 
