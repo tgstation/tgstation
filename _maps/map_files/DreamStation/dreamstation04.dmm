@@ -6376,10 +6376,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/warningline{
@@ -6658,10 +6655,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/structure/closet/wardrobe/engineering_yellow,
 /obj/item/clothing/mask/gas{
@@ -6866,10 +6860,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
@@ -6954,10 +6945,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/machinery/disposal/bin,
 /obj/machinery/airalarm{
@@ -7428,10 +7416,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/warningline{
@@ -7714,10 +7699,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8";
@@ -7783,10 +7765,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/machinery/light_switch{
@@ -10662,16 +10641,10 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "avL" = (
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "avM" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -11304,19 +11277,13 @@
 	frequency = 1441;
 	id_tag = "mix_sensor"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "awX" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "awY" = (
 /obj/structure/cable/green{
@@ -12132,10 +12099,7 @@
 	id = "mix_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "ayy" = (
 /obj/machinery/camera{
@@ -12145,10 +12109,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "ayz" = (
 /obj/structure/cable/green{
@@ -13961,10 +13922,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -14715,10 +14673,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8";
@@ -15443,10 +15398,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/warningline{
@@ -15966,10 +15918,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (WEST)";
@@ -16209,26 +16158,17 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aGw" = (
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aGx" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aGy" = (
 /obj/structure/rack,
@@ -16937,26 +16877,17 @@
 	frequency = 1441;
 	id_tag = "tox_sensor"
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aHZ" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aIa" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aIb" = (
 /obj/structure/girder,
@@ -17808,10 +17739,7 @@
 	id = "tox_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aJI" = (
 /obj/structure/chair/comfy/brown{
@@ -19156,17 +19084,10 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000"
-	name = "co2 floor";
-
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aME" = (
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000"
-	name = "co2 floor";
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aMF" = (
 /turf/open/floor/plating{
@@ -19663,26 +19584,17 @@
 	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000"
-	name = "co2 floor";
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aNL" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000"
-	name = "co2 floor";
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aNM" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000"
-	name = "co2 floor";
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aNN" = (
 /obj/structure/cable/green{
@@ -20614,10 +20526,7 @@
 	id = "co2_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000"
-	name = "co2 floor";
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aPn" = (
 /obj/structure/rack,
@@ -22349,8 +22258,8 @@
 /turf/open/floor/plasteel/brown{
 	dir = 9;
 	icon_state = "brown";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /area/tcommsat/server)
 "aSV" = (
@@ -22358,8 +22267,8 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 5;
 	icon_state = "green";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /area/tcommsat/server)
 "aSW" = (
@@ -22394,8 +22303,8 @@
 /obj/machinery/telecomms/server/presets/security,
 /turf/open/floor/plasteel/darkred/side{
 	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /area/tcommsat/server)
 "aSZ" = (
@@ -22463,10 +22372,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /area/engine/engineering)
 "aTg" = (
@@ -23286,8 +23192,8 @@
 /turf/open/floor/plasteel/brown{
 	dir = 10;
 	icon_state = "brown";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /area/tcommsat/server)
 "aUG" = (
@@ -23295,8 +23201,8 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 6;
 	icon_state = "green";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /area/tcommsat/server)
 "aUH" = (
@@ -23329,8 +23235,8 @@
 /turf/open/floor/plasteel/darkred/side{
 	dir = 6;
 	icon_state = "darkred";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /area/tcommsat/server)
 "aUL" = (
@@ -23419,10 +23325,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /area/engine/engineering)
 "aUS" = (
@@ -24633,10 +24536,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /area/engine/engineering)
 "aWP" = (
@@ -24822,20 +24722,14 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aXh" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aXi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -24849,10 +24743,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aXj" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -24860,20 +24751,14 @@
 	frequency = 1441;
 	id = "o2_in"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aXk" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aXl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -24887,10 +24772,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aXm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -24898,20 +24780,14 @@
 	frequency = 1441;
 	id = "air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aXn" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "air_sensor"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aXo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -24925,10 +24801,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aXp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25604,53 +25477,32 @@
 /turf/open/floor/plasteel/black,
 /area/engine/chiefs_office)
 "aYH" = (
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aYI" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aYJ" = (
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aYK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aYL" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aYM" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aYN" = (
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aYO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -26558,24 +26410,15 @@
 /area/hallway/secondary/entry)
 "bax" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "bay" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "baz" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "baA" = (
 /obj/structure/rack{
@@ -28587,8 +28430,8 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9;
 	icon_state = "yellow";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-yellow (NORTHWEST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-yellow (NORTHWEST)"
 	},
 /area/tcommsat/server)
 "beB" = (
@@ -28596,8 +28439,8 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5;
 	icon_state = "neutral";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-neutral (NORTHEAST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-neutral (NORTHEAST)"
 	},
 /area/tcommsat/server)
 "beC" = (
@@ -28612,8 +28455,8 @@
 /turf/open/floor/plasteel{
 	dir = 9;
 	icon_state = "whiteblue";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-whiteblue (NORTHWEST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-whiteblue (NORTHWEST)"
 	},
 /area/tcommsat/server)
 "beE" = (
@@ -28621,8 +28464,8 @@
 /turf/open/floor/plasteel{
 	dir = 5;
 	icon_state = "whitepurple";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-whitehall (WEST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-whitehall (WEST)"
 	},
 /area/tcommsat/server)
 "beF" = (
@@ -28636,10 +28479,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8;
 	icon_state = "yellow";
-	
-	
-	tag = "";
-	
+	tag = ""
 	},
 /area/tcommsat/computer)
 "beG" = (
@@ -29456,8 +29296,8 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10;
 	icon_state = "yellow";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-yellow (SOUTHWEST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-yellow (SOUTHWEST)"
 	},
 /area/tcommsat/server)
 "bgi" = (
@@ -29465,8 +29305,8 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 6;
 	icon_state = "neutral";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-neutral (SOUTHEAST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-neutral (SOUTHEAST)"
 	},
 /area/tcommsat/server)
 "bgj" = (
@@ -29481,8 +29321,8 @@
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "whiteblue";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-whiteblue (SOUTHWEST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-whiteblue (SOUTHWEST)"
 	},
 /area/tcommsat/server)
 "bgl" = (
@@ -29490,8 +29330,8 @@
 /turf/open/floor/plasteel{
 	dir = 6;
 	icon_state = "whitepurple";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "icon-whitepurple (SOUTHEAST)";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "icon-whitepurple (SOUTHEAST)"
 	},
 /area/tcommsat/server)
 "bgm" = (
@@ -60560,8 +60400,8 @@
 /turf/open/floor/plasteel/brown{
 	dir = 10;
 	icon_state = "brown";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/warningline{
@@ -71624,8 +71464,8 @@
 /turf/open/floor/plasteel/brown{
 	dir = 10;
 	icon_state = "brown";
-	initial_gas_mix = "n2=100;TEMP=80"
-	tag = "SERVER";
+	initial_gas_mix = "n2=100;TEMP=80";
+	tag = "SERVER"
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
