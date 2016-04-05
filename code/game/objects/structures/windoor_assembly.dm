@@ -313,7 +313,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (anchored)
-		usr << "<span class='warning'>It is fastened to the floor; therefore, you can't rotate it!</span>"
+		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 	//if(state != "01")
 		//update_nearby_tiles(need_rebuild=1) //Compel updates before

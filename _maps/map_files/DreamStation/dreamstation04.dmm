@@ -8206,10 +8206,7 @@
 	id = "auxincineratorvent";
 	name = "Auxiliary Incinerator Vent"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "arc" = (
 /turf/open/floor/plating/airless,
@@ -8763,10 +8760,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "asj" = (
 /obj/structure/cable/yellow{
@@ -9219,10 +9213,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "asY" = (
 /obj/machinery/power/compressor{
@@ -9237,10 +9228,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "asZ" = (
 /obj/machinery/power/turbine{
@@ -9253,20 +9241,14 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "ata" = (
 /obj/machinery/door/poddoor{
 	id = "turbinevent";
 	name = "Turbine Vent"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "atb" = (
 /obj/structure/disposalpipe/segment,
@@ -9833,10 +9815,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "aui" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -10641,16 +10620,10 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "avL" = (
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "avM" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -11283,19 +11256,13 @@
 	frequency = 1441;
 	id_tag = "mix_sensor"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "awX" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "awY" = (
 /obj/structure/cable/green{
@@ -12111,10 +12078,7 @@
 	id = "mix_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "ayy" = (
 /obj/machinery/camera{
@@ -12124,10 +12088,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "ayz" = (
 /obj/structure/cable/green{
@@ -16176,26 +16137,17 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aGw" = (
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aGx" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aGy" = (
 /obj/structure/rack,
@@ -16904,26 +16856,17 @@
 	frequency = 1441;
 	id_tag = "tox_sensor"
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aHZ" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aIa" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aIb" = (
 /obj/structure/girder,
@@ -17775,10 +17718,7 @@
 	id = "tox_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "aJI" = (
 /obj/structure/chair/comfy/brown{
@@ -19123,16 +19063,10 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000";
-	name = "co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aME" = (
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000";
-	name = "co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aMF" = (
 /turf/open/floor/plating{
@@ -19629,26 +19563,17 @@
 	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000";
-	name = "co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aNL" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000";
-	name = "co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aNM" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000";
-	name = "co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aNN" = (
 /obj/structure/cable/green{
@@ -20580,10 +20505,7 @@
 	id = "co2_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "co2=50000";
-	name = "co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "aPn" = (
 /obj/structure/rack,
@@ -24779,20 +24701,14 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aXh" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aXi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -24806,10 +24722,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aXj" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -24817,20 +24730,14 @@
 	frequency = 1441;
 	id = "o2_in"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aXk" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aXl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -24844,10 +24751,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aXm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -24855,20 +24759,14 @@
 	frequency = 1441;
 	id = "air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aXn" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "air_sensor"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aXo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -24882,10 +24780,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aXp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25561,53 +25456,32 @@
 /turf/open/floor/plasteel/black,
 /area/engine/chiefs_office)
 "aYH" = (
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aYI" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aYJ" = (
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aYK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aYL" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aYM" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aYN" = (
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aYO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -26515,24 +26389,15 @@
 /area/hallway/secondary/entry)
 "bax" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "bay" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "baz" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "baA" = (
 /obj/structure/rack{
@@ -77861,24 +77726,43 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space)
-"cRX" = (
-/turf/closed/wall/rust,
-/area/chapel/office)
-"cRW" = (
-/turf/open/floor/plating,
-/area/space)
-"cRV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
-"cRU" = (
+"cRC" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
+/obj/structure/table,
+/obj/item/weapon/book/manual/hydroponics_pod_people,
+/obj/item/weapon/watertank,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+"cRD" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/hardhat/cakehat,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
+"cRE" = (
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+"cRF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/table,
+/obj/structure/chair,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
-"cRT" = (
+"cRH" = (
 /obj/structure/cable/green{
 	tag = "icon-1-2";
 	icon_state = "1-2"
@@ -77887,70 +77771,11 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Assistant"
-	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
-"cRS" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable{
-	desc = "Ah, leftovers. A slice of the most green pizza of all pizzas not containing green ingredients."
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
-"cRR" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
+"cRI" = (
 /obj/structure/chair{
 	dir = 1
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRO" = (
-/obj/structure/chair,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRN" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	listening = 1;
-	name = "Station Intercom (General)";
-	pixel_y = 20;
-	tag = "NORTH"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
-"cRM" = (
-/obj/machinery/processor,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
-"cRL" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRK" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -31
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -77971,13 +77796,69 @@
 /obj/item/clothing/tie/armband/hydro,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
-"cRI" = (
+"cRK" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRL" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRM" = (
+/obj/machinery/processor,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cRN" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	listening = 1;
+	name = "Station Intercom (General)";
+	pixel_y = 20;
+	tag = "NORTH"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cRO" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/kitchen/fork,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
-"cRH" = (
+"cRS" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable{
+	desc = "Ah, leftovers. A slice of the most green pizza of all pizzas not containing green ingredients."
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cRT" = (
 /obj/structure/cable/green{
 	tag = "icon-1-2";
 	icon_state = "1-2"
@@ -77986,44 +77867,28 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/effect/landmark/start{
+	name = "Assistant"
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
-"cRG" = (
+"cRU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/chair,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"cRE" = (
-/turf/open/floor/plasteel/hydrofloor,
-/area/hydroponics)
-"cRD" = (
-/obj/structure/table/wood,
-/obj/item/clothing/head/hardhat/cakehat,
-/turf/open/floor/wood,
-/area/crew_quarters/theatre)
-"cRC" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/watertank,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/hydrofloor,
-/area/hydroponics)
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRV" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space)
+"cRW" = (
+/turf/open/floor/plating,
+/area/space)
+"cRX" = (
+/turf/closed/wall/rust,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa

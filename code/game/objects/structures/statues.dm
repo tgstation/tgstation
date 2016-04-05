@@ -224,7 +224,7 @@
 	..()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
+	atmos_spawn_air("plasma=400;TEMP=1000")
 	hardness = 0
 	CheckHardness()
 
