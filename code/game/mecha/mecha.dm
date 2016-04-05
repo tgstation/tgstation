@@ -42,6 +42,8 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
+
+	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
 	var/internal_tank_valve = ONE_ATMOSPHERE
@@ -91,7 +93,7 @@
 	var/defence_mode = FALSE
 	var/defence_mode_deflect_chance = 35
 	var/leg_overload_mode = FALSE
-	var/leg_overload_coeff = 2
+	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
 	var/smoke = 5
 	var/smoke_ready = 1
@@ -501,13 +503,6 @@
 		can_move = 0
 		spawn(step_in)
 			can_move = 1
-		if(leg_overload_mode)
-			health--
-			if(health < initial(health) - initial(health)/3)
-				leg_overload_mode = 0
-				step_in = initial(step_in)
-				step_energy_drain = initial(step_energy_drain)
-				occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
 		return 1
 	return 0
 
@@ -545,6 +540,37 @@
 		if(yes)
 			if(..()) //mech was thrown
 				return
+			if(bumpsmash)
+				var/mecha = src
+				obstacle.mech_melee_attack(mecha)
+				if(!obstacle || (obstacle && !obstacle.density))
+					step(src,dir)
+				/*var/success = 0
+				if(istype(obstacle,/turf/closed/wall)
+					var/turf/closed/wall/W = obstacle
+					W.dismantle_wall(1)
+					step(src,dir)
+					success = 1
+				if(istype(obstacle,/obj/structure/grille)
+					var/obj/structure/grille/G = obstacle
+					G.Break()
+					step(src,dir)
+					success = 1
+				if(istype(obstacle,/obj/structure/window)
+					var/obj/structure/window/W = obstacle
+					W.spawnfragments()
+					step(src,dir)
+					success = 1
+				if(istype(obstacle,/obj/structure/table)
+					var/obj/structure/table/T = obstacle
+					T.table_destroy(1)
+					step(src,dir)
+					success = 1
+				if(success)
+					visible_message(<spanclass='warning'>"[src] smashes right through [obstacle]!"
+					playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+					return
+				*/
 			if(istype(obstacle, /obj))
 				var/obj/O = obstacle
 				if(!O.anchored)
@@ -1155,7 +1181,7 @@ var/year_integer = text2num(year) // = 2013???
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/M = chassis
-	if(forced_state)
+	if(!isnull(forced_state))
 		M.defence_mode = forced_state
 	else
 		M.defence_mode = !M.defence_mode
@@ -1177,7 +1203,7 @@ var/year_integer = text2num(year) // = 2013???
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/M = chassis
-	if(forced_state)
+	if(!isnull(forced_state))
 		M.leg_overload_mode = forced_state
 	else
 		M.leg_overload_mode = !M.leg_overload_mode
@@ -1185,11 +1211,13 @@ var/year_integer = text2num(year) // = 2013???
 	M.log_message("Toggled leg actuators overload.")
 	if(M.leg_overload_mode)
 		M.leg_overload_mode = 1
+		M.bumpsmash = 1
 		M.step_in = min(1, round(M.step_in/2))
 		M.step_energy_drain = M.step_energy_drain*M.leg_overload_coeff
 		M.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
 		M.leg_overload_mode = 0
+		M.bumpsmash = 0
 		M.step_in = initial(M.step_in)
 		M.step_energy_drain = initial(M.step_energy_drain)
 		M.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
