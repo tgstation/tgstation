@@ -26,8 +26,10 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/open/floor/plasteel/purple/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 4;
+	icon_state = "purple"
 	},
 /area/mine/living_quarters)
 "ah" = (
@@ -253,11 +255,13 @@
 	},
 /area/mine/living_quarters)
 "aI" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "gulag"
+/obj/machinery/mineral/unloading_machine{
+	dir = 1;
+	icon_state = "unloader-corner";
+	input_dir = 1;
+	output_dir = 2
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
@@ -343,20 +347,20 @@
 	},
 /area/mine/laborcamp)
 "aS" = (
-/obj/machinery/mineral/stacking_unit_console{
-	dir = 1;
-	machinedir = 2
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "gulag"
 	},
-/turf/closed/wall{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
 "aT" = (
-/obj/machinery/mineral/processing_unit{
-	dir = 1;
-	output_dir = 2
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "gulag"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
@@ -366,29 +370,39 @@
 /area/lavaland/surface/outdoors)
 "aV" = (
 /obj/machinery/conveyor{
-	dir = 8;
-	id = "gulag"
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"aW" = (
-/obj/machinery/mineral/stacking_machine{
-	dir = 1;
-	input_dir = 4
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"aX" = (
-/obj/machinery/conveyor{
 	dir = 10;
 	icon_state = "conveyor0";
 	id = "gulag"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"aW" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"aX" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable{
+	tag = "icon-0-9";
+	icon_state = "0-9";
+	d1 = 2;
+	d2 = 4
+	},
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
@@ -550,29 +564,20 @@
 	},
 /area/mine/laborcamp)
 "bn" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel{
+/obj/structure/ore_box,
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (SOUTHWEST)";
+	icon_state = "brown";
+	dir = 10;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/mine/laborcamp)
+/area/mine/living_quarters)
 "bo" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Labor Camp Maintenance";
-	req_access_txt = "2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating{
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel/purple/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/mine/laborcamp)
+/area/mine/living_quarters)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -654,22 +659,23 @@
 	},
 /area/mine/laborcamp)
 "bv" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel/brown{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 6;
+	icon_state = "brown"
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
+/area/mine/living_quarters)
 "bw" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Labor Camp Maintenance";
+	req_access_txt = "2"
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	tag = "icon-1-10";
+	icon_state = "1-10";
+	d1 = 2;
+	d2 = 4
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -768,13 +774,16 @@
 	},
 /area/mine/laborcamp/security)
 "bE" = (
-/obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 1
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	tag = "icon-5-6";
+	icon_state = "5-6";
+	d1 = 2;
+	d2 = 4
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -793,7 +802,9 @@
 /area/mine/laborcamp)
 "bH" = (
 /obj/machinery/door/airlock/external{
+	glass = 1;
 	name = "Mining Shuttle Airlock";
+	opacity = 0;
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
@@ -1032,7 +1043,10 @@
 /area/mine/living_quarters)
 "cd" = (
 /obj/machinery/mineral/equipment_vendor,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (NORTHWEST)";
+	icon_state = "brown";
+	dir = 9;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
@@ -1311,15 +1325,20 @@
 	},
 /obj/structure/plasticflaps,
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 9;
+	icon_state = "warnplate"
 	},
 /area/mine/production)
 "cG" = (
-/obj/machinery/mineral/stacking_machine{
-	dir = 1;
-	input_dir = 4
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining_internal"
 	},
 /turf/open/floor/plating{
+	tag = "icon-warnplate (NORTH)";
+	icon_state = "warnplate";
+	dir = 1;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -1342,6 +1361,9 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	tag = "icon-warnplatecorner (EAST)";
+	icon_state = "warnplatecorner";
+	dir = 4;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -1444,8 +1466,10 @@
 /area/mine/living_quarters)
 "cU" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/open/floor/plasteel/purple/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 8;
+	icon_state = "purple"
 	},
 /area/mine/living_quarters)
 "cV" = (
@@ -1496,13 +1520,13 @@
 /area/mine/living_quarters)
 "da" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/purple/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "db" = (
 /obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
@@ -1890,7 +1914,9 @@
 /area/mine/eva)
 "dP" = (
 /obj/machinery/door/airlock/external{
+	glass = 1;
 	name = "Mining External Airlock";
+	opacity = 0;
 	req_access_txt = "54"
 	},
 /turf/open/floor/plasteel{
@@ -2521,7 +2547,9 @@
 	output_dir = 2
 	},
 /turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 9;
+	icon_state = "warnplate"
 	},
 /area/mine/production)
 "fa" = (
@@ -2562,8 +2590,10 @@
 	dir = 2;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/open/floor/plasteel/brown{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 5;
+	icon_state = "brown"
 	},
 /area/mine/living_quarters)
 "fe" = (
@@ -2603,6 +2633,9 @@
 	id = "mining_internal"
 	},
 /turf/open/floor/plating{
+	tag = "icon-warnplate (WEST)";
+	icon_state = "warnplate";
+	dir = 8;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2700,7 +2733,7 @@
 /area/mine/production)
 "ft" = (
 /obj/machinery/mineral/processing_unit_console,
-/turf/closed/wall/r_wall{
+/turf/closed/wall{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
@@ -2790,6 +2823,36 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
+"fE" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/loadingarea{
+	tag = "icon-loadingarea (EAST)";
+	icon_state = "loadingarea";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"fF" = (
+/turf/open/floor/plasteel/delivery{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"fG" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1;
+	output_dir = 2
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"fH" = (
+/turf/open/floor/plasteel/loadingarea{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/area/mine/laborcamp)
 
 (1,1,1) = {"
 aa
@@ -2800,8 +2863,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -3059,7 +3122,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 af
@@ -3316,7 +3379,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 af
@@ -3573,7 +3636,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 af
 af
 af
@@ -4344,10 +4407,10 @@ aa
 aa
 aa
 aa
+ed
 ab
 ab
 ab
-ab
 af
 ab
 ab
@@ -4381,7 +4444,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -4424,7 +4487,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -4601,63 +4664,9 @@ aa
 aa
 aa
 aa
+ed
 ab
 ab
-ab
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ab
-ab
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-af
-af
-af
 af
 af
 af
@@ -4688,6 +4697,60 @@ al
 al
 al
 al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+ed
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+ab
+ab
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+ed
 af
 ab
 ab
@@ -4857,7 +4920,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 af
@@ -5171,7 +5234,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -6142,7 +6205,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -6399,7 +6462,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -6913,8 +6976,8 @@ aa
 aa
 aa
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 af
@@ -7429,7 +7492,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -7686,7 +7749,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -8136,10 +8199,10 @@ al
 al
 al
 al
-al
 am
 am
 am
+an
 an
 an
 aD
@@ -8197,14 +8260,7 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-af
-af
-af
+ed
 ab
 ab
 ab
@@ -8212,6 +8268,13 @@ ab
 af
 af
 af
+ab
+ab
+ab
+ab
+af
+af
+af
 af
 ab
 ab
@@ -8298,7 +8361,6 @@ af
 af
 af
 af
-al
 al
 al
 al
@@ -8407,6 +8469,7 @@ at
 at
 at
 at
+at
 an
 bB
 bK
@@ -8454,8 +8517,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -8650,11 +8713,11 @@ al
 al
 al
 al
-al
 an
 ap
 fD
 aw
+at
 at
 at
 at
@@ -8907,7 +8970,6 @@ al
 al
 al
 al
-al
 an
 aq
 aM
@@ -8916,11 +8978,12 @@ aA
 at
 at
 at
+at
+at
 au
+fH
 at
-at
-bc
-bn
+be
 an
 bD
 bM
@@ -9164,20 +9227,20 @@ al
 al
 al
 al
-al
 an
 an
 an
 an
 an
+at
+at
 at
 at
 dr
+an
 aS
-aW
 an
 bd
-an
 an
 an
 an
@@ -9227,10 +9290,10 @@ aa
 aa
 aa
 aa
+ed
+ed
 ab
 ab
-ab
-ab
 af
 af
 af
@@ -9240,12 +9303,12 @@ af
 af
 af
 af
-af
-af
-ab
 af
 af
 ab
+af
+af
+ab
 al
 al
 al
@@ -9334,7 +9397,6 @@ af
 af
 af
 af
-al
 al
 al
 al
@@ -9428,14 +9490,15 @@ ar
 ar
 an
 at
+fE
+an
 an
 aL
 an
-aV
+aS
 an
 be
 an
-bv
 bE
 bN
 an
@@ -9484,7 +9547,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 af
@@ -9678,23 +9741,23 @@ al
 al
 al
 al
-al
 an
 as
 at
 at
 aB
 at
+fF
 aI
 aT
-aI
-aX
+fG
+aT
+aV
 an
 bf
-bo
 bw
-bF
-bF
+aW
+aX
 an
 af
 af
@@ -9935,7 +9998,6 @@ al
 al
 al
 al
-al
 an
 an
 av
@@ -9949,8 +10011,9 @@ an
 an
 an
 an
+an
+an
 bx
-bG
 bO
 an
 af
@@ -10193,22 +10256,22 @@ al
 al
 al
 al
-al
 an
 an
 an
 an
 at
 an
+aY
 aN
 aN
 ab
 ab
 ab
+ab
 an
-an
-an
-an
+bF
+bG
 an
 af
 eh
@@ -10221,7 +10284,7 @@ fj
 ee
 cd
 cU
-cU
+bn
 ee
 ab
 af
@@ -10453,20 +10516,20 @@ al
 al
 al
 al
-al
 an
 aF
 an
+aY
 ab
 ab
 ab
 ab
 ab
 ab
-af
-af
-af
-af
+an
+an
+an
+an
 af
 eh
 ex
@@ -10709,11 +10772,11 @@ al
 al
 al
 al
-al
 ab
 an
 aE
 an
+aY
 ab
 ab
 ab
@@ -10969,8 +11032,8 @@ al
 al
 ab
 ab
-ab
 aJ
+ab
 ab
 ab
 ab
@@ -10992,7 +11055,7 @@ cu
 ee
 cJ
 fj
-db
+bo
 ei
 ab
 al
@@ -11024,7 +11087,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -11249,7 +11312,7 @@ cv
 ee
 fd
 ag
-db
+bv
 ee
 al
 ed
@@ -11281,8 +11344,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -11538,9 +11601,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -12056,7 +12119,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -12313,7 +12376,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -12570,7 +12633,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -12827,7 +12890,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -14365,7 +14428,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -14622,8 +14685,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -14880,7 +14943,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -15137,7 +15200,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -16681,8 +16744,8 @@ aa
 ab
 ab
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 af
@@ -17193,7 +17256,7 @@ aa
 aa
 aa
 ab
-ab
+ed
 aa
 aa
 aa
@@ -17450,7 +17513,7 @@ aa
 aa
 aa
 ab
-ab
+ed
 aa
 aa
 aa
@@ -17707,9 +17770,9 @@ aa
 aa
 aa
 ab
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -19718,7 +19781,7 @@ dE
 dO
 dW
 ds
-al
+ed
 bh
 et
 dI
@@ -19726,7 +19789,7 @@ eX
 fg
 fg
 cq
-cx
+bh
 cF
 bh
 ab
@@ -20019,8 +20082,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -20241,7 +20304,7 @@ ff
 ft
 ff
 ff
-cH
+cG
 bh
 ab
 ab
@@ -20793,7 +20856,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -20998,13 +21061,13 @@ ab
 ab
 ab
 ab
-ab
-bt
-ab
 bt
 ab
 ab
 ab
+bt
+fy
+fy
 ab
 ab
 af
@@ -21050,7 +21113,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -21305,8 +21368,8 @@ aa
 aa
 aa
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -22040,8 +22103,8 @@ af
 af
 af
 af
-af
-af
+dq
+dq
 ab
 ab
 ab
@@ -22295,11 +22358,11 @@ af
 af
 af
 af
-af
-af
-af
-af
-ab
+dq
+dq
+dq
+dq
+fy
 ab
 ab
 af
@@ -22547,17 +22610,17 @@ ab
 ab
 ab
 ab
-ab
-ab
-af
-af
-af
-af
-af
-af
-af
-ab
-ab
+fy
+fy
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+fy
+fy
 ab
 af
 ab
@@ -22806,10 +22869,10 @@ ab
 ab
 ab
 ab
-ab
-ab
-af
-af
+fy
+fy
+dq
+dq
 af
 af
 af
@@ -22847,9 +22910,9 @@ aa
 aa
 aa
 ab
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -23104,7 +23167,7 @@ aa
 aa
 aa
 ab
-ab
+ed
 aa
 aa
 aa
@@ -23361,11 +23424,11 @@ aa
 aa
 aa
 ab
-ab
+ed
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -23622,7 +23685,7 @@ ab
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -23877,8 +23940,8 @@ aa
 ab
 ab
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 af
@@ -25159,7 +25222,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -25675,7 +25738,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -25932,7 +25995,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -26701,8 +26764,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -26958,7 +27021,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -27215,7 +27278,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -27992,7 +28055,7 @@ ab
 ab
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -28246,10 +28309,10 @@ aa
 ab
 ab
 ab
-ab
+ed
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -28448,7 +28511,7 @@ ab
 ab
 ab
 ab
-ab
+fy
 ab
 ab
 al
@@ -28504,11 +28567,12 @@ ab
 ab
 ab
 ab
+ed
+ed
 ab
 ab
 ab
-ab
-ab
+af
 af
 af
 af
@@ -28516,14 +28580,13 @@ af
 af
 af
 af
-af
 ab
 ab
 ab
 af
 ab
 al
-al
+ed
 al
 al
 al
@@ -28705,8 +28768,8 @@ ab
 ab
 ab
 ab
-ab
-ab
+fy
+fy
 ab
 al
 al
@@ -29014,7 +29077,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -29271,8 +29334,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -29528,9 +29591,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -30000,7 +30063,7 @@ al
 al
 ab
 ab
-ab
+fy
 al
 al
 al
@@ -30047,7 +30110,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -30304,7 +30367,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -31070,10 +31133,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ed
+ed
+ed
+ed
 ab
 ab
 ab
@@ -31328,7 +31391,7 @@ aa
 aa
 aa
 ab
-ab
+ed
 ab
 ab
 ab
@@ -31841,7 +31904,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -32098,13 +32161,13 @@ aa
 aa
 aa
 aa
+ed
 ab
 ab
 ab
 ab
 ab
-ab
-ab
+ed
 ab
 ab
 af
@@ -32360,7 +32423,7 @@ ab
 ab
 ab
 ab
-ab
+ed
 aa
 aa
 ab
@@ -32612,15 +32675,15 @@ aa
 aa
 aa
 aa
+ed
 ab
 ab
 ab
-ab
-ab
-ab
+ed
+ed
 aa
 aa
-ab
+ed
 af
 af
 af
@@ -32874,10 +32937,10 @@ aa
 ab
 ab
 ab
-ab
+ed
 aa
 aa
-ab
+ed
 af
 af
 af
@@ -33128,10 +33191,10 @@ aa
 aa
 aa
 aa
+ed
 ab
 ab
-ab
-ab
+ed
 aa
 aa
 ab
@@ -33385,7 +33448,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -33640,7 +33703,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -35931,7 +35994,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -36467,7 +36530,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -36724,9 +36787,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -37243,7 +37306,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -37498,8 +37561,8 @@ aa
 ab
 ab
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -38523,7 +38586,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -38781,7 +38844,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -39038,7 +39101,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -39295,7 +39358,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -39551,7 +39614,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -40322,7 +40385,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -40579,10 +40642,10 @@ aa
 aa
 aa
 aa
+ed
+ed
 ab
-ab
-ab
-ab
+ed
 ab
 ab
 ab
@@ -40843,7 +40906,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -41100,7 +41163,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -41354,9 +41417,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -41610,9 +41673,9 @@ aa
 ab
 ab
 ab
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -42121,8 +42184,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -42378,10 +42441,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ed
+ed
+ed
+ed
 ab
 ab
 ab
@@ -42637,7 +42700,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -43663,8 +43726,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -45211,8 +45274,8 @@ ab
 ab
 ab
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 af
@@ -45980,7 +46043,7 @@ ab
 ab
 ab
 ab
-ab
+ed
 aa
 aa
 aa
@@ -46236,13 +46299,13 @@ aa
 ab
 ab
 ab
-ab
-ab
+ed
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -46468,7 +46531,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -46494,13 +46557,13 @@ ab
 ab
 ab
 ab
-ab
+ed
 aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 af
@@ -46751,13 +46814,13 @@ ab
 ab
 ab
 ab
-ab
+ed
 aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 af
@@ -47008,12 +47071,12 @@ ab
 ab
 ab
 ab
-ab
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -47261,16 +47324,16 @@ aa
 aa
 aa
 aa
+ed
 ab
 ab
 ab
-ab
-ab
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -47518,8 +47581,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -48038,8 +48101,8 @@ aa
 ab
 ab
 ab
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -48549,7 +48612,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -48805,7 +48868,7 @@ aa
 aa
 ab
 ab
-ab
+ed
 ab
 ab
 ab
@@ -49832,7 +49895,7 @@ aa
 aa
 aa
 ab
-ab
+ed
 aa
 ab
 ab
@@ -50088,8 +50151,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 aa
 ab
 ab
@@ -50345,10 +50408,10 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 aa
-ab
+ed
 ab
 ab
 ab
@@ -50602,10 +50665,10 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 aa
-ab
+ed
 ab
 ab
 ab
@@ -50859,8 +50922,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 aa
 ab
 ab
@@ -51116,7 +51179,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -51867,7 +51930,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -52144,7 +52207,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -52786,7 +52849,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -52917,7 +52980,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -53174,7 +53237,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -53429,12 +53492,12 @@ aa
 aa
 aa
 aa
+ed
+ed
 ab
 ab
-ab
-ab
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -53737,7 +53800,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -53949,7 +54012,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -54206,7 +54269,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -54714,9 +54777,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -54971,7 +55034,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -55107,7 +55170,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -55749,7 +55812,7 @@ ab
 ab
 ab
 ab
-ab
+ed
 aa
 aa
 ab
@@ -56009,7 +56072,7 @@ ab
 ab
 aa
 aa
-ab
+ed
 ab
 af
 af
@@ -56265,7 +56328,7 @@ ab
 ab
 ab
 ab
-ab
+ed
 ab
 ab
 af
@@ -56513,7 +56576,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -57029,7 +57092,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -57286,7 +57349,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -57542,7 +57605,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -57777,7 +57840,7 @@ al
 al
 al
 al
-al
+ed
 ab
 af
 af
@@ -58569,7 +58632,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -58826,9 +58889,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+ed
+ed
+ed
 ab
 ab
 ab
@@ -59083,7 +59146,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 aa
 aa
 aa
@@ -59144,7 +59207,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -59340,12 +59403,12 @@ aa
 aa
 aa
 aa
-ab
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -59597,12 +59660,12 @@ aa
 aa
 aa
 aa
-ab
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -59854,12 +59917,12 @@ aa
 aa
 aa
 aa
-ab
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -60111,12 +60174,12 @@ aa
 aa
 aa
 aa
-ab
+ed
 aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -60373,7 +60436,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -60920,7 +60983,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -62424,7 +62487,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -62681,8 +62744,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -62938,10 +63001,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ed
+ed
+ed
+ed
 ab
 ab
 ab
@@ -63195,10 +63258,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ed
+ed
+ed
+ed
 ab
 ab
 ab
@@ -63455,14 +63518,14 @@ aa
 ab
 ab
 ab
+ed
+ed
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
 af
 af
 af
@@ -63689,7 +63752,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -63971,7 +64034,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -64228,7 +64291,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -64485,7 +64548,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -65529,7 +65592,7 @@ af
 af
 af
 ab
-al
+ed
 al
 al
 al
@@ -66027,7 +66090,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
@@ -66284,8 +66347,8 @@ aa
 aa
 aa
 aa
-ab
-ab
+ed
+ed
 ab
 ab
 ab
@@ -66316,7 +66379,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -66536,12 +66599,12 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
+ed
+ed
+ed
+ed
+ed
+ed
 ab
 ab
 ab
@@ -66793,11 +66856,11 @@ aa
 aa
 aa
 aa
+ed
+ed
 ab
 ab
-ab
-ab
-ab
+ed
 ab
 ab
 ab
@@ -67025,7 +67088,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -67285,7 +67348,7 @@ al
 al
 al
 al
-af
+ed
 af
 af
 af
@@ -67564,10 +67627,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ed
+ed
+ed
+ed
 ab
 ab
 ab
@@ -68085,7 +68148,7 @@ aa
 aa
 aa
 aa
-ab
+ed
 ab
 ab
 ab
