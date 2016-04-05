@@ -272,7 +272,11 @@
 	dwidth = 1
 	width = 3
 	height = 4
+#if (LAVALAND_ENABLED == 1)
 	var/target_area = /area/lavaland/surface/outdoors
+#else
+	var/target_area = /area/mine/unexplored
+#endif
 
 /obj/docking_port/stationary/random/initialize()
 	..()
