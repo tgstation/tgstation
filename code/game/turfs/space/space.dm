@@ -10,7 +10,7 @@
 	var/destination_z
 	var/destination_x
 	var/destination_y
-
+	var/static/bandaidfix = 1 //so we can disable this to test easily.
 	var/global/datum/gas_mixture/space/space_gas = new
 
 var/global/list/turf/open/space/space_turfs = list() //i hate everything
@@ -154,3 +154,11 @@ var/global/list/turf/open/space/space_turfs = list() //i hate everything
 
 /turf/open/space/proc/update_icon()
 	icon_state = SPACE_ICON_STATE
+	
+/turf/open/space/process_cell
+	..() //mainly for excited group processing
+	//hack starts here!
+	if (bandaidfix)
+		air.gases.Cut()
+		temperature = TCMB
+		air.temperature = TCMB
