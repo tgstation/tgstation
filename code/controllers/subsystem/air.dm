@@ -272,10 +272,12 @@ var/datum/subsystem/air/SSair
 		active_turfs -= t
 
 		if(t.blocks_air)
+			CHECK_TICK
 			continue
 
 		var/turf/open/T = t
 		if(!istype(T))
+			CHECK_TICK
 			continue
 		T.excited = 0
 		T.update_visuals()
@@ -301,6 +303,7 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		if (z_level && AM.z != z_level)
+			CHECK_TICK
 			continue
 		AM.atmosinit()
 		CHECK_TICK
@@ -311,6 +314,7 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_pipenets(z_level)
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		if (z_level && AM.z != z_level)
+			CHECK_TICK
 			continue
 		AM.build_network()
 		CHECK_TICK
