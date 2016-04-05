@@ -1,0 +1,5 @@
+author: Erwgd
+delete-after: True
+changes: 
+  - rscadd: "Utility belts of all kinds can now accept gloves. Most belts, except janitorial belts, may now also hold station bounced radios."
+  - rscadd: "Hazard vests and most jackets can carry a station bounced radio as well. Labcoats can be used to store a handheld crew monitor."
