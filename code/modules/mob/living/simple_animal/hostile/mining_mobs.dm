@@ -60,7 +60,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
-	ranged_cooldown_cap = 20
+	ranged_cooldown_time = 20
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -73,7 +73,6 @@
 	a_intent = "harm"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
@@ -210,23 +209,21 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
-	ranged_cooldown_cap = 0
+	ranged_cooldown_time = 20
 	environment_smash = 0
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/internal/hivelord_core)
-	var/next_brood = 0
-	var/brood_cooldown = 20
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	if(world.time >= next_brood)
+	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction
-		next_brood = world.time + brood_cooldown
+		ranged_cooldown = world.time + ranged_cooldown_time
 	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -332,8 +329,7 @@
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
-	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
-	ranged_cooldown_cap = 8
+	ranged_cooldown_time = 80
 	friendly = "wails at"
 	speak_emote = list("bellows")
 	vision_range = 4
@@ -359,7 +355,7 @@
 	handle_preattack()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
-	if(ranged_cooldown <= 2 && !pre_attack)
+	if(ranged_cooldown <= world.time + ranged_cooldown_time*0.25 && !pre_attack)
 		pre_attack++
 	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
@@ -381,14 +377,13 @@
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
-		ranged_cooldown = ranged_cooldown_cap
+		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
 		pre_attack = 0
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
-	if(ranged_cooldown)
-		ranged_cooldown--
+	ranged_cooldown -= 10
 	handle_preattack()
 	. = ..()
 
