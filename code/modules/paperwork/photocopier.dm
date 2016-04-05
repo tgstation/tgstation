@@ -119,7 +119,7 @@
 					break
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
-				if(toner > 0 && !busy && doccopy)
+				if(toner > 5 && !busy && doccopy)
 					new /obj/item/documents/photocopy(src)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
