@@ -215,8 +215,6 @@
 /turf/open/proc/last_share_check()
 	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
 		excited_group.reset_cooldowns()
-	else if(air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
-		excited_group.dismantle_cooldown = 0
 
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
@@ -238,7 +236,6 @@
 /datum/excited_group
 	var/list/turf_list = list()
 	var/breakdown_cooldown = 0
-	var/dismantle_cooldown = 0
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -267,29 +264,24 @@
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
-	dismantle_cooldown = 0
 
 /datum/excited_group/proc/self_breakdown()
 	var/datum/gas_mixture/A = new
-
-	//make local for sanic speed
 	var/list/A_gases = A.gases
-	var/list/turf_list = src.turf_list
-	var/turflen = turf_list.len
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		A.merge(T.air)
 
-	for(var/id in A_gases)
-		A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
-
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		T.air.copy_from(A)
-		T.update_visuals()
+		var/T_gases = T.air.gases
 
-	breakdown_cooldown = 0
+		for(var/id in A_gases)
+			T.air.assert_gas(id)
+			T_gases[id][MOLES] = A_gases[id][MOLES]/turf_list.len
+
+		T.update_visuals()
 
 /datum/excited_group/proc/dismantle()
 	for(var/t in turf_list)
