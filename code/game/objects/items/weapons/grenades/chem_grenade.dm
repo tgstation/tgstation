@@ -15,6 +15,8 @@
 	var/affected_area = 3
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
+	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
+	var/threat = 0 // Used by advanced grenades to make them slightly more worthy.
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -153,15 +155,14 @@
 		nadeassembly.on_found(finder)
 
 /obj/item/weapon/grenade/chem_grenade/prime()
-	if(stage != READY || !reagents)
+	if(stage != READY)
 		return
 
-	var/has_reagents
-	for(var/obj/item/I in beakers)
-		if(I.reagents.total_volume)
-			has_reagents = 1
+	var/list/reactants = list()
+	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+		reactants += G.reagents
 
-	if(!has_reagents)
+	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threat))
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
 		return
 
@@ -173,79 +174,30 @@
 		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 
-	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
-
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
 	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
 
 	update_mob()
 
-	mix_reagents()
-
-	if(reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
-		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
-		steam.set_up(10, 0, get_turf(src))
-		steam.attach(src)
-		steam.start()
-
-		var/list/viewable = view(affected_area, loc)
-		var/list/accessible = can_flood_from(loc, affected_area)
-		var/list/reactable = accessible
-		var/mycontents = GetAllContents()
-		for(var/turf/T in accessible)
-			for(var/atom/A in T.GetAllContents())
-				if(A in mycontents) continue
-				if(!(A in viewable)) continue
-				reactable |= A
-		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
-			qdel(src)
-			return
-		var/fraction = 1/reactable.len
-		for(var/atom/A in reactable)
-			reagents.reaction(A, TOUCH, fraction)
-
 	qdel(src)
-
-/obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
-	var/total_temp
-	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-		G.reagents.trans_to(src, G.reagents.total_volume)
-		total_temp += G.reagents.chem_temp
-	reagents.chem_temp = total_temp
-
-/obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
-	var/turf/myturf = get_turf(myloc)
-	var/list/reachable = list(myloc)
-	for(var/i=1; i<=maxrange; i++)
-		var/list/turflist = list()
-		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
-			turflist |= T
-		for(var/turf/T in turflist)
-			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
-				turflist.Remove(T)
-				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
-		for(var/turf/T in turflist)
-			if(T in reachable) continue
-			for(var/turf/NT in orange(1, T))
-				if(!(NT in reachable)) continue
-				if(!(get_dir(T,NT) in cardinal)) continue
-				if(!NT.CanAtmosPass(T)) continue
-				reachable |= T
-				break
-	return reachable
 
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "large grenade"
-	desc = "A custom made large grenade."
+	desc = "A custom made large grenade. It affects a larger area."
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass,/obj/item/weapon/reagent_containers/food/condiment,
 								/obj/item/weapon/reagent_containers/food/drinks)
 	origin_tech = "combat=3;materials=3"
-	affected_area = 4
+	affected_area = 5
+	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
+	threat = 1.1	// 10% more effective.
 
-/obj/item/weapon/grenade/chem_grenade/large/mix_reagents()
+/obj/item/weapon/grenade/chem_grenade/large/prime()
+	if(stage != READY)
+		return
+
 	for(var/obj/item/slime_extract/S in beakers)
 		if(S.Uses)
 			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
@@ -272,6 +224,9 @@
 	else
 		return ..()
 
+//////////////////////////////
+////// PREMADE GRENADES //////
+//////////////////////////////
 
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "metal foam grenade"
