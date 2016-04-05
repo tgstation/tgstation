@@ -58,7 +58,7 @@ var/datum/subsystem/minimap/SSminimap
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
 			del(minimap)
 			minimap = flatten
-			sleep(world.tick_lag) //we have to sleep in order to get byond to clear out the proc's garbage bin
+			stoplag() //we have to sleep in order to get byond to clear out the proc's garbage bin
 
 		CHECK_TICK
 

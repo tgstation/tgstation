@@ -32,6 +32,9 @@ var/global/list/turf/open/space/space_turfs = list() //i hate everything
 	..()
 	atmos_overlay_types.Cut()
 
+/turf/open/space/Assimilate_Air()
+	return
+
 /turf/open/space/proc/update_starlight()
 	if(config.starlight)
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
@@ -101,7 +104,7 @@ var/global/list/turf/open/space/space_turfs = list() //i hate everything
 				L.pulling.loc = T
 
 		//now we're on the new z_level, proceed the space drifting
-		sleep(0)//Let a diagonal move finish, if necessary
+		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
 /turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)

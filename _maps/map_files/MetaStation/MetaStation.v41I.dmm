@@ -51208,10 +51208,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "bEH" = (
 /turf/open/floor/engine{
@@ -52102,19 +52099,13 @@
 	frequency = 1441;
 	id_tag = "mix_sensor"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "bGj" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "bGk" = (
 /obj/machinery/telecomms/processor/preset_one,
@@ -53537,10 +53528,7 @@
 	id = "mix_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "bIi" = (
 /obj/machinery/camera{
@@ -53550,10 +53538,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "bIj" = (
 /obj/machinery/telecomms/bus/preset_one,
@@ -59142,26 +59127,17 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bRK" = (
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bRL" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bRM" = (
 /obj/machinery/light/small{
@@ -60084,26 +60060,17 @@
 	frequency = 1441;
 	id_tag = "tox_sensor"
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bTk" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bTl" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bTm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -60957,10 +60924,7 @@
 	id = "tox_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bUx" = (
 /obj/machinery/camera{
@@ -60970,10 +60934,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "bUy" = (
 /obj/structure/table,
@@ -62467,16 +62428,10 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bWV" = (
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bWW" = (
 /obj/structure/window/reinforced,
@@ -63106,26 +63061,17 @@
 	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bYa" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bYb" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bYc" = (
 /obj/structure/chair/stool,
@@ -64081,10 +64027,7 @@
 	id = "co2_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bZE" = (
 /obj/machinery/camera{
@@ -64094,10 +64037,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "bZF" = (
 /obj/machinery/power/solar_control{
@@ -70742,20 +70682,14 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "cka" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "ckb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -70769,10 +70703,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "ckc" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -70780,20 +70711,14 @@
 	frequency = 1441;
 	id = "o2_in"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "ckd" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "cke" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -70807,10 +70732,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "ckf" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -70818,20 +70740,14 @@
 	frequency = 1441;
 	id = "air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "ckg" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "air_sensor"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "ckh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -70845,10 +70761,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "cki" = (
 /obj/structure/window/reinforced{
@@ -71575,17 +71488,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/incinerator)
 "clo" = (
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "clp" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "clq" = (
 /obj/machinery/camera{
@@ -71595,23 +71502,14 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "clr" = (
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "cls" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "clt" = (
 /obj/machinery/camera{
@@ -71621,27 +71519,18 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "clu" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "clv" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "clw" = (
 /obj/machinery/camera{
@@ -71651,10 +71540,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "clx" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -72565,30 +72451,18 @@
 /area/maintenance/incinerator)
 "cmS" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "cmT" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "cmU" = (
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "cmV" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "cmW" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -100639,10 +100513,8 @@
 	name = "Aft Maintenance"
 	})
 "dfy" = (
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/turf/open/floor/engine/vacuum,
+/area/atmos)
 "dfz" = (
 /obj/machinery/light{
 	dir = 1
@@ -146359,9 +146231,9 @@ aaf
 aaa
 aaf
 bCV
-bEH
-bEH
-bEH
+dfy
+dfy
+dfy
 bCV
 bLl
 bMS
@@ -146616,7 +146488,7 @@ aaf
 aaf
 aaf
 bCV
-bEH
+dfy
 bGj
 bIi
 bCV

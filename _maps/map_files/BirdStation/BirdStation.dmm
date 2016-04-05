@@ -1381,7 +1381,7 @@
 "aAC" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/shuttle/mining)
 "aAD" = (/obj/structure/shuttle/engine/propulsion/burst,/obj/structure/window/reinforced{dir = 1; layer = 2.9},/turf/open/floor/plating/airless,/area/shuttle/mining)
 "aAE" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/shuttle/mining)
-"aAF" = (/obj/machinery/suit_storage_unit/mining,/turf/open/floor/plasteel{icon_state = "bot"},/area/quartermaster/miningdock{name = "\improper Mining Office"})
+"aAF" = (/obj/machinery/suit_storage_unit/mining/eva,/turf/open/floor/plasteel{icon_state = "bot"},/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aAG" = (/obj/structure/closet/secure_closet/miner,/obj/item/weapon/storage/toolbox/mechanical,/obj/item/device/gps/mining,/turf/open/floor/plasteel,/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aAH" = (/obj/machinery/door/airlock/mining{name = "cargo door"; req_access_txt = "31"},/obj/structure/cable/cyan{icon_state = "1-2"},/turf/open/floor/plating,/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aAI" = (/turf/closed/wall,/area/hallway/secondary/exit)

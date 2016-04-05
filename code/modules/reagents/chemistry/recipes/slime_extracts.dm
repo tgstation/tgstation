@@ -313,7 +313,7 @@
 		if(holder && holder.my_atom)
 			var/turf/open/T = get_turf(holder.my_atom)
 			if(istype(T))
-				T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
+				T.atmos_spawn_air("plasma=50;TEMP=1000")
 
 //Yellow
 

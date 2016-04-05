@@ -65,7 +65,7 @@
 	start_up_time = 300 //30 seconds
 	start_up_message = "The wind begins to pick up. Seek shelter."
 	duration_lower = 60 //1 minute
-	duration_upper = 180 //3 minutes
+	duration_upper = 150 //2.5 minutes
 	duration_message = "An ash storm has started! Get inside!"
 	wind_down = 300 // 30 seconds
 	wind_down_message = "The storm begins to fade. Should be safe to go outside again."
