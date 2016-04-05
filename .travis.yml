@@ -16,6 +16,7 @@ env:
 
 
 cache:
+  pip: true
   directories:
     - tgui/node_modules
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
