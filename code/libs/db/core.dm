@@ -76,12 +76,7 @@ DBQuery
 
 		Execute(sql_query=src.sql,cursor_handler=default_cursor)
 			Close()
-			var/timestart = world.timeofday
-			var/retvar = _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
-			if(world.timeofday - timestart > 2)
-				world.log << "Query took longer than 2 ticks to execute ([world.timeofday - timestart] ticks) Q=[sql_query]"
-			
-			return retvar
+			return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
 
 		NextRow() return _dm_db_next_row(_db_query,item,conversions)
 
