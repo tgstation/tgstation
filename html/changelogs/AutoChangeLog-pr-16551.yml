@@ -1,6 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Adds protector holoparasites to traitor holoparasite injectors."
-  - rscadd: "Protector holoparasites cause the summoner to teleport to them when out of range, instead of the other way around."
-  - rscadd: "Protector holoparasites have two modes; Combat, where they do and take medium damage, and Protection, where they do and take almost no damage, but move slightly slower."
