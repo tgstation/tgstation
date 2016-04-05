@@ -10340,25 +10340,16 @@
 	},
 /area/maintenance/incinerator)
 "arI" = (
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "arJ" = (
 /turf/open/floor/engine/n2o,
 /area/atmos)
 "arK" = (
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "arL" = (
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "arM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -10759,17 +10750,11 @@
 /area/atmos)
 "asz" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "asA" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "asB" = (
 /obj/structure/grille,
@@ -11323,20 +11308,14 @@
 	id = "waste_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "aty" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "mix_sensor"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "atz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -11350,10 +11329,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/atmos)
 "atA" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -11392,20 +11368,14 @@
 	id = "tox_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "atE" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "tox_sensor"
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "atF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -11419,10 +11389,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "plasma floor";
-	initial_gas_mix = "plasma=70000"
-	},
+/turf/open/floor/engine/plasma,
 /area/atmos)
 "atG" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -11431,20 +11398,14 @@
 	id = "waste_in";
 	pixel_y = 1
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "atH" = (
 /obj/machinery/air_sensor{
 	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "atI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -11458,10 +11419,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "co2 floor";
-	initial_gas_mix = "co2=50000"
-	},
+/turf/open/floor/engine/co2,
 /area/atmos)
 "atJ" = (
 /obj/structure/lattice,
@@ -16530,16 +16488,10 @@
 	frequency = 1441;
 	id = "o2_in"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aCz" = (
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aCA" = (
 /obj/machinery/vending/cigarette,
@@ -17181,17 +17133,11 @@
 	frequency = 1441;
 	id_tag = "n2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aDK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aDL" = (
 /obj/structure/lattice/catwalk,
@@ -17855,10 +17801,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	initial_gas_mix = "o2=100000"
-	},
+/turf/open/floor/engine/o2,
 /area/atmos)
 "aET" = (
 /obj/structure/disposalpipe/segment,
@@ -19293,16 +19236,10 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aHs" = (
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aHt" = (
 /obj/structure/disposalpipe/segment,
@@ -19901,17 +19838,11 @@
 	frequency = 1441;
 	id_tag = "o2_sensor"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aIz" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aIA" = (
 /obj/item/weapon/cautery{
@@ -20537,10 +20468,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	initial_gas_mix = "n2=100000"
-	},
+/turf/open/floor/engine/n2,
 /area/atmos)
 "aJH" = (
 /obj/structure/disposalpipe/segment,
@@ -21951,16 +21879,10 @@
 	frequency = 1441;
 	id = "air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aMs" = (
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aMt" = (
 /obj/item/weapon/hemostat,
@@ -22668,17 +22590,11 @@
 	frequency = 1441;
 	id_tag = "air_sensor"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aNG" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aNH" = (
 /obj/item/weapon/surgicaldrill,
@@ -23416,10 +23332,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/atmos)
 "aPa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
