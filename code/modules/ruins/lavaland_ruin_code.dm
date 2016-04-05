@@ -268,10 +268,10 @@
 	category = list("Imported")
 
 /obj/item/golem_shell
-	name = "empty golem shell"
+	name = "incomplete golem shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
-	desc = "The incomplete body of a golem."
+	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
