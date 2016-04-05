@@ -545,32 +545,6 @@
 				obstacle.mech_melee_attack(mecha)
 				if(!obstacle || (obstacle && !obstacle.density))
 					step(src,dir)
-				/*var/success = 0
-				if(istype(obstacle,/turf/closed/wall)
-					var/turf/closed/wall/W = obstacle
-					W.dismantle_wall(1)
-					step(src,dir)
-					success = 1
-				if(istype(obstacle,/obj/structure/grille)
-					var/obj/structure/grille/G = obstacle
-					G.Break()
-					step(src,dir)
-					success = 1
-				if(istype(obstacle,/obj/structure/window)
-					var/obj/structure/window/W = obstacle
-					W.spawnfragments()
-					step(src,dir)
-					success = 1
-				if(istype(obstacle,/obj/structure/table)
-					var/obj/structure/table/T = obstacle
-					T.table_destroy(1)
-					step(src,dir)
-					success = 1
-				if(success)
-					visible_message(<spanclass='warning'>"[src] smashes right through [obstacle]!"
-					playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-					return
-				*/
 			if(istype(obstacle, /obj))
 				var/obj/O = obstacle
 				if(!O.anchored)
