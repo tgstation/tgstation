@@ -38,7 +38,7 @@
 			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/space)))
+		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/open/space)))
 			continue	//#savetheminers
 		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))
 			continue

@@ -62,7 +62,7 @@ RSF
 
 /obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if (!(istype(A, /obj/structure/table) || istype(A, /turf/simulated/floor)))
+	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
 		return
 
 	if (istype(A, /obj/structure/table) && mode == 1)
@@ -79,8 +79,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /turf/simulated/floor) && mode == 1)
-		if (istype(A, /turf/simulated/floor) && matter >= 1)
+	else if (istype(A, /turf/open/floor) && mode == 1)
+		if (istype(A, /turf/open/floor) && matter >= 1)
 			user << "Dispensing Dosh..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 			new /obj/item/stack/spacecash/c10( A )
@@ -107,8 +107,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /turf/simulated/floor) && mode == 2)
-		if (istype(A, /turf/simulated/floor) && matter >= 1)
+	else if (istype(A, /turf/open/floor) && mode == 2)
+		if (istype(A, /turf/open/floor) && matter >= 1)
 			user << "Dispensing Drinking Glass..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( A )
@@ -135,8 +135,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /turf/simulated/floor) && mode == 3)
-		if (istype(A, /turf/simulated/floor) && matter >= 1)
+	else if (istype(A, /turf/open/floor) && mode == 3)
+		if (istype(A, /turf/open/floor) && matter >= 1)
 			user << "Dispensing Paper Sheet..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 			new /obj/item/weapon/paper( A )
@@ -163,8 +163,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /turf/simulated/floor) && mode == 4)
-		if (istype(A, /turf/simulated/floor) && matter >= 1)
+	else if (istype(A, /turf/open/floor) && mode == 4)
+		if (istype(A, /turf/open/floor) && matter >= 1)
 			user << "Dispensing Pen..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 			new /obj/item/weapon/pen( A )
@@ -191,8 +191,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /turf/simulated/floor) && mode == 5)
-		if (istype(A, /turf/simulated/floor) && matter >= 1)
+	else if (istype(A, /turf/open/floor) && mode == 5)
+		if (istype(A, /turf/open/floor) && matter >= 1)
 			user << "Dispensing Dice Pack..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 			new /obj/item/weapon/storage/pill_bottle/dice( A )
@@ -219,8 +219,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /turf/simulated/floor) && mode == 6)
-		if (istype(A, /turf/simulated/floor) && matter >= 1)
+	else if (istype(A, /turf/open/floor) && mode == 6)
+		if (istype(A, /turf/open/floor) && matter >= 1)
 			user << "Dispensing Cigarette..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 			new /obj/item/clothing/mask/cigarette( A )

@@ -20,6 +20,7 @@
 	density = 1
 	anchored = 1
 	layer = 2.8
+	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
@@ -27,7 +28,6 @@
 	var/busy = 0
 	var/buildstackamount = 1
 	var/framestackamount = 2
-	var/mob/tableclimber
 	var/deconstructable = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
@@ -40,8 +40,8 @@
 
 /obj/structure/table/update_icon()
 	if(smooth)
-		smooth_icon(src)
-		smooth_icon_neighbors(src)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
 	switch(severity)
@@ -60,6 +60,10 @@
 	if(prob(75))
 		table_destroy(1)
 		return
+
+/obj/structure/table/narsie_act()
+	if(prob(20))
+		new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
@@ -90,19 +94,12 @@
 	table_destroy(1)
 	return 1
 
-/obj/structure/table/attack_hand(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(tableclimber && tableclimber != user)
-		tableclimber.Weaken(2)
-		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
-
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
-
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
@@ -115,22 +112,6 @@
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSTABLE)
-
-/obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
-	..()
-	if(ismob(O) && user == O && ishuman(user))
-		if(user.canmove)
-			climb_table(user)
-			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isrobot(user))
-		return
-	if(!user.drop_item())
-		return
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
 
 /obj/structure/table/proc/tablepush(obj/item/I, mob/user)
 	if(get_dist(src, user) < 2)
@@ -257,36 +238,6 @@
 			return
 
 /*
- * TABLE CLIMBING
- */
-
-
-/obj/structure/table/proc/climb_table(mob/user)
-	src.add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>You start climbing onto [src]...</span>")
-	var/climb_time = 20
-	if(user.restrained()) //Table climbing takes twice as long when restrained.
-		climb_time *= 2
-	tableclimber = user
-	if(do_mob(user, user, climb_time))
-		if(src.loc) //Checking if table has been destroyed
-			density = 0
-			if(step(user,get_dir(user,src.loc)))
-				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
-									"<span class='notice'>You climb onto [src].</span>")
-				add_logs(user, src, "climbed onto")
-				user.Stun(2)
-			else
-				user << "<span class='warning'>You fail to climb onto [src].</span>"
-			density = 1
-			tableclimber = null
-			return 1
-	tableclimber = null
-	return 0
-
-
-/*
  * Glass tables
  */
 /obj/structure/table/glass
@@ -306,7 +257,7 @@
 		qdel(src)
 
 
-/obj/structure/table/glass/climb_table(mob/user)
+/obj/structure/table/glass/climb_structure(mob/user)
 	if(..())
 		visible_message("<span class='warning'>[src] breaks!</span>")
 		playsound(src.loc, "shatter", 50, 1)
@@ -331,6 +282,9 @@
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
 
+/obj/structure/table/wood/narsie_act()
+	return
+
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
@@ -338,6 +292,9 @@
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
+
+/obj/structure/table/wood/poker/narsie_act()
+	new /obj/structure/table/wood(src.loc)
 
 /*
  * Reinforced tables
@@ -581,3 +538,4 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		return
+

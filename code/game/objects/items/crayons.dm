@@ -132,7 +132,7 @@
 	var/capped = 1
 	instant = 1
 	edible = 0
-	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
+	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

@@ -90,6 +90,7 @@
 
 	if(breath)
 		loc.assume_air(breath)
+		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
 	return 0
@@ -363,6 +364,9 @@
 
 	if(slurring)
 		slurring = max(slurring-1,0)
+
+	if(cultslurring)
+		cultslurring = max(cultslurring-1, 0)
 
 	if(silent)
 		silent = max(silent-1, 0)

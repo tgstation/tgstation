@@ -166,7 +166,11 @@
 	if(module)
 		return
 
-	designation = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_secborg)
+		modulelist += "Security"
+
+	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 	var/animation_length = 0
 
 	if(module)
@@ -947,7 +951,7 @@
 			return
 
 		if(module.type == /obj/item/weapon/robot_module/miner)
-			if(istype(loc, /turf/simulated/floor/plating/asteroid))
+			if(istype(loc, /turf/open/floor/plating/asteroid))
 				if(istype(module_state_1,/obj/item/weapon/storage/bag/ore))
 					loc.attackby(module_state_1,src)
 				else if(istype(module_state_2,/obj/item/weapon/storage/bag/ore))
@@ -999,11 +1003,12 @@
 	set category = "IC"
 	set src = usr
 
+	if(incapacitated())
+		return
 	var/obj/item/W = get_active_hand()
 	if(W)
 		W.attack_self(src)
 
-	return
 
 /mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.
@@ -1209,6 +1214,11 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
+		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		see_in_dark = 1
+
+	if(sight_mode & BORGMATERIAL)
+		sight |= SEE_OBJS
 		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
 		see_in_dark = 1
 

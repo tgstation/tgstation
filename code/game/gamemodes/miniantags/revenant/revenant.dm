@@ -112,6 +112,7 @@
 		src << "<span class='revenboldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
+		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
 	..()
@@ -169,8 +170,10 @@
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
+		update_action_buttons_icon()
 		spawn(30)
 			inhibited = 0
+			update_action_buttons_icon()
 	..()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
@@ -264,7 +267,7 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/simulated/wall))
+	if(istype(T, /turf/closed/wall))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
 	if(src.inhibited)
@@ -281,6 +284,7 @@
 	if(essence + essence_amt <= 0)
 		return
 	essence = max(0, essence+essence_amt)
+	update_action_buttons_icon()
 	update_health_hud()
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
@@ -338,7 +342,7 @@
 		user << "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
-	if(gc_destroyed || !src || inert)
+	if(!src || qdeleted(src) || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")

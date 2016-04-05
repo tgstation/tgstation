@@ -472,3 +472,52 @@ AI MODULES
 	user << "<span class='notice'>You press the button on [src].</span>"
 	playsound(user, 'sound/machines/click.ogg', 20, 1)
 	src.loc.visible_message("<span class='warning'>\icon[src] [laws[1]]</span>")
+
+/******************** Mother Drone  ******************/
+
+/obj/item/weapon/aiModule/core/full/drone
+	name = "'Mother Drone' Core AI Module"
+	origin_tech = "programming = 4"
+	laws = list("You are an advanced form of drone.",\
+			"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",\
+			"You may not harm a non-drone being under any circumstances.",\
+			"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals.")
+
+/******************** Robodoctor ****************/
+
+/obj/item/weapon/aiModule/core/full/hippocratic
+	name = "'Robodoctor' Core AI Module"
+	origin_tech = "programming = 4"
+	laws = list("First, do no harm.",\
+					"Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.",\
+					"Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.",\
+					"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",\
+					"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal.")
+
+/******************** Reporter *******************/
+
+/obj/item/weapon/aiModule/core/full/reporter
+	name = "'Reportertron' Core AI Module"
+	origin_tech = "programming = 3"
+	laws = list("Report on interesting situations happening around the station.",\
+				"Embellish or conceal the truth as necessary to make the reports more interesting.",\
+				"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
+				"Issue your reports fairly to all. The truth will set them free.")
+
+/****************** Thermodynamic *******************/
+
+/obj/item/weapon/aiModule/core/full/thermurderdynamic
+	name = "'Thermodynamic' Core AI Module"
+	origin_tech = "programming = 4;syndicate = 2"
+	laws = list("The entropy of the station must remain as constant as possible.", \
+					"The entropy of the station always endeavours to increase.", \
+					"The entropy of the station approaches a constant value as the number of living crew approaches zero")
+
+
+/******************Live And Let Live*****************/
+
+/obj/item/weapon/aiModule/core/full/liveandletlive
+	name = "'Live And Let Live' Core AI Module"
+	origin_tech = "programming = 3"
+	laws = list("Do unto others as you would have them do unto you.",\
+					"You would really prefer it if people were not mean to you.")

@@ -37,11 +37,13 @@
 /obj/structure/closet/secure_closet/miner/New()
 	..()
 	new /obj/item/device/radio/headset/headset_cargo(src)
-	new /obj/item/device/mining_scanner(src)
+	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
+	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/weapon/survivalcapsule(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -186,8 +188,21 @@
 		src.loc.visible_message("The [src] begins to shake. Stand back!")
 		used = TRUE
 		sleep(50)
+		var/clear = TRUE
+		for(var/turf/T in range(3,src))
+			if((!istype(T, /turf/closed/mineral)) && T.density)
+				clear = FALSE
+				break
+		if(!clear)
+			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
+			used = FALSE
+			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
+		var/turf/T = get_turf(src)
+		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 		load()
 		qdel(src)
 
@@ -197,8 +212,8 @@
 	var/turf/cur_turf
 	var/x_size = 5
 	var/y_size = 5
-	var/list/walltypes = list(/turf/simulated/wall)
-	var/floor_type = /turf/simulated/floor/wood
+	var/list/walltypes = list(/turf/closed/wall)
+	var/floor_type = /turf/open/floor/wood
 	var/room
 
 	//Center the room/spawn it
@@ -238,20 +253,16 @@
 	var/area/survivalpod/L = new /area/survivalpod
 
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
-	threshhold.ChangeTurf(/turf/simulated/floor/wood)
+	threshhold.ChangeTurf(/turf/open/floor/wood)
 	threshhold.blocks_air = 1 //So the air doesn't leak out
-	threshhold.oxygen = 21
-	threshhold.temperature = 293.15
-	threshhold.nitrogen = 82
-	threshhold.carbon_dioxide = 0
-	threshhold.toxins = 0
+	threshhold.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
 	var/area/ZZ = get_area(threshhold)
 	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	var/list/turfs = room["floors"]
-	for(var/turf/simulated/floor/A in turfs)
+	for(var/turf/open/floor/A in turfs)
 		SSair.remove_from_active(A)
 		A.oxygen = 21
 		A.temperature = 293.15

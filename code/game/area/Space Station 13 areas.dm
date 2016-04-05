@@ -381,7 +381,14 @@ var/list/teleportlocs = list()
 
 //Maintenance
 /area/maintenance
-	ambientsounds = list('sound/ambience/ambimaint1.ogg', 'sound/ambience/ambimaint2.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint4.ogg', 'sound/ambience/ambimaint5.ogg')
+	ambientsounds = list('sound/ambience/ambimaint1.ogg',
+						 'sound/ambience/ambimaint2.ogg',
+						 'sound/ambience/ambimaint3.ogg',
+						 'sound/ambience/ambimaint4.ogg',
+						 'sound/ambience/ambimaint5.ogg',
+						 'sound/voice/lowHiss2.ogg', //Xeno Breathing Hisses, Hahahaha I'm not even sorry.
+						 'sound/voice/lowHiss3.ogg',
+						 'sound/voice/lowHiss4.ogg')
 	valid_territory = 0
 
 /area/maintenance/atmos_control
@@ -825,6 +832,7 @@ var/list/teleportlocs = list()
 /area/security/detectives_office
 	name = "Detective's Office"
 	icon_state = "detective"
+	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 
 /area/security/range
 	name = "Firing Range"

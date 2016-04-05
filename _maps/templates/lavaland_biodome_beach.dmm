@@ -1,0 +1,76 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/r_wall,/area/ruin/powered)
+"c" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"e" = (/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"f" = (/obj/effect/overlay/palmtree_l,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"g" = (/turf/closed/wall/mineral/sandstone,/area/ruin/powered)
+"h" = (/obj/effect/overlay/palmtree_r,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"i" = (/obj/structure/table,/obj/item/weapon/storage/box/drinkingglasses,/obj/item/weapon/storage/box/drinkingglasses,/obj/item/weapon/reagent_containers/food/drinks/shaker,/obj/item/weapon/storage/box/beakers,/turf/open/floor/wood,/area/ruin/powered)
+"j" = (/obj/structure/table,/obj/machinery/reagentgrinder,/turf/open/floor/wood,/area/ruin/powered)
+"k" = (/obj/machinery/vending/boozeomat{emagged = 1},/turf/open/floor/wood,/area/ruin/powered)
+"l" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/rag,/turf/open/floor/wood,/area/ruin/powered)
+"m" = (/obj/effect/mob_spawn/human/cook{helmet = null; id_access = "Bartender"; id_job = "Bartender"; suit = /obj/item/clothing/suit/armor/vest; uniform = /obj/item/clothing/under/rank/bartender; death = 0; desc = "Looks secure."; flavour_text = "You are a bartender for the beach!"; icon = 'icons/obj/Cryogenic2.dmi'; icon_state = "sleeper"; mob_name = "Jerry Thomas"; name = "bartenders cryosleeper"; roundstart = 1},/turf/open/floor/wood,/area/ruin/powered)
+"n" = (/turf/open/floor/wood,/area/ruin/powered)
+"o" = (/obj/structure/table,/obj/machinery/microwave,/turf/open/floor/wood,/area/ruin/powered)
+"p" = (/turf/open/floor/plating/beach/sand,/obj/structure/closet/crate/bin,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"q" = (/turf/open/floor/plating/beach/sand,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"r" = (/obj/structure/table,/turf/open/floor/wood,/area/ruin/powered)
+"s" = (/turf/open/floor/plating/beach/sand,/obj/machinery/vending/cigarette,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"t" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/ruin/powered)
+"u" = (/obj/machinery/processor,/turf/open/floor/wood,/area/ruin/powered)
+"v" = (/turf/open/floor/plating/beach/sand,/obj/machinery/vending/cola,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"w" = (/turf/open/floor/plating/beach/sand,/obj/structure/chair/stool,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"x" = (/obj/structure/closet/secure_closet/freezer/meat,/turf/open/floor/wood,/area/ruin/powered)
+"y" = (/turf/open/floor/plating/beach/sand,/obj/machinery/vending/snack,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"z" = (/turf/open/floor/plating/beach/sand{density = 1; opacity = 1},/area/ruin/powered)
+"A" = (/obj/machinery/door/airlock/sandstone,/turf/open/floor/wood,/area/ruin/powered)
+"B" = (/obj/structure/closet/secure_closet/freezer/kitchen,/turf/open/floor/wood,/area/ruin/powered)
+"C" = (/obj/structure/sign/barsign,/turf/closed/wall/mineral/sandstone,/area/ruin/powered)
+"D" = (/mob/living/simple_animal/crab,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"E" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"F" = (/turf/open/floor/plating/beach/sand,/obj/structure/closet/athletic_mixed,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"G" = (/turf/open/floor/plating/beach/sand,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/structure/closet/crate,/turf/open/floor/plasteel/sandeffect,/area/ruin/powered)
+"H" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+"I" = (/obj/machinery/door/airlock/sandstone,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"J" = (/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"K" = (/obj/item/toy/beach_ball,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"L" = (/obj/structure/chair,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"M" = (/obj/structure/chair,/mob/living/simple_animal/crab,/turf/open/floor/plating/beach/sand,/area/ruin/powered)
+"N" = (/turf/open/floor/plating/beach/coastline_t,/area/ruin/powered)
+"O" = (/turf/open/floor/plating/beach/coastline_b,/area/ruin/powered)
+"P" = (/turf/open/floor/plating/beach/water,/area/ruin/powered)
+"Q" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bccccccccccccccccccccccccccccb
+bcddddddddddddddddddddddddddcb
+bcdeeeeeeeeeeeeeeeeeeeeeeeedcb
+bcdeeeeefeeeeeeeeeeeeeeeeeedcb
+bcdeeeeeegggggggggggeeeeheedcb
+bcdeeeeeegijklmnnnogpqeeeeedcb
+bcdeeeeeqgnnnnnnnnrgsqqqqqedcb
+bcdeeeefqgttttttgnugvqqqqqedcb
+bcdeeeeeqqwwwwwwgnxgyqeeeeedcb
+bcdzzzzzqqqqqqqqAnBgqqzzzzedcb
+bcdeeeeeeqqqqqqqgCggqeDeeeedcb
+bcdeeeEeeeeeeqqqqqqqqeeeeeedcb
+bcdeeeeeeeeeeqqqeeeeeeeeFGedcb
+HcIeeeeeeeeeeqqqeeeeeeeeqqedcb
+bcdeeDeeeeeeeeeeeeeeeeeeeeedcb
+bcdeeeeefJeeeeeeeeeeeeeeeeedcb
+bcdeeKLeeLeeMeeLeLeLeLeLefedcb
+bcdeeeeeeeeeeeeeeeeeeeeeeeedcb
+bcdNNNNNNNNNNNNNNNNNNNNNNNNdcb
+bcdOOOOOOOOOOOOOOOOOOOOOOOOdcb
+bcdPPPPPPPPPPPPPPPPPPPPPPPPdcb
+bcdPPPPPPPPPPPPPPPPPPPPPPPPdcb
+bcdPPPPPPPPPPPPPPPPPPPPPPPPdcb
+bcdPPPPPPPPPPPPPPPPPPPPPPPPdcb
+bcdPPPPPPPPPPPPPPPPPPPPPPPPdcb
+bcddddddddddddddddddddddddddcb
+bccccccccccccccccccccccccccccb
+bbbbbQbbbbbbbbbbbbbbbbbbbbbbbb
+"}

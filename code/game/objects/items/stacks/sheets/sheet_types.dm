@@ -57,6 +57,11 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/narsie_act()
+	if(prob(20))
+		new /obj/item/stack/sheet/runed_metal(loc, amount)
+		qdel(src)
+
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
 
@@ -114,6 +119,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
+	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
+	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	)
 
 /obj/item/stack/sheet/mineral/wood
@@ -179,6 +186,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
  */
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
+	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 6, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 4, time = 40, one_per_turf = 1, on_floor = 1), \
@@ -193,15 +201,12 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
 
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
 /obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
 	recipes = runed_metal_recipes
 	return ..()
-
-/obj/item/stack/sheet/runed_metal/attack_self(mob/user)
-	if(!iscultist(user))
-		user << "<span class='warning'>You aren't able to think of anything [src] could build...</span>"
-		return
-	..()
 
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"

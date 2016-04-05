@@ -56,7 +56,7 @@ obj/effect/glowshroom/glowcap
 			if(prob(spreadIntoAdjacentChance))
 				spreadsIntoAdjacent = 1
 
-			for(var/turf/simulated/floor/earth in view(3,src))
+			for(var/turf/open/floor/earth in view(3,src))
 				if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 					possibleLocs += earth
 

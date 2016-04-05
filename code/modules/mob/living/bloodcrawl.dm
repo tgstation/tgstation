@@ -46,9 +46,9 @@
 		var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
 		src.ExtinguishMob()
 		if(buckled)
-			buckled.unbuckle_mob(force=1)
-		if(buckled_mob)
-			unbuckle_mob(force=1)
+			buckled.unbuckle_mob(src,force=1)
+		if(buckled_mobs.len)
+			unbuckle_all_mobs(force=1)
 		if(pulledby)
 			pulledby.stop_pulling()
 		if(src.pulling && src.bloodcrawl == BLOODCRAWL_EAT)
@@ -56,6 +56,8 @@
 				var/mob/living/victim = src.pulling
 				if(victim.stat == CONSCIOUS)
 					src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>")
+				else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
+					visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>")
 				else
 					victim.loc = holder
 					victim.emote("scream")
@@ -69,13 +71,19 @@
 				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)
 			if(kidnapped)
-				src << "<span class='danger'>You devour [kidnapped]. Your health is fully restored.</span>"
-				src.adjustBruteLoss(-1000)
-				src.adjustFireLoss(-1000)
-				src.adjustOxyLoss(-1000)
-				src.adjustToxLoss(-1000)
-				kidnapped.ghostize()
-				qdel(kidnapped)
+				if(kidnapped.reagents && kidnapped.reagents.has_reagent("devilskiss"))
+					src << "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>"
+					adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
+					kidnapped.loc = get_turf(B)
+					kidnapped.visible_message("<span class='warning'>[B] violently expels [kidnapped]!</span>")
+				else
+					src << "<span class='danger'>You devour [kidnapped]. Your health is fully restored.</span>"
+					src.adjustBruteLoss(-1000)
+					src.adjustFireLoss(-1000)
+					src.adjustOxyLoss(-1000)
+					src.adjustToxLoss(-1000)
+					kidnapped.ghostize()
+					qdel(kidnapped)
 			else
 				src << "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>"
 		src.notransform = 0

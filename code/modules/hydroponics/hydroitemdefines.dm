@@ -137,6 +137,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
+	desc = "Contains a fertilizer that causes mild mutations with each harvest."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
@@ -146,6 +147,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
+	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 
@@ -155,6 +157,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
+	desc = "Contains a fertilizer that doubles the yield of a plant while causing no mutations."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 
@@ -162,20 +165,37 @@
 	..()
 	reagents.add_reagent("robustharvestnutriment", 50)
 
-/obj/item/weapon/reagent_containers/glass/bottle/weedkiller
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty
+	name = "bottle"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+
+/obj/item/weapon/reagent_containers/glass/bottle/killer
+	name = "bottle"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+	volume = 50
+	w_class = 1
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(1,2,5,10,15,25,50)
+
+/obj/item/weapon/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
+	desc = "Contains a herbicide."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-/obj/item/weapon/reagent_containers/glass/bottle/weedkiller/New()
+/obj/item/weapon/reagent_containers/glass/bottle/killer/weedkiller/New()
 	..()
 	reagents.add_reagent("weedkiller", 50)
 
-/obj/item/weapon/reagent_containers/glass/bottle/pestkiller
+/obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
+	desc = "Contains a pesticide."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle20"
 
-/obj/item/weapon/reagent_containers/glass/bottle/pestkiller/New()
+/obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller/New()
 	..()
 	reagents.add_reagent("pestkiller", 50)
+

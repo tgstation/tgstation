@@ -126,7 +126,7 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-	var/turf_type = /turf/space
+	var/turf_type = /turf/open/space
 	var/area_type = /area/space
 
 /obj/docking_port/stationary/New()
@@ -153,7 +153,7 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	turf_type = /turf/space/transit
+	turf_type = /turf/open/space/transit
 
 /obj/docking_port/stationary/transit/New()
 	..()
@@ -282,7 +282,7 @@
 
 	//resmooth if need be.
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 
 	//rotate the pixel offsets too.
 	if (pixel_x || pixel_y)
@@ -312,7 +312,7 @@
 //			S1.dir = turn(NORTH, -travelDir)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
-	var/turf_type = /turf/space
+	var/turf_type = /turf/open/space
 	var/area_type = /area/space
 	if(S0)
 		if(S0.turf_type)
@@ -351,8 +351,8 @@
 			areaInstance.contents += T1
 
 			//copy over air
-			if(istype(T1, /turf/simulated))
-				var/turf/simulated/Ts1 = T1
+			if(istype(T1, /turf/open))
+				var/turf/open/Ts1 = T1
 				Ts1.copy_air_with_tile(T0)
 
 			//move mobile to new location
@@ -421,7 +421,7 @@
 /*
 	if(istype(S1, /obj/docking_port/stationary/transit))
 		var/d = turn(dir, 180 + travelDir)
-		for(var/turf/space/transit/T in S1.return_ordered_turfs())
+		for(var/turf/open/space/transit/T in S1.return_ordered_turfs())
 			T.pushdirection = d
 			T.update_icon()
 */
@@ -455,12 +455,15 @@
 	for(var/turf/T in L)
 		for(var/atom/movable/AM in T)
 			if(ismob(AM))
-				if(istype(AM, /mob/living))
+				if(ishuman(AM))
 					var/mob/living/M = AM
 					M.Paralyse(10)
-					M.take_organ_damage(80)
+					M.apply_damage(60, BRUTE, "chest")
+					M.apply_damage(60, BRUTE, "head")
 					M.anchored = 0
 				else
+					var/mob/M = AM
+					M.gib()
 					continue
 
 			if(!AM.anchored)

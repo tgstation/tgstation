@@ -25,21 +25,6 @@
 		qdel(dna)
 	return ..()
 
-/mob/living/carbon/Move(NewLoc, direct)
-	. = ..()
-	if(.)
-		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/10
-		if((src.disabilities & FAT) && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
-
-/mob/living/carbon/movement_delay()
-	. = ..()
-	if(legcuffed)
-		. += legcuffed.slowdown
-
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -126,13 +111,12 @@
 				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
 				return
 	src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
+		var/obj/screen/inventory/hand/H
+		H = hud_used.inv_slots[slot_l_hand]
+		H.update_icon()
+		H = hud_used.inv_slots[slot_r_hand]
+		H.update_icon()
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
@@ -185,19 +169,19 @@
 			return
 		if(weakeyes)
 			Stun(2)
-		switch(damage)
-			if(1)
-				src << "<span class='warning'>Your eyes sting a little.</span>"
-				if(prob(40))
-					adjust_eye_damage(1)
 
-			if(2)
-				src << "<span class='warning'>Your eyes burn.</span>"
-				adjust_eye_damage(rand(2, 4))
+		if (damage == 1)
+			src << "<span class='warning'>Your eyes sting a little.</span>"
+			if(prob(40))
+				adjust_eye_damage(1)
 
-			else
-				src << "<span class='warning'>Your eyes itch and burn severely!</span>"
-				adjust_eye_damage(rand(12, 16))
+		else if (damage == 2)
+			src << "<span class='warning'>Your eyes burn.</span>"
+			adjust_eye_damage(rand(2, 4))
+
+		else if( damage > 3)
+			src << "<span class='warning'>Your eyes itch and burn severely!</span>"
+			adjust_eye_damage(rand(12, 16))
 
 		if(eye_damage > 10)
 			blind_eyes(damage)
@@ -351,13 +335,6 @@
 		return "trails_1"
 	return "trails_2"
 
-var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/SLIDE = 2
-var/const/GALOSHES_DONT_HELP = 4
-/mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
-	return loc.handle_slip(src, s_amount, w_amount, O, lube)
-
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
@@ -446,7 +423,7 @@ var/const/GALOSHES_DONT_HELP = 4
 				handcuffed.dropped(src)
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob()
+					buckled.unbuckle_mob(src)
 				update_handcuffed()
 				return
 			if(I == legcuffed)
@@ -487,7 +464,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/weapon/W = handcuffed
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
+			buckled.unbuckle_mob(src)
 		update_handcuffed()
 		if (client)
 			client.screen -= W
@@ -832,3 +809,6 @@ var/const/GALOSHES_DONT_HELP = 4
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
+
+
+

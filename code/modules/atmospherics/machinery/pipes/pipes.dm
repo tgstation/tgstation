@@ -39,7 +39,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/hide(i)
-	if(level == 1 && istype(loc, /turf/simulated))
+	if(level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
 	update_icon()
 
@@ -91,7 +91,7 @@
 			qdel(meter)
 	. = ..()
 
-	if(parent && !parent.gc_destroyed)
+	if(parent && !qdeleted(parent))
 		qdel(parent)
 	parent = null
 

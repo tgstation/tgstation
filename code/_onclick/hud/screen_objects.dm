@@ -13,6 +13,7 @@
 	unacidable = 1
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
+	var/datum/hud/hud = null // A reference to the owner HUD, if any.
 
 /obj/screen/Destroy()
 	master = null
@@ -27,19 +28,107 @@
 	maptext_height = 480
 	maptext_width = 480
 
+/obj/screen/swap_hand
+	layer = 19
+	name = "swap hand"
+
+/obj/screen/swap_hand/Click()
+	// At this point in client Click() code we have passed the 1/10 sec check and little else
+	// We don't even know if it's a middle click
+	if(world.time <= usr.next_move)
+		return 1
+
+	if(usr.incapacitated())
+		return 1
+
+	if(ismob(usr))
+		var/mob/M = usr
+		M.swap_hand()
+	return 1
+
 
 /obj/screen/inventory
-	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
+	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
+	var/icon_empty // Icon when empty. For now used only by humans.
+	var/icon_full  // Icon when contains an item. For now used only by humans.
+	layer = 19
 
+/obj/screen/inventory/Click()
+	// At this point in client Click() code we have passed the 1/10 sec check and little else
+	// We don't even know if it's a middle click
+	if(world.time <= usr.next_move)
+		return 1
+
+	if(usr.incapacitated())
+		return 1
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return 1
+	if(usr.attack_ui(slot_id))
+		usr.update_inv_l_hand(0)
+		usr.update_inv_r_hand(0)
+	return 1
+
+/obj/screen/inventory/update_icon()
+	if(!icon_empty)
+		icon_empty = icon_state
+
+	if(hud && hud.mymob && slot_id && icon_full)
+		if(hud.mymob.get_item_by_slot(slot_id))
+			icon_state = icon_full
+		else
+			icon_state = icon_empty
+
+/obj/screen/inventory/hand
+	var/image/active_overlay
+	var/image/handcuff_overlay
+
+/obj/screen/inventory/hand/update_icon()
+	..()
+	if(!active_overlay)
+		active_overlay = image("icon"=icon, "icon_state"="hand_active")
+	if(!handcuff_overlay)
+		var/state = (slot_id == slot_r_hand) ? "markus" : "gabrielle"
+		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
+
+	overlays.Cut()
+
+	if(hud && hud.mymob)
+		if(iscarbon(hud.mymob))
+			var/mob/living/carbon/C = hud.mymob
+			if(C.handcuffed)
+				overlays += handcuff_overlay
+
+		if(slot_id == slot_l_hand && hud.mymob.hand)
+			overlays += active_overlay
+		else if(slot_id == slot_r_hand && !hud.mymob.hand)
+			overlays += active_overlay
+
+/obj/screen/inventory/hand/Click()
+	// At this point in client Click() code we have passed the 1/10 sec check and little else
+	// We don't even know if it's a middle click
+	if(world.time <= usr.next_move)
+		return 1
+	if(usr.incapacitated())
+		return 1
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return 1
+
+	if(ismob(usr))
+		var/mob/M = usr
+		switch(name)
+			if("right hand", "r_hand")
+				M.activate_hand("r")
+			if("left hand", "l_hand")
+				M.activate_hand("l")
+	return 1
 
 /obj/screen/close
 	name = "close"
 
 /obj/screen/close/Click()
-	if(master)
-		if(istype(master, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = master
-			S.close(usr)
+	if(istype(master, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = master
+		S.close(usr)
 	return 1
 
 
@@ -304,38 +393,6 @@
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
 
-/obj/screen/inventory/Click()
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-
-	if(usr.incapacitated())
-		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return 1
-	switch(name)
-		if("r_hand")
-			if(ismob(usr))
-				var/mob/Mr = usr
-				Mr.activate_hand("r")
-		if("l_hand")
-			if(ismob(usr))
-				var/mob/Ml = usr
-				Ml.activate_hand("l")
-		if("swap")
-			if(ismob(usr))
-				var/mob/Ms = usr
-				Ms.swap_hand()
-		if("hand")
-			if(ismob(usr))
-				var/mob/Mh = usr
-				Mh.swap_hand()
-		else
-			if(usr.attack_ui(slot_id))
-				usr.update_inv_l_hand(0)
-				usr.update_inv_r_hand(0)
-	return 1
 
 /obj/screen/flash
 	name = "flash"
@@ -376,6 +433,16 @@
 	icon_state = "block"
 	screen_loc = ui_internal
 	mouse_opacity = 0
+
+/obj/screen/healths/blob/naut
+	name = "health"
+	icon = 'icons/mob/blob.dmi'
+	icon_state = "nauthealth"
+
+/obj/screen/healths/blob/naut/core
+	name = "overmind health"
+	screen_loc = ui_health
+	icon_state = "corehealth"
 
 /obj/screen/healths/guardian
 	name = "summoner health"

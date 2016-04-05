@@ -76,8 +76,8 @@
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "uniform"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_iclothing
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -85,106 +85,90 @@
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_wear_suit
 	inv_box.icon_state = "suit"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_oclothing
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "right hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_r_active"
+	inv_box.icon_state = "hand_r"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
-	inv_box.layer = 19
-	r_hand_hud_object = inv_box
-	if(owner.handcuffed)
-		inv_box.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
 	static_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "left hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_l_active"
+	inv_box.icon_state = "hand_l"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
-	inv_box.layer = 19
-	l_hand_hud_object = inv_box
-	if(owner.handcuffed)
-		inv_box.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
 	static_inventory += inv_box
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
 	static_inventory += using
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "id"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_id
 	inv_box.slot_id = slot_wear_id
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_mask
 	inv_box.slot_id = slot_wear_mask
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_back
 	inv_box.slot_id = slot_back
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "storage1"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage1
 	inv_box.slot_id = slot_l_store
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "storage2"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage2
 	inv_box.slot_id = slot_r_store
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_sstore1
 	inv_box.slot_id = slot_s_store
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	using = new /obj/screen/resist()
@@ -206,54 +190,54 @@
 	inv_box.name = "gloves"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_gloves
 	inv_box.slot_id = slot_gloves
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "eyes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_glasses
 	inv_box.slot_id = slot_glasses
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "ears"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_ears
 	inv_box.slot_id = slot_ears
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_head
 	inv_box.slot_id = slot_head
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "shoes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_shoes
 	inv_box.slot_id = slot_shoes
-	inv_box.layer = 19
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "belt"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_belt
 	inv_box.slot_id = slot_belt
-	inv_box.layer = 19
 	static_inventory += inv_box
 
 	throw_icon = new /obj/screen/throw_catch()
@@ -289,6 +273,12 @@
 	static_inventory += zone_select
 
 	inventory_shown = 0
+
+	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[inv.slot_id] = inv
+			inv.update_icon()
 
 /datum/hud/human/hidden_inventory_update()
 	if(!mymob)

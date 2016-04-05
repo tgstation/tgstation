@@ -14,7 +14,8 @@
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
-	var/mix_message = "The solution begins to bubble."
+	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
+	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
@@ -63,7 +64,7 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
+/datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
 			continue

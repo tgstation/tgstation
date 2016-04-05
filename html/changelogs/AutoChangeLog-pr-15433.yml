@@ -1,6 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - tweak: "Suit sensors will now favor higher levels for starting amount with the exception of the max level, that remains unchanged."
-  - tweak: "Old odds: 25% off 25% binary lifesigns 25% full lifesigns 25% coordinates"
-  - tweak: "New odds: 12.5% off 25% binary lifesigns 37.5% full lifesigns 25% coordinates"

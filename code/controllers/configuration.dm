@@ -90,8 +90,8 @@
 	var/list/probabilities = list()		// relative probability of each mode
 
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
+	var/forbid_secborg = 0				// disallow secborg module to be chosen.
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -114,7 +114,6 @@
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
 	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
-	var/cleared_default_races = 0		//used for sanity in clearing the old default list, not actually a config option
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
@@ -170,6 +169,7 @@
 	var/assistant_cap = -1
 
 	var/starlight = 0
+	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
 	var/aggressive_changelog = 0
@@ -185,6 +185,13 @@
 	var/datum/votablemap/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+
+	// Enables random events mid-round when set to 1
+	var/allow_random_events = 0
+
+	// Multipliers for random events minimal starting time and minimal players amounts
+	var/events_min_time_mul = 1
+	var/events_min_players_mul = 1
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
@@ -389,6 +396,8 @@
 					protected_config.autoadmin = 1
 					if(value)
 						protected_config.autoadmin_rank = ckeyEx(value)
+				if("generate_minimaps")
+					config.generate_minimaps = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -507,6 +516,12 @@
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
+
+				if("events_min_time_mul")
+					config.events_min_time_mul		= text2num(value)
+				if("events_min_players_mul")
+					config.events_min_players_mul	= text2num(value)
+
 				if("minimal_access_threshold")
 					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
@@ -517,6 +532,8 @@
 					config.force_random_names		= 1
 				if("allow_ai")
 					config.allow_ai					= 1
+				if("disable_secborg")
+					config.forbid_secborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
 				if("silent_borg")
@@ -530,12 +547,10 @@
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
 				if("roundstart_races")
-					if(!cleared_default_races)
-						roundstart_species = list()
-						cleared_default_races = 1
 					var/race_id = lowertext(value)
 					for(var/species_id in species_list)
 						if(species_id == race_id)
+							roundstart_races += species_list[species_id]
 							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
@@ -559,8 +574,6 @@
 						continue
 					if (BombCap < 4)
 						BombCap = 4
-					if (BombCap > 128)
-						BombCap = 128
 
 					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
 					MAX_EX_HEAVY_RANGE = round(BombCap/2)

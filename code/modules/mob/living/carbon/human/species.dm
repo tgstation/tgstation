@@ -646,7 +646,7 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && !H.dna.species.need_nutrition)
+	if (H.nutrition > 0 && H.stat != DEAD && H.dna.species.need_nutrition)
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -777,14 +777,14 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			// If there's no gravity we have the option of sanic speed.
+			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 			if(!istype(J) && istype(C))
 				J = C.jetpack
 
-			if(istype(J) && J.turbo && J.allow_thrust(0.01, H))
-				. -= 2 // Turbo mode. Gotta go fast.
+			if(istype(J) && J.allow_thrust(0.01, H))
+				. -= 2
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
@@ -965,7 +965,7 @@
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
 				var/turf/location = H.loc
-				if(istype(location, /turf/simulated))
+				if(istype(location, /turf))
 					location.add_blood(H)
 				if(ishuman(user))
 					var/mob/living/carbon/human/M = user
@@ -1049,13 +1049,13 @@
 			if(organ.take_damage(0, damage*burnmod))
 				H.update_damage_overlays(0)
 		if(TOX)
-			H.adjustToxLoss(damage * blocked)
+			H.adjustToxLoss(damage)
 		if(OXY)
-			H.adjustOxyLoss(damage * blocked)
+			H.adjustOxyLoss(damage)
 		if(CLONE)
-			H.adjustCloneLoss(damage * blocked)
+			H.adjustCloneLoss(damage)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage * blocked)
+			H.adjustStaminaLoss(damage)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)

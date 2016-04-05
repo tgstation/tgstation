@@ -53,8 +53,13 @@
 	if(z == 1 && prob(3) && !start_active)
 		toggle_cam()
 
+/obj/machinery/camera/Move()
+	remove_from_proximity_list(src, 1)
+	return ..()
+
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out
+	remove_from_proximity_list(src, 1)
 	if(assembly)
 		qdel(assembly)
 		assembly = null
@@ -308,7 +313,7 @@
 
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
-	var/turf/simulated/wall/T = null
+	var/turf/closed/wall/T = null
 	for(var/i = 1, i <= 8; i += i)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))

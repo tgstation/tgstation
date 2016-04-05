@@ -111,7 +111,7 @@
 /obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(M.mind)
-		M.mind.remove_spell(/obj/effect/proc_holder/spell/bloodcrawl)
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
 
 /obj/item/organ/internal/heart/demon/Stop()
 	return 0 // Always beating.

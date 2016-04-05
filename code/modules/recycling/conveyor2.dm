@@ -16,6 +16,7 @@
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
+	speed_process = 1
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -105,15 +106,12 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)	// slight delay to prevent infinite propagation due to map order
-	var/items_moved = 0
+	sleep(1)
 	for(var/atom/movable/A in affecting)
 		if(!A.anchored)
 			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 				step(A,movedir)
-				items_moved++
-		if(items_moved >= 10)
-			break
+		CHECK_TICK
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -125,7 +123,7 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(istype(I, /obj/item/weapon/wrench))	
+	if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
@@ -203,6 +201,7 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = 1
+	speed_process = 1
 
 
 
@@ -240,6 +239,7 @@
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.operating = position
 		C.update_move_direction()
+		CHECK_TICK
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
@@ -266,6 +266,7 @@
 		if(S.id == src.id)
 			S.position = position
 			S.update()
+		CHECK_TICK
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -299,7 +300,7 @@
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !istype(A, /turf/open/floor) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
@@ -323,7 +324,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !istype(A, /turf/open/floor) || istype(A, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

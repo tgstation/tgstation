@@ -113,9 +113,12 @@
  */
 
 /obj/item/weapon/tank/internals/plasmaman
+	name = "plasmaman plasma tank"
+	desc = "A tank of plasma gas."
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
 	force = 10
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()

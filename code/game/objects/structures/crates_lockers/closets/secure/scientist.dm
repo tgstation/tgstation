@@ -21,3 +21,4 @@
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/device/laser_pointer(src)
+	new /obj/item/weapon/door_remote/research_director(src)

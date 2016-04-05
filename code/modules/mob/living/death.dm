@@ -4,7 +4,7 @@
 		death(1)
 
 	if(buckled)
-		buckled.unbuckle_mob() //to update alien nest overlay.
+		buckled.unbuckle_mob(src,force=1) //to update alien nest overlay, forced because we don't exist anymore
 
 	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
 	if(animate)
@@ -45,7 +45,7 @@
 	if(!gibbed)
 		dead_mob_list += src
 	else if(buckled)
-		buckled.unbuckle_mob()
+		buckled.unbuckle_mob(src,force=1)
 	paralysis = 0
 	stunned = 0
 	weakened = 0

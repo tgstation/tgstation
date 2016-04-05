@@ -357,7 +357,7 @@ var/global/mulebot_count = 0
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.buckled_mobs.len || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -381,7 +381,7 @@ var/global/mulebot_count = 0
 	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M in buckled_mobs) //post buckling
 		M.pixel_y = initial(M.pixel_y) + 9
 		if(M.layer < layer)
 			M.layer = layer + 0.1
@@ -402,7 +402,7 @@ var/global/mulebot_count = 0
 
 	overlays.Cut()
 
-	unbuckle_mob()
+	unbuckle_all_mobs()
 
 	if(load)
 		load.loc = loc
@@ -474,7 +474,7 @@ var/global/mulebot_count = 0
 				if(next == loc)
 					path -= next
 					return
-				if(istype( next, /turf/simulated))
+				if(istype( next, /turf))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
 
 					if(bloodiness)

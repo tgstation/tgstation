@@ -46,7 +46,7 @@
 				data["viruses"] = preserve
 	return 1
 
-/datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
+/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
 	if(reac_volume < 3)
@@ -118,7 +118,7 @@
  *	Water reaction to turf
  */
 
-/datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
 	if(reac_volume >= 10)
@@ -128,7 +128,7 @@
 		M.apply_water()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !istype(T, /turf/open/space))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
@@ -184,11 +184,14 @@
 			M.stuttering = 1
 		M.stuttering += 4
 		M.Dizzy(5)
+		if(iscultist(M) && prob(5))
+			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
 		M.confused += 3
-		if((is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+			ticker.mode.remove_cultist(M.mind)
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
@@ -197,7 +200,7 @@
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
-/datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
 	if(!istype(T)) return
 	if(reac_volume>=10)
@@ -217,7 +220,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustParalysis(-2, 0)
 		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0)
+		M.AdjustWeakened(-2, 0, 0)
 	else
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
@@ -251,7 +254,7 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
-/datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
 		T.MakeSlippery(2)
@@ -366,7 +369,7 @@
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3)
+	H.Weaken(3, 0, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
@@ -447,7 +450,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
 
-/datum/reagent/oxygen/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
 	return
@@ -471,7 +474,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
 
-/datum/reagent/nitrogen/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
 	return
@@ -497,7 +500,7 @@
 	color = "#484848" // rgb: 72, 72, 72
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/space))
+	if(M.canmove && istype(M.loc, /turf/open/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -519,7 +522,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
 		if(!D)
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -570,7 +573,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/space))
+	if(M.canmove && istype(M.loc, /turf/open/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -595,7 +598,7 @@
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!istype(T, /turf/open/space))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -641,7 +644,7 @@
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!istype(T, /turf/open/space))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -832,7 +835,7 @@
 		return 0
 	O.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
 
-/datum/reagent/carbondioxide/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
 	return
@@ -987,10 +990,10 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/carpet/reaction_turf(turf/simulated/T, reac_volume)
-	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
-		var/turf/simulated/floor/F = T
-		F.ChangeTurf(/turf/simulated/floor/carpet)
+/datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
+	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.ChangeTurf(/turf/open/floor/carpet)
 	..()
 	return
 
@@ -1121,7 +1124,7 @@
 	reagent_state = LIQUID
 	color = "#A70FFF"
 
-/datum/reagent/drying_agent/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T) && T.wet)
 		T.MakeDry(TURF_WET_WATER)
 
@@ -1160,3 +1163,40 @@
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+//Reagent used for shadowling blindness smoke spell
+datum/reagent/shadowling_blindness_smoke
+	name = "odd black liquid"
+	id = "blindness_smoke"
+	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
+	color = "#000000" //Complete black (RGB: 0, 0, 0)
+	metabolization_rate = 100 //lel
+
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
+	if(!is_shadow_or_thrall(M))
+		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
+		M.blind_eyes(5)
+		if(prob(25))
+			M.visible_message("<b>[M]</b> claws at their eyes!")
+			M.Stun(3, 0)
+			. = 1
+	else
+		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
+		M.heal_organ_damage(2,2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		. = 1
+	return ..() || .
+
+
+
+/datum/reagent/royal_bee_jelly
+	name = "royal bee jelly"
+	id = "royal_bee_jelly"
+	description = "Royal Bee Jelly, if injected into a Queen Space Bee said bee will split into two bees."
+	color = "#00ff80"
+
+/datum/reagent/royal_bee_jelly/on_mob_life(mob/living/M)
+	if(prob(2))
+		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
+	..()

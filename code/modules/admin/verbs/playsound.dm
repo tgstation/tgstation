@@ -7,8 +7,13 @@ var/sound/admin_sound
 	if(!check_rights(R_SOUNDS))
 		return
 
-	admin_sound = sound(S, repeat = 0, wait = 1, channel = SOUND_CHANNEL_ADMIN)
+
+	var/sound/admin_sound = new()
+	admin_sound.file = S
 	admin_sound.priority = 250
+	admin_sound.channel = SOUND_CHANNEL_ADMIN
+	admin_sound.wait = 1
+	admin_sound.repeat = 0
 	admin_sound.status = SOUND_UPDATE|SOUND_STREAM
 
 	log_admin("[key_name(src)] played sound [S]")
@@ -20,7 +25,8 @@ var/sound/admin_sound
 
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			M << admin_sound
+			var/vol = M.client.prefs.adminmusicvolume
+			M << sound(admin_sound,channel = SOUND_CHANNEL_ADMIN,volume=vol)
 
 	admin_sound.frequency = 1 //Remove this line when the AFD stuff above is gone
 	admin_sound.wait = 0

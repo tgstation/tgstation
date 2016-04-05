@@ -1,0 +1,10 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Explosive Holoparasites no longer teleport non-mobs when attacking, but have a higher chance to teleport mobs."
+  - rscdel: "Explosive Holoparasite bombs no longer trigger on their summoner or any other parasites their summoner has."
+  - bugfix: "Ranged Holoparasites no longer have nightvision active by default. It can still be toggled on."
+  - tweak: "Ranged Holoparasite snares no longer alert if the crossing mob is their summoner or one of the parasites their summoner has."
+  - tweak: "Ranged Holoparasites are slightly less visible in scout mode."
+  - tweak: "Standard Holoparasites attack 20% faster than other parasite types."
+  - rscdel: "Support Holoparasite beacons no longer require safe atmospheric conditions, but the warp channel takes slightly longer, and is preceded with a visible message."

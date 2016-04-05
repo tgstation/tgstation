@@ -630,7 +630,7 @@
 			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
 				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
 				return
-			AI.aiRestorePowerRoutine = 0//So the AI initially has power.
+			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
 			AI.loc = card
@@ -669,7 +669,7 @@
 
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
-	AI.aiRestorePowerRoutine = 0
+	AI.ai_restore_power()
 	AI.loc = src
 	occupant = AI
 	icon_state = initial(icon_state)
@@ -792,8 +792,8 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	if(user.buckled_mob) //mob attached to us
-		user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you!</span>"
+	if(user.buckled_mobs.len) //mob attached to us
+		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		return
 
 	visible_message("[user] starts to climb into [src.name].")
@@ -805,8 +805,8 @@
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
 			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
-		else if(user.buckled_mob)
-			user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you.</span>"
+		else if(user.buckled_mobs.len)
+			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		else
 			moved_inside(user)
 	else

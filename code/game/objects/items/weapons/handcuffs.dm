@@ -72,6 +72,7 @@
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
 	item_state = "coil_red"
+	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 	var/datum/robot_energy_storage/wirestorage = null
@@ -179,6 +180,7 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
+	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 
@@ -287,14 +289,24 @@
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
+	var/weaken = 0
 
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
 	if(!C.legcuffed)
+		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		src.loc = C
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
-		C << "<span class='userdanger'>\The [src] ensares you!</span>"
+		C << "<span class='userdanger'>\The [src] ensnares you!</span>"
+		C.Weaken(weaken)
+
+/obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant
+	name = "reinforced bola"
+	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
+	icon_state = "bola_r"
+	breakouttime = 70
+	weaken = 1

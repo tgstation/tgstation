@@ -75,7 +75,7 @@
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
-	item_state = "laser"
+	item_state = null
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	pin = null

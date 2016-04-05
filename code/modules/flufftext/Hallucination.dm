@@ -278,7 +278,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion
 	var/list/image/delusions = list()
 
-/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1)
+/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon")
@@ -298,6 +298,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				A = image('icons/mob/human.dmi',H,"skeleton_s")
 			if("demon")//Demon
 				A = image('icons/mob/mob.dmi',H,"daemon")
+			if("custom")
+				A = image(custom_icon_file, H, custom_icon)
 		A.override = 1
 		if(target.client)
 			delusions |= A
@@ -669,10 +671,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			//src << "Danger Flash"
 			if(!halimage)
 				var/list/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
+				for(var/turf/open/floor/F in view(src,world.view))
 					possible_points += F
 				if(possible_points.len)
-					var/turf/simulated/floor/target = pick(possible_points)
+					var/turf/open/floor/target = pick(possible_points)
 
 					switch(rand(1,3))
 						if(1)
@@ -700,10 +702,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 		if("husks")
 			if(!halbody)
 				var/list/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
+				for(var/turf/open/floor/F in view(src,world.view))
 					possible_points += F
 				if(possible_points.len)
-					var/turf/simulated/floor/target = pick(possible_points)
+					var/turf/open/floor/target = pick(possible_points)
 					switch(rand(1,4))
 						if(1)
 							var/image/body = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)

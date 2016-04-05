@@ -25,7 +25,15 @@
 
 	action_icon_state = "alien_evolve_drone"
 
-/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/humanoid/user)
+	var/obj/item/organ/internal/alien/hivenode/node = user.getorgan(/obj/item/organ/internal/alien/hivenode)
+	if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
+		user << "<span class='danger'>Without the hivemind, you can't possibly hold the responsibility of leadership!</span>"
+		return 0
+	if(node.recent_queen_death)
+		user << "<span class='danger'>Your thoughts are still too scattered to take up the position of leadership.</span>"
+		return 0
+
 	if(!isturf(user.loc))
 		user << "<span class='notice'>You can't evolve here!</span>"
 		return 0

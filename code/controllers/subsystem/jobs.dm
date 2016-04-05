@@ -114,7 +114,7 @@ var/datum/subsystem/job/SSjob
 		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
 			continue
 
-		if(job in command_positions) //If you want a command position, select it!
+		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -417,7 +417,7 @@ var/datum/subsystem/job/SSjob
 	for(var/i=equip_needed-5, i>0, i--)
 		if(secequipment.len)
 			var/spawnloc = secequipment[1]
-			new /obj/structure/closet/secure_closet/security(spawnloc)
+			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
 			secequipment -= spawnloc
 		else //We ran out of spare locker spawns!
 			break
@@ -428,8 +428,8 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/J in occupations)
 		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
 		jobs.Find(jobstext)
-		J.total_positions = text2num(jobs.group[2])
-		J.spawn_positions = text2num(jobs.group[3])
+		J.total_positions = text2num(jobs.group[1])
+		J.spawn_positions = text2num(jobs.group[2])
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
