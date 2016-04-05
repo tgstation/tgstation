@@ -25,7 +25,7 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
-		sleep(world.tick_lag)
+		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
 	..()

@@ -104,7 +104,7 @@ var/global/list/turf/open/space/space_turfs = list() //i hate everything
 				L.pulling.loc = T
 
 		//now we're on the new z_level, proceed the space drifting
-		sleep(0)//Let a diagonal move finish, if necessary
+		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
 /turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
