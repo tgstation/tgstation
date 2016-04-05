@@ -21,7 +21,7 @@
 	roundstart = 1
 
 	sexes = 1
-	exotic_blood = /datum/reagent/friendship
+	exotic_blood = "friendship"
 
 	no_equip = list(slot_shoes, slot_gloves, slot_w_uniform)
 	// slots the race can't equip stuff to
@@ -38,7 +38,7 @@
 	// Weaker than humans
 
 	// species flags. these can be found in flags.dm
-	specflags = list(MUTCOLORS, HAIR, EYECOLOR, NOBLOOD)
+	specflags = list(MUTCOLORS, HAIR, EYECOLOR, NOBLOOD, PIERCEIMMUNE)
 
 	attack_verb = "kick"
 	ignored_by = list()	// list of mobs that will ignore this species
@@ -76,17 +76,15 @@
 ///////////
 
 /datum/species/pony/on_species_gain(mob/living/carbon/C)
-	C.reagents.add_reagent("friendship", 100)
+	..()
 	for(var/addiction in C.reagents.addiction_list)
 		var/datum/reagent/R = addiction
-		if(R.id == "friendship")
+		if(R.id == exotic_blood)
 			C.reagents.addiction_list.Remove(addiction)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		H.regenerate_icons()
-		for(var/obj/item/thing in list(H.shoes, H.gloves, H.w_uniform))
-			H.unEquip(thing)
 
 
 /datum/species/pony/update_base_icon_state(mob/living/carbon/human/H)
@@ -193,8 +191,8 @@
 	H.apply_overlay(BODY_FRONT_LAYER)
 
 /datum/species/pony/spec_life(mob/living/carbon/human/H)
-	if(H.reagents.get_reagent_amount("friendship") < 100)
-		H.reagents.add_reagent("friendship", 2)
+	if(H.reagents.get_reagent_amount(exotic_blood) < 100)
+		H.reagents.add_reagent(exotic_blood, 2)
 	return
 
 /datum/species/pony/handle_speech(message, mob/living/carbon/human/H)
@@ -209,7 +207,7 @@
 // Sto- Ported from Goonstation.
 
 /datum/species/pony/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "friendship")
+	if(chem.id == exotic_blood)
 		return 1
 
 /datum/reagent/friendship
