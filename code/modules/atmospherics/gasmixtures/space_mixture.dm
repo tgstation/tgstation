@@ -28,6 +28,16 @@
 	. = dummy.share(sharer, atmos_adjacent_turfs) //keep all the sharing calculations, but don't actually change anything about ourselves
 	dummy.copy_from(src)
 
+/datum/gas_mixture/space/after_share()
+	temperature = TCMB
+	gases.Cut()
+
+/datum/gas_mixture/space/react()
+	return 0 //we're immutable.
+
+/datum/gas_mixture/space/fire()
+	return 0 //we're immutable.
+
 /datum/gas_mixture/space/copy()
 	return new /datum/gas_mixture/space //we're immutable, so we can just return a new instance.
 
