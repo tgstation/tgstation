@@ -896,7 +896,7 @@ var/list/preferences_datums = list()
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in (roundstart_species - "pony")
 
 					if(result)
 						var/newtype = roundstart_species[result]
