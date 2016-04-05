@@ -1214,7 +1214,9 @@
 "ct" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	name = "Break Room"
+	glass = 1;
+	name = "Break Room";
+	opacity = 0
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1343,14 +1345,13 @@
 	},
 /area/mine/production)
 "cH" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining_internal"
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/purple/corner{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 4;
+	icon_state = "purplecorner"
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/production)
+/area/mine/living_quarters)
 "cI" = (
 /obj/machinery/conveyor{
 	icon_state = "conveyor0";
@@ -4754,6 +4755,7 @@ ed
 af
 ab
 ab
+ed
 al
 al
 al
@@ -4771,8 +4773,7 @@ al
 al
 al
 al
-al
-al
+ed
 al
 al
 al
@@ -9397,7 +9398,7 @@ af
 af
 af
 af
-al
+ed
 al
 al
 al
@@ -11454,7 +11455,7 @@ al
 al
 al
 al
-al
+ed
 af
 af
 af
@@ -12177,7 +12178,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -14906,7 +14907,7 @@ ab
 ei
 fq
 bp
-fk
+cH
 ee
 ei
 ei
@@ -15348,7 +15349,7 @@ af
 af
 af
 af
-al
+ed
 ab
 ab
 ab
@@ -20378,7 +20379,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -21066,8 +21067,8 @@ ab
 ab
 ab
 bt
-fy
-fy
+al
+al
 ab
 ab
 af
@@ -22103,8 +22104,8 @@ af
 af
 af
 af
-dq
-dq
+al
+al
 ab
 ab
 ab
@@ -22358,11 +22359,11 @@ af
 af
 af
 af
-dq
-dq
-dq
-dq
-fy
+al
+al
+al
+al
+al
 ab
 ab
 af
@@ -22610,17 +22611,17 @@ ab
 ab
 ab
 ab
-fy
-fy
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-fy
-fy
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
 ab
 af
 ab
@@ -22869,10 +22870,10 @@ ab
 ab
 ab
 ab
-fy
-fy
-dq
-dq
+al
+al
+al
+al
 af
 af
 af
@@ -34615,7 +34616,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -34996,7 +34997,6 @@ ab
 ab
 ab
 aa
-fx
 ai
 ai
 ai
@@ -35008,7 +35008,8 @@ ai
 ai
 ai
 ai
-fx
+ai
+ai
 aa
 ab
 ab
@@ -35510,7 +35511,6 @@ ab
 ab
 ab
 aa
-fx
 aj
 aj
 aj
@@ -35522,7 +35522,8 @@ aj
 aj
 aj
 aj
-fx
+aj
+aj
 aa
 ab
 ab
@@ -35847,7 +35848,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -43031,7 +43032,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -59493,7 +59494,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
@@ -63447,7 +63448,7 @@ al
 al
 al
 al
-al
+ed
 al
 al
 al
