@@ -101,7 +101,7 @@
 		return
 
 	var/turf/T = get_turf(A)
-	if(beacon.z != T.z)
+	if(beacon.z == T.z)
 		src << "<span class='danger'><B>You begin to warp [A].</span></B>"
 		A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", "<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
 		do_attack_animation(A)
