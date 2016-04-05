@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Zombies can no longer destroy more than one airlock at a time."
