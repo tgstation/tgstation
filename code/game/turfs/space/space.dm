@@ -32,6 +32,9 @@ var/global/list/turf/open/space/space_turfs = list() //i hate everything
 	..()
 	atmos_overlay_types.Cut()
 
+/turf/open/space/Assimilate_Air()
+	return
+
 /turf/open/space/proc/update_starlight()
 	if(config.starlight)
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
