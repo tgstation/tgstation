@@ -1239,9 +1239,9 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F=file("data/logs/profiling/[date_string]_instances.csv")
 	fdel(F)
-	to_chat(F, "Types,Number of Instances")
+	F << "Types,Number of Instances"
 	for(var/key in type_instances)
-		to_chat(F, "[key],[type_instances[key]]")
+		F << "[key],[type_instances[key]]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F]</span>")
 
@@ -1255,8 +1255,8 @@ Pressure: [env.return_pressure()]"}
 	fdel(F)
 	for(var/obj/effect/decal/cleanable/blood/tracks/T in blood_list)
 		if(!T.loc)
-			to_chat(F, "Found [T] in a null location but still in the blood list")
-			to_chat(F, "--------------------------------------")
+			F << "Found [T] in a null location but still in the blood list"
+			F << "--------------------------------------"
 			continue
 		var/dat
 		for(var/b in cardinal)
@@ -1266,7 +1266,7 @@ Pressure: [env.return_pressure()]"}
 				for(var/key in T.setdirs)
 					dat += (key)
 		dat += "--------------------------------------"
-		to_chat(F, dat)
+		F << dat
 
 	to_chat(usr, "<span class='notice'>Dumped to [F]</span>")
 
@@ -1278,18 +1278,18 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_machine_profiling.csv")
 	fdel(F)
-	to_chat(F, "type,nanoseconds")
+	F << "type,nanoseconds"
 	for(var/typepath in machine_profiling)
 		var/ns = machine_profiling[typepath]
-		to_chat(F, "[typepath],[ns]")
+		F << "[typepath],[ns]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F]</span>")
 	var/FF = file("data/logs/profiling/[date_string]_object_profiling.csv")
 	fdel(FF)
-	to_chat(FF, "type,nanoseconds")
+	FF << "type,nanoseconds"
 	for(var/typepath in object_profiling)
 		var/ns = object_profiling[typepath]
-		to_chat(FF, "[typepath],[ns]")
+		FF << "[typepath],[ns]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [FF].</span>")
 
@@ -1304,7 +1304,7 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_machine_instances.csv")
 	fdel(F)
-	to_chat(F, "type,count")
+	F << "type,count"
 	var/list/machineinstances = list()
 	for(var/atom/typepath in machines)
 		if(!typepath.type in machineinstances)
@@ -1312,12 +1312,12 @@ Pressure: [env.return_pressure()]"}
 		machineinstances["[typepath.type]"] += 1
 	for(var/T in machineinstances)
 		var/count = machineinstances[T]
-		to_chat(F, "[T],[count]")
+		F << "[T],[count]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 	F =file("data/logs/profiling/[date_string]_power_machine_instances.csv")
 	fdel(F)
-	to_chat(F, "type,count")
+	F << "type,count"
 	machineinstances.len = 0
 	for(var/atom/typepath in power_machines)
 		if(!typepath.type in machineinstances)
@@ -1325,7 +1325,7 @@ Pressure: [env.return_pressure()]"}
 		machineinstances["[typepath.type]"] += 1
 	for(var/T in machineinstances)
 		var/count = machineinstances[T]
-		to_chat(F, "[T],[count]")
+		F << "[T],[count]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 #endif
@@ -1337,27 +1337,27 @@ Pressure: [env.return_pressure()]"}
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_del_profiling.csv")
 	fdel(F)
-	to_chat(F, "type,deletes")
+	F << "type,deletes"
 	for(var/typepath in del_profiling)
 		var/ns = del_profiling[typepath]
-		to_chat(F, "[typepath],[ns]")
+		F << "[typepath],[ns]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 	F =file("data/logs/profiling/[date_string]_gdel_profiling.csv")
 	fdel(F)
-	to_chat(F, "type,soft deletes")
+	F << "type,soft deletes"
 	for(var/typepath in gdel_profiling)
 		var/ns = gdel_profiling[typepath]
-		to_chat(F, "[typepath],[ns]")
+		F << "[typepath],[ns]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 
 	F =file("data/logs/profiling/[date_string]_ghdel_profiling.csv")
 	fdel(F)
-	to_chat(F, "type,hard deletes")
+	F << "type,hard deletes"
 	for(var/typepath in ghdel_profiling)
 		var/ns = ghdel_profiling[typepath]
-		to_chat(F, "[typepath],[ns]")
+		F << "[typepath],[ns]"
 
 	to_chat(usr, "<span class='notice'>Dumped to [F].</span>")
 

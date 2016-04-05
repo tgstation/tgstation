@@ -105,6 +105,8 @@
 
 #define iswindow(A) (istype(A, /obj/structure/window))
 
+#define isclient(A) (istype(A, /client))
+
 //Macros for antags
 
 #define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)

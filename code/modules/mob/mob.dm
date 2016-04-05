@@ -451,8 +451,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 		narsimage.loc = src.loc
 		narglow.loc = src.loc
 		//Display the new narsimage to the player
-		to_chat(src, narsimage)
-		to_chat(src, narglow)
+		src << narsimage
+		src << narglow
 	else
 		if(narsimage)
 			del(narsimage)

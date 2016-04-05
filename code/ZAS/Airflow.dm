@@ -57,7 +57,7 @@ mob/proc/airflow_stun()
 		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return 0
 
-	if(weakened <= 0) src << "<span class='warning'>The sudden rush of air knocks you over!</span>"
+	if(weakened <= 0) to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
 	SetWeakened(5)
 	last_airflow_stun = world.time
 	return
@@ -77,7 +77,7 @@ mob/living/carbon/human/airflow_stun()
 		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return 0
 
-	if(weakened <= 0) src << "<span class='warning'>The sudden rush of air knocks you over!</span>"
+	if(weakened <= 0) to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
 	SetWeakened(rand(1,5))
 	last_airflow_stun = world.time
 	return

@@ -110,16 +110,16 @@ datum/archived_book/New(var/path)
 datum/archived_book/proc/save()
 	var/savefile/F = new(book_mgr.path(id))
 
-	to_chat(F["version"], BOOK_VERSION_MAX)
-	to_chat(F["author"], author)
-	to_chat(F["title"], title)
-	to_chat(F["category"], category)
-	to_chat(F["id"], id)
-	to_chat(F["dat"], dat)
+	F["version"]     << BOOK_VERSION_MAX
+	F["author"]      << author
+	F["title"]       << title
+	F["category"]    << category
+	F["id"]          << id
+	F["dat"]         << dat
 
-	to_chat(F["author_real"], author_real)
-	to_chat(F["author_key"], author_key)
-	to_chat(F["photos"], photos)
+	F["author_real"] << author_real
+	F["author_key"]  << author_key
+	F["photos"]      << photos
 
 #undef BOOK_VERSION_MIN
 #undef BOOK_VERSION_MAX

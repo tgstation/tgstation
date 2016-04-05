@@ -53,8 +53,8 @@ proc/make_report(body, author, okey, cid)
 
 	reports.Insert(1, created)
 
-	to_chat(Reports["reports"], reports)
-	to_chat(Reports["lastID"], lastID)
+	Reports["reports"] << reports)
+	Reports["lastID"]  << lastID)
 
 // load the reports from disk
 proc/load_reports()
@@ -153,7 +153,7 @@ client/proc/mark_report_done(ID as num)
 
 	found.done = 1
 
-	to_chat(Reports["reports"], reports)
+	Reports["reports"] << reports
 
 
 client/proc/edit_report(ID as num)

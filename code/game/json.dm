@@ -39,7 +39,7 @@ proc/makejson()
 				players += "[C.fakekey];"
 		else
 			players += "[C.key];"
-	to_chat(F, "{\"mode\":\"[mode]\",\"players\" : \"[players]\",\"playercount\" : \"[playerscount]\",\"admin\" : \"[admins]\",\"time\" : \"[time2text(world.realtime,"MM/DD - hh:mm")]\"}")
+	F << "{\"mode\":\"[mode]\",\"players\" : \"[players]\",\"playercount\" : \"[playerscount]\",\"admin\" : \"[admins]\",\"time\" : \"[time2text(world.realtime,"MM/DD - hh:mm")]\"}"
 	fcopy("info.json","[jsonpath]/info.json")
 
 /proc/switchmap(newmap,newpath)
@@ -77,7 +77,7 @@ proc/makejson()
 			to_chat(world, "FOUND"*/)
 	fdel(dmepath)
 	var/file = file(dmepath)
-	to_chat(file, text)
+	file << text
 	message_admins("Compiling...")
 	shell("./recompile")
 	message_admins("Done")
@@ -97,5 +97,5 @@ client/proc/ChangeMap(var/X as text)
 	set category  = "Admin"
 	switchmap(X,X)
 proc/send2adminirc(channel,msg)
-	to_chat(world, channel << " "<< msg)
+	world << channel << " " << msg
 	shell("python nudge.py '[channel]' [msg]")
