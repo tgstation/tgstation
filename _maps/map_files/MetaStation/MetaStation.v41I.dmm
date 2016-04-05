@@ -61722,12 +61722,10 @@
 "bVL" = (
 /obj/structure/table/wood,
 /obj/machinery/light,
-/obj/item/weapon/deck/cas{
-	step_x = 3;
-	step_y = 2
-	},
+/obj/item/weapon/deck/cas,
 /obj/item/weapon/deck/cas/black{
-	step_y = 8
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /turf/open/floor/wood,
 /area/library)

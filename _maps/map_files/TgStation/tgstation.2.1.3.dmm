@@ -58606,12 +58606,10 @@
 "cpg" = (
 /obj/structure/table/wood,
 /obj/structure/disposalpipe/segment,
-/obj/item/weapon/deck/cas{
-	step_x = 2;
-	step_y = 1
-	},
+/obj/item/weapon/deck/cas,
 /obj/item/weapon/deck/cas/black{
-	step_y = 7
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /turf/open/floor/wood,
 /area/library)
