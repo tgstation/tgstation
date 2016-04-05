@@ -21,9 +21,9 @@
 /datum/gas_mixture/space/remove_ratio()
 	return copy() //we're immutable, so we can just return a copy.
 
-/datum/gas_mixture/space/share()
-	..()
-	gases.Cut() //keep the part where it removes gas from the other mixture, but remove all our gases after the fact
+/datum/gas_mixture/space/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+	var/datum/gas_mixture/space/dummy = new
+	return dummy.share(sharer, atmos_adjacent_turfs) //keep all the sharing calculations, but don't actually change anything about ourselves
 
 /datum/gas_mixture/space/copy()
 	return new /datum/gas_mixture/space //we're immutable, so we can just return a new instance.
