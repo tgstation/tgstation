@@ -23,7 +23,7 @@
 	name = "captain's hat"
 	desc = "It's good being the king."
 	icon_state = "captainsoft"
-	item_color = "captian"
+	item_color = "captain"
 	item_state = "that"
 	flags_inv = 0
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
