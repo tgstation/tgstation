@@ -16,7 +16,7 @@
 	var/obj/item/device/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
-	var/threat = 0 // Used by advanced grenades to make them slightly more worthy.
+	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -162,7 +162,7 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threat))
+	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale))
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
 		return
 
@@ -192,7 +192,7 @@
 	origin_tech = "combat=3;materials=3"
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
-	threat = 1.1	// 10% more effective.
+	threatscale = 1.1	// 10% more effective.
 
 /obj/item/weapon/grenade/chem_grenade/large/prime()
 	if(stage != READY)
