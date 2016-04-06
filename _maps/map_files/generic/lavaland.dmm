@@ -1245,11 +1245,11 @@
 	},
 /area/mine/production)
 "cx" = (
-/obj/machinery/mineral/stacking_unit_console,
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/mine/production)
+/area/ruin/powered)
 "cy" = (
 /obj/machinery/door/airlock/mining{
 	name = "Mining Station Storage";
@@ -2854,6 +2854,208 @@
 	icon_state = "loadingarea"
 	},
 /area/mine/laborcamp)
+"gj" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gi" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gh" = (
+/turf/closed/wall/shuttle/smooth{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gg" = (
+/obj/item/weapon/resonator/upgraded,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gf" = (
+/obj/structure/table/wood,
+/obj/item/weapon/book/manual/research_and_development{
+	name = "Sacred Text of the Liberator"
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"ge" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "automated trading pod"
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gd" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	name = "shrine of the liberator";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gc" = (
+/obj/structure/statue/gold/rd,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"gb" = (
+/obj/machinery/mineral/ore_redemption,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"ga" = (
+/obj/item/weapon/disk/design_disk/golem_shell,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fZ" = (
+/obj/item/weapon/storage/firstaid/brute,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/structure/table/wood,
+/obj/item/areaeditor/blueprints{
+	desc = "Use to build new structures in the wastes.";
+	name = "land claim"
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fY" = (
+/obj/item/weapon/storage/firstaid/brute,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fX" = (
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fW" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fV" = (
+/obj/machinery/computer/shuttle,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fU" = (
+/obj/effect/mob_spawn/human/golem/adamantine,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fT" = (
+/obj/item/weapon/resonator,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fS" = (
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fR" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fQ" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fP" = (
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fO" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fN" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fM" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fL" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fK" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/device/mining_scanner,
+/obj/item/device/flashlight/lantern,
+/obj/item/weapon/card/id/mining,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fJ" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/device/mining_scanner,
+/obj/item/device/flashlight/lantern,
+/obj/item/weapon/card/id/mining,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"fI" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -8300,10 +8502,10 @@ al
 al
 al
 al
-al
-al
-al
-al
+fI
+fI
+fI
+fI
 al
 al
 al
@@ -8557,10 +8759,10 @@ al
 al
 al
 al
-al
-al
-al
-al
+fI
+gc
+gf
+fI
 al
 al
 al
@@ -8811,16 +9013,16 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fI
+fI
+fI
+gd
+gd
+fI
+gh
+gh
+gh
 al
 al
 al
@@ -9068,16 +9270,16 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fR
+fS
+fQ
+fS
+fS
+fQ
+fS
+gi
+gh
 al
 al
 al
@@ -9325,16 +9527,16 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fS
+fS
+fQ
+fS
+fS
+fQ
+fS
+fS
+gh
 al
 al
 al
@@ -9579,22 +9781,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fI
+fI
+fI
+fS
+fS
+fI
+fS
+fS
+fI
+fS
+fS
+fI
+fI
+fI
+fI
 al
 al
 al
@@ -9836,22 +10038,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fJ
+fM
+fQ
+fS
+fS
+fI
+fS
+fS
+fI
+fS
+fS
+fQ
+fM
+gj
+fI
 al
 al
 al
@@ -10093,22 +10295,22 @@ al
 al
 al
 al
-al
-ed
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fJ
+fM
+fQ
+fT
+fT
+fI
+fS
+fS
+fI
+fT
+fT
+fQ
+fM
+gj
+fI
 al
 al
 al
@@ -10350,22 +10552,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fJ
+fM
+fI
+fU
+fU
+fI
+fS
+fS
+fI
+fU
+fU
+fI
+fM
+gj
+fI
 al
 al
 al
@@ -10607,22 +10809,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fJ
+fM
+fI
+fV
+fV
+fI
+fS
+fS
+fI
+fV
+fV
+fI
+fM
+gj
+fI
 al
 al
 al
@@ -10864,22 +11066,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fJ
+fM
+fI
+fI
+fI
+fI
+fQ
+fQ
+fI
+fI
+fI
+fI
+fM
+gj
+fI
 al
 al
 al
@@ -11121,22 +11323,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fJ
+fM
+fI
+fW
+fS
+fS
+fS
+fS
+fS
+fS
+fW
+fI
+fM
+gj
+fI
 al
 al
 al
@@ -11378,22 +11580,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fK
+fM
+fI
+fX
+ga
+fS
+fS
+fS
+fS
+fS
+fX
+fI
+fM
+gj
+fI
 al
 al
 al
@@ -11635,22 +11837,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fK
+fM
+fI
+fY
+fS
+gb
+fS
+gb
+fS
+fS
+fY
+fI
+fM
+cx
+fI
 al
 al
 al
@@ -11892,22 +12094,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fK
+fP
+fI
+fZ
+fS
+gb
+fS
+gb
+fS
+fS
+fY
+fI
+fM
+fP
+fI
 al
 al
 al
@@ -12149,22 +12351,22 @@ ed
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fL
+fL
+fI
+fX
+fS
+fS
+fS
+fS
+gg
+fS
+fX
+fI
+fL
+fL
+fI
 al
 al
 al
@@ -12406,22 +12608,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fM
+fM
+fI
+fS
+fS
+fS
+fS
+fS
+fS
+fS
+fS
+fI
+fM
+fM
+fI
 al
 al
 al
@@ -12663,22 +12865,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fL
+fL
+fI
+fQ
+fQ
+fI
+fQ
+fQ
+fI
+fQ
+fQ
+fI
+fL
+fL
+fI
 al
 al
 al
@@ -12920,22 +13122,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fN
+fN
+fI
+fN
+fN
+fI
+fS
+fS
+fI
+fN
+fN
+fI
+fN
+fN
+fI
 al
 al
 al
@@ -13177,22 +13379,22 @@ al
 al
 al
 al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+fI
+fO
+fO
+fI
+fO
+fO
+fI
+ge
+fQ
+fI
+fO
+fO
+fI
+fO
+fO
+fI
 al
 al
 al
