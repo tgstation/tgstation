@@ -174,7 +174,7 @@
 		GibtoniteReaction(user)
 		return
 	if(primed)
-		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+		if(istype(I, /obj/item/device/t_scanner) || istype(I, /obj/item/device/multitool))
 			primed = 0
 			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
