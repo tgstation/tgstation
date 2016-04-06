@@ -20,6 +20,12 @@
 	icon_state = "busta_nut"
 	starting_materials = list(MAT_CARDBOARD = 370)
 	w_type=RECYK_MISC
+	
+/obj/item/trash/oldempirebar
+	name = "Old Empire Bar"
+	icon_state = "old_empire_bar"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/trash/raisins
 	name = "4no raisins"

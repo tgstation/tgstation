@@ -1162,6 +1162,17 @@
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("bustanut", 6)
 		reagents.add_reagent("sodiumchloride", 6)
+		
+/obj/item/weapon/reagent_containers/food/snacks/oldempirebar
+	name = "Old Empire Bar"
+	icon_state = "old_empire_bar"
+	desc = "You can see a villager from a long lost old empire on the wrap."
+	trash = /obj/item/trash/oldempirebar
+	New()
+		..()
+		reagents.add_reagent("nutriment", rand(2,6))
+		reagents.add_reagent("rogan", 6)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"

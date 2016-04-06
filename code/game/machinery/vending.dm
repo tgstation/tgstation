@@ -1074,6 +1074,7 @@ var/global/num_vending_terminals = 1
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/snacks/syndicake = 4,
 		/obj/item/weapon/reagent_containers/food/snacks/bustanuts = 4,
+		/obj/item/weapon/reagent_containers/food/snacks/oldempirebar = 4,
 		)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/snacks/candy = 13,

@@ -168,6 +168,23 @@
 			to_chat(M, "<span class='notice'>[pick("You feel quite hardcore", "Coderbased is your god", "Fucking kickscammers Bustration will be the best")].")
 		else
 			M.say(pick("Muh hardcores.", "Falling down is a feature.", "Gorrillionaires and Booty Borgs when?"))
+			
+/datum/reagent/rogan
+	name = "Rogan"
+	id = "rogan"
+	description = "Smells older than your grandpa."
+	reagent_state = LIQUID
+	color = "#0000FF"
+	custom_metabolism = 0.01
+
+/datum/reagent/rogan/on_mob_life(var/mob/living/M)
+	if(..()) return 1
+
+	if(prob(1))
+		if(prob(42))
+			to_chat(M, "<span class='notice'>[pick("Rogan?", "ROGAN.", "Food please.", "Wood please.", "Gold please.", "All hail, king of the losers!", "I'll beat you back to Age of Empires.", "Sure, blame it on your ISP.", "Start the game already!", "It is good to be the king.", "Long time, no siege.", "Nice town, I'll take it.", "Raiding party!", "Dadgum.", "Wololo.", "Attack an enemy now.", "Cease creating extra villagers.", "Create extra villagers.", "Build a navy.", "	Stop building a navy.", "Wait for my signal to attack.", "Build a wonder.", "Give me your extra resources.", "What age are you in?")]")
+		else
+			M.say("Rogan?")
 
 /datum/reagent/slimejelly
 	name = "Slime Jelly"
