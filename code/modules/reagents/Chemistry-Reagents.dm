@@ -708,7 +708,6 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC" //rgb: 200, 165, 220
 	custom_metabolism = 0.5
-	overdose = REAGENTS_OVERDOSE*2
 
 /datum/reagent/inaprovaline/on_mob_life(var/mob/living/M, var/alien)
 
