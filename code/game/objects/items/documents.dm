@@ -40,5 +40,6 @@
 			var/obj/item/toy/crayon/C = O
 			name = "[C.colourName] secret documents"
 			icon_state = "docs_[C.colourName]"
+			forgedseal = 1
 			user << "<span class='notice'>You forge the official seal with a [C.colourName] crayon. No one will notice... right?</span>"
 			update_icon()
