@@ -12,7 +12,13 @@
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
-	var/_z = rand(ZLEVEL_SPACEMIN,ZLEVEL_SPACEMAX)	//select a random space zlevel
+	var/list/possible_transtitons = list()
+	var/k = 1
+	for(var/a in map_transition_config)
+		if(map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
+			possible_transtitons += k
+		k++
+	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf
 	var/_x
