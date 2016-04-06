@@ -258,42 +258,20 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_allturfs(z_level)
 	var/z_start = 1
 	var/z_finish = world.maxz
-
+	var/times_fired = ++src.times_fired
 	if(1 <= z_level && z_level <= world.maxz)
 		z_level = round(z_level)
 		z_start = z_level
 		z_finish = z_level
 
-	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish)) - space_turfs
+	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+	var/list/active_turfs = src.active_turfs
 
 	for(var/thing in turfs_to_init)
-		var/turf/t = thing
-		t.CalculateAdjacentTurfs()
-		active_turfs -= t
+		var/turf/T = thing
+		active_turfs -= T
+		T.Initalize_Atmos(times_fired)
 
-		if(t.blocks_air)
-			CHECK_TICK
-			continue
-
-		var/turf/open/T = t
-		if(!istype(T))
-			CHECK_TICK
-			continue
-		T.excited = 0
-		T.update_visuals()
-
-		for(var/tile in T.atmos_adjacent_turfs)
-			var/turf/enemy_tile = tile
-			var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-
-			var/is_active = T.air.compare(enemy_air)
-
-			if(is_active)
-				//testing("Active turf found. Return value of compare(): [is_active]")
-				T.excited = 1
-				active_turfs |= T
-				break
-		CHECK_TICK
 
 	if(active_turfs.len)
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")

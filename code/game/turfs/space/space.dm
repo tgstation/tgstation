@@ -13,20 +13,19 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 
-var/global/list/turf/open/space/space_turfs = list() //i hate everything
 
 /turf/open/space/New()
 	update_icon()
 	air = space_gas
-	space_turfs += src
 
 /turf/open/space/Destroy()
 	return QDEL_HINT_LETMELIVE
 
+/turf/open/space/Initalize_Atmos(times_fired)
+	return
+
 /turf/open/space/ChangeTurf(path)
 	. = ..()
-	if(!istype(., /turf/open/space))
-		space_turfs -= src
 
 /turf/open/space/AfterChange()
 	..()
