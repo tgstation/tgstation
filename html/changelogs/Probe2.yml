@@ -1,6 +1,0 @@
-author: Probe1
-
-delete-after: True
-
-changes: 
-- rscadd: (Metaclub) Changed up Genetics a bit and made a bunch of small fixes/tweaks https://github.com/d3athrow/vgstation13/pull/9222
