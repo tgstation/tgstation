@@ -1,5 +1,6 @@
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
+	icon_state = "0"
 	name = "\proper space"
 	intact = 0
 
