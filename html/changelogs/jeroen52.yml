@@ -1,5 +1,0 @@
-author: jeroen52
-changes: 
-  - rscadd : Added a new reagent found in the new "Old Empire Bar" chocolate bar which is called "rogan", causes you to say "Rogan?" and think AoE 2 taunts. Obtainable by grinding the chocolate bar or by Adminbus.
-  - rscadd : Added a new chocolate bar called the "Old Empire Bar" as a reference to AoE. Contains a reagent called "rogan". Obtainable through hacking a Getmore Chocolate Corporation vending machine or Adminbus.
-delete-after: true
