@@ -160,6 +160,7 @@
 			dat += "<div class='statusDisplay'>"
 			dat += "Wallet: <A href='?src=\ref[src];create=wallet;amount=1'>Make</A> ([100/efficiency])<BR>"
 			dat += "Book bag: <A href='?src=\ref[src];create=bkbag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Empty sandbag: <A href='?src=\ref[src];create=sdbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Plant bag: <A href='?src=\ref[src];create=ptbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Rag: <A href='?src=\ref[src];create=rag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Mining satchel: <A href='?src=\ref[src];create=mnbag;amount=1'>Make</A> ([200/efficiency])<BR>"
@@ -299,6 +300,9 @@
 			if (check_cost(200/efficiency))
 				return 0
 			else new/obj/item/weapon/storage/bag/books(src.loc)
+		if("sdbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/emptysandbag(src.loc)
 		if("ptbag")
 			if (check_cost(200/efficiency))
 				return 0

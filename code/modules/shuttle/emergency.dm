@@ -229,7 +229,7 @@
 /obj/docking_port/mobile/emergency/proc/open_dock()
 	for(var/obj/machinery/door/poddoor/shuttledock/D in airlocks)
 		var/turf/T = get_step(D, D.checkdir)
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/open/space))
 			spawn(0)
 				D.open()
 

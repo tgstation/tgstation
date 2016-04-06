@@ -46,7 +46,7 @@
 				data["viruses"] = preserve
 	return 1
 
-/datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
+/datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
 	if(reac_volume < 3)
@@ -118,7 +118,7 @@
  *	Water reaction to turf
  */
 
-/datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
 	if(reac_volume >= 10)
@@ -128,7 +128,7 @@
 		M.apply_water()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !istype(T, /turf/open/space))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
@@ -200,7 +200,7 @@
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
-/datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
 	if(!istype(T)) return
 	if(reac_volume>=10)
@@ -254,7 +254,7 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
-/datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
 		T.MakeSlippery(2)
@@ -448,11 +448,11 @@
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 
-/datum/reagent/oxygen/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 	return
 
 /datum/reagent/copper
@@ -472,11 +472,11 @@
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 
-/datum/reagent/nitrogen/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 	return
 
 /datum/reagent/hydrogen
@@ -500,7 +500,7 @@
 	color = "#484848" // rgb: 72, 72, 72
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/space))
+	if(M.canmove && istype(M.loc, /turf/open/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -522,7 +522,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
 		if(!D)
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -573,7 +573,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/space))
+	if(M.canmove && istype(M.loc, /turf/open/space))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -598,7 +598,7 @@
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!istype(T, /turf/open/space))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -644,7 +644,7 @@
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!istype(T, /turf/open/space))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -833,11 +833,11 @@
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
+	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 
-/datum/reagent/carbondioxide/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
+		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 	return
 
 
@@ -990,10 +990,10 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/carpet/reaction_turf(turf/simulated/T, reac_volume)
-	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
-		var/turf/simulated/floor/F = T
-		F.ChangeTurf(/turf/simulated/floor/carpet)
+/datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
+	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/plasteel))
+		var/turf/open/floor/F = T
+		F.ChangeTurf(/turf/open/floor/carpet)
 	..()
 	return
 
@@ -1124,7 +1124,7 @@
 	reagent_state = LIQUID
 	color = "#A70FFF"
 
-/datum/reagent/drying_agent/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T) && T.wet)
 		T.MakeDry(TURF_WET_WATER)
 

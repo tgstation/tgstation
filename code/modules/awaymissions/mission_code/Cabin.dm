@@ -103,7 +103,7 @@
 	/datum/mapGeneratorModule/snow/bunnies)
 
 /datum/mapGeneratorModule/snow/checkPlaceAtom(turf/T)
-	if(istype(T,/turf/simulated/floor/plating/asteroid/snow))
+	if(istype(T,/turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
 

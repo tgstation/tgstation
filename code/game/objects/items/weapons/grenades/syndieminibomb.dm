@@ -42,8 +42,8 @@
         playsound(loc, 'sound/effects/EMPulse.ogg', 50, 1)
         radiation_pulse(loc,freeze_range,freeze_range+1,rad_damage)
         for(var/turf/T in view(freeze_range,loc))
-                if(istype(T,/turf/simulated/floor))
-                        var/turf/simulated/floor/F = T
+                if(istype(T,/turf/open/floor))
+                        var/turf/open/floor/F = T
                         F.wet = TURF_WET_ICE
                 for(var/mob/living/carbon/L in T)
                         L.adjustStaminaLoss(stamina_damage)

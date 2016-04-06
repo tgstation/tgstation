@@ -25,7 +25,7 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
-		sleep(world.tick_lag)
+		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
 	..()
@@ -154,8 +154,8 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
+	if(istype(A,/turf/open))
+		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air

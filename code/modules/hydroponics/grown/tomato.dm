@@ -120,7 +120,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
-	if(awakening || istype(user.loc,/turf/space))
+	if(awakening || istype(user.loc,/turf/open/space))
 		return
 	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
 	awakening = 1

@@ -239,19 +239,19 @@
 				if(T.flags & NOJAUNT)
 					T.flags -= NOJAUNT
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-				if(!istype(T, /turf/simulated/floor/plating) && !istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(15))
-					var/turf/simulated/floor/floor = T
+				if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
+					var/turf/open/floor/floor = T
 					if(floor.intact)
 						floor.builtin_tile.loc = floor
 					floor.broken = 0
 					floor.burnt = 0
 					floor.make_plating(1)
-				if(T.type == /turf/simulated/wall && prob(15))
+				if(T.type == /turf/closed/wall && prob(15))
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-					T.ChangeTurf(/turf/simulated/wall/rust)
-				if(T.type == /turf/simulated/wall/r_wall && prob(10))
+					T.ChangeTurf(/turf/closed/wall/rust)
+				if(T.type == /turf/closed/wall/r_wall && prob(10))
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-					T.ChangeTurf(/turf/simulated/wall/r_wall/rust)
+					T.ChangeTurf(/turf/closed/wall/r_wall/rust)
 				for(var/obj/structure/closet/closet in T.contents)
 					closet.open()
 				for(var/obj/structure/bodycontainer/corpseholder in T.contents)
