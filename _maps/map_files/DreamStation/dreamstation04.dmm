@@ -33756,7 +33756,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bop" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar,
@@ -37257,7 +37257,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "buY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -38484,7 +38484,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bwX" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
@@ -39401,7 +39401,7 @@
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
-/area/space)
+/area/maintenance/fsmaint)
 "byY" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
@@ -39410,7 +39410,7 @@
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
-/area/space)
+/area/maintenance/fsmaint)
 "byZ" = (
 /obj/item/wallframe/light_fixture/small,
 /obj/machinery/airalarm{
@@ -39419,7 +39419,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bza" = (
 /obj/structure/chair{
 	dir = 1
@@ -41428,7 +41428,7 @@
 	on = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bCA" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -41460,7 +41460,7 @@
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
-/area/space)
+/area/maintenance/fsmaint)
 "bCE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -42763,12 +42763,12 @@
 "bEL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bEM" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bEN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -44408,7 +44408,7 @@
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
-/area/space)
+/area/maintenance/fsmaint)
 "bHg" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -45662,7 +45662,7 @@
 /obj/structure/falsewall,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/fsmaint)
 "bJj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -45688,7 +45688,7 @@
 	broken = 1;
 	icon_state = "platingdmg3"
 	},
-/area/space)
+/area/maintenance/fsmaint)
 "bJm" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/lighter,
@@ -87558,14 +87558,14 @@ aae
 aaa
 aae
 aaa
-cRz
-cRz
-cRz
-cRz
-cRz
-cRz
-cRz
-cRz
+cgO
+cgO
+cgO
+cgO
+cgO
+cgO
+cgO
+cgO
 aae
 aae
 aaa
@@ -87815,14 +87815,14 @@ bUI
 caT
 bUI
 aaa
-cRz
-cRW
+cgO
+cdl
 boo
-byO
+czH
 byZ
 bCD
 bEM
-cRz
+cgO
 aaa
 aae
 aae
@@ -88072,17 +88072,17 @@ bUI
 caU
 bUI
 aaa
-cRz
-cRW
+cgO
+cdl
 buX
 byX
-cRW
-cRW
-cRW
-cRz
-cRz
-cRz
-cRz
+cdl
+cdl
+cdl
+cgO
+cgO
+cgO
+cgO
 aae
 aaa
 aaa
@@ -88329,17 +88329,17 @@ bUI
 caV
 bUI
 aae
-cRV
-cRW
-bwV
-cRW
+cps
+cdl
+cvL
+cdl
 bCz
 bEL
 bHf
 bJi
 bEL
 bJl
-cRz
+cgO
 aae
 aae
 aaa
