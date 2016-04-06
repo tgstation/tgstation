@@ -19,26 +19,28 @@
 	return(FIRELOSS)
 
 //Captain
-/obj/item/clothing/head/caphat
+/obj/item/clothing/head/soft/caphat
 	name = "captain's hat"
 	desc = "It's good being the king."
-	icon_state = "captain"
+	icon_state = "captainsoft"
+	item_color = "captain"
 	item_state = "that"
 	flags_inv = 0
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 //Captain: This is no longer space-worthy
-/obj/item/clothing/head/caphat/parade
+/obj/item/clothing/head/soft/caphat/parade
 	name = "captain's parade cap"
 	desc = "Worn only by Captains with an abundance of class."
-	icon_state = "capcap"
-
+	icon_state = "capcapsoft"
+	item_color = "capcap"
 
 //Head of Personnel
-/obj/item/clothing/head/hopcap
+/obj/item/clothing/head/soft/hopcap
 	name = "head of personnel's cap"
-	icon_state = "hopcap"
+	icon_state = "hopcapsoft"
+	item_color = "hopcap"
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 

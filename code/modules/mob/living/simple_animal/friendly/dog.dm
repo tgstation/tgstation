@@ -227,7 +227,7 @@
 			if( /obj/item/clothing/glasses/sunglasses, /obj/item/clothing/head/that, /obj/item/clothing/head/collectable/paper,
 					/obj/item/clothing/head/hardhat, /obj/item/clothing/head/collectable/hardhat, /obj/item/clothing/head/hardhat/white,
 					/obj/item/weapon/paper, /obj/item/clothing/head/helmet, /obj/item/clothing/head/chefhat, /obj/item/clothing/head/collectable/chef,
-					/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain, /obj/item/clothing/head/kitty,
+					/obj/item/clothing/head/soft/caphat, /obj/item/clothing/head/collectable/captain, /obj/item/clothing/head/kitty,
 					/obj/item/clothing/head/collectable/kitty, /obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears,
 					/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret, /obj/item/clothing/head/det_hat,
 					/obj/item/clothing/head/nursehat, /obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate,
@@ -235,7 +235,7 @@
 					/obj/item/clothing/head/wizard/fake, /obj/item/clothing/head/wizard, /obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/helmet/space/santahat,
 					/obj/item/clothing/head/soft, /obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/sombrero,
-					/obj/item/clothing/head/hopcap, /obj/item/clothing/mask/gas/clown_hat)
+					/obj/item/clothing/head/soft/hopcap, /obj/item/clothing/mask/gas/clown_hat)
 				valid = 1
 
 	if(valid)
@@ -280,7 +280,7 @@
 				desc = "Your food will be taste-tested.  All of it."
 
 
-			if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
+			if(/obj/item/clothing/head/soft/caphat, /obj/item/clothing/head/collectable/captain)
 				name = "Captain [real_name]"
 				desc = "Probably better than the last captain."
 
@@ -351,10 +351,6 @@
 				emote_see = list("looks for presents.", "checks his list.")
 				desc = "He's very fond of milk and cookies."
 
-			if(/obj/item/clothing/head/soft)
-				name = "Corgi Tech [real_name]"
-				desc = "The reason your yellow gloves have chew-marks."
-
 			if(/obj/item/clothing/head/hardhat/reindeer)
 				name = "[real_name] the red-nosed Corgi"
 				emote_hear = list("lights the way!", "illuminates.", "yaps!")
@@ -364,9 +360,14 @@
 				name = "Segnor [real_name]"
 				desc = "You must respect elder [real_name]"
 
-			if(/obj/item/clothing/head/hopcap)
+			if(/obj/item/clothing/head/soft/hopcap)
 				name = "Lieutenant [real_name]"
 				desc = "Can actually be trusted to not run off on his own."
+
+			if(/obj/item/clothing/head/soft)
+				name = "Corgi Tech [real_name]"
+				desc = "The reason your yellow gloves have chew-marks."
+
 
 			if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
 				name = "Trooper [real_name]"
