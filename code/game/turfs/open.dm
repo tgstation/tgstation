@@ -9,6 +9,47 @@
 	var/wet = 0
 	var/image/wet_overlay = null
 
+/turf/open/Initalize_Atmos(times_fired)
+	excited = 0
+	update_visuals()
+	if (blocks_air)
+		return
+	current_cycle = times_fired
+
+	//cache some vars
+	var/datum/gas_mixture/air = src.air
+	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+
+	for(var/direction in cardinal)
+		var/turf/open/enemy_tile = get_step(src, direction)
+		if(!istype(enemy_tile))
+			atmos_adjacent_turfs -= enemy_tile
+			continue
+		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
+
+		//only check this turf, if it didn't check us when it was initalized
+		if(enemy_tile.current_cycle < times_fired)
+			if(CanAtmosPass(enemy_tile))
+				atmos_adjacent_turfs |= enemy_tile
+				enemy_tile.atmos_adjacent_turfs |= src
+			else
+				atmos_adjacent_turfs -= enemy_tile
+				enemy_tile.atmos_adjacent_turfs -= src
+				continue
+		else
+			if (!(enemy_tile in atmos_adjacent_turfs))
+				continue
+
+
+		var/is_active = air.compare(enemy_air)
+
+		if(is_active)
+			//testing("Active turf found. Return value of compare(): [is_active]")
+			if(!excited) //make sure we aren't already excited
+				excited = 1
+				SSair.active_turfs |= src
+
+
 /turf/open/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)
 	if(!forced)
