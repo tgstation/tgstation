@@ -103,7 +103,7 @@
 	force = 15
 
 
-
+/*
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
@@ -141,6 +141,6 @@
 		scanning = 1
 		mineral_scan_pulse(L,get_turf(loc))
 		spawn(equip_cooldown)
-			scanning = 0
+			scanning = 0*/
 
 

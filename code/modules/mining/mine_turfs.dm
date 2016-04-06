@@ -13,14 +13,15 @@
 	blocks_air = 1
 	layer = MOB_LAYER + 0.05
 	temperature = TCMB
-	var/environment_type = "basalt"
-	var/turf/open/floor/plating/asteroid/turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface //For basalt vs normal asteroid
+	var/environment_type = "asteroid"
+	var/turf/open/floor/plating/asteroid/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
-	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
+	var/mineral_state = null // Name of mineral overlay icon
+	var/mineral_states_amt = 0 // Amount of extra mineral states, 0 for no extra states
 
 /turf/closed/mineral/New()
 	pixel_y = -4
@@ -33,6 +34,14 @@
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
+	if(mineral_state)
+		var/min = mineral_state
+		if(mineral_states_amt)
+			var/state = rand(0, mineral_states_amt)
+			if(state)
+				min = "[min][state]"
+		overlays += image(icon, icon_state = min, layer = MOB_LAYER + 0.1)
+		name = "[mineral_state] deposit"
 
 /turf/closed/mineral/volcanic
 	environment_type = "basalt"
@@ -107,58 +116,61 @@
 	mineralType = /obj/item/weapon/ore/iron
 	spreadChance = 20
 	spread = 1
-	scan_state = "rock_Iron"
+	mineral_state = "iron"
+	mineral_states_amt = 1
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/weapon/ore/uranium
 	spreadChance = 5
 	spread = 1
-	scan_state = "rock_Uranium"
+	mineral_state = "uranium"
+	mineral_states_amt = 2
 
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/weapon/ore/diamond
 	spreadChance = 0
 	spread = 1
-	scan_state = "rock_Diamond"
+	mineral_state = "diamond"
 
 /turf/closed/mineral/gold
 	mineralType = /obj/item/weapon/ore/gold
 	spreadChance = 5
 	spread = 1
-	scan_state = "rock_Gold"
+	mineral_state = "gold"
 
 /turf/closed/mineral/silver
 	mineralType = /obj/item/weapon/ore/silver
 	spreadChance = 5
 	spread = 1
-	scan_state = "rock_Silver"
+	mineral_state = "silver"
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
 	spread = 1
-	scan_state = "rock_Plasma"
+	mineral_state = "plasma"
+	//mineral_states_amt = 3
 
 /turf/closed/mineral/clown
 	mineralType = /obj/item/weapon/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Clown"
+	mineral_state = "clown"
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/weapon/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_BScrystal"
+	mineral_state = "bluespace crystal"
 
 ////////////////////////////////Gibtonite
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Gibtonite"
+	mineral_state = "gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
@@ -170,14 +182,14 @@
 	..()
 
 /turf/closed/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
+	if(istype(I, /obj/item/device/t_scanner) || istype(I, /obj/item/device/multitool) && stage == 1)
 		user.visible_message("<span class='notice'>[user] holds [I] to [src]...</span>", "<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
 	..()
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = 4.06)
+		var/image/I = image(icon, loc = src, icon_state = "[mineral_state]_active", layer = 4.10)
 		overlays += I
 		activated_image = I
 		name = "gibtonite deposit"
@@ -215,8 +227,6 @@
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
 		overlays -= activated_image
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = 4.06)
-		overlays += I
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
 		if(det_time < 0)
@@ -413,7 +423,7 @@
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
-	name = "Asteroid"
+	name = "asteroid sand"
 	baseturf = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"

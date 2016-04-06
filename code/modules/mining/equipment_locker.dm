@@ -285,7 +285,6 @@
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						          		200),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300),
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
 		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
@@ -414,7 +413,7 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Two Survival Capsules", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Two Survival Capsules", "Resonator", "Mining Drone")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
@@ -426,8 +425,6 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Advanced Scanner")
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -680,7 +677,7 @@
 				adjustBruteLoss(-10)
 				user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
+	if(istype(I, /obj/item/device/t_scanner) || istype(I, /obj/item/device/multitool))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
 		DropOre()
 		return
@@ -875,7 +872,7 @@
 		user << "<span class='info'>The display on [src] seems to be flickering.</span>"
 
 /**********************Mining Scanners**********************/
-
+/*
 /obj/item/device/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
 	name = "manual mining scanner"
@@ -904,8 +901,8 @@
 
 /obj/item/device/mining_scanner/admin/attack_self(mob/user)
 	for(var/turf/closed/mineral/M in world)
-		if(M.scan_state)
-			M.icon_state = M.scan_state
+		if(M.mineral_state)
+			M.overlays += M.mineral_state
 	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
@@ -954,7 +951,7 @@
 /proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()
 	for(var/turf/closed/mineral/M in range(range, T))
-		if(M.scan_state)
+		if(M.mineral_state)
 			minerals += M
 	if(minerals.len)
 		for(var/mob/user in mobs)
@@ -962,7 +959,7 @@
 				var/client/C = user.client
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/mining.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					var/image/I = image('icons/turf/mining.dmi', loc = F, icon_state = M.mineral_state, layer = 18)
 					C.images += I
 					spawn(30)
 						if(C)
@@ -972,12 +969,12 @@
 /proc/mineral_scan_pulse_material(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()
 	for(var/turf/closed/mineral/M in range(range, T))
-		if(M.scan_state)
+		if(M.mineral_state)
 			minerals += M
 	if(minerals.len)
 		for(var/turf/closed/mineral/M in minerals)
 			var/obj/effect/overlay/temp/mining_overlay/C = PoolOrNew(/obj/effect/overlay/temp/mining_overlay, M)
-			C.icon_state = M.scan_state
+			C.icon_state = M.mineral_state
 
 /obj/effect/overlay/temp/mining_overlay
 	layer = 20
@@ -987,7 +984,7 @@
 	duration = 30
 	pixel_x = -4
 	pixel_y = -4
-
+*/
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining
@@ -1050,7 +1047,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/explorer
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/multitool,
+	/obj/item/device/t_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
 
 /obj/item/clothing/head/explorer
 	name = "explorer hood"
