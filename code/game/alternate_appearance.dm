@@ -1,5 +1,5 @@
 /*
-	Alternate Appearances!
+	Alternate Appearances! By RemieRichards
 	A framework for replacing an atom (and it's overlays) with an override = 1 image, that's less shit!
 	Example uses:
 		* hallucinating all mobs looking like skeletons
