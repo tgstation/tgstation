@@ -327,3 +327,13 @@
 	time = 10
 	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC
+
+/datum/table_recipe/aabattery
+	name = "AA Battery"
+	result = /obj/item/weapon/stock_parts/cell/oneuse
+	time = 20
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				/datum/reagent/lithium = 5,
+				/datum/reagent/cupricoxide = 5)
+	tools = list(/obj/item/weapon/screwdriver)
+	category = CAT_MISC

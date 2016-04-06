@@ -158,6 +158,24 @@
 	..()
 	charge = 0
 
+/obj/item/weapon/stock_parts/cell/oneuse
+	name = "\improper AA battery"
+	desc = "Generic brand, non-rechargable AA battery. Why does anyone still use these?"
+	icon_state = "aacell"
+	origin_tech = null
+	maxcharge = 1000
+	chargerate = 0
+	materials = list(MAT_GLASS=40)
+	rating = 2
+
+/obj/item/weapon/stock_parts/cell/oneuse/updateicon()
+	..()
+	overlays.Cut() //Hacky meme way to remove the charge overlays until I find a better way
+
+/obj/item/weapon/stock_parts/cell/oneuse/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
 	origin_tech = null

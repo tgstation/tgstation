@@ -683,6 +683,12 @@
 	. = 1
 	..()
 
+/datum/reagent/cupricoxide
+	name = "Cupric Oxide"
+	id = "cupricoxide"
+	description = "A black powder of oxidised copper."
+	color = "#222222" // rgb: 34, 34, 34
+
 /datum/reagent/space_cleaner
 	name = "Space cleaner"
 	id = "cleaner"
