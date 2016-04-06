@@ -1,4 +1,0 @@
-author: LanCartwright
-delete-after: True
-changes: 
-  - tweak: "Custom viruses with stealth values of 3 or above are now invisible on the PANDEMIC and no longer visible on health huds."
