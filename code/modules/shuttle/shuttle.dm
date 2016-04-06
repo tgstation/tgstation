@@ -168,10 +168,10 @@
 	var/area/shuttle/areaInstance
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
-	var/mode = SHUTTLE_IDLE			//current shuttle mode (see global defines)
+	var/mode = SHUTTLE_IDLE			//current shuttle mode (see /__DEFINES/stat.dm)
 	var/callTime = 50				//time spent in transit (deciseconds)
 	var/roundstart_move				//id of port to send shuttle to at roundstart
-	var/travelDir = 0			//direction the shuttle would travel in
+	var/travelDir = 0				//direction the shuttle would travel in
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
@@ -518,6 +518,33 @@
 	if(!timer)
 		return round(callTime/divisor, 1)
 	return max( round((timer+callTime-world.time)/divisor,1), 0 )
+
+// returns 3-letter mode string, used by status screens and mob status panel
+/obj/docking_port/mobile/proc/getModeStr()
+	switch(mode)
+		if(SHUTTLE_RECALL)
+			return "RCL"
+		if(SHUTTLE_CALL)
+			return "ETA"
+		if(SHUTTLE_DOCKED)
+			return "ETD"
+		if(SHUTTLE_ESCAPE)
+			return "ESC"
+		if(SHUTTLE_STRANDED)
+			return "ERR"
+	return ""
+
+// returns 5-letter timer string, used by status screens and mob status panel
+/obj/docking_port/mobile/proc/getTimerStr()
+	if(mode == SHUTTLE_STRANDED)
+		return "--:--"
+
+	var/timeleft = timeLeft()
+	if(timeleft > 0)
+		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
+	else
+		return "00:00"
+
 
 /obj/docking_port/mobile/proc/getStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()

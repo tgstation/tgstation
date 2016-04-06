@@ -2,7 +2,7 @@
 
 /turf/closed/mineral //wall piece
 	name = "rock"
-	icon = 'icons/turf/smoothrocks.dmi'
+	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
@@ -10,8 +10,6 @@
 	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
 	opacity = 1
 	density = 1
-	pixel_y = -4
-	pixel_x = -4
 	blocks_air = 1
 	layer = MOB_LAYER + 0.05
 	temperature = TCMB
@@ -23,6 +21,18 @@
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
+
+/turf/closed/mineral/New()
+	pixel_y = -4
+	pixel_x = -4
+	icon = 'icons/turf/smoothrocks.dmi'
+	..()
+	if (mineralType && mineralAmt && spread && spreadChance)
+		for(var/dir in cardinal)
+			if(prob(spreadChance))
+				var/turf/T = get_step(src, dir)
+				if(istype(T, /turf/closed/mineral/random))
+					Spread(T)
 
 /turf/closed/mineral/volcanic
 	environment_type = "basalt"
@@ -47,8 +57,6 @@
 	new src.type(T)
 
 /turf/closed/mineral/random
-	name = "rock"
-	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
 		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40,
@@ -58,13 +66,6 @@
 
 /turf/closed/mineral/random/New()
 	..()
-
-	if (mineralType && mineralAmt && spread && spreadChance)
-		for(var/dir in cardinal)
-			if(prob(spreadChance))
-				var/turf/T = get_step(src, dir)
-				if(istype(T, /turf/closed/mineral/random))
-					Spread(T)
 
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
@@ -133,7 +134,6 @@
 	scan_state = "rock_Silver"
 
 /turf/closed/mineral/plasma
-	icon_state = "rock_Plasma"
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
 	spread = 1
@@ -147,7 +147,6 @@
 	scan_state = "rock_Clown"
 
 /turf/closed/mineral/bscrystal
-	icon_state = "rock_BScrystal"
 	mineralType = /obj/item/weapon/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
@@ -156,8 +155,6 @@
 
 ////////////////////////////////Gibtonite
 /turf/closed/mineral/gibtonite
-	name = "gibtonite deposit"
-	icon_state = "rock_Gibtonite"
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0

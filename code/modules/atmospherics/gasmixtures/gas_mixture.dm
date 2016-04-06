@@ -287,6 +287,9 @@ var/list/gaslist_cache = null
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 	//Returns: amount of gas exchanged (+ if sharer received)
 
+/datum/gas_mixture/proc/after_share(datum/gas_mixture/sharer)
+	//called on share's sharer to let it know it just got some gases
+
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
 	//Returns: new temperature of the sharer
@@ -499,10 +502,13 @@ var/list/gaslist_cache = null
 	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-
+	sharer.after_share(src, atmos_adjacent_turfs)
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
+
+/datum/gas_mixture/after_share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+	return
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
@@ -531,11 +537,11 @@ var/list/gaslist_cache = null
 		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
 		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
 		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
-		if(delta > MINIMUM_AIR_TO_SUSPEND && \
-			delta > gas_moles * MINIMUM_AIR_RATIO_TO_SUSPEND)
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
+			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 
-	if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
+	if(total_moles() > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/temp
 		var/sample_temp
 
