@@ -189,7 +189,7 @@
 		used = TRUE
 		sleep(50)
 		var/clear = TRUE
-		for(var/turf/T in range(3,src))
+		for(var/turf/T in range(2,src))
 			if(istype(T, /turf/closed))
 				clear = FALSE
 				break
@@ -347,7 +347,7 @@
 	icon = 'icons/obj/lavaland/pod_computer.dmi'
 	anchored = 1
 	density = 1
-	pixel_y = -16
+	pixel_y = -32
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
@@ -393,13 +393,13 @@
 	icon_state = "smooth"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock)
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock, /obj/structure/window)
 
 //Signs
 
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps"
-	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims "
+	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
 
@@ -416,11 +416,12 @@
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	opacity = 0
+	glass = 1
 
 /obj/structure/tubes
 	icon_state = "tubes"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	name = "tubes"
 	anchored = 1
-	layer = 6
+	layer = MOB_LAYER - 0.2
 	density = 0
