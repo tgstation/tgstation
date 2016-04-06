@@ -209,7 +209,8 @@ For the main html chat area
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
 		target << message
-		CRASH("DEBUG: Boutput called with invalid message")
+		if (!isatom(target)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
+			CRASH("DEBUG: Boutput called with invalid message")
 		return
 
 	//Otherwise, we're good to throw it at the user

@@ -107,6 +107,8 @@
 
 #define isclient(A) (istype(A, /client))
 
+#define isatom(A) (istype(A, /atom))
+
 //Macros for antags
 
 #define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)
