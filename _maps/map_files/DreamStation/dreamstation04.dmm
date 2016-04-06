@@ -8206,10 +8206,7 @@
 	id = "auxincineratorvent";
 	name = "Auxiliary Incinerator Vent"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "arc" = (
 /turf/open/floor/plating/airless,
@@ -8763,10 +8760,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "asj" = (
 /obj/structure/cable/yellow{
@@ -9219,10 +9213,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "asY" = (
 /obj/machinery/power/compressor{
@@ -9237,10 +9228,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "asZ" = (
 /obj/machinery/power/turbine{
@@ -9253,20 +9241,14 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "ata" = (
 /obj/machinery/door/poddoor{
 	id = "turbinevent";
 	name = "Turbine Vent"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "atb" = (
 /obj/structure/disposalpipe/segment,
@@ -9833,10 +9815,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "n2=0.01;o2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "aui" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -33713,17 +33692,7 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bog" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/watertank,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -33780,18 +33749,14 @@
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "boo" = (
-/obj/structure/table,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -31
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar_left";
+	name = "skeletal minibar"
 	},
-/obj/item/clothing/head/hardhat/cakehat,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel{
-	icon_state = "bar"
-	},
-/area/crew_quarters/bar)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bop" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar,
@@ -36228,6 +36193,9 @@
 	tag = "icon-manifold-r-f (WEST)";
 	dir = 8
 	},
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bsV" = (
@@ -37282,28 +37250,31 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "buX" = (
-/obj/structure/chair{
-	dir = 4
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar_right";
+	name = "skeletal minibar"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gin,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "buY" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "buZ" = (
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -37315,6 +37286,12 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold-r-f (EAST)";
 	dir = 4
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Assistant"
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -38451,8 +38428,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bwO" = (
-/obj/structure/closet/secure_closet/hydroponics,
-/obj/item/clothing/tie/armband/hydro,
 /obj/machinery/camera{
 	c_tag = "Hydroponics West";
 	dir = 4;
@@ -38499,20 +38474,17 @@
 	},
 /area/hydroponics)
 "bwV" = (
-/obj/structure/chair{
-	dir = 4
+/turf/open/floor/plating{
+	broken = 1;
+	icon_state = "platingdmg3"
 	},
-/obj/effect/landmark/start{
-	name = "Assistant"
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/area/space)
 "bwW" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/obj/structure/closet/crate,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bwX" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
@@ -39342,20 +39314,9 @@
 /turf/open/floor/plating,
 /area/hydroponics)
 "byO" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/light/small,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	listening = 1;
-	name = "Station Intercom (General)";
-	pixel_y = -25;
-	tag = "SOUTH"
-	},
-/turf/open/floor/plasteel/hydrofloor,
-/area/hydroponics)
+/obj/structure/chair/stool,
+/turf/open/floor/plating,
+/area/space)
 "byP" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
@@ -39434,36 +39395,31 @@
 /turf/open/floor/plasteel/green,
 /area/hydroponics)
 "byX" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
+/obj/structure/chair/stool,
+/turf/open/floor/plating{
+	broken = 1;
+	heat_capacity = 1e+006;
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/fsmaint)
+"byY" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
+/turf/open/floor/plating{
+	broken = 1;
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/fsmaint)
+"byZ" = (
+/obj/item/wallframe/light_fixture/small,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"byY" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/landmark/start{
-	name = "Assistant"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"byZ" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bza" = (
 /obj/structure/chair{
 	dir = 1
@@ -40335,10 +40291,12 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bAK" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Assistant"
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -41465,16 +41423,12 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bCz" = (
-/obj/machinery/processor,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	listening = 1;
-	name = "Station Intercom (General)";
-	pixel_y = 20;
-	tag = "NORTH"
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bCA" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -41497,14 +41451,16 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bCD" = (
-/obj/structure/cable/green{
-	tag = "icon-1-2";
-	icon_state = "1-2"
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
 	},
-/obj/machinery/hologram/holopad,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/turf/open/floor/plating{
+	broken = 1;
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/fsmaint)
 "bCE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -42805,26 +42761,19 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bEL" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bEM" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bEN" = (
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bEO" = (
@@ -42839,17 +42788,19 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bEP" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bEQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply,
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bER" = (
@@ -44431,13 +44382,12 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bHd" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -44447,19 +44397,18 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bHf" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating{
+	broken = 1;
+	icon_state = "platingdmg1"
 	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/area/maintenance/fsmaint)
 "bHg" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -45677,10 +45626,10 @@
 	},
 /area/crew_quarters/kitchen)
 "bJd" = (
-/obj/machinery/food_cart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/food_cart,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bJe" = (
@@ -45710,13 +45659,12 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bJi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
+/obj/structure/falsewall,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bJj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -45733,14 +45681,14 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bJl" = (
-/obj/structure/chair{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
-/obj/effect/landmark/start{
-	name = "Assistant"
+/turf/open/floor/plating{
+	broken = 1;
+	icon_state = "platingdmg3"
 	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/area/maintenance/fsmaint)
 "bJm" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/lighter,
@@ -46467,10 +46415,6 @@
 	icon_state = "alarm0";
 	pixel_y = -22
 	},
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable{
-	desc = "Ah, leftovers. A slice of the most green pizza of all pizzas not containing green ingredients."
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bKC" = (
@@ -46512,13 +46456,17 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bKF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4;
+	level = 2
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
+"bKG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
-"bKG" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -49416,12 +49364,13 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bQh" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4;
+	level = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
 "bQi" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -65920,10 +65869,8 @@
 	},
 /area/maintenance/starboardsolar)
 "cvG" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /obj/structure/girder/displaced,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "cvH" = (
@@ -77779,6 +77726,169 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space)
+"cRC" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
+/obj/structure/table,
+/obj/item/weapon/book/manual/hydroponics_pod_people,
+/obj/item/weapon/watertank,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+"cRD" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/hardhat/cakehat,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
+"cRE" = (
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+"cRF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRH" = (
+/obj/structure/cable/green{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRI" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRJ" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	listening = 1;
+	name = "Station Intercom (General)";
+	pixel_y = -25;
+	tag = "SOUTH"
+	},
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/item/clothing/tie/armband/hydro,
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+"cRK" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRL" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRM" = (
+/obj/machinery/processor,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cRN" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	listening = 1;
+	name = "Station Intercom (General)";
+	pixel_y = 20;
+	tag = "NORTH"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cRO" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/kitchen/fork,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRS" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable{
+	desc = "Ah, leftovers. A slice of the most green pizza of all pizzas not containing green ingredients."
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cRT" = (
+/obj/structure/cable/green{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Assistant"
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"cRV" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space)
+"cRW" = (
+/turf/open/floor/plating,
+/area/space)
+"cRX" = (
+/turf/closed/wall/rust,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa
@@ -87194,12 +87304,12 @@ aaa
 aaa
 aaa
 aaa
+aae
+aae
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
+aae
+aae
 aaa
 aaa
 aaa
@@ -87448,16 +87558,16 @@ aae
 aaa
 aae
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cgO
+cgO
+cgO
+cgO
+cgO
+cgO
+cgO
+cgO
+aae
+aae
 aaa
 aaa
 aaa
@@ -87705,17 +87815,17 @@ bUI
 caT
 bUI
 aaa
+cgO
+cdl
+boo
+czH
+byZ
+bCD
+bEM
+cgO
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aae
+aae
 aaa
 aaa
 aaa
@@ -87961,19 +88071,19 @@ aae
 bUI
 caU
 bUI
+aaa
+cgO
+cdl
+buX
+byX
+cdl
+cdl
+cdl
+cgO
+cgO
+cgO
+cgO
 aae
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aab
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -88218,20 +88328,20 @@ aae
 bUI
 caV
 bUI
-aaa
 aae
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cps
+cdl
+cvL
+cdl
+bCz
+bEL
+bHf
+bJi
+bEL
+bJl
+cgO
+aae
+aae
 aaa
 aaa
 aaa
@@ -88477,15 +88587,15 @@ caW
 ccW
 ccW
 ccW
-ccW
-aae
-aae
-ccW
-ccW
+cRX
+bwW
+byY
 ccW
 ccW
-cgO
-cgO
+ccW
+ccW
+cdl
+bKF
 cgO
 aae
 aae
@@ -88742,7 +88852,7 @@ cph
 cqR
 ccW
 ctX
-cdm
+bQh
 cxn
 cyC
 cxn
@@ -99246,7 +99356,7 @@ bjI
 bkT
 bmD
 bof
-bqt
+cRE
 bsI
 buM
 bwO
@@ -99503,11 +99613,11 @@ bjI
 bkZ
 bmD
 bog
-bqu
-bsJ
-buN
-bwP
-byO
+cRE
+cRE
+buM
+cRE
+bqt
 bAG
 bCs
 bEB
@@ -99759,12 +99869,12 @@ big
 bjI
 bkT
 bmD
-bmD
-bqv
-bsK
-buO
-bqv
-bmD
+cRC
+bqu
+bsJ
+buN
+bwP
+cRJ
 bAG
 bAG
 bEC
@@ -100016,12 +100126,12 @@ big
 bjI
 bkT
 bmD
-boh
-boj
-bsL
-buM
-boj
-byP
+bmD
+bqv
+bsK
+buO
+bqv
+bmD
 bAG
 bCt
 bAG
@@ -100273,12 +100383,12 @@ big
 bjI
 bkT
 bmD
-boi
-bqw
-bsM
-buP
-bwQ
-byQ
+boh
+boj
+bsL
+buM
+boj
+byP
 bAG
 bAG
 bAG
@@ -100529,13 +100639,13 @@ aYc
 big
 bjI
 bkT
-bmE
-boj
-bqx
-bsN
-buQ
-bwR
-boj
+bmD
+boi
+bqw
+bsM
+buP
+bwQ
+byQ
 bAG
 bCu
 bED
@@ -100789,10 +100899,10 @@ bla
 bmE
 boj
 bqx
-bsO
+bsN
 buQ
 bwR
-byR
+boj
 bAG
 bCv
 bEE
@@ -101043,17 +101153,17 @@ aRP
 bii
 bjQ
 blb
-bmF
-bok
-bqy
-bsP
-buR
-bwS
-byS
-bAH
-bCw
-bEF
-bGX
+bmE
+boj
+bqx
+bsO
+buQ
+bwR
+byR
+bAG
+cRM
+bEH
+bGV
 bED
 bKB
 bAG
@@ -101300,17 +101410,17 @@ aRP
 big
 bjR
 blc
-bmG
-bol
-bqz
-bsQ
-buS
-bwT
-byT
-bAI
-bCx
-bEG
-bGY
+bmF
+bok
+bqy
+bsP
+buR
+bwS
+byS
+bAH
+bCw
+bEF
+bGX
 bJf
 bKC
 bAG
@@ -101557,17 +101667,17 @@ aRP
 big
 bjR
 bld
-bmE
-boj
-bqA
-bsR
-buQ
-bwR
-byU
-bAG
-bCy
-bEH
-bGZ
+bmG
+bol
+bqz
+bsQ
+buS
+bwT
+byT
+bAI
+bCx
+bEG
+bGY
 bJg
 bKD
 bAG
@@ -101820,13 +101930,13 @@ bqA
 bsR
 buQ
 bwR
-byV
+byU
 bAG
-bCz
+bCy
 bEH
-bHa
+bGZ
 bJh
-bKE
+cRS
 bAG
 bOp
 bQf
@@ -102071,19 +102181,19 @@ bhr
 biw
 bjR
 bkT
-bmD
-bom
-bqB
-bsS
-buT
-bwU
-byW
+bmE
+boj
+bqA
+bsR
+buQ
+bwR
+byV
 bAG
-bCA
-bEI
-bHb
-bJi
-bKF
+cRN
+bEH
+bHa
+bJh
+bKE
 bAG
 bop
 bCF
@@ -102329,16 +102439,16 @@ bix
 bjT
 ble
 bmD
-bon
-bqC
-boj
-buU
-boj
-byP
+bom
+bqB
+bsS
+buT
+bwU
+byW
 bAG
-bCB
-bEJ
-bGV
+bCA
+bEI
+bHb
 bJj
 bKG
 bMs
@@ -102586,18 +102696,18 @@ biy
 bjU
 bkU
 bmD
-bmD
-bqD
-bmE
-buV
-bmE
-bmD
+bon
+bqC
+boj
+buU
+boj
+byP
 bAG
-bAG
-bEK
-bHc
-bJk
-bJk
+bCB
+bEJ
+bGV
+bED
+bED
 bAG
 bOr
 bQg
@@ -102842,20 +102952,20 @@ aRV
 big
 bjR
 blf
-bmH
-boo
-bqE
-bsT
-buW
-bor
-bor
-bAJ
-bCC
-bqF
-bsV
-bor
-bor
-bor
+bmD
+bmD
+bqD
+bmE
+buV
+bmE
+bmD
+bAG
+bAG
+bEK
+bHc
+bJk
+bJk
+bAG
 bor
 bsV
 bqF
@@ -103100,18 +103210,18 @@ biz
 bjR
 blg
 bmI
-bop
+bCC
+bqE
+bsT
+buW
+bor
+cRK
+bAJ
+bCC
 bqF
+bsV
 bor
-buX
-bwV
-bvb
-bvb
 bor
-bEL
-buX
-bvb
-bwV
 bor
 bor
 bsV
@@ -103359,19 +103469,19 @@ bkW
 bmJ
 boq
 bqG
-boq
+cRF
 buY
-bwW
-byX
+cRF
+cRF
 bAK
-boq
-bEM
+cRF
+bqG
 bHd
-byX
-bwW
-boq
-boq
-bQh
+bAK
+cRF
+cRF
+cRF
+bHd
 bqG
 boq
 bmJ
@@ -103616,19 +103726,19 @@ blh
 bmI
 bor
 bqF
-bor
+bwZ
 buZ
-bvd
-bvd
-bvd
-bor
+bvc
+cRL
+bwX
+bwZ
 bEN
-buZ
-bvd
-bvd
-bor
-bor
-bsV
+cRQ
+bwX
+bwZ
+cRL
+bwX
+cRU
 bqF
 bor
 bmI
@@ -103875,16 +103985,16 @@ bos
 bqH
 bsU
 bva
-bos
+cRH
 bsU
-bos
-bCD
+cRH
+cRH
 bEO
 bHe
-bos
-bos
-bos
-bos
+cRH
+cRH
+cRH
+cRT
 bHe
 bqH
 bTK
@@ -104131,15 +104241,15 @@ bmI
 bor
 bqF
 bsV
-bvb
-bvb
-byY
-bvb
 bor
-bEL
-buX
-bvb
-bvb
+bor
+bsV
+bor
+bor
+bqF
+bsV
+bor
+bor
 bor
 bor
 bsV
@@ -104388,15 +104498,15 @@ bmL
 bot
 bqF
 bsV
-bvc
-bwX
-byZ
-bwZ
+bvb
+bor
+bsV
+bor
 bor
 bEP
-bHf
-bvc
-bwZ
+bsV
+bor
+bor
 bor
 bor
 bsV
@@ -104644,16 +104754,16 @@ bkT
 bmH
 bor
 bqF
+cRG
+bvc
+cRI
 bsV
-bvd
-bvd
-buZ
-bvd
 bor
-bEN
-buZ
-bJl
-bvd
+cRO
+cRP
+cRR
+bor
+bor
 bMt
 bor
 bsV
@@ -104902,7 +105012,7 @@ bmH
 bou
 bqF
 bsV
-bor
+bvd
 bor
 bsV
 bor
@@ -106698,7 +106808,7 @@ big
 bjR
 bkT
 bmM
-box
+cRD
 bqK
 bsZ
 bvg
