@@ -5,7 +5,7 @@
  *		Ushanka
  *		Pumpkin head
  *		Kitty ears
- *
+ *		Cardborg disguise
  */
 
 /*
@@ -147,3 +147,24 @@
 	flags_inv = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 1 //luminosity when on
+
+
+/obj/item/clothing/head/cardborg
+	name = "cardborg helmet"
+	desc = "A helmet made out of a box."
+	icon_state = "cardborg_h"
+	item_state = "cardborg_h"
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
+	..()
+	if(ishuman(user) && slot == slot_head)
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
+			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
+			CB.disguise(user, src)
+
+/obj/item/clothing/head/cardborg/dropped(mob/living/user)
+	..()
+	user.remove_alt_appearance("standard_borg_disguise")

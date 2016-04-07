@@ -30,6 +30,9 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
+/turf/proc/Initalize_Atmos(times_fired)
+	CalculateAdjacentTurfs()
+
 /turf/Destroy()
 	visibilityChanged()
 	..()

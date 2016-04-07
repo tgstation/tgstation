@@ -18,6 +18,17 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+
+/atom/Destroy()
+	if(alternate_appearances)
+		for(var/aakey in alternate_appearances)
+			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
+			qdel(AA)
+		alternate_appearances = null
+
+	return ..()
+
+
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -357,6 +368,7 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
 
 //This is called just before maps and objects are initialized, use it to spawn other mobs/objects
 //effects at world start up without causing runtimes

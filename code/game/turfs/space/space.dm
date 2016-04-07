@@ -1,5 +1,6 @@
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
+	icon_state = "0"
 	name = "\proper space"
 	intact = 0
 
@@ -13,24 +14,26 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 
-var/global/list/turf/open/space/space_turfs = list() //i hate everything
 
 /turf/open/space/New()
 	update_icon()
 	air = space_gas
-	space_turfs += src
 
 /turf/open/space/Destroy()
 	return QDEL_HINT_LETMELIVE
 
+/turf/open/space/Initalize_Atmos(times_fired)
+	return
+
 /turf/open/space/ChangeTurf(path)
 	. = ..()
-	if(!istype(., /turf/open/space))
-		space_turfs -= src
 
 /turf/open/space/AfterChange()
 	..()
 	atmos_overlay_types.Cut()
+
+/turf/open/space/Assimilate_Air()
+	return
 
 /turf/open/space/proc/update_starlight()
 	if(config.starlight)
@@ -101,7 +104,7 @@ var/global/list/turf/open/space/space_turfs = list() //i hate everything
 				L.pulling.loc = T
 
 		//now we're on the new z_level, proceed the space drifting
-		sleep(0)//Let a diagonal move finish, if necessary
+		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
 /turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)

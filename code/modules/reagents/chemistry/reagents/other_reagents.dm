@@ -448,11 +448,11 @@
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 
 /datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
+		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 	return
 
 /datum/reagent/copper
@@ -472,11 +472,11 @@
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 
 /datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
+		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 	return
 
 /datum/reagent/hydrogen
@@ -849,11 +849,11 @@
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
+	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_CO2|SPAWN_20C, reac_volume/5)
+		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 	return
 
 

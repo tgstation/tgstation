@@ -1993,7 +1993,7 @@
 	},
 /area/shuttle/syndicate)
 "ev" = (
-/obj/machinery/suit_storage_unit/mining,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "brown"

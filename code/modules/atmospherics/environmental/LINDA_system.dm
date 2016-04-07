@@ -9,7 +9,7 @@
 		R = 1
 
 	for(var/obj/O in contents+T.contents)
-		var/turf/other = (O in contents ? T : src)
+		var/turf/other = (O.loc == src ? T : src)
 		if(!O.CanAtmosPass(other))
 			R = 1
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
@@ -107,60 +107,18 @@
         T.air_update_turf(1)
     air_update_turf(1)
 
-/atom/movable/proc/atmos_spawn_air(text, amount) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
+/atom/movable/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
 	var/turf/open/T = get_turf(src)
 	if(!istype(T))
 		return
-	T.atmos_spawn_air(text, amount)
+	T.atmos_spawn_air(text)
 
-var/const/SPAWN_HEAT = 1
-var/const/SPAWN_20C = 2
-var/const/SPAWN_TOXINS = 4
-var/const/SPAWN_OXYGEN = 8
-var/const/SPAWN_CO2 = 16
-var/const/SPAWN_NITROGEN = 32
-
-var/const/SPAWN_N2O = 64
-
-var/const/SPAWN_AIR = 256
-
-/turf/open/proc/atmos_spawn_air(flag, amount)
-	if(!text || !amount || !air)
+/turf/open/proc/atmos_spawn_air(text)
+	if(!text || !air)
 		return
 
 	var/datum/gas_mixture/G = new
-	var/list/new_gases = G.gases
-
-	if(flag & SPAWN_20C)
-		G.temperature = T20C
-
-	if(flag & SPAWN_HEAT)
-		G.temperature += 1000
-
-	if(flag & SPAWN_TOXINS)
-		G.assert_gas("plasma")
-		new_gases["plasma"][MOLES] += amount
-
-	if(flag & SPAWN_OXYGEN)
-		G.assert_gas("o2")
-		new_gases["o2"][MOLES] += amount
-
-	if(flag & SPAWN_CO2)
-		G.assert_gas("co2")
-		new_gases["co2"][MOLES] += amount
-
-	if(flag & SPAWN_NITROGEN)
-		G.assert_gas("n2")
-		new_gases["n2"][MOLES] += amount
-
-	if(flag & SPAWN_N2O)
-		G.assert_gas("n2o")
-		new_gases["n2o"][MOLES] += amount
-
-	if(flag & SPAWN_AIR)
-		G.assert_gases("o2","n2")
-		new_gases["o2"][MOLES] += MOLES_O2STANDARD * amount
-		new_gases["n2"][MOLES] += MOLES_N2STANDARD * amount
+	G.parse_gas_string(text)
 
 	air.merge(G)
 	SSair.add_to_active(src, 0)

@@ -63,6 +63,7 @@
 
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
+	var/force_stasis = FALSE
 
 	///////////TIME FOR SUBSPECIES
 
@@ -99,7 +100,7 @@
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
-		if(mood)
+		if(mood && !stat)
 			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	else
 		icon_state = icon_dead
@@ -169,7 +170,11 @@
 			else
 				stat(null, "You can evolve!")
 
-		stat(null,"Power Level: [powerlevel]")
+		if(stat == UNCONSCIOUS)
+			stat(null,"You are knocked out by high levels of CO2!")
+		else
+			stat(null,"Power Level: [powerlevel]")
+
 
 /mob/living/simple_animal/slime/adjustFireLoss(amount)
 	..(-abs(amount)) // Heals them
@@ -286,7 +291,7 @@
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user, src))
 					return 1
-	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
+	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
 		else
@@ -329,6 +334,8 @@
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
+		if (stat == UNCONSCIOUS) // Slime stasis
+			msg += "<span class='deadsay'>It appears to be alive but unresponsive.</span>\n"
 		if (src.getBruteLoss())
 			msg += "<span class='warning'>"
 			if (src.getBruteLoss() < 40)
@@ -338,7 +345,6 @@
 			msg += "</span>\n"
 
 		switch(powerlevel)
-
 			if(2 to 3)
 				msg += "It is flickering gently with a little electrical activity.\n"
 
@@ -356,8 +362,7 @@
 	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
-
-	if(stat == DEAD)
+	if(stat)
 		return
 
 	if(prob(80) && !client)
