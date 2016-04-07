@@ -303,7 +303,8 @@
 		return
 	if(wisp.loc == src)
 		user << "You release the wisp. It begins to bob around your head."
-		wisp.orbit(user, 20)
+		spawn()
+			wisp.orbit(user, 20)
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 	else
@@ -311,18 +312,28 @@
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
-				M.sight -= SEE_MOBS // This doesn't work
+				M.sight &= ~SEE_MOBS
 				M << "The wisp has returned to it's latern. Your vision returns to normal." //This works
-			wisp.stop_orbit() //This works
-		wisp.loc = src //This works
-		user << "You return the wisp to the latern."
-		icon_state = "lantern-blue"//This doesn't work
+
+			wisp.stop_orbit()
+			wisp.loc = src
+			user << "You return the wisp to the latern."
+			icon_state = "lantern-blue"
 
 /obj/item/device/wisp_lantern/New()
 	..()
 	var/obj/effect/wisp/W = new(src)
 	wisp = W
 	W.home = src
+
+/obj/item/device/wisp_lantern/Destroy()
+	if(wisp)
+		if(wisp.loc == src)
+			qdel(wisp)
+		else
+			wisp.home = null //stuck orbiting your head now
+	..()
+
 
 /obj/effect/wisp
 	name = "friendly wisp"
