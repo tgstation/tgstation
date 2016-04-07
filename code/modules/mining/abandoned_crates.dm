@@ -311,12 +311,12 @@
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
-				M.sight -= SEE_MOBS
-				M << "The wisp has returned to it's latern. Your vision returns to normal."
-			wisp.stop_orbit()
-		wisp.loc = src
+				M.sight -= SEE_MOBS // This doesn't work
+				M << "The wisp has returned to it's latern. Your vision returns to normal." //This works
+			wisp.stop_orbit() //This works
+		wisp.loc = src //This works
 		user << "You return the wisp to the latern."
-		icon_state = "lantern-blue"
+		icon_state = "lantern-blue"//This doesn't work
 
 /obj/item/device/wisp_lantern/New()
 	..()
