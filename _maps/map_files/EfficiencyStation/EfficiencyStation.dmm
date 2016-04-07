@@ -17941,7 +17941,7 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/wrench,
+/obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "aFf" = (
