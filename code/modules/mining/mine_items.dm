@@ -185,7 +185,7 @@
 
 /obj/item/weapon/survivalcapsule/attack_self()
 	if(used == FALSE)
-		src.loc.visible_message("The [src] begins to shake. Stand back!")
+		src.loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
 		used = TRUE
 		sleep(50)
 		var/turf/T = get_turf(src)
@@ -194,8 +194,12 @@
 			if(istype(turf, /turf/closed) && !istype(turf, /turf/closed/mineral))
 				clear = FALSE
 				break
+			for(var/obj/obj in turf)
+				if(obj.density)
+					clear = FALSE
+					break
 		if(!clear)
-			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
+			src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a 5x5 area!</span>")
 			used = FALSE
 			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
@@ -213,7 +217,7 @@
 	var/x_size = 5
 	var/y_size = 5
 	var/list/walltypes = list(/turf/closed/wall/shuttle/survival_pod)
-	var/floor_type = /turf/open/floor/plasteel/pod
+	var/floor_type = /turf/open/floor/pod
 	var/room
 
 	//Center the room/spawn it
@@ -238,7 +242,7 @@
 	//Chair bottom right
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
 	new /obj/structure/tubes(cur_turf)
-	var/obj/structure/chair/comfy/C = new (cur_turf)
+	var/obj/structure/chair/comfy/black/C = new (cur_turf)
 	C.dir = 8
 
 	//GPS computer top right
@@ -264,11 +268,11 @@
 	//Signs
 	cur_turf = locate(start_turf.x-2, start_turf.y, start_turf.z)
 	var/obj/structure/sign/mining/survival/S1 = new(cur_turf)
-	S1.dir = EAST
+	S1.dir = WEST
 
 	cur_turf = locate(start_turf.x+2, start_turf.y, start_turf.z)
 	var/obj/structure/sign/mining/survival/S2 = new(cur_turf)
-	S2.dir = WEST
+	S2.dir = EAST
 
 	cur_turf = locate(start_turf.x, start_turf.y+2, start_turf.z)
 	var/obj/structure/sign/mining/survival/S3 = new(cur_turf)
@@ -284,9 +288,11 @@
 	var/area/survivalpod/L = new /area/survivalpod
 
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
-	threshhold.ChangeTurf(/turf/open/floor/plasteel/pod)
-	threshhold.blocks_air = 1 //So the air doesn't leak out
-	threshhold.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
+	threshhold.ChangeTurf(/turf/open/floor/pod)
+	var/turf/open/floor/pod/doorturf = threshhold
+	doorturf.blocks_air = 1 //So the air doesn't leak out
+	doorturf.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
+	doorturf.air.copy_from_turf(doorturf)
 	var/area/ZZ = get_area(threshhold)
 	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold
@@ -294,14 +300,8 @@
 
 	var/list/turfs = room["floors"]
 	for(var/turf/open/floor/A in turfs)
-		SSair.remove_from_active(A)
-		A.oxygen = 21
-		A.temperature = 293.15
-		A.nitrogen = 82
-		A.carbon_dioxide = 0
-		A.toxins = 0
+		A.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
 		A.air.copy_from_turf(A)
-		SSair.add_to_active(A)
 		A.overlays.Cut()
 		var/area/Z = get_area(A)
 		if(!is_type_in_list(Z, blacklist))
@@ -311,7 +311,7 @@
 
 
 //Floor
-/turf/open/floor/plasteel/pod
+/turf/open/floor/pod
 	name = "pod floor"
 	icon_state = "podfloor"
 	icon_regular_floor = "podfloor"
@@ -365,6 +365,7 @@
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
+	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
 
@@ -389,22 +390,23 @@
 
 /turf/closed/wall/shuttle/survival_pod
 	name = "wall"
+	desc = "An easily-compressable wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock)
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock/survival_pod)
 
 //Signs
 
 /obj/structure/sign/mining
-	name = "nanotrasen mining corps"
+	name = "nanotrasen mining corps sign"
 	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
 
 /obj/structure/sign/mining/survival
-	name = "shelter"
+	name = "shelter sign"
 	desc = "A high visibility sign designating a safe shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival"
