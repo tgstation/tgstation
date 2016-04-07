@@ -54,8 +54,8 @@
 	category = list("Weapons")
 
 /datum/design/lasercannon
-	name = "Laser Cannon"
-	desc = "A heavy duty laser cannon."
+	name = "Accelerator Laser Cannon"
+	desc = "A heavy duty laser cannon. It does more damage the farther away the target is."
 	id = "lasercannon"
 	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE

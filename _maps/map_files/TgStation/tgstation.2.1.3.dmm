@@ -38094,10 +38094,7 @@
 /area/medical/sleeper)
 "bAt" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench{
-	pixel_x = 5;
-	pixel_y = -5
-	},
+/obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAu" = (
