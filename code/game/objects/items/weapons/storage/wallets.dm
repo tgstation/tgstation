@@ -57,22 +57,20 @@
 			refreshID()
 
 /obj/item/weapon/storage/wallet/update_icon()
-
+	icon_state = "wallet"
 	if(front_id)
 		switch(front_id.icon_state)
-			if("id")
-				icon_state = "walletid"
-				return
 			if("silver")
 				icon_state = "walletid_silver"
-				return
 			if("gold")
 				icon_state = "walletid_gold"
-				return
 			if("centcom")
 				icon_state = "walletid_centcom"
-				return
-	icon_state = "wallet"
+			if("orange")
+				icon_state = "walletid_orange"
+			else
+				icon_state = "walletid"
+
 
 
 /obj/item/weapon/storage/wallet/GetID()
