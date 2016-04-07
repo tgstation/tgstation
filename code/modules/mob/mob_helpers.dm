@@ -438,6 +438,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 
 /proc/IsAdminGhost(var/mob/user)
+	if(!user)		//Are they a mob? Auto interface updates call this with a null src
+		return
 	if(!user.client) // Do they have a client?
 		return
 	if(!isobserver(user)) // Are they a ghost?
