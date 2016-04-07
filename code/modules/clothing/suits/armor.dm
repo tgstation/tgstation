@@ -246,6 +246,58 @@
 			M.adjustFireLoss(25)
 			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		return 1
+
+//velocity 9 speed armour
+/obj/item/clothing/suit/armor/reactive/speed
+	name = "speed force insticts"
+	desc = "You move too fast to wear conventional armour, and it slows you down too much, your super speed and super instincts will help you instead"
+	icon_state = "speed"
+	item_state = "speed"
+	flags = ABSTRACT | NODROP
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/dodge_range = 1
+
+/obj/item/clothing/suit/armor/reactive/speed/attack_self(mob/user)
+	src.active = !( src.active )
+	if (src.active)
+		user << "<span class='notice'>Your [src] is active and ready to dodge projectiles.</span>"
+		src.icon_state = "speed"
+		src.item_state = "speed"
+	else
+		user << "<span class='notice'>Your [src] is now inactive.</span>"
+		src.icon_state = "speedoff"
+		src.item_state = "speedoff"
+
+/obj/item/clothing/suit/armor/reactive/speed/dropped(mob/user)
+	qdel(src)
+
+/obj/item/clothing/suit/armor/reactive/speed/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(!active)
+		return 0
+	if(prob(hit_reaction_chance))
+		var/mob/living/carbon/human/H = owner
+		if(world.time < reactivearmor_cooldown)
+			owner.visible_message("<span class='danger'>You're too tired too dodge projectiles!</span>")
+			return
+		owner.visible_message("<span class='danger'>[H] phases rapidly and out of the way of [attack_text]!</span>")
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(dodge_range, H))
+			if(T.density)
+				continue
+			if(T.x>world.maxx-dodge_range || T.x<dodge_range)
+				continue
+			if(T.y>world.maxy-dodge_range || T.y<dodge_range)
+				continue
+			turfs += T
+		if(!turfs.len)
+			turfs += pick(/turf in orange(dodge_range, H))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked))
+			return
+		H.forceMove(picked)
+		reactivearmor_cooldown = world.time + 20
+		return 1
+	return 0
 //All of the armor below is mostly unused
 
 

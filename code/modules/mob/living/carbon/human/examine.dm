@@ -246,6 +246,9 @@
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"
 
+	if(reagents.has_reagent("velocity9"))
+		msg += "[t_He] is vibrating at unnatural super speed!\n"
+
 	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
 		switch(drunkenness)
 			if(11 to 21)

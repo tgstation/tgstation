@@ -282,3 +282,19 @@
 	origin_tech = "combat=1"
 	needs_permit = 0
 
+/obj/item/weapon/icicle
+	name = "icicle"
+	desc = "A rough looking icicle. Looks like this can be used as a dagger or thrown like a knife."
+	icon_state = "icicle"
+	force = 10
+	throwforce = 15
+	throw_speed = 6
+	embedded_pain_multiplier = 2
+	w_class = 2
+	embed_chance = 65
+	embedded_fall_chance = 30
+	sharpness = IS_SHARP
+	attack_verb = list("stabbed", "shanked", "impaled")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/icicle/velocity
