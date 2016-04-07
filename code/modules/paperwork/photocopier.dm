@@ -265,13 +265,15 @@
 			do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
-	
+
 	else if(istype(O, /obj/item/documents))
 		if(copier_empty())
 			if(!user.drop_item())
 				return
 			doccopy = O
 			do_insertion(O)
+		else
+			user << "<span class='warning'>There is already something in [src]!</span>"
 
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
