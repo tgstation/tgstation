@@ -129,6 +129,11 @@
 	range = 5
 	splash = 1
 
+/obj/item/projectile/kinetic/mecha
+	damage = 13
+	range = 6
+	splash = 2
+
 /obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))

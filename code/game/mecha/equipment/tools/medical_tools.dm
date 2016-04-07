@@ -1,15 +1,11 @@
 // Sleeper, Medical Beam, and Syringe gun
 
 /obj/item/mecha_parts/mecha_equipment/medical
+	compatibleMechs = list(/obj/mecha/medical)
 
 /obj/item/mecha_parts/mecha_equipment/medical/New()
 	..()
 	SSobj.processing |= src
-
-
-/obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/mecha/medical/M)
-	if(..() && istype(M))
-		return 1
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/attach(obj/mecha/M)
