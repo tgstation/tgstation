@@ -27,7 +27,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	anchored =1
 	var/datum/powernet/powernet
 	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer."
+	desc = "A flexible, superconducting cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
