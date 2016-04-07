@@ -45408,7 +45408,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/closet,
 /obj/item/pipe{
 	dir = 4;
 	icon_state = "mixer";
@@ -45418,6 +45417,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/droneDispenser/preloaded,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bOx" = (
@@ -58492,15 +58492,6 @@
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
-"cpg" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/droneDispenser/preloaded,
-/turf/open/floor/plating,
-/area/maintenance/electrical)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -112142,7 +112133,7 @@ auJ
 awS
 auI
 awO
-cpg
+awO
 asB
 aCP
 aEj
