@@ -47,7 +47,7 @@
 			var/obj/item/weapon/melee/baton/cattleprod/S = new /obj/item/weapon/melee/baton/cattleprod
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
-			var/turf/floorloc = get_turf(user)
+			var/turf/open/floorloc = get_turf(user)
 			floorloc.contents += contents//drops the contents of the prod (the only content should be the crystal) at the user's feet
 			user.unEquip(I)
 			user.put_in_hands(S)

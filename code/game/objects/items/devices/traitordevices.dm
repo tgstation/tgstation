@@ -198,7 +198,7 @@ effective or pretty fucking useless.
 	if(user.get_item_by_slot(slot_belt) != src)
 		Deactivate()
 		return
-	var/turf/simulated/T = get_turf(src)
+	var/turf/T = get_turf(src)
 	if(on)
 		var/lumcount = T.get_lumcount()
 		if(lumcount > 3)

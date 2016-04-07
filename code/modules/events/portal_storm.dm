@@ -2,6 +2,7 @@
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
 	weight = 2
+	min_players = 15
 	earliest_start = 18000
 
 /datum/round_event/portal_storm/syndicate_shocktroop

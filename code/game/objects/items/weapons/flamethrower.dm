@@ -186,9 +186,7 @@
 		return
 	operating = 1
 	var/turf/previousturf = get_turf(src)
-	for(var/turf/simulated/T in turflist)
-		if(!T.air)
-			break
+	for(var/turf/T in turflist)
 		if(T == previousturf)
 			continue	//so we don't burn the tile we be standin on
 		if(!T.CanAtmosPass(previousturf))

@@ -170,7 +170,16 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/spider
 
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath
+	name = "goliath meat"
+	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
+	list_reagents = list("nutriment" = 3, "toxin" = 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
+	visible_message("\The [src] finishes cooking!")
+	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
+	SSobj.burning -= src
+	qdel(src)
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -200,6 +209,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/spider
 	name = "spider steak"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
+	name = "goliath steak"
+	desc = "A delicious, lava cooked steak."
+	burn_state = LAVA_PROOF
 
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////

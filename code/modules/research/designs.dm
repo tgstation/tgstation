@@ -357,6 +357,15 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipment")
 
+/datum/design/portaseeder
+	name = "Portable Seed Extractor"
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
+	build_type = PROTOLATHE
+	req_tech = list("biotech" = 2, "materials" = 2)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 100)
+	build_path = /obj/item/weapon/storage/bag/plants/portaseeder
+	category = list("Equipment")
+
 /datum/design/air_horn
 	name = "Air Horn"
 	desc = "Damn son, where'd you find this?"

@@ -153,7 +153,7 @@ Actual Adjacent procs :
 //simulated_only controls whether only simulated turfs are considered or not
 /turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
-	var/turf/simulated/T
+	var/turf/T
 
 	for(var/dir in cardinal)
 		T = get_step(src,dir)

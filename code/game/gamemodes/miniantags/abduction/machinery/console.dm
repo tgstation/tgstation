@@ -143,7 +143,7 @@
 		vest.SetDisguise(chosen)
 	return
 
-/obj/machinery/abductor/console/proc/SetDroppoint(turf/simulated/location,user)
+/obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
 	if(!istype(location))
 		user << "<span class='warning'>That place is not safe for the specimen.</span>"
 		return

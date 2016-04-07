@@ -39,6 +39,12 @@
 	if(name != real_name)
 		alt_name = " (died as [real_name])"
 
+
+	var/K
+
+	if(key)
+		K = src.key
+
 	message = src.say_quote(message, get_spans())
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
@@ -49,6 +55,8 @@
 		if(istype(M, /mob/new_player) && !adminoverride)
 			continue
 		if(M.stat != DEAD && !adminoverride)
+			continue
+		if(K && M.client && K in M.client.prefs.ignoring)
 			continue
 		if(istype(M, /mob/dead/observer))
 			M << "<a href=?src=\ref[M];follow=\ref[src]>(F)</a> [rendered]"

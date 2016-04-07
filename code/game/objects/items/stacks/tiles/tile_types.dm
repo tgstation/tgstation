@@ -28,7 +28,7 @@
 		if(WT.remove_fuel(0,user))
 
 			if(mineralType == "plasma")
-				atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 5)
+				atmos_spawn_air("plasma=5;TEMP=1000")
 				user.visible_message("<span class='warning'>[user.name] sets the plasma tiles on fire!</span>", \
 									"<span class='warning'>You set the plasma tiles on fire!</span>")
 				qdel(src)
@@ -69,7 +69,7 @@
 	desc = "A patch of grass like they often use on golf courses."
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/grass
+	turf_type = /turf/open/floor/grass
 	burn_state = FLAMMABLE
 
 
@@ -80,7 +80,7 @@
 	desc = "an easy to fit wood floor tile."
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/wood
+	turf_type = /turf/open/floor/wood
 	burn_state = FLAMMABLE
 
 
@@ -90,7 +90,7 @@
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
-	turf_type = /turf/simulated/floor/carpet
+	turf_type = /turf/open/floor/carpet
 	burn_state = FLAMMABLE
 
 
@@ -99,7 +99,7 @@
 	singular_name = "astral carpet"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
-	turf_type = /turf/simulated/floor/fakespace
+	turf_type = /turf/open/floor/fakespace
 	burn_state = FLAMMABLE
 
 /obj/item/stack/tile/fakespace/loaded
@@ -111,7 +111,7 @@
 	singular_name = "high-traction floor tile"
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
-	turf_type = /turf/simulated/floor/noslip
+	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
 
 /obj/item/stack/tile/noslip/thirty
@@ -128,7 +128,7 @@
 	throwforce = 10
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor/plasteel
+	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
 
 /obj/item/stack/tile/plasteel/cyborg

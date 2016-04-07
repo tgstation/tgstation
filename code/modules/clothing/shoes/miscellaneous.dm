@@ -59,7 +59,7 @@
 	icon_state = "galoshes_dry"
 
 /obj/item/clothing/shoes/galoshes/dry/step_action()
-	var/turf/simulated/t_loc = get_turf(src)
+	var/turf/open/t_loc = get_turf(src)
 	if(istype(t_loc) && t_loc.wet)
 		t_loc.MakeDry(TURF_WET_WATER)
 

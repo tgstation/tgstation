@@ -148,7 +148,7 @@ var/global/datum/controller/master/Master = new()
 				//this is a queue for any SS skipped or paused for tick reasons, to be ran first next tick
 				if (priority_queue.len)
 					priorityrunning = priority_queue.len
-					subsystemstorun = priority_queue | subsystems
+					subsystemstorun = priority_queue | subsystemstorun
 #endif
 				var/ran_subsystems = 0
 				while(subsystemstorun.len)
@@ -206,7 +206,10 @@ var/global/datum/controller/master/Master = new()
 								if(newwait < oldwait)
 									newwait = MC_AVERAGE(oldwait, newwait)
 								SS.wait = Clamp(newwait, SS.dwait_lower, SS.dwait_upper)
-								SS.next_fire = world.time + SS.wait
+								if(SS.paused)
+									SS.next_fire = world.time //run it next tick if we can, but don't priority queue it, as we are a dynamic wait subsystem
+								else //not paused, it ran all the way thru, normal wait time
+									SS.next_fire = world.time + SS.wait
 							else
 								if(!paused)
 									SS.next_fire += SS.wait

@@ -26,10 +26,10 @@
 #define EMPED		16		// temporary broken by EMP pulse
 
 //shuttle mode defines
-#define SHUTTLE_IDLE 0
-#define SHUTTLE_RECALL 1
-#define SHUTTLE_CALL 2
-#define SHUTTLE_DOCKED 3
-#define SHUTTLE_STRANDED 4
-#define SHUTTLE_ESCAPE 5
-#define SHUTTLE_ENDGAME 6
+#define SHUTTLE_IDLE		0
+#define SHUTTLE_RECALL		1
+#define SHUTTLE_CALL		2
+#define SHUTTLE_DOCKED		3
+#define SHUTTLE_STRANDED	4
+#define SHUTTLE_ESCAPE		5
+#define SHUTTLE_ENDGAME		6

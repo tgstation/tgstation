@@ -608,7 +608,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/movement_delay()
 	. = ..()
 	if(isturf(loc))
-		var/turf/T = loc
+		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
 		if("run")
@@ -629,7 +629,7 @@ Sorry Giacom. Please don't be mad :(
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (istype(M.loc, /turf) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -889,7 +889,7 @@ Sorry Giacom. Please don't be mad :(
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/space))
+	else if(istype(get_turf(src), /turf/open/space))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 
