@@ -3,7 +3,7 @@
 	icobase = 'icons/mob/human_races/r_plasmaman_sb.dmi'
 	deform = 'icons/mob/human_races/r_plasmaman_pb.dmi'  // TODO: Need deform.
 	language = "Clatter"
-	attack_verb = "punch"
+	attack_verb = "punches"
 	has_sweat_glands = 0
 
 	//flags = IS_WHITELISTED /*| HAS_LIPS | HAS_TAIL | NO_EAT | NO_BREATHE | NON_GENDERED*/ | NO_BLOOD

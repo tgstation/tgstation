@@ -847,7 +847,7 @@
 	sharpness = 0.8 //same as glass shards
 	w_class = 1
 	item_state = "beer"
-	attack_verb = list("stabbed", "slashed", "attacked")
+	attack_verb = list("stabs", "slashes", "attacks")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	starting_materials = list(MAT_GLASS = 500)
 	melt_temperature = MELTPOINT_GLASS

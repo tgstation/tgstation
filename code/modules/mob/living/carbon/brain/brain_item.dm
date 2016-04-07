@@ -10,7 +10,7 @@
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "biotech=3"
-	attack_verb = list("attacked", "slapped", "whacked")
+	attack_verb = list("attacks", "slaps", "whacks")
 	prosthetic_name = "cyberbrain"
 	prosthetic_icon = "brain-prosthetic"
 	organ_tag = "brain"

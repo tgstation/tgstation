@@ -34,7 +34,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	siemens_coefficient = 1.5 //Extra conducting
 	slot_flags = SLOT_BELT
 	item_state = "coil_red"
-	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+	attack_verb = list("whips", "lashes", "disciplines", "flogs")
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")

@@ -102,7 +102,7 @@
 		item_state = "telebaton_1"
 		w_class = 4
 		force = 15//quite robust
-		attack_verb = list("smacked", "struck", "slapped")
+		attack_verb = list("smacks", "strikes", "slaps")
 	else
 		user.visible_message("<span class='notice'>[user] collapses their telescopic baton.</span>",\
 		"<span class='notice'>You collapse the baton.</span>",\
@@ -115,7 +115,7 @@
 		item_state = initial(item_state)
 		w_class = initial(w_class)
 		force = initial(force) //not so robust now
-		attack_verb = list("hit", "punched")
+		attack_verb = list("hits", "punches")
 	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 

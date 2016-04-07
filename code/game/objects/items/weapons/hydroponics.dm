@@ -144,7 +144,7 @@
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
-	attack_verb = list("seared", "heated", "whacked", "steamed")*/
+	attack_verb = list("sears", "heats", "whacks", "steams")*/
 
 /*/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return

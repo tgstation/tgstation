@@ -7,7 +7,7 @@
 	w_class = 3.0
 	force = 2.5 //A big book, solely used for non-Chaplains trying to use it on people
 	flags = FPRINT
-	attack_verb = list("whacked", "slapped", "slammed")
+	attack_verb = list("whacks", "slaps", "slams", "forcefully blesses")
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
@@ -92,21 +92,21 @@
 	if(ishuman(M)) //We're forced to do two ishuman() code paragraphs because this one blocks the others
 		var/mob/living/carbon/human/H = M
 		if(istype(H.head, /obj/item/clothing/head/helmet) || istype(H.head, /obj/item/clothing/head/hardhat) || istype(H.head, /obj/item/clothing/head/fedora) || istype(H.head, /obj/item/clothing/head/culthood)) //Blessing blocked
-			user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [H]'s head with \the [src], but their headgear blocks the hit.</span>",
-			"<span class='warning'>You [pick(attack_verb)] [H]'s head with \the [src], but their headgear blocks the blessing. Blasphemy!</span>")
+			user.visible_message("<span class='warning'>[user] [pick(attack_verb)] [H]'s head with \the [src], but their headgear blocks the hit.</span>",
+			"<span class='warning'>You try to bless [H]'s head with \the [src], but their headgear blocks the blessing. Blasphemy!</span>")
 			return 1 //That's it. Helmets are very haram
 
 	if(M.stat == DEAD) //Our target is dead. RIP in peace
-		user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [M]'s lifeless body with \the [src].</span>",
-		"<span class='warning'>You [pick(attack_verb)] [M]'s lifeless body with \the [src], trying to conjure [deity_name]'s mercy on them.</span>")
+		user.visible_message("<span class='warning'>[user] [pick(attack_verb)] [M]'s lifeless body with \the [src].</span>",
+		"<span class='warning'>You bless [M]'s lifeless body with \the [src], trying to conjure [deity_name]'s mercy on them.</span>")
 		playsound(get_turf(src), "punch", 25, 1, -1)
 
 		//TODO : Way to bring people back from death if they are your followers
 		return 1 //Otherwise, there's so little we can do
 
 	//Our target is alive, prepare the blessing
-	user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [M]'s head with \the [src].</span>",
-	"<span class='warning'>You [pick(attack_verb)] [M]'s head with \the [src]. In the name of [deity_name], bless thee!</span>")
+	user.visible_message("<span class='warning'>[user] [pick(attack_verb)] [M]'s head with \the [src].</span>",
+	"<span class='warning'>You bless [M]'s head with \the [src]. In the name of [deity_name], bless thee!</span>")
 	playsound(get_turf(src), "punch", 25, 1, -1)
 
 	if(ishuman(M)) //Only humans can be vampires or cultists

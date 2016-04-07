@@ -192,13 +192,13 @@ emp_act
 		return 0
 
 	if(istype(I.attack_verb, /list) && I.attack_verb.len)
-		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with \the [I.name] by [user]!</span>", \
-			"<span class='userdanger'>You have been [pick(I.attack_verb)] in the [hit_area] with \the [I.name] by [user]!</span>")
+		visible_message("<span class='danger'>[user] [pick(I.attack_verb)] [src] in the [hit_area] with \the [I.name]!</span>", \
+			"<span class='userdanger'>[user] [pick(I.attack_verb)] you in the [hit_area] with \the [I.name]!</span>")
 	else
-		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with \the [I.name] by [user]!</span>", \
-			"<span class='userdanger'>You have been attacked in the [hit_area] with \the [I.name] by [user]!</span>")
+		visible_message("<span class='danger'>[user] attacks [src] in the [hit_area] with \the [I.name]!</span>", \
+			"<span class='userdanger'>[user] attacks you in the [hit_area] with \the [I.name]!</span>")
 
-	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened the hit to your [hit_area].")
+	var/armor = run_armor_check(affecting, "melee", "Your armor protects your [hit_area].", "Your armor softens the hit to your [hit_area].")
 	if(armor >= 2)	return 1 //We still connected
 	if(!I.force)	return 1
 

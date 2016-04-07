@@ -15,7 +15,7 @@
 	throw_speed = 1
 	layer = 3.9
 	pressure_resistance = 1
-	attack_verb = list("slapped")
+	attack_verb = list("slaps")
 	autoignition_temperature = AUTOIGNITION_PAPER
 	fire_fuel = 1
 

@@ -6,7 +6,7 @@
 	item_state = "utility"
 	flags = FPRINT
 	slot_flags = SLOT_BELT
-	attack_verb = list("whipped", "lashed", "disciplined")
+	attack_verb = list("whips", "lashes", "disciplines")
 
 
 /obj/item/weapon/storage/belt/proc/can_use()

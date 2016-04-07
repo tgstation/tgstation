@@ -113,7 +113,7 @@
 	icon_state = "knuckles"
 	item_state = "knuckles"
 
-	attack_verb = list("punched")
+	attack_verb = list("punches")
 	bonus_knockout = 2 //Slight knockout chance increase.
 	damage_added = 3 //Add 3 damage to unarmed attacks when worn
 	force = 5 //Deal 5 damage if hit with this item in hand

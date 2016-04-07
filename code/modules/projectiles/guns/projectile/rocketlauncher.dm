@@ -19,7 +19,7 @@
 	caliber = list("rpg" = 1)
 	origin_tech = "combat=4;materials=2;syndicate=2"
 	ammo_type = "/obj/item/ammo_casing/rocket_rpg"
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb = list("strikes", "hits", "bashes")
 	gun_flags = 0
 
 /obj/item/weapon/gun/projectile/rocketlauncher/isHandgun()

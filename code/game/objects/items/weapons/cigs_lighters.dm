@@ -29,7 +29,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	heat_production = 1000
 	w_class = 1.0
 	origin_tech = "materials=1"
-	attack_verb = list("burnt", "singed")
+	attack_verb = list("burns", "singes")
 	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/weapon/match/New()
@@ -153,7 +153,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	item_state = "cig"
 	w_class = 1
 	body_parts_covered = 0
-	attack_verb = list("burnt", "singed")
+	attack_verb = list("burns", "singes")
 	heat_production = 1000
 	light_color = LIGHT_COLOR_FIRE
 	var/lit = 0
@@ -458,7 +458,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	overlay_on = "bluntlit"
 	type_butt = /obj/item/weapon/cigbutt/bluntbutt
 	item_state = "blunt"
-	attack_verb = list("burnt", "singed", "blunted")
+	attack_verb = list("burns", "singes", "blunts")
 	smoketime = 420
 	chem_volume = 50 //It's a fat blunt, a really fat blunt
 
@@ -599,7 +599,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	var/fueltime
 	heat_production = 1500
 	slot_flags = SLOT_BELT
-	attack_verb = list("burnt", "singed")
+	attack_verb = list("burns", "singes")
 	light_color = LIGHT_COLOR_FIRE
 	var/lit = 0
 

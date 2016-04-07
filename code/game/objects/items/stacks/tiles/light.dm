@@ -27,7 +27,7 @@ var/global/list/lightfloor_colors = list(
 	flags = FPRINT
 	siemens_coefficient = 1
 	max_amount = 60
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
+	attack_verb = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 
 	material = "glass"
 

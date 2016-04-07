@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- spellcheck: "When you attack or are attacked, the attack message is now always present tense. Please make issue reports if you find any that are still past tense (that aren't admin logs)."

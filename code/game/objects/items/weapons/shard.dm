@@ -17,7 +17,7 @@
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
 	siemens_coefficient = 0 //no conduct
-	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+	attack_verb = list("stabs", "slashes", "slices", "cuts")
 	var/glass = /obj/item/stack/sheet/glass/glass
 
 /obj/item/weapon/shard/New()

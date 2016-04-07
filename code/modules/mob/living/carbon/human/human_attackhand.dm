@@ -70,12 +70,12 @@
 	M.delayNextAttack(20) //Kicks are slow
 
 	if((src == M) || ((M_CLUMSY in M.mutations) && prob(20))) //Kicking yourself (or being clumsy) = stun
-		M.visible_message("<span class='notice'>\The [M] tripped while attempting to kick \the [src]!</span>", "<span class='userdanger'>While attempting to kick \the [src], you tripped and fell!</span>")
+		M.visible_message("<span class='notice'>\The [M] trips while attempting to kick \the [src]!</span>", "<span class='userdanger'>While attempting to kick \the [src], you trip and fall!</span>")
 		M.Weaken(rand(1,10))
 		return
 
 	var/stomping = 0
-	var/attack_verb = "kicked"
+	var/attack_verb = "kicks"
 
 	if(lying && (M.size >= size)) //On the ground, the kicker is bigger than/equal size of the victim = stomp
 		stomping = 1
@@ -87,15 +87,15 @@
 	if(stomping) //Stomps = more damage and armor bypassing
 		armor_modifier = 0.5
 		damage += rand(0,7)
-		attack_verb = "stomped on"
+		attack_verb = "stomps on"
 	else if(M.reagents && M.reagents.has_reagent("gyro"))
 		damage += rand(0,4)
 		knockout += rand(0,3)
-		attack_verb = "roundhouse kicked"
+		attack_verb = "roundhouse kicks"
 
 	if(!damage)
 		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		visible_message("<span class='danger'>\The [M] has attempted to kick \the [src]!</span>")
+		visible_message("<span class='danger'>\The [M] attempts to kick \the [src]!</span>")
 		return 0
 
 	if(M_HULK in M.mutations)
@@ -111,7 +111,7 @@
 		damage += rand(1,6)
 
 	playsound(loc, "punch", 30, 1, -1)
-	visible_message("<span class='danger'>[M] has [attack_verb] \the [src]!</span>", "<span class='userdanger'>[M] [attack_verb] you!</span>")
+	visible_message("<span class='danger'>[M] [attack_verb] \the [src]!</span>", "<span class='userdanger'>[M] [attack_verb] you!</span>")
 
 	if(M.size != size) //The bigger the kicker, the more damage
 		damage = max(damage + (rand(1,5) * (1 + M.size - size)), 0)
@@ -126,7 +126,7 @@
 			damage = max(0, damage - rand(1,10))
 
 	if(knockout >= 7 && prob(33))
-		visible_message("<span class='danger'>[M] has weakened [src]!</span>")
+		visible_message("<span class='danger'>[M] weakens [src]!</span>")
 		apply_effect(3, WEAKEN, armorblock)
 
 	apply_damage(damage, BRUTE, affecting)
@@ -144,13 +144,13 @@
 				var/throw_strength = 3 * M.get_strength()
 				throw_at(T, throw_strength, 1)
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='red'>[attack_verb] [src.name] ([src.ckey]) for [damage] damage</font>")
-	src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [attack_verb] by [M.name] ([M.ckey]) for [damage] damage</font>")
+	M.attack_log += text("\[[time_stamp()]\] <font color='red'>Kicked [src.name] ([src.ckey]) for [damage] damage</font>")
+	src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been kicked by [M.name] ([M.ckey]) for [damage] damage</font>")
 	if(!iscarbon(M))
 		LAssailant = null
 	else
 		LAssailant = M
-	log_attack("[M.name] ([M.ckey]) bitten by [src.name] ([src.ckey])")
+	log_attack("[M.name] ([M.ckey]) kicked by [src.name] ([src.ckey])")
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
 	//M.delayNextAttack(10)
@@ -168,7 +168,7 @@
 	..()
 
 	if((M != src) && check_shields(0, M.name))
-		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
+		visible_message("<span class='danger'>[M] attempts to touch [src]!</span>")
 		return 0
 
 
@@ -178,7 +178,7 @@
 			if(M.a_intent == I_HURT)//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
-					visible_message("<span class='danger'>[src] has been touched with the stun gloves by [M]!</span>")
+					visible_message("<span class='danger'>[M] touches [src] with the stun gloves!</span>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 					if(!iscarbon(M))
@@ -201,7 +201,7 @@
 			var/damage = rand(0, 9)
 			if(!damage)
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
+				visible_message("<span class='danger'>[M] attempts to punch [src]!</span>")
 				return 0
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
@@ -210,11 +210,11 @@
 
 			playsound(loc, "punch", 25, 1, -1)
 
-			visible_message("<span class='danger'>[M] has punched [src]!</span>")
+			visible_message("<span class='danger'>[M] punches [src]!</span>")
 
 			apply_damage(damage, HALLOSS, affecting, armor_block)
 			if(damage >= 9)
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
+				visible_message("<span class='danger'>[M] weakens [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
 
 			return
@@ -266,29 +266,29 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
+			visible_message("<span class='warning'>[M] grabs [src] passively!</span>")
 			return 1
 
 		if(I_HURT)
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb]ed [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb]ed by [M.name] ([M.ckey])</font>")
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[M.species.attack_verb != "punches" ? "Slashed" : "Punched"] [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [M.species.attack_verb == "slashes" ? "slashed" : "punched"] by [M.name] ([M.ckey])</font>")
 			if(!iscarbon(M))
 				LAssailant = null
 			else
 				LAssailant = M
 
-			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb]ed [src.name] ([src.ckey])")
+			log_attack("[M.name] ([M.ckey]) [M.species.attack_verb] [src.name] ([src.ckey])")
 
 
 			var/damage = rand(0, M.species.max_hurt_damage)//BS12 EDIT // edited again by Iamgoofball to fix species attacks
 
 			if(!damage)
-				if(M.species.attack_verb == "punch")
+				if(M.species.attack_verb == "punches")
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				else
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 
-				visible_message("<span class='danger'>[M] has attempted to [M.species.attack_verb] [src]!</span>")
+				visible_message("<span class='danger'>[M] [M.species.attack_verb] towards [src], but misses!</span>")
 				return 0
 
 
@@ -306,12 +306,12 @@
 				damage += G.damage_added //Increase damage by the gloves' damage modifier
 				knockout += G.bonus_knockout //Increase knockout chance by the gloves' knockout modifier
 
-			if(M.species.attack_verb == "punch")
+			if(M.species.attack_verb == "punches")
 				playsound(loc, "punch", 25, 1, -1)
 			else
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 
-			visible_message("<span class='danger'>[M] has [M.species.attack_verb]ed [src]!</span>")
+			visible_message("<span class='danger'>[M] [M.species.attack_verb] [src]!</span>")
 
 			if((knockout >= M.species.max_hurt_damage) && prob(50))
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>")

@@ -43,7 +43,7 @@
 	var/surgery_speed = 1 //When this item is used as a surgery tool, multiply the delay of the surgery step by this much.
 	var/nonplant_seed_type
 
-	var/list/attack_verb // used in attack() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	var/list/attack_verb // used in attack() to say how something was attacked "[x] [z.attack_verb] [y] with [z]". Present tense.
 
 
 
@@ -758,13 +758,13 @@
 
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
-			to_chat(M, "<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
-			to_chat(user, "<span class='attack'>You stab [M] in the eye with [src]!</span>")
+				O.show_message("<span class='danger'>[user] stabs [M] in the eye with \the [src].</span>", 1)
+			to_chat(M, "<span class='userdanger'>[user] stabs you in the eye with \the [src]!</span>")
+			to_chat(user, "<span class='attack'>You stab [M] in the eye with \the [src]!</span>")
 		else
 			user.visible_message( \
-				"<span class='attack'>[user] has stabbed themself with [src]!</span>", \
-				"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
+				"<span class='attack'>[user] stabs themself with \the [src]!</span>", \
+				"<span class='userdanger'>You stab yourself in the eyes with \the [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)

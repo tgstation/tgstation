@@ -284,9 +284,9 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.delayNextAttack(10)
 	if(W.attack_verb && W.attack_verb.len)
-		visible_message("<span class='warning'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
+		visible_message("<span class='warning'><B>[user] [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else
-		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
+		visible_message("<span class='warning'><B>[user] attacks \the [src] with \the [W]!</span>")
 
 	var/damage = W.force / 4.0
 
@@ -475,9 +475,9 @@ Alien plants should do something if theres a lot of poison
 		return
 	user.delayNextAttack(10)
 	if(W.attack_verb && W.attack_verb.len)
-		src.visible_message("<span class='warning'><B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
+		src.visible_message("<span class='warning'><B>[user] [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else
-		src.visible_message("<span class='warning'><B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
+		src.visible_message("<span class='warning'><B>[user] attacks \the [src] with \the [W]!</span>")
 	var/damage = W.force / 4.0
 
 	if(istype(W, /obj/item/weapon/weldingtool))

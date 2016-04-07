@@ -59,7 +59,7 @@
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=1"
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb = list("bashes", "batters", "bludgeons", "whacks")
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
@@ -110,7 +110,7 @@
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
-	attack_verb = list("seared", "heated", "whacked", "steamed")
+	attack_verb = list("sears", "heats", "whacks", "steams")
 
 /obj/item/weapon/grown/novaflower/New()
 	..()
@@ -190,7 +190,7 @@
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=3"
-	attack_verb = list("stung")
+	attack_verb = list("stings, pricks")
 
 /obj/item/weapon/grown/deathnettle/New()
 	..()

@@ -185,7 +185,7 @@
 	throw_range = 5
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	flags = FPRINT
-	attack_verb = list("bashed", "whacked", "educated")
+	attack_verb = list("bashes", "whacks", "educates")
 
 	autoignition_temperature = AUTOIGNITION_PAPER
 	fire_fuel = 3

@@ -11,7 +11,7 @@
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=1;engineering=1;combat=1"
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb = list("strikes", "hits", "bashes")
 	mech_flags = MECH_SCAN_ILLEGAL
 	var/damage_multiplier = 2	//To allow easy modifications to the damage this weapon deals. At a value of 1, a metal rod fired with 10u of fuel deals 16 damage.
 	var/fuel_level = 0

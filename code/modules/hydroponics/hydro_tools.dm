@@ -313,7 +313,7 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
-	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	attack_verb = list("slashes", "slices", "cuts", "claws")
 
 
 // *************************************
@@ -411,7 +411,7 @@
 	throw_range = 4
 	sharpness = 1.2
 	origin_tech = "materials=2;combat=1"
-	attack_verb = list("chopped", "torn", "cut")
+	attack_verb = list("chops", "tears", "cuts")
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -423,7 +423,7 @@
 	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "unathiknife"
-	attack_verb = list("ripped", "torn", "cut")
+	attack_verb = list("rips", "tears", "cuts")
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
@@ -438,7 +438,7 @@
 	flags = FPRINT
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
-	attack_verb = list("chopped", "sliced", "cut", "reaped")
+	attack_verb = list("chops", "slices", "cuts", "reaps")
 
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return

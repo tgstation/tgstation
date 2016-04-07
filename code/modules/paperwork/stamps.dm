@@ -13,7 +13,7 @@
 	w_type = RECYK_MISC
 	_color = "cargo"
 	pressure_resistance = 2
-	attack_verb = list("stamped")
+	attack_verb = list("stamps")
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"

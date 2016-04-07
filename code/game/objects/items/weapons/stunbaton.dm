@@ -9,7 +9,7 @@
 	throwforce = 7
 	w_class = 3
 	origin_tech = "combat=2"
-	attack_verb = list("beaten")
+	attack_verb = list("beats")
 	var/stunforce = 10
 	var/status = 0
 	var/obj/item/weapon/cell/bcell = null

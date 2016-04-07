@@ -9,7 +9,7 @@
 	throw_speed = 1
 	layer = 3.9
 	pressure_resistance = 1
-	attack_verb = list("slapped")
+	attack_verb = list("slaps")
 
 	autoignition_temperature = AUTOIGNITION_PAPER
 	fire_fuel = 1
@@ -90,7 +90,7 @@
 /obj/item/weapon/p_folded/plane
 	name = "paper airplane"
 	icon_state = "plane_east"
-	attack_verb = list("stabbed", "jabbed")
+	attack_verb = list("stabs", "jabs")
 
 	desc = "Not terribly intimidating, but just might put someone's eye out."
 	throw_range = 12

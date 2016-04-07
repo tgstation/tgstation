@@ -66,7 +66,7 @@
 	sharpness = 1.2
 	force = 10
 	slot_flags = SLOT_BACK
-	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb = list("attacks", "chops", "cleaves", "tears", "cuts")
 	flags = FPRINT | TWOHANDABLE
 
 /obj/item/weapon/fireaxe/update_wield(mob/user)
@@ -112,7 +112,7 @@
 	w_class = 2.0
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=3;syndicate=4"
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 /obj/item/weapon/dualsaber/update_wield(mob/user)
 	..()
@@ -157,7 +157,7 @@
 	w_class = 2.0
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=3;syndicate=4"
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 /obj/item/weapon/dualsaber/bananabunch/update_wield(mob/user)
 	..()
@@ -243,7 +243,7 @@
 	throwforce = 15
 	flags = TWOHANDABLE
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	attack_verb = list("attacks", "pokes", "jabs", "tears", "gores")
 
 	var/base_force = 10
 

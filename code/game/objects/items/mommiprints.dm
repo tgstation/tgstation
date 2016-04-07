@@ -3,7 +3,7 @@
 	desc = "Blueprints of the station, designed for the passive aggressive spider bots aboard."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
-	attack_verb = list("attacked", "bapped", "hit")
+	attack_verb = list("attacks", "baps", "hits")
 
 	can_rename_areas = list(AREA_BLUEPRINTS)
 

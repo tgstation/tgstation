@@ -27,9 +27,9 @@
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.delayNextAttack(8)
 	if(W.attack_verb && W.attack_verb.len)
-		visible_message("<span class='warning'><B>\The [src] [gender == PLURAL ? "have" : "has"] been [pick(W.attack_verb)] with \the [W][(user ? " by [user]" : "")].</span>")
+		visible_message("<span class='warning'><B>[user] [pick(W.attack_verb)] \the [src] with \the [W].</span>")
 	else
-		visible_message("<span class='warning'><B>\The [src] [gender == PLURAL ? "have" : "has"] been attacked with \the [W][(user ? " by [user]" : "")]</span>")
+		visible_message("<span class='warning'><B>[user] attacks \the [src] with \the [W]</span>")
 
 	var/damage = (W.is_hot() || W.is_sharp()) ? (W.force) : (W.force / SPIDERWEB_BRUTE_DIVISOR)
 

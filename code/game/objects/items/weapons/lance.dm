@@ -11,10 +11,10 @@
 	force = 3
 	w_class = 8
 
-	attack_verb = list("bludgeoned", "whacked")
+	attack_verb = list("bludgeons", "whacks")
 
-	var/list/default_attack_verbs = list("bludgeoned", "whacked")
-	var/list/couch_attack_verbs = list("impaled", "stabbed")
+	var/list/default_attack_verbs = list("bludgeons", "whacks")
+	var/list/couch_attack_verbs = list("impales", "stabs")
 
 	slowdown = 3.0 //Very heavy
 	flags = SLOWDOWN_WHEN_CARRIED

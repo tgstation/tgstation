@@ -11,7 +11,7 @@
 	throwforce = 7
 	w_class = 3
 	origin_tech = "combat=4"
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	attack_verb = list("flogs", "whips", "lashes", "disciplines")
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -25,7 +25,7 @@
 	hitsound = 'sound/weapons/heavysmash.ogg'
 	w_class = 4
 	origin_tech = "combat=4"
-	attack_verb = list("bashed", "smashed", "pulverized")
+	attack_verb = list("bashes", "smashes", "pulverizes")
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
 
 	throwforce = 5

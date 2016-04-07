@@ -10,7 +10,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 2
-	attack_verb = list("called", "rang")
+	attack_verb = list("calls", "rings", "dials")
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
@@ -123,7 +123,7 @@
 	starting_materials = list(MAT_IRON = 50)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_STEEL
-	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
+	attack_verb = list("bludgeons", "whacks", "disciplines", "thrashes")
 
 /obj/item/weapon/disk
 	name = "disk"
@@ -182,7 +182,7 @@
 	w_class = 2
 	w_type = RECYK_METAL
 	origin_tech = "materials=1"
-	attack_verb = list("lashed", "bludgeoned", "whipped")
+	attack_verb = list("lashes", "bludgeons", "whips")
 	force = 4
 	breakouttime = 50 //10 seconds
 	throw_speed = 1
@@ -500,7 +500,7 @@
 	w_class = 3
 	w_type = RECYK_METAL
 	origin_tech = "combat=5"
-	attack_verb = list("rammed", "bludgeoned")
+	attack_verb = list("rams", "bludgeons")
 	force = 15
 	throw_speed = 1
 	throw_range = 3
@@ -516,7 +516,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT
-	attack_verb = list("warned", "cautioned", "smashed")
+	attack_verb = list("warns", "cautions", "smashes")
 
 /obj/item/weapon/caution/proximity_sign
 	var/timing = 0
@@ -639,7 +639,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT
-	attack_verb = list("bludgeoned", "whacked", "disciplined")
+	attack_verb = list("bludgeons", "whacks", "disciplines")
 
 /obj/item/weapon/staff/broom
 	name = "broom"
@@ -653,7 +653,7 @@
 	..()
 	item_state = "broom[wielded ? 1 : 0]"
 	force = wielded ? 5 : 3
-	attack_verb = wielded ? list("rammed into", "charged at") : list("bludgeoned", "whacked", "cleaned")
+	attack_verb = wielded ? list("rams into", "charges at") : list("bludgeons", "whacks", "cleans", "dusts")
 	if(user)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
@@ -719,7 +719,7 @@
 	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT
 	siemens_coefficient = 1
-	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb = list("slams", "bashes", "batters", "bludgeons", "thrashes", "whacks")
 
 /obj/item/weapon/table_parts/cultify()
 	new /obj/item/weapon/table_parts/wood(loc)
@@ -760,7 +760,7 @@
 	starting_materials = list(MAT_IRON = 70)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
-	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
+	attack_verb = list("whips", "lashes", "disciplines", "tickles")
 
 /obj/item/weapon/wire/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")

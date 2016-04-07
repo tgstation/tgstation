@@ -12,7 +12,7 @@
 	throw_range = 20
 	starting_materials = list(MAT_IRON = 1875)
 	max_amount = 60
-	attack_verb = list("hit", "bludgeoned", "whacked")
+	attack_verb = list("hits", "bludgeons", "whacks")
 	w_type=RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 

@@ -19,7 +19,7 @@
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
-	attack_verb = list("attacked", "bapped", "hit")
+	attack_verb = list("attacks", "baps", "hits")
 
 	var/can_create_areas_in = list(AREA_SPACE)
 	var/can_rename_areas = list(AREA_STATION, AREA_BLUEPRINTS)

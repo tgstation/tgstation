@@ -7,7 +7,7 @@
 	max_amount = 50
 	throw_speed = 3
 	throw_range = 3
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
+	attack_verb = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	perunit=3750
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 

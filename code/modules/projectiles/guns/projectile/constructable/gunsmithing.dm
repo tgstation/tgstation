@@ -647,7 +647,7 @@
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1;engineering=1"
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb = list("bashes", "batters", "bludgeons", "whacks")
 	var/metal_assembly = 0
 
 /obj/item/weapon/wrench_wired/proc/update_wired_wrench_assembly()

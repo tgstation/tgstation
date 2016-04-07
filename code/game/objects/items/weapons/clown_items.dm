@@ -91,7 +91,7 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 15
-	attack_verb = list("HONKED")
+	attack_verb = list("HONKS")
 	hitsound = 'sound/items/bikehorn.ogg'
 	var/honk_delay = 20
 	var/last_honk_time = 0
@@ -139,7 +139,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
-	attack_verb = list("quacked")
+	attack_verb = list("quacks")
 	hitsound = 'sound/items/quack.ogg'
 	honk_delay = 10
 

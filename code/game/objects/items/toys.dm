@@ -136,7 +136,7 @@
 	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 10)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_PLASTIC
-	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
+	attack_verb = list("strikes", "pistol whips", "hits", "bashes")
 	var/bullets = 7.0
 
 /obj/item/toy/gun/examine(mob/user)
@@ -214,7 +214,7 @@
 	item_state = "crossbow"
 	flags = FPRINT
 	w_class = 2.0
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb = list("attacks", "strikes", "hits")
 	var/bullets = 5
 
 /obj/item/toy/crossbow/examine(mob/user)
@@ -335,7 +335,7 @@
 	var/active = 0.0
 	w_class = 2.0
 	flags = FPRINT
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb = list("attacks", "strikes", "hits")
 
 	attack_self(mob/user as mob)
 		src.active = !( src.active )
@@ -366,7 +366,7 @@
 	force = 5
 	throwforce = 5
 	w_class = 3
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+	attack_verb = list("attacks", "slashes", "stabs", "slices")
 
 /*
  * Clock bomb
@@ -405,7 +405,7 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
 	w_class = 1.0
-	attack_verb = list("attacked", "coloured")
+	attack_verb = list("attacks", "colours", "colors")//teehee
 	var/colour = "#A10808" //RGB
 	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses

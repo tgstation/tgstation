@@ -292,7 +292,7 @@
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1;engineering=2"
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb = list("bashes", "batters", "bludgeons", "whacks")
 	var/current_blunt = null
 	var/blunt_name = null
 	var/is_lit = 0

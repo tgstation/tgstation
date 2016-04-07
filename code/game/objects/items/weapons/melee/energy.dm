@@ -30,7 +30,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "combat=3"
-	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb = list("attacks", "chops", "cleaves", "tears", "cuts")
 
 
 	suicide_act(mob/user)
@@ -50,7 +50,7 @@
 	w_class = 2.0
 	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 
 /obj/item/weapon/melee/energy/sword/IsShield()
@@ -127,7 +127,7 @@
 	w_class = 2.0
 	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 
 /obj/item/weapon/melee/energy/sword/bsword/IsShield()

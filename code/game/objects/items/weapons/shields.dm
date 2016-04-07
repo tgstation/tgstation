@@ -17,7 +17,7 @@
 	starting_materials = list(MAT_IRON = 1000, MAT_GLASS = 7500)
 	melt_temperature = MELTPOINT_GLASS
 	origin_tech = "materials=2"
-	attack_verb = list("shoved", "bashed")
+	attack_verb = list("shoves", "bashes")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 /obj/item/weapon/shield/riot/suicide_act(mob/user)
@@ -95,7 +95,7 @@
 	throw_range = 4
 	w_class = 1
 	origin_tech = "materials=4;magnets=3;syndicate=4"
-	attack_verb = list("shoved", "bashed")
+	attack_verb = list("shoves", "bashes")
 	var/active = 0
 
 /obj/item/weapon/shield/energy/suicide_act(mob/user)

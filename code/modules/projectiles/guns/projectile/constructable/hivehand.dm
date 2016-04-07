@@ -18,7 +18,7 @@
 	cant_drop = 1
 	sharpness = 1
 	hitsound = "sound/weapons/bloodyslice.ogg"
-	attack_verb = list("clawed", "rent", "slashed")
+	attack_verb = list("claws", "rends", "slashes")
 	conventional_firearm = 0
 	var/shots_remaining = 0
 	var/has_shot = 0

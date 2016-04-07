@@ -12,7 +12,7 @@
 	force = 15.0
 	w_class = 2
 	w_type = RECYK_ELECTRONIC
-	attack_verb = list("drilled")
+	attack_verb = list("drills")
 	hitsound = 'sound/weapons/circsawhit.ogg'
 
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user as mob)

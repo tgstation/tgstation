@@ -25,7 +25,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "materials=1"
-	attack_verb = list("attacked", "stabbed", "poked")
+	attack_verb = list("attacks", "stabs", "pokes")
 
 /obj/item/weapon/kitchen/utensil/New()
 	. = ..()
@@ -40,7 +40,7 @@
 	name = "spoon"
 	desc = "SPOON!"
 	icon_state = "spoon"
-	attack_verb = list("attacked", "poked")
+	attack_verb = list("attacks", "pokes", "hits")
 	melt_temperature = MELTPOINT_STEEL
 
 /obj/item/weapon/kitchen/utensil/spoon/plastic
@@ -185,7 +185,7 @@
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1"
-	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 /obj/item/weapon/kitchen/utensil/knife/large/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -237,7 +237,7 @@
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1"
-	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("cleaves", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver
 	name = "meat cleaver"
@@ -268,7 +268,7 @@
 	throw_range = 7
 	w_class = 3.0
 	autoignition_temperature=AUTOIGNITION_WOOD
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
+	attack_verb = list("bashes", "batters", "bludgeons", "thrashes", "whacks") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((M_CLUMSY in user.mutations) && prob(50))

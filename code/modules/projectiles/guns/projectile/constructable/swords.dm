@@ -12,7 +12,7 @@
 	force = 15
 	throwforce = 10
 	sharpness = 1.2
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 	var/obj/item/weapon/reagent_containers/hypospray/hypo = null
 
 	suicide_act(mob/user)
@@ -218,7 +218,7 @@
 	name = "executioner's sword"
 	desc = "A huge sword. The top third of the blade seems weaker than the rest of it."
 	icon_state = "executioners_sword_assembly"
-	attack_verb = list("smacked")
+	attack_verb = list("smacks")
 	force = 5
 	sharpness = 0
 	hitsound = "sound/weapons/smash.ogg"
@@ -251,7 +251,7 @@
 				force = 25
 				sharpness = 2.0
 				slot_flags = SLOT_BACK
-				attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cleaved")
+				attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cleaves")
 				complete = 1
 				if (istype(loc,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = loc
