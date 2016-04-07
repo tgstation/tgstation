@@ -456,7 +456,7 @@ turf/unsimulated/mineral/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_l
 				R.amount = rand(5,25)
 
 			if(2)
-				var/obj/item/stack/tile/R = new(src)
+				var/obj/item/stack/tile/plasteel/R = new(src)
 				R.amount = rand(1,5)
 
 			if(3)
