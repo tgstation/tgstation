@@ -138,8 +138,6 @@
 
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return !opacity
 	return !density
 
 
