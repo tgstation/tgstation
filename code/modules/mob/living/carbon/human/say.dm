@@ -48,7 +48,7 @@
 	return real_name
 
 /mob/living/carbon/human/IsVocal()
-	if(!getorganslot("lungs"))
+	if(!getorganslot("lungs") || !getorganslot("tongue"))
 		return 0
 	if(mind)
 		return !mind.miming

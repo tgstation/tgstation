@@ -41,7 +41,7 @@
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
-
+	var/list/mutant_organs = list(/obj/item/organ/internal/tongue)		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
 	var/brutemod = 1	// multiplier for brute damage
@@ -127,6 +127,10 @@
 			C.unEquip(thing)
 	if(exotic_blood)
 		C.reagents.add_reagent(exotic_blood, 80)
+	for(var/path in mutant_organs)
+		var/obj/item/organ/internal/I = new path()
+		I.owner = C
+		C.internal_organs += I
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species && C.dna.species.exotic_blood)
@@ -626,6 +630,9 @@
 	return 0
 
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
+	var/obj/item/organ/internal/tongue/T = H.getorganslot("tongue")
+	if(T)
+		message = T.TongueSpeech(message)
 	return message
 
 //return a list of spans or an empty list
