@@ -113,9 +113,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		updateallghostimages()
 	return ..()
 
+/mob/dead/observer/ratvar_act()
+	var/old_color = color
+	color = rgb(75, 53, 0) //A nice brassy yellow
+	animate(src, color = old_color, time = 10)
+
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
-
 
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
@@ -234,6 +238,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		succumb()
 	if(stat == DEAD)
 		ghostize(1)
+	if(mental_dominator)
+		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
+		if(mind_control_holder)
+			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
+		return 0
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")

@@ -58,3 +58,9 @@
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 
 	var/list/butcher_results = null
+
+	var/stun_absorption = FALSE //If all incoming stuns are being absorbed
+	var/stun_absorption_count = 0 //How many seconds of stun that have been absorbed
+
+	var/mob/living/mental_dominator //The person controlling the mind of this person, if applicable
+	var/mob/living/mind_control_holder/mind_control_holder //If the mob is being mind controlled, where their old mind is stored (check clock_mobs.dm)

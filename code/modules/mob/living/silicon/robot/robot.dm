@@ -790,21 +790,21 @@
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard"
+				overlays += "eyes-standard[is_clockwork_cultist(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_clockwork_cultist(src) ? "_r" : ""]"
 			if("toiletbot")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_clockwork_cultist(src) ? "_r" : ""]"
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg"
+				overlays += "eyes-secborg[is_clockwork_cultist(src) ? "_r" : ""]"
 			if("engiborg")
-				overlays += "eyes-engiborg"
+				overlays += "eyes-engiborg[is_clockwork_cultist(src) ? "_r" : ""]"
 			if("janiborg")
-				overlays += "eyes-janiborg"
+				overlays += "eyes-janiborg[is_clockwork_cultist(src) ? "_r" : ""]"
 			if("minerborg")
-				overlays += "eyes-minerborg"
+				overlays += "eyes-minerborg[is_clockwork_cultist(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
 			else
