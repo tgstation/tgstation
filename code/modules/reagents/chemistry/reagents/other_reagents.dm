@@ -1200,3 +1200,94 @@ datum/reagent/shadowling_blindness_smoke
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
+
+/datum/reagent/friendship
+	name = "pure friendship"
+	id = "friendship"
+	description = "Friendship, in liquid form. Yes, the concept of friendship. As a liquid. This makes sense in the future."
+	//description = "What is this emotion you humans call \"love?\" Oh, it's this? This is it? Huh, well okay then, thanks."
+	reagent_state = LIQUID
+	color = rgb(255, 131, 165)
+	addiction_threshold = 9
+
+/datum/reagent/friendship/reaction_mob(mob/living/M)
+	M << "<span class='rose'>You feel loved!</span>"
+	..()
+
+/datum/reagent/friendship/on_mob_life(mob/living/M)
+	// Better than omnizine, but at what cost...
+	M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustStaminaLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.AdjustStunned(-1, 0)
+
+	if (M.a_intent != "help")
+		M.a_intent_change("help")
+
+	if (prob(8))
+		var/msg = ""
+		switch (rand(1, 5))
+			if (1)
+				msg = "appreciated"
+			if (2)
+				msg = "loved"
+			if (3)
+				msg = "pretty good"
+			if (4)
+				msg = "really nice"
+			if (5)
+				msg = "pretty happy with yourself, even though things haven't always gone as well as they could"
+
+		M << "<span class='rose'>You feel [msg].</span>"
+
+	else if (prob(50) && !M.restrained() && !M.stat)
+		for (var/mob/living/hugTarget in orange(1,M))
+			if (hugTarget == M)
+				continue
+			if (!hugTarget.stat)
+				M.visible_message("<span class='rose'>[M] [prob(5) ? "awkwardly side-" : ""]hugs [hugTarget]!</span>")
+				break
+
+	if(current_cycle >= 50 && prob(33) && ishuman(M))
+		M << "<span class='userdanger rose'>The friendship overcomes you!</span>"
+		M.set_species(/datum/species/pony)
+	..(M)
+	return
+
+/datum/reagent/friendship/addiction_act_stage1(mob/living/M)
+	if(prob(30))
+		M << "<span class='notice'>You feel like some <span class='rose'>friendship</span> right about now.</span>"
+	return
+
+/datum/reagent/friendship/addiction_act_stage2(mob/living/M)
+	if(prob(30))
+		M << "<span class='notice'>You feel like you need <span class='rose'>friendship</span>. You just can't get enough.</span>"
+	return
+
+/datum/reagent/friendship/addiction_act_stage3(mob/living/M)
+	if(prob(30))
+		M << "<span class='danger'>You have an intense craving for <span class='rose'>friendship</span>.</span>"
+
+	M.adjustOxyLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	if(prob(25))
+		M << "<span class='danger'>The lack of <span class='rose'>friendship</span> is stunning!</span>"
+		M.Weaken(8)
+		M.Stun(8)
+	return
+
+/datum/reagent/friendship/addiction_act_stage4(mob/living/M)
+	if(prob(20))
+		addiction_act_stage3(M)
+	else if(prob(40))
+		M << "<span class='boldannounce'>You're not feeling good at all! You really need some <span class='rose'>friendship</span>.</span>"
+
+	M.adjustOxyLoss(3*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER, 0)
+
+	if(prob(25))
+		M << "<span class='danger'>The lack of <span class='rose'>friendship</span> is driving you mad!</span>"
+		M.hallucination += 80
+	return

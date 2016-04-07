@@ -94,6 +94,8 @@
 /datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
 	return
 
+/datum/species/proc/on_species_gain(mob/living/carbon/C)
+	return
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
