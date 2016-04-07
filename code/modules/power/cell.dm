@@ -17,13 +17,25 @@
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/chargerate = 100 //how much power is given every tick in a recharger
+	var/self_recharge = 0 //does it self recharge, over time, or not?
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
+	SSobj.processing |= src
 	charge = maxcharge
 	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
 	desc = desc + ratingdesc
 	updateicon()
+
+/obj/item/weapon/stock_parts/cell/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
+/obj/item/weapon/stock_parts/cell/process()
+	if(self_recharge)
+		give(chargerate * 0.25)
+	else
+		return PROCESS_KILL
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()
@@ -250,8 +262,9 @@
 	materials = list(MAT_GLASS=80)
 	rating = 6
 	chargerate = 30000
-	use()
-		return 1
+
+/obj/item/weapon/stock_parts/cell/infinite/use()
+	return 1
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
@@ -272,6 +285,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	materials = list()
+	self_recharge = 1 // Infused slime cores self-recharge, over time
 
 /obj/item/weapon/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
