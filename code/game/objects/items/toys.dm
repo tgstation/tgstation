@@ -568,6 +568,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
 	var/cooldown = 0
+	w_class = 2
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
@@ -648,6 +649,7 @@
 	desc = "The holy grail of all programmers. It seems a bit leaky."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
+	w_class = 1
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class = 'danger'>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</span>")
@@ -708,6 +710,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "greyshirt"
 	var/cooldown = 0
+	w_class = 2
 
 /obj/item/toy/gasha/greyshirt
 	name = "toy greyshirt"
