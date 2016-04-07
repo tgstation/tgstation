@@ -272,7 +272,7 @@
 		if(18)
 			new /obj/item/weapon/kitchen/knife/ritual(src)
 		if(19)
-			new /obj/item/weapon/coin/antagtoken(src)
+			new /obj/item/device/wisp_lantern(src)
 		if(20)
 			new /obj/item/weapon/reagent_containers/food/snacks/burger/spell(src)
 		if(21)
@@ -287,3 +287,48 @@
 		if(25)
 			new /obj/item/weapon/spellbook/oneuse/smoke(src)
 
+
+//Spooky special loot
+
+/obj/item/device/wisp_lantern
+	name = "spooky lantern"
+	desc = "This lantern gives off no light, but is home to a friendly wisp."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "lantern-blue"
+	var/obj/effect/wisp/wisp
+
+/obj/item/device/wisp_lantern/attack_self(mob/user)
+	if(!wisp)
+		user << "The wisp has gone missing!"
+		return
+	if(wisp.loc == src)
+		user << "You release the wisp. It begins to bob around your head."
+		wisp.orbit(user, 20)
+		user.sight |= SEE_MOBS
+		icon_state = "lantern"
+	else
+		if(wisp.orbiting)
+			var/atom/A = wisp.orbiting
+			if(istype(A, /mob/living))
+				var/mob/living/M = A
+				M.sight -= SEE_MOBS
+				M << "The wisp has returned to it's latern. Your vision returns to normal."
+			wisp.stop_orbit()
+		wisp.loc = src
+		user << "You return the wisp to the latern."
+		icon_state = "lantern-blue"
+
+/obj/item/device/wisp_lantern/New()
+	..()
+	var/obj/effect/wisp/W = new(src)
+	wisp = W
+	W.home = src
+
+/obj/effect/wisp
+	name = "friendly wisp"
+	desc = "Happy to light your way."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "orb"
+	var/obj/item/device/wisp_lantern/home
+	luminosity = 7
+	layer = 5
