@@ -233,7 +233,7 @@
 	//Bed middle right
 	cur_turf = locate(start_turf.x+1, start_turf.y, start_turf.z)
 	new /obj/structure/bed/pod(cur_turf)
-	new /obj/item/weapon/bedsheet/brown(cur_turf)
+	new /obj/item/weapon/bedsheet/black(cur_turf)
 
 	//Chair bottom right
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
