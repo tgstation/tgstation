@@ -262,7 +262,8 @@
 		"/obj/item/weapon/resonator",
 		"/obj/item/device/wormhole_jaunter",
 		"/obj/item/weapon/lazarus_injector",
-		"/obj/item/weapon/anobattery")
+		"/obj/item/weapon/anobattery",
+		"/obj/item/weapon/mining_drone_cube")
 
 /obj/item/weapon/storage/belt/lazarus
 	name = "trainer's belt"
@@ -273,7 +274,9 @@
 	max_w_class = 4
 	max_combined_w_class = 28
 	storage_slots = 6
-	can_hold = list("/obj/item/device/mobcapsule")
+	can_hold = list(
+		"/obj/item/device/mobcapsule",
+		"/obj/item/weapon/lazarus_injector")
 
 /obj/item/weapon/storage/belt/lazarus/New()
 	..()
