@@ -129,8 +129,7 @@
 		C.reagents.add_reagent(exotic_blood, 80)
 	for(var/path in mutant_organs)
 		var/obj/item/organ/internal/I = new path()
-		I.owner = C
-		C.internal_organs += I
+		I.Insert(C)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species && C.dna.species.exotic_blood)
