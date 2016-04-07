@@ -59,10 +59,10 @@
 				Lines += C.key
 
 	for (var/line in sortList(Lines))
-		msg += "[line]\n<b>"
+		msg += "[line]\n"
 	if(holder)
-		msg += "Living: [living] | Dead/Ghosts: [ghosts] | Living Antags: [livingAntags] | "
-	msg += "Total Players: [length(Lines)]</b>\n"
+		msg += "<b>Living: [living] | Dead/Ghosts: [ghosts] | Living Antags: [livingAntags] | </b>"
+	msg += "<b>Total Players: [length(Lines)]</b>\n"
 	to_chat(src, msg)
 
 /client/verb/adminwho()
