@@ -188,9 +188,10 @@
 		src.loc.visible_message("The [src] begins to shake. Stand back!")
 		used = TRUE
 		sleep(50)
+		var/turf/T = get_turf(src)
 		var/clear = TRUE
-		for(var/turf/T in range(2,src))
-			if(istype(T, /turf/closed))
+		for(var/turf/turf in range(2,T))
+			if(istype(turf, /turf/closed) && !istype(turf, /turf/closed/mineral))
 				clear = FALSE
 				break
 		if(!clear)
@@ -199,7 +200,6 @@
 			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
-		var/turf/T = get_turf(src)
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
@@ -393,7 +393,7 @@
 	icon_state = "smooth"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock, /obj/structure/window)
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock)
 
 //Signs
 
