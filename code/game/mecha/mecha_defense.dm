@@ -79,13 +79,13 @@
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
 	log_message("Hit by [A].",1)
-	var/deflection = deflect_chance
+	var/deflection = 1
 	var/dam_coeff = 1
 	var/counter_tracking = 0
 	for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
 		if(B.projectile_react())
-			deflection *= B.deflect_coeff
-			dam_coeff *= B.damage_coeff
+			deflection = B.deflect_coeff
+			dam_coeff = B.damage_coeff
 			counter_tracking = 1
 			break
 	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
@@ -111,8 +111,8 @@
 	var/dam_coeff = 1
 	for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
 		if(B.projectile_react())
-			deflection *= B.deflect_coeff
-			dam_coeff *= B.damage_coeff
+			deflection = B.deflect_coeff
+			dam_coeff = B.damage_coeff
 			break
 
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
