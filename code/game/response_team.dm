@@ -75,6 +75,7 @@ client/verb/JoinResponseTeam()
 
 			ticker.mode.ert += new_commando.mind
 
+			message_admins("[new_commando]/[usr.key] has joined the Emergency Response Team.")
 			return
 
 	else

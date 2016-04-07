@@ -6,6 +6,11 @@
 
 	var/list/Lines = list()
 
+	//for admins
+	var/living = 0
+	var/ghosts = 0
+	var/livingAntags = 0
+
 	if (holder)
 		for (var/client/C in clients)
 			var/entry = "\t[C.key]"
@@ -22,6 +27,7 @@
 
 				if (DEAD)
 					if (isobserver(C.mob))
+						ghosts++
 						var/mob/dead/observer/O = C.mob
 
 						if (O.started_as_observer)
@@ -32,9 +38,14 @@
 						entry += " - <font color='gray'><i>Lobby</i></font>"
 					else
 						entry += " - <font color='black'><b>DEAD</b></font>"
+						ghosts++
+				else
+					living++
 
 			if (is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
+				if(!(C.mob.isDead()))
+					livingAntags++
 
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
@@ -48,9 +59,10 @@
 				Lines += C.key
 
 	for (var/line in sortList(Lines))
-		msg += "[line]\n"
-
-	msg += "<b>Total Players: [length(Lines)]</b>\n"
+		msg += "[line]\n<b>"
+	if(holder)
+		msg += "Living: [living] | Dead/Ghosts: [ghosts] | Living Antags: [livingAntags] | "
+	msg += "Total Players: [length(Lines)]</b>\n"
 	to_chat(src, msg)
 
 /client/verb/adminwho()
