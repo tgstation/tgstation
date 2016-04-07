@@ -18068,6 +18068,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/plantgenes,
 /turf/open/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
