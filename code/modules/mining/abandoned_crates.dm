@@ -342,4 +342,4 @@
 	icon_state = "orb"
 	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
-	FLY_LAYER - 0.3
+	layer = FLY_LAYER - 0.3
