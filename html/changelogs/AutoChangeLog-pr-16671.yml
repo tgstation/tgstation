@@ -1,0 +1,5 @@
+author: bgobandit
+delete-after: True
+changes: 
+  - rscadd: "Due to budget cuts, Nanotrasen is no longer utilizing copy-protected paper for its classified documents. Fortunately, our world-class security team has always prevented any thefts or photocopies from being made!"
+  - rscadd: "Secret documents can be photocopied. If you have an objective to steal any set of documents, a photocopy will be accepted. If you must steal red or blue documents, a photocopy will NOT be accepted. Enterprising traitors can forge the red/blue seal with a crayon to take advantage of this."
