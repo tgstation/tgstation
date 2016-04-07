@@ -25,6 +25,10 @@
 	desc = desc + ratingdesc
 	updateicon()
 
+/obj/item/weapon/stock_parts/cell/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()
 	if(charge < 0.01)
