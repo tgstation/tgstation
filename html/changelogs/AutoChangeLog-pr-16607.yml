@@ -1,5 +1,0 @@
-author: Kor
-delete-after: True
-changes: 
-  - rscadd: "Mechas now have armour facings. Attacking the front will deal far less damage, while attacking the back will deal massive bonus damage."
-  - rscadd: "EMPs now deal far less damage/drain to mechas."
