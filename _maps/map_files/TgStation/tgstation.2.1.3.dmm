@@ -58492,6 +58492,15 @@
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
+"cpg" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/droneDispenser/preloaded,
+/turf/open/floor/plating,
+/area/maintenance/electrical)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -112133,7 +112142,7 @@ auJ
 awS
 auI
 awO
-awO
+cpg
 asB
 aCP
 aEj
