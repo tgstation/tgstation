@@ -21,7 +21,6 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 8
 	toggle_button_type = /obj/screen/guardian/ToggleMode
