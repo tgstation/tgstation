@@ -36,6 +36,7 @@ Captain
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/caphat
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	r_pocket = /obj/item/weapon/reagent_containers/food/drinks/flask/gold
 
 	backpack = /obj/item/weapon/storage/backpack/captain
 	satchel = /obj/item/weapon/storage/backpack/satchel_cap
