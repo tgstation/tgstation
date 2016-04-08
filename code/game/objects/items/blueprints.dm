@@ -133,6 +133,8 @@
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user && user.client)
+		if(viewing)
+			clear_viewer()
 		viewing = user.client
 		showing = get_images(get_turf(user), viewing.view)
 		viewing.images |= showing
@@ -146,6 +148,10 @@
 	showing.Cut()
 	if(message)
 		user << message
+
+/obj/item/areaeditor/blueprints/dropped(mob/user)
+	..()
+	clear_viewer()
 
 
 /obj/item/areaeditor/proc/get_area()
