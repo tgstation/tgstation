@@ -100,11 +100,8 @@
 
 
 /obj/item/effect/snare/Crossed(AM as mob|obj)
-	if(istype(AM, /mob/living/))
-		var/turf/snare_loc = get_turf(src.loc)
-		if(spawner)
-			spawner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
-			if(istype(spawner, /mob/living/simple_animal/hostile/guardian))
-				var/mob/living/simple_animal/hostile/guardian/G = spawner
-				if(G.summoner)
-					G.summoner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
+	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
+		spawner.summoner << "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>"
+		var/list/guardians = spawner.summoner.hasparasites()
+		for(var/para in guardians)
+			para << "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>"
