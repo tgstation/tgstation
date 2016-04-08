@@ -695,4 +695,7 @@
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
-	acidpwr = 20
+	acidpwr = 42//0
+/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
+	M.adjustBurnLoss(current_cycle/10) // MY INSIDES ARE MELTING HELP
+	..()
