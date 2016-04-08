@@ -48,7 +48,8 @@
 	return
 
 /obj/effect/blob/core/ex_act(severity, target)
-	return
+	var/damage = 50 - 10 * severity //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity
+	take_damage(damage, BRUTE)
 
 /obj/effect/blob/core/check_health()
 	..()
