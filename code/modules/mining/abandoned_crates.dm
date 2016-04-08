@@ -226,7 +226,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25) //100 different crates with varying chances of spawning
+	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
 			new /obj/item/weapon/bedsheet/cult(src)
@@ -343,7 +343,6 @@
 	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
 	layer = FLY_LAYER - 0.3
-<<<<<<< HEAD
 
 /obj/item/device/warp_cube
 	name = "blue cube"
@@ -373,5 +372,3 @@
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
-=======
->>>>>>> origin/wisp
