@@ -48,7 +48,7 @@
 	id = "slimerezadone"
 	result = "rezadone"
 	required_reagents = list("blood" = 1)
-	result_amount = 10
+	result_amount = 3
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
