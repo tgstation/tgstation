@@ -328,3 +328,21 @@
 		M.adjustOxyLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/velocity9
+	name = "Velocity 9"
+	id = "velocity9"
+	description = "Almost complete stun immunity and regeneration factor"
+	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/medicine/velocity9/on_mob_life(mob/living/M)
+	M.AdjustParalysis(-10, 0)
+	M.AdjustStunned(-10, 0)
+	M.AdjustWeakened(-10, 0, 0)
+	M.adjustBruteLoss(-1*REM, 0)
+	M.adjustFireLoss(-1*REM, 0)
+	M.status_flags |= GOTTAGOREALLYGONE | IGNORESLOWDOWN
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,5)//metabolise reagents much too faster
+	. = 1

@@ -74,3 +74,23 @@
 	M.Stun(2)
 	M.petrify()
 	..()
+
+/obj/item/weapon/melee/touch_attack/vibratinghand
+	name = "Vibrating hand"
+	desc = "Vibrate your hand through someone so fast, it hurts"
+	catchphrase = ""
+	on_use_sound = "sound/magic/Vibrate.ogg"
+	icon_state = "vibratinghand"
+	item_state = "vibratinghand"
+
+/obj/item/weapon/melee/touch_attack/vibratinghand/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //don't wanna vibrate your own hand through yourself
+		return
+	if(user.lying || user.handcuffed)
+		user << "<span class='warning'>You can't reach out!</span>"
+		return
+	var/mob/living/M = target
+	M.Stun(1)
+	M.adjustStaminaLoss(100)
+	M.adjustBruteLoss(20)
+	..()

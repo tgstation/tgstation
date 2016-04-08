@@ -781,6 +781,10 @@
 		. -= 1
 	if(H.status_flags & GOTTAGOREALLYFAST)
 		. -= 2
+	if(H.status_flags & GOTTAGOGONE)
+		. -= 3
+	if(H.status_flags & GOTTAGOREALLYGONE)
+		. -= 4
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
