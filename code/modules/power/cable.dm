@@ -25,6 +25,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable
 	level = 1 //is underfloor
 	anchored =1
+	on_blueprints = TRUE
 	var/datum/powernet/powernet
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer"
