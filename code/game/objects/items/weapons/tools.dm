@@ -507,7 +507,7 @@
 	icon_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
+	force = 10
 	throwforce = 7
 	item_state = "crowbar"
 	w_class = 2
@@ -524,7 +524,7 @@
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
-	force = 8
+	force = 10
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
