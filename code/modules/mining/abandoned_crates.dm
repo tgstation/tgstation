@@ -343,6 +343,7 @@
 	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
 	layer = FLY_LAYER - 0.3
+<<<<<<< HEAD
 
 /obj/item/device/warp_cube
 	name = "blue cube"
@@ -372,3 +373,5 @@
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
+=======
+>>>>>>> origin/wisp
