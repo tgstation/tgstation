@@ -1,6 +1,4 @@
-
 // Drill, Diamond drill, Mining scanner
-
 
 /obj/item/mecha_parts/mecha_equipment/drill
 	name = "exosuit drill"
@@ -92,9 +90,6 @@
 	origin_tech = "materials=4;engineering=3"
 	equip_cooldown = 20
 	force = 15
-
-
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
@@ -102,22 +97,18 @@
 	origin_tech = "materials=3;engineering=2"
 	equip_cooldown = 30
 	var/scanning = 0
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
 	SSobj.processing |= src
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
 	..()
 	M.occupant_sight_flags |= SEE_TURFS
 	if(M.occupant)
 		M.occupant.update_sight()
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
 	chassis.occupant_sight_flags &= ~SEE_TURFS
 	if(chassis.occupant)
 		chassis.occupant.update_sight()
 	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
 		SSobj.processing.Remove(src)
@@ -133,5 +124,3 @@
 		mineral_scan_pulse(L,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
-
-
