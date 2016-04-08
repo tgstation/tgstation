@@ -80,24 +80,24 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1)
-				M << "<span class='warning'><b>You can't taste a thing.</b></span>"
+				M << "<span class='warning'>You can't taste a thing.</span>"
 			if(2)
-				M << "<span class='warning'><b>You can't feel anything.</b></span>"
+				M << "<span class='warning'>You can't feel anything.</span>"
 				if(prob(10))
 					M.reagents.add_reagent("morphine",rand(5,7))
 			if(3)
 				M.reagents.add_reagent("ethanol",rand(5,7))
-				M << "<span class='warning'><b>You feel absolutely hammered.</b></span>"
+				M << "<span class='warning'>You feel absolutely hammered.</span>"
 				if(prob(15))
 					M.reagents.add_reagent("morphine",rand(5,7))
 			if(4)
 				M.reagents.add_reagent_list(list("ethanol",rand(7,15),"mindbreaker",rand(5,10)))
-				M << "<span class='warning'><b>You try to focus on not dying.</b></span>"
+				M << "<span class='warning'>You try to focus on not dying.</span>"
 				if(prob(20))
 					M.reagents.add_reagent("morphine",rand(5,7))
 			if(5)
 				M.reagents.add_reagent_list(list("impedrezene",rand(5,15),"ethanol",rand(7,20),"mindbreaker",rand(5,15)))
-				M << "<span class='warning'><b>u can count 2 potato!</b></span>"
+				M << "<span class='warning'>u can count 2 potato!</span>"
 				if(prob(25))
 					M.reagents.add_reagent("morphine",rand(5,7))
 	return

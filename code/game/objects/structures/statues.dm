@@ -31,7 +31,7 @@
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
 				anchored = 0
 		else
-			if (!istype(src.loc, /turf/simulated/floor))
+			if (!istype(src.loc, /turf/open/floor))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -224,7 +224,7 @@
 	..()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
+	atmos_spawn_air("plasma=400;TEMP=1000")
 	hardness = 0
 	CheckHardness()
 

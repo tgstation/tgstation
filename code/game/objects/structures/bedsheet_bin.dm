@@ -140,6 +140,10 @@ LINEN BINS
 	icon_state = "sheetbrown"
 	item_color = "cargo"
 
+/obj/item/weapon/bedsheet/black
+	icon_state = "sheetblack"
+	item_color = "black"
+
 /obj/item/weapon/bedsheet/centcom
 	name = "\improper Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."

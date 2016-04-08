@@ -350,7 +350,7 @@
 	if(!T)
 		T = get_turf(AT)
 	var/area/A = get_area(T)
-	if(istype(T, /turf/space)) // Turf never has gravity
+	if(istype(T, /turf/open/space)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity
 		return 1
@@ -368,41 +368,3 @@
 	always_unpowered = 0
 	valid_territory = 0
 	addSorted()
-
-/*
-/area/proc/clear_docking_area()
-	var/list/dstturfs = list()
-	var/throwy = world.maxy
-
-	for(var/turf/T in src)
-		dstturfs += T
-		if(T.y < throwy)
-			throwy = T.y
-
-	// hey you, get out of the way!
-	for(var/turf/T in dstturfs)
-		// find the turf to move things to
-		var/turf/D = locate(T.x, throwy - 1, T.z)
-		for(var/atom/movable/AM as mob|obj in T)
-			if(ismob(AM))
-				if(istype(AM, /mob/living))//mobs take damage
-					var/mob/living/living_mob = AM
-					living_mob.Paralyse(10)
-					living_mob.take_organ_damage(80)
-					living_mob.anchored = 0 //Unbuckle them so they can be moved
-				else
-					continue
-
-			//Anything not bolted down is moved, everything else is destroyed
-			if(!AM.anchored)
-				AM.Move(D, SOUTH)
-			else
-				qdel(AM)
-		if(istype(T, /turf/simulated))
-			qdel(T)
-
-	/*for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
-		if(ismob(bug))
-			continue
-		qdel(bug)*/
-*/

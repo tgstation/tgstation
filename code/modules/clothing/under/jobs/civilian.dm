@@ -172,3 +172,11 @@
 	icon_state = "miner"
 	item_state = "miner"
 	item_color = "miner"
+
+
+/obj/item/clothing/under/rank/miner/lavaland
+	desc = "A black jumpsuit for operating in hazardous environments."
+	name = "shaft miner's jumpsuit"
+	icon_state = "syndicate"
+	item_state = "bl_suit"
+	item_color = "syndicate"

@@ -117,16 +117,23 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
 	..()
 	machines += src
-	SSmachine.processing += src
+	if(!speed_process)
+		SSmachine.processing += src
+	else
+		SSfastprocess.processing += src
 	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
-	SSmachine.processing -= src
+	if(!speed_process)
+		SSmachine.processing -= src
+	else
+		SSfastprocess.processing -= src
 	dropContents()
 	return ..()
 
@@ -284,7 +291,7 @@ Class Procs:
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
 

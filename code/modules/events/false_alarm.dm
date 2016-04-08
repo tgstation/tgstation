@@ -10,11 +10,14 @@
 
 /datum/round_event/falsealarm/announce()
 	var/list/events_list = list()
+
+	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
+	var/gamemode = ticker.mode.config_tag
+
 	for(var/datum/round_event_control/E in SSevent.control)
-		if(E.holidayID || E.wizardevent)
+		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		if(E.earliest_start >= world.time)
-			continue
+
 		var/datum/round_event/event = E.typepath
 		if(initial(event.announceWhen) <= 0)
 			continue

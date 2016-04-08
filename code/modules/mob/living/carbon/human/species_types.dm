@@ -6,7 +6,6 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	roundstart = 1
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
@@ -41,7 +40,7 @@
 		return 1
 
 //Curiosity killed the cat's wagging tail.
-datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
@@ -55,7 +54,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
@@ -190,34 +188,30 @@ var/regex/lizard_hiSS = new("S+", "g")
 	eyes = "jelleyes"
 	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
-	var/recently_changed = 1
+	exotic_blood = "slimejelly"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
-	if(!H.reagents.get_reagent_amount("slimejelly"))
-		if(recently_changed)
-			H.reagents.add_reagent("slimejelly", 80)
-			recently_changed = 0
-		else
-			H.reagents.add_reagent("slimejelly", 5)
-			H.adjustBruteLoss(5)
-			H << "<span class='danger'>You feel empty!</span>"
+	if(!H.reagents.get_reagent_amount(exotic_blood))
+		H.reagents.add_reagent(exotic_blood, 5)
+		H.adjustBruteLoss(5)
+		H << "<span class='danger'>You feel empty!</span>"
 
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume < 100)
-			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 2.5
-		if(S.volume < 50)
-			if(prob(5))
-				H << "<span class='danger'>You feel drained!</span>"
-		if(S.volume < 10)
-			H.losebreath++
+	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
+
+	if(jelly_amount < 100)
+		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+			H.reagents.add_reagent(exotic_blood, 0.5)
+			H.nutrition -= 2.5
+	if(jelly_amount < 50)
+		if(prob(5))
+			H << "<span class='danger'>You feel drained!</span>"
+	if(jelly_amount < 10)
+		H.losebreath++
 
 /datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "slimejelly")
+	if(chem.id == exotic_blood)
 		return 1
 
 /*
@@ -252,19 +246,20 @@ var/regex/lizard_hiSS = new("S+", "g")
 		callback.Remove(C)
 	..()
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	if(recently_changed)
+/datum/species/jelly/slime/on_species_gain(mob/living/carbon/C)
+	..()
+	if(ishuman(C))
 		slime_split = new
-		slime_split.Grant(H)
+		slime_split.Grant(C)
 
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume >= 200)
-			if(prob(5))
-				H << "<span class='notice'>You feel very bloated!</span>"
-		if(S.volume < 200)
-			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 2.5
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
+	if(jelly_amount >= 200)
+		if(prob(5))
+			H << "<span class='notice'>You feel very bloated!</span>"
+	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		H.reagents.add_reagent(exotic_blood, 0.5)
+		H.nutrition -= 2.5
 
 	..()
 

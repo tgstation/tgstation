@@ -320,7 +320,7 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>It is fastened to the floor therefore you can't rotate it!</span>"
+		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
 	dir = turn(dir, 90)
@@ -340,7 +340,7 @@
 		return
 
 	if(anchored)
-		usr << "<span class='warning'>It is fastened to the floor therefore you can't rotate it!</span>"
+		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
 	dir = turn(dir, 270)

@@ -12,7 +12,7 @@
 	var/amount = 3
 	animate_movement = 0
 	var/metal = 0
-	var/lifetime = 6
+	var/lifetime = 40
 
 
 /obj/effect/particle_effect/foam/metal
@@ -29,16 +29,16 @@
 /obj/effect/particle_effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	SSobj.processing |= src
+	SSfastprocess.processing |= src
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 /obj/effect/particle_effect/foam/Destroy()
-	SSobj.processing.Remove(src)
+	SSfastprocess.processing.Remove(src)
 	return ..()
 
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
-	SSobj.processing.Remove(src)
+	SSfastprocess.processing.Remove(src)
 	if(metal)
 		var/obj/structure/foamedmetal/M = new(src.loc)
 		M.metal = metal

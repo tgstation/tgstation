@@ -28,7 +28,7 @@
 	icon_state = "frag"
 
 /obj/item/weapon/grenade/gluon
-    desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby."
+    desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby. These gluon streams will also make victims feel exhausted, and induce shivering. This extreme coldness will also likely wet any nearby floors."
     name = "gluon grenade"
     icon = 'icons/obj/grenade.dmi'
     icon_state = "bluefrag"
@@ -42,8 +42,8 @@
         playsound(loc, 'sound/effects/EMPulse.ogg', 50, 1)
         radiation_pulse(loc,freeze_range,freeze_range+1,rad_damage)
         for(var/turf/T in view(freeze_range,loc))
-                if(istype(T,/turf/simulated/floor))
-                        var/turf/simulated/floor/F = T
+                if(istype(T,/turf/open/floor))
+                        var/turf/open/floor/F = T
                         F.wet = TURF_WET_ICE
                 for(var/mob/living/carbon/L in T)
                         L.adjustStaminaLoss(stamina_damage)
