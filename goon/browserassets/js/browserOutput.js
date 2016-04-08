@@ -42,8 +42,8 @@ var opts = {
 	'pingDisabled': false, //Has the user disabled the ping counter
 
 	//Ping display
-	'pingCounter': 0, //seconds counter
-	'pingLimit': 30, //seconds limit
+	'lastPang': 0, //Timestamp of the last response from the server.
+	'pangLimit': 35000,
 	'pingTime': 0, //Timestamp of when ping sent
 	'pongTime': 0, //Timestamp of when ping received
 	'noResponse': false, //Tracks the state of the previous ping request
@@ -145,6 +145,9 @@ function output(message, flag) {
 	if (typeof flag === 'undefined') {
 		flag = '';
 	}
+
+	if (flag !== 'internal')
+		opts.lastPang = Date.now();
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -344,7 +347,13 @@ function handleClientData(ckey, ip, compid) {
 //Server calls this on ehjax response
 //Or, y'know, whenever really
 function ehjaxCallback(data) {
-	if (data == 'pong') {
+	opts.lastPang = Date.now();
+	if (data == 'pang') {
+		opts.pingCounter = 0; //reset
+		opts.pingTime = Date.now();
+		runByond('?_src_=chat&proc=ping');
+
+	} else if (data == 'pong') {
 		if (opts.pingDisabled) {return;}
 		opts.pongTime = Date.now();
 		var pingDuration = Math.ceil((opts.pongTime - opts.pingTime) / 2);
@@ -355,9 +364,10 @@ function ehjaxCallback(data) {
 		var blue = 0;
 		var hex = rgbToHex(red, green, blue);
 		$('#pingDot').css('color', '#'+hex);
+
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
-		output('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>');
+		output('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
 	} else if (data == 'stopaudio') {
 		$('.dectalk').remove();
 	} else {
@@ -392,9 +402,9 @@ function ehjaxCallback(data) {
 			changeMode(data.modeChange);
 		} else if (data.firebug) {
 			if (data.trigger) {
-				output('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>');
+				output('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
 			} else {
-				output('<span class="internal boldnshit">Loading firebug console...</span>');
+				output('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
 			}
 			var firebugEl = document.createElement('script');
 			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
@@ -465,30 +475,17 @@ $(function() {
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
-		if (opts.pingCounter >= opts.pingLimit && !opts.restarting) { //Every pingLimit seconds
-			opts.pingCounter = 0; //reset
-			opts.pongTime = 0; //reset
-			opts.pingTime = Date.now();
-			runByond('?_src_=chat&proc=ping');
-			setTimeout(function() {
-				if (!opts.pongTime) { //If no response within 10 seconds of ping request
-					if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
-						opts.noResponse = true;
-						opts.noResponseCount++;
-						output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>');
-					}
-				} else {
-					opts.pongTime = 0; //reset
-					if (opts.noResponse) { //Previous ping attempt failed ohno
-						$('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
-						opts.noResponse = false;
-					}
+		if (opts.lastPang + opts.pangLimit < Date.now() && !opts.restarting) { //Every pingLimit
+				if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
+					opts.noResponse = true;
+					opts.noResponseCount++;
+					output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either AFK, experiencing lag or the connection has closed.</div>', 'internal');
 				}
-			}, 10000); //10 seconds
-		} else { //Every second
-			opts.pingCounter++;
+		} else if (opts.noResponse) { //Previous ping attempt failed ohno
+				$('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
+				opts.noResponse = false;
 		}
-	}, 1000); //1 second
+	}, 2000); //2 seconds
 
 
 	/*****************************************
@@ -506,18 +503,18 @@ $(function() {
 
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
-		output('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>');
+		output('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
 	}
 	if (savedConfig.sfontType) {
 		$messages.css('font-family', savedConfig.sfontType);
-		output('<span class="internal boldnshit">Loaded font type setting of: '+savedConfig.sfontType+'</span>');
+		output('<span class="internal boldnshit">Loaded font type setting of: '+savedConfig.sfontType+'</span>', 'internal');
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
 			opts.pingDisabled = true;
 			$('#ping').hide();
 		}
-		output('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>');
+		output('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>', 'internal');
 	}
 	if (savedConfig.shighlightTerms) {
 		var savedTerms = $.parseJSON(savedConfig.shighlightTerms);
@@ -529,13 +526,13 @@ $(function() {
 		}
 		if (actualTerms) {
 			actualTerms = actualTerms.substring(0, actualTerms.length - 2);
-			output('<span class="internal boldnshit">Loaded highlight strings of: ' + actualTerms+'</span>');
+			output('<span class="internal boldnshit">Loaded highlight strings of: ' + actualTerms+'</span>', 'internal');
 			opts.highlightTerms = savedTerms;
 		}
 	}
 	if (savedConfig.shighlightColor) {
 		opts.highlightColor = savedConfig.shighlightColor;
-		output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>');
+		output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
 
 	(function() {
@@ -627,7 +624,7 @@ $(function() {
 		// Hardcoded because else there would be no feedback message.
 		if (k == 113) { // F2
 			runByond('byond://winset?screenshot=auto');
-			output('Screenshot taken');
+			output('Screenshot taken', 'internal');
 		}
 
 		var c = "";
@@ -760,7 +757,7 @@ $(function() {
 		fontSize = fontSize - 1 + 'px';
 		$messages.css({'font-size': fontSize});
 		setCookie('fontsize', fontSize, 365);
-		output('<span class="internal boldnshit">Font size set to '+fontSize+'</span>');
+		output('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
 	});
 
 	$('#increaseFont').click(function(e) {
@@ -768,7 +765,7 @@ $(function() {
 		fontSize = fontSize + 1 + 'px';
 		$messages.css({'font-size': fontSize});
 		setCookie('fontsize', fontSize, 365);
-		output('<span class="internal boldnshit">Font size set to '+fontSize+'</span>');
+		output('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
 	});
 
 	$('#chooseFont').click(function(e) {

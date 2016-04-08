@@ -113,6 +113,17 @@ For the main html chat area
 	messageQueue = null
 	src.sendClientData()
 
+	pingLoop()
+
+/datum/chatOutput/proc/pingLoop()
+	set waitfor = FALSE
+
+	while (owner)
+		if (!owner.is_afk(29 SECONDS))
+			ehjax_send(data = "pang")
+
+		sleep(30 SECONDS)
+
 /datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
 	if(islist(data))
 		data = list2json(data)
@@ -195,8 +206,12 @@ For the main html chat area
 	var/atom/A = obj
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
 	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/icon = icon(A.icon, A.icon_state, SOUTH, 1)
-		bicon_cache[key] = icon2base64(icon, key)
+		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
+		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = I
+			I = icon()
+			I.Insert(temp, dir = SOUTH)
+		bicon_cache[key] = icon2base64(I, key)
 
 	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
