@@ -13,8 +13,6 @@
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
 		return
-	if(istype(target, /turf) && !istype(target, /turf/simulated))
-		return
 	if(isobj(target))
 		var/obj/target_obj = target
 		if(target_obj.unacidable)
@@ -24,15 +22,13 @@
 					 "<span class='italics'>You hear drilling.</span>")
 
 	if(do_after_cooldown(target))
-		if(istype(target, /turf/simulated/wall/r_wall))
-			if(istype(src , /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
-				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
-					log_message("Drilled through [target]")
-					target.ex_act(3)
-			else
-				occupant_message("<span class='danger'>[target] is too durable to drill through.</span>")
-		else if(istype(target, /turf/simulated/mineral))
-			for(var/turf/simulated/mineral/M in range(chassis,1))
+		if(istype(target, /turf/closed/wall))
+			var/turf/closed/wall/W = target
+			W.dismantle_wall(1)
+		else
+			occupant_message("<span class='danger'>[target] is too durable to drill through.</span>")
+		else if(istype(target, /turf/closed/mineral))
+			for(var/turf/closed/mineral/M in range(chassis,1))
 				if(get_dir(chassis,M)&chassis.dir)
 					M.gets_drilled(chassis.occupant)
 			log_message("Drilled through [target]")
@@ -42,8 +38,8 @@
 					for(var/obj/item/weapon/ore/ore in range(1, chassis))
 						if(get_dir(chassis,ore)&chassis.dir)
 							ore.Move(ore_box)
-		else if(istype(target, /turf/simulated/floor/plating/asteroid))
-			for(var/turf/simulated/floor/plating/asteroid/M in range(1, chassis))
+		else if(istype(target, /turf/open/floor/plating/asteroid))
+			for(var/turf/open/floor/plating/asteroid/M in range(1, chassis))
 				if(get_dir(chassis,M)&chassis.dir)
 					M.gets_dug()
 			log_message("Drilled through [target]")
