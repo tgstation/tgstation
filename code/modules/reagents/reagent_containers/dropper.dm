@@ -52,7 +52,7 @@
 					update_icon()
 					return
 			else if(isalien(target)) //hiss-hiss has no eyes!
-				target << "<span class='danger'>[target] does not seem to have any eyes!"
+				target << "<span class='danger'>[target] does not seem to have any eyes!</span>"
 				return
 
 			target.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>", \
