@@ -18,7 +18,7 @@
 		var/obj/item/weapon/storage/S = W
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "<span class='notice'>You empty the ore in [S] into the [src].</span>"
+		user << "<span class='notice'>You empty the ore in [S] into \the [src].</span>"
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user)
