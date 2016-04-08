@@ -21,5 +21,4 @@ _maps/RandomRuins/SpaceRuins/emptyshell.dmm
 _maps/RandomRuins/SpaceRuins/gasthelizards.dmm
 _maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 _maps/RandomRuins/SpaceRuins/mechtransport.dmm
-_maps/RandomRuins/SpaceRuins/spacelibrary.dmm
 _maps/RandomRuins/SpaceRuins/turretedoutpost.dmm
