@@ -16,7 +16,6 @@
 		W.loc = src
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
-		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		user << "<span class='notice'>You empty the ore in [S] into the [src].</span>"
@@ -90,6 +89,6 @@
 	src.updateUsrDialog()
 	return
 
-obj/structure/ore_box/ex_act(severity, target)
+/obj/structure/ore_box/ex_act(severity, target)
 	if(prob(100 / severity) && severity < 3)
 		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them
