@@ -528,6 +528,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
 	allowmultiple = 1
 	allowling = 1
+	random = TRUE
 
 /obj/item/weapon/guardiancreator/carp/choose
-	random = TRUE
+	random = FALSE
