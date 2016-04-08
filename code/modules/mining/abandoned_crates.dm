@@ -270,7 +270,7 @@
 		if(17)
 			new /obj/item/stack/sheet/runed_metal/fifty(src)
 		if(18)
-			new /obj/item/weapon/kitchen/knife/ritual(src)
+			new /obj/item/device/warp_cube/red(src)
 		if(19)
 			new /obj/item/device/wisp_lantern(src)
 		if(20)
@@ -342,4 +342,33 @@
 	icon_state = "orb"
 	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
-	FLY_LAYER - 0.3
+	layer = FLY_LAYER - 0.3
+
+/obj/item/device/warp_cube
+	name = "blue cube"
+	desc = "A mysterious blue cube."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "blue_cube"
+	var/obj/item/device/warp_cube/linked
+
+/obj/item/device/warp_cube/attack_self(mob/user)
+	if(!linked)
+		user << "[src] fizzles uselessly."
+	if(linked.z == CENTCOMM)
+		user << "[linked] is somewhere you can't go."
+
+	PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
+	user.forceMove(get_turf(linked))
+	PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
+
+/obj/item/device/warp_cube/red
+	name = "red cube"
+	desc = "A mysterious red cube."
+	icon_state = "red_cube"
+
+/obj/item/device/warp_cube/red/New()
+	..()
+	if(!linked)
+		var/obj/item/device/warp_cube/blue = new(src.loc)
+		linked = blue
+		blue.linked = src
