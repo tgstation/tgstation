@@ -81,7 +81,7 @@ var/list/GPS_list = list()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
 		a = uppertext(copytext(sanitize(a), 1, 5))
-		if(src.loc == usr)
+		if(in_range(src, usr))
 			gpstag = a
 			name = "global positioning system ([gpstag])"
 			attack_self(usr)
