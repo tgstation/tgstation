@@ -51,7 +51,8 @@
 					user << "<span class='notice'>You transfer [trans] unit\s of the solution.</span>"
 					update_icon()
 					return
-			else //Cannot be used on other mob types.
+			else if(isalien(target)) //hiss-hiss has no eyes!
+				target << "<span class='danger'>[target] does not seem to have any eyes!"
 				return
 
 			target.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>", \
