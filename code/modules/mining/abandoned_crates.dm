@@ -276,7 +276,7 @@
 		if(20)
 			new /obj/item/weapon/reagent_containers/food/snacks/burger/spell(src)
 		if(21)
-			new /obj/item/weapon/gun/magic/wand(src)
+			new /obj/item/weapon/gun/magic/hook(src)
 		if(22)
 			new /obj/item/voodoo(src)
 		if(23)
@@ -303,10 +303,10 @@
 		return
 	if(wisp.loc == src)
 		user << "You release the wisp. It begins to bob around your head."
-		spawn()
-			wisp.orbit(user, 20)
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
+		wisp.orbit(user, 20)
+
 	else
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting
@@ -372,3 +372,47 @@
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
+
+/obj/item/weapon/gun/magic/hook
+	name = "meat hook"
+	desc = "Mid or feed."
+	fire_sound = "sound/magic/Staff_Change.ogg"
+	ammo_type = /obj/item/ammo_casing/magic/hook
+	icon_state = "hook"
+	item_state = "chain"
+	fire_sound = 'sound/weapons/circsawhit.ogg'
+	max_charges = 1
+	flags = NOBLUDGEON
+	force = 18
+
+/obj/item/ammo_casing/magic/hook
+	name = "hook"
+	desc = "a hook."
+	projectile_type = /obj/item/projectile/hook
+	caliber = "hook"
+	icon_state = "hook"
+
+/obj/item/projectile/hook
+	icon_state = "hook"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	pass_flags = PASSTABLE
+	damage = 25
+	armour_penetration = 100
+	damage_type = BRUTE
+	hitsound = 'sound/effects/splat.ogg'
+	weaken = 2
+	var/chain
+
+/obj/item/ammo_casing/magic/hook/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	..()
+	var/obj/item/projectile/hook/P = BB
+	spawn(1)
+		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30)
+
+/obj/item/projectile/hook/on_hit(atom/target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		L.forceMove(get_turf(firer))
+		L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
+		qdel(chain)
