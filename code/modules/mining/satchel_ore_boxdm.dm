@@ -22,6 +22,14 @@
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user)
+	if(Adjacent(user))
+		show_contents(user)
+
+/obj/structure/ore_box/attack_robot(mob/user)
+	if(Adjacent(user))
+		show_contents(user)
+
+/obj/structure/ore_box/proc/show_contents(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -76,15 +84,21 @@
 	user << browse("[dat]", "window=orebox")
 	return
 
+/obj/structure/ore_box/proc/dump_contents()
+	for (var/obj/item/weapon/ore/O in contents)
+		contents -= O
+		O.loc = src.loc
+
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
 		return
+	if(!Adjacent(usr))
+		return
+
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
-		for (var/obj/item/weapon/ore/O in contents)
-			contents -= O
-			O.loc = src.loc
+		dump_contents()
 		usr << "<span class='notice'>You empty the box.</span>"
 	src.updateUsrDialog()
 	return
@@ -92,3 +106,8 @@
 /obj/structure/ore_box/ex_act(severity, target)
 	if(prob(100 / severity) && severity < 3)
 		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them
+
+/obj/structure/ore_box/Destroy()
+	dump_contents()
+	return ..()
+
