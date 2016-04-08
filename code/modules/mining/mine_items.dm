@@ -81,17 +81,19 @@
 	name = "silver-plated pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	digspeed = 30 //mines faster than a normal pickaxe, bought from mining vendor
+	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
 	origin_tech = "materials=3;engineering=2"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
+	force = 17
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 20
+	digspeed = 14
 	origin_tech = "materials=4;engineering=3"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
+	force = 19
 
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill"
@@ -111,14 +113,14 @@
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 10
+	digspeed = 7
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
-	digspeed = 10
+	digspeed = 7
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
