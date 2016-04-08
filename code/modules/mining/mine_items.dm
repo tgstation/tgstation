@@ -291,8 +291,7 @@
 	threshhold.ChangeTurf(/turf/open/floor/pod)
 	var/turf/open/floor/pod/doorturf = threshhold
 	doorturf.blocks_air = 1 //So the air doesn't leak out
-	doorturf.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
-	doorturf.air.copy_from_turf(doorturf)
+	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
 	var/area/ZZ = get_area(threshhold)
 	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold
@@ -300,8 +299,7 @@
 
 	var/list/turfs = room["floors"]
 	for(var/turf/open/floor/A in turfs)
-		A.initial_gas_mix = "o2=21;n2=82;TEMP=293.15"
-		A.air.copy_from_turf(A)
+		A.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
 		A.overlays.Cut()
 		var/area/Z = get_area(A)
 		if(!is_type_in_list(Z, blacklist))
