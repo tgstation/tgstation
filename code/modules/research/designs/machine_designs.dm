@@ -475,7 +475,7 @@
 
 /datum/design/plantgenes
 	name = "Machine Design (Plant DNA Manipulator Board)"
-	desc = "The circuit board for a grounding rod."
+	desc = "The circuit board for a plant DNA manipulator."
 	id = "plantgenes"
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_type = IMPRINTER
