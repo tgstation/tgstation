@@ -395,7 +395,7 @@
 	icon_state = "smooth"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock/survival_pod)
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle)
 
 //Signs
 
