@@ -822,6 +822,8 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/imbue/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
 	var/list/papers_on_rune = list()
+	var/entered_talisman_name
+	var/list/possible_talismans = list()
 	for(var/obj/item/weapon/paper/P in T)
 		if(!P.info)
 			papers_on_rune.Add(P)
@@ -831,33 +833,27 @@ var/list/teleport_other_runes = list()
 		log_game("Talisman Imbue rune failed - no blank papers on rune")
 		return
 	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
-	var/list/nearby_runes = list()
-	for(var/obj/effect/rune/R in orange(1,src))
-		nearby_runes.Add(R)
-	if(!nearby_runes.len)
-		user << "<span class='cultitalic'>There are no runes near [src]!</span>"
-		fail_invoke()
-		log_game("Talisman Imbue rune failed - no nearby runes")
+	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
+		possible_talismans.Add(I) //This is to allow the menu to let cultists select talismans by name
+	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
-	var/obj/effect/rune/picked_rune = pick(nearby_runes)
-	var/list/split_rune_type = splittext("[picked_rune.type]", "/")
-	var/imbue_type = split_rune_type[split_rune_type.len]
-	var/talisman_type = text2path("/obj/item/weapon/paper/talisman/[imbue_type]")
-	if(ispath(talisman_type))
-		user.say("H'drak v'loso, mir'kanas verbot!")
-		var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
-		if(istype(picked_rune, /obj/effect/rune/teleport))
-			var/obj/effect/rune/teleport/TR = picked_rune
-			var/obj/item/weapon/paper/talisman/teleport/TT = TA
-			TT.keyword = TR.keyword
+	var/talisman_type = entered_talisman_name
+	user.say("H'drak v'loso, mir'kanas verbot!")
+	if(!do_after(user, 150, target = get_turf(user)))
+		return
+	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
+	if(istype(TA, /obj/item/weapon/paper/talisman/teleport))
+		var/the_keyword = stripped_input(usr, "Please enter a keyword for the talisman.", "Enter Keyword", "")
+		var/obj/item/weapon/paper/talisman/teleport/TELE = TA
+		TELE.keyword = the_keyword
 	else
-		user << "<span class='cultitalic'>The chosen rune was not a valid target!</span>"
+		user << "<span class='cultitalic'>You have failed the ritual!</span>"
 		fail_invoke()
 		log_game("Talisman Imbue rune failed - chosen rune invalid")
 		return
-	visible_message("<span class='warning'>[picked_rune] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
+	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
-	qdel(picked_rune)
 	qdel(src)
 //Rite of Fabrication: Creates a construct shell out of 5 metal sheets.
 /obj/effect/rune/construct_shell
