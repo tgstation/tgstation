@@ -15,7 +15,7 @@
 	result = /obj/item/weapon/gun
 	reqs = list(/obj/item/weapon/gun = 1)
 	parts = list(/obj/item/weapon/gun = 1)
-	tools = list(/obj/item/weapon/gun/energy/plasmacutter, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
+	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
 	time = 50
 	category = CAT_WEAPON
 
