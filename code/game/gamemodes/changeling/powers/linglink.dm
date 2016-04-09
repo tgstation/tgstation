@@ -9,8 +9,9 @@
 /obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-
 	var/datum/changeling/changeling = user.mind.changeling
+	var/obj/item/weapon/grab/G = user.get_active_hand()
+	var/mob/living/carbon/target = G.affecting
 	if(changeling.islinking)
 		user << "<span class='warning'>We have already formed a link with the victim!</span>"
 		return
@@ -23,18 +24,13 @@
 	if(target.mind.changeling)
 		user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
 		return	
-	var/obj/item/weapon/grab/G = user.get_active_hand()
 	if(!istype(G))
 		user << "<span class='warning'>We must be tightly grabbing a creature in our active hand to link with them!</span>"
 		return
 	if(G.state <= GRAB_NECK)
 		user << "<span class='warning'>We must have a tighter grip to link with this creature!</span>"
 		return
-
-	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
-
-
 
 /obj/effect/proc_holder/changeling/linglink/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
@@ -55,10 +51,9 @@
 				target << "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>"
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
-				
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 20))
-			user << "<span class='warning'>Our link with the [target] has ended!</span>"
+			user << "<span class='warning'>Our link with [target] has ended!</span>"
 			changeling.islinking = 0
 			return
 
