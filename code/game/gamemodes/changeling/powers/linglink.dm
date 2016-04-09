@@ -46,7 +46,7 @@
 			if(1)
 				user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
 			if(2)
-				user << "<span class='notice'>We stealthily stab [target] with a minor proboscis...</span>")
+				user << "<span class='notice'>We stealthily stab [target] with a minor proboscis...</span>"
 				target << "<span class='userdanger'>You experience a stabbing sensation and your ears begin to ring...</span>"
 			if(3)
 				user << "<span class='notice'>You mold the [target]'s mind like clay, they can now speak in the hivemind!</span>")
