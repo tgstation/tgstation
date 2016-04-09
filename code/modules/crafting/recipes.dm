@@ -327,3 +327,13 @@
 	time = 10
 	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC
+
+/datum/table_recipe/goliathcloak
+	name = "Goliath Hide Cloak"
+	result = /obj/item/clothing/suit/hooded/cloak/goliath
+	time = 30
+	reqs = list(/obj/item/asteroid/goliath_hide = 5,
+				/obj/item/weapon/bedsheet = 1,
+				/obj/item/weapon/ore/diamond = 2,
+				/obj/item/weapon/fuseorb =1)
+	category = CAT_MISC

@@ -25,3 +25,10 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbag"
 	w_class = 1
+
+/obj/item/weapon/fuseorb
+	name = "fusion orb"
+	desc = "A mystical object used to fuse items together."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "fuseorb"
+	w_class = 1
