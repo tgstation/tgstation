@@ -19,6 +19,17 @@
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		user << "<span class='notice'>You empty the ore in [S] into \the [src].</span>"
+	if(istype(W, /obj/item/weapon/crowbar))
+		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/item/weapon/crowbar/C = W
+		var/time = 50
+		if(do_after(user, time/C.toolspeed, target = src))
+			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
+			// If you change the amount of wood returned, remember
+			// to change the construction costs
+			var/obj/item/stack/sheet/mineral/wood/WOOD = new (loc, 4)
+			WOOD.add_fingerprint(user)
+			deconstruct()
 	return
 
 /obj/structure/ore_box/attack_hand(mob/user)
