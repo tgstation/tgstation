@@ -36,7 +36,7 @@
 		return 0
 	cooldown = world.time + 10
 	if(toggle)
-		overlays.Cut()
+		namedatum.update(src)//Rebuild default overlays
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
