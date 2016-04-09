@@ -15,4 +15,4 @@ var/list/adjectives = file2list("config/names/adjectives.txt")
 //loaded on startup because of "
 //would include in rsc if ' was used
 
-var/list/vox_name_syllables = list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah")
+var/list/vox_name_syllables = list("cha","chi","ha","hi","ka","kah","ki","ta","ti","ya","ya","yi")
