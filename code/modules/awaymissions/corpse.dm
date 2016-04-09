@@ -24,7 +24,7 @@
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
-	if(uses == 0)
+	if(!uses)
 		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
@@ -86,7 +86,7 @@
 		special(M)
 	if(uses > 0)
 		uses--
-	if(!permanent && (uses == 0))
+	if(!permanent && !uses)
 		qdel(src)
 
 // Base version - place these on maps/templates.
