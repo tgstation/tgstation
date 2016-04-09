@@ -200,6 +200,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		var/turf/T = get_turf(firer)
+		L.throw_at_fast(T,100,3, spin=1)
 		L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
 		qdel(chain)
 
