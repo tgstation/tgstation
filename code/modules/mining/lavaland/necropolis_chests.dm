@@ -186,7 +186,7 @@
 	armour_penetration = 100
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	weaken = 2
+	weaken = 3
 	var/chain
 
 /obj/item/ammo_casing/magic/hook/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
@@ -199,7 +199,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		L.forceMove(get_turf(firer))
+		var/turf/T = get_turf(firer)
 		L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
 		qdel(chain)
 
