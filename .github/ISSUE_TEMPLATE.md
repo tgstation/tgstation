@@ -24,7 +24,7 @@
 
 #### Length of time in which bug has been known to occur
 <!--
-	Be specific if you approximately know the time its been occurring
+	Be specific if you approximately know the time it's been occurring
 	for—this can speed up finding the source. If you're not sure
 	about it, tell us too!
 -->
