@@ -163,7 +163,6 @@
 /obj/item/weapon/gun/magic/hook
 	name = "meat hook"
 	desc = "Mid or feed."
-	fire_sound = "sound/magic/Staff_Change.ogg"
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
@@ -223,13 +222,13 @@
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
 		Z.dir = user.dir
-		user.loc = Z
+		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		spawn(100)
 			user.status_flags &= ~GODMODE
 			user.notransform = 0
-			user.loc = get_turf(Z)
+			user.forceMove(get_turf(Z))
 			user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
 			Z.can_destroy = TRUE
 			qdel(Z)
