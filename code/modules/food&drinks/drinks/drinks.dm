@@ -234,7 +234,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "flask"
-	desc = "A flask indicating you drink a lot."
+	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	icon_state = "flask"
 	materials = list(MAT_METAL=250)
 	volume = 60
