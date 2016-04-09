@@ -32,7 +32,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
 	var/reset = 0 //if the summoner has reset the guardian already
-	var/image/guardianoverlay = null
 	var/cooldown = 0
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
@@ -70,8 +69,24 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	namedatum = pick(possible_names)
 	updatetheme(pickedtheme)
 
-/mob/living/simple_animal/hostile/guardian/proc/updatetheme() //update the guardian's theme to whatever its datum is; proc for adminfuckery
-	namedatum.update(src)
+/mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
+	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
+	real_name = "[name]"
+	icon_living = "[namedatum.parasiteicon]"
+	icon_state = "[namedatum.parasiteicon]"
+	icon_dead = "[namedatum.parasiteicon]"
+	bubble_icon = "[namedatum.bubbleicon]"
+
+	if (namedatum.stainself)
+		color = namedatum.colour
+
+	//Special case holocarp, because #snowflake code
+	if(theme == "carp")
+		speak_emote = list("gnashes")
+		desc = "A mysterious fish that stands by its charge, ever vigilant."
+
+		attacktext = "bites"
+		attack_sound = 'sound/weapons/bite.ogg'
 
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
@@ -311,8 +326,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> is now online!</span>"
 					if("magic")
 						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
-					if("carp")
-						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been caught!</span>"
 				guardians -= G
 				if(!guardians.len)
 					verbs -= /mob/living/proc/guardian_reset
