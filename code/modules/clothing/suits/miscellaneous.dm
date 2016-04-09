@@ -182,6 +182,14 @@
 			I.overlays += image(icon = 'icons/mob/robots.dmi' , icon_state = "eyes-standard") //gotta look realistic
 			H.add_alt_appearance("standard_borg_disguise", I, silicon_mobs+H) //you look like a robot to robots! (including yourself because you're totally a robot)
 
+/obj/item/clothing/suit/squallwalker
+	name = "squallwalker suit"
+	desc = "Made made from some sort cheap plastic. "
+	icon_state = "squallwalker"
+	item_state = "squallwalker"
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+
 
 /obj/item/clothing/suit/snowman
 	name = "snowman outfit"
