@@ -28,9 +28,9 @@
 
 /datum/round_event/anomaly/anomaly_pyro/end()
 	if(newAnomaly.loc)
-		var/turf/simulated/T = get_turf(newAnomaly)
+		var/turf/open/T = get_turf(newAnomaly)
 		if(istype(T))
-			T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS | SPAWN_OXYGEN, 200) //Make it hot and burny for the new slime
+			T.atmos_spawn_air("o2=200;plasma=200;TEMP=1000") //Make it hot and burny for the new slime
 
 		var/mob/living/simple_animal/slime/S = new/mob/living/simple_animal/slime(T)
 		S.colour = pick("red", "orange")

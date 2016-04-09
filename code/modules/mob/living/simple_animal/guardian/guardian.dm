@@ -40,10 +40,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/playstyle_string = "<span class='holoparasite'>You are a standard Guardian. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
+	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
 /mob/living/simple_animal/hostile/guardian/New(loc, theme)
 	parasites |= src
 	setthemename(theme)
+
 	..()
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
@@ -52,7 +54,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
 	if(!pickedtheme)
-		pickedtheme = pick("magic", "tech")
+		pickedtheme = pick("magic", "tech", "carp")
 	var/list/possible_names = list()
 	switch(pickedtheme)
 		if("magic")
@@ -61,16 +63,31 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("tech")
 			for(var/type in (subtypesof(/datum/guardianname/tech) - namedatum.type))
 				possible_names += new type
+		if("carp")
+			for(var/type in (subtypesof(/datum/guardianname/carp) - namedatum.type))
+				possible_names += new type
 	namedatum = pick(possible_names)
-	updatetheme()
+	updatetheme(pickedtheme)
 
-/mob/living/simple_animal/hostile/guardian/proc/updatetheme() //update the guardian's theme to whatever its datum is; proc for adminfuckery
+/mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
 	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
 	real_name = "[name]"
 	icon_living = "[namedatum.parasiteicon]"
 	icon_state = "[namedatum.parasiteicon]"
 	icon_dead = "[namedatum.parasiteicon]"
 	bubble_icon = "[namedatum.bubbleicon]"
+
+	if (namedatum.stainself)
+		color = namedatum.colour
+
+	//Special case holocarp, because #snowflake code
+	if(theme == "carp")
+		speak_emote = list("gnashes")
+		desc = "A mysterious fish that stands by its charge, ever vigilant."
+
+		attacktext = "bites"
+		attack_sound = 'sound/weapons/bite.ogg'
+
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
 	..()
@@ -431,6 +448,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("magic")
 			user << "[G.magic_fluff_string]"
 			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
+		if("carp")
+			user << "[G.carp_fluff_string]"
+			user << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been caught!</span>"
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
@@ -451,7 +471,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
@@ -471,6 +491,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
+ <br>
+ <b>Protector</b>: Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower.<br>
  <br>
  <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
  <br>
@@ -492,3 +514,21 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/weapon/paper/guardian(src)
 	return
+
+/obj/item/weapon/guardiancreator/carp
+	name = "holocarp fishsticks"
+	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "fishfingers"
+	theme = "carp"
+	mob_name = "Holocarp"
+	use_message = "<span class='holoparasite'>You put the fishsticks in your mouth...</span>"
+	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
+	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
+	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
+	allowmultiple = 1
+	allowling = 1
+	random = TRUE
+
+/obj/item/weapon/guardiancreator/carp/choose
+	random = FALSE

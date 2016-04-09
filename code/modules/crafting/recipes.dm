@@ -15,7 +15,7 @@
 	result = /obj/item/weapon/gun
 	reqs = list(/obj/item/weapon/gun = 1)
 	parts = list(/obj/item/weapon/gun = 1)
-	tools = list(/obj/item/weapon/gun/energy/plasmacutter, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
+	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
 	time = 50
 	category = CAT_WEAPON
 
@@ -169,6 +169,14 @@
 	parts = list(/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
+	time = 10
+	category = CAT_WEAPON
+
+/datum/table_recipe/sandbags
+	name = "Sandbags"
+	result = /obj/item/stack/sheet/mineral/sandbags
+	reqs = list(/obj/item/weapon/ore/glass = 5,
+			/obj/item/weapon/emptysandbag = 1)
 	time = 10
 	category = CAT_WEAPON
 

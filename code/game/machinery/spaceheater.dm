@@ -68,7 +68,7 @@
 		return
 
 	if(cell && cell.charge > 0)
-		var/turf/simulated/L = loc
+		var/turf/L = loc
 		if(!istype(L))
 			if(mode != HEATER_MODE_STANDBY)
 				mode = HEATER_MODE_STANDBY
@@ -185,7 +185,7 @@
 	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
-	var/turf/simulated/L = get_turf(loc)
+	var/turf/L = get_turf(loc)
 	var/curTemp
 	if(istype(L))
 		var/datum/gas_mixture/env = L.return_air()

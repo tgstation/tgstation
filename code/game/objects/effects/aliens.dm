@@ -62,7 +62,7 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
-	health = 120
+	health = 160
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -138,8 +138,6 @@
 
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return !opacity
 	return !density
 
 
@@ -156,26 +154,27 @@
 	anchored = 1
 	density = 0
 	layer = TURF_LAYER + 0.09
-	pixel_x = -4
-	pixel_y = -4 //so the sprites line up right
-	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 	icon_state = "weeds"
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
-	canSmoothWith = list(/obj/structure/alien/weeds, /turf/simulated/wall)
+	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
 
 
 /obj/structure/alien/weeds/New(pos, node)
+	pixel_x = -4
+	pixel_y = -4 //so the sprites line up right in the map editor
 	..()
 	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
-		switch(rand(1,3))//why is there no 1? because we already have the icon set to that
+		switch(rand(1,3))
+			if(1)
+				icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 			if(2)
 				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
-	if(istype(loc, /turf/space))
+	if(istype(loc, /turf/open/space))
 		qdel(src)
 		return
 	spawn(rand(150, 200))
@@ -190,7 +189,7 @@
 	set background = BACKGROUND_ENABLED
 	var/turf/U = get_turf(src)
 
-	if(istype(U, /turf/space))
+	if(istype(U, /turf/open/space))
 		qdel(src)
 		return
 
@@ -199,7 +198,7 @@
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/open/space))
 			continue
 
 		new /obj/structure/alien/weeds(T, linked_node)
@@ -242,13 +241,13 @@
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
 
 
 /obj/structure/alien/weeds/node/New()
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	..(loc, src)
 
 #undef NODERANGE
@@ -263,8 +262,8 @@
 #define BURSTING 1
 #define GROWING 2
 #define GROWN 3
-#define MIN_GROWTH_TIME 1800	//time it takes to grow a hugger
-#define MAX_GROWTH_TIME 3000
+#define MIN_GROWTH_TIME 900	//time it takes to grow a hugger
+#define MAX_GROWTH_TIME 1500
 
 /obj/structure/alien/egg
 	name = "egg"
@@ -445,16 +444,16 @@
 			T.dump_contents()
 			qdel(target)
 
-		if(istype(target, /turf/simulated/mineral))
-			var/turf/simulated/mineral/M = target
+		if(istype(target, /turf/closed/mineral))
+			var/turf/closed/mineral/M = target
 			M.ChangeTurf(M.baseturf)
 
-		if(istype(target, /turf/simulated/floor))
-			var/turf/simulated/floor/F = target
+		if(istype(target, /turf/open/floor))
+			var/turf/open/floor/F = target
 			F.ChangeTurf(F.baseturf)
 
-		if(istype(target, /turf/simulated/wall))
-			var/turf/simulated/wall/W = target
+		if(istype(target, /turf/closed/wall))
+			var/turf/closed/wall/W = target
 			W.dismantle_wall(1)
 
 		else

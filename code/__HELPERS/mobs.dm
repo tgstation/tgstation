@@ -198,7 +198,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		sleep(1)
+		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
@@ -245,7 +245,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		sleep(1)
+		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -272,4 +272,49 @@ Proc for attack log creation, because really why not
 				. = 0
 				break
 	if (progress)
+		qdel(progbar)
+
+/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1)
+	if(!user || !targets)
+		return 0
+	if(!islist(targets))
+		targets = list(targets)
+	var/user_loc = user.loc
+
+	var/drifting = 0
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = 1
+
+	var/list/originalloc = list()
+	for(var/atom/target in targets)
+		originalloc[target] = target.loc
+
+	var/holding = user.get_active_hand()
+	var/datum/progressbar/progbar
+	if(progress)
+		progbar = new(user, time, targets[1])
+
+	var/endtime = world.time + time
+	var/starttime = world.time
+	. = 1
+	mainloop:
+		while(world.time < endtime)
+			sleep(1)
+			if(progress)
+				progbar.update(world.time - starttime)
+			if(!user || !targets)
+				. = 0
+				break
+			if(uninterruptible)
+				continue
+
+			if(drifting && !user.inertia_dir)
+				drifting = 0
+				user_loc = user.loc
+
+			for(var/atom/target in targets)
+				if((!drifting && user_loc != user.loc) || originalloc[target] != target.loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+					. = 0
+					break mainloop
+	if(progbar)
 		qdel(progbar)

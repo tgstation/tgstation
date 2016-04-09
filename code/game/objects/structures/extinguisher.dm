@@ -52,6 +52,7 @@
 	else
 		opened = !opened
 	update_icon()
+
 /obj/structure/extinguisher_cabinet/attack_tk(mob/user)
 	if(has_extinguisher)
 		has_extinguisher.loc = loc
@@ -66,6 +67,11 @@
 	attack_hand(user)
 	return
 
+/obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	opened = !opened
+	update_icon()
 
 /obj/structure/extinguisher_cabinet/update_icon()
 	if(!opened)

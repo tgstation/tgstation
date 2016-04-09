@@ -112,6 +112,7 @@
 		src << "<span class='revenboldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
+		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
 	..()
@@ -204,7 +205,7 @@
 	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
 	icon_state = "revenant_draining"
 	for(var/i = alpha, i > 0, i -= 10)
-		sleep(0.1)
+		stoplag()
 		alpha = i
 	visible_message("<span class='danger'>[src]'s body breaks apart into a fine pile of blue dust.</span>")
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
@@ -266,7 +267,7 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/simulated/wall))
+	if(istype(T, /turf/closed/wall))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
 	if(src.inhibited)
@@ -283,6 +284,7 @@
 	if(essence + essence_amt <= 0)
 		return
 	essence = max(0, essence+essence_amt)
+	update_action_buttons_icon()
 	update_health_hud()
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)

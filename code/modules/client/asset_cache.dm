@@ -175,8 +175,22 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/simple/tgui
 	assets = list(
-		"tgui.css"	= 'tgui/assets/tgui.css',
-		"tgui.js"	= 'tgui/assets/tgui.js'
+		"tgui.css"			= 'tgui/assets/tgui.css',
+		"tgui.js"			= 'tgui/assets/tgui.js',
+		"css.js"			= 'tgui/gulp/css.js',
+		"flags.js"			= 'tgui/gulp/flags.js',
+		"js.js"				= 'tgui/gulp/js.js',
+		"plugins.js"		= 'tgui/gulp/plugins.js',
+		"reload.js"			= 'tgui/gulp/reload.js',
+		"size.js"			= 'tgui/gulp/size.js',
+		"gulpfile.babel.js"	= 'tgui/gulpfile.babel.js',
+		"tgui.html"			= 'tgui/tgui.html',
+		"byond.js"			= 'tgui/src/util/byond.js',
+		"constants.js"		= 'tgui/src/util/constants.js',
+		"dragresize.js"		= 'tgui/src/util/dragresize.js',
+		"filter.js"			= 'tgui/src/util/filter.js',
+		"math.js"			= 'tgui/src/util/math.js',
+		"text.js"			= 'tgui/src/util/text.js'
 	)
 
 /datum/asset/simple/pda

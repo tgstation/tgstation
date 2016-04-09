@@ -80,7 +80,9 @@
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
 		return 1
-	if(istype(mover, /obj/item/projectile))
+	if(locate(/obj/structure/barricade) in get_turf(mover))
+		return 1
+	else if(istype(mover, /obj/item/projectile))
 		if(!anchored)
 			return 1
 		var/obj/item/projectile/proj = mover
@@ -90,9 +92,7 @@
 			return 1
 		return 0
 	else
-		return 0
-
-
+		return !density
 
 
 
@@ -104,6 +104,21 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	material = WOOD
+
+
+/obj/structure/barricade/sandbags
+	name = "sandbags"
+	desc = "Bags of sand. Self explanatory."
+	icon = 'icons/obj/smooth_structures/sandbags.dmi'
+	icon_state = "sandbags"
+	health = 280
+	maxhealth = 280
+	proj_pass_rate = 20
+	pass_flags = LETPASSTHROW
+	material = null
+	climbable = TRUE
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
 
 
 /obj/structure/barricade/security

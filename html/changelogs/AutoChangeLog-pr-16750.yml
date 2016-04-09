@@ -1,0 +1,6 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Swarmers can now deconstruct objects simply by clicking."
+  - rscadd: "Swarmers can still teleport mobs away via ctrl-click."
+  - bugfix: "Emps will now properly damage swarmers."

@@ -22,7 +22,7 @@
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
-	var/list/turf/simulated/adjacent_turfs = list()
+	var/list/turf/adjacent_turfs = list()
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -147,10 +147,10 @@
 		return 0
 	scrub(loc)
 	if(widenet)
-		for (var/turf/simulated/tile in adjacent_turfs)
+		for (var/turf/tile in adjacent_turfs)
 			scrub(tile)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/simulated/tile)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/tile)
 	if (!istype(tile))
 		return 0
 
@@ -319,6 +319,17 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user)
+	if(!welded || !(do_after(user, 20, target = src)))
+		return
+	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
+	welded = 0
+	update_icon()
+	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+
+
 
 #undef SIPHONING
 #undef SCRUBBING

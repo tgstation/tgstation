@@ -109,7 +109,7 @@
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
 	new door_type(T)
-	T.ChangeTurf(/turf/simulated/floor/plating)
+	T.ChangeTurf(/turf/open/floor/plating)
 
 
 /obj/item/projectile/magic/change

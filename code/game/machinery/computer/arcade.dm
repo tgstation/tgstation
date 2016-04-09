@@ -519,7 +519,7 @@
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
 						if(prob(90))
 							playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
-							var/turf/simulated/floor/F
+							var/turf/open/floor/F
 							for(F in orange(1, src))
 								F.ChangeTurf(F.baseturf)
 							say("Something slams into the floor around [src], exposing it to space!")
@@ -527,9 +527,9 @@
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
 								playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-								var/turf/space/T
+								var/turf/open/space/T
 								for(T in orange(1, src))
-									T.ChangeTurf(/turf/simulated/floor/plating/)
+									T.ChangeTurf(/turf/open/floor/plating/)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
 							playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)

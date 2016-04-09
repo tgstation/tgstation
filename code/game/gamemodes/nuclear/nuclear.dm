@@ -5,8 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 15 // 35 players - 5 players to be the nuke ops = 30 players remaining
-	required_enemies = 4
+	required_players = 30 // 30 players - 5 players to be the nuke ops = 25 players remaining
+	required_enemies = 5
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
@@ -305,7 +305,7 @@
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
 
-	var/tc = 30
+	var/tc = 25
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0

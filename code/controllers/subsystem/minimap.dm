@@ -58,7 +58,7 @@ var/datum/subsystem/minimap/SSminimap
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
 			del(minimap)
 			minimap = flatten
-			sleep(world.tick_lag) //we have to sleep in order to get byond to clear out the proc's garbage bin
+			stoplag() //we have to sleep in order to get byond to clear out the proc's garbage bin
 
 		CHECK_TICK
 
@@ -73,7 +73,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/obj/obj
 	var/list/obj_icons = list()
 	// Don't use icons for space, just add objects in space if they exist.
-	if(istype(tile, /turf/space))
+	if(istype(tile, /turf/open/space))
 		obj = locate(/obj/structure/lattice/catwalk) in tile
 		if(obj)
 			tile_icon = new /icon('icons/obj/smooth_structures/catwalk.dmi', "catwalk", SOUTH)

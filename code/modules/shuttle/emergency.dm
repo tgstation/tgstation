@@ -229,7 +229,7 @@
 /obj/docking_port/mobile/emergency/proc/open_dock()
 	for(var/obj/machinery/door/poddoor/shuttledock/D in airlocks)
 		var/turf/T = get_step(D, D.checkdir)
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/open/space))
 			spawn(0)
 				D.open()
 
@@ -272,7 +272,7 @@
 	dwidth = 1
 	width = 3
 	height = 4
-	var/target_area = /area/mine/unexplored //area/lavaland/surface/outdoors
+	var/target_area = /area/lavaland/surface/outdoors
 
 /obj/docking_port/stationary/random/initialize()
 	..()

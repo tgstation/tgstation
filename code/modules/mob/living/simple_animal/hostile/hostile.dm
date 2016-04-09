@@ -14,8 +14,8 @@
 	var/taunt_chance = 0
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
-	var/ranged_cooldown = 0 //What the starting cooldown is on ranged attacks
-	var/ranged_cooldown_cap = 3 //What ranged attacks, after being used are set to, to go back on cooldown, defaults to 3 life() ticks
+	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
+	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
@@ -44,8 +44,6 @@
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
-	if(ranged && ranged_cooldown)
-		ranged_cooldown--
 	if(!.) //dead
 		walk(src, 0) //stops walking
 		return 0
@@ -177,7 +175,7 @@
 	if(target in possible_targets)
 		var/target_distance = get_dist(targets_from,target)
 		if(ranged)//We ranged? Shoot at em
-			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
+			if(target_distance >= 2 && ranged_cooldown <= world.time)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
 		if(!Process_Spacemove()) // Drifting
 			walk(src,0)
@@ -277,7 +275,7 @@
 			Shoot(A)
 	else
 		Shoot(A)
-	ranged_cooldown = ranged_cooldown_cap
+	ranged_cooldown = world.time + ranged_cooldown_time
 
 
 /mob/living/simple_animal/hostile/proc/Shoot(atom/targeted_atom)
@@ -309,7 +307,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(targets_from, dir)
-			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
+			if(istype(T, /turf/closed/wall) || istype(T, /turf/closed/mineral))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
@@ -336,7 +334,7 @@
 		return 1
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
-	if(ranged && ranged_cooldown <= 0)
+	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
 	..()

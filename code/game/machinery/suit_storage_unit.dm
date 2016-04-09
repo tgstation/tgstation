@@ -140,29 +140,29 @@
 /obj/machinery/suit_storage_unit/power_change()
 	..()
 	if(!is_operational() && state_open)
-		open_machine(dump = TRUE)
+		open_machine()
+		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/open_machine(dump = FALSE)
-	state_open = TRUE
-	if(dump)
-		dropContents()
-		helmet = null
-		suit = null
-		mask = null
-		storage = null
-		occupant = null
-	update_icon()
+/obj/machinery/suit_storage_unit/proc/dump_contents()
+	dropContents()
+	helmet = null
+	suit = null
+	mask = null
+	storage = null
+	occupant = null
 
 /obj/machinery/suit_storage_unit/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			if(prob(50))
-				open_machine(dump = TRUE)
+				open_machine()
+				dump_contents()
 			qdel(src)
 		if(2)
 			if(prob(50))
-				open_machine(dump = TRUE)
+				open_machine()
+				dump_contents()
 				qdel(src)
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(mob/target, mob/user)
@@ -222,7 +222,9 @@
 			visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A light cloud of steam escapes from the chamber.</span>")
 			for(var/obj/item/I in src)
 				I.clean_blood()
-		open_machine(dump = !!occupant)
+		open_machine()
+		if(occupant)
+			dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -242,7 +244,8 @@
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
 		addtimer(src, "resist_open", 300, FALSE, user)
 	else
-		open_machine(dump = TRUE)
+		open_machine()
+		dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
@@ -289,6 +292,7 @@
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
 	if(default_pry_open(I))
+		dump_contents()
 		return
 
 	update_icon()
@@ -328,7 +332,9 @@
 			if(state_open)
 				close_machine()
 			else
-				open_machine(!!occupant) // Dump out contents if someone is in there.
+				open_machine()
+				if(occupant)
+					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE
 		if("lock")
 			locked = !locked

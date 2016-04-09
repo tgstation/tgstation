@@ -134,7 +134,7 @@
 
 	if(stat != DEAD)
 		var/co2_percentage =0
-		if(("co2" in environment.gases) && environment.total_moles())
+		if("co2" in environment.gases)
 			co2_percentage = environment.gases["co2"][MOLES] / environment.total_moles()
 		var/stasis = (co2_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
@@ -608,4 +608,3 @@
 	if (holding_still)
 		return 0
 	return 1
-s

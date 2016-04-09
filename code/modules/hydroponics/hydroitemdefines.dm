@@ -83,7 +83,7 @@
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
-	materials = list(MAT_METAL=15000)
+	materials = list(MAT_METAL = 15000)
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
