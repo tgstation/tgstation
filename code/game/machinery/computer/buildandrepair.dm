@@ -248,9 +248,10 @@
 		else
 			user << "<span class='notice'>The spectrum chip is unresponsive.</span>"
 	if(istype(I,/obj/item/weapon/card/emag))
-		contraband = TRUE
-		emagged = TRUE
-		user << "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>"
+		if(!emagged)
+			contraband = TRUE
+			emagged = TRUE
+			user << "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>"
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
