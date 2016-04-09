@@ -234,8 +234,8 @@
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued && are_operatives_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
+		feedback_set_details("round_end_result","halfwin - evacuation - disk not secured")
+		world << "<FONT size = 3><B>Neutral Victory!</B></FONT>"
 		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued &&  crew_evacuated)
