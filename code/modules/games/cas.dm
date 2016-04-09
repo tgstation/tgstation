@@ -29,7 +29,7 @@ var/global/list/cards_against_space
 	card_text_file = "config/cas_black.txt"
 
 /obj/item/toy/cards/deck/cas/New()
-	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation. k
+	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation
 		cards_against_space = list("cas_white" = file2list("config/cas_white.txt"),"cas_black" = file2list("config/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
@@ -52,7 +52,7 @@ var/global/list/cards_against_space
 		P.card_icon = "cas_white"
 		cards += P
 
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
 		return
 	if(cards.len == 0)
