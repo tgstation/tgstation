@@ -1,4 +1,3 @@
-
 /obj/item/weapon/gun/projectile/sniper_rifle
 	name = "sniper rifle"
 	desc = "The kind of gun that will leave you crying for mummy before you even realise your leg's missing"
@@ -16,23 +15,17 @@
 	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
 	slot_flags = SLOT_BACK
 
-
-/obj/item/weapon/gun/projectile/sniper_rifle/update_icon()
-	if(magazine)
-		icon_state = "sniper-mag"
-	else
-		icon_state = "sniper"
-
-
 /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
 	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=8;syndicate=4"
 
-
-
-
+/obj/item/weapon/gun/projectile/sniper_rifle/syndicate/update_icon()
+	if(magazine)
+		icon_state = "sniper-mag"
+	else
+		icon_state = "sniper"
 
 //Normal Boolets
 /obj/item/ammo_box/magazine/sniper_rounds
@@ -188,3 +181,24 @@
 		breakthings = TRUE
 	else if(damage > 25)
 		icon_state = "gauss"
+
+// Savior of Lowpop rounds
+
+/obj/item/weapon/gun/projectile/sniper_rifle/emergency
+	name = "emergency self-defense rifle"
+	desc = "Nanotrasen deploys these cheap mass-produced firearms wherever undermanned stations are at risk"
+	icon_state = "moistnugget"
+	item_state = "moistnugget"
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/emergency
+	recoil = 1
+	fire_delay = 30
+	origin_tech = "combat=2"
+	zoomable = FALSE
+
+/obj/item/ammo_box/magazine/sniper_rounds/emergency
+	name = "emergency rifle rounds (.762)"
+	ammo_type = /obj/item/ammo_casing/a762/emergency	
+	caliber = "a762"
+	max_ammo = 8
+	multiload = 1
+	icon_state = "75-8"
