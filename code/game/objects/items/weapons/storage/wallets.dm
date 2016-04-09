@@ -59,17 +59,7 @@
 /obj/item/weapon/storage/wallet/update_icon()
 	icon_state = "wallet"
 	if(front_id)
-		switch(front_id.icon_state)
-			if("silver")
-				icon_state = "walletid_silver"
-			if("gold")
-				icon_state = "walletid_gold"
-			if("centcom")
-				icon_state = "walletid_centcom"
-			if("orange")
-				icon_state = "walletid_orange"
-			else
-				icon_state = "walletid"
+		icon_state = "wallet_[front_id.icon_state]"
 
 
 
