@@ -30,8 +30,8 @@
 	)
 
 /datum/species/plasmaman/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
-	speech.message = replacetext(speech.message, "s", stutter("ss"))
-	return ..(speech,H)
+	speech.message = replacetext(speech.message, "s", "s-s") //not using stutter("s") because it likes adding more s's.
+	speech.message = replacetext(speech.message, "s-ss-s", "ss-ss") //asshole shows up as ass-sshole
 
 /datum/species/plasmaman/equip(var/mob/living/carbon/human/H)
 	H.fire_sprite = "Plasmaman"

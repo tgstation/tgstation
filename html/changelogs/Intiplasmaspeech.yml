@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscadd: "Plasmamen are now slightly less annoying when using the letter 's'. 's' becomes 's-s' and 'ss' becomes 'ss-ss' every time, no more long 's-s-s-s-s' messages."
