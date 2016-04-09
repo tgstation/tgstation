@@ -13,7 +13,7 @@
 	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
-			new /obj/item/weapon/bedsheet/cult(src)
+			new /obj/item/device/shared_storage/red(src)
 		if(2)
 			new /obj/item/clothing/suit/space/cult(src)
 			new /obj/item/clothing/head/helmet/space/cult(src)
@@ -30,6 +30,7 @@
 		if(8)
 			new /obj/item/clothing/head/culthood(src)
 			new /obj/item/clothing/suit/cultrobes(src)
+			new /obj/item/weapon/bedsheet/cult(src)
 		if(9)
 			new /obj/item/organ/internal/brain/alien(src)
 		if(10)
@@ -40,9 +41,7 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
 			new /obj/item/weapon/lighter(src)
 		if(12)
-			new /obj/item/weapon/bedsheet/cult(src)
-			new /obj/item/clothing/head/culthood(src)
-			new /obj/item/clothing/suit/cultrobes(src)
+			new /obj/item/upgradescroll(src)
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
@@ -144,9 +143,9 @@
 	if(linked.z == CENTCOMM)
 		user << "[linked] is somewhere you can't go."
 
-	PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
+	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 	user.forceMove(get_turf(linked))
-	PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
+	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 
 /obj/item/device/warp_cube/red
 	name = "red cube"
@@ -255,3 +254,83 @@
 		return QDEL_HINT_LETMELIVE
 	else
 		..()
+
+
+//Shared Bag
+
+//Internal
+
+/obj/item/weapon/storage/backpack/shared
+	name = "paradox bag"
+	desc = "Somehow, it's in two places at once."
+	max_combined_w_class = 60
+	max_w_class = 3
+
+
+//External
+
+/obj/item/device/shared_storage
+	name = "paradox bag"
+	desc = "Somehow, it's in two places at once."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "cultpack"
+	slot_flags = SLOT_BACK
+	var/obj/item/weapon/storage/backpack/shared/bag
+
+
+/obj/item/device/shared_storage/red
+	name = "paradox bag"
+	desc = "Somehow, it's in two places at once."
+
+/obj/item/device/shared_storage/red/New()
+	..()
+	if(!bag)
+		var/obj/item/weapon/storage/backpack/shared/S = new(src)
+		var/obj/item/device/shared_storage/blue = new(src.loc)
+
+		src.bag = S
+		blue.bag = S
+
+
+/obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
+	if(bag)
+		bag.loc = user
+		bag.attackby(W, user, params)
+
+
+/obj/item/device/shared_storage/attack_hand(mob/living/carbon/user)
+	if(!iscarbon(user))
+		return
+	if(loc == user && user.back && user.back == src)
+		if(bag)
+			bag.loc = user
+			bag.attack_hand(user)
+	else
+		..()
+
+
+/obj/item/device/shared_storage/MouseDrop(atom/over_object)
+	if(iscarbon(usr) || isdrone(usr))
+		var/mob/M = usr
+
+		if(!over_object)
+			return
+
+		if (istype(usr.loc,/obj/mecha))
+			return
+
+		if(!M.restrained() && !M.stat)
+			playsound(loc, "rustle", 50, 1, -5)
+
+
+			if(istype(over_object, /obj/screen/inventory/hand))
+				var/obj/screen/inventory/hand/H = over_object
+				if(!M.unEquip(src))
+					return
+				switch(H.slot_id)
+					if(slot_r_hand)
+						M.put_in_r_hand(src)
+					if(slot_l_hand)
+						M.put_in_l_hand(src)
+
+			add_fingerprint(usr)
