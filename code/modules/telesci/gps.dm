@@ -140,7 +140,7 @@ var/global/secure_GPS_count = 0
 
 	for(var/E in SPS_list)
 		var/obj/item/device/gps/secure/S  = E //No idea why casting it like this makes it work better instead of just defining it in the for each
-		S.announce(wearer, src, "died")
+		S.announce(wearer, src, "has detected the death of their wearer")
 
 /obj/item/device/gps/secure/stripped(mob/wearer as mob)
 	if(emped) return
@@ -148,11 +148,12 @@ var/global/secure_GPS_count = 0
 
 	for(var/E in SPS_list)
 		var/obj/item/device/gps/secure/S  = E
-		S.announce(wearer, src, "been stripped of [wearer.gender == FEMALE ? "her" : "his"] SPS")
+		S.announce(wearer, src, "has been stripped from their wearer")
 
 /obj/item/device/gps/secure/proc/announce(var/mob/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
-	if(istype(src.loc, /mob/living))
-		var/mob/living/L = src.loc
-		L.show_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>",MESSAGE_HEAR)
+	var/turf/pos = get_turf(SPS)
+	if(istype(find_holder(src), /mob/living))
+		var/mob/living/L = find_holder(src)
+		L.show_message("\icon[src] [gpstag] beeps: <span class='danger'>Warning! SPS '[SPS.gpstag]' [reason] at [get_area(SPS)] ([pos.x-WORLD_X_OFFSET[pos.z]], [pos.y-WORLD_Y_OFFSET[pos.z]], [pos.z]).</span>", MESSAGE_HEAR)
 	else if(isturf(src.loc))
-		src.visible_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")
+		src.visible_message("\icon[src] [gpstag] beeps: <span class='danger'>Warning! SPS '[SPS.gpstag]' [reason] at [get_area(SPS)] ([pos.x-WORLD_X_OFFSET[pos.z]], [pos.y-WORLD_Y_OFFSET[pos.z]], [pos.z]).</span>")
