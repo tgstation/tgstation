@@ -176,6 +176,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
+	icon_state = "syndicate"
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
@@ -279,3 +280,86 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
 	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+
+
+//Variety IDs
+
+/obj/item/weapon/card/id/special
+	name = "Centcom Special ID"
+	icon_state = "centcom-new"
+
+/obj/item/weapon/card/id/special/medsci
+	name = "Centcom Med-Sci ID"
+	icon_state = "centcom-medsci"
+
+/obj/item/weapon/card/id/special/specops
+	name = "Centcom Spec-ops ID"
+	icon_state = "centcom-specops"
+
+/obj/item/weapon/card/id/special/engi
+	name = "Centcom Engineering ID"
+	icon_state = "centcom-engi"
+
+/obj/item/weapon/card/id/special/thunderdome
+	name = "Centcom Thunderdome ID"
+	icon_state = "centcom-thunder"
+
+/obj/item/weapon/card/id/special/agent
+	name = "Centcom Agent ID"
+	icon_state = "centcom-agent"
+
+/obj/item/weapon/card/id/special/vice
+	name = "Centcom Vice ID"
+	icon_state = "centcom-vice"
+
+/obj/item/weapon/card/id/special/admiral
+	name = "Centcom Admiral ID"
+	icon_state = "centcom-admiral"
+
+/obj/item/weapon/card/id/special/highcom
+	name = "High Command ID"
+	icon_state = "highcom"
+
+/obj/item/weapon/card/id/special/syndicate
+	name = "Syndicate ID"
+	icon_state = "syndicate"
+
+/obj/item/weapon/card/id/special/syndicate/leader
+	name = "Syndicate Command ID"
+	icon_state = "syndicate-command"
+
+/obj/item/weapon/card/id/special/ice
+	name = "Ice ID"
+	icon_state = "ice-regular"
+
+/obj/item/weapon/card/id/special/ice
+	name = "Silver Ice ID"
+	icon_state = "ice_silver"
+
+/obj/item/weapon/card/id/special/ice/gold
+	name = "Gold Ice ID"
+	icon_state = "ice_gold"
+
+/obj/item/weapon/card/id/special/lava
+	name = "Lava ID"
+	icon_state = "lava_regular"
+
+/obj/item/weapon/card/id/special/lava/silver
+	name = "Silver Lava ID"
+	icon_state = "lava_silver"
+
+/obj/item/weapon/card/id/special/lava/gold
+	name = "Gold Lava ID"
+	icon_state = "lava_gold"
+
+/obj/item/weapon/card/id/special/ocean
+	name = "Ocean ID"
+	icon_state = "ocean_regular"
+
+/obj/item/weapon/card/id/special/ocean/silver
+	name = "Silver Ocean ID"
+	icon_state = "ocean_silver"
+
+/obj/item/weapon/card/id/special/ocean/gold
+	name = "Gold Ocean ID"
+	icon_state = "ocean_gold"
