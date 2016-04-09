@@ -250,18 +250,20 @@
 	if(user == O)
 		return
 
+
+	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] tries to stuff [O] into [src].</span>", \
 				 	 	"<span class='warning'>You try to stuff [O] into [src].</span>", \
 				 	 	"<span class='italics'>You hear clanging.</span>")
-	if(do_after(user, 40, target = src))
+	if(do_after_mob(user, targets, 40))
 		user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
 						 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 						 	 "<span class='italics'>You hear a loud metal bang.</span>")
 		var/mob/living/L = O
 		if(istype(L) && !issilicon(L))
 			L.Weaken(2)
-		step_towards(O, loc)
+		O.loc = src.loc
 		close()
 	return 1
 

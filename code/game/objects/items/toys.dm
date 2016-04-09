@@ -787,7 +787,6 @@
 		return
 	var/choice = null
 	if(cards.len == 0)
-		src.icon_state = "deck_[deckstyle]_empty"
 		user << "<span class='warning'>There are no more cards to draw!</span>"
 		return
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
@@ -802,12 +801,17 @@
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	update_icon()
+
+/obj/item/toy/cards/deck/update_icon()
 	if(cards.len > 26)
-		src.icon_state = "deck_[deckstyle]_full"
+		icon_state = "deck_[deckstyle]_full"
 	else if(cards.len > 10)
-		src.icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 1)
-		src.icon_state = "deck_[deckstyle]_low"
+		icon_state = "deck_[deckstyle]_half"
+	else if(cards.len > 0)
+		icon_state = "deck_[deckstyle]_low"
+	else if(cards.len == 0)
+		icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -828,12 +832,7 @@
 			qdel(C)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
-		if(cards.len > 26)
-			src.icon_state = "deck_[deckstyle]_full"
-		else if(cards.len > 10)
-			src.icon_state = "deck_[deckstyle]_half"
-		else if(cards.len > 1)
-			src.icon_state = "deck_[deckstyle]_low"
+		update_icon()
 
 
 /obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user, params)
@@ -848,12 +847,7 @@
 			qdel(C)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
-		if(cards.len > 26)
-			src.icon_state = "deck_[deckstyle]_full"
-		else if(cards.len > 10)
-			src.icon_state = "deck_[deckstyle]_half"
-		else if(cards.len > 1)
-			src.icon_state = "deck_[deckstyle]_low"
+	update_icon()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	var/mob/M = usr
@@ -877,8 +871,6 @@
 
 	else
 		usr << "<span class='warning'>You can't reach it from here!</span>"
-
-
 
 /obj/item/toy/cards/cardhand
 	name = "hand of cards"

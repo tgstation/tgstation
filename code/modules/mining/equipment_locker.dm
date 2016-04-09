@@ -658,7 +658,7 @@
 	ranged = 1
 	sentience_type = SENTIENCE_MINEBOT
 	ranged_message = "shoots"
-	ranged_cooldown_cap = 3
+	ranged_cooldown_time = 30
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	speak_emote = list("states")
@@ -800,10 +800,10 @@
 
 /obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	name = "minebot cooldown upgrade"
-	if(M.ranged_cooldown_cap != initial(M.ranged_cooldown_cap))
+	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
 		user << "[src] already has a decreased weapon cooldown!"
 		return
-	M.ranged_cooldown_cap = 1
+	M.ranged_cooldown_time = 10
 	qdel(src)
 
 
@@ -962,7 +962,7 @@
 				var/client/C = user.client
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/mining.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
 					C.images += I
 					spawn(30)
 						if(C)

@@ -223,6 +223,46 @@
 	build_path = /obj/item/weapon/kitchen/knife
 	category = list("initial","Misc")
 
+/datum/design/cultivator
+	name = "Cultivator"
+	id = "cultivator"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL=50)
+	build_path = /obj/item/weapon/cultivator
+	category = list("initial","Misc")
+
+/datum/design/plant_analyzer
+	name = "Plant analyzer"
+	id = "plant_analyzer"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
+	build_path = /obj/item/device/analyzer/plant_analyzer
+	category = list("initial","Misc")
+
+/datum/design/shovel
+	name = "Shovel"
+	id = "shovel"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50)
+	build_path = /obj/item/weapon/shovel
+	category = list("initial","Misc")
+
+/datum/design/spade
+	name = "Spade"
+	id = "spade"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50)
+	build_path = /obj/item/weapon/shovel/spade
+	category = list("initial","Misc")
+
+/datum/design/hatchet
+	name = "Hatchet"
+	id = "hatchet"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000)
+	build_path = /obj/item/weapon/hatchet
+	category = list("initial","Misc")
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"

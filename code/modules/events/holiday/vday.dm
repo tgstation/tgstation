@@ -15,24 +15,23 @@
 /datum/round_event/valentines/start()
 	..()
 	for(var/mob/living/carbon/human/H in mob_list)
-		H.put_in_hands(new /obj/item/weapon/hand/valentine)
+		H.put_in_hands(new /obj/item/weapon/valentine)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(b)
 
 /datum/round_event/valentines/announce()
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
 
-/obj/item/weapon/hand/valentine
+/obj/item/weapon/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sc_Ace of Hearts_syndicate" // shut up
 	var/message = "A generic message of love or whatever."
 	burn_state = FLAMMABLE
-	blank = 1
 	w_class = 1
 
-/obj/item/weapon/hand/valentine/New()
+/obj/item/weapon/valentine/New()
 	..()
 	message = pick("Roses are red / Violets are good / One day while Andy...",
 	               "My love for you is like the singularity. It cannot be contained.",
@@ -76,16 +75,15 @@
 	               "Roses are red, text is green, I love you more than cleanbots clean.",
 	               "If you were a carp I'd fi-lay you." )
 
-/obj/item/weapon/hand/valentine/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
 		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
 		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
 		if(recipient && sender)
 			name = "valentine - To: [recipient] From: [sender]"
-			blank = 0
 
-/obj/item/weapon/hand/valentine/examine(mob/user)
+/obj/item/weapon/valentine/examine(mob/user)
 	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(message)]</BODY></HTML>", "window=[name]")
@@ -96,7 +94,7 @@
 	else
 		user << "<span class='notice'>It is too far away.</span>"
 
-/obj/item/weapon/hand/valentine/attack_self(mob/user)
+/obj/item/weapon/valentine/attack_self(mob/user)
 	user.examinate(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/candyheart

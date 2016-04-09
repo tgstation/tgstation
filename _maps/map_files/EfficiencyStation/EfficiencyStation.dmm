@@ -8692,15 +8692,21 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/ears/earmuffs,
+/obj/item/device/assembly/signaler,
+/obj/item/device/healthanalyzer,
+/obj/item/device/electropack,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/toxins/misc_lab)
 "aoO" = (
 /obj/structure/table,
-/obj/item/device/electropack,
-/obj/item/device/healthanalyzer,
-/obj/item/device/assembly/signaler,
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/grenade/chem_grenade,
+/obj/item/weapon/grenade/chem_grenade,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -8710,22 +8716,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/toxins/misc_lab)
-"aoQ" = (
-/obj/structure/table,
 /obj/item/stack/sheet/mineral/plasma{
 	layer = 2.9
 	},
@@ -8741,7 +8735,7 @@
 	icon_state = "floorgrime"
 	},
 /area/toxins/misc_lab)
-"aoR" = (
+"aoQ" = (
 /obj/structure/table,
 /obj/item/device/assembly/igniter{
 	pixel_x = -5;
@@ -8775,18 +8769,24 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/toxins/misc_lab)
+"aoR" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/chem_dispenser/constructable,
 /turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+	icon_state = "delivery"
 	},
 /area/toxins/misc_lab)
 "aoS" = (
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
-/obj/machinery/chem_dispenser/constructable,
+/obj/machinery/droneDispenser/preloaded,
 /turf/open/floor/plasteel{
 	icon_state = "delivery"
 	},
@@ -17941,7 +17941,7 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/wrench,
+/obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "aFf" = (

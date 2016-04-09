@@ -61683,8 +61683,8 @@
 "bVL" = (
 /obj/structure/table/wood,
 /obj/machinery/light,
-/obj/item/weapon/deck/cas,
-/obj/item/weapon/deck/cas/black{
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/cas/black{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -76768,7 +76768,6 @@
 	pixel_y = -24
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench,
 /obj/item/weapon/crowbar,
 /obj/machinery/camera{
 	c_tag = "Medbay Cryo";
@@ -76779,6 +76778,7 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/tie/stethoscope,
+/obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "warnwhite"
@@ -122356,7 +122356,7 @@ cje
 ckt
 clT
 cns
-coC
+cgH
 cpJ
 cqW
 csr
