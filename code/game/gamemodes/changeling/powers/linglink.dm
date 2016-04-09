@@ -27,7 +27,7 @@
 	if(!istype(G))
 		user << "<span class='warning'>We must be tightly grabbing a creature in our active hand to link with them!</span>"
 		return
-	if(G.state <= GRAB_NECK)
+	if(G.state <= GRAB_AGGRESSIVE)
 		user << "<span class='warning'>We must have a tighter grip to link with this creature!</span>"
 		return
 	return changeling.can_absorb_dna(user,target)
@@ -49,8 +49,9 @@
 				target << "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>"
 				target.mind.linglink = 1
 				target << "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>"
-				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
-				sleep(1800)
+				target.reagents.add_reagent("epinephrine", 1) // So they don't choke to death while you interrogate them
+				target.reagents.add_reagent("salbutamol", 30) 
+				sleep(2200)
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 20))
 			user << "<span class='warning'>Our link with [target] has ended!</span>"
