@@ -124,6 +124,14 @@
 	required_temp = 777 // pure carbon isn't especially reactive.
 	result_amount = 3
 
+/datum/chemical_reaction/cupricoxide
+	name = "Cupric Oxide"
+	id = "cupricoxide"
+	result = "cupricoxide"
+	required_reagents = list("copper" = 1, "oxygen" = 1)
+	required_temp = 700
+	result_amount = 1
+
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
 /datum/chemical_reaction/virus_food
