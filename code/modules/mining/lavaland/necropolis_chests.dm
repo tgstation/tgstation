@@ -96,7 +96,7 @@
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "The wisp has returned to it's latern. Your vision returns to normal." //This works
+				M << "The wisp has returned to it's latern. Your vision returns to normal."
 
 			wisp.stop_orbit()
 			wisp.loc = src
