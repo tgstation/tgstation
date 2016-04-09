@@ -851,6 +851,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			normal C-4 timers."
 	item = /obj/item/device/c4detonator
 	cost = 6
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
