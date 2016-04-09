@@ -40,7 +40,7 @@
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
-	name = "Water tank"
+	name = "water tank"
 	desc = "A water tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
@@ -73,7 +73,7 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank
-	name = "Fuel tank"
+	name = "fuel tank"
 	desc = "A fuel tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
@@ -123,7 +123,7 @@
 
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "Water-Cooler"
+	name = "water cooler"
 	desc = "A machine that dispenses water to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
