@@ -1,0 +1,8 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Added wisp lanterns to necropolis chests."
+  - rscadd: "Added red/blue cube pairs to necropolis chests."
+  - rscadd: "Added meat hooks to necropolis chests."
+  - rscadd: "Added immortality talismans to necropolis chests."
+  - rscadd: "Added paradox bags to necropolis chests."
