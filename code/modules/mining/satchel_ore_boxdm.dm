@@ -27,8 +27,8 @@
 			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
 			// If you change the amount of wood returned, remember
 			// to change the construction costs
-			var/obj/item/stack/sheet/mineral/wood/WOOD = new (loc, 4)
-			WOOD.add_fingerprint(user)
+			var/obj/item/stack/sheet/mineral/wood/wo = new (loc, 4)
+			wo.add_fingerprint(user)
 			deconstruct()
 	return
 
