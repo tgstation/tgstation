@@ -1,4 +1,4 @@
-//In this file: C4 and Syndicate Bombs
+//In this file: C4
 
 /obj/item/weapon/c4
 	name = "C-4"
@@ -14,6 +14,7 @@
 	var/atom/target = null
 	var/open_panel = 0
 	var/image_overlay = null
+	var/exploded = 0
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
@@ -56,6 +57,12 @@
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
 	else if(is_wire_tool(I))
 		wires.interact(user)
+	else if(istype(I, /obj/item/device/c4detonator))
+		var/obj/item/device/c4detonator/deto = I
+		deto.linked_bomb = src
+		deto.icon_state = "remotedetonator_on"
+		icon_state = "plastic-explosive-tagged"
+		user << "<span class='notice'>You link the [src] to [deto].</span>"
 	else
 		..()
 
@@ -97,6 +104,7 @@
 			explode()
 
 /obj/item/weapon/c4/proc/explode()
+	exploded = 1
 	if(qdeleted(src))
 		return
 	var/turf/location

@@ -844,6 +844,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/c4
 	cost = 1
 
+/datum/uplink_item/device_tools/c4detonator
+	name = "C-4 Remote Detonator"
+	desc = "A small remote that can be used on a block of C-4 to link it. Once a block is linked, you can press the \
+			button on the remote to cause the C-4 to detonate. There is a slight delay, but it is much faster than \
+			normal C-4 timers."
+	item = /obj/item/device/c4detonator
+	cost = 6
+
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
