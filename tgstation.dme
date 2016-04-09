@@ -285,6 +285,7 @@
 #include "code\game\gamemodes\changeling\powers\hivemind.dm"
 #include "code\game\gamemodes\changeling\powers\humanform.dm"
 #include "code\game\gamemodes\changeling\powers\lesserform.dm"
+#include "code\game\gamemodes\changeling\powers\linglink.dm"
 #include "code\game\gamemodes\changeling\powers\mimic_voice.dm"
 #include "code\game\gamemodes\changeling\powers\mutations.dm"
 #include "code\game\gamemodes\changeling\powers\panacea.dm"
