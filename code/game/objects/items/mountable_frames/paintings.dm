@@ -113,7 +113,7 @@ var/global/list/available_paintings = list(
 			name = "\improper Pretentious Mime Painting"
 			desc = "There are no words to describe this painting."
 		if("wizard")
-			name = "\improper Nausiating Glow in the Dark Velvet Wizard Poster"
+			name = "\improper Nauseating Glow in the Dark Velvet Wizard Poster"
 			desc = "Oh god he's looking right at me, what do I do what do I do!?"
 		if("bland")
 			name = "\improper Pitcher and Orange"
@@ -126,7 +126,7 @@ var/global/list/available_paintings = list(
 			desc = "Through the carnage and bloodshed she's gunning for you, champ."
 		if("daddy")
 			name = "\improper I <3 Daddy!"
-			desc = "'Nanotrasen respects the right for all associates and their families to be able to express their indivuality though many media. However, soliciting Nanotrasen related merchandise without proper warrant is strictly prohibited. Luckly for you, you can now own your very own contraband Nanotrasen merch without the threat of *REDACTED*!'"
+			desc = "'Nanotrasen respects the right for all associates and their families to be able to express their individuality though many media. However, soliciting Nanotrasen related merchandise without proper warrant is strictly prohibited. Luckily for you, you can now own your very own contraband Nanotrasen merch without the threat of *REDACTED*!'"
 		if("carp")
 			name = "\improper 'Singing' Mounted Carp"
 			desc = "Too unrobust to beat a carp to death with your bare hands and mount it on a plank of wood? Then this professionally taxidermied trophy is just for you! Note: Does not actually sing."
@@ -203,7 +203,7 @@ var/global/list/available_paintings = list(
 			desc = "A painting of a duck. It has a crazed look in its eyes. You can almost imagine him asking you for some grapes."
 		if("mario")
 			name = "\improper Mario and Coin"
-			desc = "A painting of an italian plumber and an oversized golden plate. Apparently he's a video game mascot of sorts."
+			desc = "A painting of an Italian plumber and an oversized golden plate. Apparently he's a video game mascot of sorts."
 		if("gradius")
 			name = "\improper Vic Viper"
 			desc = "A painting of a space ship. It makes you feel like diving right into an alien base and releasing your blasters right onto its core."
@@ -250,7 +250,7 @@ var/global/list/available_paintings = list(
 			name = "\improper Pretentious Mime Painting"
 			desc = "There are no words to describe this painting."
 		if("wizard")
-			name = "\improper Nausiating Glow in the Dark Velvet Wizard Poster"
+			name = "\improper Nauseating Glow in the Dark Velvet Wizard Poster"
 			desc = "Oh god he's looking right at me, what do I do what do I do!?"
 		if("bland")
 			name = "\improper Pitcher and Orange"
@@ -263,7 +263,7 @@ var/global/list/available_paintings = list(
 			desc = "Through the carnage and bloodshed she's gunning for you, champ."
 		if("daddy")
 			name = "\improper I <3 Daddy!"
-			desc = "'Nanotrasen respects the right for all associates and their families to be able to express their indivuality though many media. However, soliciting Nanotrasen related merchandise without proper warrant is strictly prohibited. Luckly for you, you can now own your very own contraband Nanotrasen merch without the threat of *REDACTED*!'"
+			desc = "'Nanotrasen respects the right for all associates and their families to be able to express their individuality though many media. However, soliciting Nanotrasen related merchandise without proper warrant is strictly prohibited. Luckily for you, you can now own your very own contraband Nanotrasen merch without the threat of *REDACTED*!'"
 		if("carp")
 			name = "\improper 'Singing' Mounted Carp"
 			desc = "Too unrobust to beat a carp to death with your bare hands and mount it on a plank of wood? Then this professionally taxidermied trophy is just for you! Note: Does not actually sing."
