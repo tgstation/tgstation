@@ -179,6 +179,7 @@
 	icon_state = "hook"
 
 /obj/item/projectile/hook
+	name = "hook"
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
@@ -200,7 +201,6 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
-		L.throw_at_fast(get_turf(firer),100,3, spin=1)
 		L.forceMove(get_turf(firer))
 		qdel(chain)
 
