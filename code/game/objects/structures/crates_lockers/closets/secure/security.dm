@@ -113,6 +113,8 @@
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/head/beret/sec/navyofficer(src)
 
 /obj/structure/closet/secure_closet/security/sec
 

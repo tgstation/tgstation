@@ -290,3 +290,46 @@
 		return 0
 
 	return O.equip(src, visualsOnly)
+
+/mob/living/carbon/human/verb/get_weapon()
+	set name = "get-weapon"
+	set hidden = 1
+
+	var/obj/item/weapon/gun/I
+	if(ishuman(src))
+		if(get_active_hand())
+			if(istype(get_active_hand(),/obj/item/weapon/gun/))
+				I = get_active_hand()
+				if(can_equip(I, slot_belt, 1) && !belt)
+					equip_to_slot(I, slot_belt)
+					if(hand)
+						update_inv_l_hand(1)
+					else
+						update_inv_r_hand(1)
+					return
+				else if(can_equip(I, slot_s_store, 1) && !s_store)
+					equip_to_slot(I, slot_s_store)
+					if(hand)
+						update_inv_l_hand(1)
+					else
+						update_inv_r_hand(1)
+					return
+		else
+			if(belt && istype(belt,/obj/item/weapon/gun/))
+				I = belt
+				if(hand)
+					equip_to_slot(I, slot_l_hand)
+				else
+					equip_to_slot(I, slot_r_hand)
+				belt = null
+				update_inv_belt(0)
+				return
+			else if(s_store && istype(s_store,/obj/item/weapon/gun/))
+				I = s_store
+				if(hand)
+					equip_to_slot(I, slot_l_hand)
+				else
+					equip_to_slot(I, slot_r_hand)
+				s_store = null
+				update_inv_s_store(0)
+				return
