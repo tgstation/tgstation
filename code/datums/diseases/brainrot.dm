@@ -4,7 +4,7 @@
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
 	cure = "Alkysine"
-	cure_id = list("alkysine")
+	cure_id = "alkysine"
 	agent = "Cryptococcus Cosmosis"
 	affected_species = list("Human")
 	curable = 0

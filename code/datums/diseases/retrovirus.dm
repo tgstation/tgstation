@@ -3,11 +3,12 @@
 	max_stages = 4
 	spread = "Contact"
 	spread_type = CONTACT_GENERAL
-	cure = "Rest or an injection of ryetalyn"
+	cure = "Rest"
 	cure_chance = 6
 	agent = ""
 	affected_species = list("Human")
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
+	restcure = 1
 	severity = "Severe"
 	permeability_mod = 0.4
 	stage_prob = 2
@@ -20,8 +21,8 @@
 		if(prob(40))
 			cure_id = list("ryetalyn")
 			cure_list = list("ryetalyn")
-		else
-			restcure = 1
+			cure = "Ryetalyn"
+			restcure = 0
 
 
 

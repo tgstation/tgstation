@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
-	cure = "Common Cold Anti-bodies & Spaceacillin"
+	cure = "Common Cold Anti-bodies or Spaceacillin"
 	cure_id = "spaceacillin"
 	agent = "ICE9-rhinovirus"
 	affected_species = list("Human")

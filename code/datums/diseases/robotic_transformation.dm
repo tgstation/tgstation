@@ -5,9 +5,10 @@
 	max_stages = 5
 	spread = "Syringe"
 	spread_type = SPECIAL
-	cure = "An injection of copper."
-	cure_id = list("copper")
-	cure_chance = 5
+	curable = 1
+	cure = "Copper."
+	cure_id = "copper"
+	cure_chance = 50
 	agent = "R2D2 Nanomachines"
 	affected_species = list("Human")
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
