@@ -55,7 +55,7 @@
 		// Find the trace gas we need to mess with
 		if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
 			for(var/datum/gas/G in breath.trace_gases)
-				if(G.type != id)
+				if("[G.type]" != id)
 					continue
 				gas = G
 
