@@ -16,6 +16,7 @@
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
 #include "_maps\barshuttle.dmm"
+#include "_maps\crampedshuttle.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
