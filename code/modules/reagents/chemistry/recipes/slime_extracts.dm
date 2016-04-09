@@ -15,6 +15,18 @@
 	S.loc = get_turf(holder.my_atom)
 	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 
+/datum/chemical_reaction/slimeinaprov
+	name = "Slime epinephrine"
+	id = "m_inaprov"
+	result = "epinephrine"
+	required_reagents = list("water" = 5)
+	result_amount = 3
+	required_other = 1
+	required_container = /obj/item/slime_extract/grey
+
+/datum/chemical_reaction/slimeinaprov/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+
 /datum/chemical_reaction/slimemonkey
 	name = "Slime Monkey"
 	id = "m_monkey"
@@ -41,18 +53,6 @@
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slimemutate/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
-
-/datum/chemical_reaction/slimeclone
-	name = "Slime Rezadone"
-	id = "slimerezadone"
-	result = "rezadone"
-	required_reagents = list("blood" = 1)
-	result_amount = 3
-	required_other = 1
-	required_container = /obj/item/slime_extract/green
-
-/datum/chemical_reaction/slimeclone/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 
 //Mutated Green
@@ -467,18 +467,6 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/docility/P = new /obj/item/slimepotion/docility
 	P.loc = get_turf(holder.my_atom)
-
-/datum/chemical_reaction/slimeomnizine
-	name = "Slime omnizine"
-	id = "m_omni"
-	result = "omnizine"
-	required_reagents = list("water" = 5)
-	result_amount = 5
-	required_other = 1
-	required_container = /obj/item/slime_extract/pink
-
-/datum/chemical_reaction/slimeomnizine/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
 
 //Black
 /datum/chemical_reaction/slimemutate2
