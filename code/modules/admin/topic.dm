@@ -2894,11 +2894,11 @@
 					message_admins("[key_name_admin(usr)] has managed to destroy the universe with a supermatter cascade. Good job, [key_name_admin(usr)]")
 			if("mobswarm")
 				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","CS")
+				feedback_add_details("admin_secrets_fun_used","MS")
 				var/choice = input("Are you sure you want to fill the station with a bunch of unnecessary mobs?") in list("Of course!", "No, I hate timespace anomalies involving fun")
 				if(choice == "Of course!")
 					var/amt = input("How many would you like to spawn?", 10) as num
-					var/mobtype = input("What mob would you like?", /mob/living/simple_animal/corgi) in list(typesof(/mob/living))
+					var/mobtype = input("What mob would you like?", "Mob Swarm") as null|anything in typesof(/mob/living)
 					message_admins("[key_name_admin(usr)] triggered a mob swarm.")
 					new /datum/event/mob_swarm(mobtype, amt)
 			if("spawnadminbus")
