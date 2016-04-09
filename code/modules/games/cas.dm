@@ -15,7 +15,7 @@ var/global/list/cards_against_space
 	var/card_face = "cas_white"
 	var/blanks = 10
 	var/decksize = 150
-	var/card_text_file = "config/cas_white.txt"
+	var/card_text_file = "strings/cas_white.txt"
 	var/list/allcards = list()
 
 /obj/item/toy/cards/deck/cas/black
@@ -26,13 +26,15 @@ var/global/list/cards_against_space
 	card_face = "cas_black"
 	blanks = 0
 	decksize = 50
-	card_text_file = "config/cas_black.txt"
+	card_text_file = "strings/cas_black.txt"
 
 /obj/item/toy/cards/deck/cas/New()
 	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation
 		cards_against_space = list("cas_white" = file2list("config/cas_white.txt"),"cas_black" = file2list("config/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
+	if(possiblecards.len < decksize) // sanity check
+		decksize = (possiblecards.len - 1)
 	var/list/randomcards = list()
 	while (randomcards.len < decksize)
 		randomcards += pick_n_take(possiblecards)
