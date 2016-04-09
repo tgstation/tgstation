@@ -35,7 +35,7 @@
 "aI" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aJ" = (/obj/structure/chair,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aK" = (/obj/structure/table/wood,/obj/item/clothing/head/collectable/tophat,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
-"aL" = (/mob/living/simple_animal/drone{desc = "A barkeeping drone, an indestructible robot built to tend bars."; dir = 8; languages = 127; laws = "1. Serve drinks. 2. Talk to patrons. 3. Don't get messed up in their affairs."; name = "Bardrone"; seeStatic = 0},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
+"aL" = (/mob/living/simple_animal/drone{desc = "A barkeeping drone, an indestructible robot built to tend bars."; dir = 8; health = 3000; languages = 127; laws = "1. Serve drinks. 2. Talk to patrons. 3. Don't get messed up in their affairs."; maxHealth = 3000; name = "Bardrone"; seeStatic = 0},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aM" = (/obj/machinery/vending/boozeomat,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aN" = (/obj/structure/table,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aO" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/obj/item/weapon/reagent_containers/food/condiment/peppermill{step_x = 6; step_y = 4},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
