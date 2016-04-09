@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: "Balclavas once again hide your identity when worn, like gas masks."

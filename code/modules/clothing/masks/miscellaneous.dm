@@ -67,6 +67,15 @@
 	icon_state = "green_scarf"
 	item_state = "green_scarf"
 
+/obj/item/clothing/mask/balaclava
+	name = "balaclava"
+	desc = "LOADSAMONEY"
+	icon_state = "balaclava"
+	item_state = "balaclava"
+	flags = FPRINT
+	body_parts_covered = FACE
+	w_class = 2
+	species_fit = list("Vox")
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"

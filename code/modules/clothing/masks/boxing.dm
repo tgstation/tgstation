@@ -1,13 +1,3 @@
-/obj/item/clothing/mask/balaclava
-	name = "balaclava"
-	desc = "LOADSAMONEY"
-	icon_state = "balaclava"
-	item_state = "balaclava"
-	flags = FPRINT
-	body_parts_covered = MOUTH|EARS|HEAD|BEARD
-	w_class = 2
-	species_fit = list("Vox")
-
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
