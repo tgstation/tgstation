@@ -387,7 +387,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/n = sanitize_russian(stripped_multiline_input(U, "Please enter message", name, note),1)
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
-						note = n
+						note = sanitize_russian(n, 0)
 						notehtml = parsepencode(n, U, SIGNFONT)
 						notescanned = 0
 				else

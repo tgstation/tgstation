@@ -582,13 +582,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
+				reason = sanitize_russian(input(usr,"Reason?","reason",reason2), 1)
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
+				reason = sanitize_russian(input(usr,"Reason?","reason",reason2), 1)
 				if(!reason)
 					return
 

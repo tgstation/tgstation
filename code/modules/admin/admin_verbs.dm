@@ -543,7 +543,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	var/message = sanitize_russian(input(usr, "What do you want the message to be?", "Make Sound") as text | null)
 	if(!message)
 		return
 	var/templanguages = O.languages
