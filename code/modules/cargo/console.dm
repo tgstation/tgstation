@@ -24,6 +24,11 @@
 							"<span class='notice'>You adjust [src]'s routing, unlocking special supplies.</span>")
 		emagged = TRUE
 
+		// Emagging also unlocks the Broad-banded supplies
+		var/obj/item/weapon/circuitboard/cargo/board = circuit
+		circuit.contraband = TRUE
+		contraband = TRUE
+
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
