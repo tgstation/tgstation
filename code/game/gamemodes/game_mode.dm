@@ -281,11 +281,24 @@
 			intercepttext += i_text.build(A)
 		else
 			intercepttext += i_text.build(A, pick(modePlayer))
-
-	print_command_report(intercepttext,"Centcom Status Summary")
-	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)
+		var/list/players = num_players()
+		if(players.len < 25)
+			for(var/obj/machinery/computer/shuttle/ferry/request/f in world)
+				for(var/j = 1, j < 7, j++)
+					var weaploc = locate(f.x+j,f.y,f.z)
+					new /obj/item/weapon/gun/projectile/sniper_rifle/emergency(weaploc)
+
+				for(var/k = 1, k < 7, k++)
+					var ammoloc = locate(f.x+k,f.y-1,f.z)
+					new /obj/item/ammo_box/magazine/sniper_rounds/emergency(ammoloc)
+			print_command_report(intercepttext,"Centcom Status Summary")
+			priority_announce("Enemy communication intercepted. Skeleton crew confirmed vulnerable: Deploying surplus weaponry. Security Level Elevated.", 'sound/AI/intercept.ogg')
+		else
+			print_command_report(intercepttext,"Centcom Status Summary")
+			priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercepted. Security Level Elevated.", 'sound/AI/intercept.ogg')
+	set_security_level(SEC_LEVEL_BLUE)
+	SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away")
 
 
 /datum/game_mode/proc/get_players_for_role(role)
