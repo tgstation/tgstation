@@ -9,6 +9,10 @@
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a762/emergency	
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+	desc = "A modified 7.62 bullet casing"
+
 /obj/item/ammo_casing/a762/enchanted
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
