@@ -506,6 +506,10 @@
 				icon_state = "glass_brown2"
 				name = "Bacchus' Blessing"
 				desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
+			if("arnold_palmer")
+				icon_state = "arnold_palmer"
+				name = "Arnold Palmer"
+				desc = "You feel like taking a few golf swings after a few swigs of this."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
