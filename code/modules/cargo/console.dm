@@ -17,17 +17,20 @@
 	..()
 	var/obj/item/weapon/circuitboard/cargo/board = circuit
 	contraband = board.contraband
+	emagged = board.emagged
 
 /obj/machinery/computer/cargo/emag_act(mob/living/user)
 	if(!emagged)
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
-							"<span class='notice'>You adjust [src]'s routing, unlocking special supplies.</span>")
-		emagged = TRUE
+		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
-		// Emagging also unlocks the Broad-banded supplies
-		var/obj/item/weapon/circuitboard/cargo/board = circuit
-		circuit.contraband = TRUE
+		emagged = TRUE
 		contraband = TRUE
+
+		// This also permamently sets this on the circuit board
+		var/obj/item/weapon/circuitboard/cargo/board = circuit
+		board.contraband = TRUE
+		board.emagged = TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
