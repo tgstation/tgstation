@@ -43,8 +43,7 @@
 			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into \the [src]!</span>",\
 			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in \the [src]!</span>",\
 			"<span class='notice'>You hear squelching...</span>")
-	lock_atom(M)
-	M.pixel_y = 6
+	lock_atom(M, /datum/locking_category/bed/nest)
 	src.add_fingerprint(user)
 
 /obj/structure/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -61,18 +60,7 @@
 		density = 0
 		qdel(src)
 
-/obj/structure/bed/nest/lock_atom(var/atom/movable/AM)
-	. = ..()
-	if(!.)
-		return
-
-	AM.pixel_y += ALIEN_NEST_LOCKED_Y_OFFSET
-
-/obj/structure/bed/nest/unlock_atom(var/atom/movable/AM)
-	. = ..()
-	if(!.)
-		return
-
-	AM.pixel_y -= ALIEN_NEST_LOCKED_Y_OFFSET
-
 #undef ALIEN_NEST_LOCKED_Y_OFFSET
+
+/datum/locking_category/bed/nest
+	pixel_y_offset = 6

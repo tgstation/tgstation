@@ -334,18 +334,9 @@
 			user.visible_message(
 				"<span class='notice'>[user] climbs onto \the [src]!</span>",
 				"<span class='notice'>You climb onto \the [src]!</span>")
-			lock_atom(user)
+			lock_atom(user, /datum/locking_category/adminbus)
 			add_fingerprint(user)
 			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-
-/obj/structure/bed/chair/vehicle/adminbus/lock_atom(var/atom/movable/AM)
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/M = AM
-	M.flags |= INVULNERABLE
-	add_HUD(M)
 
 /obj/structure/bed/chair/vehicle/adminbus/manual_unbuckle(mob/user as mob)
 	if(occupant && occupant == user)	//Are you the driver?
@@ -378,16 +369,6 @@
 				else
 					to_chat(user, "<span class='notice'>You may not climb into \the [src] while its door is closed.</span>")
 					return
-
-/obj/structure/bed/chair/vehicle/adminbus/unlock_atom(var/atom/movable/AM)
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/M = AM
-
-	remove_HUD(M)
-	M.flags &= ~INVULNERABLE
 
 /obj/structure/bed/chair/vehicle/adminbus/proc/add_HUD(var/mob/M)
 	if(!M || !(M.hud_used))	return
@@ -639,3 +620,19 @@
 	return 0
 
 #undef MAX_CAPACITY
+
+/datum/locking_category/adminbus/lock(var/atom/movable/AM)
+	. = ..()
+	if (isliving(AM))
+		var/mob/living/M = AM
+		var/obj/structure/bed/chair/vehicle/adminbus/bus = owner
+		M.flags |= INVULNERABLE
+		bus.add_HUD(M)
+
+/datum/locking_category/adminbus/unlock(var/atom/movable/AM)
+	. = ..()
+	if (isliving(AM))
+		var/mob/living/M = AM
+		var/obj/structure/bed/chair/vehicle/adminbus/bus = owner
+		bus.remove_HUD(M)
+		M.flags &= ~INVULNERABLE

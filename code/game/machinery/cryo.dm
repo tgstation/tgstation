@@ -489,7 +489,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		to_chat(usr, "<span class='warning'>Subject may not have abiotic items on.</span>")
 		return*/
 	if(M.locked_to)
-		M.locked_to.unlock_atom(M)
+		M.unlock_from()
 	if(!node)
 		to_chat(usr, "<span class='warning'>The cell is not correctly connected to its pipe network!</span>")
 		return

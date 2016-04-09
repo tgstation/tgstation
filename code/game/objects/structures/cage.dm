@@ -17,8 +17,6 @@
 	icon = 'icons/obj/cage.dmi'
 	icon_state = "cage_base"
 
-	lockflags = LOCKED_CAN_LIE_AND_STAND | CANT_BE_MOVED_BY_LOCKED_MOBS
-
 	var/cover_state = C_OPENED
 	var/door_state = C_CLOSED
 
@@ -166,7 +164,7 @@
 		cover_state = C_CLOSED
 		if(user) user.visible_message("<span class='info'>\The [user] closes \the [src]'s cover.</span>")
 
-		for(var/mob/living/L in locked_atoms) //Move atom locked mobs inside
+		for(var/mob/living/L in get_locked(/datum/locking_category/cage)) //Move atom locked mobs inside
 			unlock_atom(L)
 			L.forceMove(src)
 
@@ -176,7 +174,7 @@
 
 		for(var/mob/living/L in contents) //Move hidden mobs to the outside
 			L.forceMove(get_turf(src))
-			lock_atom(L)
+			lock_atom(L, /datum/locking_category/cage)
 
 	update_icon()
 
@@ -194,7 +192,7 @@
 		if(C_CLOSED) //Open the door
 			if(cover_state == C_CLOSED) toggle_cover() //Open the cover, too
 
-			for(var/mob/living/L in (contents + locked_atoms))
+			for(var/mob/living/L in (contents + get_locked(/datum/locking_category/cage)))
 				unlock_atom(L)
 				L.forceMove(get_turf(src))
 
@@ -208,7 +206,7 @@
 	switch(cover_state)
 		if(C_OPENED) //Cover is opened - mob is atom locked to the cage
 			victim.forceMove(get_turf(src))
-			lock_atom(victim)
+			lock_atom(victim, /datum/locking_category/cage)
 			to_chat(victim, "<span class='notice'>You suddenly find yourself locked in a cage!</span>")
 		if(C_CLOSED) //Cover is closed - mob is stored inside the cage
 			victim.forceMove(src)
@@ -219,3 +217,6 @@
 
 #undef C_OPENED
 #undef C_CLOSED
+
+/datum/locking_category/cage
+	flags = LOCKED_CAN_LIE_AND_STAND | CANT_BE_MOVED_BY_LOCKED_MOBS

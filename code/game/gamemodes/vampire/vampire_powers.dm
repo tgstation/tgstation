@@ -475,7 +475,7 @@
 	var/max_lum = 1
 
 	if(M.current.vampire_power(20, 0))
-		if(M.current.locked_to) M.current.locked_to.unlock_atom(M.current)
+		if (M.current.locked_to) M.current.unlock_from()
 		spawn(0)
 			var/list/turfs = new/list()
 			for(var/turf/T in range(usr,outer_tele_radius))
@@ -497,7 +497,7 @@
 				return
 			M.current.ExtinguishMob()
 			if(M.current.locked_to)
-				M.current.locked_to.unlock_atom(M.current)
+				M.current.unlock_from()
 			var/turf/T = get_turf(M.current)
 			T.turf_animation('icons/effects/effects.dmi',"shadowstep")
 			usr.loc = picked

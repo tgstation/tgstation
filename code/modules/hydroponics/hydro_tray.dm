@@ -515,8 +515,7 @@
 				visible_message("<span class='warning'>\The [seed.display_name] hungrily lashes a vine at \the [M]!</span>")
 				if(M.health > 0)
 					M.Die()
-				M.forceMove(src.loc)
-				lock_atom(M)
+				lock_atom(M, /datum/locking_category/hydro_tray)
 				spawn(30)
 					if(M && M.loc == get_turf(src))
 						unlock_atom(M)
@@ -551,3 +550,5 @@
 			return
 
 	..()
+
+/datum/locking_category/hydro_tray

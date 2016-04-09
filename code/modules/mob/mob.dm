@@ -1448,9 +1448,11 @@ var/list/slot_equipment_priority = list( \
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	if(locked_to && !(locked_to.lockflags & LOCKED_CAN_LIE_AND_STAND))
-		canmove = 0
-		lying = (locked_to.lockflags & LOCKED_SHOULD_LIE) ? TRUE : FALSE //A lying value that !=1 will break this
+	if (locked_to)
+		var/datum/locking_category/category = locked_to.locked_atoms[src]
+		if (category.flags ^ LOCKED_CAN_LIE_AND_STAND)
+			canmove = 0
+			lying = (category.flags & LOCKED_SHOULD_LIE) ? TRUE : FALSE //A lying value that !=1 will break this
 
 
 	else if(isUnconscious() || weakened || paralysis || resting || !can_stand)

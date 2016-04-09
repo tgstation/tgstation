@@ -26,7 +26,7 @@
 		do_sting(M, 30)
 
 /obj/effect/plantsegment/attack_hand(var/mob/user)
-	if(user.a_intent == I_HELP && !locked_atoms.len && harvest)
+	if(user.a_intent == I_HELP && !is_locking(/datum/locking_category/plantsegment) && harvest)
 		if(seed.check_harvest(user))
 			harvest(user)
 		return
@@ -109,8 +109,9 @@
 			last_special = world.time
 
 /obj/effect/plantsegment/proc/manual_unbuckle(mob/user as mob)
-	if(locked_atoms && locked_atoms.len)
-		var/mob/M = locked_atoms[1]
+	var/list/atom/movable/locked = get_locked(/datum/locking_category/plantsegment)
+	if(locked && locked.len)
+		var/mob/M = locked[1]
 		if(!user || !istype(user))
 			user = M //Since the event sytem can't hot-potato arguments, for now, assume if noone's trying to free you, then you're trying to free yourself.
 		if(prob(Clamp(140 - seed.potency, 20, 100)))
@@ -157,17 +158,15 @@
 	on_resist_key = null
 
 /obj/effect/plantsegment/proc/entangle_mob(var/mob/living/victim)
-
-	if(!victim || !locked_atoms || locked_atoms.len || victim.locked_to || !seed || seed.spread != 2) //How much of this is actually necessary, I wonder
+	if(!victim || victim.locked_to || !seed || seed.spread != 2 || is_locking(/datum/locking_category/plantsegment)) //How much of this is actually necessary, I wonder
 		return
 
-	lock_atom(victim)
+	lock_atom(victim, /datum/locking_category/plantsegment)
 	if(victim.stat != DEAD)
 		to_chat(victim, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 
 /obj/effect/plantsegment/proc/grab_mob(var/mob/living/victim)
-
-	if(!victim || !locked_atoms || locked_atoms.len || victim.locked_to || !seed || seed.spread != 2)
+	if(!victim || victim.locked_to || !seed || seed.spread != 2 || is_locking(/datum/locking_category/plantsegment))
 		return
 
 	var/can_grab = 1
@@ -178,4 +177,6 @@
 	if(can_grab)
 		src.visible_message("<span class='danger'>Tendrils lash out from \the [src] and drag \the [victim] in!</span>")
 		victim.forceMove(src.loc)
-		lock_atom(victim)
+		lock_atom(victim, /datum/locking_category/plantsegment)
+
+/datum/locking_category/plantsegment

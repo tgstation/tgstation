@@ -672,7 +672,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(locked_to) //Handle atom locking
 		var/atom/movable/A = locked_to
 		A.unlock_atom(src)
-		A.lock_atom(new_animal)
+		A.lock_atom(new_animal, /datum/locking_category/simple_animal)
 
 	new_animal.inherit_mind(src)
 	new_animal.ckey = src.ckey
@@ -700,3 +700,6 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		if("pacid")
 			if(!supernatural)
 				adjustBruteLoss(volume * 0.5)
+
+
+/datum/locking_category/simple_animal

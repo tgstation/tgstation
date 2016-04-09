@@ -80,7 +80,7 @@
 		return
 
 	if(user && user.locked_to)
-		user.locked_to.unlock_atom(user)
+		user.unlock_from()
 
 	var/list/tempL = L
 	var/attempt = null

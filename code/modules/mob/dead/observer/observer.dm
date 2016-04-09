@@ -516,7 +516,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				if(locked_to == target) //Trying to follow same target, don't do anything
 					return
 				manual_stop_follow(locked_to) //So you can switch follow target on a whim
-			target.lock_atom(src)
+			target.lock_atom(src, /datum/locking_category/observer)
 			to_chat(src, "<span class='sinister'>You are now haunting \the [target]</span>")
 
 /mob/dead/observer/proc/manual_stop_follow(var/atom/movable/target)
@@ -526,7 +526,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	else
 		to_chat(src, "<span class='sinister'>You are no longer haunting \the [target].</span>")
-		target.unlock_atom(src)
+		unlock_from()
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -923,3 +923,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	speed = text2num(copytext(speed,1,4))/100
 	movespeed = 1/speed
+	
+/datum/locking_category/observer

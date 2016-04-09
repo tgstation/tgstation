@@ -13,10 +13,11 @@
 	icon_state = "bed"
 	icon = 'icons/obj/stools-chairs-beds.dmi'
 
-	lockflags = LOCKED_SHOULD_LIE
 	anchored = 1
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/sheet_amt = 1
+
+	var/lock_type = /datum/locking_category/bed
 
 /obj/structure/bed/alien
 	name = "resting contraption"
@@ -100,20 +101,22 @@
 	playsound(get_turf(src), 'sound/misc/buckle_click.ogg', 50, 1)
 	add_fingerprint(user)
 
-	lock_atom(M)
+	lock_atom(M, lock_type)
 
 /*
  * Roller beds
  */
 
-#define ROLLERBED_Y_OFFSET 6
+#define ROLLERBED_Y_OFFSET
 
 /obj/structure/bed/roller
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED | LOCKED_SHOULD_LIE
+
+	lockflags = DENSE_WHEN_LOCKED
+	lock_type = /datum/locking_category/bed/roller
 
 /obj/item/roller
 	name = "roller bed"
@@ -128,9 +131,10 @@
 	qdel(src)
 
 /obj/structure/bed/roller/lock_atom(var/atom/movable/AM)
-	..()
-	AM.pixel_y += ROLLERBED_Y_OFFSET
-	density = 1
+	. = ..()
+	if(!.)
+		return
+
 	icon_state = "up"
 
 /obj/structure/bed/roller/unlock_atom(var/atom/movable/AM)
@@ -138,7 +142,6 @@
 	if(!.)
 		return
 
-	AM.pixel_y -= ROLLERBED_Y_OFFSET
 	icon_state = "down"
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
@@ -157,7 +160,6 @@
 		qdel(src)
 
 /obj/structure/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(iswrench(W))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		getFromPool(sheet_type, get_turf(src), 2)
@@ -166,4 +168,10 @@
 
 	. = ..()
 
-#undef ROLLERBED_Y_OFFSET
+
+/datum/locking_category/bed
+	flags = LOCKED_SHOULD_LIE
+
+/datum/locking_category/bed/roller
+	pixel_y_offset = 6
+	flags = DENSE_WHEN_LOCKING | LOCKED_SHOULD_LIE

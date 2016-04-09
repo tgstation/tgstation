@@ -94,7 +94,7 @@
 	processing_objects.Add(src)
 	src.owner = owner
 	L = lance
-	src.owner.lock_atom(src, y_offset = 1, rotate_offsets = 1) //1 turf in front of the player
+	src.owner.lock_atom(src, /datum/locking_category/lance) //1 turf in front of the player
 
 	spawn()
 		amount_of_turfs_charged = 0
@@ -188,3 +188,8 @@
 				L.raise_lance()
 
 	return ..()
+
+
+/datum/locking_category/lance
+	y_offset       = 1
+	rotate_offsets = TRUE

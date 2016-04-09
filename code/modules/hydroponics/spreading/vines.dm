@@ -126,26 +126,24 @@
 		return
 
 	if(prob(seed ? seed.potency : 25))
-
-		if(!locked_atoms || !locked_atoms.len)
+		var/list/atom/movable/locked = get_locked(/datum/locking_category/plantsegment)
+		if(!locked.len)
 			var/mob/living/carbon/V //= locate() in src.loc
 			for(var/mob/living/carbon/C in src.loc)
 				if(C.stat != DEAD)
 					V = C
 					break
 			if(V && V.stat != DEAD) // If mob exists and is not dead or captured.
-				lock_atom(V)
+				lock_atom(V, /datum/locking_category/plantsegment)
 				to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 
 		// FEED ME, SEYMOUR.
-		if(seed && locked_atoms && locked_atoms.len)
-			var/mob/V = locked_atoms[1]
+		if(seed && locked.len)
+			var/mob/V = locked[1]
 			if(V.stat != DEAD) //Don't bother with a dead mob.
+				if(!isliving(M))
+					unlock_atom(V)
 
-				var/mob/living/M = V
-				if(!istype(M))
-					locked_atoms.Remove(M)
-					return
 				var/mob/living/carbon/human/H = V
 
 				// Drink some blood/cause some brute.

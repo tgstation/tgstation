@@ -232,7 +232,7 @@
 		"<span class='notice'>[M] climbs onto \the [nick]!</span>",\
 		"<span class='notice'>You climb onto \the [nick]!</span>")
 
-	lock_atom(M)
+	lock_atom(M, /datum/locking_category/chair/vehicle)
 
 	add_fingerprint(user)
 
@@ -355,6 +355,8 @@
 	if(!.)
 		return
 
+	occupant = AM
+
 	update_mob()
 
-	occupant = AM
+/datum/locking_category/chair/vehicle

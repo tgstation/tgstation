@@ -268,7 +268,7 @@ var/global/list/crate_mimic_disguises = list(\
 	var/can_grab = 1
 
 /mob/living/simple_animal/hostile/mimic/crate/chest/Die()
-	for(var/atom/A in locked_atoms)
+	for(var/atom/movable/A in get_locked(/datum/locking_category/mimic))
 		unlock_atom(A)
 		visible_message("<span class='notice'>\The [src] lets go of \the [A]!</span>")
 	..()
@@ -277,18 +277,20 @@ var/global/list/crate_mimic_disguises = list(\
 	..()
 	if(can_grab && istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
-		if(!locked_atoms.len) //Eating nobody
+		var/list/atom/movable/locked = get_locked(/datum/locking_category/mimic)
+		if(!locked.len) //Eating nobody
 			if(prob(60))
-				lock_atom(H)
+				lock_atom(H, /datum/locking_category/mimic)
 				visible_message("<span class='danger'>\The [src] grabs \the [H] with its tongue!")
-		else
-			if(H in locked_atoms)
-				if(prob(20))
-					to_chat(H, "<span class='danger'>You feel very weak!</span>")
-					H.Weaken(3)
+			return
+
+		if(H in locked)
+			if(prob(20))
+				to_chat(H, "<span class='danger'>You feel very weak!</span>")
+				H.Weaken(3)
 
 /mob/living/simple_animal/hostile/mimic/crate/chest/LoseTarget()
-	if(target in locked_atoms)
+	if(target in get_locked(/datum/locking_category/mimic))
 		unlock_atom(target)
 
 	var/mob/living/L = target
@@ -317,18 +319,17 @@ var/global/list/crate_mimic_disguises = list(\
 				return
 
 /mob/living/simple_animal/hostile/mimic/crate/chest/attackby(obj/item/W, mob/user)
-	if(angry)
-		if(locked_atoms.len)
-			if(W.is_sharp())
-				user.visible_message("<span class='danger'>[user] slashes at \the [src]'s tongue!</span>")
+	var/list/atom/movable/locked = get_locked(/datum/locking_category/mimic)
+	if (angry && locked.len && W.is_sharp())
+		user.visible_message("<span class='danger'>[user] slashes at \the [src]'s tongue!</span>")
 
-				for(var/atom/M in locked_atoms)
-					unlock_atom(M)
-					visible_message("<span class='notice'>\The [src] loses its hold on [M].</span>")
+		for(var/atom/M in locked)
+			unlock_atom(M)
+			visible_message("<span class='notice'>\The [src] loses its hold on [M].</span>")
 
-				if(can_grab && (W.is_sharp() >= 1.2) && prob(20)) //Required sharpness same as the normal kitchen knife's
-					visible_message("<span class='notice'>\The [src]'s tongue has been damaged!</span>")
-					can_grab = 0
+		if(can_grab && (W.is_sharp() >= 1.2) && prob(20)) //Required sharpness same as the normal kitchen knife's
+			visible_message("<span class='notice'>\The [src]'s tongue has been damaged!</span>")
+			can_grab = 0
 	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/chest/environment_disguise(list/L) //We're always chests
@@ -603,9 +604,9 @@ var/global/list/protected_objects = list(
 
 		maxHealth = health
 
-		for(var/atom/movable/AM in O.locked_atoms) //What could go wrong
+		for(var/atom/movable/AM in O.get_locked(/datum/locking_category/mimic)) //What could go wrong
 			O.unlock_atom(AM)
-			src.lock_atom(AM)
+			src.lock_atom(AM, /datum/locking_category/mimic)
 
 		if(creator)
 			src.creator = creator
@@ -627,3 +628,6 @@ var/global/list/protected_objects = list(
 			if(prob(15))
 				L.Weaken(1)
 				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+
+
+/datum/locking_category/mimic

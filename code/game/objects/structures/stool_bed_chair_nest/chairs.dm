@@ -2,11 +2,12 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
-	lockflags = 0
 
 	sheet_amt = 1
 
 	var/overrideghostspin = 0 //Set it to 1 if ghosts should NEVER be able to spin this
+
+	lock_type = /datum/locking_category/chair
 
 /obj/structure/bed/chair/New()
 	..()
@@ -200,3 +201,5 @@
 /obj/structure/bed/chair/office/dark
 	icon_state = "officechair_dark"
 
+// Subtype only for seperation purposes.
+/datum/locking_category/chair

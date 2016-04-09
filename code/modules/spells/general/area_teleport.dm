@@ -53,8 +53,7 @@
 		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	if(user && user.locked_to)
-		user.locked_to.unlock_atom(user)
+	user.unlock_from()
 
 	var/attempt = null
 	var/success = 0
@@ -68,8 +67,6 @@
 
 	if(!success)
 		user.loc = pick(L)
-
-	return
 
 /spell/area_teleport/after_cast()
 	return
