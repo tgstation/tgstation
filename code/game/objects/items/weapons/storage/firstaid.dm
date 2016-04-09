@@ -156,6 +156,12 @@
 			return
 	return
 
+/obj/item/weapon/storage/pill_bottle/AltClick()
+	if(!usr.isUnconscious() && Adjacent(usr))
+		change()
+		return
+	return ..()
+
 /obj/item/weapon/storage/pill_bottle/attackby(var/obj/item/I, var/mob/user)
 	if(!I) return
 	if(!melted)
