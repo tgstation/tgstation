@@ -308,8 +308,9 @@
 			if("1")
 				if ((!( ticker ) || emergency_shuttle.location))
 					return
+				var/justification = stripped_input(usr, "Please input a reason for the shuttle call. You may leave it blank to not have one.", "Justification") as text|null
 				emergency_shuttle.incall()
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[justification ? " Justification : '[justification]'" : ""]")
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='notice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>", 1)
 

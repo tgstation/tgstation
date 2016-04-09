@@ -205,11 +205,11 @@ var/shuttle_call/shuttle_calls[0]
 				if(!map.linked_to_centcomm)
 					to_chat(usr, "<span class='danger'>Error: No connection can be made to central command.</span>")
 					return
-				var/response = alert("Are you sure you wish to call the shuttle?", "Confirm", "Yes", "No")
+				var/justification = stripped_input(usr, "Please input a concise justification for the shuttle call. Note that failure to properly justify a shuttle call may lead to recall or termination.", "Nanotrasen Anti-Comdom Systems")
+				if(!justification || !(usr in view(1,src)))
+					return
+				var/response = alert("Are you sure you wish to call the shuttle?", "Confirm", "Yes", "Cancel")
 				if(response == "Yes")
-					var/justification = stripped_input(usr, "Please input a concise justification for the shuttle call. Note that failure to properly justify a shuttle call may lead to recall or termination", "Nanotrasen Anti-Comdom Systems")
-					if(!justification || !(usr in view(1,src)))
-						return
 					call_shuttle_proc(usr, justification)
 					if(emergency_shuttle.online)
 						post_status("shuttle")

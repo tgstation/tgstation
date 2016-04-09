@@ -870,9 +870,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!check_rights(R_ADMIN))	return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
-
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
 		if(choice == "Confirm")
@@ -880,8 +877,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			return
 
+	var/justification = stripped_input(usr, "Please input a reason for the shuttle call. You may leave it blank to not have one.", "Justification") as text|null
+	var/confirm = alert(src, "Are you sure you want to call the shuttle?", "Confirm", "Yes", "Cancel")
+	if(confirm != "Yes") return
+
 	emergency_shuttle.incall()
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.[justification ? " Justification : '[justification]'" : ""]")
 	world << sound('sound/AI/shuttlecalled.ogg')
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
