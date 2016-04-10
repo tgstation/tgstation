@@ -183,6 +183,7 @@ var/list/teleport_runes = list()
 	return ..() 
 
 /obj/effect/rune/teleport/invoke(mob/living/user)
+	var/list/potential_runes = list()	
 	for(var/R in teleport_runes)
 		var/obj/effect/rune/teleport/T = teleport_runes[R]
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
@@ -209,7 +210,7 @@ var/list/teleport_runes = list()
 	if(movedsomething)
 		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
 		user << "<span class='cult'>You[user.loc == UT ? " send everything above the rune away":"r vision blurs, and you suddenly appear somewhere else"].</span>"
- 	else
+	else
 		fail_invoke() 	
 
 //Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
