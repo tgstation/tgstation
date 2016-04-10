@@ -1,54 +1,696 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/wall/shuttle/smooth/nodiagonal{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"c" = (/obj/structure/closet/crate,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/device/flashlight/lantern,/obj/item/weapon/card/id/mining,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"d" = (/obj/structure/closet/crate,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/device/flashlight/lantern,/obj/item/weapon/card/id/mining,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"e" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"f" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"g" = (/obj/structure/shuttle/engine/heater{icon_state = "heater";dir = 4},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"h" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 8},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"i" = (/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"j" = (/obj/machinery/door/airlock/shuttle,/turf/closed/wall/shuttle/smooth{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"k" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"l" = (/obj/machinery/computer/arcade/battle,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"m" = (/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"n" = (/obj/item/weapon/resonator,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"o" = (/obj/effect/mob_spawn/human/golem/adamantine,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"p" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"q" = (/obj/machinery/mineral/equipment_vendor,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"r" = (/obj/machinery/autolathe,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"s" = (/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/storage/firstaid/fire,/obj/structure/table/wood,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"t" = (/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/storage/firstaid/fire,/obj/structure/table/wood,/obj/item/areaeditor/blueprints{desc = "Use to build new structures in the wastes.";name = "land claim"},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"u" = (/obj/item/weapon/disk/design_disk/golem_shell,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"v" = (/obj/machinery/mineral/ore_redemption,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"w" = (/obj/structure/statue/gold/rd,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"x" = (/obj/structure/window/reinforced{dir = 4;name = "shrine of the liberator";pixel_x = 0},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"y" = (/obj/machinery/door/airlock/shuttle{name = "automated trading pod"},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"z" = (/obj/structure/table/wood,/obj/item/weapon/book/manual/research_and_development{name = "Sacred Text of the Liberator"},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"A" = (/obj/item/weapon/resonator/upgraded,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"B" = (/turf/closed/wall/shuttle/smooth{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"C" = (/obj/machinery/computer/arcade/orion_trail,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"D" = (/obj/structure/ore_box,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"E" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"c" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/device/mining_scanner,
+/obj/item/device/flashlight/lantern,
+/obj/item/weapon/card/id/mining,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"d" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/device/mining_scanner,
+/obj/item/device/flashlight/lantern,
+/obj/item/weapon/card/id/mining,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"e" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"f" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"g" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"h" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"i" = (
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"j" = (
+/obj/machinery/mineral/equipment_vendor/golem,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"k" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"l" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"m" = (
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"n" = (
+/obj/item/weapon/resonator,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"o" = (
+/obj/effect/mob_spawn/human/golem/adamantine,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"p" = (
+/obj/machinery/computer/shuttle,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"q" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30;
+	step_y = 0
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"r" = (
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"s" = (
+/obj/item/weapon/storage/firstaid/fire,
+/obj/structure/table/wood,
+/obj/item/weapon/storage/firstaid/fire,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"t" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30;
+	step_y = 0
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"u" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"v" = (
+/obj/machinery/mineral/ore_redemption,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"w" = (
+/obj/structure/statue/gold/rd,
+/obj/structure/window/reinforced{
+	dir = 4;
+	name = "shrine of the liberator";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"x" = (
+/obj/item/weapon/storage/firstaid/brute,
+/obj/structure/table/wood,
+/obj/item/weapon/storage/firstaid/brute,
+/obj/item/areaeditor/blueprints{
+	desc = "Use to build new structures in the wastes.";
+	name = "land claim"
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"y" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "automated trading pod"
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"z" = (
+/obj/structure/table/wood,
+/obj/item/weapon/bedsheet/rd{
+	desc = "Majestic.";
+	layer = 3;
+	name = "Royal Cape of the Liberator";
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/weapon/book/manual/research_and_development{
+	name = "Sacred Text of the Liberator";
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	name = "shrine of the liberator";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"A" = (
+/obj/item/weapon/resonator/upgraded,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"B" = (
+/obj/item/weapon/storage/firstaid/brute,
+/obj/structure/table/wood,
+/obj/item/weapon/storage/firstaid/brute,
+/obj/item/weapon/disk/design_disk/golem_shell,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"C" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"D" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"E" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"F" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
+/turf/open/floor/plasteel/shuttle/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aaaaabbbbbbbbbbbbbbb
-aaaaabccccccdddefegh
-aaaaabffffffffiefegh
-aabbbbkkbbbbbbbbbbbb
-aablmmmnopbqrstrmkgh
-aabmmmmnopbmummmmkgh
-bbbkkbbbbbbmmvvmmbbb
-bwxmmmmmmmkmmmmmmkmy
-bzxmmmmmmmkmmvvmmkmk
-bbbkkbbbbbbmmmmAmbbb
-aaBmmmmnopbmmmmmmkgh
-aaBCmmmnopbqrssrmkgh
-aaBBBbkkbbbbbbbbbbbb
-aaaaabfffffffffefegh
-aaaaabDDDDDDDEiefegh
-aaaaabbbbbbbbbbbbbbb
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+w
+z
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+b
+p
+m
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+b
+l
+m
+k
+m
+m
+k
+m
+C
+b
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+b
+m
+m
+k
+m
+m
+k
+m
+m
+b
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+b
+b
+b
+m
+m
+b
+m
+m
+b
+m
+m
+b
+b
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+b
+c
+f
+k
+m
+m
+b
+m
+m
+b
+m
+m
+k
+f
+D
+b
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+b
+c
+f
+k
+n
+n
+b
+m
+m
+b
+n
+n
+k
+f
+D
+b
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+c
+f
+b
+F
+o
+b
+m
+m
+b
+o
+F
+b
+f
+D
+b
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+b
+c
+f
+b
+F
+o
+b
+m
+m
+b
+o
+F
+b
+f
+D
+b
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+b
+c
+f
+b
+b
+k
+b
+k
+k
+b
+k
+b
+b
+f
+D
+b
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+b
+c
+f
+b
+m
+m
+m
+m
+m
+m
+m
+q
+b
+f
+D
+b
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+b
+d
+f
+k
+m
+m
+m
+m
+m
+m
+m
+m
+k
+f
+D
+b
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+b
+d
+f
+k
+m
+m
+m
+m
+m
+m
+m
+m
+k
+f
+i
+b
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+b
+d
+f
+b
+m
+m
+m
+m
+m
+m
+m
+s
+b
+f
+f
+b
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+b
+i
+f
+b
+m
+m
+m
+m
+m
+A
+m
+s
+b
+f
+f
+b
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+b
+f
+f
+b
+m
+m
+v
+m
+m
+r
+m
+x
+b
+f
+f
+b
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+b
+e
+e
+b
+j
+m
+b
+k
+k
+b
+u
+B
+b
+E
+E
+b
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+b
+g
+g
+b
+g
+g
+b
+t
+m
+b
+g
+g
+b
+g
+g
+b
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+b
+h
+h
+b
+h
+h
+b
+y
+k
+b
+h
+h
+b
+h
+h
+b
+a
+a
 "}
