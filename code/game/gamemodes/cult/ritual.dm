@@ -212,7 +212,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	be equipped will not be summoned.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Rite of Horror will breaks your victim's mind with visions of the endtimes.<br><br>"
-	
+
 	var/datum/browser/popup = new(user, "tome", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
@@ -223,7 +223,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	var/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
-	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed - /obj/effect/rune)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
 			possible_runes.Add(initial(R.cultist_name)) //This is to allow the menu to let cultists select runes by name rather than by object path. I don't know a better way to do this
@@ -255,19 +255,21 @@ This file contains the arcane tome files as well as innate cultist emergency com
 			C.apply_damage(40, BRUTE, pick("l_arm", "r_arm"))
 			var/area/A = get_area(src)
 			var/locname = initial(A.name)
-			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/AI/spanomalies.ogg')
-			for(var/turf/B in orange (1, get_turf(user)))
-				var/turf/O = B
-				var/N = /obj/machinery/shield
-				N.color = 'red'
-				N.health = 100
-				O.ChangeTurf(N)
+			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual before it reaches a critical point.","Central Command Higher Dimensionsal Affairs")
+			for(var/turf/B in orange (1, user))
+				var/obj/machinery/shield/N = new(B)
+				N.color = "red"
+				N.health = 60
 			if(!do_after(user, 400, target = get_turf(user)))
+				for(var/obj/machinery/shield/U in orange (1, user))
+					qdel(U)
 				return
 	if(!do_after(user, 50, target = get_turf(user)))
 		return
-	user.visible_message("<span cslass='warning'>[user] creates a strange circle in their own blood.</span>", \
+	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
+	for(var/obj/machinery/shield/S in orange (1, user))
+		qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(get_turf(user))
 	if(chosen_keyword)
 		R.keyword = chosen_keyword
