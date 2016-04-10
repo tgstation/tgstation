@@ -92,7 +92,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	open_tome(user)
 
 /obj/item/weapon/tome/proc/open_tome(mob/user)
-	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","Read Tome","Cancel")
+	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","Read Tome")
 	switch(choice)
 		if("Read Tome")
 			read_tome(user)
@@ -103,8 +103,6 @@ This file contains the arcane tome files as well as innate cultist emergency com
 			if(!input)
 				return
 			cultist_commune(user, 1, 0, input)
-		if("Cancel")
-			return
 
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
