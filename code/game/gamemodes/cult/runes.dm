@@ -61,11 +61,11 @@ To draw a rune, use an arcane tome.
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(iscultist(user))
 		if(istype(I, /obj/item/weapon/tome))
-			user << "<span class='notice'>You carefully erase the [cultist_name] rune.</span>"
+			user << "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>"
 			qdel(src)
 		if(istype(I, /obj/item/weapon/paper) && !istype(I, /obj/item/weapon/paper/talisman))
 			if(talisman_type)
-				user << "<span class='notice'>You imbue the [cultist_name] rune into the paper.</span>"
+				user << "<span class='notice'>You imbue the [lowertext(cultist_name)] rune into the paper.</span>"
 				user.drop_item()
 				user.put_in_hands(new talisman_type(user))
 				qdel(I)
@@ -564,7 +564,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/true_sight
 	cultist_name = "Obscure Runes"
 	cultist_desc = "reveals or hides all invisible objects nearby, from spirits to runes."
-	invocation = "NKla'atu barada nikt'o!"
+	invocation = "Kla'atu barada nikt'o!"
 	creation_delay = 30 //3 seconds
 	talisman_type = /obj/item/weapon/paper/talisman/true_sight
 	icon_state = "4"
@@ -971,7 +971,7 @@ var/list/teleport_runes = list()
 	icon_state = "rune_large"
 	pixel_x = -32
 	pixel_y = -32
-	duration = 100
+	duration = 90
 	alpha = 0
 	color = rgb(255, 0, 0)
 
