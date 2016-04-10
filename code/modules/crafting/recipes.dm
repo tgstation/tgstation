@@ -335,5 +335,5 @@
 	reqs = list(/obj/item/asteroid/goliath_hide = 5,
 				/obj/item/weapon/bedsheet = 1,
 				/obj/item/weapon/ore/diamond = 2,
-				/obj/item/weapon/fuseorb =1)
+				/obj/item/weapon/sewingkit/advanced =1)
 	category = CAT_MISC

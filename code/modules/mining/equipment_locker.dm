@@ -306,7 +306,7 @@
 		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_ugprade/health,      			   	       		400),
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000),
-		new /datum/data/mining_equipment("Fusion Orb",    		/obj/item/weapon/fuseorb,												3000),
+		new /datum/data/mining_equipment("Advanced Sewing Kit", /obj/item/weapon/sewingkit/advanced,									3000),
 		)
 
 /datum/data/mining_equipment/
