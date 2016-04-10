@@ -270,13 +270,12 @@ var/list/teleport_other_runes = list()
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	icon_state = "5"
 	color = rgb(0, 0, 255)
-*/
 
 /obj/effect/rune/summon_tome/invoke(mob/living/user)
 	visible_message("<span class='warning'>A frayed tome materializes on the surface of [src], which dissolves into nothing.</span>")
 	new /obj/item/weapon/tome(get_turf(src))
 	qdel(src)
-
+*/
 
 //Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
 /obj/effect/rune/convert
@@ -887,7 +886,7 @@ var/list/teleport_other_runes = list()
 				log_game("Construct Shell rune failed - not enough plasteel sheets")
 				return
 
-
+/*
 //Rite of Arming: Creates cult robes, a trophy rack, and a cult sword on the rune.
 /obj/effect/rune/armor
 	cultist_name = "Summon Armaments"
@@ -904,7 +903,7 @@ var/list/teleport_other_runes = list()
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 	qdel(src)
-
+*/
 
 /*Rite of Leeching: Deals brute damage to the target and heals the same amount to the invoker.
 /obj/effect/rune/leeching
