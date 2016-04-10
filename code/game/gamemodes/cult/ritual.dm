@@ -13,7 +13,11 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	if(!iscultist(usr) || usr.incapacitated())
 		return
-
+	if(!istype(usr, /mob/living/simple_animal))
+		var/confirm_desperation = alert(user, "This is a LAST RESORT, you should use a tome to communicate if possible. This ritual will inflict serious injury on you!", "Is this what you want?", "Yes", "No")
+		if(confirm_desperation == "No")
+			user << "On second thought, maybe I should summon a tome."
+			return
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input)
 		return
@@ -40,7 +44,6 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	cultist_commune(usr, 0, 1, input)
 	return
-
 
 /obj/item/weapon/tome
 	name = "arcane tome"
