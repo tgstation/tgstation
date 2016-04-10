@@ -4,7 +4,7 @@
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
-	smooth = SMOOTH_MORE
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
@@ -13,8 +13,8 @@
 	blocks_air = 1
 	layer = MOB_LAYER + 0.05
 	temperature = TCMB
-	var/environment_type = "basalt"
-	var/turf/open/floor/plating/asteroid/turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface //For basalt vs normal asteroid
+	var/environment_type = "asteroid"
+	var/turf/open/floor/plating/asteroid/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
@@ -413,7 +413,7 @@
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
-	name = "Asteroid"
+	name = "asteroid sand"
 	baseturf = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"

@@ -446,6 +446,16 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 
+/datum/design/diskplantgene
+	name = "plant data disk"
+	desc = "A disk for storing plant genetic data."
+	id = "diskplantgene"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	build_path = /obj/item/weapon/disk/plantgene
+	category = list("Electronics")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////

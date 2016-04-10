@@ -94,6 +94,13 @@
 		close()
 	return
 
+/obj/machinery/door/firedoor/attack_alien(mob/user)
+	add_fingerprint(user)
+	if(blocked)
+		user << "<span class='warning'>[src] refuses to budge!</span>"
+		return
+	open()
+
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
