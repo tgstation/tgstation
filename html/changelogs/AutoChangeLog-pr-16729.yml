@@ -1,0 +1,4 @@
+author: RemieRichards
+delete-after: True
+changes: 
+  - rscadd: "The Station Blueprints now display the piping/wiring and some of the machinery the station started with, to assist in repairs"
