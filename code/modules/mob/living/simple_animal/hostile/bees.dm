@@ -56,6 +56,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees/New()
 	..()
+	qdel(src)
 	generate_bee_visuals()
 
 
