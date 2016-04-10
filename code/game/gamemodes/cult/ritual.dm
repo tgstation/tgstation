@@ -223,7 +223,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	var/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
-	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed - /obj/effect/rune/basic)
+	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
 			possible_runes.Add(initial(R.cultist_name)) //This is to allow the menu to let cultists select runes by name rather than by object path. I don't know a better way to do this
