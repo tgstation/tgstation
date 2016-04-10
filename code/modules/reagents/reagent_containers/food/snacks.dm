@@ -28,6 +28,14 @@
 	var/filling_color = "#FFFFFF" //What color would a filling of this item be ?
 	volume = 100 //Double amount snacks can carry, so that food prepared from excellent items can contain all the nutriments it deserves
 
+/obj/item/weapon/reagent_containers/food/snacks/Destroy()
+	var/turf/T = get_turf(src)
+	if(contents.len)
+		for(var/atom/movable/A in src)
+			A.loc = T
+		visible_message("<span class='warning'>The items sloppily placed within fall out of \the [src]!</span>")
+	..()
+
 //Proc for effects that trigger on eating that aren't directly tied to the reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(var/mob/user, var/datum/reagents/reagentreference)
 	if(!user)
@@ -201,8 +209,12 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path || istype(W,/obj/item/weapon/reagent_containers/syringe)) //Let's also not slice with syringes.
 		return 0
 
-	if(W.w_class <= 2 && W.is_sharp() < 0.8 && !istype(W,/obj/item/device/analyzer/plant_analyzer)) //Make sure the item is valid to attempt slipping shit into it
+	if(W.w_class <= 2 && (W.w_class < w_class) && W.is_sharp() < 0.8 && !istype(W,/obj/item/device/analyzer/plant_analyzer)) //Make sure the item is valid to attempt slipping shit into it
 		if(!iscarbon(user))
+			return 0
+
+		if(contents.len > slices_num/2) //There's a rational limit to this madness people
+			to_chat(user, "<span class='warning'>\the [src] is already too full to fit \the [W].</span>")
 			return 0
 
 		if(user.drop_item(W, src))
@@ -239,12 +251,6 @@
 		reagents.trans_to(slice, reagents_per_slice)
 	qdel(src) //So long and thanks for all the fish
 	return 1
-
-/obj/item/weapon/reagent_containers/food/snacks/Destroy()
-	if(contents) //Did someone slip shit in the pizza again ?
-		for(var/atom/movable/surprise in contents) //Find it
-			surprise.loc = get_turf(src) //Recover it
-	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
