@@ -10,4 +10,3 @@
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/weapon/cultivator(src)
 	new /obj/item/weapon/hatchet(src)
-	new /obj/item/weapon/storage/box/disks_plantgene(src)

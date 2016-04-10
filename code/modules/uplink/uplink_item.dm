@@ -137,13 +137,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 9
 
-//datum/uplink_item/dangerous/stemperature
-//	name = "Syndicate Temperature Gun"
-//	desc = "Upgraded version of temperature gun. Decreases or increases target temperature with every shot. In heat mode \
-//			sets target on fire if temperature of it is high enough. In freeze mode slows target. Recharges itself."
-//	item = /obj/item/weapon/gun/energy/stemperature
-//	cost = 14
-//	surplus = 25
+/datum/uplink_item/dangerous/stemperature
+	name = "Syndicate Temperature Gun"
+	desc = "Upgraded version of temperature gun. Decreases or increases target temperature with every shot. In heat mode \
+			sets target on fire if temperature of it is high enough. In freeze mode slows target. Recharges itself."
+	item = /obj/item/weapon/gun/energy/stemperature
+	cost = 14
+	surplus = 25
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -459,6 +459,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 	cost = 5
+
+/datum/uplink_item/ammo/sniper/accelerator
+	name = ".50 Accelerator Magazine"
+	desc = "A 5-round magazine of accelerator ammo designed for use with .50 sniper rifles. \
+			The shot is weak at close range, but gains more power the farther it flies."
+	item = /obj/item/ammo_box/magazine/sniper_rounds/accelerator
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"

@@ -130,8 +130,8 @@
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as their hand leaves the mirror!</B></span>")
 	var/turf/T = get_turf(user)
-	T.ChangeTurf(/turf/open/chasm/straight_down)
-	var/turf/open/chasm/straight_down/C = T
+	T.ChangeTurf(/turf/simulated/chasm/straight_down)
+	var/turf/simulated/chasm/straight_down/C = T
 	C.drop(user)
 
 //Sloth - I'll finish this item later
@@ -268,10 +268,10 @@
 	category = list("Imported")
 
 /obj/item/golem_shell
-	name = "incomplete golem shell"
+	name = "empty golem shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
-	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
+	desc = "The incomplete body of a golem."
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()

@@ -72,6 +72,43 @@
 	nodamage = 1
 	flag = "bullet"
 
+/obj/item/projectile/stemp
+	name = "freeze beam"
+	icon_state = "ice_3"
+	damage = 0
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage_type = BURN
+	nodamage = 1
+	flag = "energy"
+	var/temperature = -1100
+
+
+/obj/item/projectile/stemp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+	..()
+	if(isliving(target))
+		var/mob/living/M = target
+		M.bodytemperature = M.bodytemperature + temperature
+		if(M.bodytemperature > 500)
+		{
+			M.adjust_fire_stacks(1)
+			M.IgniteMob()
+		}
+	return 1
+
+/obj/item/projectile/stemp/shot
+	name = "heat beam"
+	icon_state = "heat_1"
+	temperature = 400
+
+/obj/item/projectile/meteor
+	name = "meteor"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "small1"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
+	flag = "bullet"
+
 /obj/item/projectile/meteor/Bump(atom/A, yes)
 	if(!yes) //prevents multi bumps.
 		return
@@ -147,14 +184,14 @@
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
 	var/turf/target_turf= get_turf(target)
-	if(istype(target_turf, /turf/closed/mineral))
-		var/turf/closed/mineral/M = target_turf
+	if(istype(target_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
 	if(src.splash)
 		for(var/turf/T in range(splash, target_turf))
-			if(istype(T, /turf/closed/mineral))
-				var/turf/closed/mineral/M = T
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
 				M.gets_drilled(firer)
 
 
@@ -234,8 +271,8 @@
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /turf/closed/mineral))
-		var/turf/closed/mineral/M = target
+	if(istype(target, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target
 		M.gets_drilled(firer)
 		range = max(range - 1, 1)
 		return -1

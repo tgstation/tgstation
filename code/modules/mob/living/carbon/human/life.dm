@@ -266,7 +266,7 @@
 				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 				var/turf/location = loc
-				if (istype(location, /turf))
+				if (istype(location, /turf/simulated))
 					location.add_vomit_floor(src, 1)
 
 				nutrition -= 20

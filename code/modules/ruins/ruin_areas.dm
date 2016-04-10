@@ -22,7 +22,3 @@
 /area/ruin/unpowered/no_grav/way_home
 	name = "\improper Salvation"
 	icon_state = "away"
-
-
-
-/area/ruin/powered/snow_biodome

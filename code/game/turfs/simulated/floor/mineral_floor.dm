@@ -8,18 +8,18 @@
  * Uranium floor
  */
 
-/turf/open/floor/mineral
+/turf/simulated/floor/mineral
 	name = "mineral floor"
 	icon_state = ""
 	var/list/icons = list()
 
 
 
-/turf/open/floor/mineral/New()
+/turf/simulated/floor/mineral/New()
 	..()
 	broken_states = list("[initial(icon_state)]_dam")
 
-/turf/open/floor/mineral/update_icon()
+/turf/simulated/floor/mineral/update_icon()
 	if(!..())
 		return 0
 	if(!broken && !burnt)
@@ -28,17 +28,17 @@
 
 //PLASMA
 
-/turf/open/floor/mineral/plasma
+/turf/simulated/floor/mineral/plasma
 	name = "plasma floor"
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
 
-/turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/turf/simulated/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		PlasmaBurn()
 
-/turf/open/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma flooring was ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma flooring was ignited by [key_name(user)] in ([x],[y],[z])")
@@ -46,18 +46,18 @@
 		return
 	..()
 
-/turf/open/floor/mineral/plasma/proc/PlasmaBurn()
+/turf/simulated/floor/mineral/plasma/proc/PlasmaBurn()
 	make_plating()
-	atmos_spawn_air("plasma=20;TEMP=1000")
+	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 20)
 
-/turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
+/turf/simulated/floor/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn()
 
 
 //GOLD
 
-/turf/open/floor/mineral/gold
+/turf/simulated/floor/mineral/gold
 	name = "gold floor"
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
@@ -65,7 +65,7 @@
 
 //SILVER
 
-/turf/open/floor/mineral/silver
+/turf/simulated/floor/mineral/silver
 	name = "silver floor"
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
@@ -73,56 +73,56 @@
 
 //BANANIUM
 
-/turf/open/floor/mineral/bananium
+/turf/simulated/floor/mineral/bananium
 	name = "bananium floor"
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
 
-/turf/open/floor/mineral/bananium/Entered(var/mob/AM)
+/turf/simulated/floor/mineral/bananium/Entered(var/mob/AM)
 	.=..()
 	if(!.)
 		if(istype(AM))
 			squeek()
 
-/turf/open/floor/mineral/bananium/attackby(obj/item/weapon/W, mob/user, params)
+/turf/simulated/floor/mineral/bananium/attackby(obj/item/weapon/W, mob/user, params)
 	.=..()
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_hand(mob/user)
+/turf/simulated/floor/mineral/bananium/attack_hand(mob/user)
 	.=..()
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_paw(mob/user)
+/turf/simulated/floor/mineral/bananium/attack_paw(mob/user)
 	.=..()
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/proc/honk()
+/turf/simulated/floor/mineral/bananium/proc/honk()
 	if(!spam_flag)
 		spam_flag = 1
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		spawn(20)
 			spam_flag = 0
 
-/turf/open/floor/mineral/bananium/proc/squeek()
+/turf/simulated/floor/mineral/bananium/proc/squeek()
 	if(!spam_flag)
 		spam_flag = 1
 		playsound(src, "clownstep", 50, 1)
 		spawn(10)
 			spam_flag = 0
 
-/turf/open/floor/mineral/bananium/airless
+/turf/simulated/floor/mineral/bananium/airless
 	oxygen = 0.01
 	nitrogen = 0.01
 	temperature = TCMB
 
 //DIAMOND
 
-/turf/open/floor/mineral/diamond
+/turf/simulated/floor/mineral/diamond
 	name = "diamond floor"
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
@@ -130,7 +130,7 @@
 
 //URANIUM
 
-/turf/open/floor/mineral/uranium
+/turf/simulated/floor/mineral/uranium
 	name = "uranium floor"
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
@@ -138,65 +138,65 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(var/mob/AM)
+/turf/simulated/floor/mineral/uranium/Entered(var/mob/AM)
 	.=..()
 	if(!.)
 		if(istype(AM))
 			radiate()
 
-/turf/open/floor/mineral/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/turf/simulated/floor/mineral/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	.=..()
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_hand(mob/user)
+/turf/simulated/floor/mineral/uranium/attack_hand(mob/user)
 	.=..()
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_paw(mob/user)
+/turf/simulated/floor/mineral/uranium/attack_paw(mob/user)
 	.=..()
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/proc/radiate()
+/turf/simulated/floor/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
 			radiation_pulse(get_turf(src), 3, 3, 1, 0)
-			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
+			for(var/turf/simulated/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
 			active = 0
 			return
 
 // ALIEN ALLOY
-/turf/open/floor/mineral/abductor
+/turf/simulated/floor/mineral/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 
-/turf/open/floor/mineral/abductor/New()
+/turf/simulated/floor/mineral/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
-/turf/open/floor/mineral/abductor/break_tile()
+/turf/simulated/floor/mineral/abductor/break_tile()
 	return //unbreakable
 
-/turf/open/floor/mineral/abductor/burn_tile()
+/turf/simulated/floor/mineral/abductor/burn_tile()
 	return //unburnable
 
-/turf/open/floor/mineral/abductor/make_plating()
-	return ChangeTurf(/turf/open/floor/plating/abductor2)
+/turf/simulated/floor/mineral/abductor/make_plating()
+	return ChangeTurf(/turf/simulated/floor/plating/abductor2)
 
 
-/turf/open/floor/plating/abductor2
+/turf/simulated/floor/plating/abductor2
 	name = "alien plating"
 	icon_state = "alienplating"
 
-/turf/open/floor/plating/abductor2/break_tile()
+/turf/simulated/floor/plating/abductor2/break_tile()
 	return //unbreakable
 
-/turf/open/floor/plating/abductor2/burn_tile()
+/turf/simulated/floor/plating/abductor2/burn_tile()
 	return //unburnable

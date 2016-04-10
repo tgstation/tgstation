@@ -28,7 +28,7 @@
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
 		if(AREA_SPACE)
-			text += "<p>According to the [src.name], you are now in an unclaimed territory.</p> \
+			text += "<p>According to the [src.name], you are now in <b>outer space</b>.  Hold your breath.</p> \
 			<p><a href='?src=\ref[src];create_area=1'>Mark this place as new area.</a></p>"
 		if(AREA_SPECIAL)
 			text += "<p>This place is not noted on the [src.name].</p>"
@@ -112,7 +112,7 @@
 
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
-	if(A.outdoors)
+	if (istype(A,/area/space))
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
@@ -205,13 +205,13 @@
 
 
 /obj/item/areaeditor/proc/check_tile_is_border(turf/T2,dir)
-	if (istype(T2, /turf/open/space))
+	if (istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
-	if (istype(T2, /turf/closed/wall))
+	if (istype(T2, /turf/simulated/wall))
 		return BORDER_2NDTILE
-	if (!istype(T2, /turf))
+	if (!istype(T2, /turf/simulated))
 		return BORDER_BETWEEN
 
 	for (var/obj/structure/window/W in T2)

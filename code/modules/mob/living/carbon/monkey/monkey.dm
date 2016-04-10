@@ -312,6 +312,3 @@
 	if(!getorganslot("lungs"))
 		return 0
 	return 1
-
-/mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
-	return 1

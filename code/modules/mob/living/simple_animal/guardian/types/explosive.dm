@@ -7,7 +7,6 @@
 	playstyle_string = "<span class='holoparasite'>As an <b>explosive</b> type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
 	var/bomb_cooldown = 0
 
 /mob/living/simple_animal/hostile/guardian/bomb/Stat()
@@ -18,10 +17,10 @@
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	if(..())
-		if(prob(40))
-			if(isliving(target))
-				var/mob/living/M = target
-				if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
+		if(prob(33))
+			if(istype(target, /atom/movable))
+				var/atom/movable/M = target
+				if(!M.anchored && M != summoner)
 					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
 					do_teleport(M, M, 10)
 					for(var/mob/living/L in range(1, M))
@@ -75,7 +74,7 @@
 	qdel(src)
 
 /obj/item/weapon/guardian_bomb/Bump(atom/A)
-	if(isliving(A) && A != spawner && A != spawner.summoner && !spawner.hasmatchingsummoner(A))
+	if(isliving(A) && !spawner.hasmatchingsummoner(A))
 		detonate(A)
 	else
 		..()
@@ -92,4 +91,4 @@
 /obj/item/weapon/guardian_bomb/examine(mob/user)
 	stored_obj.examine(user)
 	if(get_dist(user,src)<=2)
-		user << "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>"
+		user << "<span class='notice'>Looks odd!</span>"

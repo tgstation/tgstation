@@ -31,7 +31,7 @@
 	density = 1
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
-	var/turf/inturf
+	var/turf/simulated/inturf
 	var/starter = 0
 	var/rpm = 0
 	var/rpmtarget = 0
@@ -49,7 +49,7 @@
 	density = 1
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
-	var/turf/outturf
+	var/turf/simulated/outturf
 	var/lastgen
 	var/productivity = 1
 

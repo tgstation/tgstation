@@ -66,11 +66,11 @@
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
+	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 
-/datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
+/datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
+		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!

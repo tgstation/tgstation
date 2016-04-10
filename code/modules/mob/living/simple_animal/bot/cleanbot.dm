@@ -92,7 +92,7 @@
 		return
 
 	if(emagged == 2) //Emag functions
-		if(istype(loc,/turf/open))
+		if(istype(loc,/turf/simulated))
 
 			for(var/mob/living/carbon/victim in loc)
 				if(victim.stat != DEAD)//cleanbots always finish the job
@@ -104,7 +104,7 @@
 					victim.acid_act(5, 2, 100)
 
 			if(prob(10)) //Wets floors randomly
-				var/turf/open/T = loc
+				var/turf/simulated/T = loc
 				T.MakeSlippery()
 
 			if(prob(5)) //Spawns foam!

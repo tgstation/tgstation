@@ -8,15 +8,15 @@
 	layer = 2.3 //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/closed/wall,
+	/turf/simulated/floor,
+	/turf/simulated/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
 	..()
-	if(!(istype(src.loc, /turf/open/space)))
+	if(!(istype(src.loc, /turf/space)))
 		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)

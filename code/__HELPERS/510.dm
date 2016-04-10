@@ -6,8 +6,6 @@
 //		defines/misc.dm
 //		unsorted.dm (bottom, in stoplag())
 #if DM_VERSION < 510
-#warn If you are experiencing issues with atmos, try upgrading to byond 510. If the issues persist, make an issue report.
-
 #define BYGEX "code/__HELPERS/bygex"
 
 /proc/replacetext(text, find, replacement)

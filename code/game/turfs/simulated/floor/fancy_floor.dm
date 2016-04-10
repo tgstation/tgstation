@@ -4,12 +4,12 @@
  * Carpet floor
  */
 
-/turf/open/floor/wood
+/turf/simulated/floor/wood
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
-/turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
+/turf/simulated/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
@@ -21,21 +21,21 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
 
-/turf/open/floor/wood/cold
+/turf/simulated/floor/wood/cold
 	temperature = 255.37
 
-/turf/open/floor/grass
+/turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 
-/turf/open/floor/grass/New()
+/turf/simulated/floor/grass/New()
 	..()
 	spawn(1)
 		update_icon()
 
-/turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
+/turf/simulated/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/shovel))
@@ -44,7 +44,7 @@
 		user << "<span class='notice'>You shovel the grass.</span>"
 		make_plating()
 
-/turf/open/floor/carpet
+/turf/simulated/floor/carpet
 	name = "Carpet"
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
@@ -53,12 +53,12 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
-/turf/open/floor/carpet/New()
+/turf/simulated/floor/carpet/New()
 	..()
 	spawn(1)
 		update_icon()
 
-/turf/open/floor/carpet/update_icon()
+/turf/simulated/floor/carpet/update_icon()
 	if(!..())
 		return 0
 	if(!broken && !burnt)
@@ -69,22 +69,22 @@
 		if(smooth)
 			queue_smooth_neighbors(src)
 
-/turf/open/floor/carpet/break_tile()
+/turf/simulated/floor/carpet/break_tile()
 	broken = 1
 	update_icon()
 
-/turf/open/floor/carpet/burn_tile()
+/turf/simulated/floor/carpet/burn_tile()
 	burnt = 1
 	update_icon()
 
 
 
-/turf/open/floor/fakespace
+/turf/simulated/floor/fakespace
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
 
-/turf/open/floor/fakespace/New()
+/turf/simulated/floor/fakespace/New()
 	..()
 	icon_state = "[rand(0,25)]"

@@ -28,7 +28,7 @@
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
-	while (!istype(pickedstart, /turf/open/space))
+	while (!istype(pickedstart, /turf/space))
 		var/startSide = pick(cardinal)
 		pickedstart = spaceDebrisStartLoc(startSide, 1)
 		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
@@ -114,7 +114,7 @@
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
+		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
 			get_hit()
 
 	return .
@@ -256,7 +256,7 @@
 
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
-	if(!istype(T, /turf/open/space))
+	if(!istype(T, /turf/space))
 		new /obj/effect/decal/cleanable/blood (T)
 
 /obj/effect/meteor/meaty/Bump(atom/A)
@@ -270,7 +270,7 @@
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
-	if(!istype(T, /turf/open/space))
+	if(!istype(T, /turf/space))
 		new /obj/effect/decal/cleanable/xenoblood (T)
 
 //Station buster Tunguska

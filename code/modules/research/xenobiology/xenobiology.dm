@@ -508,7 +508,7 @@
 			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
 				unfreeze_mob(M)
 				stopped_atoms -= M
-		stoplag()
+		sleep(1)
 
 	//End
 	for(var/mob/living/M in stopped_atoms)
@@ -546,10 +546,10 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/open/floor/bluespace
+	turf_type = /turf/simulated/floor/bluespace
 
 
-/turf/open/floor/bluespace
+/turf/simulated/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
@@ -569,10 +569,10 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/open/floor/sepia
+	turf_type = /turf/simulated/floor/sepia
 
 
-/turf/open/floor/sepia
+/turf/simulated/floor/sepia
 	slowdown = 2
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"

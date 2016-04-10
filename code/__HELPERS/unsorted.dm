@@ -1070,7 +1070,7 @@ B --><-- A
 			break
 		loc = targetloc
 		lastloc = loc
-		stoplag()
+		sleep(0.6)
 
 	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null

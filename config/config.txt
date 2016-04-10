@@ -65,9 +65,6 @@ LOG_LAW
 ## log all Topic() calls (for use by coders in tracking down Topic issues)
 # LOG_HREFS
 
-## log all world.Topic() calls
-# LOG_WORLD_TOPIC
-
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
 

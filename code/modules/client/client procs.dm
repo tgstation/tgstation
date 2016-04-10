@@ -324,7 +324,6 @@ var/next_external_rsc = 0
 		sleep(1)
 	else
 		sleep(5)
-		stoplag()
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()

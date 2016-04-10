@@ -1,10 +1,10 @@
-/turf/open/floor/plasteel
+/turf/simulated/floor/plasteel
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/plasteel
 	broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	burnt_states = list("floorscorched1", "floorscorched2")
 
-/turf/open/floor/plasteel/update_icon()
+/turf/simulated/floor/plasteel/update_icon()
 	if(!..())
 		return 0
 	if(!broken && !burnt)
@@ -12,377 +12,377 @@
 
 
 
-/turf/open/floor/plasteel/black
+/turf/simulated/floor/plasteel/black
 	icon_state = "dark"
-/turf/open/floor/plasteel/black/side
+/turf/simulated/floor/plasteel/black/side
 	icon_state = "black" //NOTICE ME SEMPAI: floors.dmi contains two sprites named black, remove the incorrect one
-/turf/open/floor/plasteel/black/corner
+/turf/simulated/floor/plasteel/black/corner
 	icon_state = "blackcorner"
 
 
-/turf/open/floor/plasteel/white
+/turf/simulated/floor/plasteel/white
 	icon_state = "white"
-/turf/open/floor/plasteel/white/side
+/turf/simulated/floor/plasteel/white/side
 	icon_state = "whitehall"
-/turf/open/floor/plasteel/white/corner
+/turf/simulated/floor/plasteel/white/corner
 	icon_state = "whitecorner"
 
 
 
-/turf/open/floor/plasteel/brown
+/turf/simulated/floor/plasteel/brown
 	icon_state = "brown"
-/turf/open/floor/plasteel/brown/corner
+/turf/simulated/floor/plasteel/brown/corner
 	icon_state = "browncorner"
 
-/turf/open/floor/plasteel/darkbrown
+/turf/simulated/floor/plasteel/darkbrown
 	icon_state = "darkbrownfull"
-/turf/open/floor/plasteel/darkbrown/side
+/turf/simulated/floor/plasteel/darkbrown/side
 	icon_state = "darkbrown"
-/turf/open/floor/plasteel/darkbrown/corner
+/turf/simulated/floor/plasteel/darkbrown/corner
 	icon_state = "darkbrowncorners"
 
 
 
-/turf/open/floor/plasteel/green
+/turf/simulated/floor/plasteel/green
 	icon_state = "greenfull"
-/turf/open/floor/plasteel/green/side
+/turf/simulated/floor/plasteel/green/side
 	icon_state = "green"
-/turf/open/floor/plasteel/green/corner
+/turf/simulated/floor/plasteel/green/corner
 	icon_state = "greencorner"
 
-/turf/open/floor/plasteel/darkgreen
+/turf/simulated/floor/plasteel/darkgreen
 	icon_state = "darkgreenfull"
-/turf/open/floor/plasteel/darkgreen/side
+/turf/simulated/floor/plasteel/darkgreen/side
 	icon_state = "darkgreen"
-/turf/open/floor/plasteel/darkgreen/corner
+/turf/simulated/floor/plasteel/darkgreen/corner
 	icon_state = "darkgreencorners"
 
-/turf/open/floor/plasteel/whitegreen
+/turf/simulated/floor/plasteel/whitegreen
 	icon_state = "whitegreenfull"
-/turf/open/floor/plasteel/whitegreen/side
+/turf/simulated/floor/plasteel/whitegreen/side
 	icon_state = "whitegreen"
-/turf/open/floor/plasteel/whitegreen/corner
+/turf/simulated/floor/plasteel/whitegreen/corner
 	icon_state = "whitegreencorner"
 
 
 
-/turf/open/floor/plasteel/red
+/turf/simulated/floor/plasteel/red
 	icon_state = "redfull"
-/turf/open/floor/plasteel/red/side
+/turf/simulated/floor/plasteel/red/side
 	icon_state = "red"
-/turf/open/floor/plasteel/red/corner
+/turf/simulated/floor/plasteel/red/corner
 	icon_state = "redcorner"
 
-/turf/open/floor/plasteel/darkred
+/turf/simulated/floor/plasteel/darkred
 	icon_state = "darkredfull"
-/turf/open/floor/plasteel/darkred/side
+/turf/simulated/floor/plasteel/darkred/side
 	icon_state = "darkred"
-/turf/open/floor/plasteel/darkred/corner
+/turf/simulated/floor/plasteel/darkred/corner
 	icon_state = "darkredcorners"
 
-/turf/open/floor/plasteel/whitered
+/turf/simulated/floor/plasteel/whitered
 	icon_state = "whiteredfull"
-/turf/open/floor/plasteel/whitered/side
+/turf/simulated/floor/plasteel/whitered/side
 	icon_state = "whitered"
-/turf/open/floor/plasteel/whitered/corner
+/turf/simulated/floor/plasteel/whitered/corner
 	icon_state = "whiteredcorner"
 
 
 
-/turf/open/floor/plasteel/blue
+/turf/simulated/floor/plasteel/blue
 	icon_state = "bluefull"
-/turf/open/floor/plasteel/blue/side
+/turf/simulated/floor/plasteel/blue/side
 	icon_state = "blue"
-/turf/open/floor/plasteel/blue/corner
+/turf/simulated/floor/plasteel/blue/corner
 	icon_state = "bluecorner"
 
-/turf/open/floor/plasteel/darkblue
+/turf/simulated/floor/plasteel/darkblue
 	icon_state = "darkbluefull"
-/turf/open/floor/plasteel/darkblue/side
+/turf/simulated/floor/plasteel/darkblue/side
 	icon_state = "darkblue"
-/turf/open/floor/plasteel/darkblue/corner
+/turf/simulated/floor/plasteel/darkblue/corner
 	icon_state = "darkbluecorners"
 
-/turf/open/floor/plasteel/whiteblue
+/turf/simulated/floor/plasteel/whiteblue
 	icon_state = "whitebluefull"
-/turf/open/floor/plasteel/whiteblue/side
+/turf/simulated/floor/plasteel/whiteblue/side
 	icon_state = "whiteblue"
-/turf/open/floor/plasteel/whiteblue/corner
+/turf/simulated/floor/plasteel/whiteblue/corner
 	icon_state = "whitebluecorner"
 
 
 
-/turf/open/floor/plasteel/yellow
+/turf/simulated/floor/plasteel/yellow
 	icon_state = "yellowfull"
-/turf/open/floor/plasteel/yellow/side
+/turf/simulated/floor/plasteel/yellow/side
 	icon_state = "yellow"
-/turf/open/floor/plasteel/yellow/corner
+/turf/simulated/floor/plasteel/yellow/corner
 	icon_state = "yellowcorner"
 
-/turf/open/floor/plasteel/darkyellow
+/turf/simulated/floor/plasteel/darkyellow
 	icon_state = "darkyellowfull"
-/turf/open/floor/plasteel/darkyellow/side
+/turf/simulated/floor/plasteel/darkyellow/side
 	icon_state = "darkyellow"
-/turf/open/floor/plasteel/darkyellow/corner
+/turf/simulated/floor/plasteel/darkyellow/corner
 	icon_state = "darkyellowcorners"
 
-/turf/open/floor/plasteel/whiteyellow
+/turf/simulated/floor/plasteel/whiteyellow
 	icon_state = "whiteyellowfull"
-/turf/open/floor/plasteel/whiteyellow/side
+/turf/simulated/floor/plasteel/whiteyellow/side
 	icon_state = "whiteyellow"
-/turf/open/floor/plasteel/whiteyellow/corner
+/turf/simulated/floor/plasteel/whiteyellow/corner
 	icon_state = "whiteyellowcorner"
 
 
 
-/turf/open/floor/plasteel/purple
+/turf/simulated/floor/plasteel/purple
 	icon_state = "purplefull"
-/turf/open/floor/plasteel/purple/side
+/turf/simulated/floor/plasteel/purple/side
 	icon_state = "purple"
-/turf/open/floor/plasteel/purple/corner
+/turf/simulated/floor/plasteel/purple/corner
 	icon_state = "purplecorner"
 
-/turf/open/floor/plasteel/darkpurple
+/turf/simulated/floor/plasteel/darkpurple
 	icon_state = "darkpurplefull"
-/turf/open/floor/plasteel/darkpurple/side
+/turf/simulated/floor/plasteel/darkpurple/side
 	icon_state = "darkpurple"
-/turf/open/floor/plasteel/darkpurple/corner
+/turf/simulated/floor/plasteel/darkpurple/corner
 	icon_state = "darkpurplecorners"
 
-/turf/open/floor/plasteel/whitepurple
+/turf/simulated/floor/plasteel/whitepurple
 	icon_state = "whitepurplefull"
-/turf/open/floor/plasteel/whitepurple/side
+/turf/simulated/floor/plasteel/whitepurple/side
 	icon_state = "whitepurple"
-/turf/open/floor/plasteel/whitepurple/corner
+/turf/simulated/floor/plasteel/whitepurple/corner
 	icon_state = "whitepurplecorner"
 
 
-/turf/open/floor/plasteel/orange
+/turf/simulated/floor/plasteel/orange
 	icon_state = "orangefull"
-/turf/open/floor/plasteel/orange/side
+/turf/simulated/floor/plasteel/orange/side
 	icon_state = "orange"
-/turf/open/floor/plasteel/orange/corner
+/turf/simulated/floor/plasteel/orange/corner
 	icon_state = "orangecorner"
 
 
-/turf/open/floor/plasteel/neutral
+/turf/simulated/floor/plasteel/neutral
 	icon_state = "neutralfull"
-/turf/open/floor/plasteel/neutral/side
+/turf/simulated/floor/plasteel/neutral/side
 	icon_state = "neutral"
-/turf/open/floor/plasteel/neutral/corner
+/turf/simulated/floor/plasteel/neutral/corner
 	icon_state = "neutralcorner"
 
 
-/turf/open/floor/plasteel/arrival
+/turf/simulated/floor/plasteel/arrival
 	icon_state = "arrival"
-/turf/open/floor/plasteel/arrival/corner
+/turf/simulated/floor/plasteel/arrival/corner
 	icon_state = "arrivalcorner"
 
 
-/turf/open/floor/plasteel/escape
+/turf/simulated/floor/plasteel/escape
 	icon_state = "escape"
-/turf/open/floor/plasteel/escape/corner
+/turf/simulated/floor/plasteel/escape/corner
 	icon_state = "escapecorner"
 
 
-/turf/open/floor/plasteel/caution
+/turf/simulated/floor/plasteel/caution
 	icon_state = "caution"
-/turf/open/floor/plasteel/caution/corner
+/turf/simulated/floor/plasteel/caution/corner
 	icon_state = "cautioncorner"
 
 
-/turf/open/floor/plasteel/warning
+/turf/simulated/floor/plasteel/warning
 	icon_state = "warning"
-/turf/open/floor/plasteel/warning/corner
+/turf/simulated/floor/plasteel/warning/corner
 	icon_state = "warningcorner"
 
 
-/turf/open/floor/plasteel/warnplate
+/turf/simulated/floor/plasteel/warnplate
 	icon_state = "warnplate"
-/turf/open/floor/plasteel/warnplate/corner
+/turf/simulated/floor/plasteel/warnplate/corner
 	icon_state = "warnplatecorner"
 
 
-/turf/open/floor/plasteel/warnwhite
+/turf/simulated/floor/plasteel/warnwhite
 	icon_state = "warnwhite"
-/turf/open/floor/plasteel/warnwhite/corner
+/turf/simulated/floor/plasteel/warnwhite/corner
 	icon_state = "warnwhitecorner"
 
 
-/turf/open/floor/plasteel/whitebot
+/turf/simulated/floor/plasteel/whitebot
 	icon_state = "whitebot"
-/turf/open/floor/plasteel/whitebot/delivery
+/turf/simulated/floor/plasteel/whitebot/delivery
 	icon_state = "whitedelivery"
 
 
-/turf/open/floor/plasteel/redyellow
+/turf/simulated/floor/plasteel/redyellow
 	icon_state = "redyellowfull"
-/turf/open/floor/plasteel/redyellow/side
+/turf/simulated/floor/plasteel/redyellow/side
 	icon_state = "redyellow"
 
 
-/turf/open/floor/plasteel/redblue
+/turf/simulated/floor/plasteel/redblue
 	icon_state = "redbluefull"
-/turf/open/floor/plasteel/redblue/blueside
+/turf/simulated/floor/plasteel/redblue/blueside
 	icon_state = "bluered"
-/turf/open/floor/plasteel/redblue/redside
+/turf/simulated/floor/plasteel/redblue/redside
 	icon_state = "redblue"
 
 
-/turf/open/floor/plasteel/redgreen
+/turf/simulated/floor/plasteel/redgreen
 	icon_state = "redgreenfull"
-/turf/open/floor/plasteel/redgreen/side
+/turf/simulated/floor/plasteel/redgreen/side
 	icon_state = "redgreen"
 
 
-/turf/open/floor/plasteel/greenyellow
+/turf/simulated/floor/plasteel/greenyellow
 	icon_state = "greenyellowfull"
-/turf/open/floor/plasteel/greenyellow/side
+/turf/simulated/floor/plasteel/greenyellow/side
 	icon_state = "greenyellow"
 
 
-/turf/open/floor/plasteel/greenblue
+/turf/simulated/floor/plasteel/greenblue
 	icon_state = "greenbluefull"
-/turf/open/floor/plasteel/greenblue/side
+/turf/simulated/floor/plasteel/greenblue/side
 	icon_state = "greenblue"
 
 
-/turf/open/floor/plasteel/blueyellow
+/turf/simulated/floor/plasteel/blueyellow
 	icon_state = "blueyellowfull"
-/turf/open/floor/plasteel/blueyellow/side
+/turf/simulated/floor/plasteel/blueyellow/side
 	icon_state = "blueyellow"
 
 
-/turf/open/floor/plasteel/darkwarning
+/turf/simulated/floor/plasteel/darkwarning
 	icon_state = "warndark"
-/turf/open/floor/plasteel/darkwarning/corner
+/turf/simulated/floor/plasteel/darkwarning/corner
 	icon_state = "warndarkcorners"
 
-/turf/open/floor/plasteel/warningline
+/turf/simulated/floor/plasteel/warningline
 	icon_state = "warningline"
-/turf/open/floor/plasteel/warningline/corner
+/turf/simulated/floor/plasteel/warningline/corner
 	icon_state = "warninglinecorners"
 
-/turf/open/floor/plasteel/yellowsiding
+/turf/simulated/floor/plasteel/yellowsiding
 	icon_state = "yellowsiding"
-/turf/open/floor/plasteel/yellowsiding/corner
+/turf/simulated/floor/plasteel/yellowsiding/corner
 	icon_state = "yellowcornersiding"
 
 
-/turf/open/floor/plasteel/podhatch
+/turf/simulated/floor/plasteel/podhatch
 	icon_state = "podhatch"
-/turf/open/floor/plasteel/podhatch/corner
+/turf/simulated/floor/plasteel/podhatch/corner
 	icon_state = "podhatchcorner"
 
 
 
-/turf/open/floor/plasteel/circuit
+/turf/simulated/floor/plasteel/circuit
 	icon_state = "bcircuit"
-/turf/open/floor/plasteel/circuit/off
+/turf/simulated/floor/plasteel/circuit/off
 	icon_state = "bcircuitoff"
 
-/turf/open/floor/plasteel/circuit/gcircuit
+/turf/simulated/floor/plasteel/circuit/gcircuit
 	icon_state = "gcircuit"
-/turf/open/floor/plasteel/circuit/gcircuit/off
+/turf/simulated/floor/plasteel/circuit/gcircuit/off
 	icon_state = "gcircuitoff"
-/turf/open/floor/plasteel/circuit/gcircuit/animated
+/turf/simulated/floor/plasteel/circuit/gcircuit/animated
 	icon_state = "gcircuitanim"
 
-/turf/open/floor/plasteel/circuit/rcircuit
+/turf/simulated/floor/plasteel/circuit/rcircuit
 	icon_state = "rcircuit"
-/turf/open/floor/plasteel/circuit/rcircuit/animated
+/turf/simulated/floor/plasteel/circuit/rcircuit/animated
 	icon_state = "rcircuitanim"
 
 
 
-/turf/open/floor/plasteel/loadingarea
+/turf/simulated/floor/plasteel/loadingarea
 	icon_state = "loadingarea"
-/turf/open/floor/plasteel/loadingarea/dirty
+/turf/simulated/floor/plasteel/loadingarea/dirty
 	icon_state = "loadingareadirty1"
-/turf/open/floor/plasteel/loadingarea/dirtydirty
+/turf/simulated/floor/plasteel/loadingarea/dirtydirty
 	icon_state = "loadingareadirty2"
 
 
-/turf/open/floor/plasteel/shuttle
+/turf/simulated/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"
-/turf/open/floor/plasteel/shuttle/red
+/turf/simulated/floor/plasteel/shuttle/red
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
-/turf/open/floor/plasteel/shuttle/yellow
+/turf/simulated/floor/plasteel/shuttle/yellow
 	icon_state = "shuttlefloor2"
-/turf/open/floor/plasteel/shuttle/white
+/turf/simulated/floor/plasteel/shuttle/white
 	icon_state = "shuttlefloor3"
-/turf/open/floor/plasteel/shuttle/purple
+/turf/simulated/floor/plasteel/shuttle/purple
 	icon_state = "shuttlefloor5"
 
 
-/turf/open/floor/plasteel/asteroid
+/turf/simulated/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
-/turf/open/floor/plasteel/asteroid/warning
+/turf/simulated/floor/plasteel/asteroid/warning
 	icon_state = "asteroidwarning"
 
 
-/turf/open/floor/plasteel/recharge_floor
+/turf/simulated/floor/plasteel/recharge_floor
 	icon_state = "recharge_floor"
-/turf/open/floor/plasteel/recharge_floor/asteroid
+/turf/simulated/floor/plasteel/recharge_floor/asteroid
 	icon_state = "recharge_floor_asteroid"
 
 
-/turf/open/floor/plasteel/chapel
+/turf/simulated/floor/plasteel/chapel
 	icon_state = "chapel"
 
-/turf/open/floor/plasteel/showroomfloor
+/turf/simulated/floor/plasteel/showroomfloor
 	icon_state = "showroomfloor"
 
-/turf/open/floor/plasteel/floorgrime
+/turf/simulated/floor/plasteel/floorgrime
 	icon_state = "floorgrime"
 
-/turf/open/floor/plasteel/solarpanel
+/turf/simulated/floor/plasteel/solarpanel
 	icon_state = "solarpanel"
 
-/turf/open/floor/plasteel/cmo
+/turf/simulated/floor/plasteel/cmo
 	icon_state = "cmo"
 
-/turf/open/floor/plasteel/barber
+/turf/simulated/floor/plasteel/barber
 	icon_state = "barber"
 
-/turf/open/floor/plasteel/hydrofloor
+/turf/simulated/floor/plasteel/hydrofloor
 	icon_state = "hydrofloor"
 
-/turf/open/floor/plasteel/delivery
+/turf/simulated/floor/plasteel/delivery
 	icon_state = "delivery"
 
-/turf/open/floor/plasteel/bot
+/turf/simulated/floor/plasteel/bot
 	icon_state = "bot"
 
-/turf/open/floor/plasteel/freezer
+/turf/simulated/floor/plasteel/freezer
 	icon_state = "freezerfloor"
 
-/turf/open/floor/plasteel/bar
+/turf/simulated/floor/plasteel/bar
 	icon_state = "bar"
 
-/turf/open/floor/plasteel/grimy
+/turf/simulated/floor/plasteel/grimy
 	icon_state = "grimy"
 
-/turf/open/floor/plasteel/cafeteria
+/turf/simulated/floor/plasteel/cafeteria
 	icon_state = "cafeteria"
 
-/turf/open/floor/plasteel/vault
+/turf/simulated/floor/plasteel/vault
 	icon_state = "vault"
 
-/turf/open/floor/plasteel/cult
+/turf/simulated/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
 
-/turf/open/floor/plasteel/goonplaque
+/turf/simulated/floor/plasteel/goonplaque
 	icon_state = "plaque"
 	name = "Commemorative Plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 
-/turf/open/floor/plasteel/cult/narsie_act()
+/turf/simulated/floor/plasteel/cult/narsie_act()
 	return
 
-/turf/open/floor/plasteel/cult/airless
+/turf/simulated/floor/plasteel/cult/airless
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
@@ -395,56 +395,56 @@
 //
 //unused? remove?
 //
-/turf/open/floor/plasteel/stage_bottom
+/turf/simulated/floor/plasteel/stage_bottom
 	icon_state = "stage_bottom"
-/turf/open/floor/plasteel/stage_left
+/turf/simulated/floor/plasteel/stage_left
 	icon_state = "stage_left"
-/turf/open/floor/plasteel/stage_bleft
+/turf/simulated/floor/plasteel/stage_bleft
 	icon_state = "stage_bleft"
 
 
-/turf/open/floor/plasteel/stairs
+/turf/simulated/floor/plasteel/stairs
 	icon_state = "stairs"
-/turf/open/floor/plasteel/stairs/left
+/turf/simulated/floor/plasteel/stairs/left
 	icon_state = "stairs-l"
-/turf/open/floor/plasteel/stairs/medium
+/turf/simulated/floor/plasteel/stairs/medium
 	icon_state = "stairs-m"
-/turf/open/floor/plasteel/stairs/right
+/turf/simulated/floor/plasteel/stairs/right
 	icon_state = "stairs-r"
-/turf/open/floor/plasteel/stairs/old
+/turf/simulated/floor/plasteel/stairs/old
 	icon_state = "stairs-old"
 
 
-/turf/open/floor/plasteel/brownold
+/turf/simulated/floor/plasteel/brownold
 	icon_state = "brownold"
-/turf/open/floor/plasteel/brownold/corner
+/turf/simulated/floor/plasteel/brownold/corner
 	icon_state = "browncornerold"
 
 
-/turf/open/floor/plasteel/rockvault
+/turf/simulated/floor/plasteel/rockvault
 	icon_state = "rockvault"
-/turf/open/floor/plasteel/rockvault/alien
+/turf/simulated/floor/plasteel/rockvault/alien
 	icon_state = "alienvault"
-/turf/open/floor/plasteel/rockvault/sandstone
+/turf/simulated/floor/plasteel/rockvault/sandstone
 	icon_state = "sandstonevault"
 
 
-/turf/open/floor/plasteel/elevatorshaft
+/turf/simulated/floor/plasteel/elevatorshaft
 	icon_state = "elevatorshaft"
 
-/turf/open/floor/plasteel/bluespace
+/turf/simulated/floor/plasteel/bluespace
 	icon_state = "bluespace"
 
-/turf/open/floor/plasteel/sepia
+/turf/simulated/floor/plasteel/sepia
 	icon_state = "sepia"
 
-/turf/open/floor/plasteel/sandy
+/turf/simulated/floor/plasteel/sandy
 	icon_state = "sandy"
-	baseturf = /turf/open/floor/plating/beach/sand
+	baseturf = /turf/simulated/floor/plating/beach/sand
 
-/turf/open/floor/plasteel/sandeffect
+/turf/simulated/floor/plasteel/sandeffect
 	icon_state = "sandeffect"
-/turf/open/floor/plasteel/sandeffect/warning
+/turf/simulated/floor/plasteel/sandeffect/warning
 	icon_state = "warningsandeffect"
-/turf/open/floor/plasteel/sandeffect/warning/corner
+/turf/simulated/floor/plasteel/sandeffect/warning/corner
 	icon_state = "warningsandeffectcorners"

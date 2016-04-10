@@ -26,4 +26,3 @@
 
 /area/lavaland/surface/outdoors
 	name = "Lavaland Wastes"
-	outdoors = 1

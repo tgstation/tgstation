@@ -32,7 +32,7 @@
 	if(istype(O, /obj/item/weapon/pen))
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
-		var/obj/structure/sign/sign_type
+		var/sign_type
 		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sign_types)
 			if("Blank")
 				sign_type = /obj/structure/sign/basic
@@ -62,20 +62,9 @@
 				sign_type = /obj/structure/sign/botany
 			if("Xenobiology")
 				sign_type = /obj/structure/sign/xenobio
-
-		//Make sure user is adjacent still
-		if(!Adjacent(user))
-			return
-
 		if(!sign_type)
 			return
-
-		//It's import to clone the pixel layout information
-		//Otherwise signs revert to being on the turf and
-		//move jarringly
-		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
-		newsign.pixel_x = pixel_x
-		newsign.pixel_y = pixel_y
+		new sign_type(get_turf(src))
 		qdel(src)
 
 /obj/item/sign_backing

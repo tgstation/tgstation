@@ -14,7 +14,6 @@
 	power_environ = 0
 	power_equip = 0
 	power_light = 0
-	outdoors = 1
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 
 /area/mine/unexplored
@@ -27,7 +26,6 @@
 	power_environ = 0
 	power_equip = 0
 	power_light = 0
-	outdoors = 1
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 
 /area/mine/lobby

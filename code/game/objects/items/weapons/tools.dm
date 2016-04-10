@@ -40,16 +40,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	toolspeed = 2
 
-/obj/item/weapon/wrench/medical
-	name = "medical wrench"
-	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
-	icon_state = "medwrench"
-	item_state = "wrench"
-	force = 2 //MEDICAL
-	throwforce = 4
-	origin_tech = "materials=1;engineering=1;biotech=1"
-	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
-
 /*
  * Screwdriver
  */

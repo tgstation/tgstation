@@ -5,7 +5,7 @@
 		return 0
 
 	if(structures)
-		if(!isturf(loc) || istype(loc, /turf/open/space))
+		if(!isturf(loc) || istype(loc, /turf/space))
 			src << "<span class='danger'>Your structure would just float away, you need stable ground!</span>"
 			return 0
 
