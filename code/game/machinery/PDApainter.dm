@@ -46,7 +46,7 @@
 	for(var/I in typesof(/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/D = new I
 		D.name = D.icon_state
-		if(istype(D,/obj/item/weapon/card/id/special))
+		if(istype(D,/obj/item/weapon/card/id/special) || istype(D,/obj/item/weapon/card/id/syndicate_command) || istype(D,/obj/item/weapon/card/id/syndicate) || istype(D,/obj/item/weapon/card/id/centcom))
 			src.idemagcolorlist  += D
 		else
 			src.idcolorlist += D
@@ -155,3 +155,7 @@
 /obj/machinery/pdapainter/power_change()
 	..()
 	update_icon()
+
+/obj/machinery/pdapainter/emag_act(mob/user)
+	emagged = 1
+	user << "<span class='notice'>You short out the [src].</span>"

@@ -132,6 +132,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
+	icon_state = "syndicate"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
 
@@ -205,35 +206,35 @@ update_label("John Doe", "Clowny")
 	access = get_all_centcom_access()
 	..()
 
-/obj/item/weapon/card/id/ert
+/obj/item/weapon/card/id/centcom/ert
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
-/obj/item/weapon/card/id/ert/New()
+/obj/item/weapon/card/id/centcom/ert/New()
 	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
 
-/obj/item/weapon/card/id/ert/Security
+/obj/item/weapon/card/id/centcom/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 
-/obj/item/weapon/card/id/ert/Security/New()
+/obj/item/weapon/card/id/centcom/ert/Security/New()
 	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
 
-/obj/item/weapon/card/id/ert/Engineer
+/obj/item/weapon/card/id/centcom/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
 
-/obj/item/weapon/card/id/ert/Engineer/New()
+/obj/item/weapon/card/id/centcom/ert/Engineer/New()
 	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
 
-/obj/item/weapon/card/id/ert/Medical
+/obj/item/weapon/card/id/centcom/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 
-/obj/item/weapon/card/id/ert/Medical/New()
+/obj/item/weapon/card/id/centcom/ert/Medical/New()
 	access = get_all_accesses()+get_ert_access("med")-access_change_ids
 
 /obj/item/weapon/card/id/prisoner

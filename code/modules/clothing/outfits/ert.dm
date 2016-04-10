@@ -26,7 +26,7 @@
 /datum/outfit/ert/commander
 	name = "ERT Commander"
 
-	id = /obj/item/weapon/card/id/ert
+	id = /obj/item/weapon/card/id/centcom/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	back = /obj/item/weapon/storage/backpack/captain
@@ -59,7 +59,7 @@
 /datum/outfit/ert/security
 	name = "ERT Security"
 
-	id = /obj/item/weapon/card/id/ert/Security
+	id = /obj/item/weapon/card/id/centcom/ert/Security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	back = /obj/item/weapon/storage/backpack/security
@@ -94,7 +94,7 @@
 /datum/outfit/ert/medic
 	name = "ERT Medic"
 
-	id = /obj/item/weapon/card/id/ert/Medical
+	id = /obj/item/weapon/card/id/centcom/ert/Medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/weapon/storage/backpack/medic
@@ -129,7 +129,7 @@
 /datum/outfit/ert/engineer
 	name = "ERT Engineer"
 
-	id = /obj/item/weapon/card/id/ert/Engineer
+	id = /obj/item/weapon/card/id/centcom/ert/Engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	glasses =  /obj/item/clothing/glasses/meson/engine
 	back = /obj/item/weapon/storage/backpack/industrial
