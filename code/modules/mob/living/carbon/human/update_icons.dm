@@ -62,7 +62,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 
-	if(dna && istype(dna.species, /datum/species/pony))
+	if(dna && istype(dna.species))
 		return
 
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
@@ -104,7 +104,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 /mob/living/carbon/human/proc/update_augments()
 	remove_overlay(AUGMENTS_LAYER)
 
-	if(dna && istype(dna.species, /datum/species/pony))
+	if(dna && istype(dna.species))
 		return
 
 	var/list/standing	= list()
@@ -174,7 +174,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -216,7 +216,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			wear_id.screen_loc = ui_id
 			client.screen += wear_id
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
@@ -239,7 +239,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		var/t_state = gloves.item_state
@@ -253,7 +253,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		overlays_standing[GLOVES_LAYER]	= standing
 
 	else
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 		if(blood_DNA)
 			if (gender == FEMALE && dna.species.id == "human")
@@ -277,7 +277,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
@@ -303,7 +303,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
 			client.screen += ears					//Either way, add the item to the HUD
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
@@ -327,7 +327,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
@@ -360,7 +360,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 /mob/living/carbon/human/update_inv_head()
-	if(dna && istype(dna.species, /datum/species/pony))
+	if(dna && istype(dna.species))
 		remove_overlay(HEAD_LAYER)
 		return
 
@@ -411,7 +411,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
-		if(dna && istype(dna.species, /datum/species/pony))
+		if(dna && istype(dna.species))
 			return
 
 		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
