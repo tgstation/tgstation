@@ -29,75 +29,57 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
-	set waitfor = 0
 
 	if(!check_rights(R_DEBUG)) return
 
-	var/target = null
-	var/targetselected = 0
-	var/returnval = null
-	var/class = null
+	spawn(0)
+		var/target = null
+		var/targetselected = 0
+		var/returnval = null
+		var/class = null
 
-	switch(alert("Proc owned by something?",,"Yes","No"))
-		if("Yes")
-			targetselected = 1
-			if(src.holder && src.holder.marked_datum)
-				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client","Marked datum ([holder.marked_datum.type])")
-				if(class == "Marked datum ([holder.marked_datum.type])")
-					class = "Marked datum"
-			else
+		switch(alert("Proc owned by something?",,"Yes","No"))
+			if("Yes")
+				targetselected = 1
 				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
-			switch(class)
-				if("Obj")
-					target = input("Enter target:","Target",usr) as obj in world
-				if("Mob")
-					target = input("Enter target:","Target",usr) as mob in world
-				if("Area or Turf")
-					target = input("Enter target:","Target",usr.loc) as area|turf in world
-				if("Client")
-					var/list/keys = list()
-					for(var/client/C)
-						keys += C
-					target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
-				if("Marked datum")
-					target = holder.marked_datum
-				else
-					return
-		if("No")
-			target = null
-			targetselected = 0
+				switch(class)
+					if("Obj")
+						target = input("Enter target:","Target",usr) as obj in world
+					if("Mob")
+						target = input("Enter target:","Target",usr) as mob in world
+					if("Area or Turf")
+						target = input("Enter target:","Target",usr.loc) as area|turf in world
+					if("Client")
+						var/list/keys = list()
+						for(var/client/C)
+							keys += C
+						target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
+					else
+						return
+			if("No")
+				target = null
+				targetselected = 0
 
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
-	if(!procname)
-		return
-	if(targetselected && !hascall(target,procname))
-		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
-		return
-	else
-		var/procpath = text2path(procname)
-		if (!procpath)
-			usr << "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
-			return
-	var/list/lst = get_callproc_args()
-	if(!lst)
-		return
+		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+		if(!procname)	return
 
-	if(targetselected)
-		if(!target)
-			usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+		var/list/lst = get_callproc_args()
+		if(!lst)
 			return
-		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	else
-		//this currently has no hascall protection. wasn't able to get it working.
-		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	. = get_callproc_returnval(returnval, procname)
-	if(.)
-		usr << .
-	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+		if(targetselected)
+			if(!target)
+				usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+				return
+			if(!hascall(target,procname))
+				usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
+				return
+			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+		else
+			//this currently has no hascall protection. wasn't able to get it working.
+			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+
+		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 
 /client/proc/callproc_datum(A as null|area|mob|obj|turf)
 	set category = "Debug"

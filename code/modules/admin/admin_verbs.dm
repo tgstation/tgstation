@@ -294,8 +294,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/startSinglo,
 		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest,
-		/client/proc/readmin
+		/client/proc/cmd_admin_areatest
 		)
 //	if(holder)
 //		verbs.Remove(holder.rank.adds)
@@ -592,30 +591,12 @@ var/list/admin_verbs_hideable = list(
 
 	deadmins += ckey
 	admin_datums -= ckey
-	verbs += /client/proc/readmin
 
 	src << "<span class='interface'>You are now a normal player.</span>"
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
 
-/client/proc/readmin()
-	set name = "Readmin"
-	set category = "Admin"
-	set desc = "Regain your admin powers."
-
-	load_admins(ckey)
-
-	if(!holder) // Something went wrong...
-		return
-
-	deadmins -= ckey
-	verbs -= /client/proc/readmin
-
-	src << "<span class='interface'>You are now an admin.</span>"
-	message_admins("[src] re-adminned themselves.")
-	log_admin("[src] re-adminned themselves.")
-	feedback_add_details("admin_verb","RAS")
 
 /client/proc/populate_world(amount = 50 as num)
 	set name = "Populate World"
