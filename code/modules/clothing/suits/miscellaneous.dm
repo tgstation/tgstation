@@ -363,7 +363,7 @@
 	item_state = "bandolier"
 	storage_slots = 8
 	max_combined_w_class = 20
-	can_hold = list("/obj/item/ammo_casing/shotgun")
+	can_only_hold = list("/obj/item/ammo_casing/shotgun")
 
 /obj/item/clothing/suit/officercoat
 	name = "Officer's Coat"

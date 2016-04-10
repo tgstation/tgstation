@@ -5,9 +5,8 @@
 	icon_state = "gearbelt"
 	item_state = "utility"
 	w_class = 4 //Lets it hold mining satchels.
-	max_w_class = 4
 	max_combined_w_class = 28
-	can_hold = list(
+	can_only_hold = list(
 		"/obj/item/weapon/storage/box/samplebags",
 		"/obj/item/device/core_sampler",
 		"/obj/item/device/beacon_locator",

@@ -8,7 +8,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0
-	max_w_class = 3
+	fits_max_w_class = 3
 	max_combined_w_class = 16
 	var/empty = 0
 
@@ -75,7 +75,7 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
-	max_w_class = 2
+	fits_max_w_class = 2
 	max_combined_w_class = 10
 
 	var/busy_hunting = 0
@@ -120,7 +120,7 @@
 			return
 
 		stored_item = item
-		max_w_class = 3.0 - stored_item.w_class
+		fits_max_w_class = 3.0 - stored_item.w_class
 		item.loc = null //null space here we go - to stop it showing up in the briefcase
 		to_chat(user, "You place \the [item] into the false bottom of the briefcase.")
 	else
@@ -131,7 +131,7 @@
 		user.put_in_hands(stored_item)
 		to_chat(user, "You pull out \the [stored_item] from \the [src]'s false bottom.")
 		stored_item = null
-		max_w_class = initial(max_w_class)
+		fits_max_w_class = initial(fits_max_w_class)
 	else
 		return ..()
 

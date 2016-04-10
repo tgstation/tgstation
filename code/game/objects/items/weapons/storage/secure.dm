@@ -24,7 +24,7 @@
 	var/emagged = 0
 	var/open = 0
 	w_class = 3.0
-	max_w_class = 2
+	fits_max_w_class = 2
 	max_combined_w_class = 14
 
 /obj/item/weapon/storage/secure/examine(mob/user)
@@ -217,7 +217,7 @@
 	flags = FPRINT
 	force = 8.0
 	w_class = 8.0
-	max_w_class = 8
+	fits_max_w_class = 8
 	anchored = 1.0
 	density = 0
 	cant_hold = list("/obj/item/weapon/storage/secure/briefcase")

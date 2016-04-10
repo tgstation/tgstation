@@ -5,7 +5,7 @@
 	icon = 'icons/obj/wallet.dmi'
 	icon_state = "wallet"
 	w_class = 2
-	can_hold = list(
+	can_only_hold = list(
 		"/obj/item/weapon/spacecash",
 		"/obj/item/weapon/card",
 		"/obj/item/clothing/mask/cigarette",

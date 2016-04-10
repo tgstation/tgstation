@@ -98,4 +98,4 @@
 	..()
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
-	hold.can_hold = list("obj/item/weapon/hatchet", "obj/item/weapon/kitchen/utensil/knife")
+	hold.can_only_hold = list("obj/item/weapon/hatchet", "obj/item/weapon/kitchen/utensil/knife")

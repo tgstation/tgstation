@@ -34,9 +34,9 @@
 	item_state = "trashbag"
 
 	w_class = 4
-	max_w_class = 2
+	fits_max_w_class = 2
 	storage_slots = 21
-	can_hold = list() // any
+	can_only_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
 /obj/item/weapon/storage/bag/trash/update_icon()
@@ -61,9 +61,9 @@
 	item_state = "plasticbag"
 
 	w_class = 4
-	max_w_class = 2
+	fits_max_w_class = 2
 	storage_slots = 21
-	can_hold = list() // any
+	can_only_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 	body_parts_covered = FULL_HEAD|BEARD
 	slot_flags = SLOT_BELT | SLOT_HEAD
@@ -103,8 +103,7 @@
 	w_class = 3
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = 3
-	can_hold = list("/obj/item/weapon/ore")
+	can_only_hold = list("/obj/item/weapon/ore")
 
 
 // -----------------------------
@@ -117,9 +116,8 @@
 	name = "Plant Bag"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown", "/obj/item/weapon/reagent_containers/food/snacks/meat", "/obj/item/weapon/reagent_containers/food/snacks/egg", "/obj/item/weapon/reagent_containers/food/snacks/honeycomb")
+	can_only_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown", "/obj/item/weapon/reagent_containers/food/snacks/meat", "/obj/item/weapon/reagent_containers/food/snacks/egg", "/obj/item/weapon/reagent_containers/food/snacks/honeycomb")
 
 // -----------------------------
 //          Food bag
@@ -132,9 +130,8 @@
 	name = "Food Delivery Bag"
 	storage_slots = 14; //the number of food items it can carry.
 	max_combined_w_class = 28 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
 	w_class = 3
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks")
+	can_only_hold = list("/obj/item/weapon/reagent_containers/food/snacks")
 
 /obj/item/weapon/storage/bag/food/update_icon()
 	if(contents.len < 1)
@@ -175,9 +172,8 @@
 	origin_tech = "biotech=2;materials=1"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/reagent_containers/glass/bottle","/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/reagent_containers/syringe")
+	can_only_hold = list("/obj/item/weapon/reagent_containers/glass/bottle","/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/reagent_containers/syringe")
 
 // -----------------------------
 //        Sheet Snatcher
@@ -335,9 +331,8 @@
 	desc = "This bag can be used to store many machine components."
 	storage_slots = 25;
 	max_combined_w_class = 200
-	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/stock_parts", "/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/cell")
+	can_only_hold = list("/obj/item/weapon/stock_parts", "/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/cell")
 
 /obj/item/weapon/storage/bag/gadgets/mass_remove(atom/A)
 	var/lowest_rating = INFINITY //Get the lowest rating, so only mass drop the lowest parts.
@@ -365,8 +360,7 @@
 
 	flags = FPRINT
 	w_class = 4
-	max_w_class = 3
-	storage_slots = 21
+	fits_max_w_class = 3
 	max_combined_w_class = 63 // Fuck this var
-	can_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash")
+	can_only_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash")
 	cant_hold = list()

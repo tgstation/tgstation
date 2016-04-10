@@ -11,7 +11,7 @@
 	w_class = 4.0
 	flags = FPRINT
 	slot_flags = SLOT_BACK	//ERROOOOO
-	max_w_class = 3
+	fits_max_w_class = 3
 	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -31,7 +31,7 @@
 	origin_tech = "bluespace=4"
 	item_state = "holdingpack"
 	icon_state = "holdingpack"
-	max_w_class = 4
+	fits_max_w_class = 4
 	max_combined_w_class = 28
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
@@ -98,7 +98,7 @@
 	item_state = "giftbag"
 	w_class = 4.0
 	storage_slots = 7
-	max_w_class = 4
+	fits_max_w_class = 4
 	max_combined_w_class = 400 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/santabag/attack_hand(user)

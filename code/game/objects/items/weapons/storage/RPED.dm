@@ -5,7 +5,7 @@
 	item_state = "RPED"
 	w_class = 4
 	use_to_pickup = 1
-	max_w_class = 3
+	fits_max_w_class = 3
 	max_combined_w_class = 100
 	storage_slots = 50
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')

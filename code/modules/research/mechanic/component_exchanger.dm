@@ -22,7 +22,7 @@
 	use_to_pickup = 1
 	allow_quick_empty = 1
 	storage_slots = 21
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_only_hold = list("/obj/item/weapon/stock_parts")
 
 /obj/item/weapon/storage/component_exchanger/attackby(var/atom/A, mob/user)
 	if(istype(A, /obj/item/weapon/storage/bag/gadgets))

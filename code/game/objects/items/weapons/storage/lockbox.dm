@@ -6,7 +6,7 @@
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
 	w_class = 4
-	max_w_class = 3
+	fits_max_w_class = 3
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
 	req_access = list(access_armory)
@@ -190,8 +190,7 @@
 	desc = "A secure container for the profits of a vending machine."
 	icon_state = "coinbox+l"
 	w_class = 2
-	max_w_class = 1
-	can_hold = list("/obj/item/voucher","/obj/item/weapon/coin","/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin","/obj/item/weapon/reagent_containers/food/snacks/chococoin")
+	can_only_hold = list("/obj/item/voucher","/obj/item/weapon/coin","/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin","/obj/item/weapon/reagent_containers/food/snacks/chococoin")
 	max_combined_w_class = 30
 	force = 8
 	throwforce = 10

@@ -19,7 +19,7 @@
 	attack_verb = list("robusts", "batters", "staves in")
 	storage_slots = 14
 	max_combined_w_class = 28
-	ignore_w_class = list(
+	fits_ignoring_w_class = list(
 		"/obj/item/weapon/weldingtool/hugetank",
 		"/obj/item/device/rcd/matter/engineering",
 		"/obj/item/device/rcd/rpd",

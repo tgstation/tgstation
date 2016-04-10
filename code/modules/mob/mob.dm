@@ -827,7 +827,7 @@ var/list/slot_equipment_priority = list( \
 			if(slot_in_backpack)
 				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
-					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
+					if(B.contents.len < B.storage_slots && w_class <= B.fits_max_w_class)
 						return 1
 				return 0
 		return 0 //Unsupported slot

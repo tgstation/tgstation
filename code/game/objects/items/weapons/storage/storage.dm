@@ -12,11 +12,11 @@
 
 	// These two accept a string containing the type path and the following optional prefixes:
 	//  = - Strict type matching.  Will NOT check for subtypes.
-	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
-	var/list/ignore_w_class = new/list() //List of objects which will fit in this item, regardless of size. AKA can_hold_too.
+	var/list/can_only_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_only_hold isn't set)
+	var/list/fits_ignoring_w_class = new/list() //List of objects which will fit in this item, regardless of size. Doesn't restrict to ONLY items of these types, and doesn't ignore max_combined_w_class. (in effect only if can_only_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
-	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/fits_max_w_class = 2 //Max size of objects that this object can store (in effect only if can_only_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
@@ -227,9 +227,9 @@
 		to_chat(usr, "<span class='notice'>Unwield \the [ref_name] first.</span>")
 		return
 
-	if(can_hold.len)
+	if(can_only_hold.len)
 		var/ok = 0
-		for(var/A in can_hold)
+		for(var/A in can_only_hold)
 			if(dd_hasprefix(A,"="))
 				// Force strict matching of type.
 				// No subtypes allowed.
@@ -262,10 +262,10 @@
 				to_chat(usr, "<span class='notice'>\The [src] cannot hold \the [W].</span>")
 			return 0
 
-	if (W.w_class > max_w_class)
+	if ((W.w_class > fits_max_w_class) && !can_only_hold.len) //fits_max_w_class doesn't matter if there's only a specific list of items you can put in
 		var/yeh = 0
-		if(ignore_w_class.len)
-			for(var/A in ignore_w_class)
+		if(fits_ignoring_w_class.len)
+			for(var/A in fits_ignoring_w_class)
 				if(dd_hasprefix(A,"="))
 					// Force strict matching of type.
 					// No subtypes allowed.

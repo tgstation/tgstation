@@ -8,7 +8,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
-	max_w_class = 3
+	fits_max_w_class = 3
 	max_combined_w_class = 20
 	origin_tech = "materials=3;engineering=3"
 

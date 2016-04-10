@@ -316,7 +316,7 @@
 		if(slot_in_backpack)
 			if (src.back && istype(src.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = src.back
-				if(B.contents.len < B.storage_slots && W.w_class <= B.max_w_class)
+				if(B.contents.len < B.storage_slots && W.w_class <= B.fits_max_w_class)
 					W.loc = B
 					equipped = 1
 
