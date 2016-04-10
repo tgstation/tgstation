@@ -89,7 +89,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	open_tome(user)
 
 /obj/item/weapon/tome/proc/open_tome(mob/user)
-	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","Read Tome")
+	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","Read Tome","Cancel")
 	switch(choice)
 		if("Read Tome")
 			read_tome(user)
@@ -100,6 +100,8 @@ This file contains the arcane tome files as well as innate cultist emergency com
 			if(!input)
 				return
 			cultist_commune(user, 1, 0, input)
+		if("Cancel")
+			return
 
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
@@ -112,15 +114,8 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	text += "<font color='red'><b>Imbue Talisman</b></font><br>The Rite of Talisman Creation is one of the most important. It is the only way to create talismans. A blank sheet of paper must be on top of the rune, with a valid rune nearby. After \
 	invoking it, the paper will be converted into a talisman, and the rune inlaid upon it.<br><br>"
 
-	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Teleportation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, the rune will \
-	search for other Rites of Translocation with the same keyword. Assuming one is found, the user will be instantaneously transported to the location of the other rune. If more than two runes are scribed \
-	with the same keyword, it will choose randomly between all eligible runes and send the invoker to one of them.<br><br>"
-
-//	text += "<font color='red'><b>Teleport Other</b></font><br>The Rite of Forced Translocation, like the Rite of Translocation, works by teleporting the person on the rune to one of the \
-	same keyword. However, this rune will only work on people other than the user, allowing the user to send any living creature somewhere else.<br><br>"
-
-//	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
-	<br><br>"
+	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Teleportation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, search for other Rites of Translocation. \
+	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>".<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>The Rite of Conversion is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
 	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
@@ -165,7 +160,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. This will deal a moderate amount of damage to all invokers.<br><br>"
 
-	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place five sheets of plasteel on top of the rune \
+	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
 //	text += "<font color='red'><b>Summon Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
@@ -174,7 +169,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 //	text += "<font color='red'><b>Drain Life</b></font><br>The Rite of Leeching will drain the life of any non-cultist above the rune and heal the invoker for the same amount.<br><br>"
 
 	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
-	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. Use with caution<br><br>"
+	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. It requires three invokers.<br><br>"
 
 //	text += "<font color='red'><b>Time Stop</b></font><br>The Rite of Dimensional Corruption is a versatile rite that can be very strong when protecting our cult from the enemies of the Geometer. \
 	As it is invoked, it will rend and reshape reality around itself, stopping time for all those who don't follow the teachings of the Geometer. However, it requires more than one ritual soul as a \
@@ -255,7 +250,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 			C.apply_damage(40, BRUTE, pick("l_arm", "r_arm"))
 			var/area/A = get_area(src)
 			var/locname = initial(A.name)
-			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual before it reaches a critical point.","Central Command Higher Dimensionsal Affairs")
+			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/turf/B in orange (1, user))
 				var/obj/machinery/shield/N = new(B)
 				N.color = "red"
