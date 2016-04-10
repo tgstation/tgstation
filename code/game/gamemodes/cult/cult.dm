@@ -23,20 +23,13 @@
 		if(is_sacrifice_target(mind))	return 0
 	return 1
 
-/proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
+/proc/cultist_commune(mob/living/user, clear = 0, message)
 	if(!message)
 		return
-	if(say)
-		user.say("O bidai nabora se[pick("'","`")]sma!")
-	else
-		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+	user.whisper("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
 	if(!user)
 		return
-	if(say)
-		user.say(message)
-	else
-		user.whisper(message)
 	var/my_message = "Error, message null. You should probably report this."
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
