@@ -12,7 +12,7 @@
 	var/instant = FALSE	//fires on New
 	var/flavour_text = "The mapper forgot to set this!"
 	var/faction = null
-	var/permanent = FALSE	//Set to true for infinite mob spawn I guess.
+	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
 	var/objectives = null
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
