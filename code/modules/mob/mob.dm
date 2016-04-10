@@ -873,11 +873,7 @@ var/next_mob_id = 0
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in dead_mob_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter)
 
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()

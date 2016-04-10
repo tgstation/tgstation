@@ -19,7 +19,7 @@
 	status_flags = CANPUSH
 	languages = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
-	var/mob/oldform
+	var/mob/living/oldform
 	var/list/demon_overlays[DEMON_TOTAL_LAYERS]
 
 /mob/living/carbon/true_demon/proc/convert_to_archdemon()

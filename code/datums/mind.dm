@@ -1684,6 +1684,14 @@
 			spawn(0)
 				S.start_recharge()
 
+/datum/mind/proc/get_ghost(even_if_they_cant_reenter)
+	for(var/mob/dead/observer/G in dead_mob_list)
+		if(G.mind == src)
+			if(G.can_reenter_corpse || even_if_they_cant_reenter)
+				return G
+			break
+
+
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

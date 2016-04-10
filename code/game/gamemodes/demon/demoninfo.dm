@@ -1,11 +1,11 @@
-#define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
+#define POWERUPTHRESHOLD 2 //TODO LORDPIDEY change back to 3//How many souls are needed per stage.
 
 #define BASIC_DEMON 0
 #define BLOOD_LIZARD 1
 #define TRUE_DEMON 2
 #define ARCH_DEMON 3
 
-#define SOULVALUE soulsOwned.len-reviveNumber
+#define SOULVALUE soulsOwned.len-reviveNumber+1 //TODO LORDPIDEY remove the +1
 
 #define DEMONRESURRECTTIME 600
 
@@ -367,22 +367,23 @@ var/list/allDemons = list()
 
 /datum/demoninfo/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
-		body<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
+		owner.current<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
 		sleep(DEMONRESURRECTTIME)
-		if (body.stat == DEAD)
+		if (!body || (body && body.stat == DEAD))
 			if(SOULVALUE>0)
 				if(check_banishment(body))
-					body<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
+					owner.current<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
 					return -1
 				else
+					owner.current<< "<span class='userdanger'>WE LIVE AGAIN!</span>"
 					return demonic_resurrection(body)
 			else
-				body<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
+				owner.current<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
 				return -1
 		else
-			body << "<span class='danger'> You seem to have resurrected without your infernal powers.</span>"
+			owner.current << "<span class='danger'> You seem to have resurrected without your infernal powers.</span>"
 	else
-		body << "<span class='userdanger'>Your infernal powers are too weak to resurrect yourself.</span>"
+		owner.current << "<span class='userdanger'>Your infernal powers are too weak to resurrect yourself.</span>"
 
 /datum/demoninfo/proc/check_banishment(mob/living/body)
 	switch(banish)
@@ -424,13 +425,28 @@ var/list/allDemons = list()
 			return 0
 
 /datum/demoninfo/proc/demonic_resurrection(mob/living/body)
-	if(blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(blobstart))
-		message_admins("[owner.name] (demonic name is: [truename]) is resurrecting using demonic energy.</a>).")
-		reviveNumber++
-		if(body)
-			body.revive(1,0)
-		else
+	message_admins("[owner.name] (demonic name is: [truename]) is resurrecting using demonic energy.</a>")
+	reviveNumber++
+	if(body)
+		world << "Now performing type 1 demonic resurrection." //TODO LORDPIDEY remove test string
+		body.revive(1,0)
+		if(istype(body, /mob/living/carbon/true_demon))
+			var/mob/living/carbon/true_demon/D = body
+			if(D.oldform)
+				D.oldform.revive(1,0) // Heal the old body too, so the demon doesn't resurrect, then immediately regress into a dead body.
+	else
+		world << "Now performing type 2 demonic resurrection." //TODO LORDPIDEY remove test string
+		if(blobstart.len > 0)
+			var/turf/targetturf = get_turf(pick(blobstart))
+			var/mob/currentMob = owner.current
+			if(!currentMob)
+				currentMob = owner.get_ghost()
+				if(!currentMob)
+					message_admins("[owner.name]'s demonic resurrection failed due to client logoff.  Aborting.")
+					return -1 //
+			if(currentMob.mind != owner)
+				message_admins("[owner.name]'s demonic resurrection failed due to becoming a new mob.  Aborting.")
+				return -1
 			owner.current.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
 			if(SOULVALUE>=POWERUPTHRESHOLD)
@@ -447,6 +463,6 @@ var/list/allDemons = list()
 				A.oldform = H
 				A.set_name()
 				owner.transfer_to(A)
-	else
-		throw EXCEPTION("Unable to find a blobstart landmark for demonic resurrection")
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark for demonic resurrection")
 	check_regression()

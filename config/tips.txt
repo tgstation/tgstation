@@ -176,3 +176,5 @@ As a Morph, you can talk while disguised, but your words have a chance of being 
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
 As a Ghost, you can double click on people, bots, or the singularity to follow them.
+As a Demon, you gain power for every three souls you control, however you also become more obvious.
+As a Demon, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.

@@ -36,7 +36,7 @@ LOG_ADMIN
 LOG_ADMINCHAT
 
 ## log client access (logon/logoff)
-LOG_ACCESS
+#LOG_ACCESS
 
 ## log game actions (start of round, results, etc.)
 LOG_GAME
