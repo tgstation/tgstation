@@ -127,7 +127,7 @@
 	
 /obj/item/projectile/bullet/honker
 	damage = 0
-	weak = 5
+	weaken = 5
 	stun = 5
 	forcedodge = 1
 	hitsound = 'sound/items/bikehorn.ogg'
