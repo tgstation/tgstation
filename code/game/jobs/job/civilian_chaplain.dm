@@ -313,7 +313,7 @@
 		feedback_set_details("religion_name","[new_religion]")
 
 		//Allow them to change their deity if they believe the deity we gave them sucks
-		var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Your deity currently is [deity_name] (Leave empty or unchanged to keep diety name)", "Name of Deity", deity_name)), 1, MAX_NAME_LEN)
+		var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Your deity currently is [deity_name] (Leave empty or unchanged to keep deity name)", "Name of Deity", deity_name)), 1, MAX_NAME_LEN)
 
 		if(!length(new_deity))
 			new_deity = deity_name //Just give them what was picked for them already
