@@ -5,7 +5,7 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops					= 2,
-							/obj/item/toy/AI										= 2,
+							/obj/item/toy/talking/AI								= 2,
 							/obj/item/clothing/under/syndicate/tacticool			= 2,
 							/obj/item/toy/sword										= 2,
 							/obj/item/toy/gun										= 2,
@@ -33,6 +33,7 @@
 							/obj/item/toy/redbutton									= 2,
 							/obj/item/toy/talking/owl								= 2,
 							/obj/item/toy/talking/griffin							= 2,
+							/obj/item/toy/talking/skeleton							= 2,
 							/obj/item/weapon/coin/antagtoken						= 2,
 							/obj/item/stack/tile/fakespace/loaded					= 2,
 							/obj/item/toy/toy_xeno									= 2,

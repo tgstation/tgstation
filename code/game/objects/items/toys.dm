@@ -673,52 +673,49 @@
 	icon_state = "reticenceprize"
 	quiet = 1
 
-/*
- * AI core prizes
- */
-/obj/item/toy/AI
-	name = "toy AI"
-	desc = "A little toy model AI core with real law announcing action!"
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "AI"
-	w_class = 2
-	var/cooldown = 0
-
-/obj/item/toy/AI/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
-		var/message = generate_ion_law()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
-		cooldown = 1
-		spawn(30) cooldown = 0
-		return
-	..()
-
 /obj/item/toy/talking
 	name = "talking action figure"
 	desc = "A generic action figure modeled after nothing in particular."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
 	w_class = 2
-	var/cooldown = 0
+	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
 	var/recharge_time = 30
 
+// Talking toys are language universal, and thus all species can use them
+/obj/item/toy/talking/attack_alien(mob/user)
+	. = attack_hand(user)
+
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
-		var/message = pick(messages)
-		user << "<span class='notice'>You pull the string on the [src].</span>"
-		toy_talk(user, message)
-		cooldown = 1
-		spawn(recharge_time) cooldown = 0
+		var/message = generate_message()
+		user.visible_message("<span class='notice'>[user] pulls the string on \the [src].</span>", "<span class='notice'>You pull the string on \the [src].</span>", "<span class='notice'>You hear a string being pulled.</span>")
+		toy_talk(user.loc, message)
+		cooldown = TRUE
+		spawn(recharge_time)
+			cooldown = FALSE
 		return
 	..()
 
-/obj/item/toy/talking/proc/toy_talk(user, message)
-	playsound(user, 'sound/machines/click.ogg', 20, 1)
+/obj/item/toy/talking/proc/generate_message()
+	return pick(messages)
+
+/obj/item/toy/talking/proc/toy_talk(loc, message)
+	playsound(loc, 'sound/machines/click.ogg', 20, 1)
 	src.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+
+/*
+ * AI core prizes
+ */
+/obj/item/toy/talking/AI
+	name = "toy AI"
+	desc = "A little toy model AI core with real law announcing action!"
+	icon_state = "AI"
+
+/obj/item/toy/talking/AI/generate_message()
+	return generate_ion_law()
 
 /obj/item/toy/talking/owl
 	name = "owl action figure"
@@ -732,6 +729,57 @@
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 
+/obj/item/toy/talking/skeleton
+	name = "skeleton action figure"
+	desc = "An action figure modeled after 'Oh-cee', the original content \
+		skeleton.\nNot suitable for infants or assistants under 36 months \
+		of age."
+	icon_state = "skeletonprize"
+	attack_verb = list("boned", "dunked on", "worked down to the bone")
+
+	var/phomeme
+
+	var/list/papyrus_messages = list(
+		"That's the disposal bin. Feel free to visit it at any time.",
+		"I can't just let anyone ERP with me, I'm a skeleton with standards!",
+		"Sorry. Can't talk. I'm busy being popular on a video game.",
+		"You can't spell 'robust' without several letters from my name!!!")
+	var/list/sans_messages = list(
+		"You feel your redtext crawling on your back.",
+		"On days like these, references like this should be BURNING IN HELL.")
+
+/obj/item/toy/talking/skeleton/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to commit \
+		suicide with \the [src].</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.set_species(/datum/species/skeleton)
+
+	set_phomeme("sans")
+	toy_talk(user, "You feel like you're going to have a bad time.")
+
+	user.Stun(5)
+	sleep(20)
+	return OXYLOSS
+
+/obj/item/toy/talking/skeleton/generate_message()
+	return pick(papyrus_messages + sans_messages)
+
+/obj/item/toy/talking/skeleton/proc/set_phomeme(a_phomeme)
+	phomeme = a_phomeme
+	span = "danger [a_phomeme]"
+
+/obj/item/toy/talking/skeleton/toy_talk(mob/user, message)
+	// change spans dynamically depending on the message
+	if(sans_messages.Find(message))
+		set_phomeme("sans")
+	if(papyrus_messages.Find(message))
+		set_phomeme("papyrus")
+
+	// If message isn't in the defined lists, just use whatever was set last
+	..(user.loc, message)
+	chatter(message, phomeme, user)
 
 /*
 || A Deck of Cards for playing various games of chance ||
