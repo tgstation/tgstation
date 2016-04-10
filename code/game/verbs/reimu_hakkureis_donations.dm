@@ -43,7 +43,7 @@ Coats
 Leather Coat:/obj/item/clothing/suit/leathercoat:160
 Pirate Coat:/obj/item/clothing/suit/pirate:120
 Red poncho:/obj/item/clothing/suit/poncho/red:140
-Green poncho:/obj/item/clothing/suit/poncho/green:1
+Green poncho:/obj/item/clothing/suit/poncho/green:150
 Puffer jacket:/obj/item/clothing/suit/jacket/puffer:120
 Winter coat:/obj/item/clothing/suit/hooded/wintercoat:130
 Cardborg:/obj/item/clothing/suit/cardborg:190
