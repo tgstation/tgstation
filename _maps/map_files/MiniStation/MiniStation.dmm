@@ -3510,6 +3510,7 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/hand_labeler,
 /obj/item/clothing/glasses/sunglasses,
+/obj/item/weapon/book/demonomicon,
 /turf/open/floor/carpet,
 /area/security/brig)
 "hn" = (
@@ -10216,7 +10217,7 @@
 /area/crew_quarters/bar)
 "uW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads{
 	name = "\improper Job Assignment"
