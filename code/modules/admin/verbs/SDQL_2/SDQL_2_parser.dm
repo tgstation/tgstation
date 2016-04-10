@@ -211,13 +211,11 @@
 //call_query:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
 /datum/SDQL_parser/proc/call_query(i, list/node)
 	var/list/func = list()
-	var/list/arguments = list()
-	i = call_function(i + 1, func, arguments)
+	i = variable(i + 1, func) // Yes technically does anything variable() matches but I don't care, if admins fuck up this badly then they shouldn't be allowed near SDQL.
 
 	node += "call"
 	node["call"] = func
-	node["args"] = arguments
-
+	
 	if(tokenl(i) != "on")
 		return i
 
@@ -353,6 +351,22 @@
 	if(token(i + 1) == ".")
 		L += "."
 		i = variable(i + 2, L)
+
+	else if (token(i + 1) == "(") // OH BOY PROC
+		var/list/arguments = list()
+		i = call_function(i, null, arguments)
+		L += ":"
+		L[++L.len] = arguments
+
+	else if (token(i + 1) == "\[")
+		var/list/expression = list()
+		i = expression(i + 2, expression)
+		if (token(i) != "]")
+			parse_error("Missing ] at the end of list access.")
+
+		L += "\["
+		L[++L.len] = expression
+		i++
 
 	else
 		i++

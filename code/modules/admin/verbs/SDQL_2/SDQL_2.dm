@@ -96,22 +96,8 @@
 
 			switch(query_tree[1])
 				if("call")
-					var/list/call_list = query_tree["call"]
-					var/list/args_list = query_tree["args"]
-
 					for(var/datum/d in objs)
-						var/list/new_args = list()
-						for(var/arg in args_list)
-							new_args += SDQL_expression(d, arg)
-						for(var/v in call_list)
-							if(copytext(v, 1, 8) == "global.") // Global proc.
-								v = "/proc/[copytext(v, 8)]"
-								spawn()
-									call(v)(arglist(new_args))
-							else if(d)
-								if(hascall(d, v))
-									spawn()
-										call(d, v)(arglist(new_args)) // Spawn in case the function sleeps.
+						SDQL_var(d, query_tree["call"][1], source = d)
 
 				if("delete")
 					for(var/datum/d in objs)
@@ -160,8 +146,9 @@
 										break
 
 	catch(var/exception/e)
-		to_chat(usr, "<span class='warning'>A runtime error has occured during the execution of your query and your query has been aborted.</span>")
-		to_chat(usr, e)
+		to_chat(usr, "<span class='danger'>An exception has occured during the execution of your query and your query has been aborted.</span>")
+		to_chat(usr, "exception name: [e.name]")
+		to_chat(usr, "file/line: [e.file]/[e.line]")
 		return
 
 /proc/SDQL_parse(list/query_list)
@@ -203,7 +190,7 @@
 /proc/SDQL_testout(list/query_tree, indent = 0)
 	var/spaces = ""
 	for(var/s = 0, s < indent, s++)
-		spaces += "    "
+		spaces += "&nbsp;&nbsp;&nbsp;&nbsp;"
 
 	for(var/item in query_tree)
 		if(istype(item, /list))
@@ -217,14 +204,12 @@
 		if(!isnum(item) && query_tree[item])
 
 			if(istype(query_tree[item], /list))
-				to_chat(usr, "[spaces]    (")
+				to_chat(usr, "[spaces]&nbsp;&nbsp;&nbsp;&nbsp;(")
 				SDQL_testout(query_tree[item], indent + 2)
-				to_chat(usr, "[spaces]    )")
+				to_chat(usr, "[spaces]&nbsp;&nbsp;&nbsp;&nbsp;)")
 
 			else
-				to_chat(usr, "[spaces]    [query_tree[item]]")
-
-
+				to_chat(usr, "[spaces]&nbsp;&nbsp;&nbsp;&nbsp;[query_tree[item]]")
 
 /proc/SDQL_from_objs(list/tree)
 	if("world" in tree)
@@ -384,46 +369,86 @@
 			val += SDQL_expression(object, expression_list)
 
 	else
-		val = SDQL_var(object, expression, i)
+		val = SDQL_var(object, expression, i, object)
 		i = expression.len
 
 	return list("val" = val, "i" = i)
 
-/proc/SDQL_var(datum/object, list/expression, start = 1)
+/proc/SDQL_var(datum/object, list/expression, start = 1, source)
 	var/v
 
-	if(expression[start] in object.vars)
-		v = object.vars[expression[start]]
+	var/long = start < expression.len
 
-	else if(expression [start] == "{" && start < expression.len)
-		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x")
+	if (object == world && long && expression[start + 1] == ".")
+		to_chat(usr, "Sorry, but global variables are not supported at the moment.")
+		return null
+
+	if (expression [start] == "{" && long)
+		if (lowertext(copytext(expression[start + 1], 1, 3)) != "0x")
 			to_chat(usr, "<span class='danger'>Invalid pointer syntax: [expression[start + 1]]</span>")
 			return null
 		v = locate("\[[expression[start + 1]]]")
-		if(!v)
+		if (!v)
 			to_chat(usr, "<span class='danger'>Invalid pointer: [expression[start + 1]]</span>")
 			return null
 		start++
 
-	else
+	else if ((!long || expression[start + 1] == ".") && (expression[start] in object.vars))
+		v = object.vars[expression[start]]
+
+	else if (long && expression[start + 1] == ":" && hascall(object, expression[start]))
+		v = expression[start]
+
+	else if (!long || expression[start + 1] == ".")
 		switch(expression[start])
 			if("usr")
 				v = usr
 			if("src")
-				v = object
+				v = source
 			if("marked")
 				if(usr.client && usr.client.holder && usr.client.holder.marked_datum)
 					v = usr.client.holder.marked_datum
 				else
 					return null
+			if("global")
+				v = world // World is mostly a token, really.
 			else
 				return null
 
-	if(start < expression.len && expression[start + 1] == ".")
-		return SDQL_var(v, expression[start + 2])
+	else if (object == world) // Shitty ass hack kill me.
+		v = expression[start]
 
-	else
-		return v
+	if(long)
+		if (expression[start + 1] == ".")
+			return SDQL_var(v, expression[start + 2], source = source)
+
+		else if (expression[start + 1] == ":")
+			return SDQL_function(object, v, expression[start + 2], source)
+
+		else if (expression[start + 1] == "\[" && islist(v))
+			var/list/L = v
+			var/index = SDQL_expression(source, expression[start + 2])
+			if (isnum(index) && (!IsInteger(index) || L.len < index))
+				to_chat(world, "<span class='danger'>Invalid list index: [index]</span>")
+				return null
+
+			return L[index]
+
+	return v
+
+
+/proc/SDQL_function(var/datum/object, var/procname, var/list/arguments, source)
+	set waitfor = FALSE
+
+	var/list/new_args = list()
+	for(var/arg in arguments)
+		new_args += SDQL_expression(source, arg)
+
+	if (object == world) // Global proc.
+		procname = "/proc/[procname]"
+		return call(procname)(arglist(new_args))
+
+	return call(object, procname)(arglist(new_args)) // Spawn in case the function sleeps.
 
 
 /proc/SDQL2_tokenize(query_text)
