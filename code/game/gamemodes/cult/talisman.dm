@@ -170,21 +170,29 @@ Rite of Disorientation
 
 //Rite of True Sight: Same as rune, but doesn't work on ghosts
 /obj/item/weapon/paper/talisman/true_sight
-	cultist_name = "Talisman of Veiling/Revealing"
-	cultist_desc = "A talisman that reveals or hides nearby invisible runes."
+	cultist_name = "Talisman of Veiling"
+	cultist_desc = "A talisman that hides nearby runes."
 	invocation = "Kla'atu barada nikt'o!"
 	health_cost = 1
+	uses = 2
+	var/revealing = FALSE //if it reveals or not
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user)
 	. = ..()
-	user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
-	for(var/obj/effect/rune/R in orange(3,user))
-		if(!R.invisibility)
+	for(var/obj/effect/rune/R in range(3,user))
+		if(!revealing)
+			user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
+				 "<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
 			R.visible_message("<span class='danger'>[R] fades away.</span>")
 			R.invisibility = INVISIBILITY_OBSERVER
 			R.alpha = 100 //To help ghosts distinguish hidden runes
+			cultist_name = "Talisman of Revealing"
+			cultist_desc = "A talisman that reveals nearby runes."
+			invocation = "Nikt'o barada kla'atu!"
+			revealing = TRUE
 		else
+			user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
+				 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
 			R.invisibility = 0
 			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
 			R.alpha = initial(R.alpha)

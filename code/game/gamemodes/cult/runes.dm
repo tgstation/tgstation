@@ -560,7 +560,7 @@ var/list/teleport_runes = list()
 			M.visible_message("<span class='warning'>[M] twitches.</span>")
 
 
-//Rite of True Sight: Turns ghosts and obscured runes visible, or hides them if they're visible already.
+//Rite of True Sight: Turns ghosts and obscured runes visible, or hides them, depending on what state the rune is in
 /obj/effect/rune/true_sight
 	cultist_name = "Obscure Runes"
 	cultist_desc = "reveals or hides all invisible objects nearby, from spirits to runes."
@@ -569,25 +569,38 @@ var/list/teleport_runes = list()
 	talisman_type = /obj/item/weapon/paper/talisman/true_sight
 	icon_state = "4"
 	color = rgb(255, 150, 200)
+	var/revealing = TRUE //if the next use will reveal or hide
 
 /obj/effect/rune/true_sight/invoke()
 	visible_message("<span class='warning'>[src] flickers slightly.</span>")
-	for(var/obj/effect/rune/R in orange(3,src))
-		if(!R.invisibility)
-			R.visible_message("<span class='danger'>[R] fades away.</span>")
-			R.invisibility = INVISIBILITY_OBSERVER
-			R.alpha = 100 //To help ghosts distinguish hidden runes
-		else
-			R.invisibility = 0
-			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
-			R.alpha = initial(R.alpha)
-	for(var/mob/dead/observer/O in range(3,src))
-		if(!O.invisibility)
-			O << "<span class='cultitalic'>You suddenly feel as if you've vanished...</span>"
-			O.invisibility = INVISIBILITY_OBSERVER
-		else
-			O << "<span class='cultitalic'>You suddenly feel very obvious...</span>"
-			O.invisibility = 0
+	if(revealing)
+		invocation = "Nikt'o barada kla'atu!"
+		for(var/mob/dead/observer/O in range(3,src))
+			if(O.invisibility)
+				O << "<span class='cultitalic'>You suddenly feel very obvious...</span>"
+				O.invisibility = 0
+		for(var/obj/effect/rune/R in orange(3,src))
+			if(R.invisibility)
+				R.invisibility = 0
+				R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
+				R.alpha = initial(R.alpha)
+	else
+		invocation = "Kla'atu barada nikt'o!"
+		for(var/obj/effect/rune/R in orange(3,src))
+			if(!R.invisibility)
+				R.visible_message("<span class='danger'>[R] fades away.</span>")
+				R.invisibility = INVISIBILITY_OBSERVER
+				R.alpha = 100 //To help ghosts distinguish hidden runes
+		for(var/mob/dead/observer/O in range(3,src))
+			if(!O.invisibility)
+				O << "<span class='cultitalic'>You suddenly feel as if you've vanished...</span>"
+				O.invisibility = INVISIBILITY_OBSERVER
+	revealing = !revealing
+
+/obj/effect/rune/true_sight/examine(mob/user)
+	..()
+	if(iscultist(user) || user.stat == DEAD)
+		user << "<span class='cult'>Will [revealing ? "reveal":"hide"] nearby runes and spirits when invoked.</span>"
 
 
 //Rite of Disruption: Emits an EMP blast.

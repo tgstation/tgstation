@@ -158,7 +158,7 @@ This file contains the arcane tome files as well as innate cultist communication
 
 	text += "<font color='red'><b>Talisman of Arming</b></font><br>This talisman functions nearly identically to the rune, arming you with armor and a sword. If used on another cultist, it instead armors them.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Veiling/Revealing</b></font><br>This talisman functions identically to the rune, but will not reveal or hide spirits.<br><br>"
+	text += "<font color='red'><b>Talisman of Veiling/Revealing</b></font><br>This talisman functions similarly to the rune; on its first use, it will hide runes, and on the second, will reveal runes. It does not reveal spirits.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Electromagnetic Pulse</b></font><br>This talisman functions like the Rite of Disruption, but slightly weaker. It disappears after one use.<br><br>"
 
@@ -217,4 +217,4 @@ This file contains the arcane tome files as well as innate cultist communication
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	new rune_to_scribe(Turf, chosen_keyword)
-	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
+	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)][initial(rune_to_scribe.talisman_type) ? " This rune can be imbued by striking it with paper.":""]</span>"
