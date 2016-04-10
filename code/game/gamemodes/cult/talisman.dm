@@ -294,9 +294,11 @@ Rite of Disorientation
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 
-/obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
 		user.visible_message("<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
 		if(iscarbon(target))
-				var/mob/living/carbon/H = target
-				H.reagents.add_reagent("mindbreaker", 30)
+			var/mob/living/carbon/H = target
+			H.reagents.add_reagent("mindbreaker", 30)
+		qdel(src)
+		return
