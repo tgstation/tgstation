@@ -24443,12 +24443,12 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNP" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNQ" = (
@@ -59344,6 +59344,7 @@
 	pixel_y = 0
 	},
 /obj/item/clothing/under/suit_jacket/red,
+/obj/item/weapon/book/demonomicon,
 /turf/open/floor/plasteel{
 	icon_state = "cult";
 	dir = 2

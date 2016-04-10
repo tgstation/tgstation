@@ -39738,6 +39738,7 @@
 /area/storage/art)
 "buT" = (
 /obj/structure/cult/tome,
+/obj/item/weapon/book/demonomicon,
 /turf/open/floor/plasteel{
 	icon_state = "cult"
 	},
@@ -48372,8 +48373,7 @@
 	name = "Chapel Maintenance"
 	})
 "bKq" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/decal/cleanable/cobweb,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "bKr" = (
