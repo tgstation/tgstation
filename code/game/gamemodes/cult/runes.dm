@@ -721,7 +721,7 @@ var/list/teleport_runes = list()
 //Rite of the Shadowed Mind:  Deafens, blinds and mutes all non-cultists nearby.
 /obj/effect/rune/deafen
 	cultist_name = "Debilitate"
-	cultist_desc = "causes all non-followers nearby to lose their hearing, sight and voice."
+	cultist_desc = "causes all non-followers nearby to lose their hearing, sight and voice. Will trigger when crossed by noncultists."
 	invocation = "Sti kaliedir!"
 	color = rgb(0, 255, 0)
 	icon_state = "4"
@@ -738,11 +738,15 @@ var/list/teleport_runes = list()
 			C.silent += 10
 	qdel(src)
 
+/obj/effect/rune/deafen/Crossed(atom/A)
+	if(isliving(A) && !iscultist(A))
+		invoke(A)
+
 
 //Rite of Disorientation: Stuns all non-cultists nearby for a brief time
 /obj/effect/rune/stun
 	cultist_name = "Stun"
-	cultist_desc = "stuns all nearby non-followers for a brief time."
+	cultist_desc = "stuns all nearby non-followers for a brief time. Will trigger when crossed by noncultists."
 	invocation = "Fuu ma'jin!"
 	talisman_type = /obj/item/weapon/paper/talisman/stun
 	icon_state = "2"
@@ -757,6 +761,10 @@ var/list/teleport_runes = list()
 			M.Stun(3)
 			M.flash_eyes(1,1)
 	qdel(src)
+
+/obj/effect/rune/stun/Crossed(atom/A)
+	if(isliving(A) && !iscultist(A))
+		invoke(A)
 
 
 //Rite of Joined Souls: Summons a single cultist.
