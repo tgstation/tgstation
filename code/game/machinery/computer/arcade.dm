@@ -12,6 +12,7 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
+	var/list/cheaters = list() //Trying to cheat twice at cuban pete gibs you
 
 	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 	emag_cost = 0 // because fun
@@ -94,7 +95,6 @@
 	A.game_data["blocked"] = blocked
 
 
-
 /obj/machinery/computer/arcade/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -174,6 +174,9 @@
 		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
+		if(is_cheater(usr))
+			return
+
 		temp = "New Round"
 		player_hp = 30
 		player_mp = 10
@@ -266,6 +269,9 @@
 	return
 
 /obj/machinery/computer/arcade/emag(mob/user as mob)
+	if(is_cheater(user))
+		return
+
 	temp = "If you die in the game, you die for real!"
 	player_hp = 30
 	player_mp = 10
@@ -299,6 +305,9 @@
 	..(severity)
 
 /obj/machinery/computer/arcade/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(is_cheater(user))
+		return
+
 	var/obj/item/weapon/circuitboard/arcade/A
 	if(circuit)
 		A = new
@@ -307,6 +316,11 @@
 
 /obj/machinery/computer/arcade/kick_act()
 	..()
+	if(stat & (NOPOWER|BROKEN))
+		return
+
+	if(is_cheater(usr))
+		return
 
 	if(!emagged && prob(5)) //Bug
 		temp = "|eW R0vnb##[rand(0,9)]#"
@@ -316,3 +330,21 @@
 		enemy_mp = rand(1,40)
 		gameover = 0
 		turtle = 0
+
+/obj/machinery/computer/arcade/proc/is_cheater(mob/user as mob)
+	var/cheater = 0
+	if(emagged && !gameover)
+		if(stat & (NOPOWER|BROKEN))
+			return cheater
+		else if(user in cheaters)
+			to_chat(usr, "<span class='danger'>[src.enemy_name] throws a bomb at you for trying to cheat him again.</span>")
+			explosion(get_turf(src.loc),-1,0,2)//IED sized explosion
+			user.gib()
+			cheaters = null
+			qdel(src)
+			cheater = 1
+		else
+			to_chat(usr, "<span class='danger'>[src.enemy_name] isn't one to tolerate cheaters. Don't try that again.</span>")
+			cheaters += user
+			cheater = 1
+	return cheater
