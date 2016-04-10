@@ -401,7 +401,6 @@
 
 /datum/supply_pack/engineering
 	group = "Engineering"
-	crate_type = /obj/structure/closet/crate/engineering
 
 /datum/supply_pack/engineering/fueltank
 	name = "Fuel Tank Crate"
@@ -436,7 +435,6 @@
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	crate_name = "electrical maintenance crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
@@ -496,7 +494,6 @@
 					/obj/item/weapon/electronics/tracker,
 					/obj/item/weapon/paper/solar)
 	crate_name = "solar panel crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/engine
 	name = "Emitter Crate"
@@ -505,7 +502,7 @@
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	crate_name = "emitter crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
 /datum/supply_pack/engineering/engine/field_gen
@@ -547,7 +544,7 @@
 	access = access_ce
 	contains = list(/obj/machinery/power/supermatter_shard)
 	crate_name = "supermatter shard crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
