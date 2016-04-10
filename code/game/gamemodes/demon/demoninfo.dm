@@ -1,11 +1,11 @@
-#define POWERUPTHRESHOLD 2 //TODO LORDPIDEY change back to 3//How many souls are needed per stage.
+#define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
 
 #define BASIC_DEMON 0
 #define BLOOD_LIZARD 1
 #define TRUE_DEMON 2
 #define ARCH_DEMON 3
 
-#define SOULVALUE soulsOwned.len-reviveNumber+1 //TODO LORDPIDEY remove the +1
+#define SOULVALUE soulsOwned.len-reviveNumber
 
 #define DEMONRESURRECTTIME 600
 
@@ -340,12 +340,16 @@ var/list/allDemons = list()
 		if(!istype(S, /obj/effect/proc_holder/spell/targeted/summon_contract))
 			owner.RemoveSpell(S)
 
+/datum/demoninfo/proc/give_summon_contract()
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
+
+
 /datum/demoninfo/proc/give_base_spells(var/give_summon_contract = 0)
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
 	if(give_summon_contract)
-		owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
+		give_summon_contract()
 
 /datum/demoninfo/proc/give_lizard_spells()
 	remove_spells()
@@ -428,14 +432,12 @@ var/list/allDemons = list()
 	message_admins("[owner.name] (demonic name is: [truename]) is resurrecting using demonic energy.</a>")
 	reviveNumber++
 	if(body)
-		world << "Now performing type 1 demonic resurrection." //TODO LORDPIDEY remove test string
 		body.revive(1,0)
 		if(istype(body, /mob/living/carbon/true_demon))
 			var/mob/living/carbon/true_demon/D = body
 			if(D.oldform)
 				D.oldform.revive(1,0) // Heal the old body too, so the demon doesn't resurrect, then immediately regress into a dead body.
 	else
-		world << "Now performing type 2 demonic resurrection." //TODO LORDPIDEY remove test string
 		if(blobstart.len > 0)
 			var/turf/targetturf = get_turf(pick(blobstart))
 			var/mob/currentMob = owner.current
@@ -447,8 +449,9 @@ var/list/allDemons = list()
 			if(currentMob.mind != owner)
 				message_admins("[owner.name]'s demonic resurrection failed due to becoming a new mob.  Aborting.")
 				return -1
-			owner.current.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
+			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
+			give_summon_contract()
 			if(SOULVALUE>=POWERUPTHRESHOLD)
 				H.set_species(/datum/species/lizard, 1)
 				H.underwear = "Nude"
@@ -463,6 +466,9 @@ var/list/allDemons = list()
 				A.oldform = H
 				A.set_name()
 				owner.transfer_to(A)
+				if(SOULVALUE>=POWERUPTHRESHOLD*3)
+					A.convert_to_archdemon()
+
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for demonic resurrection")
 	check_regression()

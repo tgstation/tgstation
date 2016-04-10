@@ -9,8 +9,13 @@
 /obj/item/weapon/paper/contract/proc/update_text()
 	return
 
+/obj/item/weapon/paper/contract/update_icon()
+	return
 
 
+/obj/item/weapon/paper/contract/employment
+	icon_state = "paper_words"
+	
 /obj/item/weapon/paper/contract/employment/New(atom/loc, mob/living/nOwner)
 	. = ..()
 	if(!nOwner.mind)
