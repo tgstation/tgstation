@@ -8,6 +8,7 @@
 /*
  * Lasertag
  */
+
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armour"
 	desc = "Blue Pride, Station Wide"
@@ -37,7 +38,6 @@
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	item_state = "pirate"
 	flags = FPRINT
 	species_fit = list("Vox")
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
@@ -46,7 +46,6 @@
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
-	item_state = "hgpirate"
 	flags = FPRINT
 	species_fit = list("Vox")
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
@@ -55,8 +54,7 @@
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
 	desc = "Suit for a cyborg costume."
-	icon_state = "death"
-	item_state = "death"
+	icon_state = "death"//broken on mob, item fine
 	flags = FPRINT
 	siemens_coefficient = 1
 	fire_resist = T0C+5200
@@ -65,15 +63,14 @@
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
 	desc = "A Nazi great coat"
-	icon_state = "nazi"
-	item_state = "nazi"
+	icon_state = "nazi"//broken on mob, item fine
 	flags = FPRINT
 
 
 /obj/item/clothing/suit/johnny_coat
 	name = "johnny~~ coat"
 	desc = "Johnny~~"
-	icon_state = "johnny"
+	icon_state = "johnny"//broken on mob, item fine
 	item_state = "johnny"
 	flags = FPRINT
 
@@ -82,7 +79,6 @@
 	name = "justice suit"
 	desc = "this pretty much looks ridiculous"
 	icon_state = "justice"
-	item_state = "justice"
 	flags = FPRINT
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 
@@ -151,7 +147,6 @@
 	name = "Monkey Suit"
 	desc = "A suit that looks like a primate"
 	icon_state = "monkeysuit"
-	item_state = "monkeysuit"
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	siemens_coefficient = 2.0
 
@@ -187,7 +182,7 @@
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
-	item_state = "ianshirt"
+	body_parts_covered = ARMS|FULL_TORSO
 
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
@@ -211,42 +206,24 @@
 		return
 	usr.update_inv_wear_suit()
 
-//pyjamas
-//originally intended to be pinstripes >.>
-
-/obj/item/clothing/under/bluepyjamas
-	name = "blue pyjamas"
-	desc = "Slightly old-fashioned sleepwear."
-	icon_state = "blue_pyjamas"
-	item_state = "blue_pyjamas"
-
-/obj/item/clothing/under/redpyjamas
-	name = "red pyjamas"
-	desc = "Slightly old-fashioned sleepwear."
-	icon_state = "red_pyjamas"
-	item_state = "red_pyjamas"
-
 //coats
 
 /obj/item/clothing/suit/leathercoat
 	name = "leather coat"
 	desc = "A long, thick black leather coat."
-	icon_state = "leathercoat"
-	item_state = "leathercoat"
+	icon_state = "leathercoat"//broken completely
 	flags = FPRINT
 
 /obj/item/clothing/suit/browncoat
 	name = "brown leather coat"
 	desc = "A long, brown leather coat."
-	icon_state = "browncoat"
-	item_state = "browncoat"
+	icon_state = "browncoat"//broken completely
 	flags = FPRINT
 
 /obj/item/clothing/suit/neocoat
 	name = "black coat"
 	desc = "A flowing, black coat."
-	icon_state = "neocoat"
-	item_state = "neocoat"
+	icon_state = "neocoat"//broken completely
 	flags = FPRINT
 
 //actual suits
@@ -254,8 +231,7 @@
 /obj/item/clothing/suit/creamsuit
 	name = "cream suit"
 	desc = "A cream coloured, genteel suit."
-	icon_state = "creamsuit"
-	item_state = "creamsuit"
+	icon_state = "creamsuit"//broken completely
 	flags = FPRINT
 
 //stripper
@@ -302,7 +278,9 @@
 	item_state = "xenos_helm"
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	siemens_coefficient = 2.0
+
 //swimsuit
+
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
@@ -346,21 +324,19 @@
 	name = "Simon's Jacket"
 	desc = "Now you too can pierce the heavens"
 	icon_state = "simonjacket"
-	item_state = "simonjacket"
 	species_fit = list("Vox")
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/kaminacape
 	name = "Kamina's Cape"
 	desc = "Don't believe in yourself, dumbass. Believe in me. Believe in the Kamina who believes in you."
 	icon_state = "kaminacape"
-	item_state = "kaminacape"
 	body_parts_covered = 0
 
 /obj/item/clothing/suit/storage/bandolier
 	name = "bandolier"
 	desc = "A bandolier designed to hold up to eight shotgun shells."
 	icon_state = "bandolier"
-	item_state = "bandolier"
 	storage_slots = 8
 	max_combined_w_class = 20
 	can_only_hold = list("/obj/item/ammo_casing/shotgun")
@@ -369,55 +345,55 @@
 	name = "Officer's Coat"
 	desc = "Ein Mantel gemacht, um die Juden zu bestrafen."
 	icon_state = "officersuit"
-	item_state = "officersuit"
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
 	desc = "Und das heiﬂt: Erika"
 	icon_state = "soldiersuit"
-	item_state = "soldiersuit"
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/russofurcoat
 	name = "russian fur coat"
 	desc = "Let the land do the fighting for you."
 	icon_state = "russofurcoat"
-	item_state = "russofurcoat"
 	allowed = list(/obj/item/weapon/gun)
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/doshjacket
 	name = "Plasterer's Jacket"
 	desc = "Perfect for doing up the house."
 	icon_state = "doshjacket"
-	item_state = "doshjacket"
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/suit/lordadmiral
 	name = "Lord Admiral's Coat"
 	desc = "You'll be the Ruler of the King's Navy in no time."
 	icon_state = "lordadmiral"
-	item_state = "lordadmiral"
 	allowed = list (/obj/item/weapon/gun)
 
 /obj/item/clothing/suit/raincoat
 	name = "Raincoat"
 	desc = "Do you like Huey Lewis and the News?"
 	icon_state = "raincoat"
-	item_state = "raincoat"
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV //transparent
 	allowed = list (/obj/item/weapon/fireaxe)
 
 /obj/item/clothing/suit/kefkarobe
 	name = "Crazed Jester's Robe"
 	desc = "Do I look like a waiter?"
 	icon_state = "kefkarobe"
+
 /obj/item/clothing/suit/libertycoat
 	name = "Liberty Coat"
 	desc = "Smells faintly of freedom."
 	icon_state = "libertycoat"
-	item_state = "libertycoat"
+	body_parts_covered = FULL_TORSO|ARMS
+
 /obj/item/clothing/suit/storage/draculacoat
 	name = "Vampire Coat"
 	desc = "What is a man? A miserable little pile of secrets."
 	icon_state = "draculacoat"
-	item_state = "draculacoat"
 	blood_overlay_type = "coat"
 	cant_hold = list(/obj/item/weapon/nullrod, /obj/item/weapon/storage/bible)
 	armor = list(melee = 30, bullet = 20, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
@@ -426,19 +402,18 @@
 	name = "Apron"
 	desc = "Simple white apron."
 	icon_state = "maidapron"
-	item_state = "maidapron"
+	body_parts_covered = FULL_TORSO
 
 /obj/item/clothing/suit/clownpiece
 	name = "small fairy wings"
 	desc = "Some small and translucid insect-like wings."
 	icon_state = "clownpiece"
-	item_state = "clownpiece"
+	body_parts_covered = 0
 
 /obj/item/clothing/suit/clownpiece/flying
 	name = "small fairy wings"
 	desc = "Some small and translucid insect-like wings. Looks like these are the real deal!"
 	icon_state = "clownpiece-fly"
-	item_state = "clownpiece"
 
 /obj/item/clothing/suit/clownpiece/flying/attack_hand(var/mob/living/carbon/human/H)
 	if(!istype(H))
@@ -475,21 +450,19 @@
 	desc = "Made by professional knitting nanas to truly fit the festive mood."
 	heat_conductivity = INS_ARMOUR_HEAT_CONDUCTIVITY
 	body_parts_covered = FULL_TORSO|ARMS
+	icon_state = "cjumper-red"
 
 /obj/item/clothing/suit/jumper/christmas/red
 	desc = "Made by professional knitting nanas to truly fit the festive mood. This one has a tasteful red colour to it, and a festive Fir tree."
 	icon_state = "cjumper-red"
-	item_state = "cjumper-red"
 
 /obj/item/clothing/suit/jumper/christmas/blue
 	desc = "Made by professional knitting nanas to truly fit the festive mood. This one has a nice light blue colouring to it, and has a snowman on it."
 	icon_state = "cjumper-blue"
-	item_state = "cjumper-blue"
 
 /obj/item/clothing/suit/jumper/christmas/green
 	desc = "Made by professional knitting nanas to truly fit the festive mood. This one is green in colour, and has a reindeer with a red nose on the front. At least you think it's a reindeer."
 	icon_state = "cjumper-green"
-	item_state = "cjumper-green"
 
 /obj/item/clothing/suit/spaceblanket
 	w_class = 2
@@ -514,7 +487,6 @@
 	name = "advanced space blanket"
 	desc = "Using an Advanced Space Blanket requires Advanced Power Blanket Training."
 	icon_state = "goodblanket"
-	item_state = "shittyuglyawfulBADblanket"
 	heat_conductivity = 0
 	slowdown = 5
 	bearpelt = 1
