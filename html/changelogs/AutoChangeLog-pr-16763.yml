@@ -1,0 +1,4 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "Emagging the cargo console also unlocks regular contraband, in addition to syndicate gear"
