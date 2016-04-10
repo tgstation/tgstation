@@ -491,7 +491,7 @@
 						if(3) //X is Ying an abstract
 							message = "THE [ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionobjects]"
 		if(40 to 41)// the X is now named Y
-			switch(rand(1,)) //What is being renamed?
+			switch(rand(1,5)) //What is being renamed?
 				if(1)//Areas
 					switch(rand(1,4)//What is the area being renamed to?
 						if(1)
