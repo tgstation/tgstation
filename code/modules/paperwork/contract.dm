@@ -38,8 +38,8 @@
 		else if (user.mind && (user.mind.assigned_role =="Head of Personnel") || (user.mind.assigned_role == "Centcom Commander"))
 			deconvert = prob (10) // the HoP doesn't have AS much legal training
 	if(deconvert)
-		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotransen!</span>")
-		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotransen.</span>"
+		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
+		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>"
 		M.return_soul()
 		return
 	else
