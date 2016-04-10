@@ -98,7 +98,7 @@ var/agnoston = "agnoston"
 	var/ownerkey
 	var/money = 0
 	var/maxmoney = 0
-	var/allowed_num_items = 1000
+	var/allowed_num_items = 10 //rel lox
 
 	New(ckey, money)
 		..()
