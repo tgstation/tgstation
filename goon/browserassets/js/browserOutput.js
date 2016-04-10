@@ -86,7 +86,7 @@ if (typeof String.prototype.trim !== 'function') {
 
 //Shit fucking piece of crap that doesn't work god fuckin damn it
 function linkify(text) {
-	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:.*?\..*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
+	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
 	return text.replace(rex, function ($0, $1) {
 		if(/^https?:\/\/.+/i.test($0)) {
 			return $1 ? $0: '<a href="'+$0+'">'+$0+'</a>';
