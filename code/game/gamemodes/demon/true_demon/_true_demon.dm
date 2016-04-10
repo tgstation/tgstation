@@ -149,5 +149,5 @@
 	else
 		return ..()
 
-
-
+/mob/living/carbon/true_demon/can_be_revived()
+	return 1
