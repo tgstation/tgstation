@@ -914,6 +914,7 @@
 #include "code\modules\client\asset_cache.dm"
 #include "code\modules\client\client defines.dm"
 #include "code\modules\client\client procs.dm"
+#include "code\modules\client\client_colour.dm"
 #include "code\modules\client\message.dm"
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_savefile.dm"
