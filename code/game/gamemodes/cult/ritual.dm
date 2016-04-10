@@ -118,10 +118,10 @@ This file contains the arcane tome files as well as innate cultist communication
 	undo this effect and allow passage again.<br><br>"
 
 	text += "<font color='red'><b>Debilitate</b></font><br>The Rite of the Shadowed Mind is simple. When invoked, it will cause all non-cultists that can see its rune to become deaf, blind and mute for a \
-	considerable amount of time.<br><br>"
+	considerable amount of time. If crossed by a noncultist, will trigger.<br><br>"
 
 	text += "<font color='red'><b>Stun</b></font><br>Though the Rite of Blazing Light is weak when invoked normally, applying it to a paper makes it much more useful. \
-	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time.<br><br>"
+	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time. If crossed by a noncultist, will trigger.<br><br>"
 
 	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls allows the cult to free other cultists with ease. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. It requires two invokers, and will damage each invoker slightly.<br><br>"
