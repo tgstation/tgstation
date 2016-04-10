@@ -98,8 +98,6 @@
 	remove_overlay(FACEMASK_LAYER)
 	if(istype(wear_mask, /obj/item/clothing/mask))
 		update_hud_wear_mask(wear_mask)
-		if(dna && istype(dna.species))
-			return
 		if(!(head && (head.flags_inv & HIDEMASK)))
 			var/image/standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
 			overlays_standing[FACEMASK_LAYER] = standing
@@ -114,8 +112,6 @@
 
 	if(back)
 		update_hud_back(back)
-		if(dna && istype(dna.species))
-			return
 		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		overlays_standing[BACK_LAYER] = standing
 	apply_overlay(BACK_LAYER)
@@ -124,8 +120,6 @@
 	remove_overlay(HEAD_LAYER)
 	if(head)
 		update_hud_head(head)
-		if(dna && istype(dna.species))
-			return
 
 		var/image/standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		overlays_standing[HEAD_LAYER] = standing
