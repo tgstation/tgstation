@@ -313,7 +313,7 @@
 	..()
 
 /mob/living/carbon/monkey/IsVocal()
-	if(!getorganslot("lungs") || !getorganslot("tongue"))
+	if(!getorganslot("lungs"))
 		return 0
 	return 1
 

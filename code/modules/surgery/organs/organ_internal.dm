@@ -243,7 +243,7 @@
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "lungs"
-	zone = "head"
+	zone = "mouth"
 	slot = "tongue"
 	var/say_mod = null
 
@@ -290,7 +290,7 @@
 
 /obj/item/organ/internal/tongue/abductor
 	name = "superlingual matrix"
-	desc = "A mysterious structure that allows for instantaneous and omnipresence communication between users. Pretty impressive until you need to eat something."
+	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "lungs"
 	say_mod = "gibbers"
 
@@ -298,10 +298,15 @@
 	//Hacks
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/obj/item/organ/internal/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
+		else if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
+			var/datum/species/abductor/Ayy = user.dna.species
+			var/datum/species/abductor/Byy = H.dna.species
+			if(Ayy.team != Byy.team)
+				continue
 		H << rendered
 	for(var/mob/M in dead_mob_list)
 		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
@@ -328,6 +333,16 @@
 			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
 	return jointext(message_list, " ")
+
+/obj/item/organ/internal/tongue/alien
+	name = "alien tongue"
+	desc = "Although they largely communicate through a hivemind aliens have unfortunately kept their horrific jaws intact."
+	icon_state = "lungs"
+	say_mod = "hiss"
+
+/obj/item/organ/internal/tongue/alien/TongueSpeech(var/message)
+	playsound(get_turf(src), "hiss", 25, 1, 1)
+	return message
 
 /obj/item/organ/internal/appendix
 	name = "appendix"

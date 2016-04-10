@@ -582,6 +582,7 @@ var/global/list/synth_flesh_disguises = list()
 		miss_sound = S.miss_sound
 		meat = S.meat
 		mutant_bodyparts = S.mutant_bodyparts.Copy()
+		mutant_organs = S.mutant_organs.Copy()
 		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()

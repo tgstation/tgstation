@@ -629,9 +629,6 @@
 	return 0
 
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
-	var/obj/item/organ/internal/tongue/T = H.getorganslot("tongue")
-	if(T)
-		message = T.TongueSpeech(message)
 	return message
 
 //return a list of spans or an empty list
