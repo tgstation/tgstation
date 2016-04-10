@@ -692,7 +692,7 @@ var/list/teleport_runes = list()
 			talisman_type = J
 	user.say("H'drak v'loso, mir'kanas verbot!")
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
-	if(!do_after(user, 150, target = get_turf(user)))
+	if(!do_after(user, 100, target = get_turf(user)))
 		return
 	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
 	if(istype(TA, /obj/item/weapon/paper/talisman/teleport))
