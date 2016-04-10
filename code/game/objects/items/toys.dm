@@ -681,15 +681,15 @@
 		return
 	..()
 
-/obj/item/toy/demonologist
-	name = "toy demonologist"
+/obj/item/toy/demonomicon
+	name = "Toy demonomicon"
 	desc = "A tool to help you write fictional demons!"
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "librarian"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "demonomicon"
 	w_class = 2
 	var/cooldown = 0
 
-/obj/item/toy/demonologist/attack_self(mob/user)
+/obj/item/toy/demonomicon/attack_self(mob/user)
 	if(!cooldown)
 		var/datum/demoninfo/demon = randomDemonInfo()
 		user << "<span class='notice'>You press the button on [src].</span>"
