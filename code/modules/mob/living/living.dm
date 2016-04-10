@@ -502,7 +502,7 @@ Sorry Giacom. Please don't be mad :(
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
-	heal_overall_damage(1000, 1000)
+	heal_overall_damage(100000, 100000)
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()

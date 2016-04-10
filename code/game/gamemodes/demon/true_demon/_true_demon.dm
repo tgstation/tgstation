@@ -22,6 +22,12 @@
 	var/mob/living/oldform
 	var/list/demon_overlays[DEMON_TOTAL_LAYERS]
 
+/mob/living/carbon/true_demon/New()
+	internal_organs += new /obj/item/organ/internal/brain/
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
+	
+
 /mob/living/carbon/true_demon/proc/convert_to_archdemon()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
 	ascended = 1
