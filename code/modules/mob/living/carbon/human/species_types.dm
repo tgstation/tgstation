@@ -431,11 +431,53 @@ var/regex/lizard_hiSS = new("S+", "g")
 /datum/species/skeleton/get_spans()
 	return spanlist
 
+/datum/species/skeleton/proc/splitby(list/L, char)
+	var/list/out = list()
+	for(var/i = 1, i <= L.len, i++)
+		var/list/split = splittext(L[i], char)
+
+		//world << jointext(split, " ")
+		var/first = TRUE
+		for(var/j = 1, j <= split.len, j++)
+			if(!first)
+				out += char
+			first = FALSE
+			out += split[j]
+
+	return out
+
+
 /datum/species/skeleton/handle_speech(message, mob/living/carbon/human/H)
+	// We want to transform any message into a list of numbers
+	// and punctuation marks
+	// For example:
+	// "Hi." -> [2, '.']
+	// "HALP GEROGE MELLONS, that swine, is GRIFFIN ME!"
+	// -> [4, 6, 7, ',', 4, 5, ',', '2', 7, 2, '!']
+	// "fuck,thissentenceissquashed" -> [4, ',', 21]
+
 	var/list/words = splittext(message, " ")
+
+	// In addition to splitting by spaces, we also got to extract
+	// any punctuation that indicates pausing
+	words = splitby(words, ",")
+	words = splitby(words, ";")
+	words = splitby(words, ".")
+	words = splitby(words, ":")
+	words = splitby(words, "!")
+	words = splitby(words, "?")
+
+	var/list/punctuation = list(",", ";", ".", ":", "!", "?")
 	var/list/letter_count = list()
 	for(var/i = 1, i <= words.len, i++)
+		var/word = words[i]
+		// a comma seperated list of punctuation makes my eyes bleed
+		if (word in punctuation)
+			letter_count += word
+			continue
 		letter_count += length(words[i])
+
+	//world << jointext(letter_count, ",")
 
 	var/phomeme_type = "error"
 	// determine phomeme type
@@ -446,24 +488,36 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 	spawn(0)
 		// for each word of length N
-		for(var/j = 1, j <=letter_count.len, j++)
+		for(var/i = 1, i <=letter_count.len, i++)
+			if (letter_count[i] in punctuation)
+				var/P = letter_count[i]
+				// gotta sleep for a certain amount of time
+				// to simulate pausing in talking
+				if (P in list(",", ":"))
+					sleep(3)
+				// Due to the HTML escaping or something of the
+				// ' character, it'll produce a ; in the
+				// string. As such, we'll just ignore
+				// semicolons for now
+				if (P == ";")
+					//God semicolons, so awkward
+					sleep(0)
+				if (P in list("!", "?", "."))
+					sleep(6)
+				continue
 			// Don't bother saying more than 10 letters
-			var/length = min(letter_count[j], 10)
+			var/length = min(letter_count[i], 10)
 			if (length == 0)
 				// so we "verbalise" long spaces
 				sleep(1)
 			speak_word(H.loc, phomeme_type, length)
 			// TODO pause when we find a comma/full stop
 
-	//return message
+	return message
 
-	// debug, say which span we're using, because it's not as obvious
-	// as in other games
-	return phomeme_type + ": " + message
 
 /datum/species/skeleton/proc/speak_word(loc, phomeme_type, length)
 	var/path = "sound/voice/skeletons/voice_[phomeme_type]_[length].ogg"
-	world << path
 	playsound(loc, path, vol = 75, vary = 0, extrarange = 3, falloff = 1, surround = 1)
 	
 	var/sleep_length = 0
