@@ -62413,6 +62413,13 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},

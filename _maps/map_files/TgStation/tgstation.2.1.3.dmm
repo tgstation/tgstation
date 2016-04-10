@@ -58425,6 +58425,18 @@
 	},
 /turf/open/space,
 /area/space)
+"coT" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plasteel{
+	icon_state = "grimy"
+	},
+/area/chapel/office)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -110144,7 +110156,7 @@ aHf
 aIz
 aJM
 aLa
-aMX
+coT
 aFw
 aPh
 aQs

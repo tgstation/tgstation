@@ -57036,9 +57036,13 @@
 	})
 "cay" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/robot_debris{
-	icon_state = "gib6"
-	},
+/obj/structure/table,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plating,
 /area/maintenance/port{
 	name = "Chapel Maintenance"

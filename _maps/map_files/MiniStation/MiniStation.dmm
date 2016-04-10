@@ -16131,6 +16131,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"IL" = (
+/obj/structure/table,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aa
@@ -46086,7 +46096,7 @@ nC
 jo
 bx
 bN
-bN
+IL
 bx
 ps
 rE

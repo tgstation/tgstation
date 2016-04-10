@@ -100502,13 +100502,18 @@
 	},
 /area/medical/morgue)
 "dfx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/area/chapel/main)
 "dfy" = (
 /turf/open/floor/engine/vacuum,
 /area/atmos)
@@ -120846,7 +120851,7 @@ cOU
 cRS
 cRS
 cSP
-cRS
+dfx
 cOU
 cUb
 cOU
