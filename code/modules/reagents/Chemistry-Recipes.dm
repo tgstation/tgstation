@@ -109,8 +109,8 @@ datum
 			name = "Phalanximine"
 			id = "phalanximine"
 			result = "phalanximine"
-			required_reagents = list("arithrazine" = 1, "diethylamine" = 1, "mutagen" = 1)
-			result_amount = 1
+			required_reagents = list("hyronalin" = 1, "ethanol" = 1, "mutagen" = 1)
+			result_amount = 3
 
 		stoxin
 			name = "Sleep Toxin"
