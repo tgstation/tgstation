@@ -200,7 +200,7 @@ var/list/teleport_runes = list()
 						 "<span class='cult'>Your vision blurs, and you suddenly appear somewhere else.</span>")
 	user.forceMove(get_turf(selected_rune))
 
-
+/*
 var/list/teleport_other_runes = list()
 //Rite of Forced Translocation: Warps the target to a random teleport rune with the same keyword.
 /obj/effect/rune/teleport_other
@@ -270,7 +270,7 @@ var/list/teleport_other_runes = list()
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	icon_state = "5"
 	color = rgb(0, 0, 255)
-
+*/
 
 /obj/effect/rune/summon_tome/invoke(mob/living/user)
 	visible_message("<span class='warning'>A frayed tome materializes on the surface of [src], which dissolves into nothing.</span>")
@@ -310,6 +310,7 @@ var/list/teleport_other_runes = list()
 	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
 					  			"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	ticker.mode.add_cultist(new_cultist.mind)
+	new /obj/item/weapon/tome(get_turf(src))
 	new_cultist.mind.special_role = "Cultist"
 	new_cultist << "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>"
@@ -416,7 +417,7 @@ var/list/teleport_other_runes = list()
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
 /obj/effect/rune/narsie
-	cultist_name = "Call Forth The Geometer"
+	cultist_name = "Summon Nar-Sie"
 	cultist_desc = "Tears apart dimensional barriers, calling forth the avatar of the Geometer."
 	invocation = null
 	req_cultists = 9
@@ -573,7 +574,7 @@ var/list/teleport_other_runes = list()
 		if(M.stat == DEAD)
 			M.visible_message("<span class='warning'>[M] twitches.</span>")
 
-
+/*
 //Rite of Obscurity: Turns all runes within a 3-tile radius invisible or reveals them again.
 /obj/effect/rune/hide_runes
 	cultist_name = "Veil Runes"
@@ -619,7 +620,7 @@ var/list/teleport_other_runes = list()
 	invocation = "By'o isit!"
 	icon_state = "4"
 	color = rgb(0, 150, 0)
-
+*/
 /obj/effect/rune/make_runes_fake/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] flares brightly, then slowly dulls and appears mundane.</span>")
 	for(var/obj/effect/rune/R in range(3,src))
@@ -732,7 +733,7 @@ var/list/teleport_other_runes = list()
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
 
-
+/*
 //Rite of the Shadowed Mind:  Deafens, blinds and mutes all non-cultists nearby.
 /obj/effect/rune/deafen
 	cultist_name = "Debilitate"
@@ -770,6 +771,7 @@ var/list/teleport_other_runes = list()
 			M.Stun(3)
 			M.flash_eyes(1,1)
 	qdel(src)
+*/
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
 	cultist_name = "Summon Cultist"
@@ -813,7 +815,7 @@ var/list/teleport_other_runes = list()
 
 //Rite of Binding: Turns a nearby rune and a paper on top of the rune to a talisman, if both are valid.
 /obj/effect/rune/imbue
-	cultist_name = "Bind Talisman"
+	cultist_name = "Create Talisman"
 	cultist_desc = "Transforms papers and valid runes into talismans."
 	invocation = null //no talisman made, no invocation.
 	icon_state = "3"
@@ -823,6 +825,7 @@ var/list/teleport_other_runes = list()
 	var/turf/T = get_turf(src)
 	var/list/papers_on_rune = list()
 	var/entered_talisman_name
+	var/obj/item/weapon/paper/talisman/talisman_type
 	var/list/possible_talismans = list()
 	for(var/obj/item/weapon/paper/P in T)
 		if(!P.info)
@@ -834,12 +837,18 @@ var/list/teleport_other_runes = list()
 		return
 	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
 	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
-		possible_talismans.Add(I) //This is to allow the menu to let cultists select talismans by name
+		var/obj/item/weapon/paper/talisman/J = I
+		if(initial(J.cultist_name))
+			possible_talismans.Add(initial(J.cultist_name)) //This is to allow the menu to let cultists select talismans by name
 	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
-	var/talisman_type = entered_talisman_name
+	for(var/I in typesof(/obj/item/weapon/paper/talisman))
+		var/obj/effect/rune/J = I
+		if(initial(J.cultist_name) == entered_talisman_name)
+			talisman_type = J
 	user.say("H'drak v'loso, mir'kanas verbot!")
+	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
 	if(!do_after(user, 150, target = get_turf(user)))
 		return
 	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
@@ -847,17 +856,12 @@ var/list/teleport_other_runes = list()
 		var/the_keyword = stripped_input(usr, "Please enter a keyword for the talisman.", "Enter Keyword", "")
 		var/obj/item/weapon/paper/talisman/teleport/TELE = TA
 		TELE.keyword = the_keyword
-	else
-		user << "<span class='cultitalic'>You have failed the ritual!</span>"
-		fail_invoke()
-		log_game("Talisman Imbue rune failed - chosen rune invalid")
-		return
 	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
 	qdel(src)
 //Rite of Fabrication: Creates a construct shell out of 5 metal sheets.
 /obj/effect/rune/construct_shell
-	cultist_name = "Fabricate Shell"
+	cultist_name = "Summon Construct Shell"
 	cultist_desc = "Turns five plasteel sheets into an empty construct shell, suitable for containing a soul shard."
 	invocation = null //see below; doesn't say the invocation unless there's enough sheets.
 	icon_state = "5"
@@ -902,7 +906,7 @@ var/list/teleport_other_runes = list()
 	qdel(src)
 
 
-//Rite of Leeching: Deals brute damage to the target and heals the same amount to the invoker.
+/*Rite of Leeching: Deals brute damage to the target and heals the same amount to the invoker.
 /obj/effect/rune/leeching
 	cultist_name = "Drain Life"
 	cultist_desc = "Drains the life of the target on the rune, restoring it to the user."
@@ -930,7 +934,7 @@ var/list/teleport_other_runes = list()
 	target << "<span class='cultitalic'>You feel extremely weak.</span>"
 	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
 						 "<span class='cult'>[target]'s blood flows into you, healing your wounds and revitalizing your spirit.</span>")
-
+*/
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
 /obj/effect/rune/blood_boil
@@ -1004,7 +1008,7 @@ var/list/teleport_other_runes = list()
 		for(var/obj/I in new_human)
 			new_human.unEquip(I)
 		new_human.dust()
-
+/*
 //Rite of Dimensional Corruption: Stops time around the rune for all non-cultists.
 /obj/effect/rune/timestop
 	cultist_name = "Time Stop"
@@ -1041,3 +1045,4 @@ var/list/teleport_other_runes = list()
 		if(iscultist(M) || M.null_rod_check())
 			immune |= M
 	..()
+*/
