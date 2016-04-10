@@ -4913,10 +4913,13 @@ var/global/list/tonio_doesnt_remove=list("tonio", "blood")
 	id = "detcoffee"
 	description = "Bitter, black, and tasteless. It's the way I've always had my joe, and the way I was having it when one of the officers came running toward me. The chief medical officer got axed, and no one knew who did it. I reluctantly took one last drink before putting on my coat and heading out. I knew that by the time I was finished, my joe would have fallen to a dreadfully low temperature, but I had work to do."
 	causes_jitteriness = 0
+	var/activated = 0
 
 /datum/reagent/drink/coffee/detcoffee/on_mob_life(var/mob/living/M)
 	if(..()) return 1
-	M.update_colour()
+	if(!activated)
+		M.update_colour()
+		activated = 1
 
 /datum/reagent/drink/coffee/detcoffee/reagent_deleted()
 	if(..()) return 1
