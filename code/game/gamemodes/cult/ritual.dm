@@ -172,13 +172,14 @@ This file contains the arcane tome files as well as innate cultist communication
 	return 1
 
 /obj/item/weapon/tome/proc/scribe_rune(mob/user)
-	var/turf/T = get_turf(user)
+	var/turf/Turf = get_turf(user)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
-	if(locate(/obj/effect/rune in T))
+	if(locate(/obj/effect/rune in Turf))
 		user << "<span class='cult'>There is already a rune here.</span>"
+		return
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
@@ -211,9 +212,9 @@ This file contains the arcane tome files as well as innate cultist communication
 			var/area/A = get_area(src)
 			var/locname = initial(A.name)
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs.","Central Command Higher Dimensionsal Affairs")
-	if(!do_after(user, initial(rune_to_scribe.creation_delay), target = T))
+	if(!do_after(user, initial(rune_to_scribe.creation_delay), target = Turf))
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
-	new rune_to_scribe(T, chosen_keyword)
+	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"

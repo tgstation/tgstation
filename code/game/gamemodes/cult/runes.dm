@@ -55,18 +55,23 @@ To draw a rune, use an arcane tome.
 		user << "<b>Required Acolytes:</b> [req_cultists]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
+		if(talisman_type)
+			user << "<b>This rune can be imbued by striking it with paper.</b>"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(iscultist(user))
 		if(istype(I, /obj/item/weapon/tome))
 			user << "<span class='notice'>You carefully erase the [cultist_name] rune.</span>"
 			qdel(src)
-		if(talisman_type && istype(I, /obj/item/weapon/paper) && !istype(I, /obj/item/weapon/paper/talisman))
-			user << "<span class='notice'>You imbue the [cultist_name] rune into the paper.</span>"
-			user.drop_item()
-			user.put_in_hands(new talisman_type(user))
-			qdel(I)
-			qdel(src)
+		if(istype(I, /obj/item/weapon/paper) && !istype(I, /obj/item/weapon/paper/talisman))
+			if(talisman_type)
+				user << "<span class='notice'>You imbue the [cultist_name] rune into the paper.</span>"
+				user.drop_item()
+				user.put_in_hands(new talisman_type(user))
+				qdel(I)
+				qdel(src)
+			else
+				user << "<span class='notice'>This rune cannot be imbued into a talisman.</span>"
 	else if(istype(I, /obj/item/weapon/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!")
 		user << "<span class='danger'>You disrupt the magic of [src] with [I].</span>"
@@ -401,8 +406,8 @@ var/list/teleport_runes = list()
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer, Nar-Sie Herself. Requires 9 invokers."
 	invocation = null
 	req_cultists = 9
-	creation_delay = 400 //40 seconds
-	scribe_damage = 30 //lots of damage
+	creation_delay = 350 //35 seconds
+	scribe_damage = 25 //lots of damage
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
