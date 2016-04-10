@@ -118,7 +118,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	invoking it, the paper will be converted into a talisman, and the rune inlaid upon it.<br><br>"
 
 	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Teleportation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, search for other Rites of Translocation. \
-	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>".<br><br>"
+	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>The Rite of Conversion is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
 	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
@@ -132,16 +132,6 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
 	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
 
-//	text += "<font color='red'><b>Veil Runes</b></font><br>The Rite of Obscurity is a rite that will cause all nearby runes to become invisible. The runes will still be considered by other rites \
-	(such as the Rite of Translocation) but will be unusuable directly.(such as the Rite of Translocation) but will be unusuable directly. Use the same rite once more to reveal these runes once more.<br><br>"
-
-//	text += "<font color='red'><b>Reveal Runes</b></font><br>The Rite of True Sight is the foil of the Rite of Obscurity. It will turn all invisible runes visible once more, in addition to causing \
-	all spirits nearby to become visible.<br><br>"
-
-//	text += "<font color='red'><b>Disguise Runes</b></font><br>Many crewmen enjoy drawing runes in crayon that resemble spell circles in order to play pranks on their fellow crewmen. The Rite of \
-	False Truths takes advantage of this very joke. When invoked, all nearby runes will appear dull, precisely resembling those drawn in crayon. They still cannot be cleaned by conventional means, so \
-	anyone trying to clean up the rune may become suspicious as it does not respond.<br><br>"
-
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. The Rite of Disruption may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location.<br><br>"
 
@@ -154,22 +144,11 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
 	undo this effect and allow passage again.<br><br>"
 
-//	text += "<font color='red'><b>Debilitate</b></font><br>The Rite of the Shadowed Mind is simple. When invoked, it will cause all non-cultists that can see its rune to become deaf, blind and mute for a \
-	considerable amount of time.<br><br>"
-
-//	text += "<font color='red'><b>Stun</b></font><br>Though the Rite of Blazing Light is weak when invoked normally, using it in conjuction with the Rite of Binding makes it much more powerful. \
-	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time.<br><br>"
-
 	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. This will deal a moderate amount of damage to all invokers.<br><br>"
 
 	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
-
-//	text += "<font color='red'><b>Summon Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
-	be equipped will not be summoned.<br><br>"
-
-//	text += "<font color='red'><b>Drain Life</b></font><br>The Rite of Leeching will drain the life of any non-cultist above the rune and heal the invoker for the same amount.<br><br>"
 
 	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
 	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. It requires three invokers.<br><br>"
@@ -221,7 +200,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	var/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
-	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed - /obj/effect/rune)
+	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
 			possible_runes.Add(initial(R.cultist_name)) //This is to allow the menu to let cultists select runes by name rather than by object path. I don't know a better way to do this
