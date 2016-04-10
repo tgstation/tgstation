@@ -20,7 +20,6 @@ Rite of Disorientation
 	var/invocation = "Naise meam!"
 	var/uses = 1
 	var/health_cost = 0 //The amount of health taken from the user when invoking the talisman
-	var/color = null
 
 /obj/item/weapon/paper/talisman/examine(mob/user)
 	if(iscultist(user) || user.stat == DEAD)
