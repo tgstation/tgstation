@@ -419,16 +419,62 @@ var/regex/lizard_hiSS = new("S+", "g")
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	var/list/myspan = null
+	var/span = null
+	var/list/spanlist = null
 
 
 /datum/species/skeleton/New()
 	..()
-	myspan = list(pick(SPAN_SANS,SPAN_PAPYRUS)) //pick a span and stick with it for the round
-
+	span = pick(SPAN_SANS,SPAN_PAPYRUS) //pick a span and stick with it for the round
+	spanlist = list(span)
 
 /datum/species/skeleton/get_spans()
-	return myspan
+	return spanlist
+
+/datum/species/skeleton/handle_speech(message, mob/living/carbon/human/H)
+	var/list/words = splittext(message, " ")
+	var/list/letter_count = list()
+	for(var/i = 1, i <= words.len, i++)
+		letter_count += length(words[i])
+
+	var/phomeme_type = "error"
+	// determine phomeme type
+	if (span == SPAN_SANS)
+		phomeme_type = "sans"
+	if (span == SPAN_PAPYRUS)
+		phomeme_type = "papyrus"
+
+	spawn(0)
+		// for each word of length N
+		for(var/j = 1, j <=letter_count.len, j++)
+			// Don't bother saying more than 10 letters
+			var/length = min(letter_count[j], 10)
+			if (length == 0)
+				// so we "verbalise" long spaces
+				sleep(1)
+			speak_word(H.loc, phomeme_type, length)
+			// TODO pause when we find a comma/full stop
+
+	//return message
+
+	// debug, say which span we're using, because it's not as obvious
+	// as in other games
+	return phomeme_type + ": " + message
+
+/datum/species/skeleton/proc/speak_word(loc, phomeme_type, length)
+	var/path = "sound/voice/skeletons/voice_[phomeme_type]_[length].ogg"
+	world << path
+	playsound(loc, path, vol = 75, vary = 0, extrarange = 3, falloff = 1, surround = 1)
+	
+	var/sleep_length = 0
+	if (phomeme_type == "papyrus")
+		sleep_length = (length + 1)*0.5
+		// Gap between papyrus phomemes is 50ms
+	if (phomeme_type == "sans")
+		sleep_length = (length + 1)*0.7
+		// Gap is 70ms for the slightly lazier sans
+	
+	sleep(sleep_length)
 
 
 /*
