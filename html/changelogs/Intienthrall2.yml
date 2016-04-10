@@ -1,6 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- bugfix: "Vampire spells that have a blood cost listed now actually take that blood from you, some weren't."
-- tweak: "Enthrall now costs 150 blood to use, up from free."
-- bugfix: "You no longer appear in your own list of targets when you cast a spell as a vampire."
