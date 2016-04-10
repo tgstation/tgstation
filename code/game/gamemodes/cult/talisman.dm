@@ -212,12 +212,11 @@ Rite of Disorientation
 	cultist_desc = "A talisman that will make nearby runes appear fake."
 	color = "#ff80d5" // honk
 	invocation = "By'o nar'nar!"
-	health_cost = 0
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
-	for(var/obj/effect/rune/R in orange(3,user))
+	for(var/obj/effect/rune/R in orange(6,user))
 		R.desc = "A rune drawn in crayon."
 
 //Rite of Disruption: Weaker than rune
@@ -247,15 +246,13 @@ Rite of Disorientation
 	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
 	color = "#33cc33" // green
 	invocation = "N'ath reth sh'yro eth draggathnor!"
-	health_cost = 0
 
 //Rite of Horrors: Breaks the mind of the victim with nightmarish hallucinations
 /obj/item/weapon/paper/talisman/horror
 	cultist_name = "Talisman of Horrors"
 	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
 	color = "#ffb366" // light orange
-	invocation = "Na' Md'lo 'Nab!"
-	health_cost = 0
+	invocation = "Lo'Nab Na'Dm!"
 
 /obj/item/weapon/paper/talisman/stun/attack_self(mob/living/user)
 	if(iscultist(user))
@@ -316,4 +313,3 @@ Rite of Disorientation
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 30)
 		qdel(src)
-		return
