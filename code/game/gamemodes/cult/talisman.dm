@@ -160,7 +160,7 @@ Rite of Disorientation
 	if(iscultist(user) && keyword)
 		user << "<b>Keyword:</b> [keyword]"
 
-//Rite of Knowledge: Same as rune, but has two uses
+//Rite of Knowledge: Has two uses
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
@@ -211,7 +211,7 @@ Rite of Disorientation
 	cultist_name = "Talisman of Disguising"
 	cultist_desc = "A talisman that will make nearby runes appear fake."
 	invocation = "By'o nar'nar!"
-	health_cost = 3
+	health_cost = 0
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
@@ -236,14 +236,21 @@ Rite of Disorientation
 	cultist_name = "Talisman of Stunning"
 	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
 	invocation = "Fuu ma'jin!"
-	health_cost = 15
+	health_cost = 12
 
 //Rite of Arming: Equips cultist armor on the user, where available
 /obj/item/weapon/paper/talisman/armor
 	cultist_name = "Talisman of Arming"
 	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
 	invocation = "N'ath reth sh'yro eth draggathnor!"
-	health_cost = 3
+	health_cost = 0
+
+//Rite of Horrors: Breaks the mind of the victim with nightmarish hallucinations
+/obj/item/weapon/paper/talisman/horror
+	cultist_name = "Talisman of Horrors"
+	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
+	invocation = "Na' Md'lo 'Nab!"
+	health_cost = 0
 
 /obj/item/weapon/paper/talisman/stun/attack_self(mob/living/user)
 	if(iscultist(user))
@@ -286,3 +293,10 @@ Rite of Disorientation
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+
+/obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user)
+	if(iscultist(user))
+		user.visible_message("<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+		if(iscarbon(target))
+				var/mob/living/carbon/H = target
+				H.reagents.add_reagent("mindbreaker", 30)
