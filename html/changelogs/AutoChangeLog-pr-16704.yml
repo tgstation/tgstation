@@ -1,0 +1,7 @@
+author: Incoming5643
+delete-after: True
+changes: 
+  - rscadd: "Leading scientists have finally proven that humans (and xenos) in fact have tongues in their mouths."
+  - rscadd: "Swapping out tongues allows the various races to change their speech impediments. Putting a xeno tongue in someone allows them to make the hissing sound like a xeno whenever they speak."
+  - rscdel: "There are no erp mechanics tied to this feature."
+  - experiment: "Remember that tongues are stored in the MOUTH, selecting the head isn't good enough."
