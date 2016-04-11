@@ -729,18 +729,25 @@ var/list/teleport_runes = list()
 /obj/effect/rune/deafen/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] is obscured by shadows!</span>")
 	for(var/mob/living/carbon/C in viewers(src))
-		if(!iscultist(C) && !C.null_rod_check())
+		blind(C)
+	qdel(src)
+
+/obj/effect/rune/deafen/Crossed(atom/A)
+	if(iscarbon(A) && !iscultist(A))
+		blind(A)
+		qdel(src)
+
+/obj/effect/rune/deafen/proc/blind(mob/living/carbon/C)
+	if(istype(L) && !iscultist(L))
+		if(!C.null_rod_check())
 			C << "<span class='cultlarge'>A dark fog blankets your senses!</span>"
 			C.adjustEarDamage(0,50)
 			C.flash_eyes(1, 1)
 			C.adjust_blurriness(50)
 			C.adjust_blindness(20)
 			C.silent += 10
-	qdel(src)
-
-/obj/effect/rune/deafen/Crossed(atom/A)
-	if(isliving(A) && !iscultist(A))
-		invoke(A)
+		else
+			C << "<span class='warning'>Your holy weapon emits a soft glow!</span>"
 
 
 //Rite of Disorientation: Stuns all non-cultists nearby for a brief time
@@ -755,16 +762,23 @@ var/list/teleport_runes = list()
 /obj/effect/rune/stun/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] explodes in a bright flash!</span>")
 	for(var/mob/living/M in viewers(src))
-		if(!iscultist(M) && !M.null_rod_check())
-			M << "<span class='cultitalic'><b>You are disoriented by [src]!</b></span>"
-			M.Weaken(3)
-			M.Stun(3)
-			M.flash_eyes(1,1)
+		stun(M)
 	qdel(src)
 
 /obj/effect/rune/stun/Crossed(atom/A)
-	if(isliving(A) && !iscultist(A))
-		invoke(A)
+	if(isliving(A))
+		stun(A)
+		qdel(src)
+
+/obj/effect/rune/stun/proc/stun(mob/living/L)
+	if(istype(L) && !iscultist(L))
+		if(!L.null_rod_check())
+			L << "<span class='cultitalic'><b>You are disoriented by [src]!</b></span>"
+			L.Weaken(3)
+			L.Stun(3)
+			L.flash_eyes(1,1)
+		else
+			L << "<span class='warning'>Your holy weapon absorbs the blinding light!</span>"
 
 
 //Rite of Joined Souls: Summons a single cultist.
