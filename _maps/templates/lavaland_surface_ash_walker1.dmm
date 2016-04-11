@@ -19,24 +19,25 @@
 "s" = (/obj/item/weapon/twohanded/spear,/obj/structure/mineral_door/iron,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "t" = (/obj/structure/mineral_door/iron,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "u" = (/obj/structure/closet/crate,/obj/item/weapon/rcd/loaded,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"v" = (/obj/structure/closet/crate,/obj/item/weapon/storage/firstaid,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"v" = (/obj/structure/closet/crate,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "w" = (/obj/machinery/the_singularitygen,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "x" = (/obj/structure/rack{icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_left"; name = "skeletal minibar"},/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "y" = (/obj/structure/rack{icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_right"; name = "skeletal minibar"},/obj/item/clothing/head/helmet/roman/legionaire,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "z" = (/obj/item/weapon/shovel,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"A" = (/obj/structure/table_frame,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"B" = (/obj/structure/table/optable,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"C" = (/obj/item/device/flashlight,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"D" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"E" = (/obj/structure/closet/crate/miningcar,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"F" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"G" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"H" = (/obj/structure/mineral_door/iron,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/unpowered)
-"I" = (/turf/closed/wall/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
-"J" = (/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors)
-"K" = (/obj/item/weapon/twohanded/spear,/obj/structure/table,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"L" = (/obj/item/weapon/pickaxe,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors)
-"M" = (/obj/structure/ore_box,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"A" = (/obj/structure/closet/crate,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/o2,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"B" = (/obj/structure/table_frame,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"C" = (/obj/structure/table/optable,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"D" = (/obj/item/device/flashlight,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"E" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"F" = (/obj/structure/closet/crate/miningcar,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"G" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"H" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"I" = (/obj/structure/mineral_door/iron,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/unpowered)
+"J" = (/turf/closed/wall/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/lavaland/surface/outdoors)
+"K" = (/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors)
+"L" = (/obj/item/weapon/twohanded/spear,/obj/structure/table,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"M" = (/obj/item/weapon/pickaxe,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors)
+"N" = (/obj/structure/ore_box,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aabaaaaaaaaabb
@@ -49,12 +50,12 @@ baacjfkfflcaaa
 aaacmnfopqcaaa
 aaccrrstrrccaa
 aacuvwffxyzcaa
-aacvfffkffAcaa
-aacBfCffffDcaa
-bErFfGrHrrrraa
-IJrKKGrJbJLMaa
-IJrrrrrbbbbbaa
-bbbJbbbbJbbJaa
-JbbbbbJbJbbbaa
-abbbbbbbJbbbaa
+aacAfffkffBcaa
+aacCfDffffEcaa
+bFrGfHrIrrrraa
+JKrLLHrKbKMNaa
+JKrrrrrbbbbbaa
+bbbKbbbbKbbKaa
+KbbbbbKbKbbbaa
+abbbbbbbKbbbaa
 "}
