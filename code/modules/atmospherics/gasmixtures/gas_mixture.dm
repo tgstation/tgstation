@@ -404,8 +404,7 @@ var/list/gaslist_cache = null
 	#if DM_VERSION >= 510
 	//global so that we don't have to make them more than once
 	var/global/const/ID = 1
-	var/global/const/TEMP = 2
-	var/global/const/VALUE = 3
+	var/global/const/VALUE = 2
 	var/global/regex/R
 	if(!R)
 		R = regex("(\\w+?)\\=(\[^;]+)", "g")
