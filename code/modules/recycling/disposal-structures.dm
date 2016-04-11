@@ -131,7 +131,7 @@
 	desc = "An underfloor disposal pipe."
 	anchored = 1
 	density = 0
-
+	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes

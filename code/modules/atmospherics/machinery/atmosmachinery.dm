@@ -14,6 +14,7 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
+	on_blueprints = TRUE
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0

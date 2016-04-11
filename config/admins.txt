@@ -110,4 +110,5 @@ Bawhoppennn = Game Master
 Anturke = Host
 Lumipharon = Game Master
 bgobandit = Game Master
+coiax = Game Master
 RandomMarine = Game Master
