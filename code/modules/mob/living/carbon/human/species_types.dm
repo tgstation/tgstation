@@ -421,6 +421,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	var/span = null
 	var/list/spanlist = null
+	var/list/punctuation = list(",",":",";",".","?","!")
 
 
 /datum/species/skeleton/New()
@@ -456,26 +457,17 @@ var/regex/lizard_hiSS = new("S+", "g")
 	// -> [4, 6, 7, ',', 4, 5, ',', '2', 7, 2, '!']
 	// "fuck,thissentenceissquashed" -> [4, ',', 21]
 
-	var/list/words = splittext(message, " ")
-
-	// In addition to splitting by spaces, we also got to extract
-	// any punctuation that indicates pausing
-	words = splitby(words, ",")
-	words = splitby(words, ";")
-	words = splitby(words, ".")
-	words = splitby(words, ":")
-	words = splitby(words, "!")
-	words = splitby(words, "?")
-
-	var/list/punctuation = list(",", ";", ".", ":", "!", "?")
+	var/global/regex/R
+	if(!R)
+		//this regex does that for us!
+		R = regex("(\[\\l\\d]*)(\[^\\l\\d\\s])?", "g")
 	var/list/letter_count = list()
-	for(var/i = 1, i <= words.len, i++)
-		var/word = words[i]
-		// a comma seperated list of punctuation makes my eyes bleed
-		if (word in punctuation)
-			letter_count += word
-			continue
-		letter_count += length(words[i])
+	while(R.next <= length(message))
+		R.Find(message)
+		if(R.group[1])
+			letter_count += length(R.group[1])
+		if(R.group[2])
+			letter_count += R.group[2]
 
 	//world << jointext(letter_count, ",")
 
