@@ -738,7 +738,7 @@ var/list/teleport_runes = list()
 		qdel(src)
 
 /obj/effect/rune/deafen/proc/blind(mob/living/carbon/C)
-	if(istype(L) && !iscultist(L))
+	if(istype(C) && !iscultist(C))
 		if(!C.null_rod_check())
 			C << "<span class='cultlarge'>A dark fog blankets your senses!</span>"
 			C.adjustEarDamage(0,50)
