@@ -32,7 +32,7 @@
 	#define FIX_TILE		3
 	#define AUTO_TILE		4
 	#define PLACE_TILE		5
-	#define PLACE_TILE		6
+	#define REPLACE_TILE		6
 	#define TILE_EMAG		7
 
 /mob/living/simple_animal/bot/floorbot/New()
@@ -95,7 +95,7 @@
 		if(istype(W, /obj/item/stack/tile/plasteel))
 			user << "<span class='notice'>The floorbot can produce normal tiles itself.</span>"
 			return
-		if(specialtiles != 0 && istype(W, /obj/item/stack/tile/)
+		if(specialtiles != 0 && istype(W, /obj/item/stack/tile/))
 			var/obj/item/stack/tile/usedtile = W
 			if(usedtile != tiletype)
 				user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
@@ -108,7 +108,7 @@
 		tiletype.use(loaded)
 		specialtiles += loaded
 		if(loaded > 0)
-			user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [specialtiles] tiles.</span>"
+			user << "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>"
 		else
 			user << "<span class='warning'>You need at least one floor tile to put into [src]!</span>"
 	else
