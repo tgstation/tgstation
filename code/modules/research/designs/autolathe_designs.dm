@@ -223,6 +223,22 @@
 	build_path = /obj/item/weapon/kitchen/knife
 	category = list("initial","Dinnerware")
 
+/datum/design/fork
+	name = "Fork"
+	id = "fork"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 80)
+	build_path = /obj/item/weapon/kitchen/fork
+	category = list("initial","Dinnerware")
+
+/datum/design/drinking_glass
+	name = "Drinking glass"
+	id = "drinking_glass"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 500)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+	category = list("initial","Dinnerware")
+
 /datum/design/cultivator
 	name = "Cultivator"
 	id = "cultivator"

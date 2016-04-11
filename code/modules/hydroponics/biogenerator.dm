@@ -139,6 +139,7 @@
 			dat += "<A href='?src=\ref[src];activate=1'>Activate</A><A href='?src=\ref[src];detach=1'>Detach Container</A>"
 			dat += "<h3>Food:</h3>"
 			dat += "<div class='statusDisplay'>"
+			dat += "Bowl: <A href='?src=\ref[src];create=bowl;amount=1'>Make</A><A href='?src=\ref[src];create=bowl;amount=5'>x5</A> ([10/efficiency])<BR>"
 			dat += "10 milk: <A href='?src=\ref[src];create=milk;amount=1'>Make</A><A href='?src=\ref[src];create=milk;amount=5'>x5</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A><A href='?src=\ref[src];create=cream;amount=5'>x5</A> ([30/efficiency])<BR>"
 			dat += "Milk carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
@@ -234,6 +235,10 @@
 
 /obj/machinery/biogenerator/proc/create_product(create)
 	switch(create)
+		if("bowl")
+			if (check_cost(10/efficiency))
+				return 0
+			else new/obj/item/weapon/reagent_containers/glass/bowl(src.loc)
 		if("milk")
 			if(check_container_volume(10))
 				return 0
