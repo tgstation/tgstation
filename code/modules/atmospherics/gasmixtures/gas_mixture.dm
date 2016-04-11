@@ -417,12 +417,12 @@ var/list/gaslist_cache = null
 		R.Find(gas_string)
 
 		if(R.group[TEMP]) //handle the specific temperature case
-			temperature = R.group[VALUE]
+			temperature = text2num(R.group[VALUE])
 			continue
 
 		var/id = R.group[ID]
 		add_gas(id)
-		cached_gases[id] = R.group[VALUE]
+		cached_gases[id][MOLES] = text2num(R.group[VALUE])
 
 	R.next = 1 //reset it for the next call
 	#else
@@ -437,10 +437,10 @@ var/list/gaslist_cache = null
 	for(var/d in def)
 		var/list/gas = splittext(d, "=")
 		if(gas[ID] == "TEMP")
-			temperature = gas[VALUE]
+			temperature = text2num(gas[VALUE])
 			continue
 		add_gas(gas[ID])
-		cached_gases[gas[ID]] = gas[VALUE]
+		cached_gases[gas[ID]][MOLES] = text2num(gas[VALUE])
 	#endif
 	return 1
 
