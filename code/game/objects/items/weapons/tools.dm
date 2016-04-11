@@ -50,6 +50,25 @@
 	origin_tech = "materials=1;engineering=1;biotech=1"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
 
+/obj/item/weapon/wrench/medical/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take \his soul. It looks like \he's trying to commit suicide.</span>")
+	// TODO Make them glow with the power of the M E D I C A L W R E N C H
+
+	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
+	sleep(20)
+
+	for (var/obj/O in user.contents)
+		O.loc = get_turf(src)
+
+
+	var/obj/item/weapon/wrench/medical/W = new /obj/item/weapon/wrench/medical(loc)
+	W.add_fingerprint(user)
+	W.desc += " For some reason, it reminds you of [user.name]."
+
+	user.dust()
+
+	return OXYLOSS
+
 /*
  * Screwdriver
  */
