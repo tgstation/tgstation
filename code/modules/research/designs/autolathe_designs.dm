@@ -221,7 +221,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/weapon/kitchen/knife
-	category = list("initial","Misc")
+	category = list("initial","Dinnerware")
 
 /datum/design/cultivator
 	name = "Cultivator"
