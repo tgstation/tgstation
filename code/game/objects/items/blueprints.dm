@@ -193,6 +193,7 @@
 			else
 				usr << "<span class='warning'>Error! Please notify administration.</span>"
 				return
+
 	var/list/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
@@ -200,6 +201,7 @@
 	if(length(str) > 50)
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
+	var/area/old = get_area(get_turf(src))
 
 	var/area/A
 	for(var/key in turfs)
@@ -216,6 +218,7 @@
 		A.setup(str)
 		A.contents += turfs
 		A.SetDynamicLighting()
+	A.has_gravity = old.has_gravity
 	interact()
 	return 1
 
