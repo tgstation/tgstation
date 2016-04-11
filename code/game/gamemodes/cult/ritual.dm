@@ -174,7 +174,7 @@ This file contains the arcane tome files as well as innate cultist communication
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
-	if(locate(/obj/effect/rune in Turf))
+	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
@@ -198,7 +198,7 @@ This file contains the arcane tome files as well as innate cultist communication
 			break
 	if(!rune_to_scribe)
 		return
-	if(locate(/obj/effect/rune in Turf))
+	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
@@ -214,7 +214,7 @@ This file contains the arcane tome files as well as innate cultist communication
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs.","Central Command Higher Dimensionsal Affairs")
 	if(!do_after(user, initial(rune_to_scribe.creation_delay), target = Turf))
 		return
-	if(locate(/obj/effect/rune in Turf))
+	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
