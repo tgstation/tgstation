@@ -134,6 +134,10 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
+	
+/obj/item/projectile/bullet/meteorshot/New()
+	..()
+	SpinAnimation()
 
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
