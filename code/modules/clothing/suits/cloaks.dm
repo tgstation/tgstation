@@ -78,7 +78,7 @@
 	name = "goliath hide hood"
 	icon_state = "golhood"
 	desc = "A stiff hood made of goliath hide."
-	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 30, bio = 40, rad = 10)
+	armor = list(melee = 60, bullet = 20, laser = 33, energy = 10, bomb = 70, bio = 60, rad = 20)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
