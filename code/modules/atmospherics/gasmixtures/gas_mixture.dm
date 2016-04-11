@@ -408,7 +408,7 @@ var/list/gaslist_cache = null
 	var/global/const/VALUE = 3
 	var/global/regex/R
 	if(!R)
-		R = regex("(\\w+?)(TEMP)?\\=(\[^;]+)", "g")
+		R = regex("(\\w+?)\\=(\[^;]+)", "g")
 
 	var/list/cached_gases = gases
 	cached_gases.Cut() //clear the list to populate it later
@@ -416,11 +416,10 @@ var/list/gaslist_cache = null
 	while(R.next <= length(gas_string))
 		R.Find(gas_string)
 
-		if(R.group[TEMP]) //handle the specific temperature case
+		var/id = R.group[ID]
+		if(id == "TEMP")
 			temperature = text2num(R.group[VALUE])
 			continue
-
-		var/id = R.group[ID]
 		add_gas(id)
 		cached_gases[id][MOLES] = text2num(R.group[VALUE])
 
