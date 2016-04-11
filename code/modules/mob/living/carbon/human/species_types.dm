@@ -518,7 +518,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 
 /datum/species/skeleton/proc/speak_word(loc, phomeme_type, length)
 	var/path = "sound/voice/skeletons/voice_[phomeme_type]_[length].ogg"
-	playsound(loc, path, vol = 75, vary = 0, extrarange = 3, falloff = 1, surround = 1)
+	playsound(loc, path, vol = 40, vary = 0, extrarange = 3, falloff = 1, surround = 1)
 	
 	var/sleep_length = 0
 	if (phomeme_type == "papyrus")
