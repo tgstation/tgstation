@@ -5,6 +5,7 @@
 //		defines/tick.dm
 //		defines/misc.dm
 //		unsorted.dm (bottom, in stoplag())
+//		gas_mixture.dm (parse_gas_string())
 #if DM_VERSION < 510
 #warn If you are experiencing issues with atmos, try upgrading to byond 510. If the issues persist, make an issue report.
 
@@ -172,7 +173,7 @@
 
 /proc/json_encode(value)
 	return JSON.stringify(value)
-	
+
 /proc/json_decode(value)
 	return JSON.parse(value)
 
