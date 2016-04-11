@@ -94,6 +94,8 @@
 	if(seed)
 		if(!..() && seed.get_gene(/datum/plant_gene/trait/squash)) //was it caught by a mob?
 			squash(hit_atom)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
