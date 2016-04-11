@@ -77,7 +77,7 @@
 
 /obj/item/weapon/melee/touch_attack/vibratinghand
 	name = "Vibrating hand"
-	desc = "Vibrate your hand through someone so fast, it hurts"
+	desc = "Vibrate your hand into someone so fast, it hurts"
 	catchphrase = ""
 	on_use_sound = "sound/magic/Vibrate.ogg"
 	icon_state = "vibratinghand"

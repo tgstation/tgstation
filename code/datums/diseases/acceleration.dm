@@ -1,38 +1,46 @@
-/datum/disease/velocity
-	name = "Velocity 9 poisoning"
+/datum/disease/acceleration
+	name = "Accelerated attributes"
 	max_stages = 3
 	spread_text = "Special"
 	cure_text = "Frost Oil"
 	cures = list("frostoil")
-	agent = "Speed force"
+	agent = "Radiation metabolism accidents"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 100
-	desc = ""
+	desc = "Infected's attributes such as reagent metabolism, movement, and speed rapidly accelerate."
 	disease_flags = CAN_CARRY|CURABLE
 	spread_flags = NON_CONTAGIOUS
 	required_organs = list(/obj/item/organ/internal/lungs)
 	severity = HARMFUL
 
-/datum/disease/velocity/stage_act()
+/datum/disease/acceleration/stage_act()
 	..()
 	switch(stage)
 		if(2)
 			if(prob(10))
-				affected_mob.visible_message("<span class='warning'>[affected_mob]'s rapidly vibrates and moves in slow motion</span>")
-			if (affected_mob.reagents.get_reagent_amount("velocity9") < 20)
-				affected_mob.reagents.add_reagent("velocity9", 20)
+				affected_mob.visible_message("<span class='warning'>[affected_mob] violently jitters and rapidly shakes.</span>")
+				affected_mob.Jitter(33)
+			if (affected_mob.reagents.get_reagent_amount("accelerativeenyzme") < 20)
+				affected_mob.reagents.add_reagent("accelerativeenyzme", 20)
 		if(3)
-			if (affected_mob.reagents.get_reagent_amount("velocity9") < 20)
-				affected_mob.reagents.add_reagent("velocity9", 20)
+			if (affected_mob.reagents.get_reagent_amount("accelerativeenyzme") < 20)
+				affected_mob.reagents.add_reagent("accelerativeenyzme", 20)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/H = affected_mob
 				H.unEquip(H.wear_suit)
-			affected_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/reactive/speed(affected_mob), slot_wear_suit)
+			affected_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/reactive/kinetic(affected_mob), slot_wear_suit)
 			grant_vibratinghand()
 			grant_iciclehand()
 			affected_mob.next_move_adjust = -3
 
-/datum/disease/velocity/proc/grant_vibratinghand()
+/datum/disease/acceleration/Destroy()
+	affected_mob.unEquip(SLOT_OCLOTHING)
+	affected_mob.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/touch/vibrate)
+	affected_mob.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/icicle)
+	affected_mob.reagents.remove_reagent("accelerativeenyzme", 20)
+	affected_mob.next_move_adjust = 0
+
+/datum/disease/acceleration/proc/grant_vibratinghand()
 	if(affected_mob.dna.species.id != "human")//can't vibrate scales fast enough
 		return
 	var/list/spelllist = affected_mob.mob_spell_list.Copy()
@@ -43,8 +51,8 @@
 			return
 	affected_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/vibrate)
 
-/datum/disease/velocity/proc/grant_iciclehand()
-	if(affected_mob.dna.species.id != "human")//can't vibrate calws fast enough
+/datum/disease/acceleration/proc/grant_iciclehand()
+	if(affected_mob.dna.species.id != "human")//can't vibrate claws fast enough
 		return
 	var/list/spelllist = affected_mob.mob_spell_list.Copy()
 	if(affected_mob.mind)
@@ -55,8 +63,8 @@
 	affected_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/icicle)
 
 /obj/effect/proc_holder/spell/targeted/touch/vibrate
-	name = "Vibrating hand"
-	desc = "Vibrate your hand into a highly effective disabling weapon."
+	name = "Vibrating chop"
+	desc = "Vibrate your hand into an effective disabling chop."
 	hand_path = "/obj/item/weapon/melee/touch_attack/vibratinghand"
 
 	school = "speed"
@@ -83,5 +91,5 @@
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()
-		var/obj/item/weapon/icicle/velocity = new
-		C.put_in_hands(velocity)
+		var/obj/item/weapon/icicle/acceleration = new
+		C.put_in_hands(acceleration)

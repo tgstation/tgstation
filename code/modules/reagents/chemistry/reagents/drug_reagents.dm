@@ -329,20 +329,41 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/velocity9
-	name = "Velocity 9"
-	id = "velocity9"
-	description = "Almost complete stun immunity and regeneration factor"
+/datum/reagent/medicine/accelerativeenyzme
+	name = "Accelerated Serotonic enzyme"
+	id = "accelerativeenyzme"
+	description = "Almost complete stun immunity, massive metabolism speed, and regeneration factor"
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-/datum/reagent/medicine/velocity9/on_mob_life(mob/living/M)
+/datum/reagent/medicine/accelerativeenyzme/on_mob_life(mob/living/M)
+	var/mob/living/carbon/human/L = M
+	if("tail_lizard" in L.dna.species.mutant_bodyparts)
+		L.dna.species.mutant_bodyparts -= "tail_lizard"
+		var/obj/item/organ/severedtail/S = new(get_turf(M))
+		M.visible_message("[M]'s tail violently tears off due to drag!</span>")
+		L.update_body()
+		M.adjustBruteLoss(40)
+		M.adjustStaminaloss(80)
+	else if("waggingtail_lizard" in L.dna.species.mutant_bodyparts)
+		L.dna.species.mutant_bodyparts -= "waggingtail_lizard"
+		M.visible_message("[M]'s wagging tail painfully vapourises due to drag and air resistance!</span>")
+		L.update_body()
+		M.adjustBruteLoss(80)
+		M.adjustStaminaloss(100)
+	if("spines" in L.dna.features)
+		L.dna.features -= "spines"
+		M.visible_message("[M]'s spines retreat into their body!</span>")
+		S.color = "#[L.dna.features["mcolor"]]"
+		S.markings = "[L.dna.features["tail"]]"
+		L.update_body()
 	M.AdjustParalysis(-10, 0)
 	M.AdjustStunned(-10, 0)
 	M.AdjustWeakened(-10, 0, 0)
 	M.adjustBruteLoss(-1*REM, 0)
 	M.adjustFireLoss(-1*REM, 0)
-	M.status_flags |= GOTTAGOREALLYGONE | IGNORESLOWDOWN
+	M.Jitter(33)
+	M.status_flags |= GOTTAGOREALLYGONE
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,5)//metabolise reagents much too faster
+			M.reagents.remove_reagent(R.id,10)//metabolise reagents so fast it doesn't help much
 	. = 1

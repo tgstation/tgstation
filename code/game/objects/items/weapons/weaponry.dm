@@ -297,4 +297,4 @@
 	attack_verb = list("stabbed", "shanked", "impaled")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/icicle/velocity
+/obj/item/weapon/icicle/acceleration

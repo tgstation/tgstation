@@ -247,34 +247,41 @@
 			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		return 1
 
-//velocity 9 speed armour
-/obj/item/clothing/suit/armor/reactive/speed
-	name = "speed force insticts"
-	desc = "You move too fast to wear conventional armour, and it slows you down too much, your super speed and super instincts will help you instead"
-	icon_state = "speed"
-	item_state = "speed"
+//kinetic field armour
+/obj/item/clothing/suit/armor/reactive/kinetic
+	name = "protective kinetic field"
+	desc = "You move too fast to wear conventional armour, and it slows you down too much, your super speed and super instincts have created a kinetic field instead."
+	icon_state = "kineticoff"
+	item_state = "kineticoff"
 	flags = ABSTRACT | NODROP
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0)
+	allowed = list()
+	blood_overlay_type = null
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0)
 	var/dodge_range = 1
+	var/dodge_chance = 75
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 
-/obj/item/clothing/suit/armor/reactive/speed/attack_self(mob/user)
+/obj/item/clothing/suit/armor/reactive/kinetic/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		user << "<span class='notice'>Your [src] is active and ready to dodge projectiles.</span>"
-		src.icon_state = "speed"
-		src.item_state = "speed"
+		user << "<span class='notice'>Your [src] is active and ready to protect and serve.</span>"
+		src.icon_state = "kinetic"
+		src.item_state = "kinetic"
 	else
 		user << "<span class='notice'>Your [src] is now inactive.</span>"
-		src.icon_state = "speedoff"
-		src.item_state = "speedoff"
+		src.icon_state = "kineticoff"
+		src.item_state = "kineticoff"
 
-/obj/item/clothing/suit/armor/reactive/speed/dropped(mob/user)
+/obj/item/clothing/suit/armor/reactive/kinetic/dropped(mob/user)
 	qdel(src)
 
-/obj/item/clothing/suit/armor/reactive/speed/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/clothing/suit/armor/reactive/kinetic/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(!active)
 		return 0
-	if(prob(hit_reaction_chance))
+	if(prob(dodge_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>You're too tired too dodge projectiles!</span>")
@@ -295,7 +302,7 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
-		reactivearmor_cooldown = world.time + 20
+		reactivearmor_cooldown = world.time + 30
 		return 1
 	return 0
 //All of the armor below is mostly unused
