@@ -493,7 +493,7 @@
 		if(40 to 41)// the X is now named Y
 			switch(rand(1,5)) //What is being renamed?
 				if(1)//Areas
-					switch(rand(1,4)//What is the area being renamed to?
+					switch(rand(1,4))//What is the area being renamed to?
 						if(1)
 							message = "[ionarea] IS NOW NAMED [ioncrew1]."
 						if(2)
@@ -503,7 +503,7 @@
 						if(4)
 							message = "[ionarea] IS NOW NAMED [ionthreats]."
 				if(2)//Crew
-					switch(rand(1,5)//What is the crew being renamed to?
+					switch(rand(1,5))//What is the crew being renamed to?
 						if(1)
 							message = "ALL [ioncrew1] ARE NOW NAMED [ionarea]."
 						if(2)
@@ -515,7 +515,7 @@
 						if(5)
 							message = "ALL [ioncrew1] ARE NOW NAMED [ionthreats]."
 				if(3)//Races
-					switch(rand(1,4)//What is the race being renamed to?
+					switch(rand(1,4))//What is the race being renamed to?
 						if(1)
 							message = "ALL [ionspecies] ARE NOW NAMED [ionarea]."
 						if(2)
@@ -525,7 +525,7 @@
 						if(4)
 							message = "ALL [ionspecies] ARE NOW NAMED [ionthreats]."
 				if(4)//Objects
-					switch(rand(1,4)//What is the object being renamed to?
+					switch(rand(1,4))//What is the object being renamed to?
 						if(1)
 							message = "ALL [ionobjects] ARE NOW NAMED [ionarea]."
 						if(2)
@@ -535,7 +535,7 @@
 						if(4)
 							message = "ALL [ionobjects] ARE NOW NAMED [ionthreats]."
 				if(5)//Threats
-					switch(rand(1,4)//What is the object being renamed to?
+					switch(rand(1,4))//What is the object being renamed to?
 						if(1)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionarea]."
 						if(2)
