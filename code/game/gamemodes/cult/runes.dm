@@ -766,7 +766,7 @@ var/list/teleport_runes = list()
 	qdel(src)
 
 /obj/effect/rune/stun/Crossed(atom/A)
-	if(isliving(A))
+	if(isliving(A) && !iscultist(A))
 		stun(A)
 		qdel(src)
 
