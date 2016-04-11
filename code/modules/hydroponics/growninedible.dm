@@ -50,35 +50,39 @@
 
 
 /obj/item/weapon/grown/Crossed(atom/movable/AM)
-	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
-	if(S && iscarbon(AM))
-		var/mob/living/carbon/M = AM
-		var/stun = max(seed.potency * S.rate * 2, 1)
-		var/weaken = max(seed.potency * S.rate, 0.5)
-		if(M.slip(stun, weaken, src))
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_slip(src, M)
-			return 1
+	if(seed)
+		var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
+		if(S && iscarbon(AM))
+			var/mob/living/carbon/M = AM
+			var/stun = max(seed.potency * S.rate * 2, 1)
+			var/weaken = max(seed.potency * S.rate, 0.5)
+			if(M.slip(stun, weaken, src))
+				for(var/datum/plant_gene/trait/T in seed.genes)
+					T.on_slip(src, M)
+				return 1
 	..()
 
 
 // Glow gene procs
 /obj/item/weapon/grown/Destroy()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G && ismob(loc))
-		loc.AddLuminosity(-G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G && ismob(loc))
+			loc.AddLuminosity(-G.get_lum(seed))
 	return ..()
 
 /obj/item/weapon/grown/pickup(mob/user)
 	..()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		SetLuminosity(0)
-		user.AddLuminosity(G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G)
+			SetLuminosity(0)
+			user.AddLuminosity(G.get_lum(seed))
 
 /obj/item/weapon/grown/dropped(mob/user)
 	..()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		user.AddLuminosity(-G.get_lum(seed))
-		SetLuminosity(G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G)
+			user.AddLuminosity(-G.get_lum(seed))
+			SetLuminosity(G.get_lum(seed))
