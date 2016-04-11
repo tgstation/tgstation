@@ -100494,13 +100494,12 @@
 	},
 /area/medical/morgue)
 "dfx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/plantgenes,
+/turf/open/floor/plasteel{
+	dir = 9;
+	icon_state = "warning"
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/area/hydroponics)
 "dfy" = (
 /turf/open/floor/engine/vacuum,
 /area/atmos)
@@ -136215,7 +136214,7 @@ bZc
 caw
 bZc
 ccX
-ceH
+dfx
 bVf
 cuS
 ciC
