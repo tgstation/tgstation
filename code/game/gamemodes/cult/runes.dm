@@ -247,7 +247,7 @@ var/list/teleport_runes = list()
 	creation_delay = 10 //1 second
 	talisman_type = /obj/item/weapon/paper/talisman/summon_tome
 	icon_state = "5"
-	color = rgb(0, 0, 255)
+	color = rgb(50, 0, 200)
 
 /obj/effect/rune/summon_tome/invoke(mob/living/user)
 	visible_message("<span class='warning'>A frayed tome materializes on the surface of [src], which dissolves into nothing.</span>")
@@ -479,7 +479,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "requires two corpses, one on the rune and one near it. The one placed upon the rune is brought to life, the other is turned to ash."
 	invocation = null //Depends on the name of the user - see below
 	icon_state = "1"
-	color = rgb(255, 0, 0)
+	color = rgb(255, 20, 75)
 
 /obj/effect/rune/raise_dead/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
@@ -610,7 +610,7 @@ var/list/teleport_runes = list()
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	talisman_type = /obj/item/weapon/paper/talisman/emp
 	icon_state = "5"
-	color = rgb(255, 0, 0)
+	color = rgb(225, 30, 50)
 
 /obj/effect/rune/emp/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
@@ -619,7 +619,7 @@ var/list/teleport_runes = list()
 		C << "<span class='warning'>You feel a minute vibration pass through you!</span>"
 	playsound(T, 'sound/items/Welder2.ogg', 25, 1)
 	qdel(src) //delete before pulsing because it's a delay reee
-	empulse(T, 4, 8) //A bit less than an EMP grenade
+	empulse(T, 5, 10) //A bit less than an EMP grenade
 
 
 //Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
@@ -820,10 +820,10 @@ var/list/teleport_runes = list()
 	qdel(src)
 
 
-//Rite of Fabrication: Creates a construct shell out of 15 metal sheets.
+//Rite of Fabrication: Creates a construct shell out of 30 metal sheets.
 /obj/effect/rune/construct_shell
 	cultist_name = "Fabricate Shell"
-	cultist_desc = "turns fifteen metal sheets into an empty construct shell, suitable for containing a soul shard."
+	cultist_desc = "turns thirty metal sheets into an empty construct shell, suitable for containing a soul shard."
 	invocation = "Ethra p'ni dedol!"
 	icon_state = "5"
 	color = rgb(150, 150, 150)
@@ -833,12 +833,12 @@ var/list/teleport_runes = list()
 	var/turf/T = get_turf(src)
 	var/canmakeshell = 0
 	for(var/obj/item/stack/sheet/metal/S in T)
-		if(!canmakeshell && S.use(15))
+		if(!canmakeshell && S.use(30))
 			canmakeshell = 1
 	if(canmakeshell)
 		. = ..()
 	else
-		user << "<span class='cultitalic'>There must be at least fifteen sheets of metal on [src]!</span>"
+		user << "<span class='cultitalic'>There must be at least thirty sheets of metal on [src]!</span>"
 		log_game("Construct Shell rune failed - not enough metal sheets")
 
 /obj/effect/rune/construct_shell/invoke(mob/living/user)
@@ -889,7 +889,7 @@ var/list/teleport_runes = list()
 	return ..()
 
 /obj/effect/rune/leeching/invoke(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(CLICK_CD_RANGE)
 	var/turf/T = get_turf(src)
 	for(var/mob/living/carbon/M in T)
 		if(M.stat != DEAD && M != user)
@@ -920,7 +920,7 @@ var/list/teleport_runes = list()
 				C << "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>"
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
-			C.take_overall_damage(51,51)
+			C.take_overall_damage(45,45)
 	for(var/mob/living/carbon/M in range(1,src))
 		if(iscultist(M))
 			M.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
@@ -935,7 +935,11 @@ var/list/teleport_runes = list()
 	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
-	color = rgb(255, 0, 0)
+	color = rgb(225, 20, 20)
+
+/obj/effect/rune/manifest/New(loc)
+	..()
+	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))

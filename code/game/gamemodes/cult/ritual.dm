@@ -118,15 +118,15 @@ This file contains the arcane tome files as well as innate cultist communication
 	undo this effect and allow passage again.<br><br>"
 
 	text += "<font color='red'><b>Debilitate</b></font><br>The Rite of the Shadowed Mind is simple. When invoked, it will cause all non-cultists that can see its rune to become deaf, blind and mute for a \
-	considerable amount of time. If crossed by a noncultist, will trigger.<br><br>"
+	considerable amount of time. If crossed by a noncultist, will trigger, affecting that noncultist.<br><br>"
 
 	text += "<font color='red'><b>Stun</b></font><br>Though the Rite of Blazing Light is weak when invoked normally, applying it to a paper makes it much more useful. \
-	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time. If crossed by a noncultist, will trigger.<br><br>"
+	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time. If crossed by a noncultist, will trigger, affecting that noncultist.<br><br>"
 
 	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls allows the cult to free other cultists with ease. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. It requires two invokers, and will damage each invoker slightly.<br><br>"
 
-	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
+	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place thirty sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
 	text += "<font color='red'><b>Summon Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
@@ -137,9 +137,8 @@ This file contains the arcane tome files as well as innate cultist communication
 	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
 	massive amount of damage to all non-cultist viewers. It requires three invokers.<br><br>"
 
-	text += "<font color='red'><b>Manifest Spirit</b></font><br>If you wish to bring a spirit back from the dead with a wish for vengeance and desire to serve, the Rite of Spectral \
-	Manifestation can do just that. When invoked, any spirits above the rune will be brought to life as a human wearing nothing that seeks only to serve you and the Geometer. However, the spirit's link \
-	to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, the spirits will dissipate, dropping their items to the ground. You may manifest \
+	text += "<font color='red'><b>Manifest Spirit</b></font><br>The Rite of Spectral Manifestation allows you to summon spirits as weak, humanoid fighters. When invoked, any spirits above the rune will be brought to life as a human wearing nothing that seeks only to serve you and the Geometer. \
+	However, the spirit's link to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, the spirits will dissipate, dropping their items to the ground. You may manifest \
 	multiple spirits with one rune, but you will rapidly take damage in doing so.<br><br>"
 
 	text += "<font color='red'><b><i>Call Forth The Geometer</i></b></font><br>There is only one way to summon the avatar of Nar-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \

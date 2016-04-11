@@ -171,7 +171,7 @@ Rite of Disorientation
 //Rite of True Sight: Same as rune, but doesn't work on ghosts
 /obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
-	cultist_desc = "A talisman that hides nearby runes."
+	cultist_desc = "A talisman that hides nearby runes. On its second use, will reveal nearby runes."
 	invocation = "Kla'atu barada nikt'o!"
 	health_cost = 1
 	uses = 2
@@ -181,7 +181,7 @@ Rite of Disorientation
 	. = ..()
 	for(var/obj/effect/rune/R in range(3,user))
 		if(!revealing)
-			user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
+			user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
 				 "<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
 			R.visible_message("<span class='danger'>[R] fades away.</span>")
 			R.invisibility = INVISIBILITY_OBSERVER
