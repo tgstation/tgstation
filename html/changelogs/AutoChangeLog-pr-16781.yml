@@ -1,0 +1,5 @@
+author: RandomMarine
+delete-after: True
+changes: 
+  - rscadd: "Additional luxuries have been added to golem ships. Including new rewards. Praise be to The Liberator!"
+  - rscdel: "However, jaunters are no longer easily obtained by free golems."
