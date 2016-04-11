@@ -19,13 +19,13 @@ z9 = empty space
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
-		#define MINETYPE "lavaland"
+		#define MINETYPE "mining"
 
         #include "map_files\TgStation\tgstation.2.1.3.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
-        #include "map_files\generic\lavaland.dmm"
+        #include "map_files\generic\z5.dmm"
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
         #include "map_files\generic\z8.dmm"
