@@ -485,17 +485,17 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/deafen/Crossed(atom/A)
 	if(iscarbon(A) && !iscultist(A))
-		blind(A)
+		blind(A, 33)
 		qdel(src)
 
-/obj/effect/rune/deafen/proc/blind(mob/living/carbon/C)
+/obj/effect/rune/deafen/proc/blind(mob/living/carbon/C, blindpower = 50)
 	if(istype(C) && !iscultist(C))
 		if(!C.null_rod_check())
 			C << "<span class='cultlarge'>A dark fog blankets your senses!</span>"
-			C.adjustEarDamage(0,50)
+			C.adjustEarDamage(0,blindpower)
 			C.flash_eyes(1, 1)
-			C.adjust_blurriness(50)
-			C.adjust_blindness(20)
+			C.adjust_blurriness(blindpower)
+			C.adjust_blindness(blindpower * 0.4)
 			C.silent += 10
 		else
 			C << "<span class='warning'>Your holy weapon emits a soft glow!</span>"
@@ -518,15 +518,15 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/stun/Crossed(atom/A)
 	if(isliving(A) && !iscultist(A))
-		stun(A)
+		stun(A, 2)
 		qdel(src)
 
-/obj/effect/rune/stun/proc/stun(mob/living/L)
+/obj/effect/rune/stun/proc/stun(mob/living/L, stunpower = 3)
 	if(istype(L) && !iscultist(L))
 		if(!L.null_rod_check())
 			L << "<span class='cultitalic'><b>You are disoriented by [src]!</b></span>"
-			L.Weaken(3)
-			L.Stun(3)
+			L.Weaken(stunpower)
+			L.Stun(stunpower)
 			L.flash_eyes(1,1)
 		else
 			L << "<span class='warning'>Your holy weapon absorbs the blinding light!</span>"
