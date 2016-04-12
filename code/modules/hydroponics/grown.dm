@@ -85,13 +85,17 @@
 
 // Various gene procs
 /obj/item/weapon/reagent_containers/food/snacks/grown/attack_self(mob/user)
-	if(seed.get_gene(/datum/plant_gene/trait/squash))
-		squash(user)
+	if(seed)
+		if(seed.get_gene(/datum/plant_gene/trait/squash))
+			squash(user)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
-	if(!..() && seed.get_gene(/datum/plant_gene/trait/squash)) //was it caught by a mob?
-		squash(hit_atom)
+	if(seed)
+		if(!..() && seed.get_gene(/datum/plant_gene/trait/squash)) //was it caught by a mob?
+			squash(hit_atom)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
@@ -125,38 +129,42 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/Crossed(atom/movable/AM)
-	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
-	if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
-		var/mob/living/carbon/M = AM
-		var/stun = max(seed.potency * S.rate * 2, 1)
-		var/weaken = max(seed.potency * S.rate, 0.5)
-		if(M.slip(stun, weaken, src))
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_slip(src, M)
-		return 1
+	if(seed)
+		var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
+		if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
+			var/mob/living/carbon/M = AM
+			var/stun = max(seed.potency * S.rate * 2, 1)
+			var/weaken = max(seed.potency * S.rate, 0.5)
+			if(M.slip(stun, weaken, src))
+				for(var/datum/plant_gene/trait/T in seed.genes)
+					T.on_slip(src, M)
+			return 1
 	..()
 
 
 // Glow gene procs
 /obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G && ismob(loc))
-		loc.AddLuminosity(-G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G && ismob(loc))
+			loc.AddLuminosity(-G.get_lum(seed))
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
 	..()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		SetLuminosity(0)
-		user.AddLuminosity(G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G)
+			SetLuminosity(0)
+			user.AddLuminosity(G.get_lum(seed))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/dropped(mob/user)
 	..()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		user.AddLuminosity(-G.get_lum(seed))
-		SetLuminosity(G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G)
+			user.AddLuminosity(-G.get_lum(seed))
+			SetLuminosity(G.get_lum(seed))
 
 
 
