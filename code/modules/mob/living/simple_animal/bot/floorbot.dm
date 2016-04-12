@@ -23,6 +23,7 @@
 	var/replacetiles = 0
 	var/placetiles = 0
 	var/specialtiles = 0
+	var/maxtiles = 100
 	var/obj/item/stack/tile/tiletype
 	var/fixfloors = 0
 	var/autotile = 0
@@ -76,7 +77,12 @@
 	dat += "<TT><B>Floor Repairer Controls v1.1</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
-	dat += "Special tiles left: [specialtiles]<BR>"
+	dat += "Special tiles: "
+	if(specialtiles)
+		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[specialtiles]/[maxtiles]\]</a>"
+	else
+		dat += "None Loaded"
+	
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "Add tiles to new hull plating: <A href='?src=\ref[src];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
@@ -138,6 +144,9 @@
 			autotile = !autotile
 		if("anchor")
 			anchored = !anchored
+		if("eject" && specialtiles)
+			tiletype.loc = get_turf(src)
+			specialtiles = 0
 
 		if("bridgemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
@@ -351,6 +360,10 @@
 	N.contents = list()
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
+
+	if(specialtiles)
+		tiletype.loc = Tsec
+		tiletype = null
 
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
