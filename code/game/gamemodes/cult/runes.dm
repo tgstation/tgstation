@@ -764,6 +764,10 @@ var/list/teleport_runes = list()
 	icon_state = "6"
 	color = rgb(255, 0, 0)
 
+/obj/effect/rune/manifest/New(loc)
+	..()
+	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
 		user << "<span class='cultitalic'>You must be standing on [src]!</span>"
