@@ -83,7 +83,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 					break
 
 			if(valid)
-				world.log << "Ruins marker placed at [T.x][T.y][T.z]"
+				world.log << "Ruins marker placed at ([T.x], [T.y], [T.z])"
 				var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 				R.Load(potentialRuins,template)
 				ruin_number --
