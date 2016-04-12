@@ -29,8 +29,7 @@
 		if(istype(src, seed.product)) // no adding reagents if it is just a trash item
 			seed.prepare_result(src)
 		transform *= TransformUsingVariable(seed.potency, 100, 0.5)
-
-	add_juice()
+		add_juice()
 
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)

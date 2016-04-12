@@ -36,7 +36,7 @@
 			T.on_new(src, newloc)
 		seed.prepare_result(src)
 		transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
-	add_juice()
+		add_juice()
 
 
 
