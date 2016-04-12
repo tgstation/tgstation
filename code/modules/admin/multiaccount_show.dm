@@ -37,7 +37,7 @@
 	user << browse(output, "window=accaunts;size=600x400")
 
 /client/proc/checkAllAccounts()
-	set name = "Check multiaccounts(All)"
+	set name = "Check multiaccounts (All)"
 	set category = "Admin"
 
 	var/DBQuery/query
