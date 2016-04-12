@@ -42,38 +42,48 @@
 		return 1
 
 /obj/item/weapon/airlock_painter/suicide_act(mob/user)
-	if(can_use(user))
+	var/has_lungs = FALSE
+	if(user.getorganslot("lungs"))
+		has_lungs = TRUE
+
+	if(can_use(user) && has_lungs)
 		user.visible_message("<span class='suicide'>[user] is inhaling toner from \the [name]! It looks like \he's trying to commit suicide.</span>")
 		use(user)
 
-		// Wait two beats for the toner to take effect
-		sleep(20)
-
 		// Once you've inhaled the toner, you throw up your lungs
 		// and then die.
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/lungs/L = H.getorganslot("lungs")
-		L.Remove(H)
+
+		// Find out if there is an open turf in front of us,
+		// and if not, pick the turf we are standing on.
+		var/turf
+
+		turf = get_step(get_turf(src), user.dir)
+		if(!istype(turf, /turf/open))
+			turf = get_turf(src)
+
+		var/obj/item/organ/internal/lungs/L
+		L = user.getorganslot("lungs")
+		L.Remove(user)
 
 		// now make some colorful reagent, and apply it to the lungs
 		L.create_reagents(10)
 		L.reagents.add_reagent("colorful_reagent", 10)
 		L.reagents.reaction(L, TOUCH, 1)
 
-		// Also, some colourful vomit (not actually real vomit)
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, get_turf(src))
-		V.create_reagents(10)
-		V.reagents.add_reagent("colorful_reagent", 10)
-		V.reagents.reaction(L, TOUCH, 1)
-		// TODO Vomit doesn't seem to be colouring, which is odd
+		// TODO maybe add some colorful vomit?
 
 		user.visible_message("<span class='suicide'>[user] vomits out their [L]!</span>")
-		playsound(V.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
 
-		L.loc = get_turf(src)
-		sleep(10)
+		L.loc = turf
 
 		return (TOXLOSS|OXYLOSS)
+	else if(can_use(user) && !has_lungs)
+		user.visible_message("<span class='suicide'>[user] is spraying toner on \himself from \the [name]! It looks like \he's trying to commit suicide.</span>")
+		user.reagents.add_reagent("colorful_reagent", 1)
+		user.reagents.reaction(user, TOUCH, 1)
+		return TOXLOSS
+		
 	else
 		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from \the [name]! It might be a suicide attempt if \the [name] had any toner.</span>")
 		return SHAME
