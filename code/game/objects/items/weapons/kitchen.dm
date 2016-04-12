@@ -94,6 +94,7 @@
 	flags = CONDUCT
 	force = 15
 	throwforce = 10
+	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 3
 

@@ -624,6 +624,14 @@
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
 
+/datum/design/cleaver
+	name = "Butcher's cleaver"
+	id = "cleaver"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 18000)
+	build_path = /obj/item/weapon/kitchen/knife/butcher
+	category = list("hacked", "Dinnerware")
+
 /datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
