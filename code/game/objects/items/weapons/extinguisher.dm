@@ -160,5 +160,7 @@
 /obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
 	if(loc == user && reagents.total_volume)
 		reagents.clear_reagents()
+		loc.MakeSlippery(TURF_WET_WATER)
+
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
 	return
