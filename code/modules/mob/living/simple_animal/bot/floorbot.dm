@@ -110,10 +110,10 @@
 			user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
 			return
 	if(istype(W, /obj/item/stack/tile))
-		if(specialtiles >= 100)
+		if(specialtiles >= maxtiles)
 			return
 		tiletype = W  //This still needs its own path inside the bot
-		var/loaded = min(100-specialtiles, tiletype.amount)
+		var/loaded = min(maxtiles-specialtiles, tiletype.amount)
 		tiletype.use(loaded)
 		specialtiles += loaded
 		if(loaded > 0)
@@ -144,9 +144,10 @@
 			autotile = !autotile
 		if("anchor")
 			anchored = !anchored
-		if("eject" && specialtiles)
-			tiletype.loc = get_turf(src)
-			specialtiles = 0
+		if("eject")
+			if(specialtiles)
+				tiletype.loc = get_turf(src)
+				specialtiles = 0
 
 		if("bridgemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
