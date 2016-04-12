@@ -486,11 +486,9 @@ var/list/preferences_datums = list()
 		if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
 			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
-		if(config.enforce_human_authority && !user.client.prefs.pref_species.qualifies_for_rank(rank, user.client.prefs.features))
-			if(user.client.prefs.pref_species.id == "human")
-				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[MUTANT\]</b></font></td></tr>"
-			else
-				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
+		var/cause_for_refusal = user.client.prefs.pref_species.does_not_qualify_for_rank(rank, user.client.prefs.features)
+		if(config.enforce_human_authority && cause_for_refusal )
+			HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[[cause_for_refusal]\]</b></font></td></tr>"
 			continue
 		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
 			HTML += "<b><span class='dark'>[rank]</span></b>"

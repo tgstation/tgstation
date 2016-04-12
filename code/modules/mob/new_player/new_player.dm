@@ -282,7 +282,7 @@
 		return 0
 	if(!job.player_old_enough(src.client))
 		return 0
-	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
+	if(config.enforce_human_authority && client.prefs.pref_species.does_not_qualify_for_rank(rank, client.prefs.features))
 		return 0
 	return 1
 

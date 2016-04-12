@@ -13,21 +13,21 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
-/datum/species/human/qualifies_for_rank(rank, list/features)
+/datum/species/human/does_not_qualify_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
-		return 1	//Pure humans are always allowed in all roles.
+		return null	//Pure humans are always allowed in all roles.
 
 	//Mutants are not allowed in most roles.
 	if(rank in security_positions) //This list does not include lawyers.
-		return 0
+		return "MUTANT"
 	if(rank in science_positions)
-		return 0
+		return "MUTANT"
 	if(rank in medical_positions)
-		return 0
+		return "MUTANT"
 	if(rank in engineering_positions)
-		return 0
+		return "MUTANT"
 	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
-		return 0
+		return "MUTANT"
 	return ..()
 
 
@@ -514,11 +514,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	H.equipOutfit(O, visualsOnly)
 	return 0
 
-/datum/species/plasmaman/qualifies_for_rank(rank, list/features)
+/datum/species/plasmaman/does_not_qualify_for_rank(rank, list/features)
 	if(rank in security_positions)
-		return 0
+		return "NON-HUMAN"
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
-		return 0
+		return "NON-HUMAN"
 	return ..()
 
 

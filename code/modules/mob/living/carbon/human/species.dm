@@ -114,10 +114,10 @@
 
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
-/datum/species/proc/qualifies_for_rank(rank, list/features)
+/datum/species/proc/does_not_qualify_for_rank(rank, list/features)
 	if(rank in command_positions)
-		return 0
-	return 1
+		return "NON-HUMAN"
+	return null
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C)
 	// Drop the items the new species can't wear
