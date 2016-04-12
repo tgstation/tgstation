@@ -10,7 +10,7 @@
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 50)
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell
+	build_path = /obj/item/weapon/stock_parts/cell/empty
 	category = list("Misc","Power Designs","Machinery","initial")
 
 /datum/design/high_cell
@@ -21,7 +21,7 @@
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/high
+	build_path = /obj/item/weapon/stock_parts/cell/high/empty
 	category = list("Misc","Power Designs")
 
 /datum/design/super_cell
@@ -33,7 +33,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/super
+	build_path = /obj/item/weapon/stock_parts/cell/super/empty
 	category = list("Misc","Power Designs")
 
 /datum/design/hyper_cell
@@ -45,7 +45,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/hyper
+	build_path = /obj/item/weapon/stock_parts/cell/hyper/empty
 	category = list("Misc","Power Designs")
 
 /datum/design/bluespace_cell
@@ -57,7 +57,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 800, MAT_GOLD = 300, MAT_SILVER = 300, MAT_GLASS = 160, MAT_DIAMOND = 160)
 	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace/empty
 	category = list("Misc","Power Designs")
 
 
