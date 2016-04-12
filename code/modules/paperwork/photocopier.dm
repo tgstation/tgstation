@@ -239,7 +239,7 @@
 
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
 	O.loc = src
-	user << "<span class ='notice>You insert [O] into [src].</span>"
+	user << "<span class ='notice'>You insert [O] into [src].</span>"
 	flick("photocopier1", src)
 	updateUsrDialog()
 
