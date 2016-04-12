@@ -173,8 +173,8 @@ a.updated {
 	if (!S.sellShares(logged_in, amt))
 		user << "<span class='danger'>Could not complete transaction.</span>"
 		return
-	user << "<span class='notice'>Sold [amt] shares of [S.name] for [total] points.</span>"
-	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, total)
+	user << "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] points.</span>"
+	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
 	if (!user || !S)
@@ -213,8 +213,8 @@ a.updated {
 	if (!S.buyShares(logged_in, amt))
 		user << "<<span class='danger'>Could not complete transaction.</span>"
 		return
-	user << "<span class='notice'>Bought [amt] shares of [S.name] for [total] points.</span>"
-	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, total)
+	user << "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] points.</span>"
+	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
 	if (B.stock.borrow(B, logged_in))
@@ -258,10 +258,10 @@ a.updated {
 		for(var/D in stockExchange.logs)
 			var/datum/stock_log/L = D
 			if(istype(L, /datum/stock_log/buy))
-				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks for <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"
+				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits in <b>[L.company_name]</b>.<br>"
 				continue
 			if(istype(L, /datum/stock_log/sell))
-				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks for <b>[L.money]</b> credits from <b>[L.company_name]</b>.<br>"
+				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> totalcredits from <b>[L.company_name]</b>.<br>"
 				continue
 			if(istype(L, /datum/stock_log/borrow))
 				dat += "[L.time] | <b>[L.user_name]</b> borrowed <b>[L.stocks]</b> stocks with a deposit of <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"

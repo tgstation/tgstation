@@ -5,7 +5,9 @@
 //		defines/tick.dm
 //		defines/misc.dm
 //		unsorted.dm (bottom, in stoplag())
+//		gas_mixture.dm (parse_gas_string())
 #if DM_VERSION < 510
+
 #define BYGEX "code/__HELPERS/bygex"
 /proc/replacetext(text, replace, replacement)
 	if(istype(replace, /regex))
@@ -170,7 +172,7 @@
 
 /proc/json_encode(value)
 	return JSON.stringify(value)
-	
+
 /proc/json_decode(value)
 	return JSON.parse(value)
 

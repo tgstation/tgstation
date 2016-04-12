@@ -69,9 +69,17 @@
 	desc = "All you need to destroy those pesky weeds and pests."
 	icon_state = "hydrocrate"
 
+/obj/structure/closet/crate/engineering
+	name = "engineering crate"
+	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/engineering/electrical
+	icon_state = "engi_e_crate"
+
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
+	icon_state = "engi_crate"
 
 /obj/structure/closet/crate/rcd/New()
 	..()

@@ -7,6 +7,10 @@
 #define MELEE 1
 #define RANGED 2
 
+#define FRONT_ARMOUR 1
+#define SIDE_ARMOUR 2
+#define BACK_ARMOUR 3
+
 
 /obj/mecha
 	name = "mecha"
@@ -29,6 +33,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
+	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
@@ -100,7 +105,10 @@
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
 
-
+	var/static/list/armour_facings = list("[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR),
+"[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR),
+"[SOUTH]" = list("[NORTH]" = FRONT_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[SOUTH]" = BACK_ARMOUR ),
+"[WEST]" = list("[NORTH]" = SIDE_ARMOUR, "[EAST]" = FRONT_ARMOUR, "[SOUTH]" = SIDE_ARMOUR, "[WEST]" = BACK_ARMOUR) )
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 

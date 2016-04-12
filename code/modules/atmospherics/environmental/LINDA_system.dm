@@ -9,7 +9,7 @@
 		R = 1
 
 	for(var/obj/O in contents+T.contents)
-		var/turf/other = (O in contents ? T : src)
+		var/turf/other = (O.loc == src ? T : src)
 		if(!O.CanAtmosPass(other))
 			R = 1
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments

@@ -19,6 +19,9 @@
 
 	var/image/obscured	//camerachunks
 
+	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
+
+
 /turf/New()
 	..()
 
@@ -29,6 +32,9 @@
 
 	for(var/atom/movable/AM in src)
 		Entered(AM)
+
+/turf/proc/Initalize_Atmos(times_fired)
+	CalculateAdjacentTurfs()
 
 /turf/Destroy()
 	visibilityChanged()
@@ -128,11 +134,13 @@
 		return
 	if(path == type)
 		return src
+	var/old_blueprint_data = blueprint_data
 
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
 	W.AfterChange()
+	W.blueprint_data = old_blueprint_data
 	return W
 
 /turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
@@ -268,3 +276,21 @@
 		var/atom/A = V
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
+
+
+/turf/proc/add_blueprints(atom/movable/AM)
+	var/image/I = new
+	I.appearance = AM.appearance
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.loc = src
+	I.dir = AM.dir
+	I.alpha = 128
+
+	if(!blueprint_data)
+		blueprint_data = list()
+	blueprint_data += I
+
+
+/turf/proc/add_blueprints_preround(atom/movable/AM)
+	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+		add_blueprints(AM)

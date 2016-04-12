@@ -277,7 +277,7 @@
 	if(stat)
 		return
 	if(act == "scream")
-		message = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
+		message = "makes a loud and pained whimper." //ugly hack to stop animals screaming when crushed :P
 		act = "me"
 	..(act, m_type, message)
 

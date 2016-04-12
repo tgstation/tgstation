@@ -62,7 +62,7 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
-	health = 120
+	health = 160
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -138,8 +138,6 @@
 
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return !opacity
 	return !density
 
 
@@ -264,8 +262,8 @@
 #define BURSTING 1
 #define GROWING 2
 #define GROWN 3
-#define MIN_GROWTH_TIME 1800	//time it takes to grow a hugger
-#define MAX_GROWTH_TIME 3000
+#define MIN_GROWTH_TIME 900	//time it takes to grow a hugger
+#define MAX_GROWTH_TIME 1500
 
 /obj/structure/alien/egg
 	name = "egg"

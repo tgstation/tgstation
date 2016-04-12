@@ -60,7 +60,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 30
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -329,7 +329,7 @@
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
-	ranged_cooldown_time = 80
+	ranged_cooldown_time = 120
 	friendly = "wails at"
 	speak_emote = list("bellows")
 	vision_range = 4

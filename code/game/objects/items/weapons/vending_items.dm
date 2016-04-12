@@ -34,8 +34,8 @@
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = list(52, 4, 0)//of 156 standard, 12 contraband
-	init_charges = list(52, 4, 0)
+	charges = list(53, 4, 0)//of 159 standard, 12 contraband
+	init_charges = list(53, 4, 0)
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
