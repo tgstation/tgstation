@@ -22,7 +22,7 @@
 
 
 obj/item/weapon/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
+	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1))
 		A.clean_blood()
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
