@@ -519,12 +519,13 @@ var/list/teleport_runes = list()
 	color = rgb(255, 0, 0)
 
 /obj/effect/rune/emp/invoke(mob/living/user)
+	var/turf/E = get_turf(src)
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
-	for(var/mob/living/carbon/C in orange(1,src))
-		C << "<span class='warning'>Your hair stands on end as a shockwave bursts from the rune!</span>"
-	playsound(get_turf(src), 'sound/items/Welder2.ogg', 25, 1)
-	qdel(src) //delete before pulsing 
-	empulse(src, 8, 12) //actually worth using over the talisman now
+	for(var/mob/living/carbon/C in range(1,src))
+		C << "<span class='warning'>You feel a minute vibration pass through you!</span>"
+	playsound(E, 'sound/items/Welder2.ogg', 25, 1)
+	qdel(src) //delete before pulsing because it's a delay reee
+	empulse(E, 8*cultists_in_range, 12*cultists_in_range) // Very strong now, scales
 
 //Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
 /obj/effect/rune/astral
