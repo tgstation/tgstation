@@ -84,12 +84,6 @@ This file contains the arcane tome files as well as innate cultist communication
 	have many different names, and almost all of them are known as Rites. The only rune that is not a Rite is the Ritual of Dimensional Rending, which can only be performed with nine cultists and calls \
 	forth the avatar of the Geometer herself (so long as she consents).<br><br>A rune's name and effects can be revealed by examining the rune. <br><br><br>"
 
-	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Translocation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, the rune will \
-	search for other Rites of Translocation. If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
-
-	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
-	<br><br>"
-
 	text += "<font color='red'><b>Convert</b></font><br>The Rite of Enlightment is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
 	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br><br>"
@@ -98,9 +92,12 @@ This file contains the arcane tome files as well as innate cultist communication
 	target cultists!). If this creature has a mind, a soul shard will be created and the creature's soul transported to it. This rune is required if the cult's objectives include the sacrifice of a crew \
 	member.<br><br>"
 
-	text += "<font color='red'><b>Raise Dead</b></font><br>The Rite of Resurrection is a delicate rite that requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
-	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
-	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
+	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Translocation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, the rune will \
+	search for other Rites of Translocation. If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
+
+	text += "<font color='red'><b>Form Shield</b></font><br>While simple, the Rite of the Corporeal Shield serves an important purpose in defense and hindering passage. When invoked, the \
+	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
+	undo this effect and allow passage again.<br><br>"
 
 	text += "<font color='red'><b>Obscure Runes</b></font><br>The Rite of True Sight is a rite that will cause all visible nearby runes and spirits to become invisible, and invisible runes and spirits to become visible. \
 	The runes will still be considered by other rites (such as the Rite of Translocation) but will be unusuable directly.<br><br>"
@@ -108,38 +105,41 @@ This file contains the arcane tome files as well as innate cultist communication
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. The Rite of Disruption may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location.<br><br>"
 
-	text += "<font color='red'><b>Astral Communion</b></font><br>The Rite of Astral Communion is perhaps the most ingenious rune that is usable by a single person. Upon invoking the rune, the \
-	user's spirit will be ripped from their body. In this state, the user's physical body will be locked in place to the rune itself - any attempts to move it will result in the rune pulling it back. \
-	The body will also take constant damage while in this form, and may even die. The user's spirit will contain their consciousness, and will allow them to freely wander the station as a ghost. This may \
-	also be used to commune with the dead.<br><br>"
-
-	text += "<font color='red'><b>Form Shield</b></font><br>While simple, the Rite of the Corporeal Shield serves an important purpose in defense and hindering passage. When invoked, the \
-	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
-	undo this effect and allow passage again.<br><br>"
-
 	text += "<font color='red'><b>Debilitate</b></font><br>The Rite of the Shadowed Mind is simple. When invoked, it will cause all non-cultists that can see its rune to become deaf, blind and mute for a \
 	considerable amount of time. If crossed by a noncultist, will trigger, affecting that noncultist.<br><br>"
 
 	text += "<font color='red'><b>Stun</b></font><br>Though the Rite of Blazing Light is weak when invoked normally, applying it to a paper makes it much more useful. \
 	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time. If crossed by a noncultist, will trigger, affecting that noncultist.<br><br>"
 
-	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls allows the cult to free other cultists with ease. When invoked, it will allow the user to summon a single cultist to the rune from \
-	any location. It requires two invokers, and will damage each invoker slightly.<br><br>"
+	text += "<font color='red'><b>Summon Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
+	be equipped will not be summoned.<br><br>"
+
+	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
+	<br><br>"
 
 	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place thirty sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
-	text += "<font color='red'><b>Summon Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
-	be equipped will not be summoned.<br><br>"
+	text += "<font color='red'><b>Astral Communion</b></font><br>The Rite of Astral Communion is perhaps the most ingenious rune that is usable by a single person. Upon invoking the rune, the \
+	user's spirit will be ripped from their body. In this state, the user's physical body will be locked in place to the rune itself - any attempts to move it will result in the rune pulling it back. \
+	The body will also take constant damage while in this form, and may even die. The user's spirit will contain their consciousness, and will allow them to freely wander the station as a ghost. This may \
+	also be used to commune with the dead.<br><br>"
+
+	text += "<font color='red'><b>Raise Dead</b></font><br>The Rite of Resurrection is a delicate rite that requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
+	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
+	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
 
 	text += "<font color='red'><b>Drain Life</b></font><br>The Rite of Leeching will drain the life of any non-cultist above the rune and heal the invoker for the same amount.<br><br>"
-
-	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
-	massive amount of damage to all non-cultist viewers. It requires three invokers.<br><br>"
 
 	text += "<font color='red'><b>Manifest Spirit</b></font><br>The Rite of Spectral Manifestation allows you to summon spirits as weak, humanoid fighters. When invoked, any spirits above the rune will be brought to life as a human wearing nothing that seeks only to serve you and the Geometer. \
 	However, the spirit's link to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, the spirits will dissipate, dropping their items to the ground. You may manifest \
 	multiple spirits with one rune, but you will rapidly take damage in doing so.<br><br>"
+
+	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls allows the cult to free other cultists with ease. When invoked, it will allow the user to summon a single cultist to the rune from \
+	any location. It requires two invokers, and will damage each invoker slightly.<br><br>"
+
+	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
+	massive amount of damage to all non-cultist viewers. It requires three invokers.<br><br>"
 
 	text += "<font color='red'><b><i>Call Forth The Geometer</i></b></font><br>There is only one way to summon the avatar of Nar-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \
 	comparison to other runes, is very large, requiring a 3x3 space of empty tiles to create. To invoke the rune, nine cultists must stand on the rune, so that all of them are within its circle. Then, \
@@ -219,4 +219,6 @@ This file contains the arcane tome files as well as innate cultist communication
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	new rune_to_scribe(Turf, chosen_keyword)
-	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)][initial(rune_to_scribe.talisman_type) ? " This rune can be imbued by striking it with paper.":""]</span>"
+	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
+	if(initial(rune_to_scribe.talisman_type))
+		user << "<span class='cult'><b>This rune can be converted to a talisman by striking it with paper.</b></span>"
