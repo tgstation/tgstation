@@ -91,17 +91,17 @@
 
 	return dat
 
-	/mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
-		if(istype(W, /obj/item/stack/tile/plasteel))
-			user << "<span class='notice'>The floorbot can produce normal tiles itself.</span>"
+/mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
+	if(istype(W, /obj/item/stack/tile/plasteel))
+		user << "<span class='notice'>The floorbot can produce normal tiles itself.</span>"
+		return
+	if(specialtiles != 0 && istype(W, /obj/item/stack/tile/))
+		var/obj/item/stack/tile/usedtile = W
+		if(usedtile != tiletype)
+			user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
 			return
-		if(specialtiles != 0 && istype(W, /obj/item/stack/tile/))
-			var/obj/item/stack/tile/usedtile = W
-			if(usedtile != tiletype)
-				user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
-				return
-		if(istype(W, /obj/item/stack/tile/) && specialtiles == 0)
-			tiletype = W
+	if(istype(W, /obj/item/stack/tile/))
+		tiletype = W
 		if(specialtiles >= 100)
 			return
 		var/loaded = min(100-specialtiles, tiletype.amount)
