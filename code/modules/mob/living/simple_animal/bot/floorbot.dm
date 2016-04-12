@@ -8,6 +8,9 @@
 	anchored = 0
 	health = 25
 	maxHealth = 25
+	
+	radio_key = /obj/item/device/encryptionkey/headset_eng
+	radio_channel = "Engineering"
 
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
@@ -95,15 +98,15 @@
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		user << "<span class='notice'>The floorbot can produce normal tiles itself.</span>"
 		return
-	if(specialtiles != 0 && istype(W, /obj/item/stack/tile/))
+	if(specialtiles && istype(W, /obj/item/stack/tile))
 		var/obj/item/stack/tile/usedtile = W
-		if(usedtile != tiletype)
+		if(usedtile.type != tiletype.type)
 			user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
 			return
-	if(istype(W, /obj/item/stack/tile/))
-		tiletype = W
+	if(istype(W, /obj/item/stack/tile))
 		if(specialtiles >= 100)
 			return
+		tiletype = W  //This still needs its own path inside the bot
 		var/loaded = min(100-specialtiles, tiletype.amount)
 		tiletype.use(loaded)
 		specialtiles += loaded
@@ -306,11 +309,11 @@
 	else
 		
 		var/turf/open/floor/F = target_turf
-		if(replacetiles && F != tiletype.turf_type)
+		if(replacetiles && F.type != tiletype.turf_type)
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			spawn(50)
-				if(mode == BOT_REPAIRING)
+				if(mode == BOT_REPAIRING && F)
 					F.broken = 0
 					F.burnt = 0
 					F.ChangeTurf(tiletype.turf_type)
@@ -326,7 +329,7 @@
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			spawn(50)
-				if(mode == BOT_REPAIRING)
+				if(mode == BOT_REPAIRING && F)
 					F.broken = 0
 					F.burnt = 0
 					F.ChangeTurf(/turf/open/floor/plasteel)
