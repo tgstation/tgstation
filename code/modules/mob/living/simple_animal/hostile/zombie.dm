@@ -31,12 +31,13 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 	layer = MOB_LAYER - 0.1
+	var/removingairlock = 0
 
 
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	..()
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/living/L = target
 		if(ishuman(L) && L.stat)
 			var/mob/living/carbon/human/H = L
@@ -51,19 +52,24 @@
 			visible_message("<span class='danger'>[src] tears [L] to pieces!</span>")
 			src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
 			revive(full_heal = 1)
-			
+
 	if(istype(target, /obj/machinery/door/airlock))
-		src << "<span class='notice'>You start tearing apart the airlock...</span>"
-		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
-		if(do_after(src, 250, target))
-			playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
-			qdel(target)
+		if(!removingairlock)
+			src << "<span class='notice'>You start tearing apart the airlock...</span>"
+			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			var/obj/machinery/door/airlock/A = target
-			var/obj/structure/door_assembly/door = new A.doortype(target.loc)
-			door.density = 0
-			door.anchored = 1
-			door.name = "ravaged airlock"
-			door.desc = "An airlock that has been torn apart. Looks like it wont be keeping much out now."
+			removingairlock = 1
+			if(do_after(src, 250, 0, A, 1))
+				playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
+				door.density = 0
+				door.anchored = 1
+				door.name = "ravaged airlock"
+				door.desc = "An airlock that has been torn apart. Looks like it won't be keeping much out now."
+				qdel(A)
+			removingairlock = 0
+		else
+			src << "<span class='notice'>You are already tearing an airlock apart!</span>"
 
 /mob/living/simple_animal/hostile/zombie/death()
 	..()

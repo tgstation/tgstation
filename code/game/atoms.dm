@@ -357,6 +357,7 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
 
 //This is called just before maps and objects are initialized, use it to spawn other mobs/objects
 //effects at world start up without causing runtimes

@@ -1,0 +1,4 @@
+author: Erwgd
+delete-after: True
+changes: 
+  - rscadd: "The autolathe can now make hydroponics tools! Access the design routines in the Misc. category of the machine."

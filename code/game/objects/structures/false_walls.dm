@@ -227,7 +227,7 @@
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
+	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)
 

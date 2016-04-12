@@ -1,0 +1,4 @@
+author: CoreOverload
+delete-after: True
+changes: 
+  - rscadd: "You can now put slimes in stasis by exposing them to room temp CO2. Useful for both fighting the slimes and safely storing them."

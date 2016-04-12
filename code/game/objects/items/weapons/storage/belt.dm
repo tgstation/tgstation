@@ -29,7 +29,9 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
-		/obj/item/weapon/extinguisher/mini
+		/obj/item/weapon/extinguisher/mini,
+		/obj/item/device/radio,
+		/obj/item/clothing/gloves/
 		)
 
 /obj/item/weapon/storage/belt/utility/full/New()
@@ -76,7 +78,9 @@
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/hypospray,
 		/obj/item/device/rad_laser,
-		/obj/item/device/sensor_device
+		/obj/item/device/sensor_device,
+		/obj/item/device/radio,
+		/obj/item/clothing/gloves/
 		)
 
 
@@ -102,7 +106,9 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/weapon/kitchen/knife/combat,
 		/obj/item/device/flashlight/seclite,
-		/obj/item/weapon/melee/classic_baton/telescopic
+		/obj/item/weapon/melee/classic_baton/telescopic,
+		/obj/item/device/radio,
+		/obj/item/clothing/gloves/
 		)
 
 /obj/item/weapon/storage/belt/security/full/New()
@@ -236,7 +242,8 @@
 		/obj/item/weapon/reagent_containers/spray,
 		/obj/item/weapon/soap,
 		/obj/item/weapon/holosign_creator,
-		/obj/item/key/janitor
+		/obj/item/key/janitor,
+		/obj/item/clothing/gloves/
 		)
 
 /obj/item/weapon/storage/belt/bandolier
@@ -251,7 +258,7 @@
 
 /obj/item/weapon/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A holster to conceal a carried handgun and ammo. WARNING: Badasses only."
+	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
 	icon_state = "holster"
 	item_state = "holster"
 	storage_slots = 3

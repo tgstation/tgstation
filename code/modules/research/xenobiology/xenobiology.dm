@@ -508,7 +508,7 @@
 			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
 				unfreeze_mob(M)
 				stopped_atoms -= M
-		sleep(1)
+		stoplag()
 
 	//End
 	for(var/mob/living/M in stopped_atoms)
