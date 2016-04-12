@@ -127,6 +127,42 @@
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 	category = list("Weapons")
 
+/datum/design/pyro_grenade
+	name = "Pyro Grenade"
+	desc = "An advanced grenade that is able to self ignite its mixture."
+	id = "pyro_Grenade"
+	req_tech = list("combat" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_PLASMA = 500)
+	reliability = 79
+	build_path = /obj/item/weapon/grenade/chem_grenade/pyro
+	category = list("Weapons")
+
+/* // Currently commented out, because it has no worthwhile useage yet.
+
+/datum/design/cryo_grenade
+	name = "Cryo Grenade"
+	desc = "An advanced grenade that rapidly cools its contents upon detonation."
+	id = "cryo_Grenade"
+	req_tech = list("combat" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	reliability = 79
+	build_path = /obj/item/weapon/grenade/chem_grenade/cryo
+	category = list("Weapons")
+*/
+
+/datum/design/adv_grenade
+	name = "Advanced Release Grenade"
+	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
+	id = "adv_Grenade"
+	req_tech = list("combat" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 500)
+	reliability = 79
+	build_path = /obj/item/weapon/grenade/chem_grenade/adv_release
+	category = list("Weapons")
+
 /datum/design/smg
 	name = "NanoTrasen Saber SMG"
 	desc = "A prototype advancment over the WT-550 auto rifle made using lightweight materials on a traditional frame, designed to fire standard 9mm rounds."
