@@ -265,7 +265,7 @@
 				result = F
 		if(REPLACE_TILE)
 			F = scan_target
-			if(istype(F, /turf/open/floor) && !istype(F, /turf/open/floor/plating) //The floor must already have a tile.
+			if(istype(F, /turf/open/floor) && !istype(F, /turf/open/floor/plating)) //The floor must already have a tile.
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
