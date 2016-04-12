@@ -36,16 +36,13 @@
 		if(10)
 			new /obj/item/organ/internal/heart/cursed(src)
 		if(11)
-			new /obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
-			new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus(src)
-			new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
-			new /obj/item/weapon/lighter(src)
+			new /obj/vehicle/lavaboat(src)
 		if(12)
 			new /obj/item/upgradescroll(src)
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
-			new /obj/item/weapon/nullrod/claymore/darkblade
+			new /obj/item/weapon/nullrod/claymore/darkblade(src)
 		if(15)
 			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
@@ -334,3 +331,33 @@
 						M.put_in_l_hand(src)
 
 			add_fingerprint(usr)
+
+
+//Boat
+
+/obj/vehicle/lavaboat
+	name = "lava boat"
+	desc = "A boat used for traversing lava."
+	icon_state = "miningcaropen"
+	icon = 'icons/obj/crates.dmi'
+	keytype = /obj/item/weapon/oar
+	burn_state = LAVA_PROOF
+
+/obj/vehicle/lavaboat/relaymove(mob/user, direction)
+	var/turf/next = get_step(src, direction)
+	var/turf/current = get_turf(src)
+
+	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+		..()
+	else
+		user << "Boats don't go on land!"
+		return 0
+
+/obj/item/weapon/oar
+	name = "oar"
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "keysec"
+	desc = "Not to be confused with the kind Research hassles you for."
+	force = 12
+	w_class = 3
+	burn_state = LAVA_PROOF

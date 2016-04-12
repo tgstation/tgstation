@@ -230,6 +230,16 @@
 			var/mob/living/L = thing
 			if("mining" in L.faction)
 				continue
+			if(L.buckled)
+				if(isobj(L.buckled))
+					var/obj/O = L.buckled
+					if(O.burn_state == LAVA_PROOF)
+						continue
+				if(isliving(L.buckled)) //Goliath riding
+					var/mob/living/liv = L.buckled
+					if("mining" in liv.faction)
+						continue
+
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
