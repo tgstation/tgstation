@@ -158,7 +158,7 @@
 	if(stage != READY)
 		return
 
-	var/list/reactants = list()
+	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
@@ -223,6 +223,84 @@
 		beakers += I
 	else
 		return ..()
+
+/obj/item/weapon/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes. Cools the area moderately upon detonation.
+	name = "cryo grenade"
+	desc = "A custom made cryogenic grenade. It rapidly cools its contents upon detonation."
+	icon_state = "cryo_g"
+	affected_area = 2
+	ignition_temp = -100
+
+/obj/item/weapon/grenade/chem_grenade/pyro // Intended for pyrotechnical mixes. Produces a small fire upon detonation, igniting potentially flammable mixtures.
+	name = "pyro grenade"
+	desc = "A custom made pyrotechnical grenade. It heats up and ignites its contents upon detonation."
+	icon_state = "pyro_g"
+	affected_area = 3
+	ignition_temp = 500
+
+/obj/item/weapon/grenade/chem_grenade/pyro/prime() // Sets off sparks, probably igniting the mixture.
+	if(stage != READY)
+		return
+
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(12, 0, src)
+	spark_system.attach(src)
+	spawn(0)
+		spark_system.start()
+
+	..()
+
+/obj/item/weapon/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
+	name = "advanced release grenade"
+	desc = "A custom made advanced release grenade. It is able to be triggered more than once. Can be configured using a multitool."
+	icon_state = "time_g"
+	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
+
+/obj/item/weapon/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/multitool))
+		if(unit_spread < 100)
+			unit_spread += 5
+		else
+			unit_spread = 5
+		user << "<span class='notice'> You set the time release to [unit_spread] units per detonation.</span>"
+		return
+	else
+		return ..()
+
+/obj/item/weapon/grenade/chem_grenade/adv_release/prime()
+	if(stage != READY)
+		return
+
+	var/total_volume = 0
+	for(var/obj/item/weapon/reagent_containers/RC in beakers)
+		total_volume += RC.reagents.total_volume
+
+	var/fraction = unit_spread/total_volume
+	var/datum/reagents/reactants = new(unit_spread)
+	for(var/obj/item/weapon/reagent_containers/RC in beakers)
+		RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, threatscale, 1, 1)
+
+	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
+
+	if(nadeassembly)
+		var/mob/M = get_mob_by_ckey(assemblyattacher)
+		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
+		var/turf/T = get_turf(src)
+		var/area/A = get_area(T)
+		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
+		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
+
+	var/turf/DT = get_turf(src)
+	var/area/DA = get_area(DT)
+	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
+
+	if(total_volume < unit_spread) // If that was the last detonation, delete the grenade to prevent reusing it. Keep in mind, an explosion might destroy the grenade before it can detonate again.
+		update_mob()
+		qdel(src)
+
+
+
+
 
 //////////////////////////////
 ////// PREMADE GRENADES //////

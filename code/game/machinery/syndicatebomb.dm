@@ -342,22 +342,55 @@
 	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
 	qdel(src)
 
-#define MAX_BEAKERS 4
-#define SPREAD_RANGE 7
-
 /obj/item/weapon/bombcore/chemical
 	name = "chemical payload"
 	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. It is able to hold up to four chemical containers, and must be loaded before use."
 	origin_tech = "combat=4;materials=3"
 	icon_state = "chemcore"
 	var/list/beakers = list()
+	var/max_beakers = 4
+	var/spread_range = 5
+	var/temp_boost = 50
+	var/time_release = 0
 
 /obj/item/weapon/bombcore/chemical/detonate()
+
+	if(time_release > 0)
+		var/total_volume = 0
+		for(var/obj/item/weapon/reagent_containers/RC in beakers)
+			total_volume += RC.reagents.total_volume
+		var/fraction = time_release/total_volume
+		var/datum/reagents/reactants = new(time_release)
+		for(var/obj/item/weapon/reagent_containers/RC in beakers)
+			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
+		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
+
+		if(total_volume < time_release)
+			if(loc && istype(loc,/obj/machinery/syndicatebomb/))
+				qdel(loc)
+			qdel(src)
+
+		else
+			spawn(5)
+				detonate() // Detonate it again in half a second, until it's out of juice.
+		return
+
+	// If it's not a time release bomb, do normal explosion
+
 	var/list/reactants = list()
+
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), SPREAD_RANGE, reactants, 50))
+	for(var/obj/item/slime_extract/S in beakers)
+		if(S.Uses)
+			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+				G.reagents.trans_to(S, G.reagents.total_volume)
+
+			if(S && S.reagents && S.reagents.total_volume)
+				reactants += S.reagents
+
+	if(!chem_splash(get_turf(src), spread_range, reactants, temp_boost))
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
@@ -379,31 +412,54 @@
 			beakers -= B
 		return
 	else if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) || istype(I, /obj/item/weapon/reagent_containers/glass/bottle))
-		if(beakers.len < MAX_BEAKERS)
+		if(beakers.len < max_beakers)
 			if(!user.drop_item())
 				return
 			beakers += I
 			user << "<span class='notice'>You load [src] with [I].</span>"
 			I.loc = src
 		else
-			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [MAX_BEAKERS] containers.</span>"
+			user << "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>"
 			return
 	..()
 
 /obj/item/weapon/bombcore/chemical/CheckParts()
+	// Using different grenade casings, causes the payload to have different properties.
 	for(var/obj/item/weapon/grenade/chem_grenade/G in src)
+
+		if(istype(G, /obj/item/weapon/grenade/chem_grenade/large))
+			var/obj/item/weapon/grenade/chem_grenade/large/LG = G
+			max_beakers += 0.5 // Adding two large grenades only allows for a maximum of 5 beakers.
+			spread_range += 2 // Extra range, reduced density.
+			temp_boost += 50 // maximum of +150K blast using only large beakers.
+			for(var/obj/item/slime_extract/S in LG.beakers) // And slime cores.
+				if(beakers.len < max_beakers)
+					beakers += S
+					S.loc = src
+				else
+					S.loc = get_turf(src)
+
+		if(istype(G, /obj/item/weapon/grenade/chem_grenade/cryo))
+			spread_range -= 1 // Reduced range, but increased density.
+			temp_boost -= 100 // minimum of -150K blast.
+
+		if(istype(G, /obj/item/weapon/grenade/chem_grenade/pyro))
+			temp_boost += 150 // maximum of +350K blast.
+
+		if(istype(G, /obj/item/weapon/grenade/chem_grenade/adv_release))
+			time_release += 25 // A typical bomb, using basic beakers, will explode over 2-4 seconds, depending on number of time release casings. Up to a minute long using special materials.
+
 		for(var/obj/item/weapon/reagent_containers/glass/B in G)
-			if(beakers.len < MAX_BEAKERS)
+			if(beakers.len < max_beakers)
 				beakers += B
 				B.loc = src
 			else
 				B.loc = get_turf(src)
+
 		qdel(G)
 	return
 
 
-#undef MAX_BEAKERS
-#undef SPREAD_RANGE
 
 ///Syndicate Detonator (aka the big red button)///
 
