@@ -227,33 +227,21 @@
 /obj/item/weapon/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes. Cools the area moderately upon detonation.
 	name = "cryo grenade"
 	desc = "A custom made cryogenic grenade. It rapidly cools its contents upon detonation."
-	icon_state = "cryo_g"
+	icon_state = "cryog"
 	affected_area = 2
 	ignition_temp = -100
 
 /obj/item/weapon/grenade/chem_grenade/pyro // Intended for pyrotechnical mixes. Produces a small fire upon detonation, igniting potentially flammable mixtures.
 	name = "pyro grenade"
 	desc = "A custom made pyrotechnical grenade. It heats up and ignites its contents upon detonation."
-	icon_state = "pyro_g"
+	icon_state = "pyrog"
 	affected_area = 3
-	ignition_temp = 500
-
-/obj/item/weapon/grenade/chem_grenade/pyro/prime() // Sets off sparks, probably igniting the mixture.
-	if(stage != READY)
-		return
-
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(12, 0, src)
-	spark_system.attach(src)
-	spawn(0)
-		spark_system.start()
-
-	..()
+	ignition_temp = 500 // This is enough to expose a hotspot.
 
 /obj/item/weapon/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
 	name = "advanced release grenade"
 	desc = "A custom made advanced release grenade. It is able to be triggered more than once. Can be configured using a multitool."
-	icon_state = "time_g"
+	icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/weapon/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
@@ -294,7 +282,7 @@
 	var/area/DA = get_area(DT)
 	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
 
-	if(total_volume < unit_spread) // If that was the last detonation, delete the grenade to prevent reusing it. Keep in mind, an explosion might destroy the grenade before it can detonate again.
+	if(total_volume < unit_spread) // If that was the last detonation, delete the grenade to prevent reusing it. Keep in mind, an explosion might destroy the grenade before it can detonate again anyways.
 		update_mob()
 		qdel(src)
 

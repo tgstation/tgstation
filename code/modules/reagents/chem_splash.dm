@@ -1,6 +1,9 @@
 // Replaces chemgrenade stuff, allowing reagent explosions to be called from anywhere.
 // It should be called using a location, the range, and a list of reagents involved.
 
+// Threatscale is a multiplier for the 'threat' of the grenade. If you're increasing the affected range drastically, you might want to improve this.
+// Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
+
 
 proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
 	if(!istype(epicenter, /turf) || !affected_range || !reactants.len || threatscale <= 0)
@@ -57,12 +60,13 @@ proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactan
 			for(var/atom/A in T.GetAllContents())
 				if(!(A in viewable)) continue
 				reactable |= A
+			if(extra_heat >= 300)
+				T.hotspot_expose(extra_heat*2, 5)
 		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
 			return
 		var/fraction = 0.5/accessible.len // In a 100u mix. A small grenade spreads ~1.5u units per affected tile. A large grenade spreads ~0.75u, and a bomb spreads ~0.4u
 		for(var/atom/A in reactable)
 			splash_holder.reaction(A, TOUCH, fraction)
-
 
 	qdel(splash_holder)
 	return 1

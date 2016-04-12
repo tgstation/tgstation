@@ -371,8 +371,8 @@
 			qdel(src)
 
 		else
-			spawn(5)
-				detonate() // Detonate it again in half a second, until it's out of juice.
+			spawn(10)
+				detonate() // Detonate it again in one second, until it's out of juice.
 		return
 
 	// If it's not a time release bomb, do normal explosion
@@ -431,7 +431,7 @@
 			var/obj/item/weapon/grenade/chem_grenade/large/LG = G
 			max_beakers += 0.5 // Adding two large grenades only allows for a maximum of 5 beakers.
 			spread_range += 2 // Extra range, reduced density.
-			temp_boost += 50 // maximum of +150K blast using only large beakers.
+			temp_boost += 50 // maximum of +150K blast using only large beakers. Not enough to self ignite.
 			for(var/obj/item/slime_extract/S in LG.beakers) // And slime cores.
 				if(beakers.len < max_beakers)
 					beakers += S
@@ -444,7 +444,7 @@
 			temp_boost -= 100 // minimum of -150K blast.
 
 		if(istype(G, /obj/item/weapon/grenade/chem_grenade/pyro))
-			temp_boost += 150 // maximum of +350K blast.
+			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite.
 
 		if(istype(G, /obj/item/weapon/grenade/chem_grenade/adv_release))
 			time_release += 25 // A typical bomb, using basic beakers, will explode over 2-4 seconds, depending on number of time release casings. Up to a minute long using special materials.
