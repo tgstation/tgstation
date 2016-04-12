@@ -525,7 +525,7 @@ var/list/teleport_runes = list()
 		C << "<span class='warning'>You feel a minute vibration pass through you!</span>"
 	playsound(E, 'sound/items/Welder2.ogg', 25, 1)
 	qdel(src) //delete before pulsing because it's a delay reee
-	empulse(E, 8*cultists_in_range, 12*cultists_in_range) // Very strong now, scales
+	empulse(E, 10, 20) // Very strong now
 
 //Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
 /obj/effect/rune/astral
