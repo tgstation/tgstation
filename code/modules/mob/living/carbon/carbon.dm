@@ -421,9 +421,8 @@
 	var/success = 0
 	if(!W)	return 0
 	else if (W == handcuffed)
-		handcuffed = null
+		handcuffed.handcuffs_remove(src)
 		success = 1
-		update_inv_handcuffed()
 
 	else if (W == legcuffed)
 		legcuffed = null

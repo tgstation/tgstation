@@ -161,6 +161,14 @@ var/list/uplink_items = list()
 	cost = 3
 	job = list("Clown", "Mime")
 
+//Security
+/datum/uplink_item/jobspecific/syndicuffs
+	name = "Syndicate Cuffs"
+	desc = "A pair of cuffs rigged with electronics and laced with a C4 charge. Can be toggled between explosion on application and explosion on removal."
+	item = /obj/item/weapon/handcuffs/syndicate
+	cost = 2
+	job = list("Security Officer", "Warden", "Head of Security")
+
 //Detective
 /datum/uplink_item/jobspecific/evidenceforger
 	name = "Evidence Forger"

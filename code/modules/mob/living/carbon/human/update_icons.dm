@@ -954,9 +954,6 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = "handcuff1"
 		overlays += O
 		obj_overlays[HANDCUFF_LAYER] = O
-		//overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1")
-	//else
-		//overlays_standing[HANDCUFF_LAYER]	= null
 
 	if(update_icons)   update_icons()
 

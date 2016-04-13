@@ -177,9 +177,9 @@
 	return null
 
 /mob/living/carbon/human/proc/has_organ(name)
-	var/datum/organ/external/O = organs_by_name[name]
 
-	return (O && !(O.status & ORGAN_DESTROYED) )
+	var/datum/organ/external/O = organs_by_name[name]
+	return O.is_existing()
 
 /mob/living/carbon/human/proc/has_organ_for_slot(slot)
 	switch(slot)
@@ -299,9 +299,8 @@
 		success = 1
 		update_inv_back()
 	else if (W == handcuffed)
-		handcuffed = null
+		handcuffed.handcuffs_remove(src)
 		success = 1
-		update_inv_handcuffed()
 	else if (W == legcuffed)
 		legcuffed = null
 		success = 1
@@ -536,7 +535,7 @@
 		if(isrobot(source) && place != "handcuff")
 			qdel(src)
 		for(var/mob/O in viewers(target, null))
-			O.show_message("<span class='danger'>[source] is trying to put \a [item] on [target]</span>", 1)
+			O.show_message("<span class='danger'>[source] is trying to put [item.gender == PLURAL ? "\the [item]" : "\a [item]"] on [target]</span>", 1)
 	else
 		var/message=null
 		switch(place)

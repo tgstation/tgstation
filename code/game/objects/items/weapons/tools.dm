@@ -188,12 +188,10 @@
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
 	if((iscarbon(C)) && (C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-		"You cut \the [C]'s restraints with \the [src]!",\
+		usr.visible_message("\The [user] cuts \the [C]'s [C.handcuffed.name] with \the [src]!",\
+		"You cut \the [C]'s [C.handcuffed.name] with \the [src]!",\
 		"You hear cable being cut.")
-		C.handcuffed.loc = null	//garbage collector awaaaaay
-		C.handcuffed = null
-		C.update_inv_handcuffed()
+		qdel(C.handcuffed)
 		return
 	else
 		..()

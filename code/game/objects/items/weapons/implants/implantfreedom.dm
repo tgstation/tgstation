@@ -22,8 +22,7 @@
 			to_chat(source, "You feel a faint click.")
 			if (source.handcuffed)
 				var/obj/item/weapon/W = source.handcuffed
-				source.handcuffed = null
-				source.update_inv_handcuffed()
+				source.handcuffed.handcuffs_remove(source)
 				if (source.client)
 					source.client.screen -= W
 				if (W)

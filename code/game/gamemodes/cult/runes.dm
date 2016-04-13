@@ -1058,8 +1058,7 @@
 		cultist.unlock_from()
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
-			cultist.handcuffed = null
-			cultist.update_inv_handcuffed()
+			cultist.handcuffed.handcuffs_remove(cultist)
 		if (cultist.legcuffed)
 			cultist.legcuffed.loc = cultist.loc
 			cultist.legcuffed = null
