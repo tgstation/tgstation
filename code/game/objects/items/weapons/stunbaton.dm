@@ -125,7 +125,7 @@
 	else
 		if(status)
 			baton_stun(L, user)
-			if(!istype(src, /obj/item/weapon/melee/baton/cattleprod) && user.real_name == user.name) //Only TRUE stun prods for shitcurity; only say it if you aren't disguised
+			if(!istype(src, /obj/item/weapon/melee/baton/cattleprod) && user.real_name == user.name && prob(5)) //Only TRUE stun prods for shitcurity; only say it if you aren't disguised
 				user.say("[pick("STOP RESISTING ARREST", "YOU HAVE THE RIGHT TO REMAIN SILENT", "REACH FOR THE SKY", "DROP THE WEAPON", "IF YOU CAN'T DO THE TIME, DON'T DO THE CRIME", \
 			"I AM THE LAW", "SELF-DEFENSE", "I AM JUDGE, JURY, AND EXECUTIONER", "PEOPLE LIKE YOU ARE RUINING THIS STATION", "LIZARD LIVES DON'T MATTER")]!!")
 		..()
