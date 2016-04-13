@@ -472,7 +472,7 @@ var/list/teleport_runes = list()
 //Rite of the Shadowed Mind:  Deafens, blinds and mutes all non-cultists nearby.
 /obj/effect/rune/deafen
 	cultist_name = "Debilitate"
-	cultist_desc = "causes all non-followers nearby to lose their hearing, sight and voice. Will trigger when crossed by noncultists."
+	cultist_desc = "causes all non-followers nearby to lose their hearing, sight and voice."
 	invocation = "Sti kaliedir!"
 	color = rgb(0, 255, 0)
 	icon_state = "4"
@@ -480,31 +480,22 @@ var/list/teleport_runes = list()
 /obj/effect/rune/deafen/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] is obscured by shadows!</span>")
 	for(var/mob/living/carbon/C in viewers(src))
-		blind(C)
-	qdel(src)
-
-/obj/effect/rune/deafen/Crossed(atom/A)
-	if(iscarbon(A) && !iscultist(A))
-		blind(A, 33)
-		qdel(src)
-
-/obj/effect/rune/deafen/proc/blind(mob/living/carbon/C, blindpower = 50)
-	if(istype(C) && !iscultist(C))
-		if(!C.null_rod_check())
-			C << "<span class='cultlarge'>A dark fog blankets your senses!</span>"
-			C.adjustEarDamage(0,blindpower)
-			C.flash_eyes(1, 1)
-			C.adjust_blurriness(blindpower)
-			C.adjust_blindness(blindpower * 0.4)
-			C.silent += 10
-		else
-			C << "<span class='warning'>Your holy weapon emits a soft glow!</span>"
+		if(!iscultist(C))
+			if(!C.null_rod_check())
+				C << "<span class='cultlarge'>A dark fog blankets your senses!</span>"
+				C.adjustEarDamage(0,50)
+				C.flash_eyes(1, 1)
+				C.adjust_blurriness(50)
+				C.adjust_blindness(20)
+				C.silent += 10
+			else
+				C << "<span class='warning'>Your holy weapon emits a soft glow!</span>"
 
 
 //Rite of Disorientation: Stuns all non-cultists nearby for a brief time
 /obj/effect/rune/stun
 	cultist_name = "Stun"
-	cultist_desc = "stuns all nearby non-followers for a brief time. Will trigger when crossed by noncultists."
+	cultist_desc = "stuns all nearby non-followers for a brief time."
 	invocation = "Fuu ma'jin!"
 	talisman_type = /obj/item/weapon/paper/talisman/stun
 	icon_state = "2"
@@ -513,23 +504,14 @@ var/list/teleport_runes = list()
 /obj/effect/rune/stun/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] explodes in a bright flash!</span>")
 	for(var/mob/living/M in viewers(src))
-		stun(M)
-	qdel(src)
-
-/obj/effect/rune/stun/Crossed(atom/A)
-	if(isliving(A) && !iscultist(A))
-		stun(A, 2)
-		qdel(src)
-
-/obj/effect/rune/stun/proc/stun(mob/living/L, stunpower = 3)
-	if(istype(L) && !iscultist(L))
-		if(!L.null_rod_check())
-			L << "<span class='cultitalic'><b>You are disoriented by [src]!</b></span>"
-			L.Weaken(stunpower)
-			L.Stun(stunpower)
-			L.flash_eyes(1,1)
-		else
-			L << "<span class='warning'>Your holy weapon absorbs the blinding light!</span>"
+		if(!iscultist(L))
+			if(!L.null_rod_check())
+				L << "<span class='cultitalic'><b>You are disoriented by [src]!</b></span>"
+				L.Weaken(3)
+				L.Stun(3)
+				L.flash_eyes(1,1)
+			else
+				L << "<span class='warning'>Your holy weapon absorbs the blinding light!</span>"
 
 
 //Rite of Arming: Creates cult robes, a trophy rack, and a cult sword on the rune.
