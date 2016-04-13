@@ -1046,7 +1046,7 @@ Sorry Giacom. Please don't be mad :(
 	if(amount>0)
 		if(!old_eye_blurry)
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
+	else if(old_eye_blurry && !eye_blurry)
 		clear_fullscreen("blurry")
 
 /mob/proc/set_blurriness(amount)
