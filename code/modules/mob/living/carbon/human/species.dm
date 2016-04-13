@@ -875,7 +875,9 @@
 				var/armor_block = H.run_armor_check(affecting, "melee")
 
 				playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
-
+				var/datum/martial_art/MA = H.martial_art
+				if(MA.on_hit(H,M)) // they countered with something
+					return
 				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
@@ -952,7 +954,10 @@
 		user.do_attack_animation(H)
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
-
+	var/datum/martial_art/MA = H.martial_art
+	if(MA.on_hit(H,user)) // they countered with something
+		add_logs(user, H, "countered or blocked")
+		return 0
 	if(I.attack_verb && I.attack_verb.len)
 		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
 						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")

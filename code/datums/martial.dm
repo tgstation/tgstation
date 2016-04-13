@@ -7,6 +7,7 @@
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/help_verb = null
+	var/counter_prob = 0//probability to counter direct melee attacks
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -15,6 +16,9 @@
 	return 0
 
 /datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return 0
+
+/datum/martial_art/proc/on_hit(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	return 0
 
 /datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
@@ -47,7 +51,9 @@
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 								"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>")
-
+	var/datum/martial_art/MA = D.martial_art
+	if(MA.on_hit(D,A))//they countered with something
+		return 1
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
 
 	add_logs(A, D, "punched")
@@ -110,7 +116,9 @@
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
-
+	var/datum/martial_art/MA = D.martial_art
+	if(MA.on_hit(D,A)) // they countered with something
+		return 1
 	D.visible_message("<span class='danger'>[A] has hit [D] with a [atk_verb]!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
 
@@ -389,6 +397,9 @@
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
+		return 1
+	var/datum/martial_art/MA = D.martial_art
+	if(MA.on_hit(D,A)) // they countered with something
 		return 1
 	A.do_attack_animation(D)
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
