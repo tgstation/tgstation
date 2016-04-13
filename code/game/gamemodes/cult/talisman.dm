@@ -49,7 +49,7 @@ Rite of Disorientation
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/weapon/paper/talisman/malformed
-cultist_name = "malformed talisman"
+	cultist_name = "malformed talisman"
 	cultist_desc = "A talisman with gibberish scrawlings. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 	health_cost = 10
