@@ -1,3 +1,5 @@
+#define PUTONHUB
+
 /world
 
 	hub = "Exadv1.spacestation13"
@@ -6,7 +8,7 @@
 #else
 	hub_password = "SORRYNOPASSWORD"
 #endif
-	name = "/tg/ Station 13"
+	name = "\[SS13.RU\] - Main Russian Servers - White Dream"
 
 /*
 This is for any host that would like their server to appear on the main SS13 hub.

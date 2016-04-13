@@ -86,12 +86,12 @@
 	preloadRuinTemplates()
 
 /proc/preloadRuinTemplates()
-	var/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRuinConfig.txt")
+	var/list/potentialSpaceRuins = generateMapList( SpaceRuins /*filename = "code/textfiles/spaceRuinConfig.txt"*/)
 	for(var/ruin in potentialSpaceRuins)
 		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
 		space_ruins_templates[T.name] = T
 
-	var/list/potentialLavaRuins = generateMapList(filename = "config/lavaRuinConfig.txt")
+	var/list/potentialLavaRuins = generateMapList( RuinMaps /*filename = "code/textfiles/lavaRuinConfig.txt"*/)
 	for(var/ruin in potentialLavaRuins)
 		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
 		lava_ruins_templates[T.name] = T
