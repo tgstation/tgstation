@@ -27,17 +27,20 @@
 /obj/item/weapon/implant/explosive/activate(cause)
 	if(!cause || !imp_in)
 		return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
+	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No") != "Yes")
 		return 0
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
-	imp_in << "<span class='notice'>You activate your microbomb implant.</span>"
+	imp_in << "<span class='notice'>You activate your [name].</span>"
+	var/turf/boomturf = get_turf(imp_in)
+	var/area/A = get_area(boomturf)
+	message_admins("[key_name_admin(imp_in)]<A HREF='?_src_=holder;adminmoreinfo=\ref[imp_in]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[imp_in]'>FLW</A>) has activated their [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>[A.name] (JMP)</a>.")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
 		if(imp_in)
-			imp_in.gib()
+			imp_in.gib(no_brain = 1)
 		qdel(src)
 		return
 	timed_explosion()
@@ -58,7 +61,7 @@
 	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay/4)
-	if(imp_in && imp_in.stat)
+	if(imp_in && !imp_in.stat)
 		imp_in.visible_message("<span class = 'warning'>[imp_in] doubles over in pain!</span>")
 		imp_in.Weaken(7)
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
@@ -69,7 +72,7 @@
 	sleep(delay/4)
 	explosion(src,heavy,medium,weak,weak, flame_range = weak)
 	if(imp_in)
-		imp_in.gib()
+		imp_in.gib(no_brain = 1)
 	qdel(src)
 
 /obj/item/weapon/implant/explosive/macro
@@ -81,14 +84,6 @@
 	medium = 8
 	heavy = 4
 	delay = 70
-
-/obj/item/weapon/implant/explosive/macro/activate(cause)
-	if(!cause || !imp_in)
-		return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
-		return 0
-	imp_in << "<span class='notice'>You activate your macrobomb implant.</span>"
-	timed_explosion()
 
 /obj/item/weapon/implant/explosive/macro/implant(mob/source)
 	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
