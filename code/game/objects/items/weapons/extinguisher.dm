@@ -51,9 +51,7 @@
 		// If we're in help intent, don't bash anyone with the
 		// extinguisher
 		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
-		// FIXME the fire extinguisher isn't triggering, don't know
-		// why
-		return 0
+		return 1
 	else
 		return ..()
 
@@ -88,8 +86,6 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-	if(target.loc == user || !check_allowed_items(target)) //No more spraying yourself when putting your extinguisher away
-		return
 	var/Refill = AttemptRefill(target, user)
 	if(Refill)
 		return
