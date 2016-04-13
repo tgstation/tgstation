@@ -41,8 +41,10 @@
 
 	for(var/obj/Overlays/O in obj_overlays)
 		returnToPool(O)
-	
+
 	obj_overlays = null
+
+	species = null
 
 	..()
 

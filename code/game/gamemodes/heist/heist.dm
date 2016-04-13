@@ -83,6 +83,7 @@
 		var/mob/living/carbon/human/vox = raider.current
 		raider.name = vox.name
 		vox.age = rand(12,20)
+		vox.s_tone = random_skin_tone("Vox")
 		vox.dna.mutantrace = "vox"
 		vox.set_species("Vox")
 		vox.generate_name()

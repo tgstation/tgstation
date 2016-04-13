@@ -413,6 +413,8 @@ var/global/list/damage_icon_parts = list()
 		race_icon = 'icons/mob/human_races/r_skeleton.dmi'
 	else
 		//Icon data is kept in species datums within the mob.
+		if(species && istype(species, /datum/species))
+			species.updatespeciescolor(src)
 		race_icon = species.icobase
 		deform_icon = species.deform
 	overlays -= obj_overlays[MUTANTRACE_LAYER]

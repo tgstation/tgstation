@@ -6,7 +6,7 @@ datum/preferences
 				gender = MALE
 			else
 				gender = FEMALE
-		s_tone = random_skin_tone()
+		s_tone = random_skin_tone(species)
 		h_style = random_hair_style(gender, species)
 		f_style = random_facial_hair_style(gender, species)
 		randomize_hair_color("hair")
@@ -149,8 +149,18 @@ datum/preferences
 		var/icon/icobase
 		var/datum/species/current_species = all_species[species]
 
+		//icon based species color
 		if(current_species)
-			icobase = current_species.icobase
+			if(current_species.name == "Vox")
+				switch(s_tone)
+					if(3)
+						icobase = 'icons/mob/human_races/vox/r_voxgry.dmi'
+					if(2)
+						icobase = 'icons/mob/human_races/vox/r_voxbrn.dmi'
+					else
+						icobase = 'icons/mob/human_races/vox/r_vox.dmi'
+			else
+				icobase = current_species.icobase
 		else
 			icobase = 'icons/mob/human_races/r_human.dmi'
 

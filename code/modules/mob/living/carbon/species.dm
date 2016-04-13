@@ -45,6 +45,7 @@ var/global/list/whitelisted_species = list("Human")
 	var/punch_throw_range = 0
 	var/punch_throw_speed = 1
 	var/mutantrace											// Safeguard due to old code.
+	var/myhuman												// mob reference
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/survival_gear = /obj/item/weapon/storage/box/survival // For spawnin'.
@@ -133,6 +134,11 @@ var/global/list/whitelisted_species = list("Human")
 		default_blocks = globalspeciesholder.default_blocks.Copy()
 		default_mutations = globalspeciesholder.default_mutations.Copy()
 
+/datum/species/Destroy()
+	if(myhuman)
+		myhuman = null
+	..()
+
 /datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if(H.dna)
 		if(length(speech.message) >= 2)
@@ -197,6 +203,9 @@ var/global/list/whitelisted_species = list("Human")
 			I.mechanize()
 
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+	return
+
+/datum/species/proc/updatespeciescolor(var/mob/living/carbon/human/H) //Handles changing icobase for species that have multiple skin colors.
 	return
 
 // Sent from /datum/lung_gas/metabolizable.
@@ -465,8 +474,8 @@ var/global/list/whitelisted_species = list("Human")
 
 /datum/species/vox
 	name = "Vox"
-	icobase = 'icons/mob/human_races/r_vox.dmi'
-	deform = 'icons/mob/human_races/r_def_vox.dmi'
+	icobase = 'icons/mob/human_races/vox/r_vox.dmi'
+	deform = 'icons/mob/human_races/vox/r_def_vox.dmi'
 	language = "Vox-pidgin"
 
 	survival_gear = /obj/item/weapon/storage/box/survival/vox
@@ -609,6 +618,23 @@ var/global/list/whitelisted_species = list("Human")
 		i++
 		newname += pick(vox_name_syllables)
 	return capitalize(newname)
+
+/datum/species/vox/handle_post_spawn(var/mob/living/carbon/human/H)
+	if(myhuman != H) return
+	updatespeciescolor(H)
+	H.update_icon()
+
+/datum/species/vox/updatespeciescolor(var/mob/living/carbon/human/H)
+	switch(H.s_tone)
+		if(3)
+			icobase = 'icons/mob/human_races/vox/r_voxgry.dmi'
+			deform = 'icons/mob/human_races/vox/r_def_voxgry.dmi'
+		if(2)
+			icobase = 'icons/mob/human_races/vox/r_voxbrn.dmi'
+			deform = 'icons/mob/human_races/vox/r_def_voxbrn.dmi'
+		else
+			icobase = 'icons/mob/human_races/vox/r_vox.dmi'
+			deform = 'icons/mob/human_races/vox/r_def_vox.dmi'
 
 /datum/species/diona
 	name = "Diona"

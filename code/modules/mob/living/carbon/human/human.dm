@@ -77,9 +77,14 @@
 /mob/living/carbon/human/New(var/new_loc, var/new_species_name = null, var/delay_ready_dna=0)
 	if(!hair_styles_list.len) buildHairLists()
 	if(!all_species.len) buildSpeciesLists()
+
+	if(new_species_name)
+		s_tone = random_skin_tone(new_species_name)
+
 	if(!src.species)
 		if(new_species_name)	src.set_species(new_species_name)
 		else					src.set_species()
+
 	default_language = get_default_language()
 
 	create_reagents(1000)
@@ -1395,6 +1400,7 @@
 	var/datum/species/S = all_species[new_species_name]
 
 	src.species = new S.type
+	src.species.myhuman = src
 
 	if(species.language)
 		add_language(species.language)
@@ -1414,8 +1420,8 @@
 		src.do_deferred_species_setup = 1
 	spawn()
 		src.dna.species = new_species_name
+		src.species.handle_post_spawn(src)
 		src.update_icons()
-	src.species.handle_post_spawn(src)
 	return 1
 
 /mob/living/carbon/human/proc/bloody_doodle()

@@ -212,7 +212,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	<table width='100%'><tr><td width='24%' valign='top'>
 	<b>Species:</b> <a href='?_src_=prefs;preference=species;task=input'>[species]</a><BR>
 	<b>Secondary Language:</b> <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>
-	<b>Skin Tone:</b> <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a><BR>
+	<b>Skin Tone:</b> <a href='?_src_=prefs;preference=s_tone;task=input'>[species == "Human" ? "[-s_tone + 35]/220" : "[s_tone]"]</a><br><BR>
 	<b>Handicaps:</b> <a href='byond://?src=\ref[user];task=input;preference=disabilities'><b>Set</a></b><br>
 	<b>Limbs:</b> <a href='byond://?src=\ref[user];preference=limbs;task=input'>Set</a><br>
 	<b>Organs:</b> <a href='byond://?src=\ref[user];preference=organs;task=input'>Set</a><br>
@@ -928,7 +928,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					g_eyes = rand(0,255)
 					b_eyes = rand(0,255)
 				if("s_tone")
-					s_tone = random_skin_tone()
+					s_tone = random_skin_tone(species)
 				if("bag")
 					backbag = rand(1,4)
 				/*if("skin_style")
@@ -1079,11 +1079,12 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						h_style = new_h_style
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
-					if(new_facial)
-						r_facial = hex2num(copytext(new_facial, 2, 4))
-						g_facial = hex2num(copytext(new_facial, 4, 6))
-						b_facial = hex2num(copytext(new_facial, 6, 8))
+					if(species == "Human" || species == "Unathi")
+						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
+						if(new_facial)
+							r_facial = hex2num(copytext(new_facial, 2, 4))
+							g_facial = hex2num(copytext(new_facial, 4, 6))
+							b_facial = hex2num(copytext(new_facial, 6, 8))
 
 				if("f_style")
 					var/list/valid_facialhairstyles = list()
@@ -1122,11 +1123,24 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 				if("s_tone")
-					if(species != "Human")
+					if(species == "Human")
+						var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+						if(new_s_tone)
+							s_tone = 35 - max(min(round(new_s_tone),220),1)
+					else if(species == "Vox")//Can't reference species flags here, sorry.
+						var/skin_c = input(user, "Choose your Vox's skin color:\n(1 = Green, 2 = Brown, 3 = Gray)", "Character Preference") as num|null
+						if(skin_c)
+							s_tone = max(min(round(skin_c),3),1)
+							switch(s_tone)
+								if(3)
+									to_chat(src,"Your vox will now be gray.")
+								if(2)
+									to_chat(src,"Your vox will now be brown.")
+								else
+									to_chat(src,"Your vox will now be green.")
+					else
+						to_chat(src,"Your species doesn't have different skin tones. Yet?")
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
-					if(new_s_tone)
-						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null

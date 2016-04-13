@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+changes: 
+- imageadd: "Vox are now able to choose from 3 colors of skin (the current green has been darkened, a reddish-brown, and gray) in their preferences. Gray is the obvious best choice."
+- tweak: "Vox raiders and adminspawned vox now get a random skin color. Admins are able to varedit vox skin colors by changing s_tone and regenerating icons."
