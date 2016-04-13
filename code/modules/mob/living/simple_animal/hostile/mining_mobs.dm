@@ -447,7 +447,7 @@
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/suit/hooded/explorer))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 60)
@@ -631,9 +631,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
 	robust_searching = 1
-	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
-				/obj/item/weapon/ore/diamond{layer = 4.1})
-
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2)
 
 //Goliath
 
@@ -648,7 +646,8 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/asteroid/goliath_hide = 1)
+	loot = list()
 	stat_attack = 1
 	robust_searching = 1
 
