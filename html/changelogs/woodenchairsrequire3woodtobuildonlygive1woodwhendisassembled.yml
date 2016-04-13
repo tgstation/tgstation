@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: "Wrenching down a comfy chair now correctly gives you 2 sheets of metal, and wrenching down a wood chair now correctly gives you 3 sheets of wood."
