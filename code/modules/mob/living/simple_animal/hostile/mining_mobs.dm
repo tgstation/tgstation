@@ -772,6 +772,7 @@
 	..()
 	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
 	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
