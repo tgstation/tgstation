@@ -1,3 +1,9 @@
+/mob/living/carbon/alien/say(message)
+		.=..()
+		if(.)
+
+				playsound(loc, "hiss", 25, 1, 1) //erp just isn't the same without sound feedback
+
 /mob/living/proc/alien_talk(message, shown_name = name)
 	log_say("[key_name(src)] : [message]")
 	message = trim(message)
