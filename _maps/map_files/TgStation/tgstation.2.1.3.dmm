@@ -32146,14 +32146,12 @@
 "bpl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/matches,
-/obj/item/weapon/reagent_containers/food/drinks/flask{
-	pixel_x = 8
-	},
 /obj/item/weapon/razor{
 	pixel_x = -4;
 	pixel_y = 2
 	},
 /obj/item/clothing/mask/cigarette/cigar,
+/obj/item/weapon/reagent_containers/food/drinks/flask/gold,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bpm" = (

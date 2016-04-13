@@ -249,6 +249,8 @@
 		if(!owner && !preserved)
 			inert = 1
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+		else
+			preserved = 1
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
