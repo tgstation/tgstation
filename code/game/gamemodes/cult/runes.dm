@@ -503,7 +503,7 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/stun/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] explodes in a bright flash!</span>")
-	for(var/mob/living/M in viewers(src))
+	for(var/mob/living/L in viewers(src))
 		if(!iscultist(L))
 			if(!L.null_rod_check())
 				L << "<span class='cultitalic'><b>You are disoriented by [src]!</b></span>"
