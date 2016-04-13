@@ -63,6 +63,11 @@
 
 		var/obj/item/organ/internal/lungs/L
 		L = user.getorganslot("lungs")
+		if(!L)
+			// they managed to lose their lungs between then and
+			// now. Good job.
+			return OXYLOSS
+
 		L.Remove(user)
 
 		// now make some colorful reagent, and apply it to the lungs
