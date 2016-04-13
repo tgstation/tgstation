@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- rscdel: "Removes the message that everyone sees when the chaplain joins (which I added). Sounded good on paper, not so well in execution."
