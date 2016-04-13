@@ -1674,15 +1674,12 @@
 
 /datum/mind/proc/disrupt_spells(var/delay, var/list/exceptions = New())
 	for(var/obj/effect/proc_holder/spell/S in spell_list)
-		var/found = 0
-		for(var/type in spells)
+		for(var/type in exceptions)
 			if(istype(S, type))
-				found = 1
-				break
-		if(!found)
-			S.charge_counter = delay
-			spawn(0)
-				S.start_recharge()
+				continue
+		S.charge_counter = delay
+		spawn(0)
+			S.start_recharge()
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)
