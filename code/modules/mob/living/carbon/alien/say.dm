@@ -2,7 +2,7 @@
 		.=..()
 		if(.)
 
-				playsound(loc, "hiss", 25, 1, 1) //erp just isn't the same without sound feedback
+				playsound(loc, "hiss", 25, 1, 1)
 
 /mob/living/proc/alien_talk(message, shown_name = name)
 	log_say("[key_name(src)] : [message]")
