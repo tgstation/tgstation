@@ -149,7 +149,7 @@
 				if(tiletype == null) //Just to be safe
 					speak("Something went wrong!")
 					return
-				var/obj/item/stack/tile/T = new tiletype(get_turf(src), specialtiles)
+				new tiletype(get_turf(src), specialtiles)
 				specialtiles = 0
 				tiletype = null
 
@@ -366,8 +366,8 @@
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if(specialtiles)
-		var/obj/item/stack/tile/T = new tiletype(Tsec, specialtiles)
+	if(specialtiles && tiletype != null)
+		new tiletype(Tsec, specialtiles)
 		specialtiles = 0
 		tiletype = null
 
