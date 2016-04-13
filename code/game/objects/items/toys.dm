@@ -719,14 +719,84 @@
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 
+/obj/item/toy/talking/skeleton
+	var/phomeme_type = "error"
+	var/list/punctuation = list(",",":",";",".","?","!")
+
 /obj/item/toy/talking/skeleton/toy_talk(user, message)
 	..(user, message)
+	skelly_say(message, user)
+
+/obj/item/toy/talking/skeleton/proc/skelly_say(message, mob/user)
+	// We want to transform any message into a list of numbers
+	// and punctuation marks
+	// For example:
+	// "Hi." -> [2, '.']
+	// "HALP GEROGE MELLONS, that swine, is GRIFFIN ME!"
+	// -> [4, 6, 7, ',', 4, 5, ',', '2', 7, 2, '!']
+	// "fuck,thissentenceissquashed" -> [4, ',', 21]
+
+	var/global/regex/R
+	if(!R)
+		//this regex does that for us!
+		R = regex("(\[\\l\\d]*)(\[^\\l\\d\\s])?", "g")
+	var/list/letter_count = list()
+	while(R.next <= length(message))
+		R.Find(message)
+		if(R.group[1])
+			letter_count += length(R.group[1])
+		if(R.group[2])
+			letter_count += R.group[2]
+
+	spawn(0)
+		// for each word of length N
+		for(var/i = 1, i <=letter_count.len, i++)
+			if (letter_count[i] in punctuation)
+				var/P = letter_count[i]
+				// gotta sleep for a certain amount of time
+				// to simulate pausing in talking
+				if (P in list(",", ":"))
+					sleep(3)
+				// Due to the HTML escaping or something of the
+				// ' character, it'll produce a ; in the
+				// string. As such, we'll just ignore
+				// semicolons for now
+				if (P == ";")
+					//God semicolons, so awkward
+					sleep(0)
+				if (P in list("!", "?", "."))
+					sleep(6)
+				continue
+			// Don't bother saying more than 10 letters
+			var/length = min(letter_count[i], 10)
+			if (length == 0)
+				// so we "verbalise" long spaces
+				sleep(1)
+			speak_word(user.loc, phomeme_type, length)
+			// TODO pause when we find a comma/full stop
+
+	return message
+
+/obj/item/toy/talking/skeleton/proc/speak_word(loc, phomeme_type, length)
+	var/path = "sound/voice/skeletons/voice_[phomeme_type]_[length].ogg"
+	playsound(loc, path, vol = 40, vary = 0, extrarange = 3, falloff = 1, surround = 1)
+
+	var/sleep_length = 0
+	if (phomeme_type == "papyrus")
+		sleep_length = (length + 1)*0.5
+		// Gap between papyrus phomemes is 50ms
+	if (phomeme_type == "sans")
+		sleep_length = (length + 1)*0.7
+		// Gap is 70ms for the slightly lazier sans
+
+	sleep(sleep_length)
 
 /obj/item/toy/talking/skeleton/papyrus
 	name = "ReedPaper(tm) action figure"
 	desc = "An action figure modeled after the famous 'ReedPaper' skeleton man, from the hit videogame 'Belowyarn'"
 	icon_state = "papyrustoy"
 	span = "danger papyrus"
+	phomeme_type = "papyrus"
 	messages = list("That's the disposal bin. Feel free to visit it at any time.", "You can't spell 'robust' without several letters from my name!!!", "I can't just let anyone ERP with me, I'm a skeleton with standards!", "Nyeh heh heh!!!", "A. A. A. A. A. I'm screaming very slowly.")
 
 /obj/item/toy/talking/skeleton/sans
@@ -734,6 +804,7 @@
 	desc = "An action figure modeled after the famous 'Without' skeleton man, from the hit videogame 'Belowyarn'"
 	icon_state = "sanstoy"
 	span = "danger sans"
+	phomeme_type = "sans"
 	messages = list("You feel like you're going to have a bad time.", "geeettttttt dunked on!!!", "quick, behind that conveniently-shaped lamp.", "I've done a ton of work today. A skele-ton.", "You felt your redtext crawling on your back.")
 
 
