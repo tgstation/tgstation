@@ -9,6 +9,7 @@
  *		Snap pops
  *		Mech prizes
  *		AI core prizes
+ * 		Skeleton toys
  *		Cards
  *		Toy nuke
  *		Fake meteor
@@ -681,43 +682,59 @@
 		return
 	..()
 
-/obj/item/toy/owl
-	name = "owl action figure"
-	desc = "An action figure modeled after 'The Owl', defender of justice."
+/obj/item/toy/talking
+	name = "talking action figure"
+	desc = "A generic action figure modeled after nothing in particular."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
 	w_class = 2
 	var/cooldown = 0
+	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
+	var/span = "danger"
+	var/recharge_time = 30
 
-/obj/item/toy/owl/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
-		var/message = pick("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+/obj/item/toy/talking/attack_self(mob/user)
+	if(!cooldown)
+		var/message = pick(messages)
 		user << "<span class='notice'>You pull the string on the [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
+		toy_talk(user, message)
 		cooldown = 1
-		spawn(30) cooldown = 0
+		spawn(recharge_time) cooldown = 0
 		return
 	..()
 
-/obj/item/toy/griffin
+/obj/item/toy/talking/proc/toy_talk(user, message)
+	playsound(user, 'sound/machines/click.ogg', 20, 1)
+	src.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+
+/obj/item/toy/talking/owl
+	name = "owl action figure"
+	desc = "An action figure modeled after 'The Owl', defender of justice."
+	icon_state = "owlprize"
+	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+
+/obj/item/toy/talking/griffin
 	name = "griffin action figure"
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
-	icon = 'icons/obj/toy.dmi'
 	icon_state = "griffinprize"
-	w_class = 2
-	var/cooldown = 0
+	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 
-/obj/item/toy/griffin/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
-		var/message = pick("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
-		user << "<span class='notice'>You pull the string on the [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
-		cooldown = 1
-		spawn(30) cooldown = 0
-		return
-	..()
+/obj/item/toy/talking/skeleton/toy_talk(user, message)
+	..(user, message)
+
+/obj/item/toy/talking/skeleton/papyrus
+	name = "ReedPaper(tm) action figure"
+	desc = "An action figure modeled after the famous 'ReedPaper' skeleton man, from the hit videogame 'Belowyarn'"
+	icon_state = "papyrustoy"
+	span = "danger papyrus"
+	messages = list("That's the disposal bin. Feel free to visit it at any time.", "You can't spell 'robust' without several letters from my name!!!", "I can't just let anyone ERP with me, I'm a skeleton with standards!", "Nyeh heh heh!!!", "A. A. A. A. A. I'm screaming very slowly.")
+
+/obj/item/toy/talking/skeleton/sans
+	name = "Without(tm) action figure"
+	desc = "An action figure modeled after the famous 'Without' skeleton man, from the hit videogame 'Belowyarn'"
+	icon_state = "sanstoy"
+	span = "danger sans"
+	messages = list("You feel like you're going to have a bad time.", "geeettttttt dunked on!!!", "quick, behind that conveniently-shaped lamp.", "I've done a ton of work today. A skele-ton.", "You felt your redtext crawling on your back.")
 
 
 /*
