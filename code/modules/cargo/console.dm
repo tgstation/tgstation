@@ -97,6 +97,8 @@
 				say("For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.")
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
+				SSshuttle.supply.emagged = emagged
+				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", "cargo")
