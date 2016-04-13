@@ -55,11 +55,11 @@
 
 		// Find out if there is an open turf in front of us,
 		// and if not, pick the turf we are standing on.
-		var/turf
+		var/turf/T
 
-		turf = get_step(get_turf(src), user.dir)
-		if(!istype(turf, /turf/open))
-			turf = get_turf(src)
+		T = get_step(get_turf(src), user.dir)
+		if(!istype(T, /turf/open))
+			T = get_turf(src)
 
 		var/obj/item/organ/internal/lungs/L
 		L = user.getorganslot("lungs")
@@ -80,7 +80,7 @@
 		user.visible_message("<span class='suicide'>[user] vomits out their [L]!</span>")
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
 
-		L.loc = turf
+		L.forceMove(T)
 
 		return (TOXLOSS|OXYLOSS)
 	else if(can_use(user) && !has_lungs)
