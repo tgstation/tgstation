@@ -631,6 +631,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
 	robust_searching = 1
+	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2)
 
 //Goliath
