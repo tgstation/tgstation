@@ -721,7 +721,7 @@
 
 /obj/item/toy/talking/skeleton
 	var/phomeme_type = "error"
-	var/list/punctuation = list(",",":",";",".","?","!")
+	var/list/punctuation = list(",",":",";",".","?","!","\'","-")
 
 /obj/item/toy/talking/skeleton/toy_talk(user, message)
 	..(user, message)
@@ -736,10 +736,7 @@
 	// -> [4, 6, 7, ',', 4, 5, ',', '2', 7, 2, '!']
 	// "fuck,thissentenceissquashed" -> [4, ',', 21]
 
-	var/global/regex/R
-	if(!R)
-		//this regex does that for us!
-		R = regex("(\[\\l\\d]*)(\[^\\l\\d\\s])?", "g")
+	var/regex/R = regex("(\[\\l\\d]*)(\[^\\l\\d\\s])?", "g")
 	var/list/letter_count = list()
 	while(R.next <= length(message))
 		R.Find(message)
@@ -767,13 +764,15 @@
 				if (P in list("!", "?", "."))
 					sleep(6)
 				continue
-			// Don't bother saying more than 10 letters
-			var/length = min(letter_count[i], 10)
-			if (length == 0)
-				// so we "verbalise" long spaces
-				sleep(1)
-			speak_word(user.loc, phomeme_type, length)
-			// TODO pause when we find a comma/full stop
+
+			// Catch if a non-number passes through
+			if(isnum(letter_count[i]))
+				// Don't bother saying more than 10 letters
+				var/length = min(letter_count[i], 10)
+				if (length == 0)
+					// so we "verbalise" long spaces
+					sleep(1)
+				speak_word(user.loc, phomeme_type, length)
 
 	return message
 
