@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed artificers creation message telling them that they can use Magic Missile
-  - tweak: Improved constructs creation messages all around
-  - tweak: Juggernaut beam reflects work just like ablative armors' now. (They still take half damage)
-
