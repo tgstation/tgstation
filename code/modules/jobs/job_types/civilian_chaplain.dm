@@ -58,7 +58,7 @@ Chaplain
 			B.name = "Toolbox Manifesto"
 		if("homosexuality")
 			B.name = "Guys Gone Wild"
-		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
 			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
 			H.setBrainLoss(100) // starts off retarded as fuck
 		if("science")
