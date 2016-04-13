@@ -100,7 +100,7 @@ var/global/datum/controller/occupations/job_master
 		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
 			continue
 
-		if(job in command_positions) //If you want a command position, select it!
+		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
 		if(jobban_isbanned(player, job.title))
