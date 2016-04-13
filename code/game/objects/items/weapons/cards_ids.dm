@@ -57,7 +57,7 @@
 
 /obj/item/weapon/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
-	desc = "It's a blue card with a magnetic strip attached to some circuitry."
+	desc = "It's a blue card with a magnetic strip attached to some circuitry.It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
 	origin_tech = "bluespace=4;magnets=4;syndicate=5"
 	prox_check = FALSE
