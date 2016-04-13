@@ -6,6 +6,8 @@ BATTERER
 
 RADIOACTIVE MICROLASER
 
+C-4 DETONATOR
+
 */
 
 /*
@@ -206,3 +208,40 @@ effective or pretty fucking useless.
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
 		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
+
+/*
+		The C-4 Remote Detonator. Slap a block of C-4 with it to tag that block. Use it in your hand to trigger that block.
+		Once triggered, the block will beep and display a red warning message to people nearby. Two seconds after triggering,
+		it will blow up. Tagged C-4 blocks also have a red display, instead of the usual green.
+*/
+
+/obj/item/device/c4detonator
+	name = "strange remote"
+	desc = "A small and intimidating device. It has a button on the center and an antenna on the top."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "remotedetonator"
+	item_state = "radio"
+	w_class = 2
+	slot_flags = SLOT_BELT
+	force = 5
+	attack_verb = list("triggered")//tfw cis scum manspreading near you
+	origin_tech = "programming=4;materials=4;syndicate=3"
+	var/obj/item/weapon/c4/linked_bomb
+
+/obj/item/device/c4detonator/attack_self(mob/user)
+	if(!linked_bomb)
+		user << "<span class='warning'>The button on [src] won't go down all the way. It needs to be linked to something before it will work.</span>"
+		return
+	linked_bomb.visible_message("<span class = 'danger'>The [linked_bomb] starts beeping rapidly! It's going to explode!</span>")
+	playsound(linked_bomb.loc, 'sound/items/timer.ogg', 30, 0)
+	user << "<span class='notice'>You press the button on [src].</span>"
+	spawn(20)
+		if(!linked_bomb || linked_bomb.exploded)//check for the bomb again incase it was already detonated after being linked. prevents runtimes
+			user << "<span class='warning'>[src] buzzes. It seems the linked bomb was already destroyed.</span>"
+			linked_bomb = null
+			icon_state = "remotedetonator"
+			return
+		linked_bomb.explode()
+		linked_bomb = null
+		icon_state = "remotedetonator"
+		user << "<span class='notice'>[src] emits a soft beep. Detonation successful.</span>"
