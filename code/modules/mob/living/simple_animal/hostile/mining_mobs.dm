@@ -645,7 +645,6 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/asteroid/goliath_hide = 1)
 	loot = list()
 	stat_attack = 1
