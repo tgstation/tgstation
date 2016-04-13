@@ -442,7 +442,7 @@
 
 	var/list/new_args = list()
 	for(var/arg in arguments)
-		new_args += SDQL_expression(source, arg)
+		new_args[++new_args.len] = SDQL_expression(source, arg)
 
 	if (object == world) // Global proc.
 		procname = "/proc/[procname]"
