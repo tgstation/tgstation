@@ -1,7 +1,7 @@
 
 /mob/living/simple_animal/construct
-	name = "Construct"
-	real_name = "Construct"
+	name = "\improper Construct"
+	real_name = "\improper Construct"
 	desc = ""
 	speak_emote = list("hisses")
 	emote_hear = list("wails","screeches")
@@ -145,8 +145,8 @@
 
 
 /mob/living/simple_animal/construct/armoured
-	name = "Juggernaut"
-	real_name = "Juggernaut"
+	name = "\improper Juggernaut"
+	real_name = "\improper Juggernaut"
 	desc = "A possessed suit of armour driven by the will of the restless dead"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "behemoth"
@@ -174,39 +174,28 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
+					M.show_message("<span class='danger'>\The [src] has been attacked with [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[O] bounces harmlessly off of [src]. </span>")
+					M.show_message("<span class='danger'>[O] bounces harmlessly off of \the [src]. </span>")
 	else
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
+				M.show_message("<span class='warning'>[user] gently taps \the [src] with [O]. </span>")
 
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/forcebolt) || istype(P, /obj/item/projectile/change))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
 			adjustBruteLoss(P.damage * 0.5)
-			visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s shell!</span>", \
-							"<span class='userdanger'>The [P.name] gets reflected by [src]'s shell!</span>")
+			visible_message("<span class='danger'>\The [P.name] gets reflected by \the [src]'s shell!</span>", \
+							"<span class='userdanger'>\The [P.name] gets reflected by \the [src]'s shell!</span>")
 
-			// Find a turf near or on the original location to bounce to
-			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-				var/new_y = P.starting.y + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-				var/turf/curloc = get_turf(src)
-
-				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.current = curloc
-				P.firer = src
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
+			P.reflected = 1
+			P.rebound(src)
 
 			return -1 // complete projectile permutation
 
@@ -219,8 +208,8 @@
 
 
 /mob/living/simple_animal/construct/wraith
-	name = "Wraith"
-	real_name = "Wraith"
+	name = "\improper Wraith"
+	real_name = "\improper Wraith"
 	desc = "A wicked bladed shell contraption piloted by a bound spirit"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "floating"
@@ -243,8 +232,8 @@
 
 
 /mob/living/simple_animal/construct/builder
-	name = "Artificer"
-	real_name = "Artificer"
+	name = "\improper Artificer"
+	real_name = "\improper Artificer"
 	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "artificer"
@@ -272,8 +261,8 @@
 
 
 /mob/living/simple_animal/construct/behemoth
-	name = "Behemoth"
-	real_name = "Behemoth"
+	name = "\improper Behemoth"
+	real_name = "\improper Behemoth"
 	desc = "The pinnacle of occult technology, Behemoths are the ultimate weapon in the Cult of Nar-Sie's arsenal."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "behemoth"
@@ -303,16 +292,16 @@
 			adjustBruteLoss(damage)
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
+					M.show_message("<span class='danger'>\The [src] has been attacked with [O] by [user]. </span>")
 		else
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='danger'>[O] bounces harmlessly off of [src]. </span>")
+					M.show_message("<span class='danger'>\The [O] bounces harmlessly off of [src]. </span>")
 	else
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
+				M.show_message("<span class='warning'>[user] gently taps \the [src] with [O]. </span>")
 
 
 ////////////////////////Harvester////////////////////////////////
