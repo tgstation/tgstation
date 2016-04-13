@@ -1,0 +1,13 @@
+
+author: "nullbear"
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added several craftable explosive chemical weapons."
+  - rscadd: "Made it possible to craft bomb assemblies using plasteel. Note: they will need a payload, and to have their wires set, before it can be detonated."
+  - rscadd: "Made it possible to emag bombs in order to cause the timer to malfunction and reset itself to 60 seconds. This can be used to give yourself more time, or to shorten the timer."
+  - tweak: "Large Grenades are now 10% larger and more effective."
+  - tweak: "Grenades now typically heat up their contents when they explode."
+  - tweak: "Non-typical grenades are slightly more potent than they were before."
+  - tweak: "Reduces metagaming potential for bypassing the timer and setting off bombs with c4 or fire."
