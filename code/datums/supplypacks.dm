@@ -1324,6 +1324,14 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Stok crate"
 	group = "Hydroponics"
 
+/datum/supply_packs/vox
+	name = "Genetically modified chicken crate"
+	contains = list(/obj/item/weapon/storage/fancy/egg_box/vox)
+	cost = 30
+	containertype = /obj/structure/closet/crate/freezer
+	containername = "Green egg crate"
+	group = "Hydroponics"
+
 /* Defined below
 /datum/supply_packs/lisa
 	name = "Corgi Crate"

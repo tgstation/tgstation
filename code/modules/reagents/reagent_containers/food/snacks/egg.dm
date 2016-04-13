@@ -58,7 +58,8 @@
 			to_chat(user, "You make some dough.")
 			qdel(src)
 			return 1
-	else if (istype(W, /obj/item/toy/crayon))
+	else if (istype(W, /obj/item/toy/crayon) && !(istype(src, /obj/item/weapon/reagent_containers/food/snacks/egg/vox)))
+
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.colourName
 
@@ -71,3 +72,15 @@
 		_color = clr
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/vox
+	name = "green egg"
+	desc = "Looks like it came from some genetically engineered chicken"
+	icon_state = "egg-vox"
+
+
+	hatch()
+		visible_message("[src] hatches with a quiet cracking sound.")
+		new /mob/living/carbon/monkey/vox(get_turf(src))
+		processing_objects.Remove(src)
+		qdel(src)

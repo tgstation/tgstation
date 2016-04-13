@@ -16,11 +16,12 @@
 		if(!gene.block)
 			//testing("[gene.name] has no block")
 			continue
-
+		/*
 		if(istype(M,/mob/living/simple_animal/chicken) && M.dna)
 			var/datum/dna/chicken_dna = M.dna
 			if(chicken_dna.SE[DNA_SE_LENGTH] < 800)
 				chicken_dna.chicken2vox(M,chicken_dna)//havinagiggle.tiff
+		*/
 
 		domutation(gene, M, connected, flags)
 		// To prevent needless copy pasting of code i put this commented out section
@@ -112,6 +113,7 @@
 					//testing("[M] [act ? "" : "un"]successfully removed [gene.type] from active_genes")
 					M.update_icon = 1
 
+/* Something for turkeyday
 /datum/dna/proc/chicken2vox(var/mob/living/simple_animal/chicken/C, var/datum/dna/D)//sadly doesn't let you turn normal chicken into voxes since they don't have any DNA
 
 
@@ -126,3 +128,4 @@
 		C.mind.transfer_to(V)
 
 	qdel(C)
+*/

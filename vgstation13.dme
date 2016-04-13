@@ -1323,6 +1323,7 @@
 #include "code\modules\mob\living\carbon\monkey\powers.dm"
 #include "code\modules\mob\living\carbon\monkey\say.dm"
 #include "code\modules\mob\living\carbon\monkey\update_icons.dm"
+#include "code\modules\mob\living\carbon\monkey\vox.dm"
 #include "code\modules\mob\living\carbon\slime\death.dm"
 #include "code\modules\mob\living\carbon\slime\emote.dm"
 #include "code\modules\mob\living\carbon\slime\examine.dm"

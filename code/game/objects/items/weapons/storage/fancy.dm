@@ -89,6 +89,7 @@
 	name = "egg box"
 	storage_slots = 12
 	can_only_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
+	var/egg_type = "chicken"
 
 	foldable = /obj/item/stack/sheet/cardboard
 	starting_materials = list(MAT_CARDBOARD = 3750)
@@ -98,13 +99,19 @@
 	empty = 1
 	icon_state = "eggbox0"
 
+/obj/item/weapon/storage/fancy/egg_box/vox
+	egg_type = "vox"
+
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
 	if(empty)
 		update_icon() //Make it look actually empty
 		return
 	for(var/i = 1; i <= storage_slots; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
+		if(egg_type == "chicken")
+			new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
+		if(egg_type == "vox")
+			new /obj/item/weapon/reagent_containers/food/snacks/egg/vox(src)
 	return
 
 /*

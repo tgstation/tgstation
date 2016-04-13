@@ -10,6 +10,7 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
 	species_type = /mob/living/carbon/monkey
 	treadmill_speed = 0.8 //Slow apes!
+	var/attack_text = "bites"
 
 	mob_bump_flag = MONKEY
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
@@ -363,7 +364,7 @@
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message("<span class='danger'>[M.name] has bit [name]!</span>", 1)
+					O.show_message("<span class='danger'>[M.name] [attack_text] [name]!</span>", 1)
 				var/damage = rand(1, 5)
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
