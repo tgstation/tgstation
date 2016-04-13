@@ -333,7 +333,7 @@
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			spawn(50)
-				if(mode == BOT_REPAIRING && F)
+				if(mode == BOT_REPAIRING && F && specialtiles)
 					F.broken = 0
 					F.burnt = 0
 					F.ChangeTurf(initial(tiletype.turf_type))
