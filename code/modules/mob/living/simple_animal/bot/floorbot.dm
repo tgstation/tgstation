@@ -8,7 +8,7 @@
 	anchored = 0
 	health = 25
 	maxHealth = 25
-	
+
 	radio_key = /obj/item/device/encryptionkey/headset_eng
 	radio_channel = "Engineering"
 
@@ -79,9 +79,9 @@
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Special tiles: "
 	if(specialtiles)
-		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[specialtiles]/[maxtiles]\]</a>"
+		dat += "<A href='?src=\ref[src];operation=eject'>Loaded \[[specialtiles]/[maxtiles]\]</a><BR>"
 	else
-		dat += "None Loaded"
+		dat += "None Loaded<BR>"
 	
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
@@ -106,15 +106,16 @@
 		return
 	if(specialtiles && istype(W, /obj/item/stack/tile))
 		var/obj/item/stack/tile/usedtile = W
-		if(usedtile.type != tiletype.type)
+		if(usedtile.type != tiletype)
 			user << "<span class='warning'>Different custom tiles are already inside the floorbot.</span>"
 			return
 	if(istype(W, /obj/item/stack/tile))
 		if(specialtiles >= maxtiles)
 			return
+		var/obj/item/stack/tile/tiles = W //used only to get the amount
 		tiletype = W.type
-		var/loaded = min(maxtiles-specialtiles, tiletype.amount)
-		tiletype.use(loaded)
+		var/loaded = min(maxtiles-specialtiles, tiles.amount)
+		tiles.use(loaded)
 		specialtiles += loaded
 		if(loaded > 0)
 			user << "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>"
@@ -145,13 +146,8 @@
 		if("anchor")
 			anchored = !anchored
 		if("eject")
-			if(specialtiles)
-				if(tiletype == null) //Just to be safe
-					speak("Something went wrong!")
-					return
-				new tiletype(get_turf(src), specialtiles)
-				specialtiles = 0
-				tiletype = null
+			if(specialtiles && tiletype != null)
+				empty_tiles()
 
 		if("bridgemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
@@ -167,6 +163,16 @@
 				if("disable")
 					targetdirection = null
 	update_controls()
+	
+/mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
+	var/turf/Tsec = get_turf(src)
+
+	while(specialtiles > initial(tiletype.max_amount))
+		new tiletype(Tsec,initial(tiletype.max_amount))
+		specialtiles -= initial(tiletype.max_amount)
+	new tiletype(Tsec,specialtiles)
+	specialtiles = 0
+	tiletype = null
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
 	if(!..())
@@ -323,14 +329,14 @@
 	else
 		
 		var/turf/open/floor/F = target_turf
-		if(replacetiles && F.type != tiletype.turf_type)
+		if(replacetiles && F.type != initial(tiletype.turf_type))
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			spawn(50)
 				if(mode == BOT_REPAIRING && F)
 					F.broken = 0
 					F.burnt = 0
-					F.ChangeTurf(tiletype.turf_type)
+					F.ChangeTurf(initial(tiletype.turf_type))
 					mode = BOT_IDLE
 					specialtiles -= 1
 					if(specialtiles == 0)
@@ -339,7 +345,7 @@
 					anchored = 0
 					target = null
 			
-		else
+		else if(F.type != initial(tiletype.turf_type))
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			spawn(50)
@@ -367,9 +373,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(specialtiles && tiletype != null)
-		new tiletype(Tsec, specialtiles)
-		specialtiles = 0
-		tiletype = null
+		empty_tiles()
 
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
