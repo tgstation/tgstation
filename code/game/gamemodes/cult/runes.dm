@@ -545,7 +545,7 @@ var/list/teleport_runes = list()
 	..()
 	for(var/A in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
 		var/obj/item/weapon/paper/talisman/T = A
-		talisman_types["[initial(T.name)]"] = T
+		talisman_types["[initial(T.cultist_name)]"] = T
 
 /obj/effect/rune/summon_talisman/invoke(mob/living/user)
 	var/turf/T = get_turf(src)
