@@ -495,10 +495,12 @@ Sorry Giacom. Please don't be mad :(
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	disabilities = 0
 	set_blindness(0)
 	set_blurriness(0)
 	set_eye_damage(0)
+	cure_nearsighted()
+	cure_blind()
+	disabilities = 0
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
