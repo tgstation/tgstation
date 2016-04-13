@@ -117,6 +117,9 @@ This file contains the arcane tome files as well as innate cultist communication
 	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
 	<br><br>"
 
+	text += "<font color='red'><b>Summon Talisman</b></font><br>The Rite of Talisman Summoning is a moderately simple rune. When invoked, it will allow the user to summon a single talisman of choice before vanishing. \
+	<br><br>"
+
 	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place thirty sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
@@ -145,16 +148,16 @@ This file contains the arcane tome files as well as innate cultist communication
 	comparison to other runes, is very large, requiring a 3x3 space of empty tiles to create. To invoke the rune, nine cultists must stand on the rune, so that all of them are within its circle. Then, \
 	simply invoke it. A brief tearing will be heard as the barrier between dimensions is torn open, and the avatar will come forth.<br><br><br>"
 
-	text += "While runes are excellent for many tasks, they lack portability. The advent of <b>talismans</b> has, to a degree, solved this inconvenience. To create a talisman, simply strike a rune with a piece of paper. \
-	Unless stated otherwise, talismans are invoked by activating them in your hand. A list of valid rites, as well as the effects of their talisman form, can be found below.<br><br><br>"
+	text += "While runes are excellent for many tasks, they lack portability. The advent of <b>talismans</b> has, to a degree, solved this inconvenience. To create a talisman, simply create and activate a Rite of Talisman Summoning. \
+	Unless stated otherwise, talismans are invoked by activating them in your hand. A list of talismans producable via the Rite of Talisman Summoning are below.<br><br><br>"
 
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to the chosen Rite of Translocation.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman functions identically to the rune, creating a tome at your feet.<br><br>"
+	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman functions identically to the Rite of Knowledge, creating a tome at your feet.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Arming</b></font><br>This talisman functions nearly identically to the rune, arming you with armor and a sword. If used on another cultist, it instead armors them.<br><br>"
+	text += "<font color='red'><b>Talisman of Arming</b></font><br>This talisman functions nearly identically to the Rite of Arming, arming you with armor and a sword. If used on another cultist, it instead armors them.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Veiling/Revealing</b></font><br>This talisman functions similarly to the rune; on its first use, it will hide runes, and on the second, will reveal runes. It does not reveal spirits.<br><br>"
+	text += "<font color='red'><b>Talisman of Veiling/Revealing</b></font><br>This talisman functions similarly to the Rite of True Sight; on its first use, it will hide runes, and on the second, will reveal runes. It does not reveal spirits.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Electromagnetic Pulse</b></font><br>This talisman functions like the Rite of Disruption, but slightly weaker. It disappears after one use.<br><br>"
 
@@ -221,5 +224,4 @@ This file contains the arcane tome files as well as innate cultist communication
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
-	if(initial(rune_to_scribe.talisman_type))
-		user << "<span class='cult'><b>This rune can be converted to a talisman by striking it with paper.</b></span>"
+

@@ -29,7 +29,6 @@ To draw a rune, use an arcane tome.
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
-	var/talisman_type = null //the type of talisman the rune produces when attacked with a paper
 
 	var/creation_delay = 50 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
@@ -55,23 +54,11 @@ To draw a rune, use an arcane tome.
 		user << "<b>Required Acolytes:</b> [req_cultists]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
-		if(talisman_type)
-			user << "<b>This rune can be imbued by striking it with paper.</b>"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
-	if(iscultist(user))
-		if(istype(I, /obj/item/weapon/tome))
-			user << "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>"
-			qdel(src)
-		if(istype(I, /obj/item/weapon/paper) && !istype(I, /obj/item/weapon/paper/talisman))
-			if(talisman_type)
-				user << "<span class='notice'>You imbue the [lowertext(cultist_name)] rune into the paper.</span>"
-				user.drop_item()
-				user.put_in_hands(new talisman_type(user))
-				qdel(I)
-				qdel(src)
-			else
-				user << "<span class='notice'>This rune cannot be imbued into a talisman.</span>"
+	if(iscultist(user) && istype(I, /obj/item/weapon/tome))
+		user << "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>"
+		qdel(src)
 	else if(istype(I, /obj/item/weapon/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!")
 		user << "<span class='danger'>You disrupt the magic of [src] with [I].</span>"
@@ -329,7 +316,6 @@ var/list/teleport_runes = list()
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
-	talisman_type = /obj/item/weapon/paper/talisman/teleport
 	icon_state = "2"
 	color = rgb(0, 0, 255)
 	req_keyword = 1
@@ -413,7 +399,6 @@ var/list/teleport_runes = list()
 	cultist_desc = "reveals or hides all invisible objects nearby, from spirits to runes."
 	invocation = "Kla'atu barada nikt'o!"
 	creation_delay = 30 //3 seconds
-	talisman_type = /obj/item/weapon/paper/talisman/true_sight
 	icon_state = "4"
 	color = rgb(255, 150, 200)
 	var/revealing = TRUE //if the next use will reveal or hide
@@ -455,7 +440,6 @@ var/list/teleport_runes = list()
 	cultist_name = "Electromagnetic Disruption"
 	cultist_desc = "emits a large electromagnetic pulse, hindering electronics and disabling silicons."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
-	talisman_type = /obj/item/weapon/paper/talisman/emp
 	icon_state = "5"
 	color = rgb(225, 30, 50)
 
@@ -475,7 +459,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "causes all non-followers nearby to lose their hearing, sight and voice."
 	invocation = "Sti kaliedir!"
 	color = rgb(0, 255, 0)
-	icon_state = "4"
+	icon_state = "3"
 
 /obj/effect/rune/deafen/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] is obscured by shadows!</span>")
@@ -497,8 +481,7 @@ var/list/teleport_runes = list()
 	cultist_name = "Stun"
 	cultist_desc = "stuns all nearby non-followers for a brief time."
 	invocation = "Fuu ma'jin!"
-	talisman_type = /obj/item/weapon/paper/talisman/stun
-	icon_state = "2"
+	icon_state = "1"
 	color = rgb(100, 0, 100)
 
 /obj/effect/rune/stun/invoke(mob/living/user)
@@ -519,7 +502,6 @@ var/list/teleport_runes = list()
 	cultist_name = "Summon Armaments"
 	cultist_desc = "equips the user with robes, shoes, a backpack, and a longsword. Items that cannot be equipped will not be summoned."
 	invocation = "N'ath reth sh'yro eth draggathnor!"
-	talisman_type = /obj/item/weapon/paper/talisman/armor
 	icon_state = "4"
 	color = rgb(255, 0, 0)
 
@@ -539,7 +521,6 @@ var/list/teleport_runes = list()
 	cultist_desc = "pulls an arcane tome from the archives of the Geometer."
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	creation_delay = 10 //1 second
-	talisman_type = /obj/item/weapon/paper/talisman/summon_tome
 	icon_state = "5"
 	color = rgb(50, 0, 200)
 
@@ -549,12 +530,42 @@ var/list/teleport_runes = list()
 	qdel(src)
 
 
+//Rite of the Make a Fucking Stun Talisman Already(actually just Summon Talisman), lets you make talismans
+/obj/effect/rune/summon_talisman
+	cultist_name = "Summon Talisman"
+	cultist_desc = "allows you to summon a talisman of choice from the archives of the Geometer."
+	invocation = "H'drak v'loso, mir'kanas verbot!"
+	creation_delay = 60
+	scribe_damage = 2
+	icon_state = "2"
+	color = rgb(200, 50, 0)
+	var/list/talisman_types = list() //set in New()
+
+/obj/effect/rune/summon_talisman/New()
+	..()
+	for(var/A in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
+		var/obj/item/weapon/paper/talisman/T = A
+		talisman_types["[initial(T.name)]"] = T
+
+/obj/effect/rune/summon_talisman/invoke(mob/living/user)
+	var/turf/T = get_turf(src)
+	var/pickedtalisman_key = input(user, "Choose a talisman to create.", "Talisman To Create") as null|anything in talisman_types
+	var/pickedtalisman = talisman_types["[pickedtalisman_key ]"]
+	if(Adjacent(user) || src || !qdeleted(src) || !user.incapacitated())
+		if(pickedtalisman)
+			visible_message("<span class='warning'>A piece of paper materializes on the surface of [src], which dissolves into nothing.</span>")
+			new pickedtalisman(T)
+			qdel(src)
+		else
+			fail_invoke()
+
+
 //Rite of Fabrication: Creates a construct shell out of 30 metal sheets.
 /obj/effect/rune/construct_shell
 	cultist_name = "Fabricate Shell"
 	cultist_desc = "turns thirty metal sheets into an empty construct shell, suitable for containing a soul shard."
 	invocation = "Ethra p'ni dedol!"
-	icon_state = "5"
+	icon_state = "6"
 	color = rgb(150, 150, 150)
 
 /obj/effect/rune/construct_shell/can_invoke(mob/living/user)

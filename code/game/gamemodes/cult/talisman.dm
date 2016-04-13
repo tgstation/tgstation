@@ -33,8 +33,6 @@ Rite of Disorientation
 	if(!iscultist(user))
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 		return
-	if(invocation)
-		user.whisper(invocation)
 	if(src.invoke(user))
 		uses--
 	if(uses <= 0)
@@ -42,6 +40,8 @@ Rite of Disorientation
 		qdel(src)
 
 /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user)
+	if(invocation)
+		user.whisper(invocation)
 	if(health_cost && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
@@ -49,7 +49,7 @@ Rite of Disorientation
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/weapon/paper/talisman/malformed
-	cultist_name = "malformed talisman"
+cultist_name = "malformed talisman"
 	cultist_desc = "A talisman with gibberish scrawlings. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 	health_cost = 10
@@ -179,20 +179,21 @@ Rite of Disorientation
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user)
 	. = ..()
-	for(var/obj/effect/rune/R in range(3,user))
-		if(!revealing)
-			user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
-				 "<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
+	if(!revealing)
+		user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
+			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
+		cultist_name = "Talisman of Revealing"
+		cultist_desc = "A talisman that reveals nearby runes."
+		invocation = "Nikt'o barada kla'atu!"
+		revealing = TRUE
+		for(var/obj/effect/rune/R in range(3,user))
 			R.visible_message("<span class='danger'>[R] fades away.</span>")
 			R.invisibility = INVISIBILITY_OBSERVER
 			R.alpha = 100 //To help ghosts distinguish hidden runes
-			cultist_name = "Talisman of Revealing"
-			cultist_desc = "A talisman that reveals nearby runes."
-			invocation = "Nikt'o barada kla'atu!"
-			revealing = TRUE
-		else
-			user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
-				 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
+	else
+		user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
+			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
+		for(var/obj/effect/rune/R in range(3,user))
 			R.invisibility = 0
 			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
 			R.alpha = initial(R.alpha)
