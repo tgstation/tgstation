@@ -100606,6 +100606,13 @@
 	},
 /turf/open/space,
 /area/space)
+"dfI" = (
+/obj/machinery/plantgenes,
+/turf/open/floor/plasteel{
+	dir = 9;
+	icon_state = "warning"
+	},
+/area/hydroponics)
 
 (1,1,1) = {"
 aaa
@@ -136219,7 +136226,7 @@ bZc
 caw
 bZc
 ccX
-ceH
+dfI
 bVf
 cuS
 ciC
