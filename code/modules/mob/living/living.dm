@@ -1109,7 +1109,7 @@ Sorry Giacom. Please don't be mad :(
 			overlay_fullscreen("high", /obj/screen/fullscreen/high)
 			throw_alert("high", /obj/screen/alert/high)
 	else if(old_druggy)
-		druggy = max(eye_blurry+amount, 0)
+		druggy = max(druggy+amount, 0)
 		if(!druggy)
 			clear_fullscreen("high")
 			clear_alert("high")
