@@ -1,0 +1,6 @@
+author: Fox McCloud
+delete-after: True
+changes: 
+  - rscadd: "Slime batteries now self-recharge."
+  - rscadd: "Adds transference potion. A potion that allows the user to transfer their consciousness to a simple mob."
+  - rscadd: "Adds rainbow slime core reaction that generates a consciousness transference potion when injected with blood."

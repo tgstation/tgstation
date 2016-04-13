@@ -19,19 +19,21 @@ z7 = empty space
 
 		#define MINETYPE "lavaland"
 
-        #include "map_files\EfficiencyStation\EfficiencyStation.dmm"
-        #include "map_files\generic\z2.dmm"
-        #include "map_files\generic\z3.dmm"
-        #include "map_files\generic\z4.dmm"
-        #include "map_files\generic\lavaland.dmm"
-        #include "map_files\generic\z6.dmm"
-        #include "map_files\generic\z7.dmm"
+		#include "map_files\EfficiencyStation\EfficiencyStation.dmm"
+		#include "map_files\generic\z2.dmm"
+		#include "map_files\generic\z3.dmm"
+		#include "map_files\generic\z4.dmm"
+		#include "map_files\generic\lavaland.dmm"
+		#include "map_files\generic\z6.dmm"
+		#include "map_files\generic\z7.dmm"
+		#include "map_files\generic\z8.dmm"
+		#include "map_files\generic\z9.dmm"
 
 		#define MAP_PATH "map_files/EfficiencyStation"
-        #define MAP_FILE "EfficiencyStation.dmm"
-        #define MAP_NAME "Efficiency Station"
+		#define MAP_FILE "EfficiencyStation.dmm"
+		#define MAP_NAME "Efficiency Station"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+		#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 

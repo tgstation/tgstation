@@ -792,6 +792,10 @@ obj/item/weapon/circuitboard/rdserver
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
 
+/obj/item/weapon/circuitboard/mining_equipment_vendor/golem
+	name = "circuit board (Golem Ship Equipment Vendor)"
+	build_path = /obj/machinery/mineral/equipment_vendor/golem
+
 /obj/item/weapon/circuitboard/plantgenes
 	name = "circuit board (Plant DNA Manipulator)"
 	build_path = /obj/machinery/plantgenes
