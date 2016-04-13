@@ -112,7 +112,7 @@
 	if(istype(W, /obj/item/stack/tile))
 		if(specialtiles >= maxtiles)
 			return
-		tiletype = W  //This still needs its own path inside the bot
+		tiletype = W.type
 		var/loaded = min(maxtiles-specialtiles, tiletype.amount)
 		tiletype.use(loaded)
 		specialtiles += loaded
@@ -146,8 +146,12 @@
 			anchored = !anchored
 		if("eject")
 			if(specialtiles)
-				tiletype.loc = get_turf(src)
+				if(tiletype == null) //Just to be safe
+					speak("Something went wrong!")
+					return
+				var/obj/item/stack/tile/T = new tiletype(get_turf(src), specialtiles)
 				specialtiles = 0
+				tiletype = null
 
 		if("bridgemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
@@ -363,7 +367,8 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(specialtiles)
-		tiletype.loc = Tsec
+		var/obj/item/stack/tile/T = new tiletype(Tsec, specialtiles)
+		specialtiles = 0
 		tiletype = null
 
 	if(prob(50))
