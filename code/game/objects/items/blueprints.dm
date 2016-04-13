@@ -202,6 +202,7 @@
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
 	var/area/old = get_area(get_turf(src))
+	var/old_gravity = old.has_gravity
 
 	var/area/A
 	for(var/key in turfs)
@@ -218,7 +219,7 @@
 		A.setup(str)
 		A.contents += turfs
 		A.SetDynamicLighting()
-	A.has_gravity = old.has_gravity
+	A.has_gravity = old_gravity
 	interact()
 	return 1
 
