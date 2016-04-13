@@ -31,6 +31,13 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
+/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
+	if(modified_var == "self_recharge")
+		if(self_recharge)
+			SSobj.processing |= src
+		else
+			SSobj.processing -= src
+
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)
 		give(chargerate * 0.25)
