@@ -17828,7 +17828,7 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties,
 /obj/item/weapon/restraints/handcuffs/cable/zipties,
 /obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/toy/griffin,
+/obj/item/toy/talking/griffin,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aJX" = (
@@ -18727,10 +18727,7 @@
 	id = "cmoprivacy";
 	name = "privacy shutter"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile{
-	layer = 2.99999
-	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/cmo)
 "aLT" = (
@@ -19195,34 +19192,9 @@
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
 "aMT" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
-/turf/open/floor/plasteel{
-	icon_state = "bot"
-	},
-/area/medical/exam_room)
-"aMU" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Medbay Cryogenics";
-	network = list("SS13")
-	},
-/turf/open/floor/plasteel,
-/area/medical/exam_room)
-"aMV" = (
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -5;
 	pixel_y = 4
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 2;
@@ -19230,6 +19202,25 @@
 	},
 /obj/structure/table/glass,
 /turf/open/floor/plasteel,
+/area/medical/exam_room)
+"aMU" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/open/floor/plasteel,
+/area/medical/exam_room)
+"aMV" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
 /area/medical/exam_room)
 "aMW" = (
 /obj/structure/cable/cyan{
@@ -19729,16 +19720,17 @@
 /turf/open/floor/plasteel/delivery,
 /area/medical/exam_room)
 "aOb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	layer = 2.4;
-	on = 1
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
 "aOc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
@@ -19758,9 +19750,11 @@
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
 "aOf" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
@@ -20855,6 +20849,10 @@
 /turf/open/floor/plasteel/delivery,
 /area/medical/exam_room)
 "aPS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
 "aPT" = (
@@ -21629,16 +21627,18 @@
 /area/medical/exam_room)
 "aRz" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench{
-	pixel_x = 5;
-	pixel_y = -5
-	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	listening = 1;
 	name = "Station Intercom (General)";
 	pixel_y = -25;
 	tag = "SOUTH"
+	},
+/obj/item/weapon/wrench/medical,
+/obj/machinery/camera{
+	c_tag = "Medbay Cryogenics";
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
@@ -48535,10 +48535,8 @@
 	tag = "s"
 	},
 /obj/item/weapon/storage/fancy/cigarettes/cigars,
-/obj/item/weapon/reagent_containers/food/drinks/flask{
-	pixel_x = 8
-	},
 /obj/item/weapon/lighter,
+/obj/item/weapon/reagent_containers/food/drinks/flask/gold,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bOL" = (
@@ -67897,7 +67895,7 @@
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs/cable/green,
 /obj/item/weapon/restraints/handcuffs/cable/green,
-/obj/item/toy/owl,
+/obj/item/toy/talking/owl,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "czG" = (
@@ -72230,6 +72228,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/droneDispenser/preloaded,
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "cHo" = (
@@ -77880,12 +77879,27 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "cRV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
+/area/medical/exam_room)
 "cRW" = (
-/turf/open/floor/plating,
-/area/space)
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/medical/exam_room)
 "cRX" = (
 /turf/closed/wall/rust,
 /area/chapel/office)
@@ -95224,8 +95238,8 @@ aFL
 aHe
 aIJ
 aKm
-aEy
-aMS
+aDg
+cRV
 aOb
 aPS
 aRw
@@ -95482,7 +95496,7 @@ aHf
 aIJ
 aKn
 aLS
-aMT
+aMS
 aOc
 aPT
 aRx
@@ -95738,7 +95752,7 @@ aFN
 aHg
 aIK
 aKo
-aDg
+aLS
 aMU
 aOd
 aPU
@@ -95997,7 +96011,7 @@ aIL
 aKp
 aLS
 aMT
-aOe
+aOc
 aPV
 aRx
 aLP
@@ -96252,10 +96266,10 @@ aFP
 aHi
 aIM
 aKq
-aEy
+aDg
 aMV
 aOf
-aPS
+cRW
 aRz
 aBD
 aUj

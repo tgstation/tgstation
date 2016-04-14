@@ -1,7 +1,7 @@
 
 /obj/item/weapon/reagent_containers/honeycomb
 	name = "honeycomb"
-	desc = "a hexagonal mesh of honeycomb"
+	desc = "A hexagonal mesh of honeycomb."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "honeycomb"
 	possible_transfer_amounts = list()

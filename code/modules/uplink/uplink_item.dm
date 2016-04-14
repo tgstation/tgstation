@@ -24,6 +24,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 					continue
 				if(gamemode && (gamemode in I.exclude_modes))
 					continue
+			if(I.player_minimum && I.player_minimum > joined_player_list.len)
+				continue
+
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
 			filtered_uplink_items[category][item] = I
@@ -46,6 +49,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/surplus = 100 // Chance of being included in the surplus crate.
 	var/list/include_modes = list() // Game modes to allow this item in.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
+	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -304,6 +308,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	cost = 12
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -451,12 +456,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 	cost = 5
-
-/datum/uplink_item/ammo/sniper/accelerator
-	name = ".50 Accelerator Magazine"
-	desc = "A 5-round magazine of accelerator ammo designed for use with .50 sniper rifles. \
-			The shot is weak at close range, but gains more power the farther it flies."
-	item = /obj/item/ammo_box/magazine/sniper_rounds/accelerator
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"
@@ -640,6 +639,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/shoes/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 25
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
@@ -960,6 +960,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			cocktail which has a mild healing effect along with removing all stuns and increasing movement speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
+	player_minimum = 25
 
 /datum/uplink_item/implants/storage
 	name = "Storage Implant"
@@ -1081,6 +1082,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			but you never know. Contents are sorted to always be worth 50 TC."
 	item = /obj/structure/closet/crate
 	cost = 20
+	player_minimum = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)

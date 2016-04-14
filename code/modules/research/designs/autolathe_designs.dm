@@ -171,6 +171,14 @@
 	build_path = /obj/item/device/pipe_painter
 	category = list("initial", "Misc")
 
+/datum/design/airlock_painter
+	name = "Airlock painter"
+	id = "airlock_painter"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/weapon/airlock_painter
+	category = list("initial", "Misc")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"

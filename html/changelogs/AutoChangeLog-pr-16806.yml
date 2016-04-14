@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "Airlock painters can be printed at your local autolathe"
+  - rscadd: "Please do not attempt suicide with the airlock painter or the medical wrench."

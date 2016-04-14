@@ -170,6 +170,7 @@
 	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
 	var/contraband = 0
+	var/emagged = 0
 /obj/item/weapon/circuitboard/cargo/request
 	name = "circuit board (Supply Request Console)"
 	build_path = /obj/machinery/computer/cargo/request
@@ -241,8 +242,16 @@
 
 /obj/item/weapon/circuitboard/cargo/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
-		contraband = !contraband
-		user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
+		if(!emagged)
+			contraband = !contraband
+			user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
+		else
+			user << "<span class='notice'>The spectrum chip is unresponsive.</span>"
+	if(istype(I,/obj/item/weapon/card/emag))
+		if(!emagged)
+			contraband = TRUE
+			emagged = TRUE
+			user << "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>"
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))

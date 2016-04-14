@@ -1,7 +1,21 @@
+/obj/mecha/proc/get_armour_facing(srcdir,adir)
+	var/facing_hit = armour_facings["[srcdir]"]["[adir]"]
+	var/damage_modifier = facing_modifiers[facing_hit]
+	return damage_modifier
 
-/obj/mecha/proc/take_damage(amount, type="brute")
+/obj/mecha/proc/take_damage(amount, type="brute", adir = 0, booster_deflection_modifier = 1, booster_damage_modifier = 1)
+	var/facing_modifier = 1
+
+	if(adir)
+		facing_modifier = get_armour_facing(src.dir,adir)
+
+	if(prob(deflect_chance * booster_deflection_modifier * facing_modifier))
+		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
+		src.log_append_to_last("Armor saved.")
+		return
 	if(amount)
 		var/damage = absorbDamage(amount,type)
+		damage = (damage/facing_modifier) * booster_damage_modifier
 		health -= damage
 		update_health()
 		occupant_message("<span class='userdanger'>Taking damage!</span>")
@@ -21,14 +35,10 @@
 		qdel(src)
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
-	if(!prob(src.deflect_chance))
-		..(user, 1)
-		take_damage(15)
-		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		user.visible_message("<span class='danger'>[user] hits [src.name], doing some damage.</span>", "<span class='danger'>You hit [src.name] with all your might. The metal creaks and bends.</span>")
-		occupant_message("<span class='userdanger'>[user] hits [src.name], doing some damage.</span>")
-		return 1
-	return 0
+	..(user, 1)
+	take_damage(15, "brute", user.dir)
+	check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	user.visible_message("<span class='danger'>[user] hits [src.name]. The metal creaks and bends.</span>")
 
 /obj/mecha/attack_hand(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
@@ -46,18 +56,10 @@
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.changeNext_move(CLICK_CD_MELEE) //Now stompy alien killer mechs are actually scary to aliens!
 	user.do_attack_animation(src)
-	if(!prob(src.deflect_chance))
-		take_damage(15)
-		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-		visible_message("<span class='danger'>The [user] slashes at [src.name]'s armor!</span>")
-	else
-		src.log_append_to_last("Armor saved.")
-		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-		user << "\green Your claws had no effect!"
-		visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
-	return
-
+	take_damage(15, "brute", user.dir)
+	check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
+	visible_message("<span class='danger'>The [user] slashes at [src.name]'s armor!</span>")
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
@@ -66,31 +68,24 @@
 		user.emote("[user.friendly] [src]")
 	else
 		user.do_attack_animation(src)
-		if(!prob(src.deflect_chance))
-			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-			take_damage(damage)
-			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
-			add_logs(user, src, "attacked")
-		else
-			src.log_append_to_last("Armor saved.")
-			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
-			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
-			add_logs(user, src, "attacked")
-	return
+		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+		take_damage(damage, "brute", user.dir)
+		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
+		add_logs(user, src, "attacked")
 
 /obj/mecha/attack_tk()
 	return
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
 	log_message("Hit by [A].",1)
-	var/deflection = deflect_chance
+	var/deflection = 1
 	var/dam_coeff = 1
 	var/counter_tracking = 0
 	for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
 		if(B.projectile_react())
-			deflection *= B.deflect_coeff
-			dam_coeff *= B.damage_coeff
+			deflection = B.deflect_coeff
+			dam_coeff = B.damage_coeff
 			counter_tracking = 1
 			break
 	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
@@ -100,44 +95,30 @@
 			return
 		else
 			deflection = 100 //will bounce off
-	if(prob(deflection) || istype(A, /mob))
-		visible_message("[A] bounces off the [src.name] armor")
-		log_append_to_last("Armor saved.")
-		if(istype(A, /mob/living))
-			var/mob/living/M = A
-			M.take_organ_damage(10)
-	else if(istype(A, /obj))
+
+	if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
 			visible_message("<span class='danger'>[src.name] is hit by [A].</span>")
-			take_damage(O.throwforce*dam_coeff)
+			take_damage(O.throwforce, "brute", 0, deflection, dam_coeff)
 			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
 
 
 /obj/mecha/bullet_act(var/obj/item/projectile/Proj) //wrapper
 	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
-	var/deflection = deflect_chance
+	var/deflection = 1
 	var/dam_coeff = 1
 	for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
 		if(B.projectile_react())
-			deflection *= B.deflect_coeff
-			dam_coeff *= B.damage_coeff
+			deflection = B.deflect_coeff
+			dam_coeff = B.damage_coeff
 			break
-	if(prob(deflection))
-		visible_message("The [src.name] armor deflects the projectile")
-		log_append_to_last("Armor saved.")
-		return
-	var/ignore_threshold
-	if(Proj.flag == "taser")
-		use_power(200)
-		return
-	if(istype(Proj, /obj/item/projectile/beam/pulse))
-		ignore_threshold = 1
+
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		take_damage(Proj.damage*dam_coeff,Proj.flag)
+		take_damage(Proj.damage*dam_coeff,Proj.flag, Proj.dir, deflection, dam_coeff)
 		visible_message("<span class='danger'>[src.name] is hit by [Proj].</span>")
-		check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),ignore_threshold)
+		check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
 	Proj.on_hit(src)
 
 /obj/mecha/ex_act(severity, target)
@@ -168,8 +149,8 @@
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())
-		use_power((cell.charge/2)/severity)
-		take_damage(50 / severity,"energy")
+		use_power((cell.charge/3)/(severity*2))
+		take_damage(30 / severity,"energy")
 	src.log_message("EMP detected",1)
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
@@ -302,22 +283,17 @@
 		user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 		user.do_attack_animation(src)
 		log_message("Attacked by [W]. Attacker - [user]")
-		var/deflection = deflect_chance
+		var/deflection = 1
 		var/dam_coeff = 1
 		for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
 			if(B.attack_react(user))
 				deflection *= B.deflect_coeff
 				dam_coeff *= B.damage_coeff
 				break
-		if(prob(deflection))
-			user << "<span class='danger'>The [W] bounces off [src.name] armor.</span>"
-			src.log_append_to_last("Armor saved.")
-			return 0
-		else
-			user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
-			take_damage(round(W.force*dam_coeff),W.damtype)
-			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			return 1
+		user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
+		take_damage(round(W.force*dam_coeff),W.damtype, user.dir, deflection, dam_coeff)
+		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		return 1
 
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
@@ -340,6 +316,6 @@
 	else
 		return
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-	take_damage(M.force, damtype)
+	take_damage(M.force, damtype, M.dir)
 	add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	return

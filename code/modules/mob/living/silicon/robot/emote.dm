@@ -67,6 +67,10 @@
 			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			m_type = 2
 
+		if ("boop","boops")
+			message = "<B>[src]</B> boops."
+			m_type = 2
+
 		if ("chime","chimes") //You have mail!
 			message = "<B>[src]</B> chimes."
 			playsound(loc, 'sound/machines/chime.ogg', 50, 0)

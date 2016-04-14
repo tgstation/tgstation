@@ -233,17 +233,22 @@
 	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
-	name = "captain's flask"
-	desc = "A silver flask belonging to the captain."
+	name = "flask"
+	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	icon_state = "flask"
-	materials = list(MAT_SILVER=500)
+	materials = list(MAT_METAL=250)
 	volume = 60
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/gold
+	name = "captain's flask"
+	desc = "A gold flask belonging to the captain."
+	icon_state = "flask_gold"
+	materials = list(MAT_GOLD=500)
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
-	materials = list(MAT_METAL=250)
 	list_reagents = list("whiskey" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup

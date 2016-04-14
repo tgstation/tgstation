@@ -401,36 +401,45 @@ var/list/gaslist_cache = null
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
+	#if DM_VERSION >= 510
 	//global so that we don't have to make them more than once
-	var/global/regex/R_gas_id
-	var/global/regex/R_gas_value
-	if(!R_gas_id)
-		R_gas_id = regex("(.+?)(?=\\=)") //matches all characters before equal sign
-	if(!R_gas_value)
-		R_gas_value = regex("(?<=\\=)(.*)") //matches all characters after equal sign
+	var/global/const/ID = 1
+	var/global/const/VALUE = 2
+	var/global/regex/R
+	if(!R)
+		R = regex("(\\w+?)\\=(\[^;]+)", "g")
 
-	var/list/values = splittext(gas_string, ";")
-	var/list/gases = list()
-	//populate an associative list of gas -> moles by parsing the string
-	while(values.len)
-		var/value = values[1]
-		values.Cut(1,2)
-		R_gas_id.Find(value)
-		R_gas_value.Find(value)
-		gases[R_gas_id.group[1]] = text2num(R_gas_value.group[1])
+	var/list/cached_gases = gases
+	cached_gases.Cut() //clear the list to populate it later
 
-	//deal with the specific case of temperature
-	if("TEMP" in gases)
-		temperature = gases["TEMP"]
-		gases -= "TEMP"
+	while(R.next <= length(gas_string))
+		R.Find(gas_string)
 
-	var/list/cached_gases = src.gases
-	cached_gases &= gases
-	for(var/id in gases-cached_gases)
-		add_gas(id) //add_gases() causes a runtime due to the nature of arglist()
-	for(var/id in gases)
-		cached_gases[id][MOLES] = gases[id]
+		var/id = R.group[ID]
+		if(id == "TEMP")
+			temperature = text2num(R.group[VALUE])
+			continue
+		add_gas(id)
+		cached_gases[id][MOLES] = text2num(R.group[VALUE])
 
+	R.next = 1 //reset it for the next call
+	#else
+	//fml
+	var/global/const/ID = 1
+	var/global/const/VALUE = 2
+
+	var/list/cached_gases = gases
+	cached_gases.Cut()
+
+	var/list/def = splittext(gas_string, ";")
+	for(var/d in def)
+		var/list/gas = splittext(d, "=")
+		if(gas[ID] == "TEMP")
+			temperature = text2num(gas[VALUE])
+			continue
+		add_gas(gas[ID])
+		cached_gases[gas[ID]][MOLES] = text2num(gas[VALUE])
+	#endif
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)

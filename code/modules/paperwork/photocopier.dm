@@ -20,6 +20,7 @@
 	power_channel = EQUIP
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
+	var/obj/item/documents/doccopy = null
 	var/copies = 1	//how many copies to print!
 	var/toner = 40 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
@@ -37,7 +38,7 @@
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
-	if(copy || photocopy || (ass && (ass.loc == src.loc)))
+	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
 			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
@@ -116,6 +117,17 @@
 					busy = 0
 				else
 					break
+		else if(doccopy)
+			for(var/i = 0, i < copies, i++)
+				if(toner > 5 && !busy && doccopy)
+					new /obj/item/documents/photocopy(src, doccopy)
+					toner-= 6 // the sprite shows 6 papers, yes I checked
+					busy = 1
+					sleep(15)
+					busy = 0
+				else
+					break
+			updateUsrDialog()
 		else if(ass) //ASS COPY. By Miauw
 			for(var/i = 0, i < copies, i++)
 				var/icon/temp_img
@@ -220,16 +232,19 @@
 			greytoggle = "Greyscale"
 		updateUsrDialog()
 
+/obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
+		O.loc = src
+		user << "<span class='notice'>You insert [O] into [src].</span>"
+		flick("photocopier1", src)
+		updateUsrDialog()
+
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			if(!user.drop_item())
 				return
 			copy = O
-			O.loc = src
-			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("photocopier1", src)
-			updateUsrDialog()
+			do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -238,10 +253,16 @@
 			if(!user.drop_item())
 				return
 			photocopy = O
-			O.loc = src
-			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("photocopier1", src)
-			updateUsrDialog()
+			do_insertion(O)
+		else
+			user << "<span class='warning'>There is already something in [src]!</span>"
+
+	else if(istype(O, /obj/item/documents))
+		if(copier_empty())
+			if(!user.drop_item())
+				return
+			doccopy = O
+			do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 

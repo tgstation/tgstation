@@ -33,27 +33,27 @@ proc/list_frozen()
 	var/static/list/outlets = list()
 	var/static/list/default_tokens = list( \
 		"buy" = list("buy!", "buy, buy, buy!", "get in now!", "ride the share value to the stars!"), \
-		"company" = list("company", "corporation", "conglomereate", "enterprise", "venture"), \
+		"company" = list("company", "corporation", "conglomerate", "enterprise", "venture"), \
 		"complete" = list("complete", "total", "absolute", "incredible"), \
-		"country" = list("Space", "Argentina", "Hungary", "United States of America", "United Space", "Space Federation", "Nanotrasen", "The Wizard Federation", "United Kingdom", "Poland", "Denmark", "Sweden", "Serbia", "The European Union", "The Illuminati", "The New World Order", "Eurasian Union", "Asian Union", "United Arab Emirates", "Arabian League", "United States of Africa", "Mars Federation", "Allied Colonies of Jupiter", "Saturn's Ring", "Fringe Republic of Formerly Planet Pluto"), \
-		"development" = list("development", "unfolding of events", "turn of events"), \
-		"dip" = list("dip", "fall", "rapidly descend", "decrease"), \
+		"country" = list("Space", "Argentina", "Hungary", "United States of America", "United Space", "Space Federation", "Nanotrasen", "The Wizard Federation", "United Kingdom", "Poland", "The Syndicate", "Australia", "Serbia", "The European Union", "The Illuminati", "The New World Order", "Eurasian Union", "Asian Union", "United Arab Emirates", "Arabian League", "United States of Africa", "Mars Federation", "Allied Colonies of Jupiter", "Saturn's Ring", "Fringe Republic of Formerly Planet Pluto"), \
+		"development" = list("development", "unfolding of events", "turn of events", "new shit"), \
+		"dip" = list("dip", "fall", "plunge", "decrease"), \
 		"excited" = list("excited", "euphoric", "exhilarated", "thrilled", "stimulated"), \
-		"expand_influence" = list("expands their influence over", "continues to dominate", "looks to gain shares in", "rolls their new product line out in"), \
-		"failure" = list("failure", "meltdown", "breakdown", "crash", "defeat", "trainwreck", "wreck"), \
-		"famous" = list("famous", "prominent", "leading", "renowned"), \
+		"expand_influence" = list("expands their influence over", "continues to dominate", "gains traction in", "rolls their new product line out in"), \
+		"failure" = list("failure", "meltdown", "breakdown", "crash", "defeat", "wreck"), \
+		"famous" = list("famous", "prominent", "leading", "renowned", "expert"), \
 		"hit_shelves" = list("hit the shelves", "appeared on the market", "came out", "was released"), \
-		"industry" = list("industry"), \
+		"industry" = list("industry", "sector"), \
 		"industrial" = list("industrial"), \
 		"jobs" = list("workers"), \
-		"negative_outcome" = list("it's not leaving the shelves", "nobody seems to have taken note", "no notable profits have been reported", "it's beginning to look like a huge failure"), \
-		"neutral_outcome" = list("it's not lifting off as expected", "it's not selling according to the expectations", "it's only generating enough profit to cover the marketing and manufacturing costs", "it does not look like it will become a massive success"), \
+		"negative_outcome" = list("it's not leaving the shelves", "nobody seems to care", "it's a huge money sink", "they have already pulled all advertising and marketing support"), \
+		"neutral_outcome" = list("it's not lifting off as expected", "it's not selling according to expectations", "it's only generating enough profit to cover the marketing and manufacturing costs", "it does not look like it will become a massive success", "it's experiencing modest sales"), \
 		"positive_outcome" = list("it's already sold out", "it has already sold over one billion units", "suppliers cannot keep up with the wild demand", "several companies using this new technology are already reporting a projected increase in profits"), \
 		"resounding" = list("resounding", "tremendous", "total", "massive", "terrific", "colossal"), \
 		"rise" = list("rise", "increase", "fly off the positive side of the charts", "skyrocket", "lift off"), \
 		"sell" = list("sell!", "sell, sell, sell!", "bail!", "abandon ship!", "get out before it's too late!", "evacuate!", "withdraw!"), \
-		"signifying" = list("signifying", "indicating", "displaying the sign of", "displaying"), \
-		"sneak_peek" = list("review", "sneak peek", "preview"), \
+		"signifying" = list("signifying", "indicating", "implying", "displaying", "suggesting"), \
+		"sneak_peek" = list("review", "sneak peek", "preview", "exclusive look"), \
 		"stock_market" = list("stock market", "stock exchange"), \
 		"stockholder" = list("stockholder", "shareholder"), \
 		"success" = list("success", "triumph", "victory"), \
@@ -81,7 +81,7 @@ proc/list_frozen()
 	ticks = world.time
 
 /datum/article/proc/generateOutletName()
-	var/list/locations = list("Earth", "Luna", "Mars", "Saturn", "Jupiter", "Uranus", "Pluto", "Europa", "Io", "Phobos", "Deimos", "Space", "Venus", "Neptune", "Mercury", "Kalliope", "Ganymede", "Callisto", "Amalthea", "Himalia")
+	var/list/locations = list("Earth", "Luna", "Mars", "Saturn", "Jupiter", "Uranus", "Pluto", "Europa", "Io", "Phobos", "Deimos", "Space", "Venus", "Neptune", "Mercury", "Kalliope", "Ganymede", "Callisto", "Amalthea", "Himalia", "Orion", "Sybil", "Basil", "Badger", "Terry", "Artyom")
 	var/list/nouns = list("Post", "Herald", "Sun", "Tribune", "Mail", "Times", "Journal", "Report")
 	var/list/timely = list("Daily", "Hourly", "Weekly", "Biweekly", "Monthly", "Yearly")
 

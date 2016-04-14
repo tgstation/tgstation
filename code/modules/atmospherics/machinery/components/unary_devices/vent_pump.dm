@@ -279,6 +279,16 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded
 
+/obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user)
+	if(!welded || !(do_after(user, 20, target = src)))
+		return
+	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
+	welded = 0
+	update_icon()
+	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+
+
 #undef INT_BOUND
 #undef EXT_BOUND
 #undef NO_BOUND

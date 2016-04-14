@@ -401,6 +401,7 @@
 
 /datum/supply_pack/engineering
 	group = "Engineering"
+	crate_type = /obj/structure/closet/crate/engineering
 
 /datum/supply_pack/engineering/fueltank
 	name = "Fuel Tank Crate"
@@ -435,6 +436,7 @@
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	crate_name = "electrical maintenance crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
@@ -494,33 +496,34 @@
 					/obj/item/weapon/electronics/tracker,
 					/obj/item/weapon/paper/solar)
 	crate_name = "solar panel crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/engine
 	name = "Emitter Crate"
-	cost = 1000
+	cost = 1500
 	access = access_ce
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	crate_name = "emitter crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
 /datum/supply_pack/engineering/engine/field_gen
 	name = "Field Generator Crate"
-	cost = 1000
+	cost = 1500
 	contains = list(/obj/machinery/field/generator,
 					/obj/machinery/field/generator)
 	crate_name = "field generator crate"
 
 /datum/supply_pack/engineering/engine/sing_gen
 	name = "Singularity Generator Crate"
-	cost = 1000
+	cost = 5000
 	contains = list(/obj/machinery/the_singularitygen)
 	crate_name = "singularity generator crate"
 
 /datum/supply_pack/engineering/engine/collector
 	name = "Collector Crate"
-	cost = 1000
+	cost = 2500
 	contains = list(/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
@@ -528,7 +531,7 @@
 
 /datum/supply_pack/engineering/engine/PA
 	name = "Particle Accelerator Crate"
-	cost = 2500
+	cost = 3000
 	contains = list(/obj/structure/particle_accelerator/fuel_chamber,
 					/obj/machinery/particle_accelerator/control_box,
 					/obj/structure/particle_accelerator/particle_emitter/center,
@@ -544,7 +547,7 @@
 	access = access_ce
 	contains = list(/obj/machinery/power/supermatter_shard)
 	crate_name = "supermatter shard crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
@@ -661,11 +664,9 @@
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
-	cost = 3000
-	access = access_cmo
+	cost = 1000
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
-	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
@@ -1025,7 +1026,7 @@
 
 /datum/supply_pack/materials/wood50
 	name = "50 Wood Planks"
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
 
@@ -1037,7 +1038,7 @@
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
-	cost = 2000
+	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
 
@@ -1070,7 +1071,7 @@
 
 /datum/supply_pack/misc/watertank
 	name = "Water Tank Crate"
-	cost = 800
+	cost = 600
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
@@ -1281,8 +1282,10 @@
 	                /obj/item/toy/sword,
 	                /obj/item/toy/foamblade,
 	                /obj/item/toy/AI,
-	                /obj/item/toy/owl,
-	                /obj/item/toy/griffin,
+	                /obj/item/toy/talking/owl,
+	                /obj/item/toy/talking/griffin,
+	                /obj/item/toy/talking/skeleton/sans,
+	                /obj/item/toy/talking/skeleton/papyrus,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,

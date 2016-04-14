@@ -40,6 +40,45 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	toolspeed = 2
 
+/obj/item/weapon/wrench/medical
+	name = "medical wrench"
+	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
+	icon_state = "medwrench"
+	item_state = "wrench"
+	force = 2 //MEDICAL
+	throwforce = 4
+	origin_tech = "materials=1;engineering=1;biotech=1"
+	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
+
+/obj/item/weapon/wrench/medical/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take \his soul. It looks like \he's trying to commit suicide.</span>")
+	// TODO Make them glow with the power of the M E D I C A L W R E N C H
+	// during their ascension
+
+	// Stun stops them from wandering off
+	user.Stun(5)
+	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
+
+	// Let the sound effect finish playing
+	sleep(20)
+
+	if(!user)
+		return
+
+	for(var/obj/item/W in user)
+		user.unEquip(W)
+
+	var/obj/item/weapon/wrench/medical/W = new /obj/item/weapon/wrench/medical(loc)
+	W.add_fingerprint(user)
+	W.desc += " For some reason, it reminds you of [user.name]."
+
+	if(!user)
+		return
+
+	user.dust()
+
+	return OXYLOSS
+
 /*
  * Screwdriver
  */
