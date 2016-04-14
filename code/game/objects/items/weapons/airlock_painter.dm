@@ -42,11 +42,9 @@
 		return 1
 
 /obj/item/weapon/airlock_painter/suicide_act(mob/user)
-	var/has_lungs = FALSE
-	if(user.getorganslot("lungs"))
-		has_lungs = TRUE
+	var/obj/item/organ/internal/lungs/L = user.getorganslot("lungs")
 
-	if(can_use(user) && has_lungs)
+	if(can_use(user) && L)
 		user.visible_message("<span class='suicide'>[user] is inhaling toner from \the [name]! It looks like \he's trying to commit suicide.</span>")
 		use(user)
 
@@ -59,16 +57,14 @@
 		if(!istype(T, /turf/open))
 			T = get_turf(src)
 
-		var/obj/item/organ/internal/lungs/L
-		L = user.getorganslot("lungs")
+		// they managed to lose their lungs between then and
+		// now. Good job.
 		if(!L)
-			// they managed to lose their lungs between then and
-			// now. Good job.
 			return OXYLOSS
 
 		L.Remove(user)
 
-		// now make some colorful reagent, and apply it to the lungs
+		// make some colorful reagent, and apply it to the lungs
 		L.create_reagents(10)
 		L.reagents.add_reagent("colorful_reagent", 10)
 		L.reagents.reaction(L, TOUCH, 1)
@@ -81,7 +77,7 @@
 		L.forceMove(T)
 
 		return (TOXLOSS|OXYLOSS)
-	else if(can_use(user) && !has_lungs)
+	else if(can_use(user) && !L)
 		user.visible_message("<span class='suicide'>[user] is spraying toner on \himself from \the [name]! It looks like \he's trying to commit suicide.</span>")
 		user.reagents.add_reagent("colorful_reagent", 1)
 		user.reagents.reaction(user, TOUCH, 1)
