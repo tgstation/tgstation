@@ -57,6 +57,20 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
+/obj/item/stack/sheet/metal/attackby(obj/item/weapon/W, mob/living/user)
+	..()
+	if(istype(W, /obj/item/weapon/paper/talisman/construction))
+		if(amount>24)
+			amount = amount - 25
+			new /obj/structure/constructshell(get_turf(src))
+			user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+			if(amount == 0)
+				qdel(src)
+			qdel(W)
+		else
+			user << "<span class='warning'>The talisman requires at least 25 sheets of metal!</span>"	
+		
+
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
 		new /obj/item/stack/sheet/runed_metal(loc, amount)
