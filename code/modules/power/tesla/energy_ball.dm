@@ -14,6 +14,38 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
+										/obj/structure/sign,
+										/obj/structure/sign/map,
+										/obj/structure/sign/map/left,
+										/obj/structure/sign/map/right,
+										/obj/structure/sign/securearea,
+										/obj/structure/sign/biohazard,
+										/obj/structure/sign/electricshock,
+										/obj/structure/sign/examroom,
+										/obj/structure/sign/vacuum,
+										/obj/structure/sign/deathsposal,
+										/obj/structure/sign/pods,
+										/obj/structure/sign/fire,
+										/obj/structure/sign/nosmoking_1,
+										/obj/structure/sign/nosmoking_2,
+										/obj/structure/sign/radiation,
+										/obj/structure/sign/bluecross,
+										/obj/structure/sign/bluecross_2,
+										/obj/structure/sign/goldenplaque,
+										/obj/structure/sign/kiddieplaque,
+										/obj/structure/sign/atmosplaque,
+										/obj/structure/sign/maltesefalcon,
+										/obj/structure/sign/maltesefalcon/left,
+										/obj/structure/sign/maltesefalcon/right,
+										/obj/structure/sign/science,
+										/obj/structure/sign/chemistry,
+										/obj/structure/sign/botany,
+										/obj/structure/sign/xenobio,
+										/obj/structure/sign/directions/science,
+										/obj/structure/sign/directions/engineering,
+										/obj/structure/sign/directions/security,
+										/obj/structure/sign/directions/medical,
+										/obj/structure/sign/directions/evac,
 										/obj/machinery/gateway)
 
 /obj/singularity/energy_ball
@@ -33,7 +65,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
-	
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting
@@ -84,7 +116,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
-	
+
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
