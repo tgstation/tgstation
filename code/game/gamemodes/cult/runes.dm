@@ -516,7 +516,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "Emits a large electromagnetic pulse, hindering electronics and disabling silicons."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
-	color = rgb(255, 0, 0)
+	color = rgb(77, 148, 255)
 
 /obj/effect/rune/emp/invoke(mob/living/user)
 	var/turf/E = get_turf(src)
@@ -820,12 +820,11 @@ var/list/teleport_runes = list()
 	new_human.alpha = 150 //Makes them translucent
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
 	user << "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
-	for(get_turf(src))
-		var/obj/machinery/shield/N = new(B)
-		N.name = "Invoker's Shield"
-		N.desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
-		N.color = "red"
-		N.health = 20
+	var/obj/machinery/shield/N = new(get_turf(src))
+	N.name = "Invoker's Shield"
+	N.desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
+	N.color = "red"
+	N.health = 20
 	new_human.key = ghost_to_spawn.key
 	ticker.mode.add_cultist(new_human.mind)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
@@ -835,7 +834,8 @@ var/list/teleport_runes = list()
 			break
 		user.apply_damage(1, BRUTE)
 		sleep(30)
-
+	
+	q.del(N)
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
