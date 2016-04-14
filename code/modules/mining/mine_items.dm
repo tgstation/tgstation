@@ -63,7 +63,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 15
 	throwforce = 10
 	item_state = "pickaxe"
@@ -99,6 +99,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
+	slot_flags = SLOT_BELT
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'

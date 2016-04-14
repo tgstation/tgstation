@@ -48535,10 +48535,8 @@
 	tag = "s"
 	},
 /obj/item/weapon/storage/fancy/cigarettes/cigars,
-/obj/item/weapon/reagent_containers/food/drinks/flask{
-	pixel_x = 8
-	},
 /obj/item/weapon/lighter,
+/obj/item/weapon/reagent_containers/food/drinks/flask/gold,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bOL" = (
@@ -72230,6 +72228,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/droneDispenser/preloaded,
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "cHo" = (

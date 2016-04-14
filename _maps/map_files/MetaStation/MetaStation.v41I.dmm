@@ -37714,14 +37714,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/item/weapon/reagent_containers/food/drinks/flask{
-	pixel_x = 8
-	},
 /obj/item/weapon/razor{
 	pixel_x = -4;
 	pixel_y = 2
 	},
 /obj/item/clothing/mask/cigarette/cigar,
+/obj/item/weapon/reagent_containers/food/drinks/flask/gold,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain{
 	name = "\improper Captain's Quarters"
@@ -57651,21 +57649,14 @@
 	})
 "bPn" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern mech appliances, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
+	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Machine' sign";
+	name = "\improper 'Perfect Drone' sign";
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/structure/showcase{
-	desc = "This cyborg looks frighteningly robust, with cold unseeing eyes. Signs praise the incorruptible nature of synthetics.";
-	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "Security";
-	name = "'Perfect Machine' cyborg exhibit";
-	pixel_y = 3
-	},
-/obj/structure/window/reinforced,
+/obj/machinery/droneDispenser/preloaded,
+/obj/machinery/door/window/southleft,
 /turf/open/floor/carpet,
 /area/assembly/showroom{
 	name = "\improper Corporate Showroom"
@@ -100501,13 +100492,12 @@
 	},
 /area/medical/morgue)
 "dfx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/plantgenes,
+/turf/open/floor/plasteel{
+	dir = 9;
+	icon_state = "warning"
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/area/hydroponics)
 "dfy" = (
 /turf/open/floor/engine/vacuum,
 /area/atmos)
@@ -136222,7 +136212,7 @@ bZc
 caw
 bZc
 ccX
-ceH
+dfx
 bVf
 cuS
 ciC

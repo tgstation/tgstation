@@ -82,3 +82,5 @@
 				msg += "\t[C] is a [C.holder.rank]\n"
 
 	src << msg
+	src << "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
+

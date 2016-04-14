@@ -177,7 +177,7 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 7
+#define ZLEVEL_SPACEMAX 9
 #define ZLEVEL_MINING 5
 #define ZLEVEL_SPACEMIN 3
 #define ZLEVEL_ABANDONNEDTSAT 3

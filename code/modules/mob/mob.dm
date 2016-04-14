@@ -7,6 +7,9 @@
 		spellremove(src)
 	for(var/infection in viruses)
 		qdel(infection)
+	for(var/cc in client_colours)
+		qdel(cc)
+	client_colours = null
 	ghostize()
 	return ..()
 

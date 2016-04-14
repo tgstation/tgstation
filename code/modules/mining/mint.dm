@@ -2,7 +2,7 @@
 
 
 /obj/machinery/mineral/mint
-	name = "Coin press"
+	name = "coin press"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = 1
@@ -27,73 +27,73 @@
 	if(T)
 		for(var/obj/item/stack/sheet/O in T)
 			if (istype(O, /obj/item/stack/sheet/mineral/gold))
-				amt_gold += 100 * O.amount
+				amt_gold += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/silver))
-				amt_silver += 100 * O.amount
+				amt_silver += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/diamond))
-				amt_diamond += 100 * O.amount
+				amt_diamond += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/plasma))
-				amt_plasma += 100 * O.amount
+				amt_plasma += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/uranium))
-				amt_uranium += 100 * O.amount
+				amt_uranium += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/metal))
-				amt_iron += 100 * O.amount
+				amt_iron += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/bananium))
-				amt_clown += 100 * O.amount
+				amt_clown += MINERAL_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/adamantine))
-				amt_adamantine += 100 * O.amount
-				O.loc = null //Commented out for now. -Durandan
+				amt_adamantine += MINERAL_MATERIAL_AMOUNT * O.amount
+				O.loc = null
 			return
 
 
-/obj/machinery/mineral/mint/attack_hand(mob/user) //TODO: Adamantine coins! -Durandan
+/obj/machinery/mineral/mint/attack_hand(mob/user)
 
 	var/dat = "<b>Coin Press</b><br>"
 
-	dat += text("<br><font color='#ffcc00'><b>Gold inserted: </b>[amt_gold]</font> ")
+	dat += text("<br><font color='#ffcc00'><b>Gold inserted: </b>[amt_gold] cm3</font> ")
 	if (chosen == "gold")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=gold'>Choose</A>")
-	dat += text("<br><font color='#888888'><b>Silver inserted: </b>[amt_silver]</font> ")
+	dat += text("<br><font color='#888888'><b>Silver inserted: </b>[amt_silver] cm3</font> ")
 	if (chosen == "silver")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=silver'>Choose</A>")
-	dat += text("<br><font color='#555555'><b>Iron inserted: </b>[amt_iron]</font> ")
+	dat += text("<br><font color='#555555'><b>Iron inserted: </b>[amt_iron] cm3</font> ")
 	if (chosen == "metal")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=metal'>Choose</A>")
-	dat += text("<br><font color='#8888FF'><b>Diamond inserted: </b>[amt_diamond]</font> ")
+	dat += text("<br><font color='#8888FF'><b>Diamond inserted: </b>[amt_diamond] cm3</font> ")
 	if (chosen == "diamond")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=diamond'>Choose</A>")
-	dat += text("<br><font color='#FF8800'><b>Plasma inserted: </b>[amt_plasma]</font> ")
+	dat += text("<br><font color='#FF8800'><b>Plasma inserted: </b>[amt_plasma] cm3</font> ")
 	if (chosen == "plasma")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=plasma'>Choose</A>")
-	dat += text("<br><font color='#008800'><b>uranium inserted: </b>[amt_uranium]</font> ")
+	dat += text("<br><font color='#008800'><b>Uranium inserted: </b>[amt_uranium] cm3</font> ")
 	if (chosen == "uranium")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=uranium'>Choose</A>")
 	if(amt_clown > 0)
-		dat += text("<br><font color='#AAAA00'><b>Bananium inserted: </b>[amt_clown]</font> ")
+		dat += text("<br><font color='#AAAA00'><b>Bananium inserted: </b>[amt_clown] cm3</font> ")
 		if (chosen == "clown")
 			dat += text("chosen")
 		else
 			dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
-	dat += text("<br><font color='#888888'><b>Adamantine inserted: </b>[amt_adamantine]</font> ")//I don't even know these color codes, so fuck it.
+	dat += text("<br><font color='#888888'><b>Adamantine inserted: </b>[amt_adamantine] cm3</font> ")//I don't even know these color codes, so fuck it.
 	if (chosen == "adamantine")
 		dat += text("chosen")
 	else
@@ -128,75 +128,76 @@
 		var/temp_coins = coinsToProduce
 		processing = 1;
 		icon_state = "coinpress1"
+		var/coin_mat = MINERAL_MATERIAL_AMOUNT * 0.2
 		switch(chosen)
 			if("metal")
-				while(amt_iron > 0 && coinsToProduce > 0)
+				while(amt_iron >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/iron)
-					amt_iron -= 20
+					amt_iron -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("gold")
-				while(amt_gold > 0 && coinsToProduce > 0)
+				while(amt_gold >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/gold)
-					amt_gold -= 20
+					amt_gold -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("silver")
-				while(amt_silver > 0 && coinsToProduce > 0)
+				while(amt_silver >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/silver)
-					amt_silver -= 20
+					amt_silver -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("diamond")
-				while(amt_diamond > 0 && coinsToProduce > 0)
+				while(amt_diamond >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/diamond)
-					amt_diamond -= 20
+					amt_diamond -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("plasma")
-				while(amt_plasma > 0 && coinsToProduce > 0)
+				while(amt_plasma >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/plasma)
-					amt_plasma -= 20
+					amt_plasma -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("uranium")
-				while(amt_uranium > 0 && coinsToProduce > 0)
+				while(amt_uranium >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/uranium)
-					amt_uranium -= 20
+					amt_uranium -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5)
 			if("clown")
-				while(amt_clown > 0 && coinsToProduce > 0)
+				while(amt_clown >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/clown)
-					amt_clown -= 20
+					amt_clown -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("adamantine")
-				while(amt_adamantine > 0 && coinsToProduce > 0)
+				while(amt_adamantine >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/adamantine)
-					amt_adamantine -= 20
+					amt_adamantine -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
 					sleep(5);
 			if("mythril")
-				while(amt_adamantine > 0 && coinsToProduce > 0)
+				while(amt_adamantine >= coin_mat && coinsToProduce > 0)
 					create_coins(/obj/item/weapon/coin/mythril)
-					amt_mythril -= 20
+					amt_mythril -= coin_mat
 					coinsToProduce--
 					newCoins++
 					src.updateUsrDialog()
@@ -211,7 +212,7 @@
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new P(src)
-		var/obj/item/weapon/moneybag/M = locate(/obj/item/weapon/moneybag/, T)
+		var/obj/item/weapon/moneybag/M = locate(/obj/item/weapon/moneybag, T)
 		if(!M)
 			M = new /obj/item/weapon/moneybag(src)
 			unload_mineral(M)

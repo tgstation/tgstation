@@ -1,6 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen Cyborgs are now able to empty ore boxes without human assistance"
-  - rscadd: "Ore boxes are now craftable with 4 planks of wood"
-  - tweak: "Ore boxes now drop their contents when destroyed, or dismantled with a crowbar"
