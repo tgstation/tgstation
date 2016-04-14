@@ -708,10 +708,11 @@ var/list/teleport_runes = list()
 	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
-	for(var/I in typesof(/obj/item/weapon/paper/talisman))
-		var/obj/effect/rune/J = I
-		if(initial(J.cultist_name) == entered_talisman_name)
-			talisman_type = J
+	var/obj/effect/rune/J = I
+	var/talisman_cult_name = initial(J.cultist_name)
+	if(talisman_cult_name)
+		possible_talismans[talisman_cult_name] = J
+		talisman_type = possible_talismans[entered_talisman_name]
 	user.say("H'drak v'loso, mir'kanas verbot!")
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
 	rune_in_use = 1
