@@ -233,6 +233,8 @@ This file contains the arcane tome files as well as innate cultist emergency com
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/turf/B in orange (1, user))
 				var/obj/machinery/shield/N = new(B)
+				N.name = "Rune-Scriber's Shield"
+				N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
 				N.color = "red"
 				N.health = 60
 			if(!do_after(user, 400, target = get_turf(user)))
