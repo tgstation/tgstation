@@ -747,7 +747,7 @@
 
 	spawn(0)
 		// for each word of length N
-		for(var/i = 1, i <=letter_count.len, i++)
+		for(var/i in 1 to letter_count.len)
 			if (letter_count[i] in punctuation)
 				var/P = letter_count[i]
 				// gotta sleep for a certain amount of time
