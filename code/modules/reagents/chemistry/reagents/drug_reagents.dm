@@ -339,23 +339,22 @@
 	var/mob/living/carbon/human/L = M
 	if("tail_lizard" in L.dna.species.mutant_bodyparts)
 		L.dna.species.mutant_bodyparts -= "tail_lizard"
-		var/obj/item/organ/severedtail/S = new(get_turf(M))
+		new /obj/item/organ/severedtail/(get_turf(M))
 		M.visible_message("[M]'s tail violently tears off due to drag!</span>")
 		L.update_body()
 		M.adjustBruteLoss(40)
-		M.adjustStaminaloss(80)
+		M.adjustStaminaLoss(80)
 	else if("waggingtail_lizard" in L.dna.species.mutant_bodyparts)
 		L.dna.species.mutant_bodyparts -= "waggingtail_lizard"
 		M.visible_message("[M]'s wagging tail painfully vapourises due to drag and air resistance!</span>")
 		L.update_body()
 		M.adjustBruteLoss(80)
-		M.adjustStaminaloss(100)
-	if("spines" in L.dna.features)
-		L.dna.features -= "spines"
-		M.visible_message("[M]'s spines retreat into their body!</span>")
-		S.color = "#[L.dna.features["mcolor"]]"
-		S.markings = "[L.dna.features["tail"]]"
-		L.update_body()
+		M.adjustStaminaLoss(100)
+	if(L.dna.species.id == "lizard")
+		if("spines" in L.dna.features)
+			L.dna.features -= "spines"
+			M.visible_message("[M]'s spines retreat into their body!</span>")
+			L.update_body()
 	M.AdjustParalysis(-10, 0)
 	M.AdjustStunned(-10, 0)
 	M.AdjustWeakened(-10, 0, 0)

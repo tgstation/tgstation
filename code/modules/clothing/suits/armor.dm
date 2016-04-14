@@ -251,8 +251,8 @@
 /obj/item/clothing/suit/armor/reactive/kinetic
 	name = "protective kinetic field"
 	desc = "You move too fast to wear conventional armour, and it slows you down too much, your super speed and super instincts have created a kinetic field instead."
-	icon_state = "kineticoff"
-	item_state = "kineticoff"
+	icon_state = "kinetic"
+	item_state = "kinetic"
 	flags = ABSTRACT | NODROP
 	allowed = list()
 	blood_overlay_type = null

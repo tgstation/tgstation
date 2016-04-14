@@ -26,9 +26,7 @@
 			if (affected_mob.reagents.get_reagent_amount("accelerativeenyzme") < 20)
 				affected_mob.reagents.add_reagent("accelerativeenyzme", 20)
 			if(ishuman(affected_mob))
-				var/mob/living/carbon/human/H = affected_mob
-				H.unEquip(H.wear_suit)
-			affected_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/reactive/kinetic(affected_mob), slot_wear_suit)
+				grant_armour()
 			grant_vibratinghand()
 			grant_iciclehand()
 			affected_mob.next_move_adjust = -3
@@ -62,6 +60,14 @@
 			return
 	affected_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/icicle)
 
+/datum/disease/acceleration/proc/grant_armour()
+	var/mob/living/carbon/human/H = affected_mob
+	if(istype(H.wear_suit,/obj/item/clothing/suit/armor/reactive/kinetic))
+		return
+	else
+		H.unEquip(H.wear_suit)
+		affected_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/reactive/kinetic(affected_mob), slot_wear_suit)
+
 /obj/effect/proc_holder/spell/targeted/touch/vibrate
 	name = "Vibrating chop"
 	desc = "Vibrate your hand into an effective disabling chop."
@@ -83,8 +89,6 @@
 	charge_max = 400
 	clothes_req = 0
 	action_icon_state = "icicle"
-
-
 
 /obj/effect/proc_holder/spell/targeted/icicle/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/C in targets)
