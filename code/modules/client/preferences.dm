@@ -182,14 +182,17 @@ var/const/MAX_SAVE_SLOTS = 8
 /datum/preferences/New(client/C)
 	client=C
 	if(istype(C))
-		if(!IsGuestKey(C.key))
-			var/load_pref = load_preferences_sqlite(C.ckey)
-			if(load_pref)
-				if(load_save_sqlite(C.ckey, C, default_slot))
-					return
-		randomize_appearance_for()
-		real_name = random_name(gender)
-		save_character_sqlite(src, C.ckey, default_slot)
+		spawn()
+			while(!speciesinit)
+				sleep(10)
+			if(!IsGuestKey(C.key))
+				var/load_pref = load_preferences_sqlite(C.ckey)
+				if(load_pref)
+					if(load_save_sqlite(C.ckey, C, default_slot))
+						return
+			randomize_appearance_for()
+			real_name = random_name(gender)
+			save_character_sqlite(src, C.ckey, default_slot)
 
 /datum/preferences/proc/setup_character_options(var/dat, var/user)
 
@@ -1348,7 +1351,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					//random_character_sqlite(user, user.ckey)
 
 				if("reload")
-					load_preferences_sqlite(user, user.ckey)
+					load_preferences_sqlite(user.ckey)
 					load_save_sqlite(user.ckey, user, default_slot)
 
 				if("open_load_dialog")

@@ -100,56 +100,58 @@
 	if(!client)	return 0
 
 	if(href_list["show_preferences"])
-		client.prefs.ShowChoices(src)
-		return 1
+		if(speciesinit)
+			client.prefs.ShowChoices(src)
+			return 1
 
 	if(href_list["ready"])
-		switch(text2num(href_list["ready"]))
-			if(1)
-				ready = 1
-			if(2)
-				ready = 0
-		to_chat(usr, "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>")
-		new_player_panel_proc()
-		//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
-		return 1
+		if(speciesinit)
+			switch(text2num(href_list["ready"]))
+				if(1)
+					ready = 1
+				if(2)
+					ready = 0
+			to_chat(usr, "<span class='recruit'>You [ready ? "have declared ready" : "have unreadied"].</span>")
+			new_player_panel_proc()
+			//testing("[usr] topic call took [(world.timeofday - timestart)/10] seconds")
+			return 1
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
 		new_player_panel_proc()
 
 	if(href_list["observe"])
+		if(speciesinit)
+			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+				if(!client)	return 1
+				var/mob/dead/observer/observer = new()
 
-		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
-			if(!client)	return 1
-			var/mob/dead/observer/observer = new()
-
-			spawning = 1
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+				spawning = 1
+				src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 
-			observer.started_as_observer = 1
-			close_spawn_windows()
-			var/obj/O = locate("landmark*Observer-Start")
-			to_chat(src, "<span class='notice'>Now teleporting.</span>")
-			observer.loc = O.loc
-			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
+				observer.started_as_observer = 1
+				close_spawn_windows()
+				var/obj/O = locate("landmark*Observer-Start")
+				to_chat(src, "<span class='notice'>Now teleporting.</span>")
+				observer.loc = O.loc
+				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-			client.prefs.update_preview_icon(1)
-			observer.icon = client.prefs.preview_icon
-			observer.alpha = 127
+				client.prefs.update_preview_icon(1)
+				observer.icon = client.prefs.preview_icon
+				observer.alpha = 127
 
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
-			if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
-				observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
-			observer.key = key
-			mob_list -= src
-			qdel(src)
+				if(client.prefs.be_random_name)
+					client.prefs.real_name = random_name(client.prefs.gender,client.prefs.species)
+				observer.real_name = client.prefs.real_name
+				observer.name = observer.real_name
+				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
+					observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
+				observer.key = key
+				mob_list -= src
+				qdel(src)
 
-			return 1
+				return 1
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
