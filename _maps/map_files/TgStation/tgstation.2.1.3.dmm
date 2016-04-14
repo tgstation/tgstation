@@ -36779,9 +36779,8 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/structure/mirror{
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -38052,6 +38051,10 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -38792,7 +38795,6 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -39270,6 +39272,7 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/gun/syringe,
 /obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/soap/nanotrasen,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -39377,8 +39380,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -39759,7 +39761,8 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -28
 	},
-/obj/machinery/door/window/southright,
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -39775,8 +39778,7 @@
 	dir = 8;
 	network = list("SS13")
 	},
-/obj/structure/closet/wardrobe/pjs,
-/obj/structure/window/reinforced,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40736,7 +40738,6 @@
 	on = 1;
 	pressure_checks = 1
 	},
-/obj/structure/window/reinforced,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40821,7 +40822,6 @@
 /area/medical/cmo)
 "bFF" = (
 /obj/machinery/light,
-/obj/item/weapon/soap/nanotrasen,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40858,17 +40858,14 @@
 	},
 /area/toxins/storage)
 "bFJ" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bFK" = (
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -58363,12 +58360,6 @@
 	},
 /turf/open/space,
 /area/space)
-"coT" = (
-/obj/machinery/iv_drip,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/medical/medbay)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -103419,7 +103410,7 @@ bua
 bua
 bua
 bua
-coT
+bhh
 bhh
 btV
 bof
