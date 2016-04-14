@@ -1,5 +1,6 @@
 /var/list/sacrificed = list()
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/list/teleport_runes = list()
 
 /*
 
@@ -159,7 +160,57 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return N
 	return 0
 
-var/list/teleport_runes = list()
+//Rite of Binding: Turns a nearby rune and a paper on top of the rune to a talisman, if both are valid.
+/obj/effect/rune/imbue
+	cultist_name = "Create Talisman"
+	cultist_desc = "Transforms papers and valid runes into talismans."
+	invocation = null //no talisman made, no invocation.
+	icon_state = "3"
+	color = rgb(0, 0, 255)
+
+/obj/effect/rune/imbue/invoke(mob/living/user)
+	var/turf/T = get_turf(src)
+	var/list/papers_on_rune = list()
+	var/entered_talisman_name
+	var/obj/item/weapon/paper/talisman/talisman_type
+	var/list/possible_talismans = list()
+	for(var/obj/item/weapon/paper/P in T)
+		if(!P.info)
+			papers_on_rune.Add(P)
+	if(!papers_on_rune.len)
+		user << "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>"
+		fail_invoke()
+		log_game("Talisman Imbue rune failed - no blank papers on rune")
+		return
+	if(rune_in_use)
+		user << "<span class='cultitalic'>[src] can only support one ritual at a time!</span>"
+		fail_invoke()
+		log_game("Talisman Imbue rune failed - more than one user")
+		return
+	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
+	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
+		var/obj/item/weapon/paper/talisman/J = I
+		var/talisman_cult_name = initial(J.cultist_name)
+		if(talisman_cult_name)
+			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
+	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		return
+	talisman_type = possible_talismans[entered_talisman_name]
+	user.say("H'drak v'loso, mir'kanas verbot!")
+	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
+	rune_in_use = 1
+	if(!do_after(user, 100, target = get_turf(user)))
+		rune_in_use = 0
+		return
+	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
+	if(istype(TA, /obj/item/weapon/paper/talisman/teleport))
+		var/the_keyword = stripped_input(usr, "Please enter a keyword for the talisman.", "Enter Keyword", "")
+		var/obj/item/weapon/paper/talisman/teleport/TELE = TA
+		TELE.keyword = the_keyword
+	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
+	qdel(paper_to_imbue)
+	rune_in_use = 0
 //Rite of Translocation: Warps the user to a random teleport rune with the same keyword.
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
@@ -211,7 +262,8 @@ var/list/teleport_runes = list()
 		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
 		user << "<span class='cult'>You[user.loc == UT ? " send everything above the rune away":"r vision blurs, and you suddenly appear somewhere else"].</span>"
 	else
-		fail_invoke() 	
+		fail_invoke() 
+		
 
 //Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
 /obj/effect/rune/convert
@@ -374,7 +426,8 @@ var/list/teleport_runes = list()
 					M << "<span class='cultlarge'><i>\"YOUR SOUL BURNS WITH YOUR ARROGANCE!!!\"</i></span>"
 					if(M.reagents)
 						M.reagents.add_reagent("hell_water", 10)
-					M.Weaken(5)
+					M.Weaken(7)
+					M.Stun(7)
 			fail_invoke()
 			log_game("Summon Nar-Sie rune failed - improper objective")
 			return
@@ -521,20 +574,20 @@ var/list/teleport_runes = list()
 /obj/effect/rune/emp/invoke(mob/living/user)
 	var/turf/E = get_turf(src)
 	var/emp_strength = 0
-		for(var/mob/living/L in range(1, src))
-			if(iscultist(L))
-				var/mob/living/carbon/human/H = L
-				if(!istype(H))
-					if(istype(L, /mob/living/simple_animal/hostile/construct))
-						if(invocation)
-							L.say(invocation)
-						emp_strength++
+	for(var/mob/living/L in range(1, src))
+		if(iscultist(L))
+			var/mob/living/carbon/human/H = L
+			if(!istype(H))
+				if(istype(L, /mob/living/simple_animal/hostile/construct))
+					if(invocation)
+						L.say(invocation)
+					emp_strength++
 					continue
-				if(L.stat || (H.disabilities & MUTE) || H.silent)
-					continue
-				if(invocation)
-					L.say(invocation)
-				emp_strength++
+			if(L.stat || (H.disabilities & MUTE) || H.silent)
+				continue
+			if(invocation)
+				L.say(invocation)
+			emp_strength++
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
 	for(var/mob/living/carbon/C in range(1,src))
 		C << "<span class='warning'>You feel a minute vibration pass through you!</span>"
@@ -673,86 +726,6 @@ var/list/teleport_runes = list()
 	cultist_to_summon.forceMove(get_turf(src))
 	qdel(src)
 
-//Rite of Binding: Turns a nearby rune and a paper on top of the rune to a talisman, if both are valid.
-/obj/effect/rune/imbue
-	cultist_name = "Create Talisman"
-	cultist_desc = "Transforms papers and valid runes into talismans."
-	invocation = null //no talisman made, no invocation.
-	icon_state = "3"
-	color = rgb(0, 0, 255)
-
-/obj/effect/rune/imbue/invoke(mob/living/user)
-	var/turf/T = get_turf(src)
-	var/list/papers_on_rune = list()
-	var/entered_talisman_name
-	var/obj/item/weapon/paper/talisman/talisman_type
-	var/list/possible_talismans = list()
-	for(var/obj/item/weapon/paper/P in T)
-		if(!P.info)
-			papers_on_rune.Add(P)
-	if(!papers_on_rune.len)
-		user << "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>"
-		fail_invoke()
-		log_game("Talisman Imbue rune failed - no blank papers on rune")
-		return
-	if(rune_in_use)
-		user << "<span class='cultitalic'>[src] can only support one ritual at a time!</span>"
-		fail_invoke()
-		log_game("Talisman Imbue rune failed - more than one user")
-		return
-	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
-	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
-		var/obj/item/weapon/paper/talisman/J = I
-		if(initial(J.cultist_name))
-			possible_talismans.Add(initial(J.cultist_name)) //This is to allow the menu to let cultists select talismans by name
-	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
-		return
-	var/obj/effect/rune/J = I
-	var/talisman_cult_name = initial(J.cultist_name)
-	if(talisman_cult_name)
-		possible_talismans[talisman_cult_name] = J
-		talisman_type = possible_talismans[entered_talisman_name]
-	user.say("H'drak v'loso, mir'kanas verbot!")
-	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
-	rune_in_use = 1
-	if(!do_after(user, 100, target = get_turf(user)))
-		rune_in_use = 0
-		return
-	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
-	if(istype(TA, /obj/item/weapon/paper/talisman/teleport))
-		var/the_keyword = stripped_input(usr, "Please enter a keyword for the talisman.", "Enter Keyword", "")
-		var/obj/item/weapon/paper/talisman/teleport/TELE = TA
-		TELE.keyword = the_keyword
-	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
-	qdel(paper_to_imbue)
-	rune_in_use = 0
-	
-//Rite of Fabrication: Creates a construct shell out of 15 metal sheets.
-/obj/effect/rune/construct_shell
-	cultist_name = "Summon Construct Shell"
-	cultist_desc = "Turns fifteen metal sheets into an empty construct shell, suitable for containing a soul shard."
-	invocation = "Ethra p'ni dedol!"
-	icon_state = "5"
-	color = rgb(150, 150, 150)
-
-/obj/effect/rune/construct_shell/invoke(mob/living/user)
-	var/turf/T = get_turf(src)
-	var/canmakeshell = 0
-	for(var/obj/item/stack/sheet/metal/S in T)
-		if(!canmakeshell && S.use(15))
-			canmakeshell = 1
-	if(canmakeshell)
-		. = ..()
-	else
-		user << "<span class='cultitalic'>There must be at least fifteen sheets of metal on [src]!</span>"
-		log_game("Construct Shell rune failed - not enough metal sheets")
-
-/obj/effect/rune/construct_shell/invoke(mob/living/user)
-	new /obj/structure/constructshell(get_turf(src))
-	visible_message("<span class='warning'>The metal bends and twists into a humanoid shell!</span>")
-	qdel(src) 	
-
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
 /obj/effect/rune/blood_boil
 	cultist_name = "Boil Blood"
@@ -772,7 +745,7 @@ var/list/teleport_runes = list()
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			C.take_overall_damage(45,45)
-			C.weakened(7)
+			C.Stun(7)
 	for(var/mob/living/carbon/M in range(1,src))
 		if(iscultist(M))
 			M.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
@@ -836,7 +809,7 @@ var/list/teleport_runes = list()
 		user.apply_damage(1, BRUTE)
 		sleep(30)
 	
-	q.del(N)
+	qdel(N)
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
