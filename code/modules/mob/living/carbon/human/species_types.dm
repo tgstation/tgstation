@@ -413,11 +413,9 @@
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	var/list/myspan = null
 
-
 /datum/species/skeleton/New()
 	..()
 	myspan = list(pick(SPAN_SANS,SPAN_PAPYRUS)) //pick a span and stick with it for the round
-
 
 /datum/species/skeleton/get_spans()
 	return myspan
