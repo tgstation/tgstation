@@ -10,7 +10,7 @@
 	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
-	var/timer = 120
+	var/timer = 60
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
@@ -24,7 +24,7 @@
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
 		active = 0
-		timer = 60
+		timer = initial(timer)
 		update_icon()
 		if(payload in src)
 			payload.detonate()
@@ -46,21 +46,9 @@
 	wires = null
 	return ..()
 
-/obj/machinery/syndicatebomb/emag_act(mob/user)
-	if(active && !emagged)
-		emagged = 1
-		timer = 60	// An emag can be used to reduce the timer, or give you more time, depending on when you use it.
-		if(user)
-			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
-								"<span class='notice'>You emag the [src], causing the timing mechanism to malfunction.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
-
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	if(emagged)
-		user << "A digital display on it reads \"[rand(-1, 60)]\"."
-	else
-		user << "A digital display on it reads \"[timer]\"."
+	user << "A digital display on it reads \"[timer]\"."
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -153,7 +141,7 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, 120, 60000)
+	newtime = Clamp(newtime, initial(timer), 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
@@ -205,6 +193,7 @@
 	desc = "An ominous looking device designed to detonate an explosive payload. Can be bolted down using a wrench."
 	payload = null
 	open_panel = TRUE
+	timer = 120
 
 /obj/machinery/syndicatebomb/empty/New()
 	..()
@@ -224,18 +213,12 @@
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
-	if(prob(50))
-		detonate()
-	else
-		qdel(src)
+	detonate()
+
 
 /obj/item/weapon/bombcore/burn()
-	if(prob(25))
-		detonate()
-		..()
-	else
-		..()
-		qdel(src)
+	detonate()
+	..()
 
 /obj/item/weapon/bombcore/proc/detonate()
 	if(adminlog)
@@ -460,7 +443,6 @@
 				B.loc = get_turf(src)
 
 		qdel(G)
-	return
 
 
 
