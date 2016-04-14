@@ -37497,14 +37497,9 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
-/obj/machinery/camera{
-	c_tag = "Medbay Treatment Center";
-	dir = 4;
-	network = list("SS13");
-	pixel_x = 0;
-	pixel_y = 0
+/obj/machinery/shower{
+	dir = 4
 	},
-/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -38106,16 +38101,24 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/supply)
 "bAp" = (
-/obj/machinery/iv_drip,
+/obj/structure/closet/secure_closet/medical1,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bAq" = (
-/obj/machinery/light,
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Arrivals Bay 2";
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -38490,9 +38493,6 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -38846,6 +38846,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -39323,7 +39324,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/gun/syringe,
 /obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/soap/nanotrasen,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -39431,6 +39431,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -39808,11 +39810,10 @@
 	},
 /area/medical/sleeper)
 "bDD" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -28
 	},
+/obj/machinery/door/window/southright,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -39829,6 +39830,7 @@
 	network = list("SS13")
 	},
 /obj/structure/closet/wardrobe/pjs,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40788,6 +40790,7 @@
 	on = 1;
 	pressure_checks = 1
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40871,7 +40874,8 @@
 	},
 /area/medical/cmo)
 "bFF" = (
-/obj/machinery/light/small,
+/obj/machinery/light,
+/obj/item/weapon/soap/nanotrasen,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40908,14 +40912,17 @@
 	},
 /area/toxins/storage)
 "bFJ" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bFK" = (
-/obj/structure/closet/secure_closet/medical1,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -58422,6 +58429,12 @@
 	},
 /turf/open/space,
 /area/space)
+"coT" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -103490,7 +103503,7 @@ bua
 bua
 bua
 bua
-bhh
+coT
 bhh
 btV
 bof
