@@ -41,6 +41,7 @@
 							"Machinery",
 							"Medical",
 							"Misc",
+							"Dinnerware",
 							"Imported"
 							)
 

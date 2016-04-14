@@ -20,6 +20,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	materials = list(MAT_METAL=80)
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
@@ -93,6 +94,7 @@
 	flags = CONDUCT
 	force = 15
 	throwforce = 10
+	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 3
 
