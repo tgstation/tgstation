@@ -1,5 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- bugfix: "Fixes people going bald when they join before the game initializes."
-- tweak: "You can't use the three buttons on the popup on joining the game until the game has initialized."
