@@ -1,0 +1,4 @@
+author: lordpidey
+delete-after: True
+changes: 
+  - rscadd: "Meth labs can now blow up if you don't purify the ingredients or over-heat the end product."
