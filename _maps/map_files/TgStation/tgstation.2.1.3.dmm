@@ -45460,7 +45460,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/droneDispenser/preloaded,
+/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bOx" = (
