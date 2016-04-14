@@ -218,10 +218,14 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	return 1
 
 /obj/item/weapon/tome/proc/scribe_rune(mob/user)
+	var/turf/Turf = get_turf(user)
 	var/chosen_keyword
-	var/rune_to_scribe
+	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
+	if(locate(/obj/effect/rune) in Turf)
+		user << "<span class='cult'>There is already a rune here.</span>"
+		return 
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
@@ -243,6 +247,10 @@ This file contains the arcane tome files as well as innate cultist emergency com
 			break
 	if(!rune_to_scribe)
 		return
+	var/turf/Thenewturfyouwalkedto = get_turf(user) //we may have moved. adjust as needed...
+	if(locate(/obj/effect/rune) in Thenewturfyouwalkedto)
+		user << "<span class='cult'>There is already a rune here.</span>"
+		return 
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
@@ -271,6 +279,5 @@ This file contains the arcane tome files as well as innate cultist emergency com
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/obj/machinery/shield/S in orange (1, user))
 		qdel(S)
-	var/obj/effect/rune/R = new rune_to_scribe(get_turf(user))
-	if(chosen_keyword)
-		R.keyword = chosen_keyword
+	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
+	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>" 
