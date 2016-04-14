@@ -13314,6 +13314,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Atmospherics"
 	},
@@ -19744,11 +19745,13 @@
 /turf/open/floor/plasteel,
 /area/medical/exam_room)
 "aOe" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "QMLoad";
+	verted = -1
 	},
-/turf/open/floor/plasteel,
-/area/medical/exam_room)
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "aOf" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -24239,6 +24242,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Medbay"
 	},
@@ -36082,6 +36086,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Hydroponics"
 	},
@@ -38474,11 +38479,12 @@
 	},
 /area/hydroponics)
 "bwV" = (
-/turf/open/floor/plating{
-	broken = 1;
-	icon_state = "platingdmg3"
+/obj/machinery/conveyor{
+	dir = 5;
+	id = "QMLoad2"
 	},
-/area/space)
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "bwW" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac,
@@ -39314,9 +39320,14 @@
 /turf/open/floor/plating,
 /area/hydroponics)
 "byO" = (
-/obj/structure/chair/stool,
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "QMLoad2";
+	tag = "cargoshuttleup";
+	verted = -1
+	},
 /turf/open/floor/plating,
-/area/space)
+/area/quartermaster/storage)
 "byP" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
@@ -42657,6 +42668,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Kitchen"
 	},
@@ -44481,6 +44493,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Bar"
 	},
@@ -48740,6 +48753,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Security"
 	},
@@ -57300,6 +57314,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Tool Storage"
 	},
@@ -59083,6 +59098,12 @@
 /obj/structure/plasticflaps{
 	opacity = 1
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	dir = 1;
+	freq = 1400;
+	location = "Janitor"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "bot";
 	dir = 1
@@ -59979,6 +60000,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Research Division"
 	},
@@ -71399,7 +71421,7 @@
 /area/quartermaster/storage)
 "cFR" = (
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 6;
 	id = "QMLoad";
 	tag = "cargoshuttledown"
 	},
@@ -119714,7 +119736,7 @@ cBD
 cCF
 cDE
 cEL
-cFQ
+aOe
 cFW
 aaa
 aaa
@@ -121513,7 +121535,7 @@ cBJ
 cCK
 cDJ
 cEN
-cFV
+bwV
 cGN
 cHu
 cGN
@@ -122284,7 +122306,7 @@ cBK
 cCM
 cDM
 cER
-cDM
+byO
 cFW
 aaa
 aaa
