@@ -15,7 +15,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	if(!iscultist(usr) || usr.incapacitated())
 		return
 	if(!istype(usr, /mob/living/simple_animal))
-		var/confirm_desperation = alert(usr, "This is a LAST RESORT, you should use a tome to communicate if possible. This ritual will inflict serious injury on you!", "Is this what you want?", "Yes", "No")
+		var/confirm_desperation = alert(usr, "This is a LAST RESORT; you should use a tome to communicate if possible. This ritual will inflict serious injury on you!", "Is this what you want?", "Yes", "No")
 		if(confirm_desperation == "No")
 			usr << "On second thought, maybe I should summon a tome."
 			return
@@ -153,7 +153,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br><br>"
 
-	text += "<font color='red'><b>Sacrifice</b></font><br>The Rune of Sacrifice is necessary to achieve your goal. Simply place any dead creature upon the rune and invoke it (this will not \
+	text += "<font color='red'><b>Sacrifice</b></font><br>The Rune of Sacrifice is necessary to achieve your goals. Simply place any dead creature upon the rune and invoke it (this will not \
 	target cultists!). If this creature has a mind, a soul shard will be created and the creature's soul transported to it. This rune is required if the cult's objectives include the sacrifice of a crew \
 	member. Sacrificing the dead can be done alone, but sacrificing living crew or your cult's target will require 3 cultists. Soul shards used on construct shells will move that soul into a \
 	powerful construct of your choice.<br><br>"
@@ -178,10 +178,10 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rune of Summoning requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. This will deal a moderate amount of damage to all invokers. Absolutely crucial for rescuing your brothers from security.<br><br>"
 
-	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
+	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rune of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
-	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
+	text += "<font color='red'><b>Blood Boil</b></font><br>The Rune of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
 	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. It requires three invokers.<br><br>"
 
 	text += "<font color='red'><b>Manifest Spirit</b></font><br>If you wish to bring a spirit back from the dead with a wish for vengeance and desire to serve, the Rite of Spectral \
@@ -207,7 +207,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	talisman functions differently from others. Rather than simply reading the words, the target must be attacked directly with the talisman. The talisman will then knock down the target for a long \
 	duration in addition to inhibiting their speech. Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead."
 
-	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
+	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldritch longsword, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Rite of Horror must be applied directly to the victim, it will shatter your victim's mind with visions of the endtimes.<br><br>"
