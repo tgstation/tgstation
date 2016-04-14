@@ -1,19 +1,3 @@
-/*
-
-Talismans are portable versions of runes that resemble blank sheets of paper. They may have different effects than their parent runes and are created by using a Rite of Binding with a paper on top and
-a compatible rune somewhere nearby. A list of compatible runes can found below.
-
-Basic Runes:
-Rite of Translocation
-Rite of Knowledge
-Rite of Obscurity
-Rite of True Sight
-Rite of False Truths
-Rite of Disruption
-Rite of Disorientation
-
-*/
-
 /obj/item/weapon/paper/talisman
 	var/cultist_name = "talisman"
 	var/cultist_desc = "A basic talisman. It serves no purpose."
@@ -70,10 +54,8 @@ Rite of Disorientation
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
 	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Allows you to summon an arcane tome.<BR>"
-	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected Rite of Dislocation.<BR>"
+	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
-	dat += "<A href='?src=\ref[src];rune=conceal'>Kla'atu barada nikt'o!</A> - Allows you to conceal nearby runes.<BR>"
-	dat += "<A href='?src=\ref[src];rune=reveal'>Nikt'o barada kla'atu!</A> - Allows you to reveal nearby runes.<BR>"
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
 	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
 	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with captured souls. It is too large to carry on your person.<BR>"
@@ -98,12 +80,6 @@ Rite of Disorientation
 					usr.put_in_hands(T)
 				if("emp")
 					var/obj/item/weapon/paper/talisman/emp/T = new(usr)
-					usr.put_in_hands(T)
-				if("conceal")
-					var/obj/item/weapon/paper/talisman/hide_runes/T = new(usr)
-					usr.put_in_hands(T)
-				if("reveal")
-					var/obj/item/weapon/paper/talisman/true_sight/T = new(usr)
 					usr.put_in_hands(T)
 				if("runestun")
 					var/obj/item/weapon/paper/talisman/stun/T = new(usr)
@@ -160,7 +136,7 @@ Rite of Disorientation
 	user.forceMove(get_turf(actual_selected_rune))
 	return 1 
 
-//Rite of Knowledge: Has two uses
+
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
@@ -173,37 +149,36 @@ Rite of Disorientation
 						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
 	new /obj/item/weapon/tome(get_turf(user))
 	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
-			 "<span class='cultitalic'>An arcane tome materialzies at your feet.</span>") 
+			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>") 
 
-//Talisman of Obscurity: Same as rune
 /obj/item/weapon/paper/talisman/hide_runes
 	cultist_name = "Talisman of Veiling"
-	cultist_desc = "A talisman that will make all runes within a small radius invisible."
-	color = "#b3b3b3" // light grey
+	cultist_desc = "A multi-use talisman that hides nearby runes. On its second use, will reveal nearby runes."
 	invocation = "Kla'atu barada nikt'o!"
-	health_cost = 1
+ 	health_cost = 1
+	uses = 4
+	var/revealing = FALSE //if it reveals or not
 
-/obj/item/weapon/paper/talisman/hide_runes/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand.</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, veiling nearby runes.</span>")
-	for(var/obj/effect/rune/R in orange(3,user))
-		R.visible_message("<span class='danger'>[R] fades away.</span>")
-		R.invisibility = INVISIBILITY_OBSERVER
-
-//Rite of True Sight: Same as rune, but doesn't work on ghosts
-/obj/item/weapon/paper/talisman/true_sight
-	cultist_name = "Talisman of Revealing"
-	cultist_desc = "A talisman that reveals nearby invisible runes."
-	color = "#4d4d4d" // dark grey 
-	invocation = "Nikt'o barada kla'atu!"
-	health_cost = 1
-
-/obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
-	for(var/obj/effect/rune/R in orange(3,user))
-		R.invisibility = 0
-
+/obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user, successfuluse = 1)
+	. = ..()
+	if(!revealing)
+		user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
+			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
+		cultist_name = "Talisman of Revealing"
+		cultist_desc = "A talisman that reveals nearby runes."
+		invocation = "Nikt'o barada kla'atu!"
+		revealing = TRUE
+		for(var/obj/effect/rune/R in range(3,user))
+			R.visible_message("<span class='danger'>[R] fades away.</span>")
+			R.invisibility = INVISIBILITY_OBSERVER
+			R.alpha = 100 //To help ghosts distinguish hidden runes
+	else
+		user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
+			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
+		for(var/obj/effect/rune/R in range(3,user))
+			R.invisibility = 0
+			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
+			R.alpha = initial(R.alpha) 
 
 //Rite of False Truths: Same as rune
 /obj/item/weapon/paper/talisman/make_runes_fake
