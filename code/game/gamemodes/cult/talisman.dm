@@ -140,7 +140,7 @@
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
-	color = "#000000" // tome-black
+	color = "#1d0e0e" // red-black
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	health_cost = 1
 
@@ -151,12 +151,13 @@
 	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
 			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>") 
 
-/obj/item/weapon/paper/talisman/hide_runes
+/obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
 	cultist_desc = "A multi-use talisman that hides nearby runes. On its second use, will reveal nearby runes."
+	color = "#9c9c9c" // grey
 	invocation = "Kla'atu barada nikt'o!"
- 	health_cost = 1
-	uses = 4
+	health_cost = 1
+	uses = 2
 	var/revealing = FALSE //if it reveals or not
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user, successfuluse = 1)
@@ -164,8 +165,6 @@
 	if(!revealing)
 		user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
 			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
-		cultist_name = "Talisman of Revealing"
-		cultist_desc = "A talisman that reveals nearby runes."
 		invocation = "Nikt'o barada kla'atu!"
 		revealing = TRUE
 		for(var/obj/effect/rune/R in range(3,user))
@@ -212,22 +211,8 @@
 	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
 	color = "#ff0000" // red
 	invocation = "Fuu ma'jin!"
-	health_cost = 12
-
-//Rite of Arming: Equips cultist armor on the user, where available
-/obj/item/weapon/paper/talisman/armor
-	cultist_name = "Talisman of Arming"
-	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
-	color = "#33cc33" // green
-	invocation = "N'ath reth sh'yro eth draggathnor!"
-
-//Rite of Horrors: Breaks the mind of the victim with nightmarish hallucinations
-/obj/item/weapon/paper/talisman/horror
-	cultist_name = "Talisman of Horrors"
-	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
-	color = "#ffb366" // light orange
-	invocation = "Lo'Nab Na'Dm!"
-
+	health_cost = 10
+	
 /obj/item/weapon/paper/talisman/stun/attack_self(mob/living/user)
 	if(iscultist(user))
 		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
@@ -261,6 +246,13 @@
 		return
 	..()
 
+//Rite of Arming: Equips cultist armor on the user, where available
+/obj/item/weapon/paper/talisman/armor
+	cultist_name = "Talisman of Arming"
+	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
+	color = "#33cc33" // green
+	invocation = "N'ath reth sh'yro eth draggathnor!"
+	
 /obj/item/weapon/paper/talisman/armor/invoke(mob/living/user)
 	. = ..()
 	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
@@ -280,6 +272,13 @@
 		return
 	..()
 
+//Talisman of Horrors: Breaks the mind of the victim with nightmarish hallucinations
+/obj/item/weapon/paper/talisman/horror
+	cultist_name = "Talisman of Horrors"
+	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
+	color = "#ffb366" // light orange
+	invocation = "Lo'Nab Na'Dm!"
+
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
 		user.visible_message("<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
@@ -287,3 +286,22 @@
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 30)
 		qdel(src)
+
+//Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
+/obj/item/weapon/paper/talisman/construction
+	cultist_name = "Talisman of Construction"
+	cultist_desc = "Use this talisman on at least twenty-five metal sheets to create an empty construct shell"
+	invocation = "Ethra p'ni dedol!"
+	color = "#000000" // black
+
+/obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
+	if(iscultist(user))
+		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
+	else
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+	
+	
+/obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
+	if(iscultist(user))
+		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
+		log_game("Construct talisman failed - not a valid target")
