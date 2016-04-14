@@ -128,7 +128,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 /obj/item/weapon/tome/proc/open_tome(mob/user)
 	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","Read Tome")
 	switch(choice)
-		if("Read Tome")
+		if("Information")
 			read_tome(user)
 		if("Scribe Rune")
 			scribe_rune(user)
@@ -141,53 +141,48 @@ This file contains the arcane tome files as well as innate cultist emergency com
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
 	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
-	text += "As a member of the cult, your goals are almost or entirely impossible to complete without special aid from the Geometer's plane. The primary method of doing this are <b>runes</b>. These \
-	scribings, drawn in blood, are concentrated nodes of the magic within Nar-Sie's realm and will allow the performance of many tasks to aid you and the rest of the cult in your objectives. Runes \
-	have many different names, and almost all of them are known as Rites. The only rune that is not a Rite is the Ritual of Dimensional Rending, which can only be performed with nine cultists and calls \
-	forth the avatar of the Geometer herself (so long as she consents).<br><br>A rune's name and effects can be revealed by examining the rune. <br><br><br>"
+	text += "A rune's name and effects can be revealed by examining the rune.<<br><br>"
 
-	text += "<font color='red'><b>Imbue Talisman</b></font><br>The Rite of Talisman Creation is one of the most important. It is the only way to create talismans. A blank sheet of paper must be on top of the rune, with a valid rune nearby. After \
-	invoking it, the paper will be converted into a talisman, and the rune inlaid upon it.<br><br>"
+	text += "<font color='red'><b>Imbue Talisman</b></font><br>The Rune of Talisman Creation is one of the most important. It is the only way to create new talismans. A blank sheet of paper must be on top of the rune. After \
+	invoking it and choosing which talisman you desire, the paper will be converted into a talisman.<br><br>"
 
-	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Teleportation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, search for other Rites of Translocation. \
+	text += "<font color='red'><b>Teleport</b></font><br>The Rune of Teleportation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, search for other Rites of Translocation. \
 	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
 
-	text += "<font color='red'><b>Convert</b></font><br>The Rite of Conversion is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
+	text += "<font color='red'><b>Convert</b></font><br>The Rune of Conversion is important to the success of the cult. It will allow you to convert normal crew members into cultists. \
 	To do this, simply place the crew member upon the rune and invoke it. This rune requires two acolytes to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br><br>"
 
-	text += "<font color='red'><b>Sacrifice</b></font><br>The Rite of Sacrifice is used to offer  tribute to the Geometer. Simply place any living creature upon the rune and invoke it (this will not \
+	text += "<font color='red'><b>Sacrifice</b></font><br>The Rune of Sacrifice is necessary to achieve your goal. Simply place any dead creature upon the rune and invoke it (this will not \
 	target cultists!). If this creature has a mind, a soul shard will be created and the creature's soul transported to it. This rune is required if the cult's objectives include the sacrifice of a crew \
-	member.<br><br>"
+	member. Sacrificing the dead can be done alone, but sacrificing living crew or your cult's target will require 3 cultists. Soul shards used on construct shells will move that soul into a \
+	powerful construct of your choice.<br><br>"
 
-	text += "<font color='red'><b>Raise Dead</b></font><br>The Rite of Resurrection is a delicate rite that requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
+	text += "<font color='red'><b>Raise Dead</b></font><br>The Rune of Resurrection is a delicate rite that requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
 	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
 	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
 
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. The Rite of Disruption may allow you to gain the upper \
-	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location.<br><br>"
+	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location. The size of the EMP will grow significantly for each additional adjacent cultist when the \
+	rune is activated.<br><br>"
 
-	text += "<font color='red'><b>Astral Communion</b></font><br>The Rite of Astral Communion is perhaps the most ingenious rune that is usable by a single person. Upon invoking the rune, the \
+	text += "<font color='red'><b>Astral Communion</b></font><br>The Rune of Astral Communion is perhaps the most ingenious rune that is usable by a single person. Upon invoking the rune, the \
 	user's spirit will be ripped from their body. In this state, the user's physical body will be locked in place to the rune itself - any attempts to move it will result in the rune pulling it back. \
 	The body will also take constant damage while in this form, and may even die. The user's spirit will contain their consciousness, and will allow them to freely wander the station as a ghost. This may \
 	also be used to commune with the dead.<br><br>"
 
-	text += "<font color='red'><b>Form Shield</b></font><br>While simple, the Rite of the Corporeal Shield serves an important purpose in defense and hindering passage. When invoked, the \
+	text += "<font color='red'><b>Form Barrier</b></font><br>While simple, the Barrier Rune serves an important purpose in defense and hindering passage. When invoked, the \
 	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
 	undo this effect and allow passage again.<br><br>"
 
-	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
-	any location. This will deal a moderate amount of damage to all invokers.<br><br>"
+	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rune of Summoning requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
+	any location. This will deal a moderate amount of damage to all invokers. Absolutely crucial for rescuing your brothers from security.<br><br>"
 
 	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
 	text += "<font color='red'><b>Blood Boil</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
 	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. It requires three invokers.<br><br>"
-
-//	text += "<font color='red'><b>Time Stop</b></font><br>The Rite of Dimensional Corruption is a versatile rite that can be very strong when protecting our cult from the enemies of the Geometer. \
-	As it is invoked, it will rend and reshape reality around itself, stopping time for all those who don't follow the teachings of the Geometer. However, it requires more than one ritual soul as a \
-	catalyst, and its power is bound to overflow and hurt its casters.<br><br>"
 
 	text += "<font color='red'><b>Manifest Spirit</b></font><br>If you wish to bring a spirit back from the dead with a wish for vengeance and desire to serve, the Rite of Spectral \
 	Manifestation can do just that. When invoked, any spirits above the rune will be brought to life as a human wearing nothing that seeks only to serve you and the Geometer. However, the spirit's link \
@@ -198,20 +193,15 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	comparison to other runes, is very large, requiring a 3x3 space of empty tiles to create. To invoke the rune, nine cultists must stand on the rune, so that all of them are within its circle. Then, \
 	simply invoke it. A brief tearing will be heard as the barrier between dimensions is torn open, and the avatar will come forth.<br><br><br>"
 
-	text += "While runes are excellent for many tasks, they lack portability. The advent of <b>talismans</b> has, to a degree, solved this inconvenience. Simply put, a talisman is a piece of paper with a \
-	rune inlaid within it. The words of the rune can be whispered in order to invoke its effects, although usually to a lesser extent. To create a talisman, simply use a Rite of Binding as described above. \
-	Unless stated otherwise, talismans are invoked by activating them in your hand. A list of valid rites, as well as the effects of their talisman form, can be found below.<br><br><br>"
-
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to a randomly chosen rune of the same keyword, then \
 	disappear.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman functions nearly identically to the rune. The talisman will attempt to place the tome in your hand \
 	instead of on the ground, though this is the only advantage it has over the rune. It can be used once, then disappears.<br><br>"
 
-	text += "<font color='red'><b>Talismans of Veiling, Revealing, and Disguising</b></font><br>These talismans all function identically to their rune counterparts, but with less range. In addition, \
-	the Talisman of True Sight will not reveal spirits. They will disappear after one use.<br><br>"
+	text += "<font color='red'><b>Talismans of Veiling and Disguising</b></font><br>These talismans will hide, reveal, or disguise (as crayon drawings) all nearby runes.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Electromagnetic Pulse</b></font><br>This talisman functions like the Rite of Disruption. It disappears after one use.<br><br>"
+	text += "<font color='red'><b>Talisman of Electromagnetic Pulse</b></font><br>This talisman will EMP the target and anything else nearby. It disappears after one use.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Stunning</b></font><br>Without this talisman, the cult would have no way of easily acquiring targets to convert. Commonly called \"stunpapers\", this \
 	talisman functions differently from others. Rather than simply reading the words, the target must be attacked directly with the talisman. The talisman will then knock down the target for a long \
@@ -220,7 +210,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Rite of Horror will breaks your victim's mind with visions of the endtimes.<br><br>"
+	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Rite of Horror must be applied directly to the victim, it will shatter your victim's mind with visions of the endtimes.<br><br>"
 
 	var/datum/browser/popup = new(user, "tome", "", 800, 600)
 	popup.set_content(text)
