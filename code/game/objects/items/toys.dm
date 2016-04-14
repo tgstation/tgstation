@@ -796,7 +796,7 @@
 	icon_state = "papyrustoy"
 	span = "danger papyrus"
 	phomeme_type = "papyrus"
-	messages = list("That's the disposal bin. Feel free to visit it at any time.", "You can't spell 'robust' without several letters from my name!!!", "I can't just let anyone ERP with me, I'm a skeleton with standards!", "Nyeh heh heh!!!", "A. A. A. A. A. I'm screaming very slowly.")
+	messages = list("That's the disposal bin. Feel free to visit it at any time.", "You can't spell 'robust' without several letters from my name!!!", "I can't just let anyone ERP with me, I'm a skeleton with standards!", "Nyeh heh heh!!!", "A. A. A. A. A. I'm screaming very slowly.", "Sorry. Can't talk. I'm busy being popular online.", "You can see your reflection in a puddle, but... don't let a body of water determine your self-worth!", "Wow... we haven't even had our first date... and I've already managed to hit the friend zone!", "Silken spaghetti, finely aged in an oaken cask!")
 
 /obj/item/toy/talking/skeleton/sans
 	name = "Without(tm) action figure"
@@ -804,7 +804,7 @@
 	icon_state = "sanstoy"
 	span = "danger sans"
 	phomeme_type = "sans"
-	messages = list("You feel like you're going to have a bad time.", "geeettttttt dunked on!!!", "quick, behind that conveniently-shaped lamp.", "I've done a ton of work today. A skele-ton.", "You felt your redtext crawling on your back.")
+	messages = list("You feel like you're going to have a bad time.", "geeettttttt dunked on!!!", "quick, behind that conveniently-shaped lamp.", "I've done a ton of work today. A skele-ton.", "You felt your redtext crawling on your back.","Wow, sounds like you're really working yourself... down to the bone.", "Stop signs are red, so imagine a blue stop sign instead.")
 
 
 /*
