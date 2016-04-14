@@ -231,6 +231,14 @@
 	build_path = /obj/item/weapon/kitchen/fork
 	category = list("initial","Dinnerware")
 
+/datum/design/bowl
+	name = "Bowl"
+	id = "bowl"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 500)
+	build_path = /obj/item/weapon/reagent_containers/glass/bowl
+	category = list("initial","Dinnerware")
+
 /datum/design/drinking_glass
 	name = "Drinking glass"
 	id = "drinking_glass"
