@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "Using the fire extinguisher on yourself or others while in HELP intent will spray you or them, rather than beat their probably flaming body with a metal object."
+  - tweak: "Alt-clicking extinguishers to empty them now wets the floor underneath them."
