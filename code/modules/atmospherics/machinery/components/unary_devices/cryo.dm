@@ -13,8 +13,8 @@
 	var/efficiency = 1
 	var/sleep_factor = 750
 	var/paralyze_factor = 1000
-	var/heat_capacity = 50000
-	var/conduction_coefficient = 0.01
+	var/heat_capacity = 20000
+	var/conduction_coefficient = 0.30
 
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0

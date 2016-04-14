@@ -1,0 +1,5 @@
+author: CoreOverload
+delete-after: True
+changes: 
+  - rscadd: "A lot of items are now exportable in cargo."
+  - rscadd: "Use Export Scanner to check any item's export value."

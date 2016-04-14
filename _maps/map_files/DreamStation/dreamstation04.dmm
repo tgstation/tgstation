@@ -17828,7 +17828,7 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties,
 /obj/item/weapon/restraints/handcuffs/cable/zipties,
 /obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/toy/griffin,
+/obj/item/toy/talking/griffin,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aJX" = (
@@ -48535,10 +48535,8 @@
 	tag = "s"
 	},
 /obj/item/weapon/storage/fancy/cigarettes/cigars,
-/obj/item/weapon/reagent_containers/food/drinks/flask{
-	pixel_x = 8
-	},
 /obj/item/weapon/lighter,
+/obj/item/weapon/reagent_containers/food/drinks/flask/gold,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bOL" = (
@@ -67897,7 +67895,7 @@
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs/cable/green,
 /obj/item/weapon/restraints/handcuffs/cable/green,
-/obj/item/toy/owl,
+/obj/item/toy/talking/owl,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "czG" = (
@@ -72230,6 +72228,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/droneDispenser/preloaded,
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "cHo" = (

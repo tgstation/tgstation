@@ -29,11 +29,40 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		return
 
 
-/proc/generateMapList(filename)
+/proc/generateMapList(filename, blacklist)
 	var/list/potentialMaps = list()
+	var/list/blacklistedMaps = list()
 	var/list/Lines = file2list(filename)
+
 	if(!Lines.len)
 		return
+
+	if(blacklist)
+		var/list/Blines = file2list(blacklist)
+		for (var/t in Blines)
+			if (!t)
+				continue
+
+			t = trim(t)
+			if (length(t) == 0)
+				continue
+			else if (copytext(t, 1, 2) == "#")
+				continue
+
+			var/pos = findtext(t, " ")
+			var/name = null
+
+			if (pos)
+				name = lowertext(copytext(t, 1, pos))
+
+			else
+				name = lowertext(t)
+
+			if (!name)
+				continue
+
+			blacklistedMaps.Add(t)
+
 	for (var/t in Lines)
 		if (!t)
 			continue
@@ -58,7 +87,9 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		potentialMaps.Add(t)
 
-	return potentialMaps
+
+
+	return (potentialMaps - blacklistedMaps)
 
 
 /proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
@@ -83,9 +114,10 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 					break
 
 			if(valid)
-				world.log << "Ruins marker placed at [T.x][T.y][T.z]"
+				world.log << "Ruins marker placed at ([T.x], [T.y], [T.z])"
 				var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 				R.Load(potentialRuins,template)
+				potentialRuins -= template
 				ruin_number --
 
 	return

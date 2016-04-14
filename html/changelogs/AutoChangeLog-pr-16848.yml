@@ -1,0 +1,4 @@
+author: KorPhaeron
+delete-after: True
+changes: 
+  - rscadd: "You now need to butcher goliaths and watchers on lavaland to receive their loot. Use the combat knives to do so."

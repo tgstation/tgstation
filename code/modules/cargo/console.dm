@@ -17,12 +17,20 @@
 	..()
 	var/obj/item/weapon/circuitboard/cargo/board = circuit
 	contraband = board.contraband
+	emagged = board.emagged
 
 /obj/machinery/computer/cargo/emag_act(mob/living/user)
 	if(!emagged)
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
-							"<span class='notice'>You adjust [src]'s routing, unlocking special supplies.</span>")
+		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+
 		emagged = TRUE
+		contraband = TRUE
+
+		// This also permamently sets this on the circuit board
+		var/obj/item/weapon/circuitboard/cargo/board = circuit
+		board.contraband = TRUE
+		board.emagged = TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -89,6 +97,8 @@
 				say("For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.")
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
+				SSshuttle.supply.emagged = emagged
+				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", "cargo")

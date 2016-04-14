@@ -45,15 +45,15 @@ var/datum/subsystem/minimap/SSminimap
 	// Scale it up to our target size.
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
 
-	var/counter = 128
+	var/counter = 512
 	// Loop over turfs and generate icons.
 	for(var/T in block(locate(x1, y1, z), locate(x2, y2, z)))
 		generate_tile(T, minimap)
 
-		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every 128 tiles
+		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every so and so tiles
 		counter--
 		if(counter <= 0)
-			counter = 128
+			counter = 512
 			var/icon/flatten = new /icon()
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
 			del(minimap)

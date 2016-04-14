@@ -24,9 +24,6 @@
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
-	else // Something is terribly wrong
-		qdel(src)
-		return
 
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -34,12 +31,12 @@
 	if(dried_type == -1)
 		dried_type = src.type
 
-	for(var/datum/plant_gene/trait/T in seed.genes)
-		T.on_new(src, newloc)
-
-	seed.prepare_result(src)
-	add_juice()
-	transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+	if(seed)
+		for(var/datum/plant_gene/trait/T in seed.genes)
+			T.on_new(src, newloc)
+		seed.prepare_result(src)
+		transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+		add_juice()
 
 
 
@@ -52,15 +49,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/examine(user)
 	..()
-	for(var/datum/plant_gene/trait/T in seed.genes)
-		if(T.examine_line)
-			user << T.examine_line
+	if(seed)
+		for(var/datum/plant_gene/trait/T in seed.genes)
+			if(T.examine_line)
+				user << T.examine_line
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
-		msg += seed.get_analyzer_text()
+		if(seed)
+			msg += seed.get_analyzer_text()
 		msg += "\n- Nutritional value: [reagents.get_reagent_amount("nutriment")]\n"
 		msg += "- Other substances: [reagents.total_volume-reagents.get_reagent_amount("nutriment")]\n"
 		msg += "*---------*</span>"
@@ -70,10 +69,11 @@
 			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "Mineral Content", "glycerol" = "Glycerol",
 			"radium" = "Highly Radioactive Material", "uranium" = "Radioactive Material")
 		var/reag_txt = ""
-		for(var/reagent_id in scannable_reagents)
-			if(reagent_id in seed.reagents_add)
-				var/amt = reagents.get_reagent_amount(reagent_id)
-				reag_txt += "\n<span class='info'>- [scannable_reagents[reagent_id]]: [amt*100/reagents.maximum_volume]%</span>"
+		if(seed)
+			for(var/reagent_id in scannable_reagents)
+				if(reagent_id in seed.reagents_add)
+					var/amt = reagents.get_reagent_amount(reagent_id)
+					reag_txt += "\n<span class='info'>- [scannable_reagents[reagent_id]]: [amt*100/reagents.maximum_volume]%</span>"
 
 		if(reag_txt)
 			msg += reag_txt
@@ -85,13 +85,14 @@
 
 // Various gene procs
 /obj/item/weapon/reagent_containers/food/snacks/grown/attack_self(mob/user)
-	if(seed.get_gene(/datum/plant_gene/trait/squash))
+	if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
 		squash(user)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
-	if(!..() && seed.get_gene(/datum/plant_gene/trait/squash)) //was it caught by a mob?
-		squash(hit_atom)
+	if(!..()) //was it caught by a mob?
+		if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
+			squash(hit_atom)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
@@ -110,8 +111,9 @@
 			new trash(T)
 
 	visible_message("<span class='warning'>[src] has been squashed.</span>","<span class='italics'>You hear a smack.</span>")
-	for(var/datum/plant_gene/trait/trait in seed.genes)
-		trait.on_squash(src, target)
+	if(seed)
+		for(var/datum/plant_gene/trait/trait in seed.genes)
+			trait.on_squash(src, target)
 
 	for(var/A in T)
 		reagents.reaction(A)
@@ -120,43 +122,48 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/On_Consume()
 	if(iscarbon(usr))
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_consume(src, usr)
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_consume(src, usr)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/Crossed(atom/movable/AM)
-	var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
-	if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
-		var/mob/living/carbon/M = AM
-		var/stun = max(seed.potency * S.rate * 2, 1)
-		var/weaken = max(seed.potency * S.rate, 0.5)
-		if(M.slip(stun, weaken, src))
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_slip(src, M)
-		return 1
+	if(seed)
+		var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
+		if(S && !ispath(trash, /obj/item/weapon/grown) && iscarbon(AM))
+			var/mob/living/carbon/M = AM
+			var/stun = max(seed.potency * S.rate * 2, 1)
+			var/weaken = max(seed.potency * S.rate, 0.5)
+			if(M.slip(stun, weaken, src))
+				for(var/datum/plant_gene/trait/T in seed.genes)
+					T.on_slip(src, M)
+			return 1
 	..()
 
 
 // Glow gene procs
 /obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G && ismob(loc))
-		loc.AddLuminosity(-G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G && ismob(loc))
+			loc.AddLuminosity(-G.get_lum(seed))
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
 	..()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		SetLuminosity(0)
-		user.AddLuminosity(G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G)
+			SetLuminosity(0)
+			user.AddLuminosity(G.get_lum(seed))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/dropped(mob/user)
 	..()
-	var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		user.AddLuminosity(-G.get_lum(seed))
-		SetLuminosity(G.get_lum(seed))
+	if(seed)
+		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
+		if(G)
+			user.AddLuminosity(-G.get_lum(seed))
+			SetLuminosity(G.get_lum(seed))
 
 
 

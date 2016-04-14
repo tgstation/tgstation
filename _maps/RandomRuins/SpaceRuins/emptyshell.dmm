@@ -1,0 +1,31 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"c" = (/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"d" = (/turf/open/floor/plating,/area/ruin/unpowered)
+"e" = (/obj/effect/spawner/lootdrop/crate_spawner,/turf/open/floor/plating,/area/ruin/unpowered)
+"f" = (/obj/item/ammo_box/magazine/sniper_rounds,/turf/open/floor/plating,/area/ruin/unpowered)
+"g" = (/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/ruin/unpowered)
+"h" = (/obj/item/stack/rods,/turf/open/floor/plating,/area/ruin/unpowered)
+"i" = (/turf/open/floor/plating/airless,/area/ruin/unpowered)
+"j" = (/obj/machinery/door/airlock,/turf/open/floor/plating,/area/ruin/unpowered)
+"k" = (/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/turf/open/floor/plating,/area/ruin/unpowered)
+"l" = (/obj/item/stack/cable_coil,/turf/open/floor/plating,/area/ruin/unpowered)
+"m" = (/obj/effect/spawner/lootdrop/maintenance{lootcount = 4; name = "4maintenance loot spawner"},/turf/open/floor/plating,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaabaaaaaaa
+aaabbaaababaabaaa
+aaabccccccccccaba
+aabccccccccccccaa
+abacccdeddfdcccba
+abaccddddddgdccbb
+bbbdcdhddddddccbb
+aadijddhdgdddccaa
+aadijddkdddddccbb
+abbdcddddddhdccbb
+aaaccldeddmddccbb
+aaacccdddddecccaa
+aaaccccccccccccba
+aabaccccccccccaaa
+aaaabbaaaaaaaaaaa
+"}
