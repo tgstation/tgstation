@@ -74,7 +74,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	just to draw the massive rune needed. Do not create the rune until your cult is ready, the crew will receive the NAME and LOCATION of anyone who attempts to create the Nar-Sie rune. Once the Nar-Sie rune is drawn \
 	you must gathered 9 cultists (or constructs) over the rune and then click it to bring the Dark One into this world!<br><br>"
 
-	var/datum/browser/popup = new(user, "", 800, 600)
+	var/datum/browser/popup = new(usr, "", 800, 600)
 	popup.set_content(text)
 	popup.open()
 	return
@@ -178,9 +178,6 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rune of Summoning requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. This will deal a moderate amount of damage to all invokers. Absolutely crucial for rescuing your brothers from security.<br><br>"
 
-	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rune of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
-	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
-
 	text += "<font color='red'><b>Blood Boil</b></font><br>The Rune of Boiling Blood may be considered one of the most dangerous rites composed by the cult of Nar-Sie. When invoked, it will do a \
 	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. It requires three invokers.<br><br>"
 
@@ -195,6 +192,9 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to a randomly chosen rune of the same keyword, then \
 	disappear.<br><br>"
+	
+	text += "<font color='red'><b>Talisman of Construction</b></font><br>The Rune of Fabrication is the main way of creating construct shells. To use it, one must place fifteen sheets of metal on top of the rune \
+	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman functions nearly identically to the rune. The talisman will attempt to place the tome in your hand \
 	instead of on the ground, though this is the only advantage it has over the rune. It can be used once, then disappears.<br><br>"
