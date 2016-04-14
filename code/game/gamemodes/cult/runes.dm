@@ -520,12 +520,27 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/emp/invoke(mob/living/user)
 	var/turf/E = get_turf(src)
+	var/emp_strength = 0
+		for(var/mob/living/L in range(1, src))
+			if(iscultist(L))
+				var/mob/living/carbon/human/H = L
+				if(!istype(H))
+					if(istype(L, /mob/living/simple_animal/hostile/construct))
+						if(invocation)
+							L.say(invocation)
+						emp_strength++
+					continue
+				if(L.stat || (H.disabilities & MUTE) || H.silent)
+					continue
+				if(invocation)
+					L.say(invocation)
+				emp_strength++
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
 	for(var/mob/living/carbon/C in range(1,src))
 		C << "<span class='warning'>You feel a minute vibration pass through you!</span>"
 	playsound(E, 'sound/items/Welder2.ogg', 25, 1)
 	qdel(src) //delete before pulsing because it's a delay reee
-	empulse(E, 10, 20) // Very strong now
+	empulse(E, 7*emp_strength, 10*emp_strength) // Scales now, from a single room to around half the station depending on # of chanters
 
 //Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
 /obj/effect/rune/astral
@@ -680,6 +695,11 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		log_game("Talisman Imbue rune failed - no blank papers on rune")
 		return
+	if(rune_in_use)
+		user << "<span class='cultitalic'>[src] can only support one ritual at a time!</span>"
+		fail_invoke()
+		log_game("Talisman Imbue rune failed - more than one user")
+		return
 	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
 	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
 		var/obj/item/weapon/paper/talisman/J = I
@@ -694,7 +714,9 @@ var/list/teleport_runes = list()
 			talisman_type = J
 	user.say("H'drak v'loso, mir'kanas verbot!")
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
+	rune_in_use = 1
 	if(!do_after(user, 100, target = get_turf(user)))
+		rune_in_use = 0
 		return
 	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
 	if(istype(TA, /obj/item/weapon/paper/talisman/teleport))
@@ -703,7 +725,7 @@ var/list/teleport_runes = list()
 		TELE.keyword = the_keyword
 	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
-	qdel(src)
+	rune_in_use = 0
 	
 //Rite of Fabrication: Creates a construct shell out of 15 metal sheets.
 /obj/effect/rune/construct_shell
@@ -748,7 +770,8 @@ var/list/teleport_runes = list()
 				C << "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>"
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
-			C.take_overall_damage(51,51)
+			C.take_overall_damage(45,45)
+			C.weakened(7)
 	for(var/mob/living/carbon/M in range(1,src))
 		if(iscultist(M))
 			M.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
@@ -797,6 +820,12 @@ var/list/teleport_runes = list()
 	new_human.alpha = 150 //Makes them translucent
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
 	user << "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
+	for(get_turf(src))
+		var/obj/machinery/shield/N = new(B)
+		N.name = "Invoker's Shield"
+		N.desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
+		N.color = "red"
+		N.health = 20
 	new_human.key = ghost_to_spawn.key
 	ticker.mode.add_cultist(new_human.mind)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
