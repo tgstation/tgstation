@@ -348,7 +348,7 @@
 	say_mod = "hiss"
 
 /obj/item/organ/internal/tongue/alien/TongueSpeech(var/message)
-	playsound(get_turf(src), "hiss", 25, 1, 1)
+	playsound(owner, "hiss", 25, 1, 1)
 	return message
 
 /obj/item/organ/internal/appendix
