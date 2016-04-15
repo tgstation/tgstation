@@ -10,18 +10,7 @@
 #define DEMONRESURRECTTIME 600
 
 var/global/list/allDemons = list()
-
-/datum/demoninfo/
-	var/datum/mind/owner = null
-	var/obligation
-	var/ban
-	var/bane
-	var/banish
-	var/truename
-	var/list/datum/mind/soulsOwned = new
-	var/reviveNumber = 0
-	var/form = BASIC_DEMON
-	var/static/list/lawlorify = list (
+var/static/list/lawlorify = list (
 		LORE = list(
 			OBLIGATION_FOOD = "This demon seems to always offer it's victims food before slaughtering them.",
 			OBLIGATION_DRINK = "This demon seems to always offer it's victims a drink before slaughtering them.",
@@ -83,6 +72,17 @@ var/global/list/allDemons = list()
 			BANISH_FUNERAL_GARB = "If your corpse is clad in funeral garments, you will be unable to resurrect."
 		)
 	)
+
+/datum/demoninfo/
+	var/datum/mind/owner = null
+	var/obligation
+	var/ban
+	var/bane
+	var/banish
+	var/truename
+	var/list/datum/mind/soulsOwned = new
+	var/reviveNumber = 0
+	var/form = BASIC_DEMON
 
 /proc/randomDemonInfo(name = randomDemonName())
 	var/datum/demoninfo/demon = new

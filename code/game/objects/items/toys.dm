@@ -698,10 +698,10 @@
 		cooldown = 1
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
 		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [demon.truename]</span>")
-		src.loc.visible_message("<span class='danger'>[demoninfo.lawlorify[LORE][demon.bane]]</span>")
-		src.loc.visible_message("<span class='danger'>[demoninfo.lawlorify[LORE][demon.obligation]]</span>")
-		src.loc.visible_message("<span class='danger'>[demoninfo.lawlorify[LORE][demon.ban]]</span>")
-		src.loc.visible_message("<span class='danger'>[demoninfo.lawlorify[LORE][demon.banish]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.bane]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.obligation]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.ban]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.banish]]</span>")
 		spawn(60) cooldown = 0
 		return
 	..()
