@@ -326,18 +326,27 @@ var/list/teleport_runes = list()
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
-	teleport_runes["[listkey]"] = src
+	teleport_runes += src
 
 /obj/effect/rune/teleport/Destroy()
-	teleport_runes.Remove(listkey)
+	teleport_runes -= src
 	return ..()
 
 /obj/effect/rune/teleport/invoke(mob/living/user)
 	var/list/potential_runes = list()
+	var/list/teleportnames = list()
+	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
-		var/obj/effect/rune/teleport/T = teleport_runes[R]
+		var/obj/effect/rune/teleport/T = R
+		var/resultkey = T.listkey
+		if(resultkey in teleportnames)
+			duplicaterunecount[resultkey]++
+			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
+		else
+			teleportnames.Add(resultkey)
+			duplicaterunecount[resultkey] = 1
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
-			potential_runes["[T.listkey]"] = T
+			potential_runes[resultkey] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -351,8 +360,8 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		return
 
-	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes
-	var/obj/effect/rune/teleport/actual_selected_rune = teleport_runes["[input_rune_key]"]
+	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !actual_selected_rune)
 		fail_invoke()
 		return
@@ -919,6 +928,7 @@ var/list/teleport_runes = list()
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
+	mouse_opacity = 1 //we're big enough we don't need to cover the whole tile
 	var/used
 
 /obj/effect/rune/narsie/invoke(mob/living/user)

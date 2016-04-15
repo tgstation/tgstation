@@ -127,10 +127,18 @@ Rite of Disorientation
 
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
+	var/list/teleportnames = list()
+	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
-		var/obj/effect/rune/teleport/T = teleport_runes[R]
-		if(T.z <= ZLEVEL_SPACEMAX)
-			potential_runes["[T.listkey]"] = T
+		var/obj/effect/rune/teleport/T = R
+		var/resultkey = T.listkey
+		if(resultkey in teleportnames)
+			duplicaterunecount[resultkey]++
+			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
+		else
+			teleportnames.Add(resultkey)
+			duplicaterunecount[resultkey] = 1
+		potential_runes[resultkey] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -142,8 +150,8 @@ Rite of Disorientation
 		log_game("Teleport talisman failed - user in away mission")
 		return ..(user, 0)
 
-	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes
-	var/obj/effect/rune/teleport/actual_selected_rune = teleport_runes["[input_rune_key]"]
+	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!actual_selected_rune)
 		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
