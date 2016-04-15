@@ -212,6 +212,7 @@ BLIND     // can't see anything
 	var/chained = 0
 	var/chaintype = null // Type of chain.
 	var/bonus_kick_damage = 0
+	var/footprint_type = /obj/effect/decal/cleanable/blood/tracks/footprints //The type of footprint left by someone wearing these
 
 	siemens_coefficient = 0.9
 	body_parts_covered = FEET

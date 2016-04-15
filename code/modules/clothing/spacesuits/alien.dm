@@ -129,6 +129,8 @@
 
 	stomp_attack_power = 0
 
+	footprint_type = /obj/effect/decal/cleanable/blood/tracks/footprints/vox //They're like those five-toed shoes except for vox and with only three toes
+
 /obj/item/clothing/shoes/magboots/vox/toggle()
 	//set name = "Toggle Floor Grip"
 	if(usr.isUnconscious())

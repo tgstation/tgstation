@@ -53,16 +53,10 @@
 					H.track_blood = max(round(H.track_blood - 1, 1),0)
 
 			if (bloodDNA)
-				if(H.species && istype(H.species,/datum/species/vox))
-					src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints/vox,bloodDNA,H.dir,0,bloodcolor) // Coming
-				else
-					src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
+				src.AddTracks(H.get_footprint_type(),bloodDNA,H.dir,0,bloodcolor) // Coming
 				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
 				if(istype(from) && from)
-					if(H.species && istype(H.species,/datum/species/vox))
-						from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints/vox,bloodDNA,0,H.dir,bloodcolor) // Going
-					else
-						from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
+					from.AddTracks(H.get_footprint_type(),bloodDNA,0,H.dir,bloodcolor) // Going
 
 			bloodDNA = null
 

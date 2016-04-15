@@ -1725,3 +1725,7 @@
 		return 1
 
 	return 0
+
+/mob/living/carbon/human/proc/get_footprint_type()
+	var/obj/item/clothing/shoes/S = shoes //Why isn't shoes just typecast in the first place?
+	return ((istype(S) && S.footprint_type) || (species && species.footprint_type) || /obj/effect/decal/cleanable/blood/tracks/footprints) //The shoes' footprint type overrides the mob's, for obvious reasons. Shoes with a falsy footprint_type will let the mob's footprint take over, though.

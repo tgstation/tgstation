@@ -79,6 +79,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/body_temperature = 310.15
 
+	var/footprint_type = /obj/effect/decal/cleanable/blood/tracks/footprints //The type of footprint the species leaves if they are not wearing shoes. If we ever get any other than human and vox, maybe this should be explicitly defined for each species.
+
 	// For grays
 	var/max_hurt_damage = 5 // Max melee damage dealt + 5 if hulk
 	var/list/default_mutations = list()
@@ -481,6 +483,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
+
+	footprint_type = /obj/effect/decal/cleanable/blood/tracks/footprints/vox //Bird claws
 
 	uniform_icons = 'icons/mob/species/vox/uniform.dmi'
 //	fat_uniform_icons = 'icons/mob/uniform_fat.dmi'

@@ -111,7 +111,7 @@
 		return
 	if(perp.shoes)
 		var/obj/item/clothing/shoes/S = perp.shoes
-		S.track_blood = max(0,amount,S.track_blood)                //Adding blood to shoes
+		S.track_blood = max(0, amount, S.track_blood)                //Adding blood to shoes
 
 		if(!blood_overlays[S.type]) //If there isn't a precreated blood overlay make one
 			S.generate_blood_overlay()
@@ -130,9 +130,9 @@
 		if(blood_DNA)
 			S.blood_DNA |= blood_DNA.Copy()
 		perp.update_inv_shoes(1)
-	else
 
-		perp.track_blood = Clamp(amount, 0, perp.track_blood)                                //Or feet
+	else
+		perp.track_blood = max(amount, 0, perp.track_blood)                                //Or feet
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
 		if(!istype(blood_DNA, /list))
