@@ -617,6 +617,20 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	vending_cat = "carbonated drinks"
+	//because playsound(user, 'sound/effects/can_open[rand(1,3)].ogg', 50, 1) just wouldn't work. also so badmins can varedit these
+	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/New()
+	..()
+	flags &= ~OPENCONTAINER //Starts sealed until you pull the tab!
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user as mob)
+	if(!is_open_container())
+		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
+		flags |= OPENCONTAINER
+		playsound(user, pick(open_sounds), 50, 1)
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attackby(obj/item/weapon/W, mob/user)
 	..()
