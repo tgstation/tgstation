@@ -17,16 +17,17 @@
 	sparks = null
 	return ..()
 
-
 /obj/item/device/assembly/igniter/activate()
 	if(!..())
 		return 0//Cooldown check
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(1000,1000)
+	if(istype(src.loc.loc,/obj/structure/reagent_dispensers/fueltank))
+		for (var/obj/structure/reagent_dispensers/fueltank/F in location)
+			F.boom()
 	sparks.start()
 	return 1
-
 
 /obj/item/device/assembly/igniter/attack_self(mob/user)
 	activate()
