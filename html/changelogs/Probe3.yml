@@ -1,6 +1,0 @@
-author: Probe1
-
-delete-after: True
-
-changes: 
-- tweak: Chemmasters once again use 10 pills as the default input when making multiple pills.
