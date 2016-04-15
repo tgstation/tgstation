@@ -95,7 +95,7 @@
 	icon_state = "armory_gear"
 	amount = 3
 	toSpawn = list(
-		/obj/item/clothing/head/helmet/riot,
+		/obj/item/clothing/head/helmet/tactical/riot,
 		/obj/item/weapon/shield/riot,
 		/obj/item/weapon/melee/baton/loaded,
 		/obj/item/clothing/suit/armor/vest/security,
@@ -618,7 +618,7 @@
 		/obj/item/weapon/pickaxe/plasmacutter,
 		/obj/item/weapon/shield/energy,
 		)
-		
+
 /obj/map/spawner/space/weapons2
 	name = "exotic space weapons spawner"
 	icon_state = "space_weapons"

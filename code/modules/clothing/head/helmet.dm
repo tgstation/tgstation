@@ -1,50 +1,46 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
-	desc = "Standard Security gear. Protects the head from impacts."
-	icon_state = "helmet"
-	flags = FPRINT
+	icon_state = "helmet_sec"
 	item_state = "helmet"
-	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+	flags = FPRINT
+	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 	body_parts_covered = HEAD|EARS|EYES
 	heat_conductivity = HELMET_HEAT_CONDUCTIVITY
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.7
 
-/obj/item/clothing/head/helmet/warden
-	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "policehelm"
-	body_parts_covered = HEAD
+/obj/item/clothing/head/helmet/siren
+	name = "siren helmet"
+	desc = "For the officer that's off patrolling all the nation."
+	icon_state = "helmetgoofy" //Sprites courtesy of Blithering
+	light_power = 2.5
+	light_range = 4
+	light_color = LIGHT_COLOR_RED
+	action_button_name = "Activate Siren"
+	var/spamcheck = 0
 
-/obj/item/clothing/head/helmet/riot
-	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
-	icon_state = "riot"
-	item_state = "helmet"
-	flags = FPRINT
-	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
-	siemens_coefficient = 0.7
-	eyeprot = 1
+/obj/item/clothing/head/helmet/siren/attack_self(mob/user)
+	if(spamcheck)
+		return
+	playsound(get_turf(src), 'sound/voice/woopwoop.ogg', 100, 1, vary = 0)
+	user.show_message("<span class='warning'>[user]'s [name] rasps, \"WOOP WOOP!\"</span>",1)
 
-/obj/item/clothing/head/helmet/swat
-	name = "\improper SWAT helmet"
-	desc = "They're often used by highly trained Swat Members."
-	icon_state = "swat"
-	flags = FPRINT
-	item_state = "swat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
-	species_fit = list("Vox")
-	pressure_resistance = 200 * ONE_ATMOSPHERE
-	siemens_coefficient = 0.5
-	eyeprot = 1
+	spamcheck = 1
+	spawn(15)
+		spamcheck = 0
 
-/obj/item/clothing/head/helmet/swat/dredd
+/obj/item/clothing/head/helmet/dredd //same stats as /obj/item/clothing/head/helmet/tactical/swat
 	name = "Judge Helmet"
 	desc = "Judge, Jury, and Executioner."
 	icon_state = "dredd-helmet"
 	item_state = "dredd-helmet"
+	flags = FPRINT
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
 	species_fit = list()
+	pressure_resistance = 200 * ONE_ATMOSPHERE
+	siemens_coefficient = 0.5
+	eyeprot = 1
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -79,7 +75,7 @@
 
 /obj/item/clothing/head/helmet/hopcap
 	name = "Head of Personnel's Cap"
-	desc = "Papers, Please"
+	desc = "Papers, Please."
 	armor = list(melee = 25, bullet = 0, laser = 15, energy = 10, bomb = 5, bio = 0, rad = 0)
 	item_state = "hopcap"
 	icon_state = "hopcap"

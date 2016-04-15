@@ -808,13 +808,10 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/tactical/sec/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
 	..()
 	if(!issignaler(S))
 		..()
-		return
-
-	if(src.type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
 		return
 
 	if(S.secured)

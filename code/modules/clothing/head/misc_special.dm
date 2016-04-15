@@ -5,6 +5,7 @@
  *		Ushanka
  *		Pumpkin head
  *		Kitty ears
+ *		Butt
  *		Tinfoil Hat
  */
 

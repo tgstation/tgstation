@@ -840,7 +840,7 @@ Auto Patrol: []"},
 			new /obj/item/robot_parts/r_leg(Tsec)
 	if (prob(25))//50% chance for a helmet OR vest
 		if (prob(50))
-			new /obj/item/clothing/head/helmet(Tsec)
+			new /obj/item/clothing/head/helmet/tactical/sec(Tsec)
 		else
 			if(!lasercolor)
 				new /obj/item/clothing/suit/armor/vest(Tsec)
@@ -998,7 +998,7 @@ Auto Patrol: []"},
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You welded the vest to [src].</span>")
 		if(4)
-			if( istype(W, /obj/item/clothing/head/helmet) )
+			if( istype(W, /obj/item/clothing/head/helmet/tactical/sec) )
 				if(user.drop_item(W))
 					qdel(W)
 					build_step++

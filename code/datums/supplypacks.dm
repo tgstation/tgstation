@@ -546,8 +546,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/armor
 	name = "Armor crate"
-	contains = list(/obj/item/clothing/head/helmet,
-					/obj/item/clothing/head/helmet,
+	contains = list(/obj/item/clothing/head/helmet/tactical/sec,
+					/obj/item/clothing/head/helmet/tactical/sec,
 					/obj/item/clothing/suit/armor/vest,
 					/obj/item/clothing/suit/armor/vest)
 	cost = 15
@@ -570,11 +570,11 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/tactical/riot,
 					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/tactical/riot,
 					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/tactical/riot,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/weapon/storage/box/bolas,
 					/obj/item/weapon/storage/box/bolas)
@@ -657,7 +657,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	name = "Experimental armor crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/tactical/riot,
 					/obj/item/clothing/suit/armor/riot)
 	cost = 35
 	containertype = /obj/structure/closet/crate/secure

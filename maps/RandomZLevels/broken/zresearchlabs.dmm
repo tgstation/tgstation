@@ -1031,7 +1031,7 @@
 "tQ" = (/obj/effect/critter/fleshmonster,/turf/simulated/floor,/area/awaymission/labs/security)
 "tR" = (/obj/structure/rack,/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/labs/security)
 "tS" = (/obj/structure/rack,/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump,/obj/machinery/light{dir = 1},/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/labs/security)
-"tT" = (/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/obj/item/weapon/melee/baton,/obj/item/weapon/shield/riot,/obj/item/clothing/head/helmet/riot,/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/labs/security)
+"tT" = (/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/obj/item/weapon/melee/baton,/obj/item/weapon/shield/riot,/obj/item/clothing/head/helmet/tactical/riot,/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/labs/security)
 "tU" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/awaymission/labs/security)
 "tV" = (/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/awaymission/labs/security)
 "tW" = (/obj/structure/rack,/obj/machinery/light{dir = 1},/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/awaymission/labs/security)

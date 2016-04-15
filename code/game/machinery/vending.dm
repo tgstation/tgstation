@@ -1460,6 +1460,9 @@ var/global/num_vending_terminals = 1
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/weapon/storage/fancy/donut_box = 2,
 		)
+	premium = list(
+		/obj/item/clothing/head/helmet/siren = 2
+		)
 
 	pack = /obj/structure/vendomatpack/security
 

@@ -262,7 +262,7 @@
 			synd_mob.internals.icon_state = "internal1"
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
 	if(!istype(synd_mob.species, /datum/species/plasmaman))
-		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(synd_mob), slot_head)
+		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/tactical/swat(synd_mob), slot_head)
 	else
 		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/plasmaman/nuclear(synd_mob), slot_head)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/prescription(synd_mob), slot_glasses)//changed to prescription sunglasses so near-sighted players aren't screwed if there aren't any admins online

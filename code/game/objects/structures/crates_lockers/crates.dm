@@ -573,7 +573,7 @@
 			new/obj/item/weapon/gun/energy/polarstar(src)
 		if("gatling")
 			new/obj/item/clothing/suit/armor/riot(src)
-			new/obj/item/clothing/head/helmet/riot(src)
+			new/obj/item/clothing/head/helmet/tactical/riot(src)
 			new/obj/item/clothing/shoes/swat(src)
 			new/obj/item/clothing/gloves/swat(src)
 			new/obj/item/weapon/gun/gatling(src)

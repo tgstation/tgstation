@@ -990,6 +990,7 @@
 #include "code\modules\clothing\head\misc.dm"
 #include "code\modules\clothing\head\misc_special.dm"
 #include "code\modules\clothing\head\soft_caps.dm"
+#include "code\modules\clothing\head\tactical.dm"
 #include "code\modules\clothing\masks\boxing.dm"
 #include "code\modules\clothing\masks\breath.dm"
 #include "code\modules\clothing\masks\chemmask.dm"

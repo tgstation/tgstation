@@ -237,12 +237,12 @@
 				/obj/item/clothing/head/hardhat, /obj/item/clothing/head/collectable/hardhat,/obj/item/clothing/head/hardhat/white, /obj/item/weapon/paper )
 			valid = 1
 
-		if(/obj/item/clothing/head/helmet)
+		if(/obj/item/clothing/head/helmet/tactical/sec)
 			name = "Sergeant [real_name]"
 			desc = "The ever-loyal, the ever-vigilant."
 			valid = 1
 
-		if(/obj/item/clothing/head/helmet/swat)
+		if(/obj/item/clothing/head/helmet/tactical/swat)
 			name = "Lieutenant [real_name]"
 			desc = "When the going gets ruff..."
 			valid = 1

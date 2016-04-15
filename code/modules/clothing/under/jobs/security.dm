@@ -100,17 +100,6 @@
 	siemens_coefficient = 0.8
 	species_fit = list("Vox")
 
-
-/obj/item/clothing/head/helmet/HoS
-	name = "Head of Security Hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
-	flags = FPRINT
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	body_parts_covered = HEAD
-	siemens_coefficient = 0.8
-
-
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style."
@@ -118,14 +107,6 @@
 	item_state = "hos"
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	siemens_coefficient = 0.6
-
-
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
 	siemens_coefficient = 0.6
 
 //Jensen cosplay gear

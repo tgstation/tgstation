@@ -93,7 +93,7 @@
 "bO" = (/obj/structure/table/reinforced{icon_state = "table"},/obj/item/weapon/paper_bin,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "bP" = (/obj/structure/extinguisher_cabinet,/turf/simulated/wall,/area/vault/oldarmory)
 "bQ" = (/obj/machinery/vending/autodrobe,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
-"bR" = (/obj/structure/closet,/obj/item/clothing/head/helmet/swat/dredd,/obj/item/clothing/suit/armor/xcomsquaddie/dredd,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
+"bR" = (/obj/structure/closet,/obj/item/clothing/head/helmet/tactical/swat/dredd,/obj/item/clothing/suit/armor/xcomsquaddie/dredd,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "bS" = (/obj/structure/rack,/obj/map/spawner/space/weapons2,/obj/map/spawner/space/weapons2,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "bT" = (/obj/structure/rack,/obj/map/spawner/security/armor,/obj/map/spawner/security/armor,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)
 "bU" = (/obj/structure/rack,/obj/map/spawner/security/weapons,/obj/map/spawner/security/weapons,/turf/simulated/shuttle/floor4,/area/vault/oldarmory)

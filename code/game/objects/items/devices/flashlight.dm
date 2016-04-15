@@ -28,17 +28,17 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null, var/playsound = 1)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
-		if(has_sound)
+		if(playsound && has_sound)
 			if(get_turf(src))
 				playsound(get_turf(src), sound_on, 50, 1)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
-		if(has_sound)
+		if(playsound && has_sound)
 			playsound(get_turf(src), sound_off, 50, 1)
 
 /obj/item/device/flashlight/attack_self(mob/user)
@@ -105,6 +105,11 @@
 	brightness_on = 2
 	has_sound = 0
 
+/obj/item/device/flashlight/tactical
+	name = "tactical light"
+	desc = "A compact, helmet-mounted flashlight attachment."
+	icon_state = "tacticoollight"
+	item_state = ""
 
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp

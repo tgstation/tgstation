@@ -63,8 +63,10 @@
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/gloves/swat(src)
 	new /obj/item/clothing/gloves/swat(src)
-	new /obj/item/clothing/head/helmet/swat(src)
-	new /obj/item/clothing/head/helmet/swat(src)
+	new /obj/item/clothing/head/helmet/tactical/swat(src)
+	new /obj/item/clothing/head/helmet/tactical/swat(src)
+	new /obj/item/device/flashlight/tactical(src)
+	new /obj/item/device/flashlight/tactical(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/shoes/swat(src)
@@ -139,4 +141,3 @@
 	new /obj/item/clothing/head/helmet/thunderdome(src)
 	new /obj/item/clothing/head/helmet/thunderdome(src)
 	new /obj/item/clothing/head/helmet/thunderdome(src)
-
