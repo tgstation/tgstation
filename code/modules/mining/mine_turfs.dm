@@ -616,6 +616,12 @@
 		/turf/closed/mineral/silver/volcanic = 12, /turf/closed/mineral/plasma/volcanic = 20, /turf/closed/mineral/iron/volcanic = 40,
 		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic = 1, /turf/closed/mineral/bscrystal/volcanic = 1)
 
+/turf/closed/mineral/random/high_chance/volcanic
+	environment_type = "basalt"
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
 /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface

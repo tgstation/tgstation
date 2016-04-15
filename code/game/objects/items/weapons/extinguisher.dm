@@ -46,6 +46,15 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
+/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
+	if(user.a_intent == "help")
+		// If we're in help intent, don't bash anyone with the
+		// extinguisher
+		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
+		return 1
+	else
+		return ..()
+
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
@@ -77,8 +86,6 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-	if(target.loc == user || !check_allowed_items(target)) //No more spraying yourself when putting your extinguisher away
-		return
 	var/Refill = AttemptRefill(target, user)
 	if(Refill)
 		return
@@ -160,5 +167,11 @@
 /obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
 	if(loc == user && reagents.total_volume)
 		reagents.clear_reagents()
+
+		var/turf/T = get_turf(loc)
+		if(istype(T, /turf/open))
+			var/turf/open/theturf = T
+			theturf.MakeSlippery(TURF_WET_WATER)
+
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
 	return

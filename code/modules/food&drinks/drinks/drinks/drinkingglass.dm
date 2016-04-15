@@ -6,6 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
+	materials = list(MAT_GLASS=500)
 	burn_state = FLAMMABLE
 	burntime = 5
 	spillable = 1
@@ -538,6 +539,7 @@
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
+	materials = list(MAT_GLASS=100)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
 	if (gulp_size < 15)

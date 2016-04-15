@@ -3761,6 +3761,7 @@
 "ahl" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Security"
 	},
@@ -27004,9 +27005,9 @@
 /area/maintenance/disposal)
 "beU" = (
 /obj/machinery/conveyor{
-	dir = 9;
+	dir = 6;
 	id = "garbage";
-	verted = -1
+	verted = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -32211,6 +32212,7 @@
 "bpr" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Research Division"
 	},
@@ -33505,6 +33507,7 @@
 "brM" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #1"
 	},
@@ -34399,6 +34402,7 @@
 "bts" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #2"
 	},
@@ -35081,6 +35085,7 @@
 "buD" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #3"
 	},
@@ -35860,6 +35865,7 @@
 "bvY" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #4"
 	},
@@ -36060,6 +36066,7 @@
 "bwv" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Medbay"
 	},
@@ -39911,6 +39918,7 @@
 "bDP" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 1;
 	freq = 1400;
 	location = "Janitor"
 	},
@@ -45691,6 +45699,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Atmospherics"
 	},

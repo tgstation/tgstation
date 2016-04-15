@@ -1,0 +1,6 @@
+author: Erwgd
+delete-after: True
+changes: 
+  - rscadd: "Forks, bowls, drinking glasses, shot glasses and shakers can now be made and recycled in the autolathe! Access the designs in the new 'Dinnerware' category."
+  - tweak: "Kitchen knives have been moved to the Dinnerware category of the autolathe."
+  - rscadd: "Butcher's cleavers can now be made in a hacked autolathe."

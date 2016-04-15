@@ -28710,6 +28710,7 @@
 /obj/structure/plasticflaps,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
+	dir = 1;
 	freq = 1400;
 	location = "Atmospherics"
 	},
@@ -36879,6 +36880,7 @@
 /obj/structure/plasticflaps,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
+	dir = 1;
 	freq = 1400;
 	location = "Kitchen"
 	},
@@ -38775,13 +38777,13 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "bsW" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	dir = 1;
-	state = 2
+/obj/structure/chair/comfy/black{
+	dir = 1
 	},
-/turf/open/space,
-/area/space)
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle/syndicate)
 "bsX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -39087,6 +39089,7 @@
 /obj/structure/plasticflaps,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
+	dir = 1;
 	freq = 1400;
 	location = "Hydroponics"
 	},
@@ -42911,17 +42914,11 @@
 	},
 /area/maintenance/starboard)
 "bAI" = (
-/obj/machinery/power/emitter{
-	anchored = 1;
-	dir = 4;
-	state = 2
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit{
+	name = "\improper Departure Lounge"
+	})
 "bAJ" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -53273,7 +53270,9 @@
 /turf/open/floor/plasteel{
 	icon_state = "delivery"
 	},
-/area/space)
+/area/security/checkpoint2{
+	name = "Customs"
+	})
 "bTA" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper,
@@ -61029,6 +61028,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Science"
 	},
@@ -61713,6 +61713,27 @@
 	dir = 4
 	},
 /turf/closed/indestructible/opshuttle,
+/area/shuttle/syndicate)
+"cki" = (
+/turf/open/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 4
+	},
+/turf/closed/wall/shuttle{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"ckh" = (
+/turf/open/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 4
+	},
+/turf/closed/wall/shuttle{
+	tag = "icon-diagonalWall3 (WEST)";
+	icon_state = "diagonalWall3";
+	dir = 8
+	},
 /area/shuttle/syndicate)
 
 (1,1,1) = {"
@@ -72328,15 +72349,15 @@ aaa
 aaa
 aaa
 aaa
-ckf
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
+ckh
+abb
+abb
+abb
+abb
+abb
+abb
+abb
+abb
 acp
 aaa
 aaa
@@ -72579,13 +72600,13 @@ aaa
 aaa
 aaa
 aaa
-ckf
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
+ckh
+abb
+abb
+abb
+abb
+abb
+abb
 adT
 afM
 adT
@@ -72836,13 +72857,13 @@ aaa
 aaa
 aaa
 aaa
-ckc
+abb
 adp
 adp
 adp
 adp
 adp
-ckc
+abb
 aeO
 aeO
 aeO
@@ -73093,13 +73114,13 @@ aaa
 aaa
 aaa
 aaa
-ckc
+abb
 abp
 abp
 abp
 abp
 abp
-ckc
+abb
 aeP
 aeO
 aeO
@@ -73343,28 +73364,28 @@ aaa
 aaa
 aaa
 aaa
-ckb
-ckc
-ckc
-ckc
+ckh
+abb
+abb
+abb
 acp
 aaa
 aaa
-ckc
+abb
 abp
 aax
 abp
 abp
 abp
-ckc
+abb
 afl
 aeO
 aeO
 aeO
 ahc
-ckc
-ckc
-ckc
+abb
+abb
+abb
 acr
 aaa
 aaa
@@ -73600,26 +73621,26 @@ aaa
 aaa
 aaa
 aaa
-ckc
+abb
 abo
 abK
 abY
-ckc
+abb
 acp
 aaa
-ckc
+abb
 adq
 adC
 abL
 abp
 abp
-ckc
+abb
 afn
 aeO
 aeO
 aeO
 ahd
-ckc
+abb
 aaa
 aaa
 aaa
@@ -73861,23 +73882,23 @@ abc
 abp
 abp
 abp
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
+abb
+abb
+abb
+abb
+abb
+abb
+abb
 aem
 aeN
-ckc
-ckc
+abb
+abb
 afN
 afO
 agl
-ckc
-ckc
-ckc
+abb
+abb
+abb
 acp
 aaa
 aaa
@@ -74118,7 +74139,7 @@ abc
 abq
 abp
 abp
-ckc
+abb
 acF
 acQ
 acQ
@@ -74373,7 +74394,7 @@ aaa
 aaa
 abc
 abr
-cke
+bsW
 abp
 acq
 abp
@@ -74889,23 +74910,23 @@ abc
 abt
 abp
 abp
-ckc
-ckc
-ckc
+abb
+abb
+abb
 ckg
-ckc
-ckc
-ckc
+abb
+abb
+abb
 aen
 adB
-ckc
-ckc
-ckc
+abb
+abb
+abb
 afP
 agm
-ckc
-ckc
-ckc
+abb
+abb
+abb
 acr
 aaa
 aaa
@@ -75142,27 +75163,27 @@ aaa
 aaa
 aaa
 aaa
-ckc
+abb
 abt
 abp
 aca
-ckc
+abb
 acr
 aaa
 aaa
 aaa
-ckc
+abb
 abp
 abp
 abp
-ckc
+abb
 afQ
 abp
 abp
 abp
 ahe
 ahS
-ckc
+abb
 aaa
 aaa
 aaa
@@ -75399,10 +75420,10 @@ aaa
 aaa
 aaa
 aaa
-ckd
-ckc
-ckc
-ckc
+cki
+abb
+abb
+abb
 acr
 aaa
 aaa
@@ -75412,15 +75433,15 @@ aba
 abp
 abp
 abp
-ckc
+abb
 afR
 abp
 abp
 abp
 ahf
-ckc
-ckc
-ckc
+abb
+abb
+abb
 acp
 aaa
 aaa
@@ -75669,7 +75690,7 @@ abd
 abp
 abp
 abp
-ckc
+abb
 afS
 abp
 abp
@@ -75922,11 +75943,11 @@ aaa
 aaa
 aaa
 aaa
-ckd
-ckc
-ckc
-ckc
-ckc
+adE
+abb
+abb
+abb
+abb
 afT
 aax
 abp
@@ -76183,7 +76204,7 @@ aaa
 aaa
 aaa
 adE
-ckc
+abb
 afU
 agn
 abp
@@ -76440,15 +76461,15 @@ aaa
 aaa
 aaa
 aaa
-adE
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
-ckc
+cki
+abb
+abb
+abb
+abb
+abb
+abb
+abb
+abb
 acr
 aaa
 aaa
@@ -86305,7 +86326,7 @@ bZg
 caa
 caG
 cac
-ckd
+bAI
 ccB
 cdd
 cdA
@@ -90413,7 +90434,7 @@ bVr
 bWz
 bXE
 bYv
-ckc
+bYv
 cag
 bYy
 bYy
@@ -98635,7 +98656,7 @@ bev
 bev
 bev
 bWX
-ckb
+bXX
 bXX
 bZB
 cam
@@ -100834,7 +100855,7 @@ aaa
 aaa
 aaa
 aaa
-cka
+aaa
 aaa
 aaa
 aaa
@@ -110941,7 +110962,7 @@ aaa
 aaa
 aaa
 aaa
-bsW
+aaa
 aaa
 aab
 bnG
@@ -112226,7 +112247,7 @@ aaa
 aaa
 aaa
 aaa
-bAI
+aaa
 aab
 aab
 bnG
