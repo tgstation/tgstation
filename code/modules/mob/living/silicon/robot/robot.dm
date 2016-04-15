@@ -626,7 +626,7 @@
 			if(syndicate)
 				user << "<span class='notice'>You emag [src]'s interface.</span>"
 				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] was a syndicate cyborg.")
+				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] but they were a syndicate cyborg.")
 				emag_cooldown = world.time
 				return
 
