@@ -462,7 +462,7 @@ var/global/list/allDemons = list()
 			if(SOULVALUE >= POWERUPTHRESHOLD * 2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
 				var/mob/living/carbon/true_demon/A = new /mob/living/carbon/true_demon(targetturf)
 				A.faction |= "hell"
-				H.force_move(A)
+				H.forceMove(A)
 				A.oldform = H
 				A.set_name()
 				owner.transfer_to(A)
