@@ -102,7 +102,6 @@
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
 			return ..() //flashes don't stop demons UNLESS it's their bane.
-	return
 
 
 /mob/living/carbon/true_demon/attacked_by(obj/item/I, mob/living/user, def_zone)

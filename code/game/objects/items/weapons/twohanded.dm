@@ -482,7 +482,6 @@
 
 /obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "pitchfork[wielded]"
-	return
 
 /obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] impales \himself in \his abdomen with [src]! It looks like \he's trying to commit suicide..</span>")
@@ -499,7 +498,6 @@
 				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 			else
 				U.adjustFireLoss(rand(force/2,force))
-		return
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(!user.mind.demoninfo)

@@ -9,7 +9,7 @@
 
 #define DEMONRESURRECTTIME 600
 
-var/list/allDemons = list()
+var/global/list/allDemons = list()
 
 /datum/demoninfo/
 	var/datum/mind/owner = null
@@ -22,7 +22,7 @@ var/list/allDemons = list()
 	var/reviveNumber = 0
 	var/form = BASIC_DEMON
 
-/proc/randomDemonInfo(var/name = randomDemonName())
+/proc/randomDemonInfo(name = randomDemonName())
 	var/datum/demoninfo/demon = new
 	demon.truename = name
 	demon.bane = randomdemonbane()
@@ -31,7 +31,7 @@ var/list/allDemons = list()
 	demon.banish = randomdemonbanish()
 	return demon
 
-/proc/demonInfo(var/name, var/saveDetails = 1)
+/proc/demonInfo(name, saveDetails = 1)
 	if(allDemons[name])
 		return allDemons[name]
 	else
@@ -207,7 +207,7 @@ var/list/allDemons = list()
 		if(BANISH_FUNERAL_GARB)
 			return "Funeral garments will prevent the demon from resurrecting."
 
-/datum/demoninfo/proc/add_soul(var/datum/mind/soul)
+/datum/demoninfo/proc/add_soul(datum/mind/soul)
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
@@ -222,7 +222,7 @@ var/list/allDemons = list()
 		if(POWERUPTHRESHOLD*3)
 			increase_arch_demon()
 
-/datum/demoninfo/proc/remove_soul(var/datum/mind/soul)
+/datum/demoninfo/proc/remove_soul(datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
 
@@ -373,7 +373,7 @@ var/list/allDemons = list()
 	if(SOULVALUE>0)
 		owner.current<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
 		sleep(DEMONRESURRECTTIME)
-		if (!body || (body && body.stat == DEAD))
+		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
 				if(check_banishment(body))
 					owner.current<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
@@ -452,21 +452,21 @@ var/list/allDemons = list()
 			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
 			give_summon_contract()
-			if(SOULVALUE>=POWERUPTHRESHOLD)
+			if(SOULVALUE >= POWERUPTHRESHOLD)
 				H.set_species(/datum/species/lizard, 1)
 				H.underwear = "Nude"
 				H.undershirt = "Nude"
 				H.socks = "Nude"
 				H.dna.features["mcolor"] = "511"
 				H.regenerate_icons()
-			if(SOULVALUE>=POWERUPTHRESHOLD*2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+			if(SOULVALUE >= POWERUPTHRESHOLD * 2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
 				var/mob/living/carbon/true_demon/A = new /mob/living/carbon/true_demon(targetturf)
 				A.faction |= "hell"
-				H.loc = A
+				H.force_move(A)
 				A.oldform = H
 				A.set_name()
 				owner.transfer_to(A)
-				if(SOULVALUE>=POWERUPTHRESHOLD*3)
+				if(SOULVALUE >= POWERUPTHRESHOLD * 3)
 					A.convert_to_archdemon()
 
 		else

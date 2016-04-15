@@ -343,10 +343,11 @@
 					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
-/mob/new_player/proc/AddEmploymentContract(var/mob/living/carbon/human/employee)
+/mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	sleep(30)
-	for(var/obj/structure/filingcabinet/employment/employmentCabinet in employmentCabinets)
+	for(var/C in employmentCabinets)
+		var/obj/structure/filingcabinet/employment/employmentCabinet = C
 		if(!employmentCabinet.virgin)
 			employmentCabinet.addFile(employee)
 

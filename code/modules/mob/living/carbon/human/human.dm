@@ -993,7 +993,8 @@
 	src.mind.objectives += O
 	var/obj_count = 1
 	src << "<span class='notice'>Your current objectives:</span>"
-	for(var/datum/objective/objective in src.mind.objectives)
+	for(O in src.mind.objectives)
+		var/datum/objective/objective
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 

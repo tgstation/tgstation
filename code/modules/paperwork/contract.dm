@@ -15,7 +15,7 @@
 
 /obj/item/weapon/paper/contract/employment
 	icon_state = "paper_words"
-	
+
 /obj/item/weapon/paper/contract/employment/New(atom/loc, mob/living/nOwner)
 	. = ..()
 	if(!nOwner.mind)
@@ -243,7 +243,8 @@
 
 /obj/item/weapon/paper/contract/infernal/knowledge/FulfillContract(mob/living/carbon/human/user = target.current)
 	user.dna.add_mutation(XRAY)
-	for(var/datum/atom_hud/H in huds)
+	for(var/U in huds)
+		var/datum/atom_hud/H = U
 		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
 			H.add_hud_to(usr)
 	return ..()

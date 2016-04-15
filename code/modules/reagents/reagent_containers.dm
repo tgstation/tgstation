@@ -40,7 +40,6 @@
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == "harm")
 		return ..()
-	return
 
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return

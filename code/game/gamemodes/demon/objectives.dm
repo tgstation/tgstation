@@ -11,14 +11,12 @@
 
 /datum/objective/demon/soulquantity/check_completion()
 	var/count = 0
-	for(var/datum/mind/L in owner.demoninfo.soulsOwned)
+	for(var/S in owner.demoninfo.soulsOwned)
+		var/datum/mind/L = S
 		if(L.soulOwner != L)
 			count++
-	return count>=quantity
-/*
-/datum/objective/demon/ascend		//Ascension is not implemented yet.
-	explanation_text = "Ascend to an archdemon."
-*/
+	return count >= quantity
+
 /datum/objective/demon/soulquality
 	explanation_text = "You shouldn't see this text.  Error:Demon2"
 	var/contractType
@@ -47,7 +45,8 @@
 
 /datum/objective/demon/soulquality/check_completion()
 	var/count = 0
-	for(var/datum/mind/L in owner.demoninfo.soulsOwned)
+	for(var/S in owner.demoninfo.soulsOwned)
+		var/datum/mind/L = S
 		if(L.soulOwner != L && L.damnation_type == contractType)
 			count++
 	return count>=quantity

@@ -37,18 +37,18 @@
 							Though you are not obligated to help, perhaps by aiding a higher ranking demon, you might just get a promotion.  However, you are incapable	\
 							of intentionally harming a fellow demon.</B>"
 
-/mob/living/simple_animal/slaughter/New()
+/mob/living/simple_animal/imp/New()
 	..()
 	boost = world.time + 30
 
-/mob/living/simple_animal/slaughter/Life()
+/mob/living/simple_animal/imp/Life()
 	..()
 	if(boost<world.time)
 		speed = 1
 	else
 		speed = 0
 
-/mob/living/simple_animal/slaughter/death()
+/mob/living/simple_animal/imp/death()
 	..(1)
 	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
 	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")

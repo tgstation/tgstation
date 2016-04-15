@@ -237,7 +237,7 @@
 	color = "#FFFFFF" // rgb: 255,255,255
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!istype(M))
 		return
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)

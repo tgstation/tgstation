@@ -188,7 +188,8 @@ var/list/employmentCabinets = list()
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/datum/data/record/G in data_core.locked)
+	for(var/record in data_core.locked)
+		var/datum/data/record/G = record
 		if(!G)
 			continue
 		if(G.fields["reference"])

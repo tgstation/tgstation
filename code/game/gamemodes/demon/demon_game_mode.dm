@@ -8,7 +8,8 @@
 	if(sintouched.len)
 		text += "<br><span class='big'><b>The sintouched were:</b></span>"
 		var/list/sintouchedUnique = uniqueList(sintouched)
-		for(var/datum/mind/sintouched_mind in sintouchedUnique)
+		for(var/S in sintouchedUnique)
+			var/datum/mind/sintouched_mind = S
 			text += printplayer(sintouched_mind)
 			text += printobjectives(sintouched_mind)
 		text += "<br>"
@@ -19,7 +20,8 @@
 	/var/text = ""
 	if(demons.len)
 		text += "<br><span class='big'><b>The demons were:</b></span>"
-		for(var/datum/mind/demon in demons)
+		for(var/D in demons)
+			var/datum/mind/demon = D
 			text += printplayer(demon)
 			text += printdemoninfo(demon)
 			text += printobjectives(demon)
@@ -59,11 +61,14 @@
 	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
 	var/obj_count = 1
 	current << "<span class='notice'>Your current objectives:</span>"
-	for(var/datum/objective/objective in objectives)
+	for(var/O in objectives)
+		var/datum/objective/objective = O
 		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
 /datum/game_mode/proc/printdemoninfo(datum/mind/ply)
+	if(!ply.demoninfo)
+		return ""
 	var/text = "</br>The demon's true name is: [ply.demoninfo.truename]</br>"
 	text += "The demon's bans were:</br>"
 	text += "	[ply.demoninfo.banlore()]</br>"
