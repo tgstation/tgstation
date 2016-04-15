@@ -184,7 +184,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	if(istype(C))
 		spawn()
 			while(!speciesinit)
-				sleep(10)
+				sleep(1)
 			if(!IsGuestKey(C.key))
 				var/load_pref = load_preferences_sqlite(C.ckey)
 				if(load_pref)
