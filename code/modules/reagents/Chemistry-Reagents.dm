@@ -168,7 +168,7 @@
 			to_chat(M, "<span class='notice'>[pick("You feel quite hardcore", "Coderbased is your god", "Fucking kickscammers Bustration will be the best")].")
 		else
 			M.say(pick("Muh hardcores.", "Falling down is a feature.", "Gorrillionaires and Booty Borgs when?"))
-			
+
 /datum/reagent/rogan
 	name = "Rogan"
 	id = "rogan"
@@ -768,7 +768,7 @@
 				H.visible_message("<span class='notice'>[H] suddenly becomes calm and collected again, his eyes clear up.</span>",
 				"<span class='notice'>Your blood cools down and you are inhabited by a sensation of untold calmness.</span>")
 			else //Warn the Cultist that it is fucking him up
-				to_chat(H, "<span class='danger'>A freezing liquid permeates your bloodstream. Your arcane knowledge is becoming osbscure again.</span>")
+				to_chat(H, "<span class='danger'>A freezing liquid permeates your bloodstream. Your arcane knowledge is becoming obscure again.</span>")
 		//Vampires react to this like acid, and it massively spikes their smitecounter. And they are guaranteed to have adverse effects.
 		if(isvampire(H))
 			if(!(VAMP_MATURE in H.mind.vampire.powers))
