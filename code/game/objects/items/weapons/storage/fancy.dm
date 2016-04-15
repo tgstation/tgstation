@@ -208,6 +208,7 @@
 	icon_type = "match"
 	plural_type = "es"
 	storage_slots = 21 //3 rows of 7 items
+	max_combined_w_class = 21
 	w_class = 1
 	flags = 0
 	var/matchtype = /obj/item/weapon/match
