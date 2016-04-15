@@ -168,14 +168,10 @@
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
 
 /turf/open/floor/plasteel/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
