@@ -333,6 +333,22 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/drone
+	name = "internal storage"
+	desc = "A drone's internal storage. Able to hold a large variety of tools and materials."
+	flags = ABSTRACT | NODROP
+	burn_state = FIRE_PROOF
+
+/obj/item/weapon/storage/backpack/dufflebag/drone/New()
+	..()
+	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie
 	name = "suspicious looking dufflebag"
