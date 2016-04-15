@@ -8677,7 +8677,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -9108,10 +9108,10 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "arV" = (
+/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/book/demonomicon,
 /turf/open/floor/wood,
 /area/lawoffice)
 "arW" = (
@@ -45450,16 +45450,10 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/closet,
-/obj/item/pipe{
-	dir = 4;
-	icon_state = "mixer";
-	name = "gas mixer fitting";
-	pipe_type = 14
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/droneDispenser/preloaded,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bOx" = (
@@ -58424,17 +58418,14 @@
 /turf/open/space,
 /area/space)
 "coT" = (
-/obj/structure/table/wood,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
+/obj/item/pipe{
+	dir = 4;
+	icon_state = "mixer";
+	name = "gas mixer fitting";
+	pipe_type = 14
 	},
-/area/chapel/office)
+/turf/open/floor/engine,
+/area/toxins/misc_lab)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -64158,10 +64149,17 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAM" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+	icon_state = "grimy"
 	},
-/area/maintenance/aft)
+/area/chapel/office)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -110154,7 +110152,7 @@ aHf
 aIz
 aJM
 aLa
-coT
+cAM
 aFw
 aPh
 aQs
@@ -112769,7 +112767,7 @@ bMv
 bEC
 bQT
 bSh
-bTl
+coT
 bTl
 bXr
 bNZ

@@ -1,0 +1,4 @@
+author: Lati
+delete-after: True
+changes: 
+  - rscadd: "Custom floor tiles can now be added to floorbots. They will start replacing other tiles with these tiles if the option is toggled on."
