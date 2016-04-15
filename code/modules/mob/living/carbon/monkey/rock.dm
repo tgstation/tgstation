@@ -14,9 +14,4 @@
 	canWearHats = 1
 	canWearGlasses = 1
 	greaterform = "Golem"
-
-/mob/living/carbon/monkey/rock/New()
-	..()
-	remove_language("LANGUAGE_MONKEY")
-	add_language("Golem")
-	default_language = all_languages["Golem"]
+	languagetoadd = "Golem"

@@ -12,6 +12,7 @@
 	canWearGlasses = 0
 	var/eggsleft
 	var/eggcost = 250
+	languagetoadd = "Vox-pidgin"
 
 /mob/living/carbon/monkey/vox/attack_hand(mob/living/carbon/human/M as mob)
 
@@ -29,8 +30,6 @@
 	dna.mutantrace = "vox"
 	greaterform = "Vox"
 	alien = 1
-	add_language("Vox-pidgin")
-	default_language = all_languages["Vox-pidgin"]
 	eggsleft = rand(1,6)
 
 /mob/living/carbon/monkey/vox/put_in_hand_check(var/obj/item/W) //Silly chicken, you don't have hands

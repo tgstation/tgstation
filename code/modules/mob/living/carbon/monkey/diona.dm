@@ -17,6 +17,7 @@
 	canWearHats = 1
 	canWearClothes = 0
 	canWearGlasses = 0
+	languagetoadd = "Rootspeak"
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 
@@ -33,9 +34,6 @@
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
 	alien = 1
-	remove_language(LANGUAGE_MONKEY)
-	add_language("Rootspeak")
-	default_language = all_languages["Rootspeak"]
 
 //Verbs after this point.
 

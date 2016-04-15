@@ -11,6 +11,7 @@
 	species_type = /mob/living/carbon/monkey
 	treadmill_speed = 0.8 //Slow apes!
 	var/attack_text = "bites"
+	var/languagetoadd = LANGUAGE_MONKEY
 
 	mob_bump_flag = MONKEY
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
@@ -50,6 +51,7 @@
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
 	species_type = /mob/living/carbon/monkey/tajara
+	languagetoadd = "Siik'tajr"
 
 /mob/living/carbon/monkey/skrell
 	name = "neaera"
@@ -58,6 +60,7 @@
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
 	species_type = /mob/living/carbon/monkey/skrell
+	languagetoadd = "Skrellian"
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"
@@ -67,6 +70,7 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	canWearClothes = 0
 	species_type = /mob/living/carbon/monkey/unathi
+	languagetoadd = "Sinta'unathi"
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -105,6 +109,9 @@
 
 		update_muts=1
 
+		add_language(languagetoadd)
+		default_language = all_languages[languagetoadd]
+
 	..()
 	update_icons()
 	return
@@ -114,21 +121,18 @@
 	..()
 	dna.mutantrace = "lizard"
 	greaterform = "Unathi"
-	add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New()
 
 	..()
 	dna.mutantrace = "skrell"
 	greaterform = "Skrell"
-	add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New()
 
 	..()
 	dna.mutantrace = "tajaran"
 	greaterform = "Tajaran"
-	add_language("Siik'tajr")
 
 
 ///mob/living/carbon/monkey/diona/New()
