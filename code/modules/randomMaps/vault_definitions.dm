@@ -56,3 +56,6 @@ var/list/existing_vaults = list()
 
 /datum/vault/iou_vault
 	map_name = "iou_fort"
+
+/datum/vault/biodome
+	map_name = "biodome"

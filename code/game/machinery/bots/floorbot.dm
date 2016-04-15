@@ -34,6 +34,7 @@ var/global/list/floorbot_targets=list()
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
+	icon_initial = "floorbot"
 	layer = 5.0
 	density = 0
 	anchored = 0
@@ -411,7 +412,7 @@ var/global/list/floorbot_targets=list()
 	if(src.amount <= 0)
 		return
 	src.anchored = 1
-	src.icon_state = "floorbot-c"
+	src.icon_state = "[src.icon_initial]-c"
 	if(istype(target, /turf/space/))
 		visible_message("<span class='warning'>[src] begins to repair the hole</span>")
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
@@ -497,9 +498,9 @@ var/global/list/floorbot_targets=list()
 
 /obj/machinery/bot/floorbot/proc/updateicon()
 	if(src.amount > 0)
-		src.icon_state = "floorbot[src.on]"
+		src.icon_state = "[src.icon_initial][src.on]"
 	else
-		src.icon_state = "floorbot[src.on]e"
+		src.icon_state = "[src.icon_initial][src.on]e"
 
 
 /obj/machinery/bot/floorbot/proc/calc_path(var/turf/avoid = null)

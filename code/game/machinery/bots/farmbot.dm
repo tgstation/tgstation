@@ -30,6 +30,7 @@
 	desc = "The botanist's best friend."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
+	icon_initial = "farmbot"
 	layer = 5.0
 	density = 1
 	anchored = 0
@@ -57,7 +58,7 @@
 
 /obj/machinery/bot/farmbot/New()
 	..()
-	src.icon_state = "farmbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	spawn (4)
 		src.botcard = new /obj/item/weapon/card/id(src)
 		src.botcard.access = req_access
@@ -79,13 +80,13 @@
 
 /obj/machinery/bot/farmbot/turn_on()
 	. = ..()
-	src.icon_state = "farmbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/farmbot/turn_off()
 	..()
 	src.path = new()
-	src.icon_state = "farmbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/farmbot/attack_paw(mob/user as mob)
@@ -158,7 +159,7 @@
 	else if((href_list["ignoreEmpty"]) && (!src.locked))
 		setting_ignoreEmpty = !setting_ignoreEmpty
 	else if (href_list["eject"] )
-		flick("farmbot_hatch",src)
+		flick("[src.icon_initial]_hatch",src)
 		for (var/obj/item/weapon/reagent_containers/glass/fertilizer/fert in contents)
 			fert.loc = get_turf(src)
 
@@ -180,7 +181,7 @@
 			return
 		if(user.drop_item(W, src))
 			to_chat(user, "You insert [W].")
-			flick("farmbot_hatch",src)
+			flick("[src.icon_initial]_hatch",src)
 			src.updateUsrDialog()
 			return
 
@@ -193,10 +194,10 @@
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='danger'>[src] buzzes oddly!</span>", 1)
-	flick("farmbot_broke", src)
+	flick("[src.icon_initial]_broke", src)
 	src.emagged = 1
 	src.on = 1
-	src.icon_state = "farmbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	target = null
 	mode = FARMBOT_MODE_WAITING //Give the emagger a chance to get away! 15 seconds should be good.
 	spawn(150)
@@ -235,7 +236,7 @@
 		return
 
 	if ( emagged && prob(1) )
-		flick("farmbot_broke", src)
+		flick("[src.icon_initial]_broke", src)
 
 	if ( mode == FARMBOT_MODE_WAITING )
 		return
@@ -402,7 +403,7 @@
 			fert.loc = src.loc
 			fert.throw_at(target, 16, 3)
 		src.visible_message("<span class='danger'>[src] launches [fert.name] at [target.name]!</span>")
-		flick("farmbot_broke", src)
+		flick("[src.icon_initial]_broke", src)
 		spawn (FARMBOT_EMAG_DELAY)
 			mode = 0
 			target = null
@@ -415,20 +416,20 @@
 		qdel (fert)
 		fert = null
 		//tray.updateicon()
-		icon_state = "farmbot_fertile"
+		icon_state = "[src.icon_initial]_fertile"
 		mode = FARMBOT_MODE_WAITING
 
 		spawn (FARMBOT_ACTION_DELAY)
 			mode = 0
 			target = null
 		spawn (FARMBOT_ANIMATION_TIME)
-			icon_state = "farmbot[src.on]"
+			icon_state = "[src.icon_initial][src.on]"
 		return 1
 
 /obj/machinery/bot/farmbot/proc/weed()
-	icon_state = "farmbot_hoe"
+	icon_state = "[src.icon_initial]_hoe"
 	spawn(FARMBOT_ANIMATION_TIME)
-		icon_state = "farmbot[src.on]"
+		icon_state = "[src.icon_initial][src.on]"
 
 	if ( emagged ) // Warning, humans infested with weeds!
 		mode = FARMBOT_MODE_WAITING
@@ -439,7 +440,7 @@
 			src.visible_message("<span class='danger'>[src] swings wildly at [target] with a minihoe, missing completely!</span>")
 
 		else // yayyy take that weeds~
-			var/attackVerb = pick("slashed", "sliced", "cut", "clawed")
+			var/attackVerb = pick("slashes", "slices", "cuts", "claws")
 			var /mob/living/carbon/human/human = target
 
 			src.visible_message("<span class='danger'>[src] [attackVerb] [human]!</span>")
@@ -464,9 +465,9 @@
 		target = null
 		return 0
 
-	icon_state = "farmbot_water"
+	icon_state = "[src.icon_initial]_water"
 	spawn(FARMBOT_ANIMATION_TIME)
-		icon_state = "farmbot[src.on]"
+		icon_state = "[src.icon_initial][src.on]"
 
 	if ( emagged ) // warning, humans are thirsty!
 		var splashAmount = min(70,tank.reagents.total_volume)

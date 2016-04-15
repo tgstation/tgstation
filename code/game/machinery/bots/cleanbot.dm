@@ -19,6 +19,7 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
+	icon_initial = "cleanbot"
 	layer = 5.0
 	density = 0
 	anchored = 0
@@ -48,7 +49,7 @@
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
-	src.icon_state = "cleanbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 
 	should_patrol = 1
 
@@ -64,7 +65,7 @@
 
 /obj/machinery/bot/cleanbot/turn_on()
 	. = ..()
-	src.icon_state = "cleanbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/turn_off()
@@ -74,7 +75,7 @@
 	src.target = null
 	src.oldtarget = null
 	src.oldloc = null
-	src.icon_state = "cleanbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.path = new()
 	src.updateUsrDialog()
 
@@ -305,7 +306,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 /obj/machinery/bot/cleanbot/proc/clean(var/turf/target)
 	anchored = 1
-	icon_state = "cleanbot-c"
+	icon_state = "[src.icon_initial]-c"
 	visible_message("<span class='warning'>[src] begins to clean up the [target].</span>")
 	cleaning = 1
 	spawn(2 SECONDS)
@@ -314,7 +315,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				spawn(5)
 				qdel(C)
 		src.cleaning = 0
-		icon_state = "cleanbot[on]"
+		icon_state = "[src.icon_initial][on]"
 		anchored = 0
 		target = null
 

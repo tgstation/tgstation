@@ -3,6 +3,7 @@
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
+	icon_initial = "secbot"
 	layer = 5.0
 	density = 0
 	anchored = 0
@@ -90,7 +91,7 @@
 
 /obj/machinery/bot/secbot/New()
 	..()
-	src.icon_state = "secbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	spawn(3)
 		src.botcard = new /obj/item/weapon/card/id(src)
 		var/datum/job/detective/J = new/datum/job/detective
@@ -102,7 +103,7 @@
 
 /obj/machinery/bot/secbot/turn_on()
 	..()
-	src.icon_state = "secbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/turn_off()
@@ -112,7 +113,7 @@
 	src.anchored = 0
 	src.mode = SECBOT_IDLE
 	walk_to(src,0)
-	src.icon_state = "secbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attack_hand(mob/user as mob)
@@ -233,7 +234,7 @@ Auto Patrol: []"},
 		src.anchored = 0
 		src.emagged = 2
 		src.on = 1
-		src.icon_state = "secbot[src.on]"
+		src.icon_state = "[src.icon_initial][src.on]"
 		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
@@ -269,9 +270,9 @@ Auto Patrol: []"},
 				if(get_dist(src, src.target) <= 1)		// if right next to perp
 					if(istype(src.target,/mob/living/carbon))
 						playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
-						src.icon_state = "secbot-c"
+						src.icon_state = "[src.icon_initial]-c"
 						spawn(2)
-							src.icon_state = "secbot[src.on]"
+							src.icon_state = "[icon_initial][src.on]"
 						var/mob/living/carbon/M = src.target
 						var/maxstuns = 4
 						if(istype(M, /mob/living/carbon/human))
@@ -306,9 +307,9 @@ Auto Patrol: []"},
 							next_harm_time = world.time + 15
 							playsound(get_turf(src), 'sound/weapons/Egloves.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[src] beats [src.target] with the stun baton!</span>")
-							src.icon_state = "secbot-c"
+							src.icon_state = "[src.icon_initial]-c"
 							spawn(2)
-								src.icon_state = "secbot[src.on]"
+								src.icon_state = "[src.icon_initial][src.on]"
 
 							var/mob/living/simple_animal/S = src.target
 							if(S && istype(S))

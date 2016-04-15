@@ -10,6 +10,7 @@ var/global/mulebot_count = 0
 	name = "\improper MULEbot"
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
+	icon_initial = "mulebot"
 	layer = MOB_LAYER
 	density = 1
 	anchored = 1
@@ -114,7 +115,7 @@ var/global/mulebot_count = 0
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
-		flick("mulebot-emagged", src)
+		flick("[icon_initial]-emagged", src)
 		playsound(get_turf(src), 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I, /obj/item/weapon/card/id))
 		if(toggle_lock(user))
@@ -136,10 +137,10 @@ var/global/mulebot_count = 0
 		if(open)
 			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
-			icon_state="mulebot-hatch"
+			icon_state="[icon_initial]-hatch"
 		else
 			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
-			icon_state = "mulebot0"
+			icon_state = "[icon_initial]0"
 
 		updateDialog()
 	else if (iswrench(I))
@@ -536,7 +537,7 @@ var/global/mulebot_count = 0
 //	to_chat(if(mode) world, "Mode: [mode]")
 	switch(mode)
 		if(0)		// idle
-			icon_state = "mulebot0"
+			icon_state = "[icon_initial]0"
 			return
 		if(1)		// loading/unloading
 			return
@@ -675,7 +676,7 @@ var/global/mulebot_count = 0
 		mode = 3
 	else
 		mode = 2
-	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	icon_state = "[icon_initial][(wires.MobAvoid() != 0)]"
 
 // starts bot moving to home
 // sends a beacon query to find
@@ -683,7 +684,7 @@ var/global/mulebot_count = 0
 	spawn(0)
 		set_destination(home_destination)
 		mode = 4
-	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	icon_state = "[icon_initial][(wires.MobAvoid() != 0)]"
 
 // called when bot reaches current target
 /obj/machinery/bot/mulebot/proc/at_target()
@@ -835,7 +836,7 @@ var/global/mulebot_count = 0
 				loaddir = text2num(direction)
 			else
 				loaddir = 0
-			icon_state = "mulebot[(wires.MobAvoid() != null)]"
+			icon_state = "[icon_initial][(wires.MobAvoid() != null)]"
 			calc_path()
 			updateDialog()
 

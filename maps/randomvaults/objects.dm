@@ -34,6 +34,9 @@
 
 /area/vault/ioufort
 
+/area/vault/biodome
+	requires_power = 1
+
 /mob/living/simple_animal/hostile/monster/cyber_horror/quiet
 	speak_chance = 1 //shut the fuck up
 
@@ -136,3 +139,20 @@
 /obj/item/weapon/paper/iou
 	name = "paper- 'IOU'"
 	info = "I owe you a rod of destruction. Redeemable at Milliway's at the end of time."
+
+/obj/machinery/floodlight/on
+
+	New()
+		..()
+		on = 1
+		set_light(brightness_on)
+		update_icon()
+
+/obj/machinery/bot/farmbot/duey
+	name = "Duey"
+	desc = "Looks like a maintenance droid, repurposed for botany management. Seems the years haven't been too kind."
+	health = 150
+	maxhealth = 150
+	icon_state = "duey0"
+	icon_initial = "duey"
+	Max_Fertilizers = 50
