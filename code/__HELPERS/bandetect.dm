@@ -19,7 +19,6 @@
 
 
 /client/proc/findJoinDate()
-	joindate = ""
 	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
 	if(!http)
 		world.log << "Failed to connect to byond age check for [src.ckey]"
