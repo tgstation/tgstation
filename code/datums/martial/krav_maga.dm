@@ -38,25 +38,23 @@
 	H.verbs -= /mob/living/carbon/human/proc/leg_sweep
 	H.verbs -= /mob/living/carbon/human/proc/quick_choke
 /datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(streak != "")
-		switch(streak)
-			if("neck_chop")
-				streak = ""
-				neck_chop(A,D)
-				return 1
-			if("head_elbow")
-				streak = ""
-				head_elbow(A,D)
-				return 1
-			if("leg_sweep")
-				streak = ""
-				leg_sweep(A,D)
-				return 1
-			if("quick_choke")
-				streak = ""
-				quick_choke(A,D)
-				return 1
-		return 0
+	switch(streak)
+		if("neck_chop")
+			streak = ""
+			neck_chop(A,D)
+			return 1
+		if("head_elbow")
+			streak = ""
+			head_elbow(A,D)
+			return 1
+		if("leg_sweep")
+			streak = ""
+			leg_sweep(A,D)
+			return 1
+		if("quick_choke")
+			streak = ""
+			quick_choke(A,D)
+			return 1
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -200,7 +198,6 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-	return
 
 /obj/item/clothing/gloves/krav_maga/dropped(mob/user)
 	if(!ishuman(user))
@@ -208,4 +205,3 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_gloves) == src)
 		style.remove(H)
-	return

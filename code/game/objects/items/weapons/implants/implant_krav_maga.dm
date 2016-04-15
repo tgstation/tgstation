@@ -1,8 +1,10 @@
 /obj/item/weapon/implant/krav_maga
 	name = "krav maga implant"
 	desc = "Teaches you the arts of Krav Maga in 5 short instructional videos beamed directly into your eyeballs."
-	icon_state = "auth"
-	activated = 0
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	activated = 1
+	origin_tech = "materials=2;biotech=4;combat=5;syndicate=4"
 	var/datum/martial_art/krav_maga/style = new
 
 /obj/item/weapon/implant/krav_maga/get_data()
@@ -12,3 +14,25 @@
 				<b>Implant Details:</b> <BR>
 				<b>Function:</b> Teaches even the clumsiest host the arts of Krav Maga."}
 	return dat
+
+/obj/item/weapon/implant/krav_maga/activate()
+	var/mob/living/carbon/human/H = imp_in
+	if(!ishuman(H))
+		return
+	style.teach(H)
+	qdel(src)
+
+/obj/item/weapon/implanter/krav_maga
+	name = "implanter (krav maga)"
+
+/obj/item/weapon/implanter/krav_maga/New()
+	imp = new /obj/item/weapon/implant/krav_maga(src)
+	..()
+
+/obj/item/weapon/implantcase/krav_maga
+	name = "implant case - 'Krav Maga'"
+	desc = "A glass case containing an implant that can teach the user the art of Krav Maga."
+
+/obj/item/weapon/implantcase/krav_maga/New()
+	imp = new /obj/item/weapon/implant/krav_maga(src)
+	..()
