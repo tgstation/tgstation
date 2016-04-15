@@ -336,6 +336,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/drone
 	name = "internal storage"
 	desc = "A drone's internal storage. Able to hold a large variety of tools and materials."
+	icon_state = "safe"
 	flags = ABSTRACT | NODROP
 	burn_state = FIRE_PROOF
 
