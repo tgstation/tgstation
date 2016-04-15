@@ -48,6 +48,7 @@
 
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(loc, mutantrace)
+
 	M.dna.mutantrace = mutantrace
 	M.real_name = src.name
 
@@ -409,6 +410,14 @@
 	corpsesuit = list(/obj/item/clothing/suit/doshjacket, /obj/item/clothing/suit/ianshirt, /obj/item/clothing/suit/simonjacket, /obj/item/clothing/suit/storage/lawyer/bluejacket, /obj/item/clothing/suit/storage/lawyer/purpjacket)
 
 	corpsemask = /obj/item/clothing/mask/breath
+
+/obj/effect/landmark/corpse/vox
+	name = "Dead vox"
+	mutantrace = "Vox"
+	generate_random_mob_name = 1
+	generate_random_appearance = 1
+	corpsegender = G_BOTH
+	burn_dmg = 100
 
 /obj/effect/landmark/corpse/civilian/New()
 	corpseuniform += existing_typesof(/obj/item/clothing/under/color)

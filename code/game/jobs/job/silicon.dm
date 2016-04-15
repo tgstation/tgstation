@@ -25,6 +25,7 @@
 	spawn_positions = 2
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
+	no_id = 1
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -40,6 +41,7 @@
 	spawn_positions = 2
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
+	no_id = 1
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

@@ -69,6 +69,9 @@
 	`job_engsec_high`	INTEGER,
 	`job_engsec_med`	INTEGER,
 	`job_engsec_low`	INTEGER,
+	`job_misc_high`		INTEGER,
+	`job_misc_med`		INTEGER,
+	`job_misc_low`		INTEGER,
 	FOREIGN KEY(player_ckey, player_slot) REFERENCES players(player_ckey, player_slot) ON DELETE CASCADE,
 	UNIQUE(player_ckey, player_slot)
 );"}
