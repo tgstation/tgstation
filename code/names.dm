@@ -16,3 +16,4 @@ var/list/adjectives = file2list("config/names/adjectives.txt")
 //would include in rsc if ' was used
 
 var/list/vox_name_syllables = list("cha","chi","ha","hi","ka","kah","ki","ta","ti","ya","ya","yi")
+var/list/golem_names = file2list("config/names/golem.txt")

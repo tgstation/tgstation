@@ -91,6 +91,7 @@
 //		world.log << "k"
 		sql_report_death(src)
 		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	species.handle_death(src)
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()

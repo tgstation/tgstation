@@ -111,14 +111,15 @@
 			playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(!H.check_body_part_coverage(FEET))
-					var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-					if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
-						return
+				if(!isgolem(H))
+					if(!H.check_body_part_coverage(FEET))
+						var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
+						if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
+							return
 
-					if(!(H.species && (H.species.flags & NO_PAIN)))
-						H.Weaken(3)
-					if(affecting.take_damage(5, 0))
-						H.UpdateDamageIcon()
-					H.updatehealth()
+						if(!(H.species && (H.species.flags & NO_PAIN)))
+							H.Weaken(3)
+						if(affecting.take_damage(5, 0))
+							H.UpdateDamageIcon()
+						H.updatehealth()
 	..()

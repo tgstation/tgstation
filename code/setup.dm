@@ -918,7 +918,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define CAN_BE_FAT 8192 // /vg/
 
-#define IS_SYNTHETIC 16384 // from baystation
+#define IS_BULKY 16384 //can't wear exosuits, gloves, masks, or hardsuits
 
 #define NO_SKIN 32768
 

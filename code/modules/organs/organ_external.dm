@@ -748,6 +748,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(prob(25))
 		release_restraints()
 
+	if(isgolem(owner))
+		droplimb(1)
+
 	return
 
 /datum/organ/external/proc/robotize()
@@ -1100,10 +1103,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /datum/organ/external/head/generate_dropped_organ(current_organ)
 	if(!current_organ)
-		if(owner.species.flags & IS_SYNTHETIC)
-			current_organ = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
-		else
-			current_organ = new /obj/item/weapon/organ/head(owner.loc, owner)
+		current_organ = new /obj/item/weapon/organ/head(owner.loc, owner)
 	var/datum/organ/internal/brain/B = owner.internal_organs_by_name["brain"]
 	var/obj/item/weapon/organ/head/H = current_organ
 	if(B)

@@ -226,7 +226,10 @@
 			if(M_HARDCORE in mutations)
 				message = "<B>[src]</B> whispers with his final breath, <i>'i told u i was hardcore..'</i>"
 			else
-				message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
+				if(isgolem(src))
+					message = "<B>[src]</B> crumbles into dust..."
+				else
+					message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = VISIBLE
 
 		if ("giggle")

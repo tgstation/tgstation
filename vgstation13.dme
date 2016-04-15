@@ -1321,6 +1321,7 @@
 #include "code\modules\mob\living\carbon\monkey\login.dm"
 #include "code\modules\mob\living\carbon\monkey\monkey.dm"
 #include "code\modules\mob\living\carbon\monkey\powers.dm"
+#include "code\modules\mob\living\carbon\monkey\rock.dm"
 #include "code\modules\mob\living\carbon\monkey\say.dm"
 #include "code\modules\mob\living\carbon\monkey\update_icons.dm"
 #include "code\modules\mob\living\carbon\monkey\vox.dm"

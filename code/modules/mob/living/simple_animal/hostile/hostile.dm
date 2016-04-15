@@ -145,7 +145,7 @@
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if(H.dna)
-					if((H.dna.mutantrace == "slime") || (H.dna.mutantrace == "adamantine") || (H.dna.mutantrace=="coalgolem"))
+					if((H.dna.mutantrace == "slime") || (isgolem(H)) || (H.dna.mutantrace == "adamantine") || (H.dna.mutantrace=="coalgolem"))
 						return 0
 		//IF WE ARE MOBS SPAWNED BY THE ADMINBUS THEN WE DON'T ATTACK TEST DUMMIES OR IAN (wait what? man that's snowflaky as fuck)
 		if((istype(L,/mob/living/simple_animal/corgi/Ian) || istype(L,/mob/living/carbon/human/dummy)) && (faction == "adminbus mob"))

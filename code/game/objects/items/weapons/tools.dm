@@ -453,8 +453,6 @@
 		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
 		if(!E)
 			return
-		if(H.species.flags & IS_SYNTHETIC)
-			return
 		if(safety < 2)
 			switch(safety)
 				if(1)

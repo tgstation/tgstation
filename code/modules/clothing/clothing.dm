@@ -13,7 +13,7 @@
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M as mob, slot)
 
-	. = ..() //Default return value. If 1, item can be equipped. If 0, it can't be.
+	. = ..(M, slot, 1) //Default return value. If 1, item can be equipped. If 0, it can't be.
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
 

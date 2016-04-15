@@ -195,13 +195,6 @@ var/global/list/whitelisted_species = list("Human")
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
 
-	if(flags & IS_SYNTHETIC)
-		for(var/datum/organ/external/E in H.organs)
-			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-			E.status |= ORGAN_ROBOT
-		for(var/datum/organ/internal/I in H.internal_organs)
-			I.mechanize()
-
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
@@ -235,15 +228,6 @@ var/global/list/whitelisted_species = list("Human")
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
 /datum/species/proc/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
-	/*
-	if(flags & IS_SYNTHETIC)
-		//H.Jitter(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
-		H.h_style = ""
-		spawn(100)
-			//H.is_jittery = 0
-			//H.jitteriness = 0
-			H.update_hair()
-	*/
 	return
 
 /datum/species/proc/equip(var/mob/living/carbon/human/H)
@@ -665,3 +649,105 @@ var/global/list/whitelisted_species = list("Human")
 	burn_mod = 2.5 //treeeeees
 
 	move_speed_mod = 7
+
+/datum/species/golem
+	name = "Golem"
+	icobase = 'icons/mob/human_races/r_golem.dmi'
+	deform = 'icons/mob/human_races/r_def_golem.dmi'
+	language = "Golem"
+	attack_verb = "punches"
+	has_sweat_glands = 0
+	flags = HAS_LIPS | NO_BREATHE | NO_BLOOD | NO_SKIN | NO_PAIN | IS_BULKY
+	uniform_icons = 'icons/mob/uniform_fat.dmi'
+	primitive = /mob/living/carbon/monkey/rock
+
+	blood_color = "#B4DBCB"
+	flesh_color = "#B4DBCB"
+
+	warning_low_pressure = -1
+	hazard_low_pressure = -1
+
+	body_temperature = 0
+
+	cold_level_1 = -1  // Cold damage level 1 below this point.
+	cold_level_2 = -1  // Cold damage level 2 below this point.
+	cold_level_3 = -1  // Cold damage level 3 below this point.
+
+	heat_level_1 = 3600
+	heat_level_2 = 4000
+	heat_level_3 = 10000
+
+	burn_mod = 0.0001
+
+	has_mutant_race = 0
+	move_speed_mod = 1
+
+	chem_flags = NO_INJECT
+
+	has_organ = list(
+		"brain" =    /datum/organ/internal/brain,
+		)
+
+/datum/species/golem/makeName()
+	return capitalize(pick(golem_names))
+
+/datum/species/golem/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
+	if(!isgolem(H))
+		return
+	var/datum/mind/golemmind = H.mind
+	if(!istype(golemmind,/datum/mind))	//not a mind
+		golemmind = null
+	for(var/atom/movable/I in H.contents)
+		to_chat(world, "FOUND [I] IN [H], MOVING TO [H.loc]")
+		I.forceMove(H.loc)
+	anim(target = H, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-g", sleeptime = 15)
+	var/mob/living/adamantine_dust/A = new(H.loc)
+	if(golemmind)
+		A.mind = golemmind
+		H.mind = null
+		golemmind.current = A
+		if(A.real_name)
+			A.real_name = H.real_name
+			A.desc = "The remains of what used to be [A.real_name]."
+		A.key = H.key
+		H.key = null
+	qdel(H)
+
+/mob/living/adamantine_dust //serves as the corpse of adamantine golems
+	name = "adamantine dust"
+	desc = "The remains of an adamantine golem."
+	stat = DEAD
+	icon = 'icons/mob/human_races/r_golem.dmi'
+	icon_state = "golem_dust"
+	density = 0
+
+/mob/living/adamantine_dust/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/slime_extract/adamantine))
+		var/obj/item/slime_extract/adamantine/A = I
+		if(A.Uses)
+			if(!mind)
+				to_chat(user, "<span class='warning'>You press \the [A] into \the [src], but nothing happens.</span>")
+			else
+				if(!client)
+					to_chat(user, "<span class='notice'>As you press \the [A] into \the [src], it shudders briefly, but falls still.</span>")
+					for(var/mob/dead/observer/ghost in player_list)
+						if(ghost.mind == mind && ghost.client && ghost.can_reenter_corpse)
+							ghost << 'sound/effects/adminhelp.ogg'
+							to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to resurrect you. Return to your body if you want to live again!</b> \
+								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
+				else
+					to_chat(user, "<span class='notice'>As you press \the [A] into \the [src], it is consumed. [real_name] reconstitutes itself!.</span>")
+					qdel(A)
+					anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "reverse-dust-g", sleeptime = 15)
+					var/mob/living/carbon/human/golem/G = new /mob/living/carbon/human/golem
+					G.real_name = real_name
+					G.forceMove(src.loc) //we use move to get the entering procs - this fixes gravity
+					var/datum/mind/dustmind = mind
+					G.mind = dustmind
+					dustmind.current = G
+					mind = null
+					G.key = key
+					to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as impervious to burn damage. You are unable to wear most clothing, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
+					qdel(src)
+		else
+			to_chat(user, "<span class='warning'>The used extract doesn't have any effect on \the [src].</span>")

@@ -58,6 +58,12 @@
 	h_style = "Bald"
 	..(new_loc, "Grey")
 
+/mob/living/carbon/human/golem/New(var/new_loc, delay_ready_dna = 0)
+	h_style = "Bald"
+	..(new_loc, "Golem")
+	gender = NEUTER
+	meat_type = /obj/item/weapon/ore/diamond
+
 /mob/living/carbon/human/generate_static_overlay()
 	if(!istype(static_overlays,/list))
 		static_overlays = list()

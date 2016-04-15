@@ -5,7 +5,29 @@
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 #define ishuman(A) istype(A, /mob/living/carbon/human)
 
+#define isjusthuman(A) (ishuman(A) && A.species && istype(A.species, /datum/species/human))
+
 #define ismonkey(A) istype(A, /mob/living/carbon/monkey)
+
+#define isvox(A) (ishuman(A) && A.species && istype(A.species, /datum/species/vox))
+
+#define isdiona(A) (ishuman(A) && A.species && istype(A.species, /datum/species/diona))
+
+#define isgrey(A) (ishuman(A) && A.species && istype(A.species, /datum/species/grey))
+
+#define isplasmaman(A) (ishuman(A) && A.species && istype(A.species, /datum/species/plasmaman))
+
+#define isskellington(A) (ishuman(A) && A.species && istype(A.species, /datum/species/skellington))
+
+#define iscatbeast(A) (ishuman(A) && A.species && istype(A.species, /datum/species/tajaran))
+
+#define isunathi(A) (ishuman(A) && A.species && istype(A.species, /datum/species/unathi))
+
+#define isskrell(A) (ishuman(A) && A.species && istype(A.species, /datum/species/skrell))
+
+#define ismuton(A) (ishuman(A) && A.species && istype(A.species, /datum/species/muton))
+
+#define isgolem(A) (ishuman(A) && A.species && istype(A.species, /datum/species/golem))
 
 #define isbrain(A) istype(A, /mob/living/carbon/brain)
 

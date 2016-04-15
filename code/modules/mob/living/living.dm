@@ -1173,8 +1173,14 @@ default behaviour is:
 			if(!can_move_mob(tmob, 0, 0))
 				now_pushing = 0
 				return
-			if(istype(tmob, /mob/living/carbon/human) && (M_FAT in tmob.mutations))
-				if(prob(40) && !(M_FAT in src.mutations))
+			var/mob/living/carbon/human/H = null
+			if(ishuman(tmob))
+				H = tmob
+			if(H && ((M_FAT in H.mutations) || (H && H.species && H.species.flags & IS_BULKY)))
+				var/mob/living/carbon/human/U = null
+				if(ishuman(src))
+					U = src
+				if(prob(40) && !(U && ((M_FAT in U.mutations) || (U && U.species && U.species.flags & IS_BULKY))))
 					to_chat(src, "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>")
 					now_pushing = 0
 					return

@@ -105,7 +105,7 @@
 
 		update_muts=1
 
-	if(!istype(src, /mob/living/carbon/monkey/diona))
+	if(type == /mob/living/carbon/monkey)
 		add_language(LANGUAGE_MONKEY)
 		default_language = all_languages[LANGUAGE_MONKEY]
 

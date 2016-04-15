@@ -664,6 +664,9 @@ var/list/slot_equipment_priority = list( \
 			if(slot_wear_mask)
 				if( !(slot_flags & SLOT_MASK) )
 					return 0
+//				if(H.species.flags & IS_BULKY)
+//					to_chat(H, "<span class='warning'>You can't get \the [src] to fasten around your thick head!</span>")
+//					return 0
 				if(H.wear_mask)
 					return 0
 				return 1
@@ -679,6 +682,9 @@ var/list/slot_equipment_priority = list( \
 			if(slot_wear_suit)
 				if( !(slot_flags & SLOT_OCLOTHING) )
 					return 0
+//				if(H.species.flags & IS_BULKY)
+//					to_chat(H, "<span class='warning'>You can't get \the [src] to fit over your bulky exterior!</span>")
+//					return 0
 				if(H.wear_suit)
 					if(H.wear_suit.canremove)
 						return 2
@@ -688,6 +694,9 @@ var/list/slot_equipment_priority = list( \
 			if(slot_gloves)
 				if( !(slot_flags & SLOT_GLOVES) )
 					return 0
+//				if(H.species.flags & IS_BULKY)
+//					to_chat(H, "<span class='warning'>You can't get \the [src] to fit over your bulky fingers!</span>")
+//					return 0
 				if(H.gloves)
 					if(H.gloves.canremove)
 						return 2
@@ -697,6 +706,9 @@ var/list/slot_equipment_priority = list( \
 			if(slot_shoes)
 				if( !(slot_flags & SLOT_FEET) )
 					return 0
+//				if(H.species.flags & IS_BULKY)
+//					to_chat(H, "<span class='warning'>You can't get \the [src] to fit over your bulky feet!</span>")
+//					return 0
 				if(H.shoes)
 					if(H.shoes.canremove)
 						return 2
@@ -748,6 +760,9 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if((M_FAT in H.mutations) && (H.species && H.species.flags & CAN_BE_FAT) && !(flags & ONESIZEFITSALL))
 					return 0
+//				if(H.species.flags & IS_BULKY && !(flags & ONESIZEFITSALL))
+//					to_chat(H, "<span class='warning'>You can't get \the [src] to fit over your bulky exterior!</span>")
+//					return 0
 				if(H.w_uniform)
 					if(H.w_uniform.canremove)
 						return 2

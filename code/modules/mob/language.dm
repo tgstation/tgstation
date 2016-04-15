@@ -200,6 +200,19 @@
 	space_chance = 95
 	syllables = list("CLICK", "CLACK")
 
+/datum/language/golem
+	name = "Golem"
+	desc = "A slow, guttural language produced by the grinding of a golem's joints against one another."
+	speech_verb = "grinds"
+	ask_verb = "groans"
+	exclaim_verb = "cracks"
+	whisper_verb = "grumbles"
+	colour = "brown"
+	native = 1
+	key = "p"
+	flags = RESTRICTED
+	syllables = list("oa","ur","ae","um","tu","gor","an","lo","ag","oon","po")
+
 /datum/language/skellington/say_misunderstood(mob/M, message)
 	message="CLICK"
 	var/len = max(1,Ceiling(length(message)/5))
