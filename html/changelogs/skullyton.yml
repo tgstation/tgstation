@@ -1,6 +1,0 @@
-author: Skullyton
-
-delete-after: True
-
-changes: 
- - rscadd: Changed it so that the medkit used in creation of a medbot makes it better at treating that form of damage (regular uses bicaridine, toxin uses anti-toxin, fire uses kelotane, oxydep uses dexalin)
