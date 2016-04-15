@@ -75,6 +75,8 @@
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank"
+	if(contents.len>0)
+		desc = "A fueltank... this one has wires and an antenna jutting out from the main tank, suspicious"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 
@@ -89,6 +91,20 @@
 		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 		boom()
+		
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/device/assembly_holder))
+		if((W.name == "remote signaling device-igniter assembly") || (W.name == "igniter-remote signaling device assembly"))
+			if(!user.drop_item())
+				return
+			W.loc = src
+			user << "You place the igniter assembly inside the fuel tank, it's primed to blow on your signal!"
+		else
+			user << "The assembly won't fit into the tank! Only a signaller or igniter would be able to fit inside."
+	if(istype(W,/obj/item/device/assembly/igniter)
+		user << "You decide against tossing the igniter into the fuel tank, why bother if you have no way to signal it?"
+	else
+		..()
 
 /obj/structure/reagent_dispensers/fueltank/proc/boom()
 	explosion(src.loc,0,1,5,7,10, flame_range = 5)
@@ -108,6 +124,9 @@
 /obj/structure/reagent_dispensers/fueltank/tesla_act()
 	..() //extend the zap
 	boom()
+
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
+	return
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
