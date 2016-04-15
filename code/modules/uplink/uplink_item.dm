@@ -975,16 +975,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			The more implants inside of you, the higher the explosive power. \
 			This will permanently destroy your body, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
-	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	cost = 1
+
 
 /datum/uplink_item/implants/macrobomb
 	name = "Macrobomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
 			Upon death, releases a massive explosion that will wipe out everything nearby."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
-	cost = 20
-	include_modes = list(/datum/game_mode/nuclear)
+	cost = 1
+
 
 
 // Cybernetics
