@@ -1,0 +1,6 @@
+author: Probe1
+
+delete-after: True
+
+changes: 
+- tweak: Examine self now shows wounds in the color matching their damage type.  Color and italicized for over 20, Color and bold for over 40 damage.

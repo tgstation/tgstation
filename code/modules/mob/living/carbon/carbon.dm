@@ -207,16 +207,16 @@
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
-					status = "bleeding"
+					status = "<span class='warning'>bleeding</span>"
 				if(brutedamage > 40)
-					status = "mangled"
+					status = "<span class='danger'>mangled</span>"
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
 				if(burndamage > 40)
-					status += "peeling away"
+					status += "<span class='orangeb'>peeling away</span>"
 
 				else if(burndamage > 10)
-					status += "blistered"
+					status += "<span class='orangei'>blistered</span>"
 				else if(burndamage > 0)
 					status += "numb"
 				if(org.status & ORGAN_DESTROYED)

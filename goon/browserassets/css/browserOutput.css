@@ -294,6 +294,10 @@ h1.alert, h2.alert		{color: #000000;}
 .grey					{color: #585858; font-family: Dotum, sans-serif;}
 .skeleton				{color: #585858; font-weight: bold; font-style: italic;}
 .gutter					{color: #61380B; font-style: italic;}
+.orange					{color: #ffa500;}
+.orangei				{color: #ffa500; font-style: italic;}
+.orangeb				{color: #ffa500; font-weight: bold;}
+
 /* /vg/ */
 .good					{color: green;}
 .average				{color: #FF8000;}
