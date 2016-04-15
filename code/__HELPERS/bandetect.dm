@@ -1,8 +1,8 @@
 #define YOUNG 4
 
 
-/client/proc/join_date_check(var/y,var/m,var/d)
-	var/DBQuery/query = dbcon.NewQuery("SELECT DATEDIFF('[SQLdate()]','[y]-[m]-[d]')")
+/client/proc/join_date_check(y,m,d)
+	var/DBQuery/query = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
 
 	if(!query.Execute())
 		world.log << "SQL ERROR doing datediff. Error : \[[query.ErrorMsg()]\]\n"
@@ -10,12 +10,11 @@
 
 	if(query.NextRow())
 		var/diff = text2num(query.item[1])
-		world.log << diff
 		if(diff < YOUNG)
-			var/msg = "(IP: [address], ID: [computer_id]) is a new BYOND account made on [m]-[d]-[y]."
+			var/msg = "(IP: [address], ID: [computer_id]) is a new BYOND account made on [y]-[m]-[d]."
 			if(diff < 0)
 				msg += " They are also apparently from the future."
-			message_admins("[key_name(src)] [msg]")
+			message_admins("[key_name_admin(src)] [msg]")
 #undef YOUNG
 
 

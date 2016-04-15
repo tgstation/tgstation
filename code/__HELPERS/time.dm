@@ -23,6 +23,3 @@
 //returns timestamp in a sql and ISO 8601 friendly format
 /proc/SQLtime()
 	return time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-
-/proc/SQLdate()
-	return time2text(world.realtime, "YYYY-MM-DD")
