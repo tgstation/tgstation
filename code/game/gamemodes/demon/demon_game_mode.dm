@@ -41,7 +41,7 @@
 	demon_mind.objectives += soulqual
 	demon_mind.objectives += soulquant
 	demon_mind.demoninfo = demonInfo(trueName, 1)
-	demon_mind.store_memory("Your demonic true name is [demon_mind.demoninfo.truename]<br>[demon_mind.demoninfo.banlaw()]<br>[demon_mind.demoninfo.banelaw()]<br>[demon_mind.demoninfo.obligationlaw()]<br>[demon_mind.demoninfo.banishlaw()]<br>")
+	demon_mind.store_memory("Your demonic true name is [demon_mind.demoninfo.truename]<br>[demoninfo.lawlorify[LAW][demon_mind.demoninfo.ban]]<br>[demoninfo.lawlorify[LAW][demon_mind.demoninfo.bane]]<br>[demoninfo.lawlorify[LAW][demon_mind.demoninfo.obligation]]<br>[demoninfo.lawlorify[LAW][demon_mind.demoninfo.banish]]<br>")
 	demon_mind.demoninfo.owner = demon_mind
 	demon_mind.demoninfo.give_base_spells(1)
 	spawn(10)
@@ -52,12 +52,12 @@
 /datum/mind/proc/announceDemonLaws()
 	if(!demoninfo)
 		return
-	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of 	creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
 	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
-	current << src.demoninfo.banelaw()
-	current << src.demoninfo.banlaw()
-	current << src.demoninfo.obligationlaw()
-	current << src.demoninfo.banishlaw()
+	current << demoninfo.lawlorify[LAW][src.demoninfo.bane]
+	current << demoninfo.lawlorify[LAW][src.demoninfo.ban]
+	current << demoninfo.lawlorify[LAW][src.demoninfo.obligation]
+	current << demoninfo.lawlorify[LAW][src.demoninfo.banish]
 	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
 	var/obj_count = 1
 	current << "<span class='notice'>Your current objectives:</span>"
@@ -71,10 +71,10 @@
 		return ""
 	var/text = "</br>The demon's true name is: [ply.demoninfo.truename]</br>"
 	text += "The demon's bans were:</br>"
-	text += "	[ply.demoninfo.banlore()]</br>"
-	text += "	[ply.demoninfo.banelore()]</br>"
-	text += "	[ply.demoninfo.obligationlore()]</br>"
-	text += "	[ply.demoninfo.banishlore()]</br>"
+	text += "	[demoninfo.lawlorify[LORE][ply.demoninfo.ban]]</br>"
+	text += "	[demoninfo.lawlorify[LORE][ply.demoninfo.bane]]</br>"
+	text += "	[demoninfo.lawlorify[LORE][ply.demoninfo.obligation]]</br>"
+	text += "	[demoninfo.lawlorify[LORE][ply.demoninfo.banish]]</br>"
 	return text
 
 /datum/game_mode/proc/update_demon_icons_added(datum/mind/demon_mind)

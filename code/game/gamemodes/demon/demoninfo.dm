@@ -21,6 +21,68 @@ var/global/list/allDemons = list()
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
 	var/form = BASIC_DEMON
+	var/static/list/lawlorify = list (
+		LORE = list(
+			OBLIGATION_FOOD = "This demon seems to always offer it's victims food before slaughtering them.",
+			OBLIGATION_DRINK = "This demon seems to always offer it's victims a drink before slaughtering them.",
+			OBLIGATION_GREET = "This demon seems to only be able to converse with people it knows the name of.",
+			OBLIGATION_PRESENCEKNOWN = "This demon seems to be unable to attack from stealth.",
+			OBLIGATION_SAYNAME = "He will always chant his name upon killing someone.",
+			OBLIGATION_ANNOUNCEKILL = "This demon always loudly announces his kills for the world to hear.",
+			OBLIGATION_ANSWERTONAME = "This demon always responds to his truename.",
+			BANE_SILVER = "Silver seems to gravely injure this demon.",
+			BANE_SALT = "Throwing salt at this demon will hinder his ability to use infernal powers temporarily.",
+			BANE_LIGHT = "Bright flashes will disorient the demon, likely causing him to flee.",
+			BANE_IRON = "Cold iron will slowly injure him, until he can purge it from his system.",
+			BANE_WHITECLOTHES = "Wearing clean white clothing will help ward off this demon.",
+			BANE_HARVEST = "Presenting the labors of a harvest will disrupt the demon.",
+			BANE_TOOLBOX = "That which holds the means of creation also holds the means of the demon's undoing.",
+			BAN_HURTWOMAN = "This demon seems to prefer hunting men.",
+			BAN_CHAPEL = "This demon avoids holy ground.",
+			BAN_HURTPRIEST = "The annointed clergy appear to be immune to his powers.",
+			BAN_AVOIDWATER = "The demon seems to have some sort of aversion to water, though it does not appear to harm him.",
+			BAN_STRIKEUNCONCIOUS = "This demon only shows interest in those who are awake.",
+			BAN_HURTLIZARD = "This demon will not strike a lizardman first.",
+			BAN_HURTANIMAL = "This demon avoids hurting animals.",
+			BANISH_WATER = "To banish the demon, you must sprinkle holy water upon it's body.",
+			BANISH_COFFIN = "This demon will return to life if it's remains are not placed within a coffin.",
+			BANISH_FORMALDYHIDE = "To banish the demon, you must inject it's lifeless body with embalming fluid.",
+			BANISH_RUNES = "This demon will resurrect after death, unless it's remains are within a rune.",
+			BANISH_CANDLES = "A large number of candles will prevent it from resurrecting.",
+			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
+			BANISH_FUNERAL_GARB = "Funeral garments will prevent the demon from resurrecting."
+		),
+		LAW = list(
+			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
+			OBLIGATION_DRINK = "When not acting in self defense, you must always offer your victim drink before harming them.",
+			OBLIGATION_GREET = "You must always greet other people by their last name before talking with them.",
+			OBLIGATION_PRESENCEKNOWN = "You must always make your presence known before attacking.",
+			OBLIGATION_SAYNAME = "You must always say your true name after you kill someone.",
+			OBLIGATION_ANNOUNCEKILL = "Upon killing someone, you must make your deed known to all within earshot, over comms if reasonably possible.",
+			OBLIGATION_ANSWERTONAME = "If you are not under attack, you must always respond to your demon name.",
+			BAN_HURTWOMAN = "You must never harm a female outside of self defense.",
+			BAN_CHAPEL = "You must never attempt to enter the chapel.",
+			BAN_HURTPRIEST = "You must never attack a priest.",
+			BAN_AVOIDWATER = "You must never willingly touch a wet surface.",
+			BAN_STRIKEUNCONCIOUS = "You must never strike an unconcious person.",
+			BAN_HURTLIZARD = "You must never harm a lizardman outside of self defense.",
+			BAN_HURTANIMAL = "You must never harm a non-sentient creature or robot outside of self defense.",
+			BANE_SILVER = "Silver, in all of it's forms shall be your downfall.",
+			BANE_SALT = "Salt will disrupt your magical abilities.",
+			BANE_LIGHT = "Blinding lights will prevent you from using offensive powers for a time.",
+			BANE_IRON = "Cold wrought iron shall act as poison to you.",
+			BANE_WHITECLOTHES = "Those clad in pristine white garments will strike you true.",
+			BANE_HARVEST = "The fruits of the harvest shall be your downfall.",
+			BANE_TOOLBOX = "Toolboxes are bad news for you, for some reason.",
+			BANISH_WATER = "If your corpse is filled with holy water, you will be unable to resurrect.",
+			BANISH_COFFIN = "If your corpse is in a coffin, you will be unable to resurrect.",
+			BANISH_FORMALDYHIDE = "If your corpse is embalmed, you will be unable to resurrect.",
+			BANISH_RUNES = "If your corpse is placed within a rune, you will be unable to resurrect.",
+			BANISH_CANDLES = "If your corpse is near lit candles, you will be unable to resurrect.",
+			BANISH_DESTRUCTION = "If your corpse is destroyed, you will be unable to resurrect.",
+			BANISH_FUNERAL_GARB = "If your corpse is clad in funeral garments, you will be unable to resurrect."
+		)
+	)
 
 /proc/randomDemonInfo(name = randomDemonName())
 	var/datum/demoninfo/demon = new
@@ -70,142 +132,6 @@ var/global/list/allDemons = list()
 
 /proc/randomdemonbanish()
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
-
-/datum/demoninfo/proc/obligationlaw()
-	switch(obligation)
-		if(OBLIGATION_FOOD)
-			return "When not acting in self defense, you must always offer your victim food before harming them."
-		if(OBLIGATION_DRINK)
-			return "When not acting in self defense, you must always offer your victim drink before harming them."
-		if(OBLIGATION_GREET)
-			return "You must always greet other people by their last name before talking with them."
-		if(OBLIGATION_PRESENCEKNOWN)
-			return "You must always make your presence known before attacking."
-		if(OBLIGATION_SAYNAME)
-			return "You must always say your true name after you kill someone."
-		if(OBLIGATION_ANNOUNCEKILL)
-			return "Upon killing someone, you must make your deed known to all within earshot, over comms if reasonably possible."
-		if(OBLIGATION_ANSWERTONAME)
-			return "If you are not under attack, you must always respond to your demon name."
-
-/datum/demoninfo/proc/obligationlore()
-	switch(obligation)
-		if(OBLIGATION_FOOD)
-			return "This demon seems to always offer it's victims food before slaughtering them."
-		if(OBLIGATION_DRINK)
-			return "This demon seems to always offer it's victims a drink before slaughtering them."
-		if(OBLIGATION_GREET)
-			return "This demon seems to only be able to converse with people it knows the name of."
-		if(OBLIGATION_PRESENCEKNOWN)
-			return "This demon seems to be unable to attack from stealth."
-		if(OBLIGATION_SAYNAME)
-			return "He will always chant his name upon killing someone."
-		if(OBLIGATION_ANNOUNCEKILL)
-			return "This demon always loudly announces his kills for the world to hear."
-		if(OBLIGATION_ANSWERTONAME)
-			return "This demon always responds to his truename."
-
-/datum/demoninfo/proc/banlaw()
-	switch(ban)
-		if(BAN_HURTWOMAN)
-			return "You must never harm a female outside of self defense."
-		if(BAN_CHAPEL)
-			return "You must never attempt to enter the chapel."
-		if(BAN_HURTPRIEST)
-			return "You must never attack a priest."
-		if(BAN_AVOIDWATER)
-			return "You must never willingly touch a wet surface."
-		if(BAN_STRIKEUNCONCIOUS)
-			return "You must never strike an unconcious person."
-		if(BAN_HURTLIZARD)
-			return "You must never harm a lizardman outside of self defense."
-		if(BAN_HURTANIMAL)
-			return "You must never harm a non-sentient creature or robot outside of self defense."
-
-/datum/demoninfo/proc/banlore()
-	switch(ban)
-		if(BAN_HURTWOMAN)
-			return "This demon seems to prefer hunting men."
-		if(BAN_CHAPEL)
-			return "This demon avoids holy ground."
-		if(BAN_HURTPRIEST)
-			return "The annointed clergy appear to be immune to his powers."
-		if(BAN_AVOIDWATER)
-			return "The demon seems to have some sort of aversion to water, though it does not appear to harm him."
-		if(BAN_STRIKEUNCONCIOUS)
-			return "This demon only shows interest in those who are awake."
-		if(BAN_HURTLIZARD)
-			return "This demon will not strike a lizardman first."
-		if(BAN_HURTANIMAL)
-			return "This demon avoids hurting animals."
-
-/datum/demoninfo/proc/banelaw()
-	switch(bane)
-		if(BANE_SILVER)
-			return "Silver, in all of it's forms shall be your downfall."
-		if(BANE_SALT)
-			return "Salt will disrupt your magical abilities."
-		if(BANE_LIGHT)
-			return "Blinding lights will prevent you from using offensive powers for a time."
-		if(BANE_IRON)
-			return "Cold wrought iron shall act as poison to you."
-		if(BANE_WHITECLOTHES)
-			return "Those clad in pristine white garments will strike you true."
-		if(BANE_HARVEST)
-			return "The fruits of the harvest shall be your downfall."
-		if(BANE_TOOLBOX)
-			return "Toolboxes are bad news for you, for some reason."
-
-/datum/demoninfo/proc/banelore()
-	switch(bane)
-		if(BANE_SILVER)
-			return "Silver seems to gravely injure this demon."
-		if(BANE_SALT)
-			return "Throwing salt at this demon will hinder his ability to use infernal powers temporarily."
-		if(BANE_LIGHT)
-			return "Bright flashes will disorient the demon, likely causing him to flee."
-		if(BANE_IRON)
-			return "Cold iron will slowly injure him, until he can purge it from his system."
-		if(BANE_WHITECLOTHES)
-			return "Wearing clean white clothing will help ward off this demon."
-		if(BANE_HARVEST)
-			return "Presenting the labors of a harvest will disrupt the demon."
-		if(BANE_TOOLBOX)
-			return "That which holds the means of creation also holds the means of the demon's undoing."
-
-/datum/demoninfo/proc/banishlaw()
-	switch(banish)
-		if(BANISH_WATER)
-			return "If your corpse is filled with holy water, you will be unable to resurrect."
-		if(BANISH_COFFIN)
-			return "If your corpse is in a coffin, you will be unable to resurrect."
-		if(BANISH_FORMALDYHIDE)
-			return "If your corpse is embalmed, you will be unable to resurrect."
-		if(BANISH_RUNES)
-			return "If your corpse is placed within a rune, you will be unable to resurrect."
-		if(BANISH_CANDLES)
-			return "If your corpse is near lit candles, you will be unable to resurrect."
-		if(BANISH_DESTRUCTION)
-			return "If your corpse is destroyed, you will be unable to resurrect."
-		if(BANISH_FUNERAL_GARB)
-			return "If your corpse is clad in funeral garments, you will be unable to resurrect."
-
-/datum/demoninfo/proc/banishlore()
-	switch(banish)
-		if(BANISH_WATER)
-			return "To banish the demon, you must sprinkle holy water upon it's body."
-		if(BANISH_COFFIN)
-			return "This demon will return to life if it's remains are not placed within a coffin."
-		if(BANISH_FORMALDYHIDE)
-			return "To banish the demon, you must inject it's lifeless body with embalming fluid."
-		if(BANISH_RUNES)
-			return "This demon will resurrect after death, unless it's remains are within a rune."
-		if(BANISH_CANDLES)
-			return "A large number of candles will prevent it from resurrecting."
-		if(BANISH_DESTRUCTION)
-			return "It's corpse must be utterly destroyed to prevent resurrection."
-		if(BANISH_FUNERAL_GARB)
-			return "Funeral garments will prevent the demon from resurrecting."
 
 /datum/demoninfo/proc/add_soul(datum/mind/soul)
 	if(soulsOwned.Find(soul))
@@ -344,7 +270,7 @@ var/global/list/allDemons = list()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
 
 
-/datum/demoninfo/proc/give_base_spells(var/give_summon_contract = 0)
+/datum/demoninfo/proc/give_base_spells(give_summon_contract = 0)
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
