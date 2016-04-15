@@ -4,11 +4,20 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
+	var/amount_grown = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
 	src.bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/process()
+	if(is_in_valid_nest(src)) //_macros.dm
+		amount_grown += rand(1,2)
+		if(amount_grown >= 100)
+			hatch()
+	else
+		processing_objects.Remove(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -73,14 +82,19 @@
 	else
 		..()
 
+/obj/item/weapon/reagent_containers/food/snacks/egg/proc/hatch()
+	visible_message("[src] hatches with a quiet cracking sound.")
+	new /mob/living/simple_animal/chick(get_turf(src))
+	processing_objects.Remove(src)
+	qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/egg/vox
 	name = "green egg"
 	desc = "Looks like it came from some genetically engineered chicken"
 	icon_state = "egg-vox"
 
-
-	hatch()
-		visible_message("[src] hatches with a quiet cracking sound.")
-		new /mob/living/carbon/monkey/vox(get_turf(src))
-		processing_objects.Remove(src)
-		qdel(src)
+/obj/item/weapon/reagent_containers/food/snacks/egg/vox/hatch()
+	visible_message("[src] hatches with a quiet cracking sound.")
+	new /mob/living/carbon/monkey/vox(get_turf(src))
+	processing_objects.Remove(src)
+	qdel(src)

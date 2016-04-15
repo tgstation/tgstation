@@ -33,6 +33,7 @@
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
 	alien = 1
+	remove_language(LANGUAGE_MONKEY)
 	add_language("Rootspeak")
 	default_language = all_languages["Rootspeak"]
 

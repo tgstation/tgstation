@@ -259,18 +259,3 @@
 		E.pixel_y = rand(-6,6)
 		if(animal_count[src.type] < ANIMAL_CHILD_CAP && prob(10))
 			processing_objects.Add(E)
-
-/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/weapon/reagent_containers/food/snacks/egg/process()
-	if(is_in_valid_nest(src)) //_macros.dm
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
-			hatch()
-	else
-		processing_objects.Remove(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/egg/proc/hatch()
-	visible_message("[src] hatches with a quiet cracking sound.")
-	new /mob/living/simple_animal/chick(get_turf(src))
-	processing_objects.Remove(src)
-	qdel(src)

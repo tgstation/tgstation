@@ -105,10 +105,6 @@
 
 		update_muts=1
 
-	if(type == /mob/living/carbon/monkey)
-		add_language(LANGUAGE_MONKEY)
-		default_language = all_languages[LANGUAGE_MONKEY]
-
 	..()
 	update_icons()
 	return
@@ -363,8 +359,11 @@
 		if ((M.a_intent == I_HURT && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					O.show_message("<span class='danger'>[M.name] [attack_text] [name]!</span>", 1)
+				if(istype(M, /mob/living/carbon/monkey))
+					var/mob/living/carbon/monkey/Mo = M
+					src.visible_message("<span class='danger'>[Mo.name] [Mo.attack_text] [name]!</span>")
+				else
+					src.visible_message("<span class='danger'>[M.name] bites [name]!</span>")
 				var/damage = rand(1, 5)
 				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -373,7 +372,7 @@
 						contract_disease(D,1,0)
 			else
 				for(var/mob/O in viewers(src, null))
-					O.show_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", 1)
+					O.show_message("<span class='danger'>[M.name] lunges towards [name], but misses!</span>", 1)
 	return
 
 
