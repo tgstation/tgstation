@@ -696,7 +696,7 @@
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
 		var/message = pick(messages)
-		user << "<span class='notice'>You pull the string on the [src].</span>"
+		user.visible_message("[user] pulls the string on the [src].", "<span class='notice'>You pull the string on the [src].</span>")
 		toy_talk(user, message)
 		cooldown = 1
 		spawn(recharge_time) cooldown = 0
