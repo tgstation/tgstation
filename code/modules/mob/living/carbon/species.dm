@@ -580,10 +580,6 @@ var/global/list/whitelisted_species = list("Human")
 		if("Clown","Mime")
 			tank_slot=slot_r_hand
 			tank_slot_name = "hand"
-		if("Trader")
-			suit = /obj/item/clothing/suit/space/vox/pressure
-			helm = /obj/item/clothing/head/helmet/space/vox/pressure
-
 		if("MODE") // Gamemode stuff
 			switch(H.mind.special_role)
 				if("Wizard")

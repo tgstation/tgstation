@@ -196,12 +196,9 @@
 	var/drag_delay = 20
 	var/cools = 0
 
-	var/no_console = 0
-
 /obj/machinery/sleeper/New()
 	..()
 	RefreshParts()
-
 	spawn( 5 )
 		var/turf/t
 		if(orient == "RIGHT")
@@ -211,9 +208,6 @@
 		else
 			t = get_step(get_turf(src), EAST)
 			// generate_console(get_step(get_turf(src), EAST))
-
-		if(no_console) return
-
 		ASSERT(t)
 		var/obj/machinery/sleep_console/c = locate() in t.contents
 		if(c && istype(c,connected_type))
@@ -223,9 +217,6 @@
 			generate_console(t)
 		return
 	return
-
-/obj/machinery/sleeper/no_console
-	no_console = 1
 
 /obj/machinery/sleeper/Destroy()
 

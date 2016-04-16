@@ -35,5 +35,3 @@ Librarian=1
 
 AI=1
 Cyborg=1
-
-Trader=3

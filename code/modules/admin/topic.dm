@@ -878,12 +878,6 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Dionaea;jobban4=\ref[M]'>Dionaea</a></td>"
 
-		if(jobban_isbanned(M, "Trader"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Trader;jobban4=\ref[M]'><font color=red>Vox&nbsp;Trader</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Trader;jobban4=\ref[M]'>Vox&nbsp;Trader</font></a></td>"
-
-
 		jobs += "</tr></table>"
 
 
@@ -959,12 +953,6 @@
 				joblist += "pAI"
 				for(var/jobPos in nonhuman_positions)
 					if(!jobPos)	continue
-					var/datum/job/temp = job_master.GetJob(jobPos)
-					if(!temp) continue
-					joblist += temp.title
-			if("misc")
-				for(var/jobPos in misc_positions)
-					if(!jobPos) continue
 					var/datum/job/temp = job_master.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title

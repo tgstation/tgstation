@@ -277,9 +277,6 @@ SELECT
     jobs.job_engsec_high,
     jobs.job_engsec_med,
     jobs.job_engsec_low,
-    jobs.job_misc_high,
-    jobs.job_misc_med,
-    jobs.job_misc_low,
     body.player_ckey,
     body.player_slot,
     body.hair_red,
@@ -401,9 +398,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	job_engsec_high		= text2num(preference_list["job_engsec_high"])
 	job_engsec_med		= text2num(preference_list["job_engsec_med"])
 	job_engsec_low		= text2num(preference_list["job_engsec_low"])
-	job_misc_high		= text2num(preference_list["job_misc_high"])
-	job_misc_med		= text2num(preference_list["job_misc_med"])
-	job_misc_low		= text2num(preference_list["job_misc_low"])
 
 
 	metadata			= sanitize_text(metadata, initial(metadata))
@@ -447,9 +441,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
-	job_misc_high  = sanitize_integer(job_misc_high, 0, 65535, initial(job_misc_high))
-	job_misc_med  = sanitize_integer(job_misc_med, 0, 65535, initial(job_misc_med))
-	job_misc_low  = sanitize_integer(job_misc_low, 0, 65535, initial(job_misc_low))
 
 	q = new
 	q.Add("SELECT role, preference FROM client_roles WHERE ckey=? AND slot=?", ckey, slot)
@@ -514,9 +505,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	S["job_engsec_high"]	>> job_engsec_high
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
-	S["job_misc_high"]		>> job_misc_high
-	S["job_misc_med"]		>> job_misc_med
-	S["job_misc_low"]		>> job_misc_low
 
 	//Miscellaneous
 	S["flavor_text"]		>> flavor_text
@@ -569,9 +557,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
-	job_misc_high = sanitize_integer(job_misc_high, 0, 65535, initial(job_misc_high))
-	job_misc_med = sanitize_integer(job_misc_med, 0, 65535, initial(job_misc_med))
-	job_misc_low = sanitize_integer(job_misc_low, 0, 65535, initial(job_misc_low))
 
 	if(!skills) skills = list()
 	if(!used_skillpoints) used_skillpoints= 0
@@ -697,16 +682,16 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	check.Add("SELECT player_ckey FROM jobs WHERE player_ckey = ? AND player_slot = ?", ckey, slot)
 	if(check.Execute(db))
 		if(!check.NextRow())
-			q.Add("INSERT INTO jobs (player_ckey,player_slot,alternate_option,job_civilian_high,job_civilian_med,job_civilian_low,job_medsci_high,job_medsci_med,job_medsci_low,job_engsec_high,job_engsec_med,job_engsec_low,job_misc_high,job_misc_med,job_misc_low) \
-					VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, job_misc_high, job_misc_med, job_misc_low)
+			q.Add("INSERT INTO jobs (player_ckey,player_slot,alternate_option,job_civilian_high,job_civilian_med,job_civilian_low,job_medsci_high,job_medsci_med,job_medsci_low,job_engsec_high,job_engsec_med,job_engsec_low) \
+					VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", ckey, slot, alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 			to_chat(user, "Created Job list")
 		else
-			q.Add("UPDATE jobs SET alternate_option=?,job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=?,job_misc_high=?,job_misc_med=?,job_misc_low=? WHERE player_ckey = ? AND player_slot = ?",\
-									alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, job_misc_high, job_misc_med, job_misc_low, ckey, slot)
+			q.Add("UPDATE jobs SET alternate_option=?,job_civilian_high=?,job_civilian_med=?,job_civilian_low=?,job_medsci_high=?,job_medsci_med=?,job_medsci_low=?,job_engsec_high=?,job_engsec_med=?,job_engsec_low=? WHERE player_ckey = ? AND player_slot = ?",\
+									alternate_option, job_civilian_high, job_civilian_med, job_civilian_low, job_medsci_high, job_medsci_med, job_medsci_low, job_engsec_high, job_engsec_med, job_engsec_low, ckey, slot)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
@@ -820,9 +805,6 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	S["job_engsec_high"]       << job_engsec_high
 	S["job_engsec_med"]        << job_engsec_med
 	S["job_engsec_low"]        << job_engsec_low
-	S["job_misc_high"]         << job_misc_high
-	S["job_misc_med"]          << job_misc_med
-	S["job_misc_low"]          << job_misc_low
 //	S["skin_style"]            << skin_style
 
 	return 1

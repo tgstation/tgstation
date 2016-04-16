@@ -46,10 +46,6 @@
 		else
 			assignment = "Unassigned"
 
-		var/datum/job/job = job_master.GetJob(H.job)
-		if(job && job.no_crew_manifest)
-			return
-
 		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
 
 

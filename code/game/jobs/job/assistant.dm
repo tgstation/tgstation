@@ -11,8 +11,6 @@
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet")
 
-	no_random_roll = 1 //Don't become assistant randomly
-
 /datum/job/assistant/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	H.equip_or_collect(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
