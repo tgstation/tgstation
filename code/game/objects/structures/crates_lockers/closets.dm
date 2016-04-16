@@ -144,7 +144,7 @@
 		if(L.buckled || L.incorporeal_move || L.buckled_mobs.len)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
-			if(horizontal && !L.lying)
+			if(horizontal && L.density)
 				return
 			if(L.mob_size > max_mob_size)
 				return
