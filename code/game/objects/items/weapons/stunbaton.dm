@@ -127,21 +127,7 @@
 			baton_stun(L, user)
 		..()
 
-
-/obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
-			return 0
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		if(!R || !R.cell || !R.cell.use(hitcost))
-			return 0
-	else
-		if(!deductcharge(hitcost))
-			return 0
-
+/obj/item/weapon/melee/baton/proc/apply_stun(mob/living/L, mob/user)
 	user.lastattacked = L
 	L.lastattacker = user
 
@@ -158,6 +144,24 @@
 		H.forcesay(hit_appends)
 
 	add_logs(user, L, "stunned")
+
+/obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(R || R.cell || R.cell.use(hitcost))
+			L.apply_stun
+		else
+			return 0
+	else
+		if(deductcharge(hitcost))
+			L.apply_stun
+		else
+			return 0
 	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
