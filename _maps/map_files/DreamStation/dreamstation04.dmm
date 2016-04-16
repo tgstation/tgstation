@@ -72250,7 +72250,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/machinery/droneDispenser/preloaded,
+/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "cHo" = (

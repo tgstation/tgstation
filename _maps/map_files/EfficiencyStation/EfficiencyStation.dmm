@@ -8786,7 +8786,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
-/obj/machinery/droneDispenser/preloaded,
+/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel{
 	icon_state = "delivery"
 	},
