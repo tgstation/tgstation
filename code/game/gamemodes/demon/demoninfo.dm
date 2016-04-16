@@ -83,6 +83,7 @@ var/static/list/lawlorify = list (
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
 	var/form = BASIC_DEMON
+	var/exists = 0
 
 /proc/randomDemonInfo(name = randomDemonName())
 	var/datum/demoninfo/demon = new
@@ -93,12 +94,13 @@ var/static/list/lawlorify = list (
 	demon.banish = randomdemonbanish()
 	return demon
 
-/proc/demonInfo(name, saveDetails = 1)
-	if(allDemons[name])
-		return allDemons[name]
+/proc/demonInfo(name, saveDetails = 0)
+	if(allDemons[lowertext(name)])
+		return allDemons[lowertext(name)]
 	else
 		var/datum/demoninfo/demon = randomDemonInfo(name)
-		allDemons[name] = demon
+		allDemons[lowertext(name)] = demon
+		demon.exists = saveDetails
 		return demon
 
 
@@ -356,7 +358,8 @@ var/static/list/lawlorify = list (
 
 /datum/demoninfo/proc/demonic_resurrection(mob/living/body)
 	message_admins("[owner.name] (demonic name is: [truename]) is resurrecting using demonic energy.</a>")
-	reviveNumber++
+	if(SOULVALUE < POWERUPTHRESHOLD * 3) // once ascended, arch demons do not go down in power by any means.
+		reviveNumber++
 	if(body)
 		body.revive(1,0)
 		if(istype(body, /mob/living/carbon/true_demon))
