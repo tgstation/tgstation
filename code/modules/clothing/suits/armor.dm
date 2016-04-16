@@ -25,6 +25,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+	pocket = /obj/item/weapon/storage/internal/pocket/small
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
@@ -34,6 +35,7 @@
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
+	pocket = /obj/item/weapon/storage/internal/pocket/small
 	flags_inv = 0
 	strip_delay = 80
 
@@ -42,6 +44,7 @@
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_jacket"
 	item_state = "armor"
+	pocket = /obj/item/weapon/storage/internal/pocket/small
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
@@ -58,6 +61,7 @@
 	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
 	icon_state = "leathercoat-sec"
 	item_state = "hostrench"
+	pocket = /obj/item/weapon/storage/internal/pocket/small
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -116,6 +120,7 @@
 
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "armor"
+	pocket = /obj/item/weapon/storage/internal/pocket/small
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton/telescopic)
@@ -269,6 +274,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
+	pocket = /obj/item/weapon/storage/internal/pocket/small
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	flags = THICKMATERIAL

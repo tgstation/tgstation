@@ -18,6 +18,54 @@
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/obj/item/weapon/storage/internal/pocket/pocket = null
+
+/obj/item/clothing/New()
+	..()
+	if(ispath(pocket))
+		pocket = new pocket(src)
+
+/obj/item/clothing/MouseDrop(obj/over_object)
+	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+		var/mob/M = usr
+
+		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+			return
+
+		if(pocket && over_object == M && Adjacent(M))
+			return pocket.MouseDrop(over_object)
+
+		if(!( istype(over_object, /obj/screen) ))
+			return ..()
+
+		if(!(loc == usr) || (loc && loc.loc == usr))
+			return
+		if(!( M.restrained() ) && !( M.stat ))
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+			return
+
+/obj/item/clothing/throw_at(atom/target, range, speed)
+	if(pocket) pocket.close_all()
+	return ..()
+
+/obj/item/clothing/attack_hand(mob/user)
+	if(pocket && pocket.priority && ismob(loc))
+		pocket.show_to(user)
+	else
+		return ..()
+
+/obj/item/clothing/attackby(obj/item/W, mob/user, params)
+	if(pocket)	pocket.attackby(W, user, params)
+	else		return ..()
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
