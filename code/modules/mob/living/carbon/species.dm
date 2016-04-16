@@ -690,6 +690,9 @@ var/global/list/whitelisted_species = list("Human")
 	has_mutant_race = 0
 	move_speed_mod = 1
 
+	can_be_hypothermic = 0
+	has_sweat_glands = 0
+
 	chem_flags = NO_INJECT
 
 	has_organ = list(
