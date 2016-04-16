@@ -55,13 +55,12 @@
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil/random(src)
+	new /obj/item/stack/cable_coil/random(src)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
@@ -85,22 +84,6 @@
 	new /obj/item/weapon/wirecutters(src, "red")
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
-
-/obj/item/weapon/storage/toolbox/drone
-	name = "mechanical toolbox"
-	icon_state = "blue"
-	item_state = "toolbox_blue"
-
-/obj/item/weapon/storage/toolbox/drone/New()
-	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
-	new /obj/item/weapon/screwdriver(src)
-	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
-	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts \himself with the toolbox! It looks like \he's trying to commit suicide..</span>")

@@ -1815,7 +1815,14 @@
 	},
 /area/ai_monitored/security/armory)
 "adL" = (
-/obj/item/weapon/storage/toolbox/drone,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/device/multitool{
+	pixel_x = 12;
+	pixel_y = -4
+	},
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
