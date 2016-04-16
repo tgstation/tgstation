@@ -13,7 +13,7 @@
 	for(var/V in temp_list - (chameleon_blacklist))
 		chameleon_list += V
 
-/datum/action/item_action/chameleon/change/proc/update_look(mob/user)
+/datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/list/item_names = list()
 	var/obj/item/picked_item
 	for(var/U in chameleon_list)
@@ -30,32 +30,52 @@
 			break
 	if(!picked_item)
 		return
+	update_look(user, picked_item)
+
+/datum/action/item_action/chameleon/change/proc/random_look(mob/user)
+	var/picked_item = pick(chameleon_list)
+	// If a user is provided, then this item is in use, and we
+	// need to update our icons and stuff
+
+	if(user)
+		update_look(user, picked_item)
+
+	// Otherwise, it's likely a random initialisation, so we
+	// don't have to worry
+
+	else
+		update_item(picked_item)
+
+/datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
 			return
 
-		target.name = initial(picked_item.name)
-		target.desc = initial(picked_item.desc)
-		target.icon_state = initial(picked_item.icon_state)
-		if(istype(target, /obj/item))
-			var/obj/item/I = target
-			I.item_state = initial(picked_item.item_state)
-			I.item_color = initial(picked_item.item_color)
-			if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
-				var/obj/item/clothing/CL = I
-				var/obj/item/clothing/PCL = picked_item
-				CL.flags_cover = initial(PCL.flags_cover)
-		target.icon = initial(picked_item.icon)
+		update_item(picked_item)
 
 		C.regenerate_icons()	//so our overlays update.
 	UpdateButtonIcon()
+
+/datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
+	target.name = initial(picked_item.name)
+	target.desc = initial(picked_item.desc)
+	target.icon_state = initial(picked_item.icon_state)
+	if(istype(target, /obj/item))
+		var/obj/item/I = target
+		I.item_state = initial(picked_item.item_state)
+		I.item_color = initial(picked_item.item_color)
+		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
+			var/obj/item/clothing/CL = I
+			var/obj/item/clothing/PCL = picked_item
+			CL.flags_cover = initial(PCL.flags_cover)
+	target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
 		return
 
-	update_look(owner)
+	select_look(owner)
 	return 1
 
 /obj/item/clothing/under/chameleon
@@ -137,12 +157,25 @@
 	burn_state = FIRE_PROOF
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0)
 
+	var/datum/action/item_action/chameleon/change/chameleon_action = null
+
 /obj/item/clothing/head/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
 	chameleon_action.chameleon_name = "Hat"
 	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/head/chameleon/drone
+	// The camohat, I mean, holographic hat projection, is part of the
+	// drone itself.
+	flags = NODROP
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	// which means it offers no protection, it's just air and light
+
+/obj/item/clothing/head/chameleon/drone/New()
+	..()
+	chameleon_action.random_look()
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
