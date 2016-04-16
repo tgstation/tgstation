@@ -2,6 +2,7 @@
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
 	var/climb_time = 20
+	var/climb_stun = 2
 	var/climbable = FALSE
 	var/mob/structureclimber
 
@@ -77,18 +78,18 @@
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")
-	var/climb_time = 20
+	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
-		climb_time *= 2
+		adjusted_climb_time *= 2
 	structureclimber = user
-	if(do_mob(user, user, climb_time))
+	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
 			density = 0
 			if(step(user,get_dir(user,src.loc)))
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
 				add_logs(user, src, "climbed onto")
-				user.Stun(2)
+				user.Stun(climb_stun)
 			else
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
 			density = 1
