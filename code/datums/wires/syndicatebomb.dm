@@ -25,13 +25,13 @@
 		if(WIRE_UNBOLT)
 			holder.visible_message("<span class='notice'>\icon[B] The bolts spin in place for a moment.</span>")
 		if(WIRE_DELAY)
-			if(delayed)
+			if(B.delayedbig)
 				holder.visible_message("<span class='notice'>\icon[B] The bomb has already been delayed.</span>")
 			else
 				holder.visible_message("<span class='notice'>\icon[B] The bomb chirps.</span>")
 				playsound(B, 'sound/machines/chime.ogg', 30, 1)
 				B.timer += 30
-				delayed = 1
+				B.delayedbig = TRUE
 		if(WIRE_PROCEED)
 			holder.visible_message("<span class='danger'>\icon[B] The bomb buzzes ominously!</span>")
 			playsound(B, 'sound/machines/buzz-sigh.ogg', 30, 1)
@@ -47,9 +47,12 @@
 				playsound(B, 'sound/machines/click.ogg', 30, 1)
 				B.active = TRUE
 				B.update_icon()
+			if(B.delayedlittle)
+				holder.visible_message("<span class='notice'>\icon[B] Nothing happens.</span>")
 			else
 				holder.visible_message("<span class='notice'>\icon[B] The bomb seems to hesitate for a moment.</span>")
-				B.timer += 5
+				B.timer += 10
+				B.delayedlittle = TRUE
 
 /datum/wires/syndicatebomb/on_cut(wire, mend)
 	var/obj/machinery/syndicatebomb/B = holder
