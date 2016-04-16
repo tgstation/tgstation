@@ -211,10 +211,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
 	rune_in_use = 0
-//Rite of Translocation: Warps the user to a random teleport rune with the same keyword.
+	
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
-	cultist_desc = "Warps everything above it to another chosen teleport rune."
+	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
 	color = rgb(0, 0, 255)
@@ -223,34 +223,49 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/teleport/New(loc, set_keyword)
 	..()
-	teleport_runes.Add(src)
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
-	teleport_runes["[listkey]"] = src
+	teleport_runes += src
 
 /obj/effect/rune/teleport/Destroy()
-	teleport_runes.Remove(listkey)
-	return ..() 
+	teleport_runes -= src
+	return ..()
 
 /obj/effect/rune/teleport/invoke(mob/living/user)
-	var/list/potential_runes = list()	
+	var/list/potential_runes = list()
+	var/list/teleportnames = list()
+	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
-		var/obj/effect/rune/teleport/T = teleport_runes[R]
+		var/obj/effect/rune/teleport/T = R
+		var/resultkey = T.listkey
+		if(resultkey in teleportnames)
+			duplicaterunecount[resultkey]++
+			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
+		else
+			teleportnames.Add(resultkey)
+			duplicaterunecount[resultkey] = 1
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
-			potential_runes["[T.listkey]"] = T 
+			potential_runes[resultkey] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
-		fail_invoke()
 		log_game("Teleport rune failed - no other teleport runes")
-		return
-		
-	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes
-	var/obj/effect/rune/teleport/actual_selected_rune = teleport_runes["[input_rune_key]"]
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !actual_selected_rune) 
 		fail_invoke()
 		return
+
+	if(user.z > ZLEVEL_SPACEMAX)
+		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
+		log_game("Teleport rune failed - user in away mission")
+		fail_invoke()
+		return
+
+	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
+	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !actual_selected_rune)
+		fail_invoke()
+		return
+
 	var/turf/T = get_turf(src)
 	var/turf/UT = get_turf(user)
 	var/movedsomething = 0
@@ -262,7 +277,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
 		user << "<span class='cult'>You[user.loc == UT ? " send everything above the rune away":"r vision blurs, and you suddenly appear somewhere else"].</span>"
 	else
-		fail_invoke() 
+		fail_invoke()
 		
 
 //Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
