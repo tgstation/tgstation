@@ -310,3 +310,44 @@
 	if(iscultist(user))
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
+
+//Talisman of Shackling: Applies special cuffs directly from the talisman
+/obj/item/weapon/paper/talisman/shackle
+	cultist_name = "Talisman of Shackling"
+	cultist_desc = "Use this talisman on a victim to handcuff them with dark bindings."
+	invocation = "In'totum Lig'abis!"
+	color = "#B27300" // burnt-orange
+	uses = 4
+
+/obj/item/weapon/paper/talisman/shackle/attack(mob/living/target, mob/living/user)
+	if(iscultist(user))
+		if(isrobot(target))
+			..()
+			return
+		if(!isliving(target))
+			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
+			return
+		var/mob/living/L = target
+		if(ishuman(L))
+			CuffAttack(L,user)
+			
+/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/L,mob/living/user)
+	if(!iscarbon(L))
+		return
+	var/mob/living/carbon/C = L
+	if(!C.handcuffed)
+		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
+								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
+		if(do_mob(user, C, 30))
+			if(!C.handcuffed)
+				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
+				C.update_handcuffed()
+				user << "<span class='notice'>You shackle [C].</span>"
+				add_logs(user, C, "handcuffed")
+		else
+			user << "<span class='warning'>You fail to handcuff [C].</span>"
+	return
+		
+	
+	
