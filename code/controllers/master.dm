@@ -19,19 +19,14 @@ var/global/datum/controller/master/Master = new()
 	var/iteration = 0
 	// The cost (in deciseconds) of the MC loop.
 	var/cost = 0
-#if DM_VERSION < 510
-	// The old fps when we slow it down to prevent lag.
-	var/old_fps
-#endif
 	// A list of subsystems to process().
 	var/list/subsystems = list()
 	// The cost of running the subsystems (in deciseconds).
 	var/subsystem_cost = 0
 	// The type of the last subsystem to be process()'d.
 	var/last_type_processed
-#if DM_VERSION >= 510
+
 	var/list/priority_queue = list() //any time we pause or skip a ss for tick reasons, we run it first next tick
-#endif
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -149,37 +144,29 @@ var/global/datum/controller/master/Master = new()
 				if (!subsystemstorun.len)
 					subsystemstorun = subsystems.Copy()
 				var/priorityrunning = 0 //so we know if there are priority queue items
-#if DM_VERSION >= 510
 				//this is a queue for any SS skipped or paused for tick reasons, to be ran first next tick
 				if (priority_queue.len)
 					priorityrunning = priority_queue.len
 					subsystemstorun = priority_queue | subsystemstorun
-#endif
+
 				var/ran_subsystems = 0
 				while(subsystemstorun.len)
 					var/datum/subsystem/SS = subsystemstorun[1]
 					subsystemstorun.Cut(1, 2)
-#if DM_VERSION >= 510
+
 					if (world.tick_usage > TICK_LIMIT_MC)
-#else
-					if(world.cpu >= 100)
-#endif
 						break
-#if DM_VERSION >= 510
 					if(priorityrunning)
 						if(!priority_queue.len || !(SS in priority_queue))
 							priorityrunning = 0 //end of priority queue items
 						else
 							priority_queue -= SS
-#endif
 					if(SS.can_fire > 0)
 						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time)))
-#if DM_VERSION >= 510
 							if(!priorityrunning && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
 								if(!SS.dynamic_wait)
 									priority_queue += SS
 								continue
-#endif
 							//we can't reset SS.paused after we fire, incase it pauses again, so we cache it and
 							//	send it to SS.fire()
 							var/paused = SS.paused
@@ -188,11 +175,9 @@ var/global/datum/controller/master/Master = new()
 							timer = world.timeofday
 							last_type_processed = SS.type
 							SS.last_fire = world.time
-#if DM_VERSION >= 510
 							var/tick_usage = world.tick_usage
-#endif
 							SS.fire(paused) // Fire the subsystem
-#if DM_VERSION >= 510
+
 							if(priorityrunning)
 								priorityrunning--
 							var/newusage = max(world.tick_usage - tick_usage, 0)
@@ -200,7 +185,6 @@ var/global/datum/controller/master/Master = new()
 								SS.tick_usage = MC_AVERAGE_SLOW(SS.tick_usage,world.tick_usage - tick_usage)
 							else
 								SS.tick_usage = MC_AVERAGE_FAST(SS.tick_usage,world.tick_usage - tick_usage)
-#endif
 							SS.cost = max(MC_AVERAGE(SS.cost, world.timeofday - timer), 0)
 							if(SS.dynamic_wait) // Adjust wait depending on lag.
 								var/oldwait = SS.wait
@@ -220,9 +204,6 @@ var/global/datum/controller/master/Master = new()
 									SS.next_fire += SS.wait
 							if(!SS.paused)
 								SS.times_fired++
-#if DM_VERSION < 510
-							sleep(0)
-#endif
 
 				cost = max(MC_AVERAGE(cost, world.timeofday - start_time), 0)
 				if(ran_subsystems)
@@ -238,16 +219,6 @@ var/global/datum/controller/master/Master = new()
 				// If we are loading the server too much, sleep a bit extra...
 				if(world.cpu >= 75)
 					extrasleep += (extrasleep + world.tick_lag) * ((world.cpu-50)/10)
-#if DM_VERSION < 510
-				if(world.cpu >= 100)
-					if(!old_fps)
-						old_fps = world.fps
-						//byond bug, if we go over 120 fps and world.fps is higher then 10, the bad things that happen are made worst.
-						world.fps = 10
-				else if(old_fps && world.cpu < 50)
-					world.fps = old_fps
-					old_fps = null
-#endif
 				sleep(world.tick_lag*processing+extrasleep)
 
 			else

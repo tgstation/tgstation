@@ -94,20 +94,15 @@ var/global/dmm_suite/preloader/_preloader = new
 				break
 
 			ycrd--
-#if DM_VERSION < 510
-			sleep(-1)
-#else
 			CHECK_TICK
-#endif
+
 
 		//reached End Of File
 		if(findtext(tfile,quote+"}",zpos,0)+2==tfile_len)
 			break
-#if DM_VERSION < 510
-		sleep(-1)
-#else
+
 		CHECK_TICK
-#endif
+
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
@@ -164,12 +159,8 @@ var/global/dmm_suite/preloader/_preloader = new
 		//then fill the members_attributes list with the corresponding variables
 		members_attributes.len++
 		members_attributes[index++] = fields
-
-#if DM_VERSION < 510
-		sleep(-1)
-#else
 		CHECK_TICK
-#endif
+
 	while(dpos != 0)
 
 
