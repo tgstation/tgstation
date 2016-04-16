@@ -267,7 +267,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					if (total_moles)
 						for(var/id in env_gases)
-							var/gas_level = env_gases[id][MOLES]/total_moles
+							var/gas_level = (!total_moles ? 0 : env_gases[id][MOLES]/total_moles)
 							if(id in hardcoded_gases || gas_level > 0.001)
 								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
 

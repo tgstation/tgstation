@@ -125,9 +125,9 @@
 	var/list/breath_gases = breath.gases
 	breath.assert_gases("o2","plasma","co2","n2o")
 
-	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases["co2"][MOLES]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (!breath.total_moles() ? 0 : breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (!breath.total_moles() ? 0 : breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (!breath.total_moles() ? 0 : breath_gases["co2"][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -180,7 +180,7 @@
 
 	//NITROUS OXIDE
 	if(breath_gases["n2o"])
-		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
+		var/SA_partialpressure = (!breath.total_moles() ? 0 : breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Paralyse(3)
 			if(SA_partialpressure > SA_sleep_min)

@@ -14,7 +14,7 @@
 	breath.assert_gases("plasma", "o2")
 
 	//Partial pressure of the toxins in our breath
-	var/Toxins_pp = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_pp = (!breath.total_moles() ? 0 : breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
 
 	if(Toxins_pp) // Detect toxins in air
 		adjustPlasma(breath_gases["plasma"][MOLES]*250)
