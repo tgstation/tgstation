@@ -25,10 +25,14 @@
 		user.drop_item()
 		qdel(src)
 
-/obj/item/weapon/paper/talisman/proc/invoke(mob/living/user)
-	if(health_cost && iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
+ /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user, successfuluse = 1)
+	. = successfuluse
+	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
+		if(invocation)
+			user.whisper(invocation)
+		if(health_cost && iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm")) 
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/weapon/paper/talisman/malformed
@@ -36,7 +40,7 @@
 	cultist_desc = "A talisman with gibberish scrawlings. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 
-/obj/item/weapon/paper/talisman/malformed/invoke(mob/living/user)
+/obj/item/weapon/paper/talisman/malformed/invoke(mob/living/user, successfuluse = 1)
 	user << "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>"
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -49,7 +53,7 @@
 	invocation = null
 	uses = 3
 
-/obj/item/weapon/paper/talisman/supply/invoke(mob/living/user)
+/obj/item/weapon/paper/talisman/supply/invoke(mob/living/user, successfuluse = 1)
 	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
@@ -95,9 +99,6 @@
 					C.drop_item()
 					visible_message("<span class='warning'>[src] crumbles to dust.</span>")
 				qdel(src)
-		return
-	else
-		return
 
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport
@@ -148,7 +149,7 @@
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	health_cost = 1
 
-/obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user)
+/obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user, successfuluse = 1)
 	user.visible_message("<span class='warning'>[user]'s hand glows red for a moment.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
 	new /obj/item/weapon/tome(get_turf(user))
@@ -190,7 +191,7 @@
 	color = "#ff80d5" // honk
 	invocation = "By'o nar'nar!"
 
-/obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user)
+/obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user, successfuluse = 1)
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
@@ -204,7 +205,7 @@
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	health_cost = 5
 
-/obj/item/weapon/paper/talisman/emp/invoke(mob/living/user)
+/obj/item/weapon/paper/talisman/emp/invoke(mob/living/user, successfuluse = 1)
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
@@ -217,15 +218,18 @@
 	invocation = "Fuu ma'jin!"
 	health_cost = 10
 	
-/obj/item/weapon/paper/talisman/stun/attack_self(mob/living/user)
+/obj/item/weapon/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
+	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
+		return ..()
 	if(iscultist(user))
 		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
 	else
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
-
-/obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user)
+	return 0
+	
+/obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
 	if(iscultist(user))
-		user.whisper(invocation)
+		invoke(user, 1)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
 							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
 		var/obj/item/weapon/nullrod/N = locate() in target
@@ -257,7 +261,7 @@
 	color = "#33cc33" // green
 	invocation = "N'ath reth sh'yro eth draggathnor!"
 	
-/obj/item/weapon/paper/talisman/armor/invoke(mob/living/user)
+/obj/item/weapon/paper/talisman/armor/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
 	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, arming yourself!</span>")
@@ -319,6 +323,15 @@
 	color = "#B27300" // burnt-orange
 	uses = 4
 
+/obj/item/weapon/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
+	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
+		return ..()
+	if(iscultist(user))
+		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
+	else
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+	return 0
+
 /obj/item/weapon/paper/talisman/shackle/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
 		if(isrobot(target))
@@ -329,6 +342,7 @@
 			return
 		var/mob/living/L = target
 		if(ishuman(L))
+			invoke(user, 1)
 			CuffAttack(L,user)
 			
 /obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/L,mob/living/user)
@@ -337,7 +351,7 @@
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
+		C.visible_message("<span class='danger'>[user] begins shackling [C] with dark magic!</span>", \
 								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
