@@ -15,6 +15,8 @@
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
+	var/delayedbig = FALSE	//delay wire pulsed?
+	var/delayedlittle  = FALSE	//activation wire pulsed?
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -216,6 +218,8 @@
 			holder.wires.shuffle_wires()
 		holder.defused = 0
 		holder.open_panel = 0
+		holder.delayedbig = FALSE
+		holder.delayedlittle = FALSE
 		holder.update_icon()
 		holder.updateDialog()
 
