@@ -383,7 +383,7 @@
 	return
 
 /turf/open/floor/plasteel/cult/airless
-	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 
 
