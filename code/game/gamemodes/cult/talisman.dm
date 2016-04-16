@@ -268,6 +268,7 @@
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.drop_item()
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+	user.put_in_hands(new /obj/item/weapon/restraints/legcuffs/bola/tactical(user))
 
 /obj/item/weapon/paper/talisman/armor/attack(mob/living/target, mob/living/user)
 	if(iscultist(user) && iscultist(target))
