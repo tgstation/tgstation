@@ -104,37 +104,42 @@
 /obj/item/weapon/paper/talisman/teleport
 	cultist_name = "Talisman of Teleportation"
 	cultist_desc = "A single-use talisman that will teleport a user to a random rune of the same keyword."
-	color = "#9900cc" // purple
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
-	var/keyword = "ire"
 
-/obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user)
-	..()
+/obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
+	var/list/teleportnames = list()
+	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
-		var/obj/effect/rune/teleport/T = teleport_runes[R]
-		if(T.z <= ZLEVEL_SPACEMAX)
-			potential_runes["[T.listkey]"] = T
+		var/obj/effect/rune/teleport/T = R
+		var/resultkey = T.listkey
+		if(resultkey in teleportnames)
+			duplicaterunecount[resultkey]++
+			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
+		else
+			teleportnames.Add(resultkey)
+			duplicaterunecount[resultkey] = 1
+		potential_runes[resultkey] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
 		log_game("Teleport talisman failed - no other teleport runes")
-		return 0
+		return ..(user, 0)
 
 	if(user.z > ZLEVEL_SPACEMAX)
 		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
 		log_game("Teleport talisman failed - user in away mission")
-		return 0
+		return ..(user, 0)
 
-	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes
-	var/obj/effect/rune/teleport/actual_selected_rune = teleport_runes["[input_rune_key]"]
+	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!actual_selected_rune)
-		return 0 
+		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
 	user.forceMove(get_turf(actual_selected_rune))
-	return 1 
+	return ..()
 
 
 /obj/item/weapon/paper/talisman/summon_tome
