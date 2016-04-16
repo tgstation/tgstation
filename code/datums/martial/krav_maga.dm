@@ -1,57 +1,65 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
-	counter_prob = 25
+	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
+	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
+	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
 
-/datum/martial_art/krav_maga/on_hit(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(prob(counter_prob))
-		if(prob(50))
-			A.visible_message("<span class='warning'>[A] counters [D]'s hit!</span>", \
-						 	"<span class='userdanger'>You counter the hit!</span>")
-			sleep(5)
-			playsound(get_turf(A), 'sound/effects/hit_block.ogg', 50, 1, -1)
-			D.apply_damage(10, BRUTE)
-			return 1
+/datum/action/neck_chop
+	name = "Neck Chop - Injures the neck, stopping the victim from speaking for a while."
+	button_icon_state = "neckchop"
 
-		else
-			A.visible_message("<span class='warning'>[A] blocks [D]'s hit!</span>", \
-						 	"<span class='userdanger'>You block the hit!</span>")
-			playsound(get_turf(A), 'sound/effects/hit_block.ogg', 50, 1, -1)
-			return 1
-	return 0
+/datum/action/neck_chop/Trigger()
+	owner << "<b><i>Your next attack will be a Neck Chop.</i></b>"
+	owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>")
+	var/mob/living/carbon/human/H = owner
+	H.martial_art.streak = "neck_chop"
 
+/datum/action/leg_sweep
+	name = "Leg Sweep - Trips the victim, rendering them prone and unable to move for a short time."
+	button_icon_state = "legsweep"
+
+/datum/action/leg_sweep/Trigger()
+	owner << "<b><i>Your next attack will be a Leg Sweep.</i></b>"
+	owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>")
+	var/mob/living/carbon/human/H = owner
+	H.martial_art.streak = "leg_sweep"
+
+/datum/action/lung_punch//referred to internally as 'quick choke'
+	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
+	button_icon_state = "lungpunch"
+
+/datum/action/lung_punch/Trigger()
+	owner << "<b><i>Your next attack will be a Lung Punch.</i></b>"
+	owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>")
+	var/mob/living/carbon/human/H = owner
+	H.martial_art.streak = "quick_choke"//internal name for lung punch
 
 /datum/martial_art/krav_maga/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
 	..()
 	H << "<span class = 'userdanger'>You know the arts of Krav Maga!</span>"
-	H << "<span class = 'danger'>Recall your teachings using the Access Tutorial verb in the Krav Maga menu, in your verbs menu.</span>"
-	H.verbs += /mob/living/carbon/human/proc/krav_maga_help
-	H.verbs += /mob/living/carbon/human/proc/neck_chop
-	H.verbs += /mob/living/carbon/human/proc/head_elbow
-	H.verbs += /mob/living/carbon/human/proc/leg_sweep
-	H.verbs += /mob/living/carbon/human/proc/quick_choke
+	H << "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>"
+	neckchop.Grant(H)
+	legsweep.Grant(H)
+	lungpunch.Grant(H)
 
 /datum/martial_art/krav_maga/remove(var/mob/living/carbon/human/H)
 	..()
-	H.verbs -= /mob/living/carbon/human/proc/krav_maga_help
-	H.verbs -= /mob/living/carbon/human/proc/neck_chop
-	H.verbs -= /mob/living/carbon/human/proc/head_elbow
-	H.verbs -= /mob/living/carbon/human/proc/leg_sweep
-	H.verbs -= /mob/living/carbon/human/proc/quick_choke
+	H << "<span class = 'userdanger'>You suddenly forget the arts of Krav Maga...</span>"
+	neckchop.Remove(H)
+	legsweep.Remove(H)
+	lungpunch.Remove(H)
+
 /datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
 		if("neck_chop")
 			streak = ""
 			neck_chop(A,D)
 			return 1
-		if("head_elbow")
-			streak = ""
-			head_elbow(A,D)
-			return 1
 		if("leg_sweep")
 			streak = ""
 			leg_sweep(A,D)
 			return 1
-		if("quick_choke")
+		if("quick_choke")//is actually lung punch
 			streak = ""
 			quick_choke(A,D)
 			return 1
@@ -64,25 +72,15 @@
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Weaken(6)
+	D.Weaken(4)//originally was 6, lowered since you could kill somebody in one stun
 	return 1
 
-/datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	D.visible_message("<span class='warning'>[A] grabs and chokes [D]!</span>", \
-				  	"<span class='userdanger'>[A] grabs and chokes you!</span>")
+/datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
+	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
+				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.losebreath += 5
 	D.adjustOxyLoss(10)
-	return 1
-
-/datum/martial_art/krav_maga/proc/head_elbow(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(D.stat || D.weakened)
-		return 0
-	D.visible_message("<span class='warning'>[A] elbows [D] in the face, stunning them!</span>", \
-				  	"<span class='userdanger'>[A] elbows you in the face, stunning you!</span>")
-	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.apply_damage(10, BRUTE)
-	D.Stun(3)
 	return 1
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -103,24 +101,19 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 		return 1
 	add_logs(A, D, "punched")
 	A.do_attack_animation(D)
-	if(D.martial_art)
-		var/datum/martial_art/MA = D.martial_art
-		if(MA.on_hit(D,A)) // they countered with something
-			add_logs(A, D, "countered or blocked")
-			return 1
 	var/picked_hit_type = pick("punches", "kicks")
-	if(picked_hit_type == "kicks")
+	var/bonus_damage = 10
+	if(D.weakened || D.resting || D.lying)
+		bonus_damage += 5
+		picked_hit_type = "stomps on"
+	D.apply_damage(bonus_damage, BRUTE)
+	if(picked_hit_type == "kicks" || picked_hit_type == "stomps")
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	else
 		playsound(get_turf(D), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
-					  "<span class='userdanger'>[A] hits you!</span>")
-	var/bonus_damage = 10
-	if(D.weakened)
-		bonus_damage += 5
-	D.apply_damage(bonus_damage, BRUTE)
+					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
 	return 1
-
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
@@ -145,45 +138,7 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	return 1
 
-/mob/living/carbon/human/proc/krav_maga_help()
-	set name = "Access Tutorial"
-	set desc = "Access the Krav Maga tutorial."
-	set category = "Krav Maga"
-
-	usr << "<b><i>You recall your Krav Maga teachings...</i></b>"
-	usr << "<span class='notice'>Leg Sweep</span>: Performs a leg sweep, knocking down the target and making him vulnerable to attack."
-	usr << "<span class='notice'>Quick Choke</span>: Grabs and chokes the target. Good for speeding up a kill"
-	usr << "<span class='notice'>Head Elbow</span>: Elbows the opponent in the face, stunning them, leaving them vulnerable to attacks."
-	usr << "<span class='notice'>Neck Chop</span>:  Karate chops the opponent's neck, rendering them unable to speak for a short period of time."
-	usr << "<b><i>Trigger your moves by activating them with the verb, and then clicking on an opponent with a hostile intent.</i></b>"
-
-/mob/living/carbon/human/proc/neck_chop()
-	set name = "Neck Chop"
-	set desc = "Sets your next move to the Neck Chop."
-	set category = "Krav Maga"
-	usr << "<b><i>Your next attack will be a Neck Chop.</i></b>"
-	martial_art.streak = "neck_chop"
-
-/mob/living/carbon/human/proc/head_elbow()
-	set name = "Head Elbow"
-	set desc = "Sets your next move to the Head Elbow."
-	set category = "Krav Maga"
-	usr << "<b><i>Your next attack will be a Head Elbow.</i></b>"
-	martial_art.streak = "head_elbow"
-
-/mob/living/carbon/human/proc/leg_sweep()
-	set name = "Leg Sweep"
-	set desc = "Sets your next move to the Leg Sweep."
-	set category = "Krav Maga"
-	usr << "<b><i>Your next attack will be a Leg Sweep.</i></b>"
-	martial_art.streak = "leg_sweep"
-
-/mob/living/carbon/human/proc/quick_choke()
-	set name = "Quick Choke"
-	set desc = "Sets your next move to the Quick Choke."
-	set category = "Krav Maga"
-	usr << "<b><i>Your next attack will be a Quick Choke.</i></b>"
-	martial_art.streak = "quick_choke"
+//Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."
