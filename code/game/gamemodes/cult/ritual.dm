@@ -223,6 +223,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/possible_runes = list()
+	var/list/shields = list()
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return 
@@ -269,15 +270,21 @@ This file contains the arcane tome files as well as innate cultist emergency com
 				N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
 				N.color = "red"
 				N.health = 60
-			if(!do_after(user, 400, target = get_turf(user)))
-				for(var/obj/machinery/shield/U in orange (1, user))
-					qdel(U)
+				shields |= N
+			if(shields.len)
+				for(var/V in shields)
+        				var/obj/machinery/shield/S = V
+        				if(S && !qdeleted(S))
+            					qdel(S)
 				return
 	if(!do_after(user, 50, target = get_turf(user)))
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
-	for(var/obj/machinery/shield/S in orange (1, user))
-		qdel(S)
+	if(shields.len)
+		for(var/V in shields)
+        		var/obj/machinery/shield/S = V
+        		if(S && !qdeleted(S))
+            			qdel(S)
 	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>" 
