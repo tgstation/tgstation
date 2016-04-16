@@ -87,7 +87,7 @@
 		return 0
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(horizontal && L.mob_size > MOB_SIZE_TINY)
+		if(horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				user << "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" //you... think? there's something standing on it ffs
 			return 0
@@ -99,7 +99,7 @@
 		if(closet != src && !closet.wall_mounted)
 			return 0
 	for(var/mob/living/L in T)
-		if(horizontal && L.mob_size > MOB_SIZE_TINY && !L.lying)
+		if(horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				user << "<span class='danger'>There's something large in [src], preventing it from closing.</span>"
 			return 0
