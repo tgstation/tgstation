@@ -329,14 +329,14 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/engineering/drone/New()
 	..()
-        var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
-        new /obj/item/weapon/screwdriver(src)
-        new /obj/item/weapon/wrench(src)
-        new /obj/item/weapon/weldingtool(src)
-        new /obj/item/weapon/crowbar(src)
-        new /obj/item/stack/cable_coil(src,30,color)
-        new /obj/item/weapon/wirecutters(src)
-        new /obj/item/device/multitool(src)
+	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/clown
 	name = "clown's dufflebag"
