@@ -16,7 +16,6 @@
 
 /datum/wires/syndicatebomb/on_pulse(wire)
 	var/obj/machinery/syndicatebomb/B = holder
-	var/delayed = 0
 	switch(wire)
 		if(WIRE_BOOM)
 			if(B.active)
