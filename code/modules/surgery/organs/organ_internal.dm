@@ -231,8 +231,6 @@
 	priority = 100 //it's an indicator you're dieing, so it's very high priority
 	colour = "red"
 
-
-
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -245,6 +243,70 @@
 	var/obj/S = ..()
 	S.reagents.add_reagent("salbutamol", 5)
 	return S
+
+/obj/item/organ/internal/liver
+	name = "liver"
+	desc = "The big but unassuming northern neighbour of the stomach; the Canada of human viscera."
+	icon_state = "liver"
+	zone = "chest"
+	slot = "liver"
+
+/obj/item/organ/internal/liver/proc/handle_sobering()
+	if(owner.sleeping)
+		owner.drunkenness = max(owner.drunkenness - 1.5, 0)
+	else
+		owner.drunkenness = max(owner.drunkenness - 0.2, 0)
+
+/obj/item/organ/internal/liver/artificial
+	name = "artificial liver"
+	desc = "Pros: It's efficient enough to keep you sober. Cons: It's efficient enough to keep you sober."
+	icon_state = "liver-c"
+
+/obj/item/organ/internal/liver/artificial/handle_sobering()
+	owner.drunkenness = max(owner.drunkenness - 5, 0)
+	..()
+
+/obj/item/organ/internal/liver/alien
+	name = "alien liver"
+	desc = "A highly advanced liver that can break down and neutralize poisons."
+	icon_state = "liver-x"
+
+/obj/item/organ/internal/liver/alien/handle_sobering()
+	owner.drunkenness = 0
+
+/obj/item/organ/internal/stomach
+	name = "stomach"
+	desc = "Despite what some people say, this isn't the quickest way to a man's heart."
+	icon_state = "stomach"
+	zone = "chest"
+	slot = "stomach"
+	var/can_devour = /mob/living/carbon/monkey
+
+/obj/item/organ/internal/stomach/proc/handle_stomach()
+	for(var/mob/living/M in owner.stomach_contents)
+		if(M.loc != owner)
+			owner.stomach_contents.Remove(M)
+			continue
+		if(M.stat == DEAD)
+			M.death(1)
+			owner.stomach_contents.Remove(M)
+			qdel(M)
+			continue
+		if(SSmob.times_fired%3==1)
+			if(!(M.status_flags & GODMODE))
+				M.adjustBruteLoss(5)
+			owner.nutrition += 10
+
+/obj/item/organ/internal/stomach/proc/check_devourabilty(mob/living/carbon/C)
+	if(istype(C, can_devour))
+		return 1
+	return 0
+
+/obj/item/organ/internal/stomach/alien
+	name = "alien stomach"
+	desc = "An unnevingly huge meat sack for holding unnerved meatsacks."
+	icon_state = "stomach-x"
+	can_devour = /mob/living/carbon
 
 /obj/item/organ/internal/tongue
 	name = "tongue"

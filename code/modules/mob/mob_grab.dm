@@ -201,7 +201,12 @@
 		return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if((isalien(user) || (user.disabilities & FAT)) && iscarbon(affecting))
+			var/obj/item/organ/internal/stomach/S = user.getorganslot("stomach")
+			if(!S)
+				return
+			if(!S.check_devourabilty(affecting))
+				return
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))

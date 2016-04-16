@@ -259,6 +259,9 @@
 		if (getToxLoss() >= 45 && nutrition > 20)
 			lastpuke ++
 			if(lastpuke >= 25) // about 25 second delay I guess
+				if(!getorganslot("stomach"))
+					lastpuke = 0
+					return
 				Stun(5)
 
 				visible_message("<span class='danger'>[src] throws up!</span>", \
@@ -311,75 +314,5 @@
 			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
-
-/*
-Alcohol Poisoning Chart
-Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
-In addition, severe effects won't always trigger unless the drink is poisonously strong
-All effects don't start immediately, but rather get worse over time; the rate is affected by the imbiber's alcohol tolerance
-
-0: Non-alcoholic
-1-10: Barely classifiable as alcohol - occassional slurring
-11-20: Slight alcohol content - slurring
-21-30: Below average - imbiber begins to look slightly drunk
-31-40: Just below average - no unique effects
-41-50: Average - mild disorientation, imbiber begins to look drunk
-51-60: Just above average - disorientation, vomiting, imbiber begins to look heavily drunk
-61-70: Above average - small chance of blurry vision, imbiber begins to look smashed
-71-80: High alcohol content - blurry vision, imbiber completely shitfaced
-81-90: Extremely high alcohol content - light brain damage, passing out
-91-100: Dangerously toxic - swift death
-*/
-
-/mob/living/carbon/human/handle_status_effects()
-	..()
-	if(drunkenness)
-		if(sleeping)
-			drunkenness = max(drunkenness - 1.5, 0)
-		else
-			drunkenness = max(drunkenness - 0.2, 0)
-
-		if(drunkenness >= 6)
-			if(prob(25))
-				slurring += 2
-			jitteriness = max(jitteriness - 3, 0)
-
-		if(drunkenness >= 11 && slurring < 5)
-			slurring += 1.2
-
-		if(drunkenness >= 41)
-			if(prob(25))
-				confused += 2
-			Dizzy(10)
-
-		if(drunkenness >= 51)
-			if(prob(5))
-				confused += 10
-				vomit()
-			Dizzy(25)
-
-		if(drunkenness >= 61)
-			if(prob(50))
-				blur_eyes(5)
-
-		if(drunkenness >= 71)
-			blur_eyes(5)
-
-		if(drunkenness >= 81)
-			adjustToxLoss(0.2)
-			if(prob(5) && !stat)
-				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
-
-		if(drunkenness >= 91)
-			adjustBrainLoss(0.4)
-			if(prob(20) && !stat)
-				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
-				else
-					src << "<span class='warning'>Just a quick nap...</span>"
-					Sleeping(45)
-
-		if(drunkenness >= 101)
-			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
 #undef HUMAN_MAX_OXYLOSS

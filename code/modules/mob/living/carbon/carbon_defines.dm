@@ -31,3 +31,5 @@
 	var/rotate_on_lying = 1
 
 	var/tinttotal = 0	// Total level of visualy impairing items
+
+	var/drunkenness = 0 //Overall drunkenness - check handle_status_effects() in life.dm for effects
