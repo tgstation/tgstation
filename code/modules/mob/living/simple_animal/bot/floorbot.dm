@@ -322,6 +322,18 @@
 
 	else
 		var/turf/open/floor/F = target_turf
+
+		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
+			anchored = 1
+			icon_state = "floorbot-c"
+			mode = BOT_REPAIRING
+			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
+			sleep(50)
+			if(mode == BOT_REPAIRING && F && src.loc == F)
+				F.broken = 0
+				F.burnt = 0
+				F.ChangeTurf(/turf/open/floor/plasteel)
+
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
 			anchored = 1
 			icon_state = "floorbot-c"
@@ -335,17 +347,6 @@
 				specialtiles -= 1
 				if(specialtiles == 0)
 					speak("Requesting refill of custom floortiles to continue replacing.")
-			
-		else if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
-			anchored = 1
-			icon_state = "floorbot-c"
-			mode = BOT_REPAIRING
-			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
-			sleep(50)
-			if(mode == BOT_REPAIRING && F && src.loc == F)
-				F.broken = 0
-				F.burnt = 0
-				F.ChangeTurf(/turf/open/floor/plasteel)
 	mode = BOT_IDLE
 	update_icon()
 	anchored = 0
