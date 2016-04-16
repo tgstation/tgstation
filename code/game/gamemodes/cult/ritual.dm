@@ -284,7 +284,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	if(shields.len)
 		for(var/V in shields)
 			var/obj/machinery/shield/S = V
-				if(S && !qdeleted(S))
-					qdel(S)
+			if(S && !qdeleted(S))
+				qdel(S)
 	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>" 
