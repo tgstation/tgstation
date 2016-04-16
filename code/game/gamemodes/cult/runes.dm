@@ -204,11 +204,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		rune_in_use = 0
 		return
 	var/obj/item/weapon/paper/talisman/TA = new talisman_type(get_turf(src))
-	if(istype(TA, /obj/item/weapon/paper/talisman/teleport))
-		var/the_keyword = stripped_input(usr, "Please enter a keyword for the talisman.", "Enter Keyword", "")
-		var/obj/item/weapon/paper/talisman/teleport/TELE = TA
-		TELE.keyword = the_keyword
-	visible_message("<span class='warning'>[src] crumbles to dust, and bloody images form themselves on [paper_to_imbue].</span>")
+	visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
 	rune_in_use = 0
 	
