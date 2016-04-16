@@ -274,10 +274,10 @@ MASS SPECTROMETER
 		var/list/env_gases = environment.gases
 
 		environment.assert_gases(arglist(hardcoded_gases))
-		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
-		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
-		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
-		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/o2_concentration = (!total_moles ? 0 : env_gases["o2"][MOLES]/total_moles)
+		var/n2_concentration = (!total_moles ? 0 : env_gases["n2"][MOLES]/total_moles)
+		var/co2_concentration = (!total_moles ? 0 : env_gases["co2"][MOLES]/total_moles)
+		var/plasma_concentration = (!total_moles ? 0 : env_gases["plasma"][MOLES]/total_moles)
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -303,7 +303,7 @@ MASS SPECTROMETER
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)
 				continue
-			var/gas_concentration = env_gases[id][MOLES]/total_moles
+			var/gas_concentration = (!total_moles ? 0 : env_gases[id][MOLES]/total_moles)
 			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 		user << "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>"
 

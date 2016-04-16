@@ -192,7 +192,7 @@
 		cur_tlv = TLV[gas_id]
 		data["environment_data"] += list(list(
 								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
-								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
+								"value" = (!total_moles ? 0 : environment.gases[gas_id][MOLES] / total_moles * 100),
 								"unit" = "%",
 								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
 		))
