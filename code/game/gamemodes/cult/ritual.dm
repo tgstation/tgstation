@@ -74,10 +74,10 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	just to draw the massive rune needed. Do not create the rune until your cult is ready, the crew will receive the NAME and LOCATION of anyone who attempts to create the Nar-Sie rune. Once the Nar-Sie rune is drawn \
 	you must gathered 9 cultists (or constructs) over the rune and then click it to bring the Dark One into this world!<br><br>"
 
-	var/datum/browser/popup = new(usr, "", 800, 600)
+	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
-	return
+	return 1
 
 /obj/item/weapon/tome
 	name = "arcane tome"
@@ -207,10 +207,10 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	talisman functions differently from others. Rather than simply reading the words, the target must be attacked directly with the talisman. The talisman will then knock down the target for a long \
 	duration in addition to inhibiting their speech. Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead."
 
-	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldritch longsword, and a pair of boots. Any items that cannot \
+	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armored robes, a backpack, an eldritch longsword, a bola, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Rite of Horror must be applied directly to the victim, it will shatter your victim's mind with visions of the endtimes.<br><br>"
+	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Talisman of Horror must be applied directly to the victim, it will shatter your victim's mind with visions of the endtimes.<br><br>"
 
 	var/datum/browser/popup = new(user, "tome", "", 800, 600)
 	popup.set_content(text)
