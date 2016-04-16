@@ -14,6 +14,7 @@
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 4
+	bumpsmash = 1
 
 /obj/mecha/combat/marauder/GrantActions(var/mob/living/user, var/human_occupant = 0)
 	..()
