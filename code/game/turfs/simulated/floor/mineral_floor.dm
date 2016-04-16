@@ -116,7 +116,7 @@
 			spam_flag = 0
 
 /turf/open/floor/mineral/bananium/airless
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 //DIAMOND
 
