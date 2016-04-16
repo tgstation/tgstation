@@ -17,10 +17,9 @@
 	if(!iscultist(user))
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 		return
-	if(invocation)
+	if(invoke(user))
 		user.whisper(invocation)
-	src.invoke(user)
-	uses--
+		uses--
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)
@@ -66,8 +65,7 @@
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat)
 	popup.open()
-	uses++ //To prevent uses being consumed just by opening it
-	return 1
+	return 0
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
 	if(src)
@@ -150,6 +148,7 @@
 	health_cost = 1
 
 /obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user, successfuluse = 1)
+	. = ..()
 	user.visible_message("<span class='warning'>[user]'s hand glows red for a moment.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
 	new /obj/item/weapon/tome(get_turf(user))
@@ -192,6 +191,7 @@
 	invocation = "By'o nar'nar!"
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user, successfuluse = 1)
+	. = ..()
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
@@ -314,6 +314,23 @@
 	if(iscultist(user))
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
+		
+/obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
+	name = "cultist shackles"
+	desc = "shackles that bind the wrists with sinister magic."
+	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
+	origin_tech = "materials=2;magnets=5"
+
+/obj/item/weapon/restraints/handcuffs/energy/cult/used
+	desc = "magical remnants"
+
+/obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s [src] shatter in a discharge of dark magic!</span>", \
+							"<span class='userdanger'>[user]'s [src] shatters in a discharge of dark magic!</span>")
+	var/datum/effect_system/spark_spread/S = new
+	S.set_up(4,0,user.loc)
+	S.start()
+	qdel(src)
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
 /obj/item/weapon/paper/talisman/shackle
@@ -323,7 +340,7 @@
 	color = "#B27300" // burnt-orange
 	uses = 4
 
-/obj/item/weapon/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
+/obj/item/weapon/paper/talisman/shackle/invoke(mob/living/user, successfuluse = 0)
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
 	if(iscultist(user))
@@ -337,30 +354,29 @@
 		if(isrobot(target))
 			..()
 			return
-		if(!isliving(target))
+		if(target.stat == DEAD)
 			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
 			return
-		var/mob/living/L = target
-		if(ishuman(L))
+		var/mob/living/carbon/C = target
+		if(ishuman(C))
 			invoke(user, 1)
-			CuffAttack(L,user)
+			CuffAttack(C,user)
 			
-/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/L,mob/living/user)
-	if(!iscarbon(L))
+/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/C,mob/living/user)
+	if(!istype(C))
 		return
-	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		C.visible_message("<span class='danger'>[user] begins shackling [C] with dark magic!</span>", \
 								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
-				C.update_handcuffed()
+				var/obj/item/weapon/restraints/handcuffs/energy/cult/used/Z = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
+				Z.apply_cuffs(C, user))
 				user << "<span class='notice'>You shackle [C].</span>"
 				add_logs(user, C, "handcuffed")
 		else
-			user << "<span class='warning'>You fail to handcuff [C].</span>"
+			user << "<span class='warning'>You fail to shackle [C].</span>"
 	return
 		
 	
