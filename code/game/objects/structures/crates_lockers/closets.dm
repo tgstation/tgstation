@@ -87,7 +87,7 @@
 		return 0
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				user << "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" //you... think? there's something standing on it ffs
 			return 0
@@ -99,9 +99,9 @@
 		if(closet != src && !closet.wall_mounted)
 			return 0
 	for(var/mob/living/L in T)
-		if(horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
-				user << "<span class='danger'>There's something large in [src], preventing it from closing.</span>"
+				user << "<span class='danger'>There's something too large in [src], preventing it from closing.</span>"
 			return 0
 	return 1
 
@@ -141,7 +141,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.buckled || L.incorporeal_move || L.buckled_mobs.len)
+		if(L.anchored || L.buckled || L.incorporeal_move || L.buckled_mobs.len)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
