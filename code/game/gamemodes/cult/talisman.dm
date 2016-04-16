@@ -76,7 +76,6 @@
 					usr.put_in_hands(T)
 				if("teleport")
 					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
-					T.keyword = "veri"
 					usr.put_in_hands(T)
 				if("emp")
 					var/obj/item/weapon/paper/talisman/emp/T = new(usr)
