@@ -163,6 +163,11 @@
 		return 0
 
 	to_drop.forceMove(Target) //calls the Entered procs
+	if(ismob(Target))
+		var/mob/M = Target
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.stomach_contents.Add(to_drop)
 
 	to_drop.dropped(src)
 

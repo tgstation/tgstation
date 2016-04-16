@@ -1,0 +1,8 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscadd: "An alien who dies via meat spike will have their stomachs emptied out on the ground."
+- rscadd: "Mobs (such as aliens or fatass humans) can now only eat one mob at a time."
+- tweak: "Mobs eaten by other mobs are digested (unchanged). The person who ate the other mob will recieve 4 notifications over time after the mob as died as to the status of the mob being digested, with the 4th finishing them off."
+- tweak: "Grabbing someone to the point that it says '(now hands)' no longer causes them to drop what they're holding every second or so. This was done so that mobs who are grabbed while holding something can once again chestburst out of the thing that ate them."
+- bugfix: "Holding an arrow key while inside of a mob's stomach no longer causes it to pretty much instantly gib."

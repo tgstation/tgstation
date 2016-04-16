@@ -67,6 +67,10 @@
 				our_mob.ghostize()
 
 				our_mob.forceMove(src)
+				if(iscarbon(our_mob))
+					var/mob/living/carbon/C = our_mob
+					C.drop_stomach_contents()
+					user.visible_message("<span class='warning'>\The [C]'s stomach contents drop to the ground!</span>")
 
 				returnToPool(G)
 				return

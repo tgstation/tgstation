@@ -452,14 +452,25 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
+				if(istype(M, /mob/living/carbon) && stat & stat != 2)
+					var/digest = 0
 					if(M.stat == 2)
-						M.death(1)
-						stomach_contents.Remove(M)
-						qdel(M)
-						M = null
+						if(prob(5))
+							switch(digest)
+								if(0)
+									to_chat(src, "<span class='warning'>\The [M] shifts around in your stomach cavity as digestion begins.</span>")
+								if(1)
+									to_chat(src, "<span class='warning'>\The [M] feels a little bit lighter in your stomach cavity.</span>")
+								if(2)
+									to_chat(src, "<span class='danger'>You barely feel the weight of [M] in your stomach cavity anymore.</span>")
+								if(3 to INFINITY)
+									to_chat(src, "<span class='warning'>The weight of [M] is no longer there. Digestion has completed.</span>")
+									M.ghostize(1)
+									drop_stomach_contents()
+									qdel(M)
+							digest++
 						continue
 					if(air_master.current_cycle%3==1)
-						if(!(status_flags & GODMODE))
+						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
