@@ -103,6 +103,7 @@
 	origin_tech = "biotech=3"
 	var/beating = 1
 	var/icon_base = "heart"
+	attack_verb = list("beat", "thumped")
 
 /obj/item/organ/internal/heart/update_icon()
 	if(beating)
@@ -253,6 +254,7 @@
 	zone = "mouth"
 	slot = "tongue"
 	var/say_mod = null
+	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
 
 /obj/item/organ/internal/tongue/proc/TongueSpeech(var/message)
 	return message
