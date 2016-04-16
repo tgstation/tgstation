@@ -271,11 +271,11 @@ This file contains the arcane tome files as well as innate cultist emergency com
 				N.color = "red"
 				N.health = 60
 				shields |= N
-			if(shields.len)
-				for(var/V in shields)
-        				var/obj/machinery/shield/S = V
-        				if(S && !qdeleted(S))
-            					qdel(S)
+				if(shields.len)
+					for(var/V in shields)
+						var/obj/machinery/shield/S = V
+						if(S && !qdeleted(S))
+							qdel(S)
 				return
 	if(!do_after(user, 50, target = get_turf(user)))
 		return
@@ -283,8 +283,8 @@ This file contains the arcane tome files as well as innate cultist emergency com
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	if(shields.len)
 		for(var/V in shields)
-        		var/obj/machinery/shield/S = V
-        		if(S && !qdeleted(S))
-            			qdel(S)
+			var/obj/machinery/shield/S = V
+				if(S && !qdeleted(S))
+					qdel(S)
 	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>" 
