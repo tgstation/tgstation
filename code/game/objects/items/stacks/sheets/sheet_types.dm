@@ -157,6 +157,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	new/datum/stack_recipe("chemistry bag", /obj/item/weapon/storage/bag/chemistry, 4), \
 	new/datum/stack_recipe("bio bag", /obj/item/weapon/storage/bag/bio, 4), \
 	null, \
+	new/datum/stack_recipe("bandage", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
 	new/datum/stack_recipe("rag", /obj/item/weapon/reagent_containers/glass/rag, 1), \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	new/datum/stack_recipe("bedsheet", /obj/item/weapon/bedsheet, 3), \
