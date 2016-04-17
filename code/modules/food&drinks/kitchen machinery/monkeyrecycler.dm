@@ -58,28 +58,39 @@
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed))
 			var/mob/living/carbon/monkey/target = grabbed
-			if(target.stat == 0)
-				user << "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>"
-				return
-			if(target.buckled || target.buckled_mobs.len)
-				user << "<span class='warning'>The monkey is attached to something.</span>"
-				return
-			if(!user.drop_item())
-				return
-			qdel(target)
-			user << "<span class='notice'>You stuff the monkey into the machine.</span>"
-			playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-			var/offset = prob(50) ? -2 : 2
-			animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-			use_power(500)
-			grinded++
-			sleep(50)
-			pixel_x = initial(pixel_x) //return to its spot after shaking
-			user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
-
+			stuff_monkey_in(target, user)
+			user.drop_item()
+			return
 		else
 			user << "<span class='danger'>The machine only accepts monkeys!</span>"
 	return
+
+/obj/machinery/monkey_recycler/MouseDrop_T(mob/living/target, mob/living/user)
+	if(!istype(target))
+		return
+	if(ismonkey(target))
+		stuff_monkey_in(target, user)
+
+/obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/monkey/target, mob/living/user)
+	if(!istype(target))
+		return
+	if(target.stat == 0)
+		user << "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>"
+		return
+	if(target.buckled || target.buckled_mobs.len)
+		user << "<span class='warning'>The monkey is attached to something.</span>"
+		return
+	qdel(target)
+	user << "<span class='notice'>You stuff the monkey into the machine.</span>"
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	use_power(500)
+	grinded++
+	sleep(50)
+	pixel_x = initial(pixel_x) //return to its spot after shaking
+	user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
+
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
 	if (src.stat != 0) //NOPOWER etc
