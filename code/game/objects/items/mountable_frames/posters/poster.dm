@@ -57,8 +57,8 @@ obj/structure/sign/poster/New(var/serial)
 	serial_number = serial
 
 	if(serial_number == -1)
-		name += "Award of Sufficiency"
-		desc += "The mere sight of it makes you very proud."
+		name = "Award of Sufficiency"
+		desc = "The mere sight of it makes you very proud."
 		icon_state = "goldstar"
 	else
 		if(serial_number == loc)
