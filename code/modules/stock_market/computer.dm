@@ -5,7 +5,7 @@
 	icon_screen = "stock_computer"
 	icon_keyboard = "no_keyboard"
 	var/logged_in = "Cargo Department"
-	var/vmode = 0
+	var/vmode = 1
 
 /obj/machinery/computer/stockexchange/New()
 	..()
@@ -22,35 +22,47 @@
 	user.machine = src
 
 	var/css={"<style>
-.company {
+.change {
 	font-weight: bold;
+	font-family: monospace;
+}
+.up {
+	background: #00a000;
+}
+.down {
+	background: #a00000;
 }
 .stable {
 	width: 100%
-	border: 1px solid black;
 	border-collapse: collapse;
-}
-.stable tr {
-	border: none;
+	border: 1px solid #305260;
+	border-spacing: 4px 4px;
 }
 .stable td, .stable th {
-	border-right: 1px solid white;
-	border-bottom: 1px solid black;
+	border: 1px solid #305260;
+	padding: 0px 3px;
 }
+.bankrupt {
+	border: 1px solid #a00000;
+	background: #a00000;
+}
+
 a.updated {
 	color: red;
 }
 </style>"}
-	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body><h2>Stock Exchange</h2>"
-	dat += "<i>This is a work in progress. Certain features may not be available.</i><br>"
+	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Cargo Points:</b> [balance()] points</span><br>"
+	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
 	for (var/datum/stock/S in stockExchange.last_read)
 		var/list/LR = stockExchange.last_read[S]
 		if (!(logged_in in LR))
 			LR[logged_in] = 0
-	dat += "<b>View mode:</b> <a href='?src=\ref[src];cycleview=1'>[vmode ? "compact" : "full"]</a>"
-	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a>"
+	dat += "<b>View mode:</b> <a href='?src=\ref[src];cycleview=1'>[vmode ? "Compact" : "Full"]</a> "
+	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a><br>"
+
+	dat += "<i>This is a work in progress. Certain features may not be available.</i>"
+
 	dat += "<h3>Listed stocks</h3>"
 
 	if (vmode == 0)
@@ -105,15 +117,40 @@ a.updated {
 			dat += "<a href='?src=\ref[src];archive=\ref[S]'>View news archives</a>[news ? " <span style='color:red'>(updated)</span>" : null]</div>"
 	else if (vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
-		dat += "<table class='stable'><tr><th>&nbsp;</th><th>Name</th><th>Value</th><th>Owned/Avail</th><th>Actions</th></tr>"
+		dat += "<table class='stable'>"
+		dat += "<tr><th>&nbsp;</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th><th>Actions</th></tr>"
+
 		for (var/datum/stock/S in stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
-			dat += "<tr><td>[S.disp_value_change > 0 ? "+" : (S.disp_value_change < 0 ? "-" : "=")]</td><td><span class='company'>[S.name] "
-			if (S.bankrupt)
-				dat += "<b style='color:red'>B</b>"
-			dat += "</span> <span class='s_company'>([S.short_name])</span></td><td>[S.current_value]</td><td><b>[mystocks]</b>/[S.available_shares]</td>"
+
+			if(S.bankrupt)
+				dat += "<tr class='bankrupt'>"
+			else
+				dat += "<tr>"
+
+			if(S.disp_value_change > 0)
+				dat += "<td class='change up'>+</td>"
+			else if(S.disp_value_change < 0)
+				dat += "<td class='change down'>-</td>"
+			else
+				dat += "<td class='change'>=</td>"
+
+			dat += "<td><b>[S.short_name]</b></td>"
+			dat += "<td>[S.name]</td>"
+
+			if(!S.bankrupt)
+				dat += "<td>[S.current_value]</td>"
+			else
+				dat += "<td>0</td>"
+
+			if(mystocks)
+				dat += "<td><b>[mystocks]</b></td>"
+			else
+				dat += "<td>0</td>"
+
+			dat += "<td>[S.available_shares]</td>"
 			var/news = 0
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
@@ -129,12 +166,17 @@ a.updated {
 							break
 			dat += "<td>"
 			if (S.bankrupt)
-				dat += "+ - "
+				dat += "<span class='linkOff'>+</span> <span class='linkOff'>-</span> "
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>+</a> <a href='?src=\ref[src];sellshares=\ref[S]'>-</a> "
-			dat += "<a href='?src=\ref[src];archive=\ref[S]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=\ref[src];viewhistory=\ref[S]'>(H)</a></td></tr>"
+			dat += "<a href='?src=\ref[src];archive=\ref[S]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=\ref[src];viewhistory=\ref[S]'>(H)</a></td>"
+
+			dat += "</tr>"
+
+		dat += "</table>"
+
 	dat += "</body></html>"
-	var/datum/browser/popup = new(user, "computer", "Stock Exchange", 600, 400)
+	var/datum/browser/popup = new(user, "computer", "Stock Exchange", 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -153,12 +195,12 @@ a.updated {
 		user << "<span class='danger'>This account does not own any shares of [S.name]!</span>"
 		return
 	var/price = S.current_value
-	var/amt = round(input(user, "How many shares? (Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
-	if (!user)
+	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
+	amt = min(amt, S.shareholders[logged_in])
+
+	if (!user || !(user in range(1, src)))
 		return
 	if (!amt)
-		return
-	if (!(user in range(1, src)))
 		return
 	if (li != logged_in)
 		return
@@ -166,14 +208,12 @@ a.updated {
 	if (!isnum(b))
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
-	if (amt > S.shareholders[logged_in])
-		user << "<span class='danger'>You do not own that many shares!</span>"
-		return
+
 	var/total = amt * S.current_value
 	if (!S.sellShares(logged_in, amt))
 		user << "<span class='danger'>Could not complete transaction.</span>"
 		return
-	user << "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] points.</span>"
+	user << "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
 	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
@@ -190,12 +230,8 @@ a.updated {
 	var/avail = S.available_shares
 	var/price = S.current_value
 	var/canbuy = round(b / price)
-	var/amt = round(input(user, "How many shares? (Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
-	if (!user)
-		return
-	if (!amt)
-		return
-	if (!(user in range(1, src)))
+	var/amt = round(input(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
+	if (!user || !(user in range(1, src)))
 		return
 	if (li != logged_in)
 		return
@@ -203,17 +239,16 @@ a.updated {
 	if (!isnum(b))
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
-	if (amt > S.available_shares)
-		user << "<span class='danger'>That many shares are not available!</span>"
-		return
-	var/total = amt * S.current_value
-	if (total > b)
-		user << "<span class='danger'>Insufficient points.</span>"
+
+	amt = min(amt, S.available_shares, round(b / S.current_value))
+	if (!amt)
 		return
 	if (!S.buyShares(logged_in, amt))
 		user << "<<span class='danger'>Could not complete transaction.</span>"
 		return
-	user << "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] points.</span>"
+
+	var/total = amt * S.current_value
+	user << "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
 	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
@@ -261,7 +296,7 @@ a.updated {
 				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits in <b>[L.company_name]</b>.<br>"
 				continue
 			if(istype(L, /datum/stock_log/sell))
-				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> totalcredits from <b>[L.company_name]</b>.<br>"
+				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits from <b>[L.company_name]</b>.<br>"
 				continue
 			if(istype(L, /datum/stock_log/borrow))
 				dat += "[L.time] | <b>[L.user_name]</b> borrowed <b>[L.stocks]</b> stocks with a deposit of <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"
