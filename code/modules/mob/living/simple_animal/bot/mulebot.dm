@@ -30,6 +30,7 @@ var/global/mulebot_count = 0
 	bot_type = MULE_BOT
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
+	allow_pai = 0
 
 	suffix = ""
 
