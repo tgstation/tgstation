@@ -34,7 +34,7 @@
 	var/mob/living/simple_animal/slime/picked_slime
 	for(var/mob/living/simple_animal/slime/slime in range(1,src))
 		if(slime.loc == src)
-			return
+			continue
 		if(istype(slime, /mob/living/simple_animal/slime))
 			if(slime.stat)
 				picked_slime = slime
