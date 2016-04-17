@@ -1,5 +1,14 @@
 /datum/action/item_action/chameleon/drone/togglehatmask
 	name = "Toggle Headgear Mode"
+	button_icon = 'icons/mob/actions.dmi'
+
+/datum/action/item_action/chameleon/drone/togglehatmask/New()
+	..()
+
+	if (istype(target, /obj/item/clothing/head/chameleon/drone))
+		button_icon_state = "drone_camogear_helm"
+	if (istype(target, /obj/item/clothing/mask/chameleon/drone))
+		button_icon_state = "drone_camogear_mask"
 
 /datum/action/item_action/chameleon/drone/togglehatmask/Trigger()
 	if(!IsAvailable())
@@ -34,7 +43,9 @@
 		qdel(old_headgear)
 		// where is `slot_head` defined? WHO KNOWS
 		D.equip_to_slot(new_headgear, slot_head)
+	UpdateButtonIcon()
 	return 1
+
 
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
@@ -213,10 +224,9 @@
 
 /obj/item/clothing/head/chameleon/drone/New()
 	..()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	// this is a noop to shut the compiler up
-	togglehatmask_action.UpdateButtonIcon()
 	chameleon_action.random_look()
+	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
+	togglehatmask_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
@@ -257,10 +267,9 @@
 
 /obj/item/clothing/mask/chameleon/drone/New()
 	..()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	// this is a noop to shut the compiler up
-	togglehatmask_action.UpdateButtonIcon()
 	chameleon_action.random_look()
+	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
+	togglehatmask_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	user << "<span class='notice'>The [src] does not have a voice changer.</span>"
