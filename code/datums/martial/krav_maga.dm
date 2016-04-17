@@ -1,4 +1,4 @@
-/datum/martial_art/krav_maga//experimental
+/datum/martial_art/krav_maga
 	name = "Krav Maga"
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
