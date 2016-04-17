@@ -154,12 +154,12 @@
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(R || R.cell || R.cell.use(hitcost))
-			L.apply_stun
+			L.apply_stun()
 		else
 			return 0
 	else
 		if(deductcharge(hitcost))
-			L.apply_stun
+			L.apply_stun()
 		else
 			return 0
 	return 1
