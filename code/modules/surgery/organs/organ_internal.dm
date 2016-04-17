@@ -255,7 +255,8 @@
 	var/say_mod = null
 
 /obj/item/organ/internal/tongue/proc/TongueSpeech(var/message)
-	speakDemonName(message)
+	spawn(0)
+		speakDemonName(message)
 	return message
 
 /obj/item/organ/internal/tongue/proc/speakDemonName(var/message)
@@ -263,13 +264,9 @@
 		var/datum/mind/demon = D
 		var/datum/demoninfo/demoninfo = demon.demoninfo
 		if (findtext(message, demoninfo.truename) && demon.current)
-			var/availible = 1
-			spawn(200)
-				availible = 0
 			var/response = tgalert(demon.current, "Your demonic truename was spoken.  Do you wish to teleport there?", "Demonic Summoning", "Yes", "No", null, 0, 200)
-			if(response == "yes" && availible && demon.current)
-				demon.current.forceMove(get_turf(src))
-			return
+			if(response == "Yes" && demon.current && src.owner)
+				demon.current.forceMove(get_turf(src.owner))
 
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/M, special = 0)

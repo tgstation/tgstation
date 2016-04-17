@@ -38,5 +38,5 @@
 #define BANISH_DESTRUCTION "destruction"
 #define BANISH_FUNERAL_GARB "funeral"
 
-#define LAW 1
-#define LORE 2
+#define LORE 1
+#define LAW 2
