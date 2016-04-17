@@ -5,9 +5,8 @@
 */
 
 var/global/list/networks_by_id = list()
-var/global/list/networks_by_wide = list()
+var/global/list/datum/network/networks_by_wide = list()
 var/global/list/active_network_ids = list()
-var/global/list/datum/network/active_networks = list()
 
 proc/clean_network_command(command = "")
 	var/list/butchered = explode_text(command, " -") // allows for arguments like {text1 = "hello "} {text2 = "world"} to be caused when executing something like {print -text1 = "hello " -text2 = "world"}
@@ -16,13 +15,6 @@ proc/clean_network_command(command = "")
 	for(var/i=2, i<=butchered.len, i++)
 		arguments[i-1] = butchered[i]
 	return list(command, arguments)
-
-proc/search_networks_by_id(query)
-	var/list/found = list()
-	for(var/id in active_network_ids)
-		if(findtext(id,query))
-			found += id
-	return found
 
 /datum/network_argument
 	var/main_command
@@ -51,7 +43,6 @@ proc/search_networks_by_id(query)
 	if(id)
 		networks_by_id[id] = src
 		active_network_ids += id
-	active_networks += src
 	if(wireless)
 		networks_by_wide += src
 
@@ -70,7 +61,6 @@ proc/search_networks_by_id(query)
 		networks_by_id[id] = null
 		networks_by_id -= id
 		active_network_ids -= id
-	active_networks -= src
 	if(wireless)
 		networks_by_wide -= src
 	return ..()

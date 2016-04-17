@@ -254,7 +254,7 @@
 
 /datum/network_command/set_hidden
 	trigger = "set_hidden"
-	info = "Usage: \"set_hidden -{boolean}\". Will toggle hidden status. If a boolean is provided (-false:0 | -true:1) it will set the hidden status to that value."
+	info = "Usage: \"set_hidden -{boolean}\". Will set hidden status."
 
 /datum/network_command/set_hidden/execute(datum/network/N, datum/network_argument/A)
 	..()
@@ -265,13 +265,13 @@
 		if("false"|| "0")
 			N.stealth = 0
 			return list(feedback)
-	N.stealth = !N.stealth
+	feedback = "<span class='warning'>Invalid Argument.</span>"
 	return list(feedback)
 
 
 /datum/network_command/set_local
 	trigger = "set_local"
-	info = "Usage: \"set_local -{boolean}\". Will toggle local|wide network status. If a boolean is provided (-false:0 | -true:1) it will set local status to that value."
+	info = "Usage: \"set_local -{boolean}\". Will set local|wide network status."
 
 /datum/network_command/set_local/execute(datum/network/N, datum/network_argument/A)
 	..()
@@ -286,17 +286,38 @@
 			if(!(N in networks_by_wide))
 				networks_by_wide += N
 			return list(feedback)
-	N.wireless = !N.wireless
-	if(N in networks_by_wide)
-		networks_by_wide -= N
-	else
-		networks_by_wide += N
+	feedback = "<span class='warning'>Invalid Argument.</span>"
 	return list(feedback)
 
 
 /datum/network_command/probe
 	trigger = "probe"
-	info = "Usage: \"probe -{scope} -{target_id}\". Will search within the provided scope for network id's containing the target id. Allowed scopes are: w:wide, l:local."
+	info = "Usage: \"probe -{scope}\". Will search within the provided scope for network id's containing the target id. Allowed scopes are: w:wide, l:local."
 
 /datum/network_command/probe/execute(datum/network/N, datum/network_argument/A)
 	..()
+	var/list/datum/network/found = list()
+	if(A.args[1] == "w" || A.args[1] == "wide")
+		if(!A.is_hacktool)
+			for(var/datum/network/S in networks_by_wide)
+				if(!S.stealth)
+					found += S
+		else
+			found = networks_by_wide
+	else if(A.args[1] == "l" || A.args[1] == "local")
+		if(isnull(N.holder))
+			feedback = "<span class='notice'>No Networks found within scope provided.</span>"
+			return list(feedback)
+		var/area/AR = get_area(N.holder)
+		for(var/obj/O in AR)
+			if(O.netwrk && !O.netwrk.wireless)
+				if(!O.netwrk.stealth || A.is_hacktool)
+					found += O.netwrk
+	if(!found.len)
+		feedback = "<span class='notice'>No Networks found within scope provided.</span>"
+		return list(feedback)
+	feedback = "<span class='notice'>Probed Networks: </span>\n "
+	for(var/datum/network/S in found)
+		feedback += "<span class='notice'>| [S.id] </span>"
+	feedback += "<span class='notice'>|</span>"
+	return list(feedback)
