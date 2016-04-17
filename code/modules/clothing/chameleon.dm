@@ -1,6 +1,24 @@
+/datum/action/item_action/chameleon/drone/randomise
+	name = "Randomise Headgear"
+	button_icon_state = "random"
+
+/datum/action/item_action/chameleon/drone/randomise/Trigger()
+	if(!IsAvailable())
+		return
+
+	// Damn our lack of abstract interfeces
+	if (istype(target, /obj/item/clothing/head/chameleon/drone))
+		var/obj/item/clothing/head/chameleon/drone/X = target
+		X.chameleon_action.random_look(owner)
+	if (istype(target, /obj/item/clothing/mask/chameleon/drone))
+		var/obj/item/clothing/mask/chameleon/drone/Z = target
+		Z.chameleon_action.random_look(owner)
+
+	return 1
+
+
 /datum/action/item_action/chameleon/drone/togglehatmask
 	name = "Toggle Headgear Mode"
-	button_icon = 'icons/mob/actions.dmi'
 
 /datum/action/item_action/chameleon/drone/togglehatmask/New()
 	..()
@@ -226,6 +244,8 @@
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
+	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
+	randomise_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
@@ -269,6 +289,8 @@
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
+	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
+	randomise_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	user << "<span class='notice'>The [src] does not have a voice changer.</span>"
