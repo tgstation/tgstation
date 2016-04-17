@@ -1,4 +1,4 @@
-/datum/martial_art/krav_maga
+/datum/martial_art/krav_maga//experimental
 	name = "Krav Maga"
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
@@ -9,6 +9,9 @@
 	button_icon_state = "neckchop"
 
 /datum/action/neck_chop/Trigger()
+	if(owner.incapacitated())
+		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
+		return
 	owner << "<b><i>Your next attack will be a Neck Chop.</i></b>"
 	owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>")
 	var/mob/living/carbon/human/H = owner
@@ -19,6 +22,9 @@
 	button_icon_state = "legsweep"
 
 /datum/action/leg_sweep/Trigger()
+	if(owner.incapacitated())
+		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
+		return
 	owner << "<b><i>Your next attack will be a Leg Sweep.</i></b>"
 	owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>")
 	var/mob/living/carbon/human/H = owner
@@ -29,6 +35,9 @@
 	button_icon_state = "lungpunch"
 
 /datum/action/lung_punch/Trigger()
+	if(owner.incapacitated())
+		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
+		return
 	owner << "<b><i>Your next attack will be a Lung Punch.</i></b>"
 	owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>")
 	var/mob/living/carbon/human/H = owner
