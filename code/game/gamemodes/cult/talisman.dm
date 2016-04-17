@@ -271,7 +271,7 @@
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.drop_item()
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
-	user.put_in_hands(new /obj/item/weapon/restraints/legcuffs/bola/tactical(user))
+	user.put_in_hands(new /obj/item/weapon/restraints/legcuffs/bola/cult(user))
 
 /obj/item/weapon/paper/talisman/armor/attack(mob/living/target, mob/living/user)
 	if(iscultist(user) && iscultist(target))
@@ -351,6 +351,7 @@
 
 /obj/item/weapon/paper/talisman/shackle/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
+		invoke(user, 1)
 		if(isrobot(target))
 			..()
 			return
@@ -367,7 +368,7 @@
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
+		C.visible_message("<span class='danger'>[user] begins restraining [C] with dark magic!</span>", \
 								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
