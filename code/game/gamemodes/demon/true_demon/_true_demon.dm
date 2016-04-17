@@ -27,6 +27,7 @@
 	internal_organs += new /obj/item/organ/internal/tongue
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
+	..()
 	
 
 /mob/living/carbon/true_demon/proc/convert_to_archdemon()
