@@ -212,7 +212,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !ishuman(usr) || buckled_mobs.len)
+		if(!item_chair || !ishuman(usr) || buckled_mobs.len || src.flags & NODECONSTRUCT)
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
