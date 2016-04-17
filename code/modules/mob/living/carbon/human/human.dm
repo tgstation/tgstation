@@ -40,6 +40,8 @@
 
 	make_blood()
 
+	martial_art = default_martial_art
+
 	..()
 
 /mob/living/carbon/human/prepare_data_huds()
