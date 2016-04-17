@@ -116,9 +116,7 @@
 	origin_tech = "materials=1"
 
 /obj/item/weapon/reagent_containers/glass/beaker/attackby(obj/item/weapon/W, mob/user)
-	if(!(src.type == /obj/item/weapon/reagent_containers/glass/beaker))
-		return //regular beakers only
-	if(istype(W, /obj/item/weapon/surgicaldrill))
+	if(src.type == /obj/item/weapon/reagent_containers/glass/beaker && istype(W, /obj/item/weapon/surgicaldrill)) //regular beakers only
 		to_chat(user, "You begin drilling holes into the bottom of \the [src].")
 		playsound(user, 'sound/machines/juicer.ogg', 50, 1)
 		if(do_after(user, src, 60))
@@ -130,6 +128,8 @@
 			else
 				new /obj/item/weapon/cylinder(get_turf(src.loc))
 			qdel(src)
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/glass/beaker/mop_act(obj/item/weapon/mop/M, mob/user)
 	if(..())
