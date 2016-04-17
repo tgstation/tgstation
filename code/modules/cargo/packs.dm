@@ -1284,8 +1284,6 @@
 	                /obj/item/toy/AI,
 	                /obj/item/toy/talking/owl,
 	                /obj/item/toy/talking/griffin,
-	                /obj/item/toy/talking/skeleton/sans,
-	                /obj/item/toy/talking/skeleton/papyrus,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,

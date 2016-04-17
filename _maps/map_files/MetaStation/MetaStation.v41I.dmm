@@ -57672,7 +57672,7 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/machinery/droneDispenser/preloaded,
+/obj/machinery/droneDispenser,
 /obj/machinery/door/window/southleft,
 /turf/open/floor/carpet,
 /area/assembly/showroom{
