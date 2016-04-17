@@ -28,7 +28,23 @@
 			streak = ""
 			slam(A,D)
 			return 1
+		if("suplex")
+			streak = ""
+			suplex(A,D)
+			return 1
 	return 0
+
+/datum/action/suplex
+	name = "Suplex - Suplex your foes."
+	button_icon_state = "wrassle_suplex"
+
+/datum/action/suplex/Trigger()
+	if(owner.incapacitated())
+		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
+		return
+	owner.visible_message("<span class='danger'>[owner] prepares to SUPLEX!</span>", "<b><i>Your next attack will be a SUPLEX.</i></b>")
+	var/mob/living/carbon/human/H = owner
+	H.martial_art.streak = "suplex"
 
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
@@ -92,7 +108,7 @@
 
 /datum/martial_art/wrestling/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
 	..()
-	H << "<span class = 'userdanger'>SNAP INTO A SLIM JIM!</span>"
+	H << "<span class = 'userdanger'>SNAP INTO A JLIM SIM!</span>"
 	H << "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>"
 	drop.Grant(H)
 	kick.Grant(H)
@@ -299,6 +315,21 @@
 
 	return 0
 
+/datum/martial_art/wrestling/proc/suplex(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
+								"<span class='userdanger'>[A] suplexes [D]!</span>")
+	D.forceMove(A.loc)
+	D.adjustBruteLoss(rand(20,30))
+	D.Weaken(3)
+	add_logs(A, D, "suplexed")
+
+	A.SpinAnimation(10,1)
+
+	D.SpinAnimation(10,1)
+	spawn(3)
+		A.Weaken(2)
+	return
+
 /datum/martial_art/wrestling/proc/strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
@@ -329,8 +360,8 @@
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.throw_at(T, 3, 2)
 		D.Weaken(1)
+		D.throw_at(T, 3, 2)
 
 /datum/martial_art/wrestling/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
