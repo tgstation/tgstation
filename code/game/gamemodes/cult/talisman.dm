@@ -354,31 +354,27 @@
 		if(isrobot(target))
 			..()
 			return
-		if(target.stat == DEAD)
+		if(!isliving(target))
 			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
 			return
 		var/mob/living/L = target
 		if(ishuman(L))
-			invoke(user, 1)
 			CuffAttack(L,user)
-			
-/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/C,mob/living/user)
+
+/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
 		return
-	var/mob/living/carbon/C = L 
+	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins shackling [C] with dark magic!</span>", \
+		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				var/obj/item/weapon/restraints/handcuffs/energy/cult/used/Z = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
-				Z.apply_cuffs(C, user)
+				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
+				C.update_handcuffed()
 				user << "<span class='notice'>You shackle [C].</span>"
 				add_logs(user, C, "handcuffed")
 		else
-			user << "<span class='warning'>You fail to shackle [C].</span>"
+			user << "<span class='warning'>You fail to shackle [C].</span>" 
 	return
-		
-	
-	
