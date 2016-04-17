@@ -43,7 +43,6 @@
 		qdel(old_headgear)
 		// where is `slot_head` defined? WHO KNOWS
 		D.equip_to_slot(new_headgear, slot_head)
-	UpdateButtonIcon()
 	return 1
 
 
