@@ -357,14 +357,15 @@
 		if(target.stat == DEAD)
 			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
 			return
-		var/mob/living/carbon/C = target
-		if(ishuman(C))
+		var/mob/living/L = target
+		if(ishuman(L))
 			invoke(user, 1)
-			CuffAttack(C,user)
+			CuffAttack(L,user)
 			
 /obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/C,mob/living/user)
-	if(!istype(C))
+	if(!iscarbon(L))
 		return
+	var/mob/living/carbon/C = L 
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		C.visible_message("<span class='danger'>[user] begins shackling [C] with dark magic!</span>", \
