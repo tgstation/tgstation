@@ -25,6 +25,7 @@
 			},
 		/datum/zLevel/mining,
 		)
+	enabled_jobs = list(/datum/job/trader)
 
 /datum/map/active/New()
 	.=..()

@@ -803,6 +803,19 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 
+/obj/item/weapon/reagent_containers/food/drinks/thermos
+	name = "Thermos"
+	desc = "A metal flask which insulates its contents from temperature - keeping hot beverages hot, and cold ones cold."
+	icon_state = "shaker"
+	origin_tech = "materials=1"
+	amount_per_transfer_from_this = 10
+	volume = 100
+
+/obj/item/weapon/reagent_containers/food/drinks/thermos/full/New()
+	..()
+	var/new_reagent = pick("coffee", "hot_coco", "icecoffee", "tea", "icetea", "water", "ice", "iced_beer")
+	reagents.add_reagent(new_reagent, rand(50,100))
+
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "Captain's Flask"
 	desc = "A metal flask belonging to the captain."

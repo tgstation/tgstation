@@ -139,6 +139,9 @@ var/savefile/Banlistjob
 		AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, "Research Director")
 		AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, "Virologist")
 		return 1
+	if(rank == "Misc")
+		AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, "Trader")
+		return 1
 
 	Banlistjob.cd = "/base"
 	if ( Banlistjob.dir.Find("[ckey][computerid][rank]") )

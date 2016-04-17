@@ -45,6 +45,20 @@
 	var/pdatype=/obj/item/device/pda
 	var/pdaslot=slot_belt
 
+	var/list/species_blacklist = list() //Job not available to species in this list
+	var/list/species_whitelist = list() //If this list isn't empty, job is only available to species in this list
+
+	var/must_be_map_enabled = 0	//If 1, this job only appears on maps on which it's enabled (its type must be in the map's "enabled_jobs" list)
+								//Example:      enabled_jobs = list(/datum/job/trader) //Enable "trader" job for this map
+
+	var/no_crew_manifest = 0 //If 1, don't inject players with this job into the crew manifest
+	var/no_starting_money = 0 //If 1, don't start with a bank account or money
+	var/no_id = 0 //If 1, don't spawn with an ID
+	var/no_pda= 0 //If 1, don't spawn with a PDA
+	var/no_headset = 0 //If 1, don't spawn with a headset
+
+	var/no_random_roll = 0 //If 1, don't select this job randomly!
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
 
@@ -75,3 +89,12 @@
 		return 0
 
 	return max(0, minimal_player_age - C.player_age)
+
+/datum/job/proc/introduce(mob/M, job_title)
+	if(!job_title) job_title = src.title
+
+	to_chat(M, "<B>You are the [job_title].</B>")
+	to_chat(M, "<b>As the [job_title] you answer directly to [src.supervisors]. Special circumstances may change this.</b>")
+
+	if(src.req_admin_notify)
+		to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")

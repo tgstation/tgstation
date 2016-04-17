@@ -25,6 +25,7 @@
 			}
 		)
 
+	enabled_jobs = list(/datum/job/trader)
 
 
 // Metaclub areas

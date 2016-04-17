@@ -316,11 +316,17 @@
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donk_kit"
+	var/pocket_amount = 6
 
 /obj/item/weapon/storage/box/donkpockets/New()
 	..()
-	for(var/i=0,i<6,i++)
+	for(var/i=0,i<pocket_amount,i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
+
+/obj/item/weapon/storage/box/donkpockets/random_amount/New()
+	pocket_amount = rand(1,6)
+
+	..()
 
 /obj/item/weapon/storage/box/monkeycubes
 	name = "monkey cube box"

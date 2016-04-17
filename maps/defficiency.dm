@@ -53,6 +53,7 @@
 		DISP_MECHANICS,
 		null
 	)
+	enabled_jobs = list(/datum/job/trader)
 
 //The central shuttle leads to both outposts
 /datum/map/active/New()

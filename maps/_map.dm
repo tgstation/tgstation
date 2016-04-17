@@ -77,6 +77,8 @@
 		DISP_TELESCIENCE
 	)
 
+	var/list/enabled_jobs = list()
+
 /datum/map/New()
 
 	. = ..()

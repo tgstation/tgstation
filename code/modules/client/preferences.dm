@@ -448,6 +448,19 @@ var/const/MAX_SAVE_SLOTS = 8
 			prefUpperLevel = 3
 			prefLowerLevel = 1
 
+		if(job.species_whitelist.len)
+			if(!job.species_whitelist.Find(src.species))
+				prefLevelLabel = "Unavailable"
+				prefLevelColor = "gray"
+				prefUpperLevel = 0
+				prefLowerLevel = 0
+		else if(job.species_blacklist.len)
+			if(job.species_blacklist.Find(src.species))
+				prefLevelLabel = "Unavailable"
+				prefLevelColor = "gray"
+				prefUpperLevel = 0
+				prefLowerLevel = 0
+
 		HTML += "<a class='white' onmouseup='javascript:return mouseUp(event,[prefUpperLevel],[prefLowerLevel], \"[rank]\");' oncontextmenu='javascript:return mouseDown(event,[prefUpperLevel],[prefLowerLevel], \"[rank]\");'>"
 
 
@@ -622,6 +635,23 @@ var/const/MAX_SAVE_SLOTS = 8
 			job_civilian_low |= job.flag
 		SetChoices(user)
 		return 1
+
+	if(job.species_blacklist.Find(src.species)) //Check if our species is in the blacklist
+		to_chat(user, "<span class='notice'>Your species ("+src.species+") can't have this job!</span>")
+		return
+
+	if(job.species_whitelist.len) //Whitelist isn't empty - check if our species is in the whitelist
+		if(!job.species_whitelist.Find(src.species))
+			var/allowed_species = ""
+			for(var/S in job.species_whitelist)
+				allowed_species += "[S]"
+
+				if(job.species_whitelist.Find(S) != job.species_whitelist.len)
+					allowed_species += ", "
+
+			to_chat(user, "<span class='notice'>Only the following species can have this job: [allowed_species]. Your species is ([src.species]).</span>")
+			return
+
 	if(inc == null)
 		if(GetJobDepartment(job, 1) & job.flag)
 			SetJobDepartment(job, 1)
@@ -706,6 +736,7 @@ var/const/MAX_SAVE_SLOTS = 8
 			job_civilian_med |= job_civilian_high
 			job_medsci_med |= job_medsci_high
 			job_engsec_med |= job_engsec_high
+
 			job_civilian_high = 0
 			job_medsci_high = 0
 			job_engsec_high = 0
@@ -744,6 +775,57 @@ var/const/MAX_SAVE_SLOTS = 8
 	return 1
 
 
+/datum/preferences/proc/SetDepartmentFlags(datum/job/job, level, new_flags)	//Sets a department's preference flags (job_medsci_high, job_engsec_med - those variables) to 'new_flags'.
+																		//First argument can either be a job, or the department's flag (ENGSEC, MISC, ...)
+																		//Second argument can be either text ("high", "MEDIUM", "LoW") or number (1-high, 2-med, 3-low)
+
+																		//NOTE: If you're not sure what you're doing, be careful when using this proc.
+
+	//Determine department flag
+	var/d_flag
+	if(istype(job))
+		d_flag = job.department_flag
+	else
+		d_flag = job
+
+	//Determine department level
+	var/d_level
+	if(istext(level))
+		switch(lowertext(level))
+			if("high")
+				d_level = 1
+			if("med", "medium")
+				d_level = 2
+			if("low")
+				d_level = 3
+	else
+		d_level = level
+
+	switch(d_flag)
+		if(CIVILIAN)
+			switch(d_level)
+				if(1) //high
+					job_civilian_high = new_flags
+				if(2) //med
+					job_civilian_med = new_flags
+				if(3) //low
+					job_civilian_low = new_flags
+		if(MEDSCI)
+			switch(d_level)
+				if(1) //high
+					job_medsci_high = new_flags
+				if(2) //med
+					job_medsci_med = new_flags
+				if(3) //low
+					job_medsci_low = new_flags
+		if(ENGSEC)
+			switch(d_level)
+				if(1) //high
+					job_engsec_high = new_flags
+				if(2) //med
+					job_engsec_med = new_flags
+				if(3) //low
+					job_engsec_low = new_flags
 
 /datum/preferences/proc/SetRoles(var/mob/user, var/list/href_list)
 	// We just grab the role from the POST(?) data.
@@ -1032,6 +1114,27 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						b_hair = 0//hex2num(copytext(new_hair, 6, 8))
 
 						s_tone = 0
+
+					for(var/datum/job/job in job_master.occupations)
+						if(job.species_blacklist.Find(species)) //If new species is in a job's blacklist
+							for(var/i = 1 to 3)
+								var/F = GetJobDepartment(job, i)
+
+								F &= ~job.flag //Disable that job in our preferences
+								SetDepartmentFlags(job, i, F)
+
+							to_chat(usr, "<span class='info'>Your new species ([species]) is blacklisted from [job.title].</span>")
+
+						if(job.species_whitelist.len) //If the job has a species whitelist
+							if(!job.species_whitelist.Find(species)) //And it doesn't include our new species
+								for(var/i = 1 to 3)
+									var/F = GetJobDepartment(job, i)
+
+									if(F & job.flag)
+										to_chat(usr, "<span class='info'>Your new species ([species]) can't be [job.title]. Your preferences have been adjusted.</span>")
+
+									F &= ~job.flag //Disable that job in our preferences
+									SetDepartmentFlags(job, i, F)
 
 				if("language")
 					var/languages_available
