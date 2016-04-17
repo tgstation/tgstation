@@ -193,9 +193,11 @@
 
 	var/vchange = 1
 
+	var/datum/action/item_action/chameleon/change/chameleon_action = null
+
 /obj/item/clothing/mask/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
 	chameleon_action.chameleon_name = "Mask"
 	chameleon_action.initialize_disguises()
@@ -203,6 +205,21 @@
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	vchange = !vchange
 	user << "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>"
+
+
+/obj/item/clothing/mask/chameleon/drone
+	//Same as the drone chameleon hat, undroppable and no protection
+	flags = NODROP
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	// Can drones use the voice changer part? Let's not find out.
+	vchange = 0
+
+/obj/item/clothing/mask/chameleon/drone/New()
+	..()
+	chameleon_action.random_look()
+
+/obj/item/clothing/mask/chameleon/attack_self(mob/user)
+	user << "<span class='notice'>The [src] does not have a voice changer.</span>"
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"

@@ -51,3 +51,29 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
+
+/mob/living/simple_animal/drone/verb/toggle_headgear_camo()
+	set category = "Drone"
+	set name = "Toggle headgear type"
+
+	// The drone unEquip() proc sets head to null after dropping
+	// an item, so we need to keep a reference to our old headgear
+	// to make sure it's deleted.
+	var/obj/old_headgear = head
+	var/obj/new_headgear
+
+	if(istype(head,/obj/item/clothing/head/chameleon/drone))
+		new_headgear = new /obj/item/clothing/mask/chameleon/drone()
+		src << "<span class='notice'>Headgear in MASK mode.</span>"
+	else if(istype(head,/obj/item/clothing/mask/chameleon/drone))
+		new_headgear = new /obj/item/clothing/head/chameleon/drone()
+		src << "<span class='notice'>Headgear in HAT mode.</span>"
+	else
+		src << "<span class='warning'>You don't have a headgear projector installed.</span>"
+	if(new_headgear)
+		// Force drop the item in the headslot, even though
+		// it's NODROP
+		unEquip(head, 1)
+		qdel(old_headgear)
+		// where is `slot_head` defined? WHO KNOWS
+		equip_to_slot(new_headgear, slot_head)
