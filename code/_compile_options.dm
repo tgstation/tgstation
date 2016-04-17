@@ -49,9 +49,12 @@
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
-#define MIN_COMPILER_VERSION 509
-#if DM_VERSION < MIN_COMPILER_VERSION //Update this whenever you need to take advantage of more recent byond features
+//Update this whenever you need to take advantage of more recent byond features
+#define MIN_COMPILER_VERSION 510
+#if DM_VERSION < MIN_COMPILER_VERSION
+//Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
+#error You need version 510 or higher
 #endif
 
 
