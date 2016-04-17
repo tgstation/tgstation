@@ -713,7 +713,7 @@ var/global/list/whitelisted_species = list("Human")
 		A.mind = golemmind
 		H.mind = null
 		golemmind.current = A
-		if(A.real_name)
+		if(H.real_name)
 			A.real_name = H.real_name
 			A.desc = "The remains of what used to be [A.real_name]."
 		A.key = H.key
@@ -743,10 +743,12 @@ var/global/list/whitelisted_species = list("Human")
 							to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to resurrect you. Return to your body if you want to live again!</b> \
 								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
 				else
-					to_chat(user, "<span class='notice'>As you press \the [A] into \the [src], it is consumed. [real_name] reconstitutes itself!.</span>")
-					qdel(A)
 					anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "reverse-dust-g", sleeptime = 15)
 					var/mob/living/carbon/human/golem/G = new /mob/living/carbon/human/golem
+					if(!real_name)
+						real_name = G.species.makeName()
+					to_chat(user, "<span class='notice'>As you press \the [A] into \the [src], it is consumed. [real_name] reconstitutes itself!.</span>")
+					qdel(A)
 					G.real_name = real_name
 					G.forceMove(src.loc) //we use move to get the entering procs - this fixes gravity
 					var/datum/mind/dustmind = mind

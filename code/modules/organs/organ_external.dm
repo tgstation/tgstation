@@ -1297,6 +1297,12 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
+	if(isgolem(H)) //Golems don't inhabit their severed heads, they turn to dust when they die.
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms()
+		if(B)
+			B.detach()
+		qdel(src)
+		return
 	//Add (facial) hair.
 	if(H.f_style &&  !H.check_hidden_head_flags(HIDEBEARDHAIR))
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
