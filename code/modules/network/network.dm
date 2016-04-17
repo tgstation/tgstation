@@ -87,6 +87,19 @@ proc/clean_network_command(command = "")
 			data = NC.execute(src, A, H) // Commands can be hard-coded to the network object, or made into a 'universal' command, which can be called by any network object.
 			qdel(A)
 			return data
+	return
+
+/datum/network_command/proc/feed(var/obj/item/device/hacktool/H)
+	if(feedback && H)
+		H.feed(feedback)
+
+/datum/network_command/proc/disconnect(var/obj/item/device/hacktool/H)
+	if(H)
+		H.disconnect()
+
+/datum/network_command/proc/connect(var/datum/network/N, var/obj/item/device/hacktool/H)
+	if(H && N)
+		H.connect(N)
 
 
 /*

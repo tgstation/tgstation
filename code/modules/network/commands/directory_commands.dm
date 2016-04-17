@@ -14,13 +14,13 @@
 		for(var/datum/network_command/NC in N.commands)
 			if(!NC.stealth || ishacktool(H))
 				feedback += "\n <span class='notice'>[NC.trigger]</span>"
-		return list(feedback)
+		return feed(H)
 	for(var/datum/network_command/NC in N.commands)
 		if(NC.trigger == A.args[1])
 			feedback = "<span class='notice'>info -[NC.trigger]\n [NC.info]</span>"
-			return list(feedback)
+			return feed(H)
 	feedback = "<span class='notice'>info -[A.args[1]]</span>\n <span class='warning'>Invalid Argument: \"[A.args[1]]\"</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/get_root
@@ -31,9 +31,9 @@
 	..()
 	if(!N.root || (N.root.stealth && !ishacktool(H)))
 		feedback = "<span class='notice'>No Root Network.</span>"
-		return list(feedback)
+		return feed(H)
 	feedback = "<span class='notice'>Root: [N.root.id]</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/get_sub
@@ -51,9 +51,9 @@
 				feedback += "<span class='notice'>| [sub.id] </span>"
 		if(SN.len >= 1)
 			feedback += "<span class='notice'>|</span>"
-			return list(feedback)
+			return feed(H)
 	feedback = "<span class='notice'>No Subnetwork Available.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/get_id
@@ -63,7 +63,7 @@
 /datum/network_command/get_id/execute(datum/network/N, datum/network_argument/A, obj/item/device/hacktool/H)
 	..()
 	feedback = "<span class='notice'>Network ID: [N.id]</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/get_key
@@ -73,7 +73,7 @@
 /datum/network_command/get_key/execute(datum/network/N, datum/network_argument/A, obj/item/device/hacktool/H)
 	..()
 	feedback = "<span_class='notice'>Encryption Key: [N.password]</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/get_hidden
@@ -83,7 +83,7 @@
 /datum/network_command/get_hidden/execute(datum/network/N, datum/network_argument/A, obj/item/device/hacktool/H)
 	..()
 	feedback = "<span class='notice'>Network Stealthed: [N.stealth ? "TRUE" : "FALSE"]</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/get_local
@@ -93,7 +93,7 @@
 /datum/network_command/get_wireless/execute(datum/network/N, datum/network_argument/A, obj/item/device/hacktool/H)
 	..()
 	feedback = "<span class='notice'>Local Network: [N.wireless ? "FALSE" : "TRUE"]</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/rootnet
@@ -104,16 +104,18 @@
 	..()
 	if(!N.root || (N.root.stealth && !ishacktool(H)))
 		feedback = "<span class'notice'>No Root Network.</span>"
-		return list(feedback)
+		return feed(H)
 	if(!N.root.password || N.root.password == N.password || N.root.password == A.args[1])
-		return list(feedback, N.root)
+		connect(N.root, H)
+		return feed(H)
 	if(N.root.password && ishacktool(H) && A.args[1] == "b")
 		feedback = "<span class='warning'>Performing bruteforce hack on [N.root.id].</span>"
 		N.root.execute("security -brute -[N.id]", H) // Trigger the root's security. Loudly.
-		return list(feedback, N.root)
+		connect(N.root, H)
+		return feed(H)
 	feedback = "<span class='warning'>Encryption Key Mismatch.</span>"
 	N.root.execute("security -alert -[N.id]", H) // Trigger the root's security. Quietly.
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/subnet
@@ -126,7 +128,8 @@
 	if(A.args[1] && N.sub.len >= 1)
 		for(var/datum/network/S in N.sub)
 			if(S.id == A.args[1])
-				return list(feedback, S)
+				connect(S, H)
+				return feed(H)
 	if(N.sub.len > 1 && !A.args[1])
 		var/not_stealthed = 0
 		for(var/datum/network/S in N.sub)
@@ -135,19 +138,21 @@
 				SN = S
 		if(!ishacktool(H) && not_stealthed == 0)
 			feedback = "<span class='notice'>No subnetworks available. Unable to complete request.</span>"
-			return list(feedback)
+			return feed(H)
 		if(ishacktool(H) || not_stealthed > 1)
 			feedback = "<span class='notice'>Multiple subnetworks available. Unable to complete request.</span>"
-			return list(feedback)
+			return feed(H)
 		if(!ishacktool(H) && not_stealthed == 1)
-			return list(feedback, SN)
+			connect(SN, H)
+			return feed(H)
 	if(N.sub.len == 1)
 		for(var/datum/network/S in N.sub)
 			SN = S
 		if(!SN.stealth || ishacktool(H))
-			return list(feedback, SN)
+			connect(SN, H)
+			return feed(H)
 	feedback = "<span class='notice'>No subnetworks available. Unable to complete request.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/connect
@@ -158,19 +163,22 @@
 	..()
 	if(N.root.id == A.args[1])
 		if(!N.root.password || N.root.password == N.password || N.root.password == A.args[2])
-			return list(feedback, N.root)
+			connect(N.root, H)
+			return feed(H)
 		if(N.root.password && ishacktool(H) && A.args[2] == "b")
 			feedback = "<span class='warning'>Performing bruteforce hack on [N.root.id].</span>"
 			N.root.execute("security -brute -[N.id]", H) // Trigger the root's security. Loudly.
-			return list(feedback, N.root)
+			connect(N.root, H)
+			return feed(H)
 		feedback = "<span class='warning'>Encryption Key Mismatch.</span>"
 		N.root.execute("security -alert -[N.id]", H) // Trigger the root's security. Quietly.
-		return list(feedback)
+		return feed(H)
 	for(var/datum/network/S in N.sub)
 		if(S.id == A.args[1])
-			return list(feedback, S)
+			connect(S, H)
+			return feed(H)
 	feedback = "<span class='warning'>Unable to connect.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 datum/network_command/disconnect
@@ -181,7 +189,8 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	..()
 	feedback = "<span class='notice'>Attempting to disconnect from network.</span>"
 	N.execute("security -disconnect", H)
-	return list(feedback, "NULL")
+	disconnect(H)
+	return feed(H)
 
 
 /datum/network_command/set_root
@@ -192,16 +201,16 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	..()
 	if(!A.args[1])
 		feedback = "<span class='warning'>Invalid Arguments</span>"
-		return list(feedback)
+		return feed(H)
 	if(!A.args[1] in active_network_ids || N.root.id == A.args[1] || A.args[1] == N.id)
 		feedback = "<span class='warning'>Target Root is Invalid.</span>"
-		return list(feedback)
+		return feed(H)
 	if(!N.root.password || N.root.password == N.password || N.root.password == A.args[2])
 		var/datum/network/newroot = networks_by_id[A.args[1]]
 		newroot.sub += N
 		N.root.sub -= N
 		N.root = newroot
-		return list(feedback)
+		return feed(H)
 	if(N.root.password && ishacktool(H) && A.args[2] == "b")
 		feedback = "<span class='warning'>Performing bruteforce hack on [N.root.id].</span>"
 		N.root.execute("security -brute -[N.id]", H) // Trigger the root's security. Loudly.
@@ -209,10 +218,10 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 		newroot.sub += N
 		N.root.sub -= N
 		N.root = newroot
-		return list(feedback)
+		return feed(H)
 	feedback = "<span class='warning'>Encryption Key Mismatch.</span>"
 	N.root.execute("security -alert -[N.id]", H) // Trigger the root's security. Quietly.
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/set_key
@@ -224,10 +233,10 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	if(A.args[1])
 		N.password = A.args[1]
 		feedback = "<span class='notice'>Encryption Key Changed.</span>"
-		return list(feedback)
+		return feed(H)
 	N.password = null
 	feedback = "<span class='notice'>Encryption Key Removed.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/set_id
@@ -238,10 +247,10 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	..()
 	if(!A.args[1])
 		feedback = "<span class='warning'>Invalid Argument.</span>"
-		return list(feedback)
+		return feed(H)
 	if(A.args[1] in active_network_ids)
 		feedback = "<span class='warning'>Failed to set Network ID.</span>"
-		return list(feedback)
+		return feed(H)
 	active_network_ids -= N.id
 	networks_by_id[N.id] = null
 	networks_by_id -= N.id
@@ -249,7 +258,7 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	networks_by_id[N.id] = N
 	active_network_ids += N.id
 	feedback = "<span class='notice'>Successfully set Network ID.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/set_hidden
@@ -261,12 +270,12 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	switch(A.args[1])
 		if("true" || "1")
 			N.stealth = 1
-			return list(feedback)
+			return feed(H)
 		if("false"|| "0")
 			N.stealth = 0
-			return list(feedback)
+			return feed(H)
 	feedback = "<span class='warning'>Invalid Argument.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/set_local
@@ -280,14 +289,14 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 			N.wireless = 0
 			if(N in networks_by_wide)
 				networks_by_wide -= N
-			return list(feedback)
+			return feed(H)
 		if("false" || "0")
 			N.wireless = 1
 			if(!(N in networks_by_wide))
 				networks_by_wide += N
-			return list(feedback)
+			return feed(H)
 	feedback = "<span class='warning'>Invalid Argument.</span>"
-	return list(feedback)
+	return feed(H)
 
 
 /datum/network_command/probe
@@ -307,7 +316,7 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 	else if(A.args[1] == "l" || A.args[1] == "local")
 		if(isnull(N.holder))
 			feedback = "<span class='notice'>No Networks found within scope provided.</span>"
-			return list(feedback)
+			return feed(H)
 		var/area/AR = get_area(N.holder)
 		for(var/obj/O in AR)
 			if(O.netwrk && !O.netwrk.wireless)
@@ -315,9 +324,9 @@ datum/network_command/disconnect/execute(datum/network/N, datum/network_argument
 					found += O.netwrk
 	if(!found.len)
 		feedback = "<span class='notice'>No Networks found within scope provided.</span>"
-		return list(feedback)
+		return feed(H)
 	feedback = "<span class='notice'>Probed Networks: </span>\n "
 	for(var/datum/network/S in found)
 		feedback += "<span class='notice'>| [S.id] </span>"
 	feedback += "<span class='notice'>|</span>"
-	return list(feedback)
+	return feed(H)

@@ -1424,7 +1424,6 @@
 #include "code\modules\network\hacktool.dm"
 #include "code\modules\network\network.dm"
 #include "code\modules\network\commands\directory_commands.dm"
-#include "code\modules\network\templates\hacktool.dm"
 #include "code\modules\ninja\__ninjaDefines.dm"
 #include "code\modules\ninja\admin_ninja_verbs.dm"
 #include "code\modules\ninja\energy_katana.dm"
