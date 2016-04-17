@@ -1421,6 +1421,8 @@
 #include "code\modules\mob\new_player\poll.dm"
 #include "code\modules\mob\new_player\preferences_setup.dm"
 #include "code\modules\mob\new_player\sprite_accessories.dm"
+#include "code\modules\network\network.dm"
+#include "code\modules\network\commands\directory_commands.dm"
 #include "code\modules\ninja\__ninjaDefines.dm"
 #include "code\modules\ninja\admin_ninja_verbs.dm"
 #include "code\modules\ninja\energy_katana.dm"
