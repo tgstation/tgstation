@@ -293,6 +293,7 @@
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 		600),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
+		new /datum/data/mining_equipment("Advanced Sewing Kit", /obj/item/weapon/sewingkit/advanced,									800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack						,	              		2000),
@@ -306,7 +307,7 @@
 		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_ugprade/health,      			   	       		400),
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000),
-		new /datum/data/mining_equipment("Advanced Sewing Kit", /obj/item/weapon/sewingkit/advanced,									3000),
+
 		)
 
 /datum/data/mining_equipment/
