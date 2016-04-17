@@ -19,13 +19,11 @@ proc/clean_network_command(command = "")
 /datum/network_argument
 	var/main_command
 	var/list/args = list()
-	var/is_hacktool = 0
 
-/datum/network_argument/New(var/command, var/hacktool)
+/datum/network_argument/New(var/command)
 	var/list/clean_command = clean_network_command(command)
 	main_command = clean_command[1]
 	args = clean_command[2]
-	is_hacktool = hacktool
 
 /datum/network
 	var/atom/holder = null							// The holder (atom that contains this network datum).
@@ -41,10 +39,16 @@ proc/clean_network_command(command = "")
 	..()
 	src.holder = holder
 	if(id)
+		while(networks_by_id[id])
+			id = initial(id)+"_"+random_string(6, hex_characters)
 		networks_by_id[id] = src
 		active_network_ids += id
-	if(wireless)
-		networks_by_wide += src
+		if(wireless)
+			networks_by_wide += src
+	var/list/commandlist = commands
+	commands = list()
+	for(var/C in commandlist)
+		commands += new C()
 
 /datum/network/Destroy()
 	holder = null
@@ -72,15 +76,15 @@ proc/clean_network_command(command = "")
 	if(S in sub)
 		sub -= S
 
-/datum/network/proc/execute(var/command, var/hacktool = 0) // Used to pass commands to the network.
+/datum/network/proc/execute(var/command, var/obj/item/device/hacktool/H) // Used to pass commands to the network.
 	if(!command)
 		return
-	var/datum/network_argument/A = new(command, hacktool)
+	var/datum/network_argument/A = new(command)
 
 	var/list/data = list()
 	for(var/datum/network_command/NC in commands) // allows for adding 'universal' commands, which can be attached to any network object.
 		if(NC.trigger == A.main_command)
-			data = NC.execute(src, A) // Commands can be hard-coded to the network object, or made into a 'universal' command, which can be called by any network object.
+			data = NC.execute(src, A, H) // Commands can be hard-coded to the network object, or made into a 'universal' command, which can be called by any network object.
 			qdel(A)
 			return data
 
@@ -96,6 +100,6 @@ proc/clean_network_command(command = "")
 	var/feedback = ""	// The message sent back to the device calling this command.
 	var/info = ""		// A feedback message that explains the usage of this command. For the noobs.
 
-/datum/network_command/proc/execute(datum/network/N, datum/network_argument/A)
+/datum/network_command/proc/execute(datum/network/N, datum/network_argument/A, obj/item/device/hacktool/H)
 	if(!N || !A)
 		return
