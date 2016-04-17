@@ -18,3 +18,6 @@
 
 /mob/living/carbon/brain/lingcheck()
 	return 0
+
+/mob/living/carbon/brain/treat_message(message)
+	return message

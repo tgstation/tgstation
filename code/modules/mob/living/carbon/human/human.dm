@@ -32,6 +32,8 @@
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
+	//Note: Additional organs are generated/replaced on the dna.species level
+
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
 
@@ -950,6 +952,9 @@
 	if(!getorganslot("lungs"))
 		var/obj/item/organ/internal/lungs/L = new()
 		L.Insert(src)
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/internal/tongue/T = new()
+		T.Insert(src)
 	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0

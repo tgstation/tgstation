@@ -8,20 +8,22 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
-		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = F.seed.Copy()
-			t_prod.loc = O.loc
-			t_amount++
-		qdel(O)
-		return 1
+		if(F.seed)
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = F.seed.Copy()
+				t_prod.loc = O.loc
+				t_amount++
+			qdel(O)
+			return 1
 
 	else if(istype(O, /obj/item/weapon/grown))
 		var/obj/item/weapon/grown/F = O
-		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = F.seed.Copy()
-			t_prod.loc = O.loc
-			t_amount++
-		qdel(O)
+		if(F.seed)
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = F.seed.Copy()
+				t_prod.loc = O.loc
+				t_amount++
+			qdel(O)
 		return 1
 
 	/*else if(istype(O, /obj/item/stack/tile/grass))

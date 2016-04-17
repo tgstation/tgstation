@@ -29,6 +29,25 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
+/obj/machinery/processor/process()
+	..()
+	var/mob/living/simple_animal/slime/picked_slime
+	for(var/mob/living/simple_animal/slime/slime in range(1,src))
+		if(slime.loc == src)
+			return
+		if(istype(slime, /mob/living/simple_animal/slime))
+			if(slime.stat)
+				picked_slime = slime
+				break
+	if(!picked_slime)
+		return
+	var/datum/food_processor_process/P = select_recipe(picked_slime)
+	if (!P)
+		return
+
+	src.visible_message("[picked_slime] is sucked into [src].")
+	picked_slime.loc = src
+
 /datum/food_processor_process
 	var/input
 	var/output

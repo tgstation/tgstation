@@ -273,7 +273,7 @@
 						return juice_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(obj/item/weapon/grown/O)
-		if (!istype(O))
+		if (!istype(O) || !O.seed)
 				return 5
 		else if (O.seed.potency == -1)
 				return 5
@@ -281,7 +281,7 @@
 				return round(O.seed.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
-		if (!istype(O))
+		if (!istype(O) || !O.seed)
 				return 5
 		else if (O.seed.potency == -1)
 				return 5

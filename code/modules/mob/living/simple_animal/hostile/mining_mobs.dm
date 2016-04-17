@@ -249,6 +249,8 @@
 		if(!owner && !preserved)
 			inert = 1
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+		else
+			preserved = 1
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
@@ -447,7 +449,7 @@
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/suit/hooded/explorer))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 60)
@@ -631,9 +633,8 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
 	robust_searching = 1
-	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
-				/obj/item/weapon/ore/diamond{layer = 4.1})
-
+	loot = list()
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2)
 
 //Goliath
 
@@ -647,8 +648,8 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/asteroid/goliath_hide = 1)
+	loot = list()
 	stat_attack = 1
 	robust_searching = 1
 
@@ -770,6 +771,7 @@
 	..()
 	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
 	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)

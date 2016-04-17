@@ -159,6 +159,7 @@
 
 /obj/effect/meteor/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
+		make_debris()
 		qdel(src)
 		return
 	..()

@@ -70,7 +70,7 @@
 
 /turf/open/floor/plating/airless
 	icon_state = "plating"
-	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/engine
 	name = "reinforced floor"
@@ -168,14 +168,10 @@
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plasteel/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
@@ -196,7 +192,7 @@
 	luminosity = 1
 
 /turf/open/floor/plating/lava/airless
-	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
@@ -256,4 +252,4 @@
 	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/open/floor/plating/lava/smooth, /turf/open/floor/plating/lava/smooth/lava_land_surface
 	)
 /turf/open/floor/plating/lava/smooth/airless
-	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
