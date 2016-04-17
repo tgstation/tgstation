@@ -123,7 +123,6 @@
 	if(istype(src, /mob/living/simple_animal/slaughter))
 		SD = src
 		SD.consumed_mobs += victim
-		world << "DEBUG: [victim] added to [SD] consumed mobs"
 
 	return TRUE
 
