@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: Your HUD no longer becomes black and white when you have noir vision.
