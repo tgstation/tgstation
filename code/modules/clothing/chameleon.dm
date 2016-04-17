@@ -1,3 +1,41 @@
+/datum/action/item_action/chameleon/drone/togglehatmask
+	name = "Toggle Headgear Mode"
+
+/datum/action/item_action/chameleon/drone/togglehatmask/Trigger()
+	if(!IsAvailable())
+		return
+
+	// No point making the code more complicated if no non-drone
+	// is ever going to use one of these
+
+	var/mob/living/simple_animal/drone/D
+
+	if(istype(owner, /mob/living/simple_animal/drone))
+		D = owner
+	else
+		return
+
+	// The drone unEquip() proc sets head to null after dropping
+	// an item, so we need to keep a reference to our old headgear
+	// to make sure it's deleted.
+	var/obj/old_headgear = target
+	var/obj/new_headgear
+
+	if(istype(old_headgear,/obj/item/clothing/head/chameleon/drone))
+		new_headgear = new /obj/item/clothing/mask/chameleon/drone()
+	else if(istype(old_headgear,/obj/item/clothing/mask/chameleon/drone))
+		new_headgear = new /obj/item/clothing/head/chameleon/drone()
+	else
+		owner << "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>"
+	if(new_headgear)
+		// Force drop the item in the headslot, even though
+		// it's NODROP
+		D.unEquip(target, 1)
+		qdel(old_headgear)
+		// where is `slot_head` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, slot_head)
+	return 1
+
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
 	var/list/chameleon_blacklist = list()
@@ -175,6 +213,9 @@
 
 /obj/item/clothing/head/chameleon/drone/New()
 	..()
+	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
+	// this is a noop to shut the compiler up
+	togglehatmask_action.UpdateButtonIcon()
 	chameleon_action.random_look()
 
 /obj/item/clothing/mask/chameleon
@@ -216,6 +257,9 @@
 
 /obj/item/clothing/mask/chameleon/drone/New()
 	..()
+	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
+	// this is a noop to shut the compiler up
+	togglehatmask_action.UpdateButtonIcon()
 	chameleon_action.random_look()
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
