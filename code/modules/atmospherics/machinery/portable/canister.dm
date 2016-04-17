@@ -227,8 +227,8 @@
 		health -= W.force
 		add_fingerprint(user)
 		healthcheck()
-	else
-		..()
+		playsound(loc, 'sound/weapons/smash.ogg', 60, 1)
+	..()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
