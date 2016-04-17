@@ -1,20 +1,39 @@
 /*
-	For one-off or niche commands which will only ever apply to one specific machine, feel free to hard code it. Otherwise, for commands which might see use
-	in another machine, please make a new net_command instead.
-
 	Upgraded devices, such as borgs, the AI, or "Hacktools" have several notable features:
 	they are able to see stealthed networks.
 	they are able to pass "-b" as an argument in place of an encryption key to make an attempt at brute-forcing the network. This will take some time, and may trigger the networks security system, but will eventually get you in.
-
 */
 
-proc/butcher_net_command(command = "")
+var/global/list/networks_by_id = list()
+var/global/list/networks_by_wide = list()
+var/global/list/active_network_ids = list()
+var/global/list/datum/network/active_networks = list()
+
+proc/clean_network_command(command = "")
 	var/list/butchered = explode_text(command, " -") // allows for arguments like {text1 = "hello "} {text2 = "world"} to be caused when executing something like {print -text1 = "hello " -text2 = "world"}
 	command = butchered[1]
 	var/list/arguments = list()
 	for(var/i=2, i<=butchered.len, i++)
 		arguments[i-1] = butchered[i]
 	return list(command, arguments)
+
+proc/search_networks_by_id(query)
+	var/list/found = list()
+	for(var/id in active_network_ids)
+		if(findtext(id,query))
+			found += id
+	return found
+
+/datum/network_argument
+	var/main_command
+	var/list/args = list()
+	var/is_hacktool = 0
+
+/datum/network_argument/New(var/command, var/hacktool)
+	var/list/clean_command = clean_network_command(command)
+	main_command = clean_command[1]
+	args = clean_command[2]
+	is_hacktool = hacktool
 
 /datum/network
 	var/atom/holder = null							// The holder (atom that contains this network datum).
@@ -24,11 +43,17 @@ proc/butcher_net_command(command = "")
 	var/wireless = 0								// Whether the network can be accessed remotely.
 	var/datum/network/root 							// The root network, if this is a subnetwork.
 	var/list/datum/network/sub = list() 			// A list of networks that are a subnetwork of this one.
-	var/list/datum/net_command/commands = list()	// A list of commands this network has access to. Works kinda like virus symptoms.
+	var/list/datum/network_command/commands = list()	// A list of commands this network has access to. Works kinda like virus symptoms.
 
 /datum/network/New(atom/holder)
 	..()
 	src.holder = holder
+	if(id)
+		networks_by_id[id] = src
+		active_network_ids += id
+	active_networks += src
+	if(wireless)
+		networks_by_wide += src
 
 /datum/network/Destroy()
 	holder = null
@@ -38,9 +63,16 @@ proc/butcher_net_command(command = "")
 	if(root)
 		root.del_sub(src)
 	root = list()
-	for(var/datum/net_command/NC in commands)
+	for(var/datum/network_command/NC in commands)
 		qdel(NC)
 	commands = list()
+	if(id)
+		networks_by_id[id] = null
+		networks_by_id -= id
+		active_network_ids -= id
+	active_networks -= src
+	if(wireless)
+		networks_by_wide -= src
 	return ..()
 
 /datum/network/proc/del_root() // Called when the root is destroyed.
@@ -50,17 +82,16 @@ proc/butcher_net_command(command = "")
 	if(S in sub)
 		sub -= S
 
-/datum/network/proc/execute(var/command, var/list/params = list("args" = list(), "upgraded" = 0)) // Used to pass commands to the network.
+/datum/network/proc/execute(var/command, var/hacktool = 0) // Used to pass commands to the network.
 	if(!command)
 		return
-	var/list/butch = butcher_net_command(command)
-	command = butch[1]
-	params["args"] = butch[2]
+	var/datum/network_argument/A = new(command, hacktool)
 
 	var/list/data = list()
-	for(var/datum/net_command/NC in commands) // allows for adding 'universal' commands, which can be attached to any network object.
-		if(NC.trigger == command)
-			data = NC.execute(src, params) // Commands can be hard-coded to the network object, or made into a 'universal' command, which can be called by any network object.
+	for(var/datum/network_command/NC in commands) // allows for adding 'universal' commands, which can be attached to any network object.
+		if(NC.trigger == A.main_command)
+			data = NC.execute(src, A) // Commands can be hard-coded to the network object, or made into a 'universal' command, which can be called by any network object.
+			qdel(A)
 			return data
 
 
@@ -69,12 +100,12 @@ proc/butcher_net_command(command = "")
 	Execute should always return either null, or a list.
 */
 
-/datum/net_command
+/datum/network_command
 	var/trigger = "" 	// The trigger word for this command to be executed.
 	var/stealth = 0		// Whether this command can be identified using info.
 	var/feedback = ""	// The message sent back to the device calling this command.
 	var/info = ""		// A feedback message that explains the usage of this command. For the noobs.
 
-/datum/net_command/proc/execute(datum/network/N, list/params)
-	if(!N)
+/datum/network_command/proc/execute(datum/network/N, datum/network_argument/A)
+	if(!N || !A)
 		return
