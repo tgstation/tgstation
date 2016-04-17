@@ -136,14 +136,14 @@ var/global/ingredientLimit = 10
 	else . = ..()
 
 /obj/machinery/cooking/attackby(obj/item/I,mob/user)
-	if(stat & (NOPOWER | BROKEN))
-		to_chat(user, "<span class='warning'> The power's off, it's no good. </span>")
-		return
 	if(src.active)
 		to_chat(user, "<span class='warning'>[src.name] is currently busy.</span>")
 		return
 	else if(..())
 		return 1
+	else if(stat & (NOPOWER | BROKEN))
+		to_chat(user, "<span class='warning'> The power's off, it's no good. </span>")
+		return
 	else if(istype(user,/mob/living/silicon))
 		to_chat(user, "<span class='warning'>That's a terrible idea.</span>")
 		return
