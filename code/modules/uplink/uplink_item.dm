@@ -310,6 +310,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	player_minimum = 25
 
+/datum/uplink_item/dangerous/wrasslin
+	name = "Championship Wrestling Belt"
+	desc = "Teaches the wearer how to wrestle like a professional. \
+			Very obvious, but lets you show the crowd who the \
+			REAL inter-galactic heavyweight champion is."
+	item = /obj/item/weapon/storage/belt/champion/wrestling
+	cost = 7
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
