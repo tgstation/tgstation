@@ -88,7 +88,7 @@
 	var/found_admin = 0
 	var/turf/our_turf = get_turf(src)
 
-	for(var/mob/J in world)
+	for(var/mob/J in range(20,src))
 		if(admin_datums[J.ckey])
 			var/turf/admin_turf = get_turf(J)
 			if(get_dist(our_turf, admin_turf) < 8)
