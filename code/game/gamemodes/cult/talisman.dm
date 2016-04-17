@@ -24,7 +24,7 @@
 		user.drop_item()
 		qdel(src)
 
- /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user, successfuluse = 1)
+/obj/item/weapon/paper/talisman/proc/invoke(mob/living/user, successfuluse = 1)
 	. = successfuluse
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
