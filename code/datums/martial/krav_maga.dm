@@ -12,8 +12,7 @@
 	if(owner.incapacitated())
 		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
 		return
-	owner << "<b><i>Your next attack will be a Neck Chop.</i></b>"
-	owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>")
+	owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "neck_chop"
 
@@ -25,8 +24,7 @@
 	if(owner.incapacitated())
 		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
 		return
-	owner << "<b><i>Your next attack will be a Leg Sweep.</i></b>"
-	owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>")
+	owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "leg_sweep"
 
@@ -38,8 +36,7 @@
 	if(owner.incapacitated())
 		owner << "<span class='warning'>You can't use Krav Maga while you're incapacitated.</span>"
 		return
-	owner << "<b><i>Your next attack will be a Lung Punch.</i></b>"
-	owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>")
+	owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "quick_choke"//internal name for lung punch
 
@@ -94,7 +91,7 @@
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
-				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak for a short time!</span>")
+				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
 	D.silent += 10

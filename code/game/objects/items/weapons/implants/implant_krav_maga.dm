@@ -31,7 +31,7 @@
 
 /obj/item/weapon/implantcase/krav_maga
 	name = "implant case - 'Krav Maga'"
-	desc = "A glass case containing an implant that can teach the user the art of Krav Maga."
+	desc = "A glass case containing an implant that can teach the user the arts of Krav Maga."
 
 /obj/item/weapon/implantcase/krav_maga/New()
 	imp = new /obj/item/weapon/implant/krav_maga(src)
