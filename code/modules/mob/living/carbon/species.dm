@@ -709,7 +709,6 @@ var/global/list/whitelisted_species = list("Human")
 	if(!istype(golemmind,/datum/mind))	//not a mind
 		golemmind = null
 	for(var/atom/movable/I in H.contents)
-		to_chat(world, "FOUND [I] IN [H], MOVING TO [H.loc]")
 		I.forceMove(H.loc)
 	anim(target = H, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-g", sleeptime = 15)
 	var/mob/living/adamantine_dust/A = new(H.loc)
