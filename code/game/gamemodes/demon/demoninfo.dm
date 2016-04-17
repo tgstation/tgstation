@@ -175,13 +175,6 @@ var/static/list/lawlorify = list (
 		if(TRUE_DEMON)
 			increase_arch_demon()
 
-/datum/demoninfo/proc/regress()
-	switch(form)
-		if(BLOOD_LIZARD)
-			regress_humanoid()
-		if(TRUE_DEMON)
-			regress_blood_lizard()
-
 /datum/demoninfo/proc/regress_humanoid()
 	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
@@ -197,6 +190,7 @@ var/static/list/lawlorify = list (
 	D.oldform.loc = D.loc
 	owner.transfer_to(D.oldform)
 	give_lizard_spells()
+	qdel(D)
 	form = BLOOD_LIZARD
 
 

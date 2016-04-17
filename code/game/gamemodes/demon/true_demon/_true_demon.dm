@@ -24,6 +24,7 @@
 
 /mob/living/carbon/true_demon/New()
 	internal_organs += new /obj/item/organ/internal/brain/
+	internal_organs += new /obj/item/organ/internal/tongue
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
 	
