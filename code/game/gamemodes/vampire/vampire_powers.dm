@@ -510,7 +510,7 @@
 			T.turf_animation('icons/effects/effects.dmi',"shadowstep")
 			usr.loc = picked
 		M.current.verbs -= /client/proc/vampire_shadowstep
-		sleep(20)
+		sleep(20 SECONDS)
 		M.current.verbs += /client/proc/vampire_shadowstep
 
 /client/proc/vampire_shadowmenace()
