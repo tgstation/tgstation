@@ -5,6 +5,7 @@
 	var/datum/action/kick/kick = new/datum/action/kick()
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
+	var/datum/action/suplex/suplex = new/datum/action/suplex()
 
 /datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
@@ -115,6 +116,7 @@
 	slam.Grant(H)
 	throw_wrassle.Grant(H)
 	strike.Grant(H)
+	suplex.Grant(H)
 
 /datum/martial_art/wrestling/remove(var/mob/living/carbon/human/H)
 	..()
@@ -124,6 +126,7 @@
 	slam.Remove(H)
 	throw_wrassle.Remove(H)
 	strike.Remove(H)
+	suplex.Remove(H)
 
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
