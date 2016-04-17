@@ -342,14 +342,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(issilicon(M))
 		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
-			if(R.emagged || R.syndicate) //Count as antags
-				return 1
-			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth).
-				if(R.connected_ai)
-					if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
-						return 0 //AI is the real traitor here, so the borg itself is not a traitor
-					return 1 //Slaved but also a traitor
-				return 1 //Unslaved, traitor
+			if(R.mind && R.mind.special_role)
+				if(R.laws && R.laws.zeroth && R.syndicate)
+					if(R.connected_ai)
+						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
+							return 0 //AI is the real traitor here, so the borg itself is not a traitor
+						return 1 //Slaved but also a traitor
+					return 1 //Unslaved, traitor
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
