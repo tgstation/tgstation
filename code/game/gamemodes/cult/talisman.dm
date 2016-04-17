@@ -372,7 +372,7 @@
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				var/obj/item/weapon/restraints/handcuffs/energy/cult/used/Z = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
-				Z.apply_cuffs(C, user))
+				Z.apply_cuffs(C, user)
 				user << "<span class='notice'>You shackle [C].</span>"
 				add_logs(user, C, "handcuffed")
 		else
