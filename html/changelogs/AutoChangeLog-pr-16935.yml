@@ -1,5 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - bugfix: "Fixed issues with drones wearing chameleon headgear."
-  - rscadd: "Added admin-only \"snowflake drone\" (also known as drone camogear) headgear."

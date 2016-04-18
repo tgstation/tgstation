@@ -1,8 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscdel: "Crates are now dense even when open."
-  - rscadd: "You can now climb onto crates in the same way as table and sandbags, though climbing onto crates is very fast and does not stun you."
-  - wip: "You can walk on crates, provided both are closed/open or the crate you're on is closed."
-  - rscdel: "You can't close or open a crate if there's a large mob on top of it."
-  - rscadd: "Stuffing items into a closet or crate is now instant and does not close the closet or crate. Stuffing mobs into a closet or crate still takes time and closes the closet/crate in question."
