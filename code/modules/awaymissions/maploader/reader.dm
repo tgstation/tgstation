@@ -74,9 +74,9 @@ var/global/dmm_suite/preloader/_preloader = new
 				else
 					world.maxz = zcrd //create a new z_level if needed
 
-			bounds[1] = min(bounds[1], xcrdStart) // Update the min-x
-			bounds[3] = min(bounds[3], zcrd) // Update the min-z
-			bounds[6] = max(bounds[6], zcrd) // Update the max-z
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
+			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
 			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
 
@@ -91,15 +91,15 @@ var/global/dmm_suite/preloader/_preloader = new
 			if(gridLines.len && gridLines[gridLines.len] == "")
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
-			bounds[2] = min(bounds[2], ycrd) // Update the min-y
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
 			ycrd += gridLines.len - 1 // Start at the top and work down
 
 			if(!cropMap && ycrd > world.maxy)
 				if(!measureOnly)
 					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-				bounds[5] = max(bounds[5], ycrd) // Update the max-y
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
 			else
-				bounds[5] = max(bounds[5], min(ycrd, world.maxy)) // Update the max-y
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], min(ycrd, world.maxy))
 
 			var/maxx = xcrdStart
 			if(measureOnly)
@@ -127,11 +127,11 @@ var/global/dmm_suite/preloader/_preloader = new
 							++xcrd
 					--ycrd
 
-			bounds[4] = max(bounds[4], cropMap ? min(maxx, world.maxx) : maxx) // Update the max-x
+			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx)
 
 		CHECK_TICK
 
-	if(bounds[1] == 1.#INF)
+	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
 		return bounds
@@ -179,7 +179,6 @@ var/global/dmm_suite/preloader/_preloader = new
 
 		var/old_position = 1
 		var/dpos
-		//var/model_sl = replacetext(model, "\n", "")
 
 		do
 			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)

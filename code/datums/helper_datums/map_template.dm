@@ -18,8 +18,8 @@
 /datum/map_template/proc/preload_size(path)
 	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
 	if(bounds)
-		width = bounds[4] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
-		height = bounds[5]
+		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+		height = bounds[MAP_MAXY]
 	return bounds
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
@@ -41,7 +41,8 @@
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 
-	for(var/L in block(locate(bounds[1], bounds[2], bounds[3]), locate(bounds[4], bounds[5], bounds[6])))
+	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A
