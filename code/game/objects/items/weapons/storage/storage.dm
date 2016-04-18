@@ -418,7 +418,7 @@
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
 	..()
 	orient2hud(usr)
-	if (over_object == usr && (in_range(src, usr) || find_holder(src) == usr))
+	if (over_object == usr && (in_range(src, usr) || find_holder_of_type(src, /mob) == usr))
 		if (usr.s_active)
 			usr.s_active.close(usr)
 		src.show_to(usr)

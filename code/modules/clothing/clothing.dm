@@ -403,7 +403,7 @@ BLIND     // can't see anything
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
-	if (usr.stat || usr.restrained()) return
+	if (usr.incapacitated()) return
 	if(has_sensor >= 2)
 		to_chat(usr, "<span class='warning'>The controls are locked.</span>")
 		return 0
@@ -434,6 +434,10 @@ BLIND     // can't see anything
 	set src in usr
 	set_sensors(usr)
 	..()
+
+/obj/item/clothing/under/AltClick()
+	if(find_holder_of_type(src, /mob) == usr)
+		set_sensors(usr)
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"

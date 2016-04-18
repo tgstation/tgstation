@@ -15,12 +15,14 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
+	if(usr.incapacitated())
+		return
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
 		amount_per_transfer_from_this = N
 
 /obj/item/weapon/reagent_containers/AltClick()
-	if(loc == usr && possible_transfer_amounts)
+	if(find_holder_of_type(src, /mob) == usr && possible_transfer_amounts)
 		set_APTFT()
 		return
 	return ..()

@@ -152,8 +152,8 @@ var/global/secure_GPS_count = 0
 
 /obj/item/device/gps/secure/proc/announce(var/mob/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
 	var/turf/pos = get_turf(SPS)
-	if(istype(find_holder(src), /mob/living))
-		var/mob/living/L = find_holder(src)
+	var/mob/living/L = find_holder_of_type(src, /mob/living/)
+	if(L)
 		L.show_message("\icon[src] [gpstag] beeps: <span class='danger'>Warning! SPS '[SPS.gpstag]' [reason] at [get_area(SPS)] ([pos.x-WORLD_X_OFFSET[pos.z]], [pos.y-WORLD_Y_OFFSET[pos.z]], [pos.z]).</span>", MESSAGE_HEAR)
 	else if(isturf(src.loc))
 		src.visible_message("\icon[src] [gpstag] beeps: <span class='danger'>Warning! SPS '[SPS.gpstag]' [reason] at [get_area(SPS)] ([pos.x-WORLD_X_OFFSET[pos.z]], [pos.y-WORLD_Y_OFFSET[pos.z]], [pos.z]).</span>")
