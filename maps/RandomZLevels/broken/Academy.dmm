@@ -465,7 +465,7 @@
 "iW" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/simulated/floor/airless{tag = "icon-white (EAST)"; icon_state = "white"; dir = 4},/area/awaymission/academy/academyaft)
 "iX" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/airless{tag = "icon-whitered (EAST)"; icon_state = "whitered"; dir = 4},/area/awaymission/academy/academyaft)
 "iY" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
-"iZ" = (/obj/structure/table,/obj/item/clothing/glasses/meson/truesight,/turf/simulated/floor,/area/awaymission/academy/academyaft)
+"iZ" = (/obj/structure/table,/obj/item/clothing/glasses/scanner/meson/truesight,/turf/simulated/floor,/area/awaymission/academy/academyaft)
 "ja" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)
 "jb" = (/obj/structure/noticeboard,/turf/simulated/wall,/area/awaymission/academy/academyaft)
 "jc" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/carpet,/area/awaymission/academy/academyaft)

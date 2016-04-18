@@ -32,7 +32,7 @@ var/global/vox_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/pressure(src), slot_wear_suit)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/pressure(src), slot_head)
 			equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(src), slot_belt)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/meson(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/scanner/meson(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
 			equip_to_slot_or_del(new /obj/item/weapon/storage/box/emps(src), slot_r_hand)
 			equip_to_slot_or_del(new /obj/item/device/multitool(src), slot_l_hand)
 

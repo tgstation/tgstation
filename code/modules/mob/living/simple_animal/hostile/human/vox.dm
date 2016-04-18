@@ -104,7 +104,7 @@
 	name = "vox cyber operator"
 	corpseuniform = /obj/item/clothing/under/rank/roboticist
 	corpseshoes = /obj/item/clothing/shoes/magboots/vox
-	corpseglasses = /obj/item/clothing/glasses/meson
+	corpseglasses = /obj/item/clothing/glasses/scanner/meson
 
 /obj/effect/landmark/corpse/vox/ion/space
 	corpsesuit = /obj/item/clothing/suit/space/vox/pressure

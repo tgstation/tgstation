@@ -42,4 +42,4 @@
 			handlers.Remove(handler)
 			continue
 		args["event"] = src
-		call(objRef,procName)(args)
+		call(objRef,procName)(args, holder)

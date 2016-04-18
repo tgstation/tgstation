@@ -410,7 +410,7 @@ hi
 
 //////////// Eye Wear ////////////
 
-/obj/item/clothing/glasses/meson/fluff/book_berner_1 //asanadas: Book Berner
+/obj/item/clothing/glasses/scanner/meson/fluff/book_berner_1 //asanadas: Book Berner
 	name = "bespectacled mesonic surveyors"
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'icons/obj/custom_items.dmi'

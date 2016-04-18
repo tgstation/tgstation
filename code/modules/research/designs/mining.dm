@@ -58,7 +58,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 	category = "Mining"
-	build_path = /obj/item/clothing/glasses/meson
+	build_path = /obj/item/clothing/glasses/scanner/meson
 
 /datum/design/excavationdrill
 	name = "Excavation Drill"

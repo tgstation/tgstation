@@ -97,6 +97,8 @@
 	var/make_alerts = TRUE // Should this APC make power alerts to the area?
 
 	machine_flags = WIREJACK
+	holomap = TRUE
+	auto_holomap = TRUE
 
 // Frame only.
 /obj/machinery/power/apc/frame
@@ -151,9 +153,12 @@
 /obj/machinery/power/apc/finalise_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(src.loc)
+	terminal = new/obj/machinery/power/terminal {auto_holomap = 0} (src.loc)
 	terminal.dir = tdir
 	terminal.master = src
+	var/turf/T = loc
+	if (istype(T))
+		T.soft_add_holomap(terminal)
 
 /obj/machinery/power/apc/initialize()
 	..()

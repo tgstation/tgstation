@@ -563,7 +563,7 @@
 "kQ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/space_heater,/turf/simulated/floor/plating,/area/hallway/primary/central)
 "kR" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 8},/turf/simulated/floor/plating,/area/hallway/primary/central)
 "kS" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/hallway/primary/central)
-"kT" = (/obj/structure/rack{dir = 1},/obj/item/clothing/mask/gas,/obj/item/clothing/glasses/meson,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/hallway/primary/central)
+"kT" = (/obj/structure/rack{dir = 1},/obj/item/clothing/mask/gas,/obj/item/clothing/glasses/scanner/meson,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/hallway/primary/central)
 "kU" = (/obj/structure/rack{dir = 1},/obj/item/weapon/extinguisher,/obj/item/clothing/head/hardhat/red,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/hallway/primary/central)
 "kV" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/turf/simulated/wall,/area/hallway/primary/central)
 "kW" = (/obj/machinery/door/airlock{id_tag = "Dorm2"; name = "Dorm 2"},/turf/simulated/floor,/area/hallway/primary/central)

@@ -24,4 +24,6 @@
 			if(admins_number == 0) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				send2adminirc("[key_name(src)] logged out - no more admins online.")
 
+	INVOKE_EVENT(on_logout, list())
+
 	..()

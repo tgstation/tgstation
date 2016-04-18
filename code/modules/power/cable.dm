@@ -39,6 +39,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	layer = 2.44							// just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/obj/item/device/powersink/attached	// holding this here for qdel
 	var/_color = "red"
+	color = "red"
 
 	//For rebuilding powernets from scratch
 	var/build_status = 0 //1 means it needs rebuilding during the next tick or on usage
@@ -46,26 +47,35 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/oldnewavail = 0
 	var/oldload = 0
 
+	holomap = TRUE
+
 /obj/structure/cable/yellow
 	_color = "yellow"
+	color = "yellow"
 
 /obj/structure/cable/green
 	_color = "green"
+	color = "green"
 
 /obj/structure/cable/blue
 	_color = "blue"
+	color = "blue"
 
 /obj/structure/cable/pink
 	_color = "pink"
+	color = CABLE_PINK
 
 /obj/structure/cable/orange
 	_color = "orange"
+	color = CABLE_ORANGE
 
 /obj/structure/cable/cyan
 	_color = "cyan"
+	color = "cyan"
 
 /obj/structure/cable/white
 	_color = "white"
+	color = "white"
 
 // the power cable object
 /obj/structure/cable/New(loc)

@@ -13,6 +13,9 @@
 	anchored = 1
 	layer = 2.6 // a bit above wires
 
+	holomap = TRUE
+	auto_holomap = TRUE
+
 
 /obj/machinery/power/terminal/New()
 	..()

@@ -366,7 +366,7 @@
 		/obj/item/clothing/shoes/laceup,
 		/obj/item/clothing/glasses/welding/superior,
 		/obj/item/clothing/glasses/sunglasses/sechud,
-		/obj/item/clothing/glasses/meson,
+		/obj/item/clothing/glasses/scanner/meson,
 		/obj/item/clothing/gloves/yellow,
 		/obj/item/clothing/gloves/knuckles,
 		/obj/item/clothing/gloves/knuckles/spiked,

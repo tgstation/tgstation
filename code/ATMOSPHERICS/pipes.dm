@@ -333,6 +333,7 @@
 	if(!suppress_icon_check)
 		update_icon()
 
+	T.soft_add_holomap(src)
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -577,6 +578,8 @@
 	if(!skip_icon_update)
 		update_icon()
 
+	T.soft_add_holomap(src)
+
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
 	name = "\improper Scrubbers pipe"
 	color = PIPE_COLOR_RED
@@ -799,6 +802,8 @@
 	hide(T.intact)
 	if(!skip_update_icon)
 		update_icon()
+
+	T.soft_add_holomap(src)
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
 	name = "\improper Scrubbers pipe"
@@ -1027,6 +1032,8 @@
 	if(!skip_update_icon)
 		update_icon()
 
+	T.soft_add_holomap(src)
+
 /obj/machinery/atmospherics/pipe/layer_manifold/findAllConnections(var/connect_dirs)
 	for(var/direction in cardinal)
 		if(connect_dirs & direction)
@@ -1207,6 +1214,8 @@
 	hide(T.intact)
 	if(!skip_update_icon)
 		update_icon()
+
+	T.soft_add_holomap(src)
 
 /obj/machinery/atmospherics/pipe/layer_adapter/findAllConnections(var/connect_dirs)
 	for(var/direction in cardinal)

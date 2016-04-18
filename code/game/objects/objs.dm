@@ -24,6 +24,15 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	// Shit for mechanics. (MECH_*)
 	var/mech_flags=0
 
+	var/holomap = FALSE // Whether we should be on the holomap.
+	var/auto_holomap = FALSE // Whether we automatically soft-add ourselves to the holomap in New(), make sure this is false is something does it manually.
+
+/obj/New()
+	..()
+	if (auto_holomap && isturf(loc))
+		var/turf/T = loc
+		T.soft_add_holomap(src)
+
 /obj/Destroy()
 	for(var/mob/user in _using)
 		user.unset_machine()

@@ -35,7 +35,7 @@
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/pickaxe/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
-	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/clothing/glasses/scanner/meson(src)
 	new /obj/item/device/gps/mining(src)
 	new /obj/item/weapon/storage/belt/mining(src)
 

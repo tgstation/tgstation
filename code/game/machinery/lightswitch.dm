@@ -10,6 +10,9 @@
 	var/on = 0
 	//	luminosity = 1
 
+	holomap = TRUE
+	auto_holomap = TRUE
+
 /obj/machinery/light_switch/New(var/loc, var/ndir, var/building = 2)
 	..()
 	name = "[areaMaster.name] light switch"

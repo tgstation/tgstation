@@ -134,6 +134,9 @@ var/global/list/obj/machinery/light/alllights = list()
 
 	var/idle = 0 // For process().
 
+	holomap = TRUE
+	auto_holomap = TRUE
+
 /obj/machinery/light/spook()
 	if(..())
 		flicker()

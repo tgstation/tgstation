@@ -32,6 +32,7 @@
 		new /obj/item/device/flash(src)
 		new /obj/item/device/gps/engineering(src)
 		new /obj/item/weapon/storage/belt/utility/chief(src)
+		new /obj/item/clothing/glasses/scanner/material(src)
 		return
 
 
@@ -115,10 +116,11 @@
 		new /obj/item/device/radio/headset/headset_eng(src)
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/clothing/mask/gas(src)
-		new /obj/item/clothing/glasses/meson(src)
+		new /obj/item/clothing/glasses/scanner/meson(src)
 		new /obj/item/taperoll/engineering(src)
 		new /obj/item/taperoll/engineering(src)
 		new /obj/item/device/gps/engineering(src)
+		new /obj/item/clothing/glasses/scanner/material(src)
 		return
 
 /obj/structure/closet/secure_closet/engineering_atmos
@@ -153,6 +155,7 @@
 		new /obj/item/ammo_storage/box/flare(src)
 		new /obj/item/device/rcd/rpd(src)
 		new /obj/item/device/analyzer(src)
+		new /obj/item/clothing/glasses/scanner/material(src)
 		return
 
 /obj/structure/closet/secure_closet/engineering_mechanic

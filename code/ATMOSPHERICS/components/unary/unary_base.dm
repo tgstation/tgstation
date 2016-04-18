@@ -60,6 +60,10 @@
 				break
 	update_icon()
 
+	var/turf/T = loc
+	if (istype(T))
+		T.soft_add_holomap(src)
+
 /obj/machinery/atmospherics/unary/build_network()
 	if(!network && node)
 		network = getFromPool(/datum/pipe_network)

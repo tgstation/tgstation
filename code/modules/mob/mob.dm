@@ -57,6 +57,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 	if(on_uattack)
 		on_uattack.holder = null
 		on_uattack = null
+	qdel(on_logout)
+	on_logout = null
 	..()
 
 /mob/projectile_check()
@@ -205,6 +207,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 	store_position()
 	on_uattack = new("owner"=src)
+	on_logout = new("owner"=src)
 
 	forceMove(loc) //Without this, area.Entered() isn't called when a mob is spawned inside area
 

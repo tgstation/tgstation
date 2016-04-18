@@ -12,6 +12,9 @@
 	var/last_tick //used to delay the powercheck
 	var/buildstage = 0
 
+	holomap = TRUE
+	auto_holomap = TRUE
+
 /obj/item/device/radio/intercom/universe/New()
 	tag = "UNIVERSE"
 	return ..()

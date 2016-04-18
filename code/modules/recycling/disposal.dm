@@ -23,6 +23,9 @@
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
 
+	holomap = TRUE
+	auto_holomap = TRUE
+
 // create a new disposal
 // find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/New()
@@ -655,6 +658,8 @@
 	anchored = 1
 	density = 0
 
+	holomap = TRUE
+	auto_holomap = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes
@@ -1448,6 +1453,9 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
 	var/obj/structure/disposalpipe/trunk/trunk
+
+	holomap = TRUE
+	auto_holomap = TRUE
 
 	New()
 		. = ..()

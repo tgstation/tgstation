@@ -78,6 +78,9 @@
 	var/list/TLV = list()
 
 	machine_flags = WIREJACK
+	holomap = TRUE
+	auto_holomap = TRUE
+
 
 /obj/machinery/alarm/xenobio
 	preset = AALARM_PRESET_HUMAN
@@ -900,6 +903,9 @@ FIRE ALARM
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+
+	holomap = TRUE
+	auto_holomap = TRUE
 
 /obj/machinery/firealarm/update_icon()
 	overlays.len = 0

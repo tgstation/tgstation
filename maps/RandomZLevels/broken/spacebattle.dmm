@@ -274,7 +274,7 @@
 "fn" = (/obj/machinery/computer/security/telescreen,/turf/simulated/shuttle/wall,/area/awaymission/spacebattle/cruiser)
 "fo" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/awaymission/spacebattle/cruiser)
 "fp" = (/obj/machinery/door/airlock/external,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/spacebattle/syndicate4)
-"fq" = (/obj/structure/closet/crate,/obj/item/clothing/glasses/material,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
+"fq" = (/obj/structure/closet/crate,/obj/item/clothing/glasses/scanner/material,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "fr" = (/obj/structure/closet/crate,/obj/item/weapon/light/tube,/obj/item/weapon/light/tube,/obj/item/weapon/light/tube,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "fs" = (/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/awaymission/spacebattle/cruiser)
 "ft" = (/obj/effect/landmark/corpse/syndicatesoldier,/obj/item/weapon/gun/projectile/automatic/c20r,/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/awaymission/spacebattle/cruiser)

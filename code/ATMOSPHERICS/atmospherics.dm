@@ -41,7 +41,7 @@ Pipelines + Other Objects -> Pipe network
 	var/piping_layer = PIPING_LAYER_DEFAULT //used in multi-pipe-on-tile - pipes only connect if they're on the same pipe layer
 
 	internal_gravity = 1 // Ventcrawlers can move in pipes without gravity since they have traction.
-
+	holomap = TRUE
 
 /obj/machinery/atmospherics/New()
 	..()
