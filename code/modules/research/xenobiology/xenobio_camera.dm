@@ -163,6 +163,6 @@
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
 				X.monkeypart += 1
 				qdel(M)
-				if(X.monkeypart = 5)
+				if(X.monkeypart >= 5)
 					X.monkeys += 1
 					X.monkeypart = 0
