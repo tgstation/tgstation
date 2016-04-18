@@ -404,3 +404,27 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+
+/obj/item/weapon/paper/paperplane
+	name = "\improper paper plane"
+	desc = "paper folded in the shape of a plane"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "paperplane"
+	throw_range = 7 //paper planes flies pretty far
+	throw_speed = 1 //but not very fast
+	throwforce = 0 // nor does it do any damage
+	gender = NEUTER
+	w_class = 1
+	layer = 3
+	pressure_resistance = 0
+	burn_state = FLAMMABLE
+	burntime = 5
+
+/obj/item/weapon/paper/paperplane/New()
+	..()
+	update_icon()
+
+/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
+	if(!..())
+		return
