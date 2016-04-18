@@ -184,15 +184,15 @@
 	if(..())
 		return
 	if(panel_open)
-		to_chat(M, "<span class='warning'>The shower's maintenance hatch needs to be closed first.</span>")
+		to_chat(M, "<span class='warning'>\The [src]'s maintenance hatch needs to be closed first.</span>")
 		return
 	if(!anchored)
-		to_chat(M, "<span class='warning'>The shower needs to be bolted to the floor to work.</span>")
+		to_chat(M, "<span class='warning'>\The [src] needs to be bolted to the floor to work.</span>")
 		return
 
 	on = !on
-	M.visible_message("<span class='notice'>[M] turns the shower [on ? "on":"off"]</span>", \
-					  "<span class='notice'>You turn the shower [on ? "on":"off"]</span>")
+	M.visible_message("<span class='notice'>[M] turns \the [src] [on ? "on":"off"]</span>", \
+					  "<span class='notice'>You turn \the [src] [on ? "on":"off"]</span>")
 	update_icon()
 	if(on)
 		for(var/atom/movable/G in get_turf(src))
@@ -220,8 +220,8 @@
 					anchored = 1
 	else
 		if(iswrench(I))
-			user.visible_message("<span class='warning'>[user] begins to adjust the [src]'s temperature valve with \a [I.name].</span>", \
-								 "<span class='notice'>You begin to adjust the [src]'s temperature valve with \a [I.name].</span>")
+			user.visible_message("<span class='warning'>[user] begins to adjust \the [src]'s temperature valve with \a [I.name].</span>", \
+								 "<span class='notice'>You begin to adjust \the [src]'s temperature valve with \a [I.name].</span>")
 			if(do_after(user, src, 50))
 				switch(watertemp)
 					if("cool")
@@ -230,8 +230,8 @@
 						watertemp = "searing hot"
 					if("searing hot")
 						watertemp = "cool"
-				user.visible_message("<span class='warning'>[user] adjusts the [src]'s temperature with \a [I.name].</span>",
-				"<span class='notice'>You adjust the [src]'s temperature with \a [I.name], the water is now [watertemp].</span>")
+				user.visible_message("<span class='warning'>[user] adjusts \the [src]'s temperature with \a [I.name].</span>",
+				"<span class='notice'>You adjust \the [src]'s temperature with \a [I.name], the water is now [watertemp].</span>")
 				add_fingerprint(user)
 
 /obj/machinery/shower/update_icon()	//This is terribly unreadable, but basically it makes the shower mist up
@@ -270,18 +270,23 @@
 		mobpresent--
 	..()
 
-//Yes, showers are super powerful as far as washing goes.
+//Yes, showers are super powerful as far as washing goes
+//Shower cleaning has been nerfed (no, really). 75 % chance to clean everything on each tick
+//You'll have to stay under it for a bit to clean every last noggin
+
+#define CLEAN_PROB 75 //Percentage
+
 /obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
 	if(!on)
 		return
 
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
-		if(M.r_hand)
+		if(M.r_hand && prob(CLEAN_PROB))
 			M.r_hand.clean_blood()
-		if(M.l_hand)
+		if(M.l_hand && prob(CLEAN_PROB))
 			M.l_hand.clean_blood()
-		if(M.back)
+		if(M.back && prob(CLEAN_PROB))
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
 		if(ishuman(M))
@@ -293,59 +298,61 @@
 			var/washglasses = 1
 
 			if(H.wear_suit)
-				washgloves = !(is_slot_hidden(H.wear_suit.body_parts_covered,HIDEGLOVES))
-				washshoes = !(is_slot_hidden(H.wear_suit.body_parts_covered,HIDESHOES))
+				washgloves = !(is_slot_hidden(H.wear_suit.body_parts_covered, HIDEGLOVES))
+				washshoes = !(is_slot_hidden(H.wear_suit.body_parts_covered, HIDESHOES))
 
 			if(H.head)
-				washmask = !(is_slot_hidden(H.head.body_parts_covered,HIDEMASK))
-				washglasses = !(is_slot_hidden(H.head.body_parts_covered,HIDEEYES))
-				washears = !(is_slot_hidden(H.head.body_parts_covered,HIDEEARS))
+				washmask = !(is_slot_hidden(H.head.body_parts_covered, HIDEMASK))
+				washglasses = !(is_slot_hidden(H.head.body_parts_covered, HIDEEYES))
+				washears = !(is_slot_hidden(H.head.body_parts_covered, HIDEEARS))
 
 			if(H.wear_mask)
-				if (washears)
-					washears = !(is_slot_hidden(H.wear_mask.body_parts_covered,HIDEEARS))
-				if (washglasses)
-					washglasses = !(is_slot_hidden(H.wear_mask.body_parts_covered,HIDEEYES))
+				if(washears)
+					washears = !(is_slot_hidden(H.wear_mask.body_parts_covered, HIDEEARS))
+				if(washglasses)
+					washglasses = !(is_slot_hidden(H.wear_mask.body_parts_covered, HIDEEYES))
 
 			if(H.head)
-				if(H.head.clean_blood())
+				if(prob(CLEAN_PROB) && H.head.clean_blood())
 					H.update_inv_head(0)
 			if(H.wear_suit)
-				if(H.wear_suit.clean_blood())
+				if(prob(CLEAN_PROB) && H.wear_suit.clean_blood())
 					H.update_inv_wear_suit(0)
 			else if(H.w_uniform)
-				if(H.w_uniform.clean_blood())
+				if(prob(CLEAN_PROB) && H.w_uniform.clean_blood())
 					H.update_inv_w_uniform(0)
 			if(H.gloves && washgloves)
-				if(H.gloves.clean_blood())
+				if(prob(CLEAN_PROB) && H.gloves.clean_blood())
 					H.update_inv_gloves(0)
 			if(H.shoes && washshoes)
-				if(H.shoes.clean_blood())
+				if(prob(CLEAN_PROB) && H.shoes.clean_blood())
 					H.update_inv_shoes(0)
 			if(H.wear_mask && washmask)
-				if(H.wear_mask.clean_blood())
+				if(prob(CLEAN_PROB) && H.wear_mask.clean_blood())
 					H.update_inv_wear_mask(0)
 			if(H.glasses && washglasses)
-				if(H.glasses.clean_blood())
+				if(prob(CLEAN_PROB) && H.glasses.clean_blood())
 					H.update_inv_glasses(0)
 			if(H.ears && washears)
-				if(H.ears.clean_blood())
+				if(prob(CLEAN_PROB) && H.ears.clean_blood())
 					H.update_inv_ears(0)
 			if(H.belt)
-				if(H.belt.clean_blood())
+				if(prob(CLEAN_PROB) && H.belt.clean_blood())
 					H.update_inv_belt(0)
 		else
 			if(M.wear_mask) //If the mob is not human, it cleans the mask without asking for bitflags
-				if(M.wear_mask.clean_blood())
+				if(prob(CLEAN_PROB) && M.wear_mask.clean_blood())
 					M.update_inv_wear_mask(0)
 	else
-		O.clean_blood()
+		if(prob(CLEAN_PROB))
+			O.clean_blood()
 
 	var/turf/turf = get_turf(src)
-	turf.clean_blood()
-	for(var/obj/effect/E in turf)
-		if(istype(E, /obj/effect/rune) || istype(E, /obj/effect/decal/cleanable) || istype(E, /obj/effect/overlay))
-			qdel(E)
+	if(prob(CLEAN_PROB))
+		turf.clean_blood()
+		for(var/obj/effect/E in turf)
+			if(istype(E, /obj/effect/rune) || istype(E, /obj/effect/decal/cleanable) || istype(E, /obj/effect/overlay))
+				qdel(E)
 
 /obj/machinery/shower/process()
 	if(!on)
@@ -355,7 +362,6 @@
 			var/mob/living/carbon/C = O
 			check_heat(C)
 		wash(O)
-		O.clean_blood()
 		watersource.reagents.reaction(O, TOUCH)
 		if(istype(O, /obj/item/weapon/reagent_containers/glass))
 			var/obj/item/weapon/reagent_containers/glass/G = O
@@ -363,16 +369,24 @@
 	watersource.reagents.reaction(get_turf(src), TOUCH)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C as mob)
-	if(!on || watertemp == "cool")
+	if(!on)
 		return
 
 	//Note : Remember process() rechecks this, so the mix/max procs slowly increase/decrease body temperature
-	if(watertemp == "freezing cold")
-		C.bodytemperature = max(T0C - 10, C.bodytemperature - 0.5) //Down to -10°C - sorry.
+	//Every second under the shower adjusts body temperature by 0.5°C. Water conducts heat pretty efficiently in real life too
+	if(watertemp == "freezing cold") //Down to 0°C, Nanotrasen waterworks are perfect and never fluctuate even slightly below that
+		C.bodytemperature = max(T0C, C.bodytemperature - 0.5)
 		return
-	if(watertemp == "searing hot")
-		C.bodytemperature = min(T0C + 300, C.bodytemperature + 50) //Up to 300°C
+	if(watertemp == "searing hot") //Up to 60°c, upper limit for common water boilers
+		C.bodytemperature = min(T0C + 60, C.bodytemperature + 0.5)
 		return
+	if(watertemp == "cool") //Adjusts towards "perfect" body temperature, 37.5°C. Actual showers tend to average at 40°C, but it's the future
+		if(C.bodytemperature > T0C + 37.5) //Cooling down
+			C.bodytemperature = min(T0C + 37.5, C.bodytemperature - 0.5)
+			return
+		if(C.bodytemperature < T0C + 37.5) //Heating up
+			C.bodytemperature = min(T0C + 37.5, C.bodytemperature + 0.5)
+			return
 
 /obj/structure/sink
 	name = "sink"
