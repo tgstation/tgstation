@@ -1168,7 +1168,7 @@
 		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("bustanut", 6)
 		reagents.add_reagent("sodiumchloride", 6)
-		
+
 /obj/item/weapon/reagent_containers/food/snacks/oldempirebar
 	name = "Old Empire Bar"
 	icon_state = "old_empire_bar"
@@ -3076,7 +3076,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("spiritbreaker", 10) // Screaming
+		reagents.add_reagent("mindbreaker", 10) // Screaming
 		reagents.add_reagent("mercury",       10) // Idiot
 		bitesize = 2
 
@@ -3975,7 +3975,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/eucharist/New()
 	..()
 	reagents.add_reagent("holywater", 5)
-	
+
 /obj/item/weapon/reagent_containers/food/snacks/eclair
 	name = "\improper eclair"
 	desc = "Plus doux que ses lèvres."
