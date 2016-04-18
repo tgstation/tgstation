@@ -1,0 +1,6 @@
+author: RandomMarine
+delete-after: True
+changes: 
+  - tweak: "Cloth items removed from biogenerator. Instead, it can create stacking cloth that crafts those items."
+  - rscadd: "In addition, cloth can be used to create grey jumpsuits, backpacks, dufflebags, bio bags, black shoes, bedsheets, and bandages."
+  - tweak: "Bedsheets now tear into cloth instead of directly into bandages."
