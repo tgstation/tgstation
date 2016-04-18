@@ -139,7 +139,7 @@
 	// them so much, it wants to hug everyone at once!
 	name = "laughter demon"
 	real_name = "laughter demon"
-	desc = "A large, adorable creature covered in armored pink scales."
+	desc = "A large, adorable creature covered in armor with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
 	emote_hear = list("gaffaws","laughs")
 	response_help  = "hugs"
@@ -182,5 +182,5 @@
 					if(M.real_name == ghost.real_name)
 						ghost.reenter_corpse()
 						break
-			M << "<span class='clown'>You leave the [src]'s warm embrace, and feel ready to take on the world.</span>"	
-					
+			M << "<span class='clown'>You leave the [src]'s warm embrace, and feel ready to take on the world.</span>"
+
