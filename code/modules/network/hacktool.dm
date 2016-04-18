@@ -1,4 +1,7 @@
-#define ishacktool(H) (istype(H, /obj/item/device/hacktool/upgraded))
+#define HACK_STEALTH 1	// Reduces network security measures, and prevents security from being triggered by standard commands.
+#define HACK_BRUTE 2	// Allows using -b in place of an encryption key to bruteforce and bypass it, though typically triggering security systems by doing so.
+#define HACK_PROBE 4	// Lets you see hidden networks and commands, at the cost of triggering security systems more loudly.
+#define HACK_BYPASS 8	// Allows you to connect to locked networks. This will trigger security systems quite loudly.
 
 /obj/item/device/hacktool
 	name = "net-tool"
@@ -13,11 +16,12 @@
 	var/datum/network/head	// The network this tool is connected to, if any.
 	var/lastfeed			// Only bother storing two 'lines' of feedback.
 	var/currfeed
+	var/software = 0
 
 /obj/item/device/hacktool/proc/disconnect()
 	head = null
 
-/obj/item/device/hacktool/proc/feed(var/F)
+/obj/item/device/hacktool/proc/get_feedback(var/F)
 	lastfeed = currfeed
 	currfeed = F
 
@@ -25,9 +29,16 @@
 	if(istype(N, /datum/network))
 		head = N
 
+/obj/item/device/hacktool/proc/bruteforce(var/datum/network/N) // Will attempt to connect to N after a timer.
+	if(!N)
+		return
+	get_feedback("Activating bruteforce software...")
+
+
+
 /obj/item/device/hacktool/upgraded
 	name = "hacktool"
-	desc = "an upgraded net-tool loaded with a few extra anti-security features."
+	desc = "an upgraded net-tool loaded with improved software and anti-security features."
 	icon_state = "hacktool-u"
 	origin_tech = "magnets=1;programming=4;bluespace=1;syndicate=1"
 
