@@ -519,6 +519,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 17
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/stealthy_weapons/kravmaga
+	name = "Stealth Krav Maga Gloves"
+	desc = "Gloves that appear in all aspects to be standard fireproof black gloves. The wearer is capable of using \
+			the arts of Krav Maga. An implant version of this item is also available in the implants section."
+	item = /obj/item/clothing/gloves/color/black/krav_maga
+	cost = 9
+
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
@@ -986,6 +993,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/implants/kravmaga
+	name = "Krav Maga Implant"
+	desc = "An implant that bestows the user with Krav Maga. It can be toggled on and off. Much harder to detect \
+			than the gloves variant."
+	item = /obj/item/weapon/implanter/krav_maga
+	cost = 10
 
 // Cybernetics
 /datum/uplink_item/cyber_implants
