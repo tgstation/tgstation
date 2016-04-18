@@ -25,7 +25,6 @@
 	var/list/stored_slimes = list()
 	var/max_slimes = 5
 	var/monkeys = 0
-	var/monkeypart = 0 //5 of these make a monkey
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
@@ -161,8 +160,5 @@
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
-				X.monkeypart += 1
+				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
-				if(X.monkeypart >= 5)
-					X.monkeys += 1
-					X.monkeypart = 0
