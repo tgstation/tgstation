@@ -40,10 +40,14 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(burn_state == ON_FIRE)
+		// if(!istype(src, /obj/item/weapon/paper/paperplane)) //placeholder for paperplane_fire code
 		icon_state = "paper_onfire"
 		return
 	if(info)
-		icon_state = "paper_words"
+		if(!istype(src, /obj/item/weapon/paper/paperplane))  //don't update paperplanes
+			icon_state = "paper_words"
+		return
+	if(istype(src, /obj/item/weapon/paper/paperplane))  //don't update paperplanes to paper
 		return
 	icon_state = "paper"
 
