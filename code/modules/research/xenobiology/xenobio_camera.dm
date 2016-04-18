@@ -25,6 +25,7 @@
 	var/list/stored_slimes = list()
 	var/max_slimes = 5
 	var/monkeys = 0
+	var/monkeypart = 0 //5 of these make a monkey
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
@@ -142,7 +143,7 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
-			owner << "[X] now has [X.monkeys] monkeys left."
+			owner << "[X] now has [X.monkeys + X.monkeypart/5] monkeys left."
 
 
 /datum/action/innate/monkey_recycle
@@ -160,5 +161,8 @@
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
-				X.monkeys += 0.2
+				X.monkeypart += 1
 				qdel(M)
+				if(X.monkeypart = 5)
+					X.monkeys += 1
+					X.monkeypart = 0
