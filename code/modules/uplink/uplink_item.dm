@@ -310,6 +310,17 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	player_minimum = 25
 
+/datum/uplink_item/dangerous/holocarp
+	name = "Holocarp"
+	desc = "Based on recovered artifacts from the cult of Carp'sie, a 'holocarp' functions similarly to a holoparasite, but with three major differences. \
+			First, it is not possible to select what type of spirit you will retrieve from Lake Carp, it seems to be impossible to predict. \
+			Second, it seems possible for a human to sustain more than one 'holocarp' in their body at once, due to their soothing fishlike nature. \
+			Third, it's a fish."
+	item = /obj/item/weapon/guardiancreator/carp
+	cost = 10
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 25
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
