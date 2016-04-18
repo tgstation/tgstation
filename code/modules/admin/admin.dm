@@ -695,13 +695,13 @@ var/global/BSACooldown = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/output_demon_info()
-	var/demon_number = 0
-	for(var/D in ticker.mode.demons)
-		demon_number++
-		usr << "Demon #[demon_number]:<br><br>" + ticker.mode.printdemoninfo(D)
-	if(!demon_number)
-		usr << "<b>No Demons located</b>" //Just so you know the thing is actually working and not just ignoring you.
+/datum/admins/proc/output_devil_info()
+	var/devil_number = 0
+	for(var/D in ticker.mode.devils)
+		devil_number++
+		usr << "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D)
+	if(!devil_number)
+		usr << "<b>No Devils located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())

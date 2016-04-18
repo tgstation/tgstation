@@ -1,2 +1,2 @@
-/mob/living/carbon/true_demon/handle_breathing()
-	// demons do not need to breathe
+/mob/living/carbon/true_devil/handle_breathing()
+	// devils do not need to breathe

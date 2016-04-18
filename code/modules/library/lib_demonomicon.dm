@@ -1,19 +1,19 @@
-/obj/item/weapon/book/demonomicon
-	name = "Demonomicon"
+/obj/item/weapon/book/codex_gigas
+	name = "Codex Gigas"
 	icon_state ="demonomicon"
 	throw_speed = 1
 	throw_range = 10
 	burn_state = LAVA_PROOF
 	author = "Forces beyond your comprehension"
 	unique = 1
-	title = "The Demonomicon"
+	title = "The codex gigas"
 	var/inUse = 0
 
 
 
 
 
-/obj/item/weapon/book/demonomicon/attack_self(mob/user)
+/obj/item/weapon/book/codex_gigas/attack_self(mob/user)
 	if(is_blind(user))
 		return
 	if(ismonkey(user))
@@ -24,10 +24,10 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.acedia)
-			user << "<span class='notice'>None of this matters, why are you reading this?  You put the book down.</span>"
+			user << "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>"
 			return
 		inUse = 1
-		var/demonName = copytext(sanitize(input(user, "What demonic being do you wish to research?", "Demonomicon", null)  as text),1,MAX_MESSAGE_LEN)
+		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
 		var/willpower = 80
@@ -43,11 +43,11 @@
 		speed += U.getBrainLoss() * 3
 		user.visible_message("[user] opens [title] and begins reading intently.")
 		if(do_after(U, speed, 0, U))
-			var/usedName = demonName
+			var/usedName = devilName
 			if(!prob(correctness))
 				usedName += "x"
-			var/datum/demoninfo/demon = demonInfo(usedName, 0)
-			user << browse("Information on [demonName]<br><br><br>[lawlorify[LORE][demon.ban]]<br>[lawlorify[LORE][demon.bane]]<br>[lawlorify[LORE][demon.obligation]]<br>[lawlorify[LORE][demon.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+			var/datum/devilinfo/devil = devilinfo(usedName, 0)
+			user << browse("Information on [demonName]<br><br><br>[lawlorify[LORE][devil.ban]]<br>[lawlorify[LORE][devil.bane]]<br>[lawlorify[LORE][devil.obligation]]<br>[lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		inUse = 0
 		sleep(10)
 		if(!prob(willpower))

@@ -1,45 +1,45 @@
 #define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
 
-#define BASIC_DEMON 0
+#define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
-#define TRUE_DEMON 2
-#define ARCH_DEMON 3
+#define TRUE_DEVIL 2
+#define ARCH_DEVIL 3
 
 #define SOULVALUE soulsOwned.len-reviveNumber
 
-#define DEMONRESURRECTTIME 600
+#define DEVILRESURRECTTIME 600
 
-var/global/list/allDemons = list()
+var/global/list/allDevils = list()
 var/static/list/lawlorify = list (
 		LORE = list(
-			OBLIGATION_FOOD = "This demon seems to always offer it's victims food before slaughtering them.",
-			OBLIGATION_DRINK = "This demon seems to always offer it's victims a drink before slaughtering them.",
-			OBLIGATION_GREET = "This demon seems to only be able to converse with people it knows the name of.",
-			OBLIGATION_PRESENCEKNOWN = "This demon seems to be unable to attack from stealth.",
+			OBLIGATION_FOOD = "This devil seems to always offer it's victims food before slaughtering them.",
+			OBLIGATION_DRINK = "This devil seems to always offer it's victims a drink before slaughtering them.",
+			OBLIGATION_GREET = "This devil seems to only be able to converse with people it knows the name of.",
+			OBLIGATION_PRESENCEKNOWN = "This devil seems to be unable to attack from stealth.",
 			OBLIGATION_SAYNAME = "He will always chant his name upon killing someone.",
-			OBLIGATION_ANNOUNCEKILL = "This demon always loudly announces his kills for the world to hear.",
-			OBLIGATION_ANSWERTONAME = "This demon always responds to his truename.",
-			BANE_SILVER = "Silver seems to gravely injure this demon.",
-			BANE_SALT = "Throwing salt at this demon will hinder his ability to use infernal powers temporarily.",
-			BANE_LIGHT = "Bright flashes will disorient the demon, likely causing him to flee.",
+			OBLIGATION_ANNOUNCEKILL = "This devil always loudly announces his kills for the world to hear.",
+			OBLIGATION_ANSWERTONAME = "This devil always responds to his truename.",
+			BANE_SILVER = "Silver seems to gravely injure this devil.",
+			BANE_SALT = "Throwing salt at this devil will hinder his ability to use infernal powers temporarily.",
+			BANE_LIGHT = "Bright flashes will disorient the devil, likely causing him to flee.",
 			BANE_IRON = "Cold iron will slowly injure him, until he can purge it from his system.",
-			BANE_WHITECLOTHES = "Wearing clean white clothing will help ward off this demon.",
-			BANE_HARVEST = "Presenting the labors of a harvest will disrupt the demon.",
-			BANE_TOOLBOX = "That which holds the means of creation also holds the means of the demon's undoing.",
-			BAN_HURTWOMAN = "This demon seems to prefer hunting men.",
-			BAN_CHAPEL = "This demon avoids holy ground.",
+			BANE_WHITECLOTHES = "Wearing clean white clothing will help ward off this devil.",
+			BANE_HARVEST = "Presenting the labors of a harvest will disrupt the devil.",
+			BANE_TOOLBOX = "That which holds the means of creation also holds the means of the devil's undoing.",
+			BAN_HURTWOMAN = "This devil seems to prefer hunting men.",
+			BAN_CHAPEL = "This devil avoids holy ground.",
 			BAN_HURTPRIEST = "The annointed clergy appear to be immune to his powers.",
-			BAN_AVOIDWATER = "The demon seems to have some sort of aversion to water, though it does not appear to harm him.",
-			BAN_STRIKEUNCONCIOUS = "This demon only shows interest in those who are awake.",
-			BAN_HURTLIZARD = "This demon will not strike a lizardman first.",
-			BAN_HURTANIMAL = "This demon avoids hurting animals.",
-			BANISH_WATER = "To banish the demon, you must sprinkle holy water upon it's body.",
-			BANISH_COFFIN = "This demon will return to life if it's remains are not placed within a coffin.",
-			BANISH_FORMALDYHIDE = "To banish the demon, you must inject it's lifeless body with embalming fluid.",
-			BANISH_RUNES = "This demon will resurrect after death, unless it's remains are within a rune.",
+			BAN_AVOIDWATER = "The devil seems to have some sort of aversion to water, though it does not appear to harm him.",
+			BAN_STRIKEUNCONCIOUS = "This devil only shows interest in those who are awake.",
+			BAN_HURTLIZARD = "This devil will not strike a lizardman first.",
+			BAN_HURTANIMAL = "This devil avoids hurting animals.",
+			BANISH_WATER = "To banish the devil, you must sprinkle holy water upon it's body.",
+			BANISH_COFFIN = "This devil will return to life if it's remains are not placed within a coffin.",
+			BANISH_FORMALDYHIDE = "To banish the devil, you must inject it's lifeless body with embalming fluid.",
+			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
 			BANISH_CANDLES = "A large number of candles will prevent it from resurrecting.",
 			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
-			BANISH_FUNERAL_GARB = "Funeral garments will prevent the demon from resurrecting."
+			BANISH_FUNERAL_GARB = "Funeral garments will prevent the devil from resurrecting."
 		),
 		LAW = list(
 			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
@@ -48,7 +48,7 @@ var/static/list/lawlorify = list (
 			OBLIGATION_PRESENCEKNOWN = "You must always make your presence known before attacking.",
 			OBLIGATION_SAYNAME = "You must always say your true name after you kill someone.",
 			OBLIGATION_ANNOUNCEKILL = "Upon killing someone, you must make your deed known to all within earshot, over comms if reasonably possible.",
-			OBLIGATION_ANSWERTONAME = "If you are not under attack, you must always respond to your demon name.",
+			OBLIGATION_ANSWERTONAME = "If you are not under attack, you must always respond to your true name.",
 			BAN_HURTWOMAN = "You must never harm a female outside of self defense.",
 			BAN_CHAPEL = "You must never attempt to enter the chapel.",
 			BAN_HURTPRIEST = "You must never attack a priest.",
@@ -73,7 +73,7 @@ var/static/list/lawlorify = list (
 		)
 	)
 
-/datum/demoninfo/
+/datum/devilinfo/
 	var/datum/mind/owner = null
 	var/obligation
 	var/ban
@@ -82,30 +82,30 @@ var/static/list/lawlorify = list (
 	var/truename
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
-	var/form = BASIC_DEMON
+	var/form = BASIC_DEVIL
 	var/exists = 0
 
-/proc/randomDemonInfo(name = randomDemonName())
-	var/datum/demoninfo/demon = new
-	demon.truename = name
-	demon.bane = randomdemonbane()
-	demon.obligation = randomdemonobligation()
-	demon.ban = randomdemonban()
-	demon.banish = randomdemonbanish()
-	return demon
+/proc/randomDevilInfo(name = randomDevilName())
+	var/datum/devilinfo/devil = new
+	devil.truename = name
+	devil.bane = randomdevilbane()
+	devil.obligation = randomdevilobligation()
+	devil.ban = randomdevilban()
+	devil.banish = randomdevilbanish()
+	return devil
 
-/proc/demonInfo(name, saveDetails = 0)
-	if(allDemons[lowertext(name)])
-		return allDemons[lowertext(name)]
+/proc/devilInfo(name, saveDetails = 0)
+	if(allDevils[lowertext(name)])
+		return allDevils[lowertext(name)]
 	else
-		var/datum/demoninfo/demon = randomDemonInfo(name)
-		allDemons[lowertext(name)] = demon
-		demon.exists = saveDetails
-		return demon
+		var/datum/devilinfo/devil = randomDevilInfo(name)
+		allDevils[lowertext(name)] = devil
+		devil.exists = saveDetails
+		return devil
 
 
 
-/proc/randomDemonName()
+/proc/randomDevilName()
 	var/preTitle = ""
 	var/title = ""
 	var/mainName = ""
@@ -123,40 +123,40 @@ var/static/list/lawlorify = list (
 		suffix = pick(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr.")
 	return preTitle + title + mainName + suffix
 
-/proc/randomdemonobligation()
+/proc/randomdevilobligation()
 	return pick(OBLIGATION_FOOD, OBLIGATION_DRINK, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
 
-/proc/randomdemonban()
+/proc/randomdevilban()
 	return pick(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
 
-/proc/randomdemonbane()
+/proc/randomdevilbane()
 	return pick(BANE_SALT, BANE_LIGHT, BANE_IRON, BANE_WHITECLOTHES, BANE_SILVER, BANE_HARVEST, BANE_TOOLBOX)
 
-/proc/randomdemonbanish()
+/proc/randomdevilbanish()
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
-/datum/demoninfo/proc/add_soul(datum/mind/soul)
+/datum/devilinfo/proc/add_soul(datum/mind/soul)
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
 	switch(SOULVALUE)
 		if(0)
-			owner.current << "<span class='warning'>Your demonic powers have been restored."
+			owner.current << "<span class='warning'>Your hellish powers have been restored."
 			give_base_spells()
 		if(POWERUPTHRESHOLD)
 			increase_blood_lizard()
 		if(POWERUPTHRESHOLD*2)
-			increase_true_demon()
+			increase_true_devil()
 		if(POWERUPTHRESHOLD*3)
-			increase_arch_demon()
+			increase_arch_devil()
 
-/datum/demoninfo/proc/remove_soul(datum/mind/soul)
+/datum/devilinfo/proc/remove_soul(datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
 
-/datum/demoninfo/proc/check_regression()
-	if (form == ARCH_DEMON)
-		return //arch demons can't regress
+/datum/devilinfo/proc/check_regression()
+	if (form == ARCH_DEVIL)
+		return //arch devil can't regress
 	switch(SOULVALUE)
 		if(-1)
 			remove_spells()
@@ -166,26 +166,26 @@ var/static/list/lawlorify = list (
 		if(POWERUPTHRESHOLD*2-1)
 			regress_blood_lizard()
 
-/datum/demoninfo/proc/increase_form()
+/datum/devilinfo/proc/increase_form()
 	switch(form)
-		if(BASIC_DEMON)
+		if(BASIC_DEVIL)
 			increase_blood_lizard()
 		if(BLOOD_LIZARD)
-			increase_true_demon()
-		if(TRUE_DEMON)
-			increase_arch_demon()
+			increase_true_devil()
+		if(TRUE_DEVIL)
+			increase_arch_devil()
 
-/datum/demoninfo/proc/regress_humanoid()
+/datum/devilinfo/proc/regress_humanoid()
 	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/human, 1)
 		H.regenerate_icons()
 	give_base_spells()
-	form = BASIC_DEMON
+	form = BASIC_DEVIL
 
-/datum/demoninfo/proc/regress_blood_lizard()
-	var/mob/living/carbon/true_demon/D = owner.current
+/datum/devilinfo/proc/regress_blood_lizard()
+	var/mob/living/carbon/true_devil/D = owner.current
 	D << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	D.oldform.loc = D.loc
 	owner.transfer_to(D.oldform)
@@ -194,7 +194,7 @@ var/static/list/lawlorify = list (
 	form = BLOOD_LIZARD
 
 
-/datum/demoninfo/proc/increase_blood_lizard()
+/datum/devilinfo/proc/increase_blood_lizard()
 	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
 	sleep(50)
 	if(istype(owner.current, /mob/living/carbon/human))
@@ -205,28 +205,28 @@ var/static/list/lawlorify = list (
 		H.socks = "Nude"
 		H.dna.features["mcolor"] = "511" //A deep red
 		H.regenerate_icons()
-	else //Did the demon get hit by a staff of transmutation?
+	else //Did the devil get hit by a staff of transmutation?
 		owner.current.color = "#501010"
 	give_lizard_spells()
 	form = BLOOD_LIZARD
 
 
 
-/datum/demoninfo/proc/increase_true_demon()
-	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true demon."
+/datum/devilinfo/proc/increase_true_devil()
+	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil."
 	sleep(50)
-	var/mob/living/carbon/true_demon/A = new /mob/living/carbon/true_demon(owner.current.loc)
+	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
 	owner.current.loc = A
 	A.oldform = owner.current
 	owner.transfer_to(A)
 	A.set_name()
 	give_true_spells()
-	form = TRUE_DEMON
+	form = TRUE_DEVIL
 
 
-/datum/demoninfo/proc/increase_arch_demon()
-	var/mob/living/carbon/true_demon/D = owner.current
+/datum/devilinfo/proc/increase_arch_devil()
+	var/mob/living/carbon/true_devil/D = owner.current
 	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
 	D.visible_message("<span class='warning'>[D]'s skin begins to erupt with spikes.</span>", \
@@ -247,54 +247,54 @@ var/static/list/lawlorify = list (
 	world << "<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>"
 	world << 'sound/hallucinations/veryfar_noise.ogg'
 	give_arch_spells()
-	D.convert_to_archdemon()
+	D.convert_to_archdevil()
 	var/area/A = get_area(owner.current)
 	if(A)
-		notify_ghosts("An arch demon has ascended in \the [A.name]. Reach out to the demon to be given a new shell for your soul.", source = owner.current, attack_not_jump = 1)
+		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, attack_not_jump = 1)
 	sleep(50)
-	if(!ticker.mode.demon_ascended)
+	if(!ticker.mode.devil_ascended)
 		SSshuttle.emergency.request(null, 0.3)
-	ticker.mode.demon_ascended++
-	form = ARCH_DEMON
+	ticker.mode.devil_ascended++
+	form = ARCH_DEVIL
 
-/datum/demoninfo/proc/remove_spells()
+/datum/devilinfo/proc/remove_spells()
 	for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
 		if(!istype(S, /obj/effect/proc_holder/spell/targeted/summon_contract))
 			owner.RemoveSpell(S)
 
-/datum/demoninfo/proc/give_summon_contract()
+/datum/devilinfo/proc/give_summon_contract()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
 
 
-/datum/demoninfo/proc/give_base_spells(give_summon_contract = 0)
+/datum/devilinfo/proc/give_base_spells(give_summon_contract = 0)
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
 	if(give_summon_contract)
 		give_summon_contract()
 
-/datum/demoninfo/proc/give_lizard_spells()
+/datum/devilinfo/proc/give_lizard_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 
-/datum/demoninfo/proc/give_true_spells()
+/datum/devilinfo/proc/give_true_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/demonic(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null)) TODO LORDPIDEY add this spell
 
-/datum/demoninfo/proc/give_arch_spells()
+/datum/devilinfo/proc/give_arch_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended(null))
 	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null)) TODO LORDPIDEY
 
-/datum/demoninfo/proc/beginResurrectionCheck(mob/living/body)
+/datum/devilinfo/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
 		owner.current<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
-		sleep(DEMONRESURRECTTIME)
+		sleep(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
 				if(check_banishment(body))
@@ -302,16 +302,16 @@ var/static/list/lawlorify = list (
 					return -1
 				else
 					owner.current<< "<span class='userdanger'>WE LIVE AGAIN!</span>"
-					return demonic_resurrection(body)
+					return hellish_resurrection(body)
 			else
 				owner.current<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
 				return -1
 		else
-			owner.current << "<span class='danger'> You seem to have resurrected without your infernal powers.</span>"
+			owner.current << "<span class='danger'> You seem to have resurrected without your hellish powers.</span>"
 	else
-		owner.current << "<span class='userdanger'>Your infernal powers are too weak to resurrect yourself.</span>"
+		owner.current << "<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>"
 
-/datum/demoninfo/proc/check_banishment(mob/living/body)
+/datum/devilinfo/proc/check_banishment(mob/living/body)
 	switch(banish)
 		if(BANISH_WATER)
 			if(istype(body, /mob/living/carbon))
@@ -350,16 +350,16 @@ var/static/list/lawlorify = list (
 					return 1
 			return 0
 
-/datum/demoninfo/proc/demonic_resurrection(mob/living/body)
-	message_admins("[owner.name] (demonic name is: [truename]) is resurrecting using demonic energy.</a>")
-	if(SOULVALUE < POWERUPTHRESHOLD * 3) // once ascended, arch demons do not go down in power by any means.
+/datum/devilinfo/proc/hellish_resurrection(mob/living/body)
+	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
+	if(SOULVALUE < POWERUPTHRESHOLD * 3) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber++
 	if(body)
 		body.revive(1,0)
-		if(istype(body, /mob/living/carbon/true_demon))
-			var/mob/living/carbon/true_demon/D = body
+		if(istype(body, /mob/living/carbon/true_devil))
+			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)
-				D.oldform.revive(1,0) // Heal the old body too, so the demon doesn't resurrect, then immediately regress into a dead body.
+				D.oldform.revive(1,0) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
 	else
 		if(blobstart.len > 0)
 			var/turf/targetturf = get_turf(pick(blobstart))
@@ -367,10 +367,10 @@ var/static/list/lawlorify = list (
 			if(!currentMob)
 				currentMob = owner.get_ghost()
 				if(!currentMob)
-					message_admins("[owner.name]'s demonic resurrection failed due to client logoff.  Aborting.")
+					message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
 					return -1 //
 			if(currentMob.mind != owner)
-				message_admins("[owner.name]'s demonic resurrection failed due to becoming a new mob.  Aborting.")
+				message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
 				return -1
 			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
@@ -383,15 +383,15 @@ var/static/list/lawlorify = list (
 				H.dna.features["mcolor"] = "511"
 				H.regenerate_icons()
 			if(SOULVALUE >= POWERUPTHRESHOLD * 2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
-				var/mob/living/carbon/true_demon/A = new /mob/living/carbon/true_demon(targetturf)
+				var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
 				A.faction |= "hell"
 				H.forceMove(A)
 				A.oldform = H
 				A.set_name()
 				owner.transfer_to(A)
 				if(SOULVALUE >= POWERUPTHRESHOLD * 3)
-					A.convert_to_archdemon()
+					A.convert_to_archdevil()
 
 		else
-			throw EXCEPTION("Unable to find a blobstart landmark for demonic resurrection")
+			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()

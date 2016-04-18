@@ -258,17 +258,17 @@
 
 /obj/item/organ/internal/tongue/proc/TongueSpeech(var/message)
 	spawn(0)
-		speakDemonName(message)
+		speakDevilName(message)
 	return message
 
-/obj/item/organ/internal/tongue/proc/speakDemonName(var/message)
-	for (var/D in ticker.mode.demons)
-		var/datum/mind/demon = D
-		var/datum/demoninfo/demoninfo = demon.demoninfo
-		if (findtext(message, demoninfo.truename) && demon.current)
-			var/response = tgalert(demon.current, "Your demonic truename was spoken.  Do you wish to teleport there?", "Demonic Summoning", "Yes", "No", null, 0, 200)
-			if(response == "Yes" && demon.current && src.owner)
-				demon.current.forceMove(get_turf(src.owner))
+/obj/item/organ/internal/tongue/proc/speakDevilName(var/message)
+	for (var/D in ticker.mode.devils)
+		var/datum/mind/devil = D
+		var/datum/devilinfo/devilinfo = devil.devilinfo
+		if (findtext(message, devilinfo.truename) && devil.current)
+			var/response = tgalert(devil.current, "Your truename was spoken.  Do you wish to teleport there?", "Infernal Summoning", "Yes", "No", null, 0, 200)
+			if(response == "Yes" && devil.current && src.owner)
+				devil.current.forceMove(get_turf(src.owner))
 
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/M, special = 0)

@@ -1609,8 +1609,8 @@
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
 	
-	else if(href_list["admincheckdemoninfo"])
-		output_demon_info()
+	else if(href_list["admincheckdevilinfo"])
+		output_devil_info()
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"])

@@ -1,5 +1,5 @@
-/mob/living/proc/check_demon_bane_multiplier(obj/item/weapon, mob/living/attacker)
-	switch(mind.demoninfo.bane)
+/mob/living/proc/check_devil_bane_multiplier(obj/item/weapon, mob/living/attacker)
+	switch(mind.devilinfo.bane)
 		if(BANE_WHITECLOTHES)
 			if(istype(attacker, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = attacker

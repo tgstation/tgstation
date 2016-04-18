@@ -32,4 +32,4 @@
 	explanation_text = "You are the BEST thing on the station.  Make sure everyone knows it."
 
 /datum/objective/sintouched/acedia
-	explanation_text = "Angels, demons, good, evil... who cares?  Just ignore any demonic threats and do your job."
+	explanation_text = "Angels, devils, good, evil... who cares?  Just ignore any hellish threats and do your job."

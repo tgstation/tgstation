@@ -1177,6 +1177,6 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/has_bane(var/banetype)
 	if(mind)
-		if(mind.demoninfo)
-			return mind.demoninfo.bane == banetype
+		if(mind.devilinfo)
+			return mind.devilinfo.bane == banetype
 	return 0

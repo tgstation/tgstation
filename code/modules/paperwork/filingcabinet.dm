@@ -206,7 +206,7 @@ var/list/employmentCabinets = list()
 			virgin = 0
 		cooldown = 1
 		..()
-		sleep(100) // prevents the demon from just instantly emptying the cabinet, ensuring an easy win.
+		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
 		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"

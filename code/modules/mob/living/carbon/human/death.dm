@@ -35,9 +35,9 @@
 		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	. = ..(gibbed)
-	if(mind && mind.demoninfo)
+	if(mind && mind.devilinfo)
 		spawn(0)
-			mind.demoninfo.beginResurrectionCheck(src)
+			mind.devilinfo.beginResurrectionCheck(src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

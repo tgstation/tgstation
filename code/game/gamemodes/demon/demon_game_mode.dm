@@ -1,7 +1,7 @@
 /datum/game_mode
 	var/list/datum/mind/sintouched = list()
-	var/list/datum/mind/demons = list()
-	var/demon_ascended = 0 // Number of arch demons on station
+	var/list/datum/mind/devils = list()
+	var/devil_ascended = 0 // Number of arch devils on station
 
 /datum/game_mode/proc/auto_declare_completion_sintouched()
 	var/text = ""
@@ -16,49 +16,49 @@
 	text += "<br>"
 	world << text
 
-/datum/game_mode/proc/auto_declare_completion_demons()
+/datum/game_mode/proc/auto_declare_completion_devils()
 	/var/text = ""
-	if(demons.len)
-		text += "<br><span class='big'><b>The demons were:</b></span>"
-		for(var/D in demons)
-			var/datum/mind/demon = D
-			text += printplayer(demon)
-			text += printdemoninfo(demon)
-			text += printobjectives(demon)
+	if(devils.len)
+		text += "<br><span class='big'><b>The devils were:</b></span>"
+		for(var/D in devils)
+			var/datum/mind/devil = D
+			text += printplayer(devil)
+			text += printdevilinfo(devil)
+			text += printobjectives(devil)
 		text += "<br>"
 	world << text
 
-/datum/game_mode/demon
+/datum/game_mode/devil
 
 
-/datum/game_mode/proc/finalize_demon(datum/mind/demon_mind)
-	var/mob/living/carbon/human/S = demon_mind.current
-	var/trueName= randomDemonName()
-	var/datum/objective/demon/soulquantity/soulquant = new
-	soulquant.owner = demon_mind
-	var/datum/objective/demon/soulquality/soulqual = new
-	soulqual.owner = demon_mind
-	demon_mind.objectives += soulqual
-	demon_mind.objectives += soulquant
-	demon_mind.demoninfo = demonInfo(trueName, 1)
-	demon_mind.store_memory("Your demonic true name is [demon_mind.demoninfo.truename]<br>[lawlorify[LAW][demon_mind.demoninfo.ban]]<br>[lawlorify[LAW][demon_mind.demoninfo.bane]]<br>[lawlorify[LAW][demon_mind.demoninfo.obligation]]<br>[lawlorify[LAW][demon_mind.demoninfo.banish]]<br>")
-	demon_mind.demoninfo.owner = demon_mind
-	demon_mind.demoninfo.give_base_spells(1)
+/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind)
+	var/mob/living/carbon/human/S = devil_mind.current
+	var/trueName= randomDevilName()
+	var/datum/objective/devil/soulquantity/soulquant = new
+	soulquant.owner = devil_mind
+	var/datum/objective/devil/soulquality/soulqual = new
+	soulqual.owner = devil_mind
+	devil_mind.objectives += soulqual
+	devil_mind.objectives += soulquant
+	devil_mind.devilinfo = devilinfo(trueName, 1)
+	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
+	devil_mind.devilinfo.owner = devil_mind
+	devil_mind.devilinfo.give_base_spells(1)
 	spawn(10)
-		if(demon_mind.assigned_role == "Clown")
+		if(devil_mind.assigned_role == "Clown")
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
 
-/datum/mind/proc/announceDemonLaws()
-	if(!demoninfo)
+/datum/mind/proc/announceDevilLaws()
+	if(!devilinfo)
 		return
-	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.demoninfo.truename], an agent of hell, a demon.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
 	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
-	current << lawlorify[LAW][src.demoninfo.bane]
-	current << lawlorify[LAW][src.demoninfo.ban]
-	current << lawlorify[LAW][src.demoninfo.obligation]
-	current << lawlorify[LAW][src.demoninfo.banish]
-	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your demon name.</span><br>"
+	current << lawlorify[LAW][src.devilinfo.bane]
+	current << lawlorify[LAW][src.devilinfo.ban]
+	current << lawlorify[LAW][src.devilinfo.obligation]
+	current << lawlorify[LAW][src.devilinfo.banish]
+	current << "<br/><br/> <span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>"
 	var/obj_count = 1
 	current << "<span class='notice'>Your current objectives:</span>"
 	for(var/O in objectives)
@@ -66,26 +66,26 @@
 		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
-/datum/game_mode/proc/printdemoninfo(datum/mind/ply)
-	if(!ply.demoninfo)
+/datum/game_mode/proc/printdevilinfo(datum/mind/ply)
+	if(!ply.devilinfo)
 		return ""
-	var/text = "</br>The demon's true name is: [ply.demoninfo.truename]</br>"
-	text += "The demon's bans were:</br>"
-	text += "	[lawlorify[LORE][ply.demoninfo.ban]]</br>"
-	text += "	[lawlorify[LORE][ply.demoninfo.bane]]</br>"
-	text += "	[lawlorify[LORE][ply.demoninfo.obligation]]</br>"
-	text += "	[lawlorify[LORE][ply.demoninfo.banish]]</br>"
+	var/text = "</br>The devil's true name is: [ply.devilinfo.truename]</br>"
+	text += "The devil's bans were:</br>"
+	text += "	[lawlorify[LORE][ply.devilinfo.ban]]</br>"
+	text += "	[lawlorify[LORE][ply.devilinfo.bane]]</br>"
+	text += "	[lawlorify[LORE][ply.devilinfo.obligation]]</br>"
+	text += "	[lawlorify[LORE][ply.devilinfo.banish]]</br>"
 	return text
 
-/datum/game_mode/proc/update_demon_icons_added(datum/mind/demon_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEMON]
-	hud.join_hud(demon_mind.current)
-	set_antag_hud(demon_mind.current, "demon")
+/datum/game_mode/proc/update_devil_icons_added(datum/mind/devil_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEVIL]
+	hud.join_hud(devil_mind.current)
+	set_antag_hud(devil_mind.current, "devil")
 
-/datum/game_mode/proc/update_demon_icons_removed(datum/mind/demon_mind)
-	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEMON]
-	hud.leave_hud(demon_mind.current)
-	set_antag_hud(demon_mind.current, null)
+/datum/game_mode/proc/update_devil_icons_removed(datum/mind/devil_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEVIL]
+	hud.leave_hud(devil_mind.current)
+	set_antag_hud(devil_mind.current, null)
 
 /datum/game_mode/proc/update_sintouch_icons_added(datum/mind/sin_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SINTOUCHED]

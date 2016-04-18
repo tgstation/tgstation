@@ -312,7 +312,7 @@ BLIND     // can't see anything
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
-	var/whiteness = 0 //Used to determine if clothing is "white" for purposes of a demonic weakness.
+	var/whiteness = 0 //Used to determine if clothing is "white" for purposes of a devil weakness.
 
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)

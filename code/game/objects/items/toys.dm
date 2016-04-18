@@ -9,7 +9,7 @@
  *		Snap pops
  *		Mech prizes
  *		AI core prizes
- *		Toy demonomicon
+ *		Toy codex gigas
  * 		Skeleton toys
  *		Cards
  *		Toy nuke
@@ -683,25 +683,25 @@
 		return
 	..()
 
-/obj/item/toy/demonomicon
-	name = "Toy demonomicon"
-	desc = "A tool to help you write fictional demons!"
+/obj/item/toy/codex_gigas
+	name = "Toy Codex Gigas"
+	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
 	w_class = 2
 	var/cooldown = 0
 
-/obj/item/toy/demonomicon/attack_self(mob/user)
+/obj/item/toy/codex_gigas/attack_self(mob/user)
 	if(!cooldown)
-		var/datum/demoninfo/demon = randomDemonInfo()
+		var/datum/devilinfo/devil = randomdevilinfo()
 		user << "<span class='notice'>You press the button on [src].</span>"
 		cooldown = 1
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [demon.truename]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.bane]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.obligation]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.ban]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][demon.banish]]</span>")
+		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [devil.truename]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.bane]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.obligation]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.ban]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.banish]]</span>")
 		spawn(60) cooldown = 0
 		return
 	..()

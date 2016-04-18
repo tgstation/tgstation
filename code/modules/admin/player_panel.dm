@@ -580,18 +580,18 @@
 						dat += "<td><A href='?priv_msg=[abductee.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(ticker.mode.demons.len)
-			dat += "<br><table cellspacing=5><tr><td><B>demons</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/demon in ticker.mode.demons)
-				var/mob/M = demon.current
+		if(ticker.mode.devils.len)
+			dat += "<br><table cellspacing=5><tr><td><B>devils</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/devil in ticker.mode.devils)
+				var/mob/M = devil.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [demon.demoninfo.truename]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [devil.devilinfo.truename]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-					dat += "<td><A HREF='?_src_=holder;admincheckdemoninfo=\ref[M]'>Show all demon info</A></td></tr>"
+					dat += "<td><A HREF='?_src_=holder;admincheckdevilinfo=\ref[M]'>Show all devil info</A></td></tr>"
 				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[demon]'>[demon.name] :  [demon.demoninfo.truename] ([demon.key])</a><i>demon body destroyed!</i></td></tr>"
-					dat += "<td><A href='?priv_msg=[demon.key]'>PM</A></td>"
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[devil]'>[devil.name] :  [devil.devilinfo.truename] ([devil.key])</a><i>devil body destroyed!</i></td></tr>"
+					dat += "<td><A href='?priv_msg=[devil.key]'>PM</A></td>"
 			dat += "</table>"
 
 		if(ticker.mode.sintouched.len)

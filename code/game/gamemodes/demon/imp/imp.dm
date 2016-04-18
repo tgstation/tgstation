@@ -33,9 +33,9 @@
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/list/consumed_mobs = list()
-	var/playstyle_string = "<B><font size=3 color='red'>You are an imp,</font> a mischevious creature from hell. You are the lowest rank on the demonic totem pole  \
-							Though you are not obligated to help, perhaps by aiding a higher ranking demon, you might just get a promotion.  However, you are incapable	\
-							of intentionally harming a fellow demon.</B>"
+	var/playstyle_string = "<B><font size=3 color='red'>You are an imp,</font> a mischevious creature from hell. You are the lowest rank on the hellish totem pole  \
+							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion.  However, you are incapable	\
+							of intentionally harming a fellow devil.</B>"
 
 /mob/living/simple_animal/imp/New()
 	..()

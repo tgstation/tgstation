@@ -1,4 +1,4 @@
-/datum/hud/demon/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/devil/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -52,7 +52,7 @@
 
 	lingchemdisplay = new /obj/screen/ling/chems()
 
-/datum/hud/demon/persistant_inventory_update()
+/datum/hud/devil/persistant_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/true_demon/D = mymob
@@ -70,6 +70,6 @@
 		if(D.l_hand)
 			D.l_hand.screen_loc = null
 
-/mob/living/carbon/true_demon/create_mob_hud()
+/mob/living/carbon/true_devil/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/demon(src, ui_style2icon(client.prefs.UI_style))
+		hud_used = new /datum/hud/devil(src, ui_style2icon(client.prefs.UI_style))

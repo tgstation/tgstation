@@ -37,7 +37,7 @@
 	icon_state = "arch_demon"
 
 /mob/living/carbon/true_demon/proc/set_name()
-	name = mind.demoninfo.truename
+	name = mind.devilinfo.truename
 	real_name = name
 
 /mob/living/carbon/true_demon/Login()
@@ -51,7 +51,7 @@
 	drop_l_hand()
 	drop_r_hand()
 	spawn (0)
-		mind.demoninfo.beginResurrectionCheck(src)
+		mind.devilinfo.beginResurrectionCheck(src)
 
 
 /mob/living/carbon/true_demon/examine(mob/user)
@@ -100,7 +100,7 @@
 	return 666
 
 /mob/living/carbon/true_demon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
-	if(mind && mind.demoninfo.bane == BANE_LIGHT)
+	if(mind && mind.devilinfo.bane == BANE_LIGHT)
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
 			return ..() //flashes don't stop demons UNLESS it's their bane.

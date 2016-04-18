@@ -1001,6 +1001,6 @@
 		obj_count++
 
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(mind && mind.demoninfo)
+	if(mind && mind.devilinfo)
 		return check_demon_bane_multiplier(weapon, attacker)
 	return 1
