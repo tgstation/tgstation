@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - imageadd: "Crowbars and wirecutters have new inhand sprites. Crowbars can now be distinguished from wrenches in-hand."
