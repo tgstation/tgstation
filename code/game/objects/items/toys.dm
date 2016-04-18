@@ -693,7 +693,7 @@
 
 /obj/item/toy/codex_gigas/attack_self(mob/user)
 	if(!cooldown)
-		var/datum/devilinfo/devil = randomdevilinfo()
+		var/datum/devilinfo/devil = randomDevilInfo()
 		user << "<span class='notice'>You press the button on [src].</span>"
 		cooldown = 1
 		playsound(user, 'sound/machines/click.ogg', 20, 1)

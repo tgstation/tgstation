@@ -39741,7 +39741,7 @@
 /area/storage/art)
 "buT" = (
 /obj/structure/cult/tome,
-/obj/item/weapon/book/demonomicon,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel{
 	icon_state = "cult"
 	},

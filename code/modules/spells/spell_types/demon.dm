@@ -77,7 +77,7 @@
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
 
 
-/obj/effect/proc_holder/spell/dumbfire/fireball/infernal
+/obj/effect/proc_holder/spell/dumbfire/fireball/hellish
 	name = "Hellfire"
 	desc = "This spell launches hellfire at the target."
 

@@ -3510,7 +3510,7 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/hand_labeler,
 /obj/item/clothing/glasses/sunglasses,
-/obj/item/weapon/book/demonomicon,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/carpet,
 /area/security/brig)
 "hn" = (

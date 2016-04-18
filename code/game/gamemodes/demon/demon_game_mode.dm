@@ -40,7 +40,7 @@
 	soulqual.owner = devil_mind
 	devil_mind.objectives += soulqual
 	devil_mind.objectives += soulquant
-	devil_mind.devilinfo = devilinfo(trueName, 1)
+	devil_mind.devilinfo = devilInfo(trueName, 1)
 	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
 	devil_mind.devilinfo.owner = devil_mind
 	devil_mind.devilinfo.give_base_spells(1)

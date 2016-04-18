@@ -1276,7 +1276,7 @@
 "ayB" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel/black,/area/engine/gravity_generator)
 "ayC" = (/obj/structure/cable/cyan{icon_state = "1-2"},/turf/open/floor/plasteel/black,/area/engine/gravity_generator)
 "ayD" = (/obj/effect/landmark{name = "lightsout"},/turf/open/floor/wood,/area/library)
-"ayE" = (/obj/structure/table/wood,/obj/item/weapon/book/demonomicon,/obj/item/weapon/storage/pill_bottle/dice,/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/open/floor/wood,/area/library)
+"ayE" = (/obj/structure/table/wood,/obj/item/weapon/book/codex_gigas,/obj/item/weapon/storage/pill_bottle/dice,/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/open/floor/wood,/area/library)
 "ayF" = (/obj/effect/landmark/start{name = "Clown"},/turf/open/floor/wood,/area/crew_quarters/theatre)
 "ayG" = (/turf/open/floor/wood,/area/crew_quarters/theatre)
 "ayH" = (/obj/machinery/camera/autoname{dir = 8},/turf/open/floor/wood,/area/crew_quarters/theatre)
