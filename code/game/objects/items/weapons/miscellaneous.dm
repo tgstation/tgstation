@@ -25,3 +25,17 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbag"
 	w_class = 1
+
+/obj/item/weapon/fuseorb
+	name = "fusion orb"
+	desc = "A device which teleports multiple objects into each other, creating a new final product. "
+	icon = 'icons/obj/items.dmi'
+	icon_state = "fuseorb"
+	w_class = 1
+
+/obj/item/weapon/sewingkit/advanced
+	name = "adanced sewing kit"
+	desc = "A kit equpped with everything you need for field tailoring."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "advsewkit"
+	w_class = 1
