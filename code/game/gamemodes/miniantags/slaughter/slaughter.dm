@@ -32,7 +32,9 @@
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
-	var/list/consumed_mobs = list()
+	// Set consumed_mobs to a list() to keep the corpses in the demon
+	// for later retrieval on demon death
+	var/list/consumed_mobs = null
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
 							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and dissaapearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
@@ -63,8 +65,9 @@
 	new /obj/item/organ/internal/heart/demon (src.loc)
 	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
 	visible_message("<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera, its most recent meals spilling out of it.</span>")
-	for(var/mob/living/M in consumed_mobs)
-		M.loc = get_turf(src)
+	if(consumed_mobs)
+		for(var/mob/living/M in consumed_mobs)
+			M.loc = get_turf(src)
 	ghostize()
 	qdel(src)
 	return

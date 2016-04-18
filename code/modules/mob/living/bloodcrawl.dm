@@ -118,11 +118,18 @@
 	victim.adjustBruteLoss(1000)
 	victim.death()
 
-	// Keep their corpse so rescue is possible
+	var/del_corpse = TRUE
 	var/mob/living/simple_animal/slaughter/SD
 	if(istype(src, /mob/living/simple_animal/slaughter))
 		SD = src
-		SD.consumed_mobs += victim
+		// `consumed_mobs` can be set to null to gib the corpse
+		if(SD.consumed_mobs)
+			// Keep their corpse so rescue is possible
+			SD.consumed_mobs += victim
+			del_corpse = FALSE
+
+	if(del_corpse)
+		qdel(victim)
 
 	return TRUE
 
