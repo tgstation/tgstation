@@ -77,7 +77,7 @@
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
 
 
-/obj/effect/proc_holder/spell/dumbfire/fireball/demonic
+/obj/effect/proc_holder/spell/dumbfire/fireball/infernal
 	name = "Hellfire"
 	desc = "This spell launches hellfire at the target."
 
@@ -90,14 +90,14 @@
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
-	proj_type = /obj/effect/proc_holder/spell/turf/fireball/demon
+	proj_type = /obj/effect/proc_holder/spell/turf/fireball/infernal
 
 	proj_lifespan = 200
 	proj_step_delay = 1
 
 	action_background_icon_state = "bg_demon"
 
-/obj/effect/proc_holder/spell/turf/fireball/demon/cast(turf/T,mob/user = usr)
+/obj/effect/proc_holder/spell/turf/fireball/infernal/cast(turf/T,mob/user = usr)
 	explosion(T, -1, -1, 1, 4, 0, flame_range = 5)
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt

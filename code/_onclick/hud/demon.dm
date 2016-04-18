@@ -55,7 +55,7 @@
 /datum/hud/devil/persistant_inventory_update()
 	if(!mymob)
 		return
-	var/mob/living/carbon/true_demon/D = mymob
+	var/mob/living/carbon/true_devil/D = mymob
 
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(D.r_hand)

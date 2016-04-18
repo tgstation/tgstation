@@ -1,13 +1,13 @@
-#define DEMON_HANDS_LAYER 1
-#define DEMON_HEAD_LAYER 2
-#define DEMON_TOTAL_LAYERS 2
+#define DEVIL_HANDS_LAYER 1
+#define DEVIL_HEAD_LAYER 2
+#define DEVIL_TOTAL_LAYERS 2
 
 
-/mob/living/carbon/true_demon
-	name = "True Demon"
+/mob/living/carbon/true_devil
+	name = "True Devil"
 	desc = "A pile of infernal energy, taking a vaguely humanoid form."
 	icon = 'icons/mob/32x64.dmi'
-	icon_state = "true_demon"
+	icon_state = "true_devil"
 	gender = NEUTER
 	health = 350
 	maxHealth = 350
@@ -20,9 +20,9 @@
 	languages = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
-	var/list/demon_overlays[DEMON_TOTAL_LAYERS]
+	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
 
-/mob/living/carbon/true_demon/New()
+/mob/living/carbon/true_devil/New()
 	internal_organs += new /obj/item/organ/internal/brain/
 	internal_organs += new /obj/item/organ/internal/tongue
 	for(var/obj/item/organ/internal/I in internal_organs)
@@ -30,22 +30,22 @@
 	..()
 	
 
-/mob/living/carbon/true_demon/proc/convert_to_archdemon()
+/mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
 	ascended = 1
 	health = maxHealth
-	icon_state = "arch_demon"
+	icon_state = "arch_devil"
 
-/mob/living/carbon/true_demon/proc/set_name()
+/mob/living/carbon/true_devil/proc/set_name()
 	name = mind.devilinfo.truename
 	real_name = name
 
-/mob/living/carbon/true_demon/Login()
+/mob/living/carbon/true_devil/Login()
 	..()
-	mind.announceDemonLaws()
+	mind.announceDevilLaws()
 
 
-/mob/living/carbon/true_demon/death(gibbed)
+/mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
 	..(gibbed)
 	drop_l_hand()
@@ -54,7 +54,7 @@
 		mind.devilinfo.beginResurrectionCheck(src)
 
 
-/mob/living/carbon/true_demon/examine(mob/user)
+/mob/living/carbon/true_devil/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
 
 	//Left hand items
@@ -73,7 +73,7 @@
 
 	//Braindead
 	if(!client && stat != DEAD)
-		msg += "The demon seems to be in deep contemplation.\n"
+		msg += "The devil seems to be in deep contemplation.\n"
 
 	//Damaged
 	if(stat == DEAD)
@@ -86,27 +86,27 @@
 	user << msg
 
 
-/mob/living/carbon/true_demon/IsAdvancedToolUser()
+/mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
 
 
-/mob/living/carbon/true_demon/canUseTopic()
+/mob/living/carbon/true_devil/canUseTopic()
 	if(stat)
 		return
 	return 1
 
 
-/mob/living/carbon/true_demon/assess_threat()
+/mob/living/carbon/true_devil/assess_threat()
 	return 666
 
-/mob/living/carbon/true_demon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/true_devil/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(mind && mind.devilinfo.bane == BANE_LIGHT)
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
-			return ..() //flashes don't stop demons UNLESS it's their bane.
+			return ..() //flashes don't stop devils UNLESS it's their bane.
 
 
-/mob/living/carbon/true_demon/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
 	var/weakness = check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone)
 	var/message_verb = ""
@@ -124,23 +124,23 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 
-/mob/living/carbon/true_demon/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
 	A.attack_hand(src)
 
-/mob/living/carbon/true_demon/Process_Spacemove(movement_dir = 0)
+/mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/carbon/true_demon/ex_act(severity)
+/mob/living/carbon/true_devil/ex_act(severity)
 	if(ascended)
 		return 0
 	return ..()
 
-/mob/living/carbon/true_demon/singularity_act()
+/mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
 		return 0
 	return ..()
 
-/mob/living/carbon/true_demon/attack_ghost(mob/dead/observer/user as mob)
+/mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
 		S.key = user.key
@@ -148,7 +148,7 @@
 		S.mind.special_role = "Imp"
 		ticker.mode.traitors += S.mind
 		var/datum/objective/newobjective = new
-		newobjective.explanation_text = "Try to get a promotion to a higher demonic rank."
+		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
 		S << S.playstyle_string
 		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
@@ -156,13 +156,13 @@
 	else
 		return ..()
 
-/mob/living/carbon/true_demon/can_be_revived()
+/mob/living/carbon/true_devil/can_be_revived()
 	return 1
 
-/mob/living/carbon/true_demon/resist_fire()
+/mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
 
-/mob/living/carbon/true_demon/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
@@ -174,7 +174,7 @@
 				add_logs(M, src, "attacked")
 				updatehealth()
 			if ("disarm")
-				if (!lying && !ascended) //No stealing the arch demon's pitchfork.
+				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
