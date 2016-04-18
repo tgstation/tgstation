@@ -36,6 +36,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
+	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/black/hos
 	item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
@@ -45,6 +46,9 @@
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
+		if(!can_be_cut)
+			..()
+			return
 		if(icon_state == initial(icon_state)) //only if not dyed
 			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
 			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
