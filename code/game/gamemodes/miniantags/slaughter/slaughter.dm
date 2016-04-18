@@ -68,8 +68,6 @@
 	ghostize()
 	qdel(src)
 
-	return
-
 /mob/living/simple_animal/slaughter/proc/death_gibs()
 	
 	new /obj/effect/decal/cleanable/blood(get_turf(src))
@@ -79,18 +77,13 @@
 /mob/living/simple_animal/slaughter/proc/death_mealspill()
 	if(consumed_mobs)
 		for(var/mob/living/M in consumed_mobs)
-			M.loc = get_turf(src)
+			M.forceMove(get_turf(src))
 
 /obj/effect/decal/cleanable/blood/innards
 	icon = 'icons/obj/surgery.dmi'
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
-
-// This function is required because cleanable decals start with a random
-// icon_state, and it'll be overriden if just defined above.
-/obj/effect/decal/cleanable/blood/innards/New()
-	..()
-	icon_state = "innards"
+	random_icon_states = list("innards")
 
 /mob/living/simple_animal/slaughter/proc/death_message()
 	visible_message("<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>")
@@ -170,7 +163,6 @@
 	// of kittens
 	var/mob/living/simple_animal/pet/cat/kitten/K = new(get_turf(src))
 	K.name = "Laughter"
-	return
 
 /mob/living/simple_animal/slaughter/laughter/death_message()
 	visible_message("<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>", null, "You hear a sigh and a giggle.")

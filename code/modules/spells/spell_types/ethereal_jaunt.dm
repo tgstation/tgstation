@@ -43,9 +43,6 @@
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
 
-			// Used to mute the wizard here, but adding the phased_allowed
-			// check in spell.dm means muting is no longer needed.
-
 			sleep(jaunt_duration)
 
 			if(target.loc != holder) //mob warped out of the warp
