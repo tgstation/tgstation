@@ -477,21 +477,7 @@ var/global/mulebot_count = 0
 				if(istype( next, /turf))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
 
-					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.blood_DNA |= blood_DNA.Copy()
-						var/newdir = get_dir(next, loc)
-						if(newdir == dir)
-							B.dir = newdir
-						else
-							newdir = newdir | dir
-							if(newdir == 3)
-								newdir = 1
-							else if(newdir == 12)
-								newdir = 4
-							B.dir = newdir
-						bloodiness--
-
+					blood_trail(next)
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
@@ -739,6 +725,22 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
+
+/mob/living/simple_animal/bot/mulebot/proc/blood_trail(turf/next)
+	if(bloodiness)
+		var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
+		B.blood_DNA |= blood_DNA.Copy()
+		var/newdir = get_dir(next, loc)
+		if(newdir == dir)
+			B.dir = newdir
+		else
+			newdir = newdir | dir
+			if(newdir == 3)
+				newdir = 1
+			else if(newdir == 12)
+				newdir = 4
+			B.dir = newdir
+		bloodiness--
 
 #undef SIGH
 #undef ANNOYED
