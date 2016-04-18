@@ -43,9 +43,10 @@
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
 
-			mute(target)
+			// Used to mute the wizard here, but adding the phased_allowed
+			// check in spell.dm means muting is no longer needed.
+
 			sleep(jaunt_duration)
-			unmute(target)
 
 			if(target.loc != holder) //mob warped out of the warp
 				qdel(holder)
@@ -72,27 +73,7 @@
 				target.canmove = 1
 
 //Silence wizard during jaunt so they cannot spell cast while invisible
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/mute(target)
-	if(!istype(target, /mob/living/carbon))
-		return FALSE
-
-	var/mob/living/carbon/mob_to_mute = target
-	if(!mob_to_mute.dna)
-		return FALSE
-	
-	mob_to_mute.dna.add_mutation(MUT_MUTE)
-	return TRUE
-
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/unmute(target)
-	if(!istype(target, /mob/living/carbon))
-		return FALSE
-
-	var/mob/living/carbon/mob_to_mute = target
-	if(!mob_to_mute.dna)
-		return FALSE
-	
-	mob_to_mute.dna.remove_mutation(MUT_MUTE)
-	return TRUE
+//
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "liquify"
