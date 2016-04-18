@@ -30,18 +30,6 @@
 			return 1
 	return 0
 
-/datum/action/suplex
-	name = "Suplex - Suplex your foes."
-	button_icon_state = "wrassle_suplex"
-
-/datum/action/suplex/Trigger()
-	if(owner.incapacitated())
-		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
-		return
-	owner.visible_message("<span class='danger'>[owner] prepares to SUPLEX!</span>", "<b><i>Your next attack will be a SUPLEX.</i></b>")
-	var/mob/living/carbon/human/H = owner
-	H.martial_art.streak = "suplex"
-
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
 	button_icon_state = "wrassle_slam"
@@ -98,7 +86,7 @@
 	if(owner.incapacitated())
 		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
 		return
-	owner.visible_message("<spuplan class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
+	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "drop"
 
@@ -188,7 +176,7 @@
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
 		A.visible_message("<span class = 'danger'><B>[A] throws [D]!</B></span>")
-
+		playsound(A.loc, "swing_hit", 50, 1)
 		var/turf/T = get_edge_target_turf(A, A.dir)
 		if (T && isturf(T))
 			if (!D.stat)
@@ -284,7 +272,7 @@
 				fluff = "atomic [fluff]"
 
 		A.visible_message("<span class = 'danger'><B>[A] [fluff] [D]!</B></span>")
-
+		playsound(A.loc, "swing_hit", 50, 1)
 		if (!D.stat)
 			D.emote("scream")
 			D.weakened += 2
@@ -311,21 +299,6 @@
 
 	return 0
 
-/datum/martial_art/wrestling/proc/suplex(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
-								"<span class='userdanger'>[A] suplexes [D]!</span>")
-	D.forceMove(A.loc)
-	D.adjustBruteLoss(rand(20,30))
-	D.Weaken(3)
-	add_logs(A, D, "suplexed")
-
-	A.SpinAnimation(10,1)
-
-	D.SpinAnimation(10,1)
-	spawn(3)
-		A.Weaken(2)
-	return
-
 /datum/martial_art/wrestling/proc/strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
@@ -341,7 +314,7 @@
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
 		D.adjustBruteLoss(rand(10,20))
-
+		playsound(A.loc, "swing_hit", 50, 1)
 		D.Paralyse(1)
 
 /datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -352,6 +325,7 @@
 	A.dir = turn(A.dir, 90)
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
+	playsound(A.loc, "swing_hit", 50, 1)
 	D.adjustBruteLoss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
