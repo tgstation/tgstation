@@ -442,66 +442,62 @@
 	else
 		return ..(mover, target, height, air_group)
 
-/obj/machinery/disposal/MouseDrop_T(atom/dropping, mob/user)
-	if(istype(user, /mob/living/silicon/ai))
+/obj/machinery/disposal/MouseDrop_T(atom/movable/dropping, mob/user)
+
+	if(isAI(user))
 		return
 
-	if(!ismob(dropping))
-		if(istype(dropping, /obj/item))
-			if(!user.restrained() && user.canmove)
-				attackby(dropping, user)
+	//We are restrained or can't move, this will compromise taking out the trash
+	if(user.restrained() || !user.canmove)
+		return
 
+	if(istype(dropping, /obj/item))
+
+		if(dropping.locked_to) //Items can very specifically be locked to something, check that here
+			return
+
+		attackby(dropping, user)
 		return
 
 	var/locHolder = dropping.loc
 	var/mob/target = dropping
 
+	//Our target, now confirmed to be a mob, is locked to something, same thing
+	if(target.locked_to)
+		return
+
 	if(target == user)
-		if(!user.restrained() && user.canmove && !user.locked_to)
-			target.visible_message("[target] starts climbing into the [src].", "You start climbing into the [src].")
-		else
-			return
+		target.visible_message("[target] starts climbing into \the [src].", "You start climbing into \the [src].")
+
 	else
+
 		if(isanimal(user))
-			return // animals cannot put mobs other than themselves into disposal
+			return //Animals cannot put mobs other than themselves into disposal
 
-		if(!user.restrained() && user.canmove)
-			if(target.locked_to)
-				return
-
-			user.visible_message("[user] starts stuffing [target] into the [src].", "You start stuffing [target] into the [src].")
-		else
-			return
+		user.visible_message("[user] starts stuffing \the [target] into \the [src].", "You start stuffing \the [target] into \the [src].")
 
 	if(!do_after(user, src, 20))
+		return
+
+	if(user.restrained() || !user.canmove)
+		return
+
+	if(target.locked_to)
 		return
 
 	if(locHolder != target.loc)
 		return
 
 	if(target == user)
-		if(!user.restrained() && user.canmove)
-			target.visible_message("[target] climbed into the [src].", "You climbed into the [src].")
-		else
-			return
-	else
-		if(!user.restrained() && user.canmove)
-			if(target.locked_to)
-				return
+		target.visible_message("[target] climbs into \the [src].", "You climb into \the [src].")
 
-			user.visible_message("[user] stuffed [target] into the [src]!", "You stuffed [target] into the [src]!")
-			log_attack("<SPAN CLASS='warning'>[key_name(user)] placed [key_name(target)] in a disposals unit/([src]).</SPAN>")
-		else
-			return
+	else
+
+		user.visible_message("[user] stuffed \the [target] into \the [src]!", "You stuffed \the [target] into \the [src]!")
+		log_attack("<span class='warning'>[key_name(user)] stuffed [key_name(target)] into a disposal unit/([src]).</span>")
 
 	add_fingerprint(user)
-
-	if(target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
-
-	target.loc = src
-
+	target.forceMove(src)
 	update_icon()
 
 // virtual disposal object
