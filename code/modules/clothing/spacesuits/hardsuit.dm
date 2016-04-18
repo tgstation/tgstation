@@ -600,5 +600,5 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	item_color = "syndi"
-	armor = list(melee = 20, bullet = 40, laser = 20, energy = 15, bomb = 25, bio = 100, rad = 50)
+	armor = list(melee = 30, bullet = 40, laser = 20, energy = 15, bomb = 25, bio = 100, rad = 50)
 	recharge_delay = 600
