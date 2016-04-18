@@ -158,13 +158,8 @@
 			dat += "</div>"
 			dat += "<h3>Leather and Cloth:</h3>"
 			dat += "<div class='statusDisplay'>"
+			dat += "Roll of cloth: <A href='?src=\ref[src];create=cloth;amount=1'>Make</A><A href='?src=\ref[src];create=tencloth;amount=1'>x10</A> ([50/efficiency])<BR>"
 			dat += "Wallet: <A href='?src=\ref[src];create=wallet;amount=1'>Make</A> ([100/efficiency])<BR>"
-			dat += "Book bag: <A href='?src=\ref[src];create=bkbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Empty sandbag: <A href='?src=\ref[src];create=sdbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Plant bag: <A href='?src=\ref[src];create=ptbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Rag: <A href='?src=\ref[src];create=rag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Mining satchel: <A href='?src=\ref[src];create=mnbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Chemistry bag: <A href='?src=\ref[src];create=chbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];create=gloves;amount=1'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];create=tbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Security belt: <A href='?src=\ref[src];create=sbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
@@ -292,33 +287,18 @@
 			if (check_cost(5/efficiency))
 				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty(src.loc)
+		if("cloth")
+			if (check_cost(50/efficiency))
+				return 0
+			else new/obj/item/stack/sheet/cloth(src.loc)
+		if("tencloth")
+			if (check_cost(500/efficiency))
+				return 0
+			else new/obj/item/stack/sheet/cloth/ten(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency))
 				return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
-		if("bkbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/books(src.loc)
-		if("sdbag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/emptysandbag(src.loc)
-		if("ptbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/plants(src.loc)
-		if("mnbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/ore(src.loc)
-		if("chbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
-		if("rag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/reagent_containers/glass/rag(src.loc)
 		if("gloves")
 			if (check_cost(250/efficiency))
 				return 0
