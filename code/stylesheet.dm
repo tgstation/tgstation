@@ -33,7 +33,8 @@ em						{font-style: normal;	font-weight: bold;}
 .supradio				{color: #5F4519;}
 .serradio				{color: #3399CC;}
 .djradio				{color: #663300;}
-.mommi					{color: navy;}
+.binaryradio			{color: #300050;	font-family: 'Courier New', Courier, monospace;	font-size:	120%}
+.mommiradio				{color: navy;}
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}
 .emote					{					font-style: italic;}

@@ -21,11 +21,11 @@
 	log_say("[key_name(src)] (@[T.x],[T.y],[T.z] Binary: [message]")
 
 	var/message_a = say_quote("\"[html_encode(message)]\"")
-	var/rendered = text("<i><span class='game say'>Robotic Talk, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
+	var/rendered = text("<i><span class='binaryradio'>Robotic Talk, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
 
 	for (var/mob/S in player_list)
 		if(istype(S , /mob/living/silicon/ai))
-			var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
+			var/renderedAI = "<i><span class='binaryradio'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
 			to_chat(S, renderedAI)
 		else if(S.binarycheck() || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
 			handle_render(S,rendered,src)

@@ -23,7 +23,7 @@
 
 
 		var/interior_message = say_quote("\"[html_encode(speech.message)]\"")
-		var/rendered = "<i><span class='mommi game say'>[damage_control_network], <span class='name'>[name]</span> <span class='message'>[interior_message]</span></span></i>"
+		var/rendered = "<i><span class='mommiradio'>[damage_control_network], <span class='name'>[name]</span> <span class='message'>[interior_message]</span></span></i>"
 
 		for (var/mob/S in player_list)
 			var/mob/living/silicon/robot/mommi/test = S
