@@ -1,4 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - bugfix: "Fixed slime grinders not sucking up more than one slime"
