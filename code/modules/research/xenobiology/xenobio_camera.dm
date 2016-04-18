@@ -142,7 +142,7 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
-			owner << "[X] now has [X.monkeys + X.monkeypart/5] monkeys left."
+			owner << "[X] now has [X.monkeys] monkeys left."
 
 
 /datum/action/innate/monkey_recycle
