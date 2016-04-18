@@ -112,6 +112,11 @@
 		src << "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>"
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		victim.loc = get_turf(B)
+		// This whole thing here is the ONLY reason we keep passing B down
+		// this proc chain, so we know where to spit the person out who's
+		// been drinking. TODO would be a lot better if it just picked the
+		// nearest bloodspot and used that, then it'd be a lot cleaner
+		// from a code perspective
 		victim.visible_message("<span class='warning'>[B] violently expels [victim]!</span>")
 		return TRUE
 
