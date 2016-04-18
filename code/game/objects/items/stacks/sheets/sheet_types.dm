@@ -162,6 +162,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	new/datum/stack_recipe("bedsheet", /obj/item/weapon/bedsheet, 3), \
 	new/datum/stack_recipe("empty sandbag", /obj/item/weapon/emptysandbag, 4), \
+	new/datum/stack_recipe("carpet", /obj/item/stack/tile/carpet, 4, 4, 32), \
 	)
 
 /obj/item/stack/sheet/cloth
