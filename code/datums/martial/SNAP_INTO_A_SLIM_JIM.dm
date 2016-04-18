@@ -5,7 +5,6 @@
 	var/datum/action/kick/kick = new/datum/action/kick()
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
-	var/datum/action/suplex/suplex = new/datum/action/suplex()
 
 /datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
@@ -28,10 +27,6 @@
 		if("slam")
 			streak = ""
 			slam(A,D)
-			return 1
-		if("suplex")
-			streak = ""
-			suplex(A,D)
 			return 1
 	return 0
 
@@ -103,7 +98,7 @@
 	if(owner.incapacitated())
 		owner << "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>"
 		return
-	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
+	owner.visible_message("<spuplan class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "drop"
 
@@ -116,7 +111,6 @@
 	slam.Grant(H)
 	throw_wrassle.Grant(H)
 	strike.Grant(H)
-	suplex.Grant(H)
 
 /datum/martial_art/wrestling/remove(var/mob/living/carbon/human/H)
 	..()
@@ -126,7 +120,6 @@
 	slam.Remove(H)
 	throw_wrassle.Remove(H)
 	strike.Remove(H)
-	suplex.Remove(H)
 
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
@@ -369,8 +362,6 @@
 /datum/martial_art/wrestling/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
-	if(!D.lying)
-		A << "[D] needs to be prone to do this!"
 	var/obj/surface = null
 	var/turf/ST = null
 	var/falling = 0
@@ -413,7 +404,7 @@
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep(10)
 		if(A)
-			animate(A, transform = matrix(-90, MATRIX_ROTATE), time = 1, loop = 0)
+			animate(A, transform = null, time = 1, loop = 0)
 
 		A.forceMove(D.loc)
 

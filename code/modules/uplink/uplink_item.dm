@@ -316,7 +316,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Very obvious, but lets you show the crowd who the \
 			REAL inter-galactic heavyweight champion is."
 	item = /obj/item/weapon/storage/belt/champion/wrestling
-	cost = 7
+	cost = 14
 
 // Ammunition
 /datum/uplink_item/ammo
