@@ -1874,6 +1874,7 @@
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\telesci\bscrystal.dm"
 #include "code\modules\telesci\gps.dm"
+#include "code\modules\telesci\rcs.dm"
 #include "code\modules\telesci\telepad.dm"
 #include "code\modules\telesci\telesci_computer.dm"
 #include "code\modules\virus2\analyser.dm"

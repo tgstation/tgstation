@@ -49,7 +49,7 @@
 	if(!anchored)
 		to_chat(user, "<span class='warning'>You must secure \the [src] before you can make use of it!</span>")
 		return 1
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/energy_magazine) || istype(G, /obj/item/ammo_storage/magazine/lawgiver))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/energy_magazine) || istype(G, /obj/item/ammo_storage/magazine/lawgiver) || istype(G, /obj/item/weapon/rcs))
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			to_chat(user, "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>")
 			return 1
@@ -168,6 +168,18 @@
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
 				if(B.bcell.give(175))
+					icon_state = "recharger1"
+					if(!self_powered)
+						use_power(200)
+				else
+					icon_state = "recharger2"
+			else
+				icon_state = "recharger0"
+
+		else if(istype(charging, /obj/item/weapon/rcs))
+			var/obj/item/weapon/rcs/rcs = charging
+			if(rcs.cell)
+				if(rcs.cell.give(175))
 					icon_state = "recharger1"
 					if(!self_powered)
 						use_power(200)
