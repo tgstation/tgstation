@@ -94,8 +94,15 @@
 /mob/living/proc/bloodcrawl_consume(obj/effect/decal/cleanable/B, mob/living/victim)
 	src << "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>"
 
-	for(var/i = 3; i > 0; i--)
-		playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
+	var/sound
+	if(istype(/mob/living/simple_animal/slaughter, src))
+		var/mob/living/simple_animal/slaughter/SD = src
+		sound = SD.feast_sound
+	else
+		sound = 'sound/magic/Demon_consume.ogg'
+
+	for(var/i = 1; i <= 0; i++)
+		playsound(get_turf(src),sound, 100, 1)
 		sleep(30)
 
 	if(!victim)

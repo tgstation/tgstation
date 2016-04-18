@@ -17,6 +17,8 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	var/feast_sound = 'sound/magic/Demon_consume.ogg'
+	var/death_sound = 'sound/magic/demon_dies.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -56,22 +58,42 @@
 
 /mob/living/simple_animal/slaughter/death()
 	..(1)
-	new /obj/effect/decal/cleanable/blood (get_turf(src))
-	var/obj/effect/decal/cleanable/blood/innards = new (get_turf(src))
-	innards.icon = 'icons/obj/surgery.dmi'
-	innards.icon_state = "innards"
-	innards.name = "pile of viscera"
-	innards.desc = "A repulsive pile of guts and gore."
-	new /obj/item/organ/internal/heart/demon (src.loc)
-	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
-	visible_message("<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera, its most recent meals spilling out of it.</span>")
+	death_gibs()
+
+	death_mealspill()
+
+	playsound(get_turf(src),death_sound, 200, 1)
+	death_message()
+
+	ghostize()
+	qdel(src)
+
+	return
+
+/mob/living/simple_animal/slaughter/proc/death_gibs()
+	
+	new /obj/effect/decal/cleanable/blood(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/innards(get_turf(src))
+	new /obj/item/organ/internal/heart/demon(src.loc)
+
+/mob/living/simple_animal/slaughter/proc/death_mealspill()
 	if(consumed_mobs)
 		for(var/mob/living/M in consumed_mobs)
 			M.loc = get_turf(src)
-	ghostize()
-	qdel(src)
-	return
 
+/obj/effect/decal/cleanable/blood/innards
+	icon = 'icons/obj/surgery.dmi'
+	name = "pile of viscera"
+	desc = "A repulsive pile of guts and gore."
+
+// This function is required because cleanable decals start with a random
+// icon_state, and it'll be overriden if just defined above.
+/obj/effect/decal/cleanable/blood/innards/New()
+	..()
+	icon_state = "innards"
+
+/mob/living/simple_animal/slaughter/proc/death_message()
+	visible_message("<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>")
 
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
@@ -118,3 +140,52 @@
 
 /obj/item/organ/internal/heart/demon/Stop()
 	return 0 // Always beating.
+
+/mob/living/simple_animal/slaughter/laughter
+	// The laughter demon! It's everyone's best friend! It just wants to hug
+	// them so much, it wants to hug everyone at once!
+	name = "laughter demon"
+	real_name = "laughter demon"
+	desc = "A large, adorable creature covered in armored pink scales."
+	speak_emote = list("giggles","titters","chuckles")
+	emote_hear = list("gaffaws","laughs")
+	response_help  = "hugs"
+	attacktext = "wildly tickles"
+
+	attack_sound = 'sound/items/bikehorn.ogg'
+	feast_sound = 'sound/spookoween/scary_horn2.ogg'
+	death_sound = 'sound/misc/sadtrombone.ogg'
+
+	// Keep the people we hug!
+	consumed_mobs = list()
+
+	// HOT. PINK.
+	color = "#FF69B4"
+
+/mob/living/simple_animal/slaughter/laughter/death_gibs()
+	// Laughter demons are powered not by demonic energy, but by the laughter
+	// of kittens
+	var/mob/living/simple_animal/pet/cat/kitten/K = new(get_turf(src))
+	K.name = "Laughter"
+	return
+
+/mob/living/simple_animal/slaughter/laughter/death_message()
+	visible_message("<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>", null, "You hear a sigh and a giggle.")
+
+
+/mob/living/simple_animal/slaughter/laughter/death_mealspill()
+	if(!consumed_mobs)
+		return
+
+	for(var/mob/living/M in consumed_mobs)
+		M.loc = get_turf(src)
+		if(M.revive(full_heal = 1))
+			// Feel there should be a better way of FORCING a mob's ghost
+			// back into the body
+			if(!M.ckey)
+				for(var/mob/dead/observer/ghost in player_list)
+					if(M.real_name == ghost.real_name)
+						ghost.reenter_corpse()
+						break
+			M << "<span class='clown'>You leave the [src]'s warm embrace, and feel ready to take on the world.</span>"	
+					
