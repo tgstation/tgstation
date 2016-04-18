@@ -609,7 +609,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/movement_delay()
 	. = ..()
-	if(isturf(loc))
+	if(istype(loc, /turf/open))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
