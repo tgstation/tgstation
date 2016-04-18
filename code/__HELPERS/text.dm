@@ -425,3 +425,18 @@ var/list/binary = list("0","1")
 	. = list()
 	for(var/x in 1 to length(t))
 		. += copytext(t,x,x+1)
+
+proc/explode_text(text, separator = " ")
+	if(!istext(text) || !istext(separator))
+		return
+	if(!length(text) || !length(separator))
+		return
+	var/i
+	var/oldi = 1
+	var/list/L = new/list()
+	for(i=1, i<=length(text)+1, i++)
+		if(copytext(text, i, i+length(separator)) == separator) // We found a separator
+			L.Add(copytext(text, oldi, i))
+			oldi = i+length(separator)
+	L.Add(copytext(text, oldi, length(text)+1)) // Adds the last segment
+	return L
