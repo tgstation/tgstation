@@ -643,8 +643,8 @@ var/global/mulebot_count = 0
 				add_logs(src, M, "knocked down")
 				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
-				M.Stun(8)
-				M.Weaken(5)
+				M.Stun(4)
+				M.Weaken(2)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -655,7 +655,8 @@ var/global/mulebot_count = 0
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
-	var/damage = rand(5,15)
+	var/damage = rand(4.1,7.5)
+	// Total damage is between ~25 and 45
 	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
 	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
