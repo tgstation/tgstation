@@ -479,6 +479,7 @@
 	var/recharge_delay = 200 //How long after we've been shot before we can start recharging. 20 seconds here
 	var/recharge_cooldown = 0 //Time since we've last been shot
 	var/recharge_rate = 1 //How quickly the shield recharges once it starts charging
+	var/recharge_speed = 5 //How long between charges after the sheid starts reacharging
 	var/shield_state = "shield-old"
 	var/shield_on = "shield-old"
 
@@ -511,6 +512,7 @@
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 			SSobj.processing.Remove(src)
 		shield_state = "[shield_on]"
+		recharge_cooldown = world.time + recharge_speed
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/C = loc
 			C.update_inv_wear_suit()
@@ -591,7 +593,8 @@
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
-	slowdown = 0
+	recharge_delay = 400
+	recharge_speed = 100
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
@@ -600,5 +603,4 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	item_color = "syndi"
-	armor = list(melee = 30, bullet = 40, laser = 20, energy = 15, bomb = 25, bio = 100, rad = 50)
-	recharge_delay = 600
+	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
