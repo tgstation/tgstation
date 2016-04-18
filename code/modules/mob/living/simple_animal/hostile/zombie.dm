@@ -85,6 +85,11 @@
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
 	spawn(rand(300,400))
 		if(src)
+			if(!src.ckey)
+				for(var/mob/dead/observer/ghost in player_list)
+					if(src.real_name == ghost.real_name)
+						ghost.reenter_corpse()
+						break
 			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
 			revive(full_heal = 1)
 
