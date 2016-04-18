@@ -428,3 +428,43 @@
 	anchored = 1
 	layer = MOB_LAYER - 0.2
 	density = 0
+
+
+//Maglev Tracks
+
+
+/obj/vehicle/maglev
+	name = "maglev car"
+	desc = "An advanced craft that levitates along a magnetized rail at high speeds."
+	icon_state = "miningcaropen"
+	icon = 'icons/obj/crates.dmi'
+	vehicle_move_delay = 0
+
+
+/obj/vehicle/maglev/relaymove(mob/user, direction)
+	var/turf/t = get_step(src, direction)
+	var/obj/structure/maglev/N = locate() in t
+	if(N)
+		..()
+	else
+		user << "You need a maglev rail to move!"
+		return 0
+
+/obj/vehicle/maglev/keycheck()
+	return 1
+
+/obj/structure/maglev
+	name = "maglev rail"
+	desc = "You can drive maglev cars along these."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "rail"
+	smooth = SMOOTH_TRUE
+	anchored = 1
+	density = 0
+
+/obj/structure/maglev/attackby(obj/item/O, mob/user, params)
+	..()
+	if(istype(O,/obj/item/weapon/crowbar))
+		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		new /obj/item/stack/sheet/plasteel(src.loc)
+		qdel(src)
