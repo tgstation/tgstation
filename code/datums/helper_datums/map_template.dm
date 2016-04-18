@@ -17,9 +17,10 @@
 
 /datum/map_template/proc/preload_size(path)
 	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
-	. = bounds[1] != 0 // 0 if the map failed to be measured
-	width = bounds[4] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
-	height = bounds[5]
+	if(bounds)
+		width = bounds[4] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+		height = bounds[5]
+	return bounds
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -32,6 +33,8 @@
 		return
 
 	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	if(!bounds)
+		return 0
 
 	//initialize things that are normally initialized after map load
 	var/list/obj/machinery/atmospherics/atmos_machines = list()

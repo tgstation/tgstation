@@ -132,7 +132,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		CHECK_TICK
 
 	if(bounds[1] == 1.#INF)
-		return list(0, 0, 0, 0, 0, 0)
+		return null
 	else
 		return bounds
 
@@ -217,10 +217,6 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 
-	//in case of multiples turfs on one tile,
-	//will contains the images of all underlying turfs, to simulate the DMM multiple tiles piling
-	var/list/turfs_underlays = list()
-
 	//first instance the /area and remove it from the members list
 	index = members.len
 	if(members[index] != /area/template_noop)
@@ -250,10 +246,9 @@ var/global/dmm_suite/preloader/_preloader = new
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
-			turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
-			var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
-			add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
-			T = UT
+			var/underlay = T.appearance
+			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
@@ -272,7 +267,11 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	var/turf/T = locate(x,y,z)
 	if(T)
-		instance = new path (T)//first preloader pass
+		if(ispath(path, /turf))
+			T.ChangeTurf(path)
+			instance = T
+		else
+			instance = new path (T)//first preloader pass
 
 	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
@@ -357,14 +356,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(position != 0)
 
 	return to_return
-
-//simulates the DM multiple turfs on one tile underlaying
-/dmm_suite/proc/add_underlying_turf(turf/placed,turf/underturf, list/turfs_underlays)
-	if(underturf.density)
-		placed.density = 1
-	if(underturf.opacity)
-		placed.opacity = 1
-	placed.underlays += turfs_underlays
 
 //atom creation method that preloads variables at creation
 /atom/New()
