@@ -327,10 +327,14 @@
 	item_state = "duffle-eng"
 	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/dufflebag/engineering/drone
-	name = "drone industrial dufflebag"
+/obj/item/weapon/storage/backpack/dufflebag/drone
+	name = "drone dufflebag"
+	desc = "A large dufflebag for holding tools and hats."
+	icon_state = "duffle-drone"
+	item_state = "duffle-drone"
+	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/dufflebag/engineering/drone/New()
+/obj/item/weapon/storage/backpack/dufflebag/drone/New()
 	..()
 
 	new /obj/item/weapon/screwdriver(src)
