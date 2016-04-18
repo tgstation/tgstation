@@ -351,3 +351,10 @@
 	parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
 	time = 50
 	category = CAT_WEAPON
+
+/datum/table_recipe/paperplane
+	name = "Paper Plane"
+	result = /obj/item/weapon/paper/paperplane
+	reqs = list(/obj/item/weapon/paper = 1)
+	time = 10
+	category = CAT_MISC
