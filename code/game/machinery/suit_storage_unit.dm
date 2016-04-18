@@ -144,6 +144,12 @@
 		dump_contents()
 	update_icon()
 
+/obj/machinery/suit_storage_unit/dropContents()
+	if(suit || helmet || storage)
+		return
+	else
+		..()
+
 /obj/machinery/suit_storage_unit/proc/dump_contents()
 	dropContents()
 	helmet = null
