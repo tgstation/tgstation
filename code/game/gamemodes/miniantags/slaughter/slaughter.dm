@@ -156,11 +156,14 @@
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'
 	death_sound = 'sound/misc/sadtrombone.ogg'
 
+	icon_state = "bowmon"
+	icon_living = "bowmon"
+
 	// Keep the people we hug!
 	consumed_mobs = list()
 
 	// HOT. PINK.
-	color = "#FF69B4"
+	//color = "#FF69B4"
 
 /mob/living/simple_animal/slaughter/laughter/death_gibs()
 	// Laughter demons are powered not by demonic energy, but by the laughter
