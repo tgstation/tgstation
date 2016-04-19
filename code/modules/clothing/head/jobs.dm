@@ -90,6 +90,12 @@
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
 
+/obj/item/clothing/head/HoS/dermal
+	name = "dermal armour patch"
+	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
+	icon_state = "dermal"
+	armor = list(melee = 45, bullet = 35, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 0)
+
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."

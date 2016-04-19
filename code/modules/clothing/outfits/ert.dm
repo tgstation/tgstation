@@ -30,7 +30,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	back = /obj/item/weapon/storage/backpack/captain
-	belt = /obj/item/weapon/storage/belt/security/full
+	belt = /obj/item/weapon/storage/belt/security
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
@@ -63,7 +63,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	back = /obj/item/weapon/storage/backpack/security
-	belt = /obj/item/weapon/storage/belt/security/full
+	belt = /obj/item/weapon/storage/belt/security
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\

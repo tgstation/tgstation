@@ -417,9 +417,9 @@
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Two Survival Capsules")
+/*		if("Two Survival Capsules")
 			new /obj/item/weapon/survivalcapsule(src.loc)
-			new /obj/item/weapon/survivalcapsule(src.loc)
+			new /obj/item/weapon/survivalcapsule(src.loc)*/
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
 		if("Mining Drone")

@@ -43,7 +43,7 @@
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/weapon/survivalcapsule(src)
+//	new /obj/item/weapon/survivalcapsule(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -197,9 +197,13 @@
 			src.loc.visible_message("The [src] doesn't have room to deploy! You need to clear a 3x3 area!")
 			used = FALSE
 			return
+		var/turf/T = get_turf(src)
+		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)
+			src.loc.visible_message("You can't deploy it here!")
+			used = FALSE
+			return
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
-		var/turf/T = get_turf(src)
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")

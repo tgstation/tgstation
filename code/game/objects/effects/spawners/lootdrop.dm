@@ -24,9 +24,7 @@
 
 	loot = list(
 				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
-				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5,
-				/obj/item/weapon/gun/projectile/revolver/mateba,
-				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
+				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5
 				)
 
 /obj/effect/spawner/lootdrop/maintenance

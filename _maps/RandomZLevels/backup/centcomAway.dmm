@@ -559,7 +559,7 @@
 "kM" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/centcomAway/general)
 "kN" = (/obj/structure/table/wood,/obj/item/clothing/tie/medal,/turf/simulated/floor/carpet,/area/awaymission/centcomAway/general)
 "kO" = (/obj/structure/table/wood,/turf/simulated/floor/carpet,/area/awaymission/centcomAway/general)
-"kP" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup,/turf/simulated/floor/carpet,/area/awaymission/centcomAway/general)
+"kP" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/golden_cup,/turf/simulated/floor/carpet,/area/awaymission/centcomAway/general)
 "kQ" = (/obj/structure/table/wood,/obj/item/clothing/tie/medal/gold,/turf/simulated/floor/carpet,/area/awaymission/centcomAway/general)
 "kR" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/awaymission/centcomAway/general)
 "kS" = (/turf/simulated/wall/r_wall,/area/awaymission/centcomAway/thunderdome)

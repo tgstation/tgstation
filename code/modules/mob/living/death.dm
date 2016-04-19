@@ -46,6 +46,18 @@
 		dead_mob_list += src
 	else if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+
+	if(src.ckey)
+		var/message ="[src]([src.ckey]) "
+		var/whereLink=null
+		if(gibbed)
+			message+="body has been destroyed"
+			whereLink = "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>"
+		else
+			message+="has died"
+			whereLink = "<a href='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>"
+		message_admins("[message] in [src.loc.loc] [whereLink]")
+
 	paralysis = 0
 	stunned = 0
 	weakened = 0
