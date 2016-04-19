@@ -34,8 +34,10 @@ LINEN BINS
 	return
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/weapon/shard))
-		new /obj/item/stack/medical/gauze/improvised(src.loc)
+	if(istype(I, /obj/item/weapon/wirecutters) || I.is_sharp())
+		var/obj/item/stack/sheet/cloth/C = new (loc, 3)
+		transfer_fingerprints_to(C)
+		C.add_fingerprint(user)
 		qdel(src)
 		user << "<span class='notice'>You tear [src] up.</span>"
 	..()

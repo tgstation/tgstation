@@ -1,4 +1,0 @@
-author: nullbear
-delete-after: True
-changes: 
-  - bugfix: "Fixes air canisters being silent when bashed."

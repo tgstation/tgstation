@@ -8,11 +8,25 @@
 	horizontal = TRUE
 	allow_objects = TRUE
 	allow_dense = TRUE
+	dense_when_open = TRUE
+	climbable = TRUE
+	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
+	climb_stun = 0 //climbing onto crates isn't hard, guys
 	var/obj/item/weapon/paper/manifest/manifest
 
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
+
+/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target, height=0)
+	if(!istype(mover, /obj/structure/closet))
+		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
+		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate
+			if(opened) //if we're open, allow entering regardless of located crate openness
+				return 1
+			if(!locatedcrate.opened) //otherwise, if the located crate is closed, allow entering
+				return 1
+	return !density
 
 /obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
@@ -22,12 +36,10 @@
 		overlays += "manifest"
 
 /obj/structure/closet/crate/attack_hand(mob/user)
-	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)
 		return
-	if(!toggle())
-		togglelock(user)
+	..()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	user << "<span class='notice'>You tear the manifest off of the crate.</span>"

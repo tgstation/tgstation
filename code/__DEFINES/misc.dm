@@ -368,10 +368,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 /////////////////////////////////////
 //this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
 #ifndef TILE_BOUND
-#if DM_VERSION >= 510
-#warn this version of 510 is too old, You should use byond 510.1332 or later when using 510.
-#endif
-#define TILE_BOUND 256
+#error this version of 510 is too old, You must use byond 510.1332 or later. (TILE_BOUND is not defined)
 #endif
 
 // Disabling certain features
