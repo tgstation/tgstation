@@ -53,7 +53,6 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 	SStimer.hashes -= hash
-	SStimer.unique[hash] = null
 	SStimer.unique -= hash
 	return QDEL_HINT_IWILLGC
 
