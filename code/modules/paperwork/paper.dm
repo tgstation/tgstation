@@ -405,6 +405,19 @@
 /obj/item/weapon/paper/crumpled/update_icon()
 	return
 
+/obj/item/weapon/paper/AltClick(mob/user, obj/item/I,)
+	..()
+	if(!in_range(src, user))
+		return
+	if(!istype(src, /obj/item/weapon/paper/paperplane))
+		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
+		if(do_after(user, 20, target = src))
+			user.unEquip(src)
+			get_turf(src)
+			I = new /obj/item/weapon/paper/paperplane(src.loc)
+			user.put_in_hands(I)
+			qdel(src)
+		return
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
