@@ -45,7 +45,7 @@
 "aS" = (/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; dir = 8; icon_state = "blue"},/area/ruin/powered)
 "aT" = (/obj/structure/closet,/obj/effect/decal/cleanable/cobweb,/obj/item/ammo_casing/shotgun/dart,/obj/item/ammo_casing/shotgun/dart,/obj/item/weapon/gun/projectile/revolver/doublebarrel{desc = "For putting critters out to pasture."},/obj/item/ammo_casing/shotgun/buckshot,/obj/item/weapon/storage/box/bodybags,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
 "aU" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
-"aV" = (/obj/structure/closet,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"aV" = (/obj/structure/closet/secure_closet/medical1,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
 "aW" = (/obj/machinery/vending/wallmed{pixel_y = 28},/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
 "aX" = (/obj/item/stack/cable_coil/random,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
 "aY" = (/obj/structure/bodycontainer/morgue,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
