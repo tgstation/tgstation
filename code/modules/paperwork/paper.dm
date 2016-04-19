@@ -443,5 +443,15 @@
 	update_icon()
 
 /obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
-	if(!..())
+	if(!..() || !ishuman(target))//if the plane is caught or it hits a nonhuman
 		return
+	var/mob/living/carbon/human/H = target
+	if(prob(15))
+		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
+			return
+		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
+		H.adjust_blurriness(6)
+		H.adjust_eye_damage(rand(6,8))
+		H.Weaken(2)
+		H.emote("scream")
+		H.say("My eyes!!")
