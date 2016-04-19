@@ -6,15 +6,43 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/stunrevolver
-	name = "stun revolver"
+/obj/item/weapon/gun/energy/shock_revolver
+	name = "shock revolver"
 	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	icon_state = "stunrevolver"
 	item_state = "gun"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
+	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
 	can_flashlight = 0
 	pin = null
 	ammo_x_offset = 1
+
+
+/obj/item/ammo_casing/energy/shock_revolver
+	fire_sound = 'sound/weapons/gunshot.ogg'
+	e_cost = 200
+	select_name = "stun"
+	projectile_type = /obj/item/projectile/shock_revolver
+
+
+/obj/item/projectile/shock_revolver
+	name = "shock bolt"
+	icon_state = "purple_laser"
+	var/chain
+
+/obj/item/ammo_casing/energy/shock_revolver/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	..()
+	var/obj/item/projectile/hook/P = BB
+	spawn(1)
+		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
+
+/obj/item/projectile/shock_revolver/on_hit(atom/target)
+	. = ..()
+	if(isliving(target))
+		for(var/mob/living/carbon/human/M in view(3, src))
+			target.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+			M.electrocute_act(15, "[name]", safety=1)
+	qdel(chain)
+
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"
