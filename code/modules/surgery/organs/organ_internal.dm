@@ -288,7 +288,8 @@
 	say_mod = "hisses"
 
 /obj/item/organ/internal/tongue/lizard/TongueSpeech(var/message)
-	speakDevilName(message)
+	spawn(0)
+		speakDevilName(message)
 	var/regex/lizard_hiss = new("s+", "g")
 	var/regex/lizard_hiSS = new("S+", "g")
 	if(copytext(message, 1, 2) != "*")
@@ -303,7 +304,8 @@
 	say_mod = "buzzes"
 
 /obj/item/organ/internal/tongue/fly/TongueSpeech(var/message)
-	speakDevilName(message)
+	spawn(0)
+		speakDevilName(message)
 	var/regex/fly_buzz = new("z+", "g")
 	var/regex/fly_buZZ = new("Z+", "g")
 	if(copytext(message, 1, 2) != "*")
