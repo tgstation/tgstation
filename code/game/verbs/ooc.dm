@@ -61,11 +61,13 @@
 //		if(prefs.toggles & MEMBER_PUBLIC)
 //			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 	var/donator_icon = ""
-	if(is_donator(key) && !holder.fakekey)
-		donator_icon = " <img class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
 	if(holder)
 		if(holder.fakekey && is_donator(holder.fakekey))
 			donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[holder.fakekey]'>"
+
+	else if(is_donator(key))
+		donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
+
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
