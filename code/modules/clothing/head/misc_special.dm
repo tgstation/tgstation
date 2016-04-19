@@ -53,6 +53,7 @@
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	heat = 1000
+	burn_state = LAVA_PROOF
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
