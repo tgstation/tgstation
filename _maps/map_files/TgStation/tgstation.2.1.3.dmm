@@ -29660,8 +29660,13 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bkA" = (
-/turf/open/floor/plating,
-/area/maintenance/disposal)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/virology)
 "bkB" = (
 /obj/machinery/button/door{
 	id = "Disposal Exit";
@@ -30430,8 +30435,13 @@
 	},
 /area/maintenance/disposal)
 "blT" = (
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/virology)
 "blU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -42129,7 +42139,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -42206,7 +42216,6 @@
 	name = "Virology Exterior Airlock";
 	req_access_txt = "39"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -42576,7 +42585,7 @@
 	c_tag = "Virology Break Room"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
+	dir = 2;
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
@@ -42609,9 +42618,6 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -42635,7 +42641,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
+	dir = 2;
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
@@ -45404,6 +45410,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -45888,6 +45895,9 @@
 /area/medical/virology)
 "bPp" = (
 /obj/machinery/iv_drip,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -45899,6 +45909,9 @@
 /obj/structure/sign/securearea{
 	pixel_x = -32;
 	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 8;
@@ -45915,6 +45928,9 @@
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 4;
@@ -45942,7 +45958,7 @@
 /area/medical/virology)
 "bPu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
+	dir = 8;
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
@@ -45963,9 +45979,12 @@
 /area/maintenance/asmaint)
 "bPw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
+	dir = 1
 	},
-/turf/closed/wall/r_wall,
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/medical/virology)
 "bPx" = (
 /obj/machinery/disposal/bin,
@@ -46500,6 +46519,7 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -47014,6 +47034,7 @@
 	name = "Monkey Pen";
 	req_access_txt = "39"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -49509,9 +49530,6 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "whitegreen"
@@ -49547,9 +49565,7 @@
 	},
 /area/medical/virology)
 "bXa" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -49565,6 +49581,9 @@
 /area/medical/virology)
 "bXc" = (
 /obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -49572,6 +49591,9 @@
 "bXd" = (
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -52423,8 +52445,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -52952,7 +52974,6 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cdM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -53377,11 +53398,18 @@
 "ceK" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/l3closet,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "ceL" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Virology Waste to Space"
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "ceM" = (
@@ -54612,9 +54640,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/asmaint)
 "chq" = (
@@ -55719,7 +55745,10 @@
 /area/maintenance/asmaint)
 "cjA" = (
 /obj/structure/disposalpipe/segment,
-/obj/item/weapon/cigbutt/roach,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cjB" = (
@@ -58413,18 +58442,14 @@
 	},
 /area/shuttle/syndicate)
 "coS" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_nw";
-	name = "south maintenance airlock";
-	turf_type = /turf/open/space;
-	width = 18
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/virology)
 "coT" = (
 /obj/item/pipe{
 	dir = 4;
@@ -58763,13 +58788,11 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cpA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/area/medical/virology)
 "cpB" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -59317,11 +59340,13 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqG" = (
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
-/area/engine/engineering)
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/virology)
 "cqH" = (
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plating,
@@ -64059,8 +64084,11 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cAy" = (
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plating,
-/area/maintenance/electrical)
+/area/medical/virology)
 "cAz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -64074,39 +64102,46 @@
 	},
 /area/chapel/office)
 "cAA" = (
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-"cAB" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/crew_quarters/kitchen)
-"cAC" = (
-/turf/open/floor/plasteel{
-	icon_state = "cafeteria"
-	},
-/area/crew_quarters/kitchen)
-"cAD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 1
-	},
-/area/maintenance/disposal)
-"cAE" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/area/medical/morgue)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cAB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cAC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cAD" = (
+/obj/item/weapon/cigbutt/roach,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cAE" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
 "cAF" = (
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -64129,10 +64164,12 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/turf/open/floor/plasteel{
-	icon_state = "dark"
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/area/medical/morgue)
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64146,8 +64183,16 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4;
+	name = "Waste to Space"
+	},
 /turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/area/maintenance/asmaint)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -64157,10 +64202,15 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAM" = (
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/area/maintenance/aft)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -102484,7 +102534,7 @@ bJD
 bKK
 bLS
 bNc
-bOj
+bNc
 bNc
 bNc
 bNc
@@ -102999,7 +103049,7 @@ bIo
 bLU
 bNd
 bII
-bOr
+bkA
 bQD
 bLY
 bMa
@@ -103256,7 +103306,7 @@ bKM
 bLW
 bNd
 bOn
-bOr
+blT
 bOr
 bRO
 bSQ
@@ -103520,7 +103570,7 @@ bSS
 bUa
 bNc
 bNc
-bOj
+bNc
 bNc
 bNc
 bZO
@@ -103770,7 +103820,7 @@ bKN
 bHT
 bNd
 bNd
-bNd
+bTZ
 bNd
 bNd
 bSU
@@ -104034,7 +104084,7 @@ bST
 bOr
 bOr
 bOr
-bWW
+cqG
 bYa
 bYX
 bTZ
@@ -104798,7 +104848,7 @@ bKR
 bMc
 bNd
 bNd
-bNd
+bTZ
 bNd
 bNd
 bSX
@@ -105055,14 +105105,14 @@ bKQ
 bMb
 bNd
 bOr
-bOt
+bPt
 bOr
 bRQ
 bOr
 bSQ
 bNj
 bNs
-bXa
+bWW
 bYa
 bNd
 bZQ
@@ -105070,12 +105120,12 @@ caP
 cbO
 ccJ
 cdM
-bLS
+cAC
 cfp
 cge
 cbK
 ciG
-bLS
+cAE
 ckm
 cln
 cmh
@@ -105312,7 +105362,7 @@ bKQ
 bMb
 bNd
 bOt
-bOr
+blT
 bOr
 bRQ
 bOr
@@ -105332,7 +105382,7 @@ ceJ
 cgh
 ceJ
 ceJ
-ccM
+cAH
 ceJ
 cAe
 cmj
@@ -105569,21 +105619,21 @@ bKS
 bMd
 bNd
 bOs
-bOt
+bPw
 bQJ
 bRR
-bOr
-bSQ
-bWj
-bWj
-bWj
-bWj
-bNd
-bzs
-bzs
-bzs
-ccH
-bFr
+bXa
+coS
+cpA
+cpA
+cAy
+cpA
+bNc
+cbK
+cbK
+cbK
+cAA
+cAB
 ceK
 ceJ
 cgg
@@ -105845,8 +105895,8 @@ bzs
 bzs
 bKT
 bAw
-bAw
-bFr
+cAD
+cAK
 ceJ
 ccM
 ccM
@@ -106083,7 +106133,7 @@ bKB
 bMb
 bNd
 bOr
-bPt
+bOt
 bOr
 bRQ
 bSY
@@ -106091,7 +106141,7 @@ bMJ
 bNl
 bNW
 bXd
-bPu
+bYa
 bNd
 bZT
 bMb
@@ -106103,7 +106153,7 @@ cfq
 bKT
 bAw
 ciH
-bHd
+cAM
 bzs
 bAw
 cmk
@@ -106340,7 +106390,6 @@ bHB
 caU
 bNc
 bOj
-bPw
 bNc
 bNc
 bNc
@@ -106348,7 +106397,8 @@ bNc
 bNc
 bNc
 bNc
-bPw
+bNc
+bNc
 bNc
 bLS
 caU
