@@ -1,3 +1,7 @@
+#define PROXIMITY_NONE ""
+#define PROXIMITY_ON_SCREEN "_red"
+#define PROXIMITY_NEAR "_yellow"
+
 /**
  * Multitool -- A multitool is used for hacking electronic devices.
  * TO-DO -- Using it as a power measurement tool for cables etc. Nannek.
@@ -26,7 +30,7 @@
 /obj/item/device/multitool/ai_detect
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
-	var/detect_state = 0 //1 = yellow, 2 = red
+	var/detect_state = PROXIMITY_NONE
 	var/turf/our_turf
 	var/rangealert = 8	//Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
@@ -42,25 +46,16 @@
 /obj/item/device/multitool/ai_detect/process()
 	if(track_cooldown > world.time)
 		return
-
-	detect_state = 0
+	detect_state = PROXIMITY_NONE
 	our_turf = get_turf(src)
 	multitool_detect()
-
-	if(detect_state == 1)
-		icon_state = "[initial(icon_state)]_yellow"
-	else if(detect_state == 2)
-		icon_state = "[initial(icon_state)]_red"
-	else
-		icon_state = initial(icon_state)
-
+	icon_state = "[initial(icon_state)][detect_state]"
 	track_cooldown = world.time + track_delay // 1 second
-	return
 
 /obj/item/device/multitool/ai_detect/proc/multitool_detect()
 	for(var/mob/living/silicon/ai/AI in ai_list)
 		if(AI.cameraFollow == src)
-			detect_state = 2
+			detect_state = PROXIMITY_ON_SCREEN
 			break
 
 	if(!detect_state && cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
@@ -70,10 +65,10 @@
 				for(var/mob/camera/aiEye/A in chunk.seenby)
 					var/turf/detect_turf = get_turf(A)
 					if(get_dist(our_turf, detect_turf) < rangealert)
-						detect_state = 2
+						detect_state = PROXIMITY_ON_SCREEN
 						break
 					if(get_dist(our_turf, detect_turf) < rangewarning)
-						detect_state = 1
+						detect_state = PROXIMITY_NEAR
 						break
 
 /obj/item/device/multitool/ai_detect/admin
@@ -83,10 +78,10 @@
 /obj/item/device/multitool/ai_detect/admin/multitool_detect()
 	for(var/mob/J in range(rangewarning,src))
 		if(admin_datums[J.ckey])
-			detect_state = 1
+			detect_state = PROXIMITY_NEAR
 			var/turf/detect_turf = get_turf(J)
 			if(get_dist(our_turf, detect_turf) < rangealert)
-				detect_state = 2
+				detect_state = PROXIMITY_ON_SCREEN
 				break
 
 /obj/item/device/multitool/cyborg
