@@ -454,4 +454,3 @@
 		H.adjust_eye_damage(rand(6,8))
 		H.Weaken(2)
 		H.emote("scream")
-		H.say("My eyes!!")
