@@ -67,15 +67,18 @@
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
 	new /obj/item/clothing/head/HoS(src)
+	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
+	new /obj/item/clothing/head/HoS/dermal(src)
+	new /obj/item/clothing/suit/armor/hos/trenchcoat/jensen(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
+//	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/device/megaphone/sec(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
-	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
 	new /obj/item/device/flashlight/seclite(src)
@@ -98,7 +101,7 @@
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/storage/box/zipties(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/device/flashlight/seclite(src)
 
 /obj/structure/closet/secure_closet/security
@@ -120,7 +123,7 @@
 
 /obj/structure/closet/secure_closet/security/sec/New()
 	..()
-	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/weapon/storage/belt/security(src)
 
 /obj/structure/closet/secure_closet/security/cargo
 

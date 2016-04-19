@@ -31,9 +31,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
-	var/list/Lines = filename//file2list(filename)
-	if(!Lines.len)
-		return
+	var/list/Lines = file2list(filename)
+	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)
 			continue

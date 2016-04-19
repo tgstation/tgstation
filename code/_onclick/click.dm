@@ -240,6 +240,9 @@
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
+	else if(in_range(src,A))
+		var/mob/living/carbon/H=A
+		H.give()
 	else
 		..()
 

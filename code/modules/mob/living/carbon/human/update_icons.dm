@@ -441,6 +441,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
+/mob/living/carbon/human/proc/update_inv_hands()
+	update_inv_r_hand()
+	update_inv_l_hand()
+
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
 	var/icon/female_clothing_icon = female_clothing_icons[index]

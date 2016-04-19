@@ -57,11 +57,11 @@
 	if(pocket) pocket.close_all()
 	return ..()
 
-/obj/item/clothing/attack_hand(mob/user)
+/*/obj/item/clothing/attack_hand(mob/user)
 	if(pocket && pocket.priority && ismob(loc))
 		pocket.show_to(user)
 	else
-		return ..()
+		return ..()*/
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(pocket)	pocket.attackby(W, user, params)

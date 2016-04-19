@@ -70,6 +70,13 @@
 	item_state = "bl_suit"
 	item_color = "hosalt"
 
+/obj/item/clothing/under/rank/head_of_security/jensen
+	name = "head of security's jumpsuit"
+	desc = "You never asked for anything that stylish."
+	icon_state = "jensen"
+	item_state = "bl_suit"
+	item_color = "jensen"
+
 /*
  * Navy uniforms
  */

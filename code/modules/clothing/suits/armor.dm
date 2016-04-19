@@ -39,6 +39,12 @@
 	flags_inv = 0
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/jensen
+	name = "armored trenchcoat"
+	desc = "A trenchcoat augmented with a special alloy for some protection and style."
+	icon_state = "jensencoat"
+	item_state = "jensencoat"
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
