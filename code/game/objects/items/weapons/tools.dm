@@ -104,8 +104,9 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
-	if(!param_color && !icon_state)
-		param_color = pick("red","blue","pink","brown","green","cyan","yellow")
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
 		icon_state = "screwdriver_[param_color]"
 
 	if (prob(75))
@@ -150,8 +151,9 @@
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()
-	if(!param_color && !icon_state)
-		param_color = pick("yellow", "red")
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("yellow","red")
 		icon_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
