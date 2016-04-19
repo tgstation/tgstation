@@ -10,7 +10,7 @@
 #define DEVILRESURRECTTIME 600
 
 var/global/list/allDevils = list()
-var/static/list/lawlorify = list (
+var/global/list/lawlorify = list (
 		LORE = list(
 			OBLIGATION_FOOD = "This devil seems to always offer it's victims food before slaughtering them.",
 			OBLIGATION_DRINK = "This devil seems to always offer it's victims a drink before slaughtering them.",
