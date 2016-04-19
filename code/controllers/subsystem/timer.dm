@@ -1,3 +1,7 @@
+#define TIMER_NORMAL 0
+#define TIMER_OLDEST 1
+#define TIMER_NEWEST 2
+
 var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer
@@ -8,6 +12,7 @@ var/datum/subsystem/timer/SStimer
 
 	var/list/datum/timedevent/processing
 	var/list/hashes
+	var/list/unique
 
 /datum/subsystem/timer/New()
 	NEW_SS_GLOBAL(SStimer)
@@ -48,9 +53,11 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 	SStimer.hashes -= hash
+	SStimer.unique[hash] = null
+	SStimer.unique -= hash
 	return QDEL_HINT_IWILLGC
 
-/proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
+/proc/addtimer(thingToCall, procToCall, wait, unique = TIMER_NORMAL, ...)
 	if (!SStimer) //can't run timers before the mc has been created
 		return
 	if (!thingToCall || !procToCall || wait <= 0)
@@ -68,9 +75,17 @@ var/datum/subsystem/timer/SStimer
 		event.argList = args.Copy(5)
 
 	// Check for dupes if unique = 1.
-	if(unique)
-		if(event.hash in SStimer.hashes)
-			return
+	switch(unique)
+		if(TIMER_OLDEST)
+			if(event.hash in SStimer.unique)
+				return
+			SStimer.unique[event.hash] = event
+		if(TIMER_NEWEST)
+			var/datum/timedevent/old = SStimer.unique[event.hash]
+			qdel(old)
+			SStimer.processing -= old // In case qdel doesnt get to it fast enough to remove it from the processing list.
+			SStimer.unique[event.hash] = event
+
 	// If we are unique (or we're not checking that), add the timer and return the id.
 	SStimer.processing += event
 	SStimer.hashes += event.hash

@@ -14,6 +14,7 @@
 
 	var/health = 50
 	var/list/network = list("SS13")
+	var/list/networkbackup = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1
@@ -30,7 +31,6 @@
 
 	var/alarm_on = 0
 	var/busy = 0
-	var/emped = 0  //Number of consecutive EMP's on this camera
 
 	// Upgrades bitflag
 	var/upgrades = 0
@@ -79,32 +79,28 @@
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
-			var/list/previous_network = network
+			networkbackup = network
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
-			emped = emped+1  //Increase the number of consecutive EMP's
-			var/thisemp = emped //Take note of which EMP this proc is for
-			spawn(900)
-				if(loc) //qdel limbo
-					triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
-					if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
-						network = previous_network
-						icon_state = initial(icon_state)
-						stat &= ~EMPED
-						if(can_use())
-							cameranet.addCamera(src)
-						emped = 0 //Resets the consecutive EMP count
-						spawn(100)
-							if(!qdeleted(src))
-								cancelCameraAlarm()
+			addtimer(src, "emp_reset", 900, TIMER_NEWEST)
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
 					O.reset_perspective(null)
 					O << "The screen bursts into static."
 			..()
+
+/obj/machinery/camera/proc/emp_reset()
+	triggerCameraAlarm()
+	network = networkbackup
+	icon_state = initial(icon_state)
+	stat &= ~EMPED
+	if(can_use())
+		cameranet.addCamera(src)
+	addtimer(src, "cancelCameraAlarm", 100)
+
 
 
 /obj/machinery/camera/ex_act(severity, target)
