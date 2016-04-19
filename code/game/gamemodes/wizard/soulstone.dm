@@ -10,6 +10,12 @@
 	var/imprinted = "empty"
 	var/usability = 0
 
+/obj/item/device/soulstone/examine(mob/user)
+	..()
+	if(iscultist(user) || iswizard(user))
+		user << "<span class='cult'>A soulstone, used to capture spirits from unconscious or sleeping humans.</span>"
+		user << "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct.</span>"
+
 /obj/item/device/soulstone/anybody
 	usability = 1
 
@@ -31,7 +37,7 @@
 	if(istype(M, /mob/living/carbon/human/dummy))
 		return ..()
 	if(iscultist(M))
-		user << "<span class='cultlarge'>You shouldn't do that.</span>"
+		user << "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>"
 		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
@@ -95,6 +101,15 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
+
+/obj/structure/constructshell/examine(mob/user)
+	..()
+	if(iscultist(user) || iswizard(user))
+		user << "<span class='cult'>A construct shell, used to house bound souls from a soulstone.</span>"
+		user << "<span class='cult'>Placing a soulstone with a soul into this shell allows you to produce your choice of the following:</span>"
+		user << "<span class='cult'>An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.</span>"
+		user << "<span class='cult'>A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.</span>"
+		user << "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>"
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/soulstone))
