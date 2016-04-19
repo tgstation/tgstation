@@ -15,24 +15,30 @@
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
+	var/has_components = 0
+	var/stillneed = 0
 	main_loop:
 		for(var/A in R.reqs)
-			var/needed_amount = R.reqs[A]
+			stillneed += R.reqs[A]
 			for(var/B in table_contents)
 				if(ispath(B, A))
 					if(table_contents[B] >= R.reqs[A])
+						has_components += R.reqs[A]
+						stillneed -= R.reqs[A]
 						continue main_loop
 					else
-						needed_amount -= table_contents[B]
-						if(needed_amount <= 0)
+						stillneed -= table_contents[B]
+						has_components += table_contents[B]
+						if(stillneed <= 0)
 							continue main_loop
-						else
-							continue
-			return 0
+	// Early return was causing has_components to return less than it should.
+	if(stillneed)
+		return has_components
+
 	for(var/A in R.chem_catalysts)
 		if(table_contents[A] < R.chem_catalysts[A])
-			return 0
-	return 1
+			return has_components
+	return -1
 
 /obj/structure/table/proc/check_table()
 	table_contents = list()
@@ -71,10 +77,10 @@
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
 	var/send_feedback = 1
-	if(check_contents(R))
+	if(check_contents(R) < 0)
 		if(check_tools(user, R))
 			if(do_after(user, R.time, target = src))
-				if(!check_contents(R))
+				if(!check_contents(R) < 0)
 					return ", missing component."
 				if(!check_tools(user, R))
 					return ", missing tool."
@@ -203,9 +209,10 @@
 		for(var/datum/table_recipe/R in table_recipes)
 			if(R.category != categories[viewing_category])
 				continue
-			if(check_contents(R))
+			var/matched_contents = check_contents(R) // Really had no reason to be calling this loop 400+ times for an if/else statement.
+			if(matched_contents < 0)
 				can_craft += R
-			else
+			else if(matched_contents && !(user.client.prefs.toggles & HIDE_RECIPES && !matched_contents))
 				cant_craft += R
 
 		for(var/datum/table_recipe/R in can_craft)
@@ -263,9 +270,8 @@
 	var/req_text = ""
 	var/tool_text = ""
 	var/catalist_text = ""
-	if(check_contents(R))
+	if(check_contents(R) < 0)
 		name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
-
 	else
 		name_text = "<span class='linkOff'>[R.name]</span>"
 

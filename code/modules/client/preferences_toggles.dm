@@ -115,6 +115,15 @@
 	src << "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions."
 	feedback_add_details("admin_verb","TMidroundA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/togglehiderecipes()
+	set name = "Toggle Hidden Recipes"
+	set category = "Preferences"
+	set desc = "Toggles whether or not recipes you have no components for will be hidden from the tablecrafting menu."
+	prefs.toggles ^= HIDE_RECIPES
+	prefs.save_preferences()
+	src << "Recipes will [(prefs.toggles & HIDE_RECIPES) ? "now" : "no longer"] be hidden if you have no matching components."
+	feedback_add_details("admin_verb", "HiddenRecipes")
+
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
 	set category = "Preferences"
