@@ -16,24 +16,21 @@
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
 	var/has_components = 0
-	var/stillneed = 0
 	main_loop:
 		for(var/A in R.reqs)
-			stillneed += R.reqs[A]
+			var/stillneed = R.reqs[A]
 			for(var/B in table_contents)
 				if(ispath(B, A))
 					if(table_contents[B] >= R.reqs[A])
-						has_components += R.reqs[A]
-						stillneed -= R.reqs[A]
+						has_components = 1
 						continue main_loop
 					else
 						stillneed -= table_contents[B]
-						has_components += table_contents[B]
+						has_components = 1
 						if(stillneed <= 0)
 							continue main_loop
-	// Early return was causing has_components to return less than it should.
-	if(stillneed)
-		return has_components
+			if(has_components)
+				return has_components
 
 	for(var/A in R.chem_catalysts)
 		if(table_contents[A] < R.chem_catalysts[A])
