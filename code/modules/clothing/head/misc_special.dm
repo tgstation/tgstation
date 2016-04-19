@@ -50,7 +50,7 @@
 	item_color = "cakehat"
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	brightness_on = 2 //luminosity when on
+	brightness_on = 4 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	heat = 1000
 	burn_state = LAVA_PROOF
