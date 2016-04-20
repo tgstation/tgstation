@@ -1,9 +1,8 @@
 #define TIMER_DEFAULT 0
-#define TIMER_UNIQUE 1
-#define TIMER_OLDEST 2
-#define TIMER_NEWEST 3
-#define TIMER_SHORTEST 4
-#define TIMER_LONGEST 5
+#define TIMER_OLDEST 1
+#define TIMER_NEWEST 2
+#define TIMER_SHORTEST 3
+#define TIMER_LONGEST 4
 
 var/datum/subsystem/timer/SStimer
 
@@ -78,18 +77,29 @@ var/datum/subsystem/timer/SStimer
 
 	// Check for dupes if unique = 1.
 	switch(unique)
+		if(TIMER_DEFAULT)
+			event.hash = jointext(args, null)
 		if(TIMER_OLDEST) // Uses the first timer that was created.
+			var/semihash = args.Copy()
+			semihash.Cut(3, 5)
+			event.hash = jointext(semihash, null)
 			if(event.hash in SStimer.unique)
 				qdel(src)
 				return
 			SStimer.unique[event.hash] = event
 		if(TIMER_NEWEST) // Uses the most recently created timer.
+			var/semihash = args.Copy()
+			semihash.Cut(3, 5)
+			event.hash = jointext(semihash, null)
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
 				SStimer.processing -= old // In case qdel doesnt get to it fast enough to remove it from the processing list.
 				qdel(old)
 			SStimer.unique[event.hash] = event
 		if(TIMER_SHORTEST) // Uses the timer that will fire first.
+			var/semihash = args.Copy()
+			semihash.Cut(3, 5)
+			event.hash = jointext(semihash, null)
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
 				if(old.timeToRun <= event.timeToRun)
@@ -99,6 +109,9 @@ var/datum/subsystem/timer/SStimer
 				qdel(old)
 			SStimer.unique[event.hash] = event
 		if(TIMER_LONGEST) // Uses the timer that will fire last.
+			var/semihash = args.Copy()
+			semihash.Cut(3, 5)
+			event.hash = jointext(semihash, null)
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
 				if(old.timeToRun >= event.timeToRun)
@@ -106,6 +119,12 @@ var/datum/subsystem/timer/SStimer
 					return
 				SStimer.processing -= old
 				qdel(old)
+			SStimer.unique[event.hash] = event
+		else
+			event.hash = jointext(args, null)
+			if(event.hash in SStimer.unique)
+				qdel(src)
+				return
 			SStimer.unique[event.hash] = event
 
 	// If we are unique (or we're not checking that), add the timer and return the id.
