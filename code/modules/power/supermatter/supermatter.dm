@@ -62,6 +62,10 @@
 	var/has_been_powered = 0
 	var/has_reached_emergency = 0
 
+	// For making hugbox supermatter
+	var/takes_damage = 1
+	var/produces_gas = 1
+
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
 	radio = new(src)
@@ -130,12 +134,14 @@
 	var/datum/gas_mixture/removed = env.remove(gasefficency * env.total_moles())
 
 	if(!removed || !removed.total_moles())
-		damage += max((power-1600)/10, 0)
+		if(takes_damage)
+			damage += max((power-1600)/10, 0)
 		power = min(power, 1600)
 		return 1
 
 	damage_archived = damage
-	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
+	if(takes_damage)
+		damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
 	var/removed_nitrogen = 0
@@ -179,11 +185,14 @@
 
 	removed.gases["o2"][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
-	env.merge(removed)
+	if(produces_gas)
+		env.merge(removed)
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1, get_dist(l, src)) ) ) )
+			var/dist = max(1, get_dist(l, src))
+			l.hallucination += power * config_hallucination_power * sqrt(dist)
+			l.hallucination = Clamp(0, 200, l.hallucination)
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
@@ -208,7 +217,7 @@
 			investigate_log("has been powered for the first time.", "supermatter")
 			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 			has_been_powered = 1
-	else
+	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
 	return 0
 
@@ -306,3 +315,9 @@
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
 			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+
+// When you wanna make a supermatter shard for the dramatic effect, but
+// don't want it exploding suddenly
+/obj/machinery/power/supermatter_shard/hugbox
+	takes_damage = 0
+	produces_gas = 0
