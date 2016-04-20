@@ -142,7 +142,6 @@
 	attack_sound = 'sound/items/bikehorn.ogg'
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'
 	death_sound = 'sound/misc/sadtrombone.ogg'
-	death_message = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"
@@ -154,6 +153,11 @@
 
 	// HOT. PINK.
 	//color = "#FF69B4"
+
+/mob/living/simple_animal/slaughter/laughter/New()
+	..()
+
+	death_message = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
 
 /mob/living/simple_animal/slaughter/laughter/death_mealspill()
 	if(!consumed_mobs)
