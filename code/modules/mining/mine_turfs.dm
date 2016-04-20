@@ -563,6 +563,12 @@
 /turf/open/chasm/Entered(atom/movable/AM)
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
 		return
+	// Flies right over the chasm
+	if(istype(AM, /mob/living/simple_animal))
+		// apparently only simple_animals can fly??
+		var/mob/living/simple_animal/SA = AM
+		if(SA.flying)
+			return
 	drop(AM)
 
 
