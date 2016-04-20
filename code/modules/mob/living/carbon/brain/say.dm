@@ -19,3 +19,21 @@
 
 /mob/living/carbon/brain/lingcheck()
 	return 0
+
+/mob/living/carbon/brain/treat_speech(var/datum/speech/speech, genesay = 0)
+	..(speech)
+	if(container && istype(container, /obj/item/device/mmi/posibrain))
+		speech.message_classes.Add("siliconsay")
+
+/mob/living/carbon/brain/say_quote(var/text)
+	if(container && istype(container, /obj/item/device/mmi/posibrain))
+		var/ending = copytext(text, length(text))
+
+		if (ending == "?")
+			return "queries, [text]";
+		else if (ending == "!")
+			return "declares, [text]";
+		return "states, [text]";
+
+	else
+		return ..()
