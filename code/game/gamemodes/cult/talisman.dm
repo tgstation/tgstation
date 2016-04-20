@@ -31,7 +31,7 @@
 			user.whisper(invocation)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm")) 
+			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/weapon/paper/talisman/malformed
@@ -153,7 +153,7 @@
 						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
 	new /obj/item/weapon/tome(get_turf(user))
 	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
-			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>") 
+			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>")
 
 /obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
@@ -181,7 +181,7 @@
 		for(var/obj/effect/rune/R in range(3,user))
 			R.invisibility = 0
 			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
-			R.alpha = initial(R.alpha) 
+			R.alpha = initial(R.alpha)
 
 //Rite of False Truths: Same as rune
 /obj/item/weapon/paper/talisman/make_runes_fake
@@ -217,7 +217,7 @@
 	color = "#ff0000" // red
 	invocation = "Fuu ma'jin!"
 	health_cost = 10
-	
+
 /obj/item/weapon/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
@@ -226,7 +226,7 @@
 	else
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 	return 0
-	
+
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
 	if(iscultist(user))
 		invoke(user, 1)
@@ -260,7 +260,7 @@
 	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
 	color = "#33cc33" // green
 	invocation = "N'ath reth sh'yro eth draggathnor!"
-	
+
 /obj/item/weapon/paper/talisman/armor/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
 	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
@@ -308,15 +308,15 @@
 		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
 	else
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
-	
-	
+
+
 /obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
-		
+
 /obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
-	name = "cultist shackles"
+	name = "cult shackle"
 	desc = "shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 	origin_tech = "materials=2;magnets=5"
@@ -351,7 +351,6 @@
 
 /obj/item/weapon/paper/talisman/shackle/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
-		invoke(user, 1)
 		if(isrobot(target))
 			..()
 			return
@@ -375,7 +374,11 @@
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
 				user << "<span class='notice'>You shackle [C].</span>"
-				add_logs(user, C, "handcuffed")
+				add_logs(user, C, "handcuffed"
+				uses--
 		else
-			user << "<span class='warning'>You fail to shackle [C].</span>" 
+			user << "<span class='warning'>You fail to shackle [C].</span>"
+	if(uses <= 0)
+		user.drop_item()
+		qdel(src)
 	return
