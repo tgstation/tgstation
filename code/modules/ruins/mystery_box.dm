@@ -8,7 +8,7 @@
 	burn_state = FIRE_PROOF
 
 	var/code = null
-	var/lastattempt = null
+
 	var/attempts = 3
 	var/codelen = 4
 
@@ -22,7 +22,12 @@
 		var/dig = pick(digits)
 		code += dig
 
-	var/loot = rand(1,100)
+	add_loot()
+
+
+/obj/item/weapon/storage/briefcase/mystery/proc/add_loot(loot)
+	if(!loot)
+		loot = rand(1,100)
 
 	switch(loot)
 		if(1 to 5) //5% chance
@@ -81,9 +86,13 @@
 			for(var/i in 1 to rand(4, 7))
 				var/newcoin = pick(/obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/diamond, /obj/item/weapon/coin/plasma, /obj/item/weapon/coin/uranium)
 				new newcoin(src)
-		if(65 to 66)
+		if(65)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
+		if(66)
+			// don't worry, even if you fuck up and fail to unlock the
+			// case, the immortal candy bar will tp somewhere else
+			new /obj/item/weapon/reagent_containers/food/snacks/candy/youtried
 		if(67 to 68)
 			for(var/i in 1 to rand(4, 7))
 				var /newitem = pick(subtypesof(/obj/item/weapon/stock_parts) - /obj/item/weapon/stock_parts/subspace)
@@ -172,8 +181,12 @@
 	else
 		return ..()
 
-/obj/item/weapon/storage/briefcase/mystery/unlock()
+/obj/item/weapon/storage/briefcase/mystery/proc/unlock()
 	src.audible_message("Tinny congratulatory music plays, as you hear the [src] unlock.", "The lights on the [src] all go green.")
+	playsound(loc, 'sound/effects/yourwinner.ogg', 50, 0)
+	locked = FALSE
+	desc += " The lights on it are all green."
+	// It's not relockable, it is now an ordinary briefcase
 
 
 /obj/item/weapon/storage/briefcase/mystery/Destroy()
@@ -187,7 +200,9 @@
 	..()
 
 /obj/item/weapon/storage/briefcase/mystery/attack_animal(mob/user)
-	boom(user)
+	if(locked)
+		boom(user)
+	else ..()
 
 /obj/item/weapon/storage/briefcase/mystery/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
@@ -212,16 +227,64 @@
 
 	src += new /obj/item/trash/candy/youtried
 
+/obj/item/weapon/reagent_containers/food/snacks/candy/youtried
+	name = "'UTried' candy"
+	desc = "It\'s a delicious 'UTried' candy bar, still in its wrapper. For some reason, you can only open it a little bit."
+	// Yes, this is an INFINITE candy bar. Which makes the empty wrapper
+	// even more consuming.
+	trash = /obj/item/weapon/reagent_containers/food/snacks/candy/youtried
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/New()
+	..()
+	// Why would't ghosts want to follow an immortal candy bar?
+	poi_list |= src
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] eating the [src] far too quickly! It doesn't look like \he's going to stop!")
+	src.visible_message("<span class='warning'>The [src] shines brightly for a moment, and then dims.</span>", "You hear a faint hum.")
+	var/turf/T = get_turf(user)
+
+	var/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/child = new(T)
+	child.name = " (" + user.real_name + " flavour)"
+	child.desc = " This bar seems to be flavoured with " + user.real_name + "."
+	qdel(child)
+	// Why yes, this does make a new immortal candy bar and then teleport
+	// it somewhere else.
+	// I SURE HOPE THIS ISN'T HOW IMMORTAL CANDY BARS REPRODUCE, UNTIL
+	// SOMEONE TRIES TO LOCK IT AWAY, BUT ONE DAY, PANDORA OPENS THE BOX
+	// AND THE BARS WILL CONSUME US ALL
+	return (TOXLOSS | OXYLOSS)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/Destroy()
+	// I DID MOST DEFINITELY NOT COPY AND PASTE THIS FROM THE NUKE DISK
+	// CODE, HOW DARE YOU ACCUSE ME OF SUCH A THING
+	if(blobstart.len > 0)
+		var/turf/targetturf = get_turf(pick(blobstart))
+		var/turf/diskturf = get_turf(src)
+		if(ismob(loc))
+			var/mob/M = loc
+			M.remove_from_mob(src)
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = loc
+			S.remove_from_storage(src, diskturf)
+		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
+	else
+		throw EXCEPTION("Unable to find a blobstart landmark")
+	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+
 /obj/item/trash/candy/youtried
-	name = "burnt candy wrapper"
-	desc = "It's a used 'UTried' candy wrapper. It's slightly burnt, and smells toxic. A warning on it warns it is not suitable for consumption by carbon based lifeforms."
+	name = "'UTried' candy wrapper"
+	desc = "It\'s a 'UTried' candy wrapper. It's slightly burnt, and smells toxic. A warning on it warns the wrapper is not suitable for consumption by carbon based lifeforms."
 	burn_state = FIRE_PROOF // CANNOT BURN WHAT HAS ALREADY BEEN BURNT
+	// But the wrapper is not immortal, it's just annoying.
 
 /obj/item/trash/candy/youtried/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is swallowing the [src]. It looks like \he's trying to commit suicide...</span>")
 
 	// TODO when the stomach organ is implemented, move it to that instead
-	user.stomach_contents += src
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/C = user
+		C.stomach_contents += src
 	src.loc = user
 
 	return (TOXLOSS | OXYLOSS)
