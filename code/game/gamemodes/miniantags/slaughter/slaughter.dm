@@ -42,8 +42,15 @@
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
 
+	loot = list(/obj/effect/decal/cleanable/blood, \
+				/obj/effect/decal/cleanable/blood/innards, \
+				/obj/item/organ/internal/heart/demon)
+	del_on_death = 1
+	var/death_message = "<span class='danger'>The generic slaughter demon screams in anger because this is the default death message!</span>"
+
 /mob/living/simple_animal/slaughter/New()
 	..()
+	death_message = "<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>"
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -57,22 +64,12 @@
 		speed = 0
 
 /mob/living/simple_animal/slaughter/death()
-	..(1)
-	death_gibs()
+	..()
 
 	death_mealspill()
 
+	visible_message(deathmessage)
 	playsound(get_turf(src),death_sound, 200, 1)
-	death_message()
-
-	ghostize()
-	qdel(src)
-
-/mob/living/simple_animal/slaughter/proc/death_gibs()
-	
-	new /obj/effect/decal/cleanable/blood(get_turf(src))
-	new /obj/effect/decal/cleanable/blood/innards(get_turf(src))
-	new /obj/item/organ/internal/heart/demon(src.loc)
 
 /mob/living/simple_animal/slaughter/proc/death_mealspill()
 	if(consumed_mobs)
@@ -84,9 +81,6 @@
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
 	random_icon_states = list("innards")
-
-/mob/living/simple_animal/slaughter/proc/death_message()
-	visible_message("<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>")
 
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
@@ -148,25 +142,18 @@
 	attack_sound = 'sound/items/bikehorn.ogg'
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'
 	death_sound = 'sound/misc/sadtrombone.ogg'
+	death_message = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"
+
+	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
 	// Keep the people we hug!
 	consumed_mobs = list()
 
 	// HOT. PINK.
 	//color = "#FF69B4"
-
-/mob/living/simple_animal/slaughter/laughter/death_gibs()
-	// Laughter demons are powered not by demonic energy, but by the laughter
-	// of kittens
-	var/mob/living/simple_animal/pet/cat/kitten/K = new(get_turf(src))
-	K.name = "Laughter"
-
-/mob/living/simple_animal/slaughter/laughter/death_message()
-	visible_message("<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>", null, "You hear a sigh and a giggle.")
-
 
 /mob/living/simple_animal/slaughter/laughter/death_mealspill()
 	if(!consumed_mobs)

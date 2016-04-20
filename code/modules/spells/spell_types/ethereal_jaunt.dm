@@ -69,9 +69,6 @@
 								break
 				target.canmove = 1
 
-//Silence wizard during jaunt so they cannot spell cast while invisible
-//
-
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
