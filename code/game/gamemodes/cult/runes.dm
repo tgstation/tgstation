@@ -382,7 +382,7 @@ var/list/teleport_runes = list()
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall
-	cultist_name = "Form Shield"
+	cultist_name = "Barrier"
 	cultist_desc = "becomes solid when invoked, preventing passage. Invoking it again reverses this effect."
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
