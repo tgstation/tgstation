@@ -13,6 +13,7 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
+	var/mob/foundmob = ""
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -165,6 +166,27 @@
 		if(bcell.reliability != 100 && prob(50/severity))
 			bcell.reliability -= 10 / severity
 	..()
+
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	if (prob(50))
+		if(istype(hit_atom, /mob/living))
+			var/mob/living/carbon/human/H = hit_atom
+			if(status)
+				H.Stun(stunforce)
+				H.Weaken(stunforce)
+				H.apply_effect(STUTTER, stunforce)
+				deductcharge(hitcost)
+
+				H.visible_message("<span class='danger'>[src] strikes [H] and stuns them!</span>")
+
+				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+				log_attack("Flying [src.name], last touched by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])" )
+
+				return
+	return ..()
+
+
+
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/weapon/melee/baton/cattleprod
