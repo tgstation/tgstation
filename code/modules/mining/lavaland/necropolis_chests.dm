@@ -36,7 +36,7 @@
 		if(10)
 			new /obj/item/organ/internal/heart/cursed(src)
 		if(11)
-			new /obj/vehicle/lavaboat(src)
+			new /obj/vehicle/lavaboat/dragon(src)
 		if(12)
 			new /obj/item/upgradescroll(src)
 		if(13)
@@ -338,8 +338,8 @@
 /obj/vehicle/lavaboat
 	name = "lava boat"
 	desc = "A boat used for traversing lava."
-	icon_state = "miningcaropen"
-	icon = 'icons/obj/crates.dmi'
+	icon_state = "goliath_boat"
+	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	keytype = /obj/item/weapon/oar
 	burn_state = LAVA_PROOF
 
@@ -356,8 +356,33 @@
 /obj/item/weapon/oar
 	name = "oar"
 	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "keysec"
+	icon_state = "oar"
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = 3
 	burn_state = LAVA_PROOF
+
+/datum/table_recipe/oar
+	name = "goliath bone oar"
+	result = /obj/item/weapon/oar
+	reqs = list(/obj/item/asteroid/goliath_hide = 1)
+	time = 15
+	category = CAT_MISC
+
+/datum/table_recipe/boat
+	name = "goliath hide boat"
+	result = /obj/vehicle/lavaboat
+	reqs = list(/obj/item/asteroid/goliath_hide = 3)
+	time = 50
+	category = CAT_MISC
+
+//Dragon Boat
+
+/obj/vehicle/lavaboat/dragon
+	name = "mysterious boat"
+	desc = "This boat moves where you will it, without the need for an oar."
+	keytype = null
+	icon_state = "dragon_boat"
+	generic_pixel_y = 2
+	generic_pixel_x = 1
+	vehicle_move_delay = 1
