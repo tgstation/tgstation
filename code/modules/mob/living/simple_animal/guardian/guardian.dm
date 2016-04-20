@@ -105,8 +105,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	..()
 	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
 
-	float(1) // No matter our situation, guardians always float up and down
-
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
