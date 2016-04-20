@@ -5,8 +5,9 @@ This file contains the arcane tome files as well as innate cultist emergency com
 */
 
 /mob/proc/cult_add_comm() //why the fuck does this have its own proc? not removing it because it might be used somewhere but...
-	verbs += /mob/living/proc/cult_innate_comm
 	verbs += /mob/living/proc/cult_help
+	verbs += /mob/living/proc/cult_innate_comm
+	
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"
@@ -78,8 +79,6 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	cultist_commune(usr, 0, 1, input)
 	return
-
-
 
 /obj/item/weapon/tome
 	name = "arcane tome"
@@ -279,6 +278,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 				N.color = "red"
 				N.health = 60
 				shields |= N
+			if(!do_after(user, 400, target = get_turf(user)))
 				if(shields.len)
 					for(var/V in shields)
 						var/obj/machinery/shield/S = V
