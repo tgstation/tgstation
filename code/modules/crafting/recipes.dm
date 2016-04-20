@@ -356,5 +356,6 @@
 	name = "Paper Plane"
 	result = /obj/item/weapon/paper/paperplane
 	reqs = list(/obj/item/weapon/paper = 1)
+	parts = list(/obj/item/weapon/paper = 1)
 	time = 10
 	category = CAT_MISC
