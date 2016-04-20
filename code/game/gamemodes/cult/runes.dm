@@ -908,6 +908,7 @@ var/list/teleport_runes = list()
 				continue
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			C.take_overall_damage(45,45)
+			C.Weaken(2)
 	for(var/mob/living/carbon/M in range(1,src))
 		if(iscultist(M))
 			M.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
