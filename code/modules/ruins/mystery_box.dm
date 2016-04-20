@@ -197,12 +197,13 @@
 			qdel(AM)
 
 		src += new /obj/item/trash/candy/youtried
-	..()
+	return ..()
 
 /obj/item/weapon/storage/briefcase/mystery/attack_animal(mob/user)
 	if(locked)
 		boom(user)
-	else ..()
+	else
+		return..()
 
 /obj/item/weapon/storage/briefcase/mystery/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
@@ -211,8 +212,10 @@
 			boom(user)
 		else if(istype(W, /obj/item/device/multitool))
 			user << "<span class='notice'>The [W] doesn't seem to be able to interface with the [src].</span>"
-		else ..()
-	else ..()
+		else
+			return ..()
+	else
+		return ..()
 
 /obj/item/weapon/storage/briefcase/mystery/proc/boom(mob/user)
 	if(!locked)
