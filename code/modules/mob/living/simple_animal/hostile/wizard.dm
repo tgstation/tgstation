@@ -22,6 +22,7 @@
 	unsuitable_atmos_damage = 15
 	faction = list("wizard")
 	status_flags = CANPUSH
+	gold_core_spawnable = 1
 
 	retreat_distance = 3 //out of fireball range
 	minimum_distance = 3

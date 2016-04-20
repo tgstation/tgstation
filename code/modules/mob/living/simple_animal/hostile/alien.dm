@@ -159,7 +159,7 @@
 	a_intent = "help"
 	friendly = "caresses"
 	environment_smash = 0
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 	icon_state = "maid"
 	icon_living = "maid"
 	icon_dead = "maid_dead"
