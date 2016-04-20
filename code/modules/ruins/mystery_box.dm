@@ -1,24 +1,29 @@
 //Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
+// And then I, coiax, butchered the file to make a NEW BETTER mystery box
 
-/obj/structure/closet/crate/secure/loot
-	name = "abandoned crate"
-	desc = "What could be inside?"
-	icon_state = "securecrate"
+/obj/item/weapon/storage/briefcase/mystery
+	name = "mystery box"
+	desc = "A seemingly discarded, dusty suitcase. It has a keypad, along with scorch marks along the side."
+	icon_state = "secure"
+	burn_state = FIRE_PROOF
+
 	var/code = null
 	var/lastattempt = null
-	var/attempts = 10
+	var/attempts = 3
 	var/codelen = 4
 
-/obj/structure/closet/crate/secure/loot/New()
+	var/locked = TRUE
+
+/obj/item/weapon/storage/briefcase/mystery/New()
 	..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "z")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
 		var/dig = pick(digits)
 		code += dig
-		digits -= dig  //Player can enter codes with matching digits, but there are never matching digits in the answer
 
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
+	var/loot = rand(1,100)
+
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
@@ -150,68 +155,73 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+/obj/item/weapon/storage/briefcase/mystery/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
+		user << "<span class='notice'>You try entering some digits on the keypad.</span>"
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
 			if (input == code)
-				user << "<span class='notice'>The crate unlocks!</span>"
-				locked = 0
-				overlays.Cut()
-				overlays += "securecrateg"
-			else if (input == null || length(input) != codelen)
-				user << "<span class='notice'>You leave the crate alone.</span>"
+				user << "<span class='notice'>The [src] unlocks!</span>"
+				unlock()
 			else
-				user << "<span class='warning'>A red light flashes.</span>"
-				lastattempt = replacetext(input, 0, "z")
+				src.audible_message("The [src] makes an annoyed buzzing sound.", "A red light flashes on the [src].")
+				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 				attempts--
 				if(attempts == 0)
 					boom(user)
 	else
 		return ..()
 
-/obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
+/obj/item/weapon/storage/briefcase/mystery/unlock()
+	src.audible_message("Tinny congratulatory music plays, as you hear the [src] unlock.", "The lights on the [src] all go green.")
+
+
+/obj/item/weapon/storage/briefcase/mystery/Destroy()
+	// If for any reason it's blown up without playing by the rules,
+	// you only get the youtried wrapper
+	if(locked)
+		for(var/atom/movable/AM in src)
+			qdel(AM)
+
+		src += new /obj/item/trash/candy/youtried
+	..()
+
+/obj/item/weapon/storage/briefcase/mystery/attack_animal(mob/user)
 	boom(user)
 
-/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/storage/briefcase/mystery/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if(istype(W, /obj/item/weapon/card/emag))
+			// No.
 			boom(user)
-		if(istype(W, /obj/item/device/multitool))
-			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
-			if(attempts == 1)
-				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
-			else
-				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
-			if(lastattempt != null)
-				var/list/guess = list()
-				var/bulls = 0
-				var/cows = 0
-				for(var/i = 1, i < codelen + 1, i++)
-					var/a = copytext(lastattempt, i, i+1) //Stuff the code into the list
-					guess += a
-					guess[a] = i
-				for(var/i in guess) //Go through list and count matches
-					var/a = findtext(code, i)
-					if(a == guess[i])
-						++bulls
-					else if(a)
-						++cows
-				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
+		else if(istype(W, /obj/item/device/multitool))
+			user << "<span class='notice'>The [W] doesn't seem to be able to interface with the [src].</span>"
 		else ..()
 	else ..()
 
-/obj/structure/closet/crate/secure/loot/togglelock(mob/user)
-	if(locked)
-		boom(user)
-	else
-		..()
+/obj/item/weapon/storage/briefcase/mystery/proc/boom(mob/user)
+	if(!locked)
+		// Anti-tamper system is disabled when unlocked.
+		// Anti-tamper shouldn't trigger when unlocked anyway
+		return
 
-/obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+	src.visible_message("[src]'s anti-tamper system activates! Light flashes through the gaps! You smell smoke...", "A harsh alarm sounds, and then a hiss. You smell smoke...")
+
 	for(var/atom/movable/AM in src)
 		qdel(AM)
-	var/turf/T = get_turf(src)
-	explosion(T, -1, -1, 1, 1)
-	qdel(src)
+
+	src += new /obj/item/trash/candy/youtried
+
+/obj/item/trash/candy/youtried
+	name = "burnt candy wrapper"
+	desc = "It's a used 'UTried' candy wrapper. It's slightly burnt, and smells toxic. A warning on it warns it is not suitable for consumption by carbon based lifeforms."
+	burn_state = FIRE_PROOF // CANNOT BURN WHAT HAS ALREADY BEEN BURNT
+
+/obj/item/trash/candy/youtried/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is swallowing the [src]. It looks like \he's trying to commit suicide...</span>")
+
+	// TODO when the stomach organ is implemented, move it to that instead
+	user.stomach_contents += src
+	src.loc = user
+
+	return (TOXLOSS | OXYLOSS)
