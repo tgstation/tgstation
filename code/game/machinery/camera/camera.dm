@@ -79,12 +79,12 @@
 	if(!isEmpProof())
 		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
-			networkbackup = network
+			networkbackup = network.Copy()
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
-			addtimer(src, "emp_reset", 900, TIMER_NEWEST)
+			addtimer(src, "emp_reset", 900, TIMER_LONGEST)
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -94,7 +94,7 @@
 
 /obj/machinery/camera/proc/emp_reset()
 	triggerCameraAlarm()
-	network = networkbackup
+	network = networkbackup.Copy()
 	icon_state = initial(icon_state)
 	stat &= ~EMPED
 	if(can_use())
