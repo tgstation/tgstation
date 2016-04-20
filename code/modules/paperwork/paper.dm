@@ -409,7 +409,11 @@
 	..()
 	if(!in_range(src, user))
 		return
+<<<<<<< HEAD
 	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
+=======
+	if(!istype(src, /obj/item/weapon/paper/paperplane)) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
+>>>>>>> origin/paperplane
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
 			user.unEquip(src)
