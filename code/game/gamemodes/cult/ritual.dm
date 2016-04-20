@@ -174,9 +174,9 @@ This file contains the arcane tome files as well as innate cultist communication
 
 	text += "<font color='red'><b>Equipment:</b></font><br><br>"
 
-	text += "<font color='red'><b>Cult Blade</b></font><br>Cult blades are a sharp weapons that, notably, cannot be used by noncultists. These blades are produced by the Rite and Talisman of Arming.<br>"
+	text += "<font color='red'><b>Cult Blade</b></font><br>Cult blades are a sharp weapons that, notably, cannot be used by noncultists. These blades are produced by the Rite and Talisman of Arming.<br><br>"
 
-	text += "<font color='red'><b>Cult Robes</b></font><br>Cult robes are heavily armored robes. These robes are produced by the Rite and Talisman of Arming.<br>"
+	text += "<font color='red'><b>Cult Robes</b></font><br>Cult robes are heavily armored robes. These robes are produced by the Rite and Talisman of Arming.<br><br>"
 
 	text += "<font color='red'><b>Soulstone</b></font><br>A soulstone is a simple piece of magic, produced either via the starter talisman or by sacrificing humans. Using it on an unconscious or dead human, or on a Shade, will trap their soul in the stone, allowing its use in construct shells. \
 	<br>The soul within can also be released as a Shade.<br><br>"
@@ -232,8 +232,8 @@ This file contains the arcane tome files as well as innate cultist communication
 			break
 	if(!rune_to_scribe)
 		return
-	var/turf/Thenewturfyouwalkedto = get_turf(user) //we may have moved. adjust as needed...
-	if(locate(/obj/effect/rune) in Thenewturfyouwalkedto)
+	Turf = get_turf(user) //we may have moved. adjust as needed...
+	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
@@ -247,13 +247,13 @@ This file contains the arcane tome files as well as innate cultist communication
 			var/area/A = get_area(src)
 			var/locname = initial(A.name)
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs.","Central Command Higher Dimensionsal Affairs")
-	if(!do_after(user, initial(rune_to_scribe.creation_delay), target = Thenewturfyouwalkedto))
+	if(!do_after(user, initial(rune_to_scribe.creation_delay), target = Turf))
 		return
-	if(locate(/obj/effect/rune) in Thenewturfyouwalkedto)
+	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
-	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
+	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
 
