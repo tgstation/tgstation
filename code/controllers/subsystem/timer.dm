@@ -85,8 +85,8 @@ var/datum/subsystem/timer/SStimer
 		if(TIMER_NEWEST) // Uses the most recently created timer.
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
+				SStimer.processing -= old // In case qdel doesnt get to it fast enough to remove it from the processing list.
 				qdel(old)
-			SStimer.processing -= old // In case qdel doesnt get to it fast enough to remove it from the processing list.
 			SStimer.unique[event.hash] = event
 		if(TIMER_SHORTEST) // Uses the timer that will fire first.
 			var/datum/timedevent/old = SStimer.unique[event.hash]
@@ -94,8 +94,8 @@ var/datum/subsystem/timer/SStimer
 				if(old.timeToRun <= event.timeToRun)
 					qdel(src)
 					return
+				SStimer.processing -= old
 				qdel(old)
-			SStimer.processing -= old
 			SStimer.unique[event.hash] = event
 		if(TIMER_LONGEST) // Uses the timer that will fire last.
 			var/datum/timedevent/old = SStimer.unique[event.hash]
@@ -103,8 +103,8 @@ var/datum/subsystem/timer/SStimer
 				if(old.timeToRun >= event.timeToRun)
 					qdel(src)
 					return
+				SStimer.processing -= old
 				qdel(old)
-			SStimer.processing -= old
 			SStimer.unique[event.hash] = event
 
 	// If we are unique (or we're not checking that), add the timer and return the id.
