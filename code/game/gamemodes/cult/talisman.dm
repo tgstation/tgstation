@@ -102,6 +102,7 @@
 /obj/item/weapon/paper/talisman/teleport
 	cultist_name = "Talisman of Teleportation"
 	cultist_desc = "A single-use talisman that will teleport a user to a random rune of the same keyword."
+	color = "#551A8B" // purple
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
 
@@ -206,6 +207,7 @@
 	health_cost = 5
 
 /obj/item/weapon/paper/talisman/emp/invoke(mob/living/user, successfuluse = 1)
+	. = ..()
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
