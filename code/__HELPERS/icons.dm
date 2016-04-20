@@ -872,6 +872,52 @@ The _flatIcons list is a cache for generated icon files.
 	del(atom_icon)
 	return text_image
 
+// Pick a random animal instead of the icon, and use that instead
+/proc/getRandomAnimalImage(atom/A)
+	var/list/icons = list()
+	var/icon/selected
+
+	icons += new/icon('icons/mob/animal.dmi', "cow")
+	icons += new/icon('icons/mob/animal.dmi', "carp")
+	icons += new/icon('icons/mob/animal.dmi', "chicken_brown")
+	icons += new/icon('icons/mob/animal.dmi', "chicken_white")
+	icons += new/icon('icons/mob/animal.dmi', "chicken_black")
+	icons += new/icon('icons/mob/animal.dmi', "chick")
+	icons += new/icon('icons/mob/animal.dmi', "brownbear")
+	icons += new/icon('icons/mob/animal.dmi', "bearfloor")
+	icons += new/icon('icons/mob/animal.dmi', "snowbear")
+	icons += new/icon('icons/mob/animal.dmi', "mushroom")
+	icons += new/icon('icons/mob/animal.dmi', "crab")
+	icons += new/icon('icons/mob/animal.dmi', "mouse_brown")
+	icons += new/icon('icons/mob/animal.dmi', "mouse_white")
+	icons += new/icon('icons/mob/animal.dmi', "mouse_black")
+	icons += new/icon('icons/mob/animal.dmi', "goat")
+	icons += new/icon('icons/mob/animal.dmi', "parrot_fly")
+	icons += new/icon('icons/mob/animal.dmi', "bat")
+
+	// Keep a reference, we'll need to colour it if picked
+	var/icon/butterfly = new/icon('icons/mob/animal.dmi', "butterfly")
+	icons += butterfly
+
+	icons += new/icon('icons/mob/pets.dmi', "corgi")
+	icons += new/icon('icons/mob/pets.dmi', "oldcorgi")
+	icons += new/icon('icons/mob/pets.dmi', "lisa")
+	icons += new/icon('icons/mob/pets.dmi', "puppy")
+	icons += new/icon('icons/mob/pets.dmi', "pug")
+	icons += new/icon('icons/mob/pets.dmi', "fox")
+	icons += new/icon('icons/mob/pets.dmi', "cat")
+	icons += new/icon('icons/mob/pets.dmi', "cat2")
+	icons += new/icon('icons/mob/pets.dmi', "kitten")
+	icons += new/icon('icons/mob/pets.dmi', "voidpuppy")
+	icons += new/icon('icons/mob/pets.dmi', "spacecat")
+	icons += new/icon('icons/mob/pets.dmi', "original")
+
+	selected = pick(icons)
+	if(selected == butterfly)
+		var/color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		selected.ColorTone(color)
+
+	return image(selected, loc = A)
 
 //Find's the average colour of the icon
 //By vg's ComicIronic
