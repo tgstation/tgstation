@@ -1,8 +1,9 @@
 #define TIMER_DEFAULT 0
-#define TIMER_OLDEST 1
-#define TIMER_NEWEST 2
-#define TIMER_SHORTEST 3
-#define TIMER_LONGEST 4
+#define TIMER_UNIQUE 1
+#define TIMER_OLDEST 2
+#define TIMER_NEWEST 3
+#define TIMER_SHORTEST 4
+#define TIMER_LONGEST 5
 
 var/datum/subsystem/timer/SStimer
 
