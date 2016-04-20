@@ -894,6 +894,7 @@ The _flatIcons list is a cache for generated icon files.
 	icons += new/icon('icons/mob/animal.dmi', "goat")
 	icons += new/icon('icons/mob/animal.dmi', "parrot_fly")
 	icons += new/icon('icons/mob/animal.dmi', "bat")
+	icons += new/icon('icons/mob/animal.dmi', "lizard")
 
 	// Keep a reference, we'll need to colour it if picked
 	var/icon/butterfly = new/icon('icons/mob/animal.dmi', "butterfly")
