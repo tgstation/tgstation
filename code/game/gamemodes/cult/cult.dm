@@ -68,7 +68,7 @@
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
-	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy water will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
+	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - sacrifice your target and summon Nar-Sie at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy water will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
 
 
 /datum/game_mode/cult/pre_setup()
@@ -106,13 +106,14 @@
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
 				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the Sacrifice rune and three acolytes to do so."
+					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it."
+				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes around and on it. You must do this after sacrificing your target."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
 	if("sacrifice" in cult_objectives)
@@ -134,6 +135,7 @@
 		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
 		memorize_cult_objectives(cult_mind)
 	..()
+
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)
 	if(!istype(mob))
 		return

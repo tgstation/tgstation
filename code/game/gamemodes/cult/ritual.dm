@@ -11,15 +11,21 @@ This file contains the arcane tome files as well as innate cultist communication
 	set category = "Cultist"
 	set name = "Communion"
 
-	if(!iscultist(usr) || usr.incapacitated())
+	if(!iscultist(usr))
+		return
+	if(usr.incapacitated())
+		usr << "<span class='danger'>You can't seem to reach your wrists like this.</span>"
 		return
 
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input)
 		return
 
-	if(!iscultist(usr) || usr.incapacitated())
-		return	//we do this again because input() sleeps
+	if(!iscultist(usr))
+		return
+	if(usr.incapacitated())
+		usr << "<span class='danger'>You can't seem to reach your wrists like this.</span>"
+		return //we do these again because input() sleeps
 
 	cultist_commune(usr, 1, input)
 
