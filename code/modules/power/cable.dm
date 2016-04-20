@@ -783,6 +783,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon_state = "coil_white"
 
 /obj/item/stack/cable_coil/random/New()
-	item_color = pick("red","yellow","green","blue","pink")
+	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()

@@ -306,7 +306,7 @@
 		update()
 		return
 
-	if(!user.drop_item())
+	if(!user.drop_item() || I.flags & ABSTRACT) // Dunno why this wasn't here before?
 		return
 
 	I.loc = src

@@ -7,7 +7,7 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
 	baseturf = /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "o2=0;n2=0;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -424,7 +424,7 @@
 	var/sand_type = /obj/item/weapon/ore/glass
 
 /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 /turf/open/floor/plating/asteroid/basalt
@@ -440,7 +440,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/snow
 	name = "snow"
@@ -455,7 +455,7 @@
 	sand_type = /obj/item/stack/sheet/mineral/snow
 
 /turf/open/floor/plating/asteroid/snow/airless
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/snow/temperatre
 	temperature = 255.37
@@ -615,6 +615,12 @@
 		/turf/closed/mineral/uranium/volcanic = 5, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 10,
 		/turf/closed/mineral/silver/volcanic = 12, /turf/closed/mineral/plasma/volcanic = 20, /turf/closed/mineral/iron/volcanic = 40,
 		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic = 1, /turf/closed/mineral/bscrystal/volcanic = 1)
+
+/turf/closed/mineral/random/high_chance/volcanic
+	environment_type = "basalt"
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
 /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

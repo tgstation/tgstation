@@ -3761,6 +3761,7 @@
 "ahl" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Security"
 	},
@@ -27003,9 +27004,9 @@
 /area/maintenance/disposal)
 "beU" = (
 /obj/machinery/conveyor{
-	dir = 9;
+	dir = 6;
 	id = "garbage";
-	verted = -1
+	verted = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -32210,6 +32211,7 @@
 "bpr" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Research Division"
 	},
@@ -33504,6 +33506,7 @@
 "brM" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #1"
 	},
@@ -34398,6 +34401,7 @@
 "bts" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #2"
 	},
@@ -35080,6 +35084,7 @@
 "buD" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #3"
 	},
@@ -35859,6 +35864,7 @@
 "bvY" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #4"
 	},
@@ -36059,6 +36065,7 @@
 "bwv" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Medbay"
 	},
@@ -39910,6 +39917,7 @@
 "bDP" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 1;
 	freq = 1400;
 	location = "Janitor"
 	},
@@ -45449,16 +45457,10 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/closet,
-/obj/item/pipe{
-	dir = 4;
-	icon_state = "mixer";
-	name = "gas mixer fitting";
-	pipe_type = 14
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bOx" = (
@@ -45696,6 +45698,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Atmospherics"
 	},
@@ -58422,6 +58425,15 @@
 	},
 /turf/open/space,
 /area/space)
+"coT" = (
+/obj/item/pipe{
+	dir = 4;
+	icon_state = "mixer";
+	name = "gas mixer fitting";
+	pipe_type = 14
+	},
+/turf/open/floor/engine,
+/area/toxins/misc_lab)
 "coU" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -112756,7 +112768,7 @@ bMv
 bEC
 bQT
 bSh
-bTl
+coT
 bTl
 bXr
 bNZ

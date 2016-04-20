@@ -7898,7 +7898,7 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 9;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -7919,8 +7919,9 @@
 	req_access_txt = "12"
 	},
 /obj/machinery/conveyor{
-	dir = 9;
-	id = "garbage"
+	dir = 6;
+	id = "garbage";
+	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -9011,6 +9012,7 @@
 "aoS" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Security"
 	},
@@ -14875,6 +14877,7 @@
 "ayj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Engineering"
 	},
@@ -22705,6 +22708,7 @@
 "aKx" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #1"
 	},
@@ -23384,6 +23388,7 @@
 "aLP" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #2"
 	},
@@ -24217,6 +24222,7 @@
 "aNt" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #3"
 	},
@@ -24973,6 +24979,7 @@
 "aOO" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "QM #4"
 	},
@@ -25932,6 +25939,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Tool Storage"
 	},
@@ -40887,6 +40895,7 @@
 "bol" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Bridge"
 	},
@@ -42531,6 +42540,7 @@
 "bqR" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
+	dir = 8;
 	freq = 1400;
 	location = "Bar"
 	},
@@ -53329,6 +53339,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Atmospherics"
 	},
@@ -53957,7 +53968,9 @@
 /turf/open/floor/plasteel{
 	icon_state = "vault"
 	},
-/area/gateway)
+/area/bridge/meeting_room{
+	name = "\improper Command Hallway"
+	})
 "bIY" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
@@ -53967,13 +53980,17 @@
 /turf/open/floor/plasteel{
 	icon_state = "vault"
 	},
-/area/gateway)
+/area/bridge/meeting_room{
+	name = "\improper Command Hallway"
+	})
 "bIZ" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel{
 	icon_state = "vault"
 	},
-/area/gateway)
+/area/bridge/meeting_room{
+	name = "\improper Command Hallway"
+	})
 "bJa" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0";
@@ -57655,7 +57672,7 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/machinery/droneDispenser/preloaded,
+/obj/machinery/droneDispenser,
 /obj/machinery/door/window/southleft,
 /turf/open/floor/carpet,
 /area/assembly/showroom{
@@ -62209,6 +62226,7 @@
 "bWD" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Kitchen"
 	},
@@ -65445,6 +65463,7 @@
 "ccj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
+	dir = 4;
 	freq = 1400;
 	location = "Medbay"
 	},
@@ -67281,6 +67300,7 @@
 "ceO" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
+	dir = 8;
 	freq = 1400;
 	location = "Hydroponics"
 	},
@@ -76993,6 +77013,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
+	dir = 1;
 	freq = 1400;
 	location = "Research and Development"
 	},
@@ -89579,6 +89600,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
+	dir = 1;
 	freq = 1400;
 	location = "Robotics"
 	},
@@ -93767,11 +93789,6 @@
 /turf/closed/wall/r_wall,
 /area/toxins/xenobiology)
 "cTD" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	icon_state = "alarm0";
-	pixel_x = -22
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
