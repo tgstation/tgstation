@@ -84,7 +84,7 @@
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
-			addtimer(src, "emp_reset", 900, TIMER_LONGEST)
+			addtimer(src, "emp_reset", 900, 1, SSTIMER_WAIT) // this will increase the timer if the camera is emp'd again.
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
