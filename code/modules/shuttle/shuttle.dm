@@ -327,6 +327,10 @@
 			continue
 
 		for(var/atom/movable/AM in T0)
+			for(var/thing in AM)
+				//var/atom/moveable/thing2 = thing
+				qdel(thing)
+				// BUT WHAT IF STUFF HAS STUFF INSIDE WHY
 			qdel(AM)
 
 		T0.ChangeTurf(turf_type)
