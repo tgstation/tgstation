@@ -229,7 +229,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/youtried
 	name = "'UTried' candy"
-	desc = "It\'s a delicious 'UTried' candy bar, still in its wrapper. For some reason, you can only open it a little bit."
+	desc = "It\'s a delicious 'UTried' candy bar, still in its wrapper. For some reason, you can only open it a little bit.\nA warning on the side recommends you do not eat the candy too quickly in an attempt to end your life."
 	// Yes, this is an INFINITE candy bar. Which makes the empty wrapper
 	// even more consuming.
 	trash = /obj/item/weapon/reagent_containers/food/snacks/candy/youtried
