@@ -1,6 +1,5 @@
 /var/list/sacrificed = list()
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
-var/list/teleport_runes = list()
 
 /*
 
@@ -38,6 +37,11 @@ To draw a rune, use an arcane tome.
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
+	
+/obj/effect/rune/New(loc, set_keyword)
+	..()
+	if(set_keyword)
+		keyword = set_keyword
 
 /obj/effect/rune/examine(mob/user)
 	..()
@@ -207,13 +211,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
 	rune_in_use = 0
-	
+
+var/list/teleport_runes = list()
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
-	color = rgb(0, 0, 255)
+	color = "#551A8B"
 	req_keyword = 1
 	var/listkey
 
@@ -274,7 +279,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		user << "<span class='cult'>You[user.loc == UT ? " send everything above the rune away":"r vision blurs, and you suddenly appear somewhere else"].</span>"
 	else
 		fail_invoke()
-		
+
 
 //Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
 /obj/effect/rune/convert
@@ -819,7 +824,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			break
 		user.apply_damage(1, BRUTE)
 		sleep(30)
-	
+
 	qdel(N)
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
