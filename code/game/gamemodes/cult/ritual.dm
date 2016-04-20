@@ -114,8 +114,7 @@ This file contains the arcane tome files as well as innate cultist communication
 	text += "<font color='red'><b>Debilitate</b></font><br>The Rite of the Shadowed Mind is simple. When invoked, it will cause all non-cultists that can see its rune to become deaf, blind and mute for a \
 	considerable amount of time.<br><br>"
 
-	text += "<font color='red'><b>Stun</b></font><br>Though the Rite of Blazing Light is weak when invoked normally, applying it to a paper makes it much more useful. \
-	This rune will cause any non-cultists that can see the rune to become disoriented, disabling them for a short time.<br><br>"
+	text += "<font color='red'><b>Stun</b></font><br>Though the Rite of Blazing Light is weak when invoked normally, merely causing any non-cultists that can see the rune to become disoriented, disabling them for a short time.<br><br>"
 
 	text += "<font color='red'><b>Summon Armaments</b></font><br>The Rite of Arming will equip the user with armored robes, a backpack, an eldrich longsword, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned.<br><br>"
