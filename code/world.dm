@@ -226,6 +226,12 @@ var/inerror = 0
 /world/proc/update_status()
 	var/s = ""
 
+	if (config && config.server_group)
+		if (config && config.server_group_url)
+			s += "<b>\[<a href=\"[config.server_group_url]\">[config.server_group]</a>\] - </b>"
+		else
+			s += "<b>\[[config.server_group]\] - </b>"
+
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
