@@ -8,7 +8,7 @@
 "h" = (/obj/structure/window/reinforced,/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/book/manual/random,/obj/structure/extinguisher_cabinet{pixel_x = -30},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
 "i" = (/obj/machinery/door/window/southleft,/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
 "j" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced,/obj/item/device/gps{gpstag = "STV5"},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
-"k" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency,/obj/docking_port/stationary{dir = 4; dwidth = 9; height = 11; id = "emergency_home"; name = "emergency evac bay"; width = 22},/turf/open/floor/plating,/area/shuttle/escape)
+"k" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dwidth = 3; height = 5; width = 14},/obj/docking_port/stationary{dir = 4; dwidth = 9; height = 11; id = "emergency_home"; name = "emergency evac bay"; width = 22},/turf/open/floor/plating,/area/shuttle/escape)
 "l" = (/turf/open/floor/plating,/area/shuttle/escape)
 "m" = (/turf/open/floor/plating{tag = "icon-warnplatecorner"; icon_state = "warnplatecorner"; dir = 2},/area/shuttle/escape)
 "n" = (/obj/structure/closet/emcloset,/turf/open/floor/plating{dir = 2; icon_state = "warnplate"},/area/shuttle/escape)
