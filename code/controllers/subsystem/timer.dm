@@ -1,6 +1,8 @@
-#define TIMER_NORMAL 0
+#define TIMER_DEFAULT 0
 #define TIMER_OLDEST 1
 #define TIMER_NEWEST 2
+#define TIMER_SHORTEST 3
+#define TIMER_LONGEST 4
 
 var/datum/subsystem/timer/SStimer
 
@@ -56,7 +58,7 @@ var/datum/subsystem/timer/SStimer
 	SStimer.unique -= hash
 	return QDEL_HINT_IWILLGC
 
-/proc/addtimer(thingToCall, procToCall, wait, unique = TIMER_NORMAL, ...)
+/proc/addtimer(thingToCall, procToCall, wait, unique = TIMER_DEFAULT, ...)
 	if (!SStimer) //can't run timers before the mc has been created
 		return
 	if (!thingToCall || !procToCall || wait <= 0)
@@ -75,14 +77,34 @@ var/datum/subsystem/timer/SStimer
 
 	// Check for dupes if unique = 1.
 	switch(unique)
-		if(TIMER_OLDEST)
+		if(TIMER_OLDEST) // Uses the first timer that was created.
 			if(event.hash in SStimer.unique)
+				qdel(src)
 				return
 			SStimer.unique[event.hash] = event
-		if(TIMER_NEWEST)
+		if(TIMER_NEWEST) // Uses the most recently created timer.
 			var/datum/timedevent/old = SStimer.unique[event.hash]
-			qdel(old)
+			if(old)
+				qdel(old)
 			SStimer.processing -= old // In case qdel doesnt get to it fast enough to remove it from the processing list.
+			SStimer.unique[event.hash] = event
+		if(TIMER_SHORTEST) // Uses the timer that will fire first.
+			var/datum/timedevent/old = SStimer.unique[event.hash]
+			if(old)
+				if(old.timeToRun <= event.timeToRun)
+					qdel(src)
+					return
+				qdel(old)
+			SStimer.processing -= old
+			SStimer.unique[event.hash] = event
+		if(TIMER_LONGEST) // Uses the timer that will fire last.
+			var/datum/timedevent/old = SStimer.unique[event.hash]
+			if(old)
+				if(old.timeToRun >= event.timeToRun)
+					qdel(src)
+					return
+				qdel(old)
+			SStimer.processing -= old
 			SStimer.unique[event.hash] = event
 
 	// If we are unique (or we're not checking that), add the timer and return the id.
