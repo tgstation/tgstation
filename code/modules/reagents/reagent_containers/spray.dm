@@ -116,18 +116,6 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 
 	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
-/obj/item/weapon/reagent_containers/spray/verb/empty()
-
-
-	set name = "Empty Spray Bottle"
-	set category = "Object"
-	set src in usr
-
-	if(isturf(usr.loc))
-		to_chat(usr, "<span class='notice'>You empty the [src] onto the floor.</span>")
-		reagents.reaction(usr.loc)
-		spawn(5) src.reagents.clear_reagents()
-
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
@@ -219,4 +207,3 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 			returnToPool(D)
 
 	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
-

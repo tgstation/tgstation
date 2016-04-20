@@ -20,6 +20,26 @@
 	open = round(rand(0, 1))
 	update_icon()
 
+/obj/structure/toilet/verb/empty_container_into()
+	set name = "Empty container into"
+	set category = "Object"
+	set src in oview(1)
+
+	if(!usr || !isturf(usr.loc))
+		return
+	if(!open)
+		to_chat(usr, "<span class='warning'>\The [src] is closed!</span>")
+		return
+	var/obj/item/weapon/reagent_containers/container = usr.get_active_hand()
+	if(!istype(container))
+		to_chat(usr, "<span class='warning'>You need a reagent container in your active hand to do that.</span>")
+		return
+	return container.drain_into(usr, src)
+
+/obj/structure/toilet/AltClick()
+	if(Adjacent(usr))
+		return empty_container_into()
+	return ..()
 /obj/structure/toilet/attack_hand(mob/living/user as mob)
 	if(swirlie)
 		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
@@ -121,6 +141,24 @@
 	icon_state = "urinal"
 	density = 0
 	anchored = 1
+
+/obj/structure/urinal/verb/empty_container_into()
+	set name = "Empty container into"
+	set category = "Object"
+	set src in oview(1)
+
+	if(!usr || !isturf(usr.loc))
+		return
+	var/obj/item/weapon/reagent_containers/container = usr.get_active_hand()
+	if(!istype(container))
+		to_chat(usr, "<span class='warning'>You need a reagent container in your active hand to do that.</span>")
+		return
+	return container.drain_into(usr, src)
+
+/obj/structure/urinal/AltClick()
+	if(Adjacent(usr))
+		return empty_container_into()
+	return ..()
 
 /obj/structure/urinal/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/grab))
@@ -395,6 +433,24 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
+
+/obj/structure/sink/verb/empty_container_into()
+	set name = "Empty container into"
+	set category = "Object"
+	set src in oview(1)
+
+	if(!usr || !isturf(usr.loc))
+		return
+	var/obj/item/weapon/reagent_containers/container = usr.get_active_hand()
+	if(!istype(container))
+		to_chat(usr, "<span class='warning'>You need a reagent container in your active hand to do that.</span>")
+		return
+	return container.drain_into(usr, src)
+
+/obj/structure/sink/AltClick()
+	if(Adjacent(usr))
+		return empty_container_into()
+	return ..()
 
 /obj/structure/sink/attack_hand(mob/M as mob)
 	if(isrobot(M) || isAI(M))
