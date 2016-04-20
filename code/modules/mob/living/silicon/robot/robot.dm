@@ -286,6 +286,7 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	if(usr.stat == DEAD)
+		src << "<span class='userdanger'>Alert: You are dead.</span>"
 		return //won't work if dead
 	robot_alerts()
 

@@ -1,3 +1,7 @@
+#define PROXIMITY_NONE ""
+#define PROXIMITY_ON_SCREEN "_red"
+#define PROXIMITY_NEAR "_yellow"
+
 /**
  * Multitool -- A multitool is used for hacking electronic devices.
  * TO-DO -- Using it as a power measurement tool for cables etc. Nannek.
@@ -24,7 +28,12 @@
 
 
 /obj/item/device/multitool/ai_detect
-	var/track_delay = 0
+	var/track_cooldown = 0
+	var/track_delay = 10 //How often it checks for proximity
+	var/detect_state = PROXIMITY_NONE
+	var/turf/our_turf
+	var/rangealert = 8	//Glows red when inside
+	var/rangewarning = 20 //Glows yellow when inside
 
 /obj/item/device/multitool/ai_detect/New()
 	..()
@@ -35,78 +44,45 @@
 	return ..()
 
 /obj/item/device/multitool/ai_detect/process()
-	if(track_delay > world.time)
+	if(track_cooldown > world.time)
 		return
+	detect_state = PROXIMITY_NONE
+	our_turf = get_turf(src)
+	multitool_detect()
+	icon_state = "[initial(icon_state)][detect_state]"
+	track_cooldown = world.time + track_delay // 1 second
 
-	var/found_eye = 0
-	var/turf/our_turf = get_turf(src)
-
+/obj/item/device/multitool/ai_detect/proc/multitool_detect()
 	for(var/mob/living/silicon/ai/AI in ai_list)
 		if(AI.cameraFollow == src)
-			found_eye = 2
+			detect_state = PROXIMITY_ON_SCREEN
 			break
 
-	if(!found_eye && cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
+	if(!detect_state && cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
 		var/datum/camerachunk/chunk = cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
 		if(chunk)
 			if(chunk.seenby.len)
 				for(var/mob/camera/aiEye/A in chunk.seenby)
-					var/turf/eye_turf = get_turf(A)
-					if(get_dist(our_turf, eye_turf) < 8)
-						found_eye = 2
+					var/turf/detect_turf = get_turf(A)
+					if(get_dist(our_turf, detect_turf) < rangealert)
+						detect_state = PROXIMITY_ON_SCREEN
 						break
-					if(get_dist(our_turf, eye_turf) < 20) //AI is near you, be careful
-						found_eye = 1
+					if(get_dist(our_turf, detect_turf) < rangewarning)
+						detect_state = PROXIMITY_NEAR
 						break
 
-	if(found_eye == 1)
-		icon_state = "[initial(icon_state)]_yellow"
-	else if(found_eye == 2)
-		icon_state = "[initial(icon_state)]_red"
-	else
-		icon_state = initial(icon_state)
-
-	track_delay = world.time + 10 // 1 second
-	return
-
-/obj/item/device/multitool/admin_detect
+/obj/item/device/multitool/ai_detect/admin
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. Has a strange tag that says 'Grief in Safety'" //What else should I say for a meme item?
-	var/track_delay = 0
+	track_delay = 5
 
-/obj/item/device/multitool/admin_detect/New()
-	..()
-	SSobj.processing += src
-
-/obj/item/device/multitool/admin_detect/Destroy()
-	SSobj.processing -= src
-	return ..()
-
-/obj/item/device/multitool/admin_detect/process()
-	if(track_delay > world.time)
-		return
-
-	var/found_admin = 0
-	var/turf/our_turf = get_turf(src)
-
-	for(var/mob/J in world)
+/obj/item/device/multitool/ai_detect/admin/multitool_detect()
+	for(var/mob/J in range(rangewarning,src))
 		if(admin_datums[J.ckey])
-			var/turf/admin_turf = get_turf(J)
-			if(get_dist(our_turf, admin_turf) < 8)
-				found_admin = 2 //Oh shit.
+			detect_state = PROXIMITY_NEAR
+			var/turf/detect_turf = get_turf(J)
+			if(get_dist(our_turf, detect_turf) < rangealert)
+				detect_state = PROXIMITY_ON_SCREEN
 				break
-			if(get_dist(our_turf, admin_turf) < 20)
-				found_admin = 1 //Uh oh, gotta watch out.
-				break
-
-	if(found_admin == 1)
-		icon_state = "[initial(icon_state)]_yellow"
-	else if(found_admin == 2)
-		icon_state = "[initial(icon_state)]_red"
-	else
-		icon_state = initial(icon_state)
-
-	track_delay = world.time + 5 //Gotta be extra careful here
-	return
 
 /obj/item/device/multitool/cyborg
 	name = "multitool"
