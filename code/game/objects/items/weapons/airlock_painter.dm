@@ -33,13 +33,60 @@
 //because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		user << "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>"
+		user << "<span class='notice'>There is no toner cartridge installed installed in \the [name]!</span>"
 		return 0
 	else if(ink.charges < 1)
 		user << "<span class='notice'>\The [name] is out of ink!</span>"
 		return 0
 	else
 		return 1
+
+/obj/item/weapon/airlock_painter/suicide_act(mob/user)
+	var/obj/item/organ/internal/lungs/L = user.getorganslot("lungs")
+
+	if(can_use(user) && L)
+		user.visible_message("<span class='suicide'>[user] is inhaling toner from \the [name]! It looks like \he's trying to commit suicide.</span>")
+		use(user)
+
+		// Once you've inhaled the toner, you throw up your lungs
+		// and then die.
+
+		// Find out if there is an open turf in front of us,
+		// and if not, pick the turf we are standing on.
+		var/turf/T = get_step(get_turf(src), user.dir)
+		if(!istype(T, /turf/open))
+			T = get_turf(src)
+
+		// they managed to lose their lungs between then and
+		// now. Good job.
+		if(!L)
+			return OXYLOSS
+
+		L.Remove(user)
+
+		// make some colorful reagent, and apply it to the lungs
+		L.create_reagents(10)
+		L.reagents.add_reagent("colorful_reagent", 10)
+		L.reagents.reaction(L, TOUCH, 1)
+
+		// TODO maybe add some colorful vomit?
+
+		user.visible_message("<span class='suicide'>[user] vomits out their [L]!</span>")
+		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
+
+		L.forceMove(T)
+
+		return (TOXLOSS|OXYLOSS)
+	else if(can_use(user) && !L)
+		user.visible_message("<span class='suicide'>[user] is spraying toner on \himself from \the [name]! It looks like \he's trying to commit suicide.</span>")
+		user.reagents.add_reagent("colorful_reagent", 1)
+		user.reagents.reaction(user, TOUCH, 1)
+		return TOXLOSS
+		
+	else
+		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from \the [name]! It might be a suicide attempt if \the [name] had any toner.</span>")
+		return SHAME
+
 
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()

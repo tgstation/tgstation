@@ -148,7 +148,7 @@
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = environment.return_pressure()
 
-	if(pressure < 20)
+	if(pressure < 40)
 		step_in = 3
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)/2

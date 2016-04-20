@@ -7,6 +7,7 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	anchored = 1
 	density = 1
+	on_blueprints = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled

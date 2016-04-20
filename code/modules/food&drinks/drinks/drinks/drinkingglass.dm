@@ -6,6 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
+	materials = list(MAT_GLASS=500)
 	burn_state = FLAMMABLE
 	burntime = 5
 	spillable = 1
@@ -506,6 +507,10 @@
 				icon_state = "glass_brown2"
 				name = "Bacchus' Blessing"
 				desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
+			if("arnold_palmer")
+				icon_state = "arnold_palmer"
+				name = "Arnold Palmer"
+				desc = "You feel like taking a few golf swings after a few swigs of this."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
@@ -534,6 +539,7 @@
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
+	materials = list(MAT_GLASS=100)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
 	if (gulp_size < 15)

@@ -31,6 +31,9 @@
 	projectile_type = pick(typesof(/obj/item/projectile/magic))
 	..()
 
+/obj/item/ammo_casing/magic/honk
+	projectile_type = /obj/item/projectile/bullet/honker
+
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."

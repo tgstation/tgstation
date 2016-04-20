@@ -115,7 +115,7 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			user << "<span class='warning'>This SMES already have a power terminal!</span>"
+			user << "<span class='warning'>This SMES already has a power terminal!</span>"
 			return
 
 		if(!panel_open) //is the panel open ?

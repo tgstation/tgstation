@@ -171,6 +171,14 @@
 	build_path = /obj/item/device/pipe_painter
 	category = list("initial", "Misc")
 
+/datum/design/airlock_painter
+	name = "Airlock painter"
+	id = "airlock_painter"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/weapon/airlock_painter
+	category = list("initial", "Misc")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
@@ -221,7 +229,47 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/weapon/kitchen/knife
-	category = list("initial","Misc")
+	category = list("initial","Dinnerware")
+
+/datum/design/fork
+	name = "Fork"
+	id = "fork"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 80)
+	build_path = /obj/item/weapon/kitchen/fork
+	category = list("initial","Dinnerware")
+
+/datum/design/bowl
+	name = "Bowl"
+	id = "bowl"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 500)
+	build_path = /obj/item/weapon/reagent_containers/glass/bowl
+	category = list("initial","Dinnerware")
+
+/datum/design/drinking_glass
+	name = "Drinking glass"
+	id = "drinking_glass"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 500)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+	category = list("initial","Dinnerware")
+
+/datum/design/shot_glass
+	name = "Shot glass"
+	id = "shot_glass"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 100)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
+	category = list("initial","Dinnerware")
+
+/datum/design/shaker
+	name = "Shaker"
+	id = "shaker"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1500)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/shaker
+	category = list("initial","Dinnerware")
 
 /datum/design/cultivator
 	name = "Cultivator"
@@ -607,6 +655,14 @@
 	materials = list(MAT_METAL = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
+
+/datum/design/cleaver
+	name = "Butcher's cleaver"
+	id = "cleaver"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 18000)
+	build_path = /obj/item/weapon/kitchen/knife/butcher
+	category = list("hacked", "Dinnerware")
 
 /datum/design/spraycan
 	name = "Spraycan"

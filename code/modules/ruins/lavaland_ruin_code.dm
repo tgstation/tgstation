@@ -209,14 +209,15 @@
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = {"<B>You are an Ash Walker. Your tribe worships<span class='danger'>the necropolis</span>. The wastes are sacred ground, it's monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
+	flavour_text = {"<B>You are an Ash Walker. Your tribe worships <span class='danger'>the necropolis</span>. The wastes are sacred ground, it's monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "Drag corpes to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
+	new_spawn << "Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.dna.species.specflags |= NOBREATH
+		H.dna.species.specflags |= NOGUNS
 
 
 

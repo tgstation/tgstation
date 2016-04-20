@@ -1710,6 +1710,8 @@
 /obj/item/weapon/pickaxe,
 /obj/item/device/gps/mining,
 /obj/item/device/gps/mining,
+/obj/item/device/gps/mining,
+/obj/item/device/gps/mining,
 /turf/open/floor/plasteel/purple/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 9;
@@ -2040,7 +2042,7 @@
 	},
 /area/mine/production)
 "ed" = (
-/turf/closed/mineral/random/high_chance,
+/turf/closed/mineral/random/high_chance/volcanic,
 /area/lavaland/surface/outdoors)
 "ee" = (
 /turf/closed/wall{
@@ -13873,7 +13875,7 @@ ab
 af
 ab
 ee
-em
+eD
 eF
 ca
 ee
@@ -14130,7 +14132,7 @@ af
 af
 ab
 ee
-en
+em
 eG
 eG
 ee

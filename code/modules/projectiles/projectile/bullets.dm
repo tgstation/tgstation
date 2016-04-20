@@ -124,6 +124,21 @@
 	damage = 10
 	weaken = 4
 	stun = 4
+	
+/obj/item/projectile/bullet/honker
+	damage = 0
+	weaken = 5
+	stun = 5
+	forcedodge = 1
+	nodamage = 1
+	hitsound = 'sound/items/bikehorn.ogg'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana"
+	range = 200
+	
+/obj/item/projectile/bullet/honker/New()
+	..()
+	SpinAnimation()
 
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
