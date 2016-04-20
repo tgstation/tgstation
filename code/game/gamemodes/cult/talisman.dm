@@ -374,7 +374,7 @@
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
 				user << "<span class='notice'>You shackle [C].</span>"
-				add_logs(user, C, "handcuffed"
+				add_logs(user, C, "handcuffed")
 				uses--
 		else
 			user << "<span class='warning'>You fail to shackle [C].</span>"
