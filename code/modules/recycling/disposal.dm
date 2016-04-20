@@ -451,13 +451,16 @@
 	if(user.restrained() || !user.canmove)
 		return
 
-	if(istype(dropping, /obj/item))
+	if(!ismob(dropping)) //Not a mob, so we can expect it to be an item
+		if(istype(dropping, /obj/item))
 
-		if(dropping.locked_to) //Items can very specifically be locked to something, check that here
-			return
+			if(dropping.locked_to) //Items can very specifically be locked to something, check that here
+				return
 
-		attackby(dropping, user)
+			attackby(dropping, user)
 		return
+
+	//From there, we are working on a mob (as our target, user is supposed to be a mob)
 
 	var/locHolder = dropping.loc
 	var/mob/target = dropping
