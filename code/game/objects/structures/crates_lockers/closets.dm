@@ -232,7 +232,7 @@
 					new material_drop(T)
 					qdel(src)
 		else if(user.drop_item())
-			W.Move(loc)
+			W.forceMove(loc)
 	else
 		if(istype(W, /obj/item/stack/packageWrap))
 			return
