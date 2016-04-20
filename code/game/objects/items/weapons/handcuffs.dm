@@ -314,6 +314,6 @@
 /obj/item/weapon/restraints/legcuffs/bola/cult //cult variant, comes with armament talisman
 	name = "nar'sian bola"
 	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
-	icon_state = "bola_c"
+	icon_state = "bola_cult"
 	breakouttime = 45
 	weaken = 1
