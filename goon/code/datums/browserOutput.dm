@@ -119,9 +119,7 @@ For the main html chat area
 	set waitfor = FALSE
 
 	while (owner)
-		if (!owner.is_afk(29 SECONDS))
-			ehjax_send(data = "pang")
-
+		ehjax_send(data = owner.is_afk(29 SECONDS) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
 		sleep(30 SECONDS)
 
 /datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
