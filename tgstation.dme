@@ -15,10 +15,6 @@
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
-#include "_maps\shuttles\ferry_meat.dmm"
-#include "_maps\shuttles\shuttle_bar.dmm"
-#include "_maps\shuttles\shuttle_cramped.dmm"
-#include "_maps\shuttles\shuttle_narnar.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
