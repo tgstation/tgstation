@@ -64,6 +64,20 @@
 	dispense_type = /obj/item/drone_shell/syndrone/badass
 	end_create_message = "dispenses a ominous suspicious drone shell."
 
+// I don't need your forgiveness, this is awesome.
+/obj/machinery/droneDispenser/snowflake
+	name = "snowflake drone shell dispenser"
+	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
+	dispense_type = /obj/item/drone_shell/snowflake //The item the dispenser will create
+	// Those holoprojectors aren't cheap
+	metal_cost = 2000
+	glass_cost = 2000
+	power_used = 2000
+
+/obj/machinery/droneDispenser/snowflake/preloaded
+	metal = 10000
+	glass = 10000
+
 /obj/machinery/droneDispenser/hivebot //An example of a custom drone dispenser. This one requires no materials and creates basic hivebots
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."

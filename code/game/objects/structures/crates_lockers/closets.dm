@@ -20,6 +20,7 @@
 	var/horizontal = FALSE
 	var/allow_objects = FALSE
 	var/allow_dense = FALSE
+	var/dense_when_open = FALSE //if it's dense when open or not
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
@@ -81,14 +82,26 @@
 		return 1
 	return !density
 
-/obj/structure/closet/proc/can_open()
+/obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked)
 		return 0
+	var/turf/T = get_turf(src)
+	for(var/mob/living/L in T)
+		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+			if(user)
+				user << "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" //you... think? there's something standing on it ffs
+			return 0
 	return 1
 
-/obj/structure/closet/proc/can_close()
-	for(var/obj/structure/closet/closet in get_turf(src))
+/obj/structure/closet/proc/can_close(mob/living/user)
+	var/turf/T = get_turf(src)
+	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
+			return 0
+	for(var/mob/living/L in T)
+		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+			if(user)
+				user << "<span class='danger'>There's something too large in [src], preventing it from closing.</span>"
 			return 0
 	return 1
 
@@ -107,12 +120,14 @@
 		if(insert(AM) == -1) // limit reached
 			break
 
-/obj/structure/closet/proc/open()
-	if(opened || !can_open())
+/obj/structure/closet/proc/open(mob/living/user)
+	if(opened || !can_open(user))
 		return
 	playsound(loc, open_sound, 15, 1, -3)
 	opened = 1
-	density = 0
+	if(!dense_when_open)
+		density = 0
+	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
 	return 1
@@ -126,10 +141,10 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.buckled || L.incorporeal_move || L.buckled_mobs.len)
+		if(L.anchored || L.buckled || L.incorporeal_move || L.buckled_mobs.len)
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
-			if(horizontal && !L.lying)
+			if(horizontal && L.density)
 				return
 			if(L.mob_size > max_mob_size)
 				return
@@ -154,21 +169,22 @@
 
 	return 1
 
-/obj/structure/closet/proc/close()
-	if(!opened || !can_close())
+/obj/structure/closet/proc/close(mob/living/user)
+	if(!opened || !can_close(user))
 		return 0
 	take_contents()
 	playsound(loc, close_sound, 15, 1, -3)
+	climb_time = initial(climb_time)
 	opened = 0
 	density = 1
 	update_icon()
 	return 1
 
-/obj/structure/closet/proc/toggle()
+/obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
-		return close()
+		return close(user)
 	else
-		return open()
+		return open(user)
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -216,7 +232,7 @@
 					new material_drop(T)
 					qdel(src)
 		else if(user.drop_item())
-			W.Move(loc)
+			W.forceMove(loc)
 	else
 		if(istype(W, /obj/item/stack/packageWrap))
 			return
@@ -245,26 +261,29 @@
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
+	if(user == O) //try to climb onto it
+		return ..()
 	if(!opened || istype(O, /obj/structure/closet))
 		return
-	if(user == O)
-		return
-
 
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] tries to stuff [O] into [src].</span>", \
-				 	 	"<span class='warning'>You try to stuff [O] into [src].</span>", \
+	var/mob/living/L = O
+	var/actuallyismob = istype(L)
+	user.visible_message("<span class='warning'>[user] [actuallyismob ? "tries to ":""]stuff [O] into [src].</span>", \
+				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
 				 	 	"<span class='italics'>You hear clanging.</span>")
-	if(do_after_mob(user, targets, 40))
-		user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
-						 	 "<span class='notice'>You stuff [O] into [src].</span>", \
-						 	 "<span class='italics'>You hear a loud metal bang.</span>")
-		var/mob/living/L = O
-		if(istype(L) && !issilicon(L))
-			L.Weaken(2)
-		O.loc = src.loc
-		close()
+	if(actuallyismob)
+		if(do_after_mob(user, targets, 40))
+			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
+							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
+							 	 "<span class='italics'>You hear a loud metal bang.</span>")
+			if(!issilicon(L))
+				L.Weaken(2)
+			O.forceMove(get_turf(src))
+			close()
+	else
+		O.forceMove(get_turf(src))
 	return 1
 
 /obj/structure/closet/relaymove(mob/user)
@@ -280,11 +299,11 @@
 				M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>", 2)
 
 /obj/structure/closet/attack_hand(mob/user)
-	add_fingerprint(user)
+	..()
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
-	if(!toggle())
+	if(!toggle(user))
 		togglelock(user)
 		return
 
@@ -310,7 +329,8 @@
 // should be independently resolved, but this is also an interesting twist.
 /obj/structure/closet/Exit(atom/movable/AM)
 	open()
-	if(AM.loc == src) return 0
+	if(AM.loc == src)
+		return 0
 	return 1
 
 /obj/structure/closet/container_resist(mob/living/user)

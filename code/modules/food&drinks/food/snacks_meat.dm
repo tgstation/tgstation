@@ -133,25 +133,6 @@
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
-	if(!proximity) return
-	if(istype(O,/obj/structure/sink))
-		if (wrapped)
-			user << "<span class='notice'>You need to unwrap [src] first!</span>"
-			return
-		else
-			user << "<span class='notice'>You place [src] under a stream of water...</span>"
-			user.drop_item()
-			loc = get_turf(O)
-			return Expand()
-	if(istype(O, /obj/machinery/computer/camera_advanced/xenobio))
-		var/obj/machinery/computer/camera_advanced/xenobio/X = O
-		X.monkeys++
-		user << "<span class='notice'>You feed [src] to the [X]. It now has [X.monkeys] monkey cubes stored.</span>"
-		qdel(src)
-		return
-	..()
-
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/attack_self(mob/user)
 	if(wrapped)
 		Unwrap(user)
