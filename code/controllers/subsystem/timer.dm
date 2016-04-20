@@ -71,25 +71,23 @@ var/datum/subsystem/timer/SStimer
 	event.thingToCall = thingToCall
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
-	event.hash = jointext(args, null)
 	if(args.len > 4)
 		event.argList = args.Copy(5)
 
 	// Check for dupes if unique = 1.
 	switch(unique)
 		if(TIMER_DEFAULT)
-			event.hash = jointext(args, null)
+			var/semihash = args.Copy(1,3)
+			event.hash = jointext(semihash, null)
 		if(TIMER_OLDEST) // Uses the first timer that was created.
-			var/semihash = args.Copy()
-			semihash.Cut(3, 5)
+			var/semihash = args.Copy(1,3)
 			event.hash = jointext(semihash, null)
 			if(event.hash in SStimer.unique)
 				qdel(src)
 				return
 			SStimer.unique[event.hash] = event
 		if(TIMER_NEWEST) // Uses the most recently created timer.
-			var/semihash = args.Copy()
-			semihash.Cut(3, 5)
+			var/semihash = args.Copy(1,3)
 			event.hash = jointext(semihash, null)
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
@@ -97,8 +95,7 @@ var/datum/subsystem/timer/SStimer
 				qdel(old)
 			SStimer.unique[event.hash] = event
 		if(TIMER_SHORTEST) // Uses the timer that will fire first.
-			var/semihash = args.Copy()
-			semihash.Cut(3, 5)
+			var/semihash = args.Copy(1,3)
 			event.hash = jointext(semihash, null)
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
@@ -109,8 +106,7 @@ var/datum/subsystem/timer/SStimer
 				qdel(old)
 			SStimer.unique[event.hash] = event
 		if(TIMER_LONGEST) // Uses the timer that will fire last.
-			var/semihash = args.Copy()
-			semihash.Cut(3, 5)
+			var/semihash = args.Copy(1,3)
 			event.hash = jointext(semihash, null)
 			var/datum/timedevent/old = SStimer.unique[event.hash]
 			if(old)
