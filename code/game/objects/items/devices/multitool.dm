@@ -76,7 +76,7 @@
 
 /obj/item/device/multitool/ai_detect/admin/multitool_detect()
 	var/turf/our_turf = get_turf(src)
-	for(var/mob/J in range(rangewarning,get_turf(src)))
+	for(var/mob/J in range(rangewarning,our_turf))
 		if(admin_datums[J.ckey])
 			detect_state = PROXIMITY_NEAR
 			var/turf/detect_turf = get_turf(J)
