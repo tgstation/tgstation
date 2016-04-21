@@ -66,7 +66,7 @@
 			L.update_transform()
 			L.health = src.maxHealth * 0.8
 			L.maxHealth = L.health
-			L.size--
+			L.size = --size
 		visible_message("<span class='danger'>[src] splits!</span>")
 		qdel(src)
 	else
