@@ -405,6 +405,9 @@ mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
 //		M.show_message("<span class='danger'>[src] slams into [A]!</span>",1,"<span class='warning'>You hear a loud slam!</span>",2)
 	//playsound(get_turf(src), "punch", 25, 1, -1)
+
+
+	/*See this? This is how you DON'T handle armor values for protection
 	if(prob(33))
 		loc:add_blood(src)
 		bloody_body(src)
@@ -419,6 +422,23 @@ mob/living/carbon/human/airflow_hit(atom/A)
 
 	blocked = run_armor_check("groin","melee")
 	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, used_weapon = "Airflow")
+	*/
+
+	var/b_loss = airflow_speed * zas_settings.Get(/datum/ZAS_Setting/airflow_damage)
+
+	var/head_damage = ((b_loss/3)/100) * (100 - getarmor("head","melee"))
+	apply_damage(head_damage, BRUTE, "head", 0, 0, used_weapon = "Airflow")
+
+	var/chest_damage = ((b_loss/3)/100) * (100 - getarmor("chest","melee"))
+	apply_damage(chest_damage, BRUTE, "head", 0, 0, used_weapon = "Airflow")
+
+	var/groin_damage = ((b_loss/3)/100) * (100 - getarmor("groin","melee"))
+	apply_damage(groin_damage, BRUTE, "head", 0, 0, used_weapon = "Airflow")
+
+	if((head_damage + chest_damage + groin_damage) > 15)
+		var/turf/T = get_turf(src)
+		T.add_blood(src)
+		bloody_body(src)
 
 	if(zas_settings.Get(/datum/ZAS_Setting/airflow_push) || AirflowCanPush())
 		if(airflow_speed > 10)
