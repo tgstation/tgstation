@@ -826,6 +826,7 @@
 #include "code\modules\admin\verbs\pray.dm"
 #include "code\modules\admin\verbs\randomverbs.dm"
 #include "code\modules\admin\verbs\reestablish_db_connection.dm"
+#include "code\modules\admin\verbs\shuttles.dm"
 #include "code\modules\admin\verbs\tripAI.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2_parser.dm"
