@@ -1151,10 +1151,10 @@ var/global/floorIsLava = 0
 		if (ticker.mode.config_tag == "changeling")
 			return 2
 		return 1
-	if(isborer(M))
+	/*if(isborer(M)) //They ain't antags anymore
 		if (ticker.mode.config_tag == "borer")
 			return 2
-		return 1
+		return 1*/
 	if(isbadmonkey(M))
 		if (ticker.mode.config_tag == "monkey")
 			return 2
