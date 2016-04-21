@@ -1,9 +1,9 @@
 /datum/round_event_control/spawn_swarmer
 	name = "Spawn Swarmer Shell"
 	typepath = /datum/round_event/spawn_swarmer
-	weight = 7
+	weight = 3
 	max_occurrences = 1 //Only once okay fam
-	earliest_start = 18000 //30 minutes
+	earliest_start = 22000 //30 minutes
 
 
 /datum/round_event/spawn_swarmer

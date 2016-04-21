@@ -258,7 +258,18 @@
 			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
 
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			if (src.client)
+				if(client.prefs.muted & MUTE_IC)
+					src << "You cannot send IC messages (muted)."
+					return
+				if (src.client.handle_spam_prevention(act,MUTE_IC))
+					return
+			if (stat)
+				return
+			if(!(act))
+				return
+			else
+				message = "<B>[src]</B> [act]"
 
 
 

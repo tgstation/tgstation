@@ -22,7 +22,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message)
+	usr.emote(message,1)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
