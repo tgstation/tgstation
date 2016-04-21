@@ -351,3 +351,10 @@
 	parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
 	time = 50
 	category = CAT_WEAPON
+
+/datum/table_recipe/bonearmor
+	name = "Bone Armor"
+	result = /obj/item/clothing/suit/armor/bone
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/bone = 6)
+	category = CAT_MISC
