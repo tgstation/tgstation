@@ -46,14 +46,12 @@
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
-		if(!can_be_cut)
-			..()
-			return
-		if(icon_state == initial(icon_state)) //only if not dyed
-			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
-			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
-			new /obj/item/clothing/gloves/fingerless(user.loc)
-			qdel(src)
+		if(can_be_cut)
+			if(icon_state == initial(icon_state)) //only if not dyed
+				user << "<span class='notice'>You snip the fingertips off of [src].</span>"
+				playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
+				new /obj/item/clothing/gloves/fingerless(user.loc)
+				qdel(src)
 	..()
 
 /obj/item/clothing/gloves/color/orange
