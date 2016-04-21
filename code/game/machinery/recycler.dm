@@ -197,7 +197,7 @@ var/const/SAFETY_COOLDOWN = 100
 	amount_produced = 10
 	transmute = TRUE
 	circuit = /obj/item/weapon/circuitboard/alchemizer
-	var/itemsallowed = FALSE
+	var/itemsallowed = TRUE	//If we are allowed to transmute items. False makes us only transmute mobs
 
 /obj/machinery/recycler/alchemizer/New()
 	// On us
