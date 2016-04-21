@@ -19,7 +19,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	var/size = 8
+	var/size = 5
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
@@ -62,9 +62,9 @@
 	if(size > 0)
 		for(var/i in 1 to 2)
 			var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
-			L.resize = src.resize * 0.8
+			L.resize = src.resize * 0.7
 			L.update_transform()
-			L.health = src.maxHealth * 0.8
+			L.health = src.maxHealth * 0.5
 			L.maxHealth = L.health
 			L.size = --size
 		visible_message("<span class='danger'>[src] splits!</span>")
