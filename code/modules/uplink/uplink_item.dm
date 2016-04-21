@@ -310,6 +310,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	player_minimum = 25
 
+/datum/uplink_item/dangerous/changeling
+	name = "Mutagenic Changeling Injector"
+	desc = "A specialized injector that contains sampled cells from a changeling organism. Can be used to induce the user to become a changeling."
+	item = /obj/item/weapon/changeling_injector
+	cost = 20
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 15
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
