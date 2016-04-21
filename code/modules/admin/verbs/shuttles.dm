@@ -7,16 +7,37 @@
 		src << "Only administrators may use this command."
 		return
 
-	var/obj/docking_port/mobile/M = input("Select shuttle to DESTROY", "Shuttles") as null|anything in SSshuttle.mobile
+	var/list/names = list()
+	var/obj/docking_port/mobile/M
+	for (var/atom/AM in SSshuttle.mobile)
+		M = AM
+		names += M.name
 
-	if(!M)
+	var/selected = input("Select shuttle to DESTROY", "Shuttles") in names
+
+	var/decide_against_msg = "You decide against destroying a shuttle."
+
+	if(!selected)
+		src << decide_against_msg
 		return
 
-	var/confirm = alert(src, "Are you sure you want to destroy [M]?", "Confirm", "Yes", "No")
+	var/confirm = alert(src, "Are you sure you want to destroy [selected]?", "Confirm", "Yes", "No")
+
 	if(confirm != "Yes")
+		src << decide_against_msg
 		return
 
-	M.jumpToNullSpace()
+	var/destroyed = FALSE
+	for (var/atom/AM in SSshuttle.mobile)
+		M = AM
+		if(M.name == selected)
+			M.jumpToNullSpace()
+			destroyed = TRUE
+			break
+
+	if(!destroyed)
+		src << "<span class='warning'>Something went wrong, the selected shuttle doesn't exist anymore."
+		return
 
 	log_admin("ShuttleDestroy: [M]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleDestroy on [M]</b><BR></span>")
