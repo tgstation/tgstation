@@ -92,14 +92,8 @@
 									"<span class='notice'>You climb onto [src].</span>")
 				add_logs(user, src, "climbed onto")
 				user.Stun(climb_stun)
+				. = 1
 			else
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
-				density = 1
-				structureclimber = null
-				return 0
 			density = 1
-			structureclimber = null
-			return 1
-	else
-		structureclimber = null
-		return 0
+	structureclimber = null
