@@ -358,3 +358,11 @@
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 6)
 	category = CAT_MISC
+
+/datum/table_recipe/bonetalisman
+	name = "Bone Talisman"
+	result = /obj/item/clothing/tie/talisman
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 2,
+				 /obj/item/stack/sheet/sinew = 1)
+	category = CAT_MISC
