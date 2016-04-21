@@ -187,6 +187,11 @@
 	..()
 	SSshuttle.mobile += src
 
+/obj/docking_port/mobile/Destroy()
+	if(i_know_what_im_doing)
+		SSshuttle.mobile -= src
+	. = ..()
+
 /obj/docking_port/mobile/initialize()
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
@@ -299,6 +304,13 @@
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
+/atom/proc/recursiveContents()
+	. = list()
+	for(var/atom/other in src)
+		if(other.contents.len != 0)
+			. += other.recursiveContents()
+		. += other
+
 /obj/docking_port/mobile/proc/jumpToNullSpace()
 	// Destroys the docking port and the shuttle contents.
 	// Not in a fancy way, it just ceases.
@@ -326,11 +338,7 @@
 		if(!T0)
 			continue
 
-		for(var/atom/movable/AM in T0)
-			for(var/thing in AM)
-				//var/atom/moveable/thing2 = thing
-				qdel(thing)
-				// BUT WHAT IF STUFF HAS STUFF INSIDE WHY
+		for(var/atom/AM in T0.recursiveContents())
 			qdel(AM)
 
 		T0.ChangeTurf(turf_type)
