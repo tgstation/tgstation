@@ -64,6 +64,8 @@
 	if(holder)
 		if(holder.fakekey && is_donator(holder.fakekey))
 			donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[holder.fakekey]'>"
+		else if(is_donator(key))
+			donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
 
 	else if(is_donator(key))
 		donator_icon = "<img class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
