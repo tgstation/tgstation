@@ -209,7 +209,7 @@
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = {"<B>You are an Ash Walker. Your tribe worships <span class='danger'>the necropolis</span>. The wastes are sacred ground, it's monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
+	flavour_text = {"<B>You are an Ash Walker. Your tribe worships <span class='danger'>the necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
@@ -219,7 +219,11 @@
 		H.dna.species.specflags |= NOBREATH
 		H.dna.species.specflags |= NOGUNS
 
-
+/obj/effect/mob_spawn/human/ash_walker/New()
+	..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, attack_not_jump = 1)
 
 //Wishgranter Exile
 
