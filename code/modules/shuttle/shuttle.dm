@@ -489,6 +489,21 @@
 	var/obj/docking_port/stationary/transit/T = SSshuttle.getDock("[id]_transit")
 	if(T && !canDock(T))
 		return T
+
+/obj/docking_port/mobile/proc/findRoundstartDock()
+	var/obj/docking_port/stationary/transit/T
+	T = SSshuttle.getDock(roundstart_move)
+
+	if(T && !canDock(T))
+		return T
+
+/obj/docking_port/mobile/proc/dockRoundstart()
+	// Instead of spending a lot of time trying to work out where to place
+	// our shuttle, just create it somewhere empty and send it to where
+	// it should go
+	var/obj/docking_port/stationary/transit/T = findRoundstartDock()
+	return dock(T)
+
 /*	commented out due to issues with rotation
 	for(var/obj/docking_port/stationary/transit/S in SSshuttle.transit)
 		if(S.id)
