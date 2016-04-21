@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "legion"
-	health = 800
-	maxHealth = 800
+	health = 600
+	maxHealth = 600
 	icon_state = "legion"
 	icon_living = "legion"
 	desc = "One of many."
@@ -18,11 +18,13 @@
 	flying = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	ranged_cooldown_time = 20
-	var/size = 5
+	ranged_cooldown_time = 30
+	var/size = 10
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
+//	bound_width = 96
+//	bound_height = 96
 	layer = 6
 	loot = list(/obj/structure/closet/crate/necropolis)
 
@@ -59,14 +61,19 @@
 				charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
-	if(size > 0)
+	if(size > 2)
 		for(var/i in 1 to 2)
 			var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
-			L.resize = src.resize * 0.7
-			L.update_transform()
-			L.health = src.maxHealth * 0.5
+			L.health = src.maxHealth * 0.6
 			L.maxHealth = L.health
-			L.size = --size
+			L.size = size - 2
+			var/size_multiplier = L.size * 0.08
+			L.resize = size_multiplier
+
+		//	L.bound_width = L.bound_width * size_multiplier
+	//		L.bound_height = L.bound_height * size_multiplier
+
+			L.update_transform()
 		visible_message("<span class='danger'>[src] splits!</span>")
 		qdel(src)
 	else
