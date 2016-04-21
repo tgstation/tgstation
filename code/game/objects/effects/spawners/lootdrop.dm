@@ -121,10 +121,9 @@
 				/obj/item/weapon/relic = 3,
 				/obj/item/weaponcrafting/reciever = 1,
 				/obj/item/clothing/head/cone = 2,
-				/obj/item/weapon/skub = 1,
 				/obj/item/weapon/grenade/smokebomb = 2,
 				/obj/item/device/geiger_counter = 3,
-				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1, //only for the best
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1,
 				/obj/item/device/radio/headset = 1,
 				/obj/item/device/assembly/infra = 1,
 				/obj/item/device/assembly/igniter = 2,
@@ -139,8 +138,7 @@
 				/obj/item/clothing/gloves/color/grey = 1,
 				/obj/item/clothing/gloves/color/light_brown = 1,
 				/obj/item/clothing/gloves/color/brown = 1,
-				/obj/item/clothing/shoes/laceup = 4,
-				/obj/item/weapon/reagent_containers/food/condiment/saltshaker = 10, //added for impartiality
+				/obj/item/clothing/shoes/laceup = 1,
 				"" = 4
 				)
 
