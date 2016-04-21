@@ -65,7 +65,7 @@
 	var/turf/T = get_turf(locate("landmark*Shuttle Import"))
 	template.load(T, centered = TRUE)
 
-	var/obj/docking_port/mobile = M
+	var/obj/docking_port/mobile/M
 
 	for(var/S in template.get_affected_turfs(T,centered = TRUE))
 		for (var/AM in S)
@@ -74,7 +74,7 @@
 				break
 
 	if(!M)
-		user << "<span class='warning'>The loaded template didn't have a mobile docking port!</span>"
+		usr << "<span class='warning'>The loaded template didn't have a mobile docking port!</span>"
 		// TODO maybe unload the template? Pff, let the admins clean up
 
 	M.dockRoundstart()
