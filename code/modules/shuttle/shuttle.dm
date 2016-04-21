@@ -504,6 +504,9 @@
 	var/obj/docking_port/stationary/transit/T = findRoundstartDock()
 	return dock(T)
 
+/obj/effect/landmark/shuttle_import
+	name = "Shuttle Import"
+
 /*	commented out due to issues with rotation
 	for(var/obj/docking_port/stationary/transit/S in SSshuttle.transit)
 		if(S.id)
