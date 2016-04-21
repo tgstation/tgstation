@@ -78,7 +78,7 @@
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Weaken(2)//originally was 6, then 4, lowered to 2 since you could kill somebody in one stun
+	D.Weaken(2)
 	return 1
 
 /datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
