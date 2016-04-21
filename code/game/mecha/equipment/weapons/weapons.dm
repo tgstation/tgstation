@@ -7,12 +7,7 @@
 	var/projectiles_per_shot = 1
 	var/deviation = 0
 	var/shot_delay = 0
-
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	compatibleMechs = (/obj/mecha/combat)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
 	return 1
@@ -65,6 +60,23 @@
 	sleep(equip_cooldown)
 	set_ready_state(1)
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/ka //Acts like hyper KA, but you get it at the same time as regular KA.
+	equip_cooldown = 15
+	name = "\improper LL-KA mounted kinetic accelerator"
+	desc = "A weapon for working exosuits. Shoots kinetic blasts."
+	icon_state = "mecha_ka"
+	energy_drain = 30
+	projectile = /obj/item/projectile/kinetic/hyper
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	compatibleMechs = list(/obj/mecha/working,/obj/mecha/combat)
+	origin_tech = "combat=2;powerstorage=1"
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/ka/hyper //Is better than the normal hyper KA, but you get it at the same time.
+	name = "\improper LL-HA mounted hyper kinetic accelerator"
+	desc = "A weapon for working exosuits. Shoots hyper kinetic blasts."
+	projectile = /obj/item/projectile/kinetic/mecha
+	origin_tech = "combat=4;powerstorage=3"
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
 	name = "\improper CH-PS \"Immolator\" laser"
@@ -112,13 +124,8 @@
 	origin_tech = "materials=3;combat=2;powerstorage=3;plasmatech=3"
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/Laser.ogg'
+	compatibleMechs = list(/obj/mecha/working,/obj/mecha/combat)
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
-	if(..()) //combat mech
-		return 1
-	else if(M.equipment.len < M.max_equip && istype(M))
-		return 1
-	return 0
 
 /obj/item/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
@@ -152,12 +159,7 @@
 	energy_drain = 200
 	equip_cooldown = 150
 	range = MELEE|RANGED
-
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	compatibleMechs = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target)
 	if(!action_checks(target))
@@ -367,12 +369,7 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 20
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	compatibleMechs = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -384,12 +381,7 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 10
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	compatibleMechs = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/device/assembly/mousetrap/armed/M)
 	M.secured = 1

@@ -15,6 +15,7 @@
 	var/range = MELEE //bitflags
 	reliability = 1000
 	var/salvageable = 1
+	var/list/compatibleMechs = list(/obj/mecha)
 
 /obj/item/mecha_parts/mecha_equipment/New()
 	..()
@@ -99,7 +100,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(M.equipment.len<M.max_equip)
-		return 1
+		if(is_type_in_list(M,compatibleMechs))
+			return 1
+	return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src

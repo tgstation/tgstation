@@ -567,6 +567,28 @@
 	construction_time = 500
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_ka
+	name = "Exosuit Weapon (LL-KA mounted kinectic accelerator)"
+	desc = "Allows for the construction of LL-KA mounted kinectic accelerator"
+	id = "mech_ka"
+	build_type = MECHFAB
+	req_tech = list("combat" = 2, "powerstorage" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ka
+	materials = list(MAT_METAL=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_hyper_ka
+	name = "Exosuit Weapon (LL-KA mounted hyper kinectic accelerator)"
+	desc = "Allows for the construction of LL-HA mounted hyper kinectic accelerator"
+	id = "mech_hyper_ka"
+	build_type = MECHFAB
+	req_tech = list("combat" = 4, "powerstorage" = 3)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ka/hyper
+	materials = list(MAT_METAL=20000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////

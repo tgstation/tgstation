@@ -9,6 +9,7 @@
 	equip_cooldown = 30
 	energy_drain = 10
 	force = 15
+	compatibleMechs = list(/obj/mecha/working,/obj/mecha/combat)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
@@ -70,12 +71,6 @@
 			for(var/obj/item/weapon/ore/ore in range(1, chassis))
 				if(get_dir(chassis,ore)&chassis.dir)
 					ore.Move(ore_box)
-
-/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
-	if(..())
-		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
-			return 1
-	return 0
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user, var/drill_damage=80)
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
