@@ -218,6 +218,8 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.dna.species.specflags |= NOBREATH
 		H.dna.species.specflags |= NOGUNS
+		H.underwear = "Nude"
+		H.update_body()
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
