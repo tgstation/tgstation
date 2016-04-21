@@ -442,6 +442,23 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 			output += {"<tr>
 				<td colspan='5' bgcolor='white'>&nbsp</td>
 				</tr>"}
+		if(playerckey && world.GetConfig("keyban", playerckey))
+			var/list/params = list2params(world.GetConfig("ban", playerckey))
+			var/admin = params["admin"]
+			var/reason = params["reason"]
+			output += {"<tr bgcolor='[bdcolor]'>
+				<td align='center'>STICKYBANNED</td>
+				<td align='center'><b>[playerckey]</b></td>
+				<td align='center'>Time not stored</td>
+				<td align='center'><b>[admin]</b></td>
+				<td align='center'>"<b><a href=\"byond://?src=\ref[src];stickyunban=[playerckey]\">Unban</a></b>"</td>
+				</tr>
+				<tr bgcolor='[blcolor]'>
+				<td align='center' colspan='5'><b>Reason: </b> <cite>\"[reason]\"</cite></td>
+				</tr>"}
+			output += {"<tr>
+				<td colspan='5' bgcolor='white'>&nbsp</td>
+				</tr>"}
 
 		output += "</table></div>"
 

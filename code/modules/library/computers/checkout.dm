@@ -452,7 +452,7 @@
 	var/obj/item/weapon/book/B = new newbook.path(src.loc)
 
 	if (!newbook.programmatic)
-		var/list/_http = world.Export("http://ss13.pomf.se/index.php/book?id=[newbook.id]")
+		var/list/_http = world.Export("http://ss13.moe/index.php/book?id=[newbook.id]")
 		if(!_http || !_http["CONTENT"])
 			return
 		var/http = file2text(_http["CONTENT"])

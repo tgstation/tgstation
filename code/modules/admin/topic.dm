@@ -1152,7 +1152,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				var/sticky = alert(usr,"Sticky Ban [M.ckey]? Use this only if you never intend to unban the player.","Sticky Icky","Yes", "No") == "Yes"
 				if(sticky)
-					world.SetConfig("keyban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&admin=[ckey(usr.key)]")
+					world.SetConfig("SYSTEM/keyban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&admin=[ckey(usr.key)]")
 					message_admins("[key_name_admin(usr)] has sticky banned [key_name(M)].")
 					log_admin("[key_name(usr)] has sticky banned [key_name(M)].")
 				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
@@ -1172,6 +1172,11 @@
 			if("Cancel")
 				return
 
+	else if(href_list["stickyunban"])
+		if(!check_rights(R_BAN))	return
+		var/key = href_list["stickyunban"]
+		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
+			world.SetConfig("SYSTEM/keyban",key,null)
 	else if(href_list["unjobbanf"])
 		if(!check_rights(R_BAN))	return
 
