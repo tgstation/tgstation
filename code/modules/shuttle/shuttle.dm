@@ -26,6 +26,10 @@
 	// may result.
 	if(!i_know_what_im_doing)
 		return QDEL_HINT_LETMELIVE
+	else
+		// If not removed immediately, it can interfere with the docking
+		// detection code, which is annoying and inconvinient.
+		return QDEL_HINT_HARDDEL_NOW
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
@@ -148,7 +152,8 @@
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
-	return locate(/obj/docking_port/mobile) in loc
+	. = locate(/obj/docking_port/mobile) in loc
+	world << "CALLING get_docked() of [src], returning: [.]"
 	/*
 	for(var/turf/T in return_ordered_turfs())
 		. = locate(/obj/docking_port/mobile) in loc
@@ -357,7 +362,7 @@
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
 	. = canDock(S1)
 	if(.)
-		throw EXCEPTION("dock(): shuttle cannot dock")
+		throw EXCEPTION("dock(): shuttle cannot dock, error: [.]")
 		return .
 
 	if(canMove())
