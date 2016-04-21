@@ -38,12 +38,12 @@ Bonus
 					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10))
 					M << "<span class='notice'>You feel sober.</span>"
 			if(4)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaptizine") < 10)
-					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10, "synaptizine"=5))
+				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10)
+					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10))
 					M << "<span class='notice'>You feel focused.</span>"
 			if(5)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaptizine") < 10 && M.reagents.get_reagent_amount("mannitol") < 10)
-					M.reagents.add_reagent_list(list("mannitol"=10, "antihol"=10, "inacusiate"=10, "synaptizine"=10))
+				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("mannitol") < 10)
+					M.reagents.add_reagent_list(list("mannitol"=10, "antihol"=10, "inacusiate"=10))
 					M << "<span class='notice'>Your mind feels relaxed.</span>"
 	return
 
