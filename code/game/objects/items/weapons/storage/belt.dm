@@ -152,6 +152,13 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "military"
+	max_w_class = 4
+
+/obj/item/weapon/storage/belt/military/army
+	name = "army belt"
+	desc = "A belt used by military forces."
+	icon_state = "grenadebeltold"
+	item_state = "security"
 
 /obj/item/weapon/storage/belt/military/assault
 	name = "assault belt"
@@ -163,9 +170,9 @@
 /obj/item/weapon/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
-	icon_state = "grenadebelt"
+	icon_state = "grenadebeltnew"
 	item_state = "security"
-	max_w_class = 0
+	max_w_class = 4
 	storage_slots = 30
 	can_hold = list(
 		/obj/item/weapon/grenade,
@@ -173,6 +180,7 @@
 		/obj/item/weapon/lighter,
 		/obj/item/device/multitool,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
+		/obj/item/weapon/c4,
 		)
 /obj/item/weapon/storage/belt/grenade/full/New()
 	..()
