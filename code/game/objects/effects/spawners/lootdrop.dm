@@ -140,7 +140,6 @@
 				/obj/item/clothing/gloves/color/light_brown = 1,
 				/obj/item/clothing/gloves/color/brown = 1,
 				/obj/item/clothing/shoes/laceup = 4,
-				/obj/item/weapon/reagent_containers/food/condiment/saltshaker = 10, //added for impartiality
 				"" = 4
 				)
 
