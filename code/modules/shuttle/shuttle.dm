@@ -237,9 +237,10 @@
 
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
-	if(canDock(S))
+	var/status = canDock(S)
+	if(status)
 		. = 1
-		throw EXCEPTION("request(): shuttle cannot dock")
+		throw EXCEPTION("request(): shuttle cannot dock, error: [status]")
 		return 1	//we can't dock at S
 
 	switch(mode)

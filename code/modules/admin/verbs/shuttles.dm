@@ -70,8 +70,15 @@
 	for(var/S in template.get_affected_turfs(T,centered = TRUE))
 		for (var/AM in S)
 			if(istype(AM, /obj/docking_port/mobile))
-				M = AM
-				break
+				if(!M)
+					M = AM
+				else
+					usr << "<span class='warning'>More than one mobile docking port was detected ([AM]), this is a BAD THING, TELL A CODER.</span>"
+			if(istype(AM, /obj/docking_port/stationary))
+				usr << "<span class='warning'>REEEEEEEEEEEE! THE LOADED TEMPLATE HAS [AM], A STATIONARY DOCKING PORT, THIS IS A BAD THING FIX IT. TELL A CODER. WE CAN DELETE IT BUT IT SHOULD NOT BE THERE."
+				var/obj/docking_port/stationary/bad = AM
+				bad.i_know_what_im_doing = TRUE
+				qdel(bad)
 
 	if(!M)
 		usr << "<span class='warning'>The loaded template didn't have a mobile docking port!</span>"
