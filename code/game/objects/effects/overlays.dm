@@ -82,8 +82,7 @@
 	alpha = initial(alpha)
 	if(mimiced_atom)
 		name = mimiced_atom.name
-		icon = mimiced_atom.icon
-		icon_state = mimiced_atom.icon_state
+		appearance = mimiced_atom.appearance
 		dir = mimiced_atom.dir
 	animate(src, alpha = 0, time = duration)
 
