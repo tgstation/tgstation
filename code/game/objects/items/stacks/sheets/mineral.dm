@@ -375,18 +375,4 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 	..()
 
 
-/*
- * Bones
- */
-/obj/item/stack/sheet/mineral/bone
-	name = "bones"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "bone"
-	singular_name = "bone"
-	desc = "Someone's been drinking their milk."
-	force = 7
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
-	origin_tech = "materials=2;bio=2"
+

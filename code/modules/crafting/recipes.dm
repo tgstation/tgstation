@@ -356,5 +356,5 @@
 	name = "Bone Armor"
 	result = /obj/item/clothing/suit/armor/bone
 	time = 30
-	reqs = list(/obj/item/stack/sheet/mineral/bone = 6)
+	reqs = list(/obj/item/stack/sheet/bone = 6)
 	category = CAT_MISC
