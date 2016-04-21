@@ -216,7 +216,7 @@ var/const/SAFETY_COOLDOWN = 100
 	transmute(I, sound)
 
 /obj/machinery/recycler/alchemizer/proc/transmute(var/obj/item/I, var/sound = 1, var/amount_mod = 1, var/override = 0)
-	if(override == 0) //only way I could think of to let this eat both mobs and items without worse code.
+	if(!override) //only way I could think of to let this eat both mobs and items without worse code.
 		I.loc = src.loc
 		if(!itemsallowed)
 			qdel(I)
@@ -238,8 +238,9 @@ var/const/SAFETY_COOLDOWN = 100
 		var/obj/item/stack/sheet/capout = new output(loc)
 		capout.amount = 50
 		finalamount -= 50
-	var/obj/item/stack/sheet/lastout = new output(loc)
-	lastout.amount = finalamount
+	if(finalamount)
+		var/obj/item/stack/sheet/lastout = new output(loc)
+		lastout.amount = finalamount
 
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
