@@ -192,8 +192,8 @@
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-			var/dist = max(1, get_dist(l, src))
-			l.hallucination += power * config_hallucination_power * sqrt(dist)
+			var/D = sqrt(1 / max(1, get_dist(l, src)))
+			l.hallucination += power * config_hallucination_power * D
 			l.hallucination = Clamp(0, 200, l.hallucination)
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
