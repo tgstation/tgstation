@@ -426,19 +426,12 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
 	throw_range = 7 //paper planes flies pretty far
-	throw_speed = 1 //but not very fast
-	throwforce = 0 // nor does it do any damage
-	gender = NEUTER
-	w_class = 1
-	layer = 3
-	pressure_resistance = 0
-	burn_state = FLAMMABLE
-	burntime = 5
+
 
 /obj/item/weapon/paper/paperplane/New()
 	..()
 	update_icon()
-	
+
 /obj/item/weapon/paper/paperplane/update_icon()
 	if(burn_state == ON_FIRE)
 		overlays += "paperplane_onfire"
@@ -446,7 +439,7 @@
 	if(info)
 		return
 	icon_state = "paperplane"
-	
+
 /obj/item/weapon/paper/paperplane/fire_act()
 	..(0)
 	icon_state = "paperplane"
@@ -482,4 +475,3 @@
 		qdel(P)
 		updateinfolinks()
 
-	
