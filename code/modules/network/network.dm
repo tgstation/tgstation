@@ -45,15 +45,11 @@ proc/parse_network_command(command = "")
 			password = random_string(8, hex_characters)
 		else
 			password = newpw
-	var/turf/T = get_turf(holder)
-
 	if(newid) // Can be called with new(null, H) without issues, or new("system", H) to set a preferred ID.
 		id = newid
-
 	if(!id)
 		id = "[num2hex(world.time, -1)]"
 	id = updateid()
-
 	var/list/commandlist = commands.Copy()
 	commands = list()
 	for(var/datum/network_command/NC in commandlist)
@@ -67,12 +63,11 @@ proc/parse_network_command(command = "")
 			N.del_link(src)
 		linked -= I
 	linked = list()
+	connected = list()
 	for(var/datum/network_command/NC in commands)
 		qdel(NC)
 	commands = list()
-
 	networks_by_id -= id
-
 	..()
 
 
@@ -119,30 +114,20 @@ proc/parse_network_command(command = "")
 	var/newid = id
 	. = newid
 
-	if(id in active_network_ids) // Checks if the current id already exists, if it doesnt, then register it with active_network_id's and networks_by_id.
+	if(id in networks_by_id) // Checks if the current id already exists, and whether we're changing it, or it's just a conflict.
 		newid += "_[num2hex(world.time, -1)]" // Will typically be 4 digits long.
-		if(networks_by_id[id] == src) // Checks if whether or not we're changing an existing network id, or creating a new one, and acts accordingly.
-			for(var/I in networks_by_id)
-				if(I == id)
-					I = newid
-					break
-			active_network_ids -= id
-	active_network_ids += newid
+		if(networks_by_id[id] == src)
+			networks_by_id -= id
 	networks_by_id[newid] = src
 
 	for(var/I in linked) // Check through all the linked networks and update the reference.
 		var/datum/network/N = linked[I]
-		for(var/J in N.linked)
-			if(J == id)
-				if(N.linked[J] == src) // Make sure that it's actually this object, not a network with a conflicting id.
-					J = newid
-				else
-					N.linked[newid] = src // If it's not actually this object, but this is linked to that network, link it up.
-				break
-		for(var/J in N.connected)
-			if(J == id && N.connected[J] == src)
-				J = newid
-				break // Only connect it if it was previously connected.
+		if(N.linked[id] == src)
+			N.linked -= id
+		N.linked[newid] = src
+		if(N.connected[id] == src)
+			N.connected -= id
+		N.connected[newid] = src
 
 
 
@@ -156,16 +141,13 @@ proc/parse_network_command(command = "")
 	var/area/A = T.loc
 	switch(remote + boost)
 		if(REMOTE_NETWORK_NONE)
-			if(R in range(1, T))
-				return 1
+			if(R in range(1, T)) return 1
 			return
 		if(REMOTE_NETWORK_AREA)
-			if(R.loc == A && R.z == T.z && !A.outdoors)
-				return 1
+			if(R.loc == A && R.z == T.z && !A.outdoors) return 1
 			return
 		if(REMOTE_NETWORK_HALF)
-			if(R.z == T.z)
-				return 1
+			if(R.z == T.z) return 1
 			return
 	return 1
 
@@ -188,16 +170,8 @@ proc/parse_network_command(command = "")
 	if(badargs(N, H)) return
 
 /datum/network_command/proc/feedback(var/obj/item/device/hacktool/H, var/feed)
-	if(feed && H)
+	if(feed && H && istype(H))
 		H.add_feedback(feed)
-
-/datum/network_command/proc/disconnect(var/obj/item/device/hacktool/H)
-	if(H)
-		H.disconnect()
-
-/datum/network_command/proc/connect(var/datum/network/N, var/obj/item/device/hacktool/H)
-	if(H && N)
-		H.connect(N)
 
 // helper proc to trigger security systems, and step up/down depending on hacktool upgrades.
 /*
@@ -254,7 +228,7 @@ proc/parse_network_command(command = "")
 	return lockout(N, H)
 
 /datum/network_command/proc/lockout(var/datum/network/N, var/obj/item/device/hacktool/H)
-	if(N.locked || !H.bypass)
+	if(N.locked && !H.bypass)
 		feedback(H, "<span class='warning'>ACCESS DENIED</span>")
 		return 1
 
