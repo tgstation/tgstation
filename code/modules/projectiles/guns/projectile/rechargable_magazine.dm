@@ -182,7 +182,7 @@
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/item/projectile/beam/weak
 	variance = 0.8
-	click_cooldown_override = 2
+	click_cooldown_override = 1
 
 /obj/item/projectile/beam/weak
 	damage = 10
