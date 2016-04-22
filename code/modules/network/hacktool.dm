@@ -37,6 +37,40 @@
 	head = null
 	..()
 
+/obj/item/device/hacktool/proc/run_command(var/command)
+	if(!command)
+		return
+	if(!head)
+		var/list/parsed = parse_network_command(command)
+		switch(parsed[1])
+			if("help")
+				add_feedback("The hacktool is not connected to a network. To find a network, use \"probe\", and hen connect to it using \"connect -{network_id}\".")
+				return
+			if("probe")
+				if(!parsed[2][1])
+					var/probed_nets
+					for(var/I in networks_by_id)
+						var/datum/network/N = networks_by_id[I]
+						if(!N.invisible && (!N.stealth || software & HACK_PROBE) && N.can_remote(src))
+							probed_nets += " | N.id |"
+					if(probed_nets)
+						add_feedback("FOUND NETWORKS:[probed_nets]")
+						return
+					add_feedback("span class='warning'>NO NETWORKS FOUND</span>")
+					return
+			if("connect")
+				if(parsed[2][1] in networks_by_id)
+					var/datum/network/N = networks_by_id[parsed[2][1]]
+					if(!N.invisible && N.can_remote(src))
+						N.execute("connect -[parsed[2][2]]", src)
+						return
+				add_feedback("span class='warning'>BAD NETWORK: [parsed[2][1] ? parsed[2][1] : "NULL"]</span>")
+				return
+		add_feedback("span class='warning'>BAD COMMAND: [parsed[1]]</span>")
+		return
+	else
+		head.execute(command, src)
+
 /obj/item/device/hacktool/proc/connect(var/datum/network/N, var/bruteforce = FALSE)
 	if(!istype(N, /datum/network))
 		return

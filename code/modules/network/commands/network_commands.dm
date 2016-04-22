@@ -52,6 +52,19 @@
 			security(L, "badkey", H)
 			badkey(A[2], H)
 			return
+	if(A[1] != N.id)
+		if(!N.invisible && (N.stealth || H.software & HACK_PROBE))
+			if(!N.password || N.password == A[1])
+				if(security(N, "connect", H)) return
+				H.connect(N)
+				return
+			if(N.password && H.software & HACK_BRUTE && A[1] == "b")
+				security(N, "bruteforce", H)
+				H.bruteforce(N, "connect -[N.password]", 10)
+				return
+			security(N, "badkey", H)
+			badkey(A[1], H)
+			return
 	badnet(A[1], H)
 	return
 
