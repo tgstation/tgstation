@@ -409,7 +409,7 @@
 	..()
 	if(!in_range(src, user))
 		return
-	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //don't fuck with cult
+	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
 			user.unEquip(src)
@@ -425,7 +425,7 @@
 	desc = "paper folded in the shape of a plane"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
-	throw_range = 7 //paper planes flies pretty far
+	throw_range = 7
 
 
 /obj/item/weapon/paper/paperplane/New()
@@ -452,9 +452,13 @@
 	update_icon()
 
 /obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
-	if(!..() || !ishuman(target))//if the plane is caught or it hits a nonhuman
+	if(!..())
 		return
-	var/mob/living/carbon/human/H = target
+
+/obj/item/weapon/paper/paperplane/throw_impact(atom/hit_atom)
+	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
+		return
+	var/mob/living/carbon/human/H = hit_atom
 	if(prob(15))
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			return
