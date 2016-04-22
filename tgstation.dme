@@ -1020,6 +1020,7 @@
 #include "code\modules\events\operative.dm"
 #include "code\modules\events\portal_storm.dm"
 #include "code\modules\events\prison_break.dm"
+#include "code\modules\events\processor_overload.dm"
 #include "code\modules\events\radiation_storm.dm"
 #include "code\modules\events\shuttle_loan.dm"
 #include "code\modules\events\spacevine.dm"
