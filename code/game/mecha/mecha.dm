@@ -92,6 +92,7 @@
 	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
+	var/datum/action/innate/mecha/strafe/strafing = new
 
 	//Action vars
 	var/thrusters_active = FALSE
@@ -106,6 +107,7 @@
 	var/phasing = FALSE
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
+	var/strafe = FALSE //If we are strafing
 
 	var/static/list/armour_facings = list("[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR),
 "[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR),
@@ -502,7 +504,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(src.dir!=direction)
+	else if(src.dir!=direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -522,7 +524,10 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/current_dir = src.dir
 	var/result = step(src,direction)
+	if(strafe)
+		src.dir = current_dir
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -1033,6 +1038,9 @@ var/year_integer = text2num(year) // = 2013???
 	stats_action.chassis = src
 	stats_action.Grant(user)
 
+	strafing.chassis = src
+	strafing.Grant(user)
+
 
 /obj/mecha/proc/RemoveActions(var/mob/living/user, var/human_occupant = 0)
 	if(human_occupant)
@@ -1041,6 +1049,7 @@ var/year_integer = text2num(year) // = 2013???
 	cycle_action.Remove(user)
 	lights_action.Remove(user)
 	stats_action.Remove(user)
+	strafing.Remove(user)
 
 
 /datum/action/innate/mecha
@@ -1136,6 +1145,18 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")
 
 
+/datum/action/innate/mecha/strafe
+	name = "Toggle Strafing"
+	button_icon_state = "strafe"
+
+/datum/action/innate/mecha/strafe/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+
+	chassis.strafe = !chassis.strafe
+
+	chassis.occupant_message("Toggled strafing mode [chassis.strafe?"on":"off"].")
+	chassis.log_message("Toggled strafing mode [chassis.strafe?"on":"off"].")
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
