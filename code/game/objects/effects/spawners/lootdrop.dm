@@ -121,7 +121,6 @@
 				/obj/item/weapon/relic = 3,
 				/obj/item/weaponcrafting/reciever = 1,
 				/obj/item/clothing/head/cone = 2,
-				/obj/item/weapon/skub = 1,
 				/obj/item/weapon/grenade/smokebomb = 2,
 				/obj/item/device/geiger_counter = 3,
 				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1, //only for the best
