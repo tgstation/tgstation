@@ -153,7 +153,6 @@
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
 	. = locate(/obj/docking_port/mobile) in loc
-	world << "CALLING get_docked() of [src], returning: [.]"
 	/*
 	for(var/turf/T in return_ordered_turfs())
 		. = locate(/obj/docking_port/mobile) in loc
@@ -244,9 +243,9 @@
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	var/status = canDock(S)
 	if(status)
-		. = 1
+		. = status
 		throw EXCEPTION("request(): shuttle cannot dock, error: [status]")
-		return 1	//we can't dock at S
+		return status	//we can't dock at S
 
 	switch(mode)
 		if(SHUTTLE_CALL)
@@ -359,14 +358,16 @@
 
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
-/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
-	. = canDock(S1)
-	if(.)
-		throw EXCEPTION("dock(): shuttle cannot dock, error: [.]")
-		return .
+/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
+	// Crashing this ship with NO SURVIVORS
+	if(!force)
+		var/status = canDock(S1)
+		if(status)
+			throw EXCEPTION("dock(): shuttle cannot dock, error: [status]")
+			return status
 
-	if(canMove())
-		return -1
+		if(canMove())
+			return -1
 
 	closePortDoors()
 
@@ -497,18 +498,18 @@
 		return T
 
 /obj/docking_port/mobile/proc/findRoundstartDock()
-	var/obj/docking_port/stationary/transit/T
-	T = SSshuttle.getDock(roundstart_move)
+	var/obj/docking_port/stationary/D
+	D = SSshuttle.getDock(roundstart_move)
 
-	if(T && !canDock(T))
-		return T
+	if(D)
+		return D
 
 /obj/docking_port/mobile/proc/dockRoundstart()
 	// Instead of spending a lot of time trying to work out where to place
 	// our shuttle, just create it somewhere empty and send it to where
 	// it should go
-	var/obj/docking_port/stationary/transit/T = findRoundstartDock()
-	return dock(T)
+	var/obj/docking_port/stationary/D = findRoundstartDock()
+	return dock(D)
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
