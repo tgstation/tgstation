@@ -1,5 +1,0 @@
-author: nullbear
-delete-after: True
-changes: 
-  - bugfix: "xenobio console is deconstructable again."
-  - tweak: "syndibomb recipe calls for any matter bin, scaling effectiveness with tier."

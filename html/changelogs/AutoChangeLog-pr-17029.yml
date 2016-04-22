@@ -1,7 +1,0 @@
-author: Bawhoppen
-delete-after: True
-changes: 
-  - rscadd: "Security belts can now hold any type of grenade. This includes barrier grenades."
-  - rscadd: "Janitorial belts are now able to store chem grenades."
-  - rscadd: "Military belts have been given a size upgrade, so they can now hold larger items."
-  - rscadd: "Bandoliers have been given a buff and now can hold a much larger amount of ammunition."
