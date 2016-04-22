@@ -735,6 +735,17 @@
 	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT
 	siemens_coefficient = 1
+	
+/obj/item/weapon/table_parts/glass
+	name = "glass table parts"
+	desc = "Glass table parts for the spaceman with style."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "glass_tableparts"
+	starting_materials = list(MAT_GLASS = 3750)
+	w_type = RECYK_GLASS
+	melt_temperature=MELTPOINT_GLASS
+	flags = FPRINT
+	siemens_coefficient = 0 //copying from glass sheets and shards even if its bad balance
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"

@@ -6,8 +6,6 @@
  *		Rack Parts
  */
 
-
-
 /*
  * Table Parts
  */
@@ -27,12 +25,20 @@
 			qdel(src)
 		else if (rods.amount < 4)
 			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
+	if (istype(W, /obj/item/stack/sheet/glass/glass))
+		var/obj/item/stack/sheet/glass/glass = W
+		if (glass.amount >= 1)
+			new /obj/item/weapon/table_parts/glass( user.loc )
+			to_chat(user, "<span class='notice'>You add glass panes to \the [name].</span>")
+			glass.use(1)
+			qdel(src)
+		
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
 	new /obj/structure/table( user.loc )
 	user.drop_item(src, force_drop = 1)
 	qdel(src)
-	return
+	
 
 
 /*
@@ -90,6 +96,21 @@
 	user.drop_item(src, force_drop = 1)
 	qdel(src)
 	return
+
+/*
+* Glass
+*/
+
+/obj/item/weapon/table_parts/glass/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (iswrench(W))
+		new /obj/item/stack/sheet/glass/glass( user.loc )
+		new /obj/item/stack/sheet/metal( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/glass/attack_self(mob/user as mob)
+	new /obj/structure/table/glass( user.loc )
+	qdel(src)
+	
 
 
 /*
