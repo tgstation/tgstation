@@ -412,8 +412,7 @@
 	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
-			user.unEquip(src)
-			get_turf(src)
+			user.drop_item(src)
 			I = new /obj/item/weapon/paper/paperplane(src.loc)
 			user.put_in_hands(I)
 			src.loc = I
@@ -421,7 +420,7 @@
 		return
 
 /obj/item/weapon/paper/paperplane
-	name = "\improper paper plane"
+	name = "paper plane"
 	desc = "paper folded in the shape of a plane"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
@@ -442,16 +441,16 @@
 
 /obj/item/weapon/paper/paperplane/fire_act()
 	..(0)
-	icon_state = "paperplane"
+	icon_state = null //so the sprites don't stack
 	info = "[stars(info)]"
 	update_icon()
-
 
 /obj/item/weapon/paper/paperplane/extinguish()
 	..()
 	update_icon()
 
-/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
+
+/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0) //prevent the paper plane from spinning
 	if(!..())
 		return
 
