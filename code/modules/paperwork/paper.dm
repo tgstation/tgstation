@@ -40,14 +40,10 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(burn_state == ON_FIRE)
-		// if(!istype(src, /obj/item/weapon/paper/paperplane)) //placeholder for paperplane_fire code
 		icon_state = "paper_onfire"
 		return
 	if(info)
-		if(!istype(src, /obj/item/weapon/paper/paperplane))  //don't update paperplanes
-			icon_state = "paper_words"
-		return
-	if(istype(src, /obj/item/weapon/paper/paperplane))  //don't update paperplanes to paper
+		icon_state = "paper_words"
 		return
 	icon_state = "paper"
 
@@ -458,7 +454,7 @@
 
 /obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
 	if(!..())
-		return 
+		return
 /obj/item/weapon/paper/paperplane/CheckParts()
 	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
 	if(P)
@@ -469,3 +465,12 @@
 		src.rigged = P.rigged
 		qdel(P)
 		updateinfolinks()
+
+
+/obj/item/weapon/paper/paperplane/update_icon()
+	if(burn_state == ON_FIRE)
+		//icon_state code placeholder
+		return
+	if(info)
+		return
+	icon_state = "paperplane"
