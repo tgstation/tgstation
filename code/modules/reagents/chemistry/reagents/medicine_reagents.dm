@@ -86,8 +86,8 @@
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
+		. = 1
 	..()
-	. = 1
 
 /datum/reagent/medicine/synaphydramine
 	name = "Diphen-Synaptizine"
@@ -104,8 +104,8 @@
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
+		. = 1
 	..()
-	. = 1
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
