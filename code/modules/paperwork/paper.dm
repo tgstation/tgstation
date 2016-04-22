@@ -404,3 +404,82 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/weapon/paper/AltClick(mob/user, obj/item/I,)
+	..()
+	if(!in_range(src, user))
+		return
+	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //don't fuck with cult
+		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
+		if(do_after(user, 20, target = src))
+			user.unEquip(src)
+			get_turf(src)
+			I = new /obj/item/weapon/paper/paperplane(src.loc)
+			user.put_in_hands(I)
+			src.loc = I
+			I.CheckParts()
+		return
+
+/obj/item/weapon/paper/paperplane
+	name = "\improper paper plane"
+	desc = "paper folded in the shape of a plane"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "paperplane"
+	throw_range = 7 //paper planes flies pretty far
+	throw_speed = 1 //but not very fast
+	throwforce = 0 // nor does it do any damage
+	gender = NEUTER
+	w_class = 1
+	layer = 3
+	pressure_resistance = 0
+	burn_state = FLAMMABLE
+	burntime = 5
+
+/obj/item/weapon/paper/paperplane/New()
+	..()
+	update_icon()
+	
+/obj/item/weapon/paper/paperplane/update_icon()
+	if(burn_state == ON_FIRE)
+		overlays += "paperplane_onfire"
+		return
+	if(info)
+		return
+	icon_state = "paperplane"
+	
+/obj/item/weapon/paper/paperplane/fire_act()
+	..(0)
+	icon_state = "paperplane"
+	info = "[stars(info)]"
+	update_icon()
+
+
+/obj/item/weapon/paper/paperplane/extinguish()
+	..()
+	update_icon()
+
+/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
+	if(!..() || !ishuman(target))//if the plane is caught or it hits a nonhuman
+		return
+	var/mob/living/carbon/human/H = target
+	if(prob(15))
+		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
+			return
+		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
+		H.adjust_blurriness(6)
+		H.adjust_eye_damage(rand(6,8))
+		H.Weaken(2)
+		H.emote("scream")
+
+/obj/item/weapon/paper/paperplane/CheckParts()
+	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
+	if(P)
+		src.info = P.info
+		src.stamps = P.stamps
+		if(P.stamped)
+			src.stamped = P.stamped.Copy()
+		src.rigged = P.rigged
+		qdel(P)
+		updateinfolinks()
+
+	
