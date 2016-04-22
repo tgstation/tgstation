@@ -40,14 +40,10 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(burn_state == ON_FIRE)
-		// if(!istype(src, /obj/item/weapon/paper/paperplane)) //placeholder for paperplane_fire code
 		icon_state = "paper_onfire"
 		return
 	if(info)
-		if(!istype(src, /obj/item/weapon/paper/paperplane))  //don't update paperplanes
-			icon_state = "paper_words"
-		return
-	if(istype(src, /obj/item/weapon/paper/paperplane))  //don't update paperplanes to paper
+		icon_state = "paper_words"
 		return
 	icon_state = "paper"
 
@@ -405,15 +401,23 @@
 /obj/item/weapon/paper/crumpled/update_icon()
 	return
 
+
+/obj/item/weapon/paper/crumpled/bloody
+	icon_state = "scrap_bloodied"
+
 /obj/item/weapon/paper/AltClick(mob/user, obj/item/I,)
 	..()
 	if(!in_range(src, user))
 		return
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 =======
 	if(!istype(src, /obj/item/weapon/paper/paperplane)) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 >>>>>>> origin/paperplane
+=======
+	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //don't fuck with cult
+>>>>>>> refs/remotes/origin/master
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
 			user.unEquip(src)
@@ -423,10 +427,6 @@
 			src.loc = I
 			I.CheckParts()
 		return
-
-/obj/item/weapon/paper/crumpled/bloody
-	icon_state = "scrap_bloodied"
-
 
 /obj/item/weapon/paper/paperplane
 	name = "\improper paper plane"
@@ -444,6 +444,25 @@
 	burntime = 5
 
 /obj/item/weapon/paper/paperplane/New()
+	..()
+	update_icon()
+	
+/obj/item/weapon/paper/paperplane/update_icon()
+	if(burn_state == ON_FIRE)
+		overlays += "paperplane_onfire"
+		return
+	if(info)
+		return
+	icon_state = "paperplane"
+	
+/obj/item/weapon/paper/paperplane/fire_act()
+	..(0)
+	icon_state = "paperplane"
+	info = "[stars(info)]"
+	update_icon()
+
+
+/obj/item/weapon/paper/paperplane/extinguish()
 	..()
 	update_icon()
 
@@ -470,3 +489,4 @@
 		src.rigged = P.rigged
 		qdel(P)
 		updateinfolinks()
+
