@@ -19,8 +19,10 @@
 	var/mob/living/carbon/human/H = imp_in
 	if(!ishuman(H))
 		return
-	style.teach(H)
-	qdel(src)
+	if(istype(H.martial_art, /datum/martial_art/krav_maga))
+		style.remove(H)
+	else
+		style.teach(H,1)
 
 /obj/item/weapon/implanter/krav_maga
 	name = "implanter (krav maga)"
