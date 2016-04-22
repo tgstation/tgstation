@@ -59,8 +59,8 @@
 	name = "backpack power source"
 	desc = "The massive external power source for the laser gatling gun"
 	icon = 'icons/obj/guns/minigun.dmi'
-	icon_state = "minipack_gun"
-	item_state = "brokenpack"
+	icon_state = "brokenpack_gun"
+	item_state = "backpack"
 	slot_flags = SLOT_BACK
 	w_class = 5
 	var/obj/item/weapon/gun/projectile/minigun/gun = null
@@ -121,9 +121,9 @@
 
 /obj/item/weapon/minigunpack/update_icon()
 	if(armed)
-		icon_state = "minipack"
+		icon_state = "brokenpack"
 	else
-		icon_state = "minipack_gun"
+		icon_state = "brokenpack_gun"
 
 
 /obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)

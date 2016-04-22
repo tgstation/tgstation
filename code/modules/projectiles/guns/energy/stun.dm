@@ -8,7 +8,7 @@
 
 /obj/item/weapon/gun/energy/shock_revolver
 	name = "shock revolver"
-	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
+	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	icon_state = "stunrevolver"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
