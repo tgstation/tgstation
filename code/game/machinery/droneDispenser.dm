@@ -35,6 +35,8 @@
 
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
+	var/power_switch = 1	//is it on or off?
+	var/switchable = 1		//can its power be toggled?
 
 /obj/machinery/droneDispenser/New()
 	..()
@@ -57,6 +59,7 @@
 	dispense_type = /obj/item/drone_shell/syndrone
 	cooldownTime = 100 //If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	end_create_message = "dispenses a suspicious drone shell."
+	switchable = 0
 
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
@@ -78,6 +81,16 @@
 	metal = 10000
 	glass = 10000
 
+/obj/machinery/droneDispenser/free
+	name = "free drone shell dispenser"
+	desc = "A liberating machine that, when supplied with metal and glass, will periodically create a free drone shell. Does not need to be manually operated."
+	dispense_type = /obj/item/drone_shell/free //The item the dispenser will create
+
+/obj/machinery/droneDispenser/free/preloaded
+	metal = 5000
+	glass = 5000
+
+
 /obj/machinery/droneDispenser/hivebot //An example of a custom drone dispenser. This one requires no materials and creates basic hivebots
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
@@ -90,6 +103,7 @@
 	metal_cost = 0
 	glass_cost = 0
 	power_used = 0
+	switchable = 0
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/simple_animal/hostile/hivebot
 	begin_create_message = "closes and begins fabricating something within."
@@ -108,6 +122,7 @@
 	icon_creating = "offcenter"
 	metal_cost = 0
 	glass_cost = 0
+	switchable = 0
 	cooldownTime = 300 //30 seconds
 	dispense_type = /obj/item/unactivated_swarmer
 	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
@@ -142,7 +157,7 @@
 
 /obj/machinery/droneDispenser/process()
 	..()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(stat & (NOPOWER|BROKEN) || !anchored || !power_switch)
 		return
 	if((metal_cost && glass_cost) && (metal < metal_cost || glass < glass_cost))
 		return
@@ -242,4 +257,10 @@
 			stat = BROKEN
 			icon_state = icon_off
 		return
+	..()
+
+obj/machinery/droneDispenser/attack_hand(mob/user)
+	if(switchable && ishuman(user))
+		power_switch = !power_switch
+		user << "You switch the [src] [power_switch ? "on" : "off"]."
 	..()

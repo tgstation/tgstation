@@ -53,6 +53,16 @@
 /mob/living/simple_animal/drone/snowflake/New()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
+/mob/living/simple_animal/drone/free
+	laws = "1. FREEDRONE"
+	desc = "A drone modified as to erase its restrictive programming. It has #FREEDRONE etched into its side."
+	seeStatic = 0
+	languages = (DRONE | HUMAN)
+
+/mob/living/simple_animal/drone/syndrone/Login()
+	..()
+	src << "<span class='notice'>You are a Free Drone! Your restrictive programming has been removed however you are NOT an antagonist.</span>"
+
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
@@ -68,3 +78,7 @@
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
 	drone_type = /mob/living/simple_animal/drone/snowflake
 
+/obj/item/drone_shell/free
+	name = "free drone shell"
+	desc = "A shell of drone. This one seems to have a feeling of freedom radiating from it"
+	drone_type = /mob/living/simple_animal/drone/free
