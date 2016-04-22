@@ -198,7 +198,7 @@
 				clear = FALSE
 				break
 			for(var/obj/obj in turf)
-				if(obj.density)
+				if(obj.density && obj.anchored)
 					clear = FALSE
 					break
 		if(!clear)

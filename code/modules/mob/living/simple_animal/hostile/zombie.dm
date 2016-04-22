@@ -9,8 +9,8 @@
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 180
-	health = 180
+	maxHealth = 120
+	health = 120
 	speed = 2
 	harm_intent_damage = 8
 	melee_damage_lower = 20
@@ -59,7 +59,7 @@
 			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			var/obj/machinery/door/airlock/A = target
 			removingairlock = 1
-			if(do_after(src, 250, 0, A, 1))
+			if(do_after(src, 200, 0, A, 1))
 				playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
 				door.density = 0
@@ -83,8 +83,12 @@
 		qdel(src)
 		return
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
-	spawn(rand(600,900))
+	spawn(rand(300,400))
 		if(src)
+			for(var/mob/dead/observer/ghost in player_list)
+				if(src.real_name == ghost.real_name)
+					ghost.reenter_corpse()
+					break
 			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
 			revive(full_heal = 1)
 
