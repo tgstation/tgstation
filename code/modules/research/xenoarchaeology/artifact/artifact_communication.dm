@@ -57,7 +57,7 @@
 
 /obj/machinery/communication/proc/get_active_stones()
 	if((stat & NOPOWER) && !anchored) return list()
-	var/list/obj/item/commstone/thestones = allstones
+	var/list/obj/item/commstone/thestones = allstones.Copy()
 	for(var/obj/item/commstone/check in thestones)
 		if(check.loc == src)
 			thestones -= check
