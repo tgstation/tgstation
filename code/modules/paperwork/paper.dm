@@ -443,7 +443,7 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
+/obj/item/weapon/paper/paperplane/throw_impact(atom/hit_atom)
 	if(!..() || !ishuman(target))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = target
@@ -456,6 +456,9 @@
 		H.Weaken(2)
 		H.emote("scream")
 
+/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
+	if(!..())
+		return 
 /obj/item/weapon/paper/paperplane/CheckParts()
 	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
 	if(P)
