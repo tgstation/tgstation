@@ -239,6 +239,14 @@
 	build_path = /obj/item/weapon/kitchen/fork
 	category = list("initial","Dinnerware")
 
+/datum/design/tray
+	name = "Tray"
+	id = "tray"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/weapon/storage/bag/tray
+	category = list("initial","Dinnerware")
+
 /datum/design/bowl
 	name = "Bowl"
 	id = "bowl"
