@@ -257,19 +257,7 @@
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
 
 /obj/item/organ/internal/tongue/proc/TongueSpeech(var/message)
-	spawn(0)
-		speakDevilName(message)
 	return message
-
-/obj/item/organ/internal/tongue/proc/speakDevilName(var/message)
-	for (var/D in ticker.mode.devils)
-		var/datum/mind/devil = D
-		var/datum/devilinfo/devilinfo = devil.devilinfo
-		if (findtext(message, devilinfo.truename) && devil.current)
-			var/response = tgalert(devil.current, "Your truename was spoken.  Do you wish to teleport there?", "Infernal Summoning", "Yes", "No", null, 0, 200)
-			if(response == "Yes" && devil.current && src.owner)
-				devil.current.forceMove(get_turf(src.owner))
-
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -288,8 +276,6 @@
 	say_mod = "hisses"
 
 /obj/item/organ/internal/tongue/lizard/TongueSpeech(var/message)
-	spawn(0)
-		speakDevilName(message)
 	var/regex/lizard_hiss = new("s+", "g")
 	var/regex/lizard_hiSS = new("S+", "g")
 	if(copytext(message, 1, 2) != "*")
@@ -304,8 +290,6 @@
 	say_mod = "buzzes"
 
 /obj/item/organ/internal/tongue/fly/TongueSpeech(var/message)
-	spawn(0)
-		speakDevilName(message)
 	var/regex/fly_buzz = new("z+", "g")
 	var/regex/fly_buZZ = new("Z+", "g")
 	if(copytext(message, 1, 2) != "*")
