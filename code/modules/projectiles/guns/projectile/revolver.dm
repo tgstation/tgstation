@@ -87,10 +87,14 @@
 /obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
 	user << "[get_ammo(0,0)] of those are live rounds."
+	if(unique_reskin)
+		user << "<span class='italicnotice'>Alt-click it to reskin it.</span>"
+	if(unique_rename)
+		user << "<span class='italicnotice'>Use a pen on it to rename it.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	name = "\improper .38 Mars Special"
-	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds. <i>Alt-click it to reskin it.</i>"
+	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
