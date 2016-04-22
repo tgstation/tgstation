@@ -1,6 +1,6 @@
 /obj/machinery/washing_machine
 	name = "washing machine"
-	desc = "Gets rid of those pesky bloodstains, or your money back! <i>Alt-click it to start a wash cycle.</i>"
+	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
@@ -16,6 +16,10 @@
 	//8 = blood, running
 	var/gibs_ready = 0
 	var/obj/crayon
+
+/obj/machinery/washing_machine/examine(mob/user)
+	..()
+		user << "<span class='italicnotice'>Alt-click it to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
