@@ -415,7 +415,7 @@
 			user.drop_item(src)
 			I = new /obj/item/weapon/paper/paperplane(src.loc)
 			user.put_in_hands(I)
-			src.loc = I
+			src.forceMove(I)
 			I.CheckParts()
 		return
 
