@@ -129,6 +129,19 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
+				if(((dna.features["wings"] != "None") && !("wings" in dna.species.mutant_bodyparts)))
+					OpenWings()
+					spawn(1)
+					CloseWings()
+
+		if ("wings")
+			if (!src.restrained())
+				if(dna && dna.species &&((dna.features["wings"] != "None") && ("wings" in dna.species.mutant_bodyparts)))
+					message = "<B>[src]</B> opens \his wings."
+					OpenWings()
+				else if(dna && dna.species &&((dna.features["wings"] != "None") && ("wingsopen" in dna.species.mutant_bodyparts)))
+					message = "<B>[src]</B> closes \his wings."
+					CloseWings()
 
 		if ("gasp","gasps")
 			if (miming)
@@ -383,4 +396,20 @@
 	if("waggingtail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "waggingtail_human"
 		dna.species.mutant_bodyparts |= "tail_human"
+	update_body()
+
+/mob/living/carbon/human/proc/OpenWings()
+	if(!dna || !dna.species)
+		return
+	if("wings" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "wings"
+		dna.species.mutant_bodyparts |= "wingsopen"
+	update_body()
+
+/mob/living/carbon/human/proc/CloseWings()
+	if(!dna || !dna.species)
+		return
+	if("wings_open" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "wingsopen"
+		dna.species.mutant_bodyparts |= "wings"
 	update_body()

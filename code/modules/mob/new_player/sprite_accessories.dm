@@ -1295,6 +1295,20 @@
 	hasinner = 1
 	color_src = HAIR
 
+/datum/sprite_accessory/wings/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/wings_open/angel
+	name = "Angel"
+	icon_state = "angel"
+	color_src = 0
+
+/datum/sprite_accessory/wings/angel
+	name = "Angel"
+	icon_state = "angel"
+	color_src = 0
+
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
