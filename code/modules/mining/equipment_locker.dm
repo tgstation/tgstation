@@ -291,6 +291,7 @@
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 		600),
+		new /datum/data/mining_equipment("Wormhole Lifebuoy",   /obj/item/device/wormhole_jaunter/lifebuoy,							   1000),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
@@ -492,20 +493,43 @@
 		return
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-		var/list/L = list()
-		for(var/obj/item/device/radio/beacon/B in world)
-			var/turf/T = get_turf(B)
-			if(T.z == ZLEVEL_STATION)
-				L += B
-		if(!L.len)
-			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
-			return
-		var/chosen_beacon = pick(L)
-		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
-		J.target = chosen_beacon
-		try_move_adjacent(J)
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		qdel(src)
+		activate(user)
+
+/obj/item/device/wormhole_jaunter/proc/activate(mob/user)
+	var/list/L = list()
+	for(var/obj/item/device/radio/beacon/B in world)
+		var/turf/T = get_turf(B)
+		if(T.z == ZLEVEL_STATION)
+			L += B
+	if(!L.len)
+		user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
+		return
+	var/chosen_beacon = pick(L)
+	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
+	J.target = chosen_beacon
+	try_move_adjacent(J)
+	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	qdel(src)
+
+
+/obj/item/device/wormhole_jaunter/lifebuoy
+	name = "wormhole lifebuoy"
+	desc = "A single use device using similar technology to the wormhole jaunter. In addition, this belt has velocity and depth sensors that will trigger the device automatically if the user falls into a chasm, saving them from their trip into the darkness. Must be worn around the users waist in order to function in this way."
+	slot_flags = SLOT_BELT
+
+/obj/item/device/wormhole_jaunter/lifebuoy/emp_act(power)
+	var/triggered = FALSE
+	if(power == 1)
+		triggered = TRUE
+	else if(power == 2 && prob(50))
+		triggered = TRUE
+	if(triggered)
+		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
+		activate(usr)
+
+/obj/item/device/wormhole_jaunter/lifebuoy/proc/chasm_protect()
+	usr.visible_message("<span class='warning'>[usr]'s [src] activates, saving them from the chasm!</span>")
+	activate(usr)
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -518,6 +542,7 @@
 		return
 	if(istype(M, /atom/movable))
 		if(do_teleport(M, target, 6))
+			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 			if(iscarbon(M))
 				var/mob/living/carbon/L = M
 				L.Weaken(3)
@@ -1019,20 +1044,20 @@
 /*********************Hivelord stabilizer****************/
 
 /obj/item/weapon/hivelordstabilizer
-	name = "hivelord stabilizer"
+	name = "legion's heart stabilizer"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
-	desc = "Inject a hivelord core with this stabilizer to preserve its healing powers indefinitely."
+	desc = "Inject a legion's heart with this stabilizer to preserve its healing powers indefinitely."
 	w_class = 1
 	origin_tech = "biotech=1"
 
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/internal/M, mob/user)
 	var/obj/item/organ/internal/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/internal/hivelord_core))
-		user << "<span class='warning'>The stabilizer only works on hivelord cores.</span>"
+		user << "<span class='warning'>The stabilizer only works on legion's hearts.</span>"
 		return ..()
 	C.preserved = 1
-	user << "<span class='notice'>You inject the hivelord core with the stabilizer. It will no longer go inert.</span>"
+	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
 
 
