@@ -582,7 +582,7 @@
 
 /mob/living/carbon/proc/isInCrit()
 	// Health is in deep shit and we're not already dead
-	return (health < config.health_threshold_crit) && stat != 2
+	return (health < config.health_threshold_crit) && (stat != DEAD)
 
 /mob/living/carbon/get_default_language()
 	if(default_language)

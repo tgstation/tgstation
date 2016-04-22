@@ -115,8 +115,37 @@
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
-	icon_state = "cultpack"
-	item_state = "cultpacknew"
+	icon_state = "cultpack_0skull"
+	item_state = "cultpack_0skull"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/backpacks_n_bags.dmi', "right_hand" = 'icons/mob/in-hand/right/backpacks_n_bags.dmi')
+	var/skulls = 0
+
+/obj/item/weapon/storage/backpack/cultpack/attack_self(mob/user as mob)
+	..()
+	if(skulls)
+		for(,skulls > 0,skulls--)
+			new/obj/item/weapon/skull(get_turf(src))
+		update_icon(user)
+
+/obj/item/weapon/storage/backpack/cultpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(W == src)
+		return
+	if(istype(W, /obj/item/weapon/skull) && (skulls < 3))
+		user.u_equip(W,1)
+		qdel(W)
+		skulls++
+		update_icon(user)
+		to_chat(user,"<span class='warning'>You plant the skull on the trophy rack.</span>")
+		return
+	. = ..()
+
+/obj/item/weapon/storage/backpack/cultpack/update_icon(var/mob/living/carbon/user)
+	icon_state = "cultpack_[skulls]skull"
+	item_state = "cultpack_[skulls]skull"
+	if(istype(user))
+		user.update_inv_back()
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
 
 /obj/item/weapon/storage/backpack/cultify()
 	new /obj/item/weapon/storage/backpack/cultpack(loc)

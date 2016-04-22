@@ -1156,16 +1156,37 @@
 		vessel.add_reagent("blood",560-vessel.total_volume)
 		fixblood()
 
-	for (var/obj/item/weapon/organ/head/H in world)
-		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
-				if(H.brainmob.mind)
-					H.brainmob.mind.transfer_to(src)
-					qdel(H)
-					H = null
-				if(H.borer)
-					H.borer.perform_infestation(src)
-					H.borer=null
+	var/datum/organ/internal/brain/BBrain = internal_organs_by_name["brain"]
+	if(!BBrain)
+		var/obj/item/weapon/organ/head/B = decapitated
+		if(B)
+			var/datum/organ/internal/brain/copied
+			if(B.organ_data)
+				var/datum/organ/internal/I = B.organ_data
+				copied = I.Copy()
+			else
+				copied = new
+			copied.owner = src
+			internal_organs_by_name["brain"] = copied
+			internal_organs += copied
+
+			var/datum/organ/external/affected = get_organ("head")
+			affected.internal_organs += copied
+			affected.status = 0
+			affected.amputated = 0
+			affected.destspawn = 0
+			update_body()
+			updatehealth()
+			UpdateDamageIcon()
+
+			B.loc = src
+			affected.organ_item = B //this stores the organ for continuity
+
+			if(B.borer)
+				B.borer.perform_infestation(src)
+				B.borer=null
+
+			decapitated = null
 
 	for(var/datum/organ/internal/I in internal_organs)
 		I.damage = 0

@@ -554,6 +554,7 @@
 #include "code\game\objects\effects\overlays.dm"
 #include "code\game\objects\effects\portals.dm"
 #include "code\game\objects\effects\step_triggers.dm"
+#include "code\game\objects\effects\trackers.dm"
 #include "code\game\objects\effects\decals\chemical_puff.dm"
 #include "code\game\objects\effects\decals\cleanable.dm"
 #include "code\game\objects\effects\decals\contraband.dm"

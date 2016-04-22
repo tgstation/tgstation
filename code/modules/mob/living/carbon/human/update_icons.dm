@@ -469,7 +469,7 @@ var/global/list/damage_icon_parts = list()
 
 /* --------------------------------------- */
 //For legacy support.
-/mob/living/carbon/human/regenerate_icons()
+/mob/living/carbon/human/regenerate_icons()//Changing the order of those procs doesn't change which layer appears on top! That's what the defines in setup.dm are for.
 	..()
 	if(monkeyizing)		return
 	update_fire(0)

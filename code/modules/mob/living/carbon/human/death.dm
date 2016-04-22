@@ -31,7 +31,11 @@
 	else
 		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-h", sleeptime = 15)
 
-	new /obj/effect/decal/remains/human(loc)
+	var/datum/organ/external/head_organ = get_organ("head")
+	if(head_organ.status & ORGAN_DESTROYED)
+		new /obj/effect/decal/remains/human/noskull(loc)
+	else
+		new /obj/effect/decal/remains/human(loc)
 	qdel(src)
 
 /mob/living/carbon/human/Destroy()
@@ -45,6 +49,10 @@
 	obj_overlays = null
 
 	species = null
+
+	if(decapitated)
+		decapitated.origin_body = null
+		decapitated = null
 
 	..()
 

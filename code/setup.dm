@@ -1131,25 +1131,25 @@ var/default_colour_matrix = list(1,0,0,0,\
 #define STAGE_FIVE	9
 #define STAGE_SUPER	11
 
-//Human Overlays Indexes/////////
+//Human Overlays Indexes/////////THIS DEFINES WHAT LAYERS APPEARS ON TOP OF OTHERS
 #define FIRE_LAYER				1		//If you're on fire (/tg/ shit)
 #define MUTANTRACE_LAYER		2		//TODO: make part of body?
 #define MUTATIONS_LAYER			3
 #define DAMAGE_LAYER			4
 #define UNIFORM_LAYER			5
-#define SUIT_LAYER				6
-#define SHOES_LAYER				7
-#define GLOVES_LAYER			8
-#define EARS_LAYER				9
+#define SHOES_LAYER				6
+#define GLOVES_LAYER			7
+#define EARS_LAYER				8
+#define SUIT_LAYER				9
 #define GLASSES_LAYER			10
 #define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		12
-#define BACK_LAYER				13
-#define ID_LAYER				14
-#define HAIR_LAYER				15		//TODO: make part of head layer?
-#define GLASSES_OVER_HAIR_LAYER	16
-#define FACEMASK_LAYER			17
-#define HEAD_LAYER				18
+#define HAIR_LAYER				13		//TODO: make part of head layer?
+#define GLASSES_OVER_HAIR_LAYER	14
+#define FACEMASK_LAYER			15
+#define HEAD_LAYER				16
+#define BACK_LAYER				17		//Back should be above head so that headgear doesn't hides backpack when facing north
+#define ID_LAYER				18		//IDs should be visible above suits and backpacks
 #define HANDCUFF_LAYER			19
 #define LEGCUFF_LAYER			20
 #define L_HAND_LAYER			21

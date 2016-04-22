@@ -9,6 +9,24 @@
 	icon_state = "remains"
 	anchored = 1
 
+/obj/effect/decal/remains/human/attack_hand(mob/user)
+	if(icon_state == "remains")
+		user.put_in_hands(new /obj/item/weapon/skull(user))
+		icon_state = "remains_noskull"
+
+/obj/effect/decal/remains/human/noskull
+	icon_state = "remains_noskull"
+
+/obj/item/weapon/skull
+	name = "skull"
+	desc = "To be or not to be..."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains_skull"
+	item_state = "skull"
+	w_class = 1.0
+	force = 5
+	throwforce = 10
+
 /obj/effect/decal/remains/xeno
 	name = "remains"
 	desc = "They look like the remains of something... alien. They have a strange aura about them."

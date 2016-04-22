@@ -1,82 +1,82 @@
 // Human Overlay objects for the new Overlays system.
 /obj/Overlays/fire_layer
-	layer = FLOAT_LAYER - 24
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - FIRE_LAYER)
 
 /obj/Overlays/mutantrace_layer
-	layer = FLOAT_LAYER - 23
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - MUTANTRACE_LAYER)
 
 /obj/Overlays/mutations_layer
-	layer = FLOAT_LAYER - 22
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - MUTATIONS_LAYER)
 
 /obj/Overlays/damage_layer
-	layer = FLOAT_LAYER - 21
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - DAMAGE_LAYER)
 
 /obj/Overlays/uniform_layer
-	layer = FLOAT_LAYER - 20
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - UNIFORM_LAYER)
 
 /obj/Overlays/shoes_layer
-	layer = FLOAT_LAYER - 19
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - SHOES_LAYER)
 
 /obj/Overlays/gloves_layer
-	layer = FLOAT_LAYER - 18
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - GLOVES_LAYER)
 
 /obj/Overlays/ears_layer
-	layer = FLOAT_LAYER - 17
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - EARS_LAYER)
 
 /obj/Overlays/suit_layer
-	layer = FLOAT_LAYER - 16
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - SUIT_LAYER)
 
 /obj/Overlays/glasses_layer
-	layer = FLOAT_LAYER - 15
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - GLASSES_LAYER)
 
 /obj/Overlays/belt_layer
-	layer = FLOAT_LAYER - 14
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - BELT_LAYER)
 
 /obj/Overlays/suit_store_layer
-	layer = FLOAT_LAYER - 13
-
-/obj/Overlays/back_layer
-	layer = FLOAT_LAYER - 12
-
-/obj/Overlays/id_layer
-	layer = FLOAT_LAYER - 11
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - SUIT_STORE_LAYER)
 
 /obj/Overlays/hair_layer
-	layer = FLOAT_LAYER - 10
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - HAIR_LAYER)
 
 /obj/Overlays/glasses_over_hair_layer
-	layer = FLOAT_LAYER - 9
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - GLASSES_OVER_HAIR_LAYER)
 
 /obj/Overlays/facemask_layer
-	layer = FLOAT_LAYER - 8
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - FACEMASK_LAYER)
 
 /obj/Overlays/head_layer
-	layer = FLOAT_LAYER - 7
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - HEAD_LAYER)
+
+/obj/Overlays/back_layer
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - BACK_LAYER)
+
+/obj/Overlays/id_layer
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - ID_LAYER)
 
 /obj/Overlays/handcuff_layer
-	layer = FLOAT_LAYER - 6
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - HANDCUFF_LAYER)
 
 /obj/Overlays/legcuff_layer
-	layer = FLOAT_LAYER - 5
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - LEGCUFF_LAYER)
 
 /obj/Overlays/l_hand_layer
-	layer = FLOAT_LAYER - 4
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - L_HAND_LAYER)
 
 /obj/Overlays/r_hand_layer
-	layer = FLOAT_LAYER - 3
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - R_HAND_LAYER)
 
 /obj/Overlays/tail_layer
-	layer = FLOAT_LAYER - 2
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - TAIL_LAYER)
 
 /obj/Overlays/targeted_layer
-	layer = FLOAT_LAYER - 1
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - TARGETED_LAYER)
 
 
 
 //Human Overlays Object variables
 
 /mob/living/carbon/human
-	var/list/obj/Overlays/obj_overlays[25]
+	var/list/obj/Overlays/obj_overlays[TOTAL_LAYERS]
 	/*
 	var/obj/Overlays/fire_layer/fire_layer = new
 	var/obj/Overlays/mutantrace_layer/mutantrace_layer = new

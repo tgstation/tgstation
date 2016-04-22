@@ -1104,6 +1104,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /datum/organ/external/head/generate_dropped_organ(current_organ)
 	if(!current_organ)
 		current_organ = new /obj/item/weapon/organ/head(owner.loc, owner)
+		owner.decapitated = current_organ
 	var/datum/organ/internal/brain/B = owner.internal_organs_by_name["brain"]
 	var/obj/item/weapon/organ/head/H = current_organ
 	if(B)
@@ -1281,9 +1282,11 @@ obj/item/weapon/organ/head
 	name = "head"
 	icon_state = "head_m"
 	part = "head"
+	ashtype = /obj/item/weapon/skull
 	var/mob/living/carbon/brain/brainmob
 	var/mob/living/simple_animal/borer/borer
 	var/brain_op_stage = 0
+	var/mob/living/carbon/human/origin_body = null
 
 //obj/item/weapon/organ/head/with_teeth starts with 32 human teeth!
 /obj/item/weapon/organ/head/with_teeth/New()
@@ -1294,6 +1297,8 @@ obj/item/weapon/organ/head
 	name = "robotic head"
 
 obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
+	origin_body = H
+
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
@@ -1355,56 +1360,69 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 
 obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel) || istype(W,/obj/item/weapon/shard) || (istype(W,/obj/item/weapon/kitchen/utensil/knife/large) && !istype(W,/obj/item/weapon/kitchen/utensil/knife/large/butch)))
-		switch(brain_op_stage)
-			if(0)
-				user.visible_message("<span class='warning'>[user] cuts [brainmob]'s head open with \the [W].</span>", \
-				"<span class='notice'>You cut [brainmob]'s open with \the [W]!</span>")
+		if(organ_data)
+			switch(brain_op_stage)
+				if(0)
+					user.visible_message("<span class='warning'>[user] cuts [brainmob]'s head open with \the [W].</span>", \
+					"<span class='notice'>You cut [brainmob]'s open with \the [W]!</span>")
 
-				brain_op_stage = 1
+					brain_op_stage = 1
 
-			if(2)
-				user.visible_message("<span class='warning'>[user] severs [brainmob]'s brain connections delicately with \the [W].</span>", \
-				"<span class='notice'>You sever [brainmob]'s brain connections delicately with \the [W]!</span>")
+				if(2)
+					user.visible_message("<span class='warning'>[user] severs [brainmob]'s brain connections delicately with \the [W].</span>", \
+					"<span class='notice'>You sever [brainmob]'s brain connections delicately with \the [W]!</span>")
 
-				brain_op_stage = 3.0
+					brain_op_stage = 3.0
 
-			else
-				..()
+				else
+					..()
+		else
+			to_chat(user, "<span class='warning'>That head has no brain to remove!</span>")
 
 	else if(istype(W,/obj/item/weapon/circular_saw) || istype(W,/obj/item/weapon/kitchen/utensil/knife/large/butch) || istype(W,/obj/item/weapon/hatchet))
-		switch(brain_op_stage)
-			if(1)
-				user.visible_message("<span class='warning'>[user] saws [brainmob]'s head open with \the [W].</span>", \
-				"<span class='notice'>You saw [brainmob]'s head open with \the [W].</span>")
+		if(organ_data)
+			switch(brain_op_stage)
+				if(1)
+					user.visible_message("<span class='warning'>[user] saws [brainmob]'s head open with \the [W].</span>", \
+					"<span class='notice'>You saw [brainmob]'s head open with \the [W].</span>")
 
-				brain_op_stage = 2
-			if(3)
-				user.visible_message("<span class='warning'>[user] severs [brainmob]'s spine connections delicately with \the [W].</span>", \
-				"<span class='notice'>You sever [brainmob]'s spine connections delicately with \the [W]!</span>")
+					brain_op_stage = 2
+				if(3)
+					user.visible_message("<span class='warning'>[user] severs [brainmob]'s spine connections delicately with \the [W].</span>", \
+					"<span class='notice'>You sever [brainmob]'s spine connections delicately with \the [W]!</span>")
 
-				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				msg_admin_attack("[user] ([user.ckey]) debrained [brainmob] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
+					brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
+					msg_admin_attack("[user] ([user.ckey]) debrained [brainmob] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-				//TODO: ORGAN REMOVAL UPDATE.
-				var/turf/T = get_turf(src)
-				if(istype(src,/obj/item/weapon/organ/head/posi))
-					var/obj/item/device/mmi/posibrain/B = new(T)
-					B.transfer_identity(brainmob)
+					//TODO: ORGAN REMOVAL UPDATE.
+					var/turf/T = get_turf(src)
+					if(istype(src,/obj/item/weapon/organ/head/posi))
+						var/obj/item/device/mmi/posibrain/B = new(T)
+						B.transfer_identity(brainmob)
+					else
+						var/obj/item/organ/brain/B = new(T)
+						B.transfer_identity(brainmob)
+
+					if(borer)
+						borer.detach()
+
+					brain_op_stage = 4.0
+					organ_data = null
 				else
-					var/obj/item/organ/brain/B = new(T)
-					B.transfer_identity(brainmob)
-
-				if(borer)
-					borer.detach()
-
-				brain_op_stage = 4.0
-			else
-				..()
+					..()
+		else
+			to_chat(user, "<span class='warning'>That head has no brain to remove!</span>")
+	else if(istype(W,/obj/item/device/soulstone))
+		W.capture_soul_head(src,user)
+		return
 	else
 		..()
 
 obj/item/weapon/organ/head/Destroy()
 	if(brainmob)
 		brainmob.ghostize()
+	if(origin_body)
+		origin_body.decapitated = null
+		origin_body = null
 	..()

@@ -226,6 +226,7 @@
 	copied.owner = target
 	target.internal_organs_by_name["brain"] = copied
 	target.internal_organs += copied
+	target.decapitated = null
 	affected.internal_organs += copied
 
 	user.u_equip(B,1)
