@@ -206,7 +206,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	text += "<font color='red'><b>Talisman of Stunning</b></font><br>Without this talisman, the cult would have no way of easily acquiring targets to convert. Commonly called \"stunpapers\", this \
 	talisman functions differently from others. Rather than simply reading the words, the target must be attacked directly with the talisman. The talisman will then knock down the target for a long \
-	duration in addition to inhibiting their speech. Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead."
+	duration in addition to inhibiting their speech. Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armored robes, a backpack, an eldritch longsword, an empowered bola, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned.<br><br>"
@@ -275,7 +275,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 				var/obj/machinery/shield/N = new(B)
 				N.name = "Rune-Scriber's Shield"
 				N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
-				N.color = "red"
+				N.icon_state = "shield-red"
 				N.health = 60
 				shields |= N
 			if(!do_after(user, 400, target = get_turf(user)))
