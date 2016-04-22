@@ -59,7 +59,7 @@
 	name = "backpack power source"
 	desc = "The massive external power source for the laser gatling gun"
 	icon = 'icons/obj/guns/minigun.dmi'
-	icon_state = "brokenpack_gun"
+	icon_state = "holstered"
 	item_state = "backpack"
 	slot_flags = SLOT_BACK
 	w_class = 5
@@ -121,9 +121,9 @@
 
 /obj/item/weapon/minigunpack/update_icon()
 	if(armed)
-		icon_state = "brokenpack"
+		icon_state = "notholstered"
 	else
-		icon_state = "brokenpack_gun"
+		icon_state = "holstered"
 
 
 /obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)
@@ -156,6 +156,9 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	var/obj/item/weapon/minigunpack/ammo_pack
+
+/obj/item/weapon/gun/projectile/minigun/attack_self(mob/living/user)
+	return
 
 /obj/item/weapon/gun/projectile/minigun/New()
 	if(!ammo_pack)
