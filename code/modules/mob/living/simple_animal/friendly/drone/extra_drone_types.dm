@@ -59,7 +59,7 @@
 	seeStatic = 0
 	languages = (DRONE | HUMAN)
 
-/mob/living/simple_animal/drone/syndrone/Login()
+/mob/living/simple_animal/drone/free/Login()
 	..()
 	src << "<span class='notice'>You are a Free Drone! Your restrictive programming has been removed however you are NOT an antagonist.</span>"
 
