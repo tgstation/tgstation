@@ -185,4 +185,5 @@
 	click_cooldown_override = 2
 
 /obj/item/projectile/beam/weak
-	damage = 10
+	damage = 7
+	armour_penetration = 50
