@@ -151,7 +151,7 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "military"
-	max_w_class = 3
+	max_w_class = 2
 
 /obj/item/weapon/storage/belt/military/army
 	name = "army belt"
