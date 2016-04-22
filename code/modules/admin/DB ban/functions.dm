@@ -442,7 +442,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 			output += {"<tr>
 				<td colspan='5' bgcolor='white'>&nbsp</td>
 				</tr>"}
-		if(playerckey && world.GetConfig("keyban", playerckey))
+		if(playerckey && world.GetConfig("ban", playerckey))
 			var/list/params = list2params(world.GetConfig("ban", playerckey))
 			var/admin = params["admin"]
 			var/reason = params["reason"]
