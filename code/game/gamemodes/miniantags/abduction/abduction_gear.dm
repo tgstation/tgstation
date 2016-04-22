@@ -98,6 +98,7 @@
 	if(istype(src.loc, /mob/living/carbon/human))
 		if(combat_cooldown != initial(combat_cooldown))
 			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
+			return
 		var/mob/living/carbon/human/M = src.loc
 		M.adjustStaminaLoss(-75)
 		M.SetParalysis(0)
