@@ -102,7 +102,10 @@
 			data += "<div class='statusDisplay'>No mech detected.</div>"
 		else
 			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			if(recharge_port.recharging_mech.cell.crit_fail)
+
+			if(!recharge_port.recharging_mech.cell)
+				data += "<span class='bad'>WARNING : the mech cell is missing!</span></div>"
+			else if(recharge_port.recharging_mech.cell.crit_fail)
 				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
 			else
 				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"

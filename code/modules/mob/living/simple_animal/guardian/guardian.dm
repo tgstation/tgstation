@@ -17,7 +17,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
-	floating = 1
+	flying = 1 // Immunity to chasms and landmines, etc.
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -104,6 +104,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
 	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
+
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
