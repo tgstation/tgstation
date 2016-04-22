@@ -42,17 +42,18 @@
 		var/datum/network/L = N.connected[A[1]]
 		if(!L.invisible && (!L.stealth || H.software & HACK_PROBE))
 			if(!L.password || L.password == N.password || L.password == A[2])
+				if(security(L, "connect", H)) return
 				H.connect(L)
 				return
 			if(L.password && H.software & HACK_BRUTE && A[2] == "b")
-				H.connect(L, TRUE)
+				security(L, "bruteforce", H)
+				H.bruteforce(N, "connect -[A[1]] -[L.password]", 10)
 				return
 			security(L, "badkey", H)
 			badkey(A[2], H)
 			return
-	else
-		badnet(A[1], H)
-		return
+	badnet(A[1], H)
+	return
 
 // DISCONNECT COMMAND //
 
@@ -62,6 +63,7 @@
 
 /datum/network_command/disconnect/execute(datum/network/N, list/A, obj/item/device/hacktool/H)
 	if(badargs(N, H)) return
+	security(N, "disconnect", H)
 	H.disconnect()
 
 // GET COMMAND //
@@ -116,10 +118,8 @@
 			if (security(N, "noob", H)) return
 			feedback(H, info)
 			return
-		else
-			badarg(A[1], H)
-			return
-
+	badarg(A[1], H)
+	return
 
 // SET COMMAND //
 
@@ -155,10 +155,66 @@
 		var/datum/network/L = networks_by_id[A[1]]
 		if(!L.invisible && (!L.stealth || H.software & HACK_PROBE))
 			if(L.can_remote(H)) // Can only link networks by being within range, or if they're already connected. You might have to connect to a network, then cross the station, then link to the new network.
-
-
+				if(!L.password || L.password == N.password || L.password == A[3])
+					switch(A[2])
+						if(0)
+							N.add_link(L)
+							security(N, "linked", H)
+							security(L, "linked", H)
+							feedback("LINKED: {[N.id]}:{[L.id]}")
+						if(1)
+							N.add_connection(L, FALSE)
+							security(N, "linked", H)
+							security(L, "linked", H)
+							feedback("LINKED: {[N.id]}>{[L.id]}")
+						if(2)
+							N.add_connection(L)
+							security(N, "linked", H)
+							security(L, "linked", H)
+							feedback("LINKED: {[N.id]}-{[L.id]}")
+						else
+							badarg(A[2], H)
+					return
+				if(L.password && H.software & HACK_BRUTE && A[3] == "b")
+					security(L, "bruteforce", H)
+					H.bruteforce(N, "link -[A[1]] -[A[2]] -[L.password]", 10)
+					return
+				security(L, "badkey", H)
+				badkey(A[3], H)
+				return
+	badnet(A[1], H)
+	return
 
 // UNLINK COMMAND //
+
+/datum/network_command/unlink
+	trigger = "unlink"
+	info = "Usage: \"unlink -{network} -{encryption key}\". Functional opposite of link. Disconnects the specified network from this one."
+
+/datum/network_command/unlink/execute(datum/network/N, list/A, obj/item/device/hacktool/H)
+	if(badargs(N, H)) return
+	if(lockout(N, H)) return
+	if(!A[1])
+		if (security(N, "noob", H)) return
+		feedback(H, info)
+		return
+	if(A[1] in N.linked)
+		var/datum/network/L = N.linked[A[1]]
+		if(!L.password || L.password == N.password || L.password == A[2])
+			N.del_link(L, TRUE)
+			security(N, "unlinked", H)
+			security(L, "unlinked", H)
+			feedback("UNLINKED: {[N.id]} {[L.id]}")
+			return
+		if(L.password && H.software & HACK_BRUTE && A[2] == "b")
+			security(L, "bruteforce", H)
+			H.bruteforce(N, "link -[A[1]] -[L.password]", 10)
+			return
+		security(L, "badkey", H)
+		badkey(A[2], H)
+		return
+	badnet(A[1], H)
+	return
 
 // PROBE COMMAND //
 
@@ -201,9 +257,8 @@
 				if (security(N, "probe", H)) return
 				security(N, "info", H)
 				return
-			else
-				badarg(A[1])
-				return
+		badarg(A[1], H)
+		return
 	if(A[1] in N.linked)
 		var/datum/network/L = N.linked[A[1]]
 		if(!L.invisible && (!L.stealth || H.software & HACK_PROBE))
@@ -227,18 +282,15 @@
 					feedback(H, feed)
 					return
 				if("i"||"info")
-					if (L.stealth)
-						if (security(L, "probe", H)) return
-					else if (security(L, "get", H)) return
+					if (L.stealth && security(L, "probe", H)) return
+					else if (!L.stealth && security(L, "get", H)) return
 					feedback(H, "[L.info]\n Linked Networks: [L.linked.len]\n Connected Networks: [L.connected.len]\n Encrypted: [L.password ? "TRUE" : "FALSE"]")
 					return
 				if("s"||"security") // Very useful. Gets info on a networks security system from afar, before connecting to it.
 					if (security(L, "probe", H)) return
 					security(L, "info", H)
 					return
-				else
-					badarg(A[2])
-					return
-	else
-		badarg(A[1], H)
-		return
+			badarg(A[2], H)
+			return
+	badnet(A[1], H)
+	return

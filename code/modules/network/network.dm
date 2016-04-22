@@ -12,7 +12,7 @@ var/global/list/networks_by_id = list() // netid = network
 #define REMOTE_NETWORK_FULL 3 // The network can be connected to from anywhere in the world. Good for TV shows/Thunderdome cameras/Cargo Consoles
 
 proc/parse_network_command(command = "")
-	var/list/butchered = explode_text(command, " -") // allows for arguments like {text1 = "hello "} {text2 = "world"} to be caused when executing something like {print -text1 = "hello " -text2 = "world"}
+	var/list/butchered = splittext(command, " -") // allows for arguments like {text1 = "hello "} {text2 = "world"} to be caused when executing something like {print -text1 = "hello " -text2 = "world"}
 	command = butchered[1]
 	var/list/arguments = list()
 	for(var/i=2, i<=butchered.len, i++)
@@ -46,7 +46,6 @@ proc/parse_network_command(command = "")
 		else
 			password = newpw
 	var/turf/T = get_turf(holder)
-	networks_by_area[T.loc][id] = src
 
 	if(newid) // Can be called with new(null, H) without issues, or new("system", H) to set a preferred ID.
 		id = newid
@@ -73,7 +72,6 @@ proc/parse_network_command(command = "")
 	commands = list()
 
 	networks_by_id -= id
-	active_network_ids -= id
 
 	..()
 

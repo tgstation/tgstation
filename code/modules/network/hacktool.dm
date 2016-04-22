@@ -52,17 +52,17 @@
 		feed.Pop()
 	feed.Push(F)
 
-/obj/item/device/hacktool/proc/bruteforce(var/datum/network/N, var/operation = "connect", var/hacktime = 30) // Will attempt to connect to N after a timer.
-	if(!software & HACK_BRUTE)
+/obj/item/device/hacktool/proc/bruteforce(var/datum/network/N, var/operation, var/hacktime = 5) // Will attempt to connect to N after a timer.
+	if(!software & HACK_BRUTE || !operation)
 		return
 	add_feedback("Activating bruteforce software...")
 	if(software & HACK_BOOST)
 		hacktime *= 0.667
 	if(software & HACK_HYPER)
 		hacktime *= 0.5
-	addtimer(src, operation, round(hacktime, 1), 1, N)
+	addtimer(N, "execute", round(hacktime*10, 1), 1, operation, src)
 
-/obj/item/device/hacktool/proc/bypass(var/datum/network/N, var/hacktime = 30) // Will enable bypass mode, triggering network security if specified.
+/obj/item/device/hacktool/proc/bypass(var/datum/network/N, var/hacktime = 50) // Will enable bypass mode, triggering network security if specified.
 	if(!software & HACK_BYPASS)
 		return
 	add_feedback("Activating bypass software...")
