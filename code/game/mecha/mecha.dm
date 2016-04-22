@@ -1153,10 +1153,17 @@ var/year_integer = text2num(year) // = 2013???
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 
-	chassis.strafe = !chassis.strafe
+	chassis.toggle_strafe()
 
-	chassis.occupant_message("Toggled strafing mode [chassis.strafe?"on":"off"].")
-	chassis.log_message("Toggled strafing mode [chassis.strafe?"on":"off"].")
+/obj/mecha/AltClick(mob/living/user)
+	if(user == occupant)
+		toggle_strafe()
+
+/obj/mecha/proc/toggle_strafe()
+	strafe = !strafe
+
+	occupant_message("Toggled strafing mode [strafe?"on":"off"].")
+	log_message("Toggled strafing mode [strafe?"on":"off"].")
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
