@@ -81,6 +81,7 @@
 					return
 				update_icon()
 				gun.forceMove(user)
+				user.update_inv_back()
 		else
 			user << "<span class='warning'>You are already holding the gun!</span>"
 	else
@@ -125,7 +126,6 @@
 	else
 		icon_state = "holstered"
 
-
 /obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)
 	if(!gun)
 		gun = new(src)
@@ -136,6 +136,7 @@
 	else
 		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
 	update_icon()
+	user.update_inv_back()
 
 
 /obj/item/weapon/gun/projectile/minigun
@@ -151,7 +152,7 @@
 	w_class = 5
 	materials = list()
 	burst_size = 5
-	fire_delay = 2
+	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun

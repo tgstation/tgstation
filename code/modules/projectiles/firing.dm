@@ -4,7 +4,7 @@
 		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
-		if(distro)
+		if(distro && targloc)
 			targloc = spread(targloc, curloc, distro)
 		if(!throw_proj(target, targloc, user, params))
 			return 0
