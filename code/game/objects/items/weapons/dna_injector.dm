@@ -21,6 +21,10 @@
 /obj/item/weapon/dnainjector/New()
 	. = ..()
 
+	if(ticker)
+		initialize()
+
+/obj/item/weapon/dnainjector/initialize()
 	if(datatype && block)
 		buf=new
 		buf.dna=new
