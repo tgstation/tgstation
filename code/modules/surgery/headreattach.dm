@@ -230,8 +230,7 @@
 	affected.internal_organs += copied
 
 	user.u_equip(B,1)
-	B.loc = target
-	affected.organ_item = B //this stores the organ for continuity
+	qdel(B)
 
 
 /datum/surgery_step/head/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -1179,14 +1179,16 @@
 			updatehealth()
 			UpdateDamageIcon()
 
-			B.loc = src
-			affected.organ_item = B //this stores the organ for continuity
+			if(B.brainmob.mind)
+				B.brainmob.mind.transfer_to(src)
 
 			if(B.borer)
 				B.borer.perform_infestation(src)
 				B.borer=null
 
 			decapitated = null
+
+			qdel(B)
 
 	for(var/datum/organ/internal/I in internal_organs)
 		I.damage = 0
