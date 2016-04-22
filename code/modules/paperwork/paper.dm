@@ -444,7 +444,7 @@
 	update_icon()
 
 /obj/item/weapon/paper/paperplane/throw_impact(atom/hit_atom)
-	if(!..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
+	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = hit_atom
 	if(prob(15))
