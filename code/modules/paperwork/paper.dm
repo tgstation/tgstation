@@ -409,14 +409,15 @@
 	..()
 	if(!in_range(src, user))
 		return
-	if(!istype(src, /obj/item/weapon/paper/paperplane))
+	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
 			user.unEquip(src)
 			get_turf(src)
 			I = new /obj/item/weapon/paper/paperplane(src.loc)
 			user.put_in_hands(I)
-			qdel(src)
+			src.loc = I
+			I.CheckParts()
 		return
 
 /obj/item/weapon/paper/crumpled/bloody
@@ -454,3 +455,14 @@
 		H.adjust_eye_damage(rand(6,8))
 		H.Weaken(2)
 		H.emote("scream")
+
+/obj/item/weapon/paper/paperplane/CheckParts()
+	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
+	if(P)
+		src.info = P.info
+		src.stamps = P.stamps
+		if(P.stamped)
+			src.stamped = P.stamped.Copy()
+		src.rigged = P.rigged
+		qdel(P)
+		updateinfolinks()
