@@ -409,15 +409,7 @@
 	..()
 	if(!in_range(src, user))
 		return
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
-=======
-	if(!istype(src, /obj/item/weapon/paper/paperplane)) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
->>>>>>> origin/paperplane
-=======
 	if(!istype(src, /obj/item/weapon/paper/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //don't fuck with cult
->>>>>>> refs/remotes/origin/master
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
 			user.unEquip(src)
@@ -427,6 +419,7 @@
 			src.loc = I
 			I.CheckParts()
 		return
+		
 
 /obj/item/weapon/paper/paperplane
 	name = "\improper paper plane"
@@ -442,6 +435,7 @@
 	pressure_resistance = 0
 	burn_state = FLAMMABLE
 	burntime = 5
+	
 
 /obj/item/weapon/paper/paperplane/New()
 	..()
@@ -455,21 +449,26 @@
 		return
 	icon_state = "paperplane"
 	
+
 /obj/item/weapon/paper/paperplane/fire_act()
 	..(0)
 	icon_state = "paperplane"
 	info = "[stars(info)]"
 	update_icon()
 
-
 /obj/item/weapon/paper/paperplane/extinguish()
 	..()
 	update_icon()
 
+
 /obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
-	if(!..() || !ishuman(target))//if the plane is caught or it hits a nonhuman
+	if(!..())
 		return
-	var/mob/living/carbon/human/H = target
+
+/obj/item/weapon/paper/paperplane/throw_impact(atom/hit_atom)
+	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
+		return
+	var/mob/living/carbon/human/H = hit_atom
 	if(prob(15))
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			return
@@ -477,7 +476,8 @@
 		H.adjust_blurriness(6)
 		H.adjust_eye_damage(rand(6,8))
 		H.Weaken(2)
-		H.emote("scream")
+		H.emote("scream") //"My eyes!!"
+
 
 /obj/item/weapon/paper/paperplane/CheckParts()
 	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
@@ -489,4 +489,3 @@
 		src.rigged = P.rigged
 		qdel(P)
 		updateinfolinks()
-
