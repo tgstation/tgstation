@@ -34,6 +34,10 @@
 		icon_state = "[initial(icon_state)]-b"
 		density = 0 //Not blocking anything anymore
 		getFromPool(/obj/item/stack/rods, get_turf(src)) //One rod set
+	else if(health >= (0.25*initial(health)) && broken) //Repair the damage to this bitch
+		broken = 0
+		icon_state = initial(icon_state)
+		density = 1
 	if(health <= 0) //Dead
 		getFromPool(/obj/item/stack/rods, get_turf(src)) //Drop the second set of rods
 		returnToPool(src)

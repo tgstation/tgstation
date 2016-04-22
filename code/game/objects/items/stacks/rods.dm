@@ -87,8 +87,6 @@
 		for(var/obj/structure/grille/G in user.loc)
 			if(G.broken)
 				G.health = initial(G.health)
-				G.density = 1
-				G.broken = 0
 				G.healthcheck()
 				use(1)
 			else
