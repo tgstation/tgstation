@@ -69,7 +69,7 @@
 		user.drop_item()
 		qdel(O)
 		return
-
+	..()
 
 /datum/action/innate/camera_off/xenobio/Activate()
 	if(!target || !ishuman(target))
