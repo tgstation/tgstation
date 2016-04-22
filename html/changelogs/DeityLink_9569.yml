@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed arcane tomes not dealing damage when used by cultists on non-cultists.
+  - bugfix: Fixed arcane tomes not turning ghosts visible.
