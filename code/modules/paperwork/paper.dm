@@ -444,9 +444,9 @@
 	update_icon()
 
 /obj/item/weapon/paper/paperplane/throw_impact(atom/hit_atom)
-	if(!..() || !ishuman(target))//if the plane is caught or it hits a nonhuman
+	if(!..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
-	var/mob/living/carbon/human/H = target
+	var/mob/living/carbon/human/H = hit_atom
 	if(prob(15))
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			return
@@ -459,6 +459,7 @@
 /obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
 	if(!..())
 		return 
+
 /obj/item/weapon/paper/paperplane/CheckParts()
 	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
 	if(P)
