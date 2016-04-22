@@ -419,7 +419,11 @@
 			src.loc = I
 			I.CheckParts()
 		return
+<<<<<<< HEAD
+
+=======
 		
+>>>>>>> origin/master
 
 /obj/item/weapon/paper/paperplane
 	name = "\improper paper plane"
@@ -437,6 +441,7 @@
 	burntime = 5
 	
 
+
 /obj/item/weapon/paper/paperplane/New()
 	..()
 	update_icon()
@@ -449,6 +454,30 @@
 		return
 	icon_state = "paperplane"
 	
+
+/obj/item/weapon/paper/paperplane/fire_act()
+	..(0)
+	icon_state = "paperplane"
+	info = "[stars(info)]"
+	update_icon()
+
+/obj/item/weapon/paper/paperplane/extinguish()
+	..()
+	update_icon()
+
+
+/obj/item/weapon/paper/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0)
+	if(!..())
+		return
+
+/obj/item/weapon/paper/paperplane/update_icon()
+	if(burn_state == ON_FIRE)
+		overlays += "paperplane_onfire"
+		return
+	if(info)
+		return
+	icon_state = "paperplane"
+
 
 /obj/item/weapon/paper/paperplane/fire_act()
 	..(0)
