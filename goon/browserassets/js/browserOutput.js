@@ -348,7 +348,9 @@ function handleClientData(ckey, ip, compid) {
 //Or, y'know, whenever really
 function ehjaxCallback(data) {
 	opts.lastPang = Date.now();
-	if (data == 'pang') {
+	if (data == 'softPang') {
+		return;
+	} else if (data == 'pang') {
 		opts.pingCounter = 0; //reset
 		opts.pingTime = Date.now();
 		runByond('?_src_=chat&proc=ping');
