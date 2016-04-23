@@ -805,7 +805,7 @@ var/global/floorIsLava = 0
 
 	dat += "<BR>"
 
-	if(check_rights(R_DEBUG,0))
+	if(check_rights(R_FUN,0))
 		dat += {"
 			<B>Security Level Elevated</B><BR>
 			<BR>
@@ -814,12 +814,15 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
 			<a href='?src=\ref[src];secretscoder=virus_custom'>Custom Virus Outbreak</a><BR>
 			<BR>
-			<B>Coder Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-			<BR>
 			"}
+	dat +=	{"
+		<B>Coder Secrets</B><BR>
+		<BR>
+		<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
+		<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+		<BR>
+		"}
+
 
 	usr << browse(dat, "window=secrets")
 	return

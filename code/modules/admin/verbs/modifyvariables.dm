@@ -137,7 +137,7 @@ var/list/forbidden_varedit_object_types = list(
 		else
 			L = list()
 
-	var/list/locked = list("vars", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
+	var/list/locked = list("vars", "client")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
