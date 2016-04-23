@@ -492,26 +492,10 @@
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	var/status = 0
-	// doesn't work if
-	// - you're in nullspace (HOW?)
-	if(!device_turf)
-		status = 182
-	// - you're on centcom
-	if(device_turf.z == 2)
-		status = 274
-	// - you're on a z level higher than you could normally reach
-	// (we currently have 9 legal z levels, should be a way of determining
-	// that programatically)
-	if(device_turf.z >= 10)
-		status = 1483
-
-	if(status != 0)
-		usr << "<span class='warning'>\icon[src] INVALID LOCATION: ERROR CODE [status]"
-		// turf_check returns 0 if failure, so it's false if broken
-		return 0
-	else
-		return 1
+	if(!device_turf||device_turf.z==2||device_turf.z>=7)
+		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		return FALSE
+	return TRUE
 
 /obj/item/device/wormhole_jaunter/proc/activate(mob/user)
 	if(!turf_check(user))
@@ -550,7 +534,6 @@
 		user.visible_message("<span class='warning'>[user]'s [src] activates, saving them from the chasm!</span>")
 		activate(user)
 	else
-		// TIME TO TAUNT THEM
 		user.visible_message("<span class='warning'>The [src] is not attached to [user]'s belt, preventing it from saving them from the chasm. RIP.</span>")
 
 
