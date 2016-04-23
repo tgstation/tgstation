@@ -15,9 +15,7 @@
 						"#4nd%;f4y6,>£%-BZZZZZZZT")
 
 	for(var/mob/living/silicon/ai/A in player_list)	//AIs are always aware of communication blackouts.
-		A << "<br>"
-		A << "<span class='warning'><b>[alert]</b></span>"
-		A << "<br>"
+		A << "<br><span class='warning'><b>[alert]</b></span><br>"
 
 	if(prob(30))	//most of the time, we don't want an announcement, so as to allow AIs to fake blackouts.
 		priority_announce(alert)
