@@ -100,21 +100,14 @@
 			return .
 
 	if (config.ipintel_email)
-		world.log << "checking [ckey] [address]"
 		var/datum/ipintel/res = get_ip_intel(address)
-		world.log << "got res: [res.ip], [res.intel], [res.cache], [res.cachedate], [res.cacheminutesago]"
-		world.log << "checking [res.intel] vs [config.ipintel_rating_max]"
 		if (res.intel > config.ipintel_rating_max)
-			world.log << "match"
 			if (admin)
-				world.log << "admin"
 				log_admin("The admin [key] has been allowed to bypass an IP intel ban. [address] was rated [res.intel*100]% likely to be a bad ip.")
 				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass an IP intel ban. [address] was rated [res.intel*100]% likely to be a bad ip.</span>")
 				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass an IP intel ban. Your IP [address] was rated [res.intel*100]% likely to be a bad ip.</span>")
 			else
-				world.log << "not admin, banning"
 				if (!res.cache)
-					world.log << "first ban"
 					log_admin("Failed Login: [key] [computer_id] [address] - IP intel rated [res.intel*100]% likely to be a bad ip.")
 					message_admins("<span class='adminnotice'>Failed Login: [key] [computer_id] [address] - IP intel rated [res.intel*100]% likely to be a bad ip.</span>")
 
