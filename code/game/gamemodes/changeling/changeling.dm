@@ -290,6 +290,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/isabsorbing = 0
+	var/islinking = 0
 	var/geneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
