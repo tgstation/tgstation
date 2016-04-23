@@ -7,7 +7,7 @@
 /datum/ipintel/New()
 	cachedate = SQLtime()
 
-proc/get_ip_intel(ip, bypasscache = FALSE, updatecache = TRUE)
+/proc/get_ip_intel(ip, bypasscache = FALSE, updatecache = TRUE)
 	var/datum/ipintel/res = new()
 	res.ip = ip
 	. = res
@@ -41,13 +41,13 @@ var/ip_intel_errors = 0
 
 	var/http[] = world.Export("http://check.getipintel.net/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json")
 
-	if(http)
+	if (http)
 		var/status = text2num(http["STATUS"])
 
-		if(status == 200)
+		if (status == 200)
 			var/response = json_decode(file2text(http["CONTENT"]))
-			if(response)
-				if(response["status"] == "success")
+			if (response)
+				if (response["status"] == "success")
 					return text2num(response["result"])
 				else
 					ipintel_handle_error("Bad response from server: [response["status"]].", ip, retry)
@@ -55,16 +55,14 @@ var/ip_intel_errors = 0
 						sleep(25)
 						return .(ip, 1)
 
-		else if(status == 429)
-			ipintel_handle_error("Error #429: We have exceeded the rate limit.", ip)
+		else if (status == 429)
+			ipintel_handle_error("Error #429: We have exceeded the rate limit.", ip, 1)
 			return
-
 		else
 			ipintel_handle_error("Unknown status code: [status].", ip, retry)
 			if (!retry)
 				sleep(25)
 				return .(ip, 1)
-
 	else
 		ipintel_handle_error("Unable to connect to API.", ip, retry)
 		if (!retry)
@@ -72,8 +70,7 @@ var/ip_intel_errors = 0
 			return .(ip, 1)
 
 
-
-proc/ipintel_handle_error(error, ip, retry)
+/proc/ipintel_handle_error(error, ip, retry)
 	if (retry)
 		ip_intel_errors++
 		error += " Could not check [ip]. Disabling IPINTEL for [ip_intel_errors] minute[( ip_intel_errors == 1 ? "" : "s" )]"
@@ -82,7 +79,7 @@ proc/ipintel_handle_error(error, ip, retry)
 		error += " Attempting retry on [ip]."
 	log_ipintel(error)
 
-proc/log_ipintel(text)
+/proc/log_ipintel(text)
 	log_game("IPINTEL: [text]")
 
 
