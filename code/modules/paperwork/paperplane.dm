@@ -176,16 +176,11 @@
 		H.Weaken(2)
 		H.emote("scream")
 
-// Dear PKPenguin321
-// We need to make sure this AltClick doesn't override the child objects (aka talismans)
-// We need to define the AltClick on Child, Force Do Not Load, then return.
-// How to define on all child? Force do not load? Your advice is appreciated
-
-/obj/item/weapon/paper/AltClick(mob/user, obj/item/I,)
+/obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I,)
+	if((!in_range(src, user)) || usr.stat || usr.restrained())
+		return
 	if(istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You can't fold this type of paper... yet.</span>>"
-		return
-	if(!in_range(src, user))
 		return
 	if(!istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
@@ -197,18 +192,17 @@
 			I.CheckParts()
 		return
 
-/obj/item/weapon/paperplane/AltClick(mob/user, obj/item/I,)
-	if(!in_range(src, user))
+/obj/item/weapon/paperplane/AltClick(mob/living/carbon/user, obj/item/I,)
+	if((!in_range(src, user)) || usr.stat || usr.restrained())
 		return
-	if(istype(src, /obj/item/weapon/paperplane))
-		user << "<span class='notice'>You unfold the paper plane!</span>"
-		if(do_after(user, 10, target = src))
-			user.drop_item(src)
-			I = new /obj/item/weapon/paper(src.loc)
-			user.put_in_hands(I)
-			src.forceMove(I)
-			I.CheckParts()
-		return
+	user << "<span class='notice'>You unfold the paper plane!</span>"
+	if(do_after(user, 10, target = src))
+		user.drop_item(src)
+		I = new /obj/item/weapon/paper(src.loc)
+		user.put_in_hands(I)
+		src.forceMove(I)
+		I.CheckParts()
+	return
 
 /obj/item/weapon/paper/CheckParts()
 	var/obj/item/weapon/paperplane/P = locate(/obj/item/weapon/paperplane) in src
