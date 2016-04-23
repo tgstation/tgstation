@@ -291,7 +291,6 @@
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 		600),
-		new /datum/data/mining_equipment("Wormhole Lifebuoy",   /obj/item/device/wormhole_jaunter/lifebuoy,							   1000),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
@@ -476,7 +475,7 @@
 
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -485,24 +484,46 @@
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
+	slot_flags = SLOT_BELT
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
+	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	activate(user)
+
+/obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf||device_turf.z==2||device_turf.z>=7)
-		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
-		return
+	var/status = 0
+	// doesn't work if
+	// - you're in nullspace (HOW?)
+	if(!device_turf)
+		status = 182
+	// - you're on centcom
+	if(device_turf.z == 2)
+		status = 274
+	// - you're on a z level higher than you could normally reach
+	// (we currently have 9 legal z levels, should be a way of determining
+	// that programatically)
+	if(device_turf.z >= 10)
+		status = 1483
+
+	if(status != 0)
+		usr << "<span class='warning'>\icon[src] INVALID LOCATION: ERROR CODE [status]"
+		// turf_check returns 0 if failure, so it's false if broken
+		return 0
 	else
-		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-		activate(user)
+		return 1
 
 /obj/item/device/wormhole_jaunter/proc/activate(mob/user)
+	if(!turf_check(user))
+		return
+
 	var/list/L = list()
 	for(var/obj/item/device/radio/beacon/B in world)
 		var/turf/T = get_turf(B)
 		if(T.z == ZLEVEL_STATION)
 			L += B
 	if(!L.len)
-		user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
+		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
 		return
 	var/chosen_beacon = pick(L)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
@@ -511,25 +532,27 @@
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
 
-
-/obj/item/device/wormhole_jaunter/lifebuoy
-	name = "wormhole lifebuoy"
-	desc = "A single use device using similar technology to the wormhole jaunter. In addition, this belt has velocity and depth sensors that will trigger the device automatically if the user falls into a chasm, saving them from their trip into the darkness. Must be worn around the users waist in order to function in this way."
-	slot_flags = SLOT_BELT
-
-/obj/item/device/wormhole_jaunter/lifebuoy/emp_act(power)
+/obj/item/device/wormhole_jaunter/emp_act(power)
 	var/triggered = FALSE
-	if(power == 1)
-		triggered = TRUE
-	else if(power == 2 && prob(50))
-		triggered = TRUE
+
+	if(usr.get_item_by_slot(slot_belt) == src)
+		if(power == 1)
+			triggered = TRUE
+		else if(power == 2 && prob(50))
+			triggered = TRUE
+
 	if(triggered)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
 		activate(usr)
 
-/obj/item/device/wormhole_jaunter/lifebuoy/proc/chasm_protect()
-	usr.visible_message("<span class='warning'>[usr]'s [src] activates, saving them from the chasm!</span>")
-	activate(usr)
+/obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
+	if(user.get_item_by_slot(slot_belt) == src)
+		user.visible_message("<span class='warning'>[user]'s [src] activates, saving them from the chasm!</span>")
+		activate(user)
+	else
+		// TIME TO TAUNT THEM
+		user.visible_message("<span class='warning'>The [src] is not attached to [user]'s belt, preventing it from saving them from the chasm. RIP.</span>")
+
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -542,6 +565,7 @@
 		return
 	if(istype(M, /atom/movable))
 		if(do_teleport(M, target, 6))
+			// KERPLUNK
 			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 			if(iscarbon(M))
 				var/mob/living/carbon/L = M

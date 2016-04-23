@@ -574,9 +574,14 @@
 			return
 	if(istype(AM, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.belt, /obj/item/device/wormhole_jaunter/lifebuoy))
-			var/obj/item/device/wormhole_jaunter/lifebuoy/L = H.belt
-			L.chasm_protect()
+		// If we have more than one type of chasm reacting item, then
+		// should change this to some sort of flag on /obj/item and check
+		// the mob's contents. But for now this will do.
+		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
+			var/obj/item/device/wormhole_jaunter/J = H.belt
+			// This also does the belt check in case it's ever transformed
+			// to be more general.
+			J.chasm_react(H)
 			return
 	drop(AM)
 
