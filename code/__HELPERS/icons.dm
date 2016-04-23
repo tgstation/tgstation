@@ -879,7 +879,7 @@ var/list/friendly_animals = list()
 	if(friendly_animals.len <= 0)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
-			if(initial(SA.gold_core_spawnable == 2))
+			if(initial(SA.gold_core_spawnable) == 2)
 				friendly_animals += SA
 
 
@@ -890,7 +890,7 @@ var/list/friendly_animals = list()
 		var/color = rgb(rand(0,255), rand(0,255), rand(0,255))
 		I.ColorTone(color)
 
-	var/image/final_image = image(selected_icon, loc = A)
+	var/image/final_image = image(I, loc = A)
 	// For debugging
 	final_image.text = initial(SA.name)
 	return final_image
