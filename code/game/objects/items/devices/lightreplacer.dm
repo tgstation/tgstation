@@ -259,7 +259,6 @@
 
 	if(!used)
 		U << failmsg
-		return
 
 /obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)
