@@ -85,7 +85,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "screwdriver_blue"
+	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
@@ -104,10 +104,10 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
-	if(!param_color)
-		param_color = pick("red","blue","pink","brown","green","cyan","yellow")
-
-	icon_state = "screwdriver_[param_color]"
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
+		icon_state = "screwdriver_[param_color]"
 
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
@@ -126,11 +126,8 @@
 	name = "powered screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver"
+	icon_state = "screwdriver_cyborg"
 	toolspeed = 2
-
-/obj/item/weapon/screwdriver/cyborg/New(loc, var/param_color = null)
-	return ..(loc, "cyborg")
 
 /*
  * Wirecutters
@@ -139,7 +136,7 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "cutters_red"
+	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6
@@ -154,9 +151,10 @@
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()
-	if(!param_color)
-		param_color = pick("yellow", "red")
-	icon_state = "cutters_[param_color]"
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("yellow","red")
+		icon_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
@@ -180,11 +178,8 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "cutters"
+	icon_state = "cutters_cyborg"
 	toolspeed = 2
-
-/obj/item/weapon/wirecutters/cyborg/New(loc, var/param_color = null)
-	return ..(loc, "cyborg")
 
 /*
  * Welding Tool

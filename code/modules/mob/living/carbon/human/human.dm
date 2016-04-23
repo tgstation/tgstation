@@ -22,6 +22,9 @@
 	randomize_human(src)
 	dna.initialize_dna()
 
+	if(dna.species)
+		set_species(dna.species.type)
+
 	//initialise organs
 	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)

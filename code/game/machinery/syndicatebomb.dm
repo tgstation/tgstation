@@ -332,7 +332,7 @@
 	origin_tech = "combat=4;materials=3"
 	icon_state = "chemcore"
 	var/list/beakers = list()
-	var/max_beakers = 4
+	var/max_beakers = 1
 	var/spread_range = 5
 	var/temp_boost = 50
 	var/time_release = 0
@@ -411,11 +411,15 @@
 
 /obj/item/weapon/bombcore/chemical/CheckParts()
 	// Using different grenade casings, causes the payload to have different properties.
+	var/obj/item/weapon/stock_parts/matter_bin/MB = locate(/obj/item/weapon/stock_parts/matter_bin) in src
+	if(MB)
+		max_beakers += MB.rating	// max beakers = 2-5.
+		qdel(MB)
 	for(var/obj/item/weapon/grenade/chem_grenade/G in src)
 
 		if(istype(G, /obj/item/weapon/grenade/chem_grenade/large))
 			var/obj/item/weapon/grenade/chem_grenade/large/LG = G
-			max_beakers += 1 // Adding two large grenades only allows for a maximum of 6 beakers.
+			max_beakers += 1 // Adding two large grenades only allows for a maximum of 7 beakers.
 			spread_range += 2 // Extra range, reduced density.
 			temp_boost += 50 // maximum of +150K blast using only large beakers. Not enough to self ignite.
 			for(var/obj/item/slime_extract/S in LG.beakers) // And slime cores.
@@ -433,7 +437,7 @@
 			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite. Which means a self igniting bomb can't take advantage of other grenade casing properties. Sorry?
 
 		if(istype(G, /obj/item/weapon/grenade/chem_grenade/adv_release))
-			time_release += 25 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
+			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
 		for(var/obj/item/weapon/reagent_containers/glass/B in G)
 			if(beakers.len < max_beakers)
@@ -443,6 +447,7 @@
 				B.loc = get_turf(src)
 
 		qdel(G)
+
 
 
 

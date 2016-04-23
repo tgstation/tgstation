@@ -1,0 +1,6 @@
+author: Joan
+delete-after: True
+changes: 
+  - bugfix: "Aliens can now open crates and lockers."
+  - bugfix: "Aliens and monkeys can now climb climbable objects, such as crates and sandbags."
+  - rscadd: "Aliens climb very, very fast."
