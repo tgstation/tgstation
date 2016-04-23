@@ -31,6 +31,8 @@
 	for(var/obj/machinery/telecomms/T in telecomms_list)
 		if(istype(T, /obj/machinery/telecomms/processor))
 			var/obj/machinery/telecomms/processor/P = T
-			// Apparently machines very occasionally blowing up due to
-			// overload is "boring" and "not fun". So just EMP for now.
-			P.emp_act(1)
+			// Wow, it overloaded so much that it EXPLODED!?
+			if(prob(10))
+				P.ex_act(2)
+			else
+				P.emp_act(1)
