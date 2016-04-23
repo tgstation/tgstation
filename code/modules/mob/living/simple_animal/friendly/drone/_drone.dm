@@ -242,4 +242,6 @@
 /mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
 	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
 
-
+/mob/living/simple_animal/drone/bee_friendly()
+	// Why would bees pay attention to drones?
+	return 1

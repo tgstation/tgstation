@@ -1,0 +1,4 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "Alt+clicking on your mecha (while inside it) will toggle strafing mode."
