@@ -448,7 +448,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		return
 
 	var/datum/reagent/C = chemical_reagents_list[chemID] //we need to get the datum for this reagent to read the overdose threshold
-	if(units >= C.overdose - host.reagents.get_reagent_amount(chemID))
+	if(units >= C.overdose - host.reagents.get_reagent_amount(chemID) && C.overdose > 0)
 		if(alert("Secreting that much [chemID] would cause an overdose in your host. Are you sure?", "Secrete Chemicals", "Yes", "No") != "Yes")
 			return
 		add_gamelogs(src, "intentionally overdosed \the [host] with '[chemID]'", admin = TRUE, tp_link = TRUE, span_class = "danger")

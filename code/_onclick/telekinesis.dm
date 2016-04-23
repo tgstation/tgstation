@@ -145,10 +145,15 @@ var/const/tk_maxrange = 15
 
 		if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
 			var/obj/item/I = focus
+			var/isb = I.siemens_coefficient
+			var/ipb = I.permeability_coefficient
+			I.siemens_coefficient = 0
+			I.permeability_coefficient = 0.05
 			var/resolved = target.attackby(I, user, params)
 			if(!resolved && target && I)
 				I.afterattack(target,user,1,params) // for splashing with beakers
-
+			I.siemens_coefficient = isb
+			I.permeability_coefficient =ipb
 
 		else
 			apply_focus_overlay()
