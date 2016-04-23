@@ -373,7 +373,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		if(M.invisibility != 0)
 			M.invisibility = 0
 			user.visible_message(
-				"<span class='warning'>[user] drags the ghost to our plan of reality!</span>",
+				"<span class='warning'>[user] drags the ghost to our plane of reality!</span>",
 				"<span class='warning'>You drag the ghost to our plan of reality!</span>"
 			)
 		return
