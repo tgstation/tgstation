@@ -7,7 +7,7 @@
 	ammo_x_offset = 3
 
 /obj/item/weapon/gun/energy/shock_revolver
-	name = "shock revolver"
+	name = "tesla revolver"
 	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	icon_state = "stunrevolver"
 	item_state = "gun"
@@ -38,9 +38,7 @@
 /obj/item/projectile/shock_revolver/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
-		for(var/mob/living/carbon/human/M in view(3, src))
-			target.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
-			M.electrocute_act(15, "[name]", safety=1)
+		tesla_zap(src, 3, 10000)
 	qdel(chain)
 
 

@@ -23,7 +23,7 @@
 	category = list("Firing Pins")
 
 /datum/design/stunrevolver
-	name = "Shock Revolver"
+	name = "Tesla Revolver"
 	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	id = "stunrevolver"
 	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 5)
