@@ -97,7 +97,7 @@
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
-	if(!iscultist(user) && !iswizard(user) && !usability)
+	if(!iscultist(user) && !iswizard(user))
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
 		user.Dizzy(120)
 		
