@@ -151,7 +151,8 @@
 	slot_flags = null
 	w_class = 5
 	materials = list()
-	burst_size = 5
+	burst_size = 3
+	automatic = 1
 	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Laser.ogg'
@@ -189,5 +190,5 @@
 	click_cooldown_override = 1
 
 /obj/item/projectile/beam/weak
-	damage = 10
+	damage = 7
 	armour_penetration = 50
