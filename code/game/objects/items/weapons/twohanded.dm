@@ -118,17 +118,6 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-/obj/item/weapon/twohanded/offhand/hit_reaction()//if the actual twohanded weapon is a shield, we count as a shield too!
-	var/mob/user = loc
-	if(!istype(user))
-		return 0
-	var/obj/item/I = user.get_active_hand()
-	if(I == src)
-		I = user.get_inactive_hand()
-	if(!I)
-		return 0
-	return I.hit_reaction()
-
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
@@ -215,7 +204,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 50
+	block_chance = 75
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
