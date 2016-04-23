@@ -872,48 +872,27 @@ The _flatIcons list is a cache for generated icon files.
 	del(atom_icon)
 	return text_image
 
-var/list/animal_icons = list()
-var/list/icon_names = list()
+var/list/friendly_animals = list()
 
 // Pick a random animal instead of the icon, and use that instead
 /proc/getRandomAnimalImage(atom/A)
-	if(animal_icons.len <= 0)
-		for(var/icon_state in list("cow", "carp", "chicken_brown", \
-			"chicken_white", "chicken_black", "chick", "brownbear", \
-			"snowbear", "mushroom", "crab", "mouse_brown", "mouse_white", \
-			"mouse_gray", "goat", "parrot_fly", "bat", "lizard", \
-			"butterfly"))
-
-			animal_icons += icon('icons/mob/animal.dmi', icon_state)
-			icon_names += icon_state
-
-		for(var/icon_state in list("corgi", "old_corgi", "lisa", "puppy", \
-			"pug", "fox", "cat", "cat2", "kitten", "void_puppy", "spacecat", \
-			"original"))
-
-			animal_icons += icon('icons/mob/pets.dmi', icon_state)
-			icon_names += icon_state
-
-		for(var/icon_state in list("rabbit_white", "rabbit_black", \
-			"rabbit_brown", "s_rabbit_white", "s_rabbit_black", \
-			"s_rabbit_brown"))
-
-			animal_icons += icon('icons/mob/Easter.dmi', icon_state)
-			icon_names += icon_state
+	if(friendly_animals.len <= 0)
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
+			if(initial(SA.gold_core_spawnable == 2))
+				friendly_animals += SA
 
 
-	var/index = rand(1, animal_icons.len)
+	var/mob/living/simple_animal/SA = pick(friendly_animals)
+	var/icon/I = icon(initial(SA.icon), initial(SA.icon_state))
 
-	var/icon/selected_icon = animal_icons[index]
-	var/icon/selected_icon_name = icon_names[index]
-
-	if(selected_icon_name == "butterfly")
+	if(ispath(SA, /mob/living/simple_animal/butterfly))
 		var/color = rgb(rand(0,255), rand(0,255), rand(0,255))
-		selected_icon.ColorTone(color)
+		I.ColorTone(color)
 
 	var/image/final_image = image(selected_icon, loc = A)
 	// For debugging
-	final_image.text = selected_icon_name
+	final_image.text = initial(SA.name)
 	return final_image
 
 //Find's the average colour of the icon
