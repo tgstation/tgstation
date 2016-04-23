@@ -171,7 +171,6 @@
 	uses = Clamp(uses + amount, 0, max_uses)
 
 /obj/item/device/lightreplacer/proc/AddShards(amount = 1)
-	// Returns number of new bulbs made from the shards
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / shards_required)
 	if(new_bulbs > 0)
@@ -248,8 +247,6 @@
 		return
 
 	var/used = FALSE
-	// making special messages if there's more than one light fitting in
-	// a turf is dumb because it never happens
 	for(var/atom/A in T)
 		if(!CanUse(U))
 			break
