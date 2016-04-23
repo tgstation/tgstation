@@ -42,7 +42,7 @@
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
-	var/staticChoice
+	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
@@ -85,10 +85,6 @@
 
 	var/datum/action/generic/drone/select_filter/SF = new(src)
 	SF.Grant(src)
-
-	// By default, drones start with a random filter
-	if(!staticChoice)
-		staticChoice = pick(staticChoices)
 
 
 /mob/living/simple_animal/drone/Destroy()
