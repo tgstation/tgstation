@@ -132,10 +132,12 @@
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I,)
-	if((!in_range(src, user)) || usr.stat || usr.restrained())
+
+	if((istype(src, /obj/item/weapon/paper/talisman)) || (istype(src, /obj/item/weapon/paper/pamphlet)) || (istype(src, /obj/item/weapon/paper/abductor)))//doesn't fuck with cult
+		//user << "<span class='notice'>You can't fold this type of paper... yet.</span>"
+		..()
 		return
-	if(istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
-		user << "<span class='notice'>You can't fold this type of paper... yet.</span>>"
+	if((!in_range(src, user)) || usr.stat || usr.restrained())
 		return
 	if(!istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
