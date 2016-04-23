@@ -1,6 +1,6 @@
 /obj/item/weapon/paperplane
 	name = "paper plane"
-	desc = "paper folded in the shape of a plane"
+	desc = "Paper, folded in the shape of a plane"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
 	throw_range = 7
@@ -14,21 +14,23 @@
 	burn_state = FLAMMABLE
 	burntime = 5
 
-	var/info		//What's actually written on the paper.
-	var/info_links	//A different version of the paper which includes html links at fields and EOF
-	var/stamps		//The (text for the) stamps on the paper.
-	var/fields		//Amount of user created fields
+	var/info
+	var/info_links
+	var/stamps
+	var/fields
 	var/list/stamped
-	var/rigged = 0
-	var/spam_flag = 0
+	var/rigged
+	var/spam_flag
 
 
 /obj/item/weapon/paperplane/New()
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
+	src.CheckParts(src.loc)
+	updateinfolinks()
 	update_icon()
-	//updateinfolinks()
+
 
 /obj/item/weapon/paperplane/update_icon()
 	if(burn_state == ON_FIRE)
@@ -38,19 +40,76 @@
 		return
 	icon_state = "paperplane"
 
+/obj/item/weapon/paperplane/proc/clearpaper()
+	info = null
+	stamps = null
+	stamped = list()
+	overlays.Cut()
+	updateinfolinks()
+	update_icon()
+
+/obj/item/weapon/paperplane/suicide_act(mob/user)
+	user.Stun(10)
+	user.visible_message("<span class='suicide'>[user] pokes their eyes with the paper plane! It looks like \he's trying to commit sudoku..</span>")
+	user.adjust_blurriness(6)
+	user.adjust_eye_damage(rand(6,8))
+	sleep(10)
+	return (BRUTELOSS)
+
+/obj/item/weapon/paperplane/proc/addtofield(id, text, links = 0)
+	var/locid = 0
+	var/laststart = 1
+	var/textindex = 1
+	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+		var/istart = 0
+		if(links)
+			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
+		else
+			istart = findtext(info, "<span class=\"paper_field\">", laststart)
+
+		if(istart == 0)
+			return	//No field found with matching id
+
+		laststart = istart+1
+		locid++
+		if(locid == id)
+			var/iend = 1
+			if(links)
+				iend = findtext(info_links, "</span>", istart)
+			else
+				iend = findtext(info, "</span>", istart)
+
+			//textindex = istart+26
+			textindex = iend
+			break
+
+	if(links)
+		var/before = copytext(info_links, 1, textindex)
+		var/after = copytext(info_links, textindex)
+		info_links = before + text + after
+	else
+		var/before = copytext(info, 1, textindex)
+		var/after = copytext(info, textindex)
+		info = before + text + after
+		updateinfolinks()
+
+/obj/item/weapon/paperplane/proc/updateinfolinks()
+	info_links = info
+	var/i = 0
+	for(i=1,i<=fields,i++)
+		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+
+
 /obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
-
 	if(burn_state == ON_FIRE)
 		return
-
 	if(is_blind(user))
 		return
-
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << "<span class='notice'>You should unfold the paper before writing.</span>"
+		user << "<span class='notice'>You should unfold the paper before writing a note.</span>"
 		return
-
 	if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
 			return
@@ -117,16 +176,6 @@
 		H.Weaken(2)
 		H.emote("scream")
 
-/obj/item/weapon/paperplane/CheckParts()
-	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
-	if(P)
-		src.info = P.info
-		src.stamps = P.stamps
-		if(P.stamped)
-			src.stamped = P.stamped.Copy()
-		src.rigged = P.rigged
-		qdel(P)
-		//updateinfolinks()
 
 /obj/item/weapon/paper/AltClick(mob/user, obj/item/I,)
 	if(!istype(src, /obj/item/weapon/paper/))
@@ -134,7 +183,7 @@
 	..()
 	if(!in_range(src, user))
 		return
-	if(!istype(src, /obj/item/weapon/paperplane) && !istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
+	if(!istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
 		user << "<span class='notice'>You fold the paper in the shape of a plane!</span>"
 		if(do_after(user, 20, target = src))
 			user.drop_item(src)
@@ -143,17 +192,6 @@
 			src.forceMove(I)
 			I.CheckParts()
 		return
-
-/obj/item/weapon/paper/CheckParts()
-	var/obj/item/weapon/paperplane/P = locate(/obj/item/weapon/paperplane) in src
-	if(P)
-		src.info = P.info
-		src.stamps = P.stamps
-		if(P.stamped)
-			src.stamped = P.stamped.Copy()
-		src.rigged = P.rigged
-		qdel(P)
-		//updateinfolinks()
 
 /obj/item/weapon/paperplane/AltClick(mob/user, obj/item/I,)
 	if(!in_range(src, user))
@@ -167,3 +205,29 @@
 			src.forceMove(I)
 			I.CheckParts()
 		return
+
+/obj/item/weapon/paper/CheckParts()
+	var/obj/item/weapon/paperplane/P = locate(/obj/item/weapon/paperplane) in src
+	if(P)
+		src.info = P.info
+		src.stamps = P.stamps
+		if(P.stamped)
+			src.stamped = P.stamped.Copy()
+		src.rigged = P.rigged
+		src.overlays = P.overlays
+		qdel(P)
+		P.updateinfolinks()
+	update_icon()
+
+/obj/item/weapon/paperplane/CheckParts()
+	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in src
+	if(P)
+		src.info = P.info
+		src.stamps = P.stamps
+		if(P.stamped)
+			src.stamped = P.stamped.Copy()
+		src.rigged = P.rigged
+		src.overlays = P.overlays
+		qdel(P)
+		P.updateinfolinks()
+	update_icon()
