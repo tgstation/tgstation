@@ -111,6 +111,18 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+### IPINTEL:
+### This allows you to block likely proxies by checking ips against getipintel.net
+## Maximum rating: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything higher then this number is rejected
+#IPINTEL_RATING_MAX 0.90
+## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
+#IPINTEL_EMAIL ch@nge.me
+## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours)
+#IPINTEL_SAVE_GOOD 6
+## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
+#IPINTEL_SAVE_BAD 1
+
+
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
 
