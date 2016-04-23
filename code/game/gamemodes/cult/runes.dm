@@ -815,6 +815,7 @@ var/list/teleport_runes = list()
 	N.desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	N.color = "red"
 	N.health = 20
+	N.mouse_opacity = 0
 	new_human.key = ghost_to_spawn.key
 	ticker.mode.add_cultist(new_human.mind)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
