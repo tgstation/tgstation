@@ -118,17 +118,6 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-/obj/item/weapon/twohanded/offhand/hit_reaction()//if the actual twohanded weapon is a shield, we count as a shield too!
-	var/mob/user = loc
-	if(!istype(user))
-		return 0
-	var/obj/item/I = user.get_active_hand()
-	if(I == src)
-		I = user.get_inactive_hand()
-	if(!I)
-		return 0
-	return I.hit_reaction()
-
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
