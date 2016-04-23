@@ -324,16 +324,18 @@ var/global/datum/controller/occupations/job_master
 				count = (officer.current_positions + warden.current_positions + hos.current_positions)
 				if(master_assistant.current_positions > (config.assistantratio * count))
 					if(count < 5) // if theres more than 5 security on the station just let assistants join regardless, they should be able to handle the tide
+						to_chat(player, "You have been returned to lobby because there's not enough security to make you an assistant.")
 						player.ready = 0
 						unassigned -= player
 						continue
+
 			Debug("AC2 Assistant located, Player: [player]")
 			AssignRole(player, "Assistant")
 
 	//For ones returning to lobby
 	for(var/mob/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
-			to_chat(player, "<span class='danger'>You have not been placed in the game due to job related restrictions.")
+			to_chat(player, "<span class='danger'>You have been returned to lobby due to your job preferences being filled.")
 			player.ready = 0
 			unassigned -= player
 	return 1
