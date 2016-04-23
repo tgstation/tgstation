@@ -311,7 +311,7 @@
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
-		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
+		user << "<span class='warning'>To use this talisman, place it upon a stack of metal sheets.</span>"
 	else
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
