@@ -1068,10 +1068,10 @@
 /*********************Hivelord stabilizer****************/
 
 /obj/item/weapon/hivelordstabilizer
-	name = "legion's heart stabilizer"
+	name = "stabilizing serum"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
-	desc = "Inject a legion's heart with this stabilizer to preserve its healing powers indefinitely."
+	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = 1
 	origin_tech = "biotech=1"
 
@@ -1130,7 +1130,7 @@
 		new /datum/data/mining_equipment("Alien Toy",           	/obj/item/clothing/mask/facehugger/toy, 		                   		300),
 		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
 		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
-		new /datum/data/mining_equipment("Hivelord Stabilizer",		/obj/item/weapon/hivelordstabilizer,		                     		400),
+		new /datum/data/mining_equipment("Stabilizing Serum",		/obj/item/weapon/hivelordstabilizer,		                     		400),
 		new /datum/data/mining_equipment("Shelter Capsule",			/obj/item/weapon/survivalcapsule,			                     		400),
 		new /datum/data/mining_equipment("GAR scanners",			/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Sulphuric Acid",			/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,        		500),
