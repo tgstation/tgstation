@@ -821,6 +821,15 @@
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
 
+	// Defined twice because humans don't have a special case for being an
+	// animal, unless we want to go some sort of seed the random generator
+	// with their name? Much as it would be cute to always make Mehki
+	// appear as a pissed off rabbit, sounds like too much work.
+
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
+
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
