@@ -60,4 +60,4 @@
 	changeling.islinking = 0
 	target.mind.linglink = 0
 	user << "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind</span>"
-	target << "<span class='userdanger'>The link cannot be sustained any long, your connection to the hivemind has faded!</span>"
+	target << "<span class='userdanger'>The link cannot be sustained any longer, your connection to the hivemind has faded!</span>"
