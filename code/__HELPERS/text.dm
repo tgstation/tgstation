@@ -72,6 +72,8 @@ proc/russian_text2html(msg)
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
+	t = replacetext(t, "\proper", "")
+	t = replacetext(t, "\improper", "")
 	return rhtml_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
