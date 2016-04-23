@@ -1,0 +1,4 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "Non-humans are now able to interact with bee boxes."
