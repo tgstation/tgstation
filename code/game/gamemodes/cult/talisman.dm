@@ -75,7 +75,7 @@
 		if(href_list["rune"])
 			switch(href_list["rune"])
 				if("newtome")
-					var/obj/item/weapon/paper/talisman/summon_tome/T = new(usr)
+					var/obj/item/weapon/tome/T = new(usr)
 					usr.put_in_hands(T)
 				if("teleport")
 					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
