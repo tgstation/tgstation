@@ -92,7 +92,7 @@
 /datum/reagent/medicine/synaphydramine
 	name = "Diphen-Synaptizine"
 	id = "synaphydramine"
-	description = "Reducing drowsiness and hallucinations, purges Histamine from body."
+	description = "Reduces drowsiness, hallucinations, and Histamine from body."
 	color = "#EC536D" // rgb: 236, 83, 109
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/M)
