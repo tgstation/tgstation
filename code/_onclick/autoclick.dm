@@ -25,5 +25,8 @@
 
 /obj/item/proc/CanItemAutoclick(object, location, params)
 
+/obj/item/weapon/gun
+	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+
 /obj/item/weapon/gun/CanItemAutoclick(object, location, params)
-	. = 1
+	. = automatic
