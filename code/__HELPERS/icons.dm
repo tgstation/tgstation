@@ -873,54 +873,48 @@ The _flatIcons list is a cache for generated icon files.
 	return text_image
 
 var/list/animal_icons = list()
-var/icon/butterfly =
+var/list/icon_names = list()
 
 // Pick a random animal instead of the icon, and use that instead
 /proc/getRandomAnimalImage(atom/A)
 	if(animal_icons.len <= 0)
+		for(var/icon_state in list("cow", "carp", "chicken_brown", \
+			"chicken_white", "chicken_black", "chick", "brownbear", \
+			"snowbear", "mushroom", "crab", "mouse_brown", "mouse_white", \
+			"mouse_gray", "goat", "parrot_fly", "bat", "lizard", \
+			"butterfly"))
 
-		animal_icons += new/icon('icons/mob/animal.dmi', "cow")
-		animal_icons += new/icon('icons/mob/animal.dmi', "carp")
-		animal_icons += new/icon('icons/mob/animal.dmi', "chicken_brown")
-		animal_icons += new/icon('icons/mob/animal.dmi', "chicken_white")
-		animal_icons += new/icon('icons/mob/animal.dmi', "chicken_black")
-		animal_icons += new/icon('icons/mob/animal.dmi', "chick")
-		animal_icons += new/icon('icons/mob/animal.dmi', "brownbear")
-		animal_icons += new/icon('icons/mob/animal.dmi', "bearfloor")
-		animal_icons += new/icon('icons/mob/animal.dmi', "snowbear")
-		animal_icons += new/icon('icons/mob/animal.dmi', "mushroom")
-		animal_icons += new/icon('icons/mob/animal.dmi', "crab")
-		animal_icons += new/icon('icons/mob/animal.dmi', "mouse_brown")
-		animal_icons += new/icon('icons/mob/animal.dmi', "mouse_white")
-		animal_icons += new/icon('icons/mob/animal.dmi', "mouse_black")
-		animal_icons += new/icon('icons/mob/animal.dmi', "goat")
-		animal_icons += new/icon('icons/mob/animal.dmi', "parrot_fly")
-		animal_icons += new/icon('icons/mob/animal.dmi', "bat")
-		animal_icons += new/icon('icons/mob/animal.dmi', "lizard")
+			animal_icons += icon('icons/mob/animal.dmi', icon_state)
+			icon_names += icon_state
 
-		// Keep a reference, we'll need to colour it if picked
-		butterfly = new/icon('icons/mob/animal.dmi', "butterfly")
-		animal_icons += butterfly
+		for(var/icon_state in list("corgi", "old_corgi", "lisa", "puppy", \
+			"pug", "fox", "cat", "cat2", "kitten", "void_puppy", "spacecat", \
+			"original"))
 
-		animal_icons += new/icon('icons/mob/pets.dmi', "corgi")
-		animal_icons += new/icon('icons/mob/pets.dmi', "oldcorgi")
-		animal_icons += new/icon('icons/mob/pets.dmi', "lisa")
-		animal_icons += new/icon('icons/mob/pets.dmi', "puppy")
-		animal_icons += new/icon('icons/mob/pets.dmi', "pug")
-		animal_icons += new/icon('icons/mob/pets.dmi', "fox")
-		animal_icons += new/icon('icons/mob/pets.dmi', "cat")
-		animal_icons += new/icon('icons/mob/pets.dmi', "cat2")
-		animal_icons += new/icon('icons/mob/pets.dmi', "kitten")
-		animal_icons += new/icon('icons/mob/pets.dmi', "voidpuppy")
-		animal_icons += new/icon('icons/mob/pets.dmi', "spacecat")
-		animal_icons += new/icon('icons/mob/pets.dmi', "original")
+			animal_icons += icon('icons/mob/pets.dmi', icon_state)
+			icon_names += icon_state
 
-	var/icon/selected = pick(icons)
-	if(selected == butterfly)
+		for(var/icon_state in list("rabbit_white", "rabbit_black", \
+			"rabbit_brown", "s_rabbit_white", "s_rabbit_black", \
+			"s_rabbit_brown"))
+
+			animal_icons += icon('icons/mob/Easter.dmi', icon_state)
+			icon_names += icon_state
+
+
+	var/index = rand(1, animal_icons.len)
+
+	var/icon/selected_icon = animal_icons[index]
+	var/icon/selected_icon_name = icon_names[index]
+
+	if(selected_icon_name == "butterfly")
 		var/color = rgb(rand(0,255), rand(0,255), rand(0,255))
-		selected.ColorTone(color)
+		selected_icon.ColorTone(color)
 
-	return image(selected, loc = A)
+	var/image/final_image = image(selected_icon, loc = A)
+	// For debugging
+	final_image.text = selected_icon_name
+	return final_image
 
 //Find's the average colour of the icon
 //By vg's ComicIronic
