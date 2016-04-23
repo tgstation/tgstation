@@ -176,11 +176,15 @@
 		H.Weaken(2)
 		H.emote("scream")
 
+// Dear PKPenguin321
+// We need to make sure this AltClick doesn't override the child objects (aka talismans)
+// We need to define the AltClick on Child, Force Do Not Load, then return.
+// How to define on all child? Force do not load? Your advice is appreciated
 
 /obj/item/weapon/paper/AltClick(mob/user, obj/item/I,)
-	if(!istype(src, /obj/item/weapon/paper/))
+	if(istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
+		user << "<span class='notice'>You can't fold this type of paper... yet.</span>>"
 		return
-	..()
 	if(!in_range(src, user))
 		return
 	if(!istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
@@ -196,7 +200,7 @@
 /obj/item/weapon/paperplane/AltClick(mob/user, obj/item/I,)
 	if(!in_range(src, user))
 		return
-	if(!istype(src, /obj/item/weapon/paper/talisman)) //doesn't fuck with cult
+	if(istype(src, /obj/item/weapon/paperplane))
 		user << "<span class='notice'>You unfold the paper plane!</span>"
 		if(do_after(user, 10, target = src))
 			user.drop_item(src)
