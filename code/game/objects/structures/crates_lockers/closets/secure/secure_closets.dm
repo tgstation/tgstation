@@ -8,4 +8,4 @@
 
 /obj/structure/closet/secure_closet/examine(mob/user)
 	..()
-		user << "<span class='italicnotice'>Alt-click it to toggle the lock.</span>"
+	user << "<span class='italicnotice'>Alt-click it to toggle the lock.</span>"

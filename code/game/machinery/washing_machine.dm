@@ -19,7 +19,7 @@
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
-		user << "<span class='italicnotice'>Alt-click it to start a wash cycle.</span>"
+	user << "<span class='italicnotice'>Alt-click it to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
