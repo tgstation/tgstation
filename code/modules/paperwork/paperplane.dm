@@ -28,7 +28,6 @@
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	src.CheckParts(src.loc)
-	updateinfolinks()
 	update_icon()
 
 
@@ -45,7 +44,6 @@
 	stamps = null
 	stamped = list()
 	overlays.Cut()
-	updateinfolinks()
 	update_icon()
 
 /obj/item/weapon/paperplane/suicide_act(mob/user)
@@ -55,50 +53,6 @@
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)
 	return (BRUTELOSS)
-
-/obj/item/weapon/paperplane/proc/addtofield(id, text, links = 0)
-	var/locid = 0
-	var/laststart = 1
-	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
-		var/istart = 0
-		if(links)
-			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
-		else
-			istart = findtext(info, "<span class=\"paper_field\">", laststart)
-
-		if(istart == 0)
-			return	//No field found with matching id
-
-		laststart = istart+1
-		locid++
-		if(locid == id)
-			var/iend = 1
-			if(links)
-				iend = findtext(info_links, "</span>", istart)
-			else
-				iend = findtext(info, "</span>", istart)
-
-			//textindex = istart+26
-			textindex = iend
-			break
-
-	if(links)
-		var/before = copytext(info_links, 1, textindex)
-		var/after = copytext(info_links, textindex)
-		info_links = before + text + after
-	else
-		var/before = copytext(info, 1, textindex)
-		var/after = copytext(info, textindex)
-		info = before + text + after
-		updateinfolinks()
-
-/obj/item/weapon/paperplane/proc/updateinfolinks()
-	info_links = info
-	var/i = 0
-	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
@@ -156,7 +110,8 @@
 
 /obj/item/weapon/paperplane/extinguish()
 	..()
-	update_icon()
+	icon_state = "paperplane"
+	overlays -= "paperplane_onfire"
 
 
 /obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0) //prevent the paper plane from spinning
@@ -214,7 +169,6 @@
 		src.rigged = P.rigged
 		src.overlays = P.overlays
 		qdel(P)
-		P.updateinfolinks()
 	update_icon()
 
 /obj/item/weapon/paperplane/CheckParts()
