@@ -29,8 +29,9 @@
 	for(var/obj/machinery/telecomms/T in telecomms_list)
 		if(istype(T, /obj/machinery/telecomms/processor))
 			var/obj/machinery/telecomms/processor/P = T
-			// Wow, it overloaded so much that it EXPLODED!?
 			if(prob(10))
-				P.ex_act(2)
+				// Only a level 1 explosion actually damages the machine
+				// at all
+				P.ex_act(1)
 			else
 				P.emp_act(1)
