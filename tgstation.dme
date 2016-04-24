@@ -166,6 +166,7 @@
 #include "code\datums\diseases\appendicitis.dm"
 #include "code\datums\diseases\beesease.dm"
 #include "code\datums\diseases\brainrot.dm"
+#include "code\datums\diseases\chemicaloverdose.dm"
 #include "code\datums\diseases\cold.dm"
 #include "code\datums\diseases\cold9.dm"
 #include "code\datums\diseases\dna_spread.dm"

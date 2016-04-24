@@ -161,10 +161,16 @@
 	description = "A powerful hallucinogen. Not a thing to be messed with."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
+	overdose_threshold = 30
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
 	M.hallucination += 10
 	return ..()
+
+/datum/reagent/toxin/mindbreaker/overdose_process(mob/living/M)
+	M.ForceContractDisease(new /datum/disease/chemicaloverdose/mindbreaker_od(0))
+	..()
+	. = 1
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -359,9 +365,7 @@
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
-	M.adjustToxLoss(2*REM, 0)
+	M.ForceContractDisease(new /datum/disease/chemicaloverdose/histamine_od(0))
 	..()
 	. = 1
 
