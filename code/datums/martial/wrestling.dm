@@ -43,7 +43,7 @@
 	H.martial_art.streak = "slam"
 
 /datum/action/throw_wrassle
-	name = "Throw (Cinch) - Spin a cinched opponent around and throw them.."
+	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
 	button_icon_state = "wrassle_throw"
 
 /datum/action/throw_wrassle/Trigger()
