@@ -138,11 +138,11 @@
 
 /*
 
-/datum/network_command/setkey
+/datum/network_command/sett
 	trigger = "set_key"
 	info = "Usage: \"set_key -{encryption_key}\". If an encryption key is provided, will set this networks encryption key. Otherwise, will remove it."
 
-/datum/network_command/setkey/execute(datum/network/N, list/A, obj/item/device/hacktool/H)
+/datum/network_command/sett/execute(datum/network/N, list/A, obj/item/device/hacktool/H)
 	..()
 	N.password = A[1]
 	feedback = "Encryption Key Set"

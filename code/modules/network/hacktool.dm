@@ -40,7 +40,7 @@
 /obj/item/device/hacktool/proc/run_command(var/command)
 	if(!command)
 		return
-	if(!head)
+	if(!head || head.invisible)
 		var/list/parsed = parse_network_command(command)
 		switch(parsed[1])
 			if("help")

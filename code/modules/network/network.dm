@@ -30,13 +30,15 @@ proc/parse_network_command(command = "")
 	var/invisible = 0								// This network doesnt exist, as far as players are concerned.
 	var/list/linked = list()						// List of linked networks by id (netid = network).
 	var/list/connected = list()						// List of traversable networks by id (netid = network)
+
+	// A list of commands this network has access to. Works kinda like virus symptoms.
 	var/list/datum/network_command/commands = list(/datum/network_command/info, \
 												/datum/network_command/connect, \
 												/datum/network_command/disconnect, \
 												/datum/network_command/get, \
 												/datum/network_command/link, \
 												/datum/network_command/unlink, \
-												/datum/network_command/probe)	// A list of commands this network has access to. Works kinda like virus symptoms.
+												/datum/network_command/probe)
 
 /datum/network/New(var/newid = null, atom/H, var/newpw = null)
 	..()
@@ -104,6 +106,8 @@ proc/parse_network_command(command = "")
 	if(callOnLinked)
 		N.add_connection(src, FALSE)
 
+/datum/network/proc/update_network()
+	return
 
 /datum/network/proc/execute(var/command, var/obj/item/device/hacktool/H) // Used to pass commands to the network.
 	if(!command)
