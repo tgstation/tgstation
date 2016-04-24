@@ -65,11 +65,7 @@
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
-	item_state = "screwdriver_nuke"
 	toolspeed = 2
-
-/obj/item/weapon/screwdriver/nuke/New()
-//to skip screwdriver icon update
 
 /obj/item/weapon/paper/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\

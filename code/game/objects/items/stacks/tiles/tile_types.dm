@@ -12,6 +12,11 @@
 	var/turf_type = null
 	var/mineralType = null
 
+/obj/tiem/stack/tile/New(loc, amount)
+	..()
+	pixel_x = rand(-3, 3)
+	pixel_y = rand(-3, 3) //randomize a little
+
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
 	if (istype(W, /obj/item/weapon/weldingtool))

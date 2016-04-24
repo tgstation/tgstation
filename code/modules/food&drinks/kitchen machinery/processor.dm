@@ -31,6 +31,10 @@
 
 /obj/machinery/processor/process()
 	..()
+	// The irony
+	// To be clear, if it's grinding, then it can't suck them up
+	if(processing)
+		return
 	var/mob/living/simple_animal/slime/picked_slime
 	for(var/mob/living/simple_animal/slime/slime in range(1,src))
 		if(slime.loc == src)

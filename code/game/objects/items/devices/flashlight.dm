@@ -111,36 +111,28 @@
 
 /obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
-		if(holo_cooldown)
+		if(holo_cooldown > world.time)
 			user << "<span class='warning'>[src] is not ready yet!</span>"
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			CreateHolo(T, user)
+			PoolOrNew(/obj/effect/medical_holosign, list(T,user)) //produce a holographic glow
+			holo_cooldown = world.time + 100
 			return
 	..()
 
-/obj/item/device/flashlight/pen/proc/CreateHolo(tturf,creator)
-	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
-	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
-	holo_cooldown = 1
-	spawn(100)
-		holo_cooldown = 0
-	return
-
-/obj/effect/medical_holosign
+/obj/effect/overlay/temp/medical_holosign
 	name = "medical holosign"
-	desc = "A small holographic barrier that indicates a medic is coming to treat a patient."
-	icon = 'icons/effects/effects.dmi'
+	desc = "A small holographic glow that indicates a medic is coming to treat a patient."
 	icon_state = "medi_holo"
-	layer = 4.1
-	mouse_opacity = 0
+	duration = 30
 
-/obj/effect/medical_holosign/New()
-	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
-	spawn(30)
-		qdel(src)
-	return
+/obj/effect/medical_holosign/New(loc, creator)
+	..()
+	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
+	if(creator)
+		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
+
 
 /obj/item/device/flashlight/seclite
 	name = "seclite"
