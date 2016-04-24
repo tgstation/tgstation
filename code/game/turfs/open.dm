@@ -105,7 +105,7 @@
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
 		overlays += wet_overlay
 
-	if(wet != TURF_WET_ICE)
+	if(wet < TURF_WET_ICE)
 		addtimer(src, "MakeDry", rand(790, 820))
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
@@ -113,9 +113,12 @@
 		return
 	if(wet > wet_setting || !wet)
 		return
-	wet = TURF_DRY
-	if(wet_overlay)
-		overlays -= wet_overlay
+	if(wet == TURF_WET_PERMAFROST)
+		wet = TURF_WET_ICE
+	else
+		wet = TURF_DRY
+		if(wet_overlay)
+			overlays -= wet_overlay
 
 /turf/open/proc/HandleWet()
 	if(!istype(src, /turf))
