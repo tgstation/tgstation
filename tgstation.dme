@@ -221,7 +221,7 @@
 #include "code\datums\helper_datums\teleport.dm"
 #include "code\datums\helper_datums\topic_input.dm"
 #include "code\datums\martial\krav_maga.dm"
-#include "code\datums\martial\SNAP_INTO_A_SLIM_JIM.dm"
+#include "code\datums\martial\wrestling.dm"
 #include "code\datums\wires\airalarm.dm"
 #include "code\datums\wires\airlock.dm"
 #include "code\datums\wires\apc.dm"
