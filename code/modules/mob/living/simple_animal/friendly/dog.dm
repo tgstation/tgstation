@@ -399,7 +399,7 @@
 		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
 
 		if(!DF.icon_state)
-			icon_state = inventory_head.icon_state
+			DF.icon_state = inventory_head.icon_state
 
 		if(health <= 0)
 			head_icon = DF.get_image(dir = EAST)
