@@ -20,7 +20,7 @@
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
-	dog_valid = DOG_HEAD
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"

@@ -15,7 +15,6 @@
 	name = "red wizard hat"
 	desc = "Strange-looking red hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
-	dog_valid = DOG_HEAD
 	dog_fashion = /datum/dog_fashion/head/red_wizard
 
 /obj/item/clothing/head/wizard/yellow
