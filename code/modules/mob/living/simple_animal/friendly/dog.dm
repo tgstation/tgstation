@@ -248,10 +248,11 @@
 	// First, change back to defaults
 	name = real_name
 	desc = initial(desc)
-	speak = initial(speak)
-	speak_emote = initial(speak_emote)
-	emote_hear = initial(emote_hear)
-	emote_see = initial(emote_see)
+	// BYOND/DM doesn't support the use of initial on lists.
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
+	speak_emote = list("barks", "woofs")
+	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
+	emote_see = list("shakes its head.", "chases its tail.","shivers.")
 	desc = initial(desc)
 	SetLuminosity(0)
 
