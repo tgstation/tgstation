@@ -164,12 +164,11 @@
 						return
 
 					//The objects that corgis can wear on their backs.
-					var/list/allowed_types = list(
-						/obj/item/weapon/extinguisher,
-						/obj/item/clothing/suit/hooded/ian_costume,
-					)
+					var/allowed = FALSE
+					if(istype(item_to_add.dog_fashion,/datum/dog_fashion/back))
+						allowed = TRUE
 
-					if( ! ( item_to_add.type in allowed_types ) )
+					if(!allowed)
 						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>"
 						if(!usr.drop_item())
 							usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
