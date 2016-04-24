@@ -175,10 +175,10 @@
 
 /mob/living/verb/succumb()
 	set hidden = 1
-	if ((src.health < 0 && src.health > -95.0))
+	if (src.health < 0 && stat != DEAD)
 		src.attack_log += "[src] has succumbed to death with [health] points of health!"
-		src.apply_damage(maxHealth + 5 + src.health, OXY) // This will ensure people die when using the command, but don't go into overkill. 15 oxy points over the limit for safety since brute and burn regenerates
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+		src.apply_damage(maxHealth + src.health, OXY)
+		death(0)
 		to_chat(src, "<span class='info'>You have given up life and succumbed to death.</span>")
 
 

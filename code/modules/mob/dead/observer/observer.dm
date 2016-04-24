@@ -297,7 +297,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(src.health < 0 && src.health > -95.0) //crit people
+	if(src.health < 0 && stat != DEAD) //crit people
 		succumb()
 		ghostize(1)
 	else if(stat == DEAD)
@@ -923,5 +923,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	speed = text2num(copytext(speed,1,4))/100
 	movespeed = 1/speed
-	
+
 /datum/locking_category/observer

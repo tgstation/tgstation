@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: Dionae succumbing to death will actually die now.
