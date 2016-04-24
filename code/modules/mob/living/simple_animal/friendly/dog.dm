@@ -281,26 +281,9 @@
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
 		DF.apply(src)
 
-	var/special_back = 0
-	if(inventory_back)
-		special_back = 1
-		switch(inventory_back.type)
-			if(/obj/item/clothing/suit/space/hardsuit/deathsquad)
-				name = "Trooper [real_name]"
-				desc = "That's not red paint. That's real corgi blood."
-			else
-				special_back = 0
-
-	if(!special_hat && !special_back)
-		name = real_name
-		desc = initial(desc)
-		speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
-		speak_emote = list("barks", "woofs")
-		emote_hear = list("barks", "woofs", "yaps","pants")
-		emote_see = list("shakes its head", "shivers")
-		desc = "It's a corgi."
-		SetLuminosity(0)
-	return
+	if(inventory_back && inventory_back.dog_fashion)
+		var/datum/dog_fashion/DF = new inventory_head.back_fashion(src)
+		DF.apply(src)
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/Ian
@@ -435,21 +418,34 @@
 	overlays.Cut()
 	if(inventory_head)
 		var/image/head_icon
+
+		var/head_icon_state = inventory_head.icon_state
+		if(inventory_head.dog_fashion)
+			var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
+			head_icon_state = DF.icon_state
+
 		if(health <= 0)
-			head_icon = image('icons/mob/corgi_head.dmi', icon_state = inventory_head.icon_state, dir = EAST)
+			head_icon = image('icons/mob/corgi_head.dmi', icon_state = head_icon_state, dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = turn(head_icon.transform, 180)
 		else
-			head_icon = image('icons/mob/corgi_head.dmi', icon_state = inventory_head.icon_state)
+			head_icon = image('icons/mob/corgi_head.dmi', icon_state = head_icon_state)
 		overlays += head_icon
+
 	if(inventory_back)
 		var/image/back_icon
+
+		var/back_icon_state = inventory_back.icon_state
+		if(inventory_back.dog_fashion)
+			var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
+			back_icon_state = DF.icon_state
+
 		if(health <= 0)
-			back_icon = image('icons/mob/corgi_back.dmi', icon_state = inventory_back.icon_state, dir = EAST)
+			back_icon = image('icons/mob/corgi_back.dmi', icon_state = back_icon_state, dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
-			back_icon = image('icons/mob/corgi_back.dmi', icon_state = inventory_back.icon_state)
+			back_icon = image('icons/mob/corgi_back.dmi', icon_state = back_icon_state)
 		overlays += back_icon
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))

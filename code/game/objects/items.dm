@@ -121,7 +121,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 		// Needs to be in /obj/item because corgis can wear a lot of
 		// non-clothing items
-		var/datum/dog_fashion/dog_fashion
+		var/datum/dog_fashion/dog_fashion = null
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
