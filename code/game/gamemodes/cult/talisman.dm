@@ -41,13 +41,6 @@ Rite of Disorientation
 		user.drop_item()
 		qdel(src)
 
-/obj/item/weapon/paper/talisman/AltClick(mob/living/carbon/user, obj/item/)
-	..()
-	if(!iscultist(user))
-		return
-	user << "<span class='notice'>You can't fold this paper... yet.</span>"
-	return
-
 /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user)
 	if(health_cost && iscarbon(user))
 		var/mob/living/carbon/C = user
