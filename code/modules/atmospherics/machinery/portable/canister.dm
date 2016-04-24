@@ -149,14 +149,25 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		health -= 5
-		healthcheck()
+		take_damage(5, BRUTE, 0)
 
-/obj/machinery/portable_atmospherics/canister/proc/healthcheck()
+/obj/machinery/portable_atmospherics/canister/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
 	if(stat & BROKEN)
 		return
-
-	if(health <= 10)
+	health = max( health - damage, 0)
+	if(!health)
 		disconnect()
 		var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
 		var/turf/T = get_turf(src)
@@ -193,42 +204,33 @@
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/blob_act()
-	health = 0
-	healthcheck()
+	take_damage(100, BRUTE, 0)
 
 /obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/P)
-	if((P.damage_type == BRUTE || P.damage_type == BURN))
-		if(P.damage)
-			health -= round(P.damage / 2)
-			healthcheck()
-	..()
+	. = ..()
+	take_damage(P.damage / 2, P.damage_type, 0)
 
 /obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			if((stat & BROKEN) || prob(30))
 				qdel(src)
-				return
 			else
-				health = 0
+				take_damage(100, BRUTE, 0)
 		if(2)
 			if(stat & BROKEN)
 				qdel(src)
-				return
 			else
-				health -= rand(40, 100)
+				take_damage(rand(40, 110), BRUTE, 0)
 		if(3)
-			health -= rand(15, 40)
-	healthcheck()
+			take_damage(rand(15, 40), BRUTE, 0)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
-	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
-		investigate_log("was smacked with \a [W] by [key_name(user)].", "atmos")
-		health -= W.force
-		add_fingerprint(user)
-		healthcheck()
-		playsound(loc, 'sound/weapons/smash.ogg', 60, 1)
-	..()
+/obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/I, mob/user)
+	if(I.force)
+		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+	investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
+	add_fingerprint(user)
+	take_damage(I.force, I.damtype, 1)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)

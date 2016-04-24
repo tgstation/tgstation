@@ -93,7 +93,7 @@
 	if (!powered())
 		return
 	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		var/obj/item/weapon/card/id/I = user.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
@@ -112,12 +112,13 @@
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
 		updateUsrDialog()
 		return
-	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			empty_content()
-			default_deconstruction_crowbar(W)
-		return 1
-	..()
+	if(default_deconstruction_crowbar(W))
+		return
+
+	return ..()
+
+/obj/machinery/mineral/ore_redemption/deconstruction()
+	empty_content()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
 	if(O.refined_type)
@@ -407,11 +408,9 @@
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
 		return
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(I)
-		return 1
-	..()
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Two Survival Capsules", "Resonator", "Mining Drone", "Advanced Scanner")
@@ -767,8 +766,8 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
-	if(!istype(M))
+/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)
 

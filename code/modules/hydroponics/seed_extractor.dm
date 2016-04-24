@@ -6,12 +6,16 @@
 		else
 			t_max = rand(1,4)
 
+	var/seedloc = O.loc
+	if(extractor)
+		seedloc = extractor.loc
+
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		if(F.seed)
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.loc = O.loc
+				t_prod.loc = seedloc
 				t_amount++
 			qdel(O)
 			return 1
@@ -21,19 +25,12 @@
 		if(F.seed)
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.loc = O.loc
+				t_prod.loc = seedloc
 				t_amount++
 			qdel(O)
 		return 1
 
-	/*else if(istype(O, /obj/item/stack/tile/grass))
-		var/obj/item/stack/tile/grass/S = O
-		new /obj/item/seeds/grassseed(O.loc)
-		S.use(1)
-		return 1*/
-
-	else
-		return 0
+	return 0
 
 
 /obj/machinery/seed_extractor
@@ -75,9 +72,7 @@
 	if(default_unfasten_wrench(user, O))
 		return
 
-	default_deconstruction_crowbar(O)
-
-	if(isrobot(user))
+	if(default_deconstruction_crowbar(O))
 		return
 
 	if (istype(O,/obj/item/weapon/storage/bag/plants))
@@ -87,7 +82,7 @@
 			if(contents.len >= max_seeds)
 				break
 			++loaded
-			add(G)
+			add_seed(G)
 		if (loaded)
 			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
 		else
@@ -98,19 +93,18 @@
 		user << "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
 		return
 
-	if(O && O.loc)
-		O.loc = src.loc
-
-	if(seedify(O,-1))
+	else if(seedify(O,-1, src))
 		user << "<span class='notice'>You extract some seeds.</span>"
 		return
 	else if (istype(O,/obj/item/seeds))
-		add(O)
+		add_seed(O)
 		user << "<span class='notice'>You add [O] to [src.name].</span>"
 		updateUsrDialog()
 		return
-	else
+	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
+	else
+		return ..()
 
 /datum/seed_pile
 	var/name = ""
@@ -187,7 +181,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/seed_extractor/proc/add(obj/item/seeds/O)
+/obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		usr << "<span class='notice'>\The [src] is full.</span>"
 		return 0

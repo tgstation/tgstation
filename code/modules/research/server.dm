@@ -124,20 +124,10 @@
 				env.merge(removed)
 				air_update_turf()
 
-/obj/machinery/r_n_d/server/attackby(obj/item/O, mob/user, params)
-	if (disabled)
-		return
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
-		return
-	if(exchange_parts(user, O))
-		return
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			griefProtection()
-			default_deconstruction_crowbar(O)
-			return 1
+//called when the server is deconstructed.
+/obj/machinery/r_n_d/server/deconstruction()
+	griefProtection()
+	..()
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)
@@ -323,9 +313,8 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
-	..()
+	. = ..()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)
