@@ -531,10 +531,10 @@
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
-		user.visible_message("<span class='warning'>[user]'s [src] activates, saving them from the chasm!</span>")
+		user << "Your [src] activates, saving you from the chasm!</span>")
 		activate(user)
 	else
-		user.visible_message("<span class='warning'>The [src] is not attached to [user]'s belt, preventing it from saving them from the chasm. RIP.</span>")
+		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
@@ -1061,7 +1061,7 @@
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/internal/M, mob/user)
 	var/obj/item/organ/internal/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/internal/hivelord_core))
-		user << "<span class='warning'>The stabilizer only works on legion's hearts.</span>"
+		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
 	C.preserved = 1
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
