@@ -99,12 +99,13 @@
 		if(purge > 0)							purged.icon_state = "purge1"
 		else									purged.icon_state = "purge0"
 
-	switch(health)
-		if(50 to INFINITY)		healths.icon_state = "shade_health0"
-		if(41 to 49)			healths.icon_state = "shade_health1"
-		if(33 to 40)			healths.icon_state = "shade_health2"
-		if(25 to 32)			healths.icon_state = "shade_health3"
-		if(17 to 24)			healths.icon_state = "shade_health4"
-		if(9 to 16)				healths.icon_state = "shade_health5"
-		if(1 to 8)				healths.icon_state = "shade_health6"
-		else					healths.icon_state = "shade_health7"
+	if(client)
+		switch(health)
+			if(50 to INFINITY)		healths.icon_state = "shade_health0"
+			if(41 to 49)			healths.icon_state = "shade_health1"
+			if(33 to 40)			healths.icon_state = "shade_health2"
+			if(25 to 32)			healths.icon_state = "shade_health3"
+			if(17 to 24)			healths.icon_state = "shade_health4"
+			if(9 to 16)				healths.icon_state = "shade_health5"
+			if(1 to 8)				healths.icon_state = "shade_health6"
+			else					healths.icon_state = "shade_health7"
