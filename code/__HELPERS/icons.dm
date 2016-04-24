@@ -876,7 +876,7 @@ var/list/friendly_animals = list()
 
 // Pick a random animal instead of the icon, and use that instead
 /proc/getRandomAnimalImage(atom/A)
-	if(friendly_animals.len <= 0)
+	if(!friendly_animals.len)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
 			if(initial(SA.gold_core_spawnable) == 2)
