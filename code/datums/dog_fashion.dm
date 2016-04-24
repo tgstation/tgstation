@@ -8,6 +8,7 @@
 
 	// This isn't applied to the dog, but stores the icon_state of the
 	// sprite that the associated item uses
+	var/icon_file
 	var/icon_state
 
 /datum/dog_fashion/New(mob/M)
@@ -28,9 +29,16 @@
 	if(speak_emote)
 		D.speak_emote = speak_emote
 
-/datum/dog_fashion/head
+/datum/dog_fashion/proc/get_image(var/dir)
+	if(icon_file && icon_state)
+		return image(icon_file, icon_state = icon_state, dir = dir)
+	
 
-/datum/dog_fashion/body
+/datum/dog_fashion/head
+	icon_file = 'icons/mob/corgi_head.dmi'
+
+/datum/dog_fashion/back
+	icon_file = 'icons/mob/corgi_back.dmi'
 
 /datum/dog_fashion/head
 
@@ -160,6 +168,6 @@
 	speak = list("HONK!", "Honk!")
 	emote_see = list("plays tricks.", "slips.")
 
-/datum/dog_fashion/body/deathsquad
+/datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
 	desc = "That's not red paint. That's real corgi blood."

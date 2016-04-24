@@ -165,13 +165,6 @@
 
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
-						/obj/item/clothing/suit/armor/vest,
-						/obj/item/clothing/suit/space/hardsuit/deathsquad,
-						/obj/item/device/radio,
-						/obj/item/device/radio/off,
-						/obj/item/clothing/suit/cardborg,
-						/obj/item/weapon/tank/internals/oxygen,
-						/obj/item/weapon/tank/internals/air,
 						/obj/item/weapon/extinguisher,
 						/obj/item/clothing/suit/hooded/ian_costume,
 					)
@@ -202,6 +195,7 @@
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
+// > some will probably be removed
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
@@ -217,26 +211,11 @@
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
-	var/valid = 0
+	var/valid = FALSE
+	if(istype(item_to_add.dog_fashion, /datum/dog_fashion/head))
+		valid = TRUE
 
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
-	if(istype(item_to_add, /obj/item/clothing/tie/scarf))
-		valid = 1
-	else
-		switch(item_to_add.type)
-			if( /obj/item/clothing/glasses/sunglasses, /obj/item/clothing/head/that, /obj/item/clothing/head/collectable/paper,
-					/obj/item/clothing/head/hardhat, /obj/item/clothing/head/collectable/hardhat, /obj/item/clothing/head/hardhat/white,
-					/obj/item/weapon/paper, /obj/item/clothing/head/helmet, /obj/item/clothing/head/chefhat, /obj/item/clothing/head/collectable/chef,
-					/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain, /obj/item/clothing/head/kitty,
-					/obj/item/clothing/head/collectable/kitty, /obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears,
-					/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret, /obj/item/clothing/head/det_hat,
-					/obj/item/clothing/head/nursehat, /obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate,
-					/obj/item/clothing/head/ushanka, /obj/item/clothing/head/warden, /obj/item/clothing/head/collectable/police,
-					/obj/item/clothing/head/wizard/fake, /obj/item/clothing/head/wizard, /obj/item/clothing/head/collectable/wizard,
-					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/helmet/space/santahat,
-					/obj/item/clothing/head/soft, /obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/sombrero,
-					/obj/item/clothing/head/hopcap, /obj/item/clothing/mask/gas/clown_hat, /obj/item/clothing/head/wizard/red)
-				valid = 1
 
 	if(valid)
 		if(user && !user.drop_item())
@@ -418,35 +397,35 @@
 	overlays.Cut()
 	if(inventory_head)
 		var/image/head_icon
+		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
 
-		var/head_icon_state = inventory_head.icon_state
-		if(inventory_head.dog_fashion)
-			var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
-			head_icon_state = DF.icon_state
+		if(!DF.icon_state)
+			icon_state = inventory_head.icon_state
 
 		if(health <= 0)
-			head_icon = image('icons/mob/corgi_head.dmi', icon_state = head_icon_state, dir = EAST)
+			head_icon = DF.get_image(dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = turn(head_icon.transform, 180)
 		else
-			head_icon = image('icons/mob/corgi_head.dmi', icon_state = head_icon_state)
+			head_icon = DF.get_image()
+
 		overlays += head_icon
 
 	if(inventory_back)
 		var/image/back_icon
+		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
 
-		var/back_icon_state = inventory_back.icon_state
-		if(inventory_back.dog_fashion)
-			var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
-			back_icon_state = DF.icon_state
+		if(!DF.icon_state)
+			DF.icon_state = inventory_back.icon_state
 
 		if(health <= 0)
-			back_icon = image('icons/mob/corgi_back.dmi', icon_state = back_icon_state, dir = EAST)
+			back_icon = DF.get_image(dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
-			back_icon = image('icons/mob/corgi_back.dmi', icon_state = back_icon_state)
+			back_icon = DF.get_image()
 		overlays += back_icon
+
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
