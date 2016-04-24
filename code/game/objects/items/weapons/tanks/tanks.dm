@@ -111,13 +111,9 @@
 			H.unEquip(W)
 			if(prob(50))
 				step(W, pick(alldirs))
-		H.hair_style = "Bald"
-		H.update_hair()
-		H.blood_max = 5
-		gibs(H.loc, H.viruses, H.dna)
-		H.adjustBruteLoss(1000) //to make the body super-bloody
-
-	return (BRUTELOSS)
+		H.gib(no_brain = 1)
+		
+	return
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	..()
