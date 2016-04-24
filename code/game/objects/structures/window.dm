@@ -374,7 +374,7 @@
 
 //merges adjacent full-tile windows into one
 /obj/structure/window/update_icon()
-	if(!qdeleted(src)) //phil235
+	if(!qdeleted(src))
 		if(!fulltile)
 			return
 

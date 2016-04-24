@@ -262,10 +262,6 @@ Class Procs:
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-//phil235
-
-
-
 /obj/machinery/attack_alien(mob/living/carbon/alien/humanoid/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -277,7 +273,7 @@ Class Procs:
 /obj/machinery/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0) // phil235 use M.attack_text verb?
+	if(M.melee_damage_upper > 0)
 		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
 		"<span class='danger'>You smash against the [src.name].</span>")
 		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)

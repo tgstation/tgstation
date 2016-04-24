@@ -174,7 +174,7 @@
 	..()
 	if(ismob(target))
 		var/mob/M
-		if(src.loc == M) //target caught the sword //phil235 NO, shit
+		if(src.loc == M)
 			M.drop_item()
 	consume_everything(target)
 

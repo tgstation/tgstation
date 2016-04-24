@@ -23,7 +23,7 @@
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
 
-	var/auto_close //phil235 to be removed, it's preventing a runtime with map.
+	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 
 /obj/machinery/door/New()
 	..()

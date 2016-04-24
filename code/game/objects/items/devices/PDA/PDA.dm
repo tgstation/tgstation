@@ -10,7 +10,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	flags = NOBLUDGEON //phil235 test it
+	flags = NOBLUDGEON
 	w_class = 1
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"

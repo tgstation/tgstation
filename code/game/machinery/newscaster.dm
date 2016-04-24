@@ -191,7 +191,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/allow_comments = 1
 	luminosity = 0
 	anchored = 1
-	var/hitstaken = 0 //phil235 to be removed, it's used in a map var edit.
+	var/hitstaken = 0 //TO BE REMOVED, no longer used,  the var is present in a map var edit which must be removed.
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
@@ -781,8 +781,6 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
 	else
 		take_damage(5)
-
-//phil235 missing attack_alien, attack_animal, bullet_act, etc...
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)

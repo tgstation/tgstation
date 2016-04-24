@@ -348,7 +348,7 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 
-		if(isliving(O)) //phil235 need the new bitflag
+		if(isliving(O))
 			var/mob/living/L = O
 			L.IgniteMob()
 

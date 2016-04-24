@@ -154,7 +154,7 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
-		return //phil235 shitty check
+		return
 	..()
 
 //Janitor tank

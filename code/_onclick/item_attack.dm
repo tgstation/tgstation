@@ -8,7 +8,7 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user) //phil235
+	return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -20,12 +20,11 @@
 			if(do_mob(user, src, 80/sharpness))
 				harvest(user)
 			return 1
-	return I.attack(src, user) //phil235 should we return 1 if successful special attack() so we don't call afterattack?
-	//see the attack() procs if it'd be useful.
+	return I.attack(src, user)
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
-	if(flags & (NOBLUDGEON|ABSTRACT)) //phil235 check that no abstract item uses attack or attack_obj
+	if(flags & (NOBLUDGEON|ABSTRACT))
 		return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
@@ -43,7 +42,7 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(flags & (NOBLUDGEON|ABSTRACT)) //phil235
+	if(flags & (NOBLUDGEON|ABSTRACT))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
@@ -67,6 +66,8 @@
 				if(prob(33))
 					var/turf/location = get_turf(src)
 					location.add_blood_floor(src)
+
+
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

@@ -61,8 +61,9 @@ RSF
 		return
 	// Change mode
 
-/obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity) //phil235 shitty proc, rewrite.
-	if(!proximity) return
+/obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
 	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
 		return
 

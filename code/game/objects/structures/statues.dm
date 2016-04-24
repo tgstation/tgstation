@@ -88,8 +88,6 @@
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
 						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
 
-//attack alien animal phil235
-
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
@@ -208,7 +206,7 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(istype(Proj,/obj/item/projectile/beam)) //phil235 test this
+	if(istype(Proj,/obj/item/projectile/beam))
 		PlasmaBurn(2500)
 		burn = TRUE
 	else if(istype(Proj,/obj/item/projectile/ion))
