@@ -583,8 +583,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes")
+	var/confirm = alert(src, "Drop a brain?", "Confirm", "Yes", "No","Cancel")
+	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
 	if(!M)
@@ -596,8 +596,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(istype(M, /mob/dead/observer))
 		gibs(M.loc, M.viruses)
 		return
-
-	M.gib()
+	if(confirm == "Yes")
+		M.gib()
+	else
+		M.gib(no_brain = 1)
 	feedback_add_details("admin_verb","GIB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_gib_self()
@@ -609,7 +611,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
 			return
 		else
-			mob.gib()
+			mob.gib(no_brain = 1)
 
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")

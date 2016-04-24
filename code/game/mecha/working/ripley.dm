@@ -61,6 +61,7 @@
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
+	burn_state = LAVA_PROOF
 	lights_power = 7
 	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
 	max_equip = 5 // More armor, less tools
