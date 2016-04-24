@@ -87,10 +87,6 @@
 /obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
 	user << "[get_ammo(0,0)] of those are live rounds."
-	if(unique_reskin && !reskinned)
-		user << "<span class='italicnotice'>Alt-click it to reskin it.</span>"
-	if(unique_rename)
-		user << "<span class='italicnotice'>Use a pen on it to rename it.</span>"
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	name = "\improper .38 Mars Special"
