@@ -872,18 +872,18 @@ The _flatIcons list is a cache for generated icon files.
 	del(atom_icon)
 	return text_image
 
-var/list/friendly_animals = list()
+var/global/list/friendly_animal_types = list()
 
 // Pick a random animal instead of the icon, and use that instead
 /proc/getRandomAnimalImage(atom/A)
-	if(!friendly_animals.len)
+	if(!friendly_animal_types.len)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
 			if(initial(SA.gold_core_spawnable) == 2)
-				friendly_animals += SA
+				friendly_animal_types += SA
 
 
-	var/mob/living/simple_animal/SA = pick(friendly_animals)
+	var/mob/living/simple_animal/SA = pick(friendly_animal_types)
 
 	var/icon = initial(SA.icon)
 	var/icon_state = initial(SA.icon_state)
