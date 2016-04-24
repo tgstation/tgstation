@@ -19,7 +19,7 @@
 	if(!can_die)
 		return
 	else
-		feedback_set_details("megafauna_kills","[src.typepath]")
+		feedback_set_details("megafauna_kills","[initial(name)]")
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/gib()
