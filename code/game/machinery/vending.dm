@@ -252,9 +252,7 @@ var/global/num_vending_terminals = 1
 			if(prob(25)) malfunction()
 
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
-	var/obj/item/temp
-
-	for (var/typepath in productlist)
+	for(var/obj/item/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
 
@@ -278,10 +276,8 @@ var/global/num_vending_terminals = 1
 			R.category = CAT_NORMAL
 			product_records.Add(R)
 
-		temp = new typepath(null)
-
-		R.product_name = temp.name
-		R.subcategory = temp.vending_cat
+		R.product_name = initial(typepath.name)
+		R.subcategory = initial(typepath.vending_cat)
 
 /obj/machinery/vending/proc/get_item_by_type(var/this_type)
 	var/list/datum_products = list()
