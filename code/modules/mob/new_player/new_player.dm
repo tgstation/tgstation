@@ -100,13 +100,15 @@
 	if(!client)	return 0
 
 	if(href_list["show_preferences"])
-		if(!speciesinit)
+		if(!client.saveloaded)
+			to_chat(usr, "<span class='warning'>Your character preferences have not yet loaded.</span>")
 			return
 		client.prefs.ShowChoices(src)
 		return 1
 
 	if(href_list["ready"])
-		if(!speciesinit)
+		if(!client.saveloaded)
+			to_chat(usr, "<span class='warning'>Your character preferences have not yet loaded.</span>")
 			return
 		switch(text2num(href_list["ready"]))
 			if(1)
@@ -123,7 +125,8 @@
 		new_player_panel_proc()
 
 	if(href_list["observe"])
-		if(!speciesinit)
+		if(!client.saveloaded)
+			to_chat(usr, "<span class='warning'>Your character preferences have not yet loaded.</span>")
 			return
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 			if(!client)	return 1

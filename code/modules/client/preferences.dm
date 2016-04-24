@@ -188,11 +188,19 @@ var/const/MAX_SAVE_SLOTS = 8
 			if(!IsGuestKey(C.key))
 				var/load_pref = load_preferences_sqlite(C.ckey)
 				if(load_pref)
+					while(sqlinuse)
+						sleep(1)
+					sqlinuse = 1
+					spawn(1)//1s
+						sqlinuse = 0
 					if(load_save_sqlite(C.ckey, C, default_slot))
+						C.saveloaded = 1
 						return
+
 			randomize_appearance_for()
 			real_name = random_name(gender)
 			save_character_sqlite(src, C.ckey, default_slot)
+			C.saveloaded = 1
 
 /datum/preferences/proc/setup_character_options(var/dat, var/user)
 

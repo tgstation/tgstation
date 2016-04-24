@@ -17,6 +17,7 @@
 		//OTHER//
 		/////////
 	var/datum/preferences/prefs = null
+	var/saveloaded = 0
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null

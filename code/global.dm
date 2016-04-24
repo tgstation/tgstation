@@ -259,6 +259,7 @@ var/sqlport = "3306"
 var/sqldb = "tgstation"
 var/sqllogin = "root"
 var/sqlpass = ""
+var/sqlinuse = 0
 
 	// Feedback gathering sql connection
 
