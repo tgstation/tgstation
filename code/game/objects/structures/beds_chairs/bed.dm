@@ -50,6 +50,8 @@
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		deconstruct()
+	else
+		return ..()
 
 /*
  * Roller beds

@@ -49,6 +49,11 @@
 		coinvalues["[cointype]"] = C.value
 		qdel(C)
 
+/obj/machinery/computer/slot_machine/Destroy()
+	if(balance)
+		give_coins(balance)
+	return ..()
+
 /obj/machinery/computer/slot_machine/process()
 	. = ..() //Sanity checks.
 	if(!.)
@@ -91,11 +96,8 @@
 			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
 			balance += C.value
 			qdel(C)
-
-		return
-
-	else if(!balance) //to prevent coins from magically disappearing
-		..()
+	else
+		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
 	if(!emagged)
