@@ -14,6 +14,7 @@ Mineral Sheets
 		- Adamantine
 		- Mythril
 		- Enriched Uranium
+		- Bones
 */
 
 /obj/item/stack/sheet/mineral
@@ -372,3 +373,6 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 /obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
 	recipes = abductor_recipes
 	..()
+
+
+

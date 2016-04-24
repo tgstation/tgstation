@@ -563,6 +563,12 @@
 /turf/open/chasm/Entered(atom/movable/AM)
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
 		return
+	// Flies right over the chasm
+	if(istype(AM, /mob/living/simple_animal))
+		// apparently only simple_animals can fly??
+		var/mob/living/simple_animal/SA = AM
+		if(SA.flying)
+			return
 	drop(AM)
 
 
@@ -621,6 +627,9 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/uranium/volcanic = 35, /turf/closed/mineral/diamond/volcanic = 30, /turf/closed/mineral/gold/volcanic = 45,
+		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20)
 
 /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

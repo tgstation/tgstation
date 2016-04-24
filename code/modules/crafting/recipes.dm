@@ -329,25 +329,40 @@
 	category = CAT_MISC
 
 /datum/table_recipe/chemical_payload
-	name = "Chemical Bomb Core (C4)"
+	name = "chemical payload (C4)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin/super = 1,
 		/obj/item/weapon/c4 = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
-	parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
+	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
 	time = 30
 	category = CAT_WEAPON
 
 /datum/table_recipe/chemical_payload2
-	name = "Chemical Bomb Core (gibtonite)"
+	name = "chemical payload (gibtonite)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin/super = 1,
+		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/twohanded/required/gibtonite = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
-	parts = list(/obj/item/weapon/grenade/chem_grenade = 2)
+	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
 	time = 50
 	category = CAT_WEAPON
+
+/datum/table_recipe/bonearmor
+	name = "Bone Armor"
+	result = /obj/item/clothing/suit/armor/bone
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 6)
+	category = CAT_MISC
+
+/datum/table_recipe/bonetalisman
+	name = "Bone Talisman"
+	result = /obj/item/clothing/tie/talisman
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 2,
+				 /obj/item/stack/sheet/sinew = 1)
+	category = CAT_MISC

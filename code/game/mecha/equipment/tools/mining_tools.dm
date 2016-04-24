@@ -86,8 +86,11 @@
 		var/obj/item/organ/limb/affecting = H.get_organ("chest")
 		affecting.take_damage(drill_damage)
 		H.update_damage_overlays(0)
+	else if(target.stat == DEAD && target.butcher_results)
+		target.harvest(chassis) // Butcher the mob with our drill.
 	else
 		target.take_organ_damage(drill_damage)
+
 	if(target)
 		target.Paralyse(10)
 		target.updatehealth()

@@ -127,6 +127,13 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 
+/obj/item/stack/sheet/sinew
+	name = "watcher sinew"
+	icon = 'icons/obj/mining.dmi'
+	desc = "Long stringy filaments which presumably came from a watcher's wings."
+	singular_name = "watcher sinew"
+	icon_state = "sinew"
+	origin_tech = "bio=4"
 
 
 //Step one - dehairing.

@@ -378,7 +378,7 @@
 
 /obj/item/weapon/storage/box/firingpins/New()
 	..()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
 
 /obj/item/weapon/storage/box/handcuffs
