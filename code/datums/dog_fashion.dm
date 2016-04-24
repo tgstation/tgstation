@@ -32,7 +32,7 @@
 /datum/dog_fashion/proc/get_image(var/dir)
 	if(icon_file && icon_state)
 		return image(icon_file, icon_state = icon_state, dir = dir)
-	
+
 
 /datum/dog_fashion/head
 	icon_file = 'icons/mob/corgi_head.dmi'
