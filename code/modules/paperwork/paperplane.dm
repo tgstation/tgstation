@@ -9,8 +9,6 @@
 	w_class = 1
 	layer = 3
 	pressure_resistance = 0
-	slot_flags = SLOT_HEAD
-	body_parts_covered = HEAD
 	burn_state = FLAMMABLE
 	burntime = 5
 
