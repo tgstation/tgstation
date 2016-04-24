@@ -10,15 +10,6 @@
 
 	var/can_die = FALSE //Used to prevent instagib/instakill attacks like the wand of death
 
-
-	//Abilities
-	var/next_ability = 0 //the world.time when we can use our next specialBlob
-
-	var/anger = 0
-	var/annoyed = 250
-	var/angry = 500
-	var/pissed = 750
-
 /mob/living/simple_animal/hostile/megafauna/Life()
 	if(health <= 0)
 		can_die = TRUE
@@ -42,16 +33,3 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/adjustBruteLoss(damage)
-	..()
-	anger += damage
-
-/mob/living/simple_animal/hostile/megafauna/proc/anger_modifier()
-	. = 0
-	if(anger)
-		if(annoyed)
-			. = 10
-		if(angry)
-			. = 20
-		if(pissed)
-			. = 30
