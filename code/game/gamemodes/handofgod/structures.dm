@@ -52,15 +52,8 @@
 	return ..()
 
 
-/obj/structure/divine/proc/healthcheck()
-	if(!health)
-		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
-		qdel(src)
-
 
 /obj/structure/divine/attackby(obj/item/I, mob/user)
-	if(!I || (I.flags & ABSTRACT))
-		return 0
 
 	//Structure conversion/capture
 	if(istype(I, /obj/item/weapon/godstaff))
@@ -71,35 +64,52 @@
 		if(G.god && deity != G.god)
 			assign_deity(G.god, alert_old_deity = TRUE)
 			visible_message("<span class='boldnotice'>\The [src] has been captured by [user]!</span>")
-		return
+	else
+		return ..()
 
+/obj/structure/divine/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype, 1)
+
+/obj/structure/divine/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
+	if(!health)
+		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
+		qdel(src)
+
+
+/obj/structure/divine/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
+
+
+/obj/structure/divine/attack_alien(mob/living/carbon/alien/humanoid/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(get_turf(src), I.hitsound, 50, 1)
-	visible_message("<span class='danger'>\The [src] has been attacked with \the [I][(user ? " by [user]" : ".")]!</span>")
-	health = max(0, health-I.force)
-	healthcheck()
+	add_hiddenprint(user)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	take_damage(20, BRUTE, 0)
 
-
-/obj/structure/divine/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return 0
-
-	if(Proj.damage_type == BRUTE || Proj.damage_type == BURN)
-		health = max(0, health-Proj.damage)
-		healthcheck()
-
-
-/obj/structure/divine/attack_animal(mob/living/simple_animal/M)
-	if(!M)
-		return 0
-
-	visible_message("<span class='danger'>\The [src] has been attacked by \the [M]!</span>")
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	if(!damage)
-		return
-	health = max(0, health-damage)
-	healthcheck()
+/obj/machinery/attack_animal(mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper > 0)
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
+		"<span class='danger'>You smash against the [src.name].</span>")
+		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
 /obj/structure/divine/proc/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
@@ -199,7 +209,8 @@
 			user << "<span class='notice'>\The [src] does not require any more greater gems!"
 		return
 
-	..()
+	else
+		return ..()
 
 
 /obj/structure/divine/construction_holder/proc/check_completion()
@@ -239,11 +250,22 @@
 /obj/structure/divine/nexus/ex_act()
 	return
 
-
-/obj/structure/divine/nexus/healthcheck()
+/obj/structure/divine/nexus/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
 	if(deity)
 		deity.update_health_hud()
-
 	if(!health)
 		if(!qdeleted(deity) && deity.nexus_required)
 			deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
@@ -257,7 +279,6 @@
 
 
 /obj/structure/divine/nexus/process()
-	healthcheck()
 	if(deity)
 		deity.update_followers()
 		deity.add_faith(faith_regen_rate + (powerpylons.len / 5) + (deity.alive_followers / 3))

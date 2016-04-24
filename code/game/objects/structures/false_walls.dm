@@ -79,31 +79,32 @@
 		user << "<span class='warning'>You must wait until the door has stopped moving!</span>"
 		return
 
-	if(density)
-		var/turf/T = get_turf(src)
-		if(T.density)
-			user << "<span class='warning'>[src] is blocked!</span>"
-			return
-		if(istype(W, /obj/item/weapon/screwdriver))
-			if (!istype(T, /turf/open/floor))
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(density)
+			var/turf/T = get_turf(src)
+			if(T.density)
+				user << "<span class='warning'>[src] is blocked!</span>"
+				return
+			if(!istype(T, /turf/open/floor))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
 			ChangeToWall()
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
-				dismantle(user)
-	else
-		user << "<span class='warning'>You can't reach, close it first!</span>"
+		else
+			user << "<span class='warning'>You can't reach, close it first!</span>"
 
-	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
+			dismantle(user)
+	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		dismantle(user)
-
-	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		D.playDigSound()
 		dismantle(user)
+	else
+		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
@@ -160,7 +161,7 @@
 
 /obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
-	..()
+	return ..()
 
 /obj/structure/falsewall/uranium/attack_hand(mob/user)
 	radiate()
@@ -222,8 +223,8 @@
 		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
 		burnbabyburn()
-		return
-	..()
+	else
+		return ..()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
