@@ -282,7 +282,7 @@
 		DF.apply(src)
 
 	if(inventory_back && inventory_back.dog_fashion)
-		var/datum/dog_fashion/DF = new inventory_head.back_fashion(src)
+		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 		DF.apply(src)
 
 //IAN! SQUEEEEEEEEE~
