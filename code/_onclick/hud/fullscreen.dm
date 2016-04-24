@@ -1,8 +1,3 @@
-#define FULLSCREEN_LAYER 18
-#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
-#define BLIND_LAYER DAMAGE_LAYER + 0.1
-#define CRIT_LAYER BLIND_LAYER + 0.1
-
 /mob
 	var/list/screens = list()
 
@@ -63,7 +58,7 @@
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
-	layer = FULLSCREEN_LAYER
+	plane = PLANE_FULLSCREEN
 	mouse_opacity = 0
 	var/severity = 0
 
@@ -74,19 +69,19 @@
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = LAYER_DAMAGE
 
 /obj/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = LAYER_DAMAGE
 
 /obj/screen/fullscreen/crit
 	icon_state = "passage"
-	layer = CRIT_LAYER
+	layer = LAYER_CRIT
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
-	layer = BLIND_LAYER
+	layer = LAYER_BLIND
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
@@ -110,8 +105,3 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
-
-#undef FULLSCREEN_LAYER
-#undef BLIND_LAYER
-#undef DAMAGE_LAYER
-#undef CRIT_LAYER

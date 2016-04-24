@@ -120,7 +120,6 @@ var/global/list/rad_collectors = list()
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
-	Z.layer = initial(Z.layer)
 	src.P = null
 	if(active)
 		toggle_power()

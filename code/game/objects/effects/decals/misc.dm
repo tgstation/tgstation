@@ -2,7 +2,7 @@
 	name = "pointer"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "arrow"
-	layer = 16
+	plane = PLANE_EFFECTS_UNLIT
 	duration = 25
 
 /obj/effect/overlay/temp/point/New(loc, set_invis = 0)

@@ -71,7 +71,7 @@ var/const/tk_maxrange = 15
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
 	w_class = 10
-	layer = 20
+	plane = PLANE_UI_OBJECTS
 
 	var/last_throw = 0
 	var/atom/movable/focus = null

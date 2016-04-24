@@ -29,7 +29,6 @@
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
 		W.equipped(src,slot_l_hand)
 		if(pulling == W)
 			stop_pulling()
@@ -47,7 +46,6 @@
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
-		W.layer = 20
 		W.equipped(src,slot_r_hand)
 		if(pulling == W)
 			stop_pulling()
@@ -92,7 +90,6 @@
 		return 1
 	else
 		W.loc = get_turf(src)
-		W.layer = initial(W.layer)
 		W.dropped(src)
 		return 0
 
@@ -154,8 +151,6 @@
 			client.screen -= I
 		I.loc = loc
 		I.dropped(src)
-		if(I)
-			I.layer = initial(I.layer)
 	return 1
 
 

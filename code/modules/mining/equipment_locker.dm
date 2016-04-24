@@ -252,7 +252,6 @@
 			new s.type(loc,s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
-		s.layer = initial(s.layer)
 
 /obj/machinery/mineral/ore_redemption/power_change()
 	..()
@@ -962,7 +961,8 @@
 				var/client/C = user.client
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state)
+					I.plane = PLANE_EFFECTS_UNLIT
 					C.images += I
 					spawn(30)
 						if(C)
@@ -980,7 +980,7 @@
 			C.icon_state = M.scan_state
 
 /obj/effect/overlay/temp/mining_overlay
-	layer = 20
+	plane = PLANE_EFFECTS_UNLIT
 	icon = 'icons/turf/smoothrocks.dmi'
 	anchored = 1
 	mouse_opacity = 0
