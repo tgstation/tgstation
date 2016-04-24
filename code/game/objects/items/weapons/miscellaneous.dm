@@ -11,14 +11,6 @@
 	w_class = 2
 	attack_verb = list("warned", "cautioned", "smashed")
 
-/obj/item/weapon/skub
-	desc = "A skub"
-	name = "skub"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "skub"
-	w_class = 4
-	attack_verb = list("skubbed")
-
 /obj/item/weapon/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."

@@ -1,11 +1,6 @@
 /turf/open
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-
 	var/wet = 0
 	var/image/wet_overlay = null
 

@@ -286,6 +286,7 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	if(usr.stat == DEAD)
+		src << "<span class='userdanger'>Alert: You are dead.</span>"
 		return //won't work if dead
 	robot_alerts()
 
@@ -623,6 +624,13 @@
 			if((world.time - 100) < emag_cooldown)
 				return
 
+			if(syndicate)
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] but they were a syndicate cyborg.")
+				emag_cooldown = world.time
+				return
+
 			var/ai_is_antag = 0
 			if(connected_ai && connected_ai.mind)
 				if(connected_ai.mind.special_role)
@@ -636,7 +644,7 @@
 				return
 
 			if(wiresexposed)
-				user << "<span class='warning'>You must close the cover first!</span>"
+				user << "<span class='warning'>You must unexpose the wires first!</span>"
 				return
 			else
 				emag_cooldown = world.time
@@ -972,6 +980,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if(src.connected_ai)
+		connected_ai.connected_robots -= src
 		src.connected_ai = null
 	lawupdate = 0
 	lockcharge = 0

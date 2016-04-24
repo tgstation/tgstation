@@ -94,8 +94,7 @@
 	can_hold = list(
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/melee/classic_baton,
-		/obj/item/weapon/grenade/flashbang,
-		/obj/item/weapon/grenade/chem_grenade/teargas,
+		/obj/item/weapon/grenade,
 		/obj/item/weapon/reagent_containers/spray/pepper,
 		/obj/item/weapon/restraints/handcuffs,
 		/obj/item/device/assembly/flash/handheld,
@@ -152,6 +151,13 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "military"
+	max_w_class = 3
+
+/obj/item/weapon/storage/belt/military/army
+	name = "army belt"
+	desc = "A belt used by military forces."
+	icon_state = "grenadebeltold"
+	item_state = "security"
 
 /obj/item/weapon/storage/belt/military/assault
 	name = "assault belt"
@@ -163,9 +169,9 @@
 /obj/item/weapon/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
-	icon_state = "grenadebelt"
+	icon_state = "grenadebeltnew"
 	item_state = "security"
-	max_w_class = 0
+	max_w_class = 4
 	storage_slots = 30
 	can_hold = list(
 		/obj/item/weapon/grenade,
@@ -173,6 +179,7 @@
 		/obj/item/weapon/lighter,
 		/obj/item/device/multitool,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
+		/obj/item/weapon/c4,
 		)
 /obj/item/weapon/storage/belt/grenade/full/New()
 	..()
@@ -236,7 +243,7 @@
 	storage_slots = 6
 	max_w_class = 4 // Set to this so the  light replacer can fit.
 	can_hold = list(
-		/obj/item/weapon/grenade/chem_grenade/cleaner,
+		/obj/item/weapon/grenade/chem_grenade,
 		/obj/item/device/lightreplacer,
 		/obj/item/device/flashlight,
 		/obj/item/weapon/reagent_containers/spray,
@@ -251,7 +258,7 @@
 	desc = "A bandolier for holding shotgun ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
-	storage_slots = 8
+	storage_slots = 18
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)

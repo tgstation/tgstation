@@ -327,6 +327,24 @@
 	item_state = "duffle-eng"
 	burn_state = FIRE_PROOF
 
+/obj/item/weapon/storage/backpack/dufflebag/drone
+	name = "drone dufflebag"
+	desc = "A large dufflebag for holding tools and hats."
+	icon_state = "duffle-drone"
+	item_state = "duffle-drone"
+	burn_state = FIRE_PROOF
+
+/obj/item/weapon/storage/backpack/dufflebag/drone/New()
+	..()
+
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil/random(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+
 /obj/item/weapon/storage/backpack/dufflebag/clown
 	name = "clown's dufflebag"
 	desc = "A large dufflebag for holding lots of funny gags!"
