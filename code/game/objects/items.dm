@@ -119,6 +119,15 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			slot_drone_storage\
 		)
 
+	// Not all corgi compatible clothing alters their vars
+	var/dog_valid = 0
+	// Used for changing name/desc of corgis when clothing is equipped
+	var/dog_name
+	var/dog_desc
+	var/dog_emote_see
+	var/dog_emote_hear
+	var/dog_speak
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0

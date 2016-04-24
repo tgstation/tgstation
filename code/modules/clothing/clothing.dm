@@ -19,15 +19,6 @@
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
-	// Not all corgi compatible clothing alters their vars
-	var/dog_valid = FALSE
-	// Used for changing name/desc of corgis when clothing is equipped
-	var/dog_name
-	var/dog_desc
-	var/dog_emote_see
-	var/dog_emote_hear
-	var/dog_speak
-
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
