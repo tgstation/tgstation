@@ -5876,6 +5876,62 @@
 /obj/effect/landmark/shuttle_import,
 /turf/open/space,
 /area/space)
+"rU" = (
+/obj/machinery/status_display{
+	density = 0;
+	pixel_y = -30;
+	supply_display = 1
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"rT" = (
+/obj/structure/table/wood,
+/obj/item/weapon/book/manual/random,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"rS" = (
+/obj/structure/table/wood,
+/obj/item/weapon/paper{
+	info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologise for the inconvinience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>Centcom Operations Demolitions Examination Retribution Bugfixing Underlining Services"
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"rR" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"rQ" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 8;
+	id = "backup_away";
+	name = "Backup Shuttle Dock";
+	width = 8
+	},
+/obj/docking_port/mobile/emergency/backup,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"rP" = (
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle/escape)
+"rO" = (
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"rN" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"rM" = (
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -64765,16 +64821,16 @@ df
 dg
 cT
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -65022,16 +65078,16 @@ cT
 cT
 cT
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rM
+rQ
+rM
+rM
+rM
+rM
+rM
+ad
 ab
 ab
 ab
@@ -65279,16 +65335,16 @@ cU
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rN
+rO
+rO
+rO
+rO
+rU
+rM
+ad
 ab
 ab
 ab
@@ -65536,16 +65592,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rO
+rO
+rO
+rO
+rO
+rO
+rM
+ad
 ab
 ab
 ab
@@ -65793,16 +65849,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rP
+rP
+rP
+rP
+rO
+rP
+rM
+ad
 ab
 ab
 ab
@@ -66050,16 +66106,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rP
+rP
+rP
+rP
+rO
+rP
+rM
+ad
 ab
 ab
 ab
@@ -66307,16 +66363,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rO
+rR
+rO
+rO
+rO
+rO
+rM
+ad
 ab
 ab
 ab
@@ -66564,16 +66620,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rN
+rS
+rT
+rO
+rO
+rU
+rM
+ad
 ab
 ab
 ab
@@ -66821,16 +66877,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+rM
+rM
+rM
+rM
+rM
+rM
+rM
+rM
+ad
 ab
 ab
 ab
@@ -67078,16 +67134,16 @@ cV
 ad
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab

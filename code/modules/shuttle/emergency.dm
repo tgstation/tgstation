@@ -332,6 +332,24 @@
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return
 
+/obj/docking_port/mobile/emergency/backup
+	name = "backup shuttle"
+	id = "backup"
+	dwidth = 3
+	width = 8
+	height = 8
+	dir = 4
+
+	roundstart_move = "backup_away"
+
+/obj/docking_port/mobile/emergency/backup/New()
+	// We want to be a valid emergency shuttle
+	// but not be the main one, keep whatever's set
+	// valid.
+	var/current_emergency = SSshuttle.emergency
+	..()
+	SSshuttle.emergency = current_emergency
+	SSshuttle.backup_shuttle = src
 
 
 #undef UNLAUNCHED

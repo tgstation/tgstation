@@ -11,6 +11,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
+	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
 	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
@@ -39,6 +40,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		return ..()
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+	if(!backup_shuttle)
+		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 
@@ -76,8 +79,11 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		throw EXCEPTION("requestEvac(): There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
-		return
+		WARNING("requestEvac(): There is no emergency shuttle, but the shuttle was called. Using the backup shuttle instead.")
+		if(!backup_shuttle)
+			throw EXCEPTION("requestEvac(): There is no emergency shuttle, or backup shuttle! The game will be unresolvable. This is likely due to a mapping error")
+			return
+		emergency = backup_shuttle
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
 		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
