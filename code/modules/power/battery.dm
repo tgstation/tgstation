@@ -138,7 +138,7 @@ var/global/list/battery_online =	list(
 		update_icon()
 
 /obj/machinery/power/battery/proc/chargedisplay()
-	return round(5.5*charge/(capacity ? capacity : 5e6))
+	return Clamp(round(5.5*charge/(capacity ? capacity : 5e6)), 0, battery_charge.len)
 
 /*
  * Called after all power processes are finished
