@@ -2287,20 +2287,17 @@
 	else if(href_list["secretsfun"])
 		if(!check_rights(R_FUN))	return
 
-		var/ok = 0
 		switch(href_list["secretsfun"])
 			if("sec_clothes")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SC")
 				for(var/obj/item/clothing/under/O in world)
 					del(O)
-				ok = 1
 			if("sec_all_clothes")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SAC")
 				for(var/obj/item/clothing/O in world)
 					del(O)
-				ok = 1
 			if("sec_classic1")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SC1")
@@ -2314,22 +2311,19 @@
 						if (M.client)
 							M.client.perspective = MOB_PERSPECTIVE
 							M.client.eye = M
-					del(O)
-				ok = 1*/
+					del(O)*/
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
 				for(var/mob/living/carbon/human/H in mob_list)
 					spawn(0)
 						H.monkeyize()
-				ok = 1
 			if("corgi")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
 				for(var/mob/living/carbon/human/H in mob_list)
 					spawn(0)
 						H.corgize()
-				ok = 1
 			if("striketeam")
 				if(usr.client.strike_team())
 					feedback_inc("admin_secrets_fun_used",1)
@@ -2576,7 +2570,6 @@
 					if(M.stat != 2)
 						M.show_message(text("<span class='notice'>The chilling wind suddenly stops...</span>"), 1)
 /*				if("shockwave")
-				ok = 1
 				to_chat(world, "<span class='danger'><big>ALERT: STATION STRESS CRITICAL</big></span>")
 				sleep(60)
 				to_chat(world, "<span class='danger'><big>ALERT: STATION STRESS CRITICAL. TOLERABLE LEVELS EXCEEDED!</big></span>")
@@ -3149,16 +3142,35 @@
 				feedback_add_details("admin_secrets_fun_used","SILM")
 				message_admins("[key_name_admin(usr)] has spawned meteors without a command alert.", 1)
 				new /datum/event/meteor_shower/meteor_quiet
+
+			if("maint_access_brig")
+				for(var/obj/machinery/door/airlock/maintenance/M in all_doors)
+					if (access_maint_tunnels in M.req_access)
+						M.req_access = list(access_brig)
+				message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
+			if("maint_access_engiebrig")
+				for(var/obj/machinery/door/airlock/maintenance/M in all_doors)
+					if (access_maint_tunnels in M.req_access)
+						M.req_access = list()
+						M.req_one_access = list(access_brig,access_engine)
+				message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
+			if("infinite_sec")
+				var/datum/job/J = job_master.GetJob("Security Officer")
+				if(!J) return
+				J.total_positions = -1
+				J.spawn_positions = -1
+				message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+			if("virus_custom")
+				if(virus2_make_custom(usr.client))
+					feedback_add_details("admin_secrets_fun_used", "V_C")
+					message_admins("[key_name_admin(usr)] has trigger a custom virus outbreak.", 1)
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
-			if(ok)
-				to_chat(world, text("<B>A secret has been activated by [usr.key]!</B>"))
 
 	else if(href_list["secretsadmin"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/ok = 0
 		switch(href_list["secretsadmin"])
 			if("clear_bombs")
 				var/num=0
@@ -3238,16 +3250,6 @@
 							dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 				dat += "</table>"
 				usr << browse(dat, "window=fingerprints;size=440x410")
-			else
-		if (usr)
-			log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
-			if (ok)
-				to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
-
-	else if(href_list["secretscoder"])
-		if(!check_rights(R_DEBUG))	return
-
-		switch(href_list["secretscoder"])
 			if("spawn_objects")
 				var/dat = "<B>Admin Log<HR></B>"
 				for(var/l in admin_log)
@@ -3255,27 +3257,8 @@
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
-			if("maint_access_brig")
-				for(var/obj/machinery/door/airlock/maintenance/M in all_doors)
-					if (access_maint_tunnels in M.req_access)
-						M.req_access = list(access_brig)
-				message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
-			if("maint_access_engiebrig")
-				for(var/obj/machinery/door/airlock/maintenance/M in all_doors)
-					if (access_maint_tunnels in M.req_access)
-						M.req_access = list()
-						M.req_one_access = list(access_brig,access_engine)
-				message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
-			if("infinite_sec")
-				var/datum/job/J = job_master.GetJob("Security Officer")
-				if(!J) return
-				J.total_positions = -1
-				J.spawn_positions = -1
-				message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
-			if("virus_custom")
-				if(virus2_make_custom(usr.client))
-					feedback_add_details("admin_secrets_fun_used", "V_C")
-					message_admins("[key_name_admin(usr)] has trigger a custom virus outbreak.", 1)
+		if (usr)
+			log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 
 	else if(href_list["ac_view_wanted"])            //Admin newscaster Topic() stuff be here
 		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.

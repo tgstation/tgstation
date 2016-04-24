@@ -6,6 +6,9 @@ var/round_end_info = ""
 //List of ckeys that have de-adminned themselves during this round
 var/global/list/deadmins = list()
 
+//List of vars that require DEBUG on top of VAREDIT to be able to edit
+var/list/lockedvars = list("vars", "client")
+
 // List of types and how many instances of each type there are.
 var/global/list/type_instances[0]
 

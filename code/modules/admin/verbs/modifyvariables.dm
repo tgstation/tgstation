@@ -137,7 +137,6 @@ var/list/forbidden_varedit_object_types = list(
 		else
 			L = list()
 
-	var/list/locked = list("vars", "client")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
@@ -153,7 +152,7 @@ var/list/forbidden_varedit_object_types = list(
 
 	var/dir
 
-	if(variable in locked)
+	if(variable in lockedvars)
 		if(!check_rights(R_DEBUG))	return
 
 	if(isnull(variable))
@@ -323,8 +322,6 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")
-
 	if(holder && !(holder.rights & (R_PERMISSIONS)))
 		for(var/p in forbidden_varedit_object_types)
 			if( istype(O,p) )
@@ -340,7 +337,7 @@ var/list/forbidden_varedit_object_types = list(
 			to_chat(src, "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])")
 			return
 
-		if(param_var_name == "holder" || (param_var_name in locked))
+		if(param_var_name == "holder" || param_var_name in lockedvars)
 			if(!check_rights(R_DEBUG))	return
 
 		variable = param_var_name
@@ -398,7 +395,7 @@ var/list/forbidden_varedit_object_types = list(
 		if(!variable)	return
 		var_value = O.vars[variable]
 
-		if(variable == "holder" || (variable in locked))
+		if(param_var_name == "holder" || variable in lockedvars)
 			if(!check_rights(R_DEBUG))	return
 
 	if(!autodetect_class)
