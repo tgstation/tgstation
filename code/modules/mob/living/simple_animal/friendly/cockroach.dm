@@ -32,12 +32,13 @@
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_TINY)
-				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
-					death()
-				else
-					visible_message("<span class='notice'>\The [name] avoids getting crushed.</span>")
+			if(!isdrone(A))
+				if(A.mob_size > MOB_SIZE_TINY)
+					if(prob(squish_chance))
+						A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
+						death()
+					else
+						visible_message("<span class='notice'>\The [name] avoids getting crushed.</span>")
 	else
 		if(isobj(AM))
 			if(istype(AM,/obj/structure))
