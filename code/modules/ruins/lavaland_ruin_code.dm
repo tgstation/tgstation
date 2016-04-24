@@ -21,17 +21,17 @@
 	desc = "Controls the weather."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
-	var/ongoing_weather = FALSE
+	var/datum/weather/ongoing_weather = FALSE
 	var/weather_cooldown = 0
 
 /obj/machinery/lavaland_controller/process()
 	if(ongoing_weather || weather_cooldown > world.time)
 		return
-	ongoing_weather = TRUE
 	weather_cooldown = world.time + rand(3500, 6500)
 	var/datum/weather/ash_storm/LAVA = new /datum/weather/ash_storm
+	ongoing_weather = LAVA
 	LAVA.weather_start_up()
-	ongoing_weather = FALSE
+	ongoing_weather = null
 
 /obj/machinery/lavaland_controller/Destroy()
 	return QDEL_HINT_LETMELIVE
