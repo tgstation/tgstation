@@ -188,6 +188,12 @@
 	icon = 'icons/obj/doors/doorresearch.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_research
 
+/obj/machinery/door/airlock/research/voxresearch
+	name = "Airlock"
+	icon = 'icons/obj/doors/doorresearch.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_research
+	var/const/AIRLOCK_WIRE_IDSCAN = 0
+	
 /obj/machinery/door/airlock/glass_research
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/doorresearchglass.dmi'
@@ -197,6 +203,16 @@
 	heat_proof = 1
 	penetration_dampening = 3
 
+/obj/machinery/door/airlock/glass_research/voxresearch
+	name = "Maintenance Hatch"
+	icon = 'icons/obj/doors/doorresearchglass.dmi'
+	opacity = 0
+	assembly_type = /obj/structure/door_assembly/door_assembly_research
+	glass = 1
+	heat_proof = 1
+	penetration_dampening = 3
+	var/const/AIRLOCK_WIRE_IDSCAN = 0
+ 
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorminingglass.dmi'

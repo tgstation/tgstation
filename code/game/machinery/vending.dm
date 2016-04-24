@@ -1463,6 +1463,22 @@ var/global/num_vending_terminals = 1
 
 	pack = /obj/structure/vendomatpack/security
 
+/obj/machinery/vending/security/used
+	req_access_txt = 0
+	extended_inventory = 1
+	products = list(
+		/obj/item/weapon/handcuffs = 1,
+		/obj/item/weapon/grenade/flashbang = 1,
+		/obj/item/device/flash = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 24,
+		/obj/item/weapon/storage/box/evidence = 1,
+		/obj/item/weapon/legcuffs/bolas = 2,
+		)
+	contraband = list(
+		/obj/item/clothing/glasses/sunglasses = 2,
+		/obj/item/weapon/storage/fancy/donut_box = 2,
+		)
+ 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
 	desc = "A plant nutrients vendor"

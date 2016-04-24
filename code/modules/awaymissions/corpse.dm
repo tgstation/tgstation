@@ -308,6 +308,15 @@
 	corpseidjob = "Scientist"
 	corpseidaccess = "Scientist"
 
+/obj/effect/landmark/corpse/scientist/voxresearch
+	name = "Research Geneticist"
+	corpseradio = /obj/item/device/radio/headset/headset_sci
+	corpseuniform = /obj/item/clothing/under/rank/scientist
+	corpsesuit = /obj/item/clothing/suit/storage/labcoat/science
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseshoes = /obj/item/clothing/shoes/white
+	corpseid = 0
+	
 /obj/effect/landmark/corpse/miner
 	corpseradio = /obj/item/device/radio/headset/headset_mining
 	corpseuniform = /obj/item/clothing/under/rank/miner

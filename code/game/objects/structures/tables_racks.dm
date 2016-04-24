@@ -519,6 +519,10 @@
 
 	return 1
 
+/obj/structure/table/flipped
+	icon_state = "tableflip0"
+	flipped = 1
+
 /*
  * Wooden tables
  */

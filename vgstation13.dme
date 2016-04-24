@@ -847,6 +847,7 @@
 #include "code\game\shuttles\syndicate.dm"
 #include "code\game\shuttles\taxi.dm"
 #include "code\game\shuttles\vox.dm"
+#include "code\game\shuttles\voxresearch_shuttle.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
 #include "code\game\turfs\turf_flick_animations.dm"

@@ -448,3 +448,23 @@ var/global/list/paper_folding_results = list ( \
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/weapon/paper/voxresearch/voxresearchclosure
+	name = "paper- 'Shutting Down'"
+	info = "The recent attack has left us in a more unstable position than we initially assumed.  Both major contracts have been canceled and we are mothballing the facility.  Evacuate and take the fax machine with you.  It costs more to replace it than it does you."
+
+/obj/item/weapon/paper/voxresearch/voxresearch1
+	name = "paper- 'Two new contracts'"
+	info = "The research station in this quadrant has outsourced initial research into plasma reanimation studies.  Focus on performing the experiments they've contracted us to do.  Do not ask questions."
+
+/obj/item/weapon/paper/voxresearch/voxresearch2
+	name = "paper- 'Two new contracts'"
+	info = "REDACTED has tasked us to investigate the sentience of REDACTED.  Observe the subjects and evaluate their genetic markers and anatomical structure.  And for christs sake stop using Mr. Muggles DNA on test subjects.  You are not paid to and it is not recommended.  You're facing review."
+
+/obj/item/weapon/paper/voxresearch/voxtradeden
+	name = "paper- 'Good spot'"
+	info = "We set up here.  No one will look for us here and we can sell wares to eggheads at NT."
+
+/obj/item/weapon/paper/voxresearch/voxresearchescape
+	name = "paper- 'Recent Attack'"
+	info = "We still do not know who were responsible for the recent attack and escape of several test subjects.  The initial investigation points to the Syndicate but we cannot say for sure at this time.  This has violated our contract with REDACTED and REDACTED.  We may have to close the facility. "	

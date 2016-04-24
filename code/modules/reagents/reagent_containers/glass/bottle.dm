@@ -294,7 +294,18 @@
 		var/datum/disease/F = new /datum/disease/fake_gbs(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
-
+		
+/obj/item/weapon/reagent_containers/glass/bottle/chickenpox
+	name = "Chickenpox culture bottle"
+	desc = "A small bottle. Contains activated chickenpox in a vox-blood medium."
+	icon = 'icons/obj/chemical.dmi'
+	//icon_state = "bottle3"
+	New()
+		..()
+		var/datum/disease/F = new /datum/disease2/effect/chickenpox(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", 20, data)
+		
 /*
 /obj/item/weapon/reagent_containers/glass/bottle/rhumba_beat
 	name = "Rhumba Beat culture bottle"
