@@ -92,8 +92,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		user << "<span class='notice'>Not when you're incapacitated.</span>"
 		return 0
 
-	var/loc = user.loc
-	if(!phase_allowed && istype(loc, /obj/effect/dummy))
+	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
 		user << "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>"
 		return 0
 

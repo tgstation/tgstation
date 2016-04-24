@@ -64,7 +64,7 @@
 		speed = 0
 
 /mob/living/simple_animal/slaughter/death()
-	..()
+	..(1)
 
 	death_mealspill()
 

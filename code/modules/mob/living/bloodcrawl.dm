@@ -55,24 +55,23 @@
 	// dummy object
 	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
 	src.ExtinguishMob()
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
-	if(buckled_mobs.len)
-		unbuckle_all_mobs(force=1)
-	if(pulledby)
-		pulledby.stop_pulling()
-	src.loc = holder
+
+	// Keep a reference to whatever we're pulling, because forceMove()
+	// makes us stop pulling
+	var/pullee = src.pulling
+
 	src.holder = holder
+	src.forceMove(holder)
 
 	// if we're not pulling anyone, or we can't eat anyone
-	if(!src.pulling || src.bloodcrawl != BLOODCRAWL_EAT)
+	if(!pullee || src.bloodcrawl != BLOODCRAWL_EAT)
 		return
 
 	// if the thing we're pulling isn't alive
-	if (!(istype(src.pulling, /mob/living)))
+	if (!(istype(pullee, /mob/living)))
 		return
 
-	var/mob/living/victim = src.pulling
+	var/mob/living/victim = pullee
 	var/kidnapped = FALSE
 
 	if(victim.stat == CONSCIOUS)
@@ -80,7 +79,7 @@
 	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
-		victim.loc = src
+		victim.forceMove(src)
 		victim.emote("scream")
 		src.visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
 		kidnapped = TRUE
