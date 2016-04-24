@@ -531,10 +531,10 @@
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
-		user << "Your [src] activates, saving you from the chasm!</span>")
+		user << "Your [src] activates, saving you from the chasm!</span>"
 		activate(user)
 	else
-		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
+		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
