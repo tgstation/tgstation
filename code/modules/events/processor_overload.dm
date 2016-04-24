@@ -14,7 +14,7 @@
 						"Exospheri:%£ QCbyj^j</.3-BZZZZZZT", \
 						"!!hy%;f3l7e,<$^-BZZZZZZZT")
 
-	for(var/mob/living/silicon/ai/A in player_list)
+	for(var/mob/living/silicon/ai/A in ai_list)
 	//AIs are always aware of processor overload
 		A << "<br><span class='warning'><b>[alert]</b></span><br>"
 
