@@ -322,8 +322,10 @@
 		var/mob/living/carbon/M = O
 		if(M.r_hand && prob(CLEAN_PROB))
 			M.r_hand.clean_blood()
+			M.update_inv_r_hand()
 		if(M.l_hand && prob(CLEAN_PROB))
 			M.l_hand.clean_blood()
+			M.update_inv_l_hand()
 		if(M.back && prob(CLEAN_PROB))
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
@@ -420,7 +422,7 @@
 		return
 	if(watertemp == "cool") //Adjusts towards "perfect" body temperature, 37.5°C. Actual showers tend to average at 40°C, but it's the future
 		if(C.bodytemperature > T0C + 37.5) //Cooling down
-			C.bodytemperature = min(T0C + 37.5, C.bodytemperature - 0.5)
+			C.bodytemperature = max(T0C + 37.5, C.bodytemperature - 0.5)
 			return
 		if(C.bodytemperature < T0C + 37.5) //Heating up
 			C.bodytemperature = min(T0C + 37.5, C.bodytemperature + 0.5)
