@@ -54,8 +54,8 @@
 		if(S && iscarbon(AM))
 			var/stunratio = .6
 			var/mob/living/carbon/M = AM
-			var/stun = min(seed.potency * S.rate * stunratio, 1)
-			var/weaken = min(seed.potency * S.rate * stunratio, 0.5)
+			var/stun = min(seed.potency * S.rate * stunratio, 6)
+			var/weaken = min(seed.potency * S.rate * stunratio, 6)
 			if(M.slip(stun, weaken, src))
 				for(var/datum/plant_gene/trait/T in seed.genes)
 					T.on_slip(src, M)
