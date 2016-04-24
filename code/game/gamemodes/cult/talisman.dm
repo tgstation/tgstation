@@ -43,6 +43,9 @@ Rite of Disorientation
 
 /obj/item/weapon/paper/talisman/AltClick(mob/living/carbon/user, obj/item/)
 	..()
+	if(!iscultist(user))
+		return
+	user << "<span class='notice'>You can't fold this paper... yet.</span>"
 	return
 
 /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user)
