@@ -121,6 +121,8 @@ Contains:
 	flags = STOPSPRESSUREDMAGE
 	flags_cover = HEADCOVERSEYES
 
+	dog_fashion = /datum/dog_fashion/head/santa
+
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
 	desc = "Festive!"
