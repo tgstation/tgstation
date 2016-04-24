@@ -25,8 +25,7 @@
 	pixel_y = -90
 	pixel_x = -75
 	layer = 6
-	loot = list(/obj/structure/closet/crate/necropolis)
-
+	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	aggro_vision_range = 20
 	idle_vision_range = 13
@@ -97,7 +96,7 @@
 
 /obj/item/weapon/staff_of_storms
 	name = "staff of storms"
-	desc = "An ancienct staff retrieved from the remains of Legion. The wind stirs as you move it."
+	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
