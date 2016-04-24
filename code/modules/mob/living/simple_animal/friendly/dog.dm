@@ -159,20 +159,22 @@
 					if(!item_to_add)
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
+
+					if(!usr.drop_item())
+						usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+						return
+
 					if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
 					//The objects that corgis can wear on their backs.
 					var/allowed = FALSE
-					if(istype(item_to_add.dog_fashion,/datum/dog_fashion/back))
+					if(ispath(item_to_add.dog_fashion,/datum/dog_fashion/back))
 						allowed = TRUE
 
 					if(!allowed)
 						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>"
-						if(!usr.drop_item())
-							usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
-							return
 						item_to_add.loc = loc
 						if(prob(25))
 							step_rand(item_to_add)
@@ -210,16 +212,17 @@
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
+	if(user && !user.drop_item())
+		user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+		return 0
+
 	var/valid = FALSE
-	if(istype(item_to_add.dog_fashion, /datum/dog_fashion/head))
+	if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
 		valid = TRUE
 
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
 
 	if(valid)
-		if(user && !user.drop_item())
-			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
-			return 0
 		if(health <= 0)
 			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
 		else if(user)
@@ -231,9 +234,6 @@
 		update_corgi_fluff()
 		regenerate_icons()
 	else
-		if(user && !user.drop_item())
-			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
-			return 0
 		user << "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>"
 		item_to_add.loc = loc
 		if(prob(25))
