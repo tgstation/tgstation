@@ -69,7 +69,7 @@
 	temperature = 180
 	baseturf = /turf/open/floor/plating/ice
 	slowdown = 1
-	wet = TURF_WET_ICE
+	wet = TURF_WET_PERMAFROST
 
 /turf/open/floor/plating/ice/colder
 	temperature = 140

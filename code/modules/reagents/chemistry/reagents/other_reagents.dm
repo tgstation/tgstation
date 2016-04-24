@@ -257,7 +257,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(2)
+		T.MakeSlippery(TURF_WET_LUBE)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"

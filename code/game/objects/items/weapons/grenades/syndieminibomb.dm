@@ -44,7 +44,7 @@
         for(var/turf/T in view(freeze_range,loc))
                 if(istype(T,/turf/open/floor))
                         var/turf/open/floor/F = T
-                        F.wet = TURF_WET_ICE
+                        F.MakeSlippery(TURF_WET_ICE)
                 for(var/mob/living/carbon/L in T)
                         L.adjustStaminaLoss(stamina_damage)
                         L.bodytemperature -= 230

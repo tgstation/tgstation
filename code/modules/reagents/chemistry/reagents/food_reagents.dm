@@ -119,7 +119,7 @@
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
 	id = "frostoil"
-	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
+	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
@@ -152,8 +152,11 @@
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
-		//if(istype(T))
-		//	T.atmos_spawn_air(SPAWN_COLD)
+	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
+		if(istype(T, /turf/open))
+			var/turf/open/OT = T
+			OT.MakeSlippery(TURF_WET_WATER) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
