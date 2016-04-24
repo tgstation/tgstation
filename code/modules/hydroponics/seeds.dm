@@ -58,257 +58,323 @@
 //the vegetable/fruit categories are made from a culinary standpoint. many of the "vegetables" in there are technically fruits. (tomatoes, pumpkins...)
 
 /obj/item/seeds/dionanode
+	name = "packet of diona nodes"
 	seed_type = "diona"
 	vending_cat = "sentient"
 
 /obj/item/seeds/poppyseed
+	name = "packet of poppy seeds"
 	seed_type = "poppies"
 	vending_cat = "flowers"
 
 /obj/item/seeds/chiliseed
+	name = "packet of chili seeds"
 	seed_type = "chili"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/plastiseed
+	name = "packet of plastellium seeds"
 	seed_type = "plastic"
 
 /obj/item/seeds/grapeseed
+	name = "packet of grape seeds"
 	seed_type = "grapes"
 	vending_cat = "fruits"
 
 /obj/item/seeds/greengrapeseed
+	name = "packet of green grape seeds"
 	seed_type = "greengrapes"
 	vending_cat = "fruits"
 
 /obj/item/seeds/peanutseed
+	name = "packet of peanut seeds"
 	seed_type = "peanut"
 
 /obj/item/seeds/cabbageseed
+	name = "packet of cabbage seeds"
 	seed_type = "cabbage"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/shandseed
+	name = "packet of S'randar's hand seeds"
 	seed_type = "shand"
 
 /obj/item/seeds/mtearseed
+	name = "packet of Messa's tear seeds"
 	seed_type = "mtear"
 
 /obj/item/seeds/berryseed
+	name = "packet of berry seeds"
 	seed_type = "berries"
 	vending_cat = "fruits"
 
 /obj/item/seeds/glowberryseed
+	name = "packet of glowberry seeds"
 	seed_type = "glowberries"
 	vending_cat = "fruits"
 
 /obj/item/seeds/bananaseed
+	name = "packet of banana seeds"
 	seed_type = "banana"
 	vending_cat = "fruits"
 
 /obj/item/seeds/eggplantseed
+	name = "packet of eggplant seeds"
 	seed_type = "eggplant"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/eggyseed
+	name = "packet of egg-plant seeds"
 	seed_type = "realeggplant"
 
 /obj/item/seeds/bloodtomatoseed
+	name = "packet of blood tomato seeds"
 	seed_type = "bloodtomato"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/tomatoseed
+	name = "packet of tomato seeds"
 	seed_type = "tomato"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/killertomatoseed
+	name = "packet of killer tomato seeds"
 	seed_type = "killertomato"
 	vending_cat = "sentient"
 
 /obj/item/seeds/bluetomatoseed
+	name = "packet of bluetomato seeds"
 	seed_type = "bluetomato"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/bluespacetomatoseed
+	name = "packet of bluespace tomato seeds"
 	seed_type = "bluespacetomato"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/cornseed
+	name = "packet of corn seeds"
 	seed_type = "corn"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/potatoseed
+	name = "packet of potato seeds"
 	seed_type = "potato"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/icepepperseed
+	name = "packet of icechili seeds"
 	seed_type = "icechili"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/soyaseed
+	name = "packet of soybean seeds"
 	seed_type = "soybean"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/koiseed
+	name = "packet of koibean seeds"
 	seed_type = "koibean"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/wheatseed
+	name = "packet of wheat seeds"
 	seed_type = "wheat"
 	vending_cat = "cereals"
 
 /obj/item/seeds/riceseed
+	name = "packet of rice seeds"
 	seed_type = "rice"
 	vending_cat = "cereals"
 
 /obj/item/seeds/carrotseed
+	name = "packet of carrot seeds"
 	seed_type = "carrot"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/reishimycelium
+	name = "packet of reishi spores"
 	seed_type = "reishi"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/amanitamycelium
+	name = "packet of fly amanita spores"
 	seed_type = "amanita"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/angelmycelium
+	name = "packet of destroying angel spores"
 	seed_type = "destroyingangel"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/libertymycelium
+	name = "packet of liberty cap spores"
 	seed_type = "libertycap"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/chantermycelium
+	name = "packet of chanterelle spores"
 	seed_type = "mushrooms"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/towermycelium
+	name = "packet of tower cap spores"
 	seed_type = "towercap"
 	vending_cat = "trees"
 
 /obj/item/seeds/glowshroom
+	name = "packet of glowshroom spores"
 	seed_type = "glowshroom"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/plumpmycelium
+	name = "packet of plump helmet spores"
 	seed_type = "plumphelmet"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/walkingmushroommycelium
+	name = "packet of walking mushroom seeds"
 	seed_type = "walkingmushroom"
 	vending_cat = "sentient"
 
 /obj/item/seeds/nettleseed
+	name = "packet of nettle seeds"
 	seed_type = "nettle"
 	vending_cat = "weeds"
 
 /obj/item/seeds/deathnettleseed
+	name = "packet of death nettle seeds"
 	seed_type = "deathnettle"
 	vending_cat = "weeds"
 
 /obj/item/seeds/weeds
+	name = "packet of weed seeds"
 	seed_type = "weeds"
 	vending_cat = "weeds"
 
 /obj/item/seeds/harebell
+	name = "packet of harebell seeds"
 	seed_type = "harebells"
 	vending_cat = "flowers"
 
 /obj/item/seeds/sunflowerseed
+	name = "packet of sunflower seeds"
 	seed_type = "sunflowers"
 	vending_cat = "flowers"
 
 /obj/item/seeds/moonflowerseed
+	name = "packet of moonflower seeds"
 	seed_type = "moonflowers"
 	vending_cat = "flowers"
 
 /obj/item/seeds/novaflowerseed
+	name = "packet of novaflower seeds"
 	seed_type = "novaflowers"
 	vending_cat = "flowers"
 
 /obj/item/seeds/brownmold
+	name = "packet of brown mold spores"
 	seed_type = "mold"
 	vending_cat = "mushrooms"
 
 /obj/item/seeds/appleseed
+	name = "packet of apple seeds"
 	seed_type = "apple"
 	vending_cat = "fruits"
 
 /obj/item/seeds/poisonedappleseed
+	name = "packet of poisonapple seeds"
 	seed_type = "poisonapple"
 	vending_cat = "fruits"
 
 /obj/item/seeds/goldappleseed
+	name = "packet of golden apple seeds"
 	seed_type = "goldapple"
 	vending_cat = "fruits"
 
 /obj/item/seeds/ambrosiavulgarisseed
+	name = "packet of ambrosia vulgaris seeds"
 	seed_type = "ambrosia"
 	vending_cat = "weeds"
 
 /obj/item/seeds/ambrosiacruciatusseed
+	name = "packet of ambrosia vulgaris seeds"
 	seed_type = "ambrosiacruciatus"
 	vending_cat = "weeds"
 
 /obj/item/seeds/ambrosiadeusseed
+	name = "packet of ambrosia deus seeds"
 	seed_type = "ambrosiadeus"
 	vending_cat = "weeds"
 
 /obj/item/seeds/whitebeetseed
+	name = "packet of white-beet seeds"
 	seed_type = "whitebeet"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/sugarcaneseed
+	name = "packet of sugarcane seeds"
 	seed_type = "sugarcane"
 
 /obj/item/seeds/watermelonseed
+	name = "packet of watermelon seeds"
 	seed_type = "watermelon"
 	vending_cat = "fruits"
 
 /obj/item/seeds/pumpkinseed
+	name = "packet of pumpkin seeds"
 	seed_type = "pumpkin"
 	vending_cat = "vegetables"
 
 /obj/item/seeds/limeseed
+	name = "packet of lime seeds"
 	seed_type = "lime"
 	vending_cat = "fruits"
 
 /obj/item/seeds/lemonseed
+	name = "packet of lemon seeds"
 	seed_type = "lemon"
 	vending_cat = "fruits"
 
 /obj/item/seeds/orangeseed
+	name = "packet of orange seeds"
 	seed_type = "orange"
 	vending_cat = "fruits"
 
 /obj/item/seeds/poisonberryseed
+	name = "packet of poison berry seeds"
 	seed_type = "poisonberries"
 
 /obj/item/seeds/deathberryseed
+	name = "packet of death berry seeds"
 	seed_type = "deathberries"
 
 /obj/item/seeds/grassseed
+	name = "packet of grass seeds"
 	seed_type = "grass"
 	vending_cat = "weeds"
 
 /obj/item/seeds/cocoapodseed
+	name = "packet of cacao seeds"
 	seed_type = "cocoa"
 
 /obj/item/seeds/cherryseed
+	name = "packet of cherry pits"
 	seed_type = "cherry"
 	vending_cat = "fruits"
 
 /obj/item/seeds/kudzuseed
+	name = "packet of kudzu seeds"
 	seed_type = "kudzu"
 	vending_cat = "weeds"
 
 /obj/item/seeds/cinnamomum
+	name = "packet of cinnamomum seeds"
 	seed_type = "cinnamomum"
 	vending_cat = "trees"
 
 /obj/item/seeds/nofruitseed
+	name = "packet of no-fruit seeds"
 	seed_type = "nofruit"
 	vending_cat = "fruits"
 
