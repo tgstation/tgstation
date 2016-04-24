@@ -13,16 +13,14 @@
 
 
 /datum/wires/explosive/c4
-	holder_type = /obj/item/weapon/c4
+	holder_type = /obj/item/weapon/grenade/plastic/c4
 
 /datum/wires/explosive/c4/interactable(mob/user)
-	var/obj/item/weapon/c4/P = holder
-	if(P.open_panel)
-		return TRUE
+	return TRUE
 
 /datum/wires/explosive/c4/explode()
-	var/obj/item/weapon/c4/P = holder
-	P.explode()
+	var/obj/item/weapon/grenade/plastic/c4/P = holder
+	P.prime()
 
 
 /datum/wires/explosive/pizza

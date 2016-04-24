@@ -124,7 +124,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/storage/firstaid/brute = 27,
 				/obj/item/weapon/storage/firstaid/fire = 27,
 				/obj/item/weapon/storage/toolbox/syndicate = 12,
-				/obj/item/weapon/c4 = 7,
+				/obj/item/weapon/grenade/plastic/c4 = 7,
 				/obj/item/weapon/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
 				/obj/item/clothing/shoes/chameleon = 10,

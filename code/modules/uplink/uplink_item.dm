@@ -847,7 +847,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls or connect \
 			a signaler to its wiring to make it remotely detonable. It has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/weapon/c4
+	item = /obj/item/weapon/grenade/plastic/c4
 	cost = 1
 
 /datum/uplink_item/device_tools/c4bag
