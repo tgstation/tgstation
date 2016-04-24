@@ -124,6 +124,13 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return
 
+// Called when an emergency shuttle mobile docking port is
+// destroyed, which will only happen with admin intervention
+/datum/subsystem/shuttle/proc/emergencyDeregister()
+	// When a new emergency shuttle is created, it will override the
+	// backup shuttle.
+	src.emergency = src.backup_shuttle
+
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())
 		emergency.cancel(get_area(user))

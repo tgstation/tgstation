@@ -89,7 +89,16 @@
 
 /obj/docking_port/mobile/emergency/New()
 	..()
+	// The last created emergency shuttle will always be the one
+	// that we use.
 	SSshuttle.emergency = src
+
+/obj/docking_port/mobile/emergency/Destroy()
+	if(src.i_know_what_im_doing)
+		// This'll make the shuttle subsystem use the backup shuttle.
+		SSshuttle.emergencyDeregister()
+
+	. = ..()
 
 /obj/docking_port/mobile/emergency/timeLeft(divisor)
 	if(divisor <= 0)
@@ -335,7 +344,7 @@
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
 	id = "backup"
-	dwidth = 3
+	dwidth = 2
 	width = 8
 	height = 8
 	dir = 4
