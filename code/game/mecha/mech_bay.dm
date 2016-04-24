@@ -73,7 +73,9 @@
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"

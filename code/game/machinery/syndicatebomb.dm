@@ -121,7 +121,7 @@
 			qdel(src)
 			return
 	else
-		..()
+		return ..()
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)

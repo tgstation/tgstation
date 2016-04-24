@@ -125,7 +125,7 @@ var/global/list/RPD_recipes=list(
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rpd"
-	flags = CONDUCT
+	flags = CONDUCT //phil235 SEMIBLUDGEON?
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -605,7 +605,7 @@ var/global/list/RPD_recipes=list(
 				activate()
 
 				C.add_fingerprint(usr)
-				C.update()
+				C.update_icon()
 				return 1
 			return 0
 		else

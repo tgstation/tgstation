@@ -275,9 +275,10 @@
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		flamethrower_screwdriver(I, user)
-	if(istype(I, /obj/item/stack/rods))
+	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	..()
+	else
+		return ..()
 
 
 /obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
@@ -347,7 +348,7 @@
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 
-		if(isliving(O))
+		if(isliving(O)) //phil235 need the new bitflag
 			var/mob/living/L = O
 			L.IgniteMob()
 

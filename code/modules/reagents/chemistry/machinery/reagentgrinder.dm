@@ -104,6 +104,7 @@
 				return
 
 		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
+				. = 1 //no afterattack
 				if (beaker)
 						return 1
 				else
@@ -140,7 +141,7 @@
 						user << "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>"
 
 				src.updateUsrDialog()
-				return 0
+				return 1
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
 				user << "<span class='warning'>Cannot refine into a reagent!</span>"

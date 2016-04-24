@@ -65,6 +65,7 @@
 			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
+		. = 1 //no afterattack
 		if(beakers.len == 2)
 			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
@@ -79,6 +80,7 @@
 				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
+		. = 1 // no afterattack
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
@@ -122,7 +124,8 @@
 			new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(EMPTY)
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
-
+	else
+		return ..()
 
 /obj/item/weapon/grenade/chem_grenade/proc/stage_change(N)
 	if(N)

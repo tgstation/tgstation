@@ -103,6 +103,7 @@
 #include "code\_onclick\hud\alien.dm"
 #include "code\_onclick\hud\alien_larva.dm"
 #include "code\_onclick\hud\blob_overmind.dm"
+#include "code\_onclick\hud\blobbernauthud.dm"
 #include "code\_onclick\hud\drones.dm"
 #include "code\_onclick\hud\fullscreen.dm"
 #include "code\_onclick\hud\ghost.dm"
