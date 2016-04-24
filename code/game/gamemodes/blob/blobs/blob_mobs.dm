@@ -193,9 +193,9 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 200
-	maxHealth = 200
-	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	health = 160
+	maxHealth = 160
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	next_move_modifier = 1.5 //slow-ass attack speed, 3 times higher than how fast the blob can attack
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -205,7 +205,6 @@
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
-	force_threshold = 10
 	pressure_resistance = 40
 	mob_size = MOB_SIZE_LARGE
 	see_invisible = SEE_INVISIBLE_MINIMUM
