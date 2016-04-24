@@ -3,6 +3,8 @@
  *No, I have no regrets about making this.
  */
 
+ //now 100% more PC just for cheridan
+
 /*
  *Mecha Hitler himself
  */
@@ -78,8 +80,8 @@
  */
 
 /mob/living/simple_animal/hostile/nsoldier
-	name = "Geo-Nazi"
-	desc = "Generations of fascist ideals combined with futuristic science advancement. Freedom's worst nightmare come true."
+	name = "German World War II Reenactor"
+	desc = "A VERY enthusiastic WWII reenactor."
 	icon_state = "nsoldier"
 	icon_living = "nsoldier"
 	speak_chance = 0
@@ -117,8 +119,7 @@
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/nsoldier/melee //hulk nazi with really buff biceps for added effect
-	name = "Hulking Geo-Nazi"
-	desc = "The result severe genetic testing and steriods. Would probably win an arm-wrestling match."
+	name = "Hulking German World War II Reenactor"
 	icon_state = "nsoldierbuff"
 	icon_living = "nsoldierbuff"
 	stat_attack = 0 //dumb brutes can't tell the difference between unconcious and dead
@@ -172,7 +173,7 @@
 			src.gib()
 
 /mob/living/simple_animal/hostile/spawner/heilfactory
-	name = "production factory"
+	name = "world war II memorabilia production facility"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "bin_full"
 	spawn_text = "marches out of"
@@ -361,7 +362,7 @@
 	requires_power = 1
 
 /area/awaymission/raisearm/mainhq
-	name = "Nazi HQ"
+	name = "Reenactment HQ"
 	icon_state = "away3"
 	requires_power = 1
 
@@ -411,22 +412,25 @@
 
 /obj/item/clothing/head/helmet/stalhelm
 	name = "Stalhelm"
-	desc = "Ein Helm, um die Nazi-Interesse an fremden Raumstationen zu sichern."
+	desc = "A hard military helmet, seems dusty."
 	icon_state = "stalhelm"
 	item_state = "stalhelm"
+	armor = list(melee = 15, bullet = 10, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 30
 
 /obj/item/clothing/head/helmet/panzer
 	name = "Panzer Cap"
-	desc = "Ein Hut passen nur für die größten Tanks."
+	desc = "A fancy-looking military cap."
 	icon_state = "panzercap"
 	item_state = "panzercap"
 
 /obj/item/clothing/head/helmet/naziofficer
 	name = "Officer Cap"
-	desc = "Ein Hut von Offizieren in der Nazi-Partei getragen."
+	desc = "A cap fit for a commanding officer."
 	icon_state = "officercap"
 	item_state = "officercap"
-
+	armor = list(melee = 20, bullet = 15, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 60
 
 //guns
 
