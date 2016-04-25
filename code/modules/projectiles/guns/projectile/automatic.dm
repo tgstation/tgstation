@@ -235,3 +235,47 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
+
+
+
+// Bulldog shotgun //
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	name = "\improper 'Bulldog' Shotgun"
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	pin = /obj/item/device/firing_pin/implant/pindicate
+	actions_types = list()
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
+	..()
+	empty_alarm()
+	return

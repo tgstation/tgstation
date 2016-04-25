@@ -298,59 +298,61 @@
 	else
 		sawn_state = SAWN_INTACT
 
-
-// Bulldog shotgun //
-
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	name = "\improper 'Bulldog' Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
-	icon_state = "bulldog"
-	item_state = "bulldog"
-	w_class = 3
-	origin_tech = "combat=5;materials=4;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
-	can_suppress = 0
-	burst_size = 1
-	fire_delay = 0
-	pin = /obj/item/device/firing_pin/implant/pindicate
-	actions_types = list()
-
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
-	pin = /obj/item/device/firing_pin
-
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
-	..()
-	update_icon()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
-	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]"
-		return
-
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "bulldog[chambered ? "" : "-e"]"
-	return
-
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
-	..()
-	empty_alarm()
-	return
+// Automatic Shotguns//
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
 	..()
 	src.pump(user)
-
-// COMBAT SHOTGUN //
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/combat
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	w_class = 5
+
+//Dual Feed Shotgun
+
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube
+	name = "dual-feed shotgun"
+	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
+	icon_state = "cshotgun"
+	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
+	var/toggled = 0
+	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/New()
+	..()
+	if (!alternate_magazine)
+		alternate_magazine = new mag_type(src)
+
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/attack_self(mob/living/user)
+	if(!chambered && magazine.contents.len)
+		pump()
+	else
+		toggle_tube(user)
+
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/proc/toggle_tube(mob/living/user)
+	var/current_mag = magazine
+	var/alt_mag = alternate_magazine
+	magazine = alt_mag
+	alternate_magazine = current_mag
+	toggled = !toggled
+	if(toggled)
+		user << "You switch to tube B."
+	else
+		user << "You switch to tube A."
+
+
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/AltClick(mob/living/user)
+	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+		return
+	pump()
+
+/obj/item/ammo_box/magazine/internal/shot/tube
+	name = "dual feed shotgun internal tube"
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
+	max_ammo = 6
