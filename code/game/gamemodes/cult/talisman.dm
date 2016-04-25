@@ -298,7 +298,7 @@
 		user.visible_message("<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
-			H.reagents.add_reagent("mindbreaker", 30)
+			H.reagents.add_reagent("mindbreaker", 25)
 		qdel(src)
 
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
