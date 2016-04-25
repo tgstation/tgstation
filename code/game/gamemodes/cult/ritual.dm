@@ -279,25 +279,22 @@ This file contains the arcane tome files as well as innate cultist emergency com
 				N.health = 60
 				shields |= N
 			if(!do_after(user, 400, target = get_turf(user)))
-				if(shields.len)
-					for(var/V in shields)
-						var/obj/machinery/shield/S = V
-						if(S && !qdeleted(S))
-							qdel(S)
+				for(var/V in shields)
+					var/obj/machinery/shield/S = V
+					if(S && !qdeleted(S))
+						qdel(S)
 				return
 	if(!do_after(user, 50, target = get_turf(user)))
-		if(shields.len)
-			for(var/V in shields)
-				var/obj/machinery/shield/S = V
-				if(S && !qdeleted(S))
-					qdel(S)
-		return
-	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
-						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
-	if(shields.len)
 		for(var/V in shields)
 			var/obj/machinery/shield/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
+		return
+	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
+						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
+	for(var/V in shields)
+		var/obj/machinery/shield/S = V
+		if(S && !qdeleted(S))
+			qdel(S)
 	new rune_to_scribe(Thenewturfyouwalkedto, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
