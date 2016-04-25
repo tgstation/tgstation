@@ -266,3 +266,17 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;bio=2"
+
+		/*
+ * Plates
+ 		*/
+
+/obj/item/stack/sheet/goliath_hide
+	name = "goliath hide plates"
+	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_hide"
+	singular_name = "hide plate"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
