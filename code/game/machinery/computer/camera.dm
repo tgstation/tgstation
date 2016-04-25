@@ -5,7 +5,7 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/weapon/circuitboard/security
 	var/last_pic = 1
-	var/list/network = list("SS13")
+	network = null
 	var/mapping = 0//For the overview file, interesting bit of code.
 	var/list/watchers = list() //who's using the console, associated with the camera they're on.
 

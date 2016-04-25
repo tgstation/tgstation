@@ -118,6 +118,7 @@ Class Procs:
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
+	var/datum/network/network = null	// Network connected to this machine, if any.
 
 /obj/machinery/New()
 	..()

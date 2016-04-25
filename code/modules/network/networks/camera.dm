@@ -5,8 +5,8 @@
 /datum/network/camera
 	id = "camera"
 	info = "Security Camera BIOS. A simple internal network used by cameras to connect and transmit data to a camera network."
-	var/list/linked = list()
-	var/list/connected = list()
+	linked = list()
+	connected = list()
 	var/list/camera_networks = list()		// A list of camera network id's this camera is connected to.
 	var/datum/network/apc/apc = null		// The apc connected to this network, if any.
 
@@ -52,7 +52,7 @@
 
 /datum/network_command/get/camera
 	trigger = "get"
-	info = "Usage: \"get -{query}\" Used to get information about this network. Uses standard network queries, as well as: cnet:cameranet and apc:powernet.
+	info = "Usage: \"get -{query}\" Used to get information about this network. Uses standard network queries, as well as: cnet:cameranet and apc:powernet."
 
 /datum/network_command/get/camera/execute(datum/network/N, list/A, obj/item/device/hacktool/H)
 	if(badargs(N, H)) return
@@ -70,14 +70,14 @@
 
 /datum/network_command/cnet
 	trigger = "cnet"
-	info = "Usage: \"cnet -{option} -{value}\" Used to set options related to the camera network. Options can be: add, del, ref:refresh.
+	info = "Usage: \"cnet -{option} -{value}\" Used to set options related to the camera network. Options can be: add, del, ref:refresh."
 
 /datum/network_command/cnet/execute(datum/network/N, list/A, obj/item/device/hacktool/H)
 	if(badargs(N, H)) return
 	if(lockout(N, H)) return
 	switch(A[1])
 		if("add")
-			if(A[2]
+			if(A[2])
 				if (security(N, "set", H)) return
 				N.camera_networks += A[2]
 				feedback(H, "[A[2]] network added.")
