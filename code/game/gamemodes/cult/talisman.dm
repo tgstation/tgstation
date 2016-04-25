@@ -17,9 +17,7 @@
 	if(!iscultist(user))
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 		return
-	if(invoke(user))
-		user.whisper(invocation)
-		uses--
+	uses--
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)
@@ -322,7 +320,7 @@
 		log_game("Construct talisman failed - not a valid target")
 
 /obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
-	name = "cult shackle"
+	name = "cult shackles"
 	desc = "shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 	origin_tech = "materials=2;magnets=5"
@@ -331,7 +329,7 @@
 	desc = "magical remnants"
 
 /obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user]'s [src] shatter in a discharge of dark magic!</span>", \
+	user.visible_message("<span class='danger'>Your [src] shatter in a discharge of dark magic!</span>", \
 							"<span class='userdanger'>[user]'s [src] shatters in a discharge of dark magic!</span>")
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
