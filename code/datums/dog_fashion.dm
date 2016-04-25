@@ -65,7 +65,7 @@
 /datum/dog_fashion/head/rabbit
 	name = "Hoppy"
 	emote_see = list("twitches its nose", "hops around a bit")
-	desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit"
+	desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit."
 
 /datum/dog_fashion/head/beret
 	name = "Yann"
@@ -152,7 +152,7 @@
 
 /datum/dog_fashion/head/sombrero/New(mob/M)
 	..()
-	desc = "You must respect Elder [M.real_name]"
+	desc = "You must respect Elder [M.real_name]."
 
 /datum/dog_fashion/head/hop
 	name = "Lieutenant REAL_NAME"
