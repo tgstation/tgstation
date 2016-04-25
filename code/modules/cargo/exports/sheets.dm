@@ -32,7 +32,7 @@
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
 
 // Goliath hide. Expensive.
-/datum/export/goliath_hide
+/datum/export/stack/skin/goliath_hide
 	cost = 2500
 	unit_name = "goliath hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/goliath_hide)
