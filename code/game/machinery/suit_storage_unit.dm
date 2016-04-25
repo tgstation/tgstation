@@ -332,7 +332,7 @@
 			if(state_open)
 				close_machine()
 			else
-				open_machine()
+				open_machine(0)
 				if(occupant)
 					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE

@@ -157,10 +157,11 @@ Class Procs:
 		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
 
-/obj/machinery/proc/open_machine()
+/obj/machinery/proc/open_machine(var/drop = 1)
 	state_open = 1
 	density = 0
-	dropContents()
+	if(drop)
+		dropContents()
 	update_icon()
 	updateUsrDialog()
 
