@@ -1,6 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Laughter demons are like slaughter demons, but they tickle people to death"
-  - tweak: "Slaughter demons are no longer able to cast spells while phased."
-  - tweak: "Wizards can now speak while ethereal, but still cannot cast spells while ethereal."
