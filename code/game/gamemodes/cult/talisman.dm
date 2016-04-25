@@ -17,7 +17,8 @@
 	if(!iscultist(user))
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 		return
-	uses--
+	if(invoke(user))
+		uses--
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)
@@ -146,7 +147,7 @@
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
-	color = "#1d0e0e" // red-black
+	color = "#512727" // red-black
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	health_cost = 1
 
