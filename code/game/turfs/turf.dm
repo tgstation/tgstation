@@ -105,6 +105,7 @@
 					M.inertia_dir = 0
 			if(TURF_WET_LUBE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
+				M.confused += 8
 			if(TURF_WET_ICE)
 				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
 
