@@ -93,7 +93,8 @@
 				C.loc = src.loc
 			if (stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
-				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/weapon/shard(src.loc)
+				new /obj/item/weapon/shard(src.loc)
 				A.state = 3
 				A.icon_state = "3"
 			else

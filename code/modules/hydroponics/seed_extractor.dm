@@ -1,4 +1,4 @@
-/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor)
+/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
 	if(t_max == -1)
 		if(extractor)
@@ -13,6 +13,8 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		if(F.seed)
+			if(user && !user.drop_item()) //couldn't drop the item
+				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
 				t_prod.loc = seedloc
@@ -23,6 +25,8 @@
 	else if(istype(O, /obj/item/weapon/grown))
 		var/obj/item/weapon/grown/F = O
 		if(F.seed)
+			if(user && !user.drop_item())
+				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
 				t_prod.loc = seedloc
@@ -89,17 +93,13 @@
 			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
-	if(!user.drop_item()) //couldn't drop the item
-		user << "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
-		return
-
-	else if(seedify(O,-1, src))
+	else if(seedify(O,-1, src, user))
 		user << "<span class='notice'>You extract some seeds.</span>"
 		return
 	else if (istype(O,/obj/item/seeds))
-		add_seed(O)
-		user << "<span class='notice'>You add [O] to [src.name].</span>"
-		updateUsrDialog()
+		if(add_seed(O))
+			user << "<span class='notice'>You add [O] to [src.name].</span>"
+			updateUsrDialog()
 		return
 	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
@@ -188,15 +188,14 @@
 
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		if(!M.unEquip(O))
-			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
-			return
+		if(!M.drop_item())
+			return 0
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
 
 	O.loc = src
-
+	. = 1
 	for (var/datum/seed_pile/N in piles)
 		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)
 			++N.amount

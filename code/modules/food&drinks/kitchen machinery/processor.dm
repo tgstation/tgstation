@@ -193,6 +193,7 @@
 			"You put the [what] into [src].")
 		user.drop_item()
 		what.loc = src
+		return 1
 	else
 		if(user.a_intent != "harm")
 			user << "<span class='warning'>That probably won't blend!</span>"

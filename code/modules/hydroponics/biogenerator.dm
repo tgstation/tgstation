@@ -73,17 +73,21 @@
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		. = 1 //no afterattack
 		if(!panel_open)
 			if(beaker)
 				user << "<span class='warning'>A container is already loaded into the machine.</span>"
 			else
-				user.unEquip(O)
+				if(!user.drop_item())
+					return
 				O.loc = src
 				beaker = O
 				user << "<span class='notice'>You add the container to the machine.</span>"
 				update_icon()
 				updateUsrDialog()
-		return 1 //no afterattack
+		else
+			user << "<span class='warning'>Close the maintenance panel first.</span>"
+		return
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/bag/plants/PB = O

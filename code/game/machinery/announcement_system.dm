@@ -75,8 +75,7 @@ var/list/announcement_systems = list()
 	if(istype(P, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
-		if(!panel_open)
-			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return

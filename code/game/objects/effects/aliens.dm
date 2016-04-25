@@ -141,7 +141,7 @@
 /obj/structure/alien/resin/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+	if(!M.melee_damage_upper)
 		return
 	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
 	take_damage(M.melee_damage_upper, M.melee_damage_type)

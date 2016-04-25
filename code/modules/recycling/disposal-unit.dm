@@ -92,7 +92,7 @@
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 					Deconstruct()
-				return
+			return
 
 	if(user.a_intent != "harm")
 		if(!user.drop_item() || (I.flags & ABSTRACT))

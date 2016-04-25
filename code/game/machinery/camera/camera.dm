@@ -238,10 +238,6 @@
 		cable.plugin(src, user)
 		return
 
-	else if(istype(W, /obj/item/device/laser_pointer))
-		var/obj/item/device/laser_pointer/L = W
-		L.laser_act(src, user)
-		return
 	return ..()
 
 /obj/machinery/camera/take_damage(damage, damage_type = BRUTE, sound_effect = 1)

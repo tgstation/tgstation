@@ -101,7 +101,7 @@
 			update_icon()
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
-	if(..())
+	if(!..())
 		add_fingerprint(user)
 
 		if(storedpda)
@@ -118,7 +118,7 @@
 			ejectpda()
 
 		else
-			user << "<span class='notice'>The [src] is empty.</span>"
+			user << "<span class='notice'>\The [src] is empty.</span>"
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
