@@ -8,9 +8,10 @@
 	throwforce = 0
 	w_class = 1
 	burn_state = FLAMMABLE
-	burntime = 5
+	burntime = 4
 
 	var/obj/item/weapon/paper/internalPaper
+	var/list/stamped = list()
 
 /obj/item/weapon/paperplane/New(loc, obj/item/weapon/paper/newPaper)
 	..()
@@ -19,18 +20,29 @@
 	if(newPaper)
 		internalPaper = newPaper
 		src.flags = newPaper.flags
+		stamped = internalPaper.stamped
 		newPaper.forceMove(src)
 	else
 		internalPaper = new /obj/item/weapon/paper(src)
-
+	update_icon()
 
 /obj/item/weapon/paperplane/suicide_act(mob/user)
 	user.Stun(10)
-	user.visible_message("<span class='suicide'>[user] pokes their eyes with the paper plane! It looks like \he's trying to commit sudoku.</span>")
+	user.visible_message("<span class='suicide'>[user] jams the [src] in their brains. It looks like \he's trying to commit suicide.</span>")
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)
 	return (BRUTELOSS)
+
+/obj/item/weapon/paperplane/update_icon()
+	overlays.Cut()
+	if(!stamped)
+		stamped = new
+	else if(stamped)
+		for(var/S in stamped)
+			var/obj/item/weapon/stamp/stamp = S
+			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[initial(stamp.icon_state)]")
+			overlays += stampoverlay
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
 	user << "<span class='notice'>You unfold [src].</span>"
@@ -40,13 +52,26 @@
 
 /obj/item/weapon/paperplane/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon) || istype(P, /obj/item/weapon/stamp))
+	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		user << "<span class='notice'>You should unfold [src] before changing it.</span>"
 		return
-	if(P.is_hot())
+
+	else if(istype(P, /obj/item/weapon/stamp)) 	//we don't randomize stamps on a paperplane
+
+		if (!stamped)
+			stamped = new
+
+		stamped += P.type
+		internalPaper.stamps += "<img src=large_[P.icon_state].png>" //stamps the paper inside!
+		internalPaper.stamped = stamped
+		internalPaper.attackby(P) //spoofed attack to update internal paper.
+		user << "<span class='notice'>You stamp [src] with your rubber stamp.</span>"
+		update_icon()
+
+	else if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
-				"<span class='userdanger'>You miss the paper plane and accidentally light yourself on fire!</span>")
+				"<span class='userdanger'>You miss the [src] and accidentally light yourself on fire!</span>")
 			user.unEquip(P)
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
@@ -54,7 +79,7 @@
 
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
-
+		internalPaper.burntime = 1 //its already pretty burnt out
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
@@ -86,4 +111,3 @@
 	user.unEquip(src)
 	I = new /obj/item/weapon/paperplane(loc, src)
 	user.put_in_hands(I)
-
