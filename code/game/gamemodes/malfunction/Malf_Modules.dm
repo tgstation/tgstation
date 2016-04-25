@@ -161,7 +161,7 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
+		if(D.z != ZLEVEL_STATION)
 			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
@@ -191,6 +191,8 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
+		if(D.z != ZLEVEL_STATION)
+			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
