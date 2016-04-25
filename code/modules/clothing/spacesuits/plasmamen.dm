@@ -18,22 +18,15 @@
 
 	var/next_extinguish=0
 	var/extinguish_cooldown=10 SECONDS
-	var/extinguishes_left=10 // Yeah yeah, reagents, blah blah blah.  This should be simple.
-
-/obj/item/clothing/suit/space/plasmaman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>")
 
 /obj/item/clothing/suit/space/plasmaman/proc/Extinguish(var/mob/user)
 	var/mob/living/carbon/human/H=user
-	if(extinguishes_left)
-		if(next_extinguish > world.time)
-			return
+	if(next_extinguish > world.time)
+		return
 
-		next_extinguish = world.time + extinguish_cooldown
-		extinguishes_left--
-		to_chat(H, "<span class='warning'>Your suit automatically extinguishes the fire.</span>")
-		H.ExtinguishMob()
+	next_extinguish = world.time + extinguish_cooldown
+	to_chat(H, "<span class='warning'>Your suit automatically extinguishes the fire.</span>")
+	H.ExtinguishMob()
 
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasmaman helmet"
