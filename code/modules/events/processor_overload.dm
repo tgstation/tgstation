@@ -33,5 +33,8 @@
 				// Only a level 1 explosion actually damages the machine
 				// at all
 				P.ex_act(1)
+				// Damage the surrounding area to indicate that it popped
+				var/turf/T = get_turf(P)
+				explosion(T, 0, 0, 2)
 			else
 				P.emp_act(1)
