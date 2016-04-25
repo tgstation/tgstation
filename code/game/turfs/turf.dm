@@ -132,7 +132,7 @@
 /turf/proc/ChangeTurf(path, defer_change = FALSE)
 	if(!path)
 		return
-	if(path == type)
+	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 	var/old_blueprint_data = blueprint_data
 
