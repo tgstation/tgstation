@@ -215,7 +215,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 var/list/teleport_runes = list()
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
-	cultist_desc = "warps everything above it to another chosen teleport rune."
+	cultist_desc = "Warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
 	color = "#551A8B"
@@ -494,7 +494,7 @@ var/list/teleport_runes = list()
 //Rite of Resurrection: Requires two corpses. Revives one and gibs the other.
 /obj/effect/rune/raise_dead
 	cultist_name = "Raise Dead"
-	cultist_desc = "Requires two corpses. One on the rune and one adjacent. The one placed upon the rune is brought to life, the other is turned to ash."
+	cultist_desc = "Requires two corpses. One on the rune and one adjacent to the rune. The one placed upon the rune is brought to life, the other is turned to ash."
 	invocation = null //Depends on the name of the user - see below
 	icon_state = "1"
 	color = rgb(255, 0, 0)
