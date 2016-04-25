@@ -11,9 +11,3 @@
 	w_class = 2
 	attack_verb = list("warned", "cautioned", "smashed")
 
-/obj/item/weapon/emptysandbag
-	name = "empty sandbag"
-	desc = "A bag to be filled with sand."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sandbag"
-	w_class = 1

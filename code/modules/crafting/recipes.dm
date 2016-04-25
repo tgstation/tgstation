@@ -172,14 +172,6 @@
 	time = 10
 	category = CAT_WEAPON
 
-/datum/table_recipe/sandbags
-	name = "Sandbags"
-	result = /obj/item/stack/sheet/mineral/sandbags
-	reqs = list(/obj/item/weapon/ore/glass = 5,
-			/obj/item/weapon/emptysandbag = 1)
-	time = 10
-	category = CAT_WEAPON
-
 /datum/table_recipe/meteorshot
 	name = "Meteorshot Shell"
 	result = /obj/item/ammo_casing/shotgun/meteorshot
