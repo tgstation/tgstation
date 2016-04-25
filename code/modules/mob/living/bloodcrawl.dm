@@ -85,12 +85,12 @@
 		kidnapped = TRUE
 
 	if(kidnapped)
-		var/success = bloodcrawl_consume(B, victim)
+		var/success = bloodcrawl_consume(victim)
 		if(!success)
 			src << "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>"
 	return 1
 
-/mob/living/proc/bloodcrawl_consume(obj/effect/decal/cleanable/B, mob/living/victim)
+/mob/living/proc/bloodcrawl_consume(mob/living/victim)
 	src << "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>"
 
 	var/sound
@@ -110,45 +110,50 @@
 	if(victim.reagents && victim.reagents.has_reagent("devilskiss"))
 		src << "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>"
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
-		victim.loc = get_turf(B)
-		// This whole thing here is the ONLY reason we keep passing B down
-		// this proc chain, so we know where to spit the person out who's
-		// been drinking. TODO would be a lot better if it just picked the
-		// nearest bloodspot and used that, then it'd be a lot cleaner
-		// from a code perspective
-		victim.visible_message("<span class='warning'>[B] violently expels [victim]!</span>")
+		var/found_bloodpool = FALSE
+		for(var/obj/effect/decal/cleanable/target in range(1,get_turf(victim)))
+			if(target.can_bloodcrawl_in())
+				victim.forceMove(get_turf(target))
+				victim.visible_message("<span class='warning'>[target] violently expels [victim]!</span>")
+				victim.exit_blood_effect(target)
+				found_bloodpool = TRUE
+
+		if(!found_bloodpool)
+			// Fuck it, just eject them, thanks to some split second cleaning
+			victim.forceMove(get_turf(victim))
+			victim.visible_message("<span class='warning'>[victim] appears from nowhere, covered in blood!</span>")
+			victim.exit_blood_effect()
 		return TRUE
 
 	src << "<span class='danger'>You devour [victim]. Your health is fully restored.</span>"
-	src.adjustBruteLoss(-1000)
-	src.adjustFireLoss(-1000)
-	src.adjustOxyLoss(-1000)
-	src.adjustToxLoss(-1000)
+	src.revive(full_heal = 1)
 
 	// No defib possible after laughter
 	victim.adjustBruteLoss(1000)
 	victim.death()
-
-	var/del_corpse = TRUE
-	var/mob/living/simple_animal/slaughter/SD
-	if(istype(src, /mob/living/simple_animal/slaughter))
-		SD = src
-		// `consumed_mobs` can be set to null to gib the corpse
-		if(SD.consumed_mobs)
-			// Keep their corpse so rescue is possible
-			SD.consumed_mobs += victim
-			del_corpse = FALSE
-
-	if(del_corpse)
-		qdel(victim)
-
+	bloodcrawl_swallow(victim)
 	return TRUE
+
+/mob/living/proc/bloodcrawl_swallow(var/mob/living/victim)
+	qdel(victim)
 
 /obj/item/weapon/bloodcrawl
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
 	flags = NODROP|ABSTRACT
+
+/mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
+	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	var/oldcolor = src.color
+	//Makes the mob have the color of the blood pool it came out of
+	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
+		src.color = rgb(43, 186, 0)
+	else
+		src.color = rgb(149, 10, 10)
+	// but only for a few seconds
+	spawn(30)
+		src.color = oldcolor
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
@@ -162,20 +167,13 @@
 	src.loc = B.loc
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
-	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	exit_blood_effect(B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		for(var/obj/item/weapon/bloodcrawl/BC in C)
 			BC.flags = null
 			C.unEquip(BC)
 			qdel(BC)
-	var/oldcolor = src.color
-	if(istype(B, /obj/effect/decal/cleanable/xenoblood)) //Makes the mob have the color of the blood pool it came out of for a few seconds
-		src.color = rgb(43, 186, 0)
-	else
-		src.color = rgb(149, 10, 10)
 	qdel(src.holder)
 	src.holder = null
-	spawn(30)
-		src.color = oldcolor
 	return 1

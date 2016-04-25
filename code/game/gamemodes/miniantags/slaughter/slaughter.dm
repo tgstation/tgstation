@@ -34,9 +34,6 @@
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
-	// Set consumed_mobs to a list() to keep the corpses in the demon
-	// for later retrieval on demon death
-	var/list/consumed_mobs = null
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
 							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and dissaapearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
@@ -64,16 +61,8 @@
 		speed = 0
 
 /mob/living/simple_animal/slaughter/death()
-	..(1)
-
-	death_mealspill()
-
 	playsound(get_turf(src),death_sound, 200, 1)
-
-/mob/living/simple_animal/slaughter/proc/death_mealspill()
-	if(consumed_mobs)
-		for(var/mob/living/M in consumed_mobs)
-			M.forceMove(get_turf(src))
+	..()
 
 /obj/effect/decal/cleanable/blood/innards
 	icon = 'icons/obj/surgery.dmi'
@@ -148,19 +137,20 @@
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
 	// Keep the people we hug!
-	consumed_mobs = list()
+	var/list/consumed_mobs = list()
 
 	// HOT. PINK.
 	//color = "#FF69B4"
+
 
 /mob/living/simple_animal/slaughter/laughter/New()
 	..()
 
 	deathmessage = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
 
-/mob/living/simple_animal/slaughter/laughter/death_mealspill()
+/mob/living/simple_animal/slaughter/laughter/death()
 	if(!consumed_mobs)
-		return
+		return ..()
 
 	for(var/mob/living/M in consumed_mobs)
 		M.loc = get_turf(src)
@@ -174,3 +164,14 @@
 						break
 			M << "<span class='clown'>You leave the [src]'s warm embrace, and feel ready to take on the world.</span>"
 
+	return ..()
+
+/mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
+	if(consumed_mobs)
+		// Keep their corpse so rescue is possible
+		consumed_mobs += victim
+	else
+		// Be safe and just eject the corpse
+		victim.forceMove(get_turf(victim))
+		victim.exit_blood_effect()
+		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")
