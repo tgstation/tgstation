@@ -111,6 +111,30 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
+/obj/screen/fullscreen/triplemeth1
+	icon = 'goon/icons/effects/overlays/meatysmall.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "meatysmall"
+	color = "#ff0000"
+	blend_mode = 2
+	alpha = 75
+
+/obj/screen/fullscreen/triplemeth2
+	icon = 'goon/icons/effects/overlays/cloudy.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "cloudy"
+	color = "#00ff00"
+	blend_mode = 2
+	alpha = 75
+
+/obj/screen/fullscreen/triplemeth3
+	icon = 'goon/icons/effects/overlays/beamout.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "beamout"
+	color = "#0000ff"
+	blend_mode = 2
+	alpha = 75
+
 #undef FULLSCREEN_LAYER
 #undef BLIND_LAYER
 #undef DAMAGE_LAYER
