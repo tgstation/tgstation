@@ -1,0 +1,8 @@
+author: Kor Razharas
+delete-after: True
+changes: 
+  - rscadd: "Adds support for autoclicking."
+  - rscadd: "The Shock Revolver has been added to RnD."
+  - rscadd: "The Laser Gatling Gun has been added to RnD. The Gatling Gun uses autoclick to fire as you hold down the mouse."
+  - rscadd: "The Research Director now starts with a box of firing pins."
+  - rscadd: "The SABR and Stun Revolver recipes have been removed from RnD"

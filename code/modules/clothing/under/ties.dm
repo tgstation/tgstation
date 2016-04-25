@@ -306,3 +306,17 @@
 	icon_state = "bling"
 	item_state = ""	//no inhands
 	item_color = "bling"
+
+////////////////
+//OONGA BOONGA//
+////////////////
+
+/obj/item/clothing/tie/talisman
+	name = "bone talisman"
+	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
+	icon = 'icons/obj/clothing/ties.dmi'
+	icon_state = "talisman"
+	item_state = ""
+	item_color = "talisman"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 50, bio = 65, rad = 5) //Faith is the best armor. //This won't actually work because of accessories kill me with a fucking knife jesus christ I hate code

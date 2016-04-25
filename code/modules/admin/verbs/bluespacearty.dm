@@ -28,7 +28,7 @@
 	message_admins("[target.name] has been hit by Bluespace Artillery fired by [usr]")
 
 	if(target.health <= 1)
-		target.gib()
+		target.gib(no_brain = 1)
 	else
 		target.adjustBruteLoss(min(99,(target.health - 1)))
 		target.Stun(20)

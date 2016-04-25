@@ -38,9 +38,9 @@
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
 	icon = 'icons/mob/Easter.dmi'
-	icon_state = "rabbit"
-	icon_living = "rabbit"
-	icon_dead = "rabbit_dead"
+	icon_state = "rabbit_white"
+	icon_living = "rabbit_white"
+	icon_dead = "rabbit_white_dead"
 	speak = list("Hop into Easter!","Come get your eggs!","Prizes for everyone!")
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
@@ -56,13 +56,13 @@
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
-	icon_state = "s_rabbit"
-	icon_living = "s_rabbit"
-	icon_dead = "s_rabbit_dead"
+	icon_state = "s_rabbit_white"
+	icon_living = "s_rabbit_white"
+	icon_dead = "s_rabbit_white_dead"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	unsuitable_atmos_damage = 0	//This damage is taken when atmos doesn't fit all the requirements above
+	unsuitable_atmos_damage = 0
 
 //Easter Baskets
 /obj/item/weapon/storage/bag/easterbasket
