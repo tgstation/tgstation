@@ -95,8 +95,7 @@
 
 /obj/item/weapon/minigunpack/dropped(mob/user)
 	if(armed)
-		attach_gun(user)
-	..()
+		user.unEquip(gun,1)
 
 /obj/item/weapon/minigunpack/MouseDrop(atom/over_object)
 	if(armed)
@@ -171,6 +170,7 @@
 /obj/item/weapon/gun/projectile/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		user << "You need the backpack power source to fire the gun!"
+	..()
 
 /obj/item/weapon/gun/projectile/minigun/New()
 	if(!ammo_pack)
