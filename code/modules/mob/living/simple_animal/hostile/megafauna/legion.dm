@@ -27,9 +27,8 @@
 	layer = 6
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
-	aggro_vision_range = 20
-	idle_vision_range = 13
-
+	aggro_vision_range = 15
+	idle_vision_range = 9
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
@@ -106,6 +105,7 @@
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	var/obj/machinery/lavaland_controller/linked_machine
 	var/storm_cooldown = 0
 
 /obj/item/weapon/staff_of_storms/attack_self(mob/user)
@@ -113,11 +113,11 @@
 		user << "The staff is still recharging."
 		return
 
-	var/obj/machinery/lavaland_controller/linked_machine
-	for(var/obj/machinery/lavaland_controller/controller in machines)
-		if(controller.z == user.z)
-			linked_machine = controller
-			break
+	if(!linked_machine || linked_machine.z != user.z)
+		for(var/obj/machinery/lavaland_controller/controller in machines)
+			if(controller.z == user.z)
+				linked_machine = controller
+				break
 
 	if(linked_machine && linked_machine.ongoing_weather)
 		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
