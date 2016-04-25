@@ -957,7 +957,7 @@ var/list/preferences_datums = list()
 
 				if("wings")
 					var/new_wings
-					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in wings_list
+					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in r_wings_list
 					if(new_wings)
 						features["wings"] = new_wings
 

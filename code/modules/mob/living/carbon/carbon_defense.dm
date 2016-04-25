@@ -94,3 +94,36 @@
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
 		return 1
+
+/mob/living/carbon/Stun(amount, updating_canmove = 1)
+	if(dna && dna.features["wings"])
+		if((dna.features["wings"] == "Angel") && flying)
+			flyslip(src)
+			amount *= 2
+	..()
+
+
+/mob/living/carbon/proc/flyslip(mob/living/carbon/C)
+	var/obj/buckled_obj
+	if(C.buckled)
+		buckled_obj = C.buckled
+
+	C << "<span class='notice'>Your wings spazz out and launch you!</span>"
+
+	playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+	C.accident(C.l_hand)
+	C.accident(C.r_hand)
+
+	var/olddir = C.dir
+
+	C.stop_pulling()
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(C)
+		step(buckled_obj, olddir)
+	else
+		for(var/i=1, i<5, i++)
+			spawn (i)
+				step(C, olddir)
+				C.spin(1,1)
+	return 1

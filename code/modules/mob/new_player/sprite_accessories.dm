@@ -16,7 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female)
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female,var/roundstart = FALSE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
 	if(!istype(male))
@@ -27,6 +27,10 @@
 	for(var/path in typesof(prototype))
 		if(path == prototype)
 			continue
+		if(roundstart)
+			var/datum/sprite_accessory/P = path
+			if(initial(P.locked))
+				continue
 		var/datum/sprite_accessory/D = new path()
 
 		if(D.icon_state)
@@ -52,6 +56,7 @@
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
 	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
+	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
 
 //////////////////////
 // Hair Definitions //
@@ -1308,6 +1313,7 @@
 	name = "Angel"
 	icon_state = "angel"
 	color_src = 0
+	locked = TRUE
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'

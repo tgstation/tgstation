@@ -409,7 +409,7 @@
 /mob/living/carbon/human/proc/CloseWings()
 	if(!dna || !dna.species)
 		return
-	if("wings_open" in dna.species.mutant_bodyparts)
+	if("wingsopen" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "wingsopen"
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
