@@ -52,7 +52,7 @@
 	if(seed)
 		var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
 		if(S && iscarbon(AM))
-			var/stunratio = .6
+			var/stunratio = 0.6
 			var/mob/living/carbon/M = AM
 			var/stun = min(seed.potency * S.rate * stunratio, 6)
 			var/weaken = min(seed.potency * S.rate * stunratio, 6)
