@@ -415,12 +415,12 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Two Survival Capsules", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer Belt", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Two Survival Capsules")
-			new /obj/item/weapon/survivalcapsule(src.loc)
+		if("Survival Capsule and Explorer Belt")
+			new /obj/item/weapon/storage/belt/mining(src.loc)
 			new /obj/item/weapon/survivalcapsule(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
