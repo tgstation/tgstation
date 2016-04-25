@@ -15,8 +15,6 @@
 /datum/AI_Module/small/
 	uses = 5
 
-//////DOOMSDAY DEVICE
-
 /datum/AI_Module/large/nuke_station
 	module_name = "Doomsday Device"
 	mod_pick_name = "nukestation"
@@ -94,8 +92,6 @@
 		L.dust()
 	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
 	ticker.force_ending = 1
-
-//////END DOOMSDAY DEVICE
 
 /datum/AI_Module/large/fireproof_core
 	module_name = "Core Upgrade"
