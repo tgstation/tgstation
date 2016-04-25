@@ -167,7 +167,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 //Rite of Binding: Turns a nearby rune and a paper on top of the rune to a talisman, if both are valid.
 /obj/effect/rune/imbue
 	cultist_name = "Create Talisman"
-	cultist_desc = "Transforms papers and valid runes into talismans."
+	cultist_desc = "Transforms paper into powerful magic talismans."
 	invocation = null //no talisman made, no invocation.
 	icon_state = "3"
 	color = rgb(0, 0, 255)
@@ -604,18 +604,19 @@ var/list/teleport_runes = list()
 			emp_strength++
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
 	for(var/mob/living/carbon/C in range(1,src))
-		if (emp_strength < 3)
-			C << "<span class='warning'>You feel a minute vibration pass through you...</span>"
-			playsound(E, 'sound/items/Welder2.ogg', 25, 1)
-		if (emp_strength > 2 && emp_strength < 7)
-			C << "<span class='danger'>Your hair stands on end as a shockwave eminates from the rune!</span>"	
-			playsound(E, 'sound/magic/Disable_Tech.ogg', 50, 1)
-		if (emp_strength > 6)
-			C << "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>"	
-			C.Weaken(2)
-			playsound(E, 'sound/magic/Disable_Tech.ogg', 100, 1)
+	    switch(emp_strength)
+            if(1 to 2)
+                C << "<span class='warning'>You feel a minute vibration pass through you...</span>"
+                playsound(E, 'sound/items/Welder2.ogg', 25, 1)
+            if(3 to 6)
+                C << "<span class='danger'>Your hair stands on end as a shockwave eminates from the rune!</span>"
+                playsound(E, 'sound/magic/Disable_Tech.ogg', 50, 1)
+            if(7 to INFINITY)
+                C << "<span class=userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>"
+                playsound(E, 'sound/magic/Disable_Tech.ogg', 100, 1)
+                C.Weaken(2)
 	qdel(src) //delete before pulsing because it's a delay reee
-	empulse(E, 9*emp_strength, 12*emp_strength) // Scales now, from a single room to around half the station depending on # of chanters
+	empulse(E, 9*emp_strength, 12*emp_strength) // Scales now, from a single room to most of the station depending on # of chanters
 
 //Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
 /obj/effect/rune/astral
