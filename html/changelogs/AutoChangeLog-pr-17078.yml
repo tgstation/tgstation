@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - bugfix: "You can once again hit a closet or crate with an item to open it."

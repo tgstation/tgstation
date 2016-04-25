@@ -1,0 +1,10 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "The Janitor's Union has mandated additional features to station
+light replacer devices."
+  - rscadd: "The light replacer now can be used on the floor to replace
+the bulbs of any lights on that tile."
+  - rscadd: "The light replacer now eats replaced bulbs, and after a certain
+number of bulb fragments (four) will recycle them into a new bulb."
+  - tweak: "The description of the light replacer is now more informative."

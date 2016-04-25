@@ -366,7 +366,7 @@
 /datum/table_recipe/oar
 	name = "goliath bone oar"
 	result = /obj/item/weapon/oar
-	reqs = list(/obj/item/asteroid/goliath_hide = 1)
+	reqs = list(/obj/item/stack/sheet/bone = 2)
 	time = 15
 	category = CAT_MISC
 

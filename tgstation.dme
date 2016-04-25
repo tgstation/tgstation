@@ -87,6 +87,7 @@
 #include "code\_onclick\_defines.dm"
 #include "code\_onclick\adjacent.dm"
 #include "code\_onclick\ai.dm"
+#include "code\_onclick\autoclick.dm"
 #include "code\_onclick\click.dm"
 #include "code\_onclick\cyborg.dm"
 #include "code\_onclick\drag_drop.dm"

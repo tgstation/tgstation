@@ -235,7 +235,7 @@
 					/obj/item/clothing/head/wizard/fake, /obj/item/clothing/head/wizard, /obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/helmet/space/santahat,
 					/obj/item/clothing/head/soft, /obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/sombrero,
-					/obj/item/clothing/head/hopcap, /obj/item/clothing/mask/gas/clown_hat)
+					/obj/item/clothing/head/hopcap, /obj/item/clothing/mask/gas/clown_hat, /obj/item/clothing/head/wizard/red)
 				valid = 1
 
 	if(valid)
@@ -331,6 +331,10 @@
 			if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
 				name = "Grandwizard [real_name]"
 				speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+
+			if(/obj/item/clothing/head/wizard/red)
+				name = "Pyromancer [real_name]"
+				speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "ONI SOMA!")
 
 			if(/obj/item/clothing/head/cardborg)
 				name = "Borgi"
