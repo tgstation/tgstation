@@ -97,7 +97,7 @@
 				if(1 to 7)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> suddenly and violently vomits!</span>")
 					playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-					new /obj/decal/cleanable/vomit(M.loc)
+					new /obj/effect/decal/cleanable/vomit(M.loc)
 					M.emote(pick("groan","moan"))
 				if(8 to 14)
 					M.adjustToxLoss(1)
@@ -106,7 +106,7 @@
 				if(1 to 7)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> suddenly and violently vomits!</span>")
 					playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-					new /obj/decal/cleanable/vomit(M.loc)
+					new /obj/effect/decal/cleanable/vomit(M.loc)
 				if(8 to 14)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 					M.Dizzy(8)
@@ -450,7 +450,7 @@
 	if(prob(6))
 		M.visible_message("<span class = 'danger'>[M] pukes all over \himself.</span>")
 		playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-		new /obj/decal/cleanable/vomit(M.loc)
+		new /obj/effect/decal/cleanable/vomit(M.loc)
 	..()
 
 /datum/reagent/medicine/potass_iodide
@@ -503,8 +503,8 @@
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
 	if(prob(55))
 		M.adjustBruteLoss(-2*REM, 0)
-	if(M.bodytemperature > M.base_body_temp)
-		M.bodytemperature = min(M.base_body_temp, M.bodytemperature+10)
+	if(M.bodytemperature > 310)
+		M.bodytemperature = min(310, M.bodytemperature+10)
 	..()
 	. = 1
 
@@ -584,7 +584,7 @@
 				if(1)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> suddenly and violently vomits!</span>")
 					playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-					new /obj/decal/cleanable/vomit(M.loc)
+					new /obj/effect/decal/cleanable/vomit(M.loc)
 				if(2 to 3)
 					M.adjustToxLoss(1)
 		if(40 to INFINITY)
@@ -592,7 +592,7 @@
 				if(1 to 2)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> suddenly and violently vomits!</span>")
 					playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-					new /obj/decal/cleanable/vomit(M.loc)
+					new /obj/effect/decal/cleanable/vomit(M.loc)
 				if(3)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 					M.Dizzy(8)
@@ -814,8 +814,8 @@
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/M)
 	M.Dizzy(1)
 	M.confused += 1
-	if(M.bodytemperature < M.base_body_temp)
-		M.bodytemperature = max(M.base_body_temp + 10, M.bodytemperature-10)
+	if(M.bodytemperature < 310)
+		M.bodytemperature = max(310 + 10, M.bodytemperature-10)
 	if(M.getOxyLoss() > 65)
 		M.adjustOxyLoss(-10)
 	if(M.health < -25)
@@ -844,7 +844,7 @@
 	overdose_threshold = 20
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/M)
-	M.bodytemperature = min(M.base_body_temp, M.bodytemperature+5)
+	M.bodytemperature = min(310, M.bodytemperature+5)
 	if(prob(10))
 		M.Jitter(4)
 	if(prob(20))
@@ -882,7 +882,7 @@
 				if(1)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> suddenly and violently vomits!</span>")
 					playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-					new /obj/decal/cleanable/vomit(M.loc)
+					new /obj/effect/decal/cleanable/vomit(M.loc)
 				if(2 to 3)
 					M.emote("collapse")
 					M.Weaken(3)
@@ -891,12 +891,12 @@
 				if(1 to 2)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> suddenly and violently vomits!</span>")
 					playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-					new /obj/decal/cleanable/vomit(M.loc)
+					new /obj/effect/decal/cleanable/vomit(M.loc)
 				if(3)
 					M.visible_message("<span class = 'danger'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 					M.Dizzy(2)
 					M.Weaken(3)
-		. = 1
+	. = 1
 	..()
 
 /datum/reagent/medicine/strange_reagent
@@ -968,8 +968,8 @@
 	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 8*REM, 0, 1)
-	if(M.getToxLoss <= 25)
-	M.adjustToxLoss(-2*REM, 0)
+	if(M.getToxLoss() <= 25)
+		M.adjustToxLoss(-2*REM, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - 10, 0)

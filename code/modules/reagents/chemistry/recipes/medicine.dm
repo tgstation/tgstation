@@ -1,8 +1,8 @@
 
-/datum/chemical_reaction/leporazine
-	name = "Leporazine"
-	id = "leporazine"
-	result = "leporazine"
+/datum/chemical_reaction/teporone
+	name = "Teporone"
+	id = "teporone"
+	result = "teporone"
 	required_reagents = list("silicon" = 1, "copper" = 1)
 	required_catalysts = list("plasma" = 5)
 	result_amount = 2
