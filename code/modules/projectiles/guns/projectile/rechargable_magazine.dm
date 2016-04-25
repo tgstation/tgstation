@@ -146,7 +146,7 @@
 	icon_state = "minigun_spin"
 	item_state = "minigun"
 	origin_tech = null
-	flags = NODROP | CONDUCT | HANDSLOW
+	flags = CONDUCT | HANDSLOW
 	slowdown = 1
 	slot_flags = null
 	w_class = 5
@@ -161,6 +161,16 @@
 
 /obj/item/weapon/gun/projectile/minigun/attack_self(mob/living/user)
 	return
+
+/obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
+	if(ammo_pack)
+		ammo_pack.attach_gun(user)
+	else
+		qdel(src)
+
+/obj/item/weapon/gun/projectile/minigun/afterattack(atom/target, mob/living/user, flag, params)
+	if(!ammo_pack || ammo_pack.loc != user)
+		user << "You need the backpack power source to fire the gun!"
 
 /obj/item/weapon/gun/projectile/minigun/New()
 	if(!ammo_pack)
