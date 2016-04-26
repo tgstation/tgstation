@@ -69,6 +69,9 @@
 			return 0
 		if(buckled_mobs.len)
 			return 0
+		if(usr.incapacitated())
+			usr << "<span class='warning'>You can't do that right now!</span>"
+			return 0
 		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
 		new foldabletype(get_turf(src))
 		qdel(src)
