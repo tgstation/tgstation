@@ -98,7 +98,7 @@ Warden
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden
-	gloves = /obj/item/clothing/gloves/color/black/krav_maga/sec
+	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/device/assembly/flash/handheld
