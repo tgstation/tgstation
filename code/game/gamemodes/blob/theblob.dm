@@ -215,6 +215,18 @@
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(istype(W, /obj/item/device/analyzer))
+		user << "<b>The analyzer beeps once, then reports:</b><br>"
+		if(overmind)
+			user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
+			user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
+			user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
+		user << "<b>Blob Type:</b> <span class='notice'>[capitalize(initial(name))].</span>"
+		user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
+		user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
+		user << "<b>Brute Resistance:</b> <span class='notice'>Takes [100*brute_resist]% brute damage.</span>"
+		user << "<b>Burn Resistance:</b> <span class='notice'>Takes [100*fire_resist]% burn damage.</span>"
+		return
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
@@ -275,18 +287,27 @@
 	user << "It seems to be made of [get_chem_name()]."
 	return
 
+/obj/effect/blob/proc/scannerreport()
+	return "A generic blob."
+
 /obj/effect/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blob_reagent_datum.name
 	return "an unknown variant"
 
 /obj/effect/blob/normal
+	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
 	maxhealth = 25
 	health_regen = 1
 	brute_resist = 0.25
+
+/obj/effect/blob/normal/scannerreport()
+	if(health <= 10)
+		return "Currently weak to brute damage."
+	return "N/A"
 
 /obj/effect/blob/normal/update_icon()
 	..()

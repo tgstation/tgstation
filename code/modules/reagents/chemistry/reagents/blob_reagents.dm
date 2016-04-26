@@ -5,6 +5,8 @@
 	color = "#FFFFFF"
 	var/complementary_color = "#000000" //a color that's complementary to the normal blob color
 	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
+	var/analyzerdescdamage = "Unknown. Report this bug to a coder, or just adminhelp."
+	var/analyzerdesceffect = "Has no special properties."
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
@@ -35,8 +37,10 @@
 /datum/reagent/blob/sporing_pods
 	name = "Sporing Pods"
 	id = "sporing_pods"
-	description = "will do low toxin damage and produce fragile spores when killed or on expanding."
-	shortdesc = "will do low toxin damage."
+	description = "will do very low toxin damage and produce fragile spores when killed or on expanding."
+	shortdesc = "will do very low toxin damage."
+	analyzerdescdamage = "Does very low toxin damage."
+	analyzerdesceffect = "Produces spores when expanding and when killed."
 	color = "#E88D5D"
 	complementary_color = "#5DB8E8"
 	message_living = ", and you feel sick"
@@ -67,6 +71,8 @@
 	id = "replicating_foam"
 	description = "will do medium brute damage and replicate when damaged, but takes increased brute damage."
 	shortdesc = "will do medium brute damage."
+	analyzerdescdamage = "Does medium brute damage."
+	analyzerdesceffect = "Expands when attacked, will occasionally expand again when expanding, and is fragile to brute damage."
 	color = "#7B5A57"
 	complementary_color = "#57787B"
 
@@ -96,6 +102,8 @@
 	id = "shifting_fragments"
 	description = "will do medium brute damage and shift away from damage."
 	shortdesc = "will do medium brute damage."
+	analyzerdescdamage = "Does medium brute damage."
+	analyzerdesceffect = "When attacked, may shift away from the attacker."
 	color = "#C8963C"
 	complementary_color = "#3C6EC8"
 
@@ -127,6 +135,8 @@
 	id = "energized_fibers"
 	description = "will do low burn and high stamina damage and conduct electricity."
 	shortdesc = "will do low burn and high stamina damage."
+	analyzerdescdamage = "Does low burn damage and massively drains stamina."
+	analyzerdesceffect = "Is immune to electricity and will easily conduct it."
 	color = "#EFD65A"
 	complementary_color = "#5A73EF"
 	blobbernaut_message = "shocks"
@@ -147,6 +157,8 @@
 	id = "boiling_oil"
 	description = "will do medium burn damage and set targets on fire, but is weak to water."
 	shortdesc = "will do medium burn damage and set targets on fire."
+	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
+	analyzerdesceffect = "Takes damage from water."
 	color = "#B68D00"
 	complementary_color = "#0029B6"
 	blobbernaut_message = "splashes"
@@ -171,6 +183,8 @@
 	id = "flammable_goo"
 	description = "will do low burn damage, medium toxin damage, and ignite when burned."
 	shortdesc = "will do low burn damage and medium toxin damage."
+	analyzerdescdamage = "Does low burn damage, medium toxin damage, and will explode into bursts of flame when burned."
+	analyzerdesceffect = "Releases bursts of flame when attacked with burn damage, but takes additional burn damage."
 	color = "#BE5532"
 	complementary_color = "#329BBE"
 	blobbernaut_message = "splashes"
@@ -197,6 +211,7 @@
 	name = "Regenerative Materia"
 	id = "regenerative_materia"
 	description = "will do low toxin damage and cause targets to believe they are fully healed."
+	analyzerdescdamage = "Does low toxin damage and injects a toxin that causes the target to believe they are fully healed."
 	color = "#C8A5DC"
 	complementary_color = "#B9DCA5"
 	message_living = ", and you feel <i>alive</i>"
@@ -225,6 +240,7 @@
 	name = "Hallucinogenic Nectar"
 	id = "hallucinogenic_nectar"
 	description = "will do low toxin damage, vivid hallucinations, and inject targets with toxins."
+	analyzerdescdamage = "Does low toxin damage and injects a toxin that causes vivid hallucinations and blurried vision."
 	color = "#CD7794"
 	complementary_color = "#77CDB0"
 	blobbernaut_message = "splashes"
@@ -244,7 +260,8 @@
 /datum/reagent/blob/zombifying_feelers
 	name = "Zombifying Feelers"
 	id = "zombifying_feelers"
-	description = "will cause medium toxin damage and turn sleeping targets into blob zombies."
+	description = "will do low toxin damage and turn sleeping targets into blob zombies."
+	analyzerdescdamage = "Does low toxin damage and kills unconscious humans, turning them into blob zombies."
 	color = "#828264"
 	complementary_color = "#646482"
 	message_living = ", and you feel tired"
@@ -259,13 +276,14 @@
 		O.blob_mobs.Add(BS)
 		BS.Zombify(M)
 	if(M)
-		M.apply_damage(0.6*reac_volume, TOX)
+		M.apply_damage(0.4*reac_volume, TOX)
 
 //toxin, stamina, and some bonus spore toxin
 /datum/reagent/blob/envenomed_filaments
 	name = "Envenomed Filaments"
 	id = "envenomed_filaments"
-	description = "will cause medium toxin and stamina damage, and inject targets with toxins."
+	description = "will do medium toxin and stamina damage, and inject targets with toxins."
+	analyzerdescdamage = "Does medium toxin damage, drains stamina, and injects a weak toxin."
 	color = "#9ACD32"
 	complementary_color = "#6532CD"
 	message_living = ", and you feel sick and nauseated"
@@ -283,6 +301,7 @@
 	name = "Poisonous Strands"
 	id = "poisonous_strands"
 	description = "will inject targets with poison."
+	analyzerdescdamage = "Injects a highly lethal poison that will gradually liquify the target's internal organs."
 	color = "#7D6EB4"
 	complementary_color = "#A5B46E"
 	blobbernaut_message = "injects"
@@ -304,6 +323,7 @@
 	name = "Cyclonic Grid"
 	id = "cyclonic_grid"
 	description = "will cause high oxygen damage and randomly throw targets to or from it."
+	analyzerdescdamage = "Does high oxygen damage and randomly throws targets at or away from it."
 	color = "#9BCD9B"
 	complementary_color = "#CD9BCD"
 	message = "The blob blasts you with a gust of air"
@@ -320,6 +340,7 @@
 	name = "Lexorin Jelly"
 	id = "lexorin_jelly"
 	description = "will cause low brute and high oxygen damage, and cause targets to be unable to breathe."
+	analyzerdescdamage = "Does low brute damage, high oxygen damage, and prevents targets from breathing."
 	color = "#00E5B1"
 	complementary_color = "#E50034"
 	message_living = ", and your lungs feel heavy and weak"
@@ -337,6 +358,8 @@
 	id = "explosive_lattice"
 	description = "will do brute damage in an area around targets and is resistant to explosions."
 	shortdesc = "will do brute damage in an area around targets."
+	analyzerdescdamage = "Does medium brute damage and causes damage to everyone near its targets."
+	analyzerdesceffect = "Is highly resistant to explosions."
 	color = "#8B2500"
 	complementary_color = "#00668B"
 	blobbernaut_message = "blasts"
@@ -370,6 +393,8 @@
 	id = "reactive_gelatin"
 	description = "will do random brute damage and react to brute damage."
 	shortdesc = "will do random brute damage."
+	analyzerdescdamage = "Does random brute damage."
+	analyzerdesceffect = "When attacked with brute damage, will lash out, attacking everything near it."
 	color = "#FFA500"
 	complementary_color = "#005AFF"
 	blobbernaut_message = "pummels"
@@ -393,6 +418,7 @@
 	name = "Cryogenic Liquid"
 	id = "cryogenic_liquid"
 	description = "will do low burn and stamina damage, and cause targets to freeze."
+	analyzerdescdamage = "Does low burn damage, drains stamina, and injects targets with a freezing liquid."
 	color = "#8BA6E9"
 	complementary_color = "#E9CE8B"
 	blobbernaut_message = "splashes"
@@ -414,6 +440,8 @@
 	id = "electromagnetic_web"
 	description = "will do low burn damage and EMP targets, but is very fragile."
 	shortdesc = "will do low burn damage and EMP targets."
+	analyzerdescdamage = "Does low burn damage and EMPs targets."
+	analyzerdesceffect = "Is fragile to all types of damage, but takes massive damage from brute. In addition, releases a small EMP when killed."
 	color = "#83ECEC"
 	complementary_color = "#EC8383"
 	blobbernaut_message = "lashes"
@@ -448,6 +476,8 @@
 	id = "synchronous_mesh"
 	description = "will do brute damage for each nearby blob and spread damage between nearby blobs."
 	shortdesc = "will do brute damage for each nearby blob."
+	analyzerdescdamage = "Does brute damage, increasing for each blob near the target."
+	analyzerdesceffect = "When attacked, spreads damage between all blobs near the attacked blob."
 	color = "#65ADA2"
 	complementary_color = "#AD6570"
 	blobbernaut_message = "synchronously strikes"
@@ -480,6 +510,7 @@
 	name = "Penetrating Spines"
 	id = "penetrating_spines"
 	description = "will do medium brute damage through armor."
+	analyzerdescdamage = "Does medium brute damage, ignoring armor."
 	color = "#6E4664"
 	complementary_color = "#466E50"
 	blobbernaut_message = "stabs"
@@ -494,6 +525,7 @@
 	id = "adaptive_nexuses"
 	description = "will do medium brute damage and kill unconscious targets, giving you bonus resources."
 	shortdesc = "will do medium brute damage and kill unconscious targets, giving your overmind bonus resources."
+	analyzerdescdamage = "Does medium brute damage and kills unconscious humans, reaping resources from them."
 	color = "#4A64C0"
 	complementary_color = "#823ABB"
 
@@ -506,7 +538,7 @@
 		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
 		M.death()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.5*reac_volume, BRUTE)
 
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
@@ -514,6 +546,8 @@
 	id = "pressurized_slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles when damaged or killed."
 	shortdesc = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
+	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets."
+	analyzerdesceffect = "When attacked or killed, wets nearby tiles."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"
 	blobbernaut_message = "emits slime at"
@@ -549,6 +583,7 @@
 	name = "Dark Matter"
 	id = "dark_matter"
 	description = "will do medium brute damage and pull nearby objects and enemies at the target."
+	analyzerdescdamage = "Does medium brute damage and pulls nearby objects and creatures at the target."
 	color = "#61407E"
 	complementary_color = "#5D7E40"
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
@@ -563,6 +598,7 @@
 	name = "Sorium"
 	id = "b_sorium"
 	description = "will do medium brute damage and throw nearby objects and enemies away from the target."
+	analyzerdescdamage = "Does medium brute damage and pushes nearby objects and creatures away from the target."
 	color = "#808000"
 	complementary_color = "#000080"
 	message = "The blob slams into you and sends you flying"
