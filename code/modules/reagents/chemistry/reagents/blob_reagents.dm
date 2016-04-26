@@ -33,6 +33,9 @@
 /datum/reagent/blob/proc/extinguish_reaction(obj/effect/blob/B) //when the blob is hit with water, do this
 	return
 
+/datum/reagent/blob/proc/emp_reaction(obj/effect/blob/B, severity) //when the blob is hit with an emp, do this
+	return
+
 //does low toxin damage, but creates fragile spores when expanding or killed by weak attacks
 /datum/reagent/blob/sporing_pods
 	name = "Sporing Pods"
@@ -129,14 +132,14 @@
 			B.forceMove(T) //swap the blobs
 	return ..()
 
-//does low burn and a lot of stamina damage, immune to tesla bolts
+//does low burn and a lot of stamina damage, immune to tesla bolts, weak to EMP
 /datum/reagent/blob/energized_fibers
 	name = "Energized Fibers"
 	id = "energized_fibers"
-	description = "will do low burn and high stamina damage and conduct electricity."
+	description = "will do low burn and high stamina damage and conduct electricity, but is weak to EMPs."
 	shortdesc = "will do low burn and high stamina damage."
 	analyzerdescdamage = "Does low burn damage and massively drains stamina."
-	analyzerdesceffect = "Is immune to electricity and will easily conduct it."
+	analyzerdesceffect = "Is immune to electricity and will easily conduct it, but is weak to EMPs."
 	color = "#EFD65A"
 	complementary_color = "#5A73EF"
 	blobbernaut_message = "shocks"
@@ -144,12 +147,16 @@
 
 /datum/reagent/blob/energized_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.4*reac_volume, BURN)
+	M.apply_damage(0.6*reac_volume, BURN)
 	if(M)
-		M.adjustStaminaLoss(0.8*reac_volume)
+		M.adjustStaminaLoss(0.6*reac_volume)
 
 /datum/reagent/blob/energized_fibers/tesla_reaction(obj/effect/blob/B, power)
 	return 0
+
+/datum/reagent/blob/energized_fibers/emp_reaction(obj/effect/blob/B, severity)
+	var/damage = rand(30, 50) - severity * rand(10, 15)
+	B.take_damage(damage, BURN)
 
 //sets you on fire, does burn damage, weak to water
 /datum/reagent/blob/boiling_oil
@@ -158,7 +165,7 @@
 	description = "will do medium burn damage and set targets on fire, but is weak to water."
 	shortdesc = "will do medium burn damage and set targets on fire."
 	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
-	analyzerdesceffect = "Takes damage from water."
+	analyzerdesceffect = "Takes damage from water and other extinguishing liquids."
 	color = "#B68D00"
 	complementary_color = "#0029B6"
 	blobbernaut_message = "splashes"
@@ -167,10 +174,10 @@
 
 /datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.adjust_fire_stacks(round(reac_volume/12))
+	M.adjust_fire_stacks(round(reac_volume/10))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.5*reac_volume, BURN)
+		M.apply_damage(0.6*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
@@ -181,9 +188,9 @@
 /datum/reagent/blob/flammable_goo
 	name = "Flammable Goo"
 	id = "flammable_goo"
-	description = "will do low burn damage, medium toxin damage, and ignite when burned."
-	shortdesc = "will do low burn damage and medium toxin damage."
-	analyzerdescdamage = "Does low burn damage, medium toxin damage, and will explode into bursts of flame when burned."
+	description = "will do medium burn and toxin damage, make targets flammable, and ignite when burned."
+	shortdesc = "will do medium burn and toxin damage, and make targets flammable."
+	analyzerdescdamage = "Does medium burn damage, medium toxin damage, and makes targets flammable."
 	analyzerdesceffect = "Releases bursts of flame when attacked with burn damage, but takes additional burn damage."
 	color = "#BE5532"
 	complementary_color = "#329BBE"
@@ -193,15 +200,16 @@
 
 /datum/reagent/blob/flammable_goo/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.adjust_fire_stacks(round(reac_volume/10)) //apply, but don't ignite
+	M.adjust_fire_stacks(round(reac_volume/8)) //apply, but don't ignite
 	M.apply_damage(0.4*reac_volume, TOX)
 	if(M)
-		M.apply_damage(0.2*reac_volume, BURN)
+		M.apply_damage(0.4*reac_volume, BURN)
 
 /datum/reagent/blob/flammable_goo/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(cause && damage_type == BURN)
-		for(var/turf/T in range(1, B))
-			if(!(locate(/obj/effect/blob) in T) && prob(80))
+		for(var/turf/open/T in range(1, B))
+			var/obj/effect/blob/C = locate() in T
+			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
 				PoolOrNew(/obj/effect/hotspot, T)
 		return damage * 1.5
 	return ..()

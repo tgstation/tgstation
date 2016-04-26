@@ -18,4 +18,4 @@
 	return
 
 /obj/effect/blob/shield/core
-	point_return = -1
+	point_return = 0

@@ -195,6 +195,13 @@
 	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
 	take_damage(damage, BURN)
 
+/obj/effect/blob/emp_act(severity)
+	if(severity > 0)
+		if(overmind)
+			overmind.blob_reagent_datum.emp_reaction(src, severity)
+		if(prob(100 - severity * 30))
+			PoolOrNew(/obj/effect/overlay/temp/emp, get_turf(src))
+
 /obj/effect/blob/tesla_act(power)
 	..()
 	if(overmind)
