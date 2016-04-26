@@ -147,15 +147,12 @@
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
-		if(!cube.wrapped)
-			cube.Expand()
+		cube.Expand()
 
 	// Dehydrated carp
 	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
-
-	return
 
 /*
  *	Water reaction to a mob
