@@ -229,11 +229,9 @@
 			user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
 			user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
 			user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
-		user << "<b>Blob Type:</b> <span class='notice'>[capitalize(initial(name))].</span>"
+		user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
 		user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
 		user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
-		user << "<b>Brute Resistance:</b> <span class='notice'>Takes [100*brute_resist]% brute damage.</span>"
-		user << "<b>Burn Resistance:</b> <span class='notice'>Takes [100*fire_resist]% burn damage.</span>"
 		return
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -296,7 +294,7 @@
 	return
 
 /obj/effect/blob/proc/scannerreport()
-	return "A generic blob."
+	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
 
 /obj/effect/blob/proc/get_chem_name()
 	if(overmind)
