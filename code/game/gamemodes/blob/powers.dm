@@ -7,8 +7,8 @@
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(point_rate = base_point_rate, placement_override = 0)
-	if(src.placed && placement_override != -1) //src.placed because for some reason it will assume usr.placed. changing the var name does nothing, either.
+/mob/camera/blob/proc/place_blob_core(set_point_rate = base_point_rate, placement_override = 0)
+	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)
 		for(var/mob/living/M in range(7, src))
@@ -43,15 +43,15 @@
 	else if(placement_override == 1)
 		var/turf/T = pick(blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
-	if(placed && blob_core) //but this works fine, of course it does. of course.
+	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		var/obj/effect/blob/core/core = new(get_turf(src), null, set_point_rate, 1)
 		core.overmind = src
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
-	placed = 1 //so does this.
+	placed = 1
 	return 1
 
 /mob/camera/blob/verb/transport_core()
