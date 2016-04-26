@@ -546,8 +546,8 @@
 	id = "pressurized_slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles when damaged or killed."
 	shortdesc = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
-	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets."
-	analyzerdesceffect = "When attacked or killed, wets nearby tiles."
+	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them."
+	analyzerdesceffect = "When attacked or killed, wets nearby tiles, extinguishing anything on them."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"
 	blobbernaut_message = "emits slime at"
@@ -559,6 +559,8 @@
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
 		T.MakeSlippery(TURF_WET_WATER)
+		L.adjust_fire_stacks(-(reac_volume / 10))
+		L.ExtinguishMob()
 	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
@@ -566,17 +568,23 @@
 		M.adjustStaminaLoss(0.4*reac_volume)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	for(var/turf/open/T in range(1, B))
-		if(prob(damage))
-			T.MakeSlippery(TURF_WET_WATER)
+	extinguisharea(B, damage)
 	return ..()
 
 /datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
 	if(!isnull(cause))
 		B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
+	extinguisharea(B, 50)
+
+/datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/effect/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
-		if(prob(50))
+		if(prob(probchance))
 			T.MakeSlippery(TURF_WET_WATER)
+			for(var/obj/O in T)
+				O.extinguish()
+			for(var/mob/living/L in T)
+				L.adjust_fire_stacks(-(reac_volume / 10))
+				L.ExtinguishMob()
 
 //does brute damage and throws or pulls nearby objects at the target
 /datum/reagent/blob/dark_matter
