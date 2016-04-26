@@ -258,7 +258,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustOxyLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	oxyloss += amount
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(oxyloss < 0)
 		oxyloss = 0
 	if(updating_health)
@@ -525,6 +525,10 @@ Sorry Giacom. Please don't be mad :(
 	fire_stacks = 0
 	updatehealth()
 	update_canmove()
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		for(var/datum/medical_effect/M in C.medical_effects)
+			C.remove_medical_effect(M.type)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)

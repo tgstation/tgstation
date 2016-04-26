@@ -6,7 +6,7 @@
 	//// goal: make crit a medical emergency ////
 	//// instead of game over black screen time /
 	/////////////////////////////////////////////
-	if(getBrainLoss() >= 100)
+	if(getBrainLoss() >= 100 && health < 0)
 		Weaken(1)
 		losebreath++
 		return
