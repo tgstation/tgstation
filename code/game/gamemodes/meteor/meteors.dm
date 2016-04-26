@@ -156,7 +156,8 @@
 		return ..() //Refer to atom/proc/CanPass
 
 /obj/effect/meteor/Bump(atom/A)
-
+	if(loc == null)
+		return
 	explosion(get_turf(src), 2, 4, 6, 8, 0, 1, 0) //Medium meteor, medium boom
 	qdel(src)
 
@@ -170,7 +171,8 @@
 	icon_state = "medium_radioactive"
 
 /obj/effect/meteor/radioactive/Bump(atom/a)
-
+	if(loc == null)
+		return
 	for(var/mob/living/M in viewers(src, null))
 		M.radiation += rand(5, 10)
 
@@ -183,7 +185,8 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/meteor/small/Bump(atom/A)
-
+	if(loc == null)
+		return
 	explosion(get_turf(src), -1, 1, 3, 4, 0, 1, 0) //Tiny meteor doesn't cause too much damage
 	qdel(src)
 
@@ -193,7 +196,8 @@
 	icon_state = "small_flash"
 
 /obj/effect/meteor/small/flash/Bump(atom/A)
-
+	if(loc == null)
+		return
 	//Adjusted from flashbangs, should be its own global proc
 	visible_message("<span class='danger'>BANG</span>")
 	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
@@ -250,7 +254,8 @@
 	var/pierce_health = 1 //When 0, piercing meteor explodes like normal
 
 /obj/effect/meteor/piercing/Bump(atom/A)
-
+	if(loc == null)
+		return
 	if(pierce_health)
 		explosion(get_turf(A), 1, 0, 0, 0, 0, 1, 0) //Blow up the resisting object
 		pierce_health--
@@ -265,7 +270,8 @@
 	pass_flags = 0 //Nope, you're not dodging that table
 
 /obj/effect/meteor/big/Bump(atom/A)
-
+	if(loc == null)
+		return
 	explosion(get_turf(src), 4, 6, 8, 8, 0, 1, 0) //You have been visited by the nuclear meteor
 	qdel(src)
 
@@ -275,6 +281,8 @@
 	icon_state = "big_cluster"
 
 /obj/effect/meteor/big/cluster/Bump(atom/A)
+	if(loc == null)
+		return
 
 	explosion(get_turf(A), 1, 0, 0, 0, 0, 1, 0) //Enough to destroy whatever was in the way
 	var/failcount = 0
@@ -311,5 +319,7 @@
 	icon_state = "human"
 
 /obj/effect/meteor/gib/Bump(atom/A)
+	if(loc == null)
+		return
 	new /obj/effect/gibspawner/human(src.loc)
 	qdel(src)
