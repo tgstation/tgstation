@@ -12,10 +12,8 @@
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	if(M.stat == DEAD)
-		return 0 //the dead don't cause reactions
-	if(istype(M, /mob/living/simple_animal/hostile/blob))
-		return 0 //the blob mobs do not cause effects when hitting themselves or other blob mobs
+	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
+		return 0 //the dead, and blob mobs, don't cause reactions
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
 /datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
@@ -525,10 +523,8 @@
 	message = "The blob stabs you"
 
 /datum/reagent/blob/penetrating_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	if(M.stat == DEAD)
-		return
-	if(istype(M, /mob/living/simple_animal/hostile/blob))
-		return
+	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
+		return 0 //the dead, and blob mobs, don't cause reactions
 	M.adjustBruteLoss(0.6*reac_volume)
 
 /datum/reagent/blob/adaptive_nexuses
