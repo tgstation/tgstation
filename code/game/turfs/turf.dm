@@ -176,8 +176,7 @@
 
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
-		return 0
+		return 0 // Still bumps against the turf if we return 0.
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in large_dense)
