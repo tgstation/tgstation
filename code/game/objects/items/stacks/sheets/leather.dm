@@ -133,7 +133,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	desc = "Long stringy filaments which presumably came from a watcher's wings."
 	singular_name = "watcher sinew"
 	icon_state = "sinew"
-	origin_tech = "bio=4"
+	origin_tech = "biotech=4"
 
 		/*
  * Plates
