@@ -9,6 +9,7 @@
 
 	slot_flags = SLOT_EARS
 	var/obj/item/device/encryptionkey/keyslot2 = null
+	dog_fashion = null
 
 /obj/item/device/radio/headset/New()
 	..()

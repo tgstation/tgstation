@@ -133,6 +133,8 @@
 	flash_protect = 1
 	tint = 1
 
+	dog_fashion = /datum/dog_fashion/head
+
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."

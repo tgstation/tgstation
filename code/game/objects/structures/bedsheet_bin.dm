@@ -19,6 +19,7 @@ LINEN BINS
 	item_color = "white"
 	burn_state = FLAMMABLE
 
+	dog_fashion = /datum/dog_fashion/head/ghost
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))

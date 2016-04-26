@@ -7,8 +7,7 @@
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
-	if (blocks_air)
-		return
+
 	current_cycle = times_fired
 
 	//cache some vars

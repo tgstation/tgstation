@@ -251,7 +251,8 @@
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
-		togglelock(user)
+		if(!toggle(user))
+			togglelock(user)
 		return 1
 	else
 		return ..()

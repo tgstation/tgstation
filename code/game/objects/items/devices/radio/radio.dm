@@ -4,6 +4,7 @@
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
+	dog_fashion = /datum/dog_fashion/back
 	var/on = 1 // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat
@@ -539,6 +540,7 @@
 /obj/item/device/radio/borg
 	name = "cyborg radio"
 	subspace_switchable = 1
+	dog_fashion = null
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -585,3 +587,4 @@
 
 /obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
+	dog_fashion = /datum/dog_fashion/back
