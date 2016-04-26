@@ -47,8 +47,7 @@
 			locked = L
 			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/teleporter/attack_ai(mob/user)
 	src.attack_hand(user)
@@ -299,11 +298,11 @@
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		return
-
 	if(exchange_parts(user, W))
 		return
-
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
+	return ..()
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
@@ -405,34 +404,37 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool) && !panel_open)
+	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-			if(linked_stations.len < efficiency)
-				linked_stations.Add(M.buffer)
-				M.buffer = null
-				user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
-			else
-				user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
-	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+		if(panel_open)
+			M.buffer = src
+			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
+		else
+			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+				if(linked_stations.len < efficiency)
+					linked_stations.Add(M.buffer)
+					M.buffer = null
+					user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+				else
+					user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
+		return
+	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
 
-	if(exchange_parts(user, W))
+	else if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
+	else if(default_deconstruction_crowbar(W))
+		return
 
-	if(panel_open)
-		if(istype(W, /obj/item/device/multitool))
-			var/obj/item/device/multitool/M = W
-			M.buffer = src
-			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
-			return
-		if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(panel_open)
 			link_console_and_hub()
 			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
 			return
+	else
+		return ..()
 
 /obj/machinery/teleport/station/attack_paw()
 	src.attack_hand()

@@ -25,7 +25,7 @@
 		panel_open = 1
 		update_icon()
 
-	
+
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
@@ -56,9 +56,6 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
-
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
@@ -101,7 +98,10 @@
 		update_icon()
 		return
 
-	return src.attack_hand(user)
+	if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
+		return src.attack_hand(user)
+	else
+		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
 	req_access = list()

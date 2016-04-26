@@ -80,18 +80,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
-	var/list/can_be_placed_into = list(
-		/obj/structure/table,
-		/obj/structure/rack,
-		/obj/structure/closet,
-		/obj/item/weapon/storage,
-		/obj/structure/safe,
-		/obj/machinery/disposal,
-		/obj/machinery/r_n_d/destructive_analyzer,
-		/obj/machinery/r_n_d/experimentor,
-		/obj/machinery/autolathe
-	)
-
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
@@ -125,7 +113,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
-	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
 		return 0
 	else
 		return 1
@@ -358,7 +346,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 
-	return
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 

@@ -104,16 +104,16 @@
 				return
 
 		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
-				if (beaker)
-						return 1
-				else
+				if (!beaker)
 						if(!user.drop_item())
 								return 1
 						beaker =  I
 						beaker.loc = src
 						update_icon()
 						src.updateUsrDialog()
-						return 0
+				else
+						user << "<span class='warning'>There's already a container inside.</span>"
+				return 1 //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -140,17 +140,20 @@
 						user << "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>"
 
 				src.updateUsrDialog()
-				return 0
-
-		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				user << "<span class='warning'>Cannot refine into a reagent!</span>"
 				return 1
 
-		user.unEquip(I)
-		I.loc = src
-		holdingitems += I
-		src.updateUsrDialog()
-		return 0
+		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
+				if(user.a_intent == "harm")
+						return ..()
+				else
+						user << "<span class='warning'>Cannot refine into a reagent!</span>"
+						return 1
+
+		if(user.drop_item())
+				I.loc = src
+				holdingitems += I
+				src.updateUsrDialog()
+				return 0
 
 /obj/machinery/reagentgrinder/attack_paw(mob/user)
 		return src.attack_hand(user)

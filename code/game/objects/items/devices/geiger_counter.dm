@@ -130,7 +130,8 @@
 		radiation_count = 0
 		update_icon()
 		return 1
-	..()
+	else
+		return ..()
 
 /obj/item/device/geiger_counter/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())

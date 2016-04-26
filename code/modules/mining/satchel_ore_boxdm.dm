@@ -9,17 +9,17 @@
 	density = 1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
-/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/ore))
 		if(!user.drop_item())
 			return
 		W.loc = src
-	if (istype(W, /obj/item/weapon/storage))
+	else if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		user << "<span class='notice'>You empty the ore in [S] into \the [src].</span>"
-	if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/weapon/crowbar))
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/item/weapon/crowbar/C = W
 		var/time = 50
@@ -30,7 +30,8 @@
 			var/obj/item/stack/sheet/mineral/wood/wo = new (loc, 4)
 			wo.add_fingerprint(user)
 			deconstruct()
-	return
+	else
+		return ..()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	if(Adjacent(user))

@@ -65,7 +65,7 @@ var/time_last_changed_position = 0
 				idcard.loc = src
 				modify = idcard
 	else
-		..()
+		return ..()
 
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)

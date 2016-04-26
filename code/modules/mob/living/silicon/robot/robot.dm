@@ -446,9 +446,6 @@
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
-		return
-
 	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
@@ -471,6 +468,7 @@
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
@@ -605,11 +603,14 @@
 			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
-
 	else
-		if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
-			spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
+	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
+		spark_system.start()
+	..()
+
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user != src)//To prevent syndieborgs from emagging themselves

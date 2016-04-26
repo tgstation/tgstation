@@ -6,33 +6,6 @@
 	flags = OPENCONTAINER
 	spillable = 1
 
-	can_be_placed_into = list(
-		/obj/machinery/chem_master/,
-		/obj/machinery/chem_dispenser/,
-		/obj/machinery/chem_heater/,
-		/obj/machinery/reagentgrinder,
-		/obj/machinery/biogenerator,
-		/obj/machinery/r_n_d/destructive_analyzer,
-		/obj/machinery/r_n_d/experimentor,
-		/obj/machinery/autolathe,
-		/obj/structure/table,
-		/obj/structure/rack,
-		/obj/structure/closet,
-		/obj/structure/sink,
-		/obj/item/weapon/storage,
-		/obj/machinery/atmospherics/components/unary/cryo_cell,
-		/obj/item/weapon/grenade/chem_grenade,
-		/mob/living/simple_animal/bot/medbot,
-		/obj/machinery/computer/pandemic,
-		/obj/structure/safe,
-		/obj/machinery/disposal,
-		/obj/machinery/hydroponics,
-		/obj/machinery/biogenerator,
-		/mob/living/simple_animal/cow,
-		/mob/living/simple_animal/hostile/retaliate/goat
-	)
-
-
 
 /obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
@@ -103,14 +76,6 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
-
-	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
-	//NINJACODE
-	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
-		return
-
-	else if(istype(target, /obj/effect/decal/cleanable)) //stops splashing while scooping up fluids
-		return
 
 	else if(reagents.total_volume)
 		if(user.a_intent == "harm")

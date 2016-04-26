@@ -31,7 +31,6 @@
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
 	var/detect_state = PROXIMITY_NONE
-	var/turf/our_turf
 	var/rangealert = 8	//Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
 
@@ -47,12 +46,12 @@
 	if(track_cooldown > world.time)
 		return
 	detect_state = PROXIMITY_NONE
-	our_turf = get_turf(src)
 	multitool_detect()
 	icon_state = "[initial(icon_state)][detect_state]"
-	track_cooldown = world.time + track_delay // 1 second
+	track_cooldown = world.time + track_delay
 
 /obj/item/device/multitool/ai_detect/proc/multitool_detect()
+	var/turf/our_turf = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in ai_list)
 		if(AI.cameraFollow == src)
 			detect_state = PROXIMITY_ON_SCREEN
@@ -76,7 +75,8 @@
 	track_delay = 5
 
 /obj/item/device/multitool/ai_detect/admin/multitool_detect()
-	for(var/mob/J in range(rangewarning,src))
+	var/turf/our_turf = get_turf(src)
+	for(var/mob/J in urange(rangewarning,our_turf))
 		if(admin_datums[J.ckey])
 			detect_state = PROXIMITY_NEAR
 			var/turf/detect_turf = get_turf(J)
