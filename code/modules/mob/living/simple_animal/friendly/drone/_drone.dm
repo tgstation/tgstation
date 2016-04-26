@@ -69,8 +69,9 @@
 	real_name = name
 
 	access_card = new /obj/item/weapon/card/id(src)
-	var/datum/job/captain/C = new /datum/job/captain
-	access_card.access = C.get_access()
+	//Worthless greytiders in my opinion
+	var/datum/job/assistant/Greytide = new /datum/job/assistant
+	access_card.access = Greytide.get_access()
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
