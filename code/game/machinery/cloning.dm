@@ -249,22 +249,23 @@
 	if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
+	if (W.GetID())
+		if (!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-		if ((!src.locked) || (isnull(src.occupant)))
+		if (!locked || !occupant)
 			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "<span class='danger'>Access Refused.</span>"
+		if (occupant.health < -20 && occupant.stat != DEAD)
+			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
 			return
 		else
-			src.locked = 0
+			locked = 0
 			user << "System unlocked."
 	else
-		..()
+		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(src.occupant))

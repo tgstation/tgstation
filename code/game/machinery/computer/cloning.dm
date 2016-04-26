@@ -74,18 +74,17 @@
 	return null
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
-				return ..()
+				return
 			W.loc = src
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
 			return
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/cloning/attack_hand(mob/user)
 	if(..())

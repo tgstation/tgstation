@@ -41,10 +41,6 @@
 			return 0
 	return ..()
 
-/obj/structure/plasticflaps/attackby(obj/item/weapon/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	..()
-
 /obj/structure/plasticflaps/ex_act(severity)
 	..()
 	switch(severity)

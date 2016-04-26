@@ -577,7 +577,7 @@
 							if(istype(D,/obj/machinery/door/airlock))
 								var/obj/machinery/door/airlock/AL = D
 								if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
-									AL.p_open = 1
+									AL.panel_open = 1
 									AL.update_icon()
 									AL.shock(src,(100 - smartness)/2)
 									sleep(5)
@@ -589,7 +589,7 @@
 									if(!AL.wires.is_cut(WIRE_POWER2))
 										AL.wires.cut(WIRE_POWER2)
 									sleep(5)
-									AL.p_open = 0
+									AL.panel_open = 0
 									AL.update_icon()
 							D.open()
 

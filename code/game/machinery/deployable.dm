@@ -21,14 +21,22 @@
 	var/debris_type
 
 
-/obj/structure/barricade/proc/take_damage(damage, leave_debris=1, message)
+/obj/structure/barricade/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			damage = 0
 	health -= damage
 	if(health <= 0)
-		if(message)
-			visible_message(message)
-		else
-			visible_message("<span class='warning'>\The [src] is smashed apart!</span>")
-		if(leave_debris && debris_type)
+		if(debris_type)
 			new debris_type(get_turf(src), 3)
 		qdel(src)
 
@@ -43,7 +51,7 @@
 	take_damage(M.melee_damage_upper)
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help" && material == METAL)
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm" && material == METAL)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(health < maxhealth)
 			if(WT.remove_fuel(0,user))
@@ -51,31 +59,28 @@
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user, 40/I.toolspeed, target = src))
 					health = Clamp(health + 20, 0, maxhealth)
-					return
-
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>", "<span class='warning'>You hit [src] with [I]!</span>")
-		take_damage(I.force)
-		user.do_attack_animation(src)
+		return ..()
 
-/obj/structure/barricade/bullet_act(var/obj/item/projectile/P)
-	if(P)
-		..()
-		take_damage(P.damage*ranged_damage_modifier)
-		visible_message("<span class='warning'>\The [src] is hit by [P]!</span>")
+
+/obj/structure/barricade/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force)
+
+/obj/structure/barricade/bullet_act(obj/item/projectile/P)
+	. = ..()
+	visible_message("<span class='warning'>\The [src] is hit by [P]!</span>")
+	take_damage(P.damage*ranged_damage_modifier)
 
 /obj/structure/barricade/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			visible_message("<span class='warning'>\The [src] is blown apart!</span>")
 			qdel(src)
 		if(2)
-			take_damage(25, message = "<span class='warning'>\The [src] is blown apart!</span>")
+			take_damage(25, BRUTE, 0)
 
 /obj/structure/barricade/blob_act()
-	take_damage(25, leave_debris = 0, message = "<span class='warning'>The blob eats through \the [src]!</span>")
-
+	take_damage(25, BRUTE, 0)
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
@@ -104,6 +109,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	material = WOOD
+	debris_type = /obj/item/stack/sheet/mineral/wood
 
 
 /obj/structure/barricade/sandbags

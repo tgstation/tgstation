@@ -33,6 +33,8 @@
 					updateDialog()
 		else
 			user << "\The [src] is full."
+	else
+		return ..()
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())

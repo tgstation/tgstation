@@ -34,7 +34,7 @@ var/list/doppler_arrays = list()
 			user << "<span class='notice'>You unfasten [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 	else
-		..()
+		return ..()
 
 /obj/machinery/doppler_array/verb/rotate()
 	set name = "Rotate Tachyon-doppler Dish"
