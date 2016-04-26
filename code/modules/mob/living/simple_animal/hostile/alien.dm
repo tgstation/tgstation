@@ -166,11 +166,11 @@ var/list/nest_locations = list()
 	for(var/atom/A in ListTargets())
 		if(istype(A,/mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/M = A
-			if(!M.client && !M.locked_to)
+			if(!M.client && !M.locked_to && !(M.flags & INVULNERABLE))
 				Preys += A
 		else if((faction != "neutral") && (istype(A,/mob/living/carbon/monkey) || istype(A,/mob/living/carbon/human)))
 			var/mob/living/carbon/C = A
-			if(C.stat && !C.locked_to)
+			if(C.stat && !C.locked_to && !(C.flags & INVULNERABLE))
 				Preys += A
 	if(Preys.len)
 		Prey = pick(Preys)

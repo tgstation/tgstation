@@ -56,6 +56,7 @@
 	lock_atom(M, /datum/locking_category/bed/nest)
 	src.add_fingerprint(user)
 	overlays += image(icon,"nest-covering",MOB_LAYER)
+	stabilize()
 
 /obj/structure/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/aforce = W.force
@@ -86,12 +87,12 @@
 
 	var/mob/M = locked_atoms[1]
 
-	if(iscarbon(M) && (M.reagents.get_reagent_amount("stabilizine") < 1))
+	if(iscarbon(M) && (M.stat != DEAD) && (M.reagents.get_reagent_amount("stabilizine") < 1))
 		M.reagents.add_reagent("stabilizine", 2)
 	else
 		return
 
-	spawn(10)
+	spawn(15)
 		if(!gcDestroyed && locked_atoms.len)
 			stabilize()
 
