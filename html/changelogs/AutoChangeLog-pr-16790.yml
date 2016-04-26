@@ -1,0 +1,4 @@
+author: Lati
+delete-after: True
+changes: 
+  - tweak: "Syndicate bomb can be only delayed once by pulsing the delay wire. Time gained from this is changed from 10 seconds to 30 seconds."
