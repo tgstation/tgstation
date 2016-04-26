@@ -97,7 +97,7 @@
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
-			if(wet_setting == TURF_WET_ICE)
+			if(wet_setting >= TURF_WET_ICE)
 				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
 			else
 				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
