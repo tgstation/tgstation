@@ -33,9 +33,6 @@
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
 
-		//heart attack stuff
-		handle_heart()
-
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
@@ -302,15 +299,6 @@
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-
-/mob/living/carbon/human/proc/handle_heart()
-	if(!heart_attack)
-		return
-	else
-		if(losebreath < 3)
-			losebreath += 2
-		adjustOxyLoss(5)
-		adjustBruteLoss(1)
 
 /*
 Alcohol Poisoning Chart

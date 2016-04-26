@@ -115,11 +115,12 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.stat == DEAD || H.heart_attack)
+		if(H.stat == DEAD || H.has_medical_effect(/datum/medical_effect/flatline))
 			Stop()
 			return
-		if(!special)
-			H.heart_attack = 1
+		if(!special) // TODO: add Cardiac Abscondment effect
+			if(!H.has_medical_effect(/datum/medical_effect/flatline))
+				H.add_medical_effect(/datum/medical_effect/flatline, 1)
 
 	spawn(120)
 		if(!owner)
@@ -136,10 +137,9 @@
 
 /obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
-	if(ishuman(M) && beating)
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
-			H.heart_attack = 0
+	if(beating)
+		if(M.has_medical_effect(/datum/medical_effect/flatline))
+			M.remove_medical_effect(/datum/medical_effect/flatline)
 			return
 
 /obj/item/organ/internal/heart/proc/Stop()

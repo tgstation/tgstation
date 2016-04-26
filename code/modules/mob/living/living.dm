@@ -199,7 +199,7 @@ Sorry Giacom. Please don't be mad :(
 		death()
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
+	return (src.health < 0)
 
 /mob/living/ex_act(severity, target)
 	..()
@@ -246,7 +246,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustBruteLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
+	bruteloss += amount
+	if(bruteloss < 0)
+		bruteloss = 0
 	if(updating_health)
 		updatehealth()
 
@@ -256,7 +258,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustOxyLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
+	oxyloss += amount
+	if(oxyloss < 0)
+		oxyloss = 0
 	if(updating_health)
 		updatehealth()
 
@@ -273,7 +277,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustToxLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
+	toxloss += amount
+	if(toxloss < 0)
+		toxloss = 0
 	if(updating_health)
 		updatehealth()
 
@@ -290,7 +296,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustFireLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
+	fireloss += amount
+	if(fireloss < 0)
+		fireloss = 0
 	if(updating_health)
 		updatehealth()
 
@@ -300,7 +308,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustCloneLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
+	cloneloss += amount
+	if(cloneloss < 0)
+		cloneloss = 0
 	if(updating_health)
 		updatehealth()
 
@@ -317,7 +327,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
-	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
+	brainloss += amount
+	if(brainloss < 0)
+		brainloss = 0
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)

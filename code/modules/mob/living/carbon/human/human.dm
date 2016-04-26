@@ -288,9 +288,9 @@
 		if(dna && dna.species)
 			species_siemens_coeff = dna.species.siemens_coeff
 		siemens_coeff = gloves_siemens_coeff * species_siemens_coeff
-	if(heart_attack)
+	if(has_medical_effect(/datum/medical_effect/flatline))
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			heart_attack = 0
+			remove_medical_effect(/datum/medical_effect/flatline)
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)

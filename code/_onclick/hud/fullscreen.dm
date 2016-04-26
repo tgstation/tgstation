@@ -80,9 +80,18 @@
 	icon_state = "oxydamageoverlay"
 	layer = DAMAGE_LAYER
 
-/obj/screen/fullscreen/crit
-	icon_state = "passage"
+/obj/screen/fullscreen/crit1
+	icon = 'goon/icons/effects/overlays/meatysmall.dmi'
+	icon_state = "meatysmall"
 	layer = CRIT_LAYER
+	color = "#eeeeee"
+	blend_mode = 3
+
+/obj/screen/fullscreen/crit2
+	icon = 'goon/icons/effects/overlays/knockout2.dmi'
+	icon_state = "knockout2"
+	layer = CRIT_LAYER
+	blend_mode = 3
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"

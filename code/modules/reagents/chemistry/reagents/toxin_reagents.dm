@@ -324,11 +324,11 @@
 	description = "An extremely radioactive material in liquid form. Ingestion results in fatal irradiation."
 	reagent_state = LIQUID
 	color = "#CF3600"
-	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/M)
-	M.radiation += 4
+	M.radiation += 8
 	..()
 
 /datum/reagent/toxin/histamine
@@ -500,10 +500,10 @@
 				M.adjustOxyLoss(rand(5,25), 0)
 				. = 1
 			if(3)
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
-					if(!H.heart_attack)
-						H.heart_attack = 1 // rip in pepperoni
+				if(istype(M, /mob/living/carbon))
+					var/mob/living/carbon/H = M
+					if(!H.has_medical_effect(/datum/medical_effect/flatline))
+						H.add_medical_effect(/datum/medical_effect/flatline, 1)
 						if(H.stat == CONSCIOUS)
 							H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
 					else

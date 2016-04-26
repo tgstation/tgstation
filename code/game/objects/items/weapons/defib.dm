@@ -441,8 +441,8 @@
 						playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
 						var/mob/living/carbon/human/HU = M
 						M.emote("scream")
-						if(!HU.heart_attack)
-							HU.heart_attack = 1
+						if(!HU.has_medical_effect(/datum/medical_effect/flatline))
+							HU.add_medical_effect(/datum/medical_effect/flatline, 1)
 							if(!HU.stat)
 								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>",
 									"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
@@ -523,6 +523,7 @@
 								H.adjustToxLoss((mobhealth - halfwaycritdeath) * (H.getToxLoss() / overall_damage), 0)
 								H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage), 0)
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage), 0)
+								H.adjustBrainLoss(-100, 0)
 							user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
 							H.revive()
@@ -538,8 +539,8 @@
 							defib.cooldowncheck(user)
 						else
 							recharge(60)
-					else if(H.heart_attack)
-						H.heart_attack = 0
+					else if(H.has_medical_effect(/datum/medical_effect/flatline))
+						H.remove_medical_effect(/datum/medical_effect/flatline)
 						user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					else

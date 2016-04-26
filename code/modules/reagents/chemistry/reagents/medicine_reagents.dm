@@ -296,6 +296,11 @@
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = 1
+	if(prob(10))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.has_medical_effect(/datum/medical_effect/shock))
+				C.remove_medical_effect(/datum/medical_effect/shock)
 	..()
 
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
@@ -825,6 +830,11 @@
 	if(M.losebreath > 5)
 		M.losebreath = max(5, M.losebreath-5)
 		. = 1
+	if(prob(10))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.has_medical_effect(/datum/medical_effect/heartfailure))
+				C.remove_medical_effect(/datum/medical_effect/heartfailure)
 	..()
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M)
@@ -870,6 +880,10 @@
 		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-1, 0)
 		M.AdjustWeakened(-1, 0, 0)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.has_medical_effect(/datum/medical_effect/heartfailure))
+				C.remove_medical_effect(/datum/medical_effect/heartfailure)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)

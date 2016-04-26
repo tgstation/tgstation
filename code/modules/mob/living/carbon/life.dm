@@ -54,9 +54,6 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit)
-		losebreath++
-
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
@@ -393,3 +390,26 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+/mob/living/carbon/handle_medical_effects()
+	for(var/datum/medical_effect/E in medical_effects)
+		E.process(src)
+
+/mob/living/carbon/proc/add_medical_effect(var/datum/medical_effect/E, stage = 1)
+	if(has_medical_effect(E))
+		return
+	var/datum/medical_effect/ME = new E
+	ME.stage = stage
+	medical_effects += ME
+	return
+
+/mob/living/carbon/proc/remove_medical_effect(var/datum/medical_effect/E)
+	for(var/datum/medical_effect/ME in medical_effects)
+		if(istype(ME, E))
+			medical_effects -= ME
+	return
+
+/mob/living/carbon/proc/has_medical_effect(var/datum/medical_effect/E)
+	for(var/datum/medical_effect/MED in medical_effects)
+		if(istype(MED, E))
+			return 1

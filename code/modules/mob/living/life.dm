@@ -28,6 +28,12 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		//Critical condition
+		handle_crit()
+
+		//Medical Effects
+		handle_medical_effects()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -81,14 +87,20 @@
 /mob/living/proc/handle_stomach()
 	return
 
+/mob/living/proc/handle_crit()
+	return
+
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
+	var/oldstat = stat
 	if(paralysis)
 		AdjustParalysis(-1)
 	if(stunned)
 		AdjustStunned(-1)
 	if(weakened)
 		AdjustWeakened(-1, ignore_canweaken=1)
+	if(oldstat == 1 && !stat)
+		src << sound('goon/sound/misc/molly_revived.ogg', volume=50)
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
@@ -116,4 +128,5 @@
 /mob/living/proc/update_damage_hud()
 	return
 
-
+/mob/living/proc/handle_medical_effects()
+ 	return

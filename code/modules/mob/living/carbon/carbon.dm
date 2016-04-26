@@ -665,21 +665,11 @@
 		return
 
 	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
-		var/severity = 0
-		switch(health)
-			if(-20 to -10) severity = 1
-			if(-30 to -20) severity = 2
-			if(-40 to -30) severity = 3
-			if(-50 to -40) severity = 4
-			if(-60 to -50) severity = 5
-			if(-70 to -60) severity = 6
-			if(-80 to -70) severity = 7
-			if(-90 to -80) severity = 8
-			if(-95 to -90) severity = 9
-			if(-INFINITY to -95) severity = 10
-		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
+		overlay_fullscreen("crit1", /obj/screen/fullscreen/crit1)
+		overlay_fullscreen("crit2", /obj/screen/fullscreen/crit1)
 	else
-		clear_fullscreen("crit")
+		clear_fullscreen("crit1")
+		clear_fullscreen("crit2")
 		if(oxyloss)
 			var/severity = 0
 			switch(oxyloss)
@@ -742,10 +732,10 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(!getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH))
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
