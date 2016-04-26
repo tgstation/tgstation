@@ -1,0 +1,32 @@
+// DM Environment file for ProcessScheduler.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
+
+// BEGIN_INTERNALS
+// END_INTERNALS
+
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+
+// BEGIN_INCLUDE
+#include "core\_define.dm"
+#include "core\_stubs.dm"
+#include "core\process.dm"
+#include "core\processScheduler.dm"
+#include "core\updateQueue.dm"
+#include "core\updateQueueWorker.dm"
+#include "test\processSchedulerView.dm"
+#include "test\testDyingUpdateQueueProcess.dm"
+#include "test\testHarness.dm"
+#include "test\testHungProcess.dm"
+#include "test\testNiceProcess.dm"
+#include "test\testSlowProcess.dm"
+#include "test\testUpdateQueue.dm"
+#include "test\testUpdateQueueProcess.dm"
+#include "test\testZombieProcess.dm"
+// END_INCLUDE
+

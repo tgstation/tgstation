@@ -12,16 +12,16 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 4
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	faction = "goat"
 	attacktext = "kicks"
 	health = 40
 	melee_damage_lower = 1
-	melee_damage_upper = 5
+	melee_damage_upper = 2
+	size = SIZE_BIG
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
@@ -30,6 +30,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
@@ -39,35 +40,36 @@
 		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
-			src.visible_message("\blue [src] calms down.")
+			src.visible_message("<span class='notice'>[src] calms down.</span>")
 
 		if(stat == CONSCIOUS)
 			if(udder && prob(5))
 				udder.add_reagent("milk", rand(5, 10))
 
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			del(SV)
+		if(locate(/obj/effect/plantsegment) in loc)
+			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
+			SV.die_off()
 			if(prob(10))
 				say("Nom")
 
 		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+			for(var/direction in shuffle(alldirs))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/effect/spacevine) in step)
+					if(locate(/obj/effect/plantsegment) in step)
 						Move(step)
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
-	..()
-	src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
+	if(!stat)
+		..()
+		src.visible_message("<span class='warning'>[src] gets an evil-looking gleam in \his eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
-			del(SV)
+		if(locate(/obj/effect/plantsegment) in loc)
+			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
+			SV.die_off()
 			if(prob(10))
 				say("Nom")
 
@@ -77,9 +79,9 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "\red The [O] is full."
+			to_chat(user, "<span class='warning'>[O] is full.</span>")
 		if(!transfered)
-			user << "\red The udder is dry. Wait a bit longer..."
+			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
 	else
 		..()
 //cow
@@ -97,13 +99,15 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 6
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 50
+
+	size = SIZE_BIG
+	holder_type = /obj/item/weapon/holder/animal/cow
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/cow/New()
@@ -117,20 +121,21 @@
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "\red The [O] is full."
+			to_chat(user, "<span class='warning'>[O] is full.</span>")
 		if(!transfered)
-			user << "\red The udder is dry. Wait a bit longer..."
+			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
 	else
 		..()
 
 /mob/living/simple_animal/cow/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 	if(stat == CONSCIOUS)
 		if(udder && prob(5))
 			udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
+	if(!stat && M.a_intent == I_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
@@ -141,12 +146,12 @@
 											"[src] looks at you pleadingly",
 											"[src] looks at you with a resigned expression.",
 											"[src] seems resigned to its fate.")
-				M << pick(responses)
+				to_chat(M, pick(responses))
 	else
 		..()
 
 /mob/living/simple_animal/chick
-	name = "\improper chick"
+	name = "chick"
 	desc = "Adorable! They make such a racket though."
 	icon_state = "chick"
 	icon_living = "chick"
@@ -158,16 +163,16 @@
 	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
 	turns_per_move = 2
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 1
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
+	species_type = /mob/living/simple_animal/chicken
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
-	small = 1
+	size = SIZE_TINY
 
 /mob/living/simple_animal/chick/New()
 	..()
@@ -175,20 +180,18 @@
 	pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. =..()
 	if(!.)
 		return
-	if(!stat)
+	if(!stat && !ckey)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
-			del(src)
-
-var/const/MAX_CHICKENS = 50
-var/global/chicken_count = 0
+			qdel(src)
 
 /mob/living/simple_animal/chicken
-	name = "\improper chicken"
+	name = "chicken"
 	desc = "Hopefully the eggs are good this season."
 	icon_state = "chicken"
 	icon_living = "chicken"
@@ -199,47 +202,52 @@ var/global/chicken_count = 0
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 2
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 10
 	var/eggsleft = 0
-	var/_color
+	var/body_color
 	pass_flags = PASSTABLE
-	small = 1
+	size = SIZE_SMALL
 
 /mob/living/simple_animal/chicken/New()
-	..()
-	if(!_color)
-		_color = pick( list("brown","black","white") )
-	icon_state = "chicken_[_color]"
-	icon_living = "chicken_[_color]"
-	icon_dead = "chicken_[_color]_dead"
+	if(prob(5))
+		name = "Pomf chicken"
+		body_color = "white"
+
+	if(!body_color)
+		body_color = pick( list("brown","black","white") )
+	icon_state = "chicken_[body_color]"
+	icon_living = "chicken_[body_color]"
+	icon_dead = "chicken_[body_color]_dead"
+	..() //call this after icons to generate the proper static overlays
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
-	chicken_count += 1
-
-/mob/living/simple_animal/chicken/Die()
-	..()
-	chicken_count -= 1
 
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
-			user.drop_item()
-			del(O)
+			if(!user.drop_item(O))
+				user << "<span class='notice'>You can't let go of \the [O]!</span>"
+				return
+
+			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
+			qdel(O)
 			eggsleft += rand(1, 4)
-			//world << eggsleft
+//			to_chat(world, eggsleft)
 		else
-			user << "\blue [name] doesn't seem hungry!"
+			to_chat(user, "<span class='notice'>[name] doesn't seem hungry!</span>")
+	else if(istype(O, /obj/item/weapon/dnainjector))
+		var/obj/item/weapon/dnainjector/I = O
+		I.inject(src, user)
 	else
 		..()
 
 /mob/living/simple_animal/chicken/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. =..()
 	if(!.)
 		return
@@ -249,17 +257,5 @@ var/global/chicken_count = 0
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		if(chicken_count < MAX_CHICKENS && prob(10))
+		if(animal_count[src.type] < ANIMAL_CHILD_CAP && prob(10))
 			processing_objects.Add(E)
-
-/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/weapon/reagent_containers/food/snacks/egg/process()
-	if(isturf(loc))
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
-			visible_message("[src] hatches with a quiet cracking sound.")
-			new /mob/living/simple_animal/chick(get_turf(src))
-			processing_objects.Remove(src)
-			del(src)
-	else
-		processing_objects.Remove(src)

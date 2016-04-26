@@ -4,9 +4,9 @@
 	icon_state = "bio"
 	desc = "A hood that protects the head and face from biological comtaminants."
 	permeability_coefficient = 0.01
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = FPRINT
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	body_parts_covered = HEAD|EARS|EYES|MOUTH
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/suit/bio_suit
@@ -17,12 +17,11 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = FPRINT | TABLEPASS
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags = FPRINT
+	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
 	slowdown = 1.0
-	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 0.9
 
 
@@ -72,6 +71,19 @@
 
 /obj/item/clothing/head/bio_hood/cmo
 	icon_state = "bio_cmo"
+
+
+//Beekeeper's biosuit, white with a bee on its back
+/obj/item/clothing/suit/bio_suit/beekeeping
+	name = "beekeeping suit"
+	icon_state = "bio_beekeeping"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 70, rad = 0)
+
+/obj/item/clothing/head/bio_hood/beekeeping
+	name = "beekeeping hood"
+	icon_state = "bio_beekeeping"
+
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm

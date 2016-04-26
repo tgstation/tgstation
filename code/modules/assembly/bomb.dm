@@ -6,14 +6,15 @@
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 4
-	flags = FPRINT | TABLEPASS| CONDUCT //Copied this from old code, so this may or may not be necessary
+	flags = FPRINT | PROXMOVE
+	siemens_coefficient = 1
 	var/status = 0   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
 
-/obj/item/device/onetankbomb/examine()
+/obj/item/device/onetankbomb/examine(mob/user)
 	..()
-	bombtank.examine()
+	user.examination(bombtank)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)
@@ -27,9 +28,9 @@
 	if(istype(W, /obj/item/device/analyzer))
 		bombtank.attackby(W, user)
 		return
-	if(istype(W, /obj/item/weapon/wrench) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+	if(iswrench(W) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 
-		user << "<span class='notice'>You disassemble [src].</span>"
+		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
 		bombassembly.loc = user.loc
 		bombassembly.master = null
@@ -46,11 +47,11 @@
 			status = 1
 			bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
-			user << "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>"
+			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		else
 			status = 0
 			bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			user << "<span class='notice'>The hole has been closed.</span>"
+			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
 	add_fingerprint(user)
 	..()
 
@@ -60,12 +61,12 @@
 	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+	visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
 	sleep(10)
 	if(!src)
 		return
 	if(status)
-		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+		bombtank.detonate()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
 
@@ -73,9 +74,9 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
-/obj/item/device/onetankbomb/HasEntered(AM as mob|obj)
+/obj/item/device/onetankbomb/Crossed(AM as mob|obj)
 	if(bombassembly)
-		bombassembly.HasEntered(AM)
+		bombassembly.Crossed(AM)
 
 /obj/item/device/onetankbomb/on_found(mob/finder as mob)
 	if(bombassembly)
@@ -91,9 +92,10 @@
 	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 		return
 
+	if(!M.drop_item(S)) return		//Remove the assembly from your hands
+
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.drop_item()			//Remove the assembly from your hands
 	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
 	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
@@ -107,7 +109,7 @@
 	R.update_icon()
 	return
 
-/obj/item/weapon/tank/proc/ignite()	//This happens when a bomb is told to explode
+/obj/item/weapon/tank/proc/detonate()	//This happens when a bomb is told to explode
 	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 	var/strength = 1
 
@@ -125,7 +127,7 @@
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(air_contents)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(1000, 125,surfaces=1)
 
 	else if(air_contents.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
@@ -136,7 +138,7 @@
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(air_contents)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(1000, 125,surfaces=1)
 
 	else if(air_contents.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
@@ -145,11 +147,11 @@
 			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
 		else
 			ground_zero.assume_air(air_contents)
-			ground_zero.hotspot_expose(1000, 125)
+			ground_zero.hotspot_expose(1000, 125,1)
 
 	else
 		ground_zero.assume_air(air_contents)
-		ground_zero.hotspot_expose(1000, 125)
+		ground_zero.hotspot_expose(1000, 125,surfaces=1)
 
 	if(master)
 		del(master)

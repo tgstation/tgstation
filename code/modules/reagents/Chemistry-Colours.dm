@@ -1,39 +1,66 @@
-/proc/GetColors(hex)
-	hex = uppertext(hex)
-	var/hi1 = text2ascii(hex, 2)
-	var/lo1 = text2ascii(hex, 3)
-	var/hi2 = text2ascii(hex, 4)
-	var/lo2 = text2ascii(hex, 5)
-	var/hi3 = text2ascii(hex, 6)
-	var/lo3 = text2ascii(hex, 7)
-	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
-		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
-		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
+/*
+ * Returns:
+ * 	#RRGGBB(AA) on success, null on failure
+ */
+/proc/mix_color_from_reagents(const/list/reagent_list)
+	if(!istype(reagent_list))
+		return
 
-/proc/mix_color_from_reagents(var/list/reagent_list)
-	if(!reagent_list || !reagent_list.len) return 0
-
-	var/list/rgbcolor = list(0,0,0)
-	var/finalcolor = 0
-	for(var/datum/reagent/re in reagent_list) // natural color mixing bullshit/algorithm
-		if(!finalcolor)
-			rgbcolor = GetColors(re.color)
-			finalcolor = re.color
+	var/color
+	var/reagent_color
+	var/vol_counter = 0
+	var/vol_temp
+	// see libs/IconProcs/IconProcs.dm
+	for(var/datum/reagent/reagent in reagent_list)
+		if(reagent.id == "blood" && reagent.data["blood_colour"])
+			reagent_color = reagent.data["blood_colour"]
 		else
-			var/newcolor[3]
-			var/prergbcolor[3]
-			prergbcolor = rgbcolor
-			newcolor = GetColors(re.color)
+			reagent_color = reagent.color
 
-			rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-			rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+		vol_temp = reagent.volume
+		vol_counter += vol_temp
 
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
+		if(isnull(color))
+			color = reagent.color
+		else if(length(color) >= length(reagent_color))
+			color = BlendRGB(color, reagent_color, vol_temp/vol_counter)
+		else
+			color = BlendRGB(reagent_color, color, vol_temp/vol_counter)
 
-	return finalcolor
+	return color
 
-// This isn't a perfect color mixing system, the more reagents that are inside,
-// the darker it gets until it becomes absolutely pitch black! I dunno, maybe
-// that's pretty realistic? I don't do a whole lot of color-mixing anyway.
-// If you add brighter colors to it it'll eventually get lighter, though.
+/proc/mix_alpha_from_reagents(const/list/reagent_list)
+	if(!istype(reagent_list))
+		return
+
+	var/alpha
+	var/total_alpha
+
+	for(var/datum/reagent/reagent in reagent_list)
+		total_alpha += reagent.alpha
+
+	alpha = total_alpha / reagent_list.len
+
+	return alpha
+
+/proc/get_reagent_name(var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG)
+	if(!DG)
+		return
+
+	var/list/reagent_list = DG.reagents.reagent_list
+
+	if(!reagent_list.len)
+		DG.name = "glass of...nothing?"
+		DG.desc = "You can't see anything inside that glass, odd"//this shouldn't ever happen
+	else if(reagent_list.len > 4)
+		DG.name = "mixture of chemicals"
+		DG.desc = "There's too many different chemicals in the glass, you cannot tell them apart."
+		DG.viewcontents = 0
+	else
+		var/highest_quantity = 0
+		for(var/datum/reagent/reagent in reagent_list)
+			var/new_reag = DG.reagents.get_reagent_amount(reagent.id)
+			if(new_reag > highest_quantity)
+				highest_quantity = new_reag
+				DG.name = "glass of [reagent.name]"
+				DG.desc = reagent.description

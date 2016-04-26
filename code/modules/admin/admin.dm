@@ -9,7 +9,7 @@ var/global/floorIsLava = 0
 	log_adminwarn(msg)
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
-			C << msg
+			to_chat(C, msg)
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -18,8 +18,12 @@ var/global/floorIsLava = 0
 		if(R_ADMIN & C.holder.rights)
 			if(C.prefs.toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
-				C << msg
+				to_chat(C, msg)
 
+// Not happening.
+// Yes I could do a +PERMISSIONS check but I'm both too lazy and worried admins might do it on accident.
+/datum/admins/SDQL_update(var/const/var_name, var/new_value)
+	return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -29,44 +33,44 @@ var/global/floorIsLava = 0
 	set desc="Edit player (respawn, ban, heal, etc)"
 
 	if(!M)
-		usr << "You seem to be selecting a mob that doesn't exist anymore."
+		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
 		return
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:40: var/body = "<html><head><title>Options for [M.key]</title></head>"
+	checkSessionKey()
 	var/body = {"<html><head><title>Options for [M.key]</title></head>
 <body>Options panel for <b>[M]</b>"}
-	// END AUTOFIX
+	var/species_description
 	if(M.client)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:43: body += " played by <b>[M.client]</b> "
 		body += {"played by <b>[M.client]</b>
 			\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"}
-		// END AUTOFIX
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		species_description = "[H.species ? H.species.name : "<span class='danger'><b>No Species</b></span>"]"
 	body += {"
 		<br><br>\[
 		<a href='?_src_=vars;Vars=\ref[M]'>VV</a> -
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
+		<a href='?src=\ref[src];rapsheet=1;rsckey=[M.ckey]'>Bans</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
-		<b>Mob type</b> = [M.type]<br><br>
+		<b>Mob type</b> = [M.type][species_description ? " - Species = [species_description]" : ""]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
+		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
+		<A href='?src=\ref[src];oocban=\ref[M]'>OOC Ban</A> |
 		<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
 	"}
@@ -93,15 +97,15 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
 	"}
 
+	// Mob-specific controls.
+	body += M.player_panel_controls(usr)
+
 	if (M.client)
 		if(!istype(M, /mob/new_player))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:90: body += "<br><br>"
 			body += {"<br><br>
 				<b>Transformation:</b>
 				<br>"}
-			// END AUTOFIX
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
@@ -122,7 +126,8 @@ var/global/floorIsLava = 0
 					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
 					<A href='?src=\ref[src];makemommi=\ref[M]'>Make MoMMI</A> |
 					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
-					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
+					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> |
+					<A href='?src=\ref[src];makecluwne=\ref[M]'>Make Cluwne</A> |
 				"}
 
 			//Simple Animals
@@ -131,12 +136,12 @@ var/global/floorIsLava = 0
 			else
 				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
-			// MUTATIONS
-			if(iscarbon(M))
+			// DNA2 - Admin Hax
+			if(iscarbon(M) && !isbrain(M) && !isalien(M))
 				body += "<br><br>"
 				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
 				var/bname
-				for(var/block=1;block<STRUCDNASIZE;block++)
+				for(var/block=1;block<=DNA_SE_LENGTH;block++)
 					if(((block-1)%5)==0)
 						body += "</tr><tr><th>[block-1]</th>"
 					bname = assigned_blocks[block]
@@ -149,6 +154,17 @@ var/global/floorIsLava = 0
 						body += "[block]"
 					body+="</td>"
 				body += "</tr></table>"
+
+			// Law Admin Hax
+			if(issilicon(M) && M:laws)
+				body += "<br><br>"
+				body += "<b>Laws:</b><br />"
+				var/datum/ai_laws/L = M:laws
+				body += L.display_admin_tools(M)
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];add_law=1'>Add Law</a>"
+				body += " | <a href='?src=\ref[src];mob=\ref[M];clear_laws=1'>Clear Laws</a>"
+				body += " | <a href='?src=\ref[src];mob=\ref[M];reset_laws=1'>Reset Lawset</a>"
+				body += "<br /><a href='?src=\ref[src];mob=\ref[M];announce_laws=1'><b>Send Laws</b></a> - User is not notified of changes until this button pushed!<br />"
 
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
@@ -181,17 +197,30 @@ var/global/floorIsLava = 0
 			<b>Other actions:</b>
 			<br>
 			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> |
-			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> |
-			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> |
+			<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome Green</A> |
+			<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome Red</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
+			<A href='?src=\ref[src];addcancer=\ref[M]'>Inflict Cancer</A> |
 		"}
+
+	// language toggles
+	body += "<br><br><b>Languages:</b><br>"
+	var/f = 1
+	for(var/k in all_languages)
+		var/datum/language/L = all_languages[k]
+		if(!f) body += " | "
+		else f = 0
+		if(L in M.languages)
+			body += "<a href='?src=\ref[src];toglang=\ref[M];lang=[html_encode(k)]' style='color:#006600'>[k]</a>"
+		else
+			body += "<a href='?src=\ref[src];toglang=\ref[M];lang=[html_encode(k)]' style='color:#ff0000'>[k]</a>"
 
 	body += {"<br>
 		</body></html>
 	"}
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
+	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -204,12 +233,48 @@ var/global/floorIsLava = 0
 /datum/admins/proc/PlayerNotes()
 	set category = "Admin"
 	set name = "Player Notes"
+
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	PlayerNotesPage(1)
+
+/datum/admins/proc/checkCID()
+	set category = "Admin"
+	set name = "Lookup bans on Computer ID"
+
+	if(!usr)
+		return
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		to_chat(usr, "Error: you are not an admin!")
+		return
+	checkSessionKey()
+	var/cid = input("Type computer ID", "CID", 0) as num | null
+	if(cid)
+		usr << link(getVGPanel("rapsheet", admin = 1, query = list("cid" = cid)))
+//	to_chat(usr, link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&cid=[cid]"))
+	return
+
+/datum/admins/proc/checkCKEY()
+	set category = "Admin"
+	set name = "Lookup bans on CKEY"
+
+	if(!usr)
+		return
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		to_chat(usr, "Error: you are not an admin!")
+		return
+	checkSessionKey()
+	var/ckey = lowertext(input("Type player ckey", "ckey", null) as text | null)
+	usr << link(getVGPanel("rapsheet", admin = 1, query = list("ckey" = ckey)))
+//	usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&ckey=[ckey]")
+	return
 
 /datum/admins/proc/PlayerNotesPage(page)
 	var/dat = "<B>Player notes</B><HR>"
@@ -258,21 +323,43 @@ var/global/floorIsLava = 0
 	if(!infos || !infos.len) return 0
 	else return 1
 
+/proc/exportnotes(var/key as text)
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	var/list/noteslist = list()
+	if(!infos)
+		return list("1" = "No notes found for [key]")
+	else
+		var/i = 0
 
+		for(var/datum/player_info/I in infos)
+			i += 1
+			if(!I.timestamp)
+				I.timestamp = "Pre-4/3/2012"
+			if(!I.rank)
+				I.rank = "N/A"
+			/*noteslist["note:[i]"] = "[I.content]"
+			noteslist["author:[i]"] = "[I.author]"
+			noteslist["rank:[i]"] = "[I.rank]"
+			noteslist["timestamp:[i]"] = "[I.timestamp]"*/
+			noteslist["[i]"] = "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font>"
+	if(!noteslist.len)
+		noteslist["1"] = "No notes found for [key]"
+	return noteslist
 /datum/admins/proc/show_player_info(var/key as text)
 	set category = "Admin"
 	set name = "Show Player Info"
+
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:247: var/dat = "<html><head><title>Info on [key]</title></head>"
 	var/dat = {"<html><head><title>Info on [key]</title></head>
 <body>"}
-	// END AUTOFIX
+
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
@@ -290,21 +377,17 @@ var/global/floorIsLava = 0
 				I.rank = "N/A"
 				update_file = 1
 			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.author == usr.key)
+			if(I.author == usr.key || check_rights(R_PERMISSIONS, show_msg = 0))
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
 			dat += "<br><br>"
-		if(update_file) info << infos
+		if(update_file)
+			info << infos
 
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\admin.dm:265: dat += "<br>"
 	dat += {"<br>
 		<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>
 		</body></html>"}
-	// END AUTOFIX
+
 	usr << browse(dat, "window=adminplayerinfo;size=480x480")
-
-
 
 /datum/admins/proc/access_news_network() //MARKER
 	set category = "Fun"
@@ -314,7 +397,7 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+		to_chat(usr, "Error: you are not an admin!")
 		return
 	var/dat
 	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
@@ -387,21 +470,21 @@ var/global/floorIsLava = 0
 		if(6)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
-				dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid receiving channel name.</FONT><BR>"
 			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid message body.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[3]'>Return</A><BR>"
 		if(7)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid channel name.</FONT><BR>"
 			var/check = 0
 			for(var/datum/feed_channel/FC in news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
 			if(check)
-				dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Channel name already in use.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[2]'>Return</A><BR>"
 		if(9)
 			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
@@ -515,9 +598,9 @@ var/global/floorIsLava = 0
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid name for person wanted.</FONT><BR>"
 			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>ï¿½Invalid description.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
 			dat+={"
@@ -545,8 +628,8 @@ var/global/floorIsLava = 0
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
-	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
+//	to_chat(world, "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]")
+//	to_chat(world, "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]")
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
@@ -575,22 +658,47 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
-		<BR>
+		<hr />
+		<ul>
+			<li>
+				<a href="?src=\ref[src];set_base_laws=ai"><b>Default Cyborg/AI Laws:</b>[base_law_type]</a>
+			</li>
+			<li>
+				<a href="?src=\ref[src];set_base_laws=mommi"><b>Default MoMMI Laws:</b>[mommi_base_law_type]</a>
+			</li>
+		</ul>
+		<hr />
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
 		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
-		<br><A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
+		<hr />
+		<A href='?src=\ref[src];vsc=airflow'>Edit ZAS Settings</A><br>
 		<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>
 		"}
 
-	usr << browse(dat, "window=admin2;size=210x280")
+	usr << browse(dat, "window=admin2;size=280x370")
 	return
 
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))	return
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
+
+	if(check_rights(R_FUN,0) || check_rights(R_ADMINBUS,0))
+		dat += {"
+			<B>Fourth-Wall Demolition</B><BR>
+			<BR>
+			"}
+	if(check_rights(R_ADMINBUS,0))
+		dat += {"
+			<A href='?src=\ref[src];secretsfun=spawnadminbus'>Spawn an Adminbus</A><BR>
+			"}
+	if(check_rights(R_FUN,0))
+		dat += {"
+			<A href='?src=\ref[src];secretsfun=spawnselfdummy'>Spawn yourself as a Test Dummy</A><BR>
+			<BR>
+			"}
 
 	if(check_rights(R_ADMIN,0))
 		dat += {"
@@ -615,26 +723,32 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsfun=gravity'>Toggle station artificial gravity</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
+			<A href='?src=\ref[src];secretsfun=silent_meteors'>Spawn a wave of meteors with no warning</A><BR>
 			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
 			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
 			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
-			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
+			<A href='?src=\ref[src];secretsfun=hostile_infestation'>Spawn a hostile creature infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger a Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
+			<A href='?src=\ref[src];secretsfun=meaty_gores'>Trigger an Organic Debris Field</A><BR>
 			<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
+			<A href='?src=\ref[src];secretsfun=mass_hallucination'>Cause the crew to hallucinate</A><BR>
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
+			<A href='?src=\ref[src];secretsfun=pda_spam'>Trigger a wave of PDA spams</A><BR>
+			<A href='?src=\ref[src];secretsfun=mobswarm'>Trigger mobs of your choice appearing out of thin air</A><BR>
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secretsfun=hardcore_mode'>[ticker&&ticker.hardcore_mode ? "Disable" : "Enable"] hardcore mode (makes starvation kill!)</A><BR>
 			<A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
 			<A href='?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
 			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
@@ -642,6 +756,8 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];secretsfun=breaklink'>Break the station's link with Central Command</A><BR>
+			<A href='?src=\ref[src];secretsfun=makelink'>Make the station linked with Central Command</A><BR>
 			<A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
 			<A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>
@@ -652,40 +768,101 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
+			<A href='?src=\ref[src];secretsfun=experimentalguns'>Distribute experimental guns to the crew</A><BR>
 			<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 			<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
+			<A href='?src=\ref[src];secretsfun=thebees'>Unleash THE BEES onto the crew</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=\ref[src];secretsfun=togglenarsie'>Toggle Nar-Sie's behaviour</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakealerts'>Trigger a fake alert</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakebooms'>Adds in some Micheal Bay to the shift without major destruction</A><BR>
+			<A href='?src=\ref[src];secretsfun=massbomber'>Turn every players into Bomberman</A><BR>
+			<A href='?src=\ref[src];secretsfun=bomberhurt'>Make Bomberman Bombs actually hurt players</A><BR>
+			<A href='?src=\ref[src];secretsfun=bomberdestroy'>Make Bomberman Bombs actually destroy stuff</A><BR>
+			<A href='?src=\ref[src];secretsfun=bombernohurt'>Make Bomberman Bombs harmless to players(default)</A><BR>
+			<A href='?src=\ref[src];secretsfun=bombernodestroy'>Make Bomberman Bombs harmless to the environnement(default)</A><BR>
+			<A href='?src=\ref[src];secretsfun=placeturret'>Create a turret</A><BR>
+			<BR>
+			<B>Final Solutions</B><BR>
+			<I>(Warning, these will end the round!)</I><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=hellonearth'>Summon Nar-Sie</A><BR>
+			<A href='?src=\ref[src];secretsfun=supermattercascade'>Start a Supermatter Cascade</A><BR>
 			"}
 
 	if(check_rights(R_SERVER,0))
-		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
+
+		dat += {"
+			<BR>
+			<B>Server</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>
+			<A href='?src=\ref[src];secretsfun=togglebombmethod'>Toggle explosion method</A><BR>
+			"}
 
 	dat += "<BR>"
 
-	if(check_rights(R_DEBUG,0))
+	if(check_rights(R_FUN,0))
 		dat += {"
 			<B>Security Level Elevated</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
-			<BR>
-			<B>Coder Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+			<A href='?src=\ref[src];secretsfun=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
+			<A href='?src=\ref[src];secretsfun=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
+			<A href='?src=\ref[src];secretsfun=infinite_sec'>Remove cap on security officers</A><BR>
+			<a href='?src=\ref[src];secretsfun=virus_custom'>Custom Virus Outbreak</a><BR>
 			<BR>
 			"}
+	dat +=	{"
+		<B>Coder Secrets</B><BR>
+		<BR>
+		<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
+		<A href='?src=\ref[src];secretsadmin=spawn_objects'>Admin Log</A><BR>
+		<BR>
+		"}
+
 
 	usr << browse(dat, "window=secrets")
 	return
 
+/datum/admins/var/datum/shuttle/selected_shuttle
+/datum/admins/proc/shuttle_magic()
+	var/dat = "<b>WARNING:</b> server may explode!<hr><br>"
+
+	if(!istype(selected_shuttle))
+		dat += "<a href='?src=\ref[src];shuttle_select=1'>Select a shuttle</a><hr>"
+	else
+		dat += {"Selected shuttle: <b>[selected_shuttle.name]</b> (<i>[selected_shuttle.type]</i>)<br>
+		<a href='?_src_=vars;Vars=\ref[selected_shuttle]'>view variables</A> | <a href='?src=\ref[src];shuttle_teleport_to=1'>teleport to</a> | <a href='?src=\ref[src];shuttle_select=1'>select another shuttle</a><br>
+		cooldown: [selected_shuttle.cooldown] | pre-flight delay: [selected_shuttle.pre_flight_delay] | transit delay: [selected_shuttle.transit_delay]<br>
+		rotation [selected_shuttle.can_rotate ? "<b>ENABLED</b>" : "<b>DISABLED</b>"] | transit [selected_shuttle.use_transit ? "ENABLED" : "DISABLED"]<hr>
+
+		<a href='?src=\ref[src];shuttle_create_destination=1'>Create a destination docking port</a><br>
+		<a href='?src=\ref[src];shuttle_modify_destination=1'>Add a destination docking port</a><br>
+		<a href='?src=\ref[src];shuttle_set_transit=1'>Modify transit area</a><br>
+		<a href='?src=\ref[src];shuttle_get_console=1'>Get control console</a><br>
+		<a href='?src=\ref[src];shuttle_edit=1'>Modify parameters[selected_shuttle.is_special() ? " and pre-defined areas" : ""]</a>
+		<hr>
+		<a href='?src=\ref[src];shuttle_move_to=1'>Send</a><br>
+		<a href='?src=\ref[src];shuttle_forcemove=1'>Teleport</a><br>
+		<a href='?src=\ref[src];shuttle_supercharge=1'>Make movement instant</a><br>
+		<a href='?src=\ref[src];shuttle_show_overlay=1'>Draw outline</a>
+		<hr>
+		<a href='?src=\ref[src];shuttle_lockdown=1'>[selected_shuttle.lockdown ? "Lift lockdown" : "Lock down"]</a><br>
+		<a href='?src=\ref[src];shuttle_reset=1'>Reset</a><br>
+		<a href='?src=\ref[src];shuttle_delete=1'>Delete</a>
+		<hr>
+		"}
+
+	//The following commands don't need a selected shuttle
+	dat += {"
+	<a href='?src=\ref[src];shuttle_shuttlify=1'>Turn current area into a shuttle</a><br>
+	<a href='?src=\ref[src];shuttle_add_docking_port=1'>Create a shuttle docking port</a><br>
+	<a href='?src=\ref[src];shuttle_mass_lockdown=1'>Lock down all shuttles</a><br>
+	"}
+	usr << browse(dat, "window=shuttlemagic")
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
@@ -696,13 +873,14 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set name = "Restart"
 	set desc="Restarts the world"
+
 	if (!usr.client.holder)
 		return
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		world << "\red <b>Restarting world!</b> \blue Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!"
+		to_chat(world, "<span class='warning'><b>Restarting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>")
 		log_admin("[key_name(usr)] initiated a reboot.")
 
 		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -711,8 +889,10 @@ var/global/floorIsLava = 0
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
+		CallHook("Reboot",list())
+
 		if (watchdog.waiting)
-			world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+			to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 			watchdog.signal_ready()
 			return
 
@@ -724,28 +904,31 @@ var/global/floorIsLava = 0
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
+
 	if(!check_rights(0))	return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		world << "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
+		to_chat(world, "<span class='notice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]</span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
-	set desc="Toggle dis bitch"
+	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
+
 	ooc_allowed = !( ooc_allowed )
 	if (ooc_allowed)
-		world << "<B>The OOC channel has been globally enabled!</B>"
+		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
 	else
-		world << "<B>The OOC channel has been globally disabled!</B>"
+		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
@@ -761,6 +944,7 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle traitor scaling"
 	set name="Toggle Traitor Scaling"
+
 	traitor_scaling = !traitor_scaling
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
 	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
@@ -770,6 +954,7 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
+
 	if(!ticker)
 		alert("Unable to start the game as it is not set up.")
 		return
@@ -780,20 +965,21 @@ var/global/floorIsLava = 0
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else
-		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
+		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
 		return 0
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
+
 	enter_allowed = !( enter_allowed )
 	if (!( enter_allowed ))
-		world << "<B>New players may no longer enter the game.</B>"
+		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
-		world << "<B>New players may now enter the game.</B>"
+		to_chat(world, "<B>New players may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("\blue [key_name_admin(usr)] toggled new player game entering.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] toggled new player game entering.</span>", 1)
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -801,11 +987,12 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="People can't be AI"
 	set name="Toggle AI"
+
 	config.allow_ai = !( config.allow_ai )
 	if (!( config.allow_ai ))
-		world << "<B>The AI job is no longer chooseable.</B>"
+		to_chat(world, "<B>The AI job is no longer chooseable.</B>")
 	else
-		world << "<B>The AI job is chooseable now.</B>"
+		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
 	feedback_add_details("admin_verb","TAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -814,12 +1001,13 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
+
 	abandon_allowed = !( abandon_allowed )
 	if (abandon_allowed)
-		world << "<B>You may now respawn.</B>"
+		to_chat(world, "<B>You may now respawn.</B>")
 	else
-		world << "<B>You may no longer respawn :(</B>"
-	message_admins("\blue [key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].", 1)
+		to_chat(world, "<B>You may no longer respawn :(</B>")
+	message_admins("<span class='notice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>", 1)
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -828,20 +1016,14 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Toggle alien mobs"
 	set name="Toggle Aliens"
+
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(usr)] toggled Aliens to [aliens_allowed].")
 	message_admins("[key_name_admin(usr)] toggled Aliens [aliens_allowed ? "on" : "off"].", 1)
 	feedback_add_details("admin_verb","TA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/toggle_space_ninja()
-	set category = "Server"
-	set desc="Toggle space ninjas spawning."
-	set name="Toggle Space Ninjas"
-	toggle_space_ninja = !toggle_space_ninja
-	log_admin("[key_name(usr)] toggled Space Ninjas to [toggle_space_ninja].")
-	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].", 1)
-	feedback_add_details("admin_verb","TSN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+#define LOBBY_TICKING_STOPPED 0
+#define LOBBY_TICKING_RESTARTED 2
 /datum/admins/proc/delay()
 	set category = "Server"
 	set desc="Delay the game start/end"
@@ -849,51 +1031,66 @@ var/global/floorIsLava = 0
 
 	if(!check_rights(R_ADMIN))	return
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
+		if(ticker.delay_end == 2)
+			to_chat(world, "<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>")
+			log_admin("<font size=4><span class='danger'>World Reboot triggered by [key_name(usr)]!</font></span>")
+			if(watchdog.waiting)
+				watchdog.signal_ready()
+			else
+				world.Reboot()
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
-		return //alert("Round end delayed", null, null, null, null, null)
-	going = !( going )
-	if (!( going ))
-		world << "<b>The game start has been delayed.</b>"
-		log_admin("[key_name(usr)] delayed the game.")
-	else
-		world << "<b>The game will start soon.</b>"
-		log_admin("[key_name(usr)] removed the delay.")
-	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		message_admins("<span class='notice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>", 1)
 
+		return //alert("Round end delayed", null, null, null, null, null)
+	if (!( going ))
+		going = LOBBY_TICKING_RESTARTED
+		ticker.pregame_timeleft = world.timeofday + ticker.remaining_time
+		to_chat(world, "<b>The game will start soon.</b>")
+		log_admin("[key_name(usr)] removed the delay.")
+	else
+		going = LOBBY_TICKING_STOPPED
+		to_chat(world, "<b>The game start has been delayed.</b>")
+		log_admin("[key_name(usr)] delayed the game.")
+	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+#undef LOBBY_TICKING_STOPPED
+#undef LOBBY_TICKING_RESTARTED
 /datum/admins/proc/adjump()
 	set category = "Server"
 	set desc="Toggle admin jumping"
 	set name="Toggle Jump"
+
 	config.allow_admin_jump = !(config.allow_admin_jump)
-	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
+	message_admins("<span class='notice'>Toggled admin jumping to [config.allow_admin_jump].</span>")
 	feedback_add_details("admin_verb","TJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/adspawn()
 	set category = "Server"
 	set desc="Toggle admin spawning"
 	set name="Toggle Spawn"
+
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
-	message_admins("\blue Toggled admin item spawning to [config.allow_admin_spawning].")
+	message_admins("<span class='notice'>Toggled admin item spawning to [config.allow_admin_spawning].</span>")
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/adrev()
 	set category = "Server"
 	set desc="Toggle admin revives"
 	set name="Toggle Revive"
+
 	config.allow_admin_rev = !(config.allow_admin_rev)
-	message_admins("\blue Toggled reviving to [config.allow_admin_rev].")
+	message_admins("<span class='notice'>Toggled reviving to [config.allow_admin_rev].</span>")
 	feedback_add_details("admin_verb","TAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/immreboot()
 	set category = "Server"
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
+
 	if(!usr.client.holder)	return
 	if( alert("Reboot server?",,"Yes","No") == "No")
 		return
-	world << "\red <b>Rebooting world!</b> \blue Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!"
+	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
 	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -902,8 +1099,10 @@ var/global/floorIsLava = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
+	CallHook("Reboot",list())
+
 	if (watchdog.waiting)
-		world << "\blue <B>Server will shut down for an automatic update in a few seconds.</B>"
+		to_chat(world, "<span class='notice'><B>Server will shut down for an automatic update in a few seconds.</B></span>")
 		watchdog.signal_ready()
 		return
 
@@ -912,6 +1111,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
+
 	if (M.z == 2)
 		if (config.allow_admin_jump)
 			M.loc = pick(latejoin)
@@ -930,36 +1130,38 @@ var/global/floorIsLava = 0
 		return 0
 	if (!istype(M))
 		return 0
-	if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+	if(isrev(M) || isrevhead(M))
 		if (ticker.mode.config_tag == "revolution")
 			return 2
 		return 1
-	if(M.mind in ticker.mode.cult)
+	if(iscult(M))
 		if (ticker.mode.config_tag == "cult")
 			return 2
 		return 1
-	if(M.mind in ticker.mode.malf_ai)
+	if(ismalf(M))
 		if (ticker.mode.config_tag == "malfunction")
 			return 2
 		return 1
-	if(M.mind in ticker.mode.syndicates)
+	if(isnukeop(M))
 		if (ticker.mode.config_tag == "nuclear")
 			return 2
 		return 1
-	if(M.mind in ticker.mode.wizards)
+	if(iswizard(M))
 		if (ticker.mode.config_tag == "wizard")
 			return 2
 		return 1
-	if(M.mind in ticker.mode.changelings)
+	if(ischangeling(M))
 		if (ticker.mode.config_tag == "changeling")
 			return 2
 		return 1
-
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			if (ticker.mode.config_tag == "monkey")
-				return 2
-			return 1
+	/*if(isborer(M)) //They ain't antags anymore
+		if (ticker.mode.config_tag == "borer")
+			return 2
+		return 1*/
+	if(isbadmonkey(M))
+		if (ticker.mode.config_tag == "monkey")
+			return 2
+		return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
@@ -994,10 +1196,9 @@ var/global/floorIsLava = 0
 
 	if(!check_rights(R_SPAWN))	return
 
-	var/list/types = typesof(/atom)
 	var/list/matches = new()
 
-	for(var/path in types)
+	for(var/path in typesof(/atom))
 		if(findtext("[path]", object))
 			matches += path
 
@@ -1012,11 +1213,14 @@ var/global/floorIsLava = 0
 		if(!chosen)
 			return
 
-	new chosen(usr.loc)
+	if(ispath(chosen,/turf))
+		var/turf/T = get_turf(usr.loc)
+		T.ChangeTurf(chosen)
+	else
+		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 
 /datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
 	set category = "Admin"
@@ -1024,10 +1228,10 @@ var/global/floorIsLava = 0
 	set name = "Show Traitor Panel"
 
 	if(!istype(M))
-		usr << "This can only be used on instances of type /mob"
+		to_chat(usr, "This can only be used on instances of type /mob")
 		return
 	if(!M.mind)
-		usr << "This mob has no mind!"
+		to_chat(usr, "This mob has no mind!")
 		return
 
 	M.mind.edit_memory()
@@ -1038,11 +1242,12 @@ var/global/floorIsLava = 0
 	set category = "Debug"
 	set desc="Reduces view range when wearing welding helmets"
 	set name="Toggle tinted welding helmes"
+
 	tinted_weldhelh = !( tinted_weldhelh )
 	if (tinted_weldhelh)
-		world << "<B>The tinted_weldhelh has been enabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
-		world << "<B>The tinted_weldhelh has been disabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1051,13 +1256,14 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Guests can't enter"
 	set name="Toggle guests"
+
 	guests_allowed = !( guests_allowed )
 	if (!( guests_allowed ))
-		world << "<B>Guests may no longer enter the game.</B>"
+		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
-		world << "<B>Guests may now enter the game.</B>"
+		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>", 1)
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unjobban_panel()
@@ -1073,43 +1279,35 @@ var/global/floorIsLava = 0
 	for(var/mob/living/silicon/S in mob_list)
 		ai_number++
 		if(isAI(S))
-			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
 		else if(isrobot(S))
 			var/mob/living/silicon/robot/R = S
-			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
+			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
 		else if (ispAI(S))
-			usr << "<b>pAI [key_name(S, usr)]'s laws:</b>"
+			var/mob/living/silicon/pai/pAI = S
+			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws (master: [pAI.master] ):</b>")
 		else
-			usr << "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
+			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>")
 
-		if (S.laws == null)
-			usr << "[key_name(S, usr)]'s laws are null?? Contact a coder."
+		if(ispAI(S))
+			var/mob/living/silicon/pai/pAI = S
+			pAI.show_directives(usr)
+		else if (S.laws == null)
+			to_chat(usr, "[key_name(S, usr)]'s laws are null?? Contact a coder.")
 		else
 			S.laws.show_laws(usr)
+
 	if(!ai_number)
-		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
+		to_chat(usr, "<b>No AIs located</b>")//Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
-	set category = "Admin"
-	set name = "Show Skills"
 
-	if (!istype(src,/datum/admins))
-		src = usr.client.holder
-	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
-		return
-
-	show_skill_window(usr, M)
-
-	return
-
-/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
+/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob in mob_list)
 	set category = "Admin"
 	set name = "Update Mob Sprite"
 	set desc = "Should fix any mob sprite update errors."
 
 	if (!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(istype(H))
@@ -1144,26 +1342,6 @@ proc/move_admin_shuttle()
 		admin_shuttle_location = 1
 	return
 
-/**********************Centcom Ferry**************************/
-
-var/ferry_location = 0 // 0 = centcom , 1 = station
-
-proc/move_ferry()
-	var/area/fromArea
-	var/area/toArea
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-	fromArea.move_contents_to(toArea)
-	if (ferry_location)
-		ferry_location = 0
-	else
-		ferry_location = 1
-	return
-
 /**********************Alien ship**************************/
 
 var/alien_ship_location = 1 // 0 = base , 1 = mine
@@ -1184,24 +1362,62 @@ proc/move_alien_ship()
 		alien_ship_location = 1
 	return
 
-proc/formatJumpTo(var/location,var/where="")
+proc/formatJumpTo(location, where = "")
 	var/turf/loc
-	if(istype(location,/turf/))
-		loc = location
-	else
-		loc = get_turf(location)
-	if(where=="")
-		where=formatLocation(loc)
-	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>[where]</a>"
 
-proc/formatLocation(var/location)
-	var/turf/loc
-	if(istype(location,/turf/))
+	if (isturf(location))
 		loc = location
 	else
 		loc = get_turf(location)
+
+	if (where == "")
+		where = formatLocation(loc)
+
+	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc ? loc.x : "mystery"];Y=[loc ? loc.y : "mystery"];Z=[loc ? loc.z : "mystery"]'>[where]</a>"
+
+proc/formatLocation(location)
+	var/turf/loc
+
+	if (isturf(location))
+		loc = location
+	else
+		loc = get_turf(location)
+
 	var/area/A = get_area(location)
-	return "[A.name] - [loc.x],[loc.y],[loc.z]"
+	var/answer = "[istype(A) ? "[A.name]" : "UNKNOWN"] - [istype(loc) ? "[loc.x],[loc.y],[loc.z]" : "UNKNOWN"]"
+	return answer
 
 proc/formatPlayerPanel(var/mob/U,var/text="PP")
 	return "<A HREF='?_src_=holder;adminplayeropts=\ref[U]'>[text]</A>"
+
+//Credit to MrStonedOne from TG for this QoL improvement
+//returns 1 to let the dragdrop code know we are trapping this event
+//returns 0 if we don't plan to trap the event
+/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
+
+
+	//if we couldn't do it manually, we can't do it here - the 0 means no message is displayed for failure
+	if (!check_rights(R_VAREDIT, 0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.key]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+	if(alert(question, "Place ghost in control of mob?", "Yes", "No") != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+		return 1
+
+	tomob.ghostize(0) //boot the old mob out
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+	return 1

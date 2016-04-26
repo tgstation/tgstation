@@ -22,7 +22,29 @@ info.json
 /dmis
 /interface-indented
 /code-indented
+*.new.dmi
 
 .metadata
 /bot/config.yml
 /bot/data
+/analysis
+/code-fixed
+
+# Player preferences
+players2.sqlite
+
+# New CMC Minimap images.
+/data/minimaps/*
+
+# Backup maps created by maptools
+*.dmm.backup
+
+# Changelog dry runs
+/html/changelog.dry.html
+/html/changelogs/.dry_changelog.yml
+
+# Map player count config
+/maps/voting/*/playercount.txt
+
+# Runtime condenser I/O files.
+/tools/Runtime\ Condenser/*.txt

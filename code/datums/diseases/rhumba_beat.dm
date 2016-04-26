@@ -4,7 +4,7 @@
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
 	cure = "Chick Chicky Boom!"
-	cure_id = list("plasma")
+	cure_id = "plasma"
 	agent = "Unknown"
 	affected_species = list("Human")
 	permeability_mod = 1
@@ -22,29 +22,29 @@
 				affected_mob.adjustToxLoss(5)
 				affected_mob.updatehealth()
 			if(prob(1))
-				affected_mob << "\red You feel strange..."
+				to_chat(affected_mob, "<span class='warning'>You feel strange...</span>")
 		if(3)
 			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(5))
-				affected_mob << "\red You feel the urge to dance..."
+				to_chat(affected_mob, "<span class='warning'>You feel the urge to dance...</span>")
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			else if(prob(10))
-				affected_mob << "\red You feel the need to chick chicky boom..."
+				to_chat(affected_mob, "<span class='warning'>You feel the need to chick chicky boom...</span>")
 		if(4)
 			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(10))
 				affected_mob.emote("gasp")
-				affected_mob << "\red You feel a burning beat inside..."
+				to_chat(affected_mob, "<span class='warning'>You feel a burning beat inside...</span>")
 			if(prob(20))
 				affected_mob.adjustToxLoss(5)
 				affected_mob.updatehealth()
 		if(5)
 			if(affected_mob.ckey == "rosham")
 				src.cure()
-			affected_mob << "\red Your body is unable to contain the Rhumba Beat..."
+			to_chat(affected_mob, "<span class='warning'>Your body is unable to contain the Rhumba Beat...</span>")
 			if(prob(50))
 				affected_mob.gib()
 		else

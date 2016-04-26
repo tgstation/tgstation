@@ -1,79 +1,31 @@
-/mob/living/carbon/alien/say_understands(var/other)
-	if (istype(other, /mob/living/carbon/alien))
-		return 1
-	return ..()
-
 /mob/living/carbon/alien/say(var/message)
-
-	if (silent)
-		return
-
-	if (length(message) >= 2)
-		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
-			message = copytext(message, 3)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-			if (stat == 2)
-				return say_dead(message)
-			else
-				alien_talk(message)
-		else
-			if (copytext(message, 1, 2) != "*" && !stat)
-				playsound(loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
-			return ..(message)
-	else
-
-/* ~lol~
-/mob/living/carbon/alien/say_quote(var/text)
-//	var/ending = copytext(text, length(text))
-
-	return "[say_message], \"[text]\"";
-*/
+	. = ..(message, "A")
+	if(.)
+		playsound(loc, "hiss", 25, 1, 1)
 
 /mob/living/proc/alien_talk(var/message)
 
-	log_say("[key_name(src)] : [message]")
+
+	var/turf/T = get_turf(src)
+	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Alien Hivemind: [message]")
 	message = trim(message)
 
 	if (!message)
 		return
 
-	var/message_a = say_quote(message)
-	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
-	for (var/mob/living/S in player_list)
-		if(!S.stat)
-			if(S.alien_talk_understand)
-				if(S.alien_talk_understand == alien_talk_understand)
-					S.show_message(rendered, 2)
-			else if (S.hivecheck())
-				S.show_message(rendered, 2)
+	var/message_a = say_quote("\"[html_encode(message)]\"")
+	var/rendered = text("<i><span class='game say'>Hivemind, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
+	for (var/mob/S in player_list)
+		if((!S.stat && S.hivecheck()) || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
+			handle_render(S,rendered,src)
 
-	var/list/listening = hearers(1, src)
-	listening -= src
-	listening += src
+/mob/living/carbon/alien/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
+	if(!..())
+		if(message_mode == MODE_ALIEN)
+			if(hivecheck())
+				alien_talk(speech.message)
+			return 1
+		return 0
 
-	var/list/heard = list()
-	for (var/mob/M in listening)
-		if(!istype(M, /mob/living/carbon/alien) && !M.alien_talk_understand)
-			heard += M
-
-
-	if (length(heard))
-		var/message_b
-
-		message_b = "hsssss"
-		message_b = say_quote(message_b)
-		message_b = "<i>[message_b]</i>"
-
-		rendered = "<i><span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span></i>"
-
-		for (var/mob/M in heard)
-			M.show_message(rendered, 2)
-
-	message = say_quote(message)
-
-	rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
-	var/rendered2 = null
-	for (var/mob/dead/observer/M in player_list)
-		if (M.stat > 1)
-			rendered2 = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i>"
-			M.show_message(rendered2, 2)
+/mob/living/carbon/alien/hivecheck()
+	return 1

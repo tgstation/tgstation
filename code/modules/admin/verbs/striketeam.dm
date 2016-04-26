@@ -5,13 +5,13 @@ var/global/sent_strike_team = 0
 
 /client/proc/strike_team()
 	if(!ticker)
-		usr << "<font color='red'>The game hasn't started yet!</font>"
+		to_chat(usr, "<font color='red'>The game hasn't started yet!</font>")
 		return
 	if(world.time < 6000)
-		usr << "<font color='red'>There are [(6000-world.time)/10] seconds remaining before it may be called.</font>"
+		to_chat(usr, "<font color='red'>There are [(6000-world.time)/10] seconds remaining before it may be called.</font>")
 		return
 	if(sent_strike_team == 1)
-		usr << "<font color='red'>CentCom is already sending a team.</font>"
+		to_chat(usr, "<font color='red'>CentCom is already sending a team.</font>")
 		return
 	if(alert("Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No")!="Yes")
 		return
@@ -25,7 +25,7 @@ var/global/sent_strike_team = 0
 				return
 
 	if(sent_strike_team)
-		usr << "Looks like someone beat you to it."
+		to_chat(usr, "Looks like someone beat you to it.")
 		return
 
 	sent_strike_team = 1
@@ -39,7 +39,7 @@ var/global/sent_strike_team = 0
 //Code for spawning a nuke auth code.
 	var/nuke_code
 	var/temp_code
-	for(var/obj/machinery/nuclearbomb/N in world)
+	for(var/obj/machinery/nuclearbomb/N in machines)
 		temp_code = text2num(N.r_code)
 		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code
@@ -73,10 +73,10 @@ var/global/sent_strike_team = 0
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
-				new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
-			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+				new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code].</span>")
+			new_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input].</span>")
 
-			new_commando << "\blue You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
+			to_chat(new_commando, "<span class='notice'>You are a Special Ops. [!leader_selected?"commando":"<B>LEADER</B>"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: <span class='danger'>[input]</span></span>")
 
 			commando_number--
 
@@ -93,7 +93,7 @@ var/global/sent_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			del(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned a CentCom strike squad.</span>", 1)
 	log_admin("[key_name(usr)] used Spawn Death Squad.")
 	return 1
 
@@ -119,40 +119,40 @@ var/global/sent_strike_team = 0
 	new_commando.mind.special_role = "Death Commando"
 	ticker.mode.traitors |= new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(leader_selected)
+
+	ticker.mode.deathsquad += new_commando.mind
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	R.set_frequency(1441)
-	equip_to_slot_or_del(R, slot_ears)
+
+	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), slot_ears)
+
 	if (leader_selected == 0)
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), slot_w_uniform)
 	else
 		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), slot_gloves)
-	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/deathsquad(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/deathsquad(src), slot_wear_suit)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), slot_gloves)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/deathsquad(src), slot_head)
 	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
 
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), slot_in_backpack)
 
-	equip_to_slot_or_del(new /obj/item/ammo_magazine/a357(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/ammo_storage/box/a357(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/shield/energy(src), slot_in_backpack)
 	if (!leader_selected)
 		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
 	else
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
 		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
 
 	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/grenade/flashbang(src), slot_r_store)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(src), slot_s_store)
 	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/mateba(src), slot_belt)
 
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand)
@@ -161,14 +161,18 @@ var/global/sent_strike_team = 0
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)//Here you go Deuryn
 	L.imp_in = src
 	L.implanted = 1
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
+	E.imp_in = src
+	E.implanted = 1
+	src.update_icons()
 
 
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card"
 	W.icon_state = "centcom"
-	W.access = get_all_accesses()//They get full station access.
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
+	W.access = get_centcom_access("Death Commando")
+	W.icon_state = "deathsquad"
 	W.assignment = "Death Commando"
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)

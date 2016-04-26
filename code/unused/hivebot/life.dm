@@ -1,6 +1,7 @@
 /mob/living/silicon/hivebot/Life()
 	set invisibility = 0
 	set background = 1
+	if(timestopped) return 0 //under effects of time magick
 
 	if (src.monkeyizing)
 		return
@@ -62,7 +63,7 @@
 				src.stat = 1
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled) canmove = 0
+			if(incapacitated()) canmove = 0
 			else canmove = 1
 
 
@@ -75,7 +76,7 @@
 
 			if (src.stat != 2) //Alive.
 
-				if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
+				if (src.incapacitated()) //Stunned etc.
 					if (src.stunned > 0)
 						src.stunned--
 						src.stat = 0
@@ -116,7 +117,7 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || XRAY in src.mutations)
+			if (src.stat == 2 || M_XRAY in src.mutations)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS

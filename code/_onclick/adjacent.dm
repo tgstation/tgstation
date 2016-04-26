@@ -26,49 +26,64 @@
 		* Passing through in this case ignores anything with the throwpass flag, such as tables, racks, and morgue trays.
 */
 /turf/Adjacent(var/atom/neighbor, var/atom/target = null)
-	var/turf/T0 = get_turf(neighbor)
-	if(T0 == src)
-		return 1
-	if(get_dist(src,T0) > 1)
-		return 0
+	var/list/turf/T0list
+	if(istype(neighbor, /atom/movable) && isturf(neighbor.loc))
+		var/atom/movable/neighborholder = neighbor
+		T0list = neighborholder.locs
+	else
+		T0list = list(get_turf(neighbor))
+	for(var/turf/T0 in T0list)
 
-	if(T0.x == x || T0.y == y)
-		// Check for border blockages
-		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target)
+		if(T0 == src) //same turf
+			return 1
 
-	// Not orthagonal
-	var/in_dir = get_dir(neighbor,src) // eg. northwest (1+8)
-	var/d1 = in_dir&(in_dir-1)		// eg west		(1+8)&(8) = 8
-	var/d2 = in_dir - d1			// eg north		(1+8) - 8 = 1
+		if(get_dist(src, T0) > 1) //too far
+			continue
 
-	for(var/d in list(d1,d2))
-		if(!T0.ClickCross(d, border_only = 1))
-			continue // could not leave T0 in that direction
+		// Non diagonal case
+		if(T0.x == x || T0.y == y)
+			// Window snowflake code
+			if(neighbor.flags & ON_BORDER && neighbor.dir == get_dir(T0, src)) return 1
+			// Check for border blockages
+			if(T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target))
+				return 1
+			continue
 
-		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) & get_dir(T1,src), border_only = 0))
-			continue // couldn't enter or couldn't leave T1
+		// Diagonal case
+		var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
+		var/d1 = in_dir&3		     // eg. north	  (1+8)&3 (0000 0011) = 1 (0000 0001)
+		var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
 
-		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
-			continue // could not enter src
+		for(var/d in list(d1,d2))
+			if(!T0.ClickCross(d, border_only = 1) && !(neighbor.flags & ON_BORDER && neighbor.dir == d))
+				continue // could not leave T0 in that direction
 
-		return 1 // we don't care about our own density
+			var/turf/T1 = get_step(T0,d)
+			if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0)) //let's check both directions at once
+				continue // couldn't enter or couldn't leave T1
+
+			if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
+				continue // could not enter src
+
+			return 1 // we don't care about our own density
 	return 0
 
 /*
 	Adjacency (to anything else):
 	* Must be on a turf
 	* In the case of a multiple-tile object, all valid locations are checked for adjacency.
-
-	Note: Multiple-tile objects are created when the bound_width and bound_height are creater than the tile size.
-	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(var/atom/neighbor)
 	if(neighbor == loc) return 1
 	if(!isturf(loc)) return 0
-	for(var/turf/T in locs)
-		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return 1
+	if(locs.len > 1)
+		for(var/turf/T in locs)
+			if(T.Adjacent(neighbor, src))
+				return 1
+	else
+		var/turf/T = loc
+		if(T.Adjacent(neighbor, src))
+			return 1
 	return 0
 
 // This is necessary for storage items not on your person.
@@ -88,21 +103,23 @@
 	so they can be interacted with without opening the door.
 */
 /obj/machinery/door/Adjacent(var/atom/neighbor)
-	var/obj/machinery/door/firedoor/border_only/BOD = locate() in loc
-	if(BOD)
-		BOD.throwpass = 1 // allow click to pass
-		. = ..()
-		BOD.throwpass = 0
-		return .
-	return ..()
+	var/list/disable_throwpass = list()
 
+	for(var/obj/machinery/door/D in (loc.contents - src))
+		if(D.flags & ON_BORDER)
+			D.throwpass = 1
+			disable_throwpass += D
+	.=..()
+	for(var/obj/machinery/door/D in disable_throwpass)
+		D.throwpass = 0
+	return
 
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
-/turf/proc/ClickCross(var/target_dir, var/border_only, var/target_atom = null)
+/turf/proc/ClickCross(var/target_dir, var/border_only, var/atom/target_atom = null)
 	for(var/obj/O in src)
 		if( !O.density || O == target_atom || O.throwpass) continue // throwpass is used for anything you can click through
 
@@ -122,3 +139,16 @@
 
 	Since I don't want to complicate the click code rework by messing with unrelated systems it won't be changed here.
 */
+
+/**
+	/vg/: Hack for full windows on top of panes.
+**/
+/obj/structure/window/full/Adjacent(var/atom/neighbor)
+	for(var/obj/structure/window/W in loc)
+		if(W)
+			W.throwpass=1
+	.=..()
+	for(var/obj/structure/window/W in loc)
+		if(W)
+			W.throwpass=0
+	return .

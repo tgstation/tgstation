@@ -31,13 +31,14 @@
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
 	sleep(2)
-	new /obj/item/ammo_magazine/a12mm(src)
-	new /obj/item/ammo_magazine/a12mm(src)
-	new /obj/item/ammo_magazine/a12mm(src)
-	new /obj/item/ammo_magazine/a12mm(src)
-	new /obj/item/ammo_magazine/a12mm(src)
+	new /obj/item/ammo_storage/magazine/a12mm(src)
+	new /obj/item/ammo_storage/magazine/a12mm(src)
+	new /obj/item/ammo_storage/magazine/a12mm(src)
+	new /obj/item/ammo_storage/magazine/a12mm(src)
+	new /obj/item/ammo_storage/magazine/a12mm(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
+	new /obj/item/weapon/storage/box/emps(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/gun/energy/gun(src)
@@ -76,11 +77,12 @@
 
 		//Metal (common ore)
 		if(pickednum >= 2)
-			new /obj/item/stack/sheet/metal(src, rand(common_min, common_max))
+			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			M.amount = rand(common_min, common_max)
 
 		//Glass (common ore)
 		if(pickednum >= 5)
-			new /obj/item/stack/sheet/glass(src, rand(common_min, common_max))
+			new /obj/item/stack/sheet/glass/glass(src, rand(common_min, common_max))
 
 		//Plasteel (common ore) Because it has a million more uses then plasma
 		if(pickednum >= 10)
@@ -118,7 +120,7 @@
 	New()
 		var/list/resources = list(
 		/obj/item/stack/sheet/metal,
-		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/glass/glass,
 		/obj/item/stack/sheet/mineral/gold,
 		/obj/item/stack/sheet/mineral/silver,
 		/obj/item/stack/sheet/mineral/plasma,

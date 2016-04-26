@@ -5,122 +5,106 @@
 	Class: statement
 	An object representing a single instruction run by an interpreter.
 */
-/node/statement
+/datum/node/statement
 /*
 	Class: FunctionCall
 	Represents a call to a function.
 */
 //
-	FunctionCall
-		var
-			func_name
-			node/identifier/object
-			list/parameters=new
+/datum/node/statement/FunctionCall
+	var/func_name
+	var/datum/node/identifier/object
+	var/list/parameters = new
 
 /*
-	Class: FunctionDefinition
-	Defines a function.
+Class: FunctionDefinition
+Defines a function.
 */
 //
-	FunctionDefinition
-		var
-			func_name
-			list/parameters=new
-			node/BlockDefinition/FunctionBlock/block
+/datum/node/statement/FunctionDefinition
+	var/func_name
+	var/list/parameters = new
+	var/datum/node/BlockDefinition/FunctionBlock/block
 
 /*
-	Class: VariableAssignment
-	Sets a variable in an accessible scope to the given value if one exists, otherwise initializes a new local variable to the given value.
+Class: VariableAssignment
+Sets a variable in an accessible scope to the given value if one exists, otherwise initializes a new local variable to the given value.
 
-	Notes:
-	If a variable with the same name exists in a higher block, the value will be assigned to it. If not,
-	a new variable is created in the current block. To force creation of a new variable, use <VariableDeclaration>.
+Notes:
+If a variable with the same name exists in a higher block, the value will be assigned to it. If not,
+a new variable is created in the current block. To force creation of a new variable, use <VariableDeclaration>.
 
-	See Also:
-	- <VariableDeclaration>
+See Also:
+- <VariableDeclaration>
 */
 //
-	VariableAssignment
-		var
-			node
-				identifier
-					object
-					var_name
-				expression/value
+/datum/node/statement/VariableAssignment
+	var/datum/node/identifier/object
+	var/datum/node/identifier/var_name
+	var/datum/node/expression/value
 
 /*
-	Class: VariableDeclaration
-	Intializes a local variable to a null value.
+Class: VariableDeclaration
+Intializes a local variable to a null value.
 
-	See Also:
-	- <VariableAssignment>
+See Also:
+- <VariableAssignment>
 */
 //
-	VariableDeclaration
-		var
-			node
-				identifier
-					object
-					var_name
+/datum/node/statement/VariableDeclaration
+	var/datum/node/identifier/object
+	var/datum/node/identifier/var_name
 
 /*
-	Class: IfStatement
+Class: IfStatement
 */
 //
-	IfStatement
-		var
-			skip = 0
-			node
-				BlockDefinition
-					block
-					else_block //may be null
-				expression/cond
-				statement/else_if
+/datum/node/statement/IfStatement
+	var/skip = 0
+	var/datum/node/BlockDefinition/block
+	var/datum/node/BlockDefinition/else_block //may be null
+	var/datum/node/expression/cond
+	var/datum/node/statement/else_if
 
-		ElseIf
+/datum/node/statement/IfStatement/ElseIf
 
 /*
-	Class: WhileLoop
-	Loops while a given condition is true.
+Class: WhileLoop
+Loops while a given condition is true.
 */
 //
-	WhileLoop
-		var
-			node
-				BlockDefinition/block
-				expression/cond
+/datum/node/statement/WhileLoop
+	var/datum/node/BlockDefinition/block
+	var/datum/node/expression/cond
 
 /*
-	Class: ForLoop
-	Loops while test is true, initializing a variable, increasing the variable
+Class: ForLoop
+Loops while test is true, initializing a variable, increasing the variable
 */
-	ForLoop
-		var
-			node
-				BlockDefinition/block
-				expression/test
-				expression/init
-				expression/increment
+/datum/node/statement/ForLoop
+	var/datum/node/BlockDefinition/block
+	var/datum/node/expression/test
+	var/datum/node/expression/init
+	var/datum/node/expression/increment
 
 /*
-	Class: BreakStatement
-	Ends a loop.
+Class: BreakStatement
+Ends a loop.
 */
 //
-	BreakStatement
+/datum/node/statement/BreakStatement
 
 /*
-	Class: ContinueStatement
-	Skips to the next iteration of a loop.
+Class: ContinueStatement
+Skips to the next iteration of a loop.
 */
 //
-	ContinueStatement
+/datum/node/statement/ContinueStatement
 
 /*
-	Class: ReturnStatement
-	Ends the function and returns a value.
+Class: ReturnStatement
+Ends the function and returns a value.
 */
 //
-	ReturnStatement
-		var
-			node/expression/value
+/datum/node/statement/ReturnStatement
+	var/datum/node/expression/value

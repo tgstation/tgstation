@@ -15,16 +15,15 @@
 	var/obj/item/weapon/reagent_containers/syringe/B = W
 
 	if(src.beaker)
-		user << "A syringe is already loaded into the machine."
+		to_chat(user, "A syringe is already loaded into the machine.")
 		return
 
-	src.beaker =  B
-	user.drop_item()
-	B.loc = src
-	if(istype(B,/obj/item/weapon/reagent_containers/syringe))
-		user << "You add the syringe to the machine!"
-		src.updateUsrDialog()
-		icon_state = "isolator_in"
+	if(user.drop_item(B, src))
+		src.beaker =  B
+		if(istype(B,/obj/item/weapon/reagent_containers/syringe))
+			to_chat(user, "You add the syringe to the machine!")
+			src.updateUsrDialog()
+			icon_state = "isolator_in"
 
 /obj/machinery/disease2/isolator/Topic(href, href_list)
 	if(..()) return
@@ -41,7 +40,7 @@
 				break
 		// /vg/: Try to fix isolators
 		if(!Blood)
-			usr << "\red ERROR: Unable to locate blood within the beaker.  Bug?"
+			to_chat(usr, "<span class='warning'>ERROR: Unable to locate blood within the beaker.  Bug?</span>")
 			testing("Unable to locate blood in [beaker]!")
 			return
 		var/list/virus = virus_copylist(Blood.data["virus2"])
@@ -71,11 +70,8 @@
 	var/dat = ""
 	if(!beaker)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\virus2\isolator.dm:68: dat = "Please insert sample into the isolator.<BR>"
 		dat = {"Please insert sample into the isolator.<BR>
 <A href='?src=\ref[src];close=1'>Close</A>"}
-		// END AUTOFIX
 	else if(isolating)
 		dat = "Isolating"
 	else

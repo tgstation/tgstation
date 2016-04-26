@@ -2,6 +2,7 @@ var/global/vox_tick = 1
 
 /mob/living/carbon/human/proc/equip_vox_raider()
 
+
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, slot_ears)
@@ -31,7 +32,7 @@ var/global/vox_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/pressure(src), slot_wear_suit)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/pressure(src), slot_head)
 			equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(src), slot_belt)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/meson(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/scanner/meson(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
 			equip_to_slot_or_del(new /obj/item/weapon/storage/box/emps(src), slot_r_hand)
 			equip_to_slot_or_del(new /obj/item/device/multitool(src), slot_l_hand)
 
@@ -69,18 +70,8 @@ var/global/vox_tick = 1
 	// NO. /vg/ spawn_money(rand(50,150)*10,W)
 	equip_to_slot_or_del(W, slot_wear_id)
 
-	var/obj/item/weapon/implant/cortical/I = new(src)
-	I.imp_in = src
-	I.implanted = 1
-	var/datum/organ/external/affected = src.get_organ("head")
-	affected.implants += I
-	I.part = affected
-
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
-		var/datum/game_mode/heist/M = ticker.mode
-		M.cortical_stacks += I
-
 	vox_tick++
-	if (vox_tick > 4) vox_tick = 1
+	if (vox_tick > 4)
+		vox_tick = 1
 
 	return 1

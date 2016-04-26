@@ -64,7 +64,7 @@
 		new /obj/item/weapon/storage/belt/utility/full(src)
 		new /obj/item/weapon/storage/backpack/industrial/full(src)
 		new /obj/item/device/t_scanner(src)
-		new /obj/item/clothing/glasses/meson(src)
+		new /obj/item/clothing/glasses/scanner/meson(src)
 		return
 
 /obj/structure/closet/secure_closet/ert/medical

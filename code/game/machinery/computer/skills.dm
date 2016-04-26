@@ -27,7 +27,7 @@
 		usr.drop_item()
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		to_chat(user, "You insert [O].")
 	..()
 
 /obj/machinery/computer/skills/attack_ai(mob/user as mob)
@@ -41,7 +41,7 @@
 	if(..())
 		return
 	if (src.z > 6)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		to_chat(user, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 	var/dat
 
@@ -290,7 +290,8 @@ What a mess.*/
 
 			if ("Purge All Records")
 				for(var/datum/data/record/R in data_core.security)
-					del(R)
+					qdel(R)
+					R = null
 				temp = "All Employment records deleted."
 
 			if ("Delete Record (ALL)")
@@ -320,7 +321,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if (istype(active1, /datum/data/record))
-							var/t1 = input("Please input name:", "Secure. records", active1.fields["name"], null)  as text
+							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
 								return
 							active1.fields["name"] = t1
@@ -361,8 +362,9 @@ What a mess.*/
 							alert(usr, "You do not have the required rank to do this!")
 					if("species")
 						if (istype(active1, /datum/data/record))
+							var/norange = (usr.mutations && usr.mutations.len && (M_TK in usr.mutations))
 							var/t1 = copytext(sanitize(input("Please enter race:", "General records", active1.fields["species"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)) && !norange) || active1 != a1))
 								return
 							active1.fields["species"] = t1
 
@@ -380,9 +382,11 @@ What a mess.*/
 						if (active1)
 							for(var/datum/data/record/R in data_core.medical)
 								if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-									del(R)
+									qdel(R)
+									R = null
 								else
-							del(active1)
+							qdel(active1)
+							active1 = null
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
@@ -413,7 +417,8 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
+			R = null
 			continue
 
 	..(severity)

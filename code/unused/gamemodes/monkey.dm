@@ -12,9 +12,9 @@
 	var/list/datum/mind/initial_monkeys = new
 
 /datum/game_mode/monkey/announce()
-	world << "<B>The current game mode is - Monkey!</B>"
-	world << "<B>Some of your crew members have been infected by a mutageous virus!</B>"
-	world << "<B>Escape on the shuttle but the humans have precedence!</B>"
+	to_chat(world, "<B>The current game mode is - Monkey!</B>")
+	to_chat(world, "<B>Some of your crew members have been infected by a mutageous virus!</B>")
+	to_chat(world, "<B>Escape on the shuttle but the humans have precedence!</B>")
 
 /datum/game_mode/monkey/can_start()
 	if (num_players()<2)
@@ -54,7 +54,7 @@
 		for (var/datum/mind/monkey in initial_monkeys)
 			var/mob/living/carbon/human/H = monkey.current
 			var/mob/living/carbon/monkey/new_monkey = H.monkeyize()
-			new_monkey << "<B>Your goal is to capture the entire human civilization and your first target is Centcom. Hijack the shuttle without humans aboard!</B>"
+			to_chat(new_monkey, "<B>Your goal is to capture the entire human civilization and your first target is Centcom. Hijack the shuttle without humans aboard!</B>")
 
 		for (var/mob/living/carbon/monkey/rabid_monkey in mob_list)
 			if (!(rabid_monkey.mind in initial_monkeys) && (!isturf(rabid_monkey.loc) || rabid_monkey.z!=1))
@@ -106,14 +106,14 @@
 
 	if (monkeywin)
 		feedback_set_details("round_end_result","win - monkey win")
-		world << "<FONT size=3 color=red><B>The monkeys have won! Humanity is doomed!</B></FONT>"
+		to_chat(world, "<FONT size=3 color=red><B>The monkeys have won! Humanity is doomed!</B></FONT>")
 		for (var/mob/living/carbon/human/player in player_list)
 			spawn(rand(0,150))
 				player.monkeyize()
 		sleep(200)
 	else
 		feedback_set_details("round_end_result","loss - crew win")
-		world << "<FONT size=3 color=red><B>The Research Staff has stopped the monkey invasion!</B></FONT>"
+		to_chat(world, "<FONT size=3 color=red><B>The Research Staff has stopped the monkey invasion!</B></FONT>")
 	..()
 	return 1
 
@@ -122,7 +122,7 @@
 	for(var/mob/living/carbon/monkey/monkey_player in mob_list)
 		for(var/datum/disease/D in monkey_player.viruses)
 			if (istype(D, /datum/disease/jungle_fever) && monkey_player.ckey)
-				world << "<B>[monkey_player.ckey] was played infested [monkey_player]. [monkey_player.stat == 2 ? "(DEAD)" : ""]</B>"
+				to_chat(world, "<B>[monkey_player.ckey] was played infested [monkey_player]. [monkey_player.stat == 2 ? "(DEAD)" : ""]</B>")
 	return 1
 
 #undef MONKEY_MODE_RUNNING

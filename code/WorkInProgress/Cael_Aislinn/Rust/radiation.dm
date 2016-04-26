@@ -3,31 +3,31 @@
 	var/mega_energy = 0
 	var/time_alive = 0
 	var/source_alive = 2
-	New()
-		..()
 
-	process()
-		..()
-		//fade away over time
-		if(source_alive > 0)
-			time_alive++
-			source_alive--
-		else
-			time_alive -= 0.1
-			if(time_alive < 0)
-				del(src)
+/obj/machinery/rust/rad_source/process()
+	..()
+	//fade away over time
+	if(source_alive > 0)
+		time_alive++
+		source_alive--
+	else
+		time_alive -= 0.1
+		if(time_alive < 0)
+			del(src)
 
-		//radiate mobs nearby here
-		//
+	//radiate mobs nearby here
+	//
 
 /*
 /obj/machinery/rust
 	proc/RadiateParticle(var/energy, var/ionizing, var/dir = 0)
 		if(!dir)
 			RadiateParticleRand(energy, ionizing)
-		var/obj/effect/accelerated_particle/particle = new
-		particle.dir = dir
+		var/obj/effect/accelerated_particle/particle = getFromPool(/obj/effect/accelerated_particle/particle, get_turf(src))
+		particle.target = target
 		particle.ionizing = ionizing
+		particle.dir = dir
+		particle.startMove(1)
 		if(energy)
 			particle.energy = energy
 			//particle.invisibility = 2
@@ -59,9 +59,11 @@
 					break
 			if(!target)
 				target = pick(view(particle_range))
-		var/obj/effect/accelerated_particle/particle = new
+		var/obj/effect/accelerated_particle/particle = getFromPool(/obj/effect/accelerated_particle/particle, get_turf(src))
 		particle.target = target
 		particle.ionizing = ionizing
+		particle.dir = dir
+		particle.startMove(1)
 		if(energy)
 			particle.energy = energy
 			//particle.invisibility = 2
@@ -69,6 +71,8 @@
 		return particle
 */
 
+/*
 /obj/machinery/computer/rust_radiation_monitor
 	name = "Radiation Monitor"
 	icon_state = "power"
+*/

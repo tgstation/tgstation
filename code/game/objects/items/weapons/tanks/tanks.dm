@@ -1,7 +1,11 @@
+#define TANK_MAX_RELEASE_PRESSURE (3*ONE_ATMOSPHERE)
+#define TANK_DEFAULT_RELEASE_PRESSURE 24
+
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
 
 	pressure_resistance = ONE_ATMOSPHERE*5
@@ -15,7 +19,8 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
-
+	var/manipulated_by = null		//Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
+						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 /obj/item/weapon/tank/New()
 	..()
 
@@ -24,23 +29,28 @@
 	src.air_contents.temperature = T20C
 
 	processing_objects.Add(src)
-
 	return
 
-/obj/item/weapon/tank/Del()
+/obj/item/weapon/tank/Destroy()
 	if(air_contents)
-		del(air_contents)
+		qdel(air_contents)
+		air_contents = null
+
+	if(istype(loc, /obj/machinery/portable_atmospherics))
+		var/obj/machinery/portable_atmospherics/holder = loc
+		holder.holding = null
 
 	processing_objects.Remove(src)
 
 	..()
 
-/obj/item/weapon/tank/examine()
+/obj/item/weapon/tank/examine(mob/user)
+	..()
 	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if (!in_range(src, usr))
-		if (icon == src) usr << "\blue It's \a \icon[icon][src]! If you want any more information you'll need to get closer."
+	if (!in_range(src, user))
+		if (icon == src) to_chat(user, "<span class='notice'>It's \a [bicon(icon)][src]! If you want any more information you'll need to get closer.</span>")
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -59,20 +69,22 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "\blue \The \icon[icon][src] feels [descriptive]"
+	to_chat(user, "<span class='info'>\The [bicon(icon)][src] feels [descriptive]</span>")
 
-	return
+	if(air_contents.volume * 10 < volume)
+		to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of gas!</span>")
+		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
 		var/turf/location = src.loc
 		if (!( istype(location, /turf) ))
-			del(src)
+			qdel(src)
 
 		if(src.air_contents)
 			location.assume_air(air_contents)
 
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -82,37 +94,27 @@
 		icon = src.loc
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used [W] on \icon[icon] [src]"
-
-		var/pressure = air_contents.return_pressure()
-
-		var/total_moles = air_contents.total_moles()
-
-		user << "\blue Results of analysis of \icon[icon]"
-		if (total_moles>0)
-			var/o2_concentration = air_contents.oxygen/total_moles
-			var/n2_concentration = air_contents.nitrogen/total_moles
-			var/co2_concentration = air_contents.carbon_dioxide/total_moles
-			var/plasma_concentration = air_contents.toxins/total_moles
-
-			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
-
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-			user << "\blue Oxygen: [round(o2_concentration*100)]%"
-			user << "\blue CO2: [round(co2_concentration*100)]%"
-			user << "\blue Plasma: [round(plasma_concentration*100)]%"
-			if(unknown_concentration>0.01)
-				user << "\red Unknown: [round(unknown_concentration*100)]%"
-			user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
-		else
-			user << "\blue Tank is empty!"
+		user.visible_message("<span class='attack'>[user] has used [W] on [bicon(icon)] [src]</span>", "<span class='attack'>You use \the [W] on [bicon(icon)] [src]</span>")
+		var/obj/item/device/analyzer/analyzer = W
+		user.show_message(analyzer.output_gas_scan(src.air_contents, src, 0), 1)
 		src.add_fingerprint(user)
 	else if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
 		src.add_fingerprint(user)
+	else if (istype(W, /obj/item/clothing/gloves/latex))
+		if(air_contents.return_pressure())
+			to_chat(user, "You inflate \the [W] using \the [src].")
+			qdel(W)
+			var/obj/item/latexballon/LB1 = new (get_turf(user))
+			LB1.blow(src)
+			user.put_in_hands(LB1)
+			var/obj/item/latexballon/LB2 = new (get_turf(user))
+			LB2.blow(src)
+			user.put_in_hands(LB2)
+		else
+			to_chat(user, "<span class='warning'>There's no gas in the tank.</span>")
+
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
@@ -120,7 +122,10 @@
 /obj/item/weapon/tank/attack_self(mob/user as mob)
 	if (!(src.air_contents))
 		return
-	user.set_machine(src)
+
+	ui_interact(user)
+
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))
@@ -128,57 +133,72 @@
 		if(location.internal==src)
 			using_internal = 1
 
-	var/message = {"
-<b>Tank</b><BR>
-<FONT color='blue'><b>Tank Pressure:</b> [air_contents.return_pressure()]</FONT><BR>
-<BR>
-<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A><BR>
-<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-"}
-	user << browse(message, "window=tank;size=600x300")
-	onclose(user, "tank")
-	return
+	// this is the data which will be sent to the ui
+	var/data[0]
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
+	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	data["valveOpen"] = using_internal ? 1 : 0
+
+	data["maskConnected"] = 0
+	if(istype(loc,/mob/living/carbon))
+		var/mob/living/carbon/location = loc
+		if(location.internal == src || (location.wear_mask && (location.wear_mask.flags & MASKINTERNALS)))
+			data["maskConnected"] = 1
+
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "tanks.tmpl", "Tank", 500, 300)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+		// auto update every Master Controller tick
+		ui.set_auto_update(1)
 
 /obj/item/weapon/tank/Topic(href, href_list)
 	..()
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	if (usr.stat|| usr.restrained())
-		return
-	if (src.loc == usr)
-		usr.set_machine(src)
-		if (href_list["dist_p"])
+		return 0
+	if (src.loc != usr)
+		return 0
+
+	if (href_list["dist_p"])
+		if (href_list["dist_p"] == "reset")
+			src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+		else if (href_list["dist_p"] == "max")
+			src.distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+		else
 			var/cp = text2num(href_list["dist_p"])
 			src.distribute_pressure += cp
-			src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-		if (href_list["stat"])
-			if(istype(loc,/mob/living/carbon))
-				var/mob/living/carbon/location = loc
-				if(location.internal == src)
-					location.internal = null
+		src.distribute_pressure = min(max(round(src.distribute_pressure), 0), TANK_MAX_RELEASE_PRESSURE)
+	if (href_list["stat"])
+		if(istype(loc,/mob/living/carbon))
+			var/mob/living/carbon/location = loc
+			if(location.internal == src)
+				location.internal = null
+				location.internals.icon_state = "internal0"
+				to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
+				if (location.internals)
 					location.internals.icon_state = "internal0"
-					usr << "\blue You close the tank release valve."
+			else
+				if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
+					location.internal = src
+					to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
 					if (location.internals)
-						location.internals.icon_state = "internal0"
+						location.internals.icon_state = "internal1"
 				else
-					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-						location.internal = src
-						usr << "\blue You open \the [src] valve."
-						if (location.internals)
-							location.internals.icon_state = "internal1"
-					else
-						usr << "\blue You need something to connect to \the [src]."
+					to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
 
-		src.add_fingerprint(usr)
-/*
- * the following is needed for a tank lying on the floor. But currently we restrict players to use not weared tanks as intrals. --rastaf
-		for(var/mob/M in viewers(1, src.loc))
-			if ((M.client && M.machine == src))
-				src.attack_self(M)
-*/
-		src.attack_self(usr)
-	else
-		usr << browse(null, "window=tank")
-		return
-	return
+	src.add_fingerprint(usr)
+	return 1
 
 
 /obj/item/weapon/tank/remove_air(amount)
@@ -207,12 +227,15 @@
 
 /obj/item/weapon/tank/process()
 	//Allow for reactions
-	air_contents.react()
+	if(air_contents)
+		air_contents.react()
 	check_status()
 
 
 /obj/item/weapon/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
+	if(timestopped) return
+
 	var/cap = 0
 	var/uncapped = 0
 	if(!air_contents)
@@ -223,7 +246,7 @@
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
+//		to_chat(world, "<span class='warning'>[x],[y] tank is exploding: [pressure] kPa</span>")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -236,29 +259,39 @@
 		range = min(range, MAX_EXPLOSION_RANGE)		// was 8 - - - Changed to a configurable define -- TLE
 		var/turf/epicenter = get_turf(loc)
 
-		//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
+//		to_chat(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5), 1, cap)
 		if(cap)
 			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
 				if(bhangmeter)
 					bhangmeter.sense_explosion(epicenter.x,epicenter.y,epicenter.z,round(uncapped*0.25), round(uncapped*0.5), round(uncapped),"???", cap)
-		del(src)
+
+		if(istype(src.loc,/obj/item/device/transfer_valve))
+			var/obj/item/device/transfer_valve/TV = src.loc
+			TV.child_ruptured(src, range)
+
+		qdel(src)
+
+		return
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
+//		to_chat(world, "<span class='warning'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)
 				return
 			T.assume_air(air_contents)
 			playsound(get_turf(src), 'sound/effects/spray.ogg', 10, 1, -3)
-			del(src)
+
+			qdel(src)
+
+			return
 		else
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
+//		to_chat(world, "<span class='warning'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
 		if(integrity <= 0)
 			var/turf/simulated/T = get_turf(src)
 			if(!T)

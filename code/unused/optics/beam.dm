@@ -21,7 +21,7 @@
 		if(!isturf(loc))
 			return
 
-		//world << "creating beam at ([newloc.x],[newloc.y]) with [dirn] [lambda] [omega] [half]"
+//		to_chat(world, "creating beam at ([newloc.x],[newloc.y]) with [dirn] [lambda] [omega] [half]")
 
 		icon_state = "[omega]-[half ? "half" : "full"]"
 		dir = dirn
@@ -107,6 +107,7 @@
 				master:turn_on()
 
 	proc/set_wavelength(var/lambda)
+
 
 		var/w = round(lambda,1)	// integer wavelength
 		wavelength = lambda

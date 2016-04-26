@@ -15,7 +15,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 	proc/abort()
 		spawn()
-			del src
+			qdel (src)
 
 	New(filename)
 		..()
@@ -85,16 +85,22 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 					</body>
 					<html>"}
 
-client/verb/showrevinfo()
+/proc/return_revision()
+	var/output =  "Sorry, the revision info is unavailable."
+	output = file2text(".git/refs/heads/Bleeding-Edge")
+	if(!output || output == "")
+		output = "Unable to load revision info from HEAD"
+	return output
+
+/client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
 	var/output =  "Sorry, the revision info is unavailable."
-	output = file2text("/home/bay12/live/data/gitcommit")
+	output = file2text(".git/refs/heads/Bleeding-Edge")
+	if(!output || output == "")
+		output = "Unable to load revision info from HEAD"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\helper_datums\getrev.dm:93: output += "Current Infomational Settings: <br>"
 	output += {"Current Infomational Settings: <br>
 		Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"}
-	// END AUTOFIX
 	usr << browse(output,"window=revdata");
 	return

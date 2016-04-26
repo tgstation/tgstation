@@ -14,10 +14,9 @@
 		return
 	if(istype(O, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
-			user.drop_item(O)
-			contents += O
-			has_extinguisher = O
-			user << "<span class='notice'>You place [O] in [src].</span>"
+			if(user.drop_item(O, src))
+				has_extinguisher = O
+				to_chat(user, "<span class='notice'>You place [O] in [src].</span>")
 		else
 			opened = !opened
 	else
@@ -30,13 +29,22 @@
 		return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)
-		user << "<span class='notice'>You take [has_extinguisher] from [src].</span>"
+		to_chat(user, "<span class='notice'>You take [has_extinguisher] from [src].</span>")
 		has_extinguisher = null
 		opened = 1
 	else
 		opened = !opened
 	update_icon()
 
+/obj/structure/extinguisher_cabinet/attack_tk(mob/user)
+	if(has_extinguisher)
+		has_extinguisher.loc = loc
+		to_chat(user, "<span class='notice'>You telekinetically remove [has_extinguisher] from [src].</span>")
+		has_extinguisher = null
+		opened = 1
+	else
+		opened = !opened
+	update_icon()
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user)
 	attack_hand(user)

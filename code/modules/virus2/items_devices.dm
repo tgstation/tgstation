@@ -1,28 +1,25 @@
-/obj/machinery/proc/state(var/msg)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("\icon[src] <span class = 'notice'>[msg]</span>", 2)
-
 ///////////////ANTIBODY SCANNER///////////////
 
 /obj/item/device/antibody_scanner
 	name = "Antibody Scanner"
 	desc = "Used to scan living beings for antibodies in their blood."
-	icon_state = "health"
+	icon_state = "antibody"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = FPRINT
+	siemens_coefficient = 1
 
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!istype(M))
-		user << "<span class='notice'>Incompatible object, scan aborted.</span>"
+		to_chat(user, "<span class='notice'>Incompatible object, scan aborted.</span>")
 		return
 	var/mob/living/carbon/C = M
 	if(!C.antibodies)
-		user << "<span class='notice'>Unable to detect antibodies.</span>"
+		to_chat(user, "<span class='notice'>Unable to detect antibodies.</span>")
 		return
 	var/code = antigens2string(M.antibodies)
-	user << "<span class='notice'>[src] The antibody scanner displays a cryptic set of data: [code]</span>"
+	to_chat(user, "<span class='notice'>[src] The antibody scanner displays a cryptic set of data: [code]</span>")
 
 ///////////////VIRUS DISH///////////////
 
@@ -35,15 +32,13 @@
 	var/info = 0
 	var/analysed = 0
 
-	reagents = list()
-
 /obj/item/weapon/virusdish/random
 	name = "Virus Sample"
 
-/obj/item/weapon/virusdish/random/New()
-	..()
-	src.virus2 = new /datum/disease2/disease
-	src.virus2.makerandom()
+/obj/item/weapon/virusdish/random/New(loc)
+	..(loc)
+	virus2 = new /datum/disease2/disease
+	virus2.makerandom()
 	growth = rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(var/obj/item/weapon/W as obj,var/mob/living/carbon/user as mob)
@@ -51,19 +46,19 @@
 		return
 	..()
 	if(prob(50))
-		user << "The dish shatters"
+		to_chat(user, "The dish shatters")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
 					if(get_infection_chance(target))
-						infect_virus2(target,src.virus2)
-		del src
+						infect_virus2(target,src.virus2, notes="([src] attacked by [key_name(user)])")
+		qdel (src)
 
-/obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish"
+/obj/item/weapon/virusdish/examine(mob/user)
+	..()
 	if(src.info)
-		usr << "It has the following information about its contents"
-		usr << src.info
+		to_chat(user, "<span class='info'>It has the following information about its contents</span>")
+		to_chat(user, src.info)
 
 ///////////////GNA DISK///////////////
 

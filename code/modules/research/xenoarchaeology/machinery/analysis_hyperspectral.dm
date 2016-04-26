@@ -1,18 +1,31 @@
-
-obj/machinery/anomaly/hyperspectral
+/obj/machinery/anomaly/hyperspectral
 	name = "Hyperspectral Imager"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "scanner"
 
-obj/machinery/anomaly/hyperspectral/process()
+/obj/machinery/anomaly/hyperspectral/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom/hyper,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/hyperspectral/process()
 	..()
 	if(scan_process)
 		icon_state = "scanner_active"
-	else if(prob(10))
+	else
 		icon_state = "scanner"
-		flick(src, "scanner_active")
+		if(prob(10))
+			flick(src, "scanner_active")
 
-obj/machinery/anomaly/hyperspectral/ScanResults()
+
+/obj/machinery/anomaly/hyperspectral/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample
@@ -32,17 +45,17 @@ obj/machinery/anomaly/hyperspectral/ScanResults()
 		var/specifity = GetResultSpecifity(scanned_sample, carrier)
 		results = "Spectral signature over carrier ([carrier]):<br>"
 		if(specifity <= 0.25)
-			//results += "<img src=\"http://i.imgur.com/TAQHn.jpg\"></img><br>"
-			results += "<img src=chart1.jpg>"
+			results += "<img src=\"http://i.imgur.com/TAQHn.jpg\"></img><br>"
+			//results += "<img src=chart1.jpg>"
 		else if(specifity <= 0.5)
-			//results += "<img src=\"http://i.imgur.com/EwOZ7.jpg\"></img><br>"
-			results += "<img src=chart2.jpg>"
+			results += "<img src=\"http://i.imgur.com/EwOZ7.jpg\"></img><br>"
+			//results += "<img src=chart2.jpg>"
 		else if(specifity <= 0.75)
-			//results += "<img src=\"http://i.imgur.com/1qCae.jpg\"></img><br>"
-			results += "<img src=chart3.jpg>"
+			results += "<img src=\"http://i.imgur.com/1qCae.jpg\"></img><br>"
+			//results += "<img src=chart3.jpg>"
 		else
-			//results += "<img src=\"http://i.imgur.com/9T9nc.jpg\"></img><br>"
-			results += "<img src=chart4.jpg>"
+			results += "<img src=\"http://i.imgur.com/9T9nc.jpg\"></img><br>"
+			//results += "<img src=chart4.jpg>"
 
 		results += "<br>"
 		if(scanned_sample.artifact_id)

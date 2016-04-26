@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
-	cure = "Common Cold Anti-bodies & Spaceacillin"
+	cure = "Common Cold Anti-bodies or Spaceacillin"
 	cure_id = "spaceacillin"
 	agent = "ICE9-rhinovirus"
 	affected_species = list("Human")
@@ -14,9 +14,9 @@
 	..()
 	switch(stage)
 		if(2)
-			affected_mob.bodytemperature -= 10
+			affected_mob.bodytemperature--
 			if(prob(1) && prob(10))
-				affected_mob << "\blue You feel better."
+				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				cure()
 				return
 			if(prob(1))
@@ -24,16 +24,16 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
 			if(prob(5))
-				affected_mob << "\red You feel stiff."
+				to_chat(affected_mob, "<span class='warning'>You feel stiff.</span>")
 		if(3)
-			affected_mob.bodytemperature -= 20
+			affected_mob.bodytemperature -= 2
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				to_chat(affected_mob, "<span class='warning'>Your throat feels sore.</span>")
 			if(prob(10))
-				affected_mob << "\red You feel stiff."
+				to_chat(affected_mob, "<span class='warning'>You feel stiff.</span>")

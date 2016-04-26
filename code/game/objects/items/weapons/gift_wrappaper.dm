@@ -1,68 +1,110 @@
 /* Gifts and wrapping paper
  * Contains:
  *		Gifts
- *		Wrapping Paper
+ *      Winter Gifts
+ *      Strange Presents
  */
 
-/*
- * Gifts
- */
-/obj/item/weapon/a_gift
+////WRAPPED GIFTS////
+
+/obj/item/weapon/gift
 	name = "gift"
-	desc = "PRESENTS!!!! eek!"
+	desc = "A wrapped item."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "gift1"
-	item_state = "gift1"
+	icon_state = "gift"
+	item_state = "gift"
+	var/size = 3.0
+	var/obj/item/gift = null
+	w_class = 3.0
+	autoignition_temperature=AUTOIGNITION_PAPER
 
-/obj/item/weapon/a_gift/New()
+/obj/item/weapon/gift/New(turf/loc, var/obj/item/target, var/W)
+	..()
+	w_class = W
+	gift = target
+	update_icon()
+
+/obj/item/weapon/gift/update_icon()
+	switch(w_class)
+		if(1,2)
+			icon_state = "gift-small"
+			item_state = "gift-small"
+		if(3)
+			icon_state = "gift"
+			item_state = "gift"
+		if(4)
+			icon_state = "gift-large"
+			item_state = "gift-large"
+
+/obj/item/weapon/gift/attack_self(mob/user as mob)
+	user.drop_item(src, force_drop = 1)
+	if(gift)
+		user.put_in_active_hand(gift)
+		gift.add_fingerprint(user)
+		to_chat(user, "<span class='notice'>You unwrapped \a [gift]!</span>")
+	else
+		to_chat(user, "<span class='notice'>The gift was empty!</span>")
+	qdel(src)
+	return
+
+/obj/item/weapon/gift/ashify()//so the content of player-made gifts can be recovered.
+	if(gift)
+		gift.forceMove(get_turf(src))
+	..()
+
+////WINTER GIFTS////
+
+/obj/item/weapon/winter_gift
+	name = "gift"
+	desc = ""
+	icon = 'icons/obj/items.dmi'
+	icon_state = "gift"
+	item_state = "gift"
+	w_class = 4.0
+	autoignition_temperature=AUTOIGNITION_PAPER
+
+/obj/item/weapon/winter_gift/New()
 	..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	if(w_class > 0 && w_class < 4)
-		icon_state = "gift[w_class]"
-	else
-		icon_state = "gift[pick(1, 2, 3)]"
+
+/obj/item/weapon/winter_gift/ex_act()
+	qdel(src)
 	return
 
-/obj/item/weapon/gift/attack_self(mob/user as mob)
-	user.drop_item()
-	if(src.gift)
-		user.put_in_active_hand(gift)
-		src.gift.add_fingerprint(user)
-	else
-		user << "\blue The gift was empty!"
-	del(src)
+/obj/item/weapon/winter_gift/regular
+	desc = "What are you waiting for? Tear that paper apart!"
+	icon_state = "gift_winter-1"
+	item_state = "gift_winter-1"
+
+/obj/item/weapon/winter_gift/food
+	desc = "That one smells really good!"
+	icon_state = "gift_winter-2"
+	item_state = "gift_winter-2"
+
+/obj/item/weapon/winter_gift/cloth
+	desc = "That one feels warm to the touch!"
+	icon_state = "gift_winter-3"
+	item_state = "gift_winter-3"
+
+/obj/item/weapon/winter_gift/special
+	desc = "There is something eerie about that one...opening it might or might not be a good idea."
+	icon_state = "gift_winter-4"
+	item_state = "gift_winter-4"
+
+
+/obj/item/weapon/winter_gift/attack_self(mob/M as mob)
+	to_chat(M, "<span class='notice'>The gift was empty!</span>")
+	M.u_equip(src,0)
+	qdel(src)
 	return
 
-/obj/item/weapon/a_gift/ex_act()
-	del(src)
-	return
-
-/obj/effect/spresent/relaymove(mob/user as mob)
-	if (user.stat)
-		return
-	user << "\blue You cant move."
-
-/obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-
-	if (!istype(W, /obj/item/weapon/wirecutters))
-		user << "\blue I need wirecutters for that."
-		return
-
-	user << "\blue You cut open the present."
-
-	for(var/mob/M in src) //Should only be one but whatever.
-		M.loc = src.loc
-		if (M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
-
-	del(src)
-
-/obj/item/weapon/a_gift/attack_self(mob/M as mob)
-	var/gift_type = pick(/obj/item/weapon/sord,
+/obj/item/weapon/winter_gift/regular/attack_self(mob/M as mob)
+	var/gift_type = pick(
+		/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,
+		/obj/item/device/camera,
+		/obj/item/device/camera/sepia,
 		/obj/item/weapon/storage/photo_album,
 		/obj/item/weapon/storage/box/snappops,
 		/obj/item/weapon/storage/fancy/crayons,
@@ -73,18 +115,19 @@
 		/obj/item/weapon/pen/invisible,
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
-		/obj/item/weapon/corncob,
-		/obj/item/weapon/contraband/poster,
-		/obj/item/weapon/book/manual/barman_recipes,
-		/obj/item/weapon/book/manual/chef_recipes,
+//		/obj/item/weapon/corncob,
+		/obj/item/mounted/poster,
+//		/obj/item/weapon/book/manual/barman_recipes,	//we're in December 2014 and those books are still empty
+//		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,
 		/obj/item/weapon/beach_ball,
-		/obj/item/weapon/beach_ball/holoball,
+//		/obj/item/weapon/beach_ball/holoball,
 		/obj/item/weapon/banhammer,
 		/obj/item/toy/balloon,
-		/obj/item/toy/blink,
+//		/obj/item/toy/blink,	//this one reaaally needs a revamp. there's a limit to how lame a toy can be.
 		/obj/item/toy/crossbow,
 		/obj/item/toy/gun,
+		/obj/item/toy/bomb,
 		/obj/item/toy/katana,
 		/obj/item/toy/prize/deathripley,
 		/obj/item/toy/prize/durand,
@@ -99,105 +142,174 @@
 		/obj/item/toy/prize/seraph,
 		/obj/item/toy/spinningtoy,
 		/obj/item/toy/sword,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/clothing/mask/cigarette/blunt/deus,
+		/obj/item/clothing/mask/cigarette/blunt/cruciatus,
 		/obj/item/device/paicard,
 		/obj/item/device/violin,
-		/obj/item/weapon/storage/belt/utility/full,
-		/obj/item/clothing/tie/horrible)
-
-	if(!ispath(gift_type,/obj/item))	return
+		/obj/item/weapon/storage/belt/utility/complete,
+		/obj/item/clothing/accessory/tie/horrible,
+		/obj/item/device/maracas,
+		/obj/item/weapon/gun/energy/temperature,
+		/obj/item/weapon/pickaxe/shovel,
+		/obj/item/clothing/shoes/galoshes,
+		)
 
 	var/obj/item/I = new gift_type(M)
-	M.u_equip(src)
+	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
-	del(src)
+	to_chat(M, "<span class='notice'>You unwrapped \a [I]!</span>")
+	qdel(src)
 	return
 
-/*
- * Wrapping Paper
- */
-/obj/item/weapon/wrapping_paper
-	name = "wrapping paper"
-	desc = "You can use this to wrap items in."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "wrap_paper"
-	var/amount = 20.0
+//christmas and festive food
+/obj/item/weapon/winter_gift/food/attack_self(mob/M as mob)
+	var/gift_type = pick(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake,
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/buchedenoel,
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey,
+		)
 
-/obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isMoMMI(user))
-		user << "\red You need two hands for this."
+	var/obj/item/I = new gift_type(M)
+	M.u_equip(src,0)
+	M.put_in_hands(I)
+	I.add_fingerprint(M)
+	to_chat(M, "<span class='notice'>You unwrapped \a [I]! Tasty!</span>")
+	qdel(src)
+	return
+
+//warm clothes
+/obj/item/weapon/winter_gift/cloth/attack_self(mob/M as mob)
+	if(prob(30))
+		cloth_bundle()
+		to_chat(M, "<span class='notice'>You unwrapped a bundle of clothes! Looks comfy!</span>")
+		qdel(src)
 		return
-	..()
-	if (!( locate(/obj/structure/table, src.loc) ))
-		user << "\blue You MUST put the paper on a table!"
-	if (W.w_class < 4)
-		if (istype(user.get_inactive_hand(), /obj/item/weapon/wirecutters))
-			var/obj/item/weapon/wirecutters/C = user.get_inactive_hand()
-			if(W==C)
-				return
-			var/a_used = 2 ** (src.w_class - 1)
-			if (src.amount < a_used)
-				user << "\blue You need more paper!"
-				return
-			else
-				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
-					return
 
-				src.amount -= a_used
-				user.drop_item()
-				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
-				G.size = W.w_class
-				G.w_class = G.size + 1
-				G.icon_state = text("gift[]", G.size)
-				G.gift = W
-				W.loc = G
-				G.add_fingerprint(user)
-				W.add_fingerprint(user)
-				src.add_fingerprint(user)
-			if (src.amount <= 0)
-				new /obj/item/weapon/c_tube( src.loc )
-				del(src)
-				return
-		else
-			user << "\blue You need wirecutters in your other hand!"
-	else
-		user << "\blue The object is FAR too large!"
+	var/gift_type = pick(
+		/obj/item/clothing/gloves/black,
+		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/bearpelt,
+		)
+
+	var/obj/item/I = new gift_type(M)
+	M.u_equip(src,0)
+	M.put_in_hands(I)
+	I.add_fingerprint(M)
+	to_chat(M, "<span class='notice'>You unwrapped \a [I]! Looks comfy!</span>")
+	qdel(src)
 	return
 
+/obj/item/weapon/winter_gift/cloth/proc/cloth_bundle()
+	var/bundle = pick(
+		3;"batman",
+		10;"russian fur",
+		10;"chicken",
+		8;"pirate captain",
+		2;"cuban pete"
+		)
 
-/obj/item/weapon/wrapping_paper/examine()
-	set src in oview(1)
+	switch(bundle)
+		if("batman")
+			new /obj/item/weapon/storage/belt/security/batmanbelt(get_turf(loc))
+			new /obj/item/clothing/head/batman(get_turf(loc))
+			new /obj/item/clothing/gloves/batmangloves(get_turf(loc))
+			new /obj/item/clothing/shoes/jackboots/batmanboots(get_turf(loc))
+			new /obj/item/clothing/under/batmansuit(get_turf(loc))
+		if("russian fur")
+			new /obj/item/clothing/suit/russofurcoat(get_turf(loc))
+			new /obj/item/clothing/head/russofurhat(get_turf(loc))
+		if("chicken")
+			new /obj/item/clothing/head/chicken(get_turf(loc))
+			new /obj/item/clothing/suit/chickensuit(get_turf(loc))
+		if("pirate captain")
+			new /obj/item/clothing/glasses/eyepatch(get_turf(loc))
+			new /obj/item/clothing/head/hgpiratecap(get_turf(loc))
+			new /obj/item/clothing/suit/hgpirate(get_turf(loc))
+			new /obj/item/clothing/under/captain_fly(get_turf(loc))
+			new /obj/item/clothing/shoes/jackboots(get_turf(loc))
+		if("cuban pete")
+			new /obj/item/clothing/head/collectable/petehat(get_turf(loc))
+			new /obj/item/device/maracas(get_turf(loc))
+			new /obj/item/device/maracas(get_turf(loc))
 
-	..()
-	usr << text("There is about [] square units of paper left!", src.amount)
+//dangerous items
+/obj/item/weapon/winter_gift/special/attack_self(mob/M as mob)
+	var/gift_type = pick(
+		/obj/item/device/fuse_bomb,
+		/obj/item/weapon/card/emag,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned,
+		/obj/item/weapon/tome,
+		)
+
+	var/obj/item/I = new gift_type(M)
+	M.u_equip(src,0)
+	M.put_in_hands(I)
+	I.add_fingerprint(M)
+
+	var/additional_info = ""
+	if(istype(I,/obj/item/device/fuse_bomb))
+		var/obj/item/device/fuse_bomb/B = I
+		B.fuse_lit = 1
+		B.update_icon()
+		B.fuse_burn()
+		additional_info = ", OH SHIT its fuse is lit!"
+
+	var/log_str = "[M.name]([M.ckey]) openned <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[I.x];Y=[I.y];Z=[I.z]'>a black gift</a> and found [I.name] inside[additional_info]."
+
+	if(M)
+		log_str += "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
+
+	message_admins(log_str, 0, 1)
+	log_game(log_str)
+
+	to_chat(M, "<span class='notice'>You unwrapped \a [I][additional_info]!</span>")
+
+	qdel(src)
 	return
 
-/obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
-	if (!istype(target, /mob/living/carbon/human)) return
-	var/mob/living/carbon/human/H = target
+//black gifts have 2% chance to spawn by default.
+/obj/item/weapon/winter_gift/proc/pick_a_gift(var/turf/T,var/special_chance = 2)
+	var/gift_type = pick(
+		50;/obj/item/weapon/winter_gift/regular,
+		25;/obj/item/weapon/winter_gift/food,
+		25;/obj/item/weapon/winter_gift/cloth,
+		special_chance;/obj/item/weapon/winter_gift/special,
+		)
+	new gift_type(T)
 
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
-		if (src.amount > 2)
-			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
-			src.amount -= 2
+////STRANGE PRESENTS////
 
-			if (H.client)
-				H.client.perspective = EYE_PERSPECTIVE
-				H.client.eye = present
+/obj/structure/strange_present
+	name = "strange present"
+	desc = "It's a ... present?"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "strangepresent"
+	density = 1
+	anchored = 0
+	w_type=NOT_RECYCLABLE
 
-			H.loc = present
-			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-			if(!iscarbon(user))
-				H.LAssailant = null
-			else
-				H.LAssailant = user
+/obj/structure/strange_present/relaymove(mob/user as mob)
+	if (user.stat)
+		return
+	to_chat(user, "<span class='notice'>You can't move.</span>")
 
-			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
+/obj/structure/strange_present/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (iswirecutter(W))
+		to_chat(user, "<span class='notice'>You cut open the present.</span>")
 
-		else
-			user << "\blue You need more paper."
+		for(var/mob/M in src) //Should only be one but whatever.
+			M.loc = get_turf(src)
+			if (M.client)
+				M.client.eye = M.client.mob
+				M.client.perspective = MOB_PERSPECTIVE
+
+		qdel(src)
+
 	else
-		user << "They are moving around too much. A straightjacket would help."
+		to_chat(user, "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>")
+		return	..()
+
+/obj/structure/strange_present/attack_hand(mob/user as mob)
+	to_chat(user, "<span class='warning'>[src] is too tightly bound to open without wirecutters!</span>")
+	return

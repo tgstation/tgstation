@@ -1,8 +1,9 @@
 /obj/effect/mine
 	name = "Mine"
-	desc = "I Better stay away from that thing."
+	desc = "I better stay away from that thing."
 	density = 1
 	anchored = 1
+	w_type=NOT_RECYCLABLE
 	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
@@ -12,7 +13,7 @@
 /obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/HasEntered(AM as mob|obj)
+/obj/effect/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/mine/Bumped(mob/M as mob|obj)
@@ -21,7 +22,7 @@
 
 	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
 		for(var/mob/O in viewers(world.view, src.loc))
-			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
+			to_chat(O, "<font color='red'>[M] triggered the [bicon(src)] [src]</font>")
 		triggered = 1
 		call(src,triggerproc)(M)
 
@@ -33,7 +34,7 @@
 	randmutb(obj)
 	domutcheck(obj,null)
 	spawn(0)
-		del(src)
+		qdel(src)
 
 /obj/effect/mine/proc/triggerstun(obj)
 	if(ismob(obj))
@@ -43,7 +44,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	spawn(0)
-		del(src)
+		qdel(src)
 
 /obj/effect/mine/proc/triggern2o(obj)
 	//example: n2o triggerproc
@@ -61,7 +62,7 @@
 			target.zone.air.merge(payload)
 
 	spawn(0)
-		del(src)
+		qdel(src)
 
 /obj/effect/mine/proc/triggerplasma(obj)
 	for (var/turf/simulated/floor/target in range(1,src))
@@ -76,20 +77,20 @@
 			target.hotspot_expose(1000, CELL_VOLUME)
 
 	spawn(0)
-		del(src)
+		qdel(src)
 
 /obj/effect/mine/proc/triggerkick(obj)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del(obj:client)
+	qdel(obj:client)
 	spawn(0)
-		del(src)
+		qdel(src)
 
 /obj/effect/mine/proc/explode(obj)
 	explosion(loc, 0, 1, 2, 3)
 	spawn(0)
-		del(src)
+		qdel(src)
 
 /obj/effect/mine/dnascramble
 	name = "Radiation Mine"

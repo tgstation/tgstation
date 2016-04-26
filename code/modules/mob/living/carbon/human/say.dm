@@ -1,42 +1,40 @@
-/mob/living/carbon/human/say(var/message)
+///mob/living/carbon/human/say(var/message)
+//	..(message)
 
-	if(silent)
-		return
+/mob/living/carbon/human/say_quote(text)
+	if(!text)
+		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+	if (src.stuttering)
+		return "stammers, [text]";
+	if(isliving(src))
+		var/mob/living/L = src
+		if (L.getBrainLoss() >= 60)
+			return "gibbers, [text]";
+	var/ending = copytext(text, length(text))
+	if (ending == "?")
+		return "asks, [text]";
+	if (ending == "!")
+		return "exclaims, [text]";
 
-	//Mimes dont speak! Changeling hivemind and emotes are allowed.
-	if(miming)
-		if(length(message) >= 2)
-			if(mind && mind.changeling)
-				if(copytext(message, 1, 2) != "*" && department_radio_keys[copytext(message, 1, 3)] != "changeling")
-					return
-				else
-					return ..(message)
-			if(stat == DEAD)
-				return ..(message)
+//	if(dna)
+//		return "[dna.species.say_mod], \"[text]\"";
 
-		if(length(message) >= 1) //In case people forget the '*help' command, this will slow them the message and prevent people from saying one letter at a time
-			if (copytext(message, 1, 2) != "*")
-				return
+	return "says, [text]";
 
-	/*if(dna)
-		if(dna.mutantrace == "lizard")
-			if(copytext(message, 1, 2) != "*")
-				message = replacetext(message, "s", stutter("ss"))
+/mob/living/carbon/human/treat_speech(var/datum/speech/speech, var/genesay=0)
+	if(wear_mask && istype(wear_mask))
+		if(!(copytext(speech.message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(speech.message, 1, 3)] != "changeling")))
+			wear_mask.treat_mask_speech(speech)
 
-		if(dna.mutantrace == "slime" && prob(5))
-			if(copytext(message, 1, 2) != "*")
-				if(copytext(message, 1, 2) == ";")
-					message = ";"
-				else
-					message = ""
-				message += "SKR"
-				var/imax = rand(5,20)
-				for(var/i = 0,i<imax,i++)
-					message += "E"*/
+	if ((M_HULK in mutations) && health >= 25 && length(speech.message))
+		speech.message = "[uppertext(replacetext(speech.message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
+	if (src.slurring || (undergoing_hypothermia() == MODERATE_HYPOTHERMIA && prob(25)))
+		speech.message = slur(speech.message)
 
-	if(stat != DEAD)
+	// Should be handled via a virus-specific proc.
+	if(viruses)
 		for(var/datum/disease/pierrot_throat/D in viruses)
-			var/list/temp_message = text2list(message, " ") //List each word in the message
+			var/list/temp_message = text2list(speech.message, " ") //List each word in the message
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
 				pick_list += i
@@ -46,64 +44,89 @@
 					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
-				message = dd_list2text(temp_message, " ")
+				speech.message = list2text(temp_message, " ")
 
-	if(wear_mask)
-		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja) && wear_mask:voice == "Unknown")
-			if(copytext(message, 1, 2) != "*")
-				var/list/temp_message = text2list(message, " ")
-				var/list/pick_list = list()
-				for(var/i = 1, i <= temp_message.len, i++)
-					pick_list += i
-				for(var/i=1, i <= abs(temp_message.len/3), i++)
-					var/H = pick(pick_list)
-					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-					temp_message[H] = ninjaspeak(temp_message[H])
-					pick_list -= H
-				message = dd_list2text(temp_message, " ")
-				message = replacetext(message, "o", "¤")
-				message = replacetext(message, "p", "þ")
-				message = replacetext(message, "l", "£")
-				message = replacetext(message, "s", "§")
-				message = replacetext(message, "u", "µ")
-				message = replacetext(message, "b", "ß")
+	..(speech)
+	if(dna)
+		species.handle_speech(speech,src)
 
-		else if(istype(wear_mask, /obj/item/clothing/mask/luchador))
-			if(copytext(message, 1, 2) != "*")
-				message = replacetext(message, "captain", "CAPITÁN")
-				message = replacetext(message, "station", "ESTACIÓN")
-				message = replacetext(message, "sir", "SEÑOR")
-				message = replacetext(message, "the ", "el ")
-				message = replacetext(message, "my ", "mi ")
-				message = replacetext(message, "is ", "es ")
-				message = replacetext(message, "it's", "es")
-				message = replacetext(message, "friend", "amigo")
-				message = replacetext(message, "buddy", "amigo")
-				message = replacetext(message, "hello", "hola")
-				message = replacetext(message, " hot", " caliente")
-				message = replacetext(message, " very ", " muy ")
-				message = replacetext(message, "sword", "espada")
-				message = replacetext(message, "library", "biblioteca")
-				message = replacetext(message, "traitor", "traidor")
-				message = replacetext(message, "wizard", "mago")
-				message = uppertext(message)	//Things end up looking better this way (no mixed cases), and it fits the macho wrestler image.
-				if(prob(25))
-					message += " OLE!"
 
-		else if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
-			var/obj/item/clothing/mask/horsehead/hoers = wear_mask
-			if(hoers.voicechange)
-				if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
-					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+/mob/living/carbon/human/GetVoice()
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
+		var/obj/item/clothing/mask/gas/voice/V = wear_mask
+		if(V.vchange && V.is_flipped == 1) //the mask works and we are wearing it on the face instead of on the head
+			if(wear_id)
+				var/obj/item/weapon/card/id/idcard = wear_id.GetID()
+				return idcard.registered_name
+			else
+				return "Unknown"
+		else
+			return real_name
+	if(mind && mind.changeling && mind.changeling.mimicing)
+		return mind.changeling.mimicing
+	if(GetSpecialVoice())
+		return GetSpecialVoice()
+	return real_name
 
-	if ((HULK in mutations) && health >= 25 && length(message))
-		if(copytext(message, 1, 2) != "*")
-			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro
+/mob/living/carbon/human/IsVocal()
+	if(mind)
+		return !miming
+	return 1
 
-	if (src.slurring)
-		if(copytext(message, 1, 2) != "*")
-			message = slur(message)
-	..(message)
+/mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
+	if(new_voice)
+		special_voice = new_voice
+	return
+
+/mob/living/carbon/human/proc/UnsetSpecialVoice()
+	special_voice = ""
+	return
+
+/mob/living/carbon/human/proc/GetSpecialVoice()
+	return special_voice
+
+/mob/living/carbon/human/binarycheck()
+	if(ears)
+		var/obj/item/device/radio/headset/dongle = ears
+		if(!istype(dongle)) return 0
+		if(dongle.translate_binary) return 1
+
+/mob/living/carbon/human/radio(var/datum/speech/speech, var/message_mode)
+	. = ..()
+	if(. != 0)
+		return .
+
+	switch(message_mode)
+		if(MODE_HEADSET)
+			if (ears)
+				say_testing(src, "Talking into our headset (MODE_HEADSET)")
+				ears.talk_into(speech, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+		if(MODE_SECURE_HEADSET)
+			if (ears)
+				say_testing(src, "Talking into our headset (MODE_SECURE_HEADSET)")
+				ears.talk_into(speech, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+		if(MODE_DEPARTMENT)
+			if (ears)
+				say_testing(src, "Talking into our dept headset")
+				ears.talk_into(speech, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+	if(message_mode in radiochannels)
+		if(ears)
+			say_testing(src, "Talking through a radio channel")
+			ears.talk_into(speech, message_mode)
+			return ITALICS | REDUCE_RANGE
+
+	return 0
+
+/mob/living/carbon/human/get_alt_name()
+	if(name != GetVoice())
+		return get_id_name("Unknown")
+	return null
 
 /mob/living/carbon/human/proc/forcesay(list/append)
 	if(stat == CONSCIOUS)
@@ -136,45 +159,27 @@
 					say(temp)
 				winset(client, "input", "text=[null]")
 
-/mob/living/carbon/human/say_understands(var/other,var/datum/language/speaking = null)
+/mob/living/carbon/human/say_understands(var/mob/other,var/datum/language/speaking = null)
+	if(other) other = other.GetSource()
 	if(has_brain_worms()) //Brain worms translate everything. Even mice and alien speak.
 		return 1
-	if (istype(other, /mob/living/silicon/ai))
-		return 1
-	if (istype(other, /mob/living/silicon/decoy))
-		return 1
-	if (istype(other, /mob/living/silicon/pai))
-		return 1
-	if (istype(other, /mob/living/silicon/robot))
-		return 1
-	if (istype(other, /mob/living/carbon/brain))
-		return 1
-	if (istype(other, /mob/living/carbon/slime))
-		return 1
+
+	//These only pertain to common. Languages are handled by mob/say_understands()
+	if (!speaking)
+		if (istype(other, /mob/living/carbon/monkey/diona))
+			var/mob/living/carbon/monkey/diona/D = other
+			if(D.donors.len >= 4) //They've sucked down some blood and can speak common now.
+				return 1
+		if (istype(other, /mob/living/silicon))
+			return 1
+		if (istype(other, /mob/living/carbon/brain))
+			return 1
+		if (istype(other, /mob/living/carbon/slime))
+			return 1
+
+	//This is already covered by mob/say_understands()
+	//if (istype(other, /mob/living/simple_animal))
+	//	if((other.universal_speak && !speaking) || src.universal_speak || src.universal_understand)
+	//		return 1
+	//	return 0
 	return ..()
-
-/mob/living/carbon/human/GetVoice()
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		var/obj/item/clothing/mask/gas/voice/V = src.wear_mask
-		if(V.vchange)
-			return V.voice
-		else
-			return name
-	if(mind && mind.changeling && mind.changeling.mimicing)
-		return mind.changeling.mimicing
-	if(GetSpecialVoice())
-		return GetSpecialVoice()
-	return real_name
-
-/mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
-	if(new_voice)
-		special_voice = new_voice
-	return
-
-/mob/living/carbon/human/proc/UnsetSpecialVoice()
-	special_voice = ""
-	return
-
-/mob/living/carbon/human/proc/GetSpecialVoice()
-	return special_voice
-

@@ -1,0 +1,166 @@
+# To replace type:
+# TYPE: /old/type > /new/type
+
+# AI Module Conversions
+TYPE: /obj/item/weapon/aiModule/asimov                 > /obj/item/weapon/aiModule/core/asimov
+TYPE: /obj/item/weapon/aiModule/antimov                > /obj/item/weapon/aiModule/core/antimov
+TYPE: /obj/item/weapon/aiModule/robocop                > /obj/item/weapon/aiModule/core/robocop
+TYPE: /obj/item/weapon/aiModule/paladin                > /obj/item/weapon/aiModule/core/paladin
+TYPE: /obj/item/weapon/aiModule/freeformcore           > /obj/item/weapon/aiModule/freeform/core
+TYPE: /obj/item/weapon/aiModule/corp                   > /obj/item/weapon/aiModule/core/corp
+TYPE: /obj/item/weapon/aiModule/supplied/oxygen        > /obj/item/weapon/aiModule/standard/oxygen
+TYPE: /obj/item/weapon/aiModule/oneHuman               > /obj/item/weapon/aiModule/targetted/oneHuman
+TYPE: /obj/item/weapon/aiModule/teleporterOffline      > /obj/item/weapon/aiModule/standard/teleporterOffline
+TYPE: /obj/item/weapon/aiModule/nanotrasen             > /obj/item/weapon/aiModule/core/nanotrasen
+TYPE: /obj/item/weapon/aiModule/protectStation         > /obj/item/weapon/aiModule/standard/protectStation
+TYPE: /obj/item/weapon/aiModule/tyrant                 > /obj/item/weapon/aiModule/core/tyrant
+TYPE: /obj/item/weapon/aiModule/safeguard              > /obj/item/weapon/aiModule/targetted/safeguard
+TYPE: /obj/item/weapon/aiModule/quarantine             > /obj/item/weapon/aiModule/standard/quarantine
+TYPE: /obj/item/weapon/aiModule/prototypeEngineOffline > /obj/item/weapon/aiModule/standard/prototypeEngineOffline
+TYPE: /obj/item/weapon/aiModule/reset/purge            > /obj/item/weapon/aiModule/purge
+
+# Items
+
+TYPE: /obj/item/weapon/stock_parts/cell/high > /obj/item/weapon/cell/high
+TYPE: /obj/item/weapon/stock_parts/cell > /obj/item/weapon/cell
+TYPE: /obj/item/device/electropack > /obj/item/device/radio/electropack
+TYPE: /obj/item/weapon/cable_coil > /obj/item/stack/cable_coil
+TYPE: /obj/item/weapon/airlock_electronics > /obj/item/weapon/circuitboard/airlock
+TYPE: /obj/item/clothing/gloves/color/yellow > /obj/item/clothing/gloves/yellow
+TYPE: /obj/item/clothing/gloves/color/fyellow > /obj/item/clothing/gloves/fyellow
+TYPE: /obj/item/clothing/gloves/color/black > /obj/item/clothing/gloves/black
+TYPE: /obj/item/clothing/gloves/color/latex > /obj/item/clothing/gloves/latex
+TYPE: /obj/item/clothing/gloves/color/rainbow >/obj/item/clothing/gloves/rainbow
+TYPE: /obj/machinery/vending/wallmed > /obj/item/mounted/frame/wallmed
+TYPE: /obj/item/stack/packageWrap > /obj/item/weapon/wrapping_paper
+TYPE: /obj/item/weapon/folder/documents > /obj/item/weapon/folder
+TYPE: /obj/item/device/flash/handheld > /obj/item/device/flash
+TYPE: /obj/item/toy/cards/deck > /obj/item/weapon/deck
+TYPE: /obj/item/stack/sheet/rglass > /obj/item/stack/sheet/glass/rglass
+TYPE: /obj/item/weapon/shovel/spade > /obj/item/weapon/pickaxe/shovel/spade
+TYPE: /obj/item/weapon/restraints/handcuffs > /obj/item/weapon/handcuffs
+TYPE: /obj/item/weapon/storage/book/bible > /obj/item/weapon/storage/bible
+TYPE: /obj/item/documents > /obj/item/weapon/folder
+
+# Decals
+
+TYPE: /obj/effect/decal/cleanable/robot_debris > /obj/effect/decal/cleanable/blood/gibs/robot
+TYPE: /obj/effect/decal/cleanable/oil          > /obj/effect/decal/cleanable/blood/oil
+TYPE: /obj/effect/decal/cleanable/vomit/old    > /obj/effect/decal/cleanable/mucus
+
+# Machinery
+
+TYPE: /obj/machinery/atmospherics/valve                             > /obj/machinery/atmospherics/binary/valve
+TYPE: /obj/machinery/atmospherics/unary/outlet_injector/on          > /obj/machinery/atmospherics/unary/outlet_injector
+TYPE: /obj/machinery/atmospherics/portables_connector               > /obj/machinery/atmospherics/unary/portables_connector
+TYPE: /obj/machinery/atmospherics/tank/oxygen                       > /obj/machinery/atmospherics/unary/tank/oxygen
+TYPE: /obj/machinery/door/airlock/glass_virology                    > /obj/machinery/door/airlock/medical
+TYPE: /obj/machinery/power/tracker                                  > /obj/machinery/power/solar/panel/tracker
+TYPE: /obj/machinery/power/solar/tracker                            > /obj/machinery/power/solar/panel/tracker
+TYPE: /obj/machinery/power/solar_control                            > /obj/machinery/power/solar/control
+TYPE: /obj/machinery/r_n_d/protolathe                               > /obj/machinery/r_n_d/fabricator/protolathe
+TYPE: /obj/machinery/r_n_d/circuit_imprinter                        > /obj/machinery/r_n_d/fabricator/circuit_imprinter
+TYPE: /obj/structure/optable                                        > /obj/machinery/optable
+TYPE: /obj/machinery/mecha_part_fabricator > /obj/machinery/r_n_d/fabricator/mech
+TYPE: /turf/simulated/floor/mech_bay_recharge_floor > /obj/machinery/mech_bay_recharge_floor
+TYPE: /obj/machinery/pipedispenser/disposal/transit_tube > /obj/structure/transit_tube
+TYPE: /obj/machinery/computer/upload/ai > /obj/machinery/computer/aiupload
+TYPE: /obj/machinery/computer/upload/borg > /obj/machinery/computer/borgupload
+# TODO
+#TYPE: /obj/machinery/computer/shuttle/mining > /obj/machinery/computer/mining_shuttle 
+TYPE: /obj/machinery/computer/monitor > /obj/machinery/computer/security
+TYPE: /obj/machinery/suit_storage_unit/engine > /obj/machinery/suit_storage_unit/engie
+TYPE: /obj/machinery/suit_storage_unit/ce > /obj/machinery/suit_storage_unit/elite
+TYPE: /obj/item/solar_assembly > /obj/machinery/power/solar_assembly
+TYPE: /obj/machinery/vending/sustenance > /obj/machinery/vending/discount
+TYPE: /obj/machinery/librarypubliccomp > /obj/machinery/computer/library/public
+TYPE: /obj/machinery/librarycomp > /obj/machinery/computer/library/checkout
+
+# Mob
+
+TYPE: /mob/living/simple_animal/hostile/retaliate/bat > /mob/living/simple_animal/hostile/scarybat
+
+
+# Structures
+
+TYPE: /obj/structure/table/glass > /obj/structure/table
+TYPE: /obj/structure/closet/wardrobe/white/medical > /obj/structure/closet/wardrobe/medic_white
+TYPE: /obj/structure/bodycontainer/morgue > /obj/structure/morgue
+TYPE: /obj/structure/janitorialcart > /obj/structure/stool/bed/chair/vehicle/janicart
+TYPE: /obj/structure/piano > /obj/structure/device/piano
+TYPE: /obj/structure/closet/secure_closet/security/sec > /obj/structure/closet/secure_closet/security
+TYPE: /obj/structure/closet/secure_closet/atmospherics > /obj/structure/closet/secure_closet/engineering_atmos
+TYPE: /obj/structure/bodycontainer/crematorium > /obj/structure/crematorium
+
+# Turf
+
+TYPE: /obj/structure/lattice/catwalk > /turf/simulated/floor/plating/airless/catwalk
+
+# Area renames
+
+TYPE: /area/ai_monitored/nuke_storage > /area/storage/nuke_storage
+TYPE: /area/engine/engineering > /area/engineering
+TYPE: /area/engine/burn_chamber > /area/engineering/burn_chamber
+TYPE: /area/engine/break_room > /area/engineering/break_room
+TYPE: /area/maintenance/fpmaint2 > /area/maintenance/fpmaint3
+TYPE: /area/maintenance/fpmaint > /area/maintenance/fpmaint2
+TYPE: /area/maintenance/atmos_control > /area/maintenance/fpmaint
+TYPE: /area/maintenance/xenomaint     > /area/maintenance/asmaint3
+TYPE: /area/maintenance/storage       > /area/maintenance/atmos
+TYPE: /area/crew_quarters/hor         > /area/crew_quarters
+TYPE: /area/crew_quarters/heads/chief > /area/crew_quarters/heads/ce
+TYPE: /area/crew_quarters/heads       > /area/crew_quarters/hop
+TYPE: /area/engine/chiefs_office > /area/engineering/ce
+TYPE: /area/solar/auxport > /area/solar/fport
+TYPE: /area/solar/auxstarboard > /area/solar/fstarboard
+TYPE: /area/solar/starboard > /area/solar/astarboard
+TYPE: /area/solar/port > /area/solar/aport
+TYPE: /area/maintenance/auxsolarport > /area/maintenance/fportsolar
+TYPE: /area/maintenance/starboardsolar > /area/maintenance/astarboardsolar
+TYPE: /area/maintenance/portsolar > /area/maintenance/aportsolar
+TYPE: /area/maintenance/auxsolarstarboard > /area/maintenance/fstarboardsolar
+TYPE: /area/quartermaster > /area/supply
+TYPE: /area/quartermaster/sorting > /area/supply/sorting
+TYPE: /area/quartermaster/office > /area/supply/office
+TYPE: /area/quartermaster/storage > /area/supply/storage
+TYPE: /area/quartermaster/qm > /area/supply/qm
+TYPE: /area/quartermaster/miningdock > /area/supply/miningdock
+TYPE: /area/quartermaster/miningstorage > /area/supply/miningstorage
+TYPE: /area/quartermaster/mechbay > /area/supply/mechbay
+TYPE: /area/toxins/lab > /area/science/lab
+TYPE: /area/toxins/hallway > /area/science/hallway
+TYPE: /area/toxins/rdoffice > /area/science/rd
+TYPE: /area/toxins/supermatter > /area/science/supermatter
+TYPE: /area/toxins/storage > /area/science/storage
+TYPE: /area/assembly/chargebay > /area/science/chargebay
+TYPE: /area/assembly/robotics > /area/science/robotics
+TYPE: /area/toxins/test_area > /area/science/test_area
+TYPE: /area/toxins/mixing > /area/science/mixing
+TYPE: /area/toxins/misc_lab > /area/science/telescience
+TYPE: /area/toxins/server > /area/science/server
+TYPE: /area/toxins/xenobiology > /area/science/xenobiology
+TYPE: /area/toxins/xenobiology/specimen_1 > /area/science/xenobiology/specimen_1
+TYPE: /area/toxins/xenobiology/specimen_2 > /area/science/xenobiology/specimen_2
+TYPE: /area/toxins/xenobiology/specimen_3 > /area/science/xenobiology/specimen_3
+TYPE: /area/toxins/xenobiology/specimen_4 > /area/science/xenobiology/specimen_4
+TYPE: /area/toxins/xenobiology/specimen_5 > /area/science/xenobiology/specimen_5
+TYPE: /area/toxins/xenobiology/specimen_6 > /area/science/xenobiology/specimen_6
+TYPE: /area/security/nuke_storage > /area/storage/nuke_storage
+TYPE: /area/atmos > /area/engineering/atmos
+TYPE: /area/medical/research > /area/science/lab
+
+# UNKNOWN SHIT FIXME
+TYPE: /area/tcommsat/server             > /area/tcomms/chamber
+TYPE: /area/toxins/telesci              > /area/science/telescience
+TYPE: /area/crew_quarters/hor           > /area/science/rd
+TYPE: /area/shuttle/escape_pod4/station > /area/shuttle/escape_pod5/station
+TYPE: /area/shuttle/escape_pod4/transit > /area/shuttle/escape_pod5/transit
+TYPE: /area/shuttle/escape_pod4/centcom > /area/shuttle/escape_pod5/centcom
+TYPE: /area/centcom/prison              > /area/prison/solitary
+
+# TURRETS
+
+TYPE: /obj/machinery/porta_turret       > /obj/machinery/turret
+
+# Vroom
+TYPE: /obj/structure/stool/bed/chair/janicart > /obj/structure/stool/bed/chair/vehicle/janicart

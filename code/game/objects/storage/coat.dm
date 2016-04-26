@@ -1,13 +1,16 @@
 /obj/item/clothing/suit/storage
-	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
-	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/list/can_only_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_only_hold isn't set)
+	var/fits_max_w_class = 2 //Max size of objects that this object can store (in effect only if can_only_hold isn't set)
 	var/max_combined_w_class = 4 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 2 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
+	body_parts_covered = FULL_TORSO|ARMS
+
 
 /obj/item/clothing/suit/storage/proc/return_inv()
+
 
 	var/list/L = list(  )
 
@@ -33,6 +36,7 @@
 
 /obj/item/clothing/suit/storage/proc/hide_from(mob/user as mob)
 
+
 	if(!user.client)
 		return
 	user.client.screen -= src.boxes
@@ -41,6 +45,7 @@
 	return
 
 /obj/item/clothing/suit/storage/proc/close(mob/user as mob)
+
 
 	src.hide_from(user)
 	user.s_active = null
@@ -94,33 +99,39 @@
 
 	..()
 	if(isrobot(user))
-		user << "\blue You're a robot. No."
-		return //Robots can't interact with storage items.
+		if(isMoMMI(user))
+			var/mob/living/silicon/robot/mommi/M = user
+			if(M.is_in_modules(W))
+				to_chat(user, "<span class='notice'>You can't throw away something built into you.</span>")
+				return //Mommis cant give away their modules but can place other items
+		else
+			to_chat(user, "<span class='notice'>You're a robot. No.</span>")
+			return //Robots can't interact with storage items.
 
 	if(src.loc == W)
 		return //Means the item is already in the storage item
 
 	if(contents.len >= storage_slots)
-		user << "\red \The [src] is full, make some space."
+		to_chat(user, "<span class='warning'>The [src] is full, make some space.</span>")
 		return //Storage item is full
 
-	if(can_hold.len)
+	if(can_only_hold.len)
 		var/ok = 0
-		for(var/A in can_hold)
+		for(var/A in can_only_hold)
 			if(istype(W, text2path(A) ))
 				ok = 1
 				break
 		if(!ok)
-			user << "\red \The [src] cannot hold \the [W]."
+			to_chat(user, "<span class='warning'>The [src] cannot hold \the [W].</span>")
 			return
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, text2path(A) ))
-			user << "\red \The [src] cannot hold \the [W]."
+			to_chat(user, "<span class='warning'>The [src] cannot hold \the [W].</span>")
 			return
 
-	if (W.w_class > max_w_class)
-		user << "\red \The [W] is too big for \the [src]"
+	if (W.w_class > fits_max_w_class && !can_only_hold.len) //fits_max_w_class doesn't matter if there's only a specific list of items you can put in
+		to_chat(user, "<span class='warning'>The [W] is too big for \the [src].</span>")
 		return
 
 	var/sum_w_class = W.w_class
@@ -128,27 +139,23 @@
 		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 
 	if(sum_w_class > max_combined_w_class)
-		user << "\red \The [src] is full, make some space."
+		to_chat(user, "<span class='warning'>The [src] is full, make some space.</span>")
 		return
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
-			user << "\red \The [src] cannot hold \the [W] as it's a storage item of the same size."
+			to_chat(user, "<span class='warning'>The [src] cannot hold \the [W] as it's a storage item of the same size.</span>")
 			return //To prevent the stacking of the same sized items.
 
-	user.u_equip(W)
+	user.u_equip(W,1)
 	playsound(get_turf(src), "rustle", 50, 1, -5)
 	W.loc = src
 	if ((user.client && user.s_active != src))
 		user.client.screen -= W
 	src.orient2hud(user)
-	W.dropped(user)
+	//W.dropped(user)
 	add_fingerprint(user)
 	show_to(user)
-
-
-/obj/item/weapon/storage/dropped(mob/user as mob)
-	return
 
 /obj/item/clothing/suit/storage/MouseDrop(atom/over_object)
 	if(ishuman(usr))
@@ -156,15 +163,15 @@
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(get_turf(src), "rustle", 50, 1, -5)
-		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
+		if (M.wear_suit == src && !M.incapacitated())
 			if (over_object.name == "r_hand")
-				M.u_equip(src)
+				M.u_equip(src,0)
 				M.put_in_r_hand(src)
 			//	if (!( M.r_hand ))
 			//		M.u_equip(src)
 			//		M.r_hand = src
 			else if (over_object.name == "l_hand")
-				M.u_equip(src)
+				M.u_equip(src,0)
 				M.put_in_l_hand(src)
 				//	if (!( M.l_hand ))
 				//		M.u_equip(src)
@@ -197,28 +204,28 @@
 	return
 
 /obj/item/clothing/suit/storage/New()
-
-	src.boxes = new /obj/screen/storage(  )
-	src.boxes.name = "storage"
-	src.boxes.master = src
-	src.boxes.icon_state = "block"
-	src.boxes.screen_loc = "7,7 to 10,8"
-	src.boxes.layer = 19
-	src.closer = new /obj/screen/close(  )
-	src.closer.master = src
-	src.closer.icon_state = "x"
-	src.closer.layer = 20
+	. = ..()
+	boxes = getFromPool(/obj/screen/storage)
+	boxes.name = "storage"
+	boxes.master = src
+	boxes.icon_state = "block"
+	boxes.screen_loc = "7,7 to 10,8"
+	boxes.layer = 19
+	closer = getFromPool(/obj/screen/close)
+	closer.master = src
+	closer.icon_state = "x"
+	closer.layer = 20
 	orient2hud()
-	return
 
 /obj/item/clothing/suit/emp_act(severity)
 	if(!istype(src.loc, /mob/living))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()
-
+/*
 /obj/item/clothing/suit/hear_talk(mob/M, var/msg)
 	for (var/atom/A in src)
 		if(istype(A,/obj/))
 			var/obj/O = A
 			O.hear_talk(M, msg)
+*/

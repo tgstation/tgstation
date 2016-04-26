@@ -12,6 +12,7 @@
 	var/obj/item/weapon/anobattery/inserted_battery
 	var/obj/machinery/artifact/cur_artifact
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
+	var/chargerate = 0
 
 /obj/machinery/artifact_harvester/New()
 	..()
@@ -23,13 +24,12 @@
 /obj/machinery/artifact_harvester/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I,/obj/item/weapon/anobattery))
 		if(!inserted_battery)
-			user << "\blue You insert [I] into [src]."
-			user.drop_item()
-			I.loc = src
-			src.inserted_battery = I
-			updateDialog()
+			if(user.drop_item(I, src))
+				to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+				src.inserted_battery = I
+				updateDialog()
 		else
-			user << "\red There is already a battery in [src]."
+			to_chat(user, "<span class='warning'>There is already a battery in [src].</span>")
 	else
 		return..()
 
@@ -41,12 +41,8 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:44: var/dat = "<B>Artifact Power Harvester</B><BR>"
-	var/dat = {"<B>Artifact Power Harvester</B><BR>
-<HR><BR>"}
-	// END AUTOFIX
+	var/dat = "<B>Artifact Power Harvester</B><BR>"
+	dat += "<HR><BR>"
 	//
 	if(owned_scanner)
 		if(harvesting)
@@ -57,26 +53,19 @@
 			dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
 		else
 			if(inserted_battery)
+				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
+				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>"
+				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
+				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
+				dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:56: dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
-				dat += {"<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>
-					<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>
-					<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>
-					<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>
-					<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"}
-				// END AUTOFIX
 			else
 				dat += "No battery inserted.<BR>"
 	else
 		dat += "<B><font color=red>Unable to locate analysis pad.</font><BR></b>"
 	//
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm:67: dat += "<HR>"
-	dat += {"<HR>
-		<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"}
-	// END AUTOFIX
+	dat += "<HR>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"
 	user << browse(dat, "window=artharvester;size=450x500")
 	onclose(user, "artharvester")
 
@@ -85,11 +74,13 @@
 		return
 
 	if(harvesting > 0)
-		//gain a bit of charge
-		inserted_battery.stored_charge += 0.5
+		//chargerate is chargemaxlevel/effectrange
+		//creates variable charging rates, with the minimum being 0.5
+		inserted_battery.stored_charge += chargerate
 
 		//check if we've finished
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
+			inserted_battery.stored_charge = inserted_battery.capacity //Prevents overcharging
 			use_power = 1
 			harvesting = 0
 			cur_artifact.anchored = 0
@@ -106,17 +97,18 @@
 			inserted_battery.battery_effect.process()
 
 			//if the effect works by touch, activate it on anyone viewing the console
-			if(inserted_battery.battery_effect.effect == 0)
+			/*if(inserted_battery.battery_effect.effect == 0)
 				var/list/nearby = viewers(1, src)
 				for(var/mob/M in nearby)
 					if(M.machine == src)
-						inserted_battery.battery_effect.DoEffectTouch(M)
+						inserted_battery.battery_effect.DoEffectTouch(M) THIS IS RETARDED! - Angelite */
 
 		//if there's no charge left, finish
 		if(inserted_battery.stored_charge <= 0)
 			use_power = 1
 			inserted_battery.stored_charge = 0
 			harvesting = 0
+			cur_artifact.anchored = 0
 			if(inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate()
 			src.visible_message("<b>[name]</b> states, \"Battery dump completed.\"")
@@ -124,6 +116,7 @@
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
 
+	if(..()) return
 	if (href_list["harvest"])
 		//locate artifact on analysis pad
 		cur_artifact = null
@@ -159,7 +152,8 @@
 				//see if we can clear out an old effect
 				//delete it when the ids match to account for duplicate ids having different effects
 				if(inserted_battery.battery_effect && inserted_battery.stored_charge <= 0)
-					del(inserted_battery.battery_effect)
+					qdel(inserted_battery.battery_effect)
+					inserted_battery.battery_effect = null
 
 				//only charge up
 				var/matching_id = 0
@@ -169,6 +163,7 @@
 				if(inserted_battery.battery_effect)
 					matching_effecttype = (inserted_battery.battery_effect.type == cur_artifact.my_effect.type)
 				if(!inserted_battery.battery_effect || (matching_id && matching_effecttype))
+					chargerate = cur_artifact.my_effect.chargelevelmax / cur_artifact.my_effect.effectrange
 					harvesting = 1
 					use_power = 2
 					cur_artifact.anchored = 1
@@ -215,6 +210,7 @@
 	if (href_list["ejectbattery"])
 		src.inserted_battery.loc = src.loc
 		src.inserted_battery = null
+		cur_artifact.anchored = 0
 
 	if (href_list["drainbattery"])
 		if(inserted_battery)
@@ -224,6 +220,7 @@
 						inserted_battery.battery_effect.ToggleActivate(0)
 					harvesting = -1
 					use_power = 2
+					cur_artifact.anchored = 0
 					icon_state = "incubator_on"
 					var/message = "<b>[src]</b> states, \"Warning, battery charge dump commencing.\""
 					src.visible_message(message)

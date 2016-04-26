@@ -37,6 +37,9 @@ LOG_SAY
 ## log admin actions
 LOG_ADMIN
 
+## log admin actions at a single log file
+LOG_ADMIN_ONLY
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 
@@ -65,7 +68,7 @@ LOG_PDA
 ##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## log world.log and runtime errors to a file
-# LOG_RUNTIME
+# LOG_RUNTIMES
 
 ## sql switching
 # SQL_ENABLED
@@ -96,6 +99,8 @@ PROBABILITY EXTEND-A-TRAITORMONGOUS 0
 PROBABILITY EPIDEMIC 1
 PROBABILITY MEME 0
 PROBABILITY HEIST 0
+PROBABILITY MIXED 0
+PROBABILITY RAGINMAGES 0
 
 ## Hash out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
@@ -182,7 +187,7 @@ GUEST_BAN
 ## Remove the # to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.9
+TICKLAG 0.33
 
 ## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
 TICKCOMP 0
@@ -227,6 +232,9 @@ RESPAWN_AS_MOMMI
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
+## Uncomment to use the paperwork library
+#PAPERWORK_LIBRARY
+
 ## Uncomment to enable sending data to the IRC bot.
 #USE_IRC_BOT
 
@@ -241,3 +249,39 @@ RESPAWN_AS_MOMMI
 
 ## ID tag used to identify the server in the channel
 #IRC_BOT_SERVER_ID Server 1
+
+## Copy logs to a location on server startup?
+## IPs are automatically removed.
+## Default: Don't copy logs.
+#COPY_LOGS data/cleaned_logs
+
+## Media URL.
+## The base URL of your media library.  DO NOT ADD A SLASH AT THE END!
+## NOTE that this must be publically-accessible.
+#MEDIA_BASE_URL http://yoursite.tld/media
+
+
+##  Media Server 2 requires a secret key in order to tell the jukebox
+## where the music files are. It's set in config with MEDIA_SECRET_KEY
+## and MUST be the same as the media server's.
+##
+##  If you're using older code that doesn't require a password, just 
+## leave this blank.
+##
+##  Do NOT share this, it's like a password.
+#MEDIA_SECRET_KEY youshouldchangethisbro
+
+RENDERS_URL http://ss13.pomf.se/img/map-renders
+
+## MOMMI_STATIC
+## Uncomment to enable scrambling the image of mobs for MoMMIs
+#MOMMI_STATIC
+
+## SKIP_MINIMAP_GENERATION
+## Uncomment to disable generation of minimaps (makes the server start faster!)
+SKIP_MINIMAP_GENERATION
+
+## SHUT_UP_AUTOMATIC_DIAGNOSTIC_AND_ANNOUNCEMENT_SYSTEM
+## Uncomment to disable the lovely robotic voice that tells you the time at the start of every shift.
+## Recommended for your sanity if you start the server a lot for testing things.
+#SHUT_UP_AUTOMATIC_DIAGNOSTIC_AND_ANNOUNCEMENT_SYSTEM

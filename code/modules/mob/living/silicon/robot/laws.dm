@@ -7,10 +7,6 @@
 /mob/living/silicon/robot/proc/statelaws() // -- TLE
 //	set category = "AI Commands"
 //	set name = "State Laws"
-	var/mob/living/silicon/robot/mommi/M
-	if(isMoMMI(src))
-		M = src
-		M.keeper = 0
 	src.say(";Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
@@ -51,8 +47,6 @@
 					src.say(";[number]. [law]")
 					sleep(10)
 				number++
-	if(M && istype(M))
-		M.keeper = 1
 
 /mob/living/silicon/robot/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 	set category = "Robot Commands"
@@ -110,30 +104,31 @@
 		who = world
 	else
 		who = src
+
 	if(lawupdate)
 		if (connected_ai)
 			if(connected_ai.stat || connected_ai.control_disabled)
-				src << "<b>AI signal lost, unable to sync laws.</b>"
+				to_chat(src, "<b>AI signal lost, unable to sync laws.</b>")
 
 			else
 				lawsync()
-				src << "<b>Laws synced with AI, be sure to note any changes.</b>"
+				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 				if(mind && mind.special_role == "traitor" && mind.original == src)
-					src << "<b>Remember, your AI does NOT share or know about your law 0."
+					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.")
 		else
-			src << "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>"
+			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
 			lawupdate = 0
 
-	who << "<b>Obey these laws:</b>"
+	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
 	if (mind && (mind.special_role == "traitor" && mind.original == src) && connected_ai)
-		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"
+		to_chat(who, "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>")
 	else if (connected_ai)
-		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
+		to_chat(who, "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>")
 	else if (emagged)
-		who << "<b>Remember, you are not required to listen to the AI.</b>"
+		to_chat(who, "<b>Remember, you are not required to listen to the AI.</b>")
 	else
-		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
+		to_chat(who, "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>")
 
 /mob/living/silicon/robot/proc/lawsync()
 	laws_sanity_check()

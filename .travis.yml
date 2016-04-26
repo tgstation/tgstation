@@ -1,0 +1,49 @@
+#pretending we're C because otherwise ruby/rvm will initialize, even with "language: dm".
+language: c
+sudo: false
+
+env:
+    global:
+    - BYOND_MAJOR="509"
+    - BYOND_MINOR="1307"
+    matrix:
+    - DM_MAPFILE="tgstation"
+    - DM_MAPFILE="metaclub"
+    - DM_MAPFILE="defficiency"
+    - DM_MAPFILE="taxistation"
+
+cache:
+  directories:
+    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+    - $HOME/.cache/pip
+
+addons:
+  apt:
+    packages:
+      - libc6-i386
+      - libgcc1:i386
+      - libstdc++6:i386
+
+install:
+  - pip install --user PyYaml -q --download-cache $HOME/.pip-cache
+  - pip install --user beautifulsoup4 -q --download-cache $HOME/.pip-cache
+
+before_script:
+  - chmod +x ./dm.sh
+  - chmod +x ./install-byond.sh
+  - ./install-byond.sh
+
+script:
+  - cat maps/*.* | awk '/step_x =/ && /step_y =/' | awk '!/step_y = 0/ || !/step_x = 0/ { exit 1 }'
+  - python tools/ss13_genchangelog.py html/changelog.html html/changelogs --dry-run
+  - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+  - ./dm.sh -M${DM_MAPFILE} vgstation13.dme
+
+notifications:
+  irc:
+    channels:
+      - "irc.rizon.net#vgstation"
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"

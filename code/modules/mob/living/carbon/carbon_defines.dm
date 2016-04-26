@@ -1,7 +1,6 @@
 /mob/living/carbon/
 	gender = MALE
 	var/list/stomach_contents = list()
-	var/brain_op_stage = 0.0
 	var/list/datum/disease2/disease/virus2 = list()
 	var/antibodies = 0
 
@@ -12,7 +11,7 @@
 					  // life should decrease this by 1 every tick
 	// total amount of wounds on mob, used to spread out healing and the like over all wounds
 	var/number_wounds = 0
-	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
+	var/obj/item/weapon/handcuffs/handcuffed = null //Whether or not the mob is handcuffed.
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
 	//Surgery info
 	var/datum/surgery_status/op_stage = new/datum/surgery_status
@@ -22,3 +21,5 @@
 	var/pulse = PULSE_NORM	//current pulse level
 
 	var/hasmouth = 1 // Used for food, etc.
+
+	var/event/on_emote = new ()

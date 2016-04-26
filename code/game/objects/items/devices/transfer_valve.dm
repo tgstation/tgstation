@@ -10,42 +10,63 @@
 	var/valve_open = 0
 	var/toggle = 1
 
+	var/damaged = 0
+
+	flags = FPRINT | PROXMOVE
+
+/obj/item/device/transfer_valve/examine(mob/user)
+	..()
+	if(damaged)
+		to_chat(user, "<span class='info'>\The [src] appears to be damaged.</span>")
+
 /obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
 
+/obj/item/device/transfer_valve/Crossed(AM as mob|obj)
+	if(attached_device)
+		attached_device.Crossed(AM)
+	..()
+
+/obj/item/device/transfer_valve/on_found(AM as mob|obj)
+	if(attached_device)
+		attached_device.on_found(AM)
+	..()
+
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
-			user << "<span class='warning'>There are already two tanks attached, remove one first.</span>"
+			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first.</span>")
+			return
+
+		if(damaged)
+			to_chat(user, "<span class='warning'>\The [src] has sustained too much damage. \The [item] won't fit onto its warped valves.</span>")
 			return
 
 		if(!tank_one)
-			tank_one = item
-			user.drop_item()
-			item.loc = src
-			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			if(user.drop_item(item, src))
+				tank_one = item
+				to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 		else if(!tank_two)
-			tank_two = item
-			user.drop_item()
-			item.loc = src
-			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
+			if(user.drop_item(item, src))
+				tank_two = item
+				to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
 		update_icon()
-//TODO: Have this take an assemblyholder
+	//TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
 		if(A.secured)
-			user << "<span class='notice'>The device is secured.</span>"
+			to_chat(user, "<span class='notice'>The device is secured.</span>")
 			return
 		if(attached_device)
-			user << "<span class='warning'>There is already an device attached to the valve, remove it first.</span>"
+			to_chat(user, "<span class='warning'>There is already a device attached to the valve, remove it first.</span>")
 			return
 		user.remove_from_mob(item)
 		attached_device = A
 		A.loc = src
-		user << "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>"
+		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
@@ -115,7 +136,7 @@
 			toggle = 1
 
 /obj/item/device/transfer_valve/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
@@ -180,16 +201,35 @@
 		message_admins(log_str, 0, 1)
 		log_game(log_str)
 		merge_gases()
-		spawn(20) // In case one tank bursts
-			for (var/i=0,i<5,i++)
-				src.update_icon()
-				sleep(10)
-			src.update_icon()
-
 	else if(valve_open==1 && (tank_one && tank_two))
 		split_gases()
 		valve_open = 0
 		src.update_icon()
+
+/**
+ * Handles child tanks exploding.
+ *
+ * Previously handled by a stupid fucking spawn() and sleep(10) loop.
+ *
+ * We destroy any item we're inside of
+ */
+/obj/item/device/transfer_valve/proc/child_ruptured(var/obj/item/weapon/tank/tank, var/range)
+	// Old behavior.
+	if(tank_one == tank)
+		tank_one=null
+	if(tank_two == tank)
+		tank_two=null
+	update_icon()
+
+	// New behavior: Ensure deletion of valve assembly, send damage info up the chain.
+	if(range > 4) // Extreme damage is range/4, so any extreme damage will trip this.
+		// Send explosion up chain of custody.
+		if(src.loc && istype(src.loc,/obj))
+			src.loc.ex_act(1,src)
+
+		// Delete ourselves.
+		qdel(src)
+
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs

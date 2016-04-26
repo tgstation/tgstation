@@ -45,10 +45,10 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/fireproof_core()
 	set category = "Malfunction"
 	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in player_list)
-		ai.fire_res_on_core = 1
+
+	ai_flags |= COREFIRERESIST
 	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
-	src << "\red Core fireproofed."
+	to_chat(src, "<span class='warning'>Core fireproofed.</span>")
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
@@ -62,6 +62,7 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/upgrade_turrets()
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
+
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	for(var/obj/machinery/turret/turret in machines)
 		turret.health += 30
@@ -78,15 +79,16 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
+
 	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
-			for(var/obj/item/weapon/rcd/rcd in world)
+			for(var/obj/item/device/rcd/matter/engineering/rcd in world)
 				rcd.disabled = 1
 			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 				rcd.disabled = 1
-			src << "RCD-disabling pulse emitted."
-		else src << "Out of uses."
+			to_chat(src, "RCD-disabling pulse emitted.")
+		else to_chat(src, "Out of uses.")
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
@@ -97,20 +99,21 @@ rcd light flash thingy on matter drain
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
-/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in world)
+/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
 				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
 				spawn(50)
-					explosion(get_turf(M), 0,1,1,0)
-					del(M)
-			else src << "Out of uses."
-	else src << "That's not a machine."
+					explosion(get_turf(M), -1, 1, 2, 3) //C4 Radius + 1 Dest for the machine
+					qdel(M)
+			else to_chat(src, "Out of uses.")
+	else to_chat(src, "That's not a machine.")
 
 
 /datum/AI_Module/large/place_cyborg_transformer
@@ -136,7 +139,7 @@ rcd light flash thingy on matter drain
 		return
 
 	if(PCT.uses < 1)
-		src << "Out of uses."
+		to_chat(src, "Out of uses.")
 		return
 
 	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
@@ -172,7 +175,24 @@ rcd light flash thingy on matter drain
 	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
 	src.can_shunt = 0
 	PCT.uses -= 1
-	src << "You cannot shunt anymore."
+	to_chat(src, "You cannot shunt anymore.")
+
+/datum/AI_Module/large/highrescams
+	module_name = "High Resolution Cameras"
+	mod_pick_name = "High Res Cameras"
+	description = "Allows the AI to read papers and the lips of crewmembers from his cameras!"
+	cost = 10
+
+	power_type = /mob/living/silicon/ai/proc/highrescameras
+
+/mob/living/silicon/ai/proc/highrescameras()
+	set category = "Malfunction"
+	set name = "High Res Cams"
+
+	ai_flags |= HIGHRESCAMS
+
+	eyeobj.addHear()
+	src.verbs -= /mob/living/silicon/ai/proc/highrescameras
 
 
 /datum/AI_Module/small/blackout
@@ -187,14 +207,15 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/blackout()
 	set category = "Malfunction"
 	set name = "Blackout"
+
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in world)
+			for(var/obj/machinery/power/apc/apc in power_machines)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
-		else src << "Out of uses."
+		else to_chat(src, "Out of uses.")
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
@@ -208,6 +229,7 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/interhack()
 	set category = "Malfunction"
 	set name = "Hack intercept"
+
 	src.verbs -= /mob/living/silicon/ai/proc/interhack
 	ticker.mode:hack_intercept()
 
@@ -223,6 +245,7 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
+
 	if (istype (C, /obj/machinery/camera))
 		for(var/datum/AI_Module/small/reactivate_camera/camera in current_modules)
 			if(camera.uses > 0)
@@ -230,9 +253,9 @@ rcd light flash thingy on matter drain
 					C.deactivate(src)
 					camera.uses --
 				else
-					src << "This camera is either active, or not repairable."
-			else src << "Out of uses."
-	else src << "That's not a camera."
+					to_chat(src, "This camera is either active, or not repairable.")
+			else to_chat(src, "Out of uses.")
+	else to_chat(src, "That's not a camera.")
 
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
@@ -246,6 +269,7 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
+
 	if(istype(C))
 		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in current_modules
 		if(UC)
@@ -271,12 +295,12 @@ rcd light flash thingy on matter drain
 
 					if(upgraded)
 						UC.uses --
-						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "Camera successully upgraded!"
+						C.visible_message("<span class='notice'>[bicon(C)] *beep*</span>")
+						to_chat(src, "Camera successully upgraded!")
 					else
-						src << "This camera is already upgraded!"
+						to_chat(src, "This camera is already upgraded!")
 			else
-				src << "Out of uses."
+				to_chat(src, "Out of uses.")
 
 
 /datum/module_picker
@@ -291,6 +315,9 @@ rcd light flash thingy on matter drain
 			src.possible_modules += AM
 
 /datum/module_picker/proc/remove_verbs(var/mob/living/silicon/ai/A)
+
+
+
 
 	for(var/datum/AI_Module/AM in possible_modules)
 		A.verbs.Remove(AM.power_type)

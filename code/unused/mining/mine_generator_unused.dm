@@ -121,6 +121,7 @@
 
 /obj/effect/mine_generator/proc/fillWithAsteroids()
 
+
 	if(last_loc)
 		start_loc = last_loc
 

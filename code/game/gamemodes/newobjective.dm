@@ -55,7 +55,7 @@
 
 /proc/SelectObjectives(var/job,var/datum/mind/traitor,var/hijack = 0)
 	var/list/chosenobjectives = list()
-	var/list/theftobjectives = GenerateTheft(job,traitor)		//Separated all the objective types so they can be picked independantly of each other.
+	var/list/theftobjectives = GenerateTheft(job,traitor)		//separated all the objective types so they can be picked independantly of each other.
 	var/list/killobjectives = GenerateAssassinate(job,traitor)
 	var/list/frameobjectives = GenerateFrame(job,traitor)
 	var/list/protectobjectives = GenerateProtection(job,traitor)
@@ -177,7 +177,7 @@
 				if(!killobjectives.len)
 					continue
 				var/datum/objective/assassinate/objective = pickweight(killobjectives)
-				world << objective
+				to_chat(world, objective)
 				for(1 to 10)
 					if(objective.points + total_weight <= 100 || !killobjectives.len)
 						break
@@ -681,7 +681,7 @@ datum
 
 			/*burger
 				steal_target = /obj/item/weapon/reagent_containers/food/snacks/human/burger
-				explanation_text = "Steal a burger made out of human organs, this will be presented as proof of NanoTrasen's chronic lack of standards."
+				explanation_text = "Steal a burger made out of human organs, this will be presented as proof of Nanotrasen's chronic lack of standards."
 				weight = 60
 
 				get_points(var/job)
@@ -725,7 +725,7 @@ datum
 
 			/*magboots
 				steal_target = /obj/item/clothing/shoes/magboots
-				explanation_text = "Steal a pair of \"NanoTrasen\" brand magboots."
+				explanation_text = "Steal a pair of \"Nanotrasen\" brand magboots."
 				weight = 20
 
 				get_points(var/job)
@@ -1064,7 +1064,7 @@ datum
 							for(var/mob/living/silicon/ai/M in C)
 								if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
 									return 1
-						for(var/mob/living/silicon/ai/M in world)
+						for(var/mob/living/silicon/ai/M in mob_list)
 							if(istype(M.loc, /turf))
 								if(istype(get_area(M), /area/shuttle/escape))
 									return 1
@@ -1230,7 +1230,7 @@ datum
 					return 0
 				var/area/shuttle = locate(/area/shuttle/escape/centcom)
 				var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
-				for(var/mob/living/player in world)
+				for(var/mob/living/player in player_list)
 					if(player.type in protected_mobs)	continue
 					if (player.mind)
 						if (player.stat != 2)
@@ -1280,11 +1280,11 @@ datum
 				if (ticker)
 					var/n_p = 1 //autowin
 					if (ticker.current_state == GAME_STATE_SETTING_UP)
-						for(var/mob/new_player/P in world)
+						for(var/mob/new_player/P in mob_list)
 							if(P.client && P.ready && P.mind!=owner)
 								n_p ++
 					else if (ticker.current_state == GAME_STATE_PLAYING)
-						for(var/mob/living/carbon/human/P in world)
+						for(var/mob/living/carbon/human/P in mob_list)
 							if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 								n_p ++
 					target_amount = min(target_amount, n_p)
@@ -1311,32 +1311,6 @@ datum
 					return 1
 				else
 					return 0
-
-		download
-			var/target_amount
-			proc/gen_amount_goal()
-				target_amount = rand(10,20)
-				explanation_text = "Download [target_amount] research levels."
-				return target_amount
-
-
-			check_completion()
-				if(!ishuman(owner.current))
-					return 0
-				if(!owner.current || owner.current.stat == 2)
-					return 0
-				if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
-					return 0
-				var/current_amount
-				var/obj/item/clothing/suit/space/space_ninja/S = owner.current:wear_suit
-				if(!S.stored_research.len)
-					return 0
-				else
-					for(var/datum/tech/current_data in S.stored_research)
-						if(current_data.level>1)	current_amount+=(current_data.level-1)
-				if(current_amount<target_amount)	return 0
-				return 1
-
 
 		debrain//I want braaaainssss
 			New(var/text,var/joba,var/datum/mind/targeta)
@@ -1370,7 +1344,7 @@ datum
 				var/list/all_items = owner.current.get_contents()
 				for(var/obj/item/device/mmi/mmi in all_items)
 					if(mmi.brainmob&&mmi.brainmob.mind==target)	return 1
-				for(var/obj/item/brain/brain in all_items)
+				for(var/obj/item/organ/brain/brain in all_items)
 					if(brain.brainmob&&brain.brainmob.mind==target)	return 1
 				return 0
 
@@ -1456,7 +1430,7 @@ datum/objective/silence
 		var/area/pod3 =    locate(/area/shuttle/escape_pod3/centcom)
 		var/area/pod4 =    locate(/area/shuttle/escape_pod5/centcom)
 
-		for(var/mob/living/player in world)
+		for(var/mob/living/player in mob_list)
 			if (player == owner.current)
 				continue
 			if (player.mind)

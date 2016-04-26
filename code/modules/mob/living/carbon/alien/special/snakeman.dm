@@ -20,24 +20,24 @@
 		return
 
 	if(!M.client)
-		src << "This being is missing a brain."
+		to_chat(src, "This being is missing a brain.")
 		return
 
 	visible_message("[src] extends a probiscis and stabs it into [M]")
 
 	if (!do_mob(usr, M, 50))
-		usr << "\red The injection of the egg has been interrupted!"
+		to_chat(usr, "<span class='warning'>The injection of the egg has been interrupted!</span>")
 		return
 
 	if(M.client)
 		M.client.mob = new/mob/living/carbon/alien/humanoid/special/snakeman(new/obj/effect/snake_egg(src.loc))
 		visible_message("[src] injects [M] with an egg.")
 		visible_message("The egg absorbs [M]")
-		M.mutations |= NOCLONE
+		M.mutations |= M_NOCLONE
 		M.update_body()
 		M.death()
 	else
-		src << "This being is missing a brain."
+		to_chat(src, "This being is missing a brain.")
 
 	return
 

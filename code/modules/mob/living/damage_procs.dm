@@ -14,7 +14,7 @@
 		if(BRUTE)
 			adjustBruteLoss(damage/(blocked+1))
 		if(BURN)
-			if(mHeatres in mutations)	damage = 0
+			if(M_RESIST_HEAT in mutations)	damage = 0
 			adjustFireLoss(damage/(blocked+1))
 		if(TOX)
 			adjustToxLoss(damage/(blocked+1))
@@ -42,26 +42,35 @@
 
 /mob/living/proc/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0)
 	if(!effect || (blocked >= 2))	return 0
+	var/altered = 0
 	switch(effecttype)
 		if(STUN)
-			Stun(effect/(blocked+1))
+			altered = effect/(blocked+1)
+			Stun(altered)
 		if(WEAKEN)
-			Weaken(effect/(blocked+1))
+			altered = effect/(blocked+1)
+			Weaken(altered)
 		if(PARALYZE)
-			Paralyse(effect/(blocked+1))
+			altered = effect/(blocked+1)
+			Paralyse(altered)
 		if(AGONY)
-			halloss += effect // Useful for objects that cause "subdual" damage. PAIN!
+			altered = effect
+			halloss += altered // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
-			radiation += max((((effect - (effect*(getarmor(null, "rad")/100))))/(blocked+1)),0)//Rads auto check armor
+			altered = max((((effect - (effect*(getarmor(null, "rad")/100))))/(blocked+1)),0)//Rads auto check armor
+			radiation += altered
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
-				stuttering = max(stuttering,(effect/(blocked+1)))
+				altered = max(stuttering,(effect/(blocked+1)))
+				stuttering = altered
 		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
+			altered = max(eye_blurry,(effect/(blocked+1)))
+			eye_blurry = altered
 		if(DROWSY)
-			drowsyness = max(drowsyness,(effect/(blocked+1)))
+			altered = max(drowsyness,(effect/(blocked+1)))
+			drowsyness = altered
 	updatehealth()
-	return 1
+	return altered
 
 
 /mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/agony = 0, var/blocked = 0)
@@ -75,3 +84,6 @@
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
 	if(agony)		apply_effect(agony, AGONY, blocked)
 	return 1
+
+/mob/living/ashify()
+	return //let's not go ashy, shall we?

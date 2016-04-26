@@ -73,7 +73,7 @@
 					O:core = src
 					src.components.Add(O)
 		src.build_status = "built"
-		//world << "Ship initialization complete. [src.turfs.len] tiles added."
+//		to_chat(world, "Ship initialization complete. [src.turfs.len] tiles added.")
 
 	proc/receive_turf(var/turf/T)
 		turfs.Add(T)

@@ -22,13 +22,13 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
-		O.loc = src
-		scan = O
-		user << "You insert [O]."
+		if(usr.drop_item(O, src))
+			scan = O
+			to_chat(user, "You insert \the [O].")
 	..()
 
 /obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
@@ -43,7 +43,7 @@
 	if(..())
 		return
 	if (src.z > 6)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		to_chat(user, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 	var/dat
 
@@ -104,11 +104,8 @@
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
 				if(2.0)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:106: dat += "<B>Records Maintenance</B><HR>"
 					dat += {"<B>Records Maintenance</B><HR>
 						<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"}
-					// END AUTOFIX
 				if(3.0)
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
@@ -239,9 +236,8 @@ What a mess.*/
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
-						I.loc = src
-						scan = I
+						if(usr.drop_item(I, src))
+							scan = I
 
 			if("Log Out")
 				authenticated = null
@@ -348,16 +344,14 @@ What a mess.*/
 //RECORD DELETE
 			if ("Delete All Records")
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:346: temp = ""
 				temp = {"
 					Are you sure you wish to delete all Security records?<br>
 					<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>
 					<a href='?src=\ref[src];choice=Clear Screen'>No</a>"}
-				// END AUTOFIX
 			if ("Purge All Records")
 				for(var/datum/data/record/R in data_core.security)
-					del(R)
+					qdel(R)
+					R = null
 				temp = "All Security records deleted."
 
 			if ("Add Entry")
@@ -375,21 +369,15 @@ What a mess.*/
 			if ("Delete Record (ALL)")
 				if (active1)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:370: temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 					temp = {"<h5>Are you sure you wish to delete the record (ALL)?</h5>
 						<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>
 						<a href='?src=\ref[src];choice=Clear Screen'>No</a>"}
-					// END AUTOFIX
 			if ("Delete Record (Security)")
 				if (active2)
 
-					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:376: temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
 					temp = {"<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>
 						<a href='?src=\ref[src];choice=Delete Record (Security) Execute'>Yes</a><br>
 						<a href='?src=\ref[src];choice=Clear Screen'>No</a>"}
-					// END AUTOFIX
 			if ("Delete Entry")
 				if ((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
 					active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
@@ -433,7 +421,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if (istype(active1, /datum/data/record))
-							var/t1 = input("Please input name:", "Secure. records", active1.fields["name"], null)  as text
+							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
 								return
 							active1.fields["name"] = t1
@@ -463,25 +451,25 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("mi_crim")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input minor disabilities list:", "Secure. records", active2.fields["mi_crim"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please input minor crimes list:", "Secure. records", active2.fields["mi_crim"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["mi_crim"] = t1
 					if("mi_crim_d")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize minor dis.:", "Secure. records", active2.fields["mi_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please summarize minor crimes:", "Secure. records", active2.fields["mi_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["mi_crim_d"] = t1
 					if("ma_crim")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input major diabilities list:", "Secure. records", active2.fields["ma_crim"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please input major crimes list:", "Secure. records", active2.fields["ma_crim"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["ma_crim"] = t1
 					if("ma_crim_d")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize major dis.:", "Secure. records", active2.fields["ma_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
+							var/t1 = copytext(sanitize(input("Please summarize major crimes:", "Secure. records", active2.fields["ma_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["ma_crim_d"] = t1
@@ -494,8 +482,6 @@ What a mess.*/
 					if("criminal")
 						if (istype(active2, /datum/data/record))
 
-							// AUTOFIXED BY fix_string_idiocy.py
-							// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:483: temp = "<h5>Criminal Status:</h5>"
 							temp = {"<h5>Criminal Status:</h5>
 								<ul>
 								<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=none'>None</a></li>
@@ -504,17 +490,13 @@ What a mess.*/
 								<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=parolled'>Parolled</a></li>
 								<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Released</a></li>
 								</ul>"}
-							// END AUTOFIX
 					if("rank")
 						var/list/L = list( "Head of Personnel", "Captain", "AI" )
 						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
 						if ((istype(active1, /datum/data/record) && L.Find(rank)))
 
-							// AUTOFIXED BY fix_string_idiocy.py
-							// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:495: temp = "<h5>Rank:</h5>"
 							temp = {"<h5>Rank:</h5>
 								<ul>"}
-							// END AUTOFIX
 							for(var/rank in get_all_jobs())
 								temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"
@@ -522,8 +504,9 @@ What a mess.*/
 							alert(usr, "You do not have the required rank to do this!")
 					if("species")
 						if (istype(active1, /datum/data/record))
+							var/norange = (usr.mutations && usr.mutations.len && (M_TK in usr.mutations))
 							var/t1 = copytext(sanitize(input("Please enter race:", "General records", active1.fields["species"], null)  as message),1,MAX_MESSAGE_LEN)
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)) && !norange) || active1 != a1))
 								return
 							active1.fields["species"] = t1
 
@@ -553,17 +536,21 @@ What a mess.*/
 
 					if ("Delete Record (Security) Execute")
 						if (active2)
-							del(active2)
+							qdel(active2)
+							active2 = null
 
 					if ("Delete Record (ALL) Execute")
 						if (active1)
 							for(var/datum/data/record/R in data_core.medical)
 								if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-									del(R)
+									qdel(R)
+									R = null
 								else
-							del(active1)
+							qdel(active1)
+							active1 = null
 						if (active2)
-							del(active2)
+							qdel(active2)
+							active2 = null
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
@@ -594,7 +581,8 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
+			R = null
 			continue
 
 	..(severity)
@@ -602,3 +590,5 @@ What a mess.*/
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"
+
+	light_color = null

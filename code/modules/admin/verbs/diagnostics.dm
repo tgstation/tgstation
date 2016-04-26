@@ -55,42 +55,46 @@
 		if(T.active_hotspot)
 			burning = 1
 
-	usr << "\blue @[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]"
+	to_chat(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("<span class='warning'>BURNING</span>"):(null)]</span>")
 	for(var/datum/gas/trace_gas in GM.trace_gases)
-		usr << "[trace_gas.type]: [trace_gas.moles]"
+		to_chat(usr, "[trace_gas.type]: [trace_gas.moles]")
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	*/
+
+/client/proc/_fix_delayers(var/dtype)
+	var/largest_delay = 0
+	var/mob/most_delayed_mob = null
+	var/delay=0
+	for(var/mob/M in mob_list)
+		if(!M.client)
+			continue
+		// Get stats
+		var/datum/delay_controller/delayer = M.vars["[dtype]_delayer"]
+		if(delayer.blocked())
+			delay = delayer.next_allowed - world.time
+			if(delay > largest_delay)
+				most_delayed_mob=M
+				largest_delay=delay
+
+		// Unfreeze
+		delayer.next_allowed = 0
+	message_admins("[key_name_admin(most_delayed_mob)] had the largest [dtype] delay with [largest_delay] frames / [largest_delay/10] seconds!", 1)
 
 /client/proc/fix_next_move()
 	set category = "Debug"
 	set name = "Unfreeze Everyone"
-	var/largest_move_time = 0
-	var/largest_click_time = 0
-	var/mob/largest_move_mob = null
-	var/mob/largest_click_mob = null
-	for(var/mob/M in world)
-		if(!M.client)
-			continue
-		if(M.next_move >= largest_move_time)
-			largest_move_mob = M
-			if(M.next_move > world.time)
-				largest_move_time = M.next_move - world.time
-			else
-				largest_move_time = 1
-		if(M.lastDblClick >= largest_click_time)
-			largest_click_mob = M
-			if(M.lastDblClick > world.time)
-				largest_click_time = M.lastDblClick - world.time
-			else
-				largest_click_time = 0
-		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.lastDblClick]  world.time = [world.time]")
-		M.next_move = 1
-		M.lastDblClick = 0
-	message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
-	message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
+	if(!usr.client.holder) return
+
+	_fix_delayers("move")
+	_fix_delayers("click")
+	_fix_delayers("attack")
+	_fix_delayers("special")
+
 	message_admins("world.time = [world.time]", 1)
 	feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+#undef GATHER_DELAYER_LOCKUPS
 
 /client/proc/radio_report()
 	set category = "Debug"
@@ -143,13 +147,14 @@
 /client/proc/jump_to_dead_group()
 	set name = "Jump to dead group"
 	set category = "Debug"
+
 		/*
 	if(!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(!air_master)
-		usr << "Cannot find air_system"
+		to_chat(usr, "Cannot find air_system")
 		return
 	var/datum/air_group/dead_groups = list()
 	for(var/datum/air_group/group in air_master.air_groups)
@@ -165,13 +170,14 @@
 	set name = "Kill Local Airgroup"
 	set desc = "Use this to allow manual manupliation of atmospherics."
 	set category = "Debug"
+
 	/*
 	if(!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(!air_master)
-		usr << "Cannot find air_system"
+		to_chat(usr, "Cannot find air_system")
 		return
 
 	var/turf/T = get_turf(usr)
@@ -180,7 +186,7 @@
 		AG.next_check = 30
 		AG.group_processing = 0
 	else
-		usr << "Local airgroup is unsimulated!"
+		to_chat(usr, "Local airgroup is unsimulated!")
 	feedback_add_details("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	*/
 
@@ -189,9 +195,9 @@
 	set desc = "This spams all the active jobban entries for the current round to standard output."
 	set category = "Debug"
 
-	usr << "<b>Jobbans active in this round.</b>"
+	to_chat(usr, "<b>Jobbans active in this round.</b>")
 	for(var/t in jobban_keylist)
-		usr << "[t]"
+		to_chat(usr, "[t]")
 
 /client/proc/print_jobban_old_filter()
 	set name = "Search Jobban Log"
@@ -202,7 +208,40 @@
 	if(!filter)
 		return
 
-	usr << "<b>Jobbans active in this round.</b>"
+	to_chat(usr, "<b>Jobbans active in this round.</b>")
 	for(var/t in jobban_keylist)
 		if(findtext(t, filter))
-			usr << "[t]"
+			to_chat(usr, "[t]")
+
+// For /vg/ Wiki docs
+/client/proc/dump_chemreactions()
+	set category = "Debug"
+	set name = "Dump Chemical Reactions"
+
+	var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
+
+	var/str = {"
+{| class="wikitable"
+|-
+! Name
+! Reactants
+! Result"}
+	for(var/path in paths)
+		var/datum/chemical_reaction/R = new path()
+		str += {"
+|-
+! [R.name]"}
+		if(R.required_reagents)
+			str += "\n|<ul>"
+			for(var/r_id in R.required_reagents)
+				str += "<li>{{reagent|[R.required_reagents[r_id]]|[r_id]}}</li>"
+			for(var/r_id in R.required_catalysts)
+				str += "<li>{{reagent|[R.required_catalysts[r_id]]|[r_id]}}</li>"
+			str += "</ul>"
+		else
+			str += "\n|''None!''"
+		if(R.result)
+			str += "\n|{{reagent|[R.result_amount]|[R.result]}}"
+		else
+			str += "\n|''(Check [R.type]/on_reaction()!)''"
+	text2file(str+"\n|}","chemistry-recipes.wiki")

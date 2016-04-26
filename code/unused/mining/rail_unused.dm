@@ -98,8 +98,8 @@
 	return
 
 /obj/machinery/rail_switch/attack_hand(user as mob)
-	user << "You switch the rail track's direction"
-	for (var/obj/machinery/rail_track/T in world)
+	to_chat(user, "You switch the rail track's direction")
+	for (var/obj/machinery/rail_track/T in machines)
 		if (T.id == src.id)
 			var/obj/machinery/rail_car/C = locate(/obj/machinery/rail_car, T.loc)
 			if (C)
@@ -179,7 +179,7 @@
 
 /*
 for (var/client/C)
-	C << "Dela."
+	to_chat(C, "Dela.")
 */
 
 /obj/machinery/rail_car/MouseDrop_T(var/atom/movable/C, mob/user)
@@ -195,6 +195,7 @@ for (var/client/C)
 
 
 /obj/machinery/rail_car/proc/load(var/atom/movable/C)
+
 
 	if(get_dist(C, src) > 1)
 		return
@@ -223,7 +224,7 @@ for (var/client/C)
 	if(!load)
 		return
 
-	overlays.Cut()
+	overlays.len = 0
 
 	load.loc = src.loc
 	load.pixel_y -= 9

@@ -53,6 +53,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
+	ghost_read=0
+	ghost_write=0 // #430
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
@@ -66,7 +68,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	..()
 	return
 
-/obj/machinery/message_server/Del()
+/obj/machinery/message_server/Destroy()
 	message_servers -= src
 	..()
 	return
@@ -95,8 +97,10 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user as mob)
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
-	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
+	if(isobserver(user) && !isAdminGhost(user))
+		return 0
+//	to_chat(user, "<span class='notice'>There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.</span>")
+	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
 
@@ -190,20 +194,22 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/msg_engineering = list()
 	var/list/msg_security = list()
 	var/list/msg_deathsquad = list()
+	var/list/msg_ert = list()
 	var/list/msg_syndicate = list()
-	var/list/msg_mining = list()
+	var/list/msg_service = list()
 	var/list/msg_cargo = list()
 
 	var/list/datum/feedback_variable/feedback = new()
 
 	//Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
+	..()
 	if(blackbox)
 		if(istype(blackbox,/obj/machinery/blackbox_recorder))
-			del(src)
+			qdel(src)
 	blackbox = src
 
-/obj/machinery/blackbox_recorder/Del()
+/obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)
 	if(T)
 		blackbox = null
@@ -215,8 +221,9 @@ var/obj/machinery/blackbox_recorder/blackbox
 		BR.msg_engineering = msg_engineering
 		BR.msg_security = msg_security
 		BR.msg_deathsquad = msg_deathsquad
+		BR.msg_ert = msg_ert
 		BR.msg_syndicate = msg_syndicate
-		BR.msg_mining = msg_mining
+		BR.msg_service = msg_service
 		BR.msg_cargo = msg_cargo
 		BR.feedback = feedback
 		BR.messages = messages
@@ -238,6 +245,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder/proc/round_end_data_gathering()
 
+
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
@@ -256,8 +264,9 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","ENG-[msg_engineering.len]")
 	feedback_add_details("radio_usage","SEC-[msg_security.len]")
 	feedback_add_details("radio_usage","DTH-[msg_deathsquad.len]")
+	feedback_add_details("radio_usage","ERT-[msg_ert.len]")
 	feedback_add_details("radio_usage","SYN-[msg_syndicate.len]")
-	feedback_add_details("radio_usage","MIN-[msg_mining.len]")
+	feedback_add_details("radio_usage","SER-[msg_service.len]")
 	feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
 	feedback_add_details("radio_usage","OTH-[messages.len]")
 	feedback_add_details("radio_usage","PDA-[pda_msg_amt]")
@@ -271,13 +280,21 @@ var/obj/machinery/blackbox_recorder/blackbox
 /obj/machinery/blackbox_recorder/proc/save_all_data_to_sql()
 	if(!feedback) return
 
+	//#warning Blackbox recording disabled.  Please remove warning once this has been determined to be the problem.
+	//return
+
+	var/watch = start_watch()
+	log_startup_progress("Storing Black Box data...")
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
 	if(!dbcon.IsConnected()) return
 	var/round_id
 
+	var/nqueries = 0
+
 	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
 	query.Execute()
+	nqueries++
 	while(query.NextRow())
 		round_id = query.item[1]
 
@@ -285,10 +302,27 @@ var/obj/machinery/blackbox_recorder/blackbox
 		round_id = text2num(round_id)
 	round_id++
 
+	/*
 	for(var/datum/feedback_variable/FV in feedback)
 		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
+		nqueries++
+		sleep(1) // Let other shit do things
+	*/
+	// MySQL and MariaDB support compound inserts and this insert is slow as fuck.
+	var/sql = "INSERT INTO erro_feedback VALUES "
+	var/ninserts=0
+	for(var/datum/feedback_variable/FV in feedback)
+		if(ninserts>0)
+			sql += ","
+		ninserts++
+		sql += "(null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+	nqueries++
+
+	log_startup_progress("  Wrote Black Box data with [nqueries] queries in [stop_watch(watch)]s.")
 
 // Sanitize inputs to avoid SQL injection attacks
 proc/sql_sanitize_text(var/text)

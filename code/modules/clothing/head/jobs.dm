@@ -6,7 +6,7 @@
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 0.9
 
 //Captain: This probably shouldn't be space-worthy
@@ -14,19 +14,19 @@
 	name = "captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
-	flags = FPRINT|TABLEPASS
+	flags = FPRINT
 	item_state = "caphat"
 	siemens_coefficient = 0.9
+	heat_conductivity = HELMET_HEAT_CONDUCTIVITY
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/helmet/cap
 	name = "captain's cap"
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
-	flags = FPRINT|TABLEPASS
-	flags_inv = 0
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
+	flags = FPRINT
+	body_parts_covered = HEAD
+	heat_conductivity = SPACESUIT_HEAT_CONDUCTIVITY
 	siemens_coefficient = 0.9
 
 //Chaplain
@@ -34,7 +34,8 @@
 	name = "chaplain's hood"
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
+	flags = FPRINT
+	body_parts_covered = EARS|HEAD
 	siemens_coefficient = 0.9
 
 //Chaplain
@@ -42,7 +43,8 @@
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
+	flags = FPRINT
+	body_parts_covered = EARS|HEAD
 	siemens_coefficient = 0.9
 
 //Mime
@@ -50,7 +52,7 @@
 	name = "beret"
 	desc = "A beret, an artists favorite headwear."
 	icon_state = "beret"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	siemens_coefficient = 0.9
 
 //Security
@@ -58,14 +60,15 @@
 	name = "security beret"
 	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
 	icon_state = "beret_badge"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 //Medical
 /obj/item/clothing/head/surgery
 	name = "surgical cap"
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = FPRINT | TABLEPASS | BLOCKHEADHAIR
+	flags = FPRINT
+	body_parts_covered = EARS|HEAD
 
 /obj/item/clothing/head/surgery/purple
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is deep purple."

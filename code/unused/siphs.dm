@@ -59,6 +59,7 @@
 
 /obj/machinery/atmoalter/siphs/proc/setstate()
 
+
 	if(stat & NOPOWER)
 		icon_state = "siphon:0"
 		return
@@ -416,7 +417,7 @@
 	return
 
 /obj/machinery/atmoalter/siphs/Topic(href, href_list)
-	..()
+	if(..()) return 1
 
 	if (usr.stat || usr.restrained())
 		return
@@ -491,26 +492,26 @@
 			if (src.c_status)
 				src.anchored = 0
 				src.c_status = 0
-				user.show_message("\blue You have disconnected the siphon.")
+				user.show_message("<span class='notice'>You have disconnected the siphon.</span>")
 				if(con)
 					con.connected = null
 			else
 				if (con && !con.connected)
 					src.anchored = 1
 					src.c_status = 3
-					user.show_message("\blue You have connected the siphon.")
+					user.show_message("<span class='notice'>You have connected the siphon.</span>")
 					con.connected = src
 				else
-					user.show_message("\blue There is nothing here to connect to the siphon.")
+					user.show_message("<span class='notice'>There is nothing here to connect to the siphon.</span>")
 
 
 		else
 			if (istype(W, /obj/item/weapon/wrench))
 				src.alterable = !( src.alterable )
 				if (src.alterable)
-					user << "\blue You unlock the interface!"
+					to_chat(user, "<span class='notice'>You unlock the interface!</span>")
 				else
-					user << "\blue You lock the interface!"
+					to_chat(user, "<span class='notice'>You lock the interface!</span>")
 	return
 
 

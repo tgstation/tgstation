@@ -2,7 +2,7 @@
 
 
 /datum/event/bluespace_anomaly
-	announceWhen	= 20
+	announceWhen	= 5
 
 	var/area/impact_area
 
@@ -11,7 +11,7 @@
 	var/list/safe_areas = list(
 	/area/turret_protected/ai,
 	/area/turret_protected/ai_upload,
-	/area/engine,
+	/area/engineering,
 	/area/solar,
 	/area/holodeck,
 	/area/shuttle/arrival,
@@ -26,24 +26,24 @@
 
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
-	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/engineering/break_room,
+	/area/engineering/ce)
 
 
 	impact_area = locate(pick((the_station_areas - safe_areas) + danger_areas))	//need to locate() as it's just a list of paths.
 
 
 /datum/event/bluespace_anomaly/announce()
-	command_alert("Bluespace anomaly detected in the vicinity of [station_name()]. [impact_area.name] has gone missing.", "Anomaly Alert")
+	command_alert("Bluespace anomaly detected in the vicinity of [station_name()]. [impact_area.name] has been affected.", "Anomaly Alert")
 
 
 /datum/event/bluespace_anomaly/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
 			// Calculate new position (searches through beacons in world)
-		var/obj/item/device/radio/beacon/chosen
+		var/obj/item/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/device/radio/beacon/W in world)
+		for(var/obj/item/beacon/W in beacons)
 			possible += W
 
 		if(possible.len > 0)
@@ -66,14 +66,14 @@
 			var/y_distance = TO.y - FROM.y
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in range(12, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-				if(A.anchored && istype(A, /obj/machinery)) continue
+				if(istype(A, /obj/item/beacon)) continue // don't teleport beacons because that's just insanely stupid
+				if(A.anchored && (istype(A, /obj/machinery) || istype(A,/obj/structure))) continue
 				if(istype(A, /obj/structure/disposalpipe )) continue
 				if(istype(A, /obj/structure/cable )) continue
+				if(istype(A, /atom/movable/lighting_overlay)) continue
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-				if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-					A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+				A.forceMove(newloc)
 
 				spawn()
 					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -88,4 +88,4 @@
 							M.client.screen += blueeffect
 							sleep(20)
 							M.client.screen -= blueeffect
-							del(blueeffect)
+							qdel(blueeffect)

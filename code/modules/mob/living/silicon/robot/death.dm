@@ -1,46 +1,35 @@
 /mob/living/silicon/robot/gib()
 	//robots don't die when gibbed. instead they drop their MMI'd brain
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("gibbed-r", animation)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-r", sleeptime = 15)
 	robogibs(loc, viruses)
+
+	if(mind) //To make sure we're gibbing a player, who knows
+		if(!suiciding) //I don't know how that could happen, but you can't be too sure
+			score["deadsilicon"] += 1
 
 	living_mob_list -= src
 	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	qdel(src)
 
 /mob/living/silicon/robot/dust()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-r", animation)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-r", sleeptime = 15)
 	new /obj/effect/decal/remains/robot(loc)
-	if(mmi)		del(mmi)	//Delete the MMI first so that it won't go popping out.
+	if(mmi)
+		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
 
 	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	qdel(src)
 
 
 /mob/living/silicon/robot/death(gibbed)
@@ -54,6 +43,9 @@
 
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
+		if(RC.upgrading)
+			RC.upgrading = 0
+			RC.upgrade_finished = -1
 		RC.go_out()
 
 	if(blind)	blind.layer = 0
@@ -63,7 +55,10 @@
 	updateicon()
 
 	tod = worldtime2text() //weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
+		if(!suiciding)
+			score["deadsilicon"] += 1
 
 	sql_report_cyborg_death(src)
 

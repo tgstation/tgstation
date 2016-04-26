@@ -1,17 +1,32 @@
 // It is a gizmo that flashes a small area
+var/list/obj/machinery/flasher/flashers = list()
 
 /obj/machinery/flasher
 	name = "Mounted flash"
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/id = null
+	var/id_tag = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = 0
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = 1
+	ghost_read=0
+	ghost_write=0
+	min_harm_label = 15 //Seems low, but this is going by the sprite. May need to be changed for balance.
+	harm_label_examine = list("<span class='info'>A label is on the bulb, but doesn't cover it.</span>", "<span class='warning'>A label covers the bulb!</span>")
+
+	flags = FPRINT | PROXMOVE
+
+/obj/machinery/flasher/New()
+	..()
+	flashers += src
+
+/obj/machinery/flasher/Destroy()
+	..()
+	flashers -= src
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -21,6 +36,7 @@
 	anchored = 0
 	base_state = "pflash"
 	density = 1
+	min_harm_label = 35 //A lot. Has to wrap around the bulb, after all.
 
 /*
 /obj/machinery/flasher/New()
@@ -39,13 +55,13 @@
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wirecutters))
+	if (iswirecutter(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
 		if (!src.disable)
-			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -62,11 +78,13 @@
 		return
 
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1)
-	flick("[base_state]_flash", src)
 	src.last_flash = world.time
 	use_power(1000)
+	if(harm_labeled >= min_harm_label)	return //Still "flashes," so power is used and the noise is made, etc., but it doesn't actually flash anyone.
+	flick("[base_state]_flash", src)
 
 	for (var/mob/O in viewers(src, null))
+		if(isobserver(O)) continue
 		if (get_dist(src, O) > src.range)
 			continue
 
@@ -79,13 +97,15 @@
 			continue
 
 		O.Weaken(strength)
-		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
-			flick("e_flash", O:flash)
-			O.eye_stat += rand(1, 2)
+		if (istype(O, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = O
+			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+			if (E && (E.damage > E.min_bruised_damage && prob(E.damage + 50)))
+				flick("e_flash", O:flash)
+				E.damage += rand(1, 5)
 		else
 			if(!O.blinded)
 				flick("flash", O:flash)
-				O.eye_stat += rand(0, 2)
 
 
 /obj/machinery/flasher/emp_act(severity)
@@ -106,16 +126,16 @@
 			src.flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		add_fingerprint(user)
 		src.anchored = !src.anchored
 
 		if (!src.anchored)
-			user.show_message(text("\red [src] can now be moved."))
-			src.overlays.Cut()
+			user.show_message(text("<span class='warning'>[src] can now be moved.</span>"))
+			src.overlays.len = 0
 
 		else if (src.anchored)
-			user.show_message(text("\red [src] is now secured."))
+			user.show_message(text("<span class='warning'>[src] is now secured.</span>"))
 			src.overlays += "[base_state]-s"
 
 /obj/machinery/flasher_button/attack_ai(mob/user as mob)
@@ -140,8 +160,8 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/flasher/M in world)
-		if(M.id == src.id)
+	for(var/obj/machinery/flasher/M in flashers)
+		if(M.id_tag == src.id_tag)
 			spawn()
 				M.flash()
 

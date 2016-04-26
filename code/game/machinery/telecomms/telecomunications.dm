@@ -40,10 +40,14 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
-
+#ifdef SAY_DEBUG
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+#endif
+	say_testing(mob, "[src] relay_information start, language [langname]")
 	if(!on)
 		return
-	//world << "[src] ([src.id]) - [signal.debug_print()]"
 	var/send_count = 0
 
 	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
@@ -55,6 +59,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 // Loop through all linked machines and send the signal or copy.
 	for(var/obj/machinery/telecomms/machine in links)
+		if(!machine.loc)
+			world.log << "DEBUG: telecomms machine has null loc: [machine.name]"
+			continue
 		if(filter && !istype( machine, text2path(filter) ))
 			continue
 		if(!machine.on)
@@ -65,33 +72,34 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(long_range_link == 0 && machine.long_range_link == 0)
 				continue
 		// If we're sending a copy, be sure to create the copy for EACH machine and paste the data
-		var/datum/signal/copy = new
+		var/datum/signal/copy = getFromPool(/datum/signal)
 		if(copysig)
 
 			copy.transmission_method = 2
 			copy.frequency = signal.frequency
 			// Copy the main data contents! Workaround for some nasty bug where the actual array memory is copied and not its contents.
 			copy.data = list(
-
-			"mob" = signal.data["mob"],
-			"mobtype" = signal.data["mobtype"],
-			"realname" = signal.data["realname"],
-			"name" = signal.data["name"],
-			"job" = signal.data["job"],
-			"key" = signal.data["key"],
-			"vmessage" = signal.data["vmessage"],
-			"vname" = signal.data["vname"],
-			"vmask" = signal.data["vmask"],
-			"compression" = signal.data["compression"],
-			"message" = signal.data["message"],
-			"connection" = signal.data["connection"],
-			"radio" = signal.data["radio"],
-			"slow" = signal.data["slow"],
-			"traffic" = signal.data["traffic"],
-			"type" = signal.data["type"],
-			"server" = signal.data["server"],
-			"reject" = signal.data["reject"],
-			"level" = signal.data["level"]
+				"mob" = signal.data["mob"],
+				"language" = signal.data["language"],
+				"mobtype" = signal.data["mobtype"],
+				"realname" = signal.data["realname"],
+				"name" = signal.data["name"],
+				"job" = signal.data["job"],
+				"key" = signal.data["key"],
+				"vmask" = signal.data["vmask"],
+				"compression" = signal.data["compression"],
+				"message" = signal.data["message"],
+				"radio" = signal.data["radio"],
+				"slow" = signal.data["slow"],
+				"traffic" = signal.data["traffic"],
+				"type" = signal.data["type"],
+				"server" = signal.data["server"],
+				"reject" = signal.data["reject"],
+				"level" = signal.data["level"],
+				"lquote" = signal.data["lquote"],
+				"rquote" = signal.data["rquote"],
+				"message_classes" = signal.data["message_classes"],
+				"wrapper_classes" = signal.data["wrapper_classes"]
 			)
 
 			// Keep the "original" signal constant
@@ -138,6 +146,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 /obj/machinery/telecomms/New()
+	if(ticker) // if built in the round
+		construct_op = 3
+		stat |= BROKEN
+
 	telecomms_list += src
 	..()
 
@@ -158,7 +170,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				add_link(T)
 
 
-/obj/machinery/telecomms/Del()
+/obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
 	..()
 
@@ -180,6 +192,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		icon_state = "[initial(icon_state)]_off"
 
 /obj/machinery/telecomms/proc/update_power()
+
 
 	if(toggled)
 		if(stat & (BROKEN|NOPOWER|EMPED) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
@@ -215,7 +228,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(T0C to (T20C + 20))
-			integrity = between(0, integrity, 100)
+			integrity = Clamp(integrity, 0, 100)
 		if((T20C + 20) to (T0C + 70))
 			integrity = max(0, integrity - 1)
 	if(delay)
@@ -270,6 +283,12 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
+#ifdef SAY_DEBUG
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
+#endif
 
 	if(!on) // has to be on to receive messages
 		return
@@ -277,7 +296,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		return
 	if(!check_receive_level(signal))
 		return
-
+	say_testing(mob, "[src] is on, has signal, and receive is good")
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
@@ -288,8 +307,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
+		else
+			say_testing(mob, "[src] is not listening")
+	else
+		say_testing(mob, "bad transmission method")
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
+
 
 	if(signal.data["level"] != listening_level)
 		for(var/obj/machinery/telecomms/hub/H in links)
@@ -528,7 +552,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	Compiler.Holder = src
 	server_radio = new()
 
-/obj/machinery/telecomms/server/Del()
+/obj/machinery/telecomms/server/Destroy()
 	// Garbage collects all the NTSL datums.
 	if(Compiler)
 		Compiler.GC()
@@ -553,21 +577,20 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 				var/datum/comm_log_entry/log = new
 				var/mob/M = signal.data["mob"]
-
 				// Copy the signal.data entries we want
 				log.parameters["mobtype"] = signal.data["mobtype"]
 				log.parameters["job"] = signal.data["job"]
 				log.parameters["key"] = signal.data["key"]
-				log.parameters["vmessage"] = signal.data["message"]
-				log.parameters["vname"] = signal.data["vname"]
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				if(!istype(M, /mob/new_player) && M)
+				if(!istype(M, /mob/new_player) && istype(M))
 					log.parameters["uspeech"] = M.universal_speak
 				else
 					log.parameters["uspeech"] = 0
+
+
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -575,7 +598,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 					log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
 					log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
 					log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
-					log.parameters["vname"] = Gibberish(signal.data["vname"], signal.data["compression"] + 50)
 					log.input_type = "Corrupt File"
 
 				// Log and store everything that needs to be logged
@@ -603,15 +625,18 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			rawcode = t
 
 /obj/machinery/telecomms/server/proc/admin_log(var/mob/mob)
+	var/msg = "[key_name(mob)] has compiled a script to [src.id]"
 
-	var/msg="[mob.name] has compiled a script to server [src]:"
 	diary << msg
 	diary << rawcode
-	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
-	if(length(rawcode)) // Let's not bother the admins for empty code.
-		message_admins("[mob.real_name] ([mob.key]) has compiled and uploaded a NTLS script to [src.id] ([mob.x],[mob.y],[mob.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>JMP</a>)",0,1)
+
+	investigation_log("ntsl", "[msg]<br /><pre>[rawcode]</pre>")
+
+	if (length(rawcode)) // Let's not bother the admins for empty code.
+		message_admins("[msg] ([formatJumpTo(mob)])", 0, 1)
 
 /obj/machinery/telecomms/server/proc/compile(var/mob/user)
+
 
 	if(Compiler)
 		admin_log(user)
@@ -635,9 +660,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	log.parameters["message"] = content
 	log_entries.Add(log)
 	update_logs()
-
-
-
 
 // Simple log entry datum
 

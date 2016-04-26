@@ -26,14 +26,14 @@
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/anti_revolution/announce()
-	world << "<B>The current game mode is - Anti-Revolution!</B>"
-	world << "<B>Looks like CentComm has given a few new orders..</B>"
+	to_chat(world, "<B>The current game mode is - Anti-Revolution!</B>")
+	to_chat(world, "<B>Looks like CentComm has given a few new orders..</B>")
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/anti_revolution/pre_setup()
-	for(var/mob/new_player/player in world) if(player.mind)
+	for(var/mob/new_player/player in mob_list) if(player.mind)
 		if(player.mind.assigned_role in command_positions)
 			heads += player.mind
 		else
@@ -71,7 +71,7 @@
 		var/datum/objective/anti_revolution/demote/obj = new
 		obj.owner = head
 		obj.target = target
-		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote them to assistant."
+		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to Nanotrasen's goals. Demote them to assistant."
 		head.objectives += obj
 
 
@@ -83,7 +83,7 @@
 		greet_head(head_mind)
 	modePlayer += heads
 	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 	..()
 
 
@@ -99,10 +99,10 @@
 /datum/game_mode/proc/greet_head(var/datum/mind/head_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		head_mind.current << "\blue It looks like this shift CentComm has some special orders for you.. check your objectives."
-		head_mind.current << "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse."
+		to_chat(head_mind.current, "<span class='notice'>It looks like this shift CentComm has some special orders for you.. check your objectives.</span>")
+		to_chat(head_mind.current, "<span class='notice'>Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.</span>")
 	for(var/datum/objective/objective in head_mind.objectives)
-		head_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(head_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		head_mind.special_role = "Corrupt Head"
 		obj_count++
 
@@ -155,13 +155,13 @@
 
 	var/text = ""
 	if(finished == 2)
-		world << "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The heads of staff were relieved of their posts! The crew wins!</FONT></span>")
 	else if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The heads of staff managed to meet the goals set for them by CentComm!</FONT></span>")
 
 
 
-	world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>The heads of staff were: </B></FONT>")
 	var/list/heads = list()
 	heads = get_all_heads()
 	for(var/datum/mind/head_mind in heads)
@@ -175,10 +175,10 @@
 		else
 			text += "[head_mind.key] (character destroyed)"
 
-		world << text
+		to_chat(world, text)
 
 
-	world << "<FONT size = 2><B>Their objectives were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>Their objectives were: </B></FONT>")
 	for(var/datum/mind/head_mind in heads)
 		if(head_mind.objectives.len)//If the traitor had no objectives, don't need to process this.
 			var/count = 1
@@ -219,4 +219,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	src << "\red You resigned from your position, now you have the consequences."
+	to_chat(src, "<span class='warning'>You resigned from your position, now you have the consequences.</span>")

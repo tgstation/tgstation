@@ -1,5 +1,4 @@
 /client/proc/kaboom()
-
 	set category = "Debug"
 
 	var/power = input(src, "power?", "power?") as num
@@ -36,6 +35,7 @@ proc/get_explosion_turf(var/turf/T)
 	return ET
 
 proc/explosion_rec(turf/epicenter, power)
+
 
 	var/loopbreak = 0
 	while(explosion_in_progress)
@@ -114,6 +114,9 @@ proc/explosion_rec(turf/epicenter, power)
 
 /turf/simulated/wall/r_wall
 	explosion_resistance = 25
+
+/turf/simulated/wall/invulnerable
+
 
 //Code-wise, a safe value for power is something up to ~25 or ~30.. This does quite a bit of damage to the station.
 //direction is the direction that the spread took to come to this tile. So it is pointing in the main blast direction - meaning where this tile should spread most of it's force.

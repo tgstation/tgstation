@@ -2,16 +2,17 @@
 
 //iedcasing assembly crafting//
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attackby(var/obj/item/I, mob/user as mob)
-        if(istype(I, /obj/item/device/assembly/igniter))
-                var/obj/item/device/assembly/igniter/G = I
-                var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
-                user.before_take_item(G)
-                user.before_take_item(src)
-                user.put_in_hands(W)
-                user << "<span  class='notice'>You stuff the [I] in the [src], emptying the contents beforehand.</span>"
-                W.underlays += image(src.icon, icon_state = src.icon_state)
-                del(I)
-                del(src)
+    if(istype(I, /obj/item/device/assembly/igniter))
+        var/obj/item/device/assembly/igniter/G = I
+        var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
+        user.before_take_item(G)
+        user.before_take_item(src)
+        user.put_in_hands(W)
+        to_chat(user, "<span  class='notice'>You stuff the [I] into the [src], emptying the contents beforehand.</span>")
+        W.underlays += image(src.icon, icon_state = src.icon_state)
+        qdel(I)
+        I = null
+        qdel(src)
 
 
 /obj/item/weapon/grenade/iedcasing
@@ -23,7 +24,8 @@
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	var/assembled = 0
 	active = 1
@@ -33,14 +35,14 @@
 
 /obj/item/weapon/grenade/iedcasing/afterattack(atom/target, mob/user , flag) //Filling up the can
 	if(assembled == 0)
-		if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
+		if(istype(target, /obj/structure/reagent_dispensers/fueltank) && target.Adjacent(user))
 			if(target.reagents.total_volume < 50)
-				user << "<span  class='notice'>There's not enough fuel left to work with.</span>"
+				to_chat(user, "<span  class='notice'>There's not enough fuel left to work with.</span>")
 				return
 			var/obj/structure/reagent_dispensers/fueltank/F = target
 			F.reagents.remove_reagent("fuel", 50, 1)//Deleting 50 fuel from the welding fuel tank,
 			assembled = 1
-			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
+			to_chat(user, "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>")
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
@@ -48,22 +50,22 @@
 
 
 /obj/item/weapon/grenade/iedcasing/attackby(var/obj/item/I, mob/user as mob) //Wiring the can for ignition
-	if(istype(I, /obj/item/weapon/cable_coil))
+	if(istype(I, /obj/item/stack/cable_coil))
 		if(assembled == 1)
-			var/obj/item/weapon/cable_coil/C = I
+			var/obj/item/stack/cable_coil/C = I
 			C.use(1)
 			assembled = 2
-			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
+			to_chat(user, "<span  class='notice'>You wire the igniter to detonate the fuel.</span>")
 			desc = "A weak, improvised explosive."
 			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
 			name = "improvised explosive"
 			active = 0
 			det_time = rand(30,80)
 
-/obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
+/obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //Activating the IED
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You light the [name]!</span>"
+			to_chat(user, "<span class='warning'>You light the [name]!</span>")
 			active = 1
 			overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
 			icon_state = initial(icon_state) + "_active"
@@ -82,12 +84,22 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	explosion(src.loc,-1,0,2)
-	del(src)
+	explosion(get_turf(src.loc),-1,0,2)
 
-/obj/item/weapon/grenade/iedcasing/examine()
-	set src in usr
-	usr << desc
+	if(istype(loc, /obj/item/weapon/legcuffs/beartrap))
+		var/obj/item/weapon/legcuffs/beartrap/boomtrap = loc
+		if(istype(boomtrap.loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = loc.loc
+			if(H.legcuffed == boomtrap)
+				var/datum/organ/external/leg = H.get_organ("[pick("l","r")]_leg") //Either left or right leg
+				if(leg && !(leg.status & ORGAN_DESTROYED))
+					leg.droplimb(1,0)
+
+				qdel(H.legcuffed)
+				H.legcuffed = null
+	qdel(src)
+
+/obj/item/weapon/grenade/iedcasing/examine(mob/user)
+	..()
 	if(assembled == 3)
-		usr << "You can't tell when it will explode!" //Stops you from checking the time to detonation unlike regular grenades
-		return
+		to_chat(user, "<span class='info'>You can't tell when it will explode!</span>")//Stops you from checking the time to detonation unlike regular grenades

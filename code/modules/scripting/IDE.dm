@@ -1,4 +1,4 @@
-client/verb/tcssave()
+/client/verb/tcssave()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -8,7 +8,7 @@ client/verb/tcssave()
 
 			if(Machine.SelectedServer)
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
-				var/tcscode=winget(src, "tcscode", "text")
+				var/tcscode = winget(src, "tcscode", "text")
 				Server.setcode( tcscode ) // this actually saves the code from input to the server
 				src << output(null, "tcserror") // clear the errors
 			else
@@ -22,7 +22,7 @@ client/verb/tcssave()
 		src << output("<font color = red>Failed to save: Unable to locate machine. (Back up your code before exiting the window!)</font color>", "tcserror")
 
 
-client/verb/tcscompile()
+/client/verb/tcscompile()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -45,7 +45,7 @@ client/verb/tcscompile()
 
 					if(compileerrors.len)
 						src << output("<b>Compile Errors</b>", "tcserror")
-						for(var/scriptError/e in compileerrors)
+						for(var/datum/scriptError/e in compileerrors)
 							src << output("<font color = red>\t>[e.message]</font color>", "tcserror")
 						src << output("([compileerrors.len] errors)", "tcserror")
 
@@ -54,7 +54,7 @@ client/verb/tcscompile()
 							if(M.client)
 								M << output(null, "tcserror")
 								M << output("<b>Compile Errors</b>", "tcserror")
-								for(var/scriptError/e in compileerrors)
+								for(var/datum/scriptError/e in compileerrors)
 									M << output("<font color = red>\t>[e.message]</font color>", "tcserror")
 								M << output("([compileerrors.len] errors)", "tcserror")
 
@@ -78,7 +78,7 @@ client/verb/tcscompile()
 		src << output(null, "tcserror")
 		src << output("<font color = red>Failed to compile: Unable to locate machine. (Back up your code before exiting the window!)</font color>", "tcserror")
 
-client/verb/tcsrun()
+/client/verb/tcsrun()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -89,7 +89,7 @@ client/verb/tcsrun()
 			if(Machine.SelectedServer)
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
 
-				var/datum/signal/signal = new()
+				var/datum/signal/signal = getFromPool(/datum/signal)
 				signal.data["message"] = ""
 				if(Server.freq_listening.len > 0)
 					signal.frequency = Server.freq_listening[1]
@@ -114,7 +114,7 @@ client/verb/tcsrun()
 		src << output("<font color = red>Failed to run: Unable to locate machine. (Back up your code before exiting the window!)</font color>", "tcserror")
 
 
-client/verb/exittcs()
+/client/verb/exittcs()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -126,7 +126,7 @@ client/verb/exittcs()
 				if(mob in Machine.viewingcode)
 					Machine.viewingcode.Remove(mob)
 
-client/verb/tcsrevert()
+/client/verb/tcsrevert()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -155,7 +155,7 @@ client/verb/tcsrevert()
 		src << output("<font color = red>Failed to revert: Unable to locate machine.</font color>", "tcserror")
 
 
-client/verb/tcsclearmem()
+/client/verb/tcsclearmem()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))

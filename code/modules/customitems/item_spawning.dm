@@ -54,7 +54,8 @@
 				I.fingerprint_hash = C.fingerprint_hash
 				//I.pin = C.pin
 				//replace old ID
-				del(C)
+				qdel(C)
+				C = null
 				ok = M.equip_if_possible(I, slot_wear_id, 0)	//if 1, last argument deletes on fail
 				break
 			testing("Replaced ID!")
@@ -62,14 +63,14 @@
 			Item.loc = M.back
 			ok = 1
 			testing("Added to [M.back.name]!")
-			M << "\blue Your [Item.name] has been added to your [M.back.name]."
+			to_chat(M, "<span class='notice'>Your [Item.name] has been added to your [M.back.name].</span>")
 		else
 			for(var/obj/item/weapon/storage/S in M.contents) // Try to place it in any item that can store stuff, on the mob.
 				if (S.contents.len < S.storage_slots)
 					Item.loc = S
 					ok = 1
 					testing("Added to [S]!")
-					M << "\blue Your [Item.name] has been added to your [S.name]."
+					to_chat(M, "<span class='notice'>Your [Item.name] has been added to your [S.name].</span>")
 					break
 
 		//skip:

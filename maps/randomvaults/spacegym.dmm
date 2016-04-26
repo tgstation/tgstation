@@ -1,0 +1,44 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/simulated/floor/damaged/airless,/area/vault/gym)
+"c" = (/obj/structure/grille,/turf/simulated/floor/airless,/area/vault/gym)
+"d" = (/obj/structure/lattice,/turf/space,/area/vault/gym)
+"e" = (/obj/effect/decal/cleanable/blood/oil,/turf/simulated/floor/airless,/area/vault/gym)
+"f" = (/obj/item/weapon/reagent_containers/spray/cleaner,/turf/simulated/floor/damaged,/area/vault/gym)
+"g" = (/turf/simulated/wall,/area/vault/gym)
+"h" = (/obj/structure/closet/boxinggloves{name = "closet"},/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/airless,/area/vault/gym)
+"i" = (/obj/item/weapon/stool,/mob/living/simple_animal/hostile/necro/zombie{name = "boss of this gym"},/turf/simulated/floor/airless,/area/vault/gym)
+"j" = (/turf/simulated/floor/airless,/area/vault/gym)
+"k" = (/obj/item/weapon/stool,/obj/item/weapon/reagent_containers/glass/rag,/turf/simulated/floor/airless,/area/vault/gym)
+"l" = (/obj/structure/closet/boxinggloves{name = "closet"},/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/airless,/area/vault/gym)
+"m" = (/obj/machinery/shower,/turf/simulated/floor/airless,/area/vault/gym)
+"n" = (/obj/machinery/shower,/obj/item/weapon/storage/pill_bottle/creatine,/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/airless,/area/vault/gym)
+"o" = (/obj/structure/closet,/turf/simulated/floor/airless,/area/vault/gym)
+"p" = (/obj/item/weapon/stool,/turf/simulated/floor/airless,/area/vault/gym)
+"q" = (/obj/map/spawner/misc/gym,/turf/simulated/floor/airless,/area/vault/gym)
+"r" = (/mob/living/simple_animal/hostile/necro/zombie{name = "boy next door"},/turf/simulated/floor/airless,/area/vault/gym)
+"s" = (/obj/item/clothing/under/darkholme{name = "jabroni outfit"},/turf/simulated/floor/airless,/area/vault/gym)
+"t" = (/obj/structure/lattice,/obj/structure/grille,/turf/space,/area/vault/gym)
+"u" = (/obj/effect/decal/cleanable/vomit,/turf/simulated/floor/airless,/area/vault/gym)
+"v" = (/obj/map/spawner/maint,/turf/simulated/floor/airless,/area/vault/gym)
+"w" = (/mob/living/simple_animal/hostile/necro/zombie/leatherman,/turf/simulated/floor/airless,/area/vault/gym)
+"x" = (/obj/machinery/door/unpowered,/turf/simulated/floor/airless,/area/vault/gym)
+"y" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor/airless,/area/vault/gym)
+"z" = (/obj/machinery/power/treadmill,/obj/map/spawner/misc/gym,/turf/simulated/floor/airless,/area/vault/gym)
+"A" = (/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/simulated/floor/airless,/area/vault/gym)
+"B" = (/obj/machinery/power/treadmill,/turf/simulated/floor/airless,/area/vault/gym)
+"C" = (/obj/structure/mopbucket,/obj/item/weapon/mop,/turf/simulated/floor/airless,/area/vault/gym)
+
+(1,1,1) = {"
+aaaaaaaaaaaa
+aaabcdeaaaaa
+adaadddcddfa
+dggggcgcggca
+aghijklgmnga
+dgopqpogdrcd
+qgopbpogbsdt
+bgopjpogqjgt
+dguvwjcxycca
+dgzAcbBgcCga
+dcggxgggcdga
+aacbaaaaaaaa
+"}

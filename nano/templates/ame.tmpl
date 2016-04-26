@@ -1,57 +1,56 @@
 <div class="line">
 	<div class="statusLabel">Status:</div> 
-	{{if active}}
+	{{if data.active}}
 		<div class="statusValue average">Injecting</div>
 	{{else}}
 		<div class="statusValue good">Standby</div>
 	{{/if}}
-	&nbsp;{{:~link("Toggle Status", "gear", {"togglestatus":1},null)}}
+	&nbsp;{{:helper.link("Toggle Status", "gear", {"togglestatus":1},null)}}
 </div>
-{{if !fueljar}}
+{{if !data.fueljar}}
 	<div class="notice">No fuel jar detected.</div>
 {{else}}
 	<div class="statusDisplay">
 		<div class="line">
 			<div class="statusLabel">Fuel:</div> 
-			<div class="statusValue">{{:fueljar.fuel}}/{{:fueljar.fuel_max}}</div>
-			{{:~link("Eject", "eject", {"ejectjar":1},null,'floatRight')}}
+			<div class="statusValue">{{:data.fueljar.fuel}}/{{:data.fueljar.fuel_max}}</div>
+			{{:helper.link("Eject", "eject", {"ejectjar":1},null,'floatRight')}}
 		</div>
 		<div class="line">
 			<div class="statusLabel">Injecting:</div> 
 			<div class="statusValue">
-				{{:~link(fueljar.injecting+" units", 'carat-2-n-s', {'set_strength': 1})}}
+				{{:helper.link(data.fueljar.injecting+" units", 'carat-2-n-s', {'set_strength': 1})}}
 			</div>
 		</div>
 	</div>
 {{/if}}
-
 <div class="statusDisplay">
 	<div class="line">
 		<div class="statusLabel">Stability:</div>
 		<div class="statusValue">
-			{{:~displayBar(stability,0,100,"good")}}
-			{{:stability}}%
+			{{:helper.displayBar(data.stability,0,100,"good")}}
+			{{:data.stability}}%
 		</div>
 	</div>
 	<div class="line">
 		<div class="statusLabel">Shielding Count:</div>
-		<div class="statusValue">{{:linked_shielding}}</div>
+		<div class="statusValue">{{:data.linked_shields}}</div>
 	</div> 
 	<div class="line">
 		<div class="statusLabel">Cores:</div>
-		<div class="statusValue">{{:linked_cores}}</div>
-		{{:~link("Refresh Parts",null,{"refreshicons" : 1},(active?"disabled":null),'floatRight')}}
+		<div class="statusValue">{{:data.linked_cores}}</div>
+		{{:helper.link("Refresh Parts",null,{"refreshicons" : 1},(data.active?"disabled":null),'floatRight')}}
 	</div> 
 	<div class="line">
 		<div class="statusLabel">Current Efficiency:</div>
-		<div class="statusValue">{{:efficiency}}</div>
+		<div class="statusValue">{{:data.efficiency}}</div>
 	</div> 
 	<div class="line">
 		<div class="statusLabel">Average Efficiency:</div>
-		<div class="statusValue">{{:avg_stability}}</div>
+		<div class="statusValue">{{:data.stability}}</div>
 	</div> 
 	<div class="line">
 		<div class="statusLabel">Last Produced:</div>
-		<div class="statusValue">{{:stored_power}}</div>
+		<div class="statusValue">{{:data.stored_power}}</div>
 	</div>
 </div>

@@ -1,20 +1,17 @@
-/mob/living/silicon/hivebot/examine()
-	set src in oview()
-
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
+/mob/living/silicon/hivebot/examine(mob/user)
+	to_chat(user, "<span class='notice'>*---------*</span>")
+	to_chat(user, text("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>"))
 	if (src.stat == 2)
-		usr << text("\red [src.name] is powered-down.")
+		to_chat(user, text("<span class='warning'>[src.name] is powered-down.</span>"))
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 75)
-			usr << text("\red [src.name] looks slightly dented")
+			to_chat(user, text("<span class='warning'>[src.name] looks slightly dented</span>"))
 		else
-			usr << text("\red <B>[src.name] looks severely dented!</B>")
+			to_chat(user, text("<span class='danger'>[src.name] looks severely dented!</span>"))
 	if (src.getFireLoss())
 		if (src.getFireLoss() < 75)
-			usr << text("\red [src.name] looks slightly burnt!")
+			to_chat(user, text("<span class='warning'>[src.name] looks slightly burnt!</span>"))
 		else
-			usr << text("\red <B>[src.name] looks severely burnt!</B>")
+			to_chat(user, text("<span class='danger'>[src.name] looks severely burnt!</span>"))
 	if (src.stat == 1)
-		usr << text("\red [src.name] doesn't seem to be responding.")
-	return
+		to_chat(user, text("<span class='warning'>[src.name] doesn't seem to be responding.</span>"))

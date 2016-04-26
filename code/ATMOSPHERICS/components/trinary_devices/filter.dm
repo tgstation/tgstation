@@ -1,11 +1,9 @@
 obj/machinery/atmospherics/trinary/filter
 	icon = 'icons/obj/atmospherics/filter.dmi'
-	icon_state = "intact_off"
-	density = 1
-
+	icon_state = "hintact_off"
 	name = "Gas filter"
-
-	req_access = list(access_atmospherics)
+	default_colour = "#b70000"
+	mirror = /obj/machinery/atmospherics/trinary/filter/mirrored
 
 	var/on = 0
 	var/temp = null // -- TLE
@@ -16,7 +14,7 @@ obj/machinery/atmospherics/trinary/filter
 /*
 Filter types:
 -1: Nothing
- 0: Carbon Molecules: Plasma Toxin, Oxygen Agent B
+ 0: Plasma: Plasma Toxin, Oxygen Agent B
  1: Oxygen: Oxygen ONLY
  2: Nitrogen: Nitrogen ONLY
  3: Carbon Dioxide: Carbon Dioxide ONLY
@@ -26,138 +24,113 @@ Filter types:
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+obj/machinery/atmospherics/trinary/filter/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-	New()
-		if(radio_controller)
-			initialize()
-		..()
+obj/machinery/atmospherics/trinary/filter/New()
+	if(radio_controller)
+		initialize()
+	..()
 
-	update_icon()
-		if(stat & NOPOWER)
-			icon_state = "intact_off"
-		else if(node2 && node3 && node1)
-			icon_state = "intact_[on?("on"):("off")]"
-		else
-			icon_state = "intact_off"
-			on = 0
+obj/machinery/atmospherics/trinary/filter/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "hintact_off"
+	else if(node2 && node3 && node1)
+		icon_state = "hintact_[on?("on"):("off")]"
+	else
+		icon_state = "hintact_off"
+		on = 0
+	..()
 
+obj/machinery/atmospherics/trinary/filter/power_change()
+	var/old_stat = stat
+	..()
+	if(old_stat != stat)
+		update_icon()
+
+obj/machinery/atmospherics/trinary/filter/process()
+	. = ..()
+	if(!on)
 		return
 
-	power_change()
-		var/old_stat = stat
-		..()
-		if(old_stat != stat)
-			update_icon()
+	var/output_starting_pressure = air3.return_pressure()
 
-	process()
-		..()
-		if(!on)
-			return 0
+	if(output_starting_pressure >= target_pressure || air2.return_pressure() >= target_pressure )
+		//No need to mix if target is already full!
+		return
 
-		var/output_starting_pressure = air3.return_pressure()
+	//Calculate necessary moles to transfer using PV=nRT
 
-		if(output_starting_pressure >= target_pressure || air2.return_pressure() >= target_pressure )
-			//No need to mix if target is already full!
-			return 1
+	var/pressure_delta = target_pressure - output_starting_pressure
+	var/transfer_moles
 
-		//Calculate necessary moles to transfer using PV=nRT
+	if(air1.temperature > 0)
+		transfer_moles = pressure_delta*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles
+	//Actually transfer the gas
 
-		if(air1.temperature > 0)
-			transfer_moles = pressure_delta*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+	if(transfer_moles > 0)
+		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 
-		//Actually transfer the gas
+		if(!removed)
+			return
+		var/datum/gas_mixture/filtered_out = new
+		filtered_out.temperature = removed.temperature
 
-		if(transfer_moles > 0)
-			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		switch(filter_type)
+			if(0) //removing hydrocarbons
+				filtered_out.toxins = removed.toxins
+				removed.toxins = 0
 
-			if(!removed)
-				return
-			var/datum/gas_mixture/filtered_out = new
-			filtered_out.temperature = removed.temperature
+				if(removed.trace_gases.len>0)
+					for(var/datum/gas/trace_gas in removed.trace_gases)
+						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
+							removed.trace_gases -= trace_gas
+							filtered_out.trace_gases += trace_gas
 
-			switch(filter_type)
-				if(0) //removing hydrocarbons
-					filtered_out.toxins = removed.toxins
-					removed.toxins = 0
+			if(1) //removing O2
+				filtered_out.oxygen = removed.oxygen
+				removed.oxygen = 0
 
-					if(removed.trace_gases.len>0)
-						for(var/datum/gas/trace_gas in removed.trace_gases)
-							if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-								removed.trace_gases -= trace_gas
-								filtered_out.trace_gases += trace_gas
+			if(2) //removing N2
+				filtered_out.nitrogen = removed.nitrogen
+				removed.nitrogen = 0
 
-				if(1) //removing O2
-					filtered_out.oxygen = removed.oxygen
-					removed.oxygen = 0
+			if(3) //removing CO2
+				filtered_out.carbon_dioxide = removed.carbon_dioxide
+				removed.carbon_dioxide = 0
 
-				if(2) //removing N2
-					filtered_out.nitrogen = removed.nitrogen
-					removed.nitrogen = 0
+			if(4)//removing N2O
+				if(removed.trace_gases.len>0)
+					for(var/datum/gas/trace_gas in removed.trace_gases)
+						if(istype(trace_gas, /datum/gas/sleeping_agent))
+							removed.trace_gases -= trace_gas
+							filtered_out.trace_gases += trace_gas
 
-				if(3) //removing CO2
-					filtered_out.carbon_dioxide = removed.carbon_dioxide
-					removed.carbon_dioxide = 0
-
-				if(4)//removing N2O
-					if(removed.trace_gases.len>0)
-						for(var/datum/gas/trace_gas in removed.trace_gases)
-							if(istype(trace_gas, /datum/gas/sleeping_agent))
-								removed.trace_gases -= trace_gas
-								filtered_out.trace_gases += trace_gas
-
-				else
-					filtered_out = null
+			else
+				filtered_out = null
 
 
-			air2.merge(filtered_out)
-			air3.merge(removed)
+		air2.merge(filtered_out)
+		air3.merge(removed)
 
-		if(network2)
-			network2.update = 1
+	if(network2)
+		network2.update = 1
 
-		if(network3)
-			network3.update = 1
+	if(network3)
+		network3.update = 1
 
-		if(network1)
-			network1.update = 1
+	if(network1)
+		network1.update = 1
 
-		return 1
+	return 1
 
-	initialize()
-		set_frequency(frequency)
-		..()
-
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-		if (!istype(W, /obj/item/weapon/wrench))
-			return ..()
-		var/turf/T = src.loc
-		if (level==1 && isturf(T) && T.intact)
-			user << "\red You must remove the plating first."
-			return 1
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
-			add_fingerprint(user)
-			return 1
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		user << "\blue You begin to unfasten \the [src]..."
-		if (do_after(user, 40))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"\blue You have unfastened \the [src].", \
-				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
-			del(src)
+obj/machinery/atmospherics/trinary/filter/initialize()
+	set_frequency(frequency)
+	..()
 
 
 obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
@@ -165,14 +138,14 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 		return
 
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	var/dat
 	var/current_filter_type
 	switch(filter_type)
 		if(0)
-			current_filter_type = "Carbon Molecules"
+			current_filter_type = "Plasma"
 		if(1)
 			current_filter_type = "Oxygen"
 		if(2)
@@ -190,7 +163,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 			<b>Filtering: </b>[current_filter_type]<br><HR>
 			<h4>Set Filter Type:</h4>
-			<A href='?src=\ref[src];filterset=0'>Carbon Molecules</A><BR>
+			<A href='?src=\ref[src];filterset=0'>Plasma</A><BR>
 			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
 			<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>
 			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
@@ -237,3 +210,14 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 	return
 
 
+/obj/machinery/atmospherics/trinary/filter/mirrored
+	icon_state = "hintactm_off"
+	pipe_flags = IS_MIRROR
+
+/obj/machinery/atmospherics/trinary/filter/mirrored/update_icon(var/adjacent_procd)
+	..(adjacent_procd)
+	if(stat & NOPOWER)
+		icon_state = "hintactm_off"
+	else if(!(node2 && node3 && node1))
+		on = 0
+	icon_state = "hintactm_[on?("on"):("off")]"

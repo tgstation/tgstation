@@ -3,15 +3,15 @@
 
 /obj/item/clothing/head/beret/centcom/officer
 	name = "officers beret"
-	desc = "A black beret adorned with the shield—a silver kite shield with an engraved sword—of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
+	desc = "A black beret adorned with the shield—a silver kite shield with an engraved sword—of the Nanotrasen security forces, announcing to the world that the wearer is a defender of Nanotrasen."
 	icon_state = "centcomofficerberet"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 /obj/item/clothing/head/beret/centcom/captain
 	name = "captains beret"
-	desc = "A white beret adorned with the shield—a cobalt kite shield with an engraved sword—of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
+	desc = "A white beret adorned with the shield—a cobalt kite shield with an engraved sword—of the Nanotrasen security forces, worn only by those captaining a vessel of the Nanotrasen Navy."
 	icon_state = "centcomcaptain"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 /obj/item/clothing/shoes/centcom
 	name = "dress shoes"
@@ -20,7 +20,7 @@
 
 /obj/item/clothing/under/rank/centcom/representative
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Ensign\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen Navy Uniform"
+	name = "\improper Nanotrasen Navy Uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	_color = "officer"
@@ -28,7 +28,7 @@
 
 /obj/item/clothing/under/rank/centcom/officer
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Lieutenant Commander\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen Officers Uniform"
+	name = "\improper Nanotrasen Officers Uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	_color = "officer"
@@ -36,7 +36,7 @@
 
 /obj/item/clothing/under/rank/centcom/captain
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Captain\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen Captains Uniform"
+	name = "\improper Nanotrasen Captains Uniform"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	_color = "centcom"

@@ -8,9 +8,13 @@
 	icon_state = "wall-locker"
 	density = 0
 	anchored = 1
+	wall_mounted = 1
 	pick_up_stuff = 0 // #367 - Picks up stuff at src.loc, rather than the offset location.
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
+
+/obj/structure/closet/walllocker/can_close()
+	return 1
 
 //spawns endless (3 sets) amounts of breathmask, emergency oxy tank and crowbar
 
@@ -25,10 +29,10 @@
 	if (istype(user, /mob/living/silicon/ai))	//Added by Strumpetplaya - AI shouldn't be able to
 		return									//activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
 	if(!amount)
-		usr << "<spawn class='notice'>It's empty."
+		to_chat(usr, "<spawn class='notice'>It's empty.")
 		return
 	if(amount)
-		usr << "<spawn class='notice'>You take out some items from \the [src]."
+		to_chat(usr, "<spawn class='notice'>You take out some items from \the [src].")
 		for(var/path in spawnitems)
 			new path(src.loc)
 		amount--
@@ -50,54 +54,57 @@
 	pixel_x = 32
 	dir = EAST
 
-/obj/structure/closet/walllocker/defiblocker/
-	name = "emergency defibrilator locker"
-	desc = "A wall mounted locker with a handheld defibrilator"
+/obj/structure/closet/walllocker/defiblocker
+	name = "emergency defibrillator locker"
+	desc = "A wall mounted locker with a handheld defibrillator"
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "medical_wall"
 	icon_opened = "medical_wall_open"
 	icon_closed = "medical_wall"
-	var/amount = 1
+	var/obj/item/weapon/melee/defibrillator/defib
+
+/obj/structure/closet/walllocker/defiblocker/New()
+	..()
+	defib = new /obj/item/weapon/melee/defibrillator(src)
 
 /obj/structure/closet/walllocker/defiblocker/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon/ai)) return
 	if(istype(user, /mob/living/silicon/robot))
-		if(!amount)
-			usr << "<spawn class='notice'>It's empty."
+		if(!defib)
+			to_chat(usr, "<span class='notice'>It's empty.</span>")
 			return
 		else
-			usr << "<spawn class='notice'>You pull out an emergency defibrilator from \the [src]."
-			new /obj/item/weapon/melee/defibrilator(src.loc)
-			amount = 0
+			to_chat(usr, "<span class='notice'>You pull out an emergency defibrillator from \the [src].</span>")
+			defib.loc = get_turf(src)
+			defib = null
 			update_icon()
-	if(!amount)
-		usr << "<spawn class='notice'>It's empty."
+	if(!defib)
+		to_chat(usr, "<span class='notice'>It's empty.</span>")
 		return
-	if(amount)
-		usr << "<spawn class='notice'>You take out an emergency defibrilator from \the [src]."
-		//new /obj/item/weapon/melee/defibrilator(src.loc)
-		usr.put_in_hands(new /obj/item/weapon/melee/defibrilator())
-		amount = 0
+	if(defib)
+		to_chat(usr, "<span class='notice'>You take out an emergency defibrillator from \the [src].</san>")
+		//new /obj/item/weapon/melee/defibrillator(src.loc)
+		usr.put_in_hands(defib)
+		defib = null
 		update_icon()
 	return
 
 /obj/structure/closet/walllocker/defiblocker/attackby(obj/item/weapon/G as obj, mob/user as mob)
-	if(istype(G, /obj/item/weapon/melee/defibrilator))
-		if(amount)
-			usr << "<spawn class='notice'>The locker is full."
+	if(istype(G, /obj/item/weapon/melee/defibrillator))
+		if(defib)
+			to_chat(usr, "<spawn class='notice'>The locker is full.")
 			return
 		else
-			usr << "<spawn class='notice'>You put \the [G] in \the [src]."
-			amount = 1
-			update_icon()
-			user.drop_item()
-			del(G)
-			return
+			if(user.drop_item(G, src))
+				to_chat(usr, "<span class='notice'>You put \the [G] in \the [src].</span>")
+				defib = G
+				update_icon()
+				return
 	return
 
 
 /obj/structure/closet/walllocker/defiblocker/update_icon()
-	if(amount)
+	if(defib)
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened

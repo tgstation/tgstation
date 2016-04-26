@@ -1,10 +1,11 @@
 /obj/item/weapon/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
-	storage_slots = 10
+	storage_slots = 20
+	icon = 'icons/obj/wallet.dmi'
 	icon_state = "wallet"
 	w_class = 2
-	can_hold = list(
+	can_only_hold = list(
 		"/obj/item/weapon/spacecash",
 		"/obj/item/weapon/card",
 		"/obj/item/clothing/mask/cigarette",
@@ -13,6 +14,8 @@
 		"/obj/item/stack/medical",
 		"/obj/item/toy/crayon",
 		"/obj/item/weapon/coin",
+		"/obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin",
+		"/obj/item/weapon/reagent_containers/food/snacks/chococoin",
 		"/obj/item/weapon/dice",
 		"/obj/item/weapon/disk",
 		"/obj/item/weapon/implanter",
@@ -24,7 +27,7 @@
 		"/obj/item/weapon/reagent_containers/dropper",
 		"/obj/item/weapon/screwdriver",
 		"/obj/item/weapon/stamp")
-	slot_flags = SLOT_ID
+	slot_flags = SLOT_ID|SLOT_BELT
 
 	var/obj/item/weapon/card/id/front_id = null
 
@@ -44,22 +47,10 @@
 			update_icon()
 
 /obj/item/weapon/storage/wallet/update_icon()
-
 	if(front_id)
-		switch(front_id.icon_state)
-			if("id")
-				icon_state = "walletid"
-				return
-			if("silver")
-				icon_state = "walletid_silver"
-				return
-			if("gold")
-				icon_state = "walletid_gold"
-				return
-			if("centcom")
-				icon_state = "walletid_centcom"
-				return
-	icon_state = "wallet"
+		icon_state = "walletid_[front_id.icon_state]"
+	else
+		icon_state = "wallet"
 
 
 /obj/item/weapon/storage/wallet/GetID()
@@ -74,10 +65,16 @@
 
 /obj/item/weapon/storage/wallet/random/New()
 	..()
-	var/item1_type = pick( /obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50, /obj/item/weapon/spacecash/c500)
+	var/item1_type = pick(/obj/item/weapon/spacecash,
+		/obj/item/weapon/spacecash/c10,
+		/obj/item/weapon/spacecash/c100,
+		/obj/item/weapon/spacecash/c1000)
 	var/item2_type
 	if(prob(50))
-		item2_type = pick( /obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50, /obj/item/weapon/spacecash/c500)
+		item2_type = pick(/obj/item/weapon/spacecash,
+		/obj/item/weapon/spacecash/c10,
+		/obj/item/weapon/spacecash/c100,
+		/obj/item/weapon/spacecash/c1000)
 	var/item3_type = pick( /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron )
 
 	spawn(2)

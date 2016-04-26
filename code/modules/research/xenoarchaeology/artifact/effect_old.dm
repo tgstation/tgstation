@@ -33,7 +33,8 @@
 /datum/artifact_effect/proc/HaltEffect()
 	for(var/obj/effect/energy_field/F in created_field)
 		created_field.Remove(F)
-		del F
+		qdel (F)
+		F = null
 
 /datum/artifact_effect/proc/UpdateEffect(var/atom/originator)
 	/*for(var/obj/effect/energy_field/F in created_field)
@@ -57,7 +58,7 @@
 			if("healing")
 				//caeltodo
 				if (istype(user, /mob/living/carbon/human/))
-					user << "\blue You feel a soothing energy invigorate you."
+					to_chat(user, "<span class='notice'>You feel a soothing energy invigorate you.</span>")
 
 					var/mob/living/carbon/human/H = user
 					for(var/datum/organ/external/affecting in H.organs)
@@ -82,17 +83,17 @@
 					return 1
 					//
 				if (istype(user, /mob/living/carbon/monkey/))
-					user << "\blue You feel a soothing energy invigorate you."
+					to_chat(user, "<span class='notice'>You feel a soothing energy invigorate you.</span>")
 					user.adjustOxyLoss(-25)
 					user.adjustToxLoss(-25)
 					user.adjustBruteLoss(-25)
 					user.adjustFireLoss(-25)
 					user.adjustBrainLoss(-25)
 					return 1
-				else user << "Nothing happens."
+				to_chat(else user, "Nothing happens.")
 			if("injure")
 				if (istype(user, /mob/living/carbon/))
-					user << "\red A painful discharge of energy strikes you!"
+					to_chat(user, "<span class='warning'>A painful discharge of energy strikes you!</span>")
 					user.adjustOxyLoss(rand(5,25))
 					user.adjustToxLoss(rand(5,25))
 					user.adjustBruteLoss(rand(5,25))
@@ -100,33 +101,33 @@
 					user.adjustBrainLoss(rand(5,25))
 					user.radiation += 25
 					user.nutrition -= min(50, user.nutrition)
-					user.make_dizzy(6)
+					user.Dizzy(6)
 					user.weakened += 6
 					return 1
-				else user << "Nothing happens."
+				to_chat(else user, "Nothing happens.")
 			if("stun")
 				if (istype(user, /mob/living/carbon/))
-					user << "\red A powerful force overwhelms your consciousness."
+					to_chat(user, "<span class='warning'>A powerful force overwhelms your consciousness.</span>")
 					user.weakened += 45
 					user.stuttering += 45
 					if(prob(50))
 						user.stunned += rand(1,10)
 					return 1
-				else user << "Nothing happens."
+				to_chat(else user, "Nothing happens.")
 			if("roboheal")
 				if (istype(user, /mob/living/silicon/robot))
-					user << "\blue Your systems report damaged components mending by themselves!"
+					to_chat(user, "<span class='notice'>Your systems report damaged components mending by themselves!</span>")
 					user.adjustBruteLoss(rand(-10,-30))
 					user.adjustFireLoss(rand(-10,-30))
 					return 1
-				else user << "Nothing happens."
+				to_chat(else user, "Nothing happens.")
 			if("robohurt")
 				if (istype(user, /mob/living/silicon/robot))
-					user << "\red Your systems report severe damage has been inflicted!"
+					to_chat(user, "<span class='warning'>Your systems report severe damage has been inflicted!</span>")
 					user.adjustBruteLoss(rand(10,50))
 					user.adjustFireLoss(rand(10,50))
 					return 1
-				else user << "Nothing happens."
+				to_chat(else user, "Nothing happens.")
 			if("forcefield")
 				while(created_field.len < 16)
 					var/obj/effect/energy_field/E = new (locate(user.x,user.y,user.z))
@@ -143,7 +144,7 @@
 						continue
 					randomturfs.Add(T)
 				if(randomturfs.len > 0)
-					user << "\red You are suddenly zapped away elsewhere!"
+					to_chat(user, "<span class='warning'>You are suddenly zapped away elsewhere!</span>")
 					if (user.buckled)
 						user.buckled.unbuckle()
 					user.loc = pick(randomturfs)
@@ -152,7 +153,7 @@
 					sparks.start()
 				return 1
 			if("sleepy")
-				user << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+				to_chat(user, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))
 				user.drowsyness = min(user.drowsyness + rand(5,25), 50)
 				user.eye_blurry = min(user.eye_blurry + rand(1,3), 50)
 				return 1
@@ -163,7 +164,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\blue You feel a soothing energy radiating from something nearby."
+					to_chat(if(prob(10)) M, "<span class='notice'>You feel a soothing energy radiating from something nearby.</span>")
 					M.adjustBruteLoss(-1)
 					M.adjustFireLoss(-1)
 					M.adjustToxLoss(-1)
@@ -175,7 +176,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\red You feel a painful force radiating from something nearby."
+					to_chat(if(prob(10)) M, "<span class='warning'>You feel a painful force radiating from something nearby.</span>")
 					M.adjustBruteLoss(1)
 					M.adjustFireLoss(1)
 					M.adjustToxLoss(1)
@@ -187,23 +188,23 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\red Energy radiating from the [originator] is making you feel numb."
+					to_chat(if(prob(10)) M, "<span class='warning'>Energy radiating from the [originator] is making you feel numb.</span>")
 					if(prob(20))
-						M << "\red Your body goes numb for a moment."
+						to_chat(M, "<span class='warning'>Your body goes numb for a moment.</span>")
 						M.stunned += 2
 						M.weakened += 2
 						M.stuttering += 2
 				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					if(prob(10)) M << "\blue SYSTEM ALERT: Beneficial energy field detected!"
+					to_chat(if(prob(10)) M, "<span class='notice'>SYSTEM ALERT: Beneficial energy field detected!</span>")
 					M.adjustBruteLoss(-1)
 					M.adjustFireLoss(-1)
 					M.updatehealth()
 				return 1
 			if("robohurt")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					if(prob(10)) M << "\red SYSTEM ALERT: Harmful energy field detected!"
+					to_chat(if(prob(10)) M, "<span class='warning'>SYSTEM ALERT: Harmful energy field detected!</span>")
 					M.adjustBruteLoss(1)
 					M.adjustFireLoss(1)
 					M.updatehealth()
@@ -216,7 +217,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 10
-						if(prob(10)) M << "\blue SYSTEM ALERT: Energy boosting field detected!"
+						to_chat(if(prob(10)) M, "<span class='notice'>SYSTEM ALERT: Energy boosting field detected!</span>")
 				return 1
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
@@ -227,7 +228,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-10,0)
-						if(prob(10)) M << "\red SYSTEM ALERT: Energy draining field detected!"
+						to_chat(if(prob(10)) M, "<span class='warning'>SYSTEM ALERT: Energy draining field detected!</span>")
 				return 1
 			if("planthelper")
 				for (var/obj/machinery/hydroponics/H in range(src.aurarange,originator))
@@ -247,7 +248,7 @@
 			if("sleepy")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(prob(10))
-						M << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+						to_chat(M, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))
 					M.drowsyness = min(M.drowsyness + 1, 25)
 					M.eye_blurry = min(M.eye_blurry + 1, 25)
 				return 1
@@ -260,7 +261,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\blue A wave of energy invigorates you."
+					to_chat(M, "<span class='notice'>A wave of energy invigorates you.</span>")
 					M.adjustBruteLoss(-5)
 					M.adjustFireLoss(-5)
 					M.adjustToxLoss(-5)
@@ -272,13 +273,13 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\red A wave of energy causes you great pain!"
+					to_chat(M, "<span class='warning'>A wave of energy causes you great pain!</span>")
 					M.adjustBruteLoss(5)
 					M.adjustFireLoss(5)
 					M.adjustToxLoss(5)
 					M.adjustOxyLoss(5)
 					M.adjustBrainLoss(5)
-					M.make_dizzy(6)
+					M.Dizzy(6)
 					M.weakened += 3
 					M.updatehealth()
 				return 1
@@ -286,21 +287,21 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\red A wave of energy overwhelms your senses!"
+					to_chat(M, "<span class='warning'>A wave of energy overwhelms your senses!</span>")
 					M.paralysis += 3
 					M.weakened += 4
 					M.stuttering += 4
 				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
+					to_chat(M, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
 					M.adjustBruteLoss(-10)
 					M.adjustFireLoss(-10)
 					M.updatehealth()
 				return 1
 			if("robohurt")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
-					M << "\red SYSTEM ALERT: Structural damage inflicted by energy pulse!"
+					to_chat(M, "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>")
 					M.adjustBruteLoss(10)
 					M.adjustFireLoss(10)
 					M.updatehealth()
@@ -313,7 +314,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 250
-						M << "\blue SYSTEM ALERT: Large energy boost detected!"
+						to_chat(M, "<span class='notice'>SYSTEM ALERT: Large energy boost detected!</span>")
 				return 1
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
@@ -324,7 +325,7 @@
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-500,0)
-						M << "\red SYSTEM ALERT: Severe energy drain detected!"
+						to_chat(M, "<span class='warning'>SYSTEM ALERT: Severe energy drain detected!</span>")
 				return 1
 			if("planthelper")
 				//makes weeds and shrooms and stuff more potent too
@@ -349,7 +350,7 @@
 							continue
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
-						M << "\red You are displaced by a strange force!"
+						to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 						if(M.buckled)
 							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
@@ -363,12 +364,12 @@
 						continue
 
 					if(prob(30))
-						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
+						to_chat(H, pick("<span class='good'>You feel a little different.</span>","<span class='good'>You feel strange.</span>","<span class='good'>You feel different.</span>"))
 					//todo
 					if (H.gender == FEMALE)
-						H.gender = MALE
+						H.setGender(MALE)
 					else
-						H.gender = FEMALE
+						H.setGender(FEMALE)
 					/*H.dna.ready_dna(H)
 					H.update_body()
 					H.update_face()*/
@@ -379,7 +380,7 @@
 			if("sleepy")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(prob(30))
-						M << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+						to_chat(M, pick("<span class='notice'>You feel like taking a nap.</span>","<span class='notice'>You feel a yawn coming on.</span>","<span class='notice'>You feel a little tired.</span>"))
 					if(prob(50))
 						M.drowsyness = min(M.drowsyness + rand(1,5), 25)
 					if(prob(50))
@@ -393,7 +394,7 @@
 				for (var/mob/living/carbon/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\blue Waves of soothing energy wash over you."
+					to_chat(M, "<span class='notice'>Waves of soothing energy wash over you.</span>")
 					M.adjustBruteLoss(-3)
 					M.adjustFireLoss(-3)
 					M.adjustToxLoss(-3)
@@ -403,7 +404,7 @@
 				return 1
 			if("injure")
 				for (var/mob/living/carbon/human/M in range(200, originator))
-					M << "\red A wave of painful energy strikes you!"
+					to_chat(M, "<span class='warning'>A wave of painful energy strikes you!</span>")
 					M.adjustBruteLoss(3)
 					M.adjustFireLoss(3)
 					M.adjustToxLoss(3)
@@ -415,21 +416,21 @@
 				for (var/mob/living/carbon/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					M << "\red A powerful force causes you to black out momentarily."
+					to_chat(M, "<span class='warning'>A powerful force causes you to black out momentarily.</span>")
 					M.paralysis += 5
 					M.weakened += 8
 					M.stuttering += 8
 				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(200, originator))
-					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
+					to_chat(M, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
 					M.adjustBruteLoss(-5)
 					M.adjustFireLoss(-5)
 					M.updatehealth()
 				return 1
 			if("robohurt")
 				for (var/mob/living/silicon/robot/M in range(200, originator))
-					M << "\red SYSTEM ALERT: Structural damage inflicted by energy pulse!"
+					to_chat(M, "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>")
 					M.adjustBruteLoss(5)
 					M.adjustFireLoss(5)
 					M.updatehealth()
@@ -439,10 +440,10 @@
 					for (var/obj/item/weapon/cell/B in C.contents)
 						B.charge += 100
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,src)) S.charge += 250
-				for (var/mob/living/silicon/robot/M in world)
+				for (var/mob/living/silicon/robot/M in mob_list)
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 100
-						M << "\blue SYSTEM ALERT: Energy boost detected!"
+						to_chat(M, "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>")
 				return 1
 			if("celldrain")
 				for (var/obj/machinery/power/apc/C in range(200, originator))
@@ -450,10 +451,10 @@
 						B.charge = max(B.charge-250,0)
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,src))
 					S.charge = max(S.charge-250,0)
-				for (var/mob/living/silicon/robot/M in world)
+				for (var/mob/living/silicon/robot/M mob_list)
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-250,0)
-						M << "\red SYSTEM ALERT: Energy drain detected!"
+						to_chat(M, "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>")
 				return 1
 			if("teleport")
 				for (var/mob/living/M in range(200, originator))
@@ -465,7 +466,7 @@
 							continue
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
-						M << "\red You are displaced by a strange force!"
+						to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 						if(M.buckled)
 							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
@@ -479,12 +480,12 @@
 						continue
 
 					if(prob(30))
-						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
+						to_chat(H, pick("<span class='good'>You feel a little different.</span>","<span class='good'>You feel strange.</span>","<span class='good'>You feel different.</span>"))
 					//todo
 					if (H.gender == FEMALE)
-						H.gender = MALE
+						H.setGender(MALE)
 					else
-						H.gender = FEMALE
+						H.setGender(FEMALE)
 					/*H.dna.ready_dna(H)
 					H.update_body()
 					H.update_face()*/

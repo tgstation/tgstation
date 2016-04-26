@@ -1,53 +1,36 @@
 /mob/living/silicon/robot/mommi/gib()
 	//robots don't die when gibbed. instead they drop their MMI'd brain
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("gibbed-r", animation)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-r", sleeptime = 15)
 	robogibs(loc, viruses)
 
 	living_mob_list -= src
 	dead_mob_list -= src
 	if(src.module && istype(src.module))
 		var/obj/item/found = locate(tool_state) in src.module.modules
-		if(!found)
+		if(!found && tool_state != src.module.emag)
 			var/obj/item/TS = tool_state
-			drop_item()
-			if(TS && TS.loc)
-				TS.loc = src.loc
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+			drop_item(TS)
+	qdel(src)
 
 /mob/living/silicon/robot/mommi/dust()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-r", animation)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-r", sleeptime = 15)
 	new /obj/effect/decal/remains/robot(loc)
-	if(mmi)		del(mmi)	//Delete the MMI first so that it won't go popping out.
+	if(mmi)
+		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
 
 	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	qdel(src)
 
 /mob/living/silicon/robot/mommi/death(gibbed)
 	if(stat == DEAD)	return
@@ -60,6 +43,9 @@
 
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
+		if(RC.upgrading)
+			RC.upgrading = 0
+			RC.upgrade_finished = -1
 		RC.go_out()
 
 	if(blind)	blind.layer = 0

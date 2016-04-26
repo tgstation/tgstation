@@ -31,7 +31,7 @@
 	name = "amish suit"
 	icon_state = "sl_suit"
 	_color = "sl_suit"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT  | ONESIZEFITSALL
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -39,7 +39,7 @@
 	icon_state = "waiter"
 	item_state = "waiter"
 	_color = "waiter"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -85,10 +85,8 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	flags = FPRINT
+	heat_conductivity = INS_JUMPSUIT_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -98,19 +96,17 @@
 	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = FPRINT | TABLEPASS
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags = FPRINT
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
 	siemens_coefficient = 0
+	heat_conductivity = INS_JUMPSUIT_HEAT_CONDUCTIVITY
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	_color = "owl"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT  | ONESIZEFITSALL
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
@@ -119,8 +115,8 @@
 	_color = "johnny"
 
 /obj/item/clothing/under/rainbow
-	name = "rainbow"
-	desc = "rainbow"
+	name = "rainbow jumpsuit"
+	desc = "A fabulous jumpsuit."
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	_color = "rainbow"
@@ -179,13 +175,14 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	_color = "red_suit"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	_color = "blackskirt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -193,7 +190,7 @@
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	_color = "schoolgirl"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -201,6 +198,7 @@
 	icon_state = "overalls"
 	item_state = "lb_suit"
 	_color = "overalls"
+	gender = PLURAL
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -208,6 +206,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	_color = "pirate"
+	species_fit = list("Vox")
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"
@@ -229,7 +228,6 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 	_color = "kilt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -237,7 +235,6 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	_color = "sexymime"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -245,9 +242,12 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	_color = "gladiator"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = LOWER_TORSO|ARM_LEFT|HAND_LEFT
 
 //dress
+
+/obj/item/clothing/under/dress
+	body_parts_covered = FULL_TORSO|ARMS
 
 /obj/item/clothing/under/dress/dress_fire
 	name = "flame dress"
@@ -329,40 +329,38 @@
 
 //wedding stuff
 
+/obj/item/clothing/under/wedding
+	body_parts_covered = FULL_TORSO|LEGS|FEET|ARMS
+
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
 	_color = "bride_orange"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_purple
 	name = "purple wedding dress"
 	desc = "A big and puffy purple dress."
 	icon_state = "bride_purple"
 	_color = "bride_purple"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_blue
 	name = "blue wedding dress"
 	desc = "A big and puffy blue dress."
 	icon_state = "bride_blue"
 	_color = "bride_blue"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_red
 	name = "red wedding dress"
 	desc = "A big and puffy red dress."
 	icon_state = "bride_red"
 	_color = "bride_red"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_white
-	name = "orange wedding dress"
+	name = "white wedding dress"
 	desc = "A white wedding gown made from the finest silk."
 	icon_state = "bride_white"
 	_color = "bride_white"
-	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -370,7 +368,7 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	_color = "sundress"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = FULL_TORSO
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
@@ -379,3 +377,260 @@
 	_color = "roman"
 	item_state = "armor"
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+
+/obj/item/clothing/under/simonpants
+	name = "Simon's Pants"
+	desc = "Simon's pants, clad with belt and whatever the fuck that thing is around his neck"
+	icon_state = "spants"
+	_color = "simonpants"
+	item_state = "spants"
+	species_fit = list("Vox")
+	gender = PLURAL
+
+/obj/item/clothing/under/batmansuit
+	name = "batsuit"
+	desc = "You are the night."
+	icon_state = "bmuniform"
+	_color = "bmuniform"
+
+/obj/item/clothing/under/officeruniform
+	name = "officer's uniform"
+	desc = "Bestraft die Juden fur ihre Verbrechen."
+	icon_state = "officeruniform"
+	item_state = "officeruniform"
+	_color = "officeruniform"
+
+/obj/item/clothing/under/soldieruniform
+	name = "soldier's uniform"
+	desc = "Bestraft die Verbundeten fur ihren Widerstand."
+	icon_state = "soldieruniform"
+	item_state = "soldieruniform"
+	_color = "soldieruniform"
+
+/obj/item/clothing/under/squatter_outfit
+	name = "slav squatter tracksuit"
+	desc = "Cyka blyat."
+	icon_state = "squatteroutfit"
+	item_state = "squatteroutfit"
+	_color = "squatteroutfit"
+
+/obj/item/clothing/under/russobluecamooutfit
+	name = "russian blue camo"
+	desc = "Drop and give me dvadtsat!"
+	icon_state = "russobluecamo"
+	item_state = "russobluecamo"
+	_color = "russobluecamo"
+
+/obj/item/clothing/under/jester
+	name = "jester suit"
+	desc = "Only a fool would wear such a suit."
+	icon_state = "jester"
+	item_state = "jester"
+	_color = "jester"
+
+/obj/item/clothing/under/stilsuit
+	name = "stillsuit"
+	desc = "Designed to preserve bodymoisture."
+	icon_state = "stilsuit"
+	item_state = "stilsuit"
+	_color = "stilsuit"
+
+/obj/item/clothing/under/aviatoruniform
+	name = "aviator uniform"
+	desc = "Now you can look absolutely dashing!"
+	icon_state = "aviator_uniform"
+	item_state = "aviator_uniform"
+	_color = "aviator_uniform"
+	species_restricted = list("exclude","Vox")
+
+/obj/item/clothing/under/libertyshirt
+	name = "liberty shirt"
+	desc = "For any freedom loving patriot out there"
+	icon_state = "libertyshirt"
+	item_state = "libertyshirt"
+	_color = "libertyshirt"
+
+/obj/item/clothing/under/bikersuit
+	name = "biker's outfit"
+	icon_state = "biker"
+	item_state = "biker"
+	_color = "biker"
+
+/obj/item/clothing/under/jacketsuit
+	name = "richard's outfit"
+	desc = "Do you know what time it is?"
+	icon_state = "jacket"
+	item_state = "jacket"
+	_color = "jacket"
+
+/obj/item/clothing/under/mega
+	name = "\improper DRN-001 suit"
+	desc = "The original. Simple, yet very adaptable."
+	icon_state = "mega"
+	item_state = "mega"
+	_color = "mega"
+
+/obj/item/clothing/under/proto
+	name = "The Prototype Suit"
+	desc = "Even robots know scarves are the perfect accessory for a brooding rival."
+	icon_state = "proto"
+	item_state = "proto"
+	_color = "proto"
+
+/obj/item/clothing/under/megax
+	name = "\improper Maverick Hunter regalia"
+	desc = "The best outfit for taking out rogue borgs."
+	icon_state = "megax"
+	item_state = "megax"
+	_color = "megax"
+
+/obj/item/clothing/under/joe
+	name = "The Sniper Suit"
+	desc = "Mass produced combat robots with a rather unfitting name."
+	icon_state = "joe"
+	item_state = "joe"
+	_color = "joe"
+
+/obj/item/clothing/under/roll
+	name = "\improper DRN-002 Dress"
+	desc = "A simple red dress, the good doctor's second robot wasn't quite as exciting as the first."
+	icon_state = "roll"
+	item_state = "roll"
+	_color = "roll"
+
+/obj/item/clothing/under/maid
+	name = "maid outfit"
+	desc = "Perfect for lusty aliens and desperate weeaboos."
+	icon_state = "maid"
+	item_state = "maid"
+	_color = "maid"
+
+/obj/item/clothing/under/darkholme
+	name = "\improper The Darkholme"
+	desc = "Fuck you."
+	icon_state = "darkholme"
+	item_state = "darkholme"
+	_color = "darkholme"
+
+/obj/item/clothing/under/gokugidown
+	name = "turtle hermit undershirt"
+	desc = "Something seems oddly familiar about this outfit..."
+	icon_state = "gokugidown"
+	item_state = "gokugidown"
+	_color = "gokugidown"
+
+/obj/item/clothing/under/gokugi
+	name = "turtle hermit outfit"
+	desc = "An outfit from one trained by the great Turtle Hermit"
+	icon_state = "gokugi"
+	item_state = "gokugi"
+	_color = "gokugi"
+
+/obj/item/clothing/under/doomguy
+	name = "\improper Doomguy's pants"
+	desc = ""
+	icon_state = "doom"
+	item_state = "doom"
+	_color = "doom"
+
+/obj/item/clothing/under/vault13
+	name = "vault 13 Jumpsuit"
+	desc = "Oddly similar to the station's usual jumpsuits, but with a rustic charm to it. Has a large thirteen emblazened on the back"
+	icon_state = "v13-jumpsuit"
+	item_state = "v13-jumpsuit"
+	_color = "v13-jumpsuit"
+
+/obj/item/clothing/under/vault
+	name = "vault jumpsuit"
+	desc = "Oddly similar to the station's usual jumpsuits, but with a rustic charm to it."
+	icon_state = "v-jumpsuit"
+	item_state = "v-jumpsuit"
+	_color = "v-jumpsuit"
+
+/obj/item/clothing/under/contortionist
+	name = "contortionist's jumpsuit"
+	desc = "A light jumpsuit useful for squeezing through narrow vents."
+	icon_state = "darkholme"
+	item_state = "darkholme"
+	_color = "darkholme"
+
+/obj/item/clothing/under/contortionist/proc/check_clothing(mob/user as mob)
+	//Allowed to wear: glasses, shoes, gloves, pockets, mask, and jumpsuit (obviously)
+	var/list/slot_must_be_empty = list(slot_back,slot_handcuffed,slot_legcuffed,slot_l_hand,slot_r_hand,slot_belt,slot_head,slot_wear_suit)
+	for(var/slot_id in slot_must_be_empty)
+		if(user.get_item_by_slot(slot_id))
+			to_chat(user, "<span class='warning'>You can't fit inside while wearing that \the [user.get_item_by_slot(slot_id)].</span>")
+			return 0
+	return 1
+
+/obj/item/clothing/under/clownpiece
+	name = "Clownpiece's Pierrot suit"
+	desc = "A female-sized set of leggings and shirt with a pattern similar to the American flag, featuring a frilled collar."
+	icon_state = "clownpiece"
+	item_state = "clownpiece"
+	_color = "clownpiece"
+
+/obj/item/clothing/under/cia
+	name = "casual IAA outfit"
+	desc = "Just looking at this makes you feel in charge."
+	icon_state = "cia"
+	item_state = "cia"
+	_color = "cia"
+
+/obj/item/clothing/under/greaser
+	name = "greaser outfit"
+	desc = "The one that you want!"
+	icon_state = "greaser_default"
+	item_state = "greaser_default"
+
+/obj/item/clothing/under/greaser/New()
+	var/greaser_colour = "default"
+	switch(rand(1,4))
+		if(1)
+			greaser_colour = "default"
+		if(2)
+			greaser_colour = "cult"
+		if(3)
+			greaser_colour = "spider"
+		if(4)
+			greaser_colour = "snakes"
+			desc = "Tunnel Snakes Rule!"
+	icon_state = "greaser_[greaser_colour]"
+	item_state = "greaser_[greaser_colour]"
+	_color = "greaser_[greaser_colour]"
+
+/obj/item/clothing/under/wintercasualwear
+	name = "winter casualwear"
+	desc = "Perfect for winter!"
+	icon_state = "shizunewinter"
+	item_state = "shizunewinter"
+	_color = "shizunewinter"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/casualwear
+	name = "spring casualwear"
+	desc = "Perfect for spring!"
+	icon_state = "shizunenormal"
+	item_state = "shizunenormal"
+	_color = "shizunenormal"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/keyholesweater
+	name = "keyhole sweater"
+	desc = "What is the point of this, anyway?"
+	icon_state = "keyholesweater"
+	item_state = "keyholesweater"
+	_color = "keyholesweater"
+	body_parts_covered = FULL_TORSO|ARMS
+
+/obj/item/clothing/under/casualhoodie
+	name = "casual hoodie"
+	desc = "Pefect for lounging about in."
+	icon_state = "hoodiejeans"
+	item_state = "hoodiejeans"
+	_color = "hoodiejeans"
+
+/obj/item/clothing/under/casualhoodie/skirt
+	icon_state = "hoodieskirt"
+	item_state = "hoodieskirt"
+	_color = "hoodieskirt"

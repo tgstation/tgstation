@@ -5,99 +5,107 @@
 	origin_tech = "materials=2;combat=1"
 	var/banglet = 0
 
-	prime()
-		..()
-		for(var/obj/structure/closet/L in view(get_turf(src), null))
-			if(locate(/mob/living/carbon/, L))
-				for(var/mob/living/carbon/M in L)
-					bang(get_turf(src), M)
-
-
-		for(var/mob/living/carbon/M in viewers(get_turf(src), null))
-			bang(get_turf(src), M)
-
-		for(var/obj/effect/blob/B in view(8,get_turf(src)))       		//Blob damage here
-			var/damage = round(30/(get_dist(B,get_turf(src))+1))
-			B.health -= damage
-			B.update_icon()
-		del(src)
+/obj/item/weapon/grenade/flashbang/prime()
+	update_mob()
+	var/flashbang_turf = get_turf(src)
+	if(!flashbang_turf)
 		return
+	for(var/mob/living/carbon/M in get_hearers_in_view(7, flashbang_turf))
+		if(isbrain(M) || !istype(M))
+			continue
+		bang(get_turf(M), M)
 
-	proc/bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
-		if (locate(/obj/item/weapon/cloaking_device, M))			// Called during the loop that bangs people in lockers/containers and when banging
-			for(var/obj/item/weapon/cloaking_device/S in M)			// people in normal view.  Could theroetically be called during other explosions.
-				S.active = 0										// -- Polymorph
-				S.icon_state = "shield0"
+	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
+		var/damage = round(15/(get_dist(B,get_turf(src))+1))
+		B.health -= damage
+		B.update_icon()
+	qdel(src)
 
-		M << "\red <B>BANG</B>"
-		playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
+/obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
+	if (locate(/obj/item/weapon/cloaking_device, M))			// Called during the loop that bangs people in lockers/containers and when banging
+		for(var/obj/item/weapon/cloaking_device/S in M)			// people in normal view.  Could theroetically be called during other explosions.
+			S.active = 0										// -- Polymorph
+			S.icon_state = "shield0"
+
+	to_chat(M, "<span class='danger'>BANG</span>")
+	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
 
 //Checking for protections
-		var/eye_safety = 0
-		var/ear_safety = 0
-		if(iscarbon(M))
-			eye_safety = M.eyecheck()
-			if(ishuman(M))
-				if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
-					ear_safety += 2
-				if(HULK in M.mutations)
-					ear_safety += 1
-				if(istype(M:head, /obj/item/clothing/head/helmet))
-					ear_safety += 1
+	var/eye_safety = 0
+	var/ear_safety = 0
+	if(iscarbon(M))
+		eye_safety = M.eyecheck()
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.earprot())
+				ear_safety += 2
+			if(M_HULK in M.mutations)
+				ear_safety += 1
+			if(istype(M:head, /obj/item/clothing/head/helmet))
+				ear_safety += 1
 
 //Flashing everyone
-		if(eye_safety < 1)
-			flick("e_flash", M.flash)
-			M.eye_stat += rand(1, 3)
-			M.Stun(2)
-			M.Weaken(10)
+	if(eye_safety < 1)
+		flick("e_flash", M.flash)
+		M.Stun(2)
+		M.Weaken(10)
 
 
 
 //Now applying sound
-		if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
-			if(ear_safety > 0)
-				M.Stun(2)
-				M.Weaken(1)
+	if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
+		if(ear_safety > 0)
+			M.Stun(2)
+			M.Weaken(1)
+		else
+			M.Stun(10)
+			M.Weaken(3)
+			if ((prob(14) || (M == src.loc && prob(70))))
+				M.ear_damage += rand(1, 10)
 			else
-				M.Stun(10)
-				M.Weaken(3)
-				if ((prob(14) || (M == src.loc && prob(70))))
-					M.ear_damage += rand(1, 10)
-				else
-					M.ear_damage += rand(0, 5)
-					M.ear_deaf = max(M.ear_deaf,15)
+				M.ear_damage += rand(0, 5)
+				M.ear_deaf = max(M.ear_deaf,15)
 
-		else if(get_dist(M, T) <= 5)
-			if(!ear_safety)
-				M.Stun(8)
-				M.ear_damage += rand(0, 3)
-				M.ear_deaf = max(M.ear_deaf,10)
+	else if(get_dist(M, T) <= 5)
+		if(!ear_safety)
+			M.Stun(8)
+			M.ear_damage += rand(0, 3)
+			M.ear_deaf = max(M.ear_deaf,10)
 
-		else if(!ear_safety)
-			M.Stun(4)
-			M.ear_damage += rand(0, 1)
-			M.ear_deaf = max(M.ear_deaf,5)
+	else if(!ear_safety)
+		M.Stun(4)
+		M.ear_damage += rand(0, 1)
+		M.ear_deaf = max(M.ear_deaf,5)
 
 //This really should be in mob not every check
-		if (M.eye_stat >= 20)
-			M << "\red Your eyes start to burn badly!"
-			M.disabilities |= NEARSIGHTED
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+		if (E && E.damage >= E.min_bruised_damage)
+			to_chat(M, "<span class='warning'>Your eyes start to burn badly!</span>")
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if (prob(M.eye_stat - 20 + 1))
-					M << "\red You can't see anything!"
-					M.sdisabilities |= BLIND
-		if (M.ear_damage >= 15)
-			M << "\red Your ears start to ring badly!"
-			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
-				if (prob(M.ear_damage - 10 + 5))
-					M << "\red You can't hear anything!"
-					M.sdisabilities |= DEAF
-		else
-			if (M.ear_damage >= 5)
-				M << "\red Your ears start to ring!"
-		M.update_icons()
+				if (E.damage >= E.min_broken_damage)
+					to_chat(M, "<span class='warning'>You can't see anything!</span>")
+	if (M.ear_damage >= 15)
+		to_chat(M, "<span class='warning'>Your ears start to ring badly!</span>")
+		if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
+			if (prob(M.ear_damage - 10 + 5))
+				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
+				M.sdisabilities |= DEAF
+	else
+		if (M.ear_damage >= 5)
+			to_chat(M, "<span class='warning'>Your ears start to ring!</span>")
+	M.update_icons()
 
+/obj/effect/effect/smoke/flashbang
+	name = "illumination"
+	time_to_live = 10
+	opacity = 0
+	icon_state = "sparks"
+
+/obj/effect/effect/smoke/flashbang/New()
+	..()
+	set_light(15)
 
 /obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
@@ -123,7 +131,7 @@
 			new /obj/item/weapon/grenade/flashbang/clusterbang/segment(src.loc)//Creates a 'segment' that launches a few more flashbangs
 			playsound(get_turf(src), 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	spawn(0)
-		del(src)
+		qdel(src)
 		return
 
 /obj/item/weapon/grenade/flashbang/clusterbang/segment
@@ -155,7 +163,7 @@
 			new /obj/item/weapon/grenade/flashbang/cluster(src.loc)
 			playsound(get_turf(src), 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	spawn(0)
-		del(src)
+		qdel(src)
 		return
 
 /obj/item/weapon/grenade/flashbang/cluster/New()//Same concept as the segments, so that all of the parts don't become reliant on the clusterbang

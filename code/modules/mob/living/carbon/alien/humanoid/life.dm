@@ -7,10 +7,11 @@
 
 	var/temperature_alert = 0
 
-
 /mob/living/carbon/alien/humanoid/Life()
 	set invisibility = 0
 	//set background = 1
+
+	if(timestopped) return 0 //under effects of time magick
 
 	if (monkeyizing)
 		return
@@ -68,24 +69,24 @@
 
 /mob/living/carbon/alien/humanoid
 	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
-			if ((prob(1) && paralysis < 10))
-				src << "\red You have a seizure!"
+		if(disabilities & EPILEPSY)
+			if((prob(1) && paralysis < 10))
+				to_chat(src, "<span class='warning'>You have a seizure !</span>")
 				Paralyse(10)
-		if (disabilities & COUGHING)
-			if ((prob(5) && paralysis <= 1))
+		if(disabilities & COUGHING)
+			if((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & TOURETTES)
-			if ((prob(10) && paralysis <= 1))
+		if(disabilities & TOURETTES)
+			if((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (disabilities & NERVOUS)
-			if (prob(10))
+		if(disabilities & NERVOUS)
+			if(prob(10))
 				stuttering = max(10, stuttering)
 
 
@@ -128,7 +129,7 @@
 					breath = loc.remove_air(breath_moles)
 
 					// Handle chem smoke effect  -- Doohl
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
+					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(src, INGEST)
 							spawn(5)
@@ -150,21 +151,21 @@
 
 	proc/get_breath_from_internal(volume_needed)
 		if(internal)
-			if (!contents.Find(internal))
+			if(!contents.Find(internal))
 				internal = null
-			if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
+			if(!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 				internal = null
 			if(internal)
-				if (internals)
+				if(internals)
 					internals.icon_state = "internal1"
 				return internal.remove_air_volume(volume_needed)
 			else
-				if (internals)
+				if(internals)
 					internals.icon_state = "internal0"
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(status_flags & GODMODE)
+		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return
 
 		if(!breath || (breath.total_moles == 0))
@@ -191,9 +192,9 @@
 		breath.toxins -= toxins_used
 		breath.oxygen += toxins_used
 
-		if(breath.temperature > (T0C+66) && !(mHeatres in mutations)) // Hot air hurts :(
+		if(breath.temperature > (T0C+66) && !(M_RESIST_HEAT in mutations)) // Hot air hurts :(
 			if(prob(20))
-				src << "\red You feel a searing heat in your lungs!"
+				to_chat(src, "<span class='warning'>You feel a searing heat in your lungs !</span>")
 			fire_alert = max(fire_alert, 1)
 		else
 			fire_alert = 0
@@ -201,8 +202,6 @@
 		//Temporary fixes to the alerts.
 
 		return 1
-
-
 
 	proc/adjust_body_temperature(current, loc_temp, boost)
 		var/temperature = current
@@ -237,7 +236,7 @@
 			thermal_protection += 0.2
 		if(wear_suit && (wear_suit.flags & SUITSPACE))
 			thermal_protection += 3
-		if(COLD_RESISTANCE in mutations)
+		if(M_RESIST_COLD in mutations)
 			thermal_protection += 5
 
 		return thermal_protection
@@ -260,18 +259,19 @@
 
 	proc/handle_chemicals_in_body()
 
+
 		if(reagents) reagents.metabolize(src)
 
-		if(FAT in mutations)
+		if(M_FAT in mutations)
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
-					mutations.Remove(FAT)
+					to_chat(src, "<span class='notice'>You feel fit again!</span>")
+					mutations.Remove(M_FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
-					mutations.Add(FAT)
+					to_chat(src, "<span class='warning'>You suddenly feel blubbery!</span>")
+					mutations.Add(M_FAT)
 
 		if (nutrition > 0)
 			nutrition -= HUNGER_FACTOR
@@ -304,7 +304,7 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health < config.health_threshold_dead || !has_brain())
 				death()
 				blinded = 1
 				stat = DEAD
@@ -378,7 +378,8 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in mutations))
+
+		if (stat == 2 || (M_XRAY in mutations))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
@@ -440,7 +441,7 @@
 				if (!( machine.check_eye(src) ))
 					reset_view(null)
 			else
-				if(client && !client.adminobs)
+				if(client && !client.adminobs && !isTeleViewing(client.eye))
 					reset_view(null)
 
 		return 1
@@ -451,13 +452,25 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
+				if(istype(M, /mob/living/carbon) && stat & stat != 2)
+					var/digest = 0
 					if(M.stat == 2)
-						M.death(1)
-						stomach_contents.Remove(M)
-						del(M)
+						if(prob(5))
+							switch(digest)
+								if(0)
+									to_chat(src, "<span class='warning'>\The [M] shifts around in your stomach cavity as digestion begins.</span>")
+								if(1)
+									to_chat(src, "<span class='warning'>\The [M] feels a little bit lighter in your stomach cavity.</span>")
+								if(2)
+									to_chat(src, "<span class='danger'>You barely feel the weight of [M] in your stomach cavity anymore.</span>")
+								if(3 to INFINITY)
+									to_chat(src, "<span class='warning'>The weight of [M] is no longer there. Digestion has completed.</span>")
+									M.ghostize(1)
+									drop_stomach_contents()
+									qdel(M)
+							digest++
 						continue
 					if(air_master.current_cycle%3==1)
-						if(!(status_flags & GODMODE))
+						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10

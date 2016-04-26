@@ -15,16 +15,19 @@
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
 /obj/machinery/r_n_d/server/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/rdserver,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor
+	)
+
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 
@@ -54,26 +57,24 @@
 		if(0 to T0C)
 			health = min(100, health + 1)
 		if(T0C to (T20C + 20))
-			health = between(0, health, 100)
-		if((T20C + 20) to (T0C + 70))
+			health = Clamp(health, 0, 100)
+		if((T20C + 20) to INFINITY)
 			health = max(0, health - 1)
 	if(health <= 0)
 		griefProtection() //I dont like putting this in process() but it's the best I can do without re-writing a chunk of rd servers.
 		files.known_designs = list()
+		var/changed=0
 		for(var/datum/tech/T in files.known_tech)
 			if(prob(1))
-				T.level--
-		files.RefreshResearch()
+				T.level = 0 // This never happens, so make it dramatic. T.level--
+				changed=1
+		if(changed)
+			files.RefreshResearch()
 	if(delay)
 		delay--
 	else
 		produce_heat(heat_gen)
 		delay = initial(delay)
-
-/obj/machinery/r_n_d/server/meteorhit(var/obj/O as obj)
-	griefProtection()
-	..()
-
 
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
@@ -120,47 +121,11 @@
 
 				env.merge(removed)
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (disabled)
-		return
-	if (shocked)
-		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "server_o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "server"
-			user << "You close the maintenance hatch of [src]."
-		return
-	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
-			griefProtection()
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
-			return 1
-
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
 	if (disabled)
 		return
 	if (shocked)
 		shock(user,50)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("RESEARCH",src,user:wear_suit)
-	return
-
-
-
 
 /obj/machinery/r_n_d/server/centcom
 	name = "Centcom Central R&D Database"
@@ -202,6 +167,8 @@
 	var/list/consoles = list()
 	var/badmin = 0
 
+	light_color = LIGHT_COLOR_PINK
+
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
 		return
@@ -209,7 +176,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "\red You do not have the required access level"
+		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
 		return
 
 	if(href_list["main"])
@@ -287,22 +254,16 @@
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:289: dat += "[S.name] || "
 				dat += {"[S.name] ||
 					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> |
 					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
-				// END AUTOFIX
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:296: dat += "[temp_server.name] Access Rights<BR><BR>"
 			dat += {"[temp_server.name] Access Rights<BR><BR>
 				Consoles with Upload Access<BR>"}
-			// END AUTOFIX
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
@@ -322,35 +283,23 @@
 
 		if(2) //Data Management menu
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:316: dat += "[temp_server.name] Data ManagementP<BR><BR>"
-			dat += {"[temp_server.name] Data ManagementP<BR><BR>
+			dat += {"[temp_server.name] Data Management<BR><BR>
 				Known Technologies<BR>"}
-			// END AUTOFIX
 			for(var/datum/tech/T in temp_server.files.known_tech)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:319: dat += "* [T.name] "
 				dat += {"* [T.name]
-					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings"}
-				// END AUTOFIX
+					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>"} //FYI, these are all strings
 			dat += "Known Designs<BR>"
 			for(var/datum/design/D in temp_server.files.known_designs)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:323: dat += "* [D.name] "
 				dat += {"* [D.name]
 					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
-				// END AUTOFIX
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(3) //Server Data Transfer
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:328: dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += {"[temp_server.name] Server to Server Transfer<BR><BR>
 				Send Data to what server?<BR>"}
-			// END AUTOFIX
 			for(var/obj/machinery/r_n_d/server/S in servers)
 				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
@@ -359,13 +308,13 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(D))
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, src, 20))
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
 				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
@@ -373,9 +322,9 @@
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 			else
-				user << "\blue You disconnect the monitor."
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
 				for (var/obj/C in src)
@@ -384,11 +333,11 @@
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You you disable the security protocols"
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 	src.updateUsrDialog()
 	return
 
@@ -396,7 +345,7 @@
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
-	id_with_download_string = "1;2"
+	id_with_download_string = "1;2;3;4;5"
 	server_id = 2
 
 

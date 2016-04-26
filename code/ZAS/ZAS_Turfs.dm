@@ -3,7 +3,8 @@
 /turf/var/zone/zone
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	del(giver)
+	qdel(giver)
+	giver = null
 	return 0
 
 /turf/return_air()
@@ -52,7 +53,10 @@
 /turf/simulated/var/tmp/was_icy=0
 
 /turf/simulated/proc/update_visuals()
-	overlays.Cut()
+	overlays = 0
+
+	if(decals.len)
+		overlays += decals
 
 	var/siding_icon_state = return_siding_icon_state()
 	if(siding_icon_state)
@@ -132,9 +136,10 @@
 				if(istype(target))
 					air_master.tiles_to_update |= target
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
 	if(active_hotspot)
-		del(active_hotspot)
+		qdel(active_hotspot)
+		active_hotspot = null
 	if(blocks_air)
 		for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 			var/turf/simulated/tile = get_step(src,direction)
@@ -150,7 +155,7 @@
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0
-	if(zone)
+	if(zone && zone.air && !iscatwalk(src))
 		zone.air.merge(giver)
 		return 1
 	else
@@ -184,6 +189,8 @@
 		return ..()
 
 /turf/simulated/proc/update_air_properties()
+	if(iscatwalk(src))
+		return ..()
 	var/air_directions_archived = air_check_directions
 	air_check_directions = 0
 
@@ -195,7 +202,7 @@
 		for(var/direction in DoorDirections) //Check door directions first.
 			if(air_check_directions&direction)
 				var/turf/simulated/T = get_step(src,direction)
-				if(!istype(T))
+				if(!istype(T) || iscatwalk(T))
 					continue
 				if(T.zone)
 					T.zone.AddTurf(src)
@@ -204,7 +211,7 @@
 			for(var/direction in CounterDoorDirections) //Check the others second.
 				if(air_check_directions&direction)
 					var/turf/simulated/T = get_step(src,direction)
-					if(!istype(T))
+					if(!istype(T) || iscatwalk(T))
 						continue
 					if(T.zone)
 						T.zone.AddTurf(src)
@@ -219,7 +226,7 @@
 		for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
 			air_master.connections_to_check |= C
 
-	if(zone && !zone.rebuild)
+	if(zone && istype(zone.air) && !zone.rebuild)
 		if(zone.air.check_tile_graphic())
 			update_visuals(zone.air)
 		for(var/direction in cardinal)
@@ -238,7 +245,7 @@
 						var/turf/NT = get_step(T, direction)
 
 						//If that turf is in my zone still, rebuild.
-						if(istype(NT,/turf/simulated) && NT in zone.contents)
+						if(istype(NT,/turf/simulated) && !iscatwalk(NT) && NT in zone.contents)
 							zone.rebuild = 1
 
 						//If that is an unsimulated tile in my zone, see if we need to rebuild or just remove.
@@ -262,7 +269,7 @@
 						var/turf/NT = get_step(src, reverse_direction(direction))
 
 						//If I am splitting a zone, rebuild.
-						if(istype(NT,/turf/simulated) && (NT in T.zone.contents || (NT.zone && T in NT.zone.contents)))
+						if(istype(NT,/turf/simulated) && !iscatwalk(NT) && (NT in T.zone.contents || (NT.zone && T in NT.zone.contents)))
 							T.zone.rebuild = 1
 
 						//If NT is unsimulated, parse if I should remove it or rebuild.
@@ -291,7 +298,7 @@
 				var/turf/NT = get_step(T, direction)
 
 				//If the tile is in our own zone, and we cannot connect to it, better rebuild.
-				if(istype(NT,/turf/simulated) && NT in zone.contents)
+				if(istype(NT,/turf/simulated) && !iscatwalk(NT) && NT in zone.contents)
 					zone.rebuild = 1
 
 				//Parse if we need to remove the tile, or rebuild the zone.

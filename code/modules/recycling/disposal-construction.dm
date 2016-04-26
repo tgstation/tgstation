@@ -10,7 +10,8 @@
 	anchored = 0
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	m_amt = 1850
+	starting_materials = list(MAT_IRON = 1850)
+	w_type = RECYK_METAL
 	level = 2
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
@@ -58,14 +59,13 @@
 				base_state = "intake"
 				dpdir = dir
 
-			if(9)
+			if(9, 11)
 				base_state = "pipe-j1s"
 				dpdir = dir | right | flip
 
-			if(10)
+			if(10, 12)
 				base_state = "pipe-j2s"
 				dpdir = dir | left | flip
-
 
 		if(ptype<6 || ptype>8)
 			icon_state = "con[base_state]"
@@ -85,13 +85,14 @@
 	// flip and rotate verbs
 	verb/rotate()
 		set name = "Rotate Pipe"
+		set category = "Object"
 		set src in view(1)
 
-		if(usr.stat)
+		if(usr.isUnconscious())
 			return
 
 		if(anchored)
-			usr << "You must unfasten the pipe before rotating it."
+			to_chat(usr, "You must unfasten the pipe before rotating it.")
 			return
 
 		dir = turn(dir, -90)
@@ -99,12 +100,13 @@
 
 	verb/flip()
 		set name = "Flip Pipe"
+		set category = "Object"
 		set src in view(1)
-		if(usr.stat)
+		if(usr.isUnconscious())
 			return
 
 		if(anchored)
-			usr << "You must unfasten the pipe before flipping it."
+			to_chat(usr, "You must unfasten the pipe before flipping it.")
 			return
 
 		dir = turn(dir, 180)
@@ -117,6 +119,10 @@
 				ptype = 10
 			if(10)
 				ptype = 9
+			if(11)
+				ptype = 12
+			if(12)
+				ptype = 11
 
 		update()
 
@@ -137,6 +143,8 @@
 				return /obj/machinery/disposal/deliveryChute
 			if(9,10)
 				return /obj/structure/disposalpipe/sortjunction
+			if(11, 12)
+				return /obj/structure/disposalpipe/wrapsortjunction
 		return
 
 
@@ -159,24 +167,27 @@
 			if(9, 10)
 				nicetype = "sorting pipe"
 				ispipe = 1
+			if(11, 12)
+				nicetype = "wrap sorting pipe"
+				ispipe = 1
 			else
 				nicetype = "pipe"
 				ispipe = 1
 
 		var/turf/T = src.loc
 		if(T.intact)
-			user << "You can only attach the [nicetype] if the floor plating is removed."
+			to_chat(user, "You can only attach the [nicetype] if the floor plating is removed.")
 			return
 
 		var/obj/structure/disposalpipe/CP = locate() in T
 		if(ptype>=6 && ptype <= 8) // Disposal or outlet
 			if(CP) // There's something there
 				if(!istype(CP,/obj/structure/disposalpipe/trunk) && !anchored)
-					user << "The [nicetype] requires a trunk underneath it in order to work."
+					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
 					return
 			else // Nothing under, fuck.
 				if(!anchored)
-					user << "The [nicetype] requires a trunk underneath it in order to work."
+					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
 					return
 		else
 			if(CP)
@@ -185,11 +196,11 @@
 				if(istype(CP, /obj/structure/disposalpipe/broken))
 					pdir = CP.dir
 				if(pdir & dpdir)
-					user << "There is already a [nicetype] at that location."
+					to_chat(user, "There is already a [nicetype] at that location.")
 					return
 
 
-		if(istype(I, /obj/item/weapon/wrench))
+		if(iswrench(I))
 			if(anchored)
 				anchored = 0
 				if(ispipe)
@@ -197,7 +208,7 @@
 					density = 0
 				else
 					density = 1
-				user << "You detach the [nicetype] from the underfloor."
+				to_chat(user, "You detach the [nicetype] from the underfloor.")
 			else
 				anchored = 1
 				if(ispipe)
@@ -205,19 +216,19 @@
 					density = 0
 				else
 					density = 1 // We don't want disposal bins or outlets to go density 0
-				user << "You attach the [nicetype] to the underfloor."
+				to_chat(user, "You attach the [nicetype] to the underfloor.")
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			update()
 
-		else if(istype(I, /obj/item/weapon/weldingtool))
+		else if(iswelder(I))
 			if(anchored)
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
 					playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
-					user << "Welding the [nicetype] in place."
-					if(do_after(user, 20))
+					to_chat(user, "Welding the [nicetype] in place.")
+					if(do_after(user, src, 20))
 						if(!src || !W.isOn()) return
-						user << "The [nicetype] has been welded in place!"
+						to_chat(user, "The [nicetype] has been welded in place!")
 						update() // TODO: Make this neat
 						if(ispipe) // Pipe
 
@@ -230,9 +241,13 @@
 							P.updateicon()
 
 							//Needs some special treatment ;)
-							if(ptype==9 || ptype==10)
-								var/obj/structure/disposalpipe/sortjunction/SortP = P
-								SortP.updatedir()
+							switch(ptype)
+								if(9, 10)
+									var/obj/structure/disposalpipe/sortjunction/SortP = P
+									SortP.updatedir()
+								if(11, 12)
+									var/obj/structure/disposalpipe/wrapsortjunction/sort_P = P
+									sort_P.update_dir()
 
 						else if(ptype==6) // Disposal bin
 							var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
@@ -253,11 +268,11 @@
 							src.transfer_fingerprints_to(P)
 							P.dir = dir
 
-						del(src)
+						qdel(src)
 						return
 				else
-					user << "You need more welding fuel to complete this task."
+					to_chat(user, "You need more welding fuel to complete this task.")
 					return
 			else
-				user << "You need to attach it to the plating first!"
+				to_chat(user, "You need to attach it to the plating first!")
 				return

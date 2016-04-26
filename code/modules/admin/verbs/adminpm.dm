@@ -3,7 +3,7 @@
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	if( !ismob(M) || !M.client )	return
 	cmd_admin_pm(M.client,null)
@@ -14,7 +14,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -37,29 +37,31 @@
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(var/client/C, var/msg)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
 	if(!istype(C,/client))
-		if(holder)	src << "<font color='red'>Error: Private-Message: Client not found.</font>"
+		if(holder)	to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
 		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return
 
 	/*if(C && C.last_pm_recieved + config.simultaneous_pm_warning_timeout > world.time && holder)
 		//send a warning to admins, but have a delay popup for mods
 		if(holder.rights & R_ADMIN)
-			src << "\red <b>Simultaneous PMs warning:</b> that player has been PM'd in the last [config.simultaneous_pm_warning_timeout / 10] seconds by: [C.ckey_last_pm]"
+			to_chat(src, "<span class='warning'><b>Simultaneous PMs warning:</b> that player has been PM'd in the last [config.simultaneous_pm_warning_timeout / 10] seconds by: [C.ckey_last_pm]</span>")
 		else
 			if(alert("That player has been PM'd in the last [config.simultaneous_pm_warning_timeout / 10] seconds by: [C.ckey_last_pm]","Simultaneous PMs warning","Continue","Cancel") == "Cancel")
 				return*/
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [C.key]") as text|null
+		msg = input(src, "Message:", "Private message to [key_name(C, 0, 0)]", "") as text | null
 
-		if(!msg)	return
+		if(!msg)
+			return
+
 		if(!C)
-			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			if(holder)	to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
 
@@ -88,7 +90,7 @@
 			recieve_pm_type = holder.rank
 
 	else if(!C.holder)
-		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
 		return
 
 	var/recieve_message = ""
@@ -109,9 +111,18 @@
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
-	recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[key_name(src, C, C.holder ? 1 : 0)]</b>: [msg]</font>"
-	C << recieve_message
-	src << "<font color='blue'>[send_pm_type]PM to-<b>[key_name(C, src, holder ? 1 : 0)]</b>: [msg]</font>"
+	recieve_message = "\[[time_stamp()]] <font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[key_name(src, C, C.holder ? 1 : 0)]</b>: [msg]</font>"
+	if(C.prefs.special_popup)
+		C << output(recieve_message, "window1.msay_output")
+		if(!C.holder) //Force normal players to see the admin message when it gets sent to them
+			winset(C, "rpane.special_button", "is-checked=true")
+			winset(C, null, "rpanewindow.left=window1")
+	else
+		to_chat(C, recieve_message)
+	if(src.prefs.special_popup)
+		src << output("\[[time_stamp()]] <font color='blue'>[send_pm_type]PM to-<b>[key_name(C, src, holder ? 1 : 0)]</b>: [msg]</font>", "window1.msay_output")
+	else
+		to_chat(src, "<font color='blue'>[send_pm_type]PM to-<b>[key_name(C, src, holder ? 1 : 0)]</b>: [msg]</font>")
 
 	/*if(holder && !C.holder)
 		C.last_pm_recieved = world.time
@@ -126,15 +137,15 @@
 	if(C.holder)
 		if(holder)	//both are admins
 			if(holder.rank == "Moderator") //If moderator
-				C << "<font color='maroon'>Mod PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
-				src << "<font color='blue'>Mod PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+				to_chat(C, "<font color='maroon'>Mod PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>")
+				to_chat(src, "<font color='blue'>Mod PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
 			else
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
-				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+				to_chat(C, "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>")
+				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
 
 		else		//recipient is an admin but sender is not
-			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>"
-			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
+			to_chat(C, "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [msg]</font>")
+			to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>")
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
 		if(C.prefs.toggles & SOUND_ADMINHELP)
@@ -143,14 +154,14 @@
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
 			if(holder.rank == "Moderator")
-				C << "<font color='maroon'>Mod PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
-				C << "<font color='maroon'><i>Click on the moderators's name to reply.</i></font>"
-				src << "<font color='blue'>Mod PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+				to_chat(C, "<font color='maroon'>Mod PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>")
+				to_chat(C, "<font color='maroon'><i>Click on the moderators's name to reply.</i></font>")
+				to_chat(src, "<font color='blue'>Mod PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
 			else
-				C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
-				C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+				to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+				to_chat(C, "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>")
+				to_chat(C, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
+				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
 
 			//always play non-admin recipients the adminhelp sound
 			C << 'sound/effects/adminhelp.ogg'
@@ -169,7 +180,7 @@
 					return
 
 		else		//neither are admins
-			src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
+			to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
 			return
 	*/
 
@@ -181,4 +192,7 @@
 		if(X == C || X == src)
 			continue
 		if(X.key!=key && X.key!=C.key && (X.holder.rights & R_ADMIN) || (X.holder.rights & R_MOD) )
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
+			if(X.prefs.special_popup)
+				X << output("\[[time_stamp()]] <B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> <span class='notice'>[msg]</font></span>", "window1.msay_output") //inform X
+			else
+				to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> <span class='notice'>[msg]</font></span>")//inform X

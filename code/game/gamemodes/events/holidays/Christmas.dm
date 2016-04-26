@@ -3,7 +3,7 @@
 		if(xmas.z != 1)	continue
 		for(var/turf/simulated/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
-				new /obj/item/weapon/a_gift(T)
+				new /obj/item/weapon/winter_gift/regular(T)
 	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
@@ -14,7 +14,8 @@
 		evil_tree.icon_living = evil_tree.icon_state
 		evil_tree.icon_dead = evil_tree.icon_state
 		evil_tree.icon_gib = evil_tree.icon_state
-		del(xmas)
+		qdel(xmas)
+		xmas = null
 
 /obj/item/weapon/toy/xmas_cracker
 	name = "xmas cracker"
@@ -22,9 +23,6 @@
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
 	var/cracked = 0
-
-/obj/item/weapon/toy/xmas_cracker/New()
-	..()
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
 	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
@@ -40,7 +38,7 @@
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
 			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
-			"Why doesn’t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+			"Why doesn't Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
 		cracked = 1
@@ -52,12 +50,3 @@
 		playsound(user, 'sound/effects/snap.ogg', 50, 1)
 		return 1
 	return ..()
-
-/obj/item/clothing/head/festive
-	name = "festive paper hat"
-	icon_state = "xmashat"
-	desc = "A crappy paper hat that you are REQUIRED to wear."
-	flags_inv = 0
-	flags = FPRINT|TABLEPASS
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-

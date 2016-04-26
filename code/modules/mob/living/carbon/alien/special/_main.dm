@@ -25,6 +25,7 @@
 
 			remove_special_verbs()
 
+
 			rebuild_appearance()
 
 	death(gibbed)
@@ -33,17 +34,17 @@
 			gib()
 
 	Stat()
-		statpanel("Status")
-		if (src.client && src.client.holder)
-			stat(null, "([x], [y], [z])")
+		if(statpanel("Status"))
+			if(src.client && src.client.holder)
+				stat(null, "([x], [y], [z])")
 
-		stat(null, "Intent: [src.a_intent]")
-		stat(null, "Move Mode: [src.m_intent]")
+			stat(null, "Intent: [src.a_intent]")
+			stat(null, "Move Mode: [src.m_intent]")
 
-		if (src.client.statpanel == "Status")
 			if (src.internal)
 				if (!src.internal.air_contents)
-					del(src.internal)
+					qdel(src.internal)
+					src.internal = null
 				else
 					stat("Internal Atmosphere Info", src.internal.name)
 					stat("Tank Pressure", src.internal.air_contents.return_pressure())

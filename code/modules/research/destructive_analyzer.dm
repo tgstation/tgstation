@@ -13,25 +13,32 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 1
 
+	research_flags = CONSOLECONTROL
+
 /obj/machinery/r_n_d/destructive_analyzer/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/destructive_analyzer,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser
+	)
+
 	RefreshParts()
+
+/obj/machinery/r_n_d/destructive_analyzer/Destroy()
+	if(linked_console && linked_console.linked_destroy == src)
+		linked_console.linked_destroy = null
+
+	. = ..()
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/S in src)
+	for(var/obj/item/weapon/stock_parts/S in component_parts)
 		T += S.rating * 0.1
-	T = between (0, T, 1)
+	T = Clamp(T, 0, 1)
 	decon_mod = T
-
-/obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	del(src)
-	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -39,71 +46,61 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+/obj/machinery/r_n_d/destructive_analyzer/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(loaded_item)
+		to_chat(user, "<span class='rose'>You can't open the maintenance panel while an item is loaded!</span>")
+		return -1
+	return ..()
 
-/obj/machinery/r_n_d/destructive_analyzer/update_icon()
-	overlays.Cut()
-	if(linked_console)
-		overlays += "d_analyzer_link"
+/obj/machinery/r_n_d/destructive_analyzer/crowbarDestroy(mob/user)
+	if(..() == 1)
+		if(loaded_item)
+			loaded_item.forceMove(loc)
+		return 1
+	return -1
 
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
-	if (shocked)
-		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			if(linked_console)
-				linked_console.linked_destroy = null
-				linked_console = null
-			icon_state = "d_analyzer_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "d_analyzer"
-			user << "You close the maintenance hatch of [src]."
-		return
-	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				I.loc = src.loc
-			del(src)
-			return 1
-		else
-			user << "\red You can't load the [src.name] while it's opened."
-			return 1
-	if (disabled)
-		return
-	if (!linked_console)
-		user << "\red The protolathe must be linked to an R&D console first!"
-		return
-	if (busy)
-		user << "\red The protolathe is busy right now."
-		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if(..())
+		return 1
+	if (istype(O, /obj/item) && !loaded_item && !panel_open)
 		if(isrobot(user)) //Don't put your module items in there!
-			return
+			if(isMoMMI(user))
+				var/mob/living/silicon/robot/mommi/mommi = user
+				if(mommi.is_in_modules(O,permit_sheets=1))
+					to_chat(user, "<span class='warning'>You cannot insert something that is part of you.</span>")
+					return
+			else
+				return
 		if(!O.origin_tech)
-			user << "\red This doesn't seem to have a tech origin!"
+			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "\red You cannot deconstruct this item!"
+			to_chat(user, "<span class='warning'>You cannot deconstruct this item!</span>")
 			return
-		if(O.reliability < 90 && O.crit_fail == 0)
-			usr << "\red Item is neither reliable enough or broken enough to learn from."
-			return
-		busy = 1
-		loaded_item = O
-		user.drop_item()
-		O.loc = src
-		user << "\blue You add the [O.name] to the machine!"
-		flick("d_analyzer_la", src)
-		spawn(10)
-			icon_state = "d_analyzer_l"
-			busy = 0
+		/*if(O.reliability < 90 && O.crit_fail == 0)
+			to_chat(usr, "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>")
+			return*/
+		if(user.drop_item(O, src))
+			busy = 1
+			loaded_item = O
+			to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
+			flick("d_analyzer_la", src)
+			spawn(10)
+				icon_state = "d_analyzer_l"
+				busy = 0
+	return
+
+/obj/machinery/r_n_d/destructive_analyzer/attack_hand(mob/user as mob)
+	if (..(user))
+		return
+	if (loaded_item && !panel_open && !busy)
+		to_chat(user, "<span class='notice'>You remove the [loaded_item.name] from the [src].</span>")
+		loaded_item.loc = src.loc
+		loaded_item = null
+		icon_state = "d_analyzer"
+
+/obj/machinery/r_n_d/destructive_analyzer/attack_ghost(mob/user)
 	return
 
 //For testing purposes only.

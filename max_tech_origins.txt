@@ -1,12 +1,15 @@
 Calculated Max Tech Levels:
-  These tech levels have been determined by parsing ALL origin_tech variables in code included by C:\Users\Rob\Documents\Projects\vgstation13\baystation12.dme.
+  These tech levels have been determined by parsing ALL origin_tech variables in code included by C:\Users\Rob\Documents\Projects\vgstation13\vgstation13.dme.
         biotech: 5
       bluespace: 10
+     bluespace : 3
          combat: 6
     engineering: 5
         magnets: 6
       materials: 9
+         plasma: 3
      plasmatech: 4
+          power: 4
    powerstorage: 6
-    programming: 5
+    programming: 6
       syndicate: 8

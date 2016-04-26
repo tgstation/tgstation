@@ -8,128 +8,132 @@ var/global/list/rad_collectors = list()
 	icon_state = "ca"
 	anchored = 0
 	density = 1
-	directwired = 1
 	req_access = list(access_engine_equip)
-//	use_power = 0
 	var/obj/item/weapon/tank/plasma/P = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
-	var/drainratio = 1
+	var/drain_ratio = 3.5 //3.5 times faster than original.
+	ghost_read = 0
+	ghost_write = 0
+
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/power/rad_collector/New()
 	..()
 	rad_collectors += src
 
-/obj/machinery/power/rad_collector/Del()
+/obj/machinery/power/rad_collector/Destroy()
 	rad_collectors -= src
+	eject()
 	..()
 
 /obj/machinery/power/rad_collector/process()
-	if(P)
-		if(P.air_contents.toxins <= 0)
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+	if (P)
+		if (P.air_contents.toxins <= 0)
+			investigation_log(I_SINGULO,"<font color='red'>out of fuel</font>.")
 			P.air_contents.toxins = 0
 			eject()
+		else if(!active)
+			return
 		else
-			P.air_contents.toxins -= 0.001*drainratio
-	return
-
+			P.air_contents.toxins -= (0.001 * drain_ratio)
+			P.air_contents.update_values()
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user as mob)
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"You turn the [src.name] [active? "on":"off"].")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			user.visible_message("<span class='notice'>[user] turns the [src] [active? "on":"off"].</span>", \
+			"<span class='notice'>You turn the [src] [active? "on":"off"].</span>")
+			investigation_log(I_SINGULO,"turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].")
 			return
 		else
-			user << "\red The controls are locked!"
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return
 ..()
 
-
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/analyzer))
-		user << "\blue The [W.name] detects that [last_power]W were recently produced."
+	if(..())
+		return 1
+	else if(istype(W, /obj/item/device/analyzer) || istype(W, /obj/item/device/multitool))
+		if(active)
+			to_chat(user, "<span class='notice'>\The [W] registers that [format_watts(last_power)] is being produced every cycle.</span>")
+		else
+			to_chat(user, "<span class='notice'>\The [W] registers that the unit is currently not producing power.</span>")
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/plasma))
 		if(!src.anchored)
-			user << "\red The [src] needs to be secured to the floor first."
+			to_chat(user, "<span class='warning'>\The [src] needs to be secured to the floor first.</span>")
 			return 1
 		if(src.P)
-			user << "\red There's already a plasma tank loaded."
+			to_chat(user, "<span class='warning'>A plasma tank is already loaded.</span>")
 			return 1
-		user.drop_item()
-		src.P = W
-		W.loc = src
-		update_icons()
-	else if(istype(W, /obj/item/weapon/crowbar))
+		if(user.drop_item(W, src))
+			src.P = W
+			update_icons()
+	else if(iscrowbar(W))
 		if(P && !src.locked)
 			eject()
 			return 1
-	else if(istype(W, /obj/item/weapon/wrench))
-		if(P)
-			user << "\blue Remove the plasma tank first."
-			return 1
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-		src.anchored = !src.anchored
-		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
-			"You [anchored? "secure":"undo"] the external bolts.", \
-			"You hear a ratchet")
-		if(anchored)
-			connect_to_network()
-		else
-			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				to_chat(user, "<span class='notice'>The controls are now [src.locked ? "locked." : "unlocked."]</span>")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "\red The controls can only be locked when the [src] is active"
+				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is active</span>")
 		else
-			user << "\red Access denied!"
+			to_chat(user, "<span class='warning'>Access denied!</span>")
 			return 1
 	else
-		..()
-		return 1
+		return
 
+/obj/machinery/power/rad_collector/wrenchAnchor(mob/user)
+	if(P)
+		to_chat(user, "<span class='warning'>Remove the plasma tank first.</span>")
+		return
+	if(..() == 1)
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
+			last_power = 0
+		return 1
+	return -1
 
 /obj/machinery/power/rad_collector/ex_act(severity)
 	switch(severity)
 		if(2, 3)
 			eject()
-	return ..()
 
+	return ..()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/plasma/Z = src.P
-	if (!Z)
+	last_power = 0
+
+	if(isnull(P))
 		return
-	Z.loc = get_turf(src)
-	Z.layer = initial(Z.layer)
-	src.P = null
+
+	P.loc = get_turf(src)
+	P.layer = initial(P.layer)
+	P = null
+
 	if(active)
 		toggle_power()
 	else
 		update_icons()
 
-/obj/machinery/power/rad_collector/proc/receive_pulse(var/pulse_strength)
-	if(P && active)
-		var/power_produced = 0
-		power_produced = P.air_contents.toxins*pulse_strength*20
+/obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
+	if (P && active)
+		var/power_produced = P.air_contents.toxins * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
 		add_avail(power_produced)
 		last_power = power_produced
-		return
-	return
-
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays.Cut()
+	overlays.len = 0
 	if(P)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))
@@ -137,15 +141,16 @@ var/global/list/rad_collectors = list()
 	if(active)
 		overlays += image('icons/obj/singularity.dmi', "on")
 
-
 /obj/machinery/power/rad_collector/proc/toggle_power()
 	active = !active
+
 	if(active)
 		icon_state = "ca_on"
 		flick("ca_active", src)
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
+		last_power = 0
+
 	update_icons()
-	return
 

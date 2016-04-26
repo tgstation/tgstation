@@ -1,87 +1,65 @@
 /obj/item/candle
 	name = "red candle"
-	desc = "a candle"
+	desc = "A candle made out of wax, used for moody lighting and solar flares"
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
 	w_class = 1
+	heat_production = 1000
+	light_color = LIGHT_COLOR_FIRE
 
 	var/wax = 200
 	var/lit = 0
-	proc
-		light(var/flavor_text = "\red [usr] lights the [name].")
+	var/flavor_text
 
+/obj/item/candle/update_icon()
+	var/i
+	if(wax > 150)
+		i = 1
+	else if(wax > 80)
+		i = 2
+	else i = 3
+	icon_state = "candle[i][lit ? "_lit" : ""]"
 
+/obj/item/candle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(W.is_hot())
+		light("<span class='notice'>[user] lights [src] with [W].</span>")
+
+/obj/item/candle/proc/light(var/flavor_text = "<span class='notice'>[usr] lights [src].</span>")
+	if(!src.lit)
+		src.lit = 1
+		visible_message(flavor_text)
+		set_light(CANDLE_LUM)
+		processing_objects.Add(src)
+
+/obj/item/candle/process()
+	if(!lit)
+		return
+	wax--
+	if(!wax)
+		new/obj/item/trash/candle(src.loc)
+		if(istype(src.loc, /mob))
+			src.dropped()
+		qdel(src)
+		return
 	update_icon()
-		var/i
-		if(wax>150)
-			i = 1
-		else if(wax>80)
-			i = 2
-		else i = 3
-		icon_state = "candle[i][lit ? "_lit" : ""]"
+	if(istype(loc, /turf)) //Start a fire if possible
+		var/turf/T = loc
+		T.hotspot_expose(700, 5, surfaces = 0)
 
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		..()
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
-				light("\red [user] casually lights the [name] with [W], what a badass.")
-		else if(istype(W, /obj/item/weapon/lighter))
-			var/obj/item/weapon/lighter/L = W
-			if(L.lit)
-				light()
-		else if(istype(W, /obj/item/weapon/match))
-			var/obj/item/weapon/match/M = W
-			if(M.lit)
-				light()
-		else if(istype(W, /obj/item/candle))
-			var/obj/item/candle/C = W
-			if(C.lit)
-				light()
-
-
-	light(var/flavor_text = "\red [usr] lights the [name].")
-		if(!src.lit)
-			src.lit = 1
-			//src.damtype = "fire"
-			for(var/mob/O in viewers(usr, null))
-				O.show_message(flavor_text, 1)
-			SetLuminosity(CANDLE_LUM)
-			processing_objects.Add(src)
-
-
-	process()
-		if(!lit)
-			return
-		wax--
-		if(!wax)
-			new/obj/item/trash/candle(src.loc)
-			if(istype(src.loc, /mob))
-				src.dropped()
-			del(src)
+/obj/item/candle/attack_self(mob/user as mob)
+	if(lit)
+		lit = 0
 		update_icon()
-		if(istype(loc, /turf)) //start a fire if possible
-			var/turf/T = loc
-			T.hotspot_expose(700, 5)
+		set_light(0)
 
+/obj/item/candle/is_hot()
+	if(lit)
+		return heat_production
+	return 0
 
-	attack_self(mob/user as mob)
-		if(lit)
-			lit = 0
-			update_icon()
-			SetLuminosity(0)
-			user.SetLuminosity(user.luminosity - CANDLE_LUM)
-
-
-	pickup(mob/user)
-		if(lit)
-			SetLuminosity(0)
-			user.SetLuminosity(user.luminosity + CANDLE_LUM)
-
-
-	dropped(mob/user)
-		if(lit)
-			user.SetLuminosity(user.luminosity - CANDLE_LUM)
-			SetLuminosity(CANDLE_LUM)
+/obj/item/weapon/match/is_hot()
+	if(lit)
+		return heat_production
+	return 0

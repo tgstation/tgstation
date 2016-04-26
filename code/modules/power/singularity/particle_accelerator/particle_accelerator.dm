@@ -60,7 +60,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/structure/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
 	anchored = 0
 	density = 1
@@ -70,6 +70,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/powered = 0
 	var/strength = null
 	var/desc_holder = null
+
+/obj/structure/particle_accelerator/Destroy()
+	construction_state = 0
+	if(master)
+		master.part_scan()
+	..()
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
@@ -88,7 +94,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -99,12 +105,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
 
-/obj/structure/particle_accelerator/examine()
+/obj/structure/particle_accelerator/examine(mob/user)
 	switch(src.construction_state)
 		if(0)
 			src.desc = text("A [name], looks like it's not attached to the flooring")
@@ -117,7 +123,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 			if(powered)
 				src.desc = src.desc_holder
 	..()
-	return
 
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
@@ -132,20 +137,20 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 	if(master && master.active)
 		master.toggle_power()
-		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
+		investigation_log(I_SINGULO,"was moved whilst active; it <font color='red'>powered down</font>.")
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -153,13 +158,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/blob_act()
 	if(prob(50))
-		del(src)
-	return
-
-
-/obj/structure/particle_accelerator/meteorhit()
-	if(prob(50))
-		del(src)
+		qdel(src)
 	return
 
 /obj/structure/particle_accelerator/update_icon()
@@ -258,7 +257,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/machinery/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
 	anchored = 0
 	density = 1
@@ -279,7 +278,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -290,7 +289,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
@@ -298,7 +297,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/machinery/particle_accelerator/update_icon()
 	return
 
-/obj/machinery/particle_accelerator/examine()
+/obj/machinery/particle_accelerator/examine(mob/user)
 	switch(src.construction_state)
 		if(0)
 			src.desc = text("A [name], looks like it's not attached to the flooring")
@@ -311,7 +310,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 			if(powered)
 				src.desc = src.desc_holder
 	..()
-	return
 
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
@@ -324,15 +322,15 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/machinery/particle_accelerator/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -340,15 +338,8 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/machinery/particle_accelerator/blob_act()
 	if(prob(50))
-		del(src)
+		qdel(src)
 	return
-
-
-/obj/machinery/particle_accelerator/meteorhit()
-	if(prob(50))
-		del(src)
-	return
-
 
 /obj/machinery/particle_accelerator/proc/update_state()
 	return 0

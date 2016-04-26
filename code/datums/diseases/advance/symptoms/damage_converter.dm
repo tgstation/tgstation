@@ -35,6 +35,7 @@ Bonus
 
 /datum/symptom/damage_converter/proc/Convert(var/mob/living/M)
 
+
 	if(M.getFireLoss() < M.getMaxHealth() || M.getBruteLoss() < M.getMaxHealth())
 		var/get_damage = rand(1, 2)
 		M.adjustFireLoss(-get_damage)

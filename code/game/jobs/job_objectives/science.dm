@@ -17,9 +17,9 @@
 			break
 	if(!server)
 		// This was just used for testing.
-		//world << "UNABLE TO FIND A GODDAMN RND SERVER. FUCK."
+//		to_chat(world, "UNABLE TO FIND A GODDAMN RND SERVER. FUCK.")
 		return
-	for(var/datum/tech/T in server.files.possible_tech)
+	for(var/datum/tech/T in tech_list)
 		if(T.goal_level==0) // Ignore illegal tech, etc
 			continue
 		var/datum/tech/KT  = locate(T.type, server.files.known_tech)
@@ -43,7 +43,7 @@
 
 // Mek MoMMI
 /datum/job_objective/make_mommi
-	completion_payment=150
+	completion_payment=350
 	per_unit=1
 
 /datum/job_objective/make_mommi/get_description()

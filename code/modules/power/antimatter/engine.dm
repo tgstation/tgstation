@@ -42,12 +42,13 @@
 
 	if(istype(F, /obj/item/weapon/fuel/H))
 		if(injecting)
-			user << "Theres already a fuel rod in the injector!"
+			to_chat(user, "Theres already a fuel rod in the injector!")
 			return
-		user << "You insert the rod into the injector"
+		to_chat(user, "You insert the rod into the injector")
 		injecting = 1
 		var/fuel = F.fuel
-		del(F)
+		qdel(F)
+		F = null
 		spawn( 300 )
 			injecting = 0
 			new/obj/item/weapon/fuel(src.loc)
@@ -55,12 +56,13 @@
 
 	if(istype(F, /obj/item/weapon/fuel/antiH))
 		if(injecting)
-			user << "Theres already a fuel rod in the injector!"
+			to_chat(user, "Theres already a fuel rod in the injector!")
 			return
-		user << "You insert the rod into the injector"
+		to_chat(user, "You insert the rod into the injector")
 		injecting = 1
 		var/fuel = F.fuel
-		del(F)
+		qdel(F)
+		F = null
 		spawn( 300 )
 			injecting = 0
 			new /obj/item/weapon/fuel(src.loc)
@@ -82,6 +84,7 @@
 
 
 /obj/machinery/power/am_engine/engine/proc/engine_go()
+
 
 	if( (!src.connected) || (stat & BROKEN) )
 		return
@@ -109,7 +112,7 @@
 			antiH_fuel = residual_matter
 
 	for(var/mob/M in hearers(src, null))
-		M.show_message(text("\red You hear a loud bang!"))
+		M.show_message(text("<span class='warning'>You hear a loud bang!</span>"))
 
 	//Q = k x (delta T)
 
@@ -122,6 +125,7 @@
 
 
 /obj/machinery/power/am_engine/engine/proc/engine_process()
+
 
 	do
 		if( (!src.connected) || (stat & BROKEN) )
@@ -161,7 +165,7 @@
 
 		if(energy > convert2energy(8e-12))	//TOO MUCH ENERGY
 			for(var/mob/M in hearers(src, null))
-				M.show_message(text("\red You hear a loud whirring!"))
+				M.show_message(text("<span class='warning'>You hear a loud whirring!</span>"))
 			sleep(20)
 
 			//Q = k x (delta T)
@@ -180,7 +184,7 @@
 
 			if(energy > convert2energy(8e-12))	//FAR TOO MUCH ENERGY STILL
 				for(var/mob/M in hearers(src, null))
-					M.show_message(text("\red <big>BANG!</big>"))
+					M.show_message(text("<span class='warning'><big>BANG!</big></span>"))
 				new /obj/effect/bhole(src.loc)
 
 		else	//this amount of energy is okay so it does the proper output thing

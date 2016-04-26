@@ -7,87 +7,94 @@
 	desc = "A spike for collecting meat from animals"
 	density = 1
 	anchored = 1
-	var/meat = 0
-	var/occupied = 0
-	var/meattype = 0 // 0 - Nothing, 1 - Monkey, 2 - Xeno
 
-/obj/structure/kitchenspike
-	attack_paw(mob/user as mob)
-		return src.attack_hand(usr)
+	var/mob/living/occupant = null
+	var/meat_remaining = 0
+
+	var/list/allowed_mobs = list(
+		/mob/living/carbon/monkey/diona = "spikebloodynymph",
+		/mob/living/carbon/monkey = "spikebloody",
+		/mob/living/carbon/alien = "spikebloodygreen",
+		/mob/living/simple_animal/hostile/alien = "spikebloodygreen"
+		) //Associated with icon states
+
+/obj/structure/kitchenspike/attack_paw(mob/user as mob)
+	return src.attack_hand(usr)
 
 /obj/structure/kitchenspike/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		if(occupied)
-			user << "\red You can't disassemble [src] with meat and gore all over it."
+	if (iswrench(W))
+		if(occupant)
+			to_chat(user, "<span class='warning'>You can't disassemble [src] with meat and gore all over it.</span>")
 			return
-		new /obj/item/stack/sheet/metal( user.loc )
-		del(src)
+		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		M.amount = 2
+		qdel(src)
 		return
 
 	if(istype(W,/obj/item/weapon/grab))
 		return handleGrab(W,user)
 
 /obj/structure/kitchenspike/proc/handleGrab(obj/item/weapon/grab/G as obj, mob/user as mob)
-	if(!istype(G, /obj/item/weapon/grab))
-		return
-	if(istype(G.affecting, /mob/living/carbon/monkey))
-		if(src.occupied == 0)
-			src.icon_state = "spikebloody"
-			src.occupied = 1
-			src.meat = 5
-			src.meattype = 1
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
-			del(G.affecting)
-			del(G)
-
-		else
-			user << "\red The spike already has something on it, finish collecting its meat first!"
-	else if(istype(G.affecting, /mob/living/carbon/alien))
-		if(src.occupied == 0)
-			src.icon_state = "spikebloodygreen"
-			src.occupied = 1
-			src.meat = 5
-			src.meattype = 2
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [user] has forced [G.affecting] onto the spike, killing them instantly!"))
-			del(G.affecting)
-			del(G)
-		else
-			user << "\red The spike already has something on it, finish collecting its meat first!"
-	else
-		user << "\red They are too big for the spike, try something smaller!"
+	if(!istype(G))
 		return
 
-//	MouseDrop_T(var/atom/movable/C, mob/user)
-//		if(istype(C, /obj/mob/carbon/monkey)
-//		else if(istype(C, /obj/mob/carbon/alien) && !istype(C, /mob/living/carbon/alien/larva/slime))
-//		else if(istype(C, /obj/livestock/spesscarp
+	var/mob/living/our_mob = G.affecting
+	if(!istype(our_mob)) return
+
+	if(occupant)
+		to_chat(user, "<span class='warning'>[occupant.name] is already hanging from \the [src], finish collecting its meat first!</span>")
+		return
+
+	for(var/T in allowed_mobs)
+		if(istype(our_mob, T))
+			if(our_mob.abiotic())
+				to_chat(user, "<span class='warning'>Subject may not have abiotic items on.</span>")
+				return
+			else
+				src.occupant = our_mob
+
+				if(allowed_mobs[T])
+					src.icon_state = allowed_mobs[T]
+				else
+					src.icon_state = "spikebloody"
+
+				src.meat_remaining = 1 + our_mob.size - our_mob.meat_taken
+
+				user.visible_message("<span class='warning'>[user] has forced [our_mob] onto the spike, killing it instantly!</span>")
+
+				our_mob.death(0)
+				our_mob.ghostize()
+
+				our_mob.forceMove(src)
+				if(iscarbon(our_mob))
+					var/mob/living/carbon/C = our_mob
+					C.drop_stomach_contents()
+					user.visible_message("<span class='warning'>\The [C]'s stomach contents drop to the ground!</span>")
+
+				returnToPool(G)
+				return
 
 /obj/structure/kitchenspike/attack_hand(mob/user as mob)
 	if(..())
 		return
-	if(src.occupied)
-		if(src.meattype == 1)
-			if(src.meat > 1)
-				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey( src.loc )
-				usr << "You remove some meat from the monkey."
-			else if(src.meat == 1)
-				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc)
-				usr << "You remove the last piece of meat from the monkey!"
-				src.icon_state = "spike"
-				src.occupied = 0
-		else if(src.meattype == 2)
-			if(src.meat > 1)
-				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat( src.loc )
-				usr << "You remove some meat from the alien."
-			else if(src.meat == 1)
-				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src.loc)
-				usr << "You remove the last piece of meat from the alien!"
-				src.icon_state = "spike"
-				src.occupied = 0
+
+	if(src.occupant)
+		if(src.meat_remaining > 0)
+			src.meat_remaining--
+			src.occupant.drop_meat(get_turf(src))
+
+			if(src.meat_remaining)
+				to_chat(user, "You remove some meat from \the [src.occupant].")
+			else
+				to_chat(user, "You remove the last piece of meat from \the [src]!")
+				src.clean()
+	else
+		src.clean()
+
+/obj/structure/kitchenspike/proc/clean()
+	icon_state = initial(icon_state)
+	if(occupant)
+		qdel(occupant)
+		occupant = null
+	meat_remaining = 0

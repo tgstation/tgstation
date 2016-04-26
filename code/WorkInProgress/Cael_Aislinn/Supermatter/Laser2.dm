@@ -5,12 +5,12 @@
 	name = "Zero-point laser"
 	desc = "A super-powerful laser"
 	var/visible = 1
-	var/state = 1.0
 	//var/obj/beam/e_beam/first
 	var/power = 500
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
 	anchored = 1
+	state = 1.0
 	var/id
 	var/on = 0
 	var/freq = 50000
@@ -92,7 +92,7 @@
 	for(var/t in organs)
 		var/datum/organ/external/affecting = organs["[t]"]
 		if (affecting.take_damage(0, b.power/400,0,0))
-			UpdateDamageIcon()
+			UpdateDamageIcon(1)
 		else
 			UpdateDamage()
 
@@ -111,7 +111,7 @@
 	src.hit()
 	return
 
-/obj/beam/e_beam/HasEntered(atom/movable/AM as mob|obj)
+/obj/beam/e_beam/Crossed(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/beam))
 		return
 	spawn( 0 )
@@ -120,7 +120,7 @@
 		return
 	return
 
-/obj/beam/e_beam/Del()
+/obj/beam/e_beam/Destroy()
 	if(next)
 		del(next)
 	..()

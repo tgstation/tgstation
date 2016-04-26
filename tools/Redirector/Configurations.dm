@@ -11,6 +11,7 @@ var/list/adminkeys = list()
 
 proc/gen_configs()
 
+
 	config_stream = dd_file2list("config.txt")
 
 	var/server_gen = 0	// if the stream is looking for servers
@@ -37,7 +38,7 @@ proc/gen_configs()
 
 				else if(admin_gen)
 					adminfiles.Add(line)
-					world << line
+					to_chat(world, line)
 
 
 	// Generate the list of admins now

@@ -24,22 +24,17 @@
 	user.set_machine(src)
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\awaymissions\bluespaceartillery.dm:26: dat += "Locked on<BR>"
 	dat += {"Locked on<BR>
 		<B>Charge progress: [reload]/180:</B><BR>
 		<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>
 		Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"}
-	// END AUTOFIX
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
 	return
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if(..()) return 1
+	else
 		var/A
 		A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 		var/area/thearea = teleportlocs[A]

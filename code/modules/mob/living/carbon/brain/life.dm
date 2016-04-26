@@ -1,6 +1,8 @@
 /mob/living/carbon/brain/Life()
 	set invisibility = 0
 	//set background = 1
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 
 	if(stat != DEAD)
@@ -34,14 +36,16 @@
 
 /mob/living/carbon/brain/
 	proc/handle_mutations_and_radiation()
+		if(flags & INVULNERABLE)
+			return
 
 		if (radiation)
 			if (radiation > 100)
 				radiation = 100
 				if(!container)//If it's not in an MMI
-					src << "\red You feel weak."
+					to_chat(src, "<span class='warning'>You feel weak.</span>")
 				else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
-					src << "\red STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED."
+					to_chat(src, "<span class='warning'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>")
 
 			switch(radiation)
 				if(1 to 49)
@@ -56,9 +60,9 @@
 					if(prob(5))
 						radiation -= 5
 						if(!container)
-							src << "\red You feel weak."
+							to_chat(src, "<span class='warning'>You feel weak.</span>")
 						else
-							src << "\red STATUS: DANGEROUS LEVELS OF RADIATION DETECTED."
+							to_chat(src, "<span class='warning'>STATUS: DANGEROUS LEVELS OF RADIATION DETECTED.</span>")
 					updatehealth()
 
 				if(75 to 100)
@@ -68,7 +72,7 @@
 
 
 	proc/handle_environment(datum/gas_mixture/environment)
-		if(!environment)
+		if(!environment || (flags & INVULNERABLE))
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
 		if(istype(get_turf(src), /turf/space))
@@ -104,6 +108,7 @@
 
 
 	proc/handle_chemicals_in_body()
+
 
 		if(reagents) reagents.metabolize(src)
 
@@ -148,7 +153,7 @@
 						silent = 1
 						if(!alert)//Sounds an alarm, but only once per 'level'
 							emote("alarm")
-							src << "\red Major electrical distruption detected: System rebooting."
+							to_chat(src, "<span class='warning'>Major electrical distruption detected: System rebooting.</span>")
 							alert = 1
 						if(prob(75))
 							emp_damage -= 1
@@ -164,7 +169,7 @@
 						ear_damage = 1
 						if(!alert)
 							emote("alert")
-							src << "\red Primary systems are now online."
+							to_chat(src, "<span class='warning'>Primary systems are now online.</span>")
 							alert = 1
 						if(prob(50))
 							emp_damage -= 1
@@ -176,13 +181,13 @@
 					if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 						if(!alert)
 							emote("notice")
-							src << "\red System reboot nearly complete."
+							to_chat(src, "<span class='warning'>System reboot nearly complete.</span>")
 							alert = 1
 						if(prob(25))
 							emp_damage -= 1
 					if(1)
 						alert = 0
-						src << "\red All systems restored."
+						to_chat(src, "<span class='warning'>All systems restored.</span>")
 						emp_damage -= 1
 
 			//Other
@@ -205,7 +210,8 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in src.mutations))
+
+		if (stat == 2 || (M_XRAY in src.mutations))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
@@ -269,6 +275,9 @@
 
 
 /*/mob/living/carbon/brain/emp_act(severity)
+	if(flags & INVULNERABLE)
+		return
+
 	if(!(container && istype(container, /obj/item/device/mmi)))
 		return
 	else

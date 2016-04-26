@@ -8,17 +8,16 @@
 	var/obj/item/weapon/reagent_containers/container = null
 
 /obj/machinery/computer/curer/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		return ..(I,user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
 		var/mob/living/carbon/C = user
 		if(!container)
-			container = I
-			C.drop_item()
-			I.loc = src
+			if(C.drop_item(I, src))
+				container = I
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
-			user << "<b>The pathogen materializer is still recharging.."
+			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
@@ -29,7 +28,7 @@
 		virusing = 1
 		spawn(1200) virusing = 0
 
-		state("The [src.name] Buzzes", "blue")
+		alert_noise("buzz")
 		return
 	src.attack_hand(user)
 	return
@@ -110,4 +109,4 @@
 	data["antibodies"] = B.data["antibodies"]
 	product.reagents.add_reagent("antibodies",30,data)
 
-	state("\The [src.name] buzzes", "blue")
+	alert_noise("buzz")

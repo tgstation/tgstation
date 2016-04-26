@@ -17,28 +17,22 @@
 /obj/item/ashtray/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (health < 1)
 		return
-	if (istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match))
+	if (istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match) || istype(W,  /obj/item/weapon/cigbutt))
 		if(user)
 			if (contents.len >= max_butts)
-				user << "This ashtray is full."
+				to_chat(user, "This ashtray is full.")
 				return
-			user.u_equip(W)
-			W.loc = src
-			if ((user.client && user.s_active != src))
-				user.client.screen -= W
+			user.drop_item(W, src, force_drop = 1)
 			var/obj/item/clothing/mask/cigarette/cig = W
-			if (cig.lit == 1)
-				src.visible_message("[user] crushes [cig] in [src], putting it out.")
-				cig.smoketime = 0
-			else if (cig.lit == 0)
-				if(istype(cig, /obj/item/weapon/match))
-					user << "You place [cig] in [src] without even lighting it. Why would you do that?"
-				else
-					user << "You place [cig] in [src] without even smoking it. Why would you do that?"
-			else if (cig.lit == -1)
-				src.visible_message("[user] places [cig] in [src].")
-			user.update_inv_l_hand()
-			user.update_inv_r_hand()
+			if(istype(cig, /obj/item/weapon/cigbutt))
+				to_chat(user, "You drop the [cig] into [src].")
+			if (istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match))
+				if (cig.lit == 1)
+					src.visible_message("[user] crushes [cig] in [src], putting it out.")
+				else if (cig.lit == 0)
+					to_chat(user, "You place [cig] in [src] without even lighting it. Why would you do that?")
+				else if (cig.lit == -1)
+					src.visible_message("[user] places [cig] in [src].")
 			add_fingerprint(user)
 			if (contents.len == max_butts)
 				icon_state = icon_full
@@ -48,7 +42,7 @@
 				desc = empty_desc + " It's half-filled."
 	else
 		health = max(0,health - W.force)
-		user << "You hit [src] with [W]."
+		to_chat(user, "You hit [src] with [W].")
 		if (health < 1)
 			die()
 	return
@@ -60,18 +54,16 @@
 			die()
 			return
 		if (contents.len)
-			src.visible_message("\red [src] slams into [hit_atom] spilling its contents!")
-		for (var/obj/item/clothing/mask/cigarette/O in contents)
-			contents -= O
-			O.loc = src.loc
+			src.visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")
+		for (var/obj/item/O in contents)
+			O.forceMove(src.loc)
 		icon_state = icon_empty
 	return ..()
 
 /obj/item/ashtray/proc/die()
-	src.visible_message("\red [src] shatters spilling its contents!")
-	for (var/obj/item/clothing/mask/cigarette/O in contents)
-		contents -= O
-		O.loc = src.loc
+	src.visible_message("<span class='warning'>[src] shatters spilling its contents!</span>")
+	for (var/obj/item/O in contents)
+		O.forceMove(src.loc)
 	icon_state = icon_broken
 
 /obj/item/ashtray/plastic
@@ -84,8 +76,8 @@
 	icon_broken  = "ashtray_bork_bl"
 	max_butts = 14
 	health = 24.0
-	g_amt = 30
-	m_amt = 30
+	starting_materials = list(MAT_PLASTIC = 50)
+	w_type = RECYK_MISC
 	empty_desc = "Cheap plastic ashtray."
 	throwforce = 3.0
 	die()
@@ -105,7 +97,8 @@
 	icon_broken  = "ashtray_bork_br"
 	max_butts = 10
 	health = 72.0
-	m_amt = 80
+	starting_materials = list(MAT_IRON = 80)
+	w_type = RECYK_METAL
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
 
@@ -126,7 +119,7 @@
 	icon_broken  = "ashtray_bork_gl"
 	max_butts = 12
 	health = 12.0
-	g_amt = 60
+	starting_materials = list(MAT_GLASS = 60)
 	empty_desc = "Glass ashtray. Looks fragile."
 	throwforce = 6.0
 

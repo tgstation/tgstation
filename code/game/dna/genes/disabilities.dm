@@ -8,6 +8,7 @@
 
 /datum/dna/gene/disability
 	name="DISABILITY"
+	genetype = GENETYPE_BAD
 
 	// Mutation to give (or 0)
 	var/mutation=0
@@ -35,26 +36,33 @@
 	if(sdisability)
 		M.sdisabilities|=sdisability
 	if(activation_message)
-		M << "\red [activation_message]"
+		to_chat(M, "<span class='warning'>[activation_message]</span>")
 	else
 		testing("[name] has no activation message.")
 
 /datum/dna/gene/disability/deactivate(var/mob/M, var/connected, var/flags)
-	if(mutation && (mutation in M.mutations))
-		M.mutations.Remove(mutation)
+	if(flags & GENE_NATURAL)
+		//testing("[name]([type]) has natural flag.")
+		return 0
+	M.mutations.Remove(mutation)
+	M.active_genes.Remove(src.type)
+
+		//testing("[M] [mut ? "" : "un"]successfully removed [src.name] from mutations")
 	if(disability)
 		M.disabilities &= ~disability
 	if(sdisability)
 		M.sdisabilities &= ~sdisability
 	if(deactivation_message)
-		M << "\red [deactivation_message]"
+		to_chat(M, "<span class='warning'>[deactivation_message]</span>")
 	else
 		testing("[name] has no deactivation message.")
+	return ..()
 
 /datum/dna/gene/disability/hallucinate
 	name="Hallucinate"
 	activation_message="Your mind says 'Hello'."
-	mutation=mHallucination
+	deactivation_message = "Your mind no longer speaks to you."
+	mutation=M_HALLUCINATE
 
 	New()
 		block=HALLUCINATIONBLOCK
@@ -62,6 +70,7 @@
 /datum/dna/gene/disability/epilepsy
 	name="Epilepsy"
 	activation_message="You get a headache."
+	deactivation_message = "Your headache disappears."
 	disability=EPILEPSY
 
 	New()
@@ -70,6 +79,7 @@
 /datum/dna/gene/disability/cough
 	name="Coughing"
 	activation_message="You start coughing."
+	deactivation_message = "The need to cough disappears."
 	disability=COUGHING
 
 	New()
@@ -78,7 +88,9 @@
 /datum/dna/gene/disability/clumsy
 	name="Clumsiness"
 	activation_message="You feel lightheaded."
-	mutation=CLUMSY
+	deactivation_message = "You no longer feel lightheaded."
+	mutation=M_CLUMSY
+	flags = GENE_UNNATURAL // Clown-specific.
 
 	New()
 		block=CLUMSYBLOCK
@@ -86,7 +98,9 @@
 /datum/dna/gene/disability/tourettes
 	name="Tourettes"
 	activation_message="You twitch."
+	deactivation_message = "You stop twitching."
 	disability=TOURETTES
+	flags = GENE_UNNATURAL // Game-wrecking
 
 	New()
 		block=TWITCHBLOCK
@@ -94,15 +108,24 @@
 /datum/dna/gene/disability/nervousness
 	name="Nervousness"
 	activation_message="You feel nervous."
+	deactivation_message = "You feel calmer."
 	disability=NERVOUS
 
 	New()
 		block=NERVOUSBLOCK
 
+/datum/dna/gene/disability/nervousness/OnMobLife(mob/living/carbon/carbon)
+	..()
+
+	if(prob(10))
+		carbon.stuttering = max(10, carbon.stuttering)
+
 /datum/dna/gene/disability/blindness
 	name="Blindness"
 	activation_message="You can't seem to see anything."
+	deactivation_message = "You can see again."
 	sdisability=BLIND
+	flags = GENE_UNNATURAL
 
 	New()
 		block=BLINDBLOCK
@@ -110,7 +133,9 @@
 /datum/dna/gene/disability/deaf
 	name="Deafness"
 	activation_message="It's kinda quiet."
+	deactivation_message = "You can hear again."
 	sdisability=DEAF
+	flags = GENE_UNNATURAL
 
 	New()
 		block=DEAFBLOCK
@@ -122,7 +147,22 @@
 /datum/dna/gene/disability/nearsighted
 	name="Nearsightedness"
 	activation_message="Your eyes feel weird..."
+	deactivation_message = "Your eyes no longer feel weird..."
 	disability=NEARSIGHTED
 
 	New()
 		block=GLASSESBLOCK
+
+
+/datum/dna/gene/disability/lisp
+	name = "Lisp"
+	desc = "I wonder wath thith doeth."
+	activation_message = "Thomething doethn't feel right."
+	deactivation_message = "You now feel able to pronounce consonants."
+
+	New()
+		..()
+		block=LISPBLOCK
+
+	OnSay(var/mob/M, var/datum/speech/speech)
+		speech.message = replacetext(speech.message,"s","th")

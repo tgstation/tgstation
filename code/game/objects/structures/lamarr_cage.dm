@@ -13,9 +13,9 @@
 /obj/structure/lamarr/ex_act(severity)
 	switch(severity)
 		if (1)
-			new /obj/item/weapon/shard( src.loc )
+			getFromPool(/obj/item/weapon/shard, loc)
 			Break()
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
 				src.health -= 15
@@ -35,23 +35,16 @@
 
 /obj/structure/lamarr/blob_act()
 	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
+		getFromPool(/obj/item/weapon/shard, loc)
 		Break()
-		del(src)
-
-
-/obj/structure/lamarr/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
-		Break()
-		del(src)
-
+		qdel(src)
 
 /obj/structure/lamarr/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
+			getFromPool(/obj/item/weapon/shard, loc)
 			playsound(src, "shatter", 70, 1)
 			Break()
 	else
@@ -79,10 +72,10 @@
 	if (src.destroyed)
 		return
 	else
-		usr << text("\blue You kick the lab cage.")
+		to_chat(usr, text("<span class='notice'>You kick the lab cage.</span>"))
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the lab cage.", usr)
+				to_chat(O, text("<span class='warning'>[] kicks the lab cage.</span>", usr))
 		src.health -= 2
 		healthcheck()
 		return
@@ -98,7 +91,33 @@
 	name = "Lamarr"
 	desc = "The worst she might do is attempt to... couple with your head."//hope we don't get sued over a harmless reference, rite?
 	sterile = 1
-	gender = FEMALE
+	setGender(FEMALE)
 
 /obj/item/clothing/mask/facehugger/lamarr/New()//to prevent deleting it if aliums are disabled
-	return
+	create_reagents(15)
+
+/obj/item/clothing/mask/facehugger/lamarr/process()
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		if(src.reagents)
+			for (var/datum/reagent/current_reagent in src.reagents.reagent_list)
+				if (current_reagent.id == "creatine")
+					to_chat(H, "<span class='warning'>[src]'s body contorts and expands!</span>")
+					H.drop_item(src, force_drop = 1)
+					var/obj/item/weapon/gun/projectile/hivehand/I = new (get_turf(H))
+					if(H.r_hand == src)
+						H.put_in_r_hand(I)
+					else
+						H.put_in_l_hand(I)
+					qdel(src)
+
+		src.reagents.clear_reagents()
+	..()
+
+/obj/item/clothing/mask/facehugger/lamarr/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
+		if(src.loc == user && (user.l_hand == W || user.r_hand == W))
+			processing_objects.Add(src)
+	else
+		..(W, user)
+		return

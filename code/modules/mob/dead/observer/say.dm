@@ -1,17 +1,15 @@
-/mob/dead/observer/say_understands(var/other)
-	return 1
-
 /mob/dead/observer/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return
 
-	log_say("Ghost/[src.key] : [message]")
+	var/turf/T = get_turf(src)
+	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ghost: [message]")
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "\red You cannot talk in deadchat (muted)."
+			to_chat(src, "<span class='warning'>You cannot talk in deadchat (muted).</span>")
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
@@ -19,50 +17,37 @@
 
 	. = src.say_dead(message)
 
+/mob/dead/observer/say_quote(var/text)
+	var/ending = copytext(text, length(text))
 
-/mob/dead/observer/emote(var/act, var/type, var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if (ending == "?")
+		return "[pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")], [text]";
+	else if (ending == "!")
+		return "[pick("screams", "screeches", "howls")], [text]";
 
-	if(!message)
+	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], [text]";
+
+/mob/dead/observer/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if (isnull(client) || !speech.speaker)
 		return
 
-	if(act != "me")
-		return
+	var/source = speech.speaker.GetSource()
+	var/source_turf = get_turf(source)
 
-	log_emote("Ghost/[src.key] : [message]")
+	say_testing(src, "/mob/dead/observer/Hear(): source=[source], frequency=[speech.frequency], source_turf=[formatJumpTo(source_turf)]")
 
-	if(src.client)
-		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "\red You cannot emote in deadchat (muted)."
-			return
-
-		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
-			return
-
-	. = src.emote_dead(message)
-
-/*
-	for (var/mob/M in hearers(null, null))
-		if (!M.stat)
-			if(M.job == "Chaplain")
-				if (prob (49))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
-						playsound(get_turf(src), pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-				else
-					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
-//				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					if(prob(30))
-						playsound(get_turf(src), pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-			else
-				if (prob(50))
+	if (get_dist(source_turf, src) <= world.view) // If this isn't true, we can't be in view, so no need for costlier proc.
+		if (source_turf in view(src))
+			rendered_speech = "<B>[rendered_speech]</B>"
+	else
+		if(client && client.prefs)
+			if (!speech.frequency)
+				if ((client.prefs.toggles & CHAT_GHOSTEARS) != CHAT_GHOSTEARS)
+					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTEARS is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTEARS]) = [client.prefs.toggles & CHAT_GHOSTEARS]")
 					return
-				else if (prob (95))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
-						playsound(get_turf(src), pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-				else
-					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
-//				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					playsound(get_turf(src), pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-*/
+			else
+				if ((client.prefs.toggles & CHAT_GHOSTRADIO) != CHAT_GHOSTRADIO)
+					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTRADIO is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTRADIO]) = [client.prefs.toggles & CHAT_GHOSTRADIO]")
+					return
+
+	to_chat(src, "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [rendered_speech]")

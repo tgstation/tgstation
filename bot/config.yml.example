@@ -57,3 +57,15 @@ plugins:
      # Optional message format stuff.  Uncomment to change the defaults.
      #bug-info-format:'Redmine #{ID} - {AUTHOR} - {STATUS} - {SUBJECT}{CRLF}{URL}'
      #new-bug-format: 'NEW ISSUE: {URL} (#{ID}: {SUBJECT})'
+   # Stuff for github. Don't touch if you don't use github.
+   github:
+     # http://github.com/USER_OR_ORG/REPO
+     #url: http://github.com/d3athrow/vgstation13
+     # Generate a login token and slap it here.
+     #apikey:
+     # Optional message format stuff.  Uncomment to change the defaults.
+     #bug-info-format:'GitHub #{ID}: \'{SUBJECT}\' - {URL} ({STATUS})'
+   # Stuff for MediaWiki. Don't touch if you don't use MediaWiki.
+   mediawiki:
+     # http://your.wiki.tld/path/
+     #url: http://tgstation13.org/wiki/ 

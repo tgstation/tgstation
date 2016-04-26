@@ -18,10 +18,10 @@
 /obj/machinery/computer/am_engine/New()
 	..()
 	spawn( 24 )
-		for(var/obj/machinery/power/am_engine/engine/E in world)
+		for(var/obj/machinery/power/am_engine/engine/E in power_machines)
 			if(E.engine_id == src.engine_id)
 				src.connected_E = E
-		for(var/obj/machinery/power/am_engine/injector/I in world)
+		for(var/obj/machinery/power/am_engine/injector/I in power_machines)
 			if(I.engine_id == src.engine_id)
 				src.connected_I = I
 	return

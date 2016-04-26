@@ -99,12 +99,12 @@ hi
 
 /obj/item/fluff/victor_kaminsky_1 //chinsky: Victor Kaminski
 	name = "golden detective's badge"
-	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."
+	desc = "Nanotrasen Security Department detective's badge, made from gold. Badge number is 564."
 	icon_state = "victor_kaminsky_1"
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] [].", user, src, src.name), 1)
+		O.show_message("[user] shows you: [bicon(src)] [name].", 1)
 	src.add_fingerprint(user)
 
 /obj/item/weapon/clipboard/fluff/smallnote //lexusjjss: Lexus Langg, Zachary Tomlinson
@@ -186,7 +186,7 @@ hi
 	attack_self(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+				O.show_message(text("<span class='warning'>[] uses [] to comb their hair with incredible style and sophistication. What a guy.</span>", user, src), 1)
 		return
 
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
@@ -215,7 +215,7 @@ hi
 
 /obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
-	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
+	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of Nanotrasen. It sparkles blue."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "lifetimeid"
 
@@ -293,30 +293,30 @@ hi
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
-	user << "\blue You click \the [src] but get no reaction. Must be dead."
+	to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		user << "\blue You click \the [src] but get no reaction. Must be dead."
+		to_chat(user, "<span class='notice'>You click \the [src] but get no reaction. Must be dead.</span>")
 		return
 	if(!reagents.total_volume)
-		user << "\red \The [src] is empty."
+		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
 		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses their \
+			visible_message("<span class='notice'>[user] presses their </span>\
 				penlight against their skin, quickly clicking the button once.", \
-				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
+				"<span class='notice'>You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.</span>", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			user << "\blue You don't want to contaminate the autoinjector."
+			to_chat(user, "<span class='notice'>You don't want to contaminate the autoinjector.</span>")
 			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
+			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>")
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
@@ -324,9 +324,9 @@ hi
 	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue You examine the penlight closely and see that it has [R.volume] units of [R.name] stored."
+			to_chat(usr, "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>")
 	else
-		usr << "\blue You examine the penlight closely and see that it is currently empty."
+		to_chat(usr, "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>")
 
 //End strange penlight
 
@@ -410,7 +410,7 @@ hi
 
 //////////// Eye Wear ////////////
 
-/obj/item/clothing/glasses/meson/fluff/book_berner_1 //asanadas: Book Berner
+/obj/item/clothing/glasses/scanner/meson/fluff/book_berner_1 //asanadas: Book Berner
 	name = "bespectacled mesonic surveyors"
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'icons/obj/custom_items.dmi'
@@ -582,7 +582,7 @@ hi
 
 /obj/item/clothing/under/fluff/jane_sidsuit
 	name = "NT-SID jumpsuit"
-	desc = "A NanoTrasen Synthetic Intelligence Division jumpsuit, issued to 'volunteers'. On other people it looks fine, but right here a scientist has noted: on you it looks stupid."
+	desc = "A Nanotrasen Synthetic Intelligence Division jumpsuit, issued to 'volunteers'. On other people it looks fine, but right here a scientist has noted: on you it looks stupid."
 
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "jane_sid_suit"
@@ -598,15 +598,15 @@ hi
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "jane_sid_suit_down")
 		src.color = "jane_sid_suit"
-		usr << "You zip up the [src]."
+		to_chat(usr, "You zip up the [src].")
 	else
 		src.color = "jane_sid_suit_down"
-		usr << "You unzip and roll down the [src]."
+		to_chat(usr, "You unzip and roll down the [src].")
 
 	src.icon_state = "[color]"
 	src.item_state = "[color]"

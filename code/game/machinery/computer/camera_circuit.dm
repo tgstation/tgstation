@@ -45,13 +45,13 @@
 				else
 					return
 				authorised = 1
-				user << "\blue You authorised the circuit network!"
+				to_chat(user, "<span class='notice'>You authorised the circuit network!</span>")
 				updateDialog()
 			else
-				user << "\blue You must select a camera network circuit!"
+				to_chat(user, "<span class='notice'>You must select a camera network circuit!</span>")
 		else if(istype(I,/obj/item/weapon/screwdriver))
 			secured = !secured
-			user.visible_message("\blue The [src] can [secured ? "no longer" : "now"] be modified.")
+			user.visible_message("<span class='notice'>The [src] can [secured ? "no longer" : "now"] be modified.</span>")
 			updateBuildPath()
 		return
 
@@ -87,7 +87,7 @@
 		onclose(user, "camcircuit")
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if( href_list["close"] )
 			usr << browse(null, "window=camcircuit")
 			usr.machine = null
@@ -114,10 +114,10 @@
 					else
 						return
 					authorised = 1
-					usr << "\blue You authorised the circuit network!"
+					to_chat(usr, "<span class='notice'>You authorised the circuit network!</span>")
 					updateDialog()
 				else
-					usr << "\blue You must select a camera network circuit!"
+					to_chat(usr, "<span class='notice'>You must select a camera network circuit!</span>")
 		else if( href_list["removeauth"] )
 			authorised = 0
 		updateDialog()

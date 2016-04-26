@@ -20,7 +20,8 @@
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
 	use_to_pickup = 1
 	slot_flags = SLOT_BELT
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
+
 
 // -----------------------------
 //          Trash bag
@@ -33,9 +34,9 @@
 	item_state = "trashbag"
 
 	w_class = 4
-	max_w_class = 2
+	fits_max_w_class = 2
 	storage_slots = 21
-	can_hold = list() // any
+	can_only_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
 /obj/item/weapon/storage/bag/trash/update_icon()
@@ -60,17 +61,41 @@
 	item_state = "plasticbag"
 
 	w_class = 4
-	max_w_class = 2
+	fits_max_w_class = 2
 	storage_slots = 21
-	can_hold = list() // any
+	can_only_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
+	body_parts_covered = FULL_HEAD|BEARD
+	slot_flags = SLOT_BELT | SLOT_HEAD
+	flags = FPRINT | BLOCK_BREATHING | BLOCK_GAS_SMOKE_EFFECT
+
+/obj/item/weapon/storage/bag/plasticbag/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
+	//Forbid wearing bags with something inside!
+	.=..()
+	if(contents.len && (slot == slot_head))
+		return 0
+
+/obj/item/weapon/storage/bag/plasticbag/can_be_inserted()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.head == src) //If worn
+			return 0
+	else if(isMoMMI(loc))
+		var/mob/living/silicon/robot/mommi/MoM = loc
+		if(MoM.head_state == src) //If worn
+			return 0
+	return ..()
+
+/obj/item/weapon/storage/bag/plasticbag/suicide_act(mob/user)
+	user.visible_message("<span class='danger'>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</span>")
+	return(OXYLOSS)
 
 // -----------------------------
 //        Mining Satchel
 // -----------------------------
 
 /obj/item/weapon/storage/bag/ore
-	name = "Mining Satchel"
+	name = "\improper Mining Satchel" //need the improper for the
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
@@ -78,8 +103,7 @@
 	w_class = 3
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = 3
-	can_hold = list("/obj/item/weapon/ore")
+	can_only_hold = list("/obj/item/weapon/ore")
 
 
 // -----------------------------
@@ -92,10 +116,64 @@
 	name = "Plant Bag"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown", "/obj/item/weapon/reagent_containers/food/snacks/meat", "/obj/item/weapon/reagent_containers/food/snacks/egg",)
+	can_only_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown", "/obj/item/weapon/reagent_containers/food/snacks/meat", "/obj/item/weapon/reagent_containers/food/snacks/egg", "/obj/item/weapon/reagent_containers/food/snacks/honeycomb")
 
+// -----------------------------
+//          Food bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/food
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "foodbag0"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/backpacks_n_bags.dmi', "right_hand" = 'icons/mob/in-hand/right/backpacks_n_bags.dmi')
+	name = "Food Delivery Bag"
+	storage_slots = 14; //the number of food items it can carry.
+	max_combined_w_class = 28 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	w_class = 3
+	can_only_hold = list("/obj/item/weapon/reagent_containers/food/snacks")
+
+/obj/item/weapon/storage/bag/food/update_icon()
+	if(contents.len < 1)
+		icon_state = "foodbag0"
+	else icon_state = "foodbag1"
+
+/obj/item/weapon/storage/bag/food/menu1/New()
+	..()
+	new/obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)//6 nutriments
+	new/obj/item/weapon/reagent_containers/food/snacks/fries(src)//4 nutriments
+	new/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola(src)//-3 drowsy
+	update_icon()
+
+/obj/item/weapon/storage/bag/food/menu2/New()
+	..()
+	new/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger(src)//14 nutriments
+	new/obj/item/weapon/reagent_containers/food/snacks/cheesyfries(src)//6 nutriments
+	new/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind(src)//-7 drowsy, -1 sleepy
+	update_icon()
+
+// -----------------------------
+//          Borg Food bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/food/borg
+	name = "Food Transport Bag"
+	desc = "Useful for manipulating food items in the kitchen."
+
+// -----------------------------
+//          Pill Collector
+// -----------------------------
+
+/obj/item/weapon/storage/bag/chem
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pcollector"
+	name = "Pill Collector"
+	item_state = "pcollector"
+	origin_tech = "biotech=2;materials=1"
+	storage_slots = 50; //the number of plant pieces it can carry.
+	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	w_class = 1
+	can_only_hold = list("/obj/item/weapon/reagent_containers/glass/bottle","/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/reagent_containers/syringe")
 
 // -----------------------------
 //        Sheet Snatcher
@@ -121,14 +199,14 @@
 	can_be_inserted(obj/item/W as obj, stop_messages = 0)
 		if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/wood))
 			if(!stop_messages)
-				usr << "The snatcher does not accept [W]."
+				to_chat(usr, "The snatcher does not accept [W].")
 			return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
 		var/current = 0
 		for(var/obj/item/stack/sheet/S in contents)
 			current += S.amount
 		if(capacity == current)//If it's full, you're done
 			if(!stop_messages)
-				usr << "\red The snatcher is full."
+				to_chat(usr, "<span class='warning'>The snatcher is full.</span>")
 			return 0
 		return 1
 
@@ -156,13 +234,14 @@
 				break
 
 		if(!inserted || !S.amount)
-			usr.u_equip(S)
+			usr.u_equip(S,1)
 			usr.update_icons()	//update our overlays
 			if (usr.client && usr.s_active != src)
 				usr.client.screen -= S
-			S.dropped(usr)
+			//S.dropped(usr)
 			if(!S.amount)
-				del S
+				qdel (S)
+				S = null
 			else
 				S.loc = src
 
@@ -207,7 +286,8 @@
 				N.amount = stacksize
 				S.amount -= stacksize
 			if(!S.amount)
-				del S // todo: there's probably something missing here
+				qdel (S) // todo: there's probably something missing here
+				S = null
 		orient2hud(usr)
 		if(usr.s_active)
 			usr.s_active.show_to(usr)
@@ -251,6 +331,36 @@
 	desc = "This bag can be used to store many machine components."
 	storage_slots = 25;
 	max_combined_w_class = 200
-	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_only_hold = list("/obj/item/weapon/stock_parts", "/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/cell")
+
+/obj/item/weapon/storage/bag/gadgets/mass_remove(atom/A)
+	var/lowest_rating = INFINITY //Get the lowest rating, so only mass drop the lowest parts.
+	for(var/obj/item/B in contents)
+		if(B.get_rating() < lowest_rating)
+			lowest_rating = B.get_rating()
+
+	for(var/obj/item/B in contents) //Now that we have the lowest rating we can dump only parts at the lowest rating.
+		if(B.get_rating() > lowest_rating)
+			continue
+		remove_from_storage(B, A)
+
+// -----------------------------
+//          Money Bag
+// -----------------------------
+
+// This used to be /obj/item/weapon/moneybag
+
+/obj/item/weapon/storage/bag/money
+	icon = 'icons/obj/storage.dmi'
+	name = "money bag"
+	icon_state = "moneybag"
+
+	desc = "You had an uncle who was obsessed with these once."
+
+	flags = FPRINT
+	w_class = 4
+	fits_max_w_class = 3
+	max_combined_w_class = 63 // Fuck this var
+	can_only_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash")
+	cant_hold = list()

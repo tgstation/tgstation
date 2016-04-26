@@ -1,10 +1,10 @@
 /obj/machinery/computer/arcade
 	name = "arcade machine"
-	desc = "Does not support Pin ball."
+	desc = "Does not support pinball."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	circuit = "/obj/item/weapon/circuitboard/arcade"
-	var/enemy_name = "Space Villian"
+	var/enemy_name = "Space Villain"
 	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
 	var/player_mp = 10
@@ -12,15 +12,26 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
+	var/list/cheaters = list() //Trying to cheat twice at cuban pete gibs you
+
+	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	emag_cost = 0 // because fun
+
+	light_color = LIGHT_COLOR_GREEN
+
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
+							/obj/item/toy/cards								= 2,
 							/obj/item/toy/blink								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
 							/obj/item/toy/sword								= 2,
+							/obj/item/toy/bomb								= 1,
 							/obj/item/toy/gun								= 2,
 							/obj/item/toy/crossbow							= 2,
 							/obj/item/clothing/suit/syndicatefake			= 2,
 							/obj/item/weapon/storage/fancy/crayons			= 2,
 							/obj/item/toy/spinningtoy						= 2,
+							/obj/item/toy/minimeteor						= 2,
+							/obj/item/device/whisperphone					= 2,
 							/obj/item/toy/prize/ripley						= 1,
 							/obj/item/toy/prize/fireripley					= 1,
 							/obj/item/toy/prize/deathripley					= 1,
@@ -31,7 +42,8 @@
 							/obj/item/toy/prize/seraph						= 1,
 							/obj/item/toy/prize/mauler						= 1,
 							/obj/item/toy/prize/odysseus					= 1,
-							/obj/item/toy/prize/phazon						= 1
+							/obj/item/toy/prize/phazon						= 1,
+							/obj/item/weapon/boomerang/toy					= 1,
 							)
 
 /obj/machinery/computer/arcade
@@ -52,6 +64,37 @@
 	src.name = (name_action + name_part1 + name_part2)
 
 
+/obj/machinery/computer/arcade/proc/import_game_data(var/obj/item/weapon/circuitboard/arcade/A)
+	if(!A || !A.game_data || !A.game_data.len)
+		return
+	name = A.game_data["name"]
+	emagged = A.game_data["emagged"]
+	enemy_name = A.game_data["enemy_name"]
+	temp = A.game_data["temp"]
+	player_hp = A.game_data["player_hp"]
+	player_mp = A.game_data["player_mp"]
+	enemy_hp = A.game_data["enemy_hp"]
+	enemy_mp =A.game_data["enemy_mp"]
+	gameover = A.game_data["gameover"]
+	blocked = A.game_data["blocked"]
+
+/obj/machinery/computer/arcade/proc/export_game_data(var/obj/item/weapon/circuitboard/arcade/A)
+	if(!A) return
+	if(!A.game_data)
+		A.game_data = list()
+	A.game_data.len = 0
+	A.game_data["name"] = name
+	A.game_data["emagged"] = emagged
+	A.game_data["enemy_name"] = enemy_name
+	A.game_data["temp"] = temp
+	A.game_data["player_hp"] = player_hp
+	A.game_data["player_mp"] = player_mp
+	A.game_data["enemy_hp"] = enemy_hp
+	A.game_data["enemy_mp"] = enemy_mp
+	A.game_data["gameover"] = gameover
+	A.game_data["blocked"] = blocked
+
+
 /obj/machinery/computer/arcade/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -65,22 +108,16 @@
 	user.set_machine(src)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\arcade.dm:67: dat += "<center><h4>[src.enemy_name]</h4></center>"
 	dat += {"<center><h4>[src.enemy_name]</h4></center>
 		<br><center><h3>[src.temp]</h3></center>
 		<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"}
-	// END AUTOFIX
 	if (src.gameover)
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\arcade.dm:75: dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
 		dat += {"<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> |
 			<a href='byond://?src=\ref[src];heal=1'>Heal</a> |
 			<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"}
-	// END AUTOFIX
 
 	dat += "</b></center>"
 
@@ -137,6 +174,9 @@
 		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
+		if(is_cheater(usr))
+			return
+
 		temp = "New Round"
 		player_hp = 30
 		player_mp = 10
@@ -163,6 +203,8 @@
 				feedback_inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
 				new /obj/item/clothing/head/collectable/petehat(src.loc)
+				new /obj/item/device/maracas(src.loc)
+				new /obj/item/device/maracas(src.loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				src.New()
@@ -226,45 +268,25 @@
 	src.blocked = 0
 	return
 
+/obj/machinery/computer/arcade/emag(mob/user as mob)
+	if(is_cheater(user))
+		return
 
-/obj/machinery/computer/arcade/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		temp = "If you die in the game, you die for real!"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = 0
-		blocked = 0
+	temp = "If you die in the game, you die for real!"
+	player_hp = 30
+	player_mp = 10
+	enemy_hp = 45
+	enemy_mp = 20
+	gameover = 0
+	blocked = 0
 
-		emagged = 1
+	emagged = 1
 
-		enemy_name = "Cuban Pete"
-		name = "Outbomb Cuban Pete"
+	enemy_name = "Cuban Pete"
+	name = "Outbomb Cuban Pete"
 
+	src.updateUsrDialog()
 
-		src.updateUsrDialog()
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/arcade/M = new /obj/item/weapon/circuitboard/arcade( A )
-			for (var/obj/C in src)
-				C.loc = src.loc
-			A.circuit = M
-			A.anchored = 1
-
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				new /obj/item/weapon/shard( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				user << "\blue You disconnect the monitor."
-				A.state = 4
-				A.icon_state = "4"
-
-			del(src)
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
 		..(severity)
@@ -281,3 +303,48 @@
 		new empprize(src.loc)
 
 	..(severity)
+
+/obj/machinery/computer/arcade/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(is_cheater(user))
+		return
+
+	var/obj/item/weapon/circuitboard/arcade/A
+	if(circuit)
+		A = new
+		export_game_data(A)
+	..(toggleitem, user, A)
+
+/obj/machinery/computer/arcade/kick_act()
+	..()
+	if(stat & (NOPOWER|BROKEN))
+		return
+
+	if(is_cheater(usr))
+		return
+
+	if(!emagged && prob(5)) //Bug
+		temp = "|eW R0vnb##[rand(0,9)]#"
+		player_hp = rand(1,30)
+		player_mp = rand(1,10)
+		enemy_hp = rand(1,60)
+		enemy_mp = rand(1,40)
+		gameover = 0
+		turtle = 0
+
+/obj/machinery/computer/arcade/proc/is_cheater(mob/user as mob)
+	var/cheater = 0
+	if(emagged && !gameover)
+		if(stat & (NOPOWER|BROKEN))
+			return cheater
+		else if(user in cheaters)
+			to_chat(usr, "<span class='danger'>[src.enemy_name] throws a bomb at you for trying to cheat him again.</span>")
+			explosion(get_turf(src.loc),-1,0,2)//IED sized explosion
+			user.gib()
+			cheaters = null
+			qdel(src)
+			cheater = 1
+		else
+			to_chat(usr, "<span class='danger'>[src.enemy_name] isn't one to tolerate cheaters. Don't try that again.</span>")
+			cheaters += user
+			cheater = 1
+	return cheater

@@ -18,6 +18,7 @@
 	var/repeat = 0
 
 /obj/structure/device/piano/New()
+	..()
 	if(prob(50))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
@@ -28,7 +29,7 @@
 		icon_state = "piano"
 
 /obj/structure/device/piano/proc/playnote(var/note as text)
-	//world << "Note: [note]"
+//	to_chat(world, "Note: [note]")
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
 	Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
@@ -219,22 +220,22 @@
 			cur_acc[i] = "n"
 
 		for(var/line in song.lines)
-			//world << line
+//			to_chat(world, line)
 			for(var/beat in text2list(lowertext(line), ","))
-				//world << "beat: [beat]"
+//				to_chat(world, "beat: [beat]")
 				var/list/notes = text2list(beat, "/")
 				for(var/note in text2list(notes[1], "-"))
-					//world << "note: [note]"
+//					to_chat(world, "note: [note]")
 					if(!playing || !anchored)//If the piano is playing, or is loose
 						playing = 0
 						return
-					if(lentext(note) == 0)
+					if(length(note) == 0)
 						continue
-					//world << "Parse: [copytext(note,1,2)]"
+//					to_chat(world, "Parse: [copytext(note,1,2)]")
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
-					for(var/i=2 to lentext(note))
+					for(var/i=2 to length(note))
 						var/ni = copytext(note,i,i+1)
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")
@@ -254,6 +255,12 @@
 	playing = 0
 	updateUsrDialog()
 
+/obj/structure/device/piano/attack_paw(var/mob/user)
+	if (!user.dexterity_check())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+	attack_hand(user)
+
 /obj/structure/device/piano/attack_hand(var/mob/user as mob)
 	if(!anchored)
 		return
@@ -264,28 +271,19 @@
 	if(song)
 		if(song.lines.len > 0 && !(playing))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\structures\musician.dm:262: dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
 			dat += {"<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>
 				<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times.</A><BR><BR>"}
-			// END AUTOFIX
 		if(playing)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\structures\musician.dm:265: dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
 			dat += {"<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>
 				Repeats left: [repeat].<BR><BR>"}
-			// END AUTOFIX
 	if(!edit)
 		dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\structures\musician.dm:270: dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
 		dat += {"<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>
 			<A href='?src=\ref[src];newsong=1'>Start a New Song</A><BR>
 			<A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"}
-		// END AUTOFIX
 		if(song)
 			var/calctempo = (10/song.tempo)*60
 			dat += "Tempo : <A href='?src=\ref[src];tempo=10'>-</A><A href='?src=\ref[src];tempo=1'>-</A> [calctempo] BPM <A href='?src=\ref[src];tempo=-1'>+</A><A href='?src=\ref[src];tempo=-10'>+</A><BR><BR>"
@@ -320,11 +318,12 @@
 	onclose(user, "piano")
 
 /obj/structure/device/piano/Topic(href, href_list)
-
-	if(!in_range(src, usr) || issilicon(usr) || !anchored || !usr.canmove || usr.restrained())
-		usr << browse(null, "window=piano;size=700x300")
-		onclose(usr, "piano")
+	if(..())
 		return
+	if(issilicon(usr) || !anchored || !usr.canmove)
+		return
+
+	usr.set_machine(src)
 
 	if(href_list["newsong"])
 		song = new()
@@ -354,7 +353,7 @@
 				return
 			if(song.lines.len > 50)
 				return
-			if(lentext(newline) > 50)
+			if(length(newline) > 50)
 				newline = copytext(newline, 1, 50)
 			song.lines.Add(newline)
 
@@ -369,7 +368,7 @@
 			var/content = html_encode(input("Enter your line: ", "Piano", song.lines[num]) as text|null)
 			if(!content)
 				return
-			if(lentext(content) > 50)
+			if(length(content) > 50)
 				content = copytext(content, 1, 50)
 			if(num > song.lines.len || num < 1)
 				return
@@ -391,11 +390,11 @@
 				if (!in_range(src, usr))
 					return
 
-				if(lentext(t) >= 3072)
+				if(length(t) >= 3072)
 					var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 					if(cont == "no")
 						break
-			while(lentext(t) > 3072)
+			while(length(t) > 3072)
 
 			//split into lines
 			spawn()
@@ -405,42 +404,42 @@
 					tempo = 600 / text2num(copytext(lines[1],6))
 					lines.Cut(1,2)
 				if(lines.len > 50)
-					usr << "Too many lines!"
+					to_chat(usr, "Too many lines!")
 					lines.Cut(51)
 				var/linenum = 1
 				for(var/l in lines)
-					if(lentext(l) > 50)
-						usr << "Line [linenum] too long!"
+					if(length(l) > 50)
+						to_chat(usr, "Line [linenum] too long!")
 						lines.Remove(l)
 					else
 						linenum++
 				song = new()
 				song.lines = lines
 				song.tempo = tempo
-				updateUsrDialog()
+				src.updateUsrDialog()
 
 	add_fingerprint(usr)
-	updateUsrDialog()
+	src.updateUsrDialog()
 	return
 
 /obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)
-	if (istype(O, /obj/item/weapon/wrench))
+	if (iswrench(O))
 		if (anchored)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to loosen \the [src]'s casters..."
-			if (do_after(user, 40))
+			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
+			if (do_after(user, src, 40))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
-					"\blue You have loosened \the [src]. Now it can be pulled somewhere else.", \
+					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
 					"You hear ratchet.")
 				src.anchored = 0
 		else
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to tighten \the [src] to the floor..."
-			if (do_after(user, 20))
+			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
+			if (do_after(user, src, 20))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
-					"\blue You have tightened \the [src]'s casters. Now it can be played again.", \
+					"<span class='notice'>You have tightened \the [src]'s casters. Now it can be played again.</span>", \
 					"You hear ratchet.")
 				src.anchored = 1
 	else

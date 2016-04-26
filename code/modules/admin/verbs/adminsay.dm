@@ -13,9 +13,17 @@
 		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights)
-				C << msg
+				to_chat(C, msg)
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_mod_window()
+	set category = "Special Verbs"
+	set name = "mWindow"
+	set hidden = 1
+
+	if(!check_rights(R_ADMIN|R_MOD)) return
+	winset(src, "window1", "is-visible=true")
 
 /client/proc/cmd_mod_say(msg as text)
 	set category = "Special Verbs"
@@ -34,4 +42,7 @@
 		color = "adminmod"
 	for(var/client/C in admins)
 		if((R_ADMIN|R_MOD) & C.holder.rights)
-			C << "<span class='[color]'><span class='prefix'>MOD:</span> <EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
+			if(C.prefs.special_popup)
+				C << output("\[[time_stamp()]] <span style='color:[color];'><b>[key_name(src,1)]</b> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>", "window1.msay_output")
+			else
+				to_chat(C, "<span class='prefix'>MOD: </span><span class='[color]'><EM>[key_name(src,1)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='modooc'>[msg]</span></span>")

@@ -1,17 +1,13 @@
 /proc/wormhole_event()
 	spawn()
 		var/list/pick_turfs = list()
-		for(var/turf/simulated/floor/T in world)
+		for(var/turf/simulated/floor/T in turfs)
 			if(T.z == 1)
 				pick_turfs += T
 
 		if(pick_turfs.len)
 			//All ready. Announce that bad juju is afoot.
-			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/spanomalies.ogg')
-
+			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert",alert='sound/AI/spanomalies.ogg')
 			//prob(20) can be approximated to 1 wormhole every 5 turfs!
 			//admittedly less random but totally worth it >_<
 			var/event_duration = 3000	//~5 minutes in ticks
@@ -20,17 +16,17 @@
 			var/end_time = world.time + event_duration	//the time by which the event should have ended
 
 			var/increment =	max(1,round(number_of_selections/50))
-//			world << "DEBUG: number_of_selections: [number_of_selections] | sleep_duration: [sleep_duration]"
+//			to_chat(world, "DEBUG: number_of_selections: [number_of_selections] | sleep_duration: [sleep_duration]")
 
 			var/i = 1
 			while( 1 )
 
 				//we've run into overtime. End the event
 				if( end_time < world.time )
-//					world << "DEBUG: we've run into overtime. End the event"
+//					to_chat(world, "DEBUG: we've run into overtime. End the event")
 					return
 				if( !pick_turfs.len )
-//					world << "DEBUG: we've run out of turfs to pick. End the event"
+//					to_chat(world, "DEBUG: we've run out of turfs to pick. End the event")
 					return
 
 				//loop it round
@@ -56,10 +52,8 @@
 /proc/create_wormhole(var/turf/enter as turf, var/turf/exit as turf)
 	var/obj/effect/portal/P = new /obj/effect/portal( enter )
 	P.target = exit
-	P.creator = null
 	P.icon = 'icons/obj/objects.dmi'
-	P.failchance = 0
 	P.icon_state = "anom"
 	P.name = "wormhole"
-	spawn(rand(300,600))
-		del(P)
+	spawn(rand(300,600)) //This isn't useful, the new in hand tele will likely override it
+		qdel(P)

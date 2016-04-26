@@ -9,10 +9,10 @@
 			return
 		if(1)
 			interceptname = "Biohazard Alert"
-			intercepttext = {"<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>
+			intercepttext = {"<FONT size = 3><B>Nanotrasen Update</B>: Biohazard Alert.</FONT><HR>
 Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.
 Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.
-NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.
+Nanotrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.
 Orders for all [station_name()] personnel follows:
 <ol>
 	<li>Do not leave the quarantine area.</li>
@@ -22,37 +22,40 @@ Orders for all [station_name()] personnel follows:
 </ol>
 Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.
 Message ends."}
+			for (var/mob/living/silicon/ai/aiPlayer in player_list)
+				var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
+				aiPlayer.set_zeroth_law(law)
+				to_chat(aiPlayer, "Laws Updated: [law]")
 		if(2)
 			var/nukecode = "ERROR"
-			for(var/obj/machinery/nuclearbomb/bomb in world)
+			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == 1)
 						nukecode = bomb.r_code
 			interceptname = "Directive 7-12"
-			intercepttext = {"<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>
-				Directive 7-12 has been issued for [station_name()].
-				The biohazard has grown out of control and will soon reach critical mass.
-				Your orders are as follows:
-				<ol>
-					<li>Secure the Nuclear Authentication Disk.</li>
-					<li>Detonate the Nuke located in the Station's Vault.</li>
-				</ol>
-				<b>Nuclear Authentication Code:</b> [nukecode]
-				Message ends."}
-
+			intercepttext = {"<FONT size = 3><B>Nanotrasen Update</B>: Biohazard Alert.</FONT><HR>
+Directive 7-12 has been issued for [station_name()].
+The biohazard has grown out of control and will soon reach critical mass.
+Your orders are as follows:
+<ol>
+	<li>Secure the Nuclear Authentication Disk.</li>
+	<li>Detonate the Nuke located in the Station's Vault.</li>
+</ol>
+<b>Nuclear Authentication Code:</b> [nukecode]
+Message ends."}
 			for (var/mob/living/silicon/ai/aiPlayer in player_list)
-				if (aiPlayer.client)
-					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
-					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
+				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
+				aiPlayer.set_zeroth_law(law)
+				to_chat(aiPlayer, "Laws Updated: [law]")
 
-	for(var/obj/machinery/computer/communications/comm in machines)
-		comm.messagetitle.Add(interceptname)
-		comm.messagetext.Add(intercepttext)
-		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+	for (var/obj/machinery/computer/communications/comm in machines)
+		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper- [interceptname]"
 			intercept.info = intercepttext
+
+			comm.messagetitle.Add("[interceptname]")
+			comm.messagetext.Add(intercepttext)
 	return
 
 
@@ -68,7 +71,7 @@ Message ends."}
 
 
 	proc/count()
-		for(var/turf/T in world)
+		for(var/turf/T in turfs)
 			if(T.z != 1)
 				continue
 

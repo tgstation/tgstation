@@ -54,6 +54,7 @@ atom/var/ul_Extinguished = UL_I_ONZERO
 
 atom/proc/ul_SetLuminosity(var/Red = 0, var/Green = Red, var/Blue = Red)
 
+
 	if(ul_Extinguished == UL_I_CHANGING) //Changing state, just supress any changes, to prevent glitches.
 		return
 
@@ -129,6 +130,7 @@ atom/proc/ul_Illuminate()
 	return
 
 atom/proc/ul_Extinguish()
+
 
 	if (ul_Extinguished != UL_I_LIT)
 		return
@@ -310,6 +312,7 @@ turf/proc/ul_UpdateLight()
 
 turf/proc/ul_Recalculate()
 
+
 	ul_SuppressLightLevelChanges++
 
 	var/list/Lights = ul_BlankLocal()
@@ -329,6 +332,7 @@ area/var/LightLevelBlue = 0
 area/var/list/LightLevels
 
 area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blue = LightLevelBlue)
+
 
 	if(!src || !src.ul_Lighting)
 		return
@@ -360,6 +364,7 @@ area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blu
 	return
 
 area/proc/ul_Prep()
+
 
 	if(!tag)
 		tag = "[type]"

@@ -5,7 +5,7 @@
 ***********************************************************************/
 //Might want to move this into several files later but for now it works here
 /obj/item/borg/stun
-	name = "Electrified Arm"
+	name = "electrified arm"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
@@ -29,57 +29,9 @@
 
 		for(var/mob/O in viewers(M, null))
 			if (O.client)
-				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
+				O.show_message("<span class='danger'>[user] has prodded [M] with an electrically-charged arm!</span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 
 /obj/item/borg/overdrive
-	name = "Overdrive"
+	name = "overdrive"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
-
-/**********************************************************************
-						HUD/SIGHT things
-***********************************************************************/
-/obj/item/borg/sight
-	icon = 'icons/obj/decals.dmi'
-	icon_state = "securearea"
-	var/sight_mode = null
-
-
-/obj/item/borg/sight/xray
-	name = "X-ray Vision"
-	sight_mode = BORGXRAY
-
-
-/obj/item/borg/sight/thermal
-	name = "Thermal Vision"
-	sight_mode = BORGTHERM
-
-
-/obj/item/borg/sight/meson
-	name = "Meson Vision"
-	sight_mode = BORGMESON
-
-
-/obj/item/borg/sight/hud
-	name = "Hud"
-	var/obj/item/clothing/glasses/hud/hud = null
-
-
-/obj/item/borg/sight/hud/med
-	name = "Medical Hud"
-
-
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/health(src)
-		return
-
-
-/obj/item/borg/sight/hud/sec
-	name = "Security Hud"
-
-
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/security(src)
-		return

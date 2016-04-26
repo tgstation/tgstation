@@ -1,10 +1,13 @@
+// Reagents to log when sprayed
+var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
+
 /obj/item/weapon/reagent_containers/spray
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = OPENCONTAINER|FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -13,98 +16,105 @@
 	amount_per_transfer_from_this = 10
 	volume = 250
 	possible_transfer_amounts = null
+	var/melted = 0
+
+	var/delay_spraying = TRUE // Whether to delay the next attack after using it
+
+	//! List of things to avoid spraying on close range. TODO Remove snowflake, handle this in every attackby() properly.
+	var/list/ignore_spray_types = list(/obj/item/weapon/storage, /obj/structure/table, /obj/structure/rack, /obj/structure/closet, /obj/structure/sink)
+
+/obj/item/weapon/reagent_containers/spray/attackby(obj/item/weapon/W, mob/user)
+	if(!melted)
+		if(W.is_hot())
+			to_chat(user, "You slightly melt the plastic on the top of \the [src] with \the [W].")
+			melted = 1
+	if(melted)
+		if(istype(W, /obj/item/stack/rods))
+			to_chat(user, "You press \the [W] into the melted plastic on the top of \the [src].")
+			var/obj/item/stack/rods/R = W
+			if(src.loc == user)
+				user.drop_item(src, force_drop = 1)
+				var/obj/item/weapon/gun_assembly/I = new (get_turf(user), "spraybottle_assembly")
+				user.put_in_hands(I)
+			else
+				new /obj/item/weapon/gun_assembly(get_turf(src.loc), "spraybottle_assembly")
+			R.use(1)
+			qdel(src)
 
 
-/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
+/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob, var/adjacency_flag, var/click_params)
+	if (adjacency_flag && is_type_in_list(A, ignore_spray_types))
 		return
 
-	if(istype(A, /obj/effect/proc_holder/spell))
+	if (delay_spraying)
+		user.delayNextAttack(8)
+
+	if (istype(A, /obj/structure/reagent_dispensers) && adjacency_flag)
+		transfer(A, user, can_send = FALSE, can_receive = TRUE)
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
-		if(!A.reagents.total_volume && A.reagents)
-			user << "<span class='notice'>\The [A] is empty.</span>"
+	if (is_empty()) //If empty, checks for a nonempty chempack on the user.
+		var/mob/living/M = user
+		if (M && M.back && istype(M.back,/obj/item/weapon/reagent_containers/chempack))
+			var/obj/item/weapon/reagent_containers/chempack/P = M.back
+			if (!P.safety)
+				if (!P.is_empty())
+					if (istype(src,/obj/item/weapon/reagent_containers/spray/chemsprayer)) //The chemsprayer uses three times its amount_per_transfer_from_this per spray.
+						transfer_sub(P, src, amount_per_transfer_from_this*3, user)
+					else
+						transfer_sub(P, src, amount_per_transfer_from_this, user)
+				else
+					to_chat(user, "<span class='notice'>\The [P] is empty!</span>")
+					return
+			else
+				to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
+				return
+		else
+			to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 			return
 
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>\The [src] is full.</span>"
-			return
+	// Log reagents
+	var/list/log_reagent_list = list()
 
-		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>"
-		return
+	for (var/reagent_id in logged_sprayed_reagents)
+		if (reagents.has_reagent(reagent_id))
+			log_reagent_list += "'[reagent_id]'"
 
-	if(reagents.total_volume < amount_per_transfer_from_this)
-		user << "<span class='notice'>\The [src] is empty!</span>"
-		return
+	if (log_reagent_list.len > 0)
+		add_gamelogs(user, "sprayed {[english_list(log_reagent_list, and_text = ", ")]} with \the [src]", admin = TRUE, tp_link = TRUE)
 
-	var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/3)
-
-	D.name = "chemicals"
-	D.icon = 'icons/obj/chempuff.dmi'
-
-	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
-
-	var/turf/A_turf = get_turf(A)
-
-	spawn(0)
-		for(var/i=0, i<3, i++)
-			step_towards(D,A)
-			D.reagents.reaction(get_turf(D))
-			for(var/atom/T in get_turf(D))
-				D.reagents.reaction(T)
-
-				// When spraying against the wall, also react with the wall, but
-				// not its contents.
-				if(get_dist(D, A_turf) == 1 && A_turf.density)
-					D.reagents.reaction(A_turf)
-				sleep(2)
-			sleep(3)
-		del(D)
-
-	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
-
-	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from a spray bottle.")
-		log_game("[key_name(user)] fired sulphuric acid from a spray bottle.")
-	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from a spray bottle.")
-		log_game("[key_name(user)] fired Polyacid from a spray bottle.")
-	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from a spray bottle.")
-		log_game("[key_name(user)] fired Space lube from a spray bottle.")
-	if(reagents.has_reagent("fuel"))
-		message_admins("[key_name_admin(user)] fired Welder fuel from a spray bottle.")
-		log_game("[key_name(user)] fired Welder fuel from a spray bottle.")
-	return
+	// Override for your custom puff behaviour
+	make_puff(A, user)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
-
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	to_chat(user, "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
 
+/obj/item/weapon/reagent_containers/spray/restock()
+	if(name == "Polyacid spray")
+		reagents.add_reagent("pacid", 2)
+	else if(name == "Lube spray")
+		reagents.add_reagent("lube", 2)
 
-/obj/item/weapon/reagent_containers/spray/examine()
-	set src in usr
-	..()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		usr << "[round(R.volume)] units of [R.name] left."
-	return
+/obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
+	// Create the chemical puff
+	var/transfer_amount = amount_per_transfer_from_this
+	if (!can_transfer_an_APTFT() && !is_empty()) //If it doesn't contain enough reagents to fulfill its amount_per_transfer_from_this, but also isn't empty, it'll spray whatever it has left.
+		transfer_amount = reagents.total_volume
+	var/mix_color = mix_color_from_reagents(reagents.reagent_list)
+	var/obj/effect/decal/chemical_puff/D = getFromPool(/obj/effect/decal/chemical_puff, get_turf(src), mix_color, amount_per_transfer_from_this)
+	reagents.trans_to(D, transfer_amount, 1/3)
 
-/obj/item/weapon/reagent_containers/spray/verb/empty()
+	// Move the puff toward the target
+	spawn(0)
+		for (var/i = 0, i < 3, i++)
+			step_towards(D, target)
+			D.react()
+			sleep(3)
 
-	set name = "Empty Spray Bottle"
-	set category = "Object"
-	set src in usr
+		returnToPool(D)
 
-	if(isturf(usr.loc))
-		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"
-		reagents.reaction(usr.loc)
-		spawn(5) src.reagents.clear_reagents()
+	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
@@ -131,6 +141,19 @@
 	..()
 	reagents.add_reagent("condensedcapsaicin", 40)
 
+// Plant-B-Gone
+/obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
+	name = "Plant-B-Gone"
+	desc = "Kills those pesky weeds!"
+	icon = 'icons/obj/hydroponics.dmi'
+	icon_state = "plantbgone"
+	item_state = "plantbgone"
+	volume = 100
+
+/obj/item/weapon/reagent_containers/spray/plantbgone/New()
+	..()
+	reagents.add_reagent("plantbgone", 100)
+
 
 //chemsprayer
 /obj/item/weapon/reagent_containers/spray/chemsprayer
@@ -144,102 +167,43 @@
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3;syndicate=5"
 
+	delay_spraying = FALSE
 
-//this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
-		return
-
-	if(istype(A, /obj/effect/proc_holder/spell))
-		return
-
-	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
-		if(!A.reagents.total_volume && A.reagents)
-			user << "<span class='notice'>\The [A] is empty.</span>"
-			return
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>\The [src] is full.</span>"
-			return
-
-		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>"
-		return
-
-	if(reagents.total_volume < amount_per_transfer_from_this)
-		user << "<span class='notice'>\The [src] is empty!</span>"
-		return
-
+/obj/item/weapon/reagent_containers/spray/chemsprayer/make_puff(var/atom/target, var/mob/user)
+	// Create the chemical puffs
+	var/mix_color = mix_color_from_reagents(reagents.reagent_list)
 	var/Sprays[3]
-	for(var/i=1, i<=3, i++) // intialize sprays
-		if(src.reagents.total_volume < 1) break
-		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
-		D.name = "chemicals"
-		D.icon = 'icons/obj/chempuff.dmi'
-		D.create_reagents(amount_per_transfer_from_this)
-		src.reagents.trans_to(D, amount_per_transfer_from_this)
 
-		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	for (var/i = 1, i <= 3, i++)
+		if (src.reagents.total_volume < 1)
+			break
 
+		var/obj/effect/decal/chemical_puff/D = getFromPool(/obj/effect/decal/chemical_puff, get_turf(src), mix_color, amount_per_transfer_from_this)
+		reagents.trans_to(D, amount_per_transfer_from_this)
 		Sprays[i] = D
 
-	var/direction = get_dir(src, A)
-	var/turf/T = get_turf(A)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
-	var/list/the_targets = list(T,T1,T2)
+	// Move the puffs towards the target
+	var/direction = get_dir(src, target)
+	var/turf/T = get_turf(target)
+	var/turf/T1 = get_step(T, turn(direction, 90))
+	var/turf/T2 = get_step(T, turn(direction, -90))
+	var/list/the_targets = list(T, T1, T2)
 
-	for(var/i=1, i<=Sprays.len, i++)
+	for (var/i = 1, i <= Sprays.len, i++)
 		spawn()
-			var/obj/effect/decal/D = Sprays[i]
-			if(!D) continue
+			var/obj/effect/decal/chemical_puff/D = Sprays[i]
+			if (!D)
+				continue
 
 			// Spreads the sprays a little bit
 			var/turf/my_target = pick(the_targets)
 			the_targets -= my_target
 
-			for(var/j=1, j<=rand(6,8), j++)
+			for (var/j = 1, j <= rand(6, 8), j++)
 				step_towards(D, my_target)
-				D.reagents.reaction(get_turf(D))
-				for(var/atom/t in get_turf(D))
-					D.reagents.reaction(t)
+				D.react(iteration_delay = 0)
 				sleep(2)
-			del(D)
+
+			returnToPool(D)
 
 	playsound(get_turf(src), 'sound/effects/spray2.ogg', 50, 1, -6)
-
-	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from a chem sprayer.")
-		log_game("[key_name(user)] fired sulphuric acid from a chem sprayer.")
-	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from a chem sprayer.")
-		log_game("[key_name(user)] fired Polyacid from a chem sprayer.")
-	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from a chem sprayer.")
-		log_game("[key_name(user)] fired Space lube from a chem sprayer.")
-	return
-
-// Plant-B-Gone
-/obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
-	name = "Plant-B-Gone"
-	desc = "Kills those pesky weeds!"
-	icon = 'icons/obj/hydroponics.dmi'
-	icon_state = "plantbgone"
-	item_state = "plantbgone"
-	volume = 100
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/New()
-	..()
-	reagents.add_reagent("plantbgone", 100)
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-		return
-
-	if (istype(A, /obj/effect/blob)) // blob damage in blob code
-		return
-
-	..()

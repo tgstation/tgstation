@@ -1,6 +1,7 @@
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
+	var/world_style_config = world_style
 
 	var/nudge_script_path = "nudge.py"  // where the nudge.py script is located
 
@@ -8,6 +9,7 @@
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
+	var/log_admin_only = FALSE
 	var/log_debug = 1					// log debug output
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
@@ -40,7 +42,6 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/Ticklag = 0.9
-	var/Tickcomp = 0
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
@@ -64,15 +65,32 @@
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
+	var/copy_logs = null
+
+	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
+	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
+
+	var/borer_takeover_immediately = 0
+
+	var/disable_player_mice = 0
+	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
 
+	//used to determine if cyborgs/AI can speak
+	var/silent_ai = 0
+	var/silent_borg = 0
+
 	var/server
 	var/banappeals
 	var/wikiurl = "http://baystation12.net/wiki/index.php?title=Main_Page"
+	var/vgws_base_url = "http://ss13.moe" // No hanging slashes.
 	var/forumurl = "http://baystation12.net/forums/"
+
+	var/media_base_url = "" // http://ss13.nexisonline.net/media
+	var/media_secret_key = "" // Random string
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -86,6 +104,7 @@
 
 	//game_options.txt configs
 
+	var/health_threshold_softcrit = 0
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
 
@@ -125,6 +144,7 @@
 	var/ghost_interaction = 0
 
 	var/comms_password = ""
+	var/paperwork_library = 0 //use the library DLL.
 
 	var/use_irc_bot = 0
 	var/irc_bot_host = "localhost"
@@ -135,23 +155,43 @@
 	var/assistantlimit = 0 //enables assistant limiting
 	var/assistantratio = 2 //how many assistants to security members
 
+	var/emag_energy = -1
+	var/emag_starts_charged = 1
+	var/emag_recharge_rate = 0
+	var/emag_recharge_ticks = 0
+
+	var/map_voting = 0
+	var/renders_url = ""
+
+	var/default_ooc_color = "#002eb8"
+
+	var/mommi_static = 0 //Scrambling mobs for mommis or not
+
+	var/skip_minimap_generation = 0 //If 1, don't generate minimaps
+	var/skip_vault_generation = 0 //If 1, don't generate vaults
+	var/shut_up_automatic_diagnostic_and_announcement_system = 0 //If 1, don't play the vox sounds at the start of every shift.
+
 /datum/configuration/New()
+	. = ..()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
+
 	for (var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
 
 		if (M.config_tag)
-			if(!(M.config_tag in modes))		// ensure each mode is added only once
+			if (!(M.config_tag in modes)) // Ensure each mode is added only once.
 				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
 				src.modes += M.config_tag
 				src.mode_names[M.config_tag] = M.name
 				src.probabilities[M.config_tag] = M.probability
+
 				if (M.votable)
-					src.votable_modes += M.config_tag
-		del(M)
-	src.votable_modes += "secret"
+					votable_modes += M.config_tag
+		qdel(M)
+
+	votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -181,7 +221,7 @@
 		if(type == "config")
 			switch (name)
 				if ("resource_urls")
-					config.resource_urls = stringsplit(value, " ")
+					config.resource_urls = text2list(value, " ")
 
 				if ("admin_legacy_system")
 					config.admin_legacy_system = 1
@@ -212,6 +252,9 @@
 
 				if ("log_admin")
 					config.log_admin = 1
+
+				if("log_admin_only")
+					config.log_admin_only = TRUE
 
 				if ("log_debug")
 					config.log_debug = text2num(value)
@@ -404,9 +447,6 @@
 				if("socket_talk")
 					socket_talk = text2num(value)
 
-				if("tickcomp")
-					Tickcomp = 1
-
 				if("humans_need_surnames")
 					humans_need_surnames = 1
 
@@ -435,8 +475,17 @@
 				if("ghost_interaction")
 					config.ghost_interaction = 1
 
+				if("disable_player_mice")
+					config.disable_player_mice = 1
+
+				if("uneducated_mice")
+					config.uneducated_mice = 1
+
 				if("comms_password")
 					config.comms_password = value
+
+				if("paperwork_library")
+					config.paperwork_library = 1
 
 				if("irc_bot_host")
 					config.irc_bot_host = value
@@ -455,13 +504,38 @@
 							config.python_path = "/usr/bin/env python2"
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
+
+				if("allow_cult_ghostwriter")
+					config.cult_ghostwriter = 1
+
+				if("req_cult_ghostwriter")
+					config.cult_ghostwriter_req_cultists = value
 				if("assistant_limit")
 					config.assistantlimit = 1
 				if("assistant_ratio")
 					config.assistantratio = text2num(value)
+				if("copy_logs")
+					copy_logs=value
+				if("media_base_url")
+					media_base_url = value
+				if("media_secret_key")
+					media_secret_key = value
+				if("vgws_base_url")
+					vgws_base_url = value
+				if("map_voting")
+					map_voting = 1
+				if("renders_url")
+					renders_url = value
+				if("mommi_static")
+					mommi_static = 1
+				if("skip_minimap_generation")
+					skip_minimap_generation = 1
+				if("skip_vault_generation")
+					skip_vault_generation = 1
+				if("shut_up_automatic_diagnostic_and_announcement_system")
+					shut_up_automatic_diagnostic_and_announcement_system = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
-
 
 		else if(type == "game_options")
 			if(!value)
@@ -469,8 +543,12 @@
 			value = text2num(value)
 
 			switch(name)
+				if("max_explosion_range")
+					MAX_EXPLOSION_RANGE = value
 				if("health_threshold_crit")
 					config.health_threshold_crit = value
+				if("health_threshold_softcrit")
+					config.health_threshold_softcrit = value
 				if("health_threshold_dead")
 					config.health_threshold_dead = value
 				if("revival_pod_plants")
@@ -505,6 +583,20 @@
 					config.limbs_can_break = value
 				if("respawn_delay")
 					config.respawn_delay = value
+				if("emag_energy")
+					config.emag_energy = value
+				if("emag_starts_charged")
+					config.emag_starts_charged = value
+				if("emag_recharge_rate")
+					config.emag_recharge_rate = value
+				if("emag_recharge_ticks")
+					config.emag_recharge_ticks = value
+				if("silent_ai")
+					config.silent_ai = 1
+				if("silent_borg")
+					config.silent_borg = 1
+				if("borer_takeover_immediately")
+					config.borer_takeover_immediately = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -610,7 +702,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+//		to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if (!(M.config_tag in modes))
 			del(M)
 			continue
@@ -619,5 +711,5 @@
 			continue
 		if (M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+//			to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
 	return runnable_modes

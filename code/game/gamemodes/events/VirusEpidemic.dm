@@ -7,7 +7,7 @@
 
 	Announce()
 		if(!virus)
-			for(var/mob/living/carbon/human/H in world)
+			for(var/mob/living/carbon/human/H in mob_list)
 				if((H.virus2.len) || (H.stat == 2) || prob(30))
 					continue
 				if(prob(100))	// no lethal diseases outside virus mode!
@@ -45,7 +45,7 @@
 //						virus_type = /datum/disease/t_virus
 					if("pierrot's throat")
 						virus_type = /datum/disease/pierrot_throat
-			for(var/mob/living/carbon/human/H in world)
+			for(var/mob/living/carbon/human/H in mob_list)
 
 				var/foundAlready = 0 // don't infect someone that already has the virus
 				for(var/datum/disease/D in H.viruses)
@@ -73,8 +73,6 @@
 					H.viruses += D
 					break
 			spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
-				command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-				world << sound('sound/AI/outbreak7.ogg')
+				command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert",alert='sound/AI/outbreak7.ogg')
 	Tick()
 		ActiveFor = Lifetime //killme
-

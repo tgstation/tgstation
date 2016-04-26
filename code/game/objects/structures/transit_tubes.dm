@@ -45,15 +45,11 @@
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
-
-
-/obj/structure/transit_tube_pod/Del()
+/obj/structure/transit_tube_pod/Destroy()
 	for(var/atom/movable/AM in contents)
 		AM.loc = loc
 
 	..()
-
-
 
 // When destroyed by explosions, properly handle contents.
 obj/structure/ex_act(severity)
@@ -61,9 +57,10 @@ obj/structure/ex_act(severity)
 		if(1.0)
 			for(var/atom/movable/AM in contents)
 				AM.loc = loc
+				// TODO: What the fuck are you doing
 				AM.ex_act(severity++)
 
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
@@ -71,32 +68,52 @@ obj/structure/ex_act(severity)
 					AM.loc = loc
 					AM.ex_act(severity++)
 
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			return
 
-
-
-/obj/structure/transit_tube_pod/New(loc)
-	..(loc)
-
+/obj/structure/transit_tube_pod/New()
+	. = ..()
 	air_contents.oxygen = MOLES_O2STANDARD * 2
 	air_contents.nitrogen = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
-	spawn(5)
+	spawn (5)
 		follow_tube()
 
+/obj/structure/transit_tube/New()
+	. = ..()
 
-
-/obj/structure/transit_tube/New(loc)
-	..(loc)
-
-	if(tube_dirs == null)
+	if (tube_dirs == null)
 		init_dirs()
 
+/obj/structure/transit_tube/Bumped(mob/AM as mob|obj)
+	var/obj/structure/transit_tube/tube = locate() in AM.loc
+	if(tube)
+		to_chat(AM, "<span class='warning'>The tube's support pylons block your way.</span>")
+		return ..()
+	else
+		var/turf/T = get_turf(src)
+		var/list/large_dense = list()
+		for(var/atom/movable/border_obstacle in T)
+			if(border_obstacle.flags&ON_BORDER)
+				if(!border_obstacle.CanPass(AM, AM.loc) && AM != border_obstacle)
+					return ..()
+			else if(border_obstacle != src)
+				large_dense += border_obstacle
+
+		//Then, check the turf itself
+		if (!T.CanPass(AM, T))
+			return ..()
+
+		//Finally, check objects/mobs to block entry that are not on the border
+		for(var/atom/movable/obstacle in large_dense)
+			if(!obstacle.CanPass(AM, AM.loc) && AM != obstacle)
+				return ..()
+		AM.loc = src.loc
+		to_chat(AM, "<span class='info'>You slip under the tube.</span>")
 
 
 /obj/structure/transit_tube/station/New(loc)
@@ -561,7 +578,7 @@ obj/structure/ex_act(severity)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = stringsplit(text, "-")
+	var/list/split_text = text2list(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually

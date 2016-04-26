@@ -30,9 +30,18 @@
 	var/newscaster_announcements = null
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
+	var/mixed = 0 // denotes whether its apart of a mixed mode or not
+	var/list/datum/mind/necromancer = list() //Those who use a necromancy staff OR soulstone a shade/construct
+	var/list/datum/mind/risen = list() // Those risen by necromancy or soulstone
+	var/eldergod = 1 // Can cultists spawn Nar-Sie? (Set to 0 on cascade or narsie spawn)
+	var/completion_text = ""
+
+	var/list/datum/mind/deathsquad = list()
+	var/list/datum/mind/ert = list()
+	var/rage = 0
 
 /datum/game_mode/proc/announce() //to be calles when round starts
-	world << "<B>Notice</B>: [src] did not define announce()"
+	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 
 
 ///can_start()
@@ -49,6 +58,9 @@
 	else
 		if(playerC >= required_players)
 			return 1
+
+	log_admin("Failed to start a round of [name]. Only [playerC] players ready out of [(master_mode=="secret") ? "[required_players_secret]" : "[required_players]"] needed.")
+	message_admins("Failed to start a round of [name]. Only [playerC] players ready out of [(master_mode=="secret") ? "[required_players_secret]" : "[required_players]"] needed.")
 	return 0
 
 
@@ -77,73 +89,6 @@
 ///Called by the gameticker
 /datum/game_mode/proc/process()
 	return 0
-
-
-//Called by the gameticker
-/datum/game_mode/proc/process_job_tasks()
-	var/obj/machinery/message_server/useMS = null
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
-			if(MS.active)
-				useMS = MS
-				break
-	for(var/mob/M in player_list)
-		if(M.mind)
-			var/obj/item/device/pda/P=null
-			for(var/obj/item/device/pda/check_pda in PDAs)
-				if (check_pda.owner==M.name)
-					P=check_pda
-					break
-			var/count=0
-			for(var/datum/job_objective/objective in M.mind.job_objectives)
-				count++
-				var/msg=""
-				var/pay=0
-				if(objective.per_unit && objective.units_compensated<objective.units_completed)
-					var/newunits = objective.units_completed - objective.units_compensated
-					msg="We see that you completed [newunits] new unit[newunits>1?"s":""] for Task #[count]! "
-					pay=objective.completion_payment * newunits
-					objective.units_compensated += newunits
-				else if(!objective.completed)
-					if(objective.is_completed())
-						pay=objective.completion_payment
-						msg="Task #[count] completed! "
-				if(pay>0)
-					if(M.mind.initial_account)
-						M.mind.initial_account.money += objective.completion_payment
-						var/datum/transaction/T = new()
-						T.target_name = "[command_name()] Payroll"
-						T.purpose = "Payment"
-						T.amount = objective.completion_payment
-						T.date = current_date_string
-						T.time = worldtime2text()
-						T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
-						M.mind.initial_account.transaction_log.Add(T)
-						msg += "You have been sent the $[pay], as agreed."
-					else
-						msg += "However, we were unable to send you the $[pay] you're entitled."
-					if(useMS)
-						// THIS SHOULD HAVE DONE EVERYTHING FOR ME
-						useMS.send_pda_message("[P.owner]", "[command_name()] Payroll", msg)
-
-						// BUT NOPE, NEED TO DO THIS BULLSHIT.
-						P.tnote += "<i><b>&larr; From [command_name()] (Payroll):</b></i><br>[msg]<br>"
-
-						if (!P.silent)
-							playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-						for (var/mob/O in hearers(3, P.loc))
-							if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
-						//Search for holder of the PDA.
-						var/mob/living/L = null
-						if(P.loc && isliving(P.loc))
-							L = P.loc
-						//Maybe they are a pAI!
-						else
-							L = get(P, /mob/living/silicon)
-
-						if(L)
-							L << "\icon[P] <b>Message from [command_name()] (Payroll), </b>\"[msg]\" (<i>Unable to Reply</i>)"
-					break
 
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
@@ -229,11 +174,9 @@
 
 /datum/game_mode/proc/send_intercept()
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\game_mode.dm:230: var/intercepttext = "<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>"
+
 	var/intercepttext = {"<FONT size = 3><B>[command_name()] Update</B> Requested status information:</FONT><HR>
 <B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br> <I>Reminder: Acting upon this information without solid evidence will result in termination of your working contract with Nanotrasen.</I></br>"}
-	// END AUTOFIX
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
@@ -255,10 +198,11 @@
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
-				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+				if(man.mind) man.mind.total_TC += extra
+				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
 				// Give them a warning!
-				man << "\red They are on to you!"
+				to_chat(man, "<span class='warning'>They are on to you!</span>")
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -281,7 +225,6 @@
 
 			comm.messagetitle.Add("[command_name()] Status Summary")
 			comm.messagetext.Add(intercepttext)
-	world << sound('sound/AI/commandreport.ogg')
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept.")
 /*	for(var/mob/M in player_list)
@@ -291,22 +234,11 @@
 		set_security_level(SEC_LEVEL_BLUE)*/
 
 
-/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
+/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1, poll=0)
 	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
-
-	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
-		if(BE_TRAITOR)		roletext="traitor"
-		if(BE_OPERATIVE)	roletext="operative"
-		if(BE_WIZARD)		roletext="wizard"
-		if(BE_REV)			roletext="revolutionary"
-		if(BE_CULTIST)		roletext="cultist"
-		if(BE_RAIDER)       roletext="Vox Raider"
-
 
 	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in player_list)
@@ -319,10 +251,10 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(player.client.prefs.be_special & role)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+			if(player.client.desires_role(role, display_to_user=poll))//if(player.client.prefs.be_special & role)
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
-					log_debug("[player.key] had [roletext] enabled, so drafting them.")
+					log_debug("[player.key] had [role] enabled, so drafting them.")
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
@@ -333,8 +265,8 @@
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
-				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
-					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+				if(player.client.desires_role(role, display_to_user=poll)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
 	if(restricted_jobs)
@@ -350,7 +282,7 @@
 			applicant = pick(drafted)
 			if(applicant)
 				candidates += applicant
-				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
+				log_debug("[applicant.key] was force-drafted as [role], because there aren't enough candidates.")
 				drafted.Remove(applicant)
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
@@ -359,7 +291,7 @@
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
 		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
-				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
 
 	if(restricted_jobs)
@@ -376,7 +308,7 @@
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
-				log_debug("[applicant.key] was force-drafted as [roletext], because there aren't enough candidates.")
+				log_debug("[applicant.key] was force-drafted as [role], because there aren't enough candidates.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
@@ -401,6 +333,11 @@
 		if(P.client && P.ready)
 			. ++
 
+/datum/game_mode/proc/Clean_Antags() //Cleans out the genetic defects of all antagonists
+	for(var/mob/living/A in player_list)
+		if((istype(A)) && A.mind && A.mind.special_role)
+			if(A.dna)
+				A.dna.ResetSE()
 
 ///////////////////////////////////
 //Keeps track of all living heads//
@@ -430,7 +367,7 @@
 //Reports player logouts//
 //////////////////////////
 proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report\n\n"
+	var/msg = "<span class='notice'><b>Roundstart logout report\n\n</span>"
 	for(var/mob/living/L in mob_list)
 
 		if(L.ckey)
@@ -480,7 +417,7 @@ proc/display_roundstart_logout_report()
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M << msg
+			to_chat(M, msg)
 
 
 proc/get_nt_opposed()
@@ -493,3 +430,92 @@ proc/get_nt_opposed()
 				dudes += man
 	if(dudes.len == 0) return null
 	return pick(dudes)
+
+
+/datum/game_mode/proc/update_necro_icons_added(datum/mind/owner)
+	for(var/headref in necromancer)
+		var/datum/mind/head = locate(headref)
+		for(var/datum/mind/t_mind in necromancer[headref])
+			if(head)
+				if(head.current)
+					if(head.current.client)
+						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+						head.current.client.images += I
+//						to_chat(world, "Adding minion overlay to [head.current]")
+				if(t_mind.current)
+					if(t_mind.current.client)
+						var/I = image('icons/mob/mob.dmi', loc = head.current, icon_state = "necromancer")
+						t_mind.current.client.images += I
+//						to_chat(world, "Adding master overlay to [t_mind.current]")
+				if(t_mind.current)
+					if(t_mind.current.client)
+						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+						t_mind.current.client.images += I
+//						to_chat(world, "Adding minion overlay to [t_mind.current]")
+
+/datum/game_mode/proc/update_necro_icons_removed(datum/mind/owner)
+	for(var/headref in necromancer)
+		var/datum/mind/head = locate(headref)
+		for(var/datum/mind/t_mind in necromancer[headref])
+			if(t_mind.current)
+				if(t_mind.current.client)
+					for(var/image/I in t_mind.current.client.images)
+						if((I.icon_state == "minion" || I.icon_state == "necromancer") && I.loc == owner.current)
+//							to_chat(world, "deleting [t_mind.current] overlay")
+							//del(I)
+							t_mind.current.client.images -= I
+		if(head)
+			//world.log << "found [head.name]"
+			if(head.current)
+				if(head.current.client)
+					for(var/image/I in head.current.client.images)
+						if((I.icon_state == "minion" || I.icon_state == "necromancer") && I.loc == owner.current)
+//							to_chat(world, "deleting [head.current] overlay")
+							//del(I)
+							head.current.client.images -= I
+	if(owner.current)
+		if(owner.current.client)
+			for(var/image/I in owner.current.client.images)
+				if(I.icon_state == "minion" || I.icon_state == "necromancer")
+//					to_chat(world, "deleting [owner.current] overlay")
+					//del(I)
+					owner.current.client.images -= I
+
+/datum/game_mode/proc/update_all_necro_icons()
+	spawn(0)
+		for(var/headref in necromancer)
+			var/datum/mind/head = locate(headref)
+			if(head.current)
+				if(head.current.client)
+					for(var/image/I in head.current.client.images)
+						if(I.icon_state == "minion" || I.icon_state == "necromancer")
+//							to_chat(world, "deleting [head.current] overlay")
+							//del(I)
+							head.current.client.images -= I
+			for(var/datum/mind/t_mind in necromancer[headref])
+				if(t_mind.current && t_mind.current.client)
+					for(var/image/I in t_mind.current.client.images)
+						if(I.icon_state == "minion" || I.icon_state == "necromancer")
+//							to_chat(world, "deleting [t_mind.current] overlay")
+							//del(I)
+							t_mind.current.client.images -= I
+
+		for(var/headref in necromancer)
+			var/datum/mind/head = locate(headref)
+			for(var/datum/mind/t_mind in necromancer[headref])
+				if(head)
+					if(head.current)
+						if(head.current.client)
+							var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+//							to_chat(world, "Adding minion overlay to [head.current]")
+							head.current.client.images += I
+					if(t_mind.current)
+						if(t_mind.current.client)
+							var/I = image('icons/mob/mob.dmi', loc = head.current, icon_state = "necromancer")
+							t_mind.current.client.images += I
+//							to_chat(world, "Adding master overlay to [t_mind.current]")
+					if(t_mind.current)
+						if(t_mind.current.client)
+							var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "minion")
+							t_mind.current.client.images += I
+//							to_chat(world, "Adding minion overlay to [t_mind.current]")

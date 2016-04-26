@@ -1,10 +1,38 @@
+var/list/poddoors = list()
 /obj/machinery/door/poddoor
 	name = "Podlock"
 	desc = "Why it no open!!!"
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "pdoor1"
-	var/id = 1.0
-	explosion_resistance = 25
+
+	explosion_resistance = 25//used by the old deprecated explosion_recursive.dm
+
+	explosion_block = 3
+	penetration_dampening = 20
+
+	var/id_tag = 1.0
+
+	prefix = "r_"
+	animation_delay = 18
+	animation_delay_2 = 5
+
+/obj/machinery/door/poddoor/preopen
+	icon_state = "pdoor0"
+	density = 0
+	opacity = 0
+
+/obj/machinery/door/poddoor/New()
+	. = ..()
+	if(density)
+		layer = 3.3		//to override door.New() proc
+	else
+		layer = initial(layer)
+	poddoors += src
+	return
+
+/obj/machinery/door/poddoor/Destroy()
+	poddoors -= src
+	..()
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
@@ -14,14 +42,14 @@
 
 /obj/machinery/door/poddoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if (!( istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded == 1) ))
+	if (!( iscrowbar(C) || (istype(C, /obj/item/weapon/fireaxe) && C.wielded == 1) ))
 		return
 	if ((src.density && (stat & NOPOWER) && !( src.operating )))
 		spawn( 0 )
 			src.operating = 1
 			flick("pdoorc0", src)
 			src.icon_state = "pdoor0"
-			src.SetOpacity(0)
+			src.set_opacity(0)
 			sleep(15)
 			src.density = 0
 			src.operating = 0
@@ -37,8 +65,9 @@
 		src.operating = 1
 	flick("pdoorc0", src)
 	src.icon_state = "pdoor0"
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(10)
+	layer = initial(layer)
 	src.density = 0
 	update_nearby_tiles()
 
@@ -53,14 +82,38 @@
 	if (src.operating)
 		return
 	src.operating = 1
+	layer = 3.3
 	flick("pdoorc1", src)
 	src.icon_state = "pdoor1"
 	src.density = 1
-	src.SetOpacity(initial(opacity))
+	src.set_opacity(initial(opacity))
 	update_nearby_tiles()
 
 	sleep(10)
 	src.operating = 0
+	return
+
+/obj/machinery/door/poddoor/ex_act(severity)//Wouldn't it make sense for "Blast Doors" to actually handle explosions better than other doors?
+	switch(severity)
+		if(1.0)
+			if(prob(80))
+				qdel(src)
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+		if(2.0)
+			if(prob(20))
+				qdel(src)
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+		if(3.0)
+			if(prob(80))
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
 	return
 
 /*
@@ -289,7 +342,7 @@
 		f1.sd_SetOpacity(opacity)
 		f2.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -308,7 +361,7 @@
 		f1.sd_SetOpacity(opacity)
 		f2.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -335,7 +388,7 @@
 		f4.sd_SetOpacity(opacity)
 		f3.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3
@@ -364,7 +417,7 @@
 		f4.sd_SetOpacity(opacity)
 		f3.sd_SetOpacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3

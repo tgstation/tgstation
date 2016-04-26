@@ -27,7 +27,7 @@
 			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 			if (user.get_active_hand() != I)
 				return
-			if((!in_range(src, usr) && src.loc != user))
+			if (!Adjacent(user) || user.stat)
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if(t)
@@ -38,11 +38,11 @@
 			if(!src.imp)	return
 			if(!src.imp.allow_reagents)	return
 			if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
-				user << "\red [src] is full."
+				to_chat(user, "<span class='warning'>[src] is full.</span>")
 			else
 				spawn(5)
 					I.reagents.trans_to(src.imp, 5)
-					user << "\blue You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units."
+					to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.</span>")
 		else if (istype(I, /obj/item/weapon/implanter))
 			if (I:imp)
 				if ((src.imp || I:imp.implanted))

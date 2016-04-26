@@ -1,6 +1,7 @@
 /mob/living/silicon/robot/Life()
 	set invisibility = 0
 	//set background = 1
+	if(timestopped) return 0 //under effects of time magick
 
 	if (src.monkeyizing)
 		return
@@ -18,10 +19,11 @@
 		use_power()
 		process_killswitch()
 		process_locks()
+		if(module)
+			module.recharge_consumable(src)
 	update_canmove()
 	handle_fire()
-
-
+	handle_beams()
 
 /mob/living/silicon/robot/proc/clamp_values()
 
@@ -36,10 +38,10 @@
 
 /mob/living/silicon/robot/proc/use_power()
 
+
 	if (is_component_functioning("power cell") && cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
-			src.stat = 1
 		else
 			if(src.module_state_1)
 				src.cell.use(3)
@@ -63,6 +65,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
+
 	if(src.camera && !scrambledcodes)
 		if(src.stat == 2 || wires.IsCameraCut())
 			src.camera.status = 0
@@ -78,7 +81,7 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != 2) //die only once
+	if(health <= 0 && src.stat != 2) //die only once
 		death()
 
 	if (src.stat != 2) //Alive.
@@ -140,20 +143,49 @@
 
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+/mob/living/silicon/robot/proc/handle_sensor_modes()
+	src.sight &= ~SEE_MOBS
+	src.sight &= ~SEE_TURFS
+	src.sight &= ~SEE_OBJS
+	src.sight &= ~BLIND
+	src.see_in_dark = 8
+	src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	if (src.stat == DEAD)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		src.see_in_dark = 8
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else
+		if (M_XRAY in mutations || src.sight_mode & BORGXRAY)
+			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			src.see_in_dark = 8
+			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if ((src.sight_mode & BORGTHERM) || sensor_mode == THERMAL_VISION)
+			src.sight |= SEE_MOBS
+			src.see_in_dark = 4
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+		if (sensor_mode == NIGHT)
+			see_invisible = SEE_INVISIBLE_MINIMUM
+			see_in_dark = 8
+		if ((src.sight_mode & BORGMESON) || (sensor_mode == MESON_VISION))
+			src.sight |= SEE_TURFS
+			src.see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+
+/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+	handle_sensor_modes()
+	/*if (src.stat == 2 || M_XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
+	else if ((src.sight_mode & BORGMESON  || sensor_mode == MESON_VISION) && src.sight_mode & BORGTHERM)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON)
+	else if (src.sight_mode & BORGMESON  || sensor_mode == MESON_VISION)
 		src.sight |= SEE_TURFS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
@@ -166,14 +198,20 @@
 		src.sight &= ~SEE_TURFS
 		src.sight &= ~SEE_OBJS
 		src.see_in_dark = 8
-		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO*/
 
-	for(var/image/hud in client.images)  //COPIED FROM the human handle_regular_hud_updates() proc
-		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-			client.images.Remove(hud)
+	regular_hud_updates() //Handles MED/SEC HUDs for borgs.
+	switch(sensor_mode)
+		if (SEC_HUD)
+			process_sec_hud(src, 1)
+		if (MED_HUD)
+			process_med_hud(src)
 
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)	hud.hud.process_hud(src)
+	/*switch(sensor_mode)
+		if (SEC_HUD)
+			process_sec_hud(src, 1)
+		if (MED_HUD)
+			process_med_hud(src)*/
 
 	if (src.healths)
 		if (src.stat != 2)
@@ -266,7 +304,7 @@
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
 		else
-			if(client && !client.adminobs)
+			if(client && !client.adminobs && !iscamera(client.eye) && !isTeleViewing(client.eye))
 				reset_view(null)
 
 	return 1
@@ -290,7 +328,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				src << "\red <B>Killswitch Activated"
+				to_chat(src, "<span class='warning'><B>Killswitch Activated</span>")
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -301,7 +339,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
+				to_chat(src, "<span class='warning'><B>Weapon Lock Timed Out!</span>")
 			weapon_lock = 0
 			weaponlock_time = 120
 
@@ -319,13 +357,13 @@
 	update_icons()
 	return
 
-/mob/living/silicon/robot/fire_act()
+/mob/living/silicon/robot/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
 
 //Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
+	if(paralysis || stunned || weakened || locked_to || lockcharge) canmove = 0
 	else canmove = 1
 	return canmove

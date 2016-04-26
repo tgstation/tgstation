@@ -1,4 +1,3 @@
-
 datum/fusion_reaction
 	var/primary_reactant = ""
 	var/secondary_reactant = ""

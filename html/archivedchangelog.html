@@ -1,6 +1,1921 @@
 <!--
 Stick old posts here to prevent cluttering of main changelog.
 -->
+<div class="commit sansserif">
+	<h2 class="date">2013.12.31</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Large boxes can be made with 4 cardboard.</li>
+		<li class="rscadd">Add paramedic gear from CREDITS GO HERE.</li>
+		<li class="rscadd">RPDs and pipe dispensers cleaned up, and can spawn injectors and dual-port vents.</li>
+		<li class="rscadd">Tank dispensers can be unwrenched and moved around.</li>
+		<li class="rscadd">Airlock control consoles can be configured with a multitool.</li>
+		<li class="rscadd">Airlocks, vents, injectors, conveyors, and conveyor switches can be tuned with a multitool.</li>
+		<li class="rscadd">Conveyor belts are now constructable with a conveyor circuitboard.</li>
+		<li class="rscadd">Conveyor belt switches are now constructable with a signaller and a rod.</li>
+		<li class="rscadd">Air alarms can now scrub Nitrogen (N<sub>2</sub>).</li>
+		<li class="bugfix">Vox get objectives.</li>
+		<li class="bugfix">Air alarm temperature validation is now inclusive.</li>
+		<li class="bugfix">Firelocks will reclose when opened by hand under the new air alarm code. (Crowbarring keeps them open, like on the old code.)</li>
+		<li class="bugfix">MoMMIs can change light bulbs.</li>
+		<li class="bugfix">MoMMIs can use tank dispensers.</li>
+		<li class="bugfix">MoMMIs and borgs can remove air alarms and fire alarms.</li>
+		<li class="bugfix">Cable coils now no longer have a hard-wired limit of 30 lengths. Fixes borg coils acting buggy above 30 lengths.</li>
+		<li class="bugfix">Airlock electronics will accept IDs in the ID slot, and can be configured by borgs (Only MoMMIs can do so at the moment).</li>
+		<li class="bugfix">Hulk smashing tables no longer produces rack parts.</li>
+		<li class="bugfix">Lawyers can access paper.</li>
+		<li class="bugfix">Observers are no longer naked, and sport the unused tourist outfit.</li>
+		<li class="bugfix">Bhangmeters are computers with circuitboards and everything.</li>
+		<li class="bugfix">Freezers and heaters did not properly handle pipe networks when moved.</li>
+		<li class="bugfix">Hopefully fix DNA injector issues.</li>
+		<li class="bugfix">Fix reinforced windows not being a pain in the ass to remove.</li>
+		<li class="bugfix">Fix plasma windows, rwindows, etc combining with sheets of the wrong type.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.12.15</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Circuit imprinters have a processing queue and use the new internal material handling system for easier addition of materials in the future.</li>
+		<li class="rscadd">Circuit imprinters and mechfabs can now have their output location changed with a multitool.</li>
+		<li class="rscadd">Added blast doors to atmos mix tank.</li>
+		<li class="rscadd">RPD added to CE's office.</li>
+		<li class="rscadd">Rewritten mutation handling.  Far more modular and flexible than the old code, will make adding new mutations far easier.</li>
+		<li class="rscadd">Airlock, fire alarm, and air alarm electronics are all made on the circuit imprinter now.</li>
+		<li class="bugfix">Numerous air alarms improvements.  Now should no longer fumble doors, and icons now refresh correctly, no longer affected by area alerts. Doors will automatically open upon alert clearance.</li>
+		<li class="bugfix">Air alarm thresholds now can be set by silicons.</li>
+		<li class="bugfix">Fix monkeys not having their genes set correctly.</li>
+		<li class="bugfix">DNA block injectors fixed.</li>
+		<li class="bugfix">Fix unextinguishable mob fires.</li>
+		<li class="bugfix">Fix Vox being unable to wear their own pressure suits.</li>
+	</ul>
+	<h3 class="author">Imported from Baystation 12:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">AntagHUD added.</li>
+		<li class="rscadd">Added newer ghost sprites.</li>
+	</ul>
+</li>
+<div class="commit sansserif">
+	<h2 class="date">2013.12.07</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Research devices light up when linked to a console.</li>
+		<li class="rscadd">Added atmos tape, cleaned up the awful sprite.</li>
+		<li class="bugfix">MoMMI Nest RD console now connects to the network properly.</li>
+		<li class="bugfix">Fork in-hand sprite fixed.</li>
+		<li class="bugfix">Fix DNA modifier block injector spam exploit.</li>
+		<li class="bugfix">Human icons now update properly. The same fix should also fix fat people having invisible-man-style floating clothing when lying down.</li>
+		<li class="bugfix">Fix all whispers being last words.</li>
+		<li class="bugfix">Batons now come pre-charged and can be recharged by borgs in a borg charger.</li>
+		<li class="tweak">Telescience made a bit more difficult, high-security areas are now jammed.</li>
+	</ul>
+</li>
+<div class="commit sansserif">
+	<h2 class="date">2013.12.04</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added Bay's edition of telescience, with some changes.</li>
+		<li class="rscadd">Completely recoded DNA.  Should be the same experience as the old, but more efficient and MUCH less spaghetti. (Admins can also fuck with DNA now.)</li>
+		<li class="rscadd">Re-added cleaned-up engiseer borg to the game.</li>
+		<li class="rscadd">Someone under surgery must be unconscious, dead, or asleep (under anesthesia).</li>
+		<li class="rscadd">Fuel tanks explode when air temperature exceeds 561.15&deg;K.</li>
+		<li class="rscadd">You can now whisper while in crit, but only once and you'll immediately die afterwards.</li>
+		<li class="rscadd">A new MoMMI nest has been added south of Recycling.</li>
+		<li class="rscadd">Added TG's voice analyser.</li>
+		<li class="rscadd">Added Bay's megaphone.</li>
+		<li class="rscadd">Added NanoUI for the antimatter engine.</li>
+		<li class="rscadd">Protolathes now have a queue.</li>
+		<li class="rscadd">MoMMIs now have a parking brake that prevents them from moving or being moved.</li>
+		<li class="rscadd">Added Osaifh's new borg component sprites.</li>
+		<li class="rscadd">Added lokiamis' new robot limb sprites.</li>
+		<li class="rscadd">Replaced detective's office with lokiamis' rework of it.</li>
+		<li class="rscadd">Recoded smelting, recycling, and stacking machines.  Far more flexible now, and recycler can run smelter recipes.</li>
+		<li class="rscadd">Re-added boxing ring from older server code.</li>
+		<li class="rscadd">Paperwork update:  Copying asses, AI cameras, and a couple other things.</li>
+		<li class="rscadd">Mop bucket wheels can now be locked by clicking on it with an empty hand.</li>
+		<li class="rscadd">Protolathe output location can be changed by clicking on one with a multitool.</li>
+		<li class="rscdel">Removed adminghost and ghost interaction.</li>
+		<li class="rscdel">Removed ghost visibility in darkness.</li>
+		<li class="bugfix">Atmos tank and monitoring computers fixed.</li>
+		<li class="bugfix">MoMMIs can no longer speak one character at a time.</li>
+		<li class="bugfix">Fixed IV drips being interacted with in death or crit.</li>
+		<li class="bugfix">Robots and MoMMIs now get asked to set their name on roundstart.</li>
+		<li class="bugfix">Fix magic stunprod powercells.</li>
+		<li class="bugfix">Added strict checking of things put into cigarette packets.</li>
+		<li class="bugfix">Monkeycubes for Farwa, Naera, etc. should be expandable via fire extinguisher, now.</li>
+		<li class="bugfix">Asteroid atmos greatly optimized, also prevents miners getting knocked around during hardcore.</li>
+		<li class="bugfix">RUST fuel compressor construction fixed.</li>
+		<li class="bugfix">Fix DNA scanners not handling grabs correctly.</li>
+		<li class="bugfix">MoMMIs can insert things into boxes, backpacks, lockers, and bags.</li>
+		<li class="bugfix">MoMMIs and mediborgs can dick with chemdispenser beakers.  All robots can repair dispensers (or wreck them).</li>
+		<li class="bugfix">MoMMIs now automatically activate the tool slot after picking up an item or activating it from their modules panel.</li>
+		<li class="bugfix">MoMMIs differentiate between the metal in their inventory (which can't be inserted into machines) and regular metal.</li>
+		<li class="bugfix">Fix heist not counting objects in inventory.</li>
+		<li class="bugfix">Fix slimes not being grabbable.</li>
+		<li class="bugfix">Require consciousness when using emitters.</li>
+		<li class="bugfix">Fix species whitelist.</li>
+		<li class="bugfix">Fuel jars will now be consumed when put into the AME.</li>
+		<li class="bugfix">AME rendering fixed.</li>
+		<li class="tweak">AME output per core reduced.</li>
+		<li class="tweak">Research job objective's target biotech level reduced to 5 from 8.</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Reworked the warning system, warns are now persistent and warn bans are exponentially longer based on how many times you've been banned.</li>
+		<li class="rscadd">NanoUI APC added from /tg/.</li>
+		<li class="bugfix">Monkey implant surgery fixes.</li>
+		<li class="bugfix">DNA scanner CSS fixes.</li>
+		<li class="bugfix">Fix toxins not having vacuum tiles.</li>
+		<li class="bugfix">Stun baton fix.</li>
+		<li class="bugfix">Intercom added to morgue and AME room.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.11.10</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Heist gamemode can also occur as an event.</li>
+		<li class="rscadd">Ghosts now have read-only access to all machinery.  Unless you're an admin ghost with +FUN and +ADMIN, in which case you have full access.</li>
+		<li class="rscadd">Re-added the Antimatter reactor.  Also added a room for building one east of the SMES room.</li>
+		<li class="rscadd">Added four new slimes from /tg/: Bluespace, pyrite, cerulean, and sepia.</li>
+		<li class="rscadd">Merged in mobs-on-fire from /tg/.</li>
+		<li class="rscadd">Cram small things into a fire extinguisher to use it as a gun.</li>
+		<li class="rscadd">Added fax machine to IAA office, conference room, and captain's room.</li>
+		<li class="rscadd">Add green flashing in areas that aren't shielded during radiation storms.</li>
+		<li class="rscadd">Add /tg/'s improvised stun baton and coke can IEDs, with adjustments.</li>
+		<li class="rscadd">Added playable Gray species.  Grays can see better than humans, have telepathic messaging at roundstart, and are immune to sulphuric acid.  On the other hand, they punch like wimps, and treat water like everyone else treats sulphuric acid.</li>
+		<li class="rscadd">Ghosts become very slightly visible in darkness.  Very hard to see unless they omnighost, but you can still see movement.</li>
+		<li class="rscadd">The new rooms in maint have been populated.</li>
+		<li class="rscadd">Botany has a new layout.</li>
+		<li class="rscadd">Added heat-resistant plasma glass from Bay.  Sand + Plasma in mining furnace, can also be reinforced.</li>
+		<li class="rscadd">Added drunkenness effect to virology.</li>
+		<li class="bugfix">Fixed Phazon sprites.</li>
+		<li class="bugfix">Fixed Phase Array having 0 cost and not being buildable.</li>
+		<li class="bugfix">Fixed misaligned doors in brig.</li>
+		<li class="bugfix">Corrected text search parameters in h_Sandbox's type blacklisting.  No more narsie.</li>
+		<li class="bugfix">Optimized mucus.</li>
+		<li class="bugfix">Syringes will no longer block loading of syringeguns.</li>
+		<li class="tweak">Max research for materials brought up to 9.  Other tech levels adjusted.</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Fixed an exploit with autolathes.</li>
+	</ul>
+	<h3 class="author">SarahJohnson updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Re-added farmbots.</li>
+		<li class="rscadd">Added some new plants from /tg/: Novaflowers, koibeans, ghost chilis, moon flowers.</li>
+		<li class="rscadd">Added maint hatches to DNA scanners, hydro trays.  Both are now also constructable.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.10.19</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Osaifh contributed new sprites for the phazon construction sequence.</li>
+		<li class="rscadd">Blood bags now buildable with plastic sheets.</li>
+		<li class="rscadd">Freezers and heaters can be rotated.</li>
+		<li class="rscadd">Added in-hand sprites for the store suits.</li>
+		<li class="bugfix">Ice works properly when enabled in ZAS settings (disabled on main server).</li>
+		<li class="bugfix">Fixed wooden limbs not being attachable in surgery.</li>
+		<li class="bugfix">Laser turrets hooked up to their buttons on telecomms correctly.</li>
+		<li class="bugfix">Fixed inhand sprites for buyable robotics items.</li>
+		<li class="bugfix">Fixed Detection for robotics objectives.</li>
+		<li class="tweak">Fluid footprint trail colors now match the blood sprites.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.10.7</h2>
+	<h3 class='author'>Chinsky updated:</h3>
+	<ul class='changes bgimages16'>
+		<li class='rscadd'>Added contact-spread viruses. Spread if infected guy touches someone with bare hands, or if someone touches bare infected guy. Biosuits/gloves help.</li>
+		<li class='rscadd'>Changed way airborne viruses spread a bit. Now 20% of breaths will carry viruses to adjacent tiles. Wearing sterile mask cuts down it to 5%. Masks, bio/space suits (only when worn with matching helmet) protect, internals protect completely.</li>
+		<li class='rscadd'>Raised infection chances considerably. They were so low people reported that infection does not work. Now it's 50-90% chance for unprotected folks.</li>
+		<li class="bugfix">Blood puddles and mucus now spread the fun again</li>
+	</ul>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Moved Telecomms to station, satellite is abandoned.</li>
+		<li class="rscadd">Robotnik 'stache added.</li>
+		<li class="rscadd">Added Centcomm Merch Store to cargo, payable via job objective cash.</li>
+		<li class="rscadd">Re-added roburgers.</li>
+		<li class="rscadd">Add wooden arms and hook hands. Hook hands cannot fire weapons.</li>
+		<li class="rscadd">Major refactor of blood and blood trails so trails of all kinds can be tracked.</li>
+		<li class="rscadd">Mulebots can run over xenos.</li>
+		<li class="rscadd">IV drips are now constructable with two sheets of metal.</li>
+		<li class="bugfix">No more hitting blood/dirt with things; RCDs and other tools ignore cleanables.  Fixes dirt making it impossible to fix the floor/seal breaches.</li>
+		<li class="bugfix">Peglegs no longer bleed.</li>
+		<li class="bugfix">Health scanners now report when a limb is prosthetic.</li>
+		<li class="bugfix">Stole bay's viro layout to fix remaining viro issues.</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Custom amount button on chem dispenser</li>
+		<li class="tweak">Paralysis sting now costs 4 genome points rather than 3, this is a slight change in order to further balance the changeling gamemode.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.09.30</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Air alarms now have their own Nano UI, home-made this time. (This breaks atmos computers for now, not tested well.)</li>
+		<li class="experiment">Peglegs re-added from the old server, improved and fixed in many places.  Not tested well.</li>
+		<li class="rscadd">Sandbox mode fixed.</li>
+		<li class="rscadd">Nano UI added from Bay. Check out the chemical dispensers, cryo tubes, and DNA modifiers for examples.</li>
+		<li class="rscadd">Re-added thermal plates, also made new icons for them (and cold sinks, heat sources).</li>
+		<li class="rscadd">Floorlength braids can trip you if you're running.</li>
+		<li class="rscadd">Oxygen-scrubbing vent scrubbers have a greenish hue as a warning.</li>
+		<li class="rscadd">Bonegel added to mediborg's surgical suite.</li>
+		<li class="rscadd">Phazon is smeltable.</li>
+		<li class="bugfix">Air alarms refresh correctly when dicking with scrubbers or vents.</li>
+		<li class="bugfix">Fix MoMMI Spawners.</li>
+		<li class="bugfix">Fix some vox casual suit sprites.</li>
+		<li class="bugfix">Fix buggy vent scrubber operation.</li>
+		<li class="bugfix">Vox should now spawn with their Vox box.</li>
+		<li class="bugfix">VOX voice clarified by removing the extremely heavy bass.</li>
+		<li class="rscdel">Room-filling N2O canisters removed due to being broken as fuck in ZAS, bwing spawnable in sandbox, and being redundant.</li>
+		<li class="rscdel">Removed my lighting "improvements".</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Alt click something within 3 tiles of you to get a list items on that tile in a tab, you can interact with them normally there.
+		Good for finding something in a stack of items that would normally lag your client out by right clicking. AI's can't do this! Shamelessly stolen from SuperSayu</li>
+		<li class="rscadd">Mimes now have a stage name along with clowns.</li>
+		<li class="bugfix">Various bug fixes with the map and other gameplay elements</li>
+		<li class="rscdel">Removed going to sleep on logout, games too buggy and it can be the longest 5 seconds of your life waiting to wakeup.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.09.23</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Replaced old VOX voice with new female voice that we can replicate, added a bunch of words and fixed some phrases for immersions.</li>
+		<li class="rscadd">Gas Chamber added to prison wing.</li>
+		<li class="rscadd">Courtroom re-added to security.  Detective moved to reporter's old office.</li>
+		<li class="rscadd">Added Osaifh's new Vox casual pressure suits, granted upon spawn.</li>
+		<li class="rscadd">Baguloth has returned.</li>
+		<li class="bugfix">Phazon now has a full construction path and higher requirements, both research-wise and material-wise.</li>
+		<li class="bugfix">Vox masks should no longer spawn on the map unless someone is whitelisted for Vox, or if alien whitelisting is disabled.</li>
+		<li class="bugfix">Fixed an assload of problems with atmos on the map.</li>
+		<li class="bugfix">Job and species equipping code will now drop an item on the floor if it cannot equip it.</li>
+		<li class="bugfix">Fixed doors being on top of walls at the Vox trading post.</li>
+		<li class="bugfix">MoMMI spawner now has a recharge time and a charging sprite.</li>
+		<li class="bugfix">Cleanbot now cleans up blood again.</li>
+		<li class="bugfix">Fix being unable to mute MIDIs.</li>
+		<li class="bugfix">Fix VOX sounds not being preloaded, other preloading problems.</li>
+		<li class="bugfix">Fix isolators, hopefully.</li>
+		<li class="bugfix">Fix simple_mobs being broken as hell.</li>
+		<li class="bugfix">Fix isolators, hopefully.</li>
+		<li class="bugfix">Fix PDA information disclosure exploit.</li>
+		<li class="bugfix">MoMMIs should be able to reinforce glass, now.</li>
+		<li class="rscdel">Vox Raiders removed due to controversy and constant issues with balance.</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Powerglove added.  Now everything else is child's play.</li>
+		<li class="rscadd">Space is cold for humans again.</li>
+		<li class="rscadd">Bhangmeter now logs the 'theoretical' size of the bomb if its over the cap.</li>
+		<li class="rscadd">Adds 50 milk and x5 meat button for biogenerator</li>
+		<li class="bugfix">Fixed ventcrawling being broken by aliens (possibly).</li>
+		<li class="bugfix">Beepsky can no longer stun people inside of mechs or structures.</li>
+		<li class="bugfix">Posibrains no longer speak or hear binary.</li>
+		<li class="bugfix">Fixed pump shotguns fucking up when fired point-blank.</li>
+		<li class="bugfix">Fixed users using flavor text to pretend being braindead.</li>
+		<li class="bugfix">Aliums can see in the dark now.</li>
+		<li class="rscdel">Phazon removed due to being imbalanced as fuck.</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.09.16</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Fixed law reporting</li>
+		<li class="bugfix">Fixed some map stuff</li>
+		<li class="bugfix">Fixed lighting</li>
+		<li class="rscadd">Robotics objectives</li>
+		<li class="rscadd">Added phazon to the mech fab</li>
+		<li class="rscadd">Skellington race</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Fixed greytide implant protect objectives</li>
+		<li class="bugfix">Fixed malf</li>
+		<li class="bugfix">Fixed dartgun mixing window</li>
+		<li class="bugfix">Fixed solars</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.09.15</h2>
+	<h3 class="author">N3X15 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Job objectives: <a href="http://ss13.nexisonline.net/wiki/Job_Objectives">http://ss13.nexisonline.net/wiki/Job_Objectives</a></li>
+		<li class="experiment">Skellington race.</li>
+		<li class="rscadd">Code compatible with BYOND 500.</li>
+		<li class="rscadd">Vox trading post added.</li>
+		<li class="rscadd">Xenobiology has been reworked to support independent atmospheres in each cell, configurable from the xenobiology atmos computer and via the filters in the new xenobiology maintenance tunnel (all of which require xeno access).</li>
+		<li class="rscadd">MoMMI speech is now directed to the new Damage Control channel.</li>
+		<li class="rscadd">Air alarm scrubbing interface reworked.</li>
+		<li class="rscadd">Air alarms now have a few presets under modes: Human, Vox, and Server.</li>
+		<li class="bugfix">Footprints and mule bloodtrails have been significantly optimized.</li>
+		<li class="bugfix">Air alarms will no longer constantly refresh when off the main screen.</li>
+		<li class="bugfix">Free air no longer available by building a turf.</li>
+		<li class="bugfix">Fixed lighting leaving darkness on space and generally being fucked when turfs change.</li>
+		<li class="tweak">Vox significantly buffed.</li>
+		<li class="tweak">Vox only have a 25% chance of getting a kidnap objective.</li>
+	</ul>
+	<h3 class="author">Pomf123 updated</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">New traitor item for bartenders: Drunk Bullets.</li>
+		<li class="bugfix">Borg droideka module fixed.</li>
+		<li class="bugfix">Organ failure event fixed.</li>
+		<li class="bugfix">Hopefully fixed aliens ventcrawling.</li>
+		<li class="tweak">Pain nerfed.</li>
+		<li class="rscdel">Shrapnel no longer checked for performance reasons.</li>
+	</ul>
+</div>
+	
+<div class="commit sansserif">
+	<h2 class="date">2013.09.12</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Another uplink item for assistants.</li>
+		<li class="bugfix">changeling stasis should fix pain, shrapnel and germ level.</li>
+		<li class="tweak">Removed sharp melee items getting stuck in a person's body for now</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.09.09</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Update to latest baycode for various fixes and new features.</li>
+		<li class="rscadd">Vox Raiders gamemode added.</li>
+		<li class="rscadd">Fatness mutation re-added to humans and made it selectable from the character screen.  Other species don't have the sprites.</li>
+		<li class="rscadd">Added a simple flag to vents that prevents them from spawning mice.  Useful for stopping mice from spawning in atmos/toxins mixing/other places where they can't escape.</li>
+		<li class="rscdel">Due to hardcoded byond limits, many unused and fluff items were removed.</li>
+		<li class="experiment">MoMMI Spawners added for those who wish to spawn as a MoMMI on the derelict rather than as a mouse. (Disabled for now.)</li>
+		<li class="bugfix">Fixed input pipes taking up too much CPU when miners dump an ore box full of shit into them.</li>
+		<li class="bugfix">Fix a PDA exploit.</li>
+		<li class="bugfix">Vox (and other future nitrogen-breathers) now spawn with the required internals.</li>
+		<li class="bugfix">MoMMIs can open and close crates.</li>
+		<li class="tweak">Blob win condition is now 500 blobs per core, up from 350.</li>
+		<li class="tweak">Unfat sting is now free.</li>
+		<li class="tweak">ERT hardsuits have heat protection.</li>
+		<li class="tweak">MoMMIs cannot slip in space anymore.</li>
+	</ul>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Uplink items now have a short blurb describing what they are and their use.</li>
+		<li class="rscadd">Job specific traitor items, still a work in progress.</li>
+		<li class="rscadd">Identity bans added:  Force you to have a random name and appearance upon spawn.</li>
+		<li class="tweak">Increased the hunger rate making chefs actually usefull!</li>
+		<li class="bugfix">Changeling regenerate now properly fixes organ damage.</li>
+		<li class="bugfix">Holstered weapons will now be properly affected by an EMP.</li>
+		<li class="bugfix">Fixed changelings being obviously alive when they're in stasis.</li>
+		<li class="bugfix">Makes MoMMI unable to be blob candidate, otherwise it gets picked and round ends immediately.</li>
+		<li class="bugfix">Fixed MoMMI eye sprites.</li>
+		<li class="bugfix">Add a missing wire to the map for the power monitor.</li>
+		<li class="bugfix">Fixes cyborg/MoMMI glass regeneration while being in a recharge_station.</li>
+		<li class="bugfix">Fixes MoMMI dropping their emag tool when storing.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.27</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			MoMMIs can now be made with positronic brains. Will also stop accepting legs/arms/cells after you fulfill the requirements.
+		</li>
+		<li class="rscadd">
+			Borg eyes can be seen in the dark (unless it's a hiding MoMMI).
+		</li>
+		<li class="bugfix">
+			Fixed disposal delivery chutes creating ear-raping noises when eating big piles of garbage.
+		</li>
+		<li class="bugfix">
+			Added some more recyclable crap.
+		</li>
+		<li class="bugfix">
+			Lighting will no longer affect space.
+		</li>
+	</ul>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed air conditioners creating tornadoes.
+		</li>
+		<li class="bugfix">
+			Fixed magboots not keeping you from being blown off your feet by ZAS.
+		</li>
+		<li class="bugfix">
+			Fixed random names for females.
+		</li>
+		<li class="rscadd">
+			Added manual quick-switching to pocket items
+		</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.08.25</h2>
+	<h3 class="author">Giacom updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Ported /tg/'s new blob mode for you guys, enjoy! If you don't know what it is, new blob is basically player controlled blobs with RTS elements like producing cannon fodder units, resource gathering and expanding.
+		</li>
+	</ul>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added the ability for blob overmind's to make new cores if they have enough resources and are far enough away from their original core.
+		</li>
+		<li class="rscadd">
+			Added blob 'hivemind' chat so they can talk to each other
+		</li>
+		<li class="rscadd">
+			Added the ability for blob overmind's to ctrl+click to expand their blobness, standard criteria must be met though.
+		</li>
+		<li class="rscadd">
+			Added a very often asked for feature, cyborgs and MoMMI's can now alt+click airlocks to open or close them
+		</li>
+		<li class="bugfix">
+			Fixed blob ui to work with /vay/code
+		</li>
+		<li class="bugfix">
+			Fixed some MoMMI stuff with picking up and dropping items
+		</li>
+	</ul>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed inability to close borg/MoMMI modules window after death/other circumstances.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.22</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">
+			Made it possible for atmos to move people and objects again. HARDMODE RETUUUUUURNS
+		</li>
+		<li class="rscadd">
+			Added Bhangmeter for R&amp;D to check how their bombs did.  It's in the bomb launching room in Tox.
+		</li>
+		<li class="rscadd">
+			Added Recycling Center where disposals was.  Melts objects down into their component materials if possible, otherwise ships them down to the mass driver.
+		</li>
+		<li class="rscadd">
+			Brand new Air Conditioner units.  Basically reverse Space Heaters.
+		</li>
+		<li class="tweak">
+			No longer possible to build false walls into space (prevents atmos griff), added some admin monitors for atmos-griffing.
+		</li>
+		<li class="spellcheck">
+			Fixed some spelling errors here and there.
+		</li>
+	</ul>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			Secborgs now have a limited number of shots with their emagged lasers, recharges over time.
+		</li>
+		<li class="tweak">
+			Everyone can wash out each other's mouths with soap.
+		</li>
+		<li class="tweak">
+			Remote View only works on humans.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-08-19</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Tiny overhaul of the item equip system. When you go to equip something to yourself you no longer need to take off what you're wearing, the new system swaps what you're holding with what you're wearing and drops anything that doesn't fit on the new piece of clothing.
+		</li>
+		<li class="rscadd">
+			Central Command has a random name now, Thanks to Startoad from /tg/ for the help.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.18</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Constructable igniters added.  Take an assembly with an igniter on one side, drop it on the floor, weld.  Weld to undo existing igniters (unless they're one of the premade ones on the map).
+		</li>
+		<li class="rscadd">
+			Vending machine use simplified:  If you have a card (or PDA) in your ID slot, it'll autoswipe it.  PIN numbers are no longer required, either.
+		</li>
+		<li class="rscadd">
+			Added a few meters for borg consumables to the status panel to make it easier to determine how restocking is progressing in a recharge station.
+		</li>
+		<li class="bugfix">
+			Fix for some underlying problems with MoMMI inventory management.
+		</li>
+		<li class="bugfix">
+			MoMMIs with a keeper lawset will recite their laws on the robot talk channel instead of trying (and failing) to do so in common.
+		</li>
+		<li class="bugfix">
+			Fixed a bunch of problems with the changelog's code, made credits slightly easier on the eyes.
+		</li>
+		<li class="bugfix">
+			MoMMIs can now open and close hidden doors.
+		</li>
+		<li class="tweak">
+			Gave MoMMIs a fire extinguisher and glass, and took away the health analyzer.
+		</li>
+		<li class="tweak">
+			Added some engineering tape to old robotics' and the reporter's offices' doors, among other mapping fixes and tweaks.
+		</li>
+	</ul>
+	<h3 class="author">Pomf123 Updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Areas with air alarms, fire alarms, etc. are now viewable via a special console in engineering.  Cameras will automatically join and leave the appropriate networks as they receive alarms.
+		</li>
+		<li class="bugfix">
+			Air Alarms fixed.
+		</li>
+		<li class="tweak">
+			MoMMI laws sorted to make slightly more sense.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.15</h2>
+	<h3 class="author">N3X15, Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Osaifh made a cool new icon for the MoMMI's RPD.
+		</li>
+		<li class="rscadd">
+			Recharging stations can be unwrenched and moved around, dismantled with a welder, and built with a circuit board (powerstorage 4, programming 3, then a bunch of cable, some matter bins, and micromanipulators).
+		</li>
+		<li class="rscadd">
+			Digital Valves can be removed via wrench, unless they have a radio signal configured.
+		</li>
+		<li class="bugfix">
+			Firedoors are no longer directional.
+		</li>
+		<li class="tweak">
+			Increased the cooldown of the auto borger to 2.5 minutes 1 minute is too short.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.14</h2>
+	<h3 class="author">N3X15, Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Traffic Control computer re-added to the telecommunications satellite, and the control room has been restructured.
+		</li>
+		<li class="rscadd">
+			Malf rounds have been fixed, and the malf AI has the transformer again as a very expensive module that disables shunting.  All malf powers should be working now. Thanks to Giacom from /tg/.
+		</li>
+		<li class="rscadd">
+			Power Control Modules can now be printed.  Requires power storage 2.
+		</li>
+		<li class="bugfix">
+			NTSL engine updated to /tg/'s latest and greatest version of the code.
+		</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013.08.13</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added new sprite for the MoMMI, credit to: Dbuhos for the sprite. To get a choice, activate your modules for the first time.
+		</li>
+		<li class="bugfix">
+			Fixed being able to put a built in tool in a disposal bin as a MoMMI
+		</li>
+		<li class="bugfix">
+			Hopefully fixed not having a sprite after you die as a MoMMI
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.10</h2>
+	<h3 class="author">Ririchiyo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added a module for medical cyborg that gives them access to surgery tools
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.10</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			MoMMIs have a new lawset that forces them to silently maintain and improve the station, while ignoring human/AI/Xeno activities.  KEEPER mode MoMMIs cannot be modified from Borg uploads, but can be e-magged.
+		</li>
+		<li class="bugfix">
+			Fixed some atmos issues on the bridge and in the research shuttle hallway.
+		</li>
+		<li class="bugfix">
+			MoMMIs will no longer crash the security camera computer.
+		</li>
+		<li class="bugfix">
+			RPD pipe-eating method works on disposal pipes now.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.10</h2>
+	<h3 class="author">Ririchiyo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added a module for medical cyborg that gives them access to surgery tools
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.10</h2>
+	<h3 class="author">N3X15 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Re-added Mobile MMI mob, to create stick 4 legs and 2 arms on an mmi.
+		</li>
+		<li class="bugfix">
+			Fixed being able to see stealthed admins with modwho
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013.08.10</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			Gave wizards disintegrate and spawn guns back
+		</li>
+		<li class="tweak">
+			Janicart  riders are no longer immune to magic missile
+		</li>
+		<li class="bugfix">
+			Runspeed mutation now increases your speed rather than slowing you down.
+		</li>
+		<li class="bugfix">
+			Various exploit and bug fixes
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-31</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added a new genetic mutation, major power so it will take a bit to manifest
+		</li>
+		<li class="bugfix">
+			Fixed a situation where you could use telekinesis grab and remote view at the same time
+		</li>
+		<li class="bugfix">
+			Fixed plasma fire, again.
+		</li>
+		<li class="bugfix">
+			Can't use remote view on aliums anymore.
+		</li>
+		<li class="tweak">
+			Added another suspension field gen to xenoarch
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-29</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Readded the bay specific genetics mutations
+		</li>
+		<li class="rscadd">
+			The regen mutation takes a random amount of nutriment and converts it to heal brute or burn damage. up to a maximum of 5 per go. If you have no nutrition left it starts eating other things...
+		</li>
+		<li class="tweak">
+			Removed the ability to use a TK grab in a remote view situation
+		</li>
+		<li class="bugfix">
+			Hopefully fixed changling hivemind chat
+		</li>
+		<li class="bugfix">
+			Telepathy disease now gives people telepathy instead of a non existant power
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-26</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed being able to revive somebody with a defib who just had their brain cut out.
+		</li>
+		<li class="bugfix">
+			Fixed teleporters seperating a rolling bed and their buckled person.
+		</li>
+		<li class="bugfix">
+			Fixed Sometimes getting an empty syndicate kit
+		</li>
+		<li class="bugfix">
+			Fixed randomly igniting a 'clean' tile with your cigarette or some other hot object, now requires a minimum amount of plasma to ignite into fire.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-24</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Changeling Regenerative Stasis will now heal all types of damage, fix all your bones and organs, and regenerate your blood. This solves the issue of regenerating and dying immediately afterwards.
+		</li>
+		<li class="tweak">
+			Null rod no longer deconverts, function is bible only now to prevent non chaplains from deconverting.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-21</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			Large overhaul of the Janicart, aka Pussy wagon.
+		</li>
+		<li class="tweak">
+			The janicart can no longer fly freely through space, it can however move freely when touching the station or another dense turf, otherwise it will just drift along until it hits something or something hits it.
+		</li>
+		<li class="tweak">
+			People in the janicart are no longer invincible to projectiles, they have a large chance of being hit by anything that would have hit the cart and a small chance of something unsavory happening if they're not wearing gloves
+		</li>
+		<li class="tweak">
+			The janicart now has health any bullet, laser, or explosion will reduce this health and at zero the driver will have a rude awakening. However with this i've added the ability to repair it with a lit welder, don't make me regret this though. When the cart reaches 0 health it is destroyed and cannot be repaired and is no longer a blocking object, so it doesn't block off an important path.
+		</li>
+		<li class="tweak">
+			The janicart is now affected by EMPs, use the ion rifle as a non lethal takedown for a crazy man on a cart, depending on the severity it will disable movement for 1 to 10 seconds.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-21</h2>
+	<h3 class="author">Glandouze updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Re-enabled e-bow to be created with the protolathe.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-16</h2>
+	<h3 class="author">Glandouze updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Double bladed energy swords are back.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-12</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed a buncha bugs
+		</li>
+		<li class="bugfix">
+			MMI's and Posibrains dont go deaf when they disconnect and reconnect.
+		</li>
+		<li class="tweak">
+			Ian loves playing dress up again
+		</li>
+
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-12</h2>
+	<h3 class="author">Glandouze updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed href exploits and made disposals nonlethal
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-06</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed changelings transform keeping their original flavor text allowing for metagaming
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-07-03/04</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added new tator item
+		</li>
+		<li class="rscadd">
+			Borgs have state law verb
+		</li>
+		<li class="bugfix">
+			Fixed some zas things
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">June 22nd 2013</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			The xenoarchaeology depth scanner will now tell you what energy field is required to safely extract a find.
+		</li>
+		<li class="tweak">
+			Excavation picks will now dig faster, and xenoarchaeology as a whole should be easier to do.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-06-21</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Something shocking
+		</li>
+		<li class="bugfix">
+			Fixed the issue of cyclelocks sometimes eating all the air
+		</li>
+		<li class="bugfix">
+			Fixed the internal access button for the engineering auxiliary airlocks
+		</li>
+		<li class="tweak">
+			Increased hulk's chance to weaken on hit
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-06-14</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed Fix O Vein
+		</li>
+		<li class="tweak">
+			Increased hydroponics grow time and hunger times
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-06-12</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			It's a secret
+		</li>
+		<li class="bugfix">
+			Fixed some map shit
+		</li>
+		<li class="tweak">
+			Upped zas values
+		</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013-06-04</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Decapitated heads can ghost as if they were dead now.
+		</li>
+		<li class="bugfix">
+			Fixed disposal mail system
+		</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013-06-06</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added preference to return to the lobby if your job(s) isn't available.
+		</li>
+		<li class="bugfix">
+			Toxins works now. Bomb cap is still 3,7,14
+		</li>
+		<li class="tweak">
+			Upped zas values
+		</li>
+	</ul>
+</div>
+<div class="commit sansserif">
+	<h2 class="date">2013-06-04</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Decapitated heads can ghost as if they were dead now.
+		</li>
+		<li class="bugfix">
+			Fixed disposal mail system
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-06-03</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Everybody can suicide
+		</li>
+		<li class="rscadd">
+			Paramedics
+		</li>
+		<li class="rscadd">
+			Librarians can be reporters
+		</li>
+		<li class="bugfix">
+			Fixed a bunch of game breaking bugs
+		</li>
+		<li class="bugfix">
+			Can no longer place tape in space
+		</li>
+		<li class="bugfix">
+			Engineering module 'Antique' skin for borgs appears correctly now
+		</li>
+		<li class="bugfix">
+			Fixed not spawning with internals boxes fo reals
+		</li>
+		<li class="tweak">
+			Cloning pods no longer need biomass to clone
+		</li>
+		<li class="soundadd">
+			Added new end round sound
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">6/2</h2>
+	<h3 class="author">Meyar updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Temporarily moving the Nuke Team spawn into the shutlte pending Unsimulated tiles being fixed
+		</li>
+		<li class="bugfix">
+			Removed an unsimulated tile from inside the shuttle
+		</li>
+		<li class="bugfix">
+			ERT Radio working. For real this time. (:h)
+		</li>
+		<li class="tweak">
+			ERT and Syndicate starting areas now have magboots
+		</li>
+		<li class="tweak">
+			Side effect of the ERT radio fix: Radios can now be used on Z level 2 (Admin Z level/centcom)
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">31.05.2013</h2>
+	<h3 class="author">Segrain updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Portable canisters now properly connect to ports beneath them on map load.
+		</li>
+		<li class="bugfix">
+			Fixed unfastening gas meters.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">30th May 2013</h2>
+	<h3 class="author">proliberate updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Station time is now displayed in the status tab for new players and AIs.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">30.05.2013</h2>
+	<h3 class="author">Segrain updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Meteor showers actually spawn meteors now.
+		</li>
+		<li class="tweak">
+			Engineering tape fits into toolbelt and can be placed on doors.
+		</li>
+		<li class="rscadd">
+			Pill bottles can hold paper.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">2013-06-02</h2>
+	<h3 class="author">Pomf123 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Joining as a positronic brain no longer disconnects you
+		</li>
+		<li class="bugfix">
+			Chaplains bible heals as it should
+		</li>
+		<li class="bugfix">
+			Alien queens can lay eggs now
+		</li>
+		<li class="bugfix">
+			Reagents now metabolize correctly so you dont stay asleep forever from 5u of stoxin
+		</li>
+		<li class="tweak">
+			Changed air canisters and ports near cycle locks to air tanks so you dont have to wrench them down to have them cycle properly
+		</li>
+		<li class="tweak">
+			Redid toxins burnchamber to compensate for zas
+		</li>
+		<li class="tweak">
+			Various other tweaks and fixes
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">28th May 2013</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixes everyone being able to understand alien languages. HERE IS YOUR TOWER OF BABEL
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">5/26/2013</h2>
+	<h3 class="author">Meyar updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			The syndicate shuttle now has a cycling airlock during Nuke rounds.
+		</li>
+		<li class="rscadd">
+			Restored the ability for the syndicate Agent ID to change the name on the card (reforge it) more than once.
+		</li>
+		<li class="rscadd">
+			ERT Radio now functional again.
+		</li>
+		<li class="rscadd">
+			Research blast doors now actually lock down the entirety of station-side Research.
+		</li>
+		<li class="rscadd">
+			Added lock down buttons to the wardens office.
+		</li>
+		<li class="rscadd">
+			The randomized barsign has made a return.
+		</li>
+		<li class="rscadd">
+			Syndicate Agent ID's external airlock access restored.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">25th May 2013</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixes alien races appearing an unknown when speaking their language.
+		</li>
+		<li class="bugfix">
+			Fixes alien races losing their language when cloned.
+		</li>
+		<li class="bugfix">
+			Fixes UI getting randomly reset when trying to change it in Genetics Scanners.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">21 May 2013</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">
+			ZAS will now speed air movement into/out of a zone when unsimulated tiles (e.g. space) are involved, in relation to the number of tiles.
+		</li>
+		<li class="experiment">
+			Portable Canisters will now automatically connect to any portable connecter beneath them on map load.
+		</li>
+		<li class="bugfix">
+			Bug involving mis-mapped disposal junction fixed
+		</li>
+		<li class="bugfix">
+			Air alarms now work for atmos techs (whoops!)
+		</li>
+		<li class="bugfix">
+			The Master Controller now properly stops atmos when it runtimes.
+		</li>
+		<li class="bugfix">
+			Backpacks can no longer be contaminated
+		</li>
+		<li class="tweak">
+			ZAS no longer logs air statistics.
+		</li>
+		<li class="tweak">
+			ZAS now rebuilds as soon as it detects a semi-complex change in geometry.  (It was doing this already, but in a convoluted way which was actually less efficient)
+		</li>
+		<li class="tweak">
+			General code cleanup/commenting of ZAS
+		</li>
+		<li class="tweak">
+			Jungle now initializes after the random Z-level loads and atmos initializes.
+		</li>
+	</ul>
+</div>
+
+<div>
+	<h2 class="date">May 18th, 2013</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			A new event type: Wallrot. Use welder or plantbgone on infected walls.
+		</li>
+		<li class="tweak">
+			Newscasters now can deliver preset news stories over the course of a round. See http://baystation12.net/forums/viewtopic.php?f=14&amp;t=7619 to add your own!
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">April 24, 2013</h2>
+	<h3 class="author">Jediluke69 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added 5 new drinks (Kira Special, Lemonade, Brown Star, Milkshakes, Rewriter)
+		</li>
+		<li class="tweak">
+			Nanopaste now heals about half of what it used to
+		</li>
+		<li class="tweak">
+			Ballistic crates should now come with shotguns loaded with actual shells no more beanbags
+		</li>
+		<li class="bugfix">
+			Iced tea no longer makes a glass of .what?
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">April 24, 2013</h2>
+	<h3 class="author">faux updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="imageadd">
+			Mixed Wardrobe Closet now has colored shoes and plaid skirts.
+		</li>
+		<li class="imageadd">
+			Dress uniforms added to the Captain, RD, and HoP wardrobe closets. A uniform jacket has also been added to the Captain's closet. HoS' hat has been re-added to their closet. I do not love the CMO and CE enough to give them anything.
+		</li>
+		<li class="imageadd">
+			Atheletic closet now has five different swimsuits *for the ladies* in them. If you are a guy, be prepared to be yelled at if you run around like a moron in one of these. Same goes for ladies who run around in shorts with their titties swaying in the space winds.
+		</li>
+		<li class="imageadd">
+			A set of dispatcher uniforms will spawn in the security closet. These are for playtesting the dispatcher role.
+		</li>
+		<li class="imageadd">
+			New suit spawns in the laundry room. It's for geezer's only. You're welcome, Book.
+		</li>
+		<li class="imageadd">
+			Nurse outfit variant, orderly uniform, and first responder jacket will now spawn in the medical wardrobe closet.
+		</li>
+		<li class="imageadd">
+			A white wedding dress will spawn in the chaplain's closet. There are also several dresses currently only adminspawnable. Admins: Look either under "bride" or "dress." The bride one leads to the colored wedding dresses, and there are some other kinds of dresses under dress.
+		</li>
+		<li class="tweak">
+			No more luchador masks or boxing gloves or boxing ring. You guys have a swimming pool now, dip in and enjoy it.
+		</li>
+		<li class="tweak">
+			he meeting hall has been replaced with an awkwardly placed security office meant for prisoner processing.
+		</li>
+		<li class="tweak">
+			Added a couple more welding goggles to engineering since you guys liked those a lot.
+		</li>
+		<li class="imageadd">
+			Flasks spawn behind the bar. Only three. Don't fight over them. I don't know how to add them to the bar vending machine otherwise I would have done that instead. Detective, you have your own flask in your office, it's underneath the cigarettes on your desk.
+		</li>
+		<li class="tweak">
+			Added two canes to the medical storage, for people who have leg injuries and can't walk good and stuff. I do not want to see doctors pretending to be House. These are for patients. Do not make me delete this addition and declare you guys not being able to have nice things.
+		</li>
+		<li class="tweak">
+			Secondary entance to EVA now directly leads into the medbay hardsuit section. Sorry for any inconviences this will cause. The CMO can now fetch the hardsuits whenever they want.
+		</li>
+		<li class="tweak">
+			Secondary security hardsuit has been added to the armory. Security members please stop stealing engineer's hardsuits when you guys want to pair up for space travel.
+		</li>
+		<li class="tweak">
+			Firelocks have been moved around in the main hallways to form really ghetto versions of airlocks.
+		</li>
+		<li class="tweak">
+			Violin spawns in theatre storage now. I didn't put the piano there though, that was someone else.
+		</li>
+		<li class="tweak">
+			Psych office in medbay has been made better looking.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">24th April 2013</h2>
+	<h3 class="author">NerdyBoy1104 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			New Botany additions: Rice and Plastellium. New sheet material: Plastic.
+		</li>
+		<li class="rscadd">
+			Plastellium is refined into plastic by first grinding the produce to get plasticide. 20 plasticide + 10 polytrinic acid makes 10 sheets of plastic which can be used to make crates, forks, spoons, knives, ashtrays or plastic bags from.
+		</li>
+		<li class="rscadd">
+			Rice seeds grows into rice stalks that you grind to get rice. 10 Rice + 5 Water makes boiled rice, 10 rice + 5 milk makes rice pudding, 10 rice + 5 universal enzyme (in beaker) makes Sake.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">Spamcat</h2>
+	<h3 class="author">04.05.2013 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Blood type is now saved in character creation menu, no need to edit it manually every round.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">17 April 2013</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">
+			ZAS is now more deadly, as per decision by administrative team.  May be tweaked, but currently AIRFLOW is the biggest griefer.
+		</li>
+		<li class="experiment">
+			World startup optimized, many functions now delayed until a player joins the server. (Reduces server boot time significantly)
+		</li>
+		<li class="tweak">
+			Zones will now equalize air more rapidly.
+		</li>
+		<li class="bugfix">
+			ZAS now respects active magboots when airflow occurs.
+		</li>
+		<li class="bugfix">
+			Airflow will no longer throw you into doors and open them.
+		</li>
+		<li class="bugfix">
+			Race condition in zone construction has been fixed, so zones connect properly at round start.
+		</li>
+		<li class="bugfix">
+			Plasma effects readded.
+		</li>
+		<li class="bugfix">
+			Fixed runtime involving away mission.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">17 April 2013</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">
+			ZAS is now more deadly, as per decision by administrative team.  May be tweaked, but currently AIRFLOW is the biggest griefer.
+		</li>
+		<li class="experiment">
+			World startup optimized, many functions now delayed until a player joins the server. (Reduces server boot time significantly)
+		</li>
+		<li class="tweak">
+			Zones will now equalize air more rapidly.
+		</li>
+		<li class="bugfix">
+			ZAS now respects active magboots when airflow occurs.
+		</li>
+		<li class="bugfix">
+			Airflow will no longer throw you into doors and open them.
+		</li>
+		<li class="bugfix">
+			Race condition in zone construction has been fixed, so zones connect properly at round start.
+		</li>
+		<li class="bugfix">
+			Plasma effects readded.
+		</li>
+		<li class="bugfix">
+			Fixed runtime involving away mission.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">30.04.2013</h2>
+	<h3 class="author">Spamcat updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			Pill bottle capacity increased to 14 items.
+		</li>
+		<li class="bugfix">
+			Fixed Lamarr (it now spawns properly)
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">15.04.2013</h2>
+	<h3 class="author">Spamcat updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added <a href=http://www.safecity.com.au/aspchrlar.jpg>telescopic batons</a> to HoS's and captain's lockers. These are quite robust and easily concealable.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">May 14th 2013</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">
+			Depth scanners can now be used to determine what material archaeological deposits are made of, meaning lab analysis is no longer required.
+		</li>
+		<li class="tweak">
+			Some useability issues with xenoarchaeology tools have been resolved, and the transit pods cycle automatically now.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">11 April 2013</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">
+			Fire has been reworked.
+		</li>
+		<li class="experiment">
+			In-game variable editor is both readded and expanded with fire controlling capability.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">9 April 2013</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fire Issues (Firedoors, Flamethrowers, Incendiary Grenades) fixed.
+		</li>
+		<li class="bugfix">
+			Fixed a bad line of code that was preventing autoignition of flammable gas mixes.
+		</li>
+		<li class="bugfix">
+			Volatile fuel is burned up after a point.
+		</li>
+		<li class="rscdel">
+			Partial-tile firedoors removed.  This is due to ZAS breaking when interacting with them.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">4 April 2013</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed ZAS
+		</li>
+		<li class="bugfix">
+			Fixed Fire
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 27th 2013</h2>
+	<h3 class="author">Asanadas updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			The Null Rod has recovered its de-culting ability, for balance reasons. Metagaming with it is a big no-no!
+		</li>
+		<li class="rscadd">
+			Holy Water as a liquid is able to de-cult. Less effective, but less bloody. May be changed over the course of time for balance.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">26.03.2013</h2>
+	<h3 class="author">Spamcat updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Chemmaster now puts pills in pill bottles (if one is inserted).
+		</li>
+		<li class="tweak">
+			Stabbing someone with a syringe now deals 3 damage instead of 7 because 7 is like, a crowbar punch.
+		</li>
+		<li class="bugfix">
+			Lizards can now join mid-round again.
+		</li>
+		<li class="rscadd">
+			Chemicals in bloodstream will transfer with blood now, so don't get drunk before your blood donation. Viruses and antibodies transfer through blood too.
+		</li>
+		<li class="bugfix">
+			Virology is working again.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 15th 2013</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Mapped a compact research base on the mining asteroid, with multiple labs and testing rooms. It's reachable through a new (old) shuttle dock that leaves from the research wing on the main station.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">14.03.2013</h2>
+	<h3 class="author">Spamcat updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Figured I should make one of these. Syringestabbing now produces a broken syringe complete with fingerprints of attacker and blood of a victim, so dispose your evidence carefully. Maximum transfer amount per stab is lowered to 10.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">11/03/2013</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Sec HUDs now can see short versions of sec records.on examine. Med HUDs do same for medical records, and can set medical status of patient.
+		</li>
+		<li class="rscadd">
+			Damage to the head can now cause brain damage.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 11th 2013</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Cloning now requires you to put slabs of meat into the cloning pod to replenish biomass.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 11th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="wip">
+			The xenoarchaeology update is here. This includes a major content overhaul and a bunch of new features for xenoarchaeology.
+		</li>
+		<li class="tweak">
+			Digsites (strange rock deposits) are now much more nuanced and interesting, and a huge number of minor (non-artifact) finds have been added.
+		</li>
+		<li class="rscadd">
+			Excavation is now a complex process that involves digging into the rock to the right depth.
+		</li>
+		<li class="rscadd">
+			Chemical analysis is required for safe excavation of the digsites, in order to determine how best to extract the finds.
+		</li>
+		<li class="bugfix">
+			Anomalous artifacts have been overhauled and many longstanding bugs with existing effects have been fixed - the anomaly utiliser should now work <i>much</i> more often.
+		</li>
+		<li class="rscadd">
+			Numerous new artifact effects have been added and some new artifact types can be dug up from the asteroid.
+		</li>
+		<li class="rscadd">
+			New tools and equipment have been added, including normal and spaceworthy versions of the anomaly suits, excavation tools and other neat gadgets.
+		</li>
+		<li class="rscadd">
+			Five books have been written by subject matter experts from around the galaxy to help the crew of the Exodus come to grips with this exacting new science (over 3000 words of tutorials!).
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 9th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Beekeeping is now possible. Construct an apiary of out wood and embed it into a hydroponics tray, then get a queen bee and bottle of BeezEez from cargo bay.
+			Hives produce honey and honeycomb, but be wary if the bees start swarming.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 6th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Type 1 thermoelectric generators and the associated binary circulators are now moveable (wrench to secure/unsecure) and orderable via Quartermaster.
+		</li>
+		<li class="wip">
+			code/maps/rust_test.dmm contains an example setup for a functional RUST reactor. Maximum output is in the range of 12 to 20MW (12 to 20 million watts).
+		</li>
+		<li class="bugfix">
+			Removed double announcement for gridchecks, reduced duration of gridchecks.
+		</li>
+	</ul>
+	<h3 class="author">RavingManiac updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			You can now stab people with syringes using the "harm" intent. This destroys the syringe and transfers a random percentage of its contents into the target. Armor has a 50% chance of blocking the syringe.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">March 5th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="soundadd">
+			Set roundstart music to randomly choose between space.ogg and traitor.ogg (see <a href='http://baystation12.net/forums/viewtopic.php?f=5&t=6972'>http://baystation12.net/forums/viewtopic.php?f=5&amp;t=6972</a>)
+		</li>
+		<li class="experiment">
+			All RUST components except for TEGs (which generate the power) are now obtainable ingame, bored engineers should get hold of them and setup an experimental reactor for testing purposes.
+		</li>
+	</ul>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added internal organs. They're currently all located in the chest. Use advanced scanner to detect damage. Use the same surgery as for ruptured lungs to fix them.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 27th 2013</h2>
+	<h3 class="author">Gamerofthegame updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added the (base gear) ERT preset for the debug command.
+		</li>
+		<li class="rscadd">
+			Map fixes, Virology hole fixed. Atmospheric fixes for mining and, to a less extent, the science outpost. (No, not cycling airlocks)
+		</li>
+		<li class="rscadd">
+			Fiddled with the ERT set up location on Centcom. Radmins will now have a even easier time equiping a team of any real pratical size, especially coupled with the above debug command.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 25th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			As well as building hull shield generators, normal shield gens can now be built (see <a href="http://baystation12.net/forums/viewtopic.php?f=1&t=6993">http://baystation12.net/forums/viewtopic.php?f=1&amp;t=6993</a>).
+		</li>
+		<li class="rscadd">
+			New random events: multiple new system wide-events have been have been added to the newscaster feeds, some not quite as respectable as others.
+		</li>
+		<li class="rscadd">
+			New random event: some lucky winners will win the TC Daily Grand Slam Lotto, while others may be the target of malicious hackers.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 23rd 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Finances! Players spawn with an account, and money can be transferred between accounts, withdrawn/deposited at ATMs and charged to accounts via EFTPOS scanners.
+			<br>
+			<br>
+			All players start with 500-5000 credits, credits can no longer be merged and only credits can be deposited into ATMs - so shelter your illegitimately gotten gains in physical assets and remember that fraud is frowned upon!
+		</li>
+		<li class="soundadd">
+			Turrets are no longer noiseless as the grave. Listen for the sound of machinery in their proximity.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 23rd 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="wip">
+			RUST machinery components should now be researchable (with high requirements) and orderable through QM (with high cost).
+		</li>
+		<li class="wip">
+			Shield machinery should now be researchable (with high requirements) and orderable through QM (with high cost). This one is reportedly buggy.
+		</li>
+		<li class="tweak">
+			Rogue vending machines should revert back to normal at the end of the event.
+		</li>
+		<li class="rscadd">
+			New Unathi hair styles.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">22/02/2013</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			Change to body cavity surgery.  Can only put items in chest, groind and head. Max size for item - 3 (chest), 2 (groin), 1 (head). For chest surgery ribs should be bent open, (lung surgery until second scalpel step). Surgery step needs preparation step, with drill. After that you can place item inside, or seal it with cautery to do other step instead.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 18th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			All RUST components are now buildable/orderable, with very high requirements (except for the TEGs). Emitters have replaced gyrotrons, for now.
+		</li>
+		<li class="rscadd">
+			Fixed up shield generators and made them buildable, with circuits obtainable through RnD. Hull shield gens project along space tiles adjacent to the hull (must be adjacent to a space tile to work).
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">20/02/2013</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Added new surgery: putting items inside people. After you use retractor to keep incision open, just click with any item to put it inside. But be wary, if you try to fit something too big, you might rip the veins. To remove items, use implant removal surgery.
+		</li>
+		<li class="rscadd">
+			Crowbar can be used as alternative to retractor.
+		</li>
+		<li class="rscadd">
+			Can now unload guns by clicking them in hand.
+		</li>
+		<li class="tweak">
+			Fixed distance calculation in bullet missing chance computation, it was always assuming 1 or 0 tiles. Now distace REALLY matters when you shoot.
+		</li>
+		<li class="rscadd">
+			To add more FUN to previous thing, bullets missed to not disappear but keep going until they hit something else.
+		</li>
+		<li class="bugfix">
+			Compressed Matter and Explosive implants spawn properly now.
+		</li>
+		<li class="tweak">
+			Tweaks to medical effects: removed itch caused by bandages. Chemical effects now have non-100 chance of appearing, the stronger medicine, the more probality it'll have side effects.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 18th 2013</h2>
+	<h3 class="author">Cael Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Security bots will now target hostile mobs, and vice versa.
+		</li>
+		<li class="tweak">
+			Carp should actually emigrate now, instead of just immigrating then squatting around the outer hull.
+		</li>
+		<li class="tweak">
+			Admins and moderators have been split up into separate 'who' verbs (adminwho and modwho respectively).
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 14th 2013</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Medical side-effects(patients are going to come back for secondary treatment)
+		</li>
+		<li class="rscadd">
+			NT loyalty setting(affects command reports and gives antags hints who might collaborate with them)
+		</li>
+		<li class="tweak">
+			Simple animal balance fixes(They're slower now)
+		</li>
+	</ul>
+	<h3 class="author">CaelAislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Re-added old ion storm laws, re-added grid check event.
+		</li>
+		<li class="rscadd">
+			Added Rogue Drone and Vermin Infestation random events.
+		</li>
+		<li class="rscadd">
+			Added/fixed space vines random event.
+		</li>
+		<li class="tweak">
+			Updates to the virus events.
+		</li>
+		<li class="tweak">
+			Spider infestation and alien infestation events turned off by default.
+		</li>
+		<li class="tweak">
+			Soghun, taj and skrell all have unique language text colours.
+		</li>
+		<li class="tweak">
+			Moderators will no longer be listed in adminwho, instead use modwho.
+		</li>
+	</ul>
+
+	<h3 class="author">Gamerofthegame updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Miscellaneous mapfixes.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">February 13th 2013</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Fixed SSD (logged-out) players not staying asleep.
+		</li>
+		<li class="bugfix">
+			Fixed set-pose verb and mice emotes having extra periods.
+		</li>
+		<li class="bugfix">
+			Fixed virus crate not appearing and breaking supply shuttle.
+		</li>
+		<li class="bugfix">
+			Fixed newcaster photos not being censored.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">January 23rd</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">
+			Updated server to tgstation r5200 (November 26th, 2012), see <a href="https://code.google.com/p/tgstation13/source/list">https://code.google.com/p/tgstation13/source/list</a> for tg's changelog.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+
+	<h2 class="date">1/31/2013</h2>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Chilis and cold chilis no longer kill in small amounts
+		</li>
+		<li class="bugfix">
+			Chloral now again needs around 5 units to start killing somebody
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">January 21st</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">
+			Satchels and ore boxes can now hold strange rocks.
+		</li>
+		<li class="rscadd">
+			Closets and crates can now be built out of 5 and 10 plasteel respectively.
+		</li>
+		<li class="rscadd">
+			Observers can become mice once more.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">13/01/2013</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">
+			If you get enough (6) blood drips on one tile, it'll turn into a blood puddle. Should make bleeding out more visible.
+		</li>
+		<li class="tweak">
+			Security belt now able to hold taser, baton and tape roll.
+		</li>
+		<li class="tweak">
+			Added alternative security uniform to Security wardrobes.
+		</li>
+		<li class="rscadd">
+			Ported Urist cult runes. Down with the crayon drawings!  Example: http://dl.dropbox.com/u/26846767/images/SS13/255_symbols.PNG
+		</li>
+		<li class="bugfix">
+			Engineering tape now require engineer OR atmos access instead of both.
+		</li>
+		<li class="rscadd">
+			Implants now will react to EMP, possibly in !!FUN!! ways
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">1/13/2013</h2>
+	<h3 class="author">GauHelldragon updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Servicebots now have RoboTray and Printing Pen. Robotray can be used to pick up and drop food/drinks. Printing pen can alternate between writing mode and rename paper mode by clicking it.
+		</li>
+		<li class="rscadd">
+			Farmbots. A new type of robot that weeds, waters and fertilizes. Use robot arm on water tank. Then use plant analyzer, mini-hoe, bucket and finally proximity sensor.
+		</li>
+		<li class="rscadd">
+			Chefs can clang their serving trays with a rolling pin. Just like a riot shield!
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">January 7th</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">
+			Updated server to tgstation r5200 (November 26th, 2012), see <a href="https://code.google.com/p/tgstation13/source/list">https://code.google.com/p/tgstation13/source/list</a> for tg's changelog.
+		</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">7/01/2013</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">
+			Implants: Explosvie implant, exploding when victim hears the codephrase you set.
+		</li>
+		<li class="rscadd">
+			Implants: Compressed Matter implat, scan item (making it disappear), inject yourself and recall that item on will!
+		</li>
+		<li class="rscadd">
+			Implant removal surgery, with !!FUN!! results if you mess up it.
+		</li>
+		<li class="rscadd">
+			Coats now have pockets again.
+		</li>
+		<li class="rscadd">
+			Bash people on tabetops. an windows, or with stools. Grab people to bash them on tables or windows (better grab for better hit on windows). Drag stool sprite on you to pick it up, click on it in hand to make it usual stool again.
+		</li>
+		<li class="rscadd">
+			Surgical caps, and new sprites for bloodbags and fixovein.
+		</li>
+		<li class="rscadd">
+			Now some surgery steps will bloody your hands, Full-body blood coat in case youy mess up spectacualry.
+		</li>
+		<li class="rscadd">
+			Ported some crates (Art, Surgery, Sterile equiplemnt).
+		</li>
+		<li class="tweak">
+			Changed contraband crates. Posters moved to Art Crate, cigs and lipstick ot party crate. Now contraband crate has illegal booze and illicit drugs.
+		</li>
+		<li class="bugfix">
+			Finally got evac party lights
+		</li>
+		<li class="bugfix">
+			Now disfigurment,now it WILL happen when damage is bad enough.
+		</li>
+		<li class="experiment">
+			Now if you speak in depressurized area (less than 10 kPa) only people next to you can hear you. Radios still work though.
+		</li>
+	</ul>
+</div>
 
 <div class="commit sansserif">
 	<h2 class="date">December 28nd</h2>

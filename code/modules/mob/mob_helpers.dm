@@ -1,119 +1,79 @@
-
-// fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
-/proc/ishuman(A)
-	if(istype(A, /mob/living/carbon/human))
+/mob/proc/isUnconscious() //Returns 1 if unconscious, dead or faking death
+	if(stat || (status_flags & FAKEDEATH))
 		return 1
-	return 0
 
-/proc/ismonkey(A)
-	if(A && istype(A, /mob/living/carbon/monkey))
+/mob/proc/isDead() //Returns 1 if dead or faking death
+	if(stat == DEAD || (status_flags & FAKEDEATH))
 		return 1
-	return 0
 
-/proc/isbrain(A)
-	if(A && istype(A, /mob/living/carbon/brain))
+/mob/proc/isStunned() //Because we have around four slighly different stunned variables for some reason.
+	if(isUnconscious() || paralysis || stunned || weakened)
 		return 1
-	return 0
 
-/proc/isalien(A)
-	if(istype(A, /mob/living/carbon/alien))
+/mob/proc/incapacitated()
+	if(isStunned() || restrained())
 		return 1
-	return 0
 
-/proc/isalienadult(A)
-	if(istype(A, /mob/living/carbon/alien/humanoid))
-		return 1
-	return 0
+/mob/proc/get_screen_colour()
+	if(!client)
+		return 0
+	if(M_NOIR in mutations)
+		return NOIRMATRIX
 
-/proc/islarva(A)
-	if(istype(A, /mob/living/carbon/alien/larva))
-		return 1
-	return 0
+/mob/dead/observer/get_screen_colour()
+	return default_colour_matrix
 
-/proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
-		return 1
-	return 0
+/mob/living/simple_animal/get_screen_colour()
+	. = ..()
+	if(.)
+		return .
+	else if(src.colourmatrix.len)
+		return src.colourmatrix
 
-/proc/isslimeadult(A)
-	if(istype(A, /mob/living/carbon/slime/adult))
-		return 1
-	return 0
+/mob/living/carbon/human/get_screen_colour()
+	. = ..()
+	if(.)
+		return .
+	else if(has_reagent_in_blood("detcoffee"))
+		return NOIRMATRIX
+	var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
+	if(eyes && eyes.colourmatrix.len && !(eyes.robotic))
+		return eyes.colourmatrix
+	else return default_colour_matrix
 
-/proc/isrobot(A)
-	if(istype(A, /mob/living/silicon/robot))
-		return 1
-	return 0
+/mob/proc/update_colour(var/time = 50,var/forceupdate = 0)
+	if(!client || (client.updating_colour && !forceupdate))
+		return
+	var/list/colour_to_apply = get_screen_colour()
+	var/list/difference = difflist(client.color,colour_to_apply)
+	if(difference || !(client.color) || !istype(difference) || !difference.len)
+		client.updating_colour = 1
+		var/cached_ckey = client.ckey
+		if(forceupdate)
+			time = 0
+		else if(colour_to_apply == NOIRMATRIX)
+			time = 170
+			src << sound('sound/misc/noirdarkcoffee.ogg')
+		client.colour_transition(colour_to_apply,time = time)
+		spawn(time)
+			if(client && client.mob != src)
+				return
+			if(client)
+				client.color = colour_to_apply
+				client.updating_colour = 0
+				difference = difflist(client.color,get_screen_colour())
+				if((difference || !(client.color) || !istype(difference) || !difference.len) && !forceupdate) // panic panic panic
+					src.update_colour(forceupdate = 1)
+			else
+				bad_changing_colour_ckeys["[cached_ckey]"] = 1
 
-/proc/isanimal(A)
-	if(istype(A, /mob/living/simple_animal))
-		return 1
-	return 0
+/proc/RemoveAllFactionIcons(var/datum/mind/M)
+	ticker.mode.update_cult_icons_removed(M)
+	ticker.mode.update_rev_icons_removed(M)
+	ticker.mode.update_wizard_icons_removed(M)
 
-/proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
-		return 1
-	return 0
-
-/proc/iscrab(A)
-	if(istype(A, /mob/living/simple_animal/crab))
-		return 1
-	return 0
-
-/proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
-		return 1
-	return 0
-
-/proc/ismouse(A)
-	if(istype(A, /mob/living/simple_animal/mouse))
-		return 1
-	return 0
-
-/proc/isbear(A)
-	if(istype(A, /mob/living/simple_animal/hostile/bear))
-		return 1
-	return 0
-
-/proc/iscarp(A)
-	if(istype(A, /mob/living/simple_animal/hostile/carp))
-		return 1
-	return 0
-
-/proc/isclown(A)
-	if(istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
-		return 1
-	return 0
-
-/proc/isAI(A)
-	if(istype(A, /mob/living/silicon/ai))
-		return 1
-	return 0
-
-/proc/isAIEye(A)
-	if(istype(A, /mob/camera/aiEye))
-		return 1
-	return 0
-
-/proc/ispAI(A)
-	if(istype(A, /mob/living/silicon/pai))
-		return 1
-	return 0
-
-/proc/iscarbon(A)
-	if(istype(A, /mob/living/carbon))
-		return 1
-	return 0
-
-/proc/issilicon(A)
-	if(istype(A, /mob/living/silicon))
-		return 1
-	return 0
-
-/proc/isMoMMI(A)
-	if(istype(A, /mob/living/silicon/robot/mommi))
-		return 1
-	return 0
+/proc/ClearRoles(var/datum/mind/M)
+	ticker.mode.remove_revolutionary(M)
 
 /proc/isAdminGhost(A)
 	if(isobserver(A))
@@ -124,36 +84,19 @@
 
 
 /proc/canGhostRead(var/mob/A, var/obj/target, var/flags=PERMIT_ALL)
-	var/res=isAdminGhost(A)
+	if(isAdminGhost(A))
+		return 1
 	if(flags & PERMIT_ALL)
-		res = 1
-	return res
+		return 1
+	return 0
 
 /proc/canGhostWrite(var/mob/A, var/obj/target, var/desc="fucked with", var/flags=0)
-	var/res=isAdminGhost(A)
 	if(flags & PERMIT_ALL)
-		res = 1
-	if(res && desc!="")
-		add_ghostlogs(A, target, desc, !(flags & PERMIT_ALL) && isAdminGhost(A))
-	return res
-
-/proc/isliving(A)
-	if(istype(A, /mob/living))
-		return 1
-	return 0
-
-proc/isobserver(A)
-	if(istype(A, /mob/dead/observer))
-		return 1
-	return 0
-
-proc/isovermind(A)
-	if(istype(A, /mob/camera/blob))
-		return 1
-	return 0
-
-proc/isorgan(A)
-	if(istype(A, /datum/organ/external))
+		if(!target.blessed)
+			return 1
+	if(isAdminGhost(A))
+		if(desc!="")
+			add_ghostlogs(A, target, desc, 1)
 		return 1
 	return 0
 
@@ -162,6 +105,12 @@ proc/isorgan(A)
 		if(L && L.implanted)
 			return 1
 	return 0
+
+/proc/check_holy(var/mob/A) //checks to see if the tile the mob stands on is holy
+	var/turf/T = get_turf(A)
+	if(!T) return 0
+	if(!T.holy) return 0
+	return 1  //The tile is holy. Beware!
 
 proc/hasorgans(A)
 	return ishuman(A)
@@ -214,7 +163,7 @@ proc/hasorgans(A)
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
-	if(!target.buckled && !target.lying)
+	if(!target.locked_to && !target.lying)
 		var/miss_chance = 10
 		switch(zone)
 			if("head")
@@ -255,7 +204,10 @@ proc/hasorgans(A)
 
 	return zone
 
-
+// adds stars to a text to obfuscate it
+// var/n -> text to obfuscate
+// var/pr -> percent of the text to obfuscate
+// return -> obfuscated text
 /proc/stars(n, pr)
 	if (pr == null)
 		pr = 25
@@ -278,9 +230,8 @@ proc/hasorgans(A)
 	return t
 
 proc/slur(phrase)
-	phrase = html_decode(phrase)
-	var/leng=lentext(phrase)
-	var/counter=lentext(phrase)
+	var/leng=length(phrase)
+	var/counter=length(phrase)
 	var/newphrase=""
 	var/newletter=""
 	while(counter>=1)
@@ -301,7 +252,7 @@ proc/slur(phrase)
 	return newphrase
 
 /proc/stutter(n)
-	var/te = html_decode(n)
+	var/te = n
 	var/t = ""//placed before the message. Not really sure what it's for.
 	n = length(n)//length of the entire word
 	var/p = null
@@ -321,7 +272,7 @@ proc/slur(phrase)
 						n_letter = text("[n_letter]-[n_letter]")
 		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+	return copytext(t,1,MAX_MESSAGE_LEN)
 
 
 proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
@@ -341,48 +292,41 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 	return returntext
 
+/proc/derpspeech(message, stuttering)
+	message = replacetext(message, " am ", " ")
+	message = replacetext(message, " is ", " ")
+	message = replacetext(message, " are ", " ")
+	message = replacetext(message, "you", "u")
+	message = replacetext(message, "help", "halp")
+	message = replacetext(message, "grief", "griff")
+	message = replacetext(message, "space", "spess")
+	message = replacetext(message, "carp", "crap")
+	message = replacetext(message, "reason", "raisin")
+	if(prob(50))
+		message = uppertext(message)
+		message += "[stutter(pick("!", "!!", "!!!"))]"
+	if(!stuttering && prob(15))
+		message = stutter(message)
+	return message
 
-/proc/ninjaspeak(n)
-/*
-The difference with stutter is that this proc can stutter more than 1 letter
-The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-*/
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = 1
-	while(p <= n)
-		var/n_letter
-		var/n_mod = rand(1,4)
-		if(p+n_mod>n+1)
-			n_letter = copytext(te, p, n+1)
-		else
-			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-			else
-				n_letter = text("[n_letter]-[n_letter]")
-		else
-			n_letter = text("[n_letter]")
-		t = text("[t][n_letter]")
-		p=p+n_mod
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
-
-/proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)
-		return
+/proc/shake_camera(mob/M, duration=0, strength=1)
 	spawn(1)
-		var/oldeye=M.client.eye
-		var/x
+		if(!M || !M.client || M.shakecamera)
+			return
+
 		M.shakecamera = 1
-		for(x=0; x<duration, x++)
-			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
+
+		for (var/x = 1 to duration)
+			if(!M || !M.client)
+				M.shakecamera = 0
+				return //somebody disconnected while being shaken
+			M.client.pixel_x = 32*rand(-strength, strength)
+			M.client.pixel_y = 32*rand(-strength, strength)
 			sleep(1)
+
 		M.shakecamera = 0
-		M.client.eye=oldeye
+		M.client.pixel_x = 0
+		M.client.pixel_y = 0
 
 
 /proc/findname(msg)
@@ -403,81 +347,30 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = 1
-
-	if(hud_used)
-		if(ishuman(src))
-			if(!src.client) return
-
-			if(hud_used.hud_shown)
-				hud_used.hud_shown = 0
-				if(src.hud_used.adding)
-					src.client.screen -= src.hud_used.adding
-				if(src.hud_used.other)
-					src.client.screen -= src.hud_used.other
-				if(src.hud_used.hotkeybuttons)
-					src.client.screen -= src.hud_used.hotkeybuttons
-				if(src.hud_used.item_action_list)
-					src.client.screen -= src.hud_used.item_action_list
-
-				//Due to some poor coding some things need special treatment:
-				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
-				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-
-				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
-
-			else
-				hud_used.hud_shown = 1
-				if(src.hud_used.adding)
-					src.client.screen += src.hud_used.adding
-				if(src.hud_used.other && src.hud_used.inventory_shown)
-					src.client.screen += src.hud_used.other
-				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
-					src.client.screen += src.hud_used.hotkeybuttons
-
-
-				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-				src.client.screen += src.zone_sel				//This one is a special snowflake
-
-			hud_used.hidden_inventory_update()
-			hud_used.persistant_inventory_update()
-			update_action_buttons()
-		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
-	else
-		usr << "\red This mob type does not use a HUD."
-
 //converts intent-strings into numbers and back
-var/list/intents = list("help","disarm","grab","hurt")
+var/list/intents = list(I_HELP,I_DISARM,I_GRAB,I_HURT)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if("help")		return 0
-			if("disarm")	return 1
-			if("grab")		return 2
+			if(I_HELP)		return 0
+			if(I_DISARM)	return 1
+			if(I_GRAB)		return 2
 			else			return 3
 	else
 		switch(argument)
-			if(0)			return "help"
-			if(1)			return "disarm"
-			if(2)			return "grab"
-			else			return "hurt"
+			if(0)			return I_HELP
+			if(1)			return I_DISARM
+			if(2)			return I_GRAB
+			else			return I_HURT
 
-//change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
+//change a mob's act-intent. Input the intent as a string such as I_HELP or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
 	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
-			if("help","disarm","grab","hurt")
+			if(I_HELP,I_DISARM,I_GRAB,I_HURT)
 				a_intent = input
 			if("right")
 				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
@@ -488,17 +381,36 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 	else if(isrobot(src) || ismonkey(src) || islarva(src))
 		switch(input)
-			if("help")
-				a_intent = "help"
-			if("hurt")
-				a_intent = "hurt"
+			if(I_HELP)
+				a_intent = I_HELP
+			if(I_HURT)
+				a_intent = I_HURT
 			if("right","left")
 				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
 		if(hud_used && hud_used.action_intent)
-			if(a_intent == "hurt")
+			if(a_intent == I_HURT)
 				hud_used.action_intent.icon_state = "harm"
 			else
 				hud_used.action_intent.icon_state = "help"
+
+//For hotkeys
+
+/mob/verb/a_kick()
+	set name = "a-kick"
+	set hidden = 1
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.set_attack_type(ATTACK_KICK)
+
+/mob/verb/a_bite()
+	set name = "a-bite"
+	set hidden = 1
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.set_attack_type(ATTACK_BITE)
+
 proc/is_blind(A)
 	if(istype(A, /mob/living/carbon))
 		var/mob/living/carbon/C = A
@@ -507,13 +419,30 @@ proc/is_blind(A)
 	return 0
 
 /proc/get_multitool(mob/user as mob)
-	// Check distance for those that need it.
-	if(!isAI(user) && !isAdminGhost(user))
-		if(!in_range(user, src))
-			return null
-
 	// Get tool
-	var/obj/item/device/multitool/P = user.get_multitool()
+	var/obj/item/device/multitool/P
+	if(isrobot(user) || ishuman(user))
+		P = user.get_active_hand()
+	else if(isAI(user))
+		var/mob/living/silicon/ai/AI=user
+		P = AI.aiMulti
+	else if(isAdminGhost(user))
+		var/mob/dead/observer/G=user
+		P = G.ghostMulti
+
 	if(!istype(P))
 		return null
 	return P
+
+/proc/broadcast_security_hud_message(var/message, var/broadcast_source)
+	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/hud/security)
+
+/proc/broadcast_medical_hud_message(var/message, var/broadcast_source)
+	broadcast_hud_message(message, broadcast_source, med_hud_users, /obj/item/clothing/glasses/hud/health)
+
+/proc/broadcast_hud_message(var/message, var/broadcast_source, var/list/targets, var/icon)
+	var/turf/sourceturf = get_turf(broadcast_source)
+	for(var/mob/M in targets)
+		var/turf/targetturf = get_turf(M)
+		if((targetturf.z == sourceturf.z))
+			M.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)

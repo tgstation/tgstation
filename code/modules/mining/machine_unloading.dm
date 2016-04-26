@@ -27,20 +27,23 @@
 	if (src.output && src.input)
 		if (locate(/obj/structure/ore_box, input.loc))
 			var/obj/structure/ore_box/BOX = locate(/obj/structure/ore_box, input.loc)
-			var/i = 0
-			for (var/obj/item/weapon/ore/O in BOX.contents)
-				BOX.contents -= O
-				O.loc = output.loc
-				i++
-				if (i>=10)
-					return
+			var/p = 0
+			for(var/ore_id in BOX.materials.storage)
+				var/datum/material/mat = BOX.materials.getMaterial(ore_id)
+				var/n=BOX.materials.storage[ore_id]
+				if(n<=0 || !mat.oretype) continue
+				for(var/i=0;i<n;i++)
+					new mat.oretype(get_turf(output))
+					BOX.materials.storage[ore_id]--
+					p++
+					if (p>=100)
+						return
 		if (locate(/obj/item, input.loc))
 			var/obj/item/O
 			var/i
-			for (i = 0; i<10; i++)
+			for (i = 0; i<100; i++)
 				O = locate(/obj/item, input.loc)
 				if (O)
 					O.loc = src.output.loc
 				else
 					return
-	return

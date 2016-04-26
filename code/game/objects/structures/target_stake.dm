@@ -5,7 +5,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_stake"
 	density = 1
-	flags = CONDUCT
+	flags = 0
+	siemens_coefficient = 1
 	var/obj/item/target/pinned_target // the current pinned target
 
 	Move()
@@ -24,13 +25,12 @@
 			return // get rid of that pinned target first!
 
 		if(istype(W, /obj/item/target))
-			density = 0
-			W.density = 1
-			user.drop_item(src)
-			W.loc = loc
-			W.layer = 3.1
-			pinned_target = W
-			user << "You slide the target into the stake."
+			if(user.drop_item(W, src.loc))
+				density = 0
+				W.density = 1
+				W.layer = 3.1
+				pinned_target = W
+				to_chat(user, "You slide the target into the stake.")
 		return
 
 	attack_hand(mob/user as mob)
@@ -44,9 +44,9 @@
 			if(ishuman(user))
 				if(!user.get_active_hand())
 					user.put_in_hands(pinned_target)
-					user << "You take the target out of the stake."
+					to_chat(user, "You take the target out of the stake.")
 			else
-				pinned_target.loc = get_turf_loc(user)
-				user << "You take the target out of the stake."
+				pinned_target.loc = get_turf(user)
+				to_chat(user, "You take the target out of the stake.")
 
 			pinned_target = null

@@ -4,7 +4,7 @@
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
 	cure = "Synaptizine & Sulfur"
-	cure_id = list("synaptizine","sulfur")
+	cure_list = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
 	affected_species = list("Human", "Monkey")
 	desc = "If left untreated death will occur."
@@ -22,7 +22,7 @@
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			if(prob(10))
-				affected_mob << "\red You're starting to feel very weak..."
+				to_chat(affected_mob, "<span class='warning'>You're starting to feel very weak...</span>")
 		if(4)
 			if(prob(10))
 				affected_mob.emote("cough")

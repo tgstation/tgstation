@@ -36,7 +36,7 @@
 		mezzer()
 
 
-/obj/item/clothing/glasses/meson/truesight
+/obj/item/clothing/glasses/scanner/meson/truesight
 	name = "The Lens of Truesight"
 	desc = "I can see forever!"
 	icon_state = "monocle"

@@ -4,11 +4,13 @@
 	desc = "Can hold various excavation gear."
 	icon_state = "gearbelt"
 	item_state = "utility"
-	can_hold = list(
+	w_class = 4 //Lets it hold mining satchels.
+	max_combined_w_class = 28
+	can_only_hold = list(
 		"/obj/item/weapon/storage/box/samplebags",
 		"/obj/item/device/core_sampler",
 		"/obj/item/device/beacon_locator",
-		"/obj/item/device/radio/beacon",
+		"/obj/item/beacon",
 		"/obj/item/device/gps",
 		"/obj/item/device/measuring_tape",
 		"/obj/item/device/flashlight",
@@ -25,4 +27,5 @@
 		"/obj/item/clothing/glasses",
 		"/obj/item/weapon/wrench",
 		"/obj/item/weapon/storage/box/excavation",
-		"/obj/item/weapon/anobattery")
+		"/obj/item/weapon/anobattery",
+		"/obj/item/weapon/weldingtool")

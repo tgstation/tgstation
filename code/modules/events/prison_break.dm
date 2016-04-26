@@ -1,5 +1,5 @@
 /datum/event/prison_break
-	announceWhen	= 50
+	announceWhen	= 30
 	oneShot			= 1
 
 	var/releaseWhen = 25
@@ -21,7 +21,7 @@
 
 
 /datum/event/prison_break/start()
-	for(var/area/A in world)
+	for(var/area/A in areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
 			prisonAreas += A
 

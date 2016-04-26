@@ -11,6 +11,7 @@
 	active_power_usage = 100
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/global/list/allowed_items = list (
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple  = "applejuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
@@ -22,6 +23,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = "poisonberryjuice",
 	)
+	machine_flags = WRENCHMOVE
 
 /obj/machinery/juicer/New()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
@@ -32,24 +34,23 @@
 
 
 /obj/machinery/juicer/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
 			return 1
 		else
-			user.before_take_item(O)
-			O.loc = src
-			beaker = O
-			src.verbs += /obj/machinery/juicer/verb/detach
-			update_icon()
-			src.updateUsrDialog()
-			return 0
+			if(user.drop_item(O, src))
+				beaker = O
+				src.verbs += /obj/machinery/juicer/verb/detach
+				update_icon()
+				src.updateUsrDialog()
+				return 0
 	if (!is_type_in_list(O, allowed_items))
-		user << "It looks as not containing any juice."
+		to_chat(user, "It looks as not containing any juice.")
 		return 1
-	user.before_take_item(O)
-	O.loc = src
-	src.updateUsrDialog()
+	if(user.drop_item(O, src))
+		src.updateUsrDialog()
 	return 0
 
 /obj/machinery/juicer/attack_paw(mob/user as mob)
@@ -119,7 +120,7 @@
 	set category = "Object"
 	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
-	if (usr.stat != 0)
+	if (usr.isUnconscious())
 		return
 	if (!beaker)
 		return
@@ -151,24 +152,23 @@
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
 		var/r_id = get_juice_id(O)
 		beaker.reagents.add_reagent(r_id,get_juice_amount(O))
-		del(O)
+		qdel(O)
+		O = null
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/structure/closet/crate/juice
-	New()
-		..()
-		new/obj/machinery/juicer(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-
+/obj/structure/closet/crate/juice/New()
+	..()
+	new/obj/machinery/juicer(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)

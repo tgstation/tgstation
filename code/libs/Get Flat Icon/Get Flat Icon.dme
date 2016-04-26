@@ -1,0 +1,14 @@
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "Get Flat Icon.dm"
+#ifdef __MAIN__ // BEGIN_DEMO
+#include "demo\demo.dm"
+#include "demo\demoInterface.dmf"
+#endif          // END_DEMO
+// END_INCLUDE

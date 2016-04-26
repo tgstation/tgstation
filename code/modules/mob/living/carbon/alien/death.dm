@@ -1,41 +1,27 @@
 /mob/living/carbon/alien/gib()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("gibbed-a", animation)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-a", sleeptime = 15)
 	xgibs(loc, viruses)
 	dead_mob_list -= src
 
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	qdel(src)
 
 /mob/living/carbon/alien/dust()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+	dropBorers(1)
 
-	flick("dust-a", animation)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-a", sleeptime = 15)
 	new /obj/effect/decal/remains/xeno(loc)
 	dead_mob_list -= src
 
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	qdel(src)

@@ -156,14 +156,14 @@
 	if (istype(C, /obj/item/weapon/disk/data/cartridge) && isnull(src.cartridge))
 		user.drop_item()
 		C.loc = src
-		user << "\blue You insert [C] into [src]."
+		to_chat(user, "<span class='notice'>You insert [C] into [src].</span>")
 		src.cartridge = C
 		src.updateSelfDialog()
 
 	else if (istype(C, /obj/item/weapon/card/id) && !src.owner && C:registered_name)
 		src.owner = C:registered_name
 		src.name = "PDA-[src.owner]"
-		user << "\blue Card scanned."
+		to_chat(user, "<span class='notice'>Card scanned.</span>")
 		src.updateSelfDialog()
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal)
@@ -191,7 +191,7 @@
 		scan_dat = src.scan_program.scan_atom(A)
 
 	if(scan_dat)
-		A.visible_message("\red [user] has scanned [A]!")
+		A.visible_message("<span class='warning'>[user] has scanned [A]!</span>")
 		user.show_message(scan_dat, 1)
 
 	return
@@ -252,9 +252,9 @@
 		if (alert_message)
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, src.loc))
-				O.show_message(text("\icon[src] *[alert_message]*"))
+				O.show_message(text("[bicon(src)] *[alert_message]*"))
 
-		src.overlays.Cut()
+		src.overlays.len = 0
 		src.overlays += image('icons/obj/pda.dmi', "pda-r")
 		return
 
@@ -263,7 +263,7 @@
 			return 0
 
 		if(!(program.holder in src))
-	//		world << "Not in src"
+//			to_chat(world, "Not in src")
 			program = new program.type
 			program.transfer_holder(src.hd)
 
@@ -284,15 +284,15 @@
 		return 1
 
 	delete_file(datum/computer/file/file)
-		//world << "Deleting [file]..."
+//		to_chat(world, "Deleting [file]...")
 		if((!file) || (!file.holder) || (file.holder.read_only))
-			//world << "Cannot delete :("
+//			to_chat(world, "Cannot delete :(")
 			return 0
 
 		//Don't delete the running program you jerk
 		if(src.active_program == file || src.host_program == file)
 			src.active_program = null
 
-		//world << "Now calling del on [file]..."
+//		to_chat(world, "Now calling del on [file]...")
 		del(file)
 		return 1

@@ -120,12 +120,17 @@ About Reagents:
 	Reagents are all the things you can mix and fille in bottles etc. This can be anything from
 	rejuvs over water to ... iron. Each reagent also has a few procs - i'll explain those below.
 
-		reaction_mob(var/mob/M, var/method=TOUCH)
+		reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 			This is called by the holder's reation proc.
 			This version is only called when the reagent
 			reacts with a mob. The method var can be either
 			TOUCH or INGEST. You'll want to put stuff like
 			acid-facemelting in here.
+
+		reaction_animal(var/mob/living/simple_animal/M, var/method=TOUCH, var/volume)
+			Same as above, but called when the reagent
+			reacts with a simple animal (because animals
+			are different enough from humans code-wise)
 
 		reaction_obj(var/obj/O)
 			This is called by the holder's reation proc.
@@ -224,12 +229,13 @@ About the Tools:
 	By default, all atom have a reagents var - but its empty. if you want to use an object for the chem.
 	system you'll need to add something like this in its new proc:
 
-		var/datum/reagents/R = new/datum/reagents(100) <<<<< create a new datum , 100 is the maximum_volume of the new holder datum.
-		reagents = R <<<<< assign the new datum to the objects reagents var
-		R.my_atom = src <<<<< set the holders my_atom to src so that we know where we are.
+		to_chat(var/datum/reagents/R = new/datum/reagents(100), <<< create a new datum , 100 is the maximum_volume of the new holder datum.)
+		to_chat(reagents = R, <<< assign the new datum to the objects reagents var)
+		to_chat(R.my_atom = src, <<< set the holders my_atom to src so that we know where we are.)
 
 		This can also be done by calling a convenience proc:
 		atom/proc/create_reagents(var/max_volume)
+
 
 	Other important stuff:
 

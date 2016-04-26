@@ -1,7 +1,6 @@
 /var/global/spacevines_spawned = 0
 
 /datum/event/spacevine
-	oneShot			= 1
 
 /datum/event/spacevine/start()
 	//biomass is basically just a resprited version of space vines

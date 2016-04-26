@@ -5,7 +5,7 @@
 //  Description: This is a controls the timer for the brig doors, displays the timer on itself and
 //               has a popup window when used, allowing to set the timer.
 //  Code Notes: Combination of old brigdoor.dm code from rev4407 and the status_display.dm code
-//  Date: 01/September/2010
+//  Date: 01/september/2010
 //  Programmer: Veryinky
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/door_timer
@@ -16,7 +16,7 @@
 	req_access = list(access_brig)
 	anchored = 1.0    		// can't pick it up
 	density = 0       		// can walk through it.
-	var/id = null     		// id of door it controls.
+	var/id_tag = null     	// id of door it controls.
 	var/releasetime = 0		// when world.time reaches it - release the prisoneer
 	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
@@ -30,16 +30,16 @@
 		pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
 
 		spawn(20)
-			for(var/obj/machinery/door/window/brigdoor/M in world)
-				if (M.id == src.id)
+			for(var/obj/machinery/door/window/brigdoor/M in all_doors)
+				if (M.id_tag == src.id_tag)
 					targets += M
 
-			for(var/obj/machinery/flasher/F in world)
-				if(F.id == src.id)
+			for(var/obj/machinery/flasher/F in flashers)
+				if(F.id_tag == src.id_tag)
 					targets += F
 
 			for(var/obj/structure/closet/secure_closet/brig/C in world)
-				if(C.id == src.id)
+				if(C.id_tag == src.id_tag)
 					targets += C
 
 			if(targets.len==0)
@@ -136,22 +136,16 @@
 		user.set_machine(src)
 		var/dat = "<HTML><BODY><TT>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\doors\brigdoors.dm:138: dat += "<HR>Timer System:</hr>"
 		dat += {"<HR>Timer System:</hr>
-			<b>Door [src.id] controls</b><br/>"}
-		// END AUTOFIX
+			<b>Door [src.id_tag] controls</b><br/>"}
 		if (src.timing)
 			dat += "<a href='?src=\ref[src];timing=0'>Stop Timer and open door</a><br/>"
 		else
 			dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\doors\brigdoors.dm:145: dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
 		dat += {"Time Left: [(minute ? text("[minute]:") : null)][second] <br/>
 			<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"}
-		// END AUTOFIX
 		for(var/obj/machinery/flasher/F in targets)
 			if(F.last_flash && (F.last_flash + 150) > world.time)
 				dat += "<br/><A href='?src=\ref[src];fc=1'>Flash Charging</A>"
@@ -159,11 +153,8 @@
 				dat += "<br/><A href='?src=\ref[src];fc=1'>Activate Flash</A>"
 
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\doors\brigdoors.dm:154: dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 		dat += {"<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>
 			</TT></BODY></HTML>"}
-		// END AUTOFIX
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 		return
@@ -218,7 +209,7 @@
 			set_picture("ai_bsod")
 			return
 		if(src.timing)
-			var/disp1 = uppertext(id)
+			var/disp1 = uppertext(id_tag)
 			var/timeleft = timeleft()
 			var/disp2 = "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
 			spawn( 5 )
@@ -231,7 +222,7 @@
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
 	proc/set_picture(var/state)
 		picture_state = state
-		overlays.Cut()
+		overlays.len = 0
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 
@@ -239,10 +230,10 @@
 // Stolen from status_display
 	proc/update_display(var/line1, var/line2)
 		if(line2 == null)		// single line display
-			overlays.Cut()
+			overlays.len = 0
 			overlays += texticon(line1, 23, -13)
 		else					// dual line display
-			overlays.Cut()
+			overlays.len = 0
 			overlays += texticon(line1, 23, -9)
 			overlays += texticon(line2, 23, -17)
 		// return an icon of a time text string (tn)
@@ -254,7 +245,7 @@
 //Stolen from status_display
 	proc/texticon(var/tn, var/px = 0, var/py = 0)
 		var/image/I = image('icons/obj/status_display.dmi', "blank")
-		var/len = lentext(tn)
+		var/len = length(tn)
 
 		for(var/d = 1 to len)
 			var/char = copytext(tn, len-d+1, len-d+2)
@@ -269,41 +260,41 @@
 
 /obj/machinery/door_timer/cell_1
 	name = "Cell 1"
-	id = "Cell 1"
+	id_tag = "Cell 1"
 	dir = 2
 	pixel_y = -32
 
 
 /obj/machinery/door_timer/cell_2
 	name = "Cell 2"
-	id = "Cell 2"
+	id_tag = "Cell 2"
 	dir = 2
 	pixel_y = -32
 
 
 /obj/machinery/door_timer/cell_3
 	name = "Cell 3"
-	id = "Cell 3"
+	id_tag = "Cell 3"
 	dir = 2
 	pixel_y = -32
 
 
 /obj/machinery/door_timer/cell_4
 	name = "Cell 4"
-	id = "Cell 4"
+	id_tag = "Cell 4"
 	dir = 2
 	pixel_y = -32
 
 
 /obj/machinery/door_timer/cell_5
 	name = "Cell 5"
-	id = "Cell 5"
+	id_tag = "Cell 5"
 	dir = 2
 	pixel_y = -32
 
 
 /obj/machinery/door_timer/cell_6
 	name = "Cell 6"
-	id = "Cell 6"
+	id_tag = "Cell 6"
 	dir = 4
 	pixel_x = 32

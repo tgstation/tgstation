@@ -6,6 +6,9 @@
 	w_class = 2
 	pressure_resistance = 2
 
+	autoignition_temperature = 522 // Kelvin
+	fire_fuel = 1
+
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
 	icon_state = "folder_blue"
@@ -23,20 +26,19 @@
 	icon_state = "folder_white"
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(contents.len)
 		overlays += "folder_paper"
 	return
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
-		user.drop_item()
-		W.loc = src
-		user << "<span class='notice'>You put the [W] into \the [src].</span>"
-		update_icon()
+		if(user.drop_item(W, src))
+			to_chat(user, "<span class='notice'>You put the [W] into \the [src].</span>")
+			update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
-		var/n_name = copytext(sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text), 1, MAX_NAME_LEN)
-		if((loc == usr && usr.stat == 0))
+		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null)  as text), 1, MAX_NAME_LEN)
+		if(in_range(src, user) && user.stat == CONSCIOUS)
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return
 
@@ -83,10 +85,10 @@
 			var/obj/item/weapon/paper/P = locate(href_list["read"])
 			if(P)
 				if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
+					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY[P.color ? " bgcolor=[P.color]":""]>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
 				else
-					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
+					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY[P.color ? " bgcolor=[P.color]":""]>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
 		if(href_list["look"])
 			var/obj/item/weapon/photo/P = locate(href_list["look"])

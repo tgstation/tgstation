@@ -5,11 +5,12 @@
 	var/stopper = 1 // stops throwers
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
+	w_type=NOT_RECYCLABLE
 
 /obj/effect/step_trigger/proc/Trigger(var/atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/HasEntered(H as mob|obj)
+/obj/effect/step_trigger/Crossed(H as mob|obj)
 	..()
 	if(!H)
 		return
@@ -108,6 +109,8 @@
 	var/teleport_z_offset = 0
 
 	Trigger(var/atom/movable/A)
+		if(!istype(A))
+			return
 		if(teleport_x && teleport_y && teleport_z)
 			if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
 

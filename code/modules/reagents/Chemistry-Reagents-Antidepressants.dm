@@ -1,7 +1,7 @@
-Methylphenidate
+//Methylphenidate
 
 #define ANTIDEPRESSANT_MESSAGE_DELAY 5*60*10
-
+/*REPLACED WITH METHYLIN
 /datum/reagent/antidepressant/methylphenidate
 	name = "Methylphenidate"
 	id = "methylphenidate"
@@ -15,11 +15,11 @@ Methylphenidate
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red You lose focus.."
+			to_chat(M, "<span class='warning'>You lose focus..</span>")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				M << "\blue Your mind feels focused and undivided."
+				to_chat(M, "<span class='notice'>Your mind feels focused and undivided.</span>")
 		..()
 		return
 
@@ -29,6 +29,7 @@ Methylphenidate
 	result = "methylphenidate"
 	required_reagents = list("mindbreaker" = 1, "hydrogen" = 1)
 	result_amount = 3
+*/
 
 /datum/reagent/antidepressant/citalopram
 	name = "Citalopram"
@@ -43,11 +44,11 @@ Methylphenidate
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red Your mind feels a little less stable.."
+			to_chat(M, "<span class='warning'>Your mind feels a little less stable..</span>")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				M << "\blue Your mind feels stable.. a little stable."
+				to_chat(M, "<span class='notice'>Your mind feels stable.. a little stable.</span>")
 		..()
 		return
 
@@ -72,14 +73,14 @@ Methylphenidate
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red Your mind feels much less stable.."
+			to_chat(M, "<span class='warning'>Your mind feels much less stable..</span>")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
 				if(prob(90))
-					M << "\blue Your mind feels much more stable."
+					to_chat(M, "<span class='notice'>Your mind feels much more stable.</span>")
 				else
-					M << "\red Your mind breaks apart.."
+					to_chat(M, "<span class='warning'>Your mind breaks apart..</span>")
 					M.hallucination += 200
 		..()
 		return

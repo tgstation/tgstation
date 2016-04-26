@@ -48,18 +48,18 @@
 
 /obj/machinery/gravity_generator/proc/locatelocalareas()
 	for(var/area/A in range(src,effectiverange))
-		if(A.name == "Space")
+		if(isspace(A))
 			continue // No (de)gravitizing space.
-		if(A.master && !( A.master in localareas) )
-			localareas += A.master
+		if(!(A in localareas))
+			localareas += A
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	var/obj/machinery/gravity_generator/foundgenerator = null
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		//world << "SEARCHING IN [dir]"
+//		to_chat(world, "SEARCHING IN [dir]")
 		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
 		if (!isnull(foundgenerator))
-			//world << "FOUND"
+//			to_chat(world, "FOUND")
 			break
 	return foundgenerator
 
@@ -114,7 +114,7 @@
 
 /obj/machinery/computer/gravity_control_computer/Topic(href, href_list)
 	//set background = 1
-	..()
+	if(..()) return 1
 
 	if ( (get_dist(src, usr) > 1 ))
 		if (!istype(usr, /mob/living/silicon))
@@ -129,7 +129,7 @@
 			for(var/area/A in gravity_generator:localareas)
 				var/obj/machinery/gravity_generator/G
 				for(G in machines)
-					if((A.master in G.localareas) && (G.on))
+					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
 					A.gravitychange(0,A)

@@ -33,7 +33,7 @@
 	//var/internal_tank_valve = ONE_ATMOSPHERE
 	//var/obj/machinery/portable_atmospherics/canister/internal_tank
 	//var/datum/gas_mixture/cabin_air
-	//var/obj/machinery/atmospherics/portables_connector/connected_port = null
+	//var/obj/machinery/atmospherics/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
 
@@ -181,7 +181,8 @@
 				if(mecha.loc && hascall(mecha.loc,"assume_air"))
 					mecha.loc.assume_air(leaked_gas)
 				else
-					del(leaked_gas)
+					qdel(leaked_gas)
+					leaked_gas = null
 		if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			if(mecha.get_charge())
 				mecha.spark_system.start()

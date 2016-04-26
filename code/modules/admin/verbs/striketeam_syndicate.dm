@@ -6,8 +6,9 @@ var/global/sent_syndicate_strike_team = 0
 	set category = "Fun"
 	set name = "Spawn Syndicate Strike Team"
 	set desc = "Spawns a squad of commandos in the Syndicate Mothership if you want to run an admin event."
+
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(!ticker)
 		alert("The game hasn't started yet!")
@@ -30,7 +31,7 @@ var/global/sent_syndicate_strike_team = 0
 				return
 
 	if(sent_syndicate_strike_team)
-		src << "Looks like someone beat you to it."
+		to_chat(src, "Looks like someone beat you to it.")
 		return
 
 	sent_syndicate_strike_team = 1
@@ -44,7 +45,7 @@ var/global/sent_syndicate_strike_team = 0
 //Code for spawning a nuke auth code.
 	var/nuke_code
 	var/temp_code
-	for(var/obj/machinery/nuclearbomb/N in world)
+	for(var/obj/machinery/nuclearbomb/N in machines)
 		temp_code = text2num(N.r_code)
 		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code
@@ -78,10 +79,10 @@ var/global/sent_syndicate_strike_team = 0
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
-				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
-			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code].</span>")
+			new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input].</span>")
 
-			new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B>[input]</B>"
+			to_chat(new_syndicate_commando, "<span class='notice'>You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='danger'>[input]</span></span>")
 
 			syndicate_commando_number--
 
@@ -98,7 +99,7 @@ var/global/sent_syndicate_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			del(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned a Syndicate strike squad.</span>", 1)
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -108,7 +109,7 @@ var/global/sent_syndicate_strike_team = 0
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
 	var/syndicate_commando_name = pick(last_names)
 
-	new_syndicate_commando.gender = pick(MALE, FEMALE)
+	new_syndicate_commando.setGender(pick(MALE, FEMALE))
 
 	var/datum/preferences/A = new()//Randomize appearance for the commando.
 	A.randomize_appearance_for(new_syndicate_commando)
@@ -128,6 +129,7 @@ var/global/sent_syndicate_strike_team = 0
 	return new_syndicate_commando
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader_selected = 0)
+
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
@@ -149,7 +151,7 @@ var/global/sent_syndicate_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), slot_in_backpack)
 
-	equip_to_slot_or_del(new /obj/item/ammo_magazine/c45(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/ammo_storage/box/c45(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_in_backpack)
@@ -174,5 +176,10 @@ var/global/sent_syndicate_strike_team = 0
 	W.assignment = "Syndicate Commando"
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)
+
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src) //no loyalty implant because you're already syndicate scum
+	E.imp_in = src
+	E.implanted = 1
+	src.update_icons()
 
 	return 1

@@ -125,8 +125,7 @@ var/list/advance_cures = 	list(
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(var/datum/disease/advance/D)
 	if(!(src.IsSame(D)))
-		var/list/possible_symptoms = shuffle(D.symptoms)
-		for(var/datum/symptom/S in possible_symptoms)
+		for(var/datum/symptom/S in shuffle(D.symptoms))
 			AddSymptom(new S.type)
 
 /datum/disease/advance/proc/HasSymptom(var/datum/symptom/S)
@@ -137,6 +136,7 @@ var/list/advance_cures = 	list(
 
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(var/type_level_limit = RANDOM_STARTING_LEVEL, var/amount_get = 0)
+
 
 	var/list/generated = list() // Symptoms we generated.
 
@@ -167,7 +167,7 @@ var/list/advance_cures = 	list(
 	return generated
 
 /datum/disease/advance/proc/Refresh(var/new_name = 0)
-	//world << "[src.name] \ref[src] - REFRESH!"
+//	to_chat(world, "[src.name] \ref[src] - REFRESH!")
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
 
@@ -182,6 +182,7 @@ var/list/advance_cures = 	list(
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
+
 
 	if(!symptoms || !symptoms.len)
 		CRASH("We did not have any symptoms before generating properties.")
@@ -201,6 +202,7 @@ var/list/advance_cures = 	list(
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties(var/list/properties = list())
+
 
 	if(properties && properties.len)
 
@@ -232,9 +234,10 @@ var/list/advance_cures = 	list(
 			spread = "Blood"
 
 	spread_type = spread_id
-	//world << "Setting spread type to [spread_id]/[spread]"
+//	to_chat(world, "Setting spread type to [spread_id]/[spread]")
 
 /datum/disease/advance/proc/SetSeverity(var/level_sev)
+
 
 	switch(level_sev)
 
@@ -258,7 +261,7 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/proc/GenerateCure(var/list/properties = list())
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		//world << "Res = [res]"
+//		to_chat(world, "Res = [res]")
 		cure_id = advance_cures[res]
 
 		// Get the cure name from the cure_id
@@ -293,11 +296,12 @@ var/list/advance_cures = 	list(
 // Return a unique ID of the disease.
 /datum/disease/advance/proc/GetDiseaseID()
 
+
 	var/list/L = list()
 	for(var/datum/symptom/S in symptoms)
 		L += S.id
 	L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-	var/result = dd_list2text(L, ":")
+	var/result = list2text(L, ":")
 	id = result
 	return result
 
@@ -305,6 +309,7 @@ var/list/advance_cures = 	list(
 // Add a symptom, if it is over the limit (with a small chance to be able to go over)
 // we take a random symptom away and add the new one.
 /datum/disease/advance/proc/AddSymptom(var/datum/symptom/S)
+
 
 	if(HasSymptom(S))
 		return
@@ -330,7 +335,8 @@ var/list/advance_cures = 	list(
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
 
-	//world << "Mixing!!!!"
+
+//	to_chat(world, "Mixing!!!!")
 
 	var/list/diseases = list()
 
@@ -355,7 +361,7 @@ var/list/advance_cures = 	list(
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
-	//world << "END MIXING!!!!!"
+//	to_chat(world, "END MIXING!!!!!")
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(1)
 	return to_return
@@ -394,7 +400,7 @@ var/list/advance_cures = 	list(
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = input(user, "Name your new disease.", "New Name")
+		var/new_name = copytext(sanitize(input(user, "Name your new disease.", "New Name")),1,MAX_NAME_LEN)
 		D.AssignName(new_name)
 		D.Refresh()
 
@@ -416,8 +422,9 @@ var/list/advance_cures = 	list(
 /*
 /mob/verb/test()
 
+
 	for(var/datum/disease/D in active_diseases)
-		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
+		to_chat(src, "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>")
 */
 
 #undef RANDOM_STARTING_LEVEL

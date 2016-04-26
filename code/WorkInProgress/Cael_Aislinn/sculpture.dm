@@ -1,10 +1,8 @@
-
 //sculpture
 //SCP-173, nothing more need be said
 /mob/living/simple_animal/sculpture
-	name = "\improper sculpture"
-	real_name = "sculpture"
-	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. "
+	name = "SCP-173"
+	desc = "It's some kind of hastily-painted human-size stone sculpture. Just looking at it makes you feel nervous."
 	icon = 'code/WorkInProgress/Cael_Aislinn/unknown.dmi'
 	icon_state = "sculpture"
 	icon_living = "sculpture"
@@ -14,236 +12,263 @@
 	response_help  = "touches the"
 	response_disarm = "pushes the"
 	response_harm   = "hits the"
-	var/obj/item/weapon/grab/G
-	var/observed = 0
-	var/allow_escape = 0	//set this to 1 for src to drop it's target next Life() call and try to escape
-	var/hibernate = 0
-	var/random_escape_chance = 0.5
-
-/mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
-	if(target && target != src && ishuman(target))
-		G = new /obj/item/weapon/grab(target)
-		G.assailant = src
-		G.layer = 20
-		G.affecting = target
-		target.grabbed_by += G
-		G.synch()
-		target.LAssailant = src
-
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-		visible_message("\red [src] has grabbed [target]!")
-		target << "\red <b>You feel something suddenly grab you around the neck from behind!</b> Everything goes black..."
-
-		G.state = 3
-		G.killing = 1
-
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid. [G ? "\red The sculpture is holding [G.affecting] in a vice-like grip." : ""]"
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been grabbed by SCP-173, and is being strangled!</font>")
-		log_admin("[target] ([target.ckey]) has been grabbed and is being strangled by SCP-173.")
-		message_admins("Alert: [target.real_name] has been grabbed and is being strangled by SCP-173. Set var/allow_escape = 1 to allow this player to escape temporarily, or var/hibernate = 1 to disable it entirely.")
-
-/mob/living/simple_animal/sculpture/proc/Escape()
-	var/list/turfs = new/list()
-	for(var/turf/thisturf in view(50,src))
-		if(istype(thisturf, /turf/space))
-			continue
-		else if(istype(thisturf, /turf/simulated/wall))
-			continue
-		else if(istype(thisturf, /turf/simulated/mineral))
-			continue
-		else if(istype(thisturf, /turf/simulated/shuttle/wall))
-			continue
-		else if(istype(thisturf, /turf/unsimulated/wall))
-			continue
-		turfs += thisturf
-	var/turf/target_turf = pick(turfs)
-	src.dir = get_dir(src, target_turf)
-	src.loc = target_turf
-
-	hibernate = 1
-	spawn(rand(20,35) * 10)
-		hibernate = 0
+	meat_type = null
+	see_in_dark = 8 //Needs to see in darkness to snap in darkness
+	var/response_snap = "snapped the neck of" //Past tense because it "happened before you could see it"
+	var/response_snap_target = "In the blink of an eye, something grabs you and snaps your neck!"
+	var/snap_sound = list('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg')
+	var/scare_sound = list('sound/scp/scare1.ogg','sound/scp/scare2.ogg','sound/scp/scare3.ogg','sound/scp/scare4.ogg')	//Boo
+	var/hibernate = 0 //Disables SCP until toggled back to 0
+	var/scare_played = 0 //Did we rape everyone's ears yet ?
+	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent //Graciously stolen from spider code
 
 /mob/living/simple_animal/sculpture/Life()
+	if(timestopped)
+		return 0 //Under effects of time magick
 
-	observed = 0
-
-	//update the desc
-	if(!G)
-		desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
-
-	//if we are sent into forced hibernation mode, allow our victim to escape
-	if(hibernate && G && G.killing == 1)
-		if(G)
-			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip!")
-			G.killing = 0
-			G.state = 1
+	//If we are hibernating, just don't do anything
+	if(hibernate)
 		return
 
-	//
-	if(allow_escape)
-		allow_escape = 0
-		if(G)
-			G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-			visible_message("\red [src] suddenly loosens it's grip!")
-			G.killing = 0
-			G.state = 1
-			if(!observed)
-				Escape()
-		observed = 1
-
-	//can't do anything in space at all
-	if(istype(get_turf(src), /turf/space) || hibernate)
+	if(!check_los())
 		return
 
-	for(var/mob/living/M in view(7, src))
-		if(M.stat || M == src)
-			continue
-		var/xdif = M.x - src.x
-		var/ydif = M.y - src.y
-		if(abs(xdif) <  abs(ydif))
-			//mob is either above or below src
-			if(ydif < 0 && M.dir == NORTH)
-				//mob is below src and looking up
-				observed = 1
-				break
-			else if(ydif > 0 && M.dir == SOUTH)
-				//mob is above src and looking down
-				observed = 1
-				break
-		else if(abs(xdif) >  abs(ydif))
-			//mob is either left or right of src
-			if(xdif < 0 && M.dir == EAST)
-				//mob is to the left of src and looking right
-				observed = 1
-				break
-			else if(xdif > 0 && M.dir == WEST)
-				//mob is to the right of src and looking left
-				observed = 1
-				break
-		else if (xdif == 0 && ydif == 0)
-			//mob is on the same tile as src
-			observed = 1
+	//See if we're able to strangle anyone
+	for(var/mob/living/carbon/human/M in get_turf(src))
+		if(M.stat == CONSCIOUS && check_los())
+			snap_neck(M)
 			break
 
-	//account for darkness
+	//Find out what mobs we can see for targetting purposes
+	var/list/conscious = list()
+	for(var/mob/living/carbon/human/H in view(7, src))
+		if(H.stat == CONSCIOUS) //He's up and running
+			conscious.Add(H)
+
+	//Pick the nearest valid conscious target
+	var/mob/living/carbon/human/target
+	for(var/mob/living/carbon/human/H in conscious)
+		if(!target || get_dist(src, H) < get_dist(src, target))
+			target = H
+
+	if(target)
+		handle_target(target)
+	else
+		handle_idle()
+
+
+//Check if any human mob can see SPC-173, including darkness exception
+/mob/living/simple_animal/sculpture/proc/check_los()
+
+	var/observed = 0
+
+	//If SCP-173 is in darkness, nothing can see it
 	var/turf/T = get_turf(src)
 	var/in_darkness = 0
-	if(T.luminosity == 0 && !istype(T, /turf/simulated))
-		in_darkness = 1
+	if(istype(T, /turf/simulated)) //Simulated turfs only
+		var/turf/simulated/sim = T
+		if(!sim.affecting_lights) //Best check I could figure out given VV, only full darkness counts
+			in_darkness = 1
 
-	//see if we're able to do stuff
-	if(!observed || in_darkness)
-		if(G)
-			if(prob(random_escape_chance))
-				//chance to allow the stranglee to escape
-				allow_escape = 1
-			if(G.affecting.stat == 2)
-				del G
-		else if(!G)
-			//see if we're able to strangle anyone
-			var/turf/myTurf = get_turf(src)
-			for(var/mob/living/M in myTurf)
-				GrabMob(M)
-				if(G)
+	//Humans can observe SCP-173. If a single human observes him, he's observed for everyone
+	//Note that humans have a 180° field of vision for the purposes of this proc
+	for(var/mob/living/carbon/human/H in view(7, src))
+		if(H.stat)
+			continue
+		var/x_diff = H.x - src.x
+		var/y_diff = H.y - src.y
+		if(y_diff != 0) //If we are not on the same vertical plane (up/down), mob is either above or below src
+			if(y_diff < 0 && H.dir == NORTH) //Mob is below src and looking up
+				observed = 1
+				break
+			else if(y_diff > 0 && H.dir == SOUTH) //Mob is above src and looking down
+				observed = 1
+				break
+		if(x_diff != 0) //If we are not on the same horizontal plane (left/right), mob is either left or right of src
+			if(x_diff < 0 && H.dir == EAST) //Mob is left of src and looking right
+				observed = 1
+				break
+			else if(x_diff > 0 && H.dir == WEST) //Mob is right of src and looking left
+				observed = 1
+				break
+
+	if(observed && !in_darkness) //Is someone looking at us, given that they can see us ?
+		return 0 //Try again when we get a chance
+	return 1 //Success, let's move
+
+/mob/living/simple_animal/sculpture/proc/handle_target(var/mob/living/carbon/human/target)
+
+	if(!target) //Sanity
+		return
+
+	if(!check_los())
+		return
+
+	var/turf/target_turf
+
+	//Send the warning that SPC is homing in
+	target_turf = get_turf(target)
+	if(!scare_played) //Let's minimize the spam
+		playsound(get_turf(src), pick(scare_sound), 100, 1, -1)
+		scare_played = 1
+		spawn(50)
+			scare_played = 0
+
+	//Rampage along a path to get to them, in the blink of an eye
+	var/turf/next_turf = get_step_towards(src, target)
+	var/num_turfs = get_dist(src,target)
+	spawn()
+		while(get_turf(src) != target_turf && num_turfs > 0)
+			if(!check_los()) //Something is looking at us now
+				break
+			if(!next_turf.CanPass(src, next_turf)) //We can't pass through our planned path
+				break
+			for(var/obj/structure/window/W in next_turf)
+				W.Destroy(brokenup = 1)
+				sleep(5)
+			for(var/obj/structure/table/O in next_turf)
+				O.ex_act(1)
+				sleep(5)
+			for(var/obj/structure/closet/C in next_turf)
+				C.ex_act(1)
+				sleep(5)
+			for(var/obj/structure/grille/G in next_turf)
+				G.ex_act(1)
+				sleep(5)
+			for(var/obj/machinery/door/airlock/A in next_turf)
+				if(A.welded || A.locked) //Snowflakey code to take in account bolts and welding
 					break
+				A.open()
+				sleep(5)
+			for(var/obj/machinery/door/D in next_turf)
+				D.open()
+				sleep(5)
+			if(!next_turf.CanPass(src, next_turf)) //Once we cleared everything we could, check one last time if we can pass
+				break
+			forceMove(next_turf)
+			dir = get_dir(src, target)
+			next_turf = get_step(src, get_dir(next_turf,target))
+			num_turfs--
 
-			//find out what mobs we can see
-			var/list/incapacitated = list()
-			var/list/conscious = list()
-			for(var/mob/living/carbon/M in view(7, src))
-				//this may not be quite the right test
-				if(M == src)
-					continue
-				if(M.stat == 1)
-					incapacitated.Add(M)
-				else if(!M.stat)
-					conscious.Add(M)
+/mob/living/simple_animal/sculpture/proc/handle_idle()
 
-			//pick the nearest valid conscious target
-			var/mob/living/carbon/target_mob
-			for(var/mob/living/carbon/M in conscious)
-				if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
-					target_mob = M
+	if(!check_los())
+		return
 
-			if(!target_mob)
-				//get an unconscious mob
-				for(var/mob/living/carbon/M in incapacitated)
-					if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
-						target_mob = M
-			if(target_mob)
-				var/turf/target_turf
-				if(in_darkness)
-					//move to right behind them
-					target_turf = get_step(target_mob, src)
-				else
-					//move to them really really fast and knock them down
-					target_turf = get_turf(target_mob)
-
-				//rampage along a path to get to them, in the blink of an eye
-				var/turf/next_turf = get_step_towards(src, target_mob)
-				var/num_turfs = get_dist(src,target_mob)
-				while(get_turf(src) != target_turf && num_turfs > 0)
-					for(var/obj/structure/window/W in next_turf)
-						W.ex_act(2)
-					for(var/obj/structure/table/O in next_turf)
-						O.ex_act(1)
-					for(var/obj/structure/grille/G in next_turf)
-						G.ex_act(1)
-					if(!next_turf.CanPass(src, next_turf))
+	//If we're not strangling anyone, take a stroll
+	if(prob(25)) //1 in 4 chance of checking out something new
+		var/list/turfs = new/list()
+		for(var/turf/T in view(7, src))
+			if(!istype(T, /turf/simulated/floor))
+				continue
+			turfs += T
+		var/turf/target_turf = safepick(turfs)
+		if(!target_turf)
+			return
+		//Move to our new resting point with celerity
+		var/turf/next_turf = get_step_towards(src, target_turf)
+		var/num_turfs = get_dist(src, target_turf)
+		spawn()
+			while(get_turf(src) != target_turf && num_turfs > 0)
+				if(!check_los()) //Something is looking at us now
+					break
+				if(!next_turf.CanPass(src, next_turf)) //We can't pass through our planned path
+					break
+				for(var/obj/structure/window/W in next_turf)
+					W.Destroy(brokenup = 1)
+					sleep(5)
+				for(var/obj/structure/table/O in next_turf)
+					O.ex_act(1)
+					sleep(5)
+				for(var/obj/structure/closet/C in next_turf)
+					C.ex_act(1)
+					sleep(5)
+				for(var/obj/structure/grille/G in next_turf)
+					G.ex_act(1)
+					sleep(5)
+				for(var/obj/machinery/door/airlock/A in next_turf)
+					if(A.welded || A.locked) //Snowflakey code to take in account bolts and welding
 						break
-					src.loc = next_turf
-					src.dir = get_dir(src, target_mob)
-					next_turf = get_step(src, get_dir(next_turf,target_mob))
-					num_turfs--
+					A.open()
+					sleep(5)
+				for(var/obj/machinery/door/D in next_turf)
+					D.open()
+					sleep(5)
+				if(!next_turf.CanPass(src, next_turf)) //Once we cleared everything we could, check one last time if we can pass
+					break
+				forceMove(next_turf)
+				dir = get_dir(src, target_turf)
+				next_turf = get_step(src, get_dir(next_turf,target_turf))
+				num_turfs--
+		//Coding note : This is known to allow SCP to end up on tiles that contain obstructing structures (doors, machinery, etc)
+		//Although he CAN'T pass through them during normal movement. Will look into a fix soon
 
-				//if we reached them, knock them down and start strangling them
-				if(get_turf(src) == target_turf)
-					target_mob.Stun(1)
-					target_mob.Paralyse(1)
-					GrabMob(target_mob)
+	//Do we have a vent ? Good, let's take a look
+	for(entry_vent in view(1, src))
+		if(prob(90)) //10 % chance to consider a vent, to try and avoid constant vent switching
+			return
+		visible_message("<span class='danger'>\The [src] starts trying to slide itself into the vent!</span>")
+		sleep(50) //Let's stop SCP-173 for five seconds to do his parking job
+		..()
+		if(entry_vent.network && entry_vent.network.normal_members.len)
+			var/list/vents = list()
+			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.network.normal_members)
+				vents.Add(temp_vent)
+			if(!vents.len)
+				entry_vent = null
+				return
+			if(!check_los()) //Someone started looking at us
+				return
+			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
+			spawn()
+				visible_message("<span class='danger'>\The [src] suddenly disappears into the vent!</span>")
+				loc = exit_vent
+				var/travel_time = round(get_dist(loc, exit_vent.loc)/2)
+				spawn(travel_time)
+					if(!exit_vent || exit_vent.welded)
+						forceMove(get_turf(entry_vent))
+						entry_vent = null
+						visible_message("<span class='danger'>\The [src] suddenly appears from the vent!</span>")
+						return
 
-			//if we're not strangling anyone, take a stroll
-			if(!G && prob(10))
-				var/list/turfs = new/list()
-				for(var/turf/thisturf in view(7,src))
-					if(istype(thisturf, /turf/space))
-						continue
-					else if(istype(thisturf, /turf/simulated/wall))
-						continue
-					else if(istype(thisturf, /turf/simulated/mineral))
-						continue
-					else if(istype(thisturf, /turf/simulated/shuttle/wall))
-						continue
-					else if(istype(thisturf, /turf/unsimulated/wall))
-						continue
-					turfs += thisturf
-				var/turf/target_turf = pick(turfs)
+					forceMove(get_turf(exit_vent))
+					entry_vent = null
+					visible_message("<span class='danger'>\The [src] suddenly appears from the vent!</span>")
+		else
+			entry_vent = null
 
-				//rampage along a path to get to it, in the blink of an eye
-				var/turf/next_turf = get_step_towards(src, target_turf)
-				var/num_turfs = get_dist(src,target_turf)
-				while(get_turf(src) != target_turf && num_turfs > 0)
-					for(var/obj/structure/window/W in next_turf)
-						W.ex_act(2)
-					for(var/obj/structure/table/O in next_turf)
-						O.ex_act(1)
-					for(var/obj/structure/grille/G in next_turf)
-						G.ex_act(1)
-					if(!next_turf.CanPass(src, next_turf))
-						break
-					src.loc = next_turf
-					src.dir = get_dir(src, target_mob)
-					next_turf = get_step(src, get_dir(next_turf,target_turf))
-					num_turfs--
-	else if(G)
-		//we can't move while observed, so we can't effectively strangle any more
-		//our grip is still rock solid, but the victim has a chance to escape
-		G.affecting << "\red You suddenly feel the grip around your neck being loosened!"
-		visible_message("\red [src] suddenly loosens it's grip!")
-		G.state = 1
-		G.killing = 0
+//This performs an immediate neck snap check, meant to avoid people cheesing SCP-173 by just running faster than Life() refresh
+/mob/living/simple_animal/sculpture/proc/check_snap_neck()
+
+	//See if we're able to strangle anyone
+	for(var/mob/living/carbon/human/M in get_turf(src))
+		if(M.stat == CONSCIOUS && check_los())
+			snap_neck(M)
+			break
+
+/mob/living/simple_animal/sculpture/forceMove(atom/destination, var/no_tp = 0)
+
+	..()
+	check_snap_neck()
+
+/mob/living/simple_animal/sculpture/proc/snap_neck(var/mob/living/target)
+
+	if(!check_los())
+		return
+
+	if(target && ishuman(target))
+		//To prevent movement cheese, SCP snaps necks the second it ends up on the same turf as someone
+		target.apply_damage(rand(120, 150), BRUTE, "head")
+		playsound(target.loc, pick(snap_sound), 100, 1, -1)
+
+		//Warn everyone
+		visible_message("<span class='danger'>[src] [response_snap] [target]!</span>")
+		to_chat(target, "<span class='alert'><b>[response_snap_target]</b> Your vision fades away...</span>")
+
+		//Logging stuff
+		target.attack_log += text("\[[time_stamp()]\] <font color='red'>Has had his neck snapped by [src]!</font>")
+		log_admin("[target] ([target.ckey]) has had his neck snapped by an active [src].")
+		message_admins("ALERT: <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>[target.real_name]</a> has had his neck snapped by an active [src].")
 
 /mob/living/simple_animal/sculpture/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()
@@ -252,12 +277,30 @@
 	..()
 
 /mob/living/simple_animal/sculpture/Bump(atom/movable/AM as mob, yes)
-	if(!G)
-		GrabMob(AM)
+	if(!check_los())
+		snap_neck(AM)
+	..()
 
 /mob/living/simple_animal/sculpture/Bumped(atom/movable/AM as mob, yes)
-	if(!G)
-		GrabMob(AM)
+	if(!check_los())
+		snap_neck(AM)
 
+//You cannot destroy SCP-173, fool!
 /mob/living/simple_animal/sculpture/ex_act(var/severity)
-	//nothing
+
+//But seriously, you just can't
+/mob/living/simple_animal/sculpture/Del()
+
+	replace_SCP()
+	..()
+
+//Someone tried to use a cheese to kill SCP, warp him at any blob start (nuke disk method
+/mob/living/simple_animal/sculpture/proc/replace_SCP()
+	if(blobstart.len)
+		visible_message("<span class='sinister'>\The [src] appears as if it was destroyed, but as you sigh with relief, rumbling stone echoes through your mind.</span>")
+		var/picked_turf = get_turf(pick(blobstart))
+		var/picked_area = formatLocation(picked_turf)
+		var/log_message = "[type] has been 'destroyed'. Creating one at"
+		log_game("[log_message] [picked_area]")
+		message_admins("[log_message] [formatJumpTo(picked_turf, picked_area)]")
+		new /mob/living/simple_animal/sculpture(picked_turf)

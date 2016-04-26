@@ -24,8 +24,8 @@ var/list
 		sandbox.owner = src.ckey
 		if(src.client.holder)
 			sandbox.admin = 1
-		verbs += new /mob/proc/sandbox_panel
-		verbs += new /mob/proc/sandbox_spawn_atom
+		verbs += /mob/proc/sandbox_panel
+		verbs += /mob/proc/sandbox_spawn_atom
 
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
@@ -82,7 +82,7 @@ proc/is_banned_type(typepath)
 		if(!chosen)
 			return
 	if(is_banned_type(chosen))
-		src << "\red Denied."
+		to_chat(src, "<span class='warning'>Denied.</span>")
 		return
 	new chosen(usr.loc)
 
@@ -98,11 +98,8 @@ datum/hSB
 			var/hsbpanel = "<center><b>h_Sandbox Panel</b></center><hr>"
 			if(admin)
 
-				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\sandbox\h_sandbox.dm:39: hsbpanel += "<b>Administration Tools:</b><br>"
 				hsbpanel += {"<b>Administration Tools:</b><br>
 					- <a href=\"?\ref[src];hsb=hsbtobj\">Toggle Object Spawning</a><br><br>"}
-			// END AUTOFIX
 			hsbpanel += "<b>Regular Tools:</b><br>"
 			for(var/T in hrefs)
 				hsbpanel += "- <a href=\"?\ref[src];hsb=[T]\">[hrefs[T]]</a><br>"
@@ -121,26 +118,27 @@ datum/hSB
 				if("hsbtobj")
 					if(!admin) return
 					if(hsboxspawn)
-						world << "<b>Sandbox:  [usr.key] has disabled object spawning!</b>"
+						to_chat(world, "<b>Sandbox:  [usr.key] has disabled object spawning!</b>")
 						hsboxspawn = 0
 						return
 					if(!hsboxspawn)
-						world << "<b>Sandbox:  [usr.key] has enabled object spawning!</b>"
+						to_chat(world, "<b>Sandbox:  [usr.key] has enabled object spawning!</b>")
 						hsboxspawn = 1
 						return
 				if("hsbsuit")
 					var/mob/living/carbon/human/P = usr
+					//There really should be a drop_old_and_equip_to_slot() proc.
 					if(P.wear_suit)
 						P.wear_suit.loc = P.loc
 						P.wear_suit.layer = initial(P.wear_suit.layer)
 						P.wear_suit = null
-					P.wear_suit = new/obj/item/clothing/suit/space(P)
+					P.wear_suit = new/obj/item/clothing/suit/space/nasavoid(P)
 					P.wear_suit.layer = 20
 					if(P.head)
 						P.head.loc = P.loc
 						P.head.layer = initial(P.head.layer)
 						P.head = null
-					P.head = new/obj/item/clothing/head/helmet/space(P)
+					P.head = new/obj/item/clothing/head/helmet/space/nasavoid(P)
 					P.head.layer = 20
 					if(P.wear_mask)
 						P.wear_mask.loc = P.loc
@@ -152,15 +150,16 @@ datum/hSB
 						P.back.loc = P.loc
 						P.back.layer = initial(P.back.layer)
 						P.back = null
-					P.back = new/obj/item/weapon/tank/jetpack(P)
+					P.back = new/obj/item/weapon/tank/jetpack/void(P)
 					P.back.layer = 20
-					P.internal = P.back
+
+					P.regenerate_icons()
 				if("hsbmetal")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/metal
+					var/obj/item/stack/sheet/hsb = getFromPool(/obj/item/stack/sheet/metal,get_turf(usr))
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbplasma")
@@ -184,7 +183,7 @@ datum/hSB
 				if("hsbtoolbox")
 					var/obj/item/weapon/storage/hsb = new/obj/item/weapon/storage/toolbox/mechanical
 					for(var/obj/item/device/radio/T in hsb)
-						del(T)
+						qdel(T)
 					new/obj/item/weapon/crowbar (hsb)
 					hsb.loc = usr.loc
 				if("hsbmedkit")

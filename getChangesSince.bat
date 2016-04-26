@@ -1,1 +1,0 @@
-git log --no-merges --pretty=oneline --format="%an %s" %1..HEAD > changes.txt

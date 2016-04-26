@@ -10,13 +10,15 @@
 	var/const/waittime_h = 1800
 
 /datum/game_mode/announce()
-	world << "<B>The current game mode is - Extended Role-Playing!</B>"
-	world << "<B>Just have fun and role-play!</B>"
+	to_chat(world, "<B>The current game mode is - Extended Role-Playing!</B>")
+	to_chat(world, "<B>Just have fun and role-play!</B>")
 
 /datum/game_mode/extended/pre_setup()
+	log_admin("Starting a round of extended.")
+	message_admins("Starting a round of extended.")
 	return 1
 
 /datum/game_mode/extended/post_setup()
 	spawn (rand(waittime_l, waittime_h)) // To reduce extended meta.
-		send_intercept()
+		if(!mixed) send_intercept()
 	..()

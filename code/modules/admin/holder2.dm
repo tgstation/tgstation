@@ -12,6 +12,7 @@ var/list/admin_datums = list()
 	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
 	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
 	var/admincaster_signature	//What you'll sign the newsfeeds as
+	var/sessKey		= 0
 
 /datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
 	if(!ckey)
@@ -29,6 +30,7 @@ var/list/admin_datums = list()
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
 		admins |= C
+		owner.verbs -= /client/proc/readmin
 
 /datum/admins/proc/disassociate()
 	if(owner)
@@ -45,7 +47,7 @@ generally it would be used like so:
 
 proc/admin_proc()
 	if(!check_rights(R_ADMIN)) return
-	world << "you have enough rights!"
+	to_chat(world, "you have enough rights!")
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
@@ -58,13 +60,13 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 					return 1
 				else
 					if(show_msg)
-						usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>"
+						to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
 		else
 			if(usr.client.holder)
 				return 1
 			else
 				if(show_msg)
-					usr << "<font color='red'>Error: You are not an admin.</font>"
+					to_chat(usr, "<font color='red'>Error: You are not an admin.</font>")
 	return 0
 
 // Making this a bit less of a roaring asspain. - N3X
@@ -88,7 +90,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			if(usr.client.holder.rights != other.holder.rights)
 				if( (usr.client.holder.rights & other.holder.rights) == other.holder.rights )
 					return 1	//we have all the rights they have and more
-		usr << "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>"
+		to_chat(usr, "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>")
 	return 0
 
 
@@ -99,3 +101,24 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		holder.disassociate()
 		del(holder)
 	return 1
+
+/datum/admins/proc/checkSessionKey(var/recurse=0)
+	if(recurse==5)
+		return "\[BROKEN\]";
+	recurse++
+	var/DBQuery/query = dbcon.NewQuery("DELETE FROM admin_sessions WHERE expires < Now()")
+	query.Execute()
+
+	query = dbcon.NewQuery("SELECT sessID FROM admin_sessions WHERE ckey = '[owner.ckey]' AND expires > Now()")
+	query.Execute()
+
+	sessKey=0
+	while(query.NextRow())
+		sessKey = query.item[1]
+		query=dbcon.NewQuery("UPDATE admin_sessions SET expires=DATE_ADD(NOW(), INTERVAL 24 HOUR), IP='[owner.address]' WHERE ckey = '[owner.ckey]")
+		query.Execute()
+		return sessKey
+
+	query=dbcon.NewQuery("INSERT INTO admin_sessions (sessID,ckey,expires, IP) VALUES (UUID(), '[owner.ckey]', DATE_ADD(NOW(), INTERVAL 24 HOUR), '[owner.address]')")
+	query.Execute()
+	return checkSessionKey(recurse)

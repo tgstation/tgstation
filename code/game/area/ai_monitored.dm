@@ -22,5 +22,5 @@
 /area/ai_monitored/Exited(atom/movable/O)
 	if (ismob(O) && motioncamera)
 		motioncamera.lostTarget(O)
-
+	..()
 

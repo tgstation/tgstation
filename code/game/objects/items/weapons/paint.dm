@@ -8,63 +8,74 @@ var/global/list/cached_icons = list()
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_state = "paintcan"
-	m_amt = 200
-	g_amt = 0
+	starting_materials = list(MAT_IRON = 200)
+	w_type = RECYK_METAL
 	w_class = 3.0
+	melt_temperature = MELTPOINT_STEEL
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
 	flags = FPRINT | OPENCONTAINER
 	var/paint_type = ""
 
-	afterattack(turf/simulated/target, mob/user , flag)
-		if(istype(target) && reagents.total_volume > 5)
-			for(var/mob/O in viewers(user))
-				O.show_message("\red \The [target] has been splashed with something by [user]!", 1)
-			spawn(5)
-				reagents.reaction(target, TOUCH)
-				reagents.remove_any(5)
-		else
-			return ..()
+/obj/item/weapon/reagent_containers/glass/paint/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is taking \his hand and eating the [src.name]! It looks like \he's  trying to commit suicide!</span>")
+	return (TOXLOSS|OXYLOSS)
 
-	New()
-		if(paint_type == "remover")
-			name = "paint remover bucket"
-		else if(paint_type && lentext(paint_type) > 0)
-			name = paint_type + " " + name
-		..()
-		reagents.add_reagent("paint_[paint_type]", volume)
+/obj/item/weapon/reagent_containers/glass/paint/mop_act(obj/item/weapon/mop/M, mob/user)
+	return 0
 
-	red
-		icon_state = "paint_red"
-		paint_type = "red"
+/obj/item/weapon/reagent_containers/glass/paint/afterattack(turf/simulated/target, mob/user , flag)
+	if(!flag || user.stat)
+		return ..()
 
-	green
-		icon_state = "paint_green"
-		paint_type = "green"
+	if(istype(target) && reagents.total_volume > 5)
+		for(var/mob/O in viewers(user))
+			O.show_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>", 1)
+		spawn(5)
+			reagents.reaction(target, TOUCH)
+			reagents.remove_any(5)
+	else
+		return ..()
 
-	blue
-		icon_state = "paint_blue"
-		paint_type = "blue"
+/obj/item/weapon/reagent_containers/glass/paint/New()
+	if(paint_type == "remover")
+		name = "paint remover bucket"
+	else if(paint_type && length(paint_type) > 0)
+		name = paint_type + " " + name
+	..()
+	reagents.add_reagent("paint_[paint_type]", volume)
 
-	yellow
-		icon_state = "paint_yellow"
-		paint_type = "yellow"
+/obj/item/weapon/reagent_containers/glass/paint/red
+	icon_state = "paint_red"
+	paint_type = "red"
 
-	violet
-		icon_state = "paint_violet"
-		paint_type = "violet"
+/obj/item/weapon/reagent_containers/glass/paint/green
+	icon_state = "paint_green"
+	paint_type = "green"
 
-	black
-		icon_state = "paint_black"
-		paint_type = "black"
+/obj/item/weapon/reagent_containers/glass/paint/blue
+	icon_state = "paint_blue"
+	paint_type = "blue"
 
-	white
-		icon_state = "paint_white"
-		paint_type = "white"
+/obj/item/weapon/reagent_containers/glass/paint/yellow
+	icon_state = "paint_yellow"
+	paint_type = "yellow"
 
-	remover
-		paint_type = "remover"
+/obj/item/weapon/reagent_containers/glass/paint/violet
+	icon_state = "paint_violet"
+	paint_type = "violet"
+
+/obj/item/weapon/reagent_containers/glass/paint/black
+	icon_state = "paint_black"
+	paint_type = "black"
+
+/obj/item/weapon/reagent_containers/glass/paint/white
+	icon_state = "paint_white"
+	paint_type = "white"
+
+/obj/item/weapon/reagent_containers/glass/paint/remover
+	paint_type = "remover"
 /*
 /obj/item/weapon/paint
 	name = "Paint Can"

@@ -16,7 +16,6 @@
 
 /obj/structure/closet/gmcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/head/hairflower
@@ -29,6 +28,9 @@
 	new /obj/item/clothing/suit/wcoat(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/monkeyclothes(src)
+	new /obj/item/clothing/monkeyclothes(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/coloring(src)
 
 /*
  * Janitor
@@ -41,7 +43,6 @@
 
 /obj/structure/closet/jcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/device/flashlight(src)
@@ -53,9 +54,11 @@
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/storage/bag/trash(src)
-	new /obj/item/device/lightreplacer(src)
+	new /obj/item/device/lightreplacer/loaded/mixed(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
+	new /obj/item/weapon/storage/box/lights/he(src)
+	new /obj/item/weapon/storage/box/lights/he(src)
 
 /*
  * Lawyer
@@ -67,6 +70,8 @@
 	icon_closed = "blue"
 
 /obj/structure/closet/lawcloset/New()
+	..()
+	new /obj/item/clothing/under/cia(src)
 	new /obj/item/clothing/under/lawyer/female(src)
 	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
@@ -87,6 +92,7 @@
 
 
 /obj/structure/closet/paramedic/New()
+	..()
 	new /obj/item/clothing/under/rank/medical/paramedic(src)
 	new /obj/item/clothing/under/rank/medical/paramedic(src)
 	new /obj/item/device/radio/headset/headset_med(src)
@@ -109,3 +115,5 @@
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/device/gps/paramedic(src)
+	new /obj/item/device/gps/paramedic(src)

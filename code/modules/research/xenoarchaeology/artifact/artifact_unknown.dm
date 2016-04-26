@@ -114,13 +114,27 @@ var/list/valid_secondary_effect_types = list(\
 #define TRIGGER_NITRO 12
 
 /obj/machinery/artifact/process()
+
+	var/turf/L = loc
+	if(isnull(L) || !istype(L)) 	// We're inside a container or on null turf, either way stop processing effects
+		return
+
 	if(my_effect)
 		my_effect.process()
 	if(secondary_effect)
 		secondary_effect.process()
 
 	if(pulledby)
-		Bumped(pulledby)
+		if(!Adjacent(pulledby)) //Not actually next to them
+			if(pulledby.pulling == src)
+				pulledby.stop_pulling()
+			pulledby = null
+		else if(pulledby.incapacitated()) //To prevent getting stuck stunned forever due to not being able to break the pull.
+			if(pulledby.pulling == src)
+				pulledby.stop_pulling()
+			pulledby = null
+		else
+			Bumped(pulledby)
 
 	//if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = 0
@@ -220,20 +234,23 @@ var/list/valid_secondary_effect_types = list(\
 			secondary_effect.ToggleActivate(0)
 
 /obj/machinery/artifact/attack_hand(var/mob/user as mob)
+	if(isobserver(user))
+		to_chat(user, "<span class='rose'>Your ghostly hand goes right through!</span>")
+		return
 	if (get_dist(user, src) > 1)
-		user << "\red You can't reach [src] from here."
+		to_chat(user, "<span class='warning'>You can't reach [src] from here.</span>")
 		return
 	if(ishuman(user) && user:gloves)
-		user << "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")]."
+		to_chat(user, "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")].")
 		return
 
 	src.add_fingerprint(user)
 
 	if(my_effect.trigger == TRIGGER_TOUCH)
-		user << "<b>You touch [src].<b>"
+		to_chat(user, "<b>You touch [src].<b>")
 		my_effect.ToggleActivate()
 	else
-		user << "<b>You touch [src],</b> [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")]."
+		to_chat(user, "<b>You touch [src],</b> [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")].")
 
 	if(prob(25) && secondary_effect && secondary_effect.trigger == TRIGGER_TOUCH)
 		secondary_effect.ToggleActivate(0)
@@ -246,7 +263,8 @@ var/list/valid_secondary_effect_types = list(\
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 
-	if (istype(W, /obj/item/weapon/reagent_containers/))
+	if (istype(W, /obj/item/weapon/reagent_containers/glass) && W.is_open_container() ||\
+		istype(W, /obj/item/weapon/reagent_containers/dropper))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)
 				my_effect.ToggleActivate()
@@ -317,7 +335,7 @@ var/list/valid_secondary_effect_types = list(\
 			warn = 1
 
 		if(warn)
-			M << "<b>You accidentally touch [src].<b>"
+			to_chat(M, "<b>You accidentally touch [src].<b>")
 	..()
 
 /obj/machinery/artifact/bullet_act(var/obj/item/projectile/P)
@@ -338,10 +356,10 @@ var/list/valid_secondary_effect_types = list(\
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0) del src
+		if(1.0) qdel(src)
 		if(2.0)
 			if (prob(50))
-				del src
+				qdel(src)
 			else
 				if(my_effect.trigger == TRIGGER_FORCE || my_effect.trigger == TRIGGER_HEAT)
 					my_effect.ToggleActivate()

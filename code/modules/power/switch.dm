@@ -22,33 +22,33 @@
 	icon_state_off = "switch-up"
 
 
-/obj/structure/powerswitch/examine()
+/obj/structure/powerswitch/examine(mob/user)
 	..()
 	if(on)
-		usr << "The switch is in the on position"
+		to_chat(user, "The switch is in the on position")
 	else
-		usr << "The switch is in the off position"
+		to_chat(user, "The switch is in the off position")
 
 /obj/structure/powerswitch/attack_ai(mob/user)
-	user << "\red You're an AI. This is a manual switch. It's not going to work."
+	to_chat(user, "<span class='warning'>You're an AI. This is a manual switch. It's not going to work.</span>")
 	return
 
 /obj/structure/powerswitch/attack_hand(mob/user)
 
 	if(busy)
-		user << "\red This switch is already being toggled."
+		to_chat(user, "<span class='warning'>This switch is already being toggled.</span>")
 		return
 
 	..()
 
 	busy = 1
 	for(var/mob/O in viewers(user))
-		O.show_message(text("\red [user] started pulling the [src]."), 1)
+		O.show_message(text("<span class='warning'>[user] started pulling the [src].</span>"), 1)
 
-	if(do_after(user, 50))
+	if(do_after(user, src, 50))
 		set_state(!on)
 		for(var/mob/O in viewers(user))
-			O.show_message(text("\red [user] flipped the [src] into the [on ? "on": "off"] position."), 1)
+			O.show_message(text("<span class='warning'>[user] flipped the [src] into the [on ? "on": "off"] position.</span>"), 1)
 	busy = 0
 
 /obj/structure/powerswitch/proc/set_state(var/state)
@@ -56,7 +56,7 @@
 	if(on)
 		icon_state = icon_state_on
 		var/list/connection_dirs = list()
-		for(var/direction in list(1,2,4,8,5,6,9,10))
+		for(var/direction in alldirs)
 			for(var/obj/structure/cable/C in get_step(src,direction))
 				if(C.d1 == turn(direction, 180) || C.d2 == turn(direction, 180))
 					connection_dirs += direction
@@ -71,7 +71,6 @@
 
 			var/datum/powernet/PN = new()
 			PN.number = powernets.len + 1
-			powernets += PN
 			C.netnum = PN.number
 			PN.cables += C
 

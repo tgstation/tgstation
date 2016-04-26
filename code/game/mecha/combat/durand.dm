@@ -1,6 +1,6 @@
 /obj/mecha/combat/durand
-	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
-	name = "Durand"
+	desc = "It's time to light some fires and kick some tires."
+	name = "Durand Mk. II"
 	icon_state = "durand"
 	initial_icon = "durand"
 	step_in = 4
@@ -33,7 +33,6 @@
 	. = ..()
 	return
 
-
 /obj/mecha/combat/durand/verb/defence_mode()
 	set category = "Exosuit Interface"
 	set name = "Toggle defence mode"
@@ -43,10 +42,17 @@
 		return
 	defence = !defence
 	if(defence)
+		icon_state = 0
+		if(!istype(src,/obj/mecha/combat/durand/old))
+			flick("durand-lockdown-a",src)
+			icon_state = "durand-lockdown"
 		deflect_chance = defence_deflect
 		src.occupant_message("<font color='blue'>You enable [src] defence mode.</font>")
+		playsound(src, 'sound/mecha/mechlockdown.ogg', 60, 1)
 	else
 		deflect_chance = initial(deflect_chance)
+		if(!istype(src,/obj/mecha/combat/durand/old))
+			icon_state = reset_icon()
 		src.occupant_message("<font color='red'>You disable [src] defence mode.</font>")
 	src.log_message("Toggled defence mode.")
 	return
@@ -73,3 +79,18 @@
 	if (href_list["toggle_defence_mode"])
 		src.defence_mode()
 	return
+
+/obj/mecha/combat/durand/old
+	desc = "A retired, third-generation combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
+	name = "Durand"
+	icon_state = "old_durand"
+	initial_icon = "old_durand"
+	step_in = 4
+	dir_in = 1 //Facing North.
+	health = 400
+	deflect_chance = 20
+	damage_absorption = list("brute"=0.5,"fire"=1.1,"bullet"=0.65,"laser"=0.85,"energy"=0.9,"bomb"=0.8)
+	max_temperature = 30000
+	infra_luminosity = 8
+	force = 40
+	wreckage = /obj/effect/decal/mecha_wreckage/durand/old

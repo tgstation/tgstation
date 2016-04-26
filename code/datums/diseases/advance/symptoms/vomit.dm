@@ -34,7 +34,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>"
+				to_chat(M, "[pick("<span class='warning'>You feel nauseous...", "<span class='danger'>You feel like you're going to throw up!")]</span>")
 			else
 				Vomit(M)
 
@@ -42,9 +42,10 @@ Bonus
 
 /datum/symptom/vomit/proc/Vomit(var/mob/living/M)
 
+
 	M.visible_message("<B>[M]</B> vomits on the floor!")
 
-	M.nutrition -= 20
+	M.nutrition = max(M.nutrition-40,0)
 	M.adjustToxLoss(-3)
 
 	var/turf/pos = get_turf(M)

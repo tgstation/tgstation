@@ -26,13 +26,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		job = user.mind.assigned_role
 	var/dat = "<B>[src.welcome]</B><BR>"
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\uplinks.dm:26: dat += "Tele-Crystals left: [src.uses]<BR>"
 	dat += {"Tele-Crystals left: [src.uses]<BR>
 		<HR>
 		<B>Request item:</B><BR>
 		<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"}
-	// END AUTOFIX
 	var/list/buyable_items = get_uplink_items()
 
 	// Loop through categories
@@ -82,11 +79,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu(user)
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\uplinks.dm:72: dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
 	dat += {"<A href='byond://?src=\ref[src];lock=1'>Lock</a>
 		</font></body>"}
-	// END AUTOFIX
 	user << browse(dat, "window=hidden")
 	onclose(user, "hidden")
 	return
@@ -100,7 +94,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if (href_list["buy_item"])
 
 		var/item = href_list["buy_item"]
-		var/list/split = stringsplit(item, ":") // throw away variable
+		var/list/split = text2list(item, ":") // throw away variable
 
 		if(split.len == 2)
 			// Collect category and number

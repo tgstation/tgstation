@@ -5,6 +5,7 @@
 	var/area/ai_monitored/area_motion = null
 	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
 
+	flags = FPRINT | PROXMOVE
 
 /obj/machinery/camera/process()
 	// motion camera event loop
@@ -21,7 +22,7 @@
 			// If not detecting with motion camera...
 			if (!area_motion)
 				// See if the camera is still in range
-				if(!in_range(src, target))
+				if(!Adjacent(target))
 					// If they aren't in range, lose the target.
 					lostTarget(target)
 
@@ -42,14 +43,14 @@
 /obj/machinery/camera/proc/cancelAlarm()
 	if (detectTime == -1)
 		for (var/mob/living/silicon/aiPlayer in player_list)
-			if (status) aiPlayer.cancelAlarm("Motion", src.loc.loc)
+			if (status) aiPlayer.cancelAlarm("Motion", areaMaster)
 	detectTime = 0
 	return 1
 
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime) return 0
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		if (status) aiPlayer.triggerAlarm("Motion", src.loc.loc, src)
+		if (status) aiPlayer.triggerAlarm("Motion", areaMaster, src)
 	detectTime = -1
 	return 1
 

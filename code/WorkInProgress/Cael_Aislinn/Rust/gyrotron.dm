@@ -1,200 +1,120 @@
-
-//high frequency photon (laser beam)
-/obj/item/projectile/beam/ehf_beam
-
 /obj/machinery/rust/gyrotron
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "emitter-off"
-	name = "Gyrotron"
-	anchored = 1
-	density = 0
+	name = "gyrotron"
+	anchored = 0
+	state = 0
+	density = 1
 	layer = 4
+	machine_flags = MULTITOOL_MENU | WRENCHMOVE | WELD_FIXED | FIXED2WORK
+
 	var/frequency = 1
 	var/emitting = 0
 	var/rate = 10
 	var/mega_energy = 0.001
-	var/on = 1
-	var/remoteenabled = 1
-	//
+	var/id_tag
+
 	req_access = list(access_engine)
-	//
+
 	use_power = 1
 	idle_power_usage = 10
-	active_power_usage = 300
+	active_power_usage = 100000 //Yes that is a shitton. No you're not running this engine on an SE/AME you SE/AME scrubs.
 
-	New()
-		..()
-		//pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		//pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+/obj/machinery/rust/gyrotron/initialize()
+	if(!id_tag)
+		assign_uid()
+		id_tag = uid
 
-	Topic(href, href_list)
-		..()
-		if( href_list["close"] )
-			usr << browse(null, "window=gyro_monitor")
-			usr.machine = null
-			return
-		if( href_list["modifypower"] )
-			var/new_val = text2num(input("Enter new emission power level (0.001 - 0.01)", "Modifying power level (MeV)", mega_energy))
-			if(!new_val)
-				usr << "\red That's not a valid number."
-				return
-			new_val = min(new_val,0.01)
-			new_val = max(new_val,0.001)
-			mega_energy = new_val
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-		if( href_list["modifyrate"] )
-			var/new_val = text2num(input("Enter new emission rate (1 - 10)", "Modifying emission rate (sec)", rate))
-			if(!new_val)
-				usr << "\red That's not a valid number."
-				return
-			new_val = min(new_val,1)
-			new_val = max(new_val,10)
-			rate = new_val
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-		if( href_list["modifyfreq"] )
-			var/new_val = text2num(input("Enter new emission frequency (1 - 50000)", "Modifying emission frequency (GHz)", frequency))
-			if(!new_val)
-				usr << "\red That's not a valid number."
-				return
-			new_val = min(new_val,1)
-			new_val = max(new_val,50000)
-			frequency = new_val
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-		if( href_list["activate"] )
-			emitting = 1
-			spawn(rate)
-				Emit()
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-		if( href_list["deactivate"] )
-			emitting = 0
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-		if( href_list["enableremote"] )
-			remoteenabled = 1
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-		if( href_list["disableremote"] )
-			remoteenabled = 0
-			for(var/obj/machinery/computer/rust_gyrotron_controller/comp in range(25))
-				comp.updateDialog()
-			return
-/*
-			var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-			playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
-			if(prob(35))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-			A.dir = src.dir
-			if(src.dir == 1)//Up
-				A.yo = 20
-				A.xo = 0
-			else if(src.dir == 2)//Down
-				A.yo = -20
-				A.xo = 0
-			else if(src.dir == 4)//Right
-				A.yo = 0
-				A.xo = 20
-			else if(src.dir == 8)//Left
-				A.yo = 0
-				A.xo = -20
-			else // Any other
-				A.yo = -20
-				A.xo = 0
-			A.fired()
-*/
-	proc/Emit()
-		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-		A.frequency = frequency
-		A.damage = mega_energy * 500
-		//
-		A.icon_state = "emitter"
-		playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
-		use_power(100 * mega_energy + 500)
-		/*if(prob(35))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()*/
-		A.dir = src.dir
-		if(src.dir == 1)//Up
-			A.yo = 20
-			A.xo = 0
-		else if(src.dir == 2)//Down
-			A.yo = -20
-			A.xo = 0
-		else if(src.dir == 4)//Right
-			A.yo = 0
-			A.xo = 20
-		else if(src.dir == 8)//Left
-			A.yo = 0
-			A.xo = -20
-		else // Any other
-			A.yo = -20
-			A.xo = 0
-		A.process()
-		//
-		flick("emitter-active",src)
-		if(emitting)
-			spawn(rate)
-				Emit()
+	. = ..()
 
-	proc/UpdateIcon()
-		if(on)
-			icon_state = "emitter-on"
-		else
-			icon_state = "emitter-off"
+/obj/machinery/rust/gyrotron/New()
+	. = ..()
 
-/obj/machinery/rust/gyrotron/control_panel
-	icon_state = "control_panel"
-	name = "Control panel"
-	var/obj/machinery/rust/gyrotron/owned_gyrotron
-	New()
-		..()
-		pixel_x = -pixel_x
-		pixel_y = -pixel_y
+	if(ticker)
+		initialize()
 
-	interact(mob/user)
-		if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-			if (!istype(user, /mob/living/silicon))
-				user.machine = null
-				user << browse(null, "window=gyro_monitor")
-				return
-		var/t = "<B>Free electron MASER (Gyrotron) Control Panel</B><BR>"
-		if(owned_gyrotron && owned_gyrotron.on)
+/obj/machinery/rust/gyrotron/proc/stop_emitting()
+	emitting = 0
+	use_power = 1
+	update_icon()
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron.dm:174: t += "<font color=green>Gyrotron operational</font><br>"
-			t += {"<font color=green>Gyrotron operational</font><br>
-				Operational mode: <font color=blue>"}
-			// END AUTOFIX
-			if(owned_gyrotron.emitting)
-				t += "Emitting</font> <a href='?src=\ref[owned_gyrotron];deactivate=1'>\[Deactivate\]</a><br>"
-			else
-				t += "Not emitting</font> <a href='?src=\ref[owned_gyrotron];activate=1'>\[Activate\]</a><br>"
+/obj/machinery/rust/gyrotron/proc/start_emitting()
+	if(stat & (NOPOWER | BROKEN) || emitting && state == 2) //Sanity.
+		return
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron.dm:180: t += "Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>"
-			t += {"Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>
-				Beam frequency: [owned_gyrotron.frequency] <a href='?src=\ref[owned_gyrotron];modifyfreq=1'>\[Modify\]</a><br>
-				Beam power: [owned_gyrotron.mega_energy] <a href='?src=\ref[owned_gyrotron];modifypower=1'>\[Modify\]</a><br>"}
-			// END AUTOFIX
-		else
-			t += "<b><font color=red>Gyrotron unresponsive</font></b>"
+	emitting = 1
+	use_power = 2
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\gyrotron.dm:185: t += "<hr>"
-		t += {"<hr>
-			<A href='?src=\ref[src];close=1'>Close</A><BR>"}
-		// END AUTOFIX
-		user << browse(t, "window=gyro_monitor;size=500x800")
-		user.machine = src
+	update_icon()
+
+	spawn()
+		while(emitting)
+			emit()
+			sleep(rate)
+
+/obj/machinery/rust/gyrotron/proc/emit()
+	var/obj/item/projectile/beam/emitter/A = getFromPool(/obj/item/projectile/beam/emitter, loc)
+	A.frequency = frequency
+	A.damage = mega_energy * 1500
+
+	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
+	use_power(100 * mega_energy + 500)
+
+	A.dir = dir
+	A.dumbfire()
+
+	flick("emitter-active", src)
+
+/obj/machinery/rust/gyrotron/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return {"
+		<ul>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+		</ul>
+	"}
+
+/obj/machinery/rust/gyrotron/power_change()
+	. =..()
+	if(stat & (NOPOWER | BROKEN))
+		stop_emitting()
+
+	update_icon()
+
+/obj/machinery/rust/gyrotron/update_icon()
+	if(!(stat & (NOPOWER | BROKEN)) && emitting)
+		icon_state = "emitter-on"
+	else
+		icon_state = "emitter-off"
+
+/obj/machinery/rust/gyrotron/weldToFloor(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+	if(emitting)
+		to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
+		return -1
+	. = ..()
+
+/obj/machinery/rust/gyrotron/verb/rotate_cw()
+	set name = "Rotate (Clockwise)"
+	set src in oview(1)
+	set category = "Object"
+
+	if(usr.incapacitated() || !Adjacent(usr))
+		return
+
+	if(anchored)
+		to_chat(usr, "<span class='notify'>\the [src] is anchored to the floor!</span>")
+		return
+
+	dir = turn(dir, -90)
+
+/obj/machinery/rust/gyrotron/verb/rotate_ccw()
+	set name = "Rotate (Counter-Clockwise)"
+	set src in oview(1)
+	set category = "Object"
+
+	if(usr.incapacitated() || !Adjacent(usr))
+		return
+
+	if(anchored)
+		to_chat(usr, "<span class='notify'>\the [src] is anchored to the floor!</span>")
+		return
+
+	dir = turn(dir, 90)

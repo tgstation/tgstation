@@ -8,8 +8,6 @@
 	icon_state = "mecha_equip"
 	force = 5
 	origin_tech = "materials=2"
-	construction_time = 100
-	construction_cost = list("metal"=10000)
 	var/equip_cooldown = 0
 	var/equip_ready = 1
 	var/energy_drain = 0
@@ -19,8 +17,8 @@
 	var/salvageable = 1
 
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
-	sleep(equip_cooldown)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1, delay_mult=1)
+	sleep(equip_cooldown * delay_mult)
 	set_ready_state(1)
 	if(target && chassis)
 		return 1
@@ -58,7 +56,7 @@
 		else
 			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
 	spawn
-		del src
+		qdel (src)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
@@ -110,21 +108,23 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
-	moveto = moveto || get_turf(chassis)
-	if(src.Move(moveto))
-		chassis.equipment -= src
-		if(chassis.selected == src)
-			chassis.selected = null
-		update_chassis_page()
-		chassis.log_message("[src] removed from equipment.")
-		chassis = null
-		set_ready_state(1)
+	if(!moveto)
+		moveto = get_turf(chassis)
+	src.loc = moveto
+	chassis.equipment -= src
+	if(chassis.selected == src)
+		chassis.selected = null
+	update_chassis_page()
+	chassis.log_message("[src] removed from equipment.")
+	chassis = null
+	set_ready_state(1)
 	return
 
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
+	testing("[src] topic")
 	if(href_list["detach"])
-		src.detach()
+		detach()
 	return
 
 
@@ -136,7 +136,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)
 	if(chassis)
-		chassis.occupant_message("\icon[src] [message]")
+		chassis.occupant_message("[bicon(src)] [message]")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/log_message(message)

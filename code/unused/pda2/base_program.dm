@@ -44,7 +44,7 @@
 				return 1
 
 			if(!(holder in src.master.contents))
-				//world << "Holder [holder] not in [master] of prg:[src]"
+//				to_chat(world, "Holder [holder] not in [master] of prg:[src]")
 				if(master.active_program == src)
 					master.active_program = null
 				return 1
@@ -126,7 +126,7 @@
 			if(istype(newholder.loc,/obj/item/device/pda2))
 				src.master = newholder.loc
 
-			//world << "Setting [src.holder] to [newholder]"
+//			to_chat(world, "Setting [src.holder] to [newholder]")
 			src.holder = newholder
 			return 1
 

@@ -3,6 +3,9 @@
 	name = "Research Outpost"
 	icon_state = "anomaly"
 
+	general_area = /area/research_outpost
+	general_area_name = "Research Outpost"
+
 /area/research_outpost/hallway
 	name = "Research Outpost Hallway"
 	icon_state = "hallC"
@@ -74,3 +77,27 @@
 /area/research_outpost/maintstore2
 	name = "Maintenance Storage"
 	icon_state = "auxstorage"
+
+/area/research_outpost/breakroom
+	name = "Break Room"
+	icon_state = "outpost_breakroom"
+
+/area/research_outpost/dorm1
+	name = "Dormitory 1"
+	icon_state = "outpost_dorm1"
+
+/area/research_outpost/dorm2
+	name = "Dormitory 2"
+	icon_state = "outpost_dorm2"
+
+/area/research_outpost/bathroom
+	name = "Bathroom"
+	icon_state = "outpost_bathroom"
+
+/area/research_outpost/solars
+	name = "Research Outpost Solar Array"
+	icon_state = "outpost_solars"
+
+/area/research_outpost/xenobot
+	name = "Research Outpost Xenobotany"
+	icon_state = "outpost_xenobot"

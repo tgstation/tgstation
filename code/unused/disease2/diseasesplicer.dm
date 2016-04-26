@@ -19,9 +19,9 @@
 /*
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, src, 20))
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/diseasesplicer/M = new /obj/item/weapon/circuitboard/diseasesplicer( A )
@@ -33,7 +33,7 @@
 				A.anchored = 1
 				del(src)
 			else
-				user << "\blue You disconnect the monitor."
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/diseasesplicer/M = new /obj/item/weapon/circuitboard/diseasesplicer( A )
 				for (var/obj/C in src)
@@ -51,7 +51,7 @@
 			c.drop_item()
 			I.loc = src
 	if(istype(I,/obj/item/weapon/diseasedisk))
-		user << "You upload the contents of the disk into the buffer"
+		to_chat(user, "You upload the contents of the disk into the buffer")
 		memorybank = I:effect
 
 
@@ -186,7 +186,7 @@
 
 /obj/machinery/computer/diseasesplicer/proc/state(var/msg)
 	for(var/mob/O in hearers(src, null))
-		O.show_message("\icon[src] \blue [msg]", 2)
+		O.show_message("[bicon(src)] <span class='notice'>[msg]</span>", 2)
 
 
 /obj/item/weapon/diseasedisk

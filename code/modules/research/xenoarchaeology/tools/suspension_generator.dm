@@ -2,7 +2,7 @@
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "suspension2"
+	icon_state = "suspension2-b"
 	density = 1
 	req_access = list(access_research)
 	var/obj/item/weapon/cell/cell
@@ -14,6 +14,9 @@
 	var/power_use = 25
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
+
+/obj/machinery/suspension_gen/power_change()
+	return
 
 /obj/machinery/suspension_gen/New()
 	src.cell = new/obj/item/weapon/cell/high(src)
@@ -31,14 +34,14 @@
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
-					M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
+					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
 				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
-					M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
+					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		for(var/obj/item/I in T)
 			if(!suspension_field.contents.len)
@@ -50,7 +53,7 @@
 			M.weakened = max(M.weakened, 3)
 			cell.charge -= power_use
 			if(prob(5))
-				M << "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]"
+				to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		if(cell.charge <= 0)
 			deactivate()
@@ -81,53 +84,37 @@
 
 	dat += "<hr>"
 	if(!locked)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:84: dat += "<b>Select field mode</b><br>"
-		dat += {"<b>Select field mode</b><br>
-			[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>
-			[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>
-			[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>
-			[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>
-			[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>
-			[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>
-			[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>
-			[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"}
-		// END AUTOFIX
+		dat += "<b>Select field mode</b><br>"
+		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
+		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
+		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
+		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
+		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
+		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
+		dat += "[field_type=="chlorine"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
+		dat += "[field_type=="plasma"?"<b>":""	]<A href='?src=\ref[src];select_field=plasma'>Plasma saturated field</A></b><br>"
 	else
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:94: dat += "<br>"
-		dat += {"<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>"}
-		// END AUTOFIX
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:102: dat += "<hr>"
-	dat += {"<hr>
-		<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"}
-	// END AUTOFIX
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+		dat += "<br>"
+	dat += "<hr>"
+	dat += "<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"
 	if(!locked)
 		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
 	else
 		dat += "<br>"
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\tools\suspension_generator.dm:108: dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
-	dat += {"<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>
-		<A href='?src=\ref[src];close=1'>Close console</A>"}
-	// END AUTOFIX
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
+	dat += "<A href='?src=\ref[src];close=1'>Close console</A>"
 	user << browse(dat, "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/Topic(href, href_list)
-	..()
+	if(..()) return
 	usr.set_machine(src)
 
 	if(href_list["toggle_field"])
@@ -136,7 +123,7 @@
 				if(anchored)
 					activate()
 				else
-					usr << "<span class='warning'>You are unable to activate [src] until it is properly secured on the ground.</span>"
+					to_chat(usr, "<span class='warning'>You are unable to activate [src] until it is properly secured on the ground.</span>")
 		else
 			deactivate()
 	if(href_list["select_field"])
@@ -144,13 +131,12 @@
 	else if(href_list["insertcard"])
 		var/obj/item/I = usr.get_active_hand()
 		if (istype(I, /obj/item/weapon/card))
-			usr.drop_item()
-			I.loc = src
-			auth_card = I
-			if(attempt_unlock(I))
-				usr << "<span class='info'>You insert [I], the console flashes \'<i>Access granted.</a>\'</span>"
-			else
-				usr << "<span class='warning'>You insert [I], the console flashes \'<i>Access denied.</a>\'</span>"
+			if(usr.drop_item(I, src))
+				auth_card = I
+				if(attempt_unlock(I))
+					to_chat(usr, "<span class='info'>You insert [I], the console flashes \'<i>Access granted.</a>\'</span>")
+				else
+					to_chat(usr, "<span class='warning'>You insert [I], the console flashes \'<i>Access denied.</a>\'</span>")
 	else if(href_list["ejectcard"])
 		if(auth_card)
 			if(ishuman(usr))
@@ -173,23 +159,28 @@
 	if(!open)
 		interact(user)
 	else if(cell)
+		if(isobserver(user))
+			return 0
 		cell.loc = loc
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		icon_state = "suspension0"
+		if(anchored)
+			icon_state = "suspension0"
+		else
+			icon_state = "suspension0-b"
 		cell = null
-		user << "<span class='info'>You remove the power cell</span>"
+		to_chat(user, "<span class='info'>You remove the power cell</span>")
 
 /obj/machinery/suspension_gen/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		if(!open)
 			if(screwed)
 				screwed = 0
 			else
 				screwed = 1
-			user << "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>"
-	else if (istype(W, /obj/item/weapon/crowbar))
+			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
+	else if (iscrowbar(W))
 		if(!locked)
 			if(!screwed)
 				if(!suspension_field)
@@ -197,46 +188,49 @@
 						open = 0
 					else
 						open = 1
-					user << "<span class='info'>You crowbar the battery panel [open ? "open" : "in place"].</span>"
-					icon_state = "suspension[open ? (cell ? "1" : "0") : "2"]"
+					to_chat(user, "<span class='info'>You crowbar the battery panel [open ? "open" : "in place"].</span>")
+					icon_state = "suspension[anchored ? (open ? (cell ? "1" : "0") : "2") : (open ? (cell ? "1-b" : "0-b") : "2-b")]"
 				else
-					user << "<span class='warning'>[src]'s safety locks are engaged, shut it down first.</span>"
+					to_chat(user, "<span class='warning'>[src]'s safety locks are engaged, shut it down first.</span>")
 			else
-				user << "<span class='warning'>Unscrew [src]'s battery panel first.</span>"
+				to_chat(user, "<span class='warning'>Unscrew [src]'s battery panel first.</span>")
 		else
-			user << "<span class='warning'>[src]'s security locks are engaged.</span>"
-	else if (istype(W, /obj/item/weapon/wrench))
+			to_chat(user, "<span class='warning'>[src]'s security locks are engaged.</span>")
+	else if (iswrench(W))
 		if(!suspension_field)
 			if(anchored)
 				anchored = 0
 			else
 				anchored = 1
-			user << "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>"
+			icon_state = "suspension[anchored ? (open ? (cell ? "1" : "0") : "2") : (open ? (cell ? "1-b" : "0-b") : "2-b")]"
+			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
 			if(anchored)
 				desc = "It is resting securely on four stubby legs."
 			else
 				desc = "It has stubby legs bolted up against it's body for stabilising."
 		else
-			user << "<span class='warning'>You are unable to secure [src] while it is active!</span>"
+			to_chat(user, "<span class='warning'>You are unable to secure [src] while it is active!</span>")
 	else if (istype(W, /obj/item/weapon/cell))
 		if(open)
 			if(cell)
-				user << "<span class='warning'>There is a power cell already installed.</span>"
+				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
 			else
-				user.drop_item()
-				W.loc = src
-				cell = W
-				user << "<span class='info'>You insert the power cell.</span>"
-				icon_state = "suspension1"
+				if(user.drop_item(W, src))
+					cell = W
+					to_chat(user, "<span class='info'>You insert the power cell.</span>")
+					if(anchored)
+						icon_state = "suspension1"
+					else
+						icon_state = "suspension1-b"
 	else if(istype(W, /obj/item/weapon/card))
 		var/obj/item/weapon/card/I = W
 		if(!auth_card)
 			if(attempt_unlock(I))
-				user << "<span class='info'>You swipe [I], the console flashes \'<i>Access granted.</i>\'</span>"
+				to_chat(user, "<span class='info'>You swipe [I], the console flashes \'<i>Access granted.</i>\'</span>")
 			else
-				user << "<span class='warning'>You swipe [I], console flashes \'<i>Access denied.</i>\'</span>"
+				to_chat(user, "<span class='warning'>You swipe [I], console flashes \'<i>Access denied.</i>\'</span>")
 		else
-			user << "<span class='warning'>Remove [auth_card] first.</span>"
+			to_chat(user, "<span class='warning'>Remove [auth_card] first.</span>")
 
 /obj/machinery/suspension_gen/proc/attempt_unlock(var/obj/item/weapon/card/C)
 	if(!open)
@@ -261,7 +255,7 @@
 			success = 1
 			for(var/mob/living/carbon/C in T)
 				C.weakened += 5
-				C.visible_message("\blue \icon[C] [C] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
+				C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 		if("nitrogen")
 			success = 1
 			//
@@ -284,19 +278,19 @@
 			success = 1
 			for(var/mob/living/silicon/R in T)
 				R.weakened += 5
-				R.visible_message("\blue \icon[R] [R] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
+				R.visible_message("<span class='notice'>[bicon(R)] [R] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 			//
 	//in case we have a bad field type
 	if(!success)
 		return
 
 	for(var/mob/living/simple_animal/C in T)
-		C.visible_message("\blue \icon[C] [C] begins to float in the air!","You feel tingly and light, but it is difficult to move.")
+		C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 		C.weakened += 5
 
 	suspension_field = new(T)
 	suspension_field.field_type = field_type
-	src.visible_message("\blue \icon[src] [src] activates with a low hum.")
+	src.visible_message("<span class='notice'>[bicon(src)] [src] activates with a low hum.</span>")
 	icon_state = "suspension3"
 
 	for(var/obj/item/I in T)
@@ -306,7 +300,7 @@
 	if(collected)
 		suspension_field.icon_state = "energynet"
 		suspension_field.overlays += "shield2"
-		src.visible_message("\blue \icon[suspension_field] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].")
+		src.visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
 		if(istype(T,/turf/unsimulated/mineral) || istype(T,/turf/simulated/wall))
 			suspension_field.icon_state = "shieldsparkles"
@@ -318,14 +312,15 @@
 	var/turf/T = get_turf(suspension_field)
 
 	for(var/mob/M in T)
-		M << "<span class='info'>You no longer feel like floating.</span>"
+		to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
 		M.weakened = min(M.weakened, 3)
 
-	src.visible_message("\blue \icon[src] [src] deactivates with a gentle shudder.")
-	del(suspension_field)
+	src.visible_message("<span class='notice'>[bicon(src)] [src] deactivates with a gentle shudder.</span>")
+	qdel(suspension_field)
+	suspension_field = null
 	icon_state = "suspension2"
 
-/obj/machinery/suspension_gen/Del()
+/obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding
 	deactivate()
 	..()
@@ -333,10 +328,10 @@
 /obj/machinery/suspension_gen/verb/toggle()
 	set src in view(1)
 	set name = "Rotate suspension gen (clockwise)"
-	set category = "IC"
+	set category = "Object"
 
 	if(anchored)
-		usr << "\red You cannot rotate [src], it has been firmly fixed to the floor."
+		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
 		dir = turn(dir, 90)
 
@@ -347,7 +342,7 @@
 	density = 1
 	var/field_type = "chlorine"
 
-/obj/effect/suspension_field/Del()
+/obj/effect/suspension_field/Destroy()
 	for(var/obj/I in src)
 		I.loc = src.loc
 	..()

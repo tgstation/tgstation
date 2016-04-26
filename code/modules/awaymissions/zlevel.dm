@@ -1,9 +1,13 @@
-proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+/datum/zLevel/away
+	name = "awaymission"
+	movementJammed = 1 //no drifting here
+
+/proc/createRandomZlevel(override = 0)
+	if(awaydestinations.len && !override)	//crude, but it saves another var!
 		return
 
 	var/list/potentialRandomZlevels = list()
-	world << "\red \b Searching for away missions..."
+	to_chat(world, "<span class='danger'>Searching for away missions...</span>")
 	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
@@ -31,24 +35,37 @@ proc/createRandomZlevel()
 		if (!name)
 			continue
 
+		if(!isfile(name))
+			warning("fileList.txt contains a map that does not exist: [name]")
+			continue
+
 		potentialRandomZlevels.Add(name)
 
 
-	if(potentialRandomZlevels.len)
-		world << "\red \b Loading away mission..."
+	while(1)
+		if(potentialRandomZlevels.len)
+			to_chat(world, "<span class='danger'>Loading away mission...</span>")
+			var/map = pick(potentialRandomZlevels)
+			log_game("Loading away mission [map]")
 
-		var/map = pick(potentialRandomZlevels)
-		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
+			var/file = file(map)
+			if(isfile(file))
+				maploader.load_map(file)
 
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
+				for(var/x = 1 to world.maxx)
+					for(var/y = 1 to world.maxy)
+						turfs += locate(x,y,world.maxz)
 
-		world << "\red \b Away mission loaded."
+				for(var/obj/effect/landmark/L in landmarks_list)
+					if (L.name != "awaystart")
+						continue
+					awaydestinations.Add(L)
 
-	else
-		world << "\red \b No away missions found."
-		return
+				to_chat(world, "<span class='danger'>Away mission loaded.</span>")
+				return
+			to_chat(world, "<span class='danger'>Failed to load away mission. Trying again...</span>")
+			// Remove map from list
+			potentialRandomZlevels -= map
+		else
+			to_chat(world, "<span class='danger'>No away missions found.</span>")
+			return

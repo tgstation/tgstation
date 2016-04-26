@@ -22,6 +22,7 @@ var/savefile/Banlistjob
 
 /proc/LoadBansjob()
 
+
 	Banlistjob = new("data/job_fullnew.bdb")
 	log_admin("Loading Banlistjob")
 
@@ -138,20 +139,23 @@ var/savefile/Banlistjob
 		AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, "Research Director")
 		AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, "Virologist")
 		return 1
+	if(rank == "Misc")
+		AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, "Trader")
+		return 1
 
 	Banlistjob.cd = "/base"
 	if ( Banlistjob.dir.Find("[ckey][computerid][rank]") )
-		usr << text("\red Banjob already exists.")
+		to_chat(usr, text("<span class='warning'>Banjob already exists.</span>"))
 		return 0
 	else
 		Banlistjob.dir.Add("[ckey][computerid][rank]")
 		Banlistjob.cd = "/base/[ckey][computerid][rank]"
-		Banlistjob["key"] << ckey
-		Banlistjob["id"] << computerid
-		Banlistjob["rank"] << rank
-		Banlistjob["reason"] << reason
+		Banlistjob["key"]      << ckey
+		Banlistjob["id"]       << computerid
+		Banlistjob["rank"]     << rank
+		Banlistjob["reason"]   << reason
 		Banlistjob["bannedby"] << bannedby
-		Banlistjob["temp"] << temp
+		Banlistjob["temp"]     << temp
 		if (temp)
 			Banlistjob["minutes"] << bantimestamp
 
@@ -162,8 +166,8 @@ var/savefile/Banlistjob
 	var/id
 	var/rank
 	Banlistjob.cd = "/base/[foldername]"
-	Banlistjob["key"] >> key
-	Banlistjob["id"] >> id
+	Banlistjob["key"]  >> key
+	Banlistjob["id"]   >> id
 	Banlistjob["rank"] >> rank
 	Banlistjob.cd = "/base"
 
@@ -206,7 +210,7 @@ var/savefile/Banlistjob
 /datum/admins/proc/unjobbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
+	//var/dat = "<HR><B>Unban Player:</B> <span class='warning'>(U) = Unban , (E) = Edit Ban<span class='good'>(Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 ></span></span>"
 	Banlistjob.cd = "/base"
 	for (var/A in Banlistjob.dir)
 		count++
@@ -214,36 +218,34 @@ var/savefile/Banlistjob
 		dat += text("<tr><td><A href='?src=\ref[src];unjobbanf=[Banlistjob["key"]][Banlistjob["id"]][Banlistjob["rank"]]'>(U)</A> Key: <B>[Banlistjob["key"]] </B>Rank: <B>[Banlistjob["rank"]]</B></td><td> ([Banlistjob["temp"] ? "[GetBanExpjob(Banlistjob["minutes"]) ? GetBanExpjob(Banlistjob["minutes"]) : "Removal pending" ]" : "Permaban"])</td><td>(By: [Banlistjob["bannedby"]])</td><td>(Reason: [Banlistjob["reason"]])</td></tr>")
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\newbanjob.dm:216: dat += "</table>"
 	dat += {"</table>
 		<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , </FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"}
-	// END AUTOFIX
 	usr << browse(dat, "window=unbanp;size=875x400")
 
 /*/datum/admins/proc/permjobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 0, 0, job))
-		M << "\red<BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-		M << "\red This is a permanent ban."
+		to_chat(M, "<span class='warning'><BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
+		to_chat(M, "<span class='warning'>This is a permanent ban.</span>")
 		if(config.banappeals)
-			M << "\red To try to resolve this matter head to [config.banappeals]"
+			to_chat(M, "<span class='warning'>To try to resolve this matter head to [config.banappeals]</span>")
 		else
-			M << "\red No ban appeals URL has been set."
+			to_chat(M, "<span class='warning'>No ban appeals URL has been set.</span>")
 		log_admin("[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
-		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
+		message_admins("<span class='warning'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 /datum/admins/proc/timejobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 1, mins, job))
-		M << "\red<BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-		M << "\red This is a temporary ban, it will be removed in [mins] minutes."
+		to_chat(M, "<span class='warning'><BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
+		to_chat(M, "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
 		if(config.banappeals)
-			M << "\red To try to resolve this matter head to [config.banappeals]"
+			to_chat(M, "<span class='warning'>To try to resolve this matter head to [config.banappeals]</span>")
 		else
-			M << "\red No ban appeals URL has been set."
+			to_chat(M, "<span class='warning'>No ban appeals URL has been set.</span>")
 		log_admin("[usr.client.ckey] has jobbanned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")*/
+		message_admins("<span class='warning'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")*/
 //////////////////////////////////// DEBUG ////////////////////////////////////
 
 /proc/CreateBansjob()
+
 
 	UpdateTime()
 
@@ -263,10 +265,10 @@ var/savefile/Banlistjob
 			Banlistjob.dir.Add("[last]trashid[i]")
 			Banlistjob.cd = "/base/[last]trashid[i]"
 			Banlistjob["key"] << last
-		Banlistjob["id"] << "trashid[i]"
-		Banlistjob["reason"] << "Trashban[i]."
-		Banlistjob["temp"] << a
-		Banlistjob["minutes"] << CMinutes + rand(1,2000)
+		Banlistjob["id"]       << "trashid[i]"
+		Banlistjob["reason"]   << "Trashban[i]."
+		Banlistjob["temp"]     << a
+		Banlistjob["minutes"]  << CMinutes + rand(1,2000)
 		Banlistjob["bannedby"] << "trashmin"
 		last = "trash[i]"
 

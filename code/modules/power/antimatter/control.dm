@@ -6,7 +6,7 @@
 	icon_state = "control"
 	var/icon_mod = "on" // on, critical, or fuck
 	var/old_icon_mod = "on"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 1
 	idle_power_usage = 100
@@ -18,6 +18,7 @@
 	var/update_shield_icons = 0
 	var/stability = 100
 	var/exploding = 0
+	var/exploded = 0
 
 	var/active = 0//On or not
 	var/fuel_injection = 2//How much fuel to inject
@@ -38,17 +39,25 @@
 	linked_cores = list()
 
 
-/obj/machinery/power/am_control_unit/Del()//Perhaps damage and run stability checks rather than just del on the others
+/obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
-		del(AMS)
+		AMS.control_unit = null
+		qdel(AMS)
+	for(var/obj/machinery/am_shielding/AMS in linked_cores)
+		AMS.control_unit = null
+		qdel(AMS)
+	qdel(fueljar)
+	fueljar = null
 	..()
 
 
 /obj/machinery/power/am_control_unit/process()
-	if(exploding)
+	if(exploding && !exploded)
 		message_admins("AME explosion at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) - Last touched by [fingerprintslast]",0,1)
+		exploded=1
 		explosion(get_turf(src),8,10,12,15)
-		if(src) del(src)
+		if(src)
+			qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()
@@ -112,9 +121,7 @@
 	if(prob(100-stability))//Might infect the rest of the machine
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.blob_act()
-		spawn(0)
-			//Likely explode
-			del(src)
+		qdel(src)
 		return
 	check_stability()
 	return
@@ -154,7 +161,7 @@
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user)
 	if(!istype(W) || !user) return
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(!anchored)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
@@ -170,20 +177,20 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!"
+			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "\red There is already a [fueljar] inside!"
+			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
 			return
 		fueljar = W
 		if(user.client)
 			user.client.screen -= W
-		user.u_equip(W)
+		user.u_equip(W,1)
 		W.loc = src
 		user.update_icons()
-		message_admins("AME loaded with fuel by [user.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		message_admins("AME loaded with fuel by [user.real_name] ([user.key]) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"You load an [W.name].", \
 				"You hear a thunk.")
@@ -221,7 +228,7 @@
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
-		del(src)
+		qdel(src)
 	return
 
 
@@ -253,9 +260,8 @@
 	else
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.update_icon()
-	spawn(20)
-		shield_icon_delay = 0
-	return
+	sleep(20)
+	shield_icon_delay = 0
 
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
@@ -332,9 +338,12 @@
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	..()
+	if(..()) return 1
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
 	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
-	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon/ai)))
+	if(stat & (BROKEN|NOPOWER))
 		usr.unset_machine()
 		usr << browse(null, "window=AMcontrol")
 		return
@@ -346,7 +355,7 @@
 
 	if(href_list["togglestatus"])
 		toggle_power()
-		message_admins("AME toggled [active?"on":"off"] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		message_admins("AME toggled [active?"on":"off"] by [usr.real_name] ([usr.key]) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		return 1
 
 	if(href_list["refreshicons"])
@@ -355,7 +364,7 @@
 
 	if(href_list["ejectjar"])
 		if(fueljar)
-			message_admins("AME fuel jar ejected by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			message_admins("AME fuel jar ejected by [usr.real_name] ([usr.key]) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			fueljar.loc = src.loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
@@ -368,7 +377,7 @@
 			return
 		fuel_injection=newval
 		fuel_injection=max(1,fuel_injection)
-		message_admins("AME injection strength set to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		message_admins("AME injection strength set to [fuel_injection] by [usr.real_name] ([usr.key]) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		return 1
 
 	if(href_list["refreshstability"])

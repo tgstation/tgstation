@@ -28,7 +28,7 @@
 /obj/machinery/mineral/gasextractor/attack_hand(user as mob)
 
 	if(processing == 1)
-		user << "The machine is processing"
+		to_chat(user, "The machine is processing")
 		return
 
 	var/dat

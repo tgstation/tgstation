@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Regex Help</title>
+  <style type="text/css">
+    body {font:80% "Trebuchet MS",Arial,Helvetica,sans-serif}
+    div.quickref,table.quickref {float:right;border:5px ridge #ccc;background:#ccc;margin-left:1em;margin-bottom:0.5em;padding:0.5em}
+    td {font-size:80%;vertical-align:text-top}
+    td.first {font-size:96%;font-family:"Courier New",monospace;text-align:right;padding-right:1em}
+    td.last {padding-right:3em}
+    h1,h2,h3 {font-weight:bold;font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;margin-bottom:0}
+    h1 {font-size:4em}
+    h2 {font-size:160%}
+    h3 {font-size:120%}
+    tt,code,pre {font-size:120%}
+    .datum dt {font-size:120%;font-family:"Courier New",monospace}
+    blockquote,pre {margin-left:2.5em;margin-right:2.5em}
+  </style>
+</head>
+<body>
+
+<div align=center>
+  <h1>Regex</h1>
+  <p style="margin-top:0">Version 1.1<br /><i>by Lummox JR</i></p>
+</div>
+
+<p>Regex is a library for searching and replacing text using regular
+expressions. Most standard regular expression functionality is included. To
+learn more about what regular expressions are and how to use them, please see
+<a href="#a">Appendix A</a>.</p>
+
+<div class=quickref><table>
+<tr><th colspan=2>Regex quick reference</th></tr>
+<tr><td colspan=2>/<i>pattern</i>/<i>flags</i><br />/<i>pattern</i>/<i>replacement</i>/<i>flags</i></td></tr>
+
+<tr><td class=first>a|b</td><td>Find <tt>a</tt> or <tt>b</tt></td></tr>
+<tr><td class=first>^</td><td>Beginning of line</td></tr>
+<tr><td class=first>$</td><td>End of line</td></tr>
+<tr><td class=first>\A</td><td>Beginning of text (single-line mode)</td></tr>
+<tr><td class=first>\Z</td><td>End of text (single-line mode)</td></tr>
+<tr><td class=first>\b</td><td>Word break (see <tt>\w</tt>); <tt>\B</tt> is non-break</td></tr>
+<tr><td class=first>.</td><td>Any character</td></tr>
+<tr><td class=first>[abc0-9]</td><td>Any of these characters; use - for range of characters</td></tr>
+<tr><td class=first>[^abc0-9]</td><td>Any character except one of these</td></tr>
+<tr><td class=first>(&nbsp;)</td><td>Treat contents as a group.</td></tr>
+<tr><td class=first>\<i>n</i></td><td>Find the same match found in <i>n</i>th group</td></tr>
+<tr><td class=first>$<i>n</i></td><td>Replace with match found in <i>n</i>th group</td></tr>
+<tr><td class=first>$<i>name</i></td><td>Find value of named var <i>name</i></td></tr>
+<tr><td class=first>[<i>proc</i>(<i>arg</i>,<i>...</i>)]</td><td>Call proc and use result (replacement only)</td></tr>
+
+<tr><th colspan=2>Modifiers</th></tr>
+<tr><td class=first>*</td><td>Match 0 or more times</td></tr>
+<tr><td class=first>+</td><td>Match 1 or more times</td></tr>
+<tr><td class=first>?</td><td>Match 0 or 1 time<br /><i>OR</i> make last modifier non-greedy</td></tr>
+<tr><td class=first>{<i>n</i>}</td><td>Match <i>n</i> times</td></tr>
+<tr><td class=first>{<i>n</i>,}</td><td>Match at least <i>n</i> times</td></tr>
+<tr><td class=first>{<i>n</i>,<i>m</i>}</td><td>Match <i>n</i> to <i>m</i> times</td></tr>
+
+<tr><th colspan=2>Special characters</th></tr>
+<tr><td class=first>\</td><td>Escape next character if it is not one of the following</td></tr>
+<tr><td class=first>\0<i>nnn</i></td><td>Octal character <i>nnn</i></td></tr>
+<tr><td class=first>\d</td><td>Digit 0-9; <tt>\D</tt> is non-digit</td></tr>
+<tr><td class=first>\l</td><td>Lowercase letter; <tt>\L</tt> is non-lower or non-letter</td></tr>
+<tr><td class=first>\n</td><td>Line break</td></tr>
+<tr><td class=first>\s</td><td>Whitespace character; <tt>\S</tt> is non-space</td></tr>
+<tr><td class=first>\t</td><td>Tab</td></tr>
+<tr><td class=first>\u</td><td>Uppercase letter; <tt>\U</tt> is non-upper or non-letter</td></tr>
+<tr><td class=first>\w</td><td>Word character 0-9, A-Z, a-z, or _<br /><tt>\W</tt> is non-word character</td></tr>
+<tr><td class=first>\x<i>nn</i></td><td>Hexadecimal character <i>nn</i></td></tr>
+
+<tr><th colspan=2>Flags</th></tr>
+<tr><td class=first>i</td><td>Case-<b>i</b>nsensitive</td></tr>
+<tr><td class=first>s</td><td>Treat as <b>s</b>ingle line<br /><tt>\A</tt> and <tt>\Z</tt> find start and end of entire text only<br /><tt>\s</tt> includes <tt>\n</tt></td></tr>
+<tr><td class=first>g</td><td><b>G</b>lobal; replace all matches</td></tr>
+<tr><td class=first>e</td><td>Allow <b>e</b>xpressions (proc calls)</td></tr>
+</table></div>
+
+<h2>Using Regex</h2>
+
+<p>To use regular expressions, first you have to compile the pattern you will
+use to search or replace. To do this you create a new <tt>/regex</tt>
+datum.</p>
+
+<pre>var/regex/R = new("/time/")</pre>
+
+<p>This will create a new regular expression which searches for the word
+"time" in lowercase. With this expression you can use <tt>Find()</tt> to
+find "time" and <tt>FindNext()</tt> to keep searching.</p>
+
+<p>If the expression fails to compile, the <tt>error</tt> var will tell you
+the reason why. Always check <tt>error</tt> before searching the
+expression.</p>
+
+<p>The <tt>/</tt> character is a <b>delimiter</b> which says where the
+pattern begins and ends, which is important for later examples. You can use
+almost any character as a delimiter. If you want to use that same character
+in the pattern, you must escape it with a backslash; in a BYOND string,
+you'll need to use <tt>\\</tt> for that.</p>
+
+<pre>var/txt = "It's time to start the timer."
+if(R.Find(txt))
+  do
+    world &lt;&lt; "[copytext(txt,1,R.match)]\
+              &lt;b&gt;[copytext(txt,R.match,R.index)]&lt;/b&gt;\
+              [copytext(txt,R.index)]"
+  while(R.FindNext(txt))</pre>
+
+<blockquote><b>Result:</b><br />
+It's <b>time</b> to start the timer.<br />
+It's time to start the <b>time</b>r.</blockquote>
+
+<p>If you had chosen <tt>/\btime\b/</tt> as a pattern instead, "time" would
+only be found as a whole word, so the second line would not appear.</p>
+
+<pre>var/regex/R = new("/\\btime\\b/")</pre>
+
+<p>Since this is written in DM, where a backslash has special meaning, it's
+important when you use backslashes to escape them with another backslash so
+BYOND can read them. Likewise if you use brackets <tt>[...]</tt> you'll have
+to use <tt>\[</tt> as well.</p>
+
+<h3>Replacing text</h3>
+
+<p>Replacement is about as easy as searching. Create a find-and-replace
+pattern and use <tt>Replace()</tt> to perform the replacement.
+<tt>Replace()</tt> returns the changed text if it does anything, and null
+if the pattern was not found.</p>
+
+<pre>var/regex/R = new("/\\bred\\b/blue/")
+var/txt = "Fred threw the red ball to Jane. Jane caught the red ball."
+var/newtxt = R.Replace(txt)
+while(newtxt)
+  txt = newtxt
+  newtxt = R.ReplaceNext(txt)</pre>
+
+<blockquote><b>Result:</b><br />
+Fred threw the blue ball to Jane. Jane caught the blue ball.</blockquote>
+
+<p>After <tt>Replace()</tt> runs and has found a replacement successfully,
+<tt>R.index</tt> points to the end of the replaced text. In the same way,
+<tt>ReplaceNext()</tt> will replace the next match found.</p>
+
+<p>Of course you can replace everything in one fell swoop using the
+<tt>g</tt> flag. This will make <tt>Replace()</tt> replace everything it can
+all at once.</p>
+
+<pre>var/regex/R = new("/\\bred\\b/blue/g")
+var/txt = "Fred threw the red ball to Jane. Jane caught the red ball."
+txt = R.Replace(txt) || txt</pre>
+
+<h3>Using groups</h3>
+
+<p>If your pattern includes groups using parentheses, you can read the text
+that was captured from that group by using <tt>GroupText()</tt>. This is
+the equivalent of <tt>$1</tt>, <tt>$2</tt>, etc. in a language like Perl or
+PHP.</p>
+
+<pre>var/regex/digits = new("/(\\d+)/")
+var/txt = "3 pigs and 4 chickens walk into a bar and order 50 punchlines."
+if(digits.Find(txt))
+  do
+    world &lt;&lt; digits.GroupText(1)
+  while(digits.FindNext(txt))</pre>
+
+<blockquote><b>Result:</b><br />
+3<br />4<br />50</blockquote>
+
+<h3>Named variables</h3>
+
+<p>You can insert your own variables by name into a search by using the
+<tt>namedvars</tt> associative list.</p>
+
+<pre>var/regex/R = new("/^$player logs (in|out) .*$/")
+R.namedvars["player"] = player
+if(R.Find(gamelog))
+  do
+    admin &lt;&lt; copytext(txt,R.match,R.index)
+  while(R.FindNext(txt))</pre>
+
+<a name="expr"></a><h3>Calling procs in replacement expressions</h3>
+
+<p>By using the <tt>e</tt> flag, you can allow your replacement expression to
+call a global proc, and include arguments. To do this you must put the proc
+name inside brackets <tt>[]</tt>, and if any arguments are included, they go
+inside parentheses and are separated by commas. (Do not put any spaces
+between the proc name and the parentheses.) Remember, proc names are always
+case-sensitive.</p>
+
+<pre>/(\d+)\+(\d+)/[sum($1,$2)]/e</pre>
+
+<p>This expression will search for a number, a <tt>+</tt> sign, and another
+number, then add the two numbers using the <tt>sum()</tt> proc.</p>
+
+<pre>// a and b are strings
+proc/sum(a, b)
+  return text2num(a) + text2num(b)
+
+mob/verb/TestAdd()
+  var/regex/add = new("/(\\d+)\\+(\\d+)/[sum($1,$2)]/e")
+  var/txt = "What's 11+23?"
+  txt = add.Replace(txt) || txt</pre>
+
+<blockquote><b>Result:</b><br />
+What's 34?</blockquote>
+
+<p><tt>sum()</tt> is a global proc, and the arguments it receives are text
+strings, in this case <tt>"11"</tt> and <tt>"23"</tt>. You can do anything
+with these strings that you want. Here they were numbers to be added, but
+you might want such a proc to calculate other values or format text in
+particular ways.</p>
+
+<h3>Splitting text</h3>
+
+<p>The <tt>Split()</tt> proc will take text and split it up according to
+this pattern. For example if your pattern is <tt>/,\s*/</tt>, you can split
+up a list separated by commas with optional spaces.</p>
+
+<pre>var/regex/commasplit = new("/,\\s*/")
+var/list/items = commasplit.Split("trees, rocks, water, fire, air")
+for(var/thing in items)
+  world &lt;&lt; thing</pre>
+
+<blockquote><b>Result:</b><br />
+trees<br />rocks<br />water<br />fire<br />air</blockquote>
+
+<p>There's a second argument to <tt>Split()</tt> which can make the split
+inclusive. If this is nonzero, then the pattern matches themselves (in this
+case <tt>",&nbsp;"</tt>) will be included in the list.</p>
+
+
+<h2>A Few Examples</h2>
+
+<h3>Add commas to numbers</h3>
+
+<pre>var/regex/commafy = new("/(\\d+)(\\d{3})/$1,$2/g")
+var/txt = "9000 peaches and 12345678 pretzels"
+var/newtxt = commafy.Replace(txt)
+while(newtxt)
+  txt = newtxt
+  newtxt = commafy.Replace(txt)</pre>
+
+<blockquote><b>Result:</b><br />
+9,000 peaches and 12,345,678 pretzels</blockquote>
+
+<h3>Reformat paragraphs</h3>
+
+<pre>var/regex/unpara = new("/([^\\n])\\n([^\\n])/$1$2/gs")
+var/regex/repara = new("/^(.{,77}|\S{78,})\\s+/$1\\n/g")
+txt = unpara.Replace(txt) || txt
+txt = repara.Replace(txt) || txt</pre>
+
+
+
+<a name="datum"></a><h2>Datum Reference</h2>
+
+<p>This section explains the layout of the <tt>/regex</tt> datum.</p>
+
+<h3><tt>/regex</tt> public vars</h3>
+
+<dl class=datum>
+  <dt>error</dt>
+  <dd>The error, if any, that occurred when this pattern was first created</dd>
+
+  <dt>match</dt>
+  <dd>The index of the last matching value in a searched text string; 0 if
+    none found</dd>
+
+  <dt>index</dt>
+  <dd>The index after the last match found (or replaced) in a text string; 0
+    if none</dd>
+
+  <dt>namedvars</dt>
+  <dd>An associative list of named variables which can be set before a
+    search<br />In a pattern these appear as <tt>$<i>name</i></tt></dd>
+</dl>
+
+<h3><tt>/regex</tt> public procs</h3>
+
+<dl class=datum>
+  <dt>Find(text, start=1)</dt><dd>Find a match in <tt>text</tt>. Return src.match, which is nonzero if found.</dd>
+  <dt>FindText(text)</dt><dd>Repeat the last search starting at <tt>src.index</tt>.</dd>
+  <dt>Replace(text, start=1)</dt><dd>Find a match in <tt>text</tt> and replace. Return modified text, or null if no match found.</dd>
+  <dt>ReplaceText(text)</dt><dd>Repeat the last replacement starting at <tt>src.index</tt>.</dd>
+  <dt>GroupText(group_number)</dt><dd>Return the last match found for parentheses group #<tt><i>group_number</i></tt>, or null if none found.</dd>
+  <dt>Split(text, inclusive)</dt><dd>Return a list of sections of <tt>text</tt> separated by this pattern. If <tt>inclusive</tt>, include the actual pattern matches in the list.</dd>
+</dl>
+
+
+<a name="a"></a><h2>Appendix A: Regular Expression Basics</h2>
+
+<p>If you've never used regular expressions before, this section will give
+you a brief overview. Using the handy quick reference above as well as the
+explanations in this section, you should have enough info to build your own
+patterns.</p>
+
+<p>A regular expression pattern may take two forms:</p>
+
+<pre>/<i>pattern</i>/<i>flags</i>
+/<i>pattern</i>/<i>replacement</i>/<i>flags</i></pre>
+
+<p>A basic pattern may contain something as simple as a single word or
+phrase. Literal text is easy to find. If you want to find it without worrying
+about upper- or lowercase, use the <tt>i</tt> flag at the end of the
+pattern.</p>
+
+<pre>/a basic pattern/i</pre>
+
+<p>The <tt>/</tt> character is a delimiter, which marks where the pattern
+ends. Almost any character may be used as a delimiter, including <tt>#</tt>
+or <tt>!</tt> or letters. Any character you use this way, though, can't have
+a special meaning in the pattern, so if you use <tt>|</tt>, you can't use
+<tt>a|b</tt> to mean "find a or b". If you want to use that same character
+as literal text in the pattern, you should be able to escape it with a
+backslash <tt>\</tt>. For example, you can use <tt>/\d+\/\d+\/\d{2,4}/</tt>
+to read a date.</p>
+
+<p>For special characters, backslashes are very important. Any special
+character you want to use like a normal one, including a backslash, needs a
+backslash in front of it. As in regular DM, some things like <tt>\n</tt> or
+<tt>\t</tt> have special meaning. But there are more special escape
+sequences, including <tt>\d</tt> which means digits 0-9. If you use a
+backslash in your pattern, you'll probably need to use two when writing it as
+a BYOND string. The example above would have to be written as
+<tt>"/\\d+\\/\d+\\/\\d{2,4}/"</tt>. For the rest of this appendix, it's
+assumed that you know that; the patterns you see will be the "raw" pattern
+like the one above, not in a BYOND string form.</p>
+
+<p>Some characters are easier to include using an ASCII code than the
+actual character itself. <tt>\x<i>nn</i></tt> will produce a character from a
+hexadecimal code; i.e. <tt>\x41</tt> is <tt>A</tt>. You can do a similar
+thing with octal, where <tt>\0101</tt> is <tt>A</tt>, but the leading 0 is
+needed.</p>
+
+<h3>Simple operators</h3>
+
+<p>Finding just text you can already do with BYOND's built-in procs, though,
+so let's move on to the meat of regular expressions and some of the things
+that patterns can include.</p>
+
+<p>It's possible to search along word breaks using <tt>\b</tt>, or non-breaks
+using <tt>\B</tt>. Thus, <tt>/\bbrick\b/i</tt> will match <tt>"brick"</tt>
+but it will not match <tt>"bricklayer"</tt>.</p>
+
+<p>You can match just at the beginning of a line by using <tt>^</tt> and at
+the end of a line using <tt>$</tt>. <tt>\A</tt> and <tt>\Z</tt> mean the same
+things, except that if you use the <tt>s</tt> flag to treat your text like a
+single line, they'll only match the beginning and end of the entire text.</p>
+
+<pre>/^you can/i
+/using \$\.$/</pre>
+
+<p>If you want to find one of several possible choices, then <tt>|</tt> which
+means "or" is the right tool for the job.</p>
+
+<pre>/banana|raspberry|grape/i</pre>
+
+<p>There are many other things you can find in a regular expression. A single
+period <tt>.</tt> will match any character. Brackets <tt>[]</tt> will find
+any character that matches what's between them; e.g. <tt>[AEIOUaeiou]</tt>
+will match a vowel, or <tt>[a-z]</tt> will match any lowercase letter. Or you
+can use the opposite of this by putting <tt>^</tt> at the beginning of your
+list of characters, so <tt>[^AEIOUaeiou]</tt> matches any character that is
+<i>not</i> a vowel. There are other kinds of character matches you can do
+easily without brackets:</p>
+
+<blockquote><table>
+<tr><td class=first>\d</td><td class=last>Any digit 0-9</td><td class=first>\D</td><td>Anything but 0-9</td></tr>
+<tr><td class=first>\w</td><td class=last>0-9, A-Z, a-z, or _</td><td class=first>\W</td><td>Anything but \w</td></tr>
+<tr><td class=first>\s</td><td class=last>Whitespace</td><td class=first>\S</td><td>Non-whitespace</td></tr>
+<tr><td class=first>\l</td><td class=last>Any lowercase letter</td><td class=first>\L</td><td>Any uppercase or non-letter</td></tr>
+<tr><td class=first>\u</td><td class=last>Any uppercase letter</td><td class=first>\U</td><td>Any lowercase or non-letter</td></tr>
+</table></blockquote>
+
+<h3>Modifiers</h3>
+
+<p>Of course, it's not as much use to find any old character as to find it a
+certain number of times. That's where modifiers come in. Modifiers go right
+after part of the pattern and say how many times you want to find that
+part.</p>
+
+<blockquote><table>
+<tr><td class=first>*</td><td>Match 0 or more times</td></tr>
+<tr><td class=first>+</td><td>Match 1 or more times</td></tr>
+<tr><td class=first>?</td><td>Match 0 or 1 time</td></tr>
+<tr><td class=first>{<i>n</i>}</td><td>Match exactly <i>n</i> times</td></tr>
+<tr><td class=first>{<i>n</i>,}</td><td>Match at least <i>n</i> times</td></tr>
+<tr><td class=first>{<i>n</i>,<i>m</i>}</td><td>Match <i>n</i> to <i>m</i> times</td></tr>
+</table></blockquote>
+
+<p>A modifier after a bit of text will just match the last character. That
+is, <tt>clue+</tt> will look for <tt>clue</tt> followed by any more
+<tt>e</tt>'s that immediately follow it. To use <tt>+</tt> for the entire
+block of text you need a group, which is done by putting parentheses around
+the text. <tt>(clue)+</tt> will match anywhere that <tt>clue</tt> is found at
+least once in a row.</p>
+
+<p>One important thing to know about modifiers is that they're greedy. That
+is, they'll find as much as they possibly can. <tt>/ed.*ed/i</tt> will match
+all of <tt>"Ed jumped on the bed"</tt>, because <tt>.*</tt> will keep
+searching for more as long as there's an <tt>ed</tt> to follow it. To make
+the modifier non-greedy, use a <tt>?</tt> after it. Searching the same text
+with <tt>/ed.*?ed/i</tt> will result in "Ed jumped".</p>
+
+<h3>Groups</h3>
+
+<p>Using parentheses to group things together is very useful. For one thing,
+you can use <tt>|</tt> inside a group. Try out this expression:</p>
+
+<pre>/(gold|silver|copper) coins?/i</pre>
+
+<p>That will match <tt>"copper coins"</tt> or <tt>"Silver coin"</tt>.</p>
+
+<p>When you use a group to match some text, a backreference will match that
+same text later on in the pattern. A backreference looks like
+<tt>\<i>n</i></tt>, where it matches the <i>n</i>th group. Say for example
+that you want to match <tt>"Gold coins made of gold"</tt> but not <tt>"brass
+knuckles made of wood"</tt>. A backreference will do the trick.</p>
+
+<pre>/([a-z]+) [a-z'\-]+ made of \1/i</pre>
+
+<p>The group will capture the material like gold or brass, so it can be
+matched again in the backreference <tt>\1</tt>.</p>
+
+<p>In a replacement pattern, you'd use <tt>$<i>n</i></tt> to replace part
+of a match with what was found in a group. Here's a simple replacement
+that will do that:</p>
+
+<pre>/([a-z]+) ([a-z'\-]+)/$2 of $1/</pre>
+
+<p>Here, <tt>"crystal jars"</tt> becomes <tt>"jars of crystal"</tt>.</p>
+
+<p>In both search and replacement patterns, you can use named variables
+by including them as <tt>$<i>name</i></tt>. The value of this can be set at
+any time by setting <tt>regex.namedvars[name]=value</tt>.</p>
+
+<h3>Replacement</h3>
+
+<p>As you can see, replacing text isn't all that hard. Obviously replacements
+won't use most of the search operators like brackets, parentheses, or
+modifiers, so they're usually interpreted literally. There's one important
+thing to know about replacements, though: If you use the <tt>g</tt> flag at
+the end of your pattern, any replacement will be done on every single match.
+With this you could change all coconuts to raisins.</p>
+
+<pre>/coconut/raisin/ig</pre>
+
+<p>This is a case-insensitive replacement, but if an uppercase Coconut is
+found, it will be replaced with a lowercase raisin.</p>
+
+<p>You may also call procs in replacement patterns by using the <tt>e</tt>
+flag <a href="#expr">as described above</a>.</p>
+
+
+<a name="history"></a><h2>Version History</h2>
+
+<p>Version 1.1: May 2005</p>
+<ul>
+<li>Fixed a potential replacement bug and added new
+  <a href="#expr"><tt>e</tt></a> flag for calling procs in replacement
+  expressions.</li>
+</ul>
+ 
+<p>Version 1.0: May 2005</p>
+<ul>
+<li>Initial release</li>
+</ul>
+
+
+</body></html>

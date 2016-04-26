@@ -55,10 +55,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 /datum/disease/proc/stage_act()
 	age++
 	var/cure_present = has_cure()
-	//world << "[cure_present]"
+//	to_chat(world, "[cure_present]")
 
 	if(carrier&&!cure_present)
-		//world << "[affected_mob] is carrier"
+//		to_chat(world, "[affected_mob] is carrier")
 		return
 
 	spread = (cure_present?"Remissive":initial_spread)
@@ -78,27 +78,31 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return
 
 /datum/disease/proc/has_cure()//check if affected_mob has required reagents.
-	if(!cure_id) return 0
+	if((!cure_id && !cure_list) || !curable) return 0
 	var/result = 1
-	if(cure_list == list(cure_id))
-		if(istype(cure_id, /list))
+	if(!cure_list || cure_list == cure_id) //if no cure_list or cure list is the same as cure_id, just check _id
+		if(istype(cure_id, /list)) //if cure_id is a list, check inside of it
 			for(var/C_id in cure_id)
-				if(!affected_mob.reagents.has_reagent(C_id))
+				if(affected_mob.reagents.has_reagent(C_id))
+					result = 1
+					break //you only need one of the ones in cure_id
+				else
 					result = 0
-		else if(!affected_mob.reagents.has_reagent(cure_id))
+		else if(!affected_mob.reagents.has_reagent(cure_id)) //if cure id is just text, just check it against the reagents
 			result = 0
 	else
-		for(var/C_list in cure_list)
-			if(istype(C_list, /list))
-				for(var/C_id in cure_id)
-					if(affected_mob.reagents != null)
+		for(var/C_list in cure_list) //if cure_list isn't the same as cure_id, check its contents. You must have ALL of the contents of cure_list to cure if it doesn't match cure_id
+			if(istype(C_list, /list)) //if cure_list's contents is a list
+				for(var/C_id in C_list)	 //check inside of C_list
+					if(affected_mob.reagents == null) //null reagants
 						result = 0
-					else if(!affected_mob.reagents.has_reagent(C_id))
+					else if(!affected_mob.reagents.has_reagent(C_id)) //doesn't have one of the reagents in C_list
 						result = 0
 			else if(affected_mob.reagents != null)
-				if(!affected_mob.reagents.has_reagent(C_list))
+				if(!affected_mob.reagents.has_reagent(C_list)) //if cure list contents is text, just check it against the reagents
 					result = 0
-
+			else //null reagents
+				result = 0
 	return result
 
 /datum/disease/proc/spread_by_touch()
@@ -108,10 +112,12 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return 0
 
 /datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
-	//world << "Disease [src] proc spread was called from holder [source]"
+//	to_chat(world, "Disease [src] proc spread was called from holder [source]")
 
 	// If we're overriding how we spread, say so here
 	var/how_spread = spread_type
+	if(!istype(affected_mob))
+		return 0
 	if(force_spread)
 		how_spread = force_spread
 
@@ -126,7 +132,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			source = affected_mob
 		else //no source and no mob affected. Rogue disease. Break
 			return
-	
 	if(affected_mob.reagents != null)
 		if(affected_mob)
 			if(affected_mob.reagents.has_reagent("spaceacillin"))
@@ -168,7 +173,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 				spread_type = CONTACT_GENERAL
 			affected_mob = null
 	if(!affected_mob) //the virus is in inanimate obj
-//		world << "[src] longevity = [longevity]"
+//		to_chat(world, "[src] longevity = [longevity]")
 
 		if(prob(70))
 			if(--longevity<=0)
@@ -186,6 +191,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	del(src)	//delete the datum to stop it processing
 	return
 
+/datum/disease/Del()
+	active_diseases -= src
+	if(affected_mob)
+		affected_mob.viruses -= src
+	..()
 
 /datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
@@ -202,6 +212,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return new type(process, src)
 
 /*
-/datum/disease/Del()
+/datum/disease/Destroy()
 	active_diseases.Remove(src)
 */

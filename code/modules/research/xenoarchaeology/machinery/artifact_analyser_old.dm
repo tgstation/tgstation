@@ -212,7 +212,7 @@
 	cur_artifact.my_effect.artifact_id = cur_artifact.display_id
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
-
+	if(..()) return 1
 	if(href_list["analyse"])
 		if(owned_pad)
 			var/turf/pad_turf = get_turf(owned_pad)
@@ -257,7 +257,7 @@
 
 	if(href_list["upload"] && cur_id != "")
 		//add new datum to every DB in the world
-		for(var/obj/machinery/computer/artifact_database/DB in world)
+		for(var/obj/machinery/computer/artifact_database/DB in machines)
 			var/update = 0
 			for(var/datum/catalogued_artifact/CA in DB.catalogued_artifacts)
 				if(CA.display_id == cur_id)
@@ -289,7 +289,7 @@
 		P.name = "Artifact Analysis Report #[scan_num]"
 		P.info = r
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\icon[src] \blue The [src.name] prints a sheet of paper", 3)
+			O.show_message("[bicon(src)] <span class='notice'>The [src.name] prints a sheet of paper.</span>")
 		use_power(10)
 
 	if(href_list["close"])
@@ -311,8 +311,8 @@
 	..()
 	/*spawn(10)
 		for(var/obj/machinery/artifact_analyser/analyser in orange(1))
-			world << "pad found analyser"
+			to_chat(world, "pad found analyser")
 			if(!analyser.owned_pad)
 				analyser.owned_pad = src
-				world << "pad set analyser to self"
+				to_chat(world, "pad set analyser to self")
 				break*/

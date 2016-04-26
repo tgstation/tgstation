@@ -59,7 +59,7 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 
 obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
-		var/datum/signal/signal = new
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
@@ -85,7 +85,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density && radio_connection && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
-			var/datum/signal/signal = new
+			var/datum/signal/signal = getFromPool(/datum/signal)
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
 			signal.data["timestamp"] = world.time
@@ -118,36 +118,6 @@ obj/machinery/door/airlock/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-
-
-
-
-/obj/item/airlock_sensor_frame
-	name = "Airlock Sensor frame"
-	desc = "Used for repairing or building airlock sensors"
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_sensor_off"
-	flags = FPRINT | TABLEPASS | CONDUCT
-
-/obj/item/airlock_sensor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 1 )
-		del(src)
-
-/obj/item/airlock_sensor_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red [src] cannot be placed on this spot."
-		return
-	new /obj/machinery/access_button(loc, ndir, 1)
-	del(src)
-
 obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
@@ -159,6 +129,7 @@ obj/machinery/airlock_sensor
 	var/id_tag
 	var/master_tag
 	var/frequency = 1449
+	var/command = "cycle"
 
 	var/datum/radio_frequency/radio_connection
 
@@ -167,6 +138,8 @@ obj/machinery/airlock_sensor
 
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
+
+	machine_flags = MULTITOOL_MENU
 
 
 obj/machinery/airlock_sensor/update_icon()
@@ -181,17 +154,17 @@ obj/machinery/airlock_sensor/update_icon()
 obj/machinery/airlock_sensor/attack_hand(mob/user)
 	if(..())
 		return
-	var/datum/signal/signal = new
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
-	signal.data["command"] = "cycle"
+	signal.data["command"] = command
 
 	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
 
 obj/machinery/airlock_sensor/process()
 	if(on)
-		var/datum/signal/signal = new
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
@@ -201,7 +174,7 @@ obj/machinery/airlock_sensor/process()
 		var/pressure = round(air_sample.return_pressure(),0.1)
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
-		signal.data["pressure"] = num2text(pressure)
+		signal.data["pressure"] = pressure
 
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 
@@ -221,6 +194,12 @@ obj/machinery/airlock_sensor/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
+obj/machinery/airlock_sensor/airlock_interior
+	command = "cycle_interior"
+
+obj/machinery/airlock_sensor/airlock_exterior
+	command = "cycle_exterior"
+
 /obj/machinery/airlock_sensor/New(turf/loc, var/ndir, var/building=0)
 	..()
 
@@ -239,12 +218,12 @@ obj/machinery/airlock_sensor/New()
 		//stat |= MAINT
 		//src.update_icon()
 
-obj/machinery/airlock_sensor/multitool_menu(var/obj/item/device/multitool/P, var/mob/user)
+obj/machinery/airlock_sensor/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[0]">Reset</a>)</li>
-			[format_tag("ID Tag",id_tag)]
-			[format_tag("Master ID Tag",master_tag)]
+			[format_tag("ID Tag","id_tag")]
+			[format_tag("Master ID Tag","master_tag")]
 		</ul>"}
 
 obj/machinery/airlock_sensor/Topic(href,href_list)
@@ -255,18 +234,6 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			testing("Not silicon, not using a multitool.")
 			return
-
-	var/obj/item/device/multitool/P = get_multitool(usr)
-
-	if("set_tag" in href_list)
-		if(!(href_list["set_tag"] in vars))
-			usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-			return 1
-		var/current_tag = src.vars[href_list["set_tag"]]
-		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-		if(newid)
-			vars[href_list["set_tag"]] = newid
-			initialize()
 	if("set_freq" in href_list)
 		var/newfreq=frequency
 		if(href_list["set_freq"]!="-1")
@@ -279,57 +246,19 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 			if(newfreq < 10000)
 				frequency = newfreq
 				initialize()
-
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
-
-	usr.set_machine(src)
 	update_multitool_menu(usr)
 
 
 obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
+	. = ..()
+	if(.)
+		return .
 	if(istype(W,/obj/item/weapon/screwdriver))
-		user << "You begin to pry \the [src] off the wall..."
-		if(do_after(user, 50))
-			user << "You successfully pry \the [src] off the wall."
-			new /obj/item/airlock_sensor_frame(get_turf(src))
-			del(src)
-
-
-/obj/item/access_button_frame
-	name = "access button frame"
-	desc = "Used for repairing or building airlock access buttons"
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "access_button_build"
-	flags = FPRINT | TABLEPASS| CONDUCT
-
-/obj/item/access_button_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 1 )
-		del(src)
-
-/obj/item/access_button_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red [src] cannot be placed on this spot."
-		return
-	new /obj/machinery/access_button(loc, ndir, 1)
-	del(src)
+		to_chat(user, "You begin to pry \the [src] off the wall...")
+		if(do_after(user, src, 50))
+			to_chat(user, "You successfully pry \the [src] off the wall.")
+			new /obj/item/mounted/frame/airlock_sensor(get_turf(src))
+			qdel(src)
 
 obj/machinery/access_button
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -349,6 +278,7 @@ obj/machinery/access_button
 
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/access_button/New(turf/loc, var/ndir, var/building=0)
 	..()
@@ -379,10 +309,10 @@ obj/machinery/access_button/update_icon()
 obj/machinery/access_button/attack_hand(mob/user)
 	add_fingerprint(usr)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		to_chat(user, "<span class='warning'>Access Denied.</span>")
 
 	else if(radio_connection)
-		var/datum/signal/signal = new
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = master_tag
 		signal.data["command"] = command
@@ -392,12 +322,15 @@ obj/machinery/access_button/attack_hand(mob/user)
 
 
 obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
+	. = ..()
+	if(.)
+		return .
 	if(istype(W,/obj/item/weapon/screwdriver))
-		user << "You begin to pry \the [src] off the wall..."
-		if(do_after(user, 50))
-			user << "You successfully pry \the [src] off the wall."
-			new /obj/item/access_button_frame(get_turf(src))
-			del(src)
+		to_chat(user, "You begin to pry \the [src] off the wall...")
+		if(do_after(user, src, 50))
+			to_chat(user, "You successfully pry \the [src] off the wall.")
+			new /obj/item/mounted/frame/access_button(get_turf(src))
+			qdel(src)
 
 obj/machinery/access_button/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -415,16 +348,27 @@ obj/machinery/access_button/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/access_button/multitool_menu(var/obj/item/device/multitool/P, var/mob/user)
+obj/machinery/access_button/airlock_interior
+	frequency = 1449
+	command = "cycle_interior"
+
+obj/machinery/access_button/airlock_exterior
+	frequency = 1449
+	command = "cycle_exterior"
+
+
+
+obj/machinery/access_button/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	return {"
 		<ul>
 			<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[0]">Reset</a>)</li>
-			[format_tag("Master ID Tag",master_tag)]
-			[format_tag("Command",command)]
+			[format_tag("Master ID Tag","master_tag")]
+			[format_tag("Command","command")]
 		</ul>"}
 
 obj/machinery/access_button/Topic(href,href_list)
-	if(..()) return 0
+	if(..())
+		return 1
 
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
@@ -432,40 +376,18 @@ obj/machinery/access_button/Topic(href,href_list)
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
+	if(P)
+		if("set_freq" in href_list)
+			var/newfreq=frequency
+			if(href_list["set_freq"]!="-1")
+				newfreq=text2num(href_list["set_freq"])
+			else
+				newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					frequency = newfreq
+					initialize()
 
-	if("set_tag" in href_list)
-		if(!(href_list["set_tag"] in vars))
-			usr << "\red Something went wrong: Unable to find [href_list["set_tag"]] in vars!"
-			return 1
-		var/current_tag = src.vars[href_list["set_tag"]]
-		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src, current_tag) as null|text),1,MAX_MESSAGE_LEN)
-		if(newid)
-			vars[href_list["set_tag"]] = newid
-			initialize()
-	if("set_freq" in href_list)
-		var/newfreq=frequency
-		if(href_list["set_freq"]!="-1")
-			newfreq=text2num(href_list["set_freq"])
-		else
-			newfreq = input(usr, "Specify a new frequency (GHz). Decimals assigned automatically.", src, frequency) as null|num
-		if(newfreq)
-			if(findtext(num2text(newfreq), "."))
-				newfreq *= 10 // shift the decimal one place
-			if(newfreq < 10000)
-				frequency = newfreq
-				initialize()
-
-	if(href_list["unlink"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["link"])
-		P.visible_message("\The [P] buzzes in an annoying tone.","You hear a buzz.")
-
-	if(href_list["buffer"])
-		P.buffer = src
-
-	if(href_list["flush"])
-		P.buffer = null
-
-	usr.set_machine(src)
-	update_multitool_menu(usr)
+		update_multitool_menu(usr)

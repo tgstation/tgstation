@@ -8,4 +8,11 @@
 	see_in_dark = 7
 	invisibility = 101 // No one can see us
 
-	move_on_shuttle = 0
+/mob/camera/can_shuttle_move()
+	return 0
+
+/mob/camera/cultify()
+	return
+
+/mob/camera/singuloCanEat()
+	return 0

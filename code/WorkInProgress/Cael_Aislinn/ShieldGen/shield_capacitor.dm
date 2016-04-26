@@ -24,6 +24,11 @@
 	active_power_usage = 100
 	var/charge_rate = 100
 
+	ghost_read=0
+	ghost_write=0
+
+	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE
+
 /obj/machinery/shield_capacitor/New()
 	spawn(10)
 		for(var/obj/machinery/shield_gen/possible_gen in range(1, src))
@@ -32,42 +37,43 @@
 				break
 	..()
 
-/obj/machinery/shield_capacitor/attackby(obj/item/W, mob/user)
-
-	if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = W
-		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
-			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
-			updateDialog()
-		else
-			user << "\red Access denied."
-	else if(istype(W, /obj/item/weapon/card/emag))
-		if(prob(75))
-			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
-			updateDialog()
+/obj/machinery/shield_capacitor/emag(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
+		return 1
+	playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
+	return
 
-	else if(istype(W, /obj/item/weapon/wrench))
-		src.anchored = !src.anchored
-		src.visible_message("\blue \icon[src] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
+/obj/machinery/shield_capacitor/wrenchAnchor(mob/user)
+	if(..())
+		for(var/obj/machinery/shield_gen/gen in range(1, src))
+			if(!src.anchored && gen.owned_capacitor == src)
+				gen.owned_capacitor = null
+				break
+			else if(src.anchored && !gen.owned_capacitor)
+				gen.owned_capacitor = src
+				break
+			gen.updateDialog()
+			updateDialog()
+		return 1
+	return
 
-		spawn(0)
-			for(var/obj/machinery/shield_gen/gen in range(1, src))
-				if(get_dir(src, gen) == src.dir)
-					if(!src.anchored && gen.owned_capacitor == src)
-						gen.owned_capacitor = null
-						break
-					else if(src.anchored && !gen.owned_capacitor)
-						gen.owned_capacitor = src
-						break
-					gen.updateDialog()
-					updateDialog()
-	else
-		..()
+/obj/machinery/shield_capacitor/attackby(obj/item/W, mob/user)
+	if(..())
+		return 1
+	else if(istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = W
+		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+			src.locked = !src.locked
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+			updateDialog()
+		else
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/shield_capacitor/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -91,25 +97,20 @@
 	if(locked)
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_capacitor.dm:94: t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
 		t += {"This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>
 			[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>
 			Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>
-			Charge rate: 
-		<a href='?src=\ref[src];charge_rate=[-max_charge_rate]'>\[min\]</a> 
-		<a href='?src=\ref[src];charge_rate=-1000'>\[--\]</a> 
-		<a href='?src=\ref[src];charge_rate=-100'>\[-\]</a>[charge_rate] Watts/sec 
-		<a href='?src=\ref[src];charge_rate=100'>\[+\]</a> 
-		<a href='?src=\ref[src];charge_rate=1000'>\[++\]</a> 
+			Charge rate:
+		<a href='?src=\ref[src];charge_rate=[-max_charge_rate]'>\[min\]</a>
+		<a href='?src=\ref[src];charge_rate=-1000'>\[--\]</a>
+		<a href='?src=\ref[src];charge_rate=-100'>\[-\]</a>[charge_rate] Watts/sec
+		<a href='?src=\ref[src];charge_rate=100'>\[+\]</a>
+		<a href='?src=\ref[src];charge_rate=1000'>\[++\]</a>
 		<a href='?src=\ref[src];charge_rate=[max_charge_rate]'>\[max\]</a><br>"}
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_capacitor.dm:104: t += "<hr>"
 	t += {"<hr>
-		<A href='?src=\ref[src]'>Refresh</A> 
+		<A href='?src=\ref[src]'>Refresh</A>
 		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
-	// END AUTOFIX
 	user << browse(t, "window=shield_capacitor;size=500x800")
 	user.set_machine(src)
 
@@ -130,6 +131,7 @@
 		time_since_fail = 0
 
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
+	if(!isAI(usr) && usr.z != z) return 1
 	..()
 	if( href_list["close"] )
 		usr << browse(null, "window=shield_capacitor")
@@ -171,7 +173,7 @@
 	set src in oview(1)
 
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return
 	src.dir = turn(src.dir, 270)
 	return

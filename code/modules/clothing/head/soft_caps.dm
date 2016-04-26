@@ -2,30 +2,36 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = FPRINT
 	item_state = "helmet"
 	_color = "cargo"
 	var/flipped = 0
 	siemens_coefficient = 0.9
 
-	dropped()
-		src.icon_state = "[_color]soft"
-		src.flipped=0
-		..()
-
-	verb/flip()
-		set category = "Object"
-		set name = "Flip cap"
-		set src in usr
-		if(usr.canmove && !usr.stat && !usr.restrained())
+	proc/flip(var/mob/user as mob)
+		if(!user.incapacitated())
 			src.flipped = !src.flipped
 			if(src.flipped)
 				icon_state = "[_color]soft_flipped"
-				usr << "You flip the hat backwards."
+				to_chat(user, "You flip the hat backwards.")
 			else
 				icon_state = "[_color]soft"
-				usr << "You flip the hat back in normal position."
-			usr.update_inv_head()	//so our mob-overlays update
+				to_chat(user, "You flip the hat back in normal position.")
+			user.update_inv_head()	//so our mob-overlays update
+
+	attack_self(var/mob/user as mob)
+		flip(user)
+
+	verb/flip_cap()
+		set category = "Object"
+		set name = "Flip cap"
+		set src in usr
+		flip(usr)
+
+	dropped()
+		src.icon_state = "[_color]soft" //because of this line and 15 and 18, the icon_state will end up blank if you were to try allowing heads to dye caps with their stamps
+		src.flipped=0
+		..()
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

@@ -1,27 +1,22 @@
 /mob/living/silicon/pai/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	if (src.stat == 2)
 		return
-	if(src.cable)
-		if(get_dist(src, src.cable) > 1)
-			var/turf/T = get_turf_or_move(src.loc)
-			for (var/mob/M in viewers(T))
-				M.show_message("\red [src.cable] rapidly retracts back into its spool.", 3, "\red You hear a click and the sound of wire spooling rapidly.", 2)
-			del(src.cable)
 
 	regular_hud_updates()
-	if(src.secHUD == 1)
-		src.securityHUD()
-	if(src.medHUD == 1)
-		src.medicalHUD()
+	if(src.secHUD)
+		process_sec_hud(src)
+	if(src.medHUD)
+		process_med_hud(src)
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null
-			src << "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>"
+			to_chat(src, "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>")
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
-		health = 100
+		health = maxHealth
 		stat = CONSCIOUS
 	else
-		health = 100 - getBruteLoss() - getFireLoss()
-
+		health = maxHealth - getBruteLoss() - getFireLoss()

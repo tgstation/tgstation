@@ -3,7 +3,7 @@
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
 	desc = "This controls the density of the particles."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "control_box"
 	reference = "control_box"
 	anchored = 0
@@ -21,17 +21,34 @@
 	var/parts = null
 	var/datum/wires/particle_acc/control_box/wires = null
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new(src)
 	connected_parts = list()
+	update_icon()
 	..()
 
+/obj/machinery/particle_accelerator/control_box/Destroy()
+	if(active)
+		toggle_power()
+
+	if(wires)
+		qdel(wires)
+		wires = null
+
+	..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user as mob)
 	if(construction_state >= 3)
 		interact(user)
 	else if(construction_state == 2) // Wires exposed
 		wires.Interact(user)
+
+/obj/machinery/particle_accelerator/control_box/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I,/obj/item/weapon/wirecutters)||istype(I,/obj/item/device/multitool))
+		attack_hand(user)
+	..()
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
@@ -55,11 +72,12 @@
 	if(active)
 		icon_state = "[reference]p1"
 	else
-		if(use_power)
+		if(stat & NOPOWER)
+			icon_state = "[reference]w"
+			return
+		else if(use_power)
 			if(assembled)
 				icon_state = "[reference]p"
-			else
-				icon_state = "u[reference]p"
 		else
 			switch(construction_state)
 				if(0)
@@ -77,7 +95,7 @@
 		return
 
 	if(!interface_control)
-		usr << "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>"
+		to_chat(usr, "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>")
 		return
 
 	if( href_list["close"] )
@@ -115,7 +133,7 @@
 		else
 			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in ([x],[y],[z])")
-			investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]","singulo")
+			investigation_log(I_SINGULO,"increased to <font color='red'>[strength]</font> by [usr.key]")
 		strength_change()
 
 /obj/machinery/particle_accelerator/control_box/proc/remove_strength(var/s)
@@ -124,7 +142,7 @@
 		if(strength < 0)
 			strength = 0
 		else
-			investigate_log("decreased to <font color='green'>[strength]</font> by [usr.key]","singulo")
+			investigation_log(I_SINGULO,"decreased to <font color='green'>[strength]</font> by [usr.key]")
 		strength_change()
 
 /obj/machinery/particle_accelerator/control_box/power_change()
@@ -134,14 +152,20 @@
 		use_power = 0
 	else if(!stat && construction_state <= 3)
 		use_power = 1
+	src.update_icon()
+	for(var/obj/structure/particle_accelerator/part in connected_parts)
+		part.strength = null
+		part.powered = 0
+		part.update_icon()
 	return
+
 
 
 /obj/machinery/particle_accelerator/control_box/process()
 	if(src.active)
 		//a part is missing!
 		if( length(connected_parts) < 6 )
-			investigate_log("lost a connected part; It <font color='red'>powered down</font>.","singulo")
+			investigation_log(I_SINGULO,"lost a connected part; It <font color='red'>powered down</font>.")
 			src.toggle_power()
 			return
 		//emit some particles
@@ -202,7 +226,7 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	src.active = !src.active
-	investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? usr.key : "outside forces"]","singulo")
+	investigation_log(I_SINGULO,"turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? usr.key : "outside forces"]")
 	if (active)
 		message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in ([x],[y],[z])")
@@ -223,45 +247,34 @@
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=pacontrol")
-			return
+		if(!istype(user, /mob/living/silicon) && !isAdminGhost(user))
+			if(!user.mutations || user.mutations.len || !(M_TK in user.mutations))
+				user.unset_machine()
+				user << browse(null, "window=pacontrol")
+				return
 	user.set_machine(src)
 
 	var/dat = ""
-
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:214: dat += "Particle Accelerator Control Panel<BR>"
-	dat += {"Particle Accelerator Control Panel<BR>
-		<A href='?src=\ref[src];close=1'>Close</A><BR><BR>
-		Status:<BR>"}
-	// END AUTOFIX
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
+	dat += "<h3>Status</h3>"
 	if(!assembled)
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:218: dat += "Unable to detect all parts!<BR>"
-		dat += {"Unable to detect all parts!<BR>
-			<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"}
-		// END AUTOFIX
+		dat += "Unable to detect all parts!<BR>"
+		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
 	else
-
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:221: dat += "All parts in place.<BR><BR>"
-		dat += {"All parts in place.<BR><BR>
-			Power:"}
-		// END AUTOFIX
+		dat += "All parts in place.<BR><BR>"
+		dat += "Power:"
 		if(active)
 			dat += "On<BR>"
 		else
 			dat += "Off <BR>"
+		dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
+		dat += "Particle Strength: [src.strength] "
+		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\singularity\particle_accelerator\particle_control.dm:227: dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
-		dat += {"<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>
-			Particle Strength: [src.strength] 
-			<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"}
-		// END AUTOFIX
-	user << browse(dat, "window=pacontrol;size=420x500")
-	onclose(user, "pacontrol")
+	//user << browse(dat, "window=pacontrol;size=420x500")
+	//onclose(user, "pacontrol")
+	var/datum/browser/popup = new(user, "pacontrol", name, 420, 500)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return

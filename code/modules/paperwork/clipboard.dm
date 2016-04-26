@@ -9,10 +9,11 @@
 	throw_range = 10
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/toppaper	//The topmost piece of paper.
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/clipboard/New()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
@@ -21,20 +22,20 @@
 		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					M.u_equip(src,0)
 					M.put_in_r_hand(src)
 				if("l_hand")
-					M.u_equip(src)
+					M.u_equip(src,0)
 					M.put_in_l_hand(src)
 
 			add_fingerprint(usr)
 			return
 
 /obj/item/weapon/clipboard/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(toppaper)
 		overlays += toppaper.icon_state
 		overlays += toppaper.overlays
@@ -45,12 +46,11 @@
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
-		user.drop_item()
-		W.loc = src
-		if(istype(W, /obj/item/weapon/paper))
-			toppaper = W
-		user << "<span class='notice'>You clip the [W] onto \the [src].</span>"
-		update_icon()
+		if(user.drop_item(W, src))
+			if(istype(W, /obj/item/weapon/paper))
+				toppaper = W
+			to_chat(user, "<span class='notice'>You clip the [W] onto \the [src].</span>")
+			update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
 		update_icon()
@@ -97,10 +97,9 @@
 			if(!haspen)
 				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = usr.get_active_hand()
-					usr.drop_item()
-					W.loc = src
-					haspen = W
-					usr << "<span class='notice'>You slot the pen into \the [src].</span>"
+					if(usr.drop_item(W, src))
+						haspen = W
+						to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
@@ -132,10 +131,10 @@
 			var/obj/item/weapon/paper/P = locate(href_list["read"])
 			if(P)
 				if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
+					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY[P.color ? " bgcolor=[P.color]":""]>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
 				else
-					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
+					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY[P.color ? " bgcolor=[P.color]":""]>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
 
 		if(href_list["look"])
@@ -147,7 +146,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(P && (P.loc == src))
 				toppaper = P
-				usr << "<span class='notice'>You move [P.name] to the top.</span>"
+				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")
 
 		//Update everything
 		attack_self(usr)

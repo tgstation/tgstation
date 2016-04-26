@@ -1,10 +1,13 @@
 /mob/living/carbon/alien/humanoid/drone
-	name = "alien drone"
+	name = "alien drone" //The alien drone, not Alien Drone
 	caste = "d"
 	maxHealth = 100
 	health = 100
 	icon_state = "aliend_s"
 	plasma_rate = 15
+
+/mob/living/carbon/alien/humanoid/drone/movement_delay()
+	return (2 + move_delay_add + config.alien_delay) //Drones are slow
 
 /mob/living/carbon/alien/humanoid/drone/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -15,6 +18,9 @@
 	src.real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	..()
+	add_language(LANGUAGE_XENO)
+	default_language = all_languages[LANGUAGE_XENO]
+
 //Drones use the same base as generic humanoids.
 //Drone verbs
 
@@ -27,18 +33,19 @@
 		// Queen check
 		var/no_queen = 1
 		for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-			if(!Q.key && Q.brain_op_stage != 4)
+			if(!Q.key && Q.has_brain())
 				continue
 			no_queen = 0
 
 		if(no_queen)
 			adjustToxLoss(-500)
-			src << "\green You begin to evolve!"
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
-			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
-			mind.transfer_to(new_xeno)
-			del(src)
+			visible_message("<span class='alien'>[src] begins to violently twist and contort!</span>", "<span class='alien'>You begin to evolve, stand still for a few moments</span>")
+			if(do_after(src, src, 50))
+				var/mob/living/carbon/alien/humanoid/queen/new_xeno = new(loc)
+				mind.transfer_to(new_xeno)
+				transferImplantsTo(new_xeno)
+				transferBorers(new_xeno)
+				qdel(src)
 		else
-			src << "<span class='notice'>We already have an alive queen.</span>"
+			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
 	return

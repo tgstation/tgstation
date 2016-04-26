@@ -12,6 +12,8 @@ field_generator power level display
    -Aygar
 */
 
+var/global/list/obj/machinery/field_generator/field_gen_list = list()
+
 #define field_generator_max_power 250
 /obj/machinery/field_generator
 	name = "Field Generator"
@@ -26,15 +28,15 @@ field_generator power level display
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20  // Current amount of power
-	var/state = 0
 	var/warming_up = 0
 	var/list/obj/machinery/containment_field/fields
 	var/list/obj/machinery/field_generator/connected_gens
 	var/clean_up = 0
 
+	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
 /obj/machinery/field_generator/update_icon()
-	overlays.Cut()
+	overlays.len = 0
 	if(!active)
 		if(warming_up)
 			overlays += "+a[warming_up]"
@@ -44,7 +46,7 @@ field_generator power level display
 	// Scale % power to % num_power_levels and truncate value
 	var/level = round(num_power_levels * power / field_generator_max_power)
 	// Clamp between 0 and num_power_levels for out of range power values
-	level = between(0, level, num_power_levels)
+	level = Clamp(level, 0, num_power_levels)
 	if(level)
 		overlays += "+p[level]"
 
@@ -55,10 +57,14 @@ field_generator power level display
 	..()
 	fields = list()
 	connected_gens = list()
+	field_gen_list += src
 	return
 
-
 /obj/machinery/field_generator/process()
+
+	for(var/obj/effect/beam/B in beams)
+		power += B.get_damage()
+
 	if(Varedit_start == 1)
 		if(active == 0)
 			active = 1
@@ -77,80 +83,40 @@ field_generator power level display
 
 
 /obj/machinery/field_generator/attack_hand(mob/user as mob)
+	if(isobserver(user) && !isAdminGhost(user))
+		return 0
+
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
-				user << "You are unable to turn off the [src.name] once it is online."
+				to_chat(user, "You are unable to turn off the [src.name] once it is online.")
 				return 1
 			else
 				user.visible_message("[user.name] turns on the [src.name]", \
 					"You turn on the [src.name].", \
 					"You hear heavy droning")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				investigation_log(I_SINGULO,"<font color='green'>activated</font> by [user.key].")
 
 				src.add_fingerprint(user)
 	else
-		user << "The [src] needs to be firmly secured to the floor first."
-		return
+		to_chat(user, "The [src] needs to be firmly secured to the floor first.")
+		return 0
+
+/obj/machinery/field_generator/wrenchAnchor(mob/user)
+	if(active)
+		to_chat(user, "Turn off the [src] first.")
+		return -1
+	return ..()
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active)
-		user << "The [src] needs to be off."
+		to_chat(user, "The [src] needs to be off.")
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
-		switch(state)
-			if(0)
-				state = 1
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"You secure the external reinforcing bolts to the floor.", \
-					"You hear ratchet")
-				src.anchored = 1
-			if(1)
-				state = 0
-				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear ratchet")
-				src.anchored = 0
-			if(2)
-				user << "\red The [src.name] needs to be unwelded from the floor."
-				return
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		switch(state)
-			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
-				return
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld the [src] to the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 2
-						user << "You weld the field generator to the floor."
-				else
-					return
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut the [src] free from the floor.", \
-						"You hear welding")
-					if (do_after(user,20))
-						if(!src || !WT.isOn()) return
-						state = 1
-						user << "You cut the [src] free from the floor."
-				else
-					return
-	else
-		..()
-		return
+	else if(..())
+		return 1
+	return
 
 
 /obj/machinery/field_generator/emp_act()
@@ -163,9 +129,6 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/containment_field/meteorhit()
-	return 0
-
 /obj/machinery/field_generator/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		power += Proj.damage
@@ -173,8 +136,9 @@ field_generator power level display
 	return 0
 
 
-/obj/machinery/field_generator/Del()
+/obj/machinery/field_generator/Destroy()
 	src.cleanup()
+	field_gen_list -= src
 	..()
 
 
@@ -215,9 +179,9 @@ field_generator power level display
 		return 1
 	else
 		for(var/mob/M in viewers(src))
-			M.show_message("\red The [src.name] shuts down!")
+			M.show_message("<span class='warning'>The [src.name] shuts down!</span>")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigation_log(I_SINGULO,"ran out of power and <font color='red'>deactivated</font>")
 		src.power = 0
 		return 0
 
@@ -325,10 +289,16 @@ field_generator power level display
 
 /obj/machinery/field_generator/proc/cleanup()
 	clean_up = 1
+	for (var/obj/effect/beam/B in beams)
+		if(!B)
+			continue
+		if(B.target == src)
+			B.target = null
 	for (var/obj/machinery/containment_field/F in fields)
 		if (isnull(F))
 			continue
-		del(F)
+		qdel(F)
+		F = null
 	fields = list()
 	for(var/obj/machinery/field_generator/FG in connected_gens)
 		if (isnull(FG))
@@ -346,10 +316,10 @@ field_generator power level display
 	//I want to avoid using global variables.
 	spawn(1)
 		var/temp = 1 //stops spam
-		for(var/obj/machinery/singularity/O in machines)
+		for(var/obj/machinery/singularity/O in power_machines)
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					investigation_log(I_SINGULO,"has <font color='red'>failed</font> whilst a singulo exists.")
 			O.last_warning = world.time

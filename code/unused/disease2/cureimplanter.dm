@@ -15,17 +15,17 @@
 	if(ismob(target))
 		for(var/mob/O in viewers(world.view, user))
 			if (target != user)
-				O.show_message(text("\red <B>[] is trying to inject [] with [src.name]!</B>", user, target), 1)
+				O.show_message(text("<span class='danger'>[] is trying to inject [] with [src.name]!</span>", user, target), 1)
 			else
-				O.show_message("\red <B>[user] is trying to inject themselves with [src.name]!</B>", 1)
+				O.show_message("<span class='danger'>[user] is trying to inject themselves with [src.name]!</span>", 1)
 		if(!do_mob(user, target,60)) return
 
 
 		for(var/mob/O in viewers(world.view, user))
 			if (target != user)
-				O.show_message(text("\red [] injects [] with [src.name]!", user, target), 1)
+				O.show_message(text("<span class='warning'>[] injects [] with [src.name]!</span>", user, target), 1)
 			else
-				O.show_message("\red [user] injects themself with [src.name]!", 1)
+				O.show_message("<span class='warning'>[user] injects themself with [src.name]!</span>", 1)
 
 
 		var/mob/living/carbon/M = target

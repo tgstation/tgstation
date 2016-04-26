@@ -31,14 +31,14 @@ STI KALY - blind
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
 			if(prob(1)&&prob(50))
-				affected_mob << "\red You feel [pick("that you don't have enough mana.", "that the winds of magic are gone.", "an urge to summon familiar.")]"
+				to_chat(affected_mob, "<span class='warning'>You feel [pick("that you don't have enough mana.", "that the winds of magic are gone.", "an urge to summon familiar.")]</span>")
 
 
 		if(3)
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
 			if(prob(1)&&prob(50))
-				affected_mob << "\red You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar.")]."
+				to_chat(affected_mob, "<span class='warning'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar.")].</span>")
 
 		if(4)
 
@@ -46,7 +46,7 @@ STI KALY - blind
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
 				return
 			if(prob(1)&&prob(50))
-				affected_mob << "\red You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")]."
+				to_chat(affected_mob, "<span class='warning'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
 				spawn_wizard_clothes(50)
 			if(prob(1)&&prob(1))
 				teleport()
@@ -82,8 +82,8 @@ STI KALY - blind
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
 			if(!istype(H.r_hand, /obj/item/weapon/staff))
-				H.drop_r_hand()
-				H.put_in_r_hand( new /obj/item/weapon/staff(H) )
+				if(H.r_hand || H.drop_item(H.r_hand))
+					H.put_in_r_hand( new /obj/item/weapon/staff(H) )
 			return
 	return
 
@@ -92,7 +92,7 @@ STI KALY - blind
 /datum/disease/wizarditis/proc/teleport()
 	var/list/theareas = new/list()
 	for(var/area/AR in orange(80, affected_mob))
-		if(theareas.Find(AR) || AR.name == "Space") continue
+		if(theareas.Find(AR) || isspace(AR)) continue
 		theareas += AR
 
 	if(!theareas)

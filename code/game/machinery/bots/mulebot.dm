@@ -10,6 +10,7 @@ var/global/mulebot_count = 0
 	name = "\improper MULEbot"
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
+	icon_initial = "mulebot"
 	layer = MOB_LAYER
 	density = 1
 	anchored = 1
@@ -61,6 +62,7 @@ var/global/mulebot_count = 0
 	var/list/wire_order	// order of wire indices
 	*/
 
+	var/list/can_load = list()
 
 	var/bloodiness = 0		// count of bloodiness
 	var/currentBloodColor = "#A10808"
@@ -87,9 +89,22 @@ var/global/mulebot_count = 0
 		name = "\improper Mulebot ([suffix])"
 
 
-	verbs -= /atom/movable/verb/pull
+	can_load = list(
+		/obj/structure/closet/crate,
+		/obj/structure/vendomatpack,
+		/obj/structure/stackopacks,
+		/obj/item/weapon/gift,
+		)
 
+/obj/machinery/bot/mulebot/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, control_freq)
+		radio_controller.remove_object(src, beacon_freq)
+	if(wires)
+		qdel(wires)
+		wires = null
 
+	..()
 
 // attack by item
 // emag : lock/unlock,
@@ -99,49 +114,50 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
-		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
-		flick("mulebot-emagged", src)
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
+		flick("[icon_initial]-emagged", src)
 		playsound(get_turf(src), 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I, /obj/item/weapon/card/id))
 		if(toggle_lock(user))
-			user << "\blue Controls [(locked ? "locked" : "unlocked")]."
+			to_chat(user, "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>")
 
 	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
 		var/obj/item/weapon/cell/C = I
-		user.drop_item()
-		C.loc = src
-		cell = C
-		updateDialog()
+		if(user.drop_item(C, src))
+			cell = C
+			updateDialog()
+	else if(istype(I,/obj/item/weapon/wirecutters)||istype(I,/obj/item/device/multitool))
+		attack_hand(user)
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
-			user << "\blue The maintenance hatch cannot be opened or closed while the controls are locked."
+			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
 
 		open = !open
 		if(open)
-			src.visible_message("[user] opens the maintenance hatch of [src]", "\blue You open [src]'s maintenance hatch.")
+			src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
 			on = 0
-			icon_state="mulebot-hatch"
+			icon_state="[icon_initial]-hatch"
 		else
-			src.visible_message("[user] closes the maintenance hatch of [src]", "\blue You close [src]'s maintenance hatch.")
-			icon_state = "mulebot0"
+			src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
+			icon_state = "[icon_initial]0"
 
 		updateDialog()
-	else if (istype(I, /obj/item/weapon/wrench))
+	else if (iswrench(I))
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"\red [user] repairs [src]!",
-				"\blue You repair [src]!"
+				"<span class='warning'>[user] repairs [src]!</span>",
+				"<span class='notice'>You repair [src]!</span>"
 			)
 		else
-			user << "\blue [src] does not need a repair!"
+			to_chat(user, "<span class='notice'>[src] does not need a repair!</span>")
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
+			user.visible_message("<span class='warning'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='warning'>You knock [load] off [src] with \the [I]!</span>")
 		else
-			user << "You hit [src] with \the [I] but to no effect."
+			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
 		..()
 	return
@@ -162,7 +178,7 @@ var/global/mulebot_count = 0
 	if(prob(50) && !isnull(load))
 		unload(0)
 	if(prob(25))
-		src.visible_message("\red Something shorts out inside [src]!")
+		src.visible_message("<span class='warning'>Something shorts out inside [src]!</span>")
 		wires.RandomCut()
 	..()
 
@@ -202,7 +218,7 @@ var/global/mulebot_count = 0
 			if(5,6)
 				dat += "Calculating navigation path"
 			if(7)
-				dat += "Unable to locate destination"
+				dat += "Unable to reach destination"
 
 
 		dat += "<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>"
@@ -267,7 +283,7 @@ var/global/mulebot_count = 0
 					turn_off()
 				else if (cell && !open)
 					if (!turn_on())
-						usr << "\red You can't switch on [src]."
+						to_chat(usr, "<span class='warning'>You can't switch on [src].</span>")
 						return
 				else
 					return
@@ -282,20 +298,19 @@ var/global/mulebot_count = 0
 					cell.add_fingerprint(usr)
 					cell = null
 
-					usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
+					usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 					updateDialog()
 
 			if("cellinsert")
 				if(open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item()
-						cell = C
-						C.loc = src
-						C.add_fingerprint(usr)
+						if(usr.drop_item(C, src))
+							cell = C
+							C.add_fingerprint(usr)
 
-						usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
-						updateDialog()
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+							updateDialog()
 
 
 			if("stop")
@@ -317,7 +332,7 @@ var/global/mulebot_count = 0
 				refresh=0
 				var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
 				refresh=1
-				if(new_dest)
+				if(new_dest && Adjacent(usr) && !usr.stat)
 					set_destination(new_dest)
 
 
@@ -325,7 +340,7 @@ var/global/mulebot_count = 0
 				refresh=0
 				var/new_id = copytext(sanitize(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null),1,MAX_NAME_LEN)
 				refresh=1
-				if(new_id)
+				if(new_id && Adjacent(usr) && !usr.stat)
 					suffix = new_id
 					name = "\improper Mulebot ([suffix])"
 					updateDialog()
@@ -334,7 +349,7 @@ var/global/mulebot_count = 0
 				refresh=0
 				var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
 				refresh=1
-				if(new_home)
+				if(new_home && Adjacent(usr) && !usr.stat)
 					home_destination = new_home
 					updateDialog()
 
@@ -374,7 +389,7 @@ var/global/mulebot_count = 0
 		updateDialog()
 		return 1
 	else
-		user << "\red Access denied."
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return 0
 
 // mousedrop a crate to load the bot
@@ -396,7 +411,7 @@ var/global/mulebot_count = 0
 
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate))
+	if(wires.LoadCheck() && !is_type_in_list(C,can_load))
 		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
@@ -415,7 +430,7 @@ var/global/mulebot_count = 0
 			return
 	mode = 1
 
-	// if a create, close before loading
+	// if a crate, close before loading
 	var/obj/structure/closet/crate/crate = C
 	if(istype(crate))
 		crate.close()
@@ -449,7 +464,7 @@ var/global/mulebot_count = 0
 		return
 
 	mode = 1
-	overlays.Cut()
+	overlays.len = 0
 
 	load.loc = src.loc
 	load.pixel_y -= 9
@@ -495,7 +510,7 @@ var/global/mulebot_count = 0
 		return
 	if(on)
 		var/speed = (wires.Motor1() ? 1 : 0) + (wires.Motor2() ? 2 : 0)
-		//world << "speed: [speed]"
+//		to_chat(world, "speed: [speed]")
 		switch(speed)
 			if(0)
 				// do nothing
@@ -519,10 +534,10 @@ var/global/mulebot_count = 0
 	if(refresh) updateDialog()
 
 /obj/machinery/bot/mulebot/proc/process_bot()
-	//if(mode) world << "Mode: [mode]"
+//	to_chat(if(mode) world, "Mode: [mode]")
 	switch(mode)
 		if(0)		// idle
-			icon_state = "mulebot0"
+			icon_state = "[icon_initial]0"
 			return
 		if(1)		// loading/unloading
 			return
@@ -540,7 +555,7 @@ var/global/mulebot_count = 0
 					path -= next
 					return
 				if(istype( next, /turf/simulated))
-					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
+//					to_chat(world, "at ([x],[y]) moving to ([next.x],[next.y])")
 					if(bloodiness)
 						var/turf/simulated/T=loc
 						if(istype(T))
@@ -562,7 +577,7 @@ var/global/mulebot_count = 0
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
 					if(moved)	// successful move
-						//world << "Successful move."
+//						to_chat(world, "Successful move.")
 						blockcount = 0
 						path -= loc
 
@@ -578,7 +593,7 @@ var/global/mulebot_count = 0
 
 					else		// failed to move
 
-						//world << "Unable to move."
+//						to_chat(world, "Unable to move.")
 
 
 
@@ -605,16 +620,16 @@ var/global/mulebot_count = 0
 				else
 					src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
 					playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
-					//world << "Bad turf."
+//					to_chat(world, "Bad turf.")
 					mode = 5
 					return
 			else
-				//world << "No path."
+//				to_chat(world, "No path.")
 				mode = 5
 				return
 
 		if(5)		// calculate new path
-			//world << "Calc new path."
+//			to_chat(world, "Calc new path.")
 			mode = 6
 			spawn(0)
 
@@ -632,9 +647,9 @@ var/global/mulebot_count = 0
 
 					mode = 7
 		//if(6)
-			//world << "Pending path calc."
+//			to_chat(world, "Pending path calc.")
 		//if(7)
-			//world << "No dest / no route."
+//			to_chat(world, "No dest / no route.")
 	return
 
 
@@ -661,7 +676,7 @@ var/global/mulebot_count = 0
 		mode = 3
 	else
 		mode = 2
-	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	icon_state = "[icon_initial][(wires.MobAvoid() != 0)]"
 
 // starts bot moving to home
 // sends a beacon query to find
@@ -669,7 +684,7 @@ var/global/mulebot_count = 0
 	spawn(0)
 		set_destination(home_destination)
 		mode = 4
-	icon_state = "mulebot[(wires.MobAvoid() != 0)]"
+	icon_state = "[icon_initial][(wires.MobAvoid() != 0)]"
 
 // called when bot reaches current target
 /obj/machinery/bot/mulebot/proc/at_target()
@@ -690,9 +705,13 @@ var/global/mulebot_count = 0
 							AM = A
 							break
 				else			// otherwise, look for crates only
-					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM)
-					load(AM)
+					for(var/i=1,i<=can_load.len,i++)
+						var/loadin_type = can_load[i]
+						AM = locate(loadin_type) in get_step(loc,loaddir)
+						if(AM)
+							load(AM)
+							break
+
 		// whatever happened, check to see if we return home
 
 		if(auto_return && destination != home_destination)
@@ -712,9 +731,9 @@ var/global/mulebot_count = 0
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("\red [src] bumps into [M]!")
+				src.visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
-				src.visible_message("\red [src] knocks over [M]!")
+				src.visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -724,13 +743,11 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/alter_health()
 	return get_turf(src)
 
-
-// called from mob/living/carbon/human/HasEntered()
-// when mulebot is in the same loc
-/obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
+// called from mob/living/carbon/human/Crossed() as well as .../alien/Crossed()
+/obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/RunOverCreature() called tick#: [world.time]")
+	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, "head")
 	H.apply_damage(2*damage, BRUTE, "chest")
@@ -738,17 +755,6 @@ var/global/mulebot_count = 0
 	H.apply_damage(0.5*damage, BRUTE, "r_leg")
 	H.apply_damage(0.5*damage, BRUTE, "l_arm")
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
-
-	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
-	B.blood_DNA = list()
-	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
-
-	bloodiness += 4
-	currentBloodColor="#A10808" // For if species get different blood colors.
-
-/obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
-	src.visible_message("\red [src] drives over [H]!")
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	bloodiness += 4
 	currentBloodColor=bloodcolor // For if species get different blood colors.
 
@@ -765,13 +771,13 @@ var/global/mulebot_count = 0
 
 /obj/machinery/bot/mulebot/receive_signal(datum/signal/signal)
 
-	if(!on)
+	if(!on || !wires)
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 	var/recv = signal.data["command"]
 	// process all-bot input
@@ -830,7 +836,7 @@ var/global/mulebot_count = 0
 				loaddir = text2num(direction)
 			else
 				loaddir = 0
-			icon_state = "mulebot[(wires.MobAvoid() != null)]"
+			icon_state = "[icon_initial][(wires.MobAvoid() != null)]"
 			calc_path()
 			updateDialog()
 
@@ -840,6 +846,7 @@ var/global/mulebot_count = 0
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/mulebot/proc/post_signal_multiple(var/freq, var/list/keyval)
+
 
 	if(freq == beacon_freq && !(wires.BeaconRX()))
 		return
@@ -852,13 +859,13 @@ var/global/mulebot_count = 0
 
 
 
-	var/datum/signal/signal = new()
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.source = src
 	signal.transmission_method = 1
 	//for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
+//		to_chat(world, "sent [key],[keyval[key]] on [freq]")
 	if (signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 	else if (signal.data["type"] == "mulebot")
@@ -891,13 +898,13 @@ var/global/mulebot_count = 0
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut(Tsec)
+	new /obj/item/stack/cable_coil/cut(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()
@@ -907,6 +914,7 @@ var/global/mulebot_count = 0
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effect/decal/cleanable/blood/oil(src.loc)
+	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
+	O.New(O.loc)
 	unload(0)
-	del(src)
+	qdel(src)

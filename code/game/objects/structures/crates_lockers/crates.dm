@@ -13,6 +13,8 @@
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
+	var/sound_effect_open = 'sound/machines/click.ogg'
+	var/sound_effect_close = 'sound/machines/click.ogg'
 
 /obj/structure/closet/pcrate
 	name = "plastic crate"
@@ -27,6 +29,10 @@
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
+	var/sound_effect_open = 'sound/machines/click.ogg'
+	var/sound_effect_close = 'sound/machines/click.ogg'
+
+	starting_materials = list(MAT_PLASTIC = 10*CC_PER_SHEET_METAL) // Recipe calls for 10 sheets.
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
@@ -45,6 +51,22 @@
 	density = 1
 	icon_opened = "trashcartopen"
 	icon_closed = "trashcart"
+
+/obj/structure/closet/crate/chest
+	desc = "A heavy wooden chest. Probably filled with gold and treasure!"
+	name = "chest"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "chest"
+	density = 1
+	icon_opened = "chestopen"
+	icon_closed = "chest"
+
+/obj/structure/closet/crate/chest/potential_mimic/New()
+	..()
+
+	if(prob(33))
+		var/mob/living/simple_animal/hostile/mimic/crate/chest/C = new(src.loc)
+		forceMove(C)
 
 /*these aren't needed anymore
 /obj/structure/closet/crate/hat
@@ -223,8 +245,9 @@
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
 	var/emag = "securecrateemag"
-	var/broken = 0
-	var/locked = 1
+	broken = 0
+	locked = 1
+	health = 1000
 
 /obj/structure/closet/crate/large
 	name = "large crate"
@@ -260,34 +283,64 @@
 	icon_closed = "hydrocrate"
 	density = 1
 
+/obj/structure/closet/crate/sci
+	desc = "A science crate."
+	name = "science crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "scicrate"
+	density = 1
+	icon_opened = "scicrateopen"
+	icon_closed = "scicrate"
+
+/obj/structure/closet/crate/secure/scisec
+	desc = "A secure science crate."
+	name = "secure science crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "scisecurecrate"
+	density = 1
+	icon_opened = "scisecurecrateopen"
+	icon_closed = "scisecurecrate"
+
+/obj/structure/closet/crate/engi
+	desc = "An engineering crate."
+	name = "engineering crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "engicrate"
+	density = 1
+	icon_opened = "engicrateopen"
+	icon_closed = "engicrate"
+
+/obj/structure/closet/crate/secure/engisec
+	desc = "A secure engineering crate."
+	name = "secure engineering crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "engisecurecrate"
+	density = 1
+	icon_opened = "engisecurecrateopen"
+	icon_closed = "engisecurecrate"
+
+/obj/structure/closet/crate/secure/plasma/prefilled
+	var/count=10
+/obj/structure/closet/crate/secure/plasma/prefilled/New()
+	for(var/i=0;i<count;i++)
+		new /obj/item/weapon/tank/plasma(src)
+
 /obj/structure/closet/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.
-/*	name = "Hydroponics crate"
-	desc = "All you need to destroy those pesky weeds and pests."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "hydrocrate"
-	icon_opened = "hydrocrateopen"
-	icon_closed = "hydrocrate"
-	density = 1*/
 	New()
 		..()
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/minihoe(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
 
 
 /obj/structure/closet/crate/secure/New()
 	..()
 	if(locked)
-		overlays.Cut()
+		overlays.len = 0
 		overlays += redlight
 	else
-		overlays.Cut()
+		overlays.len = 0
 		overlays += greenlight
 
 /obj/structure/closet/crate/rcd/New()
@@ -295,7 +348,7 @@
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
+	new /obj/item/device/rcd/matter/engineering(src)
 
 /obj/structure/closet/crate/radiation/New()
 	..()
@@ -308,39 +361,65 @@
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
-/obj/structure/closet/crate/open()
-	playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
+/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(air_group || (height==0 || wall_mounted)) return 1
+	if(istype(mover, /obj/structure/closet/crate)) return 0
+	return (!density)
 
-	for(var/obj/O in src)
-		O.loc = get_turf(src)
+/obj/structure/closet/crate/open()
+	if(src.opened)
+		return 0
+	if(!src.can_open())
+		return 0
+	playsound(get_turf(src), sound_effect_open, 15, 1, -3)
+
+	dump_contents()
 
 	icon_state = icon_opened
 	src.opened = 1
+	src.density = 0
+	return 1
 
 /obj/structure/closet/crate/close()
-	playsound(get_turf(src), 'sound/machines/click.ogg', 15, 1, -3)
+	if(!src.opened)
+		return 0
+	if(!src.can_close())
+		return 0
+	playsound(get_turf(src), sound_effect_close, 15, 1, -3)
 
-	var/itemcount = 0
-
-	for(var/obj/O in get_turf(src))
-		if(itemcount >= storage_capacity)
-			break
-
-		if(O.density || O.anchored || istype(O,/obj/structure/closet))
-			continue
-
-		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-			var/obj/structure/stool/bed/B = O
-			if(B.buckled_mob)
-				continue
-
-		O.loc = src
-		itemcount++
+	take_contents()
 
 	icon_state = icon_closed
 	src.opened = 0
+	src.density = 1
+	return 1
+
+/obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
+
+	if(contents.len >= storage_capacity)
+		return -1
+
+	if(include_mobs && isliving(AM))
+		var/mob/living/L = AM
+		if(L.locked_to)
+			return 0
+	else if(isobj(AM))
+		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
+			return 0
+	else
+		return 0
+
+	if(istype(AM, /obj/structure/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/bed/B = AM
+		if(B.locked_atoms.len)
+			return 0
+
+	AM.forceMove(src)
+	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
+	if(!Adjacent(user))
+		return
 	if(opened)
 		close()
 	else
@@ -348,45 +427,46 @@
 			if(isliving(user))
 				var/mob/living/L = user
 				if(L.electrocute_act(17, src))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-					s.set_up(5, 1, src)
-					s.start()
+					//var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					//s.set_up(5, 1, src)
+					//s.start()
 					return
 		open()
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+	if(!Adjacent(user))
+		return
 	if(locked && !broken)
 		if (allowed(user))
-			user << "<span class='notice'>You unlock [src].</span>"
+			to_chat(user, "<span class='notice'>You unlock [src].</span>")
 			src.locked = 0
-			overlays.Cut()
+			overlays.len = 0
 			overlays += greenlight
 			return
 		else
-			user << "<span class='notice'>[src] is locked.</span>"
+			to_chat(user, "<span class='notice'>[src] is locked.</span>")
 			return
 	else
 		..()
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
-		user << "<span class='notice'>You lock \the [src].</span>"
+		to_chat(user, "<span class='notice'>You lock \the [src].</span>")
 		src.locked = 1
-		overlays.Cut()
+		overlays.len = 0
 		overlays += redlight
 		return
-	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
-		overlays.Cut()
+	else if ( istype(W, /obj/item/weapon/card/emag) && locked &&!broken)
+		overlays.len = 0
 		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 		playsound(get_turf(src), "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
-		user << "<span class='notice'>You unlock \the [src].</span>"
+		to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
 		return
-
 	return ..()
 
 /obj/structure/closet/crate/attack_paw(mob/user as mob)
@@ -394,35 +474,33 @@
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
-		if(isrobot(user))
-			return
-		user.drop_item()
-		if(W)
-			W.loc = src.loc
-	else if(istype(W, /obj/item/weapon/packageWrap))
+		return ..()
+	else if(istype(W, /obj/item/stack/package_wrap))
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
-			user << "<span class='notice'>[src] is already rigged!</span>"
+			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
-		user  << "<span class='notice'>You rig [src].</span>"
-		user.drop_item()
-		del(W)
-		rigged = 1
+
+		if(user.drop_item(W))
+			to_chat(user, "<span class='notice'>You rig [src].</span>")
+			qdel(W)
+			W = null
+			rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
-			user  << "<span class='notice'>You attach [W] to [src].</span>"
-			user.drop_item()
-			W.loc = src
+			if(user.drop_item(W, src.loc))
+				to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			return
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(rigged)
-			user  << "<span class='notice'>You cut away the wiring.</span>"
+			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			rigged = 0
 			return
-	else return attack_hand(user)
+	else if(!place(user, W))
+		return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
@@ -430,10 +508,10 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays.Cut()
+			overlays.len = 0
 			overlays += redlight
 		else
-			overlays.Cut()
+			overlays.len = 0
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
@@ -452,18 +530,100 @@
 	switch(severity)
 		if(1.0)
 			for(var/obj/O in src.contents)
-				del(O)
-			del(src)
+				qdel(O)
+			qdel(src)
 			return
 		if(2.0)
 			for(var/obj/O in src.contents)
 				if(prob(50))
-					del(O)
-			del(src)
+					qdel(O)
+			qdel(src)
 			return
 		if(3.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 			return
 		else
 	return
+
+/obj/structure/closet/crate/secure/weapon/experimental
+	name = "Experimental Weapons Crate"
+	var/chosen_set = null
+
+/obj/structure/closet/crate/secure/weapon/experimental/New()
+	..()
+	if(!chosen_set)
+		chosen_set = pick("ricochet","bison","spur","gatling","stickybomb","nikita","osipr","hecate","gravitywell")
+
+	switch(chosen_set)
+		if("ricochet")
+			new/obj/item/clothing/suit/armor/laserproof(src)
+			new/obj/item/weapon/gun/energy/ricochet(src)
+			new/obj/item/weapon/gun/energy/ricochet(src)
+		if("bison")
+			new/obj/item/clothing/shoes/jackboots(src)
+			new/obj/item/clothing/suit/hgpirate(src)
+			new/obj/item/clothing/head/hgpiratecap(src)
+			new/obj/item/clothing/glasses/eyepatch(src)
+			new/obj/item/weapon/gun/energy/bison(src)
+		if("spur")
+			new/obj/item/clothing/suit/cardborg(src)
+			new/obj/item/clothing/head/cardborg(src)
+			new/obj/item/device/modkit/spur_parts(src)
+			new/obj/item/weapon/gun/energy/polarstar(src)
+		if("gatling")
+			new/obj/item/clothing/suit/armor/riot(src)
+			new/obj/item/clothing/head/helmet/tactical/riot(src)
+			new/obj/item/clothing/shoes/swat(src)
+			new/obj/item/clothing/gloves/swat(src)
+			new/obj/item/weapon/gun/gatling(src)
+		if("stickybomb")
+			new/obj/item/clothing/suit/bomb_suit/security(src)
+			new/obj/item/clothing/head/bomb_hood/security(src)
+			new/obj/item/weapon/gun/stickybomb(src)
+			new/obj/item/weapon/storage/box/stickybombs(src)
+		if("nikita")
+			for(var/i=1;i<=5;i++)
+				new/obj/item/ammo_casing/rocket_rpg/nikita(src)
+			new/obj/item/weapon/gun/projectile/rocketlauncher/nikita(src)
+		if("osipr")
+			new/obj/item/clothing/suit/space/syndicate/black(src)
+			new/obj/item/clothing/head/helmet/space/syndicate/black(src)
+			new/obj/item/weapon/gun/osipr(src)
+		if("hecate")
+			new/obj/item/weapon/gun/projectile/hecate(src)
+			new/obj/item/ammo_storage/box/BMG50(src)
+			new/obj/item/device/radio/headset/headset_earmuffs(src)
+			new/obj/item/clothing/glasses/thermal(src)
+		if("gravitywell")
+			new/obj/item/clothing/suit/radiation(src)
+			new/obj/item/clothing/head/radiation(src)
+			new/obj/item/clothing/shoes/magboots(src)
+			new/obj/item/weapon/gun/gravitywell(src)
+
+/obj/structure/closet/crate/secure/weapon/experimental/ricochet
+	chosen_set = "ricochet"
+
+/obj/structure/closet/crate/secure/weapon/experimental/bison
+	chosen_set = "bison"
+
+/obj/structure/closet/crate/secure/weapon/experimental/spur
+	chosen_set = "spur"
+
+/obj/structure/closet/crate/secure/weapon/experimental/gatling
+	chosen_set = "gatling"
+
+/obj/structure/closet/crate/secure/weapon/experimental/stickybomb
+	chosen_set = "stickybomb"
+
+/obj/structure/closet/crate/secure/weapon/experimental/nikita
+	chosen_set = "nikita"
+
+/obj/structure/closet/crate/secure/weapon/experimental/osipr
+	chosen_set = "osipr"
+
+/obj/structure/closet/crate/secure/weapon/experimental/hecate
+	chosen_set = "hecate"
+
+/obj/structure/closet/crate/secure/weapon/experimental/gravitywell
+	chosen_set = "gravitywell"

@@ -28,10 +28,11 @@
 
 	var/list/locked = list("vars", "key", "ckey", "client")
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			usr << "\red It is forbidden to edit this object's variables."
-			return
+	if(holder && !(holder.rights & (R_PERMISSIONS)))
+		for(var/p in forbidden_varedit_object_types)
+			if( istype(O,p) )
+				to_chat(usr, "<span class='warning'>It is forbidden to edit this object's variables.</span>")
+				return
 
 	var/list/names = list()
 	for (var/V in O.vars)
@@ -55,43 +56,43 @@
 		if(!check_rights(R_DEBUG))	return
 
 	if(isnull(var_value))
-		usr << "Unable to determine variable type."
+		to_chat(usr, "Unable to determine variable type.")
 
 	else if(isnum(var_value))
-		usr << "Variable appears to be <b>NUM</b>."
+		to_chat(usr, "Variable appears to be <b>NUM</b>.")
 		default = "num"
 		dir = 1
 
 	else if(istext(var_value))
-		usr << "Variable appears to be <b>TEXT</b>."
+		to_chat(usr, "Variable appears to be <b>TEXT</b>.")
 		default = "text"
 
 	else if(isloc(var_value))
-		usr << "Variable appears to be <b>REFERENCE</b>."
+		to_chat(usr, "Variable appears to be <b>REFERENCE</b>.")
 		default = "reference"
 
 	else if(isicon(var_value))
-		usr << "Variable appears to be <b>ICON</b>."
-		var_value = "\icon[var_value]"
+		to_chat(usr, "Variable appears to be <b>ICON</b>.")
+		var_value = "[bicon(var_value)]"
 		default = "icon"
 
 	else if(istype(var_value,/atom) || istype(var_value,/datum))
-		usr << "Variable appears to be <b>TYPE</b>."
+		to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 		default = "type"
 
 	else if(istype(var_value,/list))
-		usr << "Variable appears to be <b>LIST</b>."
+		to_chat(usr, "Variable appears to be <b>LIST</b>.")
 		default = "list"
 
 	else if(istype(var_value,/client))
-		usr << "Variable appears to be <b>CLIENT</b>."
+		to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 		default = "cancel"
 
 	else
-		usr << "Variable appears to be <b>FILE</b>."
+		to_chat(usr, "Variable appears to be <b>FILE</b>.")
 		default = "file"
 
-	usr << "Variable contains: [var_value]"
+	to_chat(usr, "Variable contains: [var_value]")
 	if(dir)
 		switch(var_value)
 			if(1)
@@ -113,7 +114,7 @@
 			else
 				dir = null
 		if(dir)
-			usr << "If a direction, direction is: [dir]"
+			to_chat(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
 		"num","type","icon","file","edit referenced object","restore to default")
@@ -160,7 +161,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
@@ -170,46 +174,9 @@
 		if("text")
 			var/new_value = input("Enter new text:","Text",O.vars[variable]) as text|null
 			if(new_value == null) return
-			O.vars[variable] = new_value
 
-			if(method)
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if ( istype(M , O.type) )
-							M.vars[variable] = O.vars[variable]
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if ( istype(A , O.type) )
-							A.vars[variable] = O.vars[variable]
-			else
-				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
-						if (M.type == O.type)
-							M.vars[variable] = O.vars[variable]
-
-				else if(istype(O, /obj))
-					for(var/obj/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-
-				else if(istype(O, /turf))
-					for(var/turf/A in world)
-						if (A.type == O.type)
-							A.vars[variable] = O.vars[variable]
-
-		if("num")
-			var/new_value = input("Enter new number:","Num",\
-					O.vars[variable]) as num|null
-			if(new_value == null) return
-
-			if(variable=="luminosity")
-				O.SetLuminosity(new_value)
+			if(variable == "light_color")
+				O.set_light(l_color = new_value)
 			else
 				O.vars[variable] = new_value
 
@@ -217,24 +184,100 @@
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
-							if(variable=="luminosity")
-								M.SetLuminosity(new_value)
+							if(variable == "light_color")
+								M.set_light(l_color = new_value)
 							else
 								M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if ( istype(A , O.type) )
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in mob_list)
+						if (M.type == O.type)
+							if(variable == "light_color")
+								M.set_light(l_color = new_value)
+							else
+								M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
+						if (A.type == O.type)
+							if(variable == "light_color")
+								A.set_light(l_color = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
+
+		if("num")
+			var/new_value = input("Enter new number:","Num",\
+					O.vars[variable]) as num|null
+			if(new_value == null) return
+
+			if(variable=="light_range")
+				O.set_light(new_value)
+			else if(variable == "light_power")
+				O.set_light(l_power = new_value)
+			else
+				O.vars[variable] = new_value
+
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in mob_list)
+						if ( istype(M , O.type) )
+							if(variable=="light_range")
+								M.set_light(new_value)
+							else if(variable == "light_power")
+								M.set_light(l_power = new_value)
+							else
+								M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							if(variable=="light_range")
+								A.set_light(new_value)
+							else if(variable == "light_power")
+								A.set_light(l_power = new_value)
+							else
+								A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
+						if ( istype(A , O.type) )
+							if(variable=="light_range")
+								A.set_light(new_value)
+							else if(variable == "light_power")
+								A.set_light(l_power = new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -242,24 +285,33 @@
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
-							if(variable=="luminosity")
-								M.SetLuminosity(new_value)
+							if(variable=="light_range")
+								M.set_light(new_value)
+							else if(variable == "light_power")
+								M.set_light(l_power = new_value)
 							else
 								M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
 						if (A.type == O.type)
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
+							if(variable=="light_range")
+								A.set_light(new_value)
+							else if(variable == "light_power")
+								A.set_light(l_power = new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if (A.type == O.type)
-							if(variable=="luminosity")
-								A.SetLuminosity(new_value)
+							if(variable=="light_range")
+								A.set_light(new_value)
+							else if(variable == "light_power")
+								A.set_light(l_power = new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -280,7 +332,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
@@ -295,7 +350,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
@@ -316,7 +374,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
@@ -331,7 +392,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
@@ -351,7 +415,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
@@ -367,7 +434,10 @@
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
-					for(var/turf/A in world)
+					var/count = 0
+					for(var/turf/A in turfs)
+						count++
+						if(!(count % 50000)) sleep(world.tick_lag)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 

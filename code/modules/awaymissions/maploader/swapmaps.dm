@@ -89,7 +89,7 @@
 	swapmap.New()
 		Create a new map datum, but does not allocate space or assign an
 		 ID (used for loading).
-	swapmap.Del()
+	swapmap.Destroy()
 		Deletes a map but does not save
 	swapmap.Save()
 		Saves to map_[id].sav
@@ -219,10 +219,10 @@ swapmap
 		areas-=defarea
 		InitializeSwapMaps()
 		locked=1
-		S["id"] << id
-		S["z"] << z2-z1+1
-		S["y"] << y2-y1+1
-		S["x"] << x2-x1+1
+		S["id"]    << id
+		S["z"]     << z2 - z1 + 1
+		S["y"]     << y2 - y1 + 1
+		S["x"]     << x2 - x1 + 1
 		S["areas"] << areas
 		for(n in 1 to areas.len) areas[areas[n]]=n
 		var/oldcd=S.cd
@@ -455,24 +455,25 @@ atom
 	Write(savefile/S)
 		for(var/V in vars-"x"-"y"-"z"-"contents"-"icon"-"overlays"-"underlays")
 			if(issaved(vars[V]))
-				if(vars[V]!=initial(vars[V])) S[V]<<vars[V]
+				if(vars[V] != initial(vars[V])) S[V] << vars[V]
 				else S.dir.Remove(V)
-		if(icon!=initial(icon))
+		if(icon != initial(icon))
 			if(swapmaps_iconcache && swapmaps_iconcache[icon])
-				S["icon"]<<swapmaps_iconcache[icon]
-			else S["icon"]<<icon
+				S["icon"] << swapmaps_iconcache[icon]
+		else S["icon"] << icon
 		// do not save mobs with keys; do save other mobs
 		var/mob/M
 		for(M in src) if(M.key) break
-		if(overlays.len) S["overlays"]<<overlays
-		if(underlays.len) S["underlays"]<<underlays
+		if(overlays.len)  S["overlays"]  << overlays
+		if(underlays.len) S["underlays"] << underlays
 		if(contents.len && !isarea(src))
 			var/list/l=contents
 			if(M)
 				l=l.Copy()
 				for(M in src) if(M.key) l-=M
-			if(l.len) S["contents"]<<l
-			if(l!=contents) del(l)
+			if(l.len)
+				S["contents"] << l
+			if(l != contents) del(l)
 	Read(savefile/S)
 		var/list/l
 		if(contents.len) l=contents

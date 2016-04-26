@@ -1,7 +1,7 @@
 //wip wip wup
 /obj/structure/mirror
 	name = "mirror"
-	desc = "Mirror mirror on the wall, who's the most robust of them all?"
+	desc = "Mirror mirror on the wall, who's the most robust of them all? Touching the mirror will bring out Nanotrasen's state of the art hair modification system."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	density = 0
@@ -14,7 +14,24 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
+		if(isvampire(H))
+			if(!(VAMP_MATURE in H.mind.vampire.powers))
+				to_chat(H, "<span class='notice'>You don't see anything.</span>")
+				return
+		if(user.hallucinating())
+			switch(rand(1,100))
+				if(1 to 20)
+					to_chat(H, "<span class='sinister'>You look like [pick("a monster","a goliath","a catbeast","a ghost","a chicken","the mailman","a demon")]! Your heart skips a beat.</span>")
+					H.Weaken(4)
+					return
+				if(21 to 40)
+					to_chat(H, "<span class='sinister'>There's [pick("somebody","a monster","a little girl","a zombie","a ghost","a catbeast","a demon")] standing behind you!</span>")
+					H.emote("scream",,, 1)
+					H.dir = turn(H.dir, 180)
+					return
+				if(41 to 50)
+					to_chat(H, "<span class='notice'>You don't see anything.</span>")
+					return
 		var/userloc = H.loc
 
 		//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
@@ -22,13 +39,31 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/list/species_facial_hair = list()
+			if(H.species)
+				for(var/i in facial_hair_styles_list)
+					var/datum/sprite_accessory/facial_hair/tmp_facial = facial_hair_styles_list[i]
+					if(H.species.name in tmp_facial.species_allowed)
+						species_facial_hair += i
+			else
+				species_facial_hair = facial_hair_styles_list
+
+			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in species_facial_hair
 			if(userloc != H.loc) return	//no tele-grooming
 			if(new_style)
 				H.f_style = new_style
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+		var/list/species_hair = list()
+		if(H.species)
+			for(var/i in hair_styles_list)
+				var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+				if(H.species.name in tmp_hair.species_allowed)
+					species_hair += i
+		else
+			species_hair = hair_styles_list
+
+		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in species_hair
 		if(userloc != H.loc) return	//no tele-grooming
 		if(new_style)
 			H.h_style = new_style
@@ -54,10 +89,10 @@
 
 
 /obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
-	if ((shattered) && (istype(I, /obj/item/stack/sheet/glass)))
-		var/obj/item/stack/sheet/glass/stack = I
+	if ((shattered) && (istype(I, /obj/item/stack/sheet/glass/glass)))
+		var/obj/item/stack/sheet/glass/glass/stack = I
 		if ((stack.amount - 2) < 0)
-			user << "\red You need more glass to do that."
+			to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 		else
 			stack.use(2)
 			shattered = 0
@@ -102,4 +137,8 @@
 		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
+	shatter()
+
+/obj/structure/mirror/kick_act()
+	..()
 	shatter()

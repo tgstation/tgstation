@@ -69,7 +69,8 @@
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<!--<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">-->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<head>
 		[head_content]
 	</head>
@@ -147,7 +148,7 @@
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 
-	//world << "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]"
+//	to_chat(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
 
 // the on-close client verb
@@ -159,12 +160,12 @@
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	//world << "windowclose: [atomref]"
+//	to_chat(world, "windowclose: [atomref]")
 	if(atomref!="null")				// if passed a real atomref
 		var/hsrc = locate(atomref)	// find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
-			//world << "[src] Topic [href] [hsrc]"
+//			to_chat(world, "[src] Topic [href] [hsrc]")
 			usr = src.mob
 			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
@@ -172,6 +173,42 @@
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//world << "[src] was [src.mob.machine], setting to null"
+//		to_chat(world, "[src] was [src.mob.machine], setting to null")
 		src.mob.unset_machine()
 	return
+
+///////////////////////
+// CLEAN UI STYLE.
+///////////////////////
+
+/datum/browser/clean/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null)
+	..(nuser,nwindow_id,ntitle,nwidth,nheight,nref)
+	add_stylesheet("common",'html/browser/clean.css') // Clean style.
+
+// Re-implemented without the extra divs.
+/datum/browser/clean/get_header()
+	var/key
+	var/filename
+	for (key in stylesheets)
+		filename = "[ckey(key)].css"
+		user << browse_rsc(stylesheets[key], filename)
+		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
+
+	for (key in scripts)
+		filename = "[ckey(key)].js"
+		user << browse_rsc(scripts[key], filename)
+		head_content += "<script type='text/javascript' src='[filename]'></script>"
+
+	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<head>
+		[head_content]
+	</head>
+	<body scroll=auto>
+	"}
+
+/datum/browser/clean/get_footer()
+	return {"
+	</body>
+</html>"}

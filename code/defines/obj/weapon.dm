@@ -3,14 +3,38 @@
 	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 3.0
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 4
 	w_class = 2
-	attack_verb = list("called", "rang")
+	attack_verb = list("calls", "rings", "dials")
 	hitsound = 'sound/weapons/ring.ogg'
+
+/obj/item/weapon/phone/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>")
+	return(OXYLOSS)
+
+/*/obj/item/weapon/syndicate_uplink
+	name = "station bounced radio"
+	desc = "Remain silent about this..."
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "radio"
+	var/temp = null
+	var/uses = 10.0
+	var/selfdestruct = 0.0
+	var/traitor_frequency = 0.0
+	var/mob/currentUser = null
+	var/obj/item/device/radio/origradio = null
+	flags = FPRINT  | CONDUCT | ONBELT
+	w_class = 2.0
+	item_state = "radio"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 100
+	origin_tech = "magnets=2;syndicate=3"*/
 
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
@@ -22,77 +46,7 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	flags = TABLEPASS
 	w_class = 3.0
-
-
-/obj/item/weapon/spacecash
-	name = "1 credit chip"
-	desc = "It's worth 1 credit."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "spacecash"
-	opacity = 0
-	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 1
-	throw_range = 2
-	w_class = 1.0
-	var/access = list()
-	access = access_crate_cash
-	var/worth = 1
-
-/obj/item/weapon/spacecash/c10
-	name = "10 credit chip"
-	icon_state = "spacecash10"
-	access = access_crate_cash
-	desc = "It's worth 10 credits."
-	worth = 10
-
-/obj/item/weapon/spacecash/c20
-	name = "20 credit chip"
-	icon_state = "spacecash20"
-	access = access_crate_cash
-	desc = "It's worth 20 credits."
-	worth = 20
-
-/obj/item/weapon/spacecash/c50
-	name = "50 credit chip"
-	icon_state = "spacecash50"
-	access = access_crate_cash
-	desc = "It's worth 50 credits."
-	worth = 50
-
-/obj/item/weapon/spacecash/c100
-	name = "100 credit chip"
-	icon_state = "spacecash100"
-	access = access_crate_cash
-	desc = "It's worth 100 credits."
-	worth = 100
-
-/obj/item/weapon/spacecash/c200
-	name = "200 credit chip"
-	icon_state = "spacecash200"
-	access = access_crate_cash
-	desc = "It's worth 200 credits."
-	worth = 200
-
-/obj/item/weapon/spacecash/c500
-	name = "500 credit chip"
-	icon_state = "spacecash500"
-	access = access_crate_cash
-	desc = "It's worth 500 credits."
-	worth = 500
-
-/obj/item/weapon/spacecash/c1000
-	name = "1000 credit chip"
-	icon_state = "spacecash1000"
-	access = access_crate_cash
-	desc = "It's worth 1000 credits."
-	worth = 1000
-
 
 /obj/item/weapon/bananapeel
 	name = "banana peel"
@@ -104,6 +58,10 @@
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
+
+/obj/item/weapon/bananapeel/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>")
+	return(OXYLOSS)
 
 /obj/item/weapon/corncob
 	name = "corn cob"
@@ -139,19 +97,6 @@
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
 
-/obj/item/weapon/bikehorn
-	name = "bike horn"
-	desc = "A horn off of a bicycle."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bike_horn"
-	item_state = "bike_horn"
-	throwforce = 3
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
-	attack_verb = list("HONKED")
-	var/spam_flag = 0
-
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -163,37 +108,33 @@
 	throw_speed = 4
 	throw_range = 5
 
-
 /obj/item/weapon/cane
 	name = "cane"
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
+	origin_tech = "materials=1"
 	icon_state = "cane"
 	item_state = "stick"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
-	m_amt = 50
-	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
+	starting_materials = list(MAT_IRON = 50)
+	w_type = RECYK_MISC
+	melt_temperature = MELTPOINT_STEEL
+	attack_verb = list("bludgeons", "whacks", "disciplines", "thrashes")
 
 /obj/item/weapon/disk
 	name = "disk"
 	icon = 'icons/obj/items.dmi'
-
-/obj/item/weapon/disk/nuclear
-	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
-	icon_state = "nucleardisk"
-	item_state = "card-id"
-	w_class = 1.0
 
 //TODO: Figure out wtf this is and possibly remove it -Nodrak
 /obj/item/weapon/dummy
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
-	flags = TABLEPASS
+	flags = 0
 
 /obj/item/weapon/dummy/ex_act()
 	return
@@ -215,27 +156,230 @@
 	w_class = 5.0
 */
 
-/obj/item/weapon/gift
-	name = "gift"
-	desc = "A wrapped item."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "gift3"
-	var/size = 3.0
-	var/obj/item/gift = null
-	item_state = "gift"
-	w_class = 4.0
-
 /obj/item/weapon/legcuffs
 	name = "legcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	throwforce = 0
 	w_class = 3.0
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+
+/obj/item/weapon/legcuffs/bolas
+	name = "bolas"
+	desc = "An entangling bolas. Throw at your foes to trip them and prevent them from running."
+	gender = NEUTER
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bolas"
+	flags = FPRINT
+	siemens_coefficient = 1
+	slot_flags = SLOT_BELT
+	throwforce = 2
+	w_class = 2
+	w_type = RECYK_METAL
+	origin_tech = "materials=1"
+	attack_verb = list("lashes", "bludgeons", "whips")
+	force = 4
+	breakouttime = 50 //10 seconds
+	throw_speed = 1
+	throw_range = 10
+	var/dispenser = 0
+	var/throw_sound = 'sound/weapons/whip.ogg'
+	var/trip_prob = 60
+	var/thrown_from
+
+/obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>")
+	return(OXYLOSS)
+
+/obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
+	if(!throw_range) return //divide by zero, also you throw like a girl
+	if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
+		if(istype(usr, /mob/living/carbon/human)) //if the user is human
+			var/mob/living/carbon/human/H = usr
+			if((M_CLUMSY in H.mutations) && prob(50))
+				to_chat(H, "<span class='warning'>You smack yourself in the face while swinging the [src]!</span>")
+				H.Stun(2)
+				H.drop_item(src)
+				return
+	if (!thrown_from && usr) //if something hasn't set it already (like a mech does when it launches)
+		thrown_from = usr //then the user must have thrown it
+	if (!istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas))
+		playsound(src, throw_sound, 20, 1) //because mechs play the sound anyways
+	var/turf/target = get_turf(A)
+	var/atom/movable/adjtarget = new /atom/movable
+	var/xadjust = 0
+	var/yadjust = 0
+	var/scaler = 0 //used to changed the normalised vector to the proper size
+	scaler = throw_range / max(abs(target.x - src.x), abs(target.y - src.y),1) //whichever is larger magnitude is what we normalise to
+	if (target.x - src.x != 0) //just to avoid fucking with math for no reason
+		xadjust = round((target.x - src.x) * scaler) //normalised vector is now scaled up to throw_range
+		adjtarget.x = src.x + xadjust //the new target at max range
+	else
+		adjtarget.x = src.x
+	if (target.y - src.y != 0)
+		yadjust = round((target.y - src.y) * scaler)
+		adjtarget.y = src.y + yadjust
+	else
+		adjtarget.y = src.y
+	// log_admin("Adjusted target of [adjtarget.x] and [adjtarget.y], adjusted with [xadjust] and [yadjust] from [scaler]")
+	..(get_turf(adjtarget), throw_range, throw_speed)
+	thrown_from = null
+
+/obj/item/weapon/legcuffs/bolas/throw_impact(atom/hit_atom) //Pomf was right, I was wrong - Comic
+	if(isliving(hit_atom) && hit_atom != usr) //if the target is a live creature other than the thrower
+		var/mob/living/M = hit_atom
+		if(ishuman(M)) //if they're a human species
+			var/mob/living/carbon/human/H = M
+			if(H.m_intent == "run") //if they're set to run (though not necessarily running at that moment)
+				if(prob(trip_prob)) //this probability is up for change and mostly a placeholder - Comic
+					step(H, H.dir)
+					H.visible_message("<span class='warning'>[H] was tripped by the bolas!</span>","<span class='warning'>Your legs have been tangled!</span>");
+					H.Stun(2) //used instead of setting damage in vars to avoid non-human targets being affected
+					H.Weaken(4)
+					H.legcuffed = src //applies legcuff properties inherited through legcuffs
+					src.loc = H
+					H.update_inv_legcuffed()
+					if(!H.legcuffed) //in case it didn't happen, we need a safety net
+						throw_failed()
+			else if(H.legcuffed) //if the target is already legcuffed (has to be walking)
+				throw_failed()
+				return
+			else //walking, but uncuffed, or the running prob() failed
+				to_chat(H, "<span class='notice'>You stumble over the thrown bolas</span>")
+				step(H, H.dir)
+				H.Stun(1)
+				throw_failed()
+				return
+		else
+			M.Stun(2) //minor stun damage to anything not human
+			throw_failed()
+			return
+
+/obj/item/weapon/legcuffs/bolas/proc/throw_failed() //called when the throw doesn't entangle
+	//log_admin("Logged as [thrown_from]")
+	if(!thrown_from || !istype(thrown_from, /mob/living)) //in essence, if we don't know whether a person threw it
+		qdel(src) //destroy it, to stop infinite bolases
+
+/obj/item/weapon/legcuffs/bolas/Bump()
+	..()
+	throw_failed() //allows a mech bolas to be destroyed
+
+// /obj/item/weapon/legcuffs/bolas/cyborg To be implemented
+//	dispenser = 1
+
+/obj/item/weapon/legcuffs/bolas/cable
+	name = "cable bolas"
+	desc = "A poorly made bolas, tied together with cable."
+	icon_state = ""
+	throw_speed = 1
+	throw_range = 6
+	trip_prob = 10
+	var/obj/item/weight1 = null //the two items that are attached to the cable
+	var/obj/item/weight2 = null
+	var/cable_color = ""
+	var/desc_empty = "A poorly made bolas, tied together with cable. It has nothing on it."
+	var/screw_state = "" //used for storing info about the screwdriver
+	var/screw_istate = ""
+
+/obj/item/weapon/legcuffs/bolas/cable/New()
+	..()
+	desc = desc_empty
+	weight1 = null
+	weight2 = null
+	update_icon()
+
+/obj/item/weapon/legcuffs/bolas/cable/update_icon()
+	if (!weight1 && !weight2)
+		icon_state = "cbolas_[cable_color]"
+		overlays.len = 0
+		desc = desc_empty
+		trip_prob = 0
+		return
+	else
+		overlays.len = 0
+		if (weight1)
+			trip_prob = 10
+			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight1")
+		if (weight2)
+			trip_prob = 30
+			overlays += icon("icons/obj/weapons.dmi", "cbolas_weight2")
+		desc = "A poorly made bolas, made out of \a [weight1] and [weight2 ? "\a [weight2]": "missing a second weight"], tied together with cable."
+
+/obj/item/weapon/legcuffs/bolas/cable/throw_failed()
+	if(prob(20))
+		src.visible_message("<span class='rose'>\The [src] falls to pieces on impact!</span>")
+		if(weight1)
+			weight1.loc = src.loc
+			weight1 = null
+		if(weight2)
+			weight2.loc = src.loc
+			weight2 = null
+		update_icon(src)
+
+/obj/item/weapon/legcuffs/bolas/cable/attackby(var/obj/O, mob/user)
+	if(istype(O, /obj/item))
+		if(istype(O, /obj/item/weapon/gift) || istype(O,/obj/item/delivery))
+			return
+		var/obj/item/I = O
+		if(istype(O, /obj/item/weapon/legcuffs/bolas)) //don't stack into infinity
+			return
+		if(iswirecutter(I)) //allows you to convert the wire back to a cable coil
+			if(!weight1 && !weight2) //if there's nothing attached
+				user.show_message("<span class='notice'>You cut the knot in the [src].</span>")
+				playsound(usr, 'sound/items/Wirecutter.ogg', 50, 1)
+				var /obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(user.loc) //we get back the wire lengths we put in
+				var /obj/item/stack/cable_coil/S = new /obj/item/weapon/screwdriver(user.loc)
+				C.amount = 10
+				C._color = cable_color
+				C.icon_state = "coil_[C._color]"
+				C.update_icon()
+				S.item_state = screw_state
+				S.icon_state = screw_istate
+				S.update_icon()
+				user.put_in_hands(S)
+				qdel(src)
+				return
+			else
+				user.show_message("<span class='notice'>You cut off [weight1] [weight2 ? "and [weight2]" : ""].</span>") //you remove the items currently attached
+				if(weight1)
+					weight1.loc = get_turf(usr)
+					weight1 = null
+				if(weight2)
+					weight2.loc = get_turf(usr)
+					weight2 = null
+				playsound(user, 'sound/items/Wirecutter.ogg', 50, 1)
+				update_icon()
+				return
+		if(I.w_class) //if it has a defined weight
+			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
+				if(!weight1)
+					if(user.drop_item(I, src))
+						weight1 = I
+						user.show_message("<span class='notice'>You tie [weight1] to the [src].</span>")
+						update_icon()
+						//del(I)
+						return
+				if(!weight2) //just in case
+					if(user.drop_item(I, src))
+						weight2 = I
+						user.show_message("<span class='notice'>You tie [weight2] to the [src].</span>")
+						update_icon()
+						//del(I)
+						return
+				else
+					user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
+					return
+			else if (I.w_class < 2.0)
+				user.show_message("<span class='rose'>\The [I] is too small to be used as a weight.</span>")
+			else if (I.w_class > 3.0)
+				user.show_message("<span class='rose'>\The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight.</span>")
+			else
+				user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
@@ -244,41 +388,122 @@
 	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
+	var/obj/item/weapon/grenade/iedcasing/IED = null
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
-		return (BRUTELOSS)
+/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
+	return (BRUTELOSS)
+
+/obj/item/weapon/legcuffs/beartrap/update_icon()
+	icon_state = "beartrap[armed]"
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "beartrap[armed]"
-		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
-/obj/item/weapon/legcuffs/beartrap/HasEntered(AM as mob|obj)
-	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
+		update_icon()
+
+		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
+		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+
+		if(armed && IED)
+			message_admins("[key_name(usr)] has armed a beartrap rigged with an IED at [formatJumpTo(get_turf(src))]!")
+			log_game("[key_name(usr)] has armed a beartrap rigged with an IED at [formatJumpTo(get_turf(src))]!")
+
+/obj/item/weapon/legcuffs/beartrap/attackby(var/obj/item/I, mob/user as mob) //Let's get explosive.
+	if(istype(I, /obj/item/weapon/grenade/iedcasing))
+		if(IED)
+			to_chat(user, "<span class='warning'>This beartrap already has an IED hooked up to it!</span>")
+			return
+		IED = I
+		switch(IED.assembled)
+			if(0,1) //if it's not fueled/hooked up
+				to_chat(user, "<span class='warning'>You haven't prepared this IED yet!</span>")
+				IED = null
+				return
+			if(2,3)
+				if(user.drop_item(I, src))
+					var/turf/bombturf = get_turf(src)
+					var/area/A = get_area(bombturf)
+					var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has rigged a beartrap with an IED at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+					message_admins(log_str)
+					log_game(log_str)
+					to_chat(user, "<span class='notice'>You sneak the [IED] underneath the pressure plate and connect the trigger wire.</span>")
+					desc = "A trap used to catch bears and other legged creatures. <span class='warning'>There is an IED hooked up to it.</span>"
+			else
+				to_chat(user, "<span class='danger'>You shouldn't be reading this message! Contact a coder or someone, something broke!</span>")
+				IED = null
+				return
+	if(isscrewdriver(I))
+		if(IED)
+			IED.loc = get_turf(src.loc)
+			IED = null
+			to_chat(user, "<span class='notice'>You remove the IED from the [src].</span>")
+			return
+	..()
+
+/obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
+	if(armed && isliving(AM) && isturf(src.loc))
+		var/mob/living/L = AM
+
+		if(L.on_foot()) //Flying mobs can't get caught in beartraps! Note that this also prevents lying mobs from triggering traps
+			if(IED && isturf(src.loc))
+				IED.active = 1
+				IED.overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
+				IED.icon_state = initial(icon_state) + "_active"
+				IED.assembled = 3
+				var/turf/bombturf = get_turf(src)
+				var/area/A = get_area(bombturf)
+				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[AM]'>?</A> has triggered an IED-rigged [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+				message_admins(log_str)
+				log_game(log_str)
+				spawn(IED.det_time)
+					IED.prime()
+
+					src.desc = initial(src.desc)
+
+			if(ishuman(L))
 				var/mob/living/carbon/H = AM
 				if(H.m_intent == "run")
 					armed = 0
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					H << "\red <B>You step on \the [src]!</B>"
+
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
+
+					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>",\
+						"<span class='danger'>You step on \the [src]![(IED && IED.active) ? " The explosive device attached to it activates." : ""]</span>",\
+						"<span class='notice'>You hear a sudden snapping sound!",\
+						//Hallucination messages
+						"<span class='danger'>A terrifying crocodile snaps at [H]!</span>",\
+						"<span class='danger'>A [(IED && IED.active) ? "crocodile" : "horrifying fiery dragon"] attempts to bite your leg off!</span>")
+			else if(isanimal(AM))
+				armed = 0
+				var/mob/living/simple_animal/SA = AM
+				SA.health -= 20
+
+			update_icon()
 	..()
 
-
+/obj/item/weapon/batteringram
+	name = "battering ram"
+	desc = "A hydraulic compression/spreader-type mechanism which, when applied to a door, will charge before rapidly expanding and dislodging frames."
+	flags = TWOHANDABLE | MUSTTWOHAND | FPRINT
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "ram"
+	item_state = "ram"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
+	siemens_coefficient = 0
+	throwforce = 15
+	w_class = 3
+	w_type = RECYK_METAL
+	origin_tech = "combat=5"
+	attack_verb = list("rams", "bludgeons")
+	force = 15
+	throw_speed = 1
+	throw_range = 3
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
@@ -290,58 +515,59 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
-	attack_verb = list("warned", "cautioned", "smashed")
+	flags = FPRINT
+	attack_verb = list("warns", "cautions", "smashes")
 
-	proximity_sign
-		var/timing = 0
-		var/armed = 0
-		var/timepassed = 0
+/obj/item/weapon/caution/proximity_sign
+	var/timing = 0
+	var/armed = 0
+	var/timepassed = 0
+	flags = FPRINT | PROXMOVE
 
-		attack_self(mob/user as mob)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(H.mind.assigned_role != "Janitor")
-					return
-				if(armed)
-					armed = 0
-					user << "\blue You disarm \the [src]."
-					return
-				timing = !timing
-				if(timing)
-					processing_objects.Add(src)
-				else
-					armed = 0
-					timepassed = 0
-				H << "\blue You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]"
+/obj/item/weapon/caution/proximity_sign/attack_self(mob/user as mob)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.mind.assigned_role != "Janitor")
+			return
+		if(armed)
+			armed = 0
+			to_chat(user, "<span class='notice'>You disarm \the [src].</span>")
+			return
+		timing = !timing
+		if(timing)
+			processing_objects.Add(src)
+		else
+			armed = 0
+			timepassed = 0
+		to_chat(H, "<span class='notice'>You [timing ? "activate \the [src]'s timer, you have 15 seconds." : "de-activate \the [src]'s timer."]</span>")
 
-		process()
-			if(!timing)
-				processing_objects.Remove(src)
-			timepassed++
-			if(timepassed >= 15 && !armed)
-				armed = 1
-				timing = 0
+/obj/item/weapon/caution/proximity_sign/process()
+	if(!timing)
+		processing_objects.Remove(src)
+	timepassed++
+	if(timepassed >= 15 && !armed)
+		armed = 1
+		timing = 0
 
-		HasProximity(atom/movable/AM as mob|obj)
-			if(armed)
-				if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
-					var/mob/living/carbon/C = AM
-					if(C.m_intent != "walk")
-						src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
-						explosion(src.loc,-1,2,0)
-						if(ishuman(C))
-							dead_legs(C)
-						if(src)
-							del(src)
+/obj/item/weapon/caution/proximity_sign/HasProximity(atom/movable/AM as mob|obj)
+	if(armed)
+		if(istype(AM, /mob/living/carbon) && !istype(AM, /mob/living/carbon/brain))
+			var/mob/living/carbon/C = AM
+			if(C.m_intent != "walk")
+				src.visible_message("The [src.name] beeps, \"Running on wet floors is hazardous to your health.\"")
+				explosion(src.loc,-1,2,0)
+				if(ishuman(C))
+					dead_legs(C)
+				if(src)
+					qdel(src)
 
-		proc/dead_legs(mob/living/carbon/human/H as mob)
-			var/datum/organ/external/l = H.get_organ("l_leg")
-			var/datum/organ/external/r = H.get_organ("r_leg")
-			if(l && !(l.status & ORGAN_DESTROYED))
-				l.status |= ORGAN_DESTROYED
-			if(r && !(r.status & ORGAN_DESTROYED))
-				r.status |= ORGAN_DESTROYED
+/obj/item/weapon/caution/proximity_sign/proc/dead_legs(mob/living/carbon/human/H as mob)
+	var/datum/organ/external/l = H.organs_by_name["l_leg"]
+	var/datum/organ/external/r = H.organs_by_name["r_leg"]
+	if(l && !(l.status & ORGAN_DESTROYED))
+		l.status |= ORGAN_DESTROYED
+	if(r && !(r.status & ORGAN_DESTROYED))
+		r.status |= ORGAN_DESTROYED
 
 /obj/item/weapon/caution/cone
 	desc = "This cone is trying to warn you of something!"
@@ -353,83 +579,35 @@
 	desc = "Parts of a rack."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	m_amt = 3750
+	flags = FPRINT
+	siemens_coefficient = 1
+	starting_materials = list(MAT_IRON = 3750)
+	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
 
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.addMaterial("iron",1)
-		return 1
-
-/obj/item/weapon/shard
-	name = "shard"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "large"
-	sharp = 1
-	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 15.0
-	item_state = "shard-glass"
-	g_amt = 3750
-	attack_verb = list("stabbed", "slashed", "sliced", "cut")
-
-	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</b>")
-		return (BRUTELOSS)
-
-/obj/item/weapon/shard/recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-	rec.addMaterial("glass",1)
-	return 1
-
-/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
-/*/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"*/
-
-/obj/item/weapon/shard/shrapnel
-	name = "shrapnel"
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "shrapnellarge"
-	desc = "A bunch of tiny bits of shattered metal."
-
-/obj/item/weapon/shard/shrapnel/New()
-
-	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	switch(src.icon_state)
-		if("shrapnelsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
-		if("shrapnelmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
-		if("shrapnellarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
+/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
+			to_chat(user, "You begin slicing through \the [src].")
+			playsound(user, 'sound/items/Welder.ogg', 50, 1)
+			if(do_after(user, src, 60))
+				to_chat(user, "You cut \the [src] into a gun stock.")
+				if(src.loc == user)
+					user.drop_item(src, force_drop = 1)
+					var/obj/item/weapon/metal_gun_stock/I = new (get_turf(user))
+					user.put_in_hands(I)
+					qdel(src)
+				else
+					new /obj/item/weapon/metal_gun_stock(get_turf(src.loc))
+					qdel(src)
 		else
-	return
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
-	desc = "used to comunicate it appears."
+	desc = "Used for communication, it appears."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
 	var/temp = null
@@ -437,14 +615,17 @@
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 100
+	starting_materials = list(MAT_IRON = 100)
+	w_type = RECYK_ELECTRONIC
+	melt_temperature=MELTPOINT_SILICON
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/staff
@@ -457,14 +638,62 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
-	attack_verb = list("bludgeoned", "whacked", "disciplined")
+	flags = FPRINT
+	attack_verb = list("bludgeons", "whacks", "disciplines")
 
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	item_state = "broom0"
+	flags = FPRINT | TWOHANDABLE
+
+/obj/item/weapon/staff/broom/update_wield(mob/user)
+	..()
+	item_state = "broom[wielded ? 1 : 0]"
+	force = wielded ? 5 : 3
+	attack_verb = wielded ? list("rams into", "charges at") : list("bludgeons", "whacks", "cleans", "dusts")
+	if(user)
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+		if(user.mind in ticker.mode.wizards)
+			user.flying = wielded ? 1 : 0
+			if(wielded)
+				to_chat(user, "<span class='notice'>You hold \the [src] between your legs.</span>")
+				user.say("QUID 'ITCH")
+				animate(user, pixel_y = pixel_y + 10 , time = 10, loop = 1, easing = SINE_EASING)
+			else
+				animate(user, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+				animate(user, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+				animate(user)
+				if(user.lying)//aka. if they have just been stunned
+					user.pixel_y -= 6
+		else
+			if(wielded)
+				to_chat(user, "<span class='notice'>You hold \the [src] between your legs.</span>")
+
+/obj/item/weapon/staff/broom/attackby(var/obj/O, mob/user)
+	if(istype(O, /obj/item/clothing/mask/horsehead))
+		new/obj/item/weapon/staff/broom/horsebroom(get_turf(src))
+		user.u_equip(O)
+		qdel(O)
+		qdel(src)
+		return
+	..()
+
+/obj/item/weapon/staff/broom/horsebroom
+	name = "broomstick horse"
+	desc = "Saddle up!"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "horsebroom"
+	item_state = "horsebroom0"
+
+/obj/item/weapon/staff/broom/horsebroom/update_wield(mob/user)
+	..()
+	item_state = "horsebroom[wielded ? 1 : 0]"
+
+
 
 /obj/item/weapon/staff/stick
 	name = "stick"
@@ -477,7 +706,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = FPRINT
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -485,32 +714,51 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
-	m_amt = 3750
-	flags = FPRINT | TABLEPASS| CONDUCT
-	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	starting_materials = list(MAT_IRON = 3750)
+	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
+	flags = FPRINT
+	siemens_coefficient = 1
+	attack_verb = list("slams", "bashes", "batters", "bludgeons", "thrashes", "whacks")
 
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		rec.addMaterial("iron",2)
-		return 1
+/obj/item/weapon/table_parts/cultify()
+	new /obj/item/weapon/table_parts/wood(loc)
+	..()
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
 	desc = "Hard table parts. Well...harder..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
-	m_amt = 7500
-	flags = FPRINT | TABLEPASS| CONDUCT
-
-	recycle(var/obj/machinery/mineral/processing_unit/recycle/rec)
-		// 2 metal + 4 rods (0.5 metal ea)
-		rec.addMaterial("iron",4)
-		return 1
+	starting_materials = list(MAT_IRON = 7500)
+	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
+	flags = FPRINT
+	siemens_coefficient = 1
+	
+/obj/item/weapon/table_parts/glass
+	name = "glass table parts"
+	desc = "Glass table parts for the spaceman with style."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "glass_tableparts"
+	starting_materials = list(MAT_GLASS = 3750)
+	w_type = RECYK_GLASS
+	melt_temperature=MELTPOINT_GLASS
+	flags = FPRINT
+	siemens_coefficient = 0 //copying from glass sheets and shards even if its bad balance
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
-	flags = null
+	flags = 0
+
+/obj/item/weapon/table_parts/wood/poker
+	name = "gambling table parts"
+	icon_state = "gambling_tableparts"
+
+/obj/item/weapon/table_parts/wood/cultify()
+	return
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -520,19 +768,22 @@
 	var/amount = 1.0
 	var/laying = 0.0
 	var/old_lay = null
-	m_amt = 40
-	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
+	starting_materials = list(MAT_IRON = 70)
+	w_type = RECYK_METAL
+	melt_temperature=MELTPOINT_STEEL
+	attack_verb = list("whips", "lashes", "disciplines", "tickles")
 
-	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
-		return (OXYLOSS)
+/obj/item/weapon/wire/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (OXYLOSS)
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
+	//icon_state = "std_module"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS|CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/weapon/module/card_reader
@@ -540,7 +791,8 @@
 	icon_state = "card_mod"
 	desc = "An electronic module for reading data and ID cards."
 
-/obj/item/weapon/module/power_control
+/obj/item/weapon/circuitboard/power_control
+	icon = 'icons/obj/module.dmi'
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
@@ -560,98 +812,15 @@
 	icon_state = "power_mod"
 	desc = "Charging circuits for power cells."
 
-
-/obj/item/device/camera_bug
-	name = "camera bug"
-	desc = "Tiny electronic device meant to bug cameras for viewing later."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "implant_evil"
-	w_class = 1.0
-	item_state = ""
-	throw_speed = 4
-	throw_range = 20
-/*unused
-/obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
-	var/list/cameras = new/list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		if (C.bugged && C.status)
-			cameras.Add(C)
-	if (length(cameras) == 0)
-		usr << "\red No bugged functioning cameras found."
-		return
-
-	var/list/friendly_cameras = new/list()
-
-	for (var/obj/machinery/camera/C in cameras)
-		friendly_cameras.Add(C.c_tag)
-
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
-	if (!target)
-		return
-	for (var/obj/machinery/camera/C in cameras)
-		if (C.c_tag == target)
-			target = C
-			break
-	if (usr.stat == 2) return
-
-	usr.client.eye = target
-*/
-
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
-	desc = "Meat that appears...strange..."
+	desc = "Meat that appears... strange..."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "biotech=2"
-
-/obj/item/weapon/hatchet
-	name = "hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "hatchet"
-	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 12.0
-	w_class = 2.0
-	throwforce = 15.0
-	throw_speed = 4
-	throw_range = 4
-	m_amt = 15000
-	origin_tech = "materials=2;combat=1"
-	attack_verb = list("chopped", "torn", "cut")
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
-/obj/item/weapon/hatchet/unathiknife
-	name = "duelling knife"
-	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "unathiknife"
-	attack_verb = list("ripped", "torn", "cut")
-
-/obj/item/weapon/scythe
-	icon_state = "scythe0"
-	name = "scythe"
-	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
-	force = 13.0
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 3
-	w_class = 4.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
-	slot_flags = SLOT_BACK
-	origin_tech = "materials=2;combat=2"
-	attack_verb = list("chopped", "sliced", "cut", "reaped")
-
-/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
-	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A,1))
-			if(prob(80))
-				del B
-		del A
 
 /*
 /obj/item/weapon/cigarpacket
@@ -663,7 +832,7 @@
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
-	flags = ONBELT | TABLEPASS */
+	flags = ONBELT  */
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
@@ -672,216 +841,6 @@
 	icon_state = "wire1"
 
 	var/obj/machinery/machine
-
-///////////////////////////////////////Stock Parts /////////////////////////////////
-
-/obj/item/weapon/stock_parts
-	name = "stock part"
-	desc = "What?"
-	gender = PLURAL
-	icon = 'icons/obj/stock_parts.dmi'
-	w_class = 2.0
-	var/rating = 1
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-//Rank 1
-
-/obj/item/weapon/stock_parts/console_screen
-	name = "console screen"
-	desc = "Used in the construction of computers and other devices with a interactive console."
-	icon_state = "screen"
-	origin_tech = "materials=1"
-	g_amt = 200
-
-/obj/item/weapon/stock_parts/capacitor
-	name = "capacitor"
-	desc = "A basic capacitor used in the construction of a variety of devices."
-	icon_state = "capacitor"
-	origin_tech = "powerstorage=1"
-	m_amt = 50
-	g_amt = 50
-
-/obj/item/weapon/stock_parts/scanning_module
-	name = "scanning module"
-	desc = "A compact, high resolution scanning module used in the construction of certain devices."
-	icon_state = "scan_module"
-	origin_tech = "magnets=1"
-	m_amt = 50
-	g_amt = 20
-
-/obj/item/weapon/stock_parts/manipulator
-	name = "micro-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "micro_mani"
-	origin_tech = "materials=1;programming=1"
-	m_amt = 30
-
-/obj/item/weapon/stock_parts/micro_laser
-	name = "micro-laser"
-	desc = "A tiny laser used in certain devices."
-	icon_state = "micro_laser"
-	origin_tech = "magnets=1"
-	m_amt = 10
-	g_amt = 20
-
-/obj/item/weapon/stock_parts/matter_bin
-	name = "matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
-	icon_state = "matter_bin"
-	origin_tech = "materials=1"
-	m_amt = 80
-
-//Rank 2
-
-/obj/item/weapon/stock_parts/capacitor/adv
-	name = "advanced capacitor"
-	desc = "An advanced capacitor used in the construction of a variety of devices."
-	origin_tech = "powerstorage=3"
-	rating = 2
-	m_amt = 50
-	g_amt = 50
-
-/obj/item/weapon/stock_parts/scanning_module/adv
-	name = "advanced scanning module"
-	desc = "A compact, high resolution scanning module used in the construction of certain devices."
-	icon_state = "scan_module"
-	origin_tech = "magnets=3"
-	rating = 2
-	m_amt = 50
-	g_amt = 20
-
-/obj/item/weapon/stock_parts/manipulator/nano
-	name = "nano-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "nano_mani"
-	origin_tech = "materials=3;programming=2"
-	rating = 2
-	m_amt = 30
-
-/obj/item/weapon/stock_parts/micro_laser/high
-	name = "high-power micro-laser"
-	desc = "A tiny laser used in certain devices."
-	icon_state = "high_micro_laser"
-	origin_tech = "magnets=3"
-	rating = 2
-	m_amt = 10
-	g_amt = 20
-
-/obj/item/weapon/stock_parts/matter_bin/adv
-	name = "advanced matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
-	icon_state = "advanced_matter_bin"
-	origin_tech = "materials=3"
-	rating = 2
-	m_amt = 80
-
-//Rating 3
-
-/obj/item/weapon/stock_parts/capacitor/super
-	name = "super capacitor"
-	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
-	origin_tech = "powerstorage=5;materials=4"
-	rating = 3
-	m_amt = 50
-	g_amt = 50
-
-/obj/item/weapon/stock_parts/scanning_module/phasic
-	name = "phasic scanning module"
-	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
-	origin_tech = "magnets=5"
-	rating = 3
-	m_amt = 50
-	g_amt = 20
-
-/obj/item/weapon/stock_parts/manipulator/pico
-	name = "pico-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "pico_mani"
-	origin_tech = "materials=5;programming=2"
-	rating = 3
-	m_amt = 30
-
-/obj/item/weapon/stock_parts/micro_laser/ultra
-	name = "ultra-high-power micro-laser"
-	icon_state = "ultra_high_micro_laser"
-	desc = "A tiny laser used in certain devices."
-	origin_tech = "magnets=5"
-	rating = 3
-	m_amt = 10
-	g_amt = 20
-
-/obj/item/weapon/stock_parts/matter_bin/super
-	name = "super matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
-	icon_state = "super_matter_bin"
-	origin_tech = "materials=5"
-	rating = 3
-	m_amt = 80
-
-// Subspace stock parts
-
-/obj/item/weapon/stock_parts/subspace/ansible
-	name = "subspace ansible"
-	icon_state = "subspace_ansible"
-	desc = "A compact module capable of sensing extradimensional activity."
-	origin_tech = "programming=3;magnets=5;materials=4;bluespace=2"
-	m_amt = 30
-	g_amt = 10
-
-/obj/item/weapon/stock_parts/subspace/filter
-	name = "hyperwave filter"
-	icon_state = "hyperwave_filter"
-	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
-	origin_tech = "programming=4;magnets=2"
-	m_amt = 30
-	g_amt = 10
-
-/obj/item/weapon/stock_parts/subspace/amplifier
-	name = "subspace amplifier"
-	icon_state = "subspace_amplifier"
-	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
-	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
-	m_amt = 30
-	g_amt = 10
-
-/obj/item/weapon/stock_parts/subspace/treatment
-	name = "subspace treatment disk"
-	icon_state = "treatment_disk"
-	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
-	origin_tech = "programming=3;magnets=2;materials=5;bluespace=2"
-	m_amt = 30
-	g_amt = 10
-
-/obj/item/weapon/stock_parts/subspace/analyzer
-	name = "subspace wavelength analyzer"
-	icon_state = "wavelength_analyzer"
-	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
-	m_amt = 30
-	g_amt = 10
-
-/obj/item/weapon/stock_parts/subspace/crystal
-	name = "ansible crystal"
-	icon_state = "ansible_crystal"
-	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
-	origin_tech = "magnets=4;materials=4;bluespace=2"
-	g_amt = 50
-
-/obj/item/weapon/stock_parts/subspace/transmitter
-	name = "subspace transmitter"
-	icon_state = "subspace_transmitter"
-	desc = "A large piece of equipment used to open a window into the subspace dimension."
-	origin_tech = "magnets=5;materials=5;bluespace=3"
-	m_amt = 50
-
-/obj/item/weapon/ectoplasm
-	name = "ectoplasm"
-	desc = "spooky"
-	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "ectoplasm"
 
 /*
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
@@ -892,6 +851,14 @@
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
 */
 
+/obj/item/weapon/ectoplasm
+	name = "ectoplasm"
+	desc = "spooky"
+	gender = PLURAL
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "ectoplasm"
+	w_type = RECYK_BIOLOGICAL
+
 /////////Random shit////////
 
 /obj/item/weapon/lightning
@@ -899,33 +866,28 @@
 	icon = 'icons/obj/lightning.dmi'
 	icon_state = "lightning"
 	desc = "test lightning"
-	flags = USEDELAY
+	flags = 0
 
 	New()
 		icon = midicon
 		icon_state = "1"
 
-	afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
-		var/angle = get_angle(A, user)
-		//world << angle
-		angle = round(angle) + 45
-		if(angle > 180)
-			angle -= 180
-		else
-			angle += 180
+/obj/item/weapon/lightning/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+	var/angle = get_angle(A, user)
+//	to_chat(world, angle)
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
 
-		if(!angle)
-			angle = 1
-		//world << "adjusted [angle]"
-		icon_state = "[angle]"
-		//world << "[angle] [(get_dist(user, A) - 1)]"
-		user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
+	if(!angle)
+		angle = 1
+//	to_chat(world, "adjusted [angle]")
+	icon_state = "[angle]"
+//	to_chat(world, "[angle] [(get_dist(user, A) - 1)]")
+	user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
 /*Testing
-proc/get_angle(atom/a, atom/b)
-    return atan2(b.y - a.y, b.x - a.x)
-proc/atan2(x, y)
-    if(!x && !y) return 0
-    return y >= 0 ? arccos(x / sqrt(x * x + y * y)) : -arccos(x / sqrt(x * x + y * y))
 proc
     //  creates an /icon object with 360 states of rotation
     rotate_icon(file, state, step = 1, aa = FALSE)

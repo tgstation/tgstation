@@ -72,12 +72,12 @@
 					if("folder")
 						F = new /datum/computer/folder
 						if(!current_folder.add_file(F))
-							//world << "Couldn't add folder :("
+//							to_chat(world, "Couldn't add folder :(")
 							del(F)
 					if("file")
 						F = new /datum/computer/file
 						if(!current_folder.add_file(F))
-							//world << "Couldn't add file :("
+//							to_chat(world, "Couldn't add file :(")
 							del(F)
 
 		if(href_list["file"] && href_list["function"])

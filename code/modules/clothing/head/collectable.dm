@@ -18,7 +18,8 @@
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
-	icon_state = "xenom"
+	icon_state = "xenos"
+	item_state = "xenos_helm"
 
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
@@ -58,6 +59,7 @@
 	desc = "A Collectable Welding Helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this Helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
+	species_fit = list("Vox")
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"

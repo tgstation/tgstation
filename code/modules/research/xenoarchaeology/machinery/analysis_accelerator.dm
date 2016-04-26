@@ -1,10 +1,22 @@
 
 // This machine shows the age for extremely old finds
 
-obj/machinery/anomaly/accelerator
+/obj/machinery/anomaly/accelerator
 	name = "Accelerator spectrometer"
 
-obj/machinery/anomaly/accelerator/ScanResults()
+/obj/machinery/anomaly/accelerator/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom/accelerator,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/accelerator/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

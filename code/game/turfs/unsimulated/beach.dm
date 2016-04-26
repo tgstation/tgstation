@@ -18,3 +18,6 @@
 /turf/unsimulated/beach/water/New()
 	..()
 	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=MOB_LAYER+0.1)
+
+/turf/unsimulated/beach/cultify()
+	return

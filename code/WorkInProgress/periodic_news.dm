@@ -5,7 +5,7 @@
 	var
 		round_time // time of the round at which this should be announced, in seconds
 		message // body of the message
-		author = "NanoTrasen Editor"
+		author = "Nanotrasen Editor"
 		channel_name = "Tau Ceti Daily"
 		can_be_redacted = 0
 
@@ -95,9 +95,9 @@
 			author = "Reporter Ro'kii Ar-Raqis"
 
 			message = {"Breaking news: Food riots have broken out throughout the Refuge asteroid colony in the Tenebrae
-						Lupus system. This comes only hours after NanoTrasen officials announced they will no longer trade with the
+						Lupus system. This comes only hours after Nanotrasen officials announced they will no longer trade with the
 						colony, citing the increased presence of \"hostile factions\" on the colony has made trade too dangerous to
-						continue. NanoTrasen officials have not given any details about said factions. More on that at the top of
+						continue. Nanotrasen officials have not given any details about said factions. More on that at the top of
 						the hour."}
 			round_time = 60 * 10
 
@@ -105,11 +105,11 @@
 			channel_name = "Tau Ceti Daily"
 			author = "Reporter Ro'kii Ar-Raqis"
 
-			message = {"More on the Refuge food riots: The Refuge Council has condemned NanoTrasen's withdrawal from
-			the colony, claiming \"there has been no increase in anti-NanoTrasen activity\", and \"\[the only] reason
-			NanoTrasen withdrew was because the \[Tenebrae Lupus] system's Plasma deposits have been completely mined out.
-			We have little to trade with them now\". NanoTrasen officials have denied these allegations, calling them
-			\"further proof\" of the colony's anti-NanoTrasen stance. Meanwhile, Refuge Security has been unable to quell
+			message = {"More on the Refuge food riots: The Refuge Council has condemned Nanotrasen's withdrawal from
+			the colony, claiming \"there has been no increase in anti-Nanotrasen activity\", and \"\[the only] reason
+			Nanotrasen withdrew was because the \[Tenebrae Lupus] system's Plasma deposits have been completely mined out.
+			We have little to trade with them now\". Nanotrasen officials have denied these allegations, calling them
+			\"further proof\" of the colony's anti-Nanotrasen stance. Meanwhile, Refuge Security has been unable to quell
 			the riots. More on this at 6."}
 			round_time = 60 * 60
 
@@ -128,6 +128,7 @@ proc/check_for_newscaster_updates(type)
 			announce_newscaster_news(news)
 
 proc/announce_newscaster_news(datum/news_announcement/news)
+
 
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = news.author

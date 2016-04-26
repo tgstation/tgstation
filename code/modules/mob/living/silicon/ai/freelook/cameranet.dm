@@ -7,7 +7,7 @@ var/const/CHUNK_SIZE = 16 // Only chunk sizes that are to the power of 2. E.g: 2
 var/datum/cameranet/cameranet = new()
 
 /datum/cameranet
-	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
+	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Destroy().
 	var/list/cameras = list()
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
@@ -61,6 +61,7 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/updateVisibility(atom/A, var/opacity_check = 1)
 
+
 	if(!ticker || (opacity_check && !A.opacity))
 		return
 	majorChunkChange(A, 2)
@@ -110,7 +111,7 @@ var/datum/cameranet/cameranet = new()
 		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 
-		//world << "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]"
+//		to_chat(world, "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]")
 
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
@@ -127,6 +128,7 @@ var/datum/cameranet/cameranet = new()
 // Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 
 /datum/cameranet/proc/checkCameraVis(mob/living/target as mob)
+
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)

@@ -9,10 +9,12 @@
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
 	layer = TURF_LAYER
-	var/obj/machinery/power/master = null
+	var/obj/machinery/power/master
 	anchored = 1
-	directwired = 0		// must have a cable on same turf connecting to terminal
 	layer = 2.6 // a bit above wires
+
+	holomap = TRUE
+	auto_holomap = TRUE
 
 
 /obj/machinery/power/terminal/New()
@@ -30,3 +32,50 @@
 		invisibility = 0
 		icon_state = "term"
 
+/obj/machinery/power/terminal/Destroy()
+	if (master)
+		master:terminal = null
+		master = null
+
+	..()
+
+/obj/machinery/power/terminal/attackby(obj/item/W, mob/user)
+	if(iswirecutter(W) && !master) //Sanity in the rare case something destroys a machine and leaves a terminal
+		getFromPool(/obj/item/stack/cable_coil, get_turf(src), 10)
+		qdel(src)
+		return
+	..()
+
+/obj/machinery/power/proc/make_terminal(mob/user)
+	if(!can_attach_terminal(user))
+		to_chat(user, "<span class='warning'>You can't wire \the [src] like that!</span>")
+		return 0
+
+	var/turf/T = get_turf(user)
+	if(T.intact)
+		to_chat(user, "<span class='warning'>The floor plating must be removed first.</span>")
+		return 0
+
+	to_chat(user, "<span class='notice'>You start adding cable to \the [src].</span>")
+	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
+	if (do_after(user, src, 100) && !T.intact && can_attach_terminal(user))
+
+		//Shock chance
+		var/obj/structure/cable/N = T.get_cable_node()
+		if (prob(50) && electrocute_mob(user, N, N))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+			return 0
+
+		finalise_terminal(get_turf(user))
+		return 1
+	return 0
+
+/obj/machinery/power/proc/finalise_terminal(newloc)
+	terminal = new /obj/machinery/power/terminal(newloc)
+	terminal.dir = get_dir(newloc, src)
+	terminal.master = src
+
+/obj/machinery/power/proc/can_attach_terminal(mob/user)
+	return user.loc != src.loc && (get_dir(user, src) in cardinal) && !terminal

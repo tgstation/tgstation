@@ -47,6 +47,7 @@
 //This proc will handle the calls to the appropiate procs.
 /datum/event/proc/process()
 
+
 	if(activeFor > startWhen && activeFor < endWhen)
 		tick()
 

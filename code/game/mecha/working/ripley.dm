@@ -2,12 +2,14 @@
 	desc = "Autonomous Power Loader Unit. The workhorse of the exosuit world."
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 6
+	step_in = 4
 	max_temperature = 20000
 	health = 200
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
 	var/list/cargo = new
 	var/cargo_capacity = 15
+	var/obj/structure/ore_box/ore_box //to save on locate()
+	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/hydraulic_clamp
 
 /*
 /obj/mecha/working/ripley/New()
@@ -16,7 +18,7 @@
 */
 
 /obj/mecha/working/ripley/firefighter
-	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
+	desc = "Standard APLU chassis, refitted with additional thermal protection and cistern."
 	name = "APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
@@ -30,7 +32,7 @@
 	name = "DEATH-RIPLEY"
 	icon_state = "deathripley"
 	step_in = 2
-	opacity=0
+	opacity = 0
 	lights_power = 60
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
@@ -55,11 +57,16 @@
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill
 		D.attach(src)
 
-	//Attach hydrolic clamp
+	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
-		del (B)
+	src.hydraulic_clamp = HC
+
+	//Deletes the beacon so it can't be found easily
+	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)
+		qdel (B)
+		B = null
+		src.tracking = null
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
@@ -71,12 +78,11 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
-			src.occupant_message("\blue You unload [O].")
-			O.loc = get_turf(src)
+			src.occupant_message("<span class='notice'>You unload [O].</span>")
+			O.forceMove(get_turf(src))
 			src.cargo -= O
-			var/turf/T = get_turf(O)
-			if(T)
-				T.Entered(O)
+			if (ore_box == O)
+				ore_box = locate(/obj/structure/ore_box) in cargo //i'll fix this later
 			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
@@ -93,7 +99,15 @@
 	output += "</div>"
 	return output
 
-/obj/mecha/working/ripley/Del()
+/obj/mecha/working/ripley/empty_bad_contents()
+	for(var/obj/O in src)
+		if(O in cargo) //mom's spaghetti
+			continue
+		if(!is_type_in_list(O,mech_parts))
+			O.loc = src.loc
+	return
+
+/obj/mecha/working/ripley/Destroy()
 	for(var/mob/M in src)
 		if(M==src.occupant)
 			continue

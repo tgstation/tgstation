@@ -1,3 +1,36 @@
+//List of all drawable graffitis. Their icon states are associated with icon states (so for example "Chaos Undivided" = "chaos")
+var/global/list/all_graffitis = list(
+	"Left arrow"="left",
+	"Right arrow"="right",
+	"Up arrow"="up",
+	"Down arrow"="down",
+	"Heart"="heart",
+	"Lambda"="lambda",
+	"50 blessings"="50bless",
+	"Engineer"="engie",
+	"Guy"="guy",
+	"The end is nigh"="end",
+	"Amy + Jon"="amyjon",
+	"Matt was here"="matt",
+	"Revolution"="revolution",
+	"Face"="face",
+	"Dwarf"="dwarf",
+	"Uboa"="uboa",
+	"Rogue cyborgs"="borgsrogue",
+	"Shitcurity"="shitcurity",
+	"Catbeast here"="catbeast",
+	"Vox are pox"="voxpox",
+	"Hieroglyphs 1"="hieroglyphs1",
+	"Hieroglyphs 2"="hieroglyphs2",
+	"Hieroglyphs 3"="hieroglyphs3",
+	"Securites eunt domus"="security",
+	"Nanotrasen logo"="nanotrasen",
+	"Syndicate logo 1"="syndicate1",
+	"Syndicate logo 2"="syndicate2",
+	"Don't believe these lies"="lie",
+	"Chaos Undivided"="chaos"
+)
+
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
 	colour = "#DA0000"
@@ -46,11 +79,11 @@
 	if(colour != "#FFFFFF" && shadeColour != "#000000")
 		colour = "#FFFFFF"
 		shadeColour = "#000000"
-		user << "You will now draw in white and black with this crayon."
+		to_chat(user, "You will now draw in white and black with this crayon.")
 	else
 		colour = "#000000"
 		shadeColour = "#FFFFFF"
-		user << "You will now draw in black and white with this crayon."
+		to_chat(user, "You will now draw in black and white with this crayon.")
 	return
 
 /obj/item/toy/crayon/rainbow
@@ -65,35 +98,69 @@
 	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
 	return
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob)
-	if(istype(target,/turf/simulated/floor))
+/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+	if(!proximity) return
+
+	if(istype(target, /turf/simulated))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
+		var/preference
 		switch(drawtype)
 			if("letter")
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-				user << "You start drawing a letter on the [target.name]."
+				to_chat(user, "You start drawing a letter on the [target.name].")
 			if("graffiti")
-				user << "You start drawing graffiti on the [target.name]."
+				var/list/graffitis = list("Random" = "graffiti") + all_graffitis
+				if(istype(user,/mob/living/carbon/human))
+					var/mob/living/carbon/human/M=user
+					if(M.getBrainLoss() >= 60)
+						graffitis = list(
+							"Cancel"="cancel",
+							"Dick"="dick[rand(1,3)]",
+							"Valids"="valid"
+							)
+				preference = input("Choose the graffiti.", "Crayon scribbles") as null|anything in graffitis
+
+				if(!preference) return
+
+				drawtype=graffitis[preference]
+				to_chat(user, "You start drawing graffiti on the [target.name].")
 			if("rune")
-				user << "You start drawing a rune on the [target.name]."
-		if(instant || do_after(user, 50))
-			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
-			user << "You finish drawing."
+				to_chat(user, "You start drawing a rune on the [target.name].")
+
+		if(!user.Adjacent(target)) return
+		if(target.density && !cardinal.Find(get_dir(user, target))) //Drawing on a wall and not standing in a cardinal direction - don't draw
+			to_chat(user, "<span class='warning'>You can't reach \the [target] from here!</span>")
+			return
+
+		if(instant || do_after(user,target, 50))
+			var/obj/effect/decal/cleanable/C = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+
+			if(target.density && (C.loc != get_turf(user))) //Drawn on a wall (while standing on a floor)
+				C.forceMove(get_turf(user))
+
+				var/angle = dir2angle_t(get_dir(C, target))
+
+				C.pixel_x = 32 * cos(angle)
+				C.pixel_y = 32 * sin(angle) //Offset the graffiti to make it appear on the wall
+				C.on_wall = target
+
+			to_chat(user, "You finish drawing.")
+			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.
 			if(uses)
 				uses--
 				if(!uses)
-					user << "\red You used up your crayon!"
-					del(src)
+					to_chat(user, "<span class='warning'>You used up your crayon!</span>")
+					qdel(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
-		user << "You take a bite of the crayon. Delicious!"
+		to_chat(user, "You take a bite of the crayon. Delicious!")
 		user.nutrition += 5
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "\red You ate your crayon!"
-				del(src)
+				to_chat(user, "<span class='warning'>You ate your crayon!</span>")
+				qdel(src)
 	else
 		..()

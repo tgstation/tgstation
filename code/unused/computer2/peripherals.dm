@@ -134,11 +134,11 @@
 
 	attack_self(mob/user as mob)
 		if( (last_vend + 400) < world.time)
-			user << "You shake something out of [src]!"
+			to_chat(user, "You shake something out of [src]!")
 			src.vend_prize()
 			src.last_vend = world.time
 		else
-			user << "\red [src] isn't ready to dispense a prize yet."
+			to_chat(user, "<span class='warning'>[src] isn't ready to dispense a prize yet.</span>")
 
 		return
 
@@ -158,7 +158,7 @@
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
-				prize = new /obj/item/device/radio/beacon( prize_location )
+				prize = new /obj/item/beacon( prize_location )
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)
@@ -180,7 +180,7 @@
 
 	attack_self(mob/user as mob)
 		if(authid)
-			user << "The card falls out."
+			to_chat(user, "The card falls out.")
 			src.authid.loc = get_turf(user)
 			src.authid = null
 

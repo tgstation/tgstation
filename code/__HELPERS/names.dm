@@ -41,6 +41,7 @@ var/command_name = null
 
 /proc/change_command_name(var/name)
 
+
 	command_name = name
 
 	return name
@@ -116,6 +117,7 @@ var/religion_name = null
 
 /proc/world_name(var/name)
 
+
 	station_name = name
 
 	if (config && config.server_name)
@@ -176,6 +178,7 @@ var/syndicate_code_response//Code response for traitors.
 
 /proc/generate_code_phrase()//Proc is used for phrase and response in master_controller.dm
 
+
 	var/code_phrase = ""//What is returned when the proc finishes.
 	var/words = pick(//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
 		50; 2,
@@ -186,7 +189,7 @@ var/syndicate_code_response//Code response for traitors.
 
 	var/safety[] = list(1,2,3)//Tells the proc which options to remove later on.
 	var/nouns[] = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","pain","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
-	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequilla sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
+	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
 	var/locations[] = teleportlocs.len ? teleportlocs : drinks//if null, defaults to drinks instead.
 
 	var/names[] = list()
@@ -243,7 +246,7 @@ var/syndicate_code_response//Code response for traitors.
 	set name = "Generate Code Phrase"
 	set category = "Debug"
 
-	world << "\red Code Phrase is: \black [generate_code_phrase()]"
+	to_chat(world, "<span class='warning'>Code Phrase is: </span>[generate_code_phrase()]")
 	return
 
 
@@ -273,7 +276,7 @@ var/syndicate_code_response//Code response for traitors.
 			else
 				syndicate_code_phrase += pick("One")
 				syndicate_code_phrase += " "
-			syndicate_code_phrase += pick("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequilla sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
+			syndicate_code_phrase += pick("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
 			syndicate_code_phrase += "."
 		if(4)
 			syndicate_code_phrase += pick("I wish I was","My dad was","His mom was","Where do I find","The hero this station needs is","I'd fuck","I wouldn't trust","Someone caught","HoS caught","Someone found","I'd wrestle","I wanna kill")

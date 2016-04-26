@@ -28,10 +28,10 @@
 	if(!istype(L, /list)) return
 	if(isnum(pos))
 		if(!value)
-			if(L.len >= pos)
+			if(L.len >= pos && !(pos > L.len))
 				return L[pos]
 		else
-			if(L.len >= pos)
+			if(L.len >= pos && !(pos > L.len))
 				L[pos] = value
 	else if(istext(pos))
 		if(!value)
@@ -72,7 +72,7 @@
 			if(chosenlist)
 				chosenlist.Remove(e)
 
-// Clone of list.Cut()
+// Clone of list.len = 0
 /proc/n_listcut(var/list/L, var/start, var/end)
 	if(!istype(L, /list)) return
 	return L.Cut(start, end)
@@ -140,43 +140,10 @@
 		return uppertext(string)
 
 /proc/time()
-	return world.timeofday
+	return world.time + (12 HOURS)
 
 /proc/timestamp(var/format = "hh:mm:ss") // Get the game time in text
-	return time2text(world.time + 432000, format)
-
-/*
-//Makes a list where all indicies in a string is a seperate index in the list
-// JUST A HELPER DON'T ADD TO NTSCRIPT
-proc/string_tolist(var/string)
-	var/list/L = new/list()
-
-	var/i
-	for(i=1, i<=lentext(string), i++)
-		L.Add(copytext(string, i, i))
-
-	return L
-
-proc/string_explode(var/string, var/separator)
-	if(istext(string))
-		if(istext(separator) && separator == "")
-			return string_tolist(string)
-		var/i
-		var/lasti = 1
-		var/list/L = new/list()
-
-		for(i=1, i<=lentext(string)+1, i++)
-			if(copytext(string, i, i+1) == separator) // We found a separator
-				L.Add(copytext(string, lasti, i))
-				lasti = i+1
-
-		L.Add(copytext(string, lasti, lentext(string)+1)) // Adds the last segment
-
-		return L
-
-Just found out there was already a string explode function, did some benchmarking, and that function were a bit faster, sticking to that.
-*/
-
+	return time2text(world.time + (10 HOURS), format) // Yes, 10, not 12 hours, for some reason time2text() is being moronic (T-thanks BYOND), and it's adding 2 hours to this, I don't even know either.
 
 proc/string_explode(var/string, var/separator = "")
 	if(istext(string) && (istext(separator) || isnull(separator)))
@@ -195,21 +162,15 @@ proc/n_repeat(var/string, var/amount)
 
 		return newstring
 
-proc/n_reverse(var/string)
-	if(istext(string))
-		var/newstring = ""
-		var/i
-		for(i=lentext(string), i>0, i--)
-			if(i>=1000)
-				break
-			newstring = newstring + copytext(string, i, i+1)
-
-		return newstring
-
 // I don't know if it's neccesary to make my own proc, but I think I have to to be able to check for istext.
 proc/n_str2num(var/string)
 	if(istext(string))
 		return text2num(string)
+
+// Clamps N between min and max
+/proc/n_clamp(var/num, var/min = 0, var/max = 1)
+	if(isnum(num) && isnum(min) && isnum(max))
+		return Clamp(num, min, max)
 
 // Number shit
 proc/n_num2str(var/num)
@@ -243,85 +204,23 @@ proc/n_round(var/num)
 			return round(num)
 		return n_ceil(num)
 
-// Clamps N between min and max
-proc/n_clamp(var/num, var/min=-1, var/max=1)
-	if(isnum(num)&&isnum(min)&&isnum(max))
-		if(num<=min)
-			return min
-		if(num>=max)
-			return max
-		return num
-
-// Returns 1 if N is inbetween Min and Max
-proc/n_inrange(var/num, var/min=-1, var/max=1)
-	if(isnum(num)&&isnum(min)&&isnum(max))
-		return ((min <= num) && (num <= max))
 // END OF BY DONKIE :(
 
-// Non-recursive
-// Imported from Mono string.ReplaceUnchecked
-/*
-/proc/string_replacetext(var/haystack,var/a,var/b)
-	if(istext(haystack)&&istext(a)&&istext(b))
-		var/i = 1
-		var/lenh=lentext(haystack)
-		var/lena=lentext(a)
-		//var/lenb=lentext(b)
-		var/count = 0
-		var/list/dat = list()
-		while (i < lenh)
-			var/found = findtext(haystack, a, i, 0)
-			//diary << "findtext([haystack], [a], [i], 0)=[found]"
-			if (found == 0) // Not found
-				break
-			else
-				if (count < SCRIPT_MAX_REPLACEMENTS_ALLOWED)
-					dat+=found
-					count+=1
-				else
-					//diary << "Script found [a] [count] times, aborted"
-					break
-			//diary << "Found [a] at [found]! Moving up..."
-			i = found + lena
-		if (count == 0)
-			return haystack
-		//var/nlen = lenh + ((lenb - lena) * count)
-		var/buf = copytext(haystack,1,dat[1]) // Prefill
-		var/lastReadPos = 0
-		for (i = 1, i <= count, i++)
-			var/precopy = dat[i] - lastReadPos-1
-			//internal static unsafe void CharCopy (String target, int targetIndex, String source, int sourceIndex, int count)
-			//fixed (char* dest = target, src = source)
-			//CharCopy (dest + targetIndex, src + sourceIndex, count);
-			//CharCopy (dest + curPos, source + lastReadPos, precopy);
-			buf+=copytext(haystack,lastReadPos,precopy)
-			diary << "buf+=copytext([haystack],[lastReadPos],[precopy])"
-			diary<<"[buf]"
-			lastReadPos = dat[i] + lena
-			//CharCopy (dest + curPos, replace, newValue.length);
-			buf+=b
-			diary<<"[buf]"
-		buf+=copytext(haystack,lastReadPos, 0)
-		return buf
-*/
+/proc/n_sin(var/const/x)
+	return sin(x)
 
-/proc/string_replacetext(text, find, replacement)
-	if(istext(text) && istext(find) && istext(replacement))
-		var/find_len = length(find)
-		if(find_len < 1)	return text
-		. = ""
-		var/last_found = 1
-		var/count = 0
-		while(1)
-			count += 1
-			if(count >  SCRIPT_MAX_REPLACEMENTS_ALLOWED)
-				break
-			var/found = findtext(text, find, last_found, 0)
-			. += copytext(text, last_found, found)
-			if(found)
-				. += replacement
-				last_found = found + find_len
-				continue
-			return
+/proc/n_cos(var/const/x)
+	return cos(x)
 
-#undef SCRIPT_MAX_REPLACEMENTS_ALLOWED
+/proc/n_asin(var/const/x)
+	return arcsin(x)
+
+/proc/n_acos(var/const/x)
+	return arccos(x)
+
+
+/proc/n_max(...)
+	return max(arglist(args))
+
+/proc/n_min(...)
+	return min(arglist(args))

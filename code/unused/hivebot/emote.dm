@@ -1,4 +1,5 @@
 /mob/living/silicon/hivebot/emote(var/act)
+	if(timestopped) return //under effects of time magick
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -129,7 +130,7 @@
 				message = "<B>[src]</B> looks."
 			m_type = 1
 		else
-			src << text("Invalid Emote: []", act)
+//			to_chat(custom_emote(VISIBLE, act)src, text("Invalid Emote: []", act))
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

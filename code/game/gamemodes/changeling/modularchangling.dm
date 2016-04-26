@@ -26,6 +26,12 @@ var/list/datum/power/changeling/powerinstances = list()
 	genomecost = 0
 	verbpath = /mob/proc/changeling_transform
 
+/datum/power/changeling/change_species
+	name = "Change Species"
+	desc = "We take on the apperance of a species that we have absorbed."
+	genomecost = 0
+	verbpath = /mob/proc/changeling_change_species
+
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We become weakened to a death-like state, where we will rise again from death."
@@ -55,6 +61,12 @@ var/list/datum/power/changeling/powerinstances = list()
 	desc = "We debase ourselves and become lesser.  We become a monkey."
 	genomecost = 1
 	verbpath = /mob/proc/changeling_lesser_form
+
+/datum/power/changeling/horror_form
+	name = "Horror Form"
+	desc = "This costly evolution allows us to transform into an all-consuming abomination. We are extremely strong, to the point that we can force airlocks open and devour humans whole, and immune to stuns."
+	genomecost = 15
+	verbpath = /mob/proc/changeling_horror_form
 
 /datum/power/changeling/deaf_sting
 	name = "Deaf Sting"
@@ -89,7 +101,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Extract DNA"
 	desc = "We stealthily sting a target and extract the DNA from them."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them. Does not count towards absorb objectives."
-	genomecost = 4
+	genomecost = 3
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_extract_dna_sting
 
@@ -116,7 +128,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/DeathSting
 	name = "Death Sting"
 	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
-	genomecost = 10
+	genomecost = 8
 	verbpath = /mob/proc/changeling_DEATHsting
 
 /datum/power/changeling/unfat_sting
@@ -177,7 +189,6 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Heals a moderate amount of damage every tick."
 	genomecost = 8
 	verbpath = /mob/proc/changeling_rapidregen
-
 
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
@@ -459,6 +470,8 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 
+
+
 /datum/changeling/proc/purchasePower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
 	if(!M || !M.changeling)
 		return
@@ -467,23 +480,23 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 	for (var/datum/power/changeling/P in powerinstances)
-		//world << "[P] - [Pname] = [P.name == Pname ? "True" : "False"]"
+//		to_chat(world, "[P] - [Pname] = [P.name == Pname ? "True" : "False"]")
 		if(P.name == Pname)
 			Thepower = P
 			break
 
 
 	if(Thepower == null)
-		M.current << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
+		to_chat(M.current, "This is awkward.  Changeling power purchase failed, please report this bug to a coder!")
 		return
 
 	if(Thepower in purchasedpowers)
-		M.current << "We have already evolved this ability!"
+		to_chat(M.current, "We have already evolved this ability!")
 		return
 
 
 	if(geneticpoints < Thepower.genomecost)
-		M.current << "We cannot evolve this... yet.  We must acquire more DNA."
+		to_chat(M.current, "We cannot evolve this... yet.  We must acquire more DNA.")
 		return
 
 	geneticpoints -= Thepower.genomecost

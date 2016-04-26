@@ -13,6 +13,7 @@
 
 /obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
 
+
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
 
@@ -30,7 +31,7 @@
 		imap += icon('icons/misc/imap.dmi', "blank")
 		imap += icon('icons/misc/imap.dmi', "blank")
 
-	//world << "[icount] images in list"
+//	to_chat(world, "[icount] images in list")
 
 
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
@@ -67,7 +68,7 @@
 					if("/turf/simulated/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if("/turf/simulated/wall/r_wall", "/turf/simulated/wall/invulnerable")
 						colour = rgb(128,96,96)
 
 					if("/turf/unsimulated/floor")
@@ -146,12 +147,12 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+//			to_chat(world, "trying [ix],[iy] : [ix+icx*iy]")
 			var/icon/I = imap[1+(ix + icx*iy)*2]
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
-			//world << "icon: \icon[I]"
+//			to_chat(world, "icon: [bicon(I)]")
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -164,11 +165,11 @@
 
 
 	for(var/i=0; i<icount;i++)
-		var/obj/screen/H = new /obj/screen()
+		var/obj/screen/H = getFromPool(/obj/screen)
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+//		to_chat(world, "[bicon(I)] at [H.screen_loc]")
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -180,8 +181,10 @@
 		HI.Insert(I, frame=1, delay = 5)
 		HI.Insert(J, frame=2, delay = 5)
 
-		del(I)
-		del(J)
+		qdel(I)
+		I = null
+		qdel(J)
+		J = null
 		H.icon = HI
 		H.layer = 25
 		usr.mapobjs += H
@@ -280,11 +283,11 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+//			to_chat(world, "trying [ix],[iy] : [ix+icx*iy]")
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
-			//world << "icon: \icon[I]"
+//			to_chat(world, "icon: [bicon(I)]")
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -295,18 +298,19 @@
 
 
 	for(var/i=0; i<icount;i++)
-		var/obj/screen/H = new /obj/screen()
+		var/obj/screen/H = getFromPool(/obj/screen)
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+//		to_chat(world, "[bicon(I)] at [H.screen_loc]")
 
 		H.name = (i==0)?"maprefresh":"map"
 
 		var/icon/I = imap[i+1]
 
 		H.icon = I
-		del(I)
+		qdel(I)
+		I = null
 		H.layer = 25
 		usr.mapobjs += H
 
@@ -353,8 +357,7 @@ proc/getb(col)
 /mob/proc/clearmap()
 	src.client.screen -= src.mapobjs
 	for(var/obj/screen/O in mapobjs)
-		del(O)
+		returnToPool(O)
 
 	mapobjs = null
 	src.unset_machine()
-

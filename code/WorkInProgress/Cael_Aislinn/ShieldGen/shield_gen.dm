@@ -32,6 +32,11 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 
+	ghost_read=0
+	ghost_write=0
+
+	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK
+
 /obj/machinery/shield_gen/New()
 	spawn(10)
 		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
@@ -41,41 +46,43 @@
 	field = new/list()
 	..()
 
-/obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = W
-		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
-			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
-			updateDialog()
-		else
-			user << "\red Access denied."
-	else if(istype(W, /obj/item/weapon/card/emag))
-		if(prob(75))
-			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
-			updateDialog()
+/obj/machinery/shield_gen/emag(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
+		return 1
+	playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
+	return
 
-	else if(istype(W, /obj/item/weapon/wrench))
-		src.anchored = !src.anchored
-		src.visible_message("\blue \icon[src] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
+/obj/machinery/shield_gen/wrenchAnchor(mob/user)
+	if(..())
+		for(var/obj/machinery/shield_capacitor/cap in range(1, src))
+			if(!src.anchored && owned_capacitor == cap)
+				owned_capacitor = null
+				break
+			else if(src.anchored && !owned_capacitor)
+				owned_capacitor = cap
+				break
+			cap.updateDialog()
+			updateDialog()
+		return 1
+	return
 
-		spawn(0)
-			for(var/obj/machinery/shield_gen/gen in range(1, src))
-				if(get_dir(src, gen) == src.dir)
-					if(!src.anchored && gen.owned_capacitor == src)
-						gen.owned_capacitor = null
-						break
-					else if(src.anchored && !gen.owned_capacitor)
-						gen.owned_capacitor = src
-						break
-					gen.updateDialog()
-					updateDialog()
-	else
-		..()
+/obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
+	if(..())
+		return 1
+	else if(istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = W
+		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+			src.locked = !src.locked
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+			updateDialog()
+		else
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/shield_gen/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -89,6 +96,10 @@
 		return
 	interact(user)
 
+/obj/machinery/shield_gen/attack_ghost(mob/user)
+	if(isAdminGhost(user)) src.attack_hand(user)
+	return
+
 /obj/machinery/shield_gen/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
@@ -100,41 +111,36 @@
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen.dm:102: t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
 		t += {"[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>
 			This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>
 			[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>
-			Coverage radius (restart required): 
-		<a href='?src=\ref[src];change_radius=-5'>--</a> 
-		<a href='?src=\ref[src];change_radius=-1'>-</a> 
-		[field_radius * 2]m 
-		<a href='?src=\ref[src];change_radius=1'>+</a> 
+			Coverage radius (restart required):
+		<a href='?src=\ref[src];change_radius=-5'>--</a>
+		<a href='?src=\ref[src];change_radius=-1'>-</a>
+		[field_radius * 2]m
+		<a href='?src=\ref[src];change_radius=1'>+</a>
 		<a href='?src=\ref[src];change_radius=5'>++</a><br>
 		Overall field strength: [average_field_strength] Renwicks ([max_field_strength ? 100 * average_field_strength / max_field_strength : "NA"]%)<br>
-		Charge rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a> 
-		<a href='?src=\ref[src];strengthen_rate=-0.01'>-</a> 
+		Charge rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a>
+		<a href='?src=\ref[src];strengthen_rate=-0.01'>-</a>
 		[strengthen_rate] Renwicks/sec \
-		<a href='?src=\ref[src];strengthen_rate=0.01'>+</a> 
+		<a href='?src=\ref[src];strengthen_rate=0.01'>+</a>
 		<a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>
 		Upkeep energy: [field.len * average_field_strength / energy_conversion_rate] Watts/sec<br>
 		Additional energy required to charge: [field.len * strengthen_rate / energy_conversion_rate] Watts/sec<br>
-		Maximum field strength: 
-		<a href='?src=\ref[src];max_field_strength=-100'>\[min\]</a> 
-		<a href='?src=\ref[src];max_field_strength=-10'>--</a> 
-		<a href='?src=\ref[src];max_field_strength=-1'>-</a> 
-		[max_field_strength] Renwicks 
-		<a href='?src=\ref[src];max_field_strength=1'>+</a> 
-		<a href='?src=\ref[src];max_field_strength=10'>++</a> 
+		Maximum field strength:
+		<a href='?src=\ref[src];max_field_strength=-100'>\[min\]</a>
+		<a href='?src=\ref[src];max_field_strength=-10'>--</a>
+		<a href='?src=\ref[src];max_field_strength=-1'>-</a>
+		[max_field_strength] Renwicks
+		<a href='?src=\ref[src];max_field_strength=1'>+</a>
+		<a href='?src=\ref[src];max_field_strength=10'>++</a>
 		<a href='?src=\ref[src];max_field_strength=100'>\[max\]</a><br>"}
 		// END NOT-AUTOFIX
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\ShieldGen\shield_gen.dm:127: t += "<hr>"
 	t += {"<hr>
-		<A href='?src=\ref[src]'>Refresh</A> 
+		<A href='?src=\ref[src]'>Refresh</A>
 		<A href='?src=\ref[src];close=1'>Close</A><BR>"}
-	// END AUTOFIX
 	user << browse(t, "window=shield_generator;size=500x800")
 	user.set_machine(src)
 
@@ -177,7 +183,8 @@
 		average_field_strength = 0
 
 /obj/machinery/shield_gen/Topic(href, href_list[])
-	..()
+	if(!isAI(usr) && usr.z != z) return 1
+	if(..()) return 1
 	if( href_list["close"] )
 		usr << browse(null, "window=shield_generator")
 		usr.unset_machine()
@@ -274,14 +281,15 @@
 		del covered_turfs
 
 		for(var/mob/M in view(5,src))
-			M << "\icon[src] You hear heavy droning start up."
+			to_chat(M, "[bicon(src)] You hear heavy droning start up.")
 	else
 		for(var/obj/effect/energy_field/D in field)
 			field.Remove(D)
-			del D
+			qdel (D)
+			D = null
 
 		for(var/mob/M in view(5,src))
-			M << "\icon[src] You hear heavy droning fade out."
+			to_chat(M, "[bicon(src)] You hear heavy droning fade out.")
 
 //grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()

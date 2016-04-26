@@ -12,58 +12,8 @@
  * Banhammer
  */
 /obj/item/weapon/banhammer/attack(mob/M as mob, mob/user as mob)
-	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
-
-/*
- * Sword
- */
-/obj/item/weapon/melee/energy/sword/IsShield()
-	if(active)
-		return 1
-	return 0
-
-/obj/item/weapon/melee/energy/sword/New()
-	_color = pick("red","blue","green","purple")
-
-/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You accidentally cut yourself with [src]."
-		user.take_organ_damage(5,5)
-	active = !active
-	if (active)
-		force = 30
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass1"
-		else
-			icon_state = "sword[_color]"
-		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
-	else
-		force = 3
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass0"
-		else
-			icon_state = "sword0"
-		w_class = 2
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
-	add_fingerprint(user)
-	return
-
-/obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
-	..()
-	if(istype(W, /obj/item/weapon/melee/energy/sword))
-		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			del(W)
-			del(src)
+	to_chat(M, "<font color='red'><b>You have been banned FOR NO REISIN by [user]<b></font>")
+	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
 
 /*
  * Classic Baton
@@ -73,14 +23,17 @@
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
 	item_state = "classic_baton"
-	flags = FPRINT | TABLEPASS
+	origin_tech = "combat=3"
+	mech_flags = MECH_SCAN_FAIL
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You club yourself over the head."
+	if ((M_CLUMSY in user.mutations) && prob(50))
+		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -95,15 +48,15 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 */
-	if (user.a_intent == "hurt")
+	if (user.a_intent == I_HURT)
 		if(!..()) return
 		playsound(get_turf(src), "swing_hit", 50, 1, -1)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+		if (M.stuttering < 8 && (!(M_HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been beaten with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if (O.client)	O.show_message("<span class='danger'>[M] has been beaten with \the [src] by [user]!</span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 	else
 		playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
@@ -118,7 +71,7 @@
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been stunned with \the [src] by [user]!</B>", 1, "\red You hear someone fall", 2)
+			if (O.client)	O.show_message("<span class='danger'>[M] has been stunned with \the [src] by [user]!</span>", 1, "<span class='warning'>You hear someone fall</span>", 2)
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton
@@ -127,7 +80,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
 	item_state = "telebaton_0"
-	flags = FPRINT | TABLEPASS
+	origin_tech = "combat=2"
+	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = 2
 	force = 3
@@ -137,42 +91,56 @@
 /obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
 	on = !on
 	if(on)
-		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
-		"\red You extend the baton.",\
-		"You hear an ominous click.")
+		user.visible_message("<span class='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",\
+		"<span class='warning'>You extend the baton.</span>",\
+		"You hear an ominous click.",\
+		"<span class='notice'>[user] extends their fishing rod.</span>",\
+		"<span class='notice'>You extend the fishing rod.</span>",\
+		"You hear a balloon exploding.")
+
 		icon_state = "telebaton_1"
 		item_state = "telebaton_1"
 		w_class = 4
 		force = 15//quite robust
-		attack_verb = list("smacked", "struck", "slapped")
+		attack_verb = list("smacks", "strikes", "slaps")
 	else
-		user.visible_message("\blue [user] collapses their telescopic baton.",\
-		"\blue You collapse the baton.",\
-		"You hear a click.")
-		icon_state = "telebaton_0"
-		item_state = "telebaton_0"
-		w_class = 2
-		force = 3//not so robust now
-		attack_verb = list("hit", "punched")
+		user.visible_message("<span class='notice'>[user] collapses their telescopic baton.</span>",\
+		"<span class='notice'>You collapse the baton.</span>",\
+		"You hear a click.",\
+		"<span class='warning'>[user] collapses their fishing rod.</span>",\
+		"<span class='warning'>You collapse the fishing rod.</span>",\
+		"You hear a balloon exploding.")
+
+		icon_state = initial(icon_state)
+		item_state = initial(item_state)
+		w_class = initial(w_class)
+		force = initial(force) //not so robust now
+		attack_verb = list("hits", "punches")
 	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
-	if(blood_overlay)							//updates blood overlay, if any
-		overlays.Cut()//this might delete other item overlays as well but eeeeeeeh
+	if(!blood_overlays["[type][icon_state]"])
+		generate_blood_overlay()
+	if(blood_overlay)
+		overlays -= blood_overlay
+	blood_overlay = blood_overlays["[type][icon_state]"]
+	blood_overlay.color = blood_color
+	overlays += blood_overlay
 
-		var/icon/I = new /icon(src.icon, src.icon_state)
-		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
-		blood_overlay = I
-
-		overlays += blood_overlay
-
-	return
+/obj/item/weapon/melee/telebaton/generate_blood_overlay()
+	if(blood_overlays["[type][icon_state]"]) //Unless someone makes a wicked typepath this will never cause a problem
+		return
+	var/icon/I = new /icon(icon, icon_state)
+	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+	blood_overlays["[type][icon_state]"] = image(I)
 
 /obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
-			user << "\red You club yourself over the head."
+		if ((M_CLUMSY in user.mutations) && prob(50))
+			user.simple_message("<span class='warning'>You club yourself over the head.</span>",
+				"<span class='danger'>The fishing rod goes mad!</span>")
+
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -180,7 +148,7 @@
 			else
 				user.take_organ_damage(2*force)
 			return
-		if (user.a_intent == "hurt")
+		if (user.a_intent == I_HURT)
 			if(!..()) return
 			if(!isrobot(target))
 				playsound(get_turf(src), "swing_hit", 50, 1, -1)
@@ -193,7 +161,10 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			src.add_fingerprint(user)
-			target.visible_message("\red <B>[target] has been stunned with \the [src] by [user]!</B>")
+
+			target.visible_message("<span class='danger'>[target] has been stunned with \the [src] by [user]!</span>",\
+				drugged_message="<span class='notice'>[user] smacks [target] with the fishing rod!</span>")
+
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
@@ -208,27 +179,13 @@
  */
 //Most of the other special functions are handled in their own files.
 
-/obj/item/weapon/melee/energy/sword/green
-	New()
-		_color = "green"
+/obj/item/weapon/melee/energy/sword/green/New()
+	..()
+	_color = "green"
 
-/obj/item/weapon/melee/energy/sword/red
-	New()
-		_color = "red"
-
-/obj/item/weapon/melee/energy/blade/New()
-	spark_system = new /datum/effect/effect/system/spark_spread()
-	spark_system.set_up(5, 0, src)
-	spark_system.attach(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/dropped()
-	del(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/proc/throw()
-	del(src)
-	return
+/obj/item/weapon/melee/energy/sword/red/New()
+	..()
+	_color = "red"
 
 /*
  * Energy Axe
@@ -239,44 +196,16 @@
 /obj/item/weapon/melee/energy/axe/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The axe is now energised."
+		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = 5
+		src.sharpness = 1.5
 	else
-		user << "\blue The axe can now be concealed."
-		src.force = 40
-		src.icon_state = "axe0"
-		src.w_class = 5
+		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
+		src.force = initial(src.force)
+		src.icon_state = initial(src.icon_state)
+		src.w_class = initial(src.w_class)
+		src.sharpness = initial(src.sharpness)
 	src.add_fingerprint(user)
-	return
-
-
-/*
- * Energy Shield
- */
-/obj/item/weapon/shield/energy/IsShield()
-	if(active)
-		return 1
-	else
-		return 0
-
-/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You beat yourself in the head with [src]."
-		user.take_organ_damage(5)
-	active = !active
-	if (active)
-		force = 10
-		icon_state = "eshield[active]"
-		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
-	else
-		force = 3
-		icon_state = "eshield[active]"
-		w_class = 1
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
-	add_fingerprint(user)
 	return

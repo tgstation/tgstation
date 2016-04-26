@@ -1,9 +1,10 @@
 /mob/living/silicon/robot/updatehealth()
 	if(status_flags & GODMODE)
-		health = 200
+		health = maxHealth
 		stat = CONSCIOUS
 		return
-	health = 200 - (getBruteLoss() + getFireLoss())
+
+	health = maxHealth - (getBruteLoss() + getFireLoss())
 	return
 
 /mob/living/silicon/robot/getBruteLoss()
@@ -32,12 +33,13 @@
 	else
 		heal_overall_damage(0, -amount)
 
-/mob/living/silicon/robot/proc/get_damaged_components(var/brute, var/burn)
+/mob/living/silicon/robot/proc/get_damaged_components(var/brute, var/burn, var/destroyed = 0)
 	var/list/datum/robot_component/parts = list()
 	for(var/V in components)
 		var/datum/robot_component/C = components[V]
-		if(C.installed == 1) if((brute && C.brute_damage) || (burn && C.electronics_damage))
-			parts += C
+		if(C.installed == 1 || (C.installed == -1 && destroyed))
+			if((brute && C.brute_damage) || (burn && C.electronics_damage) || (!C.toggled) || (!C.powered && C.toggled))
+				parts += C
 	return parts
 
 /mob/living/silicon/robot/proc/get_damageable_components()
@@ -48,6 +50,7 @@
 	return rval
 
 /mob/living/silicon/robot/proc/get_armour()
+
 
 	if(!components.len) return 0
 	var/datum/robot_component/C = components["armour"]
@@ -77,11 +80,11 @@
 		cell.charge -= cost
 		if(cell.charge <= 0)
 			cell.charge = 0
-			src << "\red Your shield has overloaded!"
+			to_chat(src, "<span class='warning'>Your shield has overloaded!</span>")
 		else
 			brute -= absorb_brute
 			burn -= absorb_burn
-			src << "\red Your shield absorbs some of the impact!"
+			to_chat(src, "<span class='warning'>Your shield absorbs some of the impact!</span>")
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)
@@ -122,11 +125,11 @@
 		cell.charge -= cost
 		if(cell.charge <= 0)
 			cell.charge = 0
-			src << "\red Your shield has overloaded!"
+			to_chat(src, "<span class='warning'>Your shield has overloaded!</span>")
 		else
 			brute -= absorb_brute
 			burn -= absorb_burn
-			src << "\red Your shield absorbs some of the impact!"
+			to_chat(src, "<span class='warning'>Your shield absorbs some of the impact!</span>")
 
 	var/datum/robot_component/armour/A = get_armour()
 	if(A)

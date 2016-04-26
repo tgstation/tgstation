@@ -60,6 +60,7 @@ var/savefile/Banlist
 
 /proc/LoadBans()
 
+
 	Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
 
@@ -95,6 +96,7 @@ var/savefile/Banlist
 
 /proc/AddBan(ckey, computerid, reason, bannedby, temp, minutes, address)
 
+
 	var/bantimestamp
 
 	if (temp)
@@ -103,17 +105,17 @@ var/savefile/Banlist
 
 	Banlist.cd = "/base"
 	if ( Banlist.dir.Find("[ckey][computerid]") )
-		usr << text("\red Ban already exists.")
+		to_chat(usr, text("<span class='warning'>Ban already exists.</span>"))
 		return 0
 	else
 		Banlist.dir.Add("[ckey][computerid]")
 		Banlist.cd = "/base/[ckey][computerid]"
-		Banlist["key"] << ckey
-		Banlist["id"] << computerid
-		Banlist["ip"] << address
-		Banlist["reason"] << reason
+		Banlist["key"]      << ckey
+		Banlist["id"]       << computerid
+		Banlist["ip"]       << address
+		Banlist["reason"]   << reason
 		Banlist["bannedby"] << bannedby
-		Banlist["temp"] << temp
+		Banlist["temp"]     << temp
 		if (temp)
 			Banlist["minutes"] << bantimestamp
 	return 1
@@ -165,7 +167,7 @@ var/savefile/Banlist
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
+	//var/dat = "<HR><B>Unban Player:</B> <span class='warning'>(U) = Unban , (E) = Edit Ban<span class='good'>(Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 ></span></span>"
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		count++
@@ -185,16 +187,14 @@ var/savefile/Banlist
 		dat += text("<tr><td><A href='?src=[ref];unbanf=[key][id]'>(U)</A><A href='?src=[ref];unbane=[key][id]'>(E)</A> Key: <B>[key]</B></td><td>ComputerID: <B>[id]</B></td><td>IP: <B>[ip]</B></td><td> [expiry]</td><td>(By: [by])</td><td>(Reason: [reason])</td></tr>")
 
 
-	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\NewBan.dm:187: dat += "</table>"
 	dat += {"</table>
 		<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"}
-	// END AUTOFIX
 	usr << browse(dat, "window=unbanp;size=875x400")
 
 //////////////////////////////////// DEBUG ////////////////////////////////////
 
 /proc/CreateBans()
+
 
 	UpdateTime()
 
@@ -214,10 +214,10 @@ var/savefile/Banlist
 			Banlist.dir.Add("[last]trashid[i]")
 			Banlist.cd = "/base/[last]trashid[i]"
 			Banlist["key"] << last
-		Banlist["id"] << "trashid[i]"
-		Banlist["reason"] << "Trashban[i]."
-		Banlist["temp"] << a
-		Banlist["minutes"] << CMinutes + rand(1,2000)
+		Banlist["id"]       << "trashid[i]"
+		Banlist["reason"]   << "Trashban[i]."
+		Banlist["temp"]     << a
+		Banlist["minutes"]  << CMinutes + rand(1,2000)
 		Banlist["bannedby"] << "trashmin"
 		last = "trash[i]"
 

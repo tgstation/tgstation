@@ -16,8 +16,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	var/holder_type = null // The holder type; used to make sure that the holder is the correct type.
 	var/wire_count = 0 // Max is 16
 	var/wires_status = 0 // BITFLAG OF WIRES
+	var/check_wires = 0
 
 	var/list/wires = list()
+	var/list/wire_names = null
 	var/list/signallers = list()
 
 	var/table_options = " align='center'"
@@ -46,6 +48,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
 
+/datum/wires/Destroy()
+	if(holder)
+		holder = null
+
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
@@ -64,9 +70,9 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 		src.wires[colour] = index
 		//wires = shuffle(wires)
 
-
 /datum/wires/proc/Interact(var/mob/living/user)
-
+	if(!istype(user))
+		return 0
 	var/html = null
 	if(holder && CanUse(user))
 		html = GetInteractWindow()
@@ -79,6 +85,9 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
 	popup.open()
 
+/datum/wires/proc/GetWireName(var/i)
+	return wire_names["[i]"]
+
 /datum/wires/proc/GetInteractWindow()
 	var/html = "<div class='block'>"
 	html += "<h3>Exposed Wires</h3>"
@@ -86,7 +95,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 	for(var/colour in wires)
 		html += "<tr>"
-		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font></td>"
+		html += "<td[row_options1]><font color='[colour]'>[capitalize(colour)]</font>"
+		if(check_wires && wire_names && wires[colour])
+			html += " ([GetWireName(wires[colour])])"
+		html += "</td>"
 		html += "<td[row_options2]>"
 		html += "<A href='?src=\ref[src];action=1;cut=[colour]'>[IsColourCut(colour) ? "Mend" :  "Cut"]</A>"
 		html += " <A href='?src=\ref[src];action=1;pulse=[colour]'>Pulse</A>"
@@ -105,18 +117,18 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/obj/item/I = L.get_active_hand()
 			holder.add_hiddenprint(L)
 			if(href_list["cut"]) // Toggles the cut/mend status
-				if(istype(I, /obj/item/weapon/wirecutters))
+				if(iswirecutter(I))
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
 				else
-					L << "<span class='error'>You need wirecutters!</span>"
+					to_chat(L, "<span class='error'>You need wirecutters!</span>")
 
 			else if(href_list["pulse"])
 				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
 				else
-					L << "<span class='error'>You need a multitool!</span>"
+					to_chat(L, "<span class='error'>You need a multitool!</span>")
 
 			else if(href_list["attach"])
 				var/colour = href_list["attach"]
@@ -129,10 +141,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 				// Attach
 				else
 					if(istype(I, /obj/item/device/assembly/signaler))
-						L.drop_item()
-						Attach(colour, I)
+						if(L.drop_item(I))
+							Attach(colour, I)
 					else
-						L << "<span class='error'>You need a remote signaller!</span>"
+						to_chat(L, "<span class='error'>You need a remote signaller!</span>")
 
 
 
@@ -244,6 +256,7 @@ var/const/POWER = 8
 
 
 /datum/wires/proc/Pulse(var/obj/item/device/assembly/signaler/S)
+
 
 	for(var/colour in signallers)
 		if(S == signallers[colour])

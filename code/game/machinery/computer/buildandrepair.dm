@@ -3,12 +3,17 @@
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
-	name = "Computer-frame"
+	name = "Computer Frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/weapon/circuitboard/circuit = null
 //	weight = 1.0E8
+
+/obj/structure/computerframe/Destroy()
+	..()
+	qdel(circuit)
+	circuit = null
 
 /obj/item/weapon/circuitboard
 	density = 0
@@ -17,11 +22,12 @@
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "circuitboard"
 	origin_tech = "programming=2"
-	g_amt=2000 // Recycle glass
+	starting_materials = list(MAT_GLASS = 2000) // Recycle glass only
+	w_type = RECYK_ELECTRONIC
 
-	var/id = null
+	var/id_tag = null
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -30,7 +36,6 @@
 	var/list/records = null
 	var/frame_desc = null
 	var/contain_parts = 1
-
 
 /obj/item/weapon/circuitboard/message_monitor
 	name = "Circuit board (Message Monitor)"
@@ -92,8 +97,14 @@
 	name = "Circuit board (Atmosphere siphon control)"
 	build_path = "/obj/machinery/computer/atmosphere/siphonswitch"
 /obj/item/weapon/circuitboard/air_management
-	name = "Circuit board (Atmospheric monitor)"
+	name = "Circuit board (Atmospheric General Monitor)"
 	build_path = "/obj/machinery/computer/general_air_control"
+/obj/item/weapon/circuitboard/atmos_automation
+	name = "Circuit board (Atmospherics Automation)"
+	build_path = "/obj/machinery/computer/general_air_control/atmos_automation"
+/obj/item/weapon/circuitboard/large_tank_control
+	name = "Circuit board (Atmospheric Tank Control)"
+	build_path = "/obj/machinery/computer/general_air_control/large_tank_control"
 /obj/item/weapon/circuitboard/injector_control
 	name = "Circuit board (Injector control)"
 	build_path = "/obj/machinery/computer/general_air_control/fuel_injection"
@@ -103,24 +114,28 @@
 /obj/item/weapon/circuitboard/pod
 	name = "Circuit board (Massdriver control)"
 	build_path = "/obj/machinery/computer/pod"
+/obj/item/weapon/circuitboard/pod/deathsquad
+	name = "Circuit board (Deathsquad Massdriver control)"
+	build_path = "/obj/machinery/computer/pod/deathsquad"
 /obj/item/weapon/circuitboard/robotics
 	name = "Circuit board (Robotics Control)"
 	build_path = "/obj/machinery/computer/robotics"
 	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/cloning
-	name = "Circuit board (Cloning)"
+	name = "Circuit board (Cloning Console)"
 	build_path = "/obj/machinery/computer/cloning"
 	origin_tech = "programming=3;biotech=3"
 /obj/item/weapon/circuitboard/arcade
 	name = "Circuit board (Arcade)"
 	build_path = "/obj/machinery/computer/arcade"
 	origin_tech = "programming=1"
+	var/list/game_data = list()
 /obj/item/weapon/circuitboard/turbine_control
 	name = "Circuit board (Turbine control)"
 	build_path = "/obj/machinery/computer/turbine_computer"
 /obj/item/weapon/circuitboard/solar_control
 	name = "Circuit board (Solar Control)"  //name fixed 250810
-	build_path = "/obj/machinery/power/solar_control"
+	build_path = "/obj/machinery/power/solar/control"
 	origin_tech = "programming=2;powerstorage=2"
 /obj/item/weapon/circuitboard/powermonitor
 	name = "Circuit board (Power Monitor)"  //name fixed 250810
@@ -147,6 +162,12 @@
 /obj/item/weapon/circuitboard/rdconsole/robotics
 	name = "Circuit Board (Robotics R&D Console)"
 	build_path = "/obj/machinery/computer/rdconsole/robotics"
+/obj/item/weapon/circuitboard/rdconsole/mechanic
+	name = "Circuit Board (Mechanic R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/mechanic"
+/obj/item/weapon/circuitboard/rdconsole/pod
+	name = "Circuit Board (Pod Bay R&D Console)"
+	build_path = "/obj/machinery/computer/rdconsole/pod"
 
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
@@ -171,10 +192,6 @@
 	build_path = "/obj/machinery/computer/supplycomp"
 	origin_tech = "programming=3"
 	var/contraband_enabled = 0
-/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
-	build_path = "/obj/machinery/computer/research_shuttle"
-	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = "/obj/machinery/computer/operating"
@@ -202,15 +219,13 @@
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
+	origin_tech = "programming=3;biotech=4"
 
-/obj/item/weapon/circuitboard/mining_shuttle
-	name = "Circuit board (Mining Shuttle)"
-	build_path = "/obj/machinery/computer/mining_shuttle"
-	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
-	build_path = "/obj/machinery/computer/research_shuttle"
-	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/shuttle_control
+	name = "Circuit board (Shuttle Control)"
+	build_path = "/obj/machinery/computer/shuttle_control"
+	origin_tech = "programming=3;engineering=2"
+
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = "/obj/machinery/computer/HolodeckControl"
@@ -231,144 +246,194 @@
 	name = "Circuit board (Bhangmeter)"
 	build_path = "/obj/machinery/computer/bhangmeter"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/telesci_computer
+	name = "Circuit board (Telepad Control Console)"
+	build_path = "/obj/machinery/computer/telescience"
+	origin_tech = "programming=3;bluespace=2"
+/obj/item/weapon/circuitboard/forensic_computer
+	name = "Circuit board (Forensics Console)"
+	build_path = "/obj/machinery/computer/forensic_scanning"
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/pda_terminal
+	name = "Circuit board (PDA Terminal)"
+	build_path = "/obj/machinery/computer/pda_terminal"
+	origin_tech = "programming=2"
 
+/obj/item/weapon/circuitboard/smeltcomp
+	name = "Circuit board (Ore Processing Console)"
+	build_path = "/obj/machinery/computer/smelting"
+	origin_tech = "programming=2;materials=2"
 
-/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/device/multitool))
-		var/catastasis = src.contraband_enabled
-		var/opposite_catastasis
-		if(catastasis)
-			opposite_catastasis = "STANDARD"
-			catastasis = "BROAD"
-		else
-			opposite_catastasis = "BROAD"
-			catastasis = "STANDARD"
+/obj/item/weapon/circuitboard/stacking_machine_console
+	name = "Circuit board (Stacking Machine Console)"
+	build_path = "/obj/machinery/computer/stacking_unit"
+	origin_tech = "programming=2;materials=2"
 
-		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
-		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
-			if("Switch to STANDARD","Switch to BROAD")
-				src.contraband_enabled = !src.contraband_enabled
-
-			if("Cancel")
-				return
-			else
-				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+/obj/item/weapon/circuitboard/attackby(obj/item/I as obj, mob/user as mob)
+	if(issolder(I))
+		var/obj/item/weapon/solder/S = I
+		if(S.remove_fuel(2,user))
+			solder_improve(user)
+	else if(iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.remove_fuel(1,user))
+			var/obj/item/weapon/circuitboard/blank/B = new /obj/item/weapon/circuitboard/blank(src.loc)
+			to_chat(user, "<span class='notice'>You melt away the circuitry, leaving behind a blank.</span>")
+			playsound(B.loc, 'sound/items/Welder.ogg', 30, 1)
+			if(user.get_inactive_hand() == src)
+				user.before_take_item(src)
+				user.put_in_hands(B)
+			qdel(src)
+			return
 	return
+
+/obj/item/weapon/circuitboard/proc/solder_improve(mob/user as mob)
+	to_chat(user, "<span class='warning'>You fiddle with a few random fuses but can't find a routing that doesn't short the board.</span>")
+	return
+
+/obj/item/weapon/circuitboard/supplycomp/solder_improve(mob/user as mob)
+	to_chat(user, "<span class='notice'>You [contraband_enabled ? "" : "un"]connect the mysterious fuse.</span>")
+	contraband_enabled = !contraband_enabled
+	return
+
+/obj/item/weapon/circuitboard/security/solder_improve(mob/user as mob)
+	if(istype(src,/obj/item/weapon/circuitboard/security/advanced))
+		return ..()
+	if(istype(src,/obj/item/weapon/circuitboard/security/engineering))
+		return ..()
+	else
+		to_chat(user, "<span class='notice'>You locate a short that makes the feed circuitry more elegant.</span>")
+		var/obj/item/weapon/circuitboard/security/advanced/A = new /obj/item/weapon/circuitboard/security/advanced(src.loc)
+		user.put_in_hands(A)
+		qdel(src)
+		return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
-					user << "\blue You wrench the frame into place."
+				if(do_after(user, src, 5) && state == 0)
+					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
 				return 1
-			if(istype(P, /obj/item/weapon/weldingtool))
+			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
-					user << "The welding tool must be on to complete this task."
+					to_chat(user, "The welding tool must be on to complete this task.")
 					return 1
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, src, 10) && state == 0)
 					if(!src || !WT.isOn()) return
-					user << "\blue You deconstruct the frame."
-					new /obj/item/stack/sheet/metal( src.loc, 5 )
-					del(src)
+					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
+					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
+					M.amount = 5
+					state = -1
+					qdel(src)
 				return 1
 		if(1)
-			if(istype(P, /obj/item/weapon/wrench))
+			if(iswrench(P))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
-					user << "\blue You unfasten the frame."
+				if(do_after(user, src, 20) && state == 1)
+					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
 				return 1
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
+					if(!user.drop_item(B, src)) return
+
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You place the circuit board inside the frame."
+					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					src.icon_state = "1"
 					src.circuit = P
-					user.drop_item()
-					P.loc = src
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return 1
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the circuit board into place."
+				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 				return 1
-			if(istype(P, /obj/item/weapon/crowbar) && circuit)
+			if(iscrowbar(P) && circuit)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the circuit board."
+				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
 				src.circuit = null
 				return 1
 		if(2)
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the circuit board."
+				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
 				return 1
-			if(istype(P, /obj/item/weapon/cable_coil))
-				if(P:amount >= 5)
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
-						if(P)
-							P:amount -= 5
-							if(!P:amount) del(P)
-							user << "\blue You add cables to the frame."
-							src.state = 3
-							src.icon_state = "3"
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
+				if (C.amount < 5)
+					to_chat(user, "<span class='warning'>You need at least 5 lengths of cable coil for this!</span>")
+					return 1
+
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if (do_after(user, src, 20) && state == 2 && C.amount >= 5)
+					C.use(5)
+					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+					src.state = 3
+					src.icon_state = "3"
+
 				return 1
 		if(3)
-			if(istype(P, /obj/item/weapon/wirecutters))
+			if(iswirecutter(P))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
-				A.amount = 5
+				getFromPool(/obj/item/stack/cable_coil, get_turf(src), 5)
 				return 1
 
-			if(istype(P, /obj/item/stack/sheet/glass))
-				if(P:amount >= 2)
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
-						if(P)
-							P:use(2)
-							user << "\blue You put in the glass panel."
-							src.state = 4
-							src.icon_state = "4"
+			if(istype(P, /obj/item/stack/sheet/glass/glass))
+				var/obj/item/stack/sheet/glass/glass/G = P
+				if (G.amount < 2)
+					to_chat(user, "<span class='warning'>You need at least 2 sheets of glass for this!</span>")
+					return 1
+
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if(do_after(user, src, 20) && state == 3 && G.amount >= 2)
+					G.use(2)
+					to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
+					src.state = 4
+					src.icon_state = "4"
+
 				return 1
 		if(4)
-			if(istype(P, /obj/item/weapon/crowbar))
+			if(iscrowbar(P))
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
-				new /obj/item/stack/sheet/glass( src.loc, 2 )
+				new /obj/item/stack/sheet/glass/glass( src.loc, 2 )
 				return 1
-			if(istype(P, /obj/item/weapon/screwdriver))
+			if(isscrewdriver(P))
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
+				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
+				if(circuit.id_tag) B:id_tag = circuit.id_tag
 				if(circuit.records) B:records = circuit.records
 				if(circuit.frequency) B:frequency = circuit.frequency
 				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
 					var/obj/machinery/computer/supplycomp/SC = B
 					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
 					SC.can_order_contraband = C.contraband_enabled
-				del(src)
+				else if(istype(circuit,/obj/item/weapon/circuitboard/arcade))
+					var/obj/machinery/computer/arcade/arcade = B
+					var/obj/item/weapon/circuitboard/arcade/C = circuit
+					arcade.import_game_data(C)
+				qdel(src)
 				return 1
 	return 0

@@ -30,10 +30,10 @@ BONUS
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3)
-				M << "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>"
+				to_chat(M, "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 			else
 				M.emote("cough")
 				var/obj/item/I = M.get_active_hand()
 				if(I && I.w_class < 3)
-					M.drop_item()
+					M.drop_item(I)
 	return

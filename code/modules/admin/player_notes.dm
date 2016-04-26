@@ -44,7 +44,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	if(!notesfile)	return
 	notesfile.cd = "/[ckey]"
 	notesfile.eof = 1		//move to the end of the buffer
-	notesfile << "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]"
+	to_chat(notesfile, "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]")
 	return
 
 //handles removing entries from the buffer, or removing the entire directory if no start_index is given
@@ -73,7 +73,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 		notesfile.eof = -2		//Move to the start of the buffer and then erase.
 
 		for( var/note in noteslist )
-			notesfile << note
+			to_chat(notesfile, note)
 	else
 		notesfile.cd = "/"
 		if(alert(usr,"Are you sure you want to remove all their notes?","Confirmation","No","Yes - Remove all notes") == "Yes - Remove all notes")
@@ -123,7 +123,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	infos += P
 	info << infos
 
-	message_admins("\blue [key_name_admin(usr)] has edited [key]'s notes.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has edited [key]'s notes.</span>")
 	log_admin("[key_name(usr)] has edited [key]'s notes.")
 
 	del info
@@ -148,7 +148,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	infos.Remove(item)
 	info << infos
 
-	message_admins("\blue [key_name_admin(usr)] deleted one of [key]'s notes.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] deleted one of [key]'s notes.</span>")
 	log_admin("[key_name(usr)] deleted one of [key]'s notes.")
 
 	del info

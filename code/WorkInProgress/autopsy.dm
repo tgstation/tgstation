@@ -7,7 +7,8 @@
 	desc = "Extracts information on wounds."
 	icon = 'icons/obj/autopsy_scanner.dmi'
 	icon_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT
+	siemens_coefficient = 1
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_data_scanner/wdata = list()
@@ -68,7 +69,7 @@
 			else
 				D.organ_names += ", [O.display_name]"
 
-		del D.organs_scanned[O.name]
+		qdel (D.organs_scanned[O.name])
 		D.organs_scanned[O.name] = W.copy()
 
 	for(var/V in O.trace_chemicals)
@@ -79,8 +80,8 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
-		usr << "No."
+	if(usr.isUnconscious() || !(istype(usr,/mob/living/carbon/human)))
+		to_chat(usr, "No.")
 		return
 
 	var/scan_data = ""
@@ -150,7 +151,7 @@
 			scan_data += "<br>"
 
 	for(var/mob/O in viewers(usr))
-		O.show_message("\red \the [src] rattles and prints out a sheet of paper.", 1)
+		O.show_message("<span class='warning'>\the [src] rattles and prints out a sheet of paper.</span>", 1)
 
 	sleep(10)
 
@@ -186,19 +187,19 @@
 		src.wdata = list()
 		src.chemtraces = list()
 		src.timeofdeath = null
-		user << "\red A new patient has been registered.. Purging data for previous patient."
+		to_chat(user, "<span class='warning'>A new patient has been registered.. Purging data for previous patient.</span>")
 
 	src.timeofdeath = M.timeofdeath
 
 	var/datum/organ/external/S = M.get_organ(user.zone_sel.selecting)
 	if(!S)
-		usr << "<b>You can't scan this body part.</b>"
+		to_chat(usr, "<b>You can't scan this body part.</b>")
 		return
 	if(!S.open)
-		usr << "<b>You have to cut the limb open first!</b>"
+		to_chat(usr, "<b>You have to cut the limb open first!</b>")
 		return
 	for(var/mob/O in viewers(M))
-		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
+		O.show_message("<span class='warning'>[user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]</span>", 1)
 
 	src.add_data(S)
 

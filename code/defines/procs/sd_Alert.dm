@@ -66,9 +66,7 @@ Version 1 changes (from version 0):
 #define SD_ALERT_LINKS			4
 #define SD_ALERT_NOVALIDATE		8
 
-proc/sd_Alert(client/who, message, title, buttons = list("Ok"),\
-	default, duration = 0, unfocus = 1, size = "300x200", \
-	table = "width=100% height=100%", style, tag, select, flags = SD_ALERT_SCROLL)
+proc/sd_Alert(client/who, message, title, buttons = list("Ok"),	default, duration = 0, unfocus = 1, size = "300x200", 	table = "width=100% height=100%", style, tag, select, flags = SD_ALERT_SCROLL)
 
 	if(ismob(who))
 		var/mob/M = who
@@ -77,12 +75,16 @@ proc/sd_Alert(client/who, message, title, buttons = list("Ok"),\
 
 	var/sd_alert/T = locate(tag)
 	if(T)
-		if(istype(T)) del(T)
+		if(istype(T))
+			qdel(T)
+			T = null
 		else CRASH("sd_Alert: tag \"[tag]\" is already in use by datum '[T]' (type: [T.type])")
 	T = new(who, tag)
 	if(duration)
 		spawn(duration)
-			if(T) del(T)
+			if(T)
+				qdel(T)
+				T = null
 			return
 	T.Display(message,title,buttons,default,unfocus,size,table,style,select,flags)
 	. = T.Response()
@@ -164,5 +166,5 @@ sd_alert
 				else if(response in validation) validated = 1
 				else response=null
 			else validated = 1
-		spawn(2) del(src)
+		spawn(2) qdel(src)
 		return response

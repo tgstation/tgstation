@@ -33,7 +33,12 @@
 #define ARCHAEO_REMAINS_HUMANOID 32
 #define ARCHAEO_REMAINS_ROBOT 33
 #define ARCHAEO_REMAINS_XENO 34
-#define MAX_ARCHAEO 34
+#define ARCHAEO_MASK 35
+#define ARCHAEO_DICE 36
+#define ARCHAEO_SPACESUIT 37
+#define ARCHAEO_LANCE 38
+#define ARCHAEO_ROULETTE 39
+#define MAX_ARCHAEO 39
 //eggs
 //droppings
 //footprints
@@ -119,6 +124,14 @@
 			return "carbon"
 		if(ARCHAEO_REMAINS_XENO)
 			return "carbon"
+		if(ARCHAEO_MASK)
+			return "mercury"
+		if(ARCHAEO_DICE)
+			return "mercury"
+		if(ARCHAEO_SPACESUIT)
+			return "potassium"
+		if(ARCHAEO_LANCE)
+			return "iron"
 	return "plasma"
 
 //see /turf/unsimulated/mineral/New() in code/modules/mining/mine_turfs.dm
@@ -126,6 +139,7 @@
 	return pick(100;DIGSITE_GARDEN,95;DIGSITE_ANIMAL,90;DIGSITE_HOUSE,85;DIGSITE_TECHNICAL,80;DIGSITE_TEMPLE,75;DIGSITE_WAR)
 
 /proc/get_random_find_type(var/digsite)
+
 
 	var/find_type = 0
 	switch(digsite)
@@ -153,6 +167,7 @@
 			100;ARCHAEO_PEN,\
 			100;ARCHAEO_LIGHTER,\
 			100;ARCHAEO_BOX,\
+			75; ARCHAEO_DICE,\
 			75;ARCHAEO_COIN,\
 			75;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_SHARD,\
@@ -171,6 +186,7 @@
 			75;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_HANDCUFFS,\
 			50;ARCHAEO_BEARTRAP,\
+			25;ARCHAEO_SPACESUIT,\
 			)
 		if(DIGSITE_TEMPLE)
 			find_type = pick(\
@@ -179,6 +195,7 @@
 			100;ARCHAEO_BOWL,\
 			100;ARCHAEO_KNIFE,\
 			100;ARCHAEO_CRYSTAL,\
+			75;ARCHAEO_MASK,\
 			75;ARCHAEO_CULTBLADE,\
 			50;ARCHAEO_SOULSTONE,\
 			50;ARCHAEO_UNKNOWN,\
@@ -197,6 +214,7 @@
 			75;ARCHAEO_LASER,\
 			75;ARCHAEO_KATANA,\
 			75;ARCHAEO_CLAYMORE,\
+			75;ARCHAEO_LANCE,\
 			50;ARCHAEO_UNKNOWN,\
 			50;ARCHAEO_CULTROBES,\
 			50;ARCHAEO_CULTBLADE,\
@@ -205,6 +223,28 @@
 			25;ARCHAEO_TOOL\
 			)
 	return find_type
+
+var/list/responsive_carriers = list( \
+	"carbon", \
+	"potassium", \
+	"hydrogen", \
+	"nitrogen", \
+	"mercury", \
+	"iron", \
+	"chlorine", \
+	"phosphorus", \
+	"plasma")
+
+var/list/finds_as_strings = list( \
+	"Trace organic cells", \
+	"Long exposure particles", \
+	"Trace water particles", \
+	"Crystalline structures", \
+	"Metallic derivative", \
+	"Metallic composite", \
+	"Metamorphic/igneous rock composite", \
+	"Metamorphic/sedimentary rock composite", \
+	"Anomalous material" )
 
 #undef ARCHAEO_BOWL
 #undef ARCHAEO_URN
@@ -240,6 +280,10 @@
 #undef ARCHAEO_REMAINS_HUMANOID
 #undef ARCHAEO_REMAINS_ROBOT
 #undef ARCHAEO_REMAINS_XENO
+#undef ARCHAEO_MASK
+#undef ARCHAEO_DICE
+#undef ARCHAEO_SPACESUIT
+#undef ARCHAEO_LANCE
 
 #undef DIGSITE_GARDEN
 #undef DIGSITE_ANIMAL

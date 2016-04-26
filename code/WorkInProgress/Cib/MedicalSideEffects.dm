@@ -6,6 +6,7 @@
 /datum/medical_effect/proc/cure(mob/living/carbon/human/H)
 
 
+
 // MOB HELPERS
 // ===========
 /mob/living/carbon/human/var/list/datum/medical_effect/side_effects = list()
@@ -71,7 +72,8 @@
 
 /datum/medical_effect/headache/cure(mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("alkysine") || H.reagents.has_reagent("tramadol"))
-		H << "\red Your head stops throbbing.."
+//		to_chat(H, "<span class='warning'>Your head stops throbbing..</span>")// Halt spam.
+
 		return 1
 	return 0
 
@@ -93,7 +95,7 @@
 
 /datum/medical_effect/bad_stomach/cure(mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("anti_toxin"))
-		H << "\red Your stomach feels a little better now.."
+		to_chat(H, "<span class='warning'>Your stomach feels a little better now..</span>")
 		return 1
 	return 0
 
@@ -118,7 +120,7 @@
 
 /datum/medical_effect/cramps/cure(mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("inaprovaline"))
-		H << "\red The cramps let up.."
+		to_chat(H, "<span class='warning'>The cramps let up..</span>")
 		return 1
 	return 0
 
@@ -143,6 +145,6 @@
 
 /datum/medical_effect/itch/cure(mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("inaprovaline"))
-		H << "\red The itching stops.."
+		to_chat(H, "<span class='warning'>The itching stops..</span>")
 		return 1
 	return 0

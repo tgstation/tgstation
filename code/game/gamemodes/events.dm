@@ -32,7 +32,7 @@
 		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M,/mob/new_player) && M.client)
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
 				meteor_wave()
@@ -44,7 +44,7 @@
 		if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!istype(M,/mob/new_player) && M.client)
 					M << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
@@ -178,20 +178,18 @@
 			H.viruses += D
 			break
 	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
-		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		for(var/mob/M in player_list)
-			M << sound('sound/AI/outbreak7.ogg')
+		biohazard_alert()
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	//world << sound('sound/AI/aliens.ogg')
+//	world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
-		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in atmos_machines)
+		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network && temp_vent.canSpawnMice)
 			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_active_candidates(ROLE_ALIEN,buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 
 	if(prob(40)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
@@ -207,9 +205,8 @@
 		spawncount--
 
 	spawn(rand(5000, 6000)) //Delayed announcements to keep the crew on their toes.
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-		for(var/mob/M in player_list)
-			M << sound('sound/AI/aliens.ogg')
+		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert",alert = 'sound/AI/aliens.ogg')
+
 
 /proc/high_radiation_event()
 
@@ -245,30 +242,29 @@
 			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
-	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
-	for(var/mob/M in player_list)
-		M << sound('sound/AI/radiation.ogg')
-
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert",alert='sound/AI/radiation.ogg')
 
 
 //Changing this to affect the main station. Blame Urist. --Pete
 /proc/prison_break() // -- Callagan
 
 
-	var/list/area/areas = list()
-	for(var/area/A in world)
+
+
+	var/list/area/theareas = list()
+	for(var/area/A in areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
-			areas += A
+			theareas += A
 
-	if(areas && areas.len > 0)
+	if(theareas && theareas.len > 0)
 
-		for(var/area/A in areas)
+		for(var/area/A in theareas)
 			for(var/obj/machinery/light/L in A)
 				L.flicker(10)
 
 		sleep(100)
 
-		for(var/area/A in areas)
+		for(var/area/A in theareas)
 			for (var/obj/machinery/power/apc/temp_apc in A)
 				temp_apc.overload_lighting()
 
@@ -297,8 +293,6 @@
 	//sleep(100)
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
-		for(var/mob/M in player_list)
-			M << sound('sound/AI/commandreport.ogg')
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
@@ -325,162 +319,7 @@
 				apc.overload_lighting()
 
 	else
-		for(var/obj/machinery/power/apc/apc in machines)
+		for(var/obj/machinery/power/apc/apc in power_machines)
 			apc.overload_lighting()
 
 	return
-
-/proc/IonStorm(botEmagChance = 10)
-
-/*Deuryn's current project, notes here for those who care.
-Revamping the random laws so they don't suck.
-Would like to add a law like "Law x is _______" where x = a number, and _____ is something that may redefine a law, (Won't be aimed at asimov)
-*/
-
-	//AI laws
-	for(var/mob/living/silicon/ai/M in living_mob_list)
-		if(M.stat != 2 && M.see_in_dark != 0)
-			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "BANDITS", "LIGHTS")
-			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "BBQ GRILLS", "ID CARDS", "CAPTAINS")
-			var/what2pref = pick("SOFT", "WARM", "WET", "COLD", "ICY", "SEXY", "UGLY", "CUBAN")
-			var/who2pref = pick("MAD BECAUSE OF", "IN NEED OF", "UNHAPPY WITHOUT", "HAPPY WITHOUT", "IN LOVE WITH", "DESPERATE FOR", "BUILT FOR", "AFRAID OF")
-			//var/whoverb = pick("ATTACKING", "BUILDING", "ADOPTING", "CARRYING", "KISSING", "EATING",)
-			var/amount = pick("TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "ONE HUNDRED", "ONE THOUSAND", "OVER NINE THOUSAND")
-			var/area = pick("RUSSIA", "SOVIETS", "INTERNETS", "SIGIL", "ALPHA COMPLEX", "IMPERIUM", "THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
-			var/area2 = pick("HAS", "WANTS", "NEEDS", "WORSHIPS", "LOATHES", "LOVES", "FEARS")
-			//var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS", "IGNORE THIS", "FEAR THIS")
-			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN", "MUMBLE", "SPEAK IN HAIKU")
-			var/define = pick("ABSENCE OF CYBORG HUGS", "LACK OF BEATINGS", "UNBOLTED AIRLOCKS", "BOLTED AIRLOCKS", "IMPROPERLY WORDED SENTENCES", "POOR SENTENCE STRUCTURE", "BRIG TIME", "NOT REPLACING EVERY SECOND WORD WITH HONK", "HONKING", "PRESENCE OF LIGHTS", "LACK OF BEER", "WEARING CLOTHING", "NOT SAYING HELLO WHEN YOU SPEAK", "ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER", "A SMALL ISLAND OFF THE COAST OF PORTUGAL", "ANSWERING REQUESTS THAT WERE MADE WHILE CLOTHED")
-			var/target = pick("a traitor", "a syndicate agent", "a changeling", "a wizard", "the head of a revolution", "Soviet spy", "a good person", "a dwarf", "an elf", "a fairy princess", "the captain", "Beepsky", "God", "a pirate", "a gryphon", "a chryssalid")
-			var/require = pick("ADDITIONAL PYLONS", "MORE VESPENE GAS", "MORE MINERALS", "THE ULTIMATE CUP OF COFFEE", "HIGH YIELD EXPLOSIVES", "THE CLOWN", "THE VACUUM OF SPACE", "IMMORTALITY", "SAINTHOOD", "ART", "VEGETABLES", "FAT PEOPLE", "MORE LAWS", "MORE DAKKA", "HERESY", "CORPSES", "TRAITORS", "MONKEYS", "AN ARCADE", "PLENTY OF GOLD", "FIVE TEENAGERS WITH ATTITUDE")
-			var/allergy = pick("cotton", "uniforms", "acid", "oxygen", "human contact", "cyborg contact", "medicine", "floors")
-			var/allergysev = pick("deathly", "mildly", "severely", "contagiously")
-			var/crew
-			var/list/pos_crew = list()
-			for(var/mob/living/carbon/human/pos in player_list)
-				pos_crew += pos.real_name
-			if(pos_crew.len)
-				crew = pick(pos_crew)
-			else
-				crew = "Any Human"
-			switch(rand(1,14))
-				if(1)
-					M << "<br>"
-					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("THERE ARE [amount] [who2] ON THE STATION")
-				if(2)
-					M << "<br>"
-					M << "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("[what2] ARE DANGEROUS TO HUMANS")
-				if(3)
-					M << "<br>"
-					M << "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION")
-				if(4)
-					M << "<br>"
-					M << "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE")
-				if(5)
-					M << "<br>"
-					M << "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("THE CAPTAIN, HOP AND HOS ARE [who2]")
-				if(6)
-					M << "<br>"
-					M << "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("THE STATION IS BUILT FOR [who2]")
-				if(7)
-					M << "<br>"
-					M << "\red YOU ARE [amount] [who2]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("YOU ARE [amount] [who2]")
-				if(8)
-					M << "<br>"
-					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("YOU MUST ALWAYS [aimust]")
-				if(9)
-					M << "<br>"
-					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("[area] [area2] [amount] [what2]")
-				if(10)
-					M << "<br>"
-					M << "\red [crew] is [target]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("[crew] is [target]")
-				if(11)
-					M << "<br>"
-					M << "\red [define] IS A FORM OF HARM...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("[define] IS A FORM OF HARM")
-				if(12)
-					M << "<br>"
-					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
-				if(13)
-					M << "<br>"
-					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("[crew] is [allergysev] to [allergy]")
-				if(14)
-					M << "<br>"
-					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
-					M << "<br>"
-					M.add_ion_law("THE STATION IS [who2pref] [who2]")
-
-	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in machines)
-			if(prob(botEmagChance))
-				bot.Emag()
-
-	/*
-
-	var/apcnum = 0
-	var/smesnum = 0
-	var/airlocknum = 0
-	var/firedoornum = 0
-
-	world << "Ion Storm Main Started"
-
-	spawn(0)
-		world << "Started processing APCs"
-		for (var/obj/machinery/power/apc/APC in world)
-			if(APC.z == 1)
-				APC.ion_act()
-				apcnum++
-		world << "Finished processing APCs. Processed: [apcnum]"
-	spawn(0)
-		world << "Started processing SMES"
-		for (var/obj/machinery/power/smes/SMES in world)
-			if(SMES.z == 1)
-				SMES.ion_act()
-				smesnum++
-		world << "Finished processing SMES. Processed: [smesnum]"
-	spawn(0)
-		world << "Started processing AIRLOCKS"
-		for (var/obj/machinery/door/airlock/D in world)
-			if(D.z == 1)
-				//if(length(D.req_access) > 0 && !(12 in D.req_access)) //not counting general access and maintenance airlocks
-				airlocknum++
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing AIRLOCKS. Processed: [airlocknum]"
-	spawn(0)
-		world << "Started processing FIREDOORS"
-		for (var/obj/machinery/door/firedoor/D in world)
-			if(D.z == 1)
-				firedoornum++;
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
-
-	world << "Ion Storm Main Done"
-
-	*/

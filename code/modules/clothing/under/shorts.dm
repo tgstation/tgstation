@@ -2,8 +2,8 @@
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	gender = PLURAL
-	flags = FPRINT | TABLEPASS
-	body_parts_covered = LOWER_TORSO
+	flags = FPRINT  | ONESIZEFITSALL
+	body_parts_covered = LEGS
 
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"

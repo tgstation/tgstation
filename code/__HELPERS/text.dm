@@ -15,10 +15,20 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(var/t as text)
-	var/sanitized_text = replacetext(t, "'", "\\'")
-	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
-	return sanitized_text
+	//var/sanitized_text = replacetext(t, "'", "\\'")
+	//sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 
+	var/sqltext = dbcon.Quote(t)
+	//testing("sanitizeSQL(): BEFORE copytext(): [sqltext]")
+	sqltext = copytext(sqltext, 2, length(sqltext))//Quote() adds quotes around input, we already do that
+	//testing("sanitizeSQL(): AFTER copytext(): [sqltext]")
+	return sqltext
+
+/*
+/mob/verb/SanitizeTest(var/t as text)
+	to_chat(src, "IN: [t]")
+	to_chat(src, "OUT: [sanitizeSQL(t)]")
+*/
 /*
  * Text sanitization
  */
@@ -33,6 +43,29 @@
 			t = copytext(t, 1, index) + copytext(t, index+1)
 			index = findtext(t, char)
 	return t
+
+/proc/strip_html_properly(input = "")
+	// these store the position of < and > respectively
+	var/opentag = 0
+	var/closetag = 0
+
+	while (input)
+		opentag = rfindtext(input, "<")
+		closetag = findtext(input, ">", opentag + 1)
+
+		if (!opentag || !closetag)
+			break
+
+		input = copytext(input, 1, opentag) + copytext(input, closetag + 1)
+
+	return input
+
+/proc/rfindtext(Haystack, Needle, Start = 1, End = 0)
+	var/i = findtext(Haystack, Needle, Start, End)
+
+	while (i)
+		. = i
+		i = findtext(Haystack, Needle, i + 1, End)
 
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
@@ -57,19 +90,38 @@
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/proc/reverse_text(txt)
+  var/i = length(txt)+1
+  . = ""
+  while(--i)
+    . += copytext(txt,i,i+1)
 
-//Returns null if there is any bad text in the string
-/proc/reject_bad_text(var/text, var/max_length=512)
-	if(length(text) > max_length)	return			//message too long
-	var/non_whitespace = 0
-	for(var/i=1, i<=length(text), i++)
-		switch(text2ascii(text,i))
-			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 255)	return			//rejects weird letters like �
-			if(0 to 31)		return			//more weird stuff
-			if(32)			continue		//whitespace
-			else			non_whitespace = 1
-	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
+/*
+ * returns null if there is any bad text in the string
+ */
+/proc/reject_bad_text(const/text, var/max_length = 512)
+	var/text_length = length(text)
+
+	if(text_length > max_length)
+		return // message too long
+
+	var/non_whitespace = FALSE
+
+	for(var/i = 1 to text_length)
+		switch(text2ascii(text, i))
+			if(62, 60, 92, 47)
+				return // rejects the text if it contains these bad characters: <, >, \ or /
+			if(127 to 255)
+				return // rejects weird letters like �
+			if(0 to 31)
+				return // more weird stuff
+			if(32)
+				continue //whitespace
+			else
+				non_whitespace = TRUE
+
+	if(non_whitespace)
+		return text // only accepts the text if it has some non-spaces
 
 // Used to get a sanitized input.
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
@@ -135,7 +187,7 @@
 	if(last_char_group == 1)
 		t_out = copytext(t_out,1,length(t_out))	//removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai"))	//prevents these common metagamey names
+	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai","plating"))	//prevents these common metagamey names
 		if(cmptext(t_out,bad_name))	return	//(not case sensitive)
 
 	return t_out
@@ -195,32 +247,10 @@ proc/checkhtml(var/t)
  * Text modification
  */
 /proc/replacetext(text, find, replacement)
-	var/find_len = length(find)
-	if(find_len < 1)	return text
-	. = ""
-	var/last_found = 1
-	while(1)
-		var/found = findtext(text, find, last_found, 0)
-		. += copytext(text, last_found, found)
-		if(found)
-			. += replacement
-			last_found = found + find_len
-			continue
-		return .
+	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
-	var/find_len = length(find)
-	if(find_len < 1)	return text
-	. = ""
-	var/last_found = 1
-	while(1)
-		var/found = findtextEx(text, find, last_found, 0)
-		. += copytext(text, last_found, found)
-		if(found)
-			. += replacement
-			last_found = found + find_len
-			continue
-		return .
+	return list2text(text2listEx(text, find), replacement)
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -287,36 +317,14 @@ proc/checkhtml(var/t)
 		return message
 	return copytext(message, 1, length + 1)
 
-/*
- * Misc
- */
-
-/proc/stringsplit(txt, character)
-	var/cur_text = txt
-	var/last_found = 1
-	var/found_char = findtext(cur_text,character)
-	var/list/list = list()
-	if(found_char)
-		var/fs = copytext(cur_text,last_found,found_char)
-		list += fs
-		last_found = found_char+length(character)
-		found_char = findtext(cur_text,character,last_found)
-	while(found_char)
-		var/found_string = copytext(cur_text,last_found,found_char)
-		last_found = found_char+length(character)
-		list += found_string
-		found_char = findtext(cur_text,character,last_found)
-	list += copytext(cur_text,last_found,length(cur_text)+1)
-	return list
-
 /proc/stringmerge(var/text,var/compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
 //This is used for fingerprints
 	var/newtext = text
-	if(lentext(text) != lentext(compare))
+	if(length(text) != length(compare))
 		return 0
-	for(var/i = 1, i < lentext(text), i++)
+	for(var/i = 1, i < length(text), i++)
 		var/a = copytext(text,i,i+1)
 		var/b = copytext(compare,i,i+1)
 //if it isn't both the same letter, or if they are both the replacement character
@@ -336,14 +344,137 @@ proc/checkhtml(var/t)
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i <= lentext(text), i++)
+	for(var/i = 1, i <= length(text), i++)
 		var/a = copytext(text,i,i+1)
 		if(a == character)
 			count++
 	return count
 
-/proc/reverse_text(var/text = "")
-	var/new_text = ""
-	for(var/i = length(text); i > 0; i--)
-		new_text += copytext(text, i, i+1)
-	return new_text
+/**
+ * Format number with thousands seperators.
+ * @param number Number to format.
+ * @param sep seperator to use
+ */
+/proc/format_num(var/number, var/sep=",")
+	var/c="" // Current char
+	var/list/parts = text2list("[number]",".")
+	var/origtext = "[parts[1]]"
+	var/len      = length(origtext)
+	var/offset   = len % 3
+	for(var/i=1;i<=len;i++)
+		c = copytext(origtext,i,i+1)
+		. += c
+		if((i%3)==offset && i!=len)
+			. += sep
+	if(parts.len==2)
+		. += ".[parts[2]]"
+
+var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "ZW", "YW")
+/proc/format_watts(var/number)
+	if(number<0) return "-[format_watts(number)]"
+	if(number==0) return "0 W"
+
+	var/i=1
+	while (round(number/1000) >= 1)
+		number/=1000
+		i++
+	return "[format_num(number)] [watt_suffixes[i]]"
+
+
+// Custom algorithm since stackoverflow is full of complete garbage and even the MS algorithm sucks.
+// Uses recursion, in places.
+// (c)2015 Rob "N3X15" Nelson <nexisentertainment@gmail.com>
+// Available under the MIT license.
+
+var/list/number_digits=list(
+	"one",
+	"two",
+	"three",
+	"four",
+	"five",
+	"six",
+	"seven",
+	"eight",
+	"nine",
+	"ten",
+	"eleven",
+	"twelve",
+	"thirteen",
+	"fourteen",
+	"fifteen",
+	"sixteen",
+	"seventeen",
+	"eighteen",
+	"nineteen",
+)
+
+var/list/number_tens=list(
+	null, // 0 :V
+	null, // teens, special case
+	"twenty",
+	"thirty",
+	"forty",
+	"fifty",
+	"sixty",
+	"seventy",
+	"eighty",
+	"ninety"
+)
+
+var/list/number_units=list(
+	null, // Don't yell units
+	"thousand",
+	"million",
+	"billion"
+)
+
+/proc/num2words(var/number, var/zero="zero", var/minus="minus", var/hundred="hundred", var/list/digits=number_digits, var/list/tens=number_tens, var/list/units=number_units, var/recursion=0)
+	if(!isnum(number))
+		warning("num2words fed a non-number: [number]")
+		return list()
+	number=round(number)
+	//testing("num2words [recursion] ([number])")
+	if(number == 0)
+		return list(zero)
+
+	if(number < 0)
+		return list(minus) + num2words(abs(number), zero, minus, hundred, digits, tens, units, recursion+1)
+
+	var/list/out=list()
+	if(number < 1000)
+		var/hundreds = round(number/100)
+		//testing(" ([recursion]) hundreds=[hundreds]")
+		if(hundreds)
+			out += num2words(hundreds, zero, minus, hundred, digits, tens, units, recursion+1) + list(hundred)
+			number %= 100
+
+	if(number < 100)
+		// Teens
+		if(number <= 19)
+			out.Add(digits[number])
+		else
+			var/tens_place = tens[round(number/10)+1]
+			//testing(" ([recursion]) tens_place=[round(number/10)+1] = [tens_place]")
+			if(tens_place!=null)
+				out.Add(tens_place)
+			number = number%10
+			//testing(" ([recursion]) number%10+1 = [number+1] = [digits[number+1]]")
+			if(number>0)
+				out.Add(digits[number])
+	else
+		var/i=1
+		while(round(number) > 0)
+			var/unit_number = number%1000
+			//testing(" ([recursion]) [number]%1000 = [unit_number] ([i])")
+			if(unit_number > 0)
+				if(units[i])
+					//testing(" ([recursion]) units = [units[i]]")
+					out = list(units[i]) + out
+				out = num2words(unit_number, zero, minus, hundred, digits, tens, units, recursion+1) + out
+			number /= 1000
+			i++
+	//testing(" ([recursion]) out=list("+list2text(out,", ")+")")
+	return out
+
+///mob/verb/test_num2words(var/number as num)
+//	to_chat(usr, "\"[list2text(num2words(number), " ")]\"")

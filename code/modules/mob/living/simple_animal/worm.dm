@@ -28,9 +28,9 @@
 	max_co2 = 0
 	max_tox = 0
 
-	a_intent = "harm" //so they don't get pushed around
+	a_intent = I_HURT //so they don't get pushed around
 
-	wall_smash = 1
+	environment_smash = 2
 
 	speed = -1
 
@@ -96,7 +96,7 @@
 
 		return
 
-	Del() //if a chunk a destroyed, make a new worm out of the split halves
+	Destroy() //if a chunk a destroyed, make a new worm out of the split halves
 		if(previous)
 			previous.Detach()
 		..()
@@ -121,7 +121,7 @@
 
 		return
 
-	proc/update_icon() //only for the sake of consistency with the other update icon procs
+	update_icon() //only for the sake of consistency with the other update icon procs
 		if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 			if(previous) //midsection
 				icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" //see 3 lines below
@@ -138,7 +138,8 @@
 			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 				var/turf/simulated/wall/wall = target
 				wall.ChangeTurf(/turf/simulated/floor)
-				new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
+				var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src)
+				M.amount = flatPlasmaValue
 				return 1
 		else if(istype(target,/atom/movable))
 			if(istype(target,/mob) || eatingDuration >= 50) //5 ticks to eat stuff like airlocks
@@ -168,7 +169,7 @@
 		if(die)
 			newHead.Die()
 
-		del(src)
+		qdel(src)
 
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
@@ -177,16 +178,19 @@
 					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/oldStack = stomachContent
 						new /obj/item/stack/sheet/mineral/plasma(src, oldStack.amount)
-						del(oldStack)
+						qdel(oldStack)
+						oldStack = null
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent
 					new /obj/item/stack/sheet/mineral/plasma(src, oldItem.w_class)
-					del(oldItem)
+					qdel(oldItem)
+					oldItem = null
 					continue
 				else
 					new /obj/item/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
-					del(stomachContent)
+					qdel(stomachContent)
+					stomachContent = null
 					continue
 
 		if(previous)

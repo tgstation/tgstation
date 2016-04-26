@@ -1,7 +1,6 @@
 Gigglesworth
 Honkel the III
 Goose McSunny
-Mr. Shoe
 Toodles Sharperton
 Dinky Doodle
 Honkerbelle
@@ -21,7 +20,6 @@ Freckle
 Honker
 Bonker
 Skiddle
-Scootaloo
 Sprinkledinkle
 Ronnie Pace
 Miss Stockings
@@ -35,3 +33,4 @@ Sparkle
 Giggles
 Jingle
 Candy
+Shiggy Diggintons

@@ -16,7 +16,7 @@
 	..()
 	processing_objects.Add(src)
 
-/obj/item/device/beacon_locator/Del()
+/obj/item/device/beacon_locator/Destroy()
 	processing_objects.Remove(src)
 	..()
 
@@ -42,7 +42,7 @@
 					if(processing_objects.Find(src))
 						//scan radios in the world to try and find one
 						var/cur_dist = 999
-						for(var/obj/item/device/radio/beacon/R in world)
+						for(var/obj/item/beacon/R in beacons)
 							if(R.z == src.z && R.frequency == src.frequency)
 								var/check_dist = get_dist(src,R)
 								if(check_dist < cur_dist)
@@ -52,9 +52,9 @@
 						scan_ticks = 0
 						var/turf/T = get_turf(src)
 						if(target_radio)
-							T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")] happily.")
+							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] happily.")
 						else
-							T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")] sadly.")
+							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] sadly.")
 		else
 			icon_state = "pinoff"
 

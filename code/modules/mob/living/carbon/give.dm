@@ -1,92 +1,54 @@
-mob/living/carbon/verb/give()
+/mob/living/carbon/verb/give()
 	set category = "IC"
 	set name = "Give"
-	set src in view(1)
-	if(src.stat == 2 || usr.stat == 2|| src.client == null)
+	set src in oview(1) //Cannot handle giving shit to mobs on your own tile, but it's a small, small loss
+
+	give_item(usr)
+
+/mob/living/carbon/proc/give_item(mob/living/carbon/user)
+
+
+	if(src.stat == 2 || user.stat == 2 || src.client == null)
 		return
-	if(src == usr)
-		usr << "I feel stupider, suddenly."
-		return
+	if(src.handcuffed)
+		to_chat(user, "<span class='warning'>Those hands are cuffed right now.</span>")
+		return //Can't receive items while cuffed
 	var/obj/item/I
-	if(!usr.hand && usr.r_hand == null)
-		usr << "You don't have anything in your right hand to give to [src.name]"
+	if(user.get_active_hand() == null)
+		to_chat(user, "You don't have anything in your [user.hand ? "left hand" : "right hand"] to give to [src].")
 		return
-	if(usr.hand && usr.l_hand == null)
-		usr << "You don't have anything in your left hand to give to [src.name]"
-		return
-	if(usr.hand)
-		I = usr.l_hand
-	else if(!usr.hand)
-		I = usr.r_hand
+	I = user.get_active_hand()
 	if(!I)
 		return
-	if(src.r_hand == null)
-		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
+	if(src == user) //Shouldn't happen
+		to_chat(user, "<span class='warning'>You tried to give yourself \the [I], but you didn't want it.</span>")
+		return
+	if(src.r_hand == null || src.l_hand == null)
+		switch(alert(src, "[user] wants to give you \a [I]?", , "Yes", "No"))
 			if("Yes")
 				if(!I)
 					return
-				if(!check_can_reach(usr,src))
-					usr << "You need to keep in reaching distance."
-					src << "[usr.name] moved too far away."
+				if(!Adjacent(user))
+					to_chat(user, "<span class='warning'>You need to stay still while giving an object.</span>")
+					to_chat(src, "<span class='warning'>[user] moved away.</span>")//What an asshole
+
 					return
-				if((usr.hand && usr.l_hand != I) || (!usr.hand && usr.r_hand != I))
-					usr << "You need to keep the item in your active hand."
-					src << "[usr.name] seem to have given up on giving \the [I.name] to you."
+				if(user.get_active_hand() != I)
+					to_chat(user, "<span class='warning'>You need to keep the item in your hand.</span>")
+					to_chat(src, "<span class='warning'>[user] has put \the [I] away!</span>")
 					return
-				if(src.r_hand != null)
-					if(src.l_hand == null)
-						usr.drop_item()
-						src.l_hand = I
-					else
-						src << "Your hands are full."
-						usr << "Their hands are full."
-						return
-				else
-					usr.drop_item()
-					src.r_hand = I
-				I.loc = src
-				I.layer = 20
-				I.add_fingerprint(src)
-				src.update_inv_l_hand()
-				src.update_inv_r_hand()
-				usr.update_inv_l_hand()
-				usr.update_inv_r_hand()
-				src.visible_message("[usr.name] handed \the [I.name] to [src.name].")
+				if(src.r_hand != null && src.l_hand != null)
+					to_chat(src, "<span class='warning'>Your hands are full.</span>")
+					to_chat(user, "<span class='warning'>Their hands are full.</span>")
+					return
+				if(!user.drop_item(I))
+					src << "<span class='warning'>[user] can't let go of \the [I]!</span>"
+					user << "<span class='warning'>You can't seem to let go of \the [I].</span>"
+					return
+
+				src.put_in_hands(I)
+				src.visible_message("<span class='notice'>[user] handed \the [I] to [src].</span>")
 			if("No")
-				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
-	else if(src.l_hand == null)
-		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
-			if("Yes")
-				if(!I)
-					return
-				if(!check_can_reach(usr,src))
-					usr << "You need to keep in reaching distance."
-					src << "[usr.name] moved too far away."
-					return
-				if((usr.hand && usr.l_hand != I) || (!usr.hand && usr.r_hand != I))
-					usr << "You need to keep the item in your active hand."
-					src << "[usr.name] seem to have given up on giving \the [I.name] to you."
-					return
-				if(src.l_hand != null)
-					if(src.r_hand == null)
-						usr.drop_item()
-						src.r_hand = I
-					else
-						src << "Your hands are full."
-						usr << "Their hands are full."
-						return
-				else
-					usr.drop_item()
-					src.l_hand = I
-				I.loc = src
-				I.layer = 20
-				I.add_fingerprint(src)
-				src.update_inv_l_hand()
-				src.update_inv_r_hand()
-				usr.update_inv_l_hand()
-				usr.update_inv_r_hand()
-				src.visible_message("[usr.name] handed \the [I.name] to [src.name].")
-			if("No")
-				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
+				src.visible_message("<span class='warning'>[user] tried to hand \the [I] to [src] but \he didn't want it.</span>")
 	else
-		usr << "[src.name]'s hands are full."
+		to_chat(user, "<span class='warning'>[src]'s hands are full.</span>")

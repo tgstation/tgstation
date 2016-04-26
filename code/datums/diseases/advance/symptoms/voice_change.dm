@@ -31,17 +31,11 @@ Bonus
 		var/mob/living/carbon/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("Your throat hurts.", "You clear your throat.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("Your throat hurts.", "You clear your throat.")]</span>")
 			else
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/random_name = ""
-					switch(H.gender)
-						if(MALE)
-							random_name = pick(first_names_male)
-						else
-							random_name = pick(first_names_female)
-					random_name += " [pick(last_names)]"
+					var/random_name = H.species.makeName(H.gender,H)
 					H.SetSpecialVoice(random_name)
 
 	return

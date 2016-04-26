@@ -1,5 +1,5 @@
 "a" = (/turf/space,/area)
-"b" = (/turf/simulated/wall/impassable_rock,/area/awaymission)
+"b" = (/turf/simulated/wall/mineral/sandstone,/area/awaymission)
 "c" = (/turf/simulated/floor/plating/snow,/area/awaymission)
 "d" = (/turf/simulated/wall/r_wall,/area/awaymission)
 "e" = (/obj/structure/flora/tree/pine,/obj/structure/flora/tree/pine,/turf/simulated/floor/plating/snow,/area/awaymission)

@@ -1,77 +1,75 @@
 /mob/living/carbon/human/gib()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
 	for(var/datum/organ/external/E in src.organs)
-		if(istype(E, /datum/organ/external/chest))
+		if(istype(E, /datum/organ/external/chest) || istype(E, /datum/organ/external/groin)) //Really bad stuff happens when either get removed
 			continue
-		// Only make the limb drop if it's not too damaged
+		//Only make the limb drop if it's not too damaged
 		if(prob(100 - E.get_damage()))
-			// Override the current limb status and don't cause an explosion
-			E.droplimb(1,1)
+			//Override the current limb status and don't cause an explosion
+			E.droplimb(1, 1)
 
-	flick("gibbed-h", animation)
-	hgibs(loc, viruses, dna)
-
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-h", sleeptime = 15)
+	hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
+	qdel(src)
 
 /mob/living/carbon/human/dust()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+	dropBorers(1)
 
-	flick("dust-h", animation)
-	new /obj/effect/decal/remains/human(loc)
+	if(istype(src, /mob/living/carbon/human/manifested))
+		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-hm", sleeptime = 15)
+	else
+		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-h", sleeptime = 15)
 
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	var/datum/organ/external/head_organ = get_organ("head")
+	if(head_organ.status & ORGAN_DESTROYED)
+		new /obj/effect/decal/remains/human/noskull(loc)
+	else
+		new /obj/effect/decal/remains/human(loc)
+	qdel(src)
 
+/mob/living/carbon/human/Destroy()
+	if(mind && species && (species.name == "Manifested") && (mind in ticker.mode.cult))//manifested ghosts are removed from the cult once their bodies are destroyed
+		ticker.mode.update_cult_icons_removed(mind)
+		ticker.mode.cult -= mind
+
+	species = null
+
+	if(decapitated)
+		decapitated.origin_body = null
+		decapitated = null
+
+	..()
+
+	for(var/obj/Overlays/O in obj_overlays)
+		returnToPool(O)
+
+	obj_overlays = null
 
 /mob/living/carbon/human/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)		healths.icon_state = "health5"
+	if(stat == DEAD)
+		return
+	if(healths)		healths.icon_state = "health7"
 	stat = DEAD
 	dizziness = 0
-	jitteriness = 0
+	remove_jitter()
 
-	//Handle brain slugs.
-	var/datum/organ/external/head = get_organ("head")
-	var/mob/living/simple_animal/borer/B
-	if(head && istype(head))
-		for(var/I in head.implants)
-			if(istype(I,/mob/living/simple_animal/borer))
-				B = I
-	if(B)
-		if(!B.ckey && ckey && B.controlling)
-			B.ckey = ckey
-			B.controlling = 0
-		if(B.host_brain.ckey)
-			ckey = B.host_brain.ckey
-			B.host_brain.ckey = null
-			B.host_brain.name = "host brain"
-			B.host_brain.real_name = "host brain"
-
-		verbs -= /mob/living/carbon/proc/release_control
+	//If we have brain worms, dump 'em.
+	var/mob/living/simple_animal/borer/B=has_brain_worms()
+	if(B && B.controlling)
+		to_chat(src, "<span class='danger'>Your host has died.  You reluctantly release control.</span>")
+		to_chat(B.host_brain, "<span class='danger'>Just before your body passes, you feel a brief return of sensation.  You are now in control...  And dead.</span>")
+		do_release_control(0)
 
 	//Check for heist mode kill count.
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist) ) )
@@ -79,7 +77,7 @@
 		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
 			var/mob/living/carbon/human/V = LAssailant
 			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
-		//world << "Vox kills: [vox_kills]"
+//		to_chat(world, "Vox kills: [vox_kills]")
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 	if(ishuman(LAssailant))
 		var/mob/living/carbon/human/H=LAssailant
@@ -87,27 +85,26 @@
 			H.mind.kills += "[name] ([ckey])"
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
-
-		//For ninjas exploding when they die.
-		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
-			src << browse(null, "window=spideros")//Just in case.
-			var/location = loc
-			explosion(location, 1, 2, 3, 4)
+		emote("deathgasp") //Let the world KNOW WE ARE DEAD
 
 		update_canmove()
 		if(client)	blind.layer = 0
 
-	tod = worldtime2text()		//weasellos time of death patch
-	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+	tod = worldtime2text() //Weasellos time of death patch
+	if(mind)
+		mind.store_memory("Time of death: [tod]", 0)
+		if(!suiciding) //Cowards don't count
+			score["deadcrew"]++ //Someone died at this point, and that's terrible
 	if(ticker && ticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	species.handle_death(src)
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(SKELETON in src.mutations)	return
+	if(SKELETON in src.mutations)
+		return
 
 	if(f_style)
 		f_style = "Shaved"
@@ -122,21 +119,22 @@
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
-
+	if(M_HUSK in mutations)
+		return
 	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+		f_style = "Shaved" //We only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
 	if(h_style)
 		h_style = "Bald"
 	update_hair(0)
 
-	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	mutations.Add(M_HUSK)
+	status_flags |= DISFIGURED	//Makes them unknown without fucking up other stuff like admintools
 	update_body(0)
 	update_mutantrace()
+	vessel.remove_reagent("blood",vessel.get_reagent_amount("blood"))
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations |= M_NOCLONE
 	return

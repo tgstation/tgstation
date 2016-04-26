@@ -1,5 +1,6 @@
 /proc/bsi_cast_ray(icon/I, list/start, list/end)
 
+
 	if(abs(start[1] - end[1]) > abs(start[2] - end[2]))
 		var/dist = abs(start[1] - end[1]) * 2
 
@@ -140,6 +141,7 @@
 		return mask
 
 /proc/generate_bluespace_icon(icon/source, state)
+
 
 	var/icon/mask = bsi_generate_mask(source, state)
 

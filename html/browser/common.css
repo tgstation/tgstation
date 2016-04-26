@@ -25,6 +25,22 @@ a, a:link, a:visited, a:active, .linkOn, .linkOff
 	cursor:default;
 }
 
+a.nobg, a.nobg:link, a.nobg:visited, a.nobg:active
+{ 
+	color: #ffffff; 
+	text-decoration: none;
+	background: transparent;
+	border: none;
+	padding: 0px;
+	margin: 0px;
+	cursor:default;
+	font-weight:bold;
+}
+a.nobg:hover 
+{ 
+	color:#40628a;
+}
+
 a:hover 
 { 
 	color: #40628a;

@@ -101,7 +101,7 @@
 	if (istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead/)) return
 	if (istype(user, /mob/living/silicon/robot))
 		if (get_dist(user, src) > 1)
-			user << "\red You can't reach [src] from here."
+			to_chat(user, "<span class='warning'>You can't reach [src] from here.</span>")
 			return
 	if(ishuman(user) && istype(user:gloves,/obj/item/clothing/gloves))
 		return ..()
@@ -164,9 +164,9 @@
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0) del src
+		if(1.0) qdel (src)
 		if(2.0)
-			if (prob(50)) del src
+			if (prob(50)) qdel (src)
 			if (my_effect.trigger == "force") src.Artifact_Activate()
 			if (my_effect.trigger == "heat") src.Artifact_Activate()
 		if(3.0)
@@ -227,7 +227,7 @@
 /obj/machinery/artifact/proc/Artifact_Contact(var/mob/user as mob)
 	// Trigger Code
 	if (istype (user,/mob/living/carbon/) && my_effect.trigger == "touch" && !src.activated) src.Artifact_Activate()
-	else if (my_effect.trigger != "touch" && !src.activated) user << "Nothing happens."
+	to_chat(else if (my_effect.trigger != "touch" && !src.activated) user, "Nothing happens.")
 
 	if (my_effect.effectmode == "contact" && src.activated && src.charged)
 		my_effect.DoEffect(user)

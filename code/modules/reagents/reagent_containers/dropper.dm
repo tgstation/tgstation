@@ -9,99 +9,121 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1,2,3,4,5)
 	volume = 5
-	var/filled = 0
+	// List of types that can be injected regardless of the CONTAINEROPEN flag
+	// TODO Remove snowflake
+	var/injectable_types = list(/obj/item/weapon/reagent_containers/food,
+	                            /obj/item/slime_extract,
+	                            /obj/item/clothing/mask/cigarette,
+	                            /obj/item/weapon/storage/fancy/cigarettes,
+	                            /obj/item/weapon/implantcase/chem,
+	                            /obj/item/weapon/reagent_containers/pill/time_release)
 
-	afterattack(obj/target, mob/user , flag)
-		if(!target.reagents) return
+/obj/item/weapon/reagent_containers/dropper/update_icon()
+	icon_state = "dropper[(reagents.total_volume ? 1 : 0)]"
 
-		if(filled)
+/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag) return
 
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
-				return
-
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
-				user << "\red You cannot directly fill this object."
-				return
-
-			var/trans = 0
-
-			if(ismob(target))
-				if(istype(target , /mob/living/carbon/human))
-					var/mob/living/carbon/human/victim = target
-
-					var/obj/item/safe_thing = null
-					if( victim.wear_mask )
-						if ( victim.wear_mask.flags & MASKCOVERSEYES )
-							safe_thing = victim.wear_mask
-					if( victim.head )
-						if ( victim.head.flags & MASKCOVERSEYES )
-							safe_thing = victim.head
-					if(victim.glasses)
-						if ( !safe_thing )
-							safe_thing = victim.glasses
-
-					if(safe_thing)
-						if(!safe_thing.reagents)
-							safe_thing.create_reagents(100)
-						trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
-
-						for(var/mob/O in viewers(world.view, user))
-							O.show_message(text("\red <B>[] tries to squirt something into []'s eyes, but fails!</B>", user, target), 1)
-						spawn(5)
-							src.reagents.reaction(safe_thing, TOUCH)
-
-
-
-						user << "\blue You transfer [trans] units of the solution."
-						if (src.reagents.total_volume<=0)
-							filled = 0
-							icon_state = "dropper[filled]"
-						return
-
-
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("\red <B>[] squirts something into []'s eyes!</B>", user, target), 1)
-				src.reagents.reaction(target, TOUCH)
-
-				var/mob/living/M = target
-
-				var/list/injected = list()
-				for(var/datum/reagent/R in src.reagents.reagent_list)
-					injected += R.name
-				var/contained = english_list(injected)
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
-				msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-				if(!iscarbon(user))
-					M.LAssailant = null
-				else
-					M.LAssailant = user
-
-			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the solution."
-			if (src.reagents.total_volume<=0)
-				filled = 0
-				icon_state = "dropper[filled]"
-
-		else
-
-			if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-				user << "\red You cannot directly remove reagents from [target]."
-				return
-
-			if(!target.reagents.total_volume)
-				user << "\red [target] is empty."
-				return
-
-			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-
-			user << "\blue You fill the dropper with [trans] units of the solution."
-
-			filled = 1
-			icon_state = "dropper[filled]"
-
+	if(!target.reagents)
+		if(reagents.total_volume)
+			if(istype(target, /obj/machinery/artifact))
+				reagents.clear_reagents()
+				to_chat(user, "<span class='notice'>You squirt the solution onto the [target]!</span>")
+				update_icon()
 		return
+	var/list/bad_reagents = reagents.get_bad_reagent_names() // Used for logging
+	if(reagents.total_volume)
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[target] is full.</span>")
+			return
+
+		if(!target.is_open_container() && !ismob(target) && !is_type_in_list(target, injectable_types)) //You can inject humans and food but you cant remove the shit.
+			to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
+			return
+
+		var/trans = 0
+
+		if(ismob(target))
+			if(ishuman(target))
+				var/mob/living/carbon/human/victim = target
+
+				var/obj/item/safe_thing = victim.get_body_part_coverage(EYES)
+
+				if(safe_thing)
+					if(!safe_thing.reagents)
+						safe_thing.create_reagents(100)
+					trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
+
+					user.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>")
+					spawn(5)
+						src.reagents.reaction(safe_thing, TOUCH)
+					to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
+					update_icon()
+					return
+			user.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>")
+			src.reagents.reaction(target, TOUCH)
+
+			var/mob/living/M = target
+
+			var/list/injected = list()
+			for(var/datum/reagent/R in src.reagents.reagent_list)
+				injected += R.name
+			var/contained = english_list(injected)
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			if(!iscarbon(user))
+				M.LAssailant = null
+			else
+				M.LAssailant = user
+
+		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
+		update_icon()
+
+		// /vg/: Logging transfers of bad things
+		if(istype(target))
+			if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
+				log_reagents(user, src, target, trans, bad_reagents)
+	else
+
+		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
+			to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target].</span>")
+			return
+
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			return
+
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
+			log_reagents(user, src, target, trans, bad_reagents)
+
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution.</span>")
+
+		update_icon()
+
+	return
+
+/obj/item/weapon/reagent_containers/dropper/baster
+	name = "baster"
+	desc = "A specialized tool for precise addition of chemicals."
+	icon_state = "baster"
+	possible_transfer_amounts = list(1,2,3,4,5,10,15)
+	volume = 15
+
+/obj/item/weapon/reagent_containers/dropper/baster/update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/dropper/robodropper
+	name = "Industrial Dropper"
+	desc = "A larger dropper. Transfers 10 units."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "dropper0"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(1,2,3,4,5,6,7,8,9,10)
+	volume = 10
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Droppers. END

@@ -20,7 +20,7 @@
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/epidemic/announce()
-	world << {"<B>The current game mode is - Epidemic!</B><br />
+	to_chat(world, {"<B>The current game mode is - Epidemic!</B><br />)
 		<B>A deadly epidemic is spreading on the station. Find a cure as fast as possible, and keep your distance to anyone who speaks in a hoarse voice!</B>"}
 
 
@@ -29,7 +29,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/epidemic/pre_setup()
 	doctors = 0
-	for(var/mob/new_player/player in world)
+	for(var/mob/new_player/player in mob_list)
 		if(player.mind.assigned_role in list("Chief Medical Officer","Medical Doctor"))
 			doctors++
 			break
@@ -56,10 +56,10 @@
 		<B>* ELIMINATE THREAT WITH EXTREME PREJUDICE. [virus_name] IS HIGHLY CONTAGIOUS. INFECTED CREW MEMBERS MUST BE QUARANTINED IMMEDIATELY.</B><BR>
 		<B>* [station_name()] is under QUARANTINE. Any vessels outbound from [station_name()] will be tracked down and destroyed.</B><BR>
 		<B>* The existence of [virus_name] is highly confidential. To prevent a panic, only high-ranking staff members are authorized to know of its existence. Crew members that illegally obtained knowledge of [virus_name] are to be neutralized.</B><BR>
-		<B>* A cure is to be researched immediately, but NanoTrasen intellectual property must be respected. To prevent knowledge of [virus_name] from falling into unauthorized hands, all medical staff that work with the pathogen must be enhanced with a NanoTrasen loyality implant.</B><BR>"}
+		<B>* A cure is to be researched immediately, but Nanotrasen intellectual property must be respected. To prevent knowledge of [virus_name] from falling into unauthorized hands, all medical staff that work with the pathogen must be enhanced with a Nanotrasen loyality implant.</B><BR>"}
 
 
-	for (var/obj/machinery/computer/communications/comm in world)
+	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper"
@@ -72,16 +72,16 @@
 
 	// add an extra law to the AI to make sure it cooperates with the heads
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
-	for(var/mob/living/silicon/ai/M in world)
+	for(var/mob/living/silicon/ai/M in mob_list)
 		M.add_ion_law(extra_law)
-		M << "\red " + extra_law
+		to_chat(M, "<span class='danger'></span>" + extra_law)
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
 	var/intercepttext = {"<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>
 		<FONT size = 2;color='red'><B>PATHOGEN [virus_name] IS STILL PRESENT ON [station_name()]. IN COMPLIANCE WITH NANOTRASEN LAWS FOR INTERSTELLAR SAFETY, EMERGENCY SAFETY MEASURES HAVE BEEN AUTHORIZED. ALL INFECTED CREW MEMBERS ON [station_name()] ARE TO BE NEUTRALIZED AND DISPOSED OF IN A MANNER THAT WILL DESTROY ALL TRACES OF THE PATHOGEN. FAILURE TO COMPLY WILL RESULT IN IMMEDIATE DESTRUCTION OF [station_name].</B></FONT><BR>
 		<B>CRUISER WILL ARRIVE IN [round(cruiser_seconds()/60)] MINUTES</B><BR>"}
 
-	for (var/obj/machinery/computer/communications/comm in world)
+	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper"
@@ -98,14 +98,14 @@
 
 	// scan the crew for possible infectees
 	var/list/crew = list()
-	for(var/mob/living/carbon/human/H in world) if(H.client)
+	for(var/mob/living/carbon/human/H in mob_list) if(H.client)
 		// heads should not be infected
 		if(H.mind.assigned_role in command_positions) continue
 		crew += H
 
 	if(crew.len < 2)
-		world << "\red There aren't enough players for this mode!"
-		world << "\red Rebooting world in 5 seconds."
+		to_chat(world, "<span class='warning'>There aren't enough players for this mode!</span>")
+		to_chat(world, "<span class='warning'>Rebooting world in 5 seconds.</span>")
 
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
@@ -138,7 +138,7 @@
 	stage = 1
 
 	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(!mixed) send_intercept()
 
 
 	..()
@@ -168,7 +168,7 @@
 /datum/game_mode/epidemic/check_win()
 	var/alive = 0
 	var/sick = 0
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.key && H.stat != 2) alive++
 		if(H.virus2.len && H.stat != 2) sick++
 
@@ -192,13 +192,13 @@
 ///////////////////////////////////////////
 /datum/game_mode/epidemic/proc/crew_lose()
 	ticker.mode:explosion_in_progress = 1
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if(M.client)
 			M << 'sound/machines/Alarm.ogg'
-	world << "\blue<b>Incoming missile detected.. Impact in 10..</b>"
+	to_chat(world, "<span class='danger'>Incoming missile detected.. Impact in 10..</span>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << "\blue<b>[i]..</b>"
+		to_chat(world, "<span class='danger'>[i]..</span>")
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
@@ -216,9 +216,9 @@
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - epidemic cured")
-		world << "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The virus outbreak was contained! The crew wins!</FONT></span>")
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		world << "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>"
+		to_chat(world, "<span class='danger'><FONT size = 3> The crew succumbed to the epidemic!</FONT></span>")
 	..()
 	return 1

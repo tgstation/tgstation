@@ -1,0 +1,94 @@
+<style>
+body {
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+* {
+	border-color: currentColor;
+}
+#skin {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+}
+#mainvsplit {
+	width: 100%;
+	height: calc(100% - 1.5em);
+}
+.byond_map canvas {
+	color: black;
+}
+#input {
+	width: 100%;
+	height: 1.5em;
+}
+.byond_input input {
+	border-width: 1px;
+	border-style: solid;
+}
+#rbuttons {
+	text-align: center;
+	padding: 10px;
+}
+#rbuttons div[byondclass=button] {
+	display: inline-block;
+	margin: 5px; 10px;
+	background-color:#000000;
+}
+</style>
+
+
+<script>
+var defaultSkin = (function(){
+	var panesShown = {};
+	var npanes = 0;
+	return {
+		show: function(id) {
+			if(panesShown[id]) return;
+			panesShown[id] = true;
+			byond('rbutton_'+id).winset({'isVisible':true,'isChecked':true});
+			++npanes;
+			byond('rside').winset({left:'rbuttons'});
+			byond('rpane').winset({left:id});
+		},
+		hide: function(id) {
+			if(!panesShown[id]) return;
+			delete panesShown[id];
+			var button = byond('rbutton_'+id);
+			button.winset({'isVisible':false});
+			if(''+button.winget('isChecked') ==' true') byond('rbutton_text').winset({isChecked:true});
+			var rpane = byond('rpane');
+			if(rpane.winget('left') == id) rpane.winset({left:''});
+			if(!--npanes) byond('rside').winset({left:''});
+		}
+	};
+})();
+</script>
+<body>
+	<div id="mainvsplit" byondclass="child" skinparams="is-vertical=true">
+		<div id="map" byondclass='map'></div>
+		<div id="rside" byondclass="child" skinparams="right=rpane;fit=left">
+			<div id="rpane" byondclass="child" style="width:100%;height:100%;" skinparams="right=output">
+				<div id="output" byondclass='output' isdefault=1></div>
+			</div>	
+		</div>
+	</div>
+	<div id="input" byondclass='input' isdefault=1></div>
+	<div id="rbuttons" byondclass="pane">
+		<div id="rbutton_text" byondclass="button" skinparams="text=Text;command='.skin byond(\'rpane\').winset({left:\'\'})';group=rbutton;isChecked=true"></div>
+		<div id="rbutton_browser" byondclass="button" skinparams="text=Browser;command='.skin byond(\'rpane\').winset({left:\'browser\'})';group=rbutton" style="display:none"></div>
+		<div id="rbutton_info" byondclass="button" skinparams="text=Info;command='.skin byond(\'rpane\').winset({left:\'info\'})';group=rbutton" style="display:none"></div>
+		<div id="rbutton_special" byondclass="button" skinparams="text=Special;command='.skin byond(\'rpane\').winset({left:\'window1\'})';group=rbutton" style="display:none"></div>
+	</div>
+	<div byondclass="pane">
+		<div id="browser" byondclass='browser' isdefault=1 skinparams="on-show='.skin defaultSkin.show(\'browser\')';on-hide='.skin defaultSkin.hide(\'browser\')'"></div>
+		<div id="info" byondclass='info' isdefault=1 skinparams="on-show='.skin defaultSkin.show(\'info\')';on-hide='.skin defaultSkin.show(\'info\')'"></div>
+	</div>
+	<div byondclass="status" id="status" isdefault=1></div>
+	<div byondclass="dpad" id="dpad" isdefault=1></div>
+	<div byondclass="hotbar" id="hotbar" isdefault=1></div>
+</body>

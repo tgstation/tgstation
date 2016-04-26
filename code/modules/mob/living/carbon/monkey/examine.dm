@@ -1,24 +1,18 @@
-/mob/living/carbon/monkey/examine()
-	set src in oview()
+/mob/living/carbon/monkey/examine(mob/user)
 
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 
 	if (src.handcuffed)
-		msg += "It is \icon[src.handcuffed] handcuffed!\n"
+		msg += "It is [bicon(src.handcuffed)] handcuffed!\n"
 	if (src.wear_mask)
-		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its head.\n"
+		msg += "It has [bicon(src.wear_mask)] \a [src.wear_mask] on its head.\n"
 	if (src.l_hand)
-		msg += "It has \icon[src.l_hand] \a [src.l_hand] in its left hand.\n"
+		msg += "It has [bicon(src.l_hand)] \a [src.l_hand] in its left hand.\n"
 	if (src.r_hand)
-		msg += "It has \icon[src.r_hand] \a [src.r_hand] in its right hand.\n"
+		msg += "It has [bicon(src.r_hand)] \a [src.r_hand] in its right hand.\n"
 	if (src.back)
-		msg += "It has \icon[src.back] \a [src.back] on its back.\n"
-	if (src.stat == DEAD || status_flags & FAKEDEATH)
+		msg += "It has [bicon(src.back)] \a [src.back] on its back.\n"
+	if (isDead())
 		msg += "<span class='deadsay'>It is limp and unresponsive, with no signs of life.</span>\n"
 	else
 		msg += "<span class='warning'>"
@@ -39,7 +33,14 @@
 	if (src.digitalcamo)
 		msg += "It is repulsively uncanny!\n"
 
+	var/butchery = "" //More information about butchering status, check out "code/datums/helper_datums/butchering.dm"
+	if(butchering_drops && butchering_drops.len)
+		for(var/datum/butchering_product/B in butchering_drops)
+			butchery = "[butchery][B.desc_modifier(src)]"
+	if(butchery)
+		msg += "<span class='info'>[butchery]</span>"
+
 	msg += "*---------*</span>"
 
-	usr << msg
-	return
+
+	to_chat(user, msg)

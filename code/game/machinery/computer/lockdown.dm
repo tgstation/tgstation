@@ -54,7 +54,7 @@
 			for(var/item in L)
 				L.Remove(item)
 		//
-		for(var/obj/machinery/door/poddoor/D in world)
+		for(var/obj/machinery/door/poddoor/D in poddoors)
 			if(D.network in connected_doors)
 				var/list/L = connected_doors[D.network]
 				L.Add(D)
@@ -104,14 +104,14 @@
 				t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "<b></td>"
 		t += "</table>"
 		if(empty)
-			t += "\red No networks connected.<br>"
+			t += "<span class='warning'>No networks connected.<br></span>"
 		t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 		user << browse(t, "window=lockdown;size=550x600")
 		onclose(user, "lockdown")
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 
 		if( href_list["close"] )
 			usr << browse(null, "window=lockdown")

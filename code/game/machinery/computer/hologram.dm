@@ -57,14 +57,15 @@
 
 /obj/machinery/computer/hologram_comp/Topic(href, href_list)
 	if(..())
-		return
-	if (in_range(src, usr))
+		return 1
+	else
 		flick("holo_console1", src)
 		if (href_list["power"])
 			if (src.projector.hologram)
 				src.projector.icon_state = "hologram0"
 				//src.projector.hologram = null
-				del(src.projector.hologram)
+				qdel(src.projector.hologram)
+				src.projector.hologram = null
 			else
 				src.projector.hologram = new(src.projector.loc)
 				src.projector.hologram.icon = 'icons/mob/human.dmi'

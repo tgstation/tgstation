@@ -9,7 +9,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = TABLEPASS
+	flags = 0
 	var/created_name = "Cleanbot"
 
 
@@ -19,6 +19,7 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
+	icon_initial = "cleanbot"
 	layer = 5.0
 	density = 0
 	anchored = 0
@@ -29,9 +30,10 @@
 	var/screwloose = 0
 	var/oddbutton = 0
 	var/blood = 1
-	var/list/target_types = list()
-	var/obj/effect/decal/cleanable/target
-	var/obj/effect/decal/cleanable/oldtarget
+	var/crayon = 0
+	var/list/blacklisted_targets = list()
+	var/turf/target
+	var/turf/oldtarget
 	var/oldloc = null
 	req_access = list(access_janitor)
 	var/path[] = new()
@@ -47,7 +49,7 @@
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
-	src.icon_state = "cleanbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 
 	should_patrol = 1
 
@@ -55,23 +57,25 @@
 	var/datum/job/janitor/J = new/datum/job/janitor
 	src.botcard.access = J.get_access()
 
+	src.locked = 0 // Start unlocked so roboticist can set them to patrol.
+
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 
 /obj/machinery/bot/cleanbot/turn_on()
 	. = ..()
-	src.icon_state = "cleanbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/turn_off()
 	..()
 	if(!isnull(src.target))
-		target.targeted_by = null
+		target.targetted_by = null
 	src.target = null
 	src.oldtarget = null
 	src.oldloc = null
-	src.icon_state = "cleanbot[src.on]"
+	src.icon_state = "[src.icon_initial][src.on]"
 	src.path = new()
 	src.updateUsrDialog()
 
@@ -92,6 +96,7 @@ Maintenance panel is [src.open ? "opened" : "closed"]"},
 text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked || issilicon(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Cleans Crayon: []<BR>"}, text("<A href='?src=\ref[src];operation=crayon'>[src.crayon ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
 	if(src.open && !src.locked)
@@ -117,7 +122,11 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			else
 				turn_on()
 		if("blood")
-			src.blood =!src.blood
+			src.blood = !src.blood
+			src.get_targets()
+			src.updateUsrDialog()
+		if("crayon")
+			src.crayon = !src.crayon
 			src.get_targets()
 			src.updateUsrDialog()
 		if("patrol")
@@ -131,32 +140,32 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			src.updateUsrDialog()
 		if("screw")
 			src.screwloose = !src.screwloose
-			usr << "<span class='notice>You twiddle the screw.</span>"
+			to_chat(usr, "<span class='notice>You twiddle the screw.</span>")
 			src.updateUsrDialog()
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
-			usr << "<span class='notice'>You press the weird button.</span>"
+			to_chat(usr, "<span class='notice'>You press the weird button.</span>")
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+			to_chat(user, "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
+				to_chat(user, "<span class='notice'>This [src] doesn't seem to respect your authority.</span>")
 	else
 		return ..()
 
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		if(user) to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
 		src.oddbutton = 1
 		src.screwloose = 1
 
@@ -174,32 +183,24 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.screwloose && prob(5))
 		if(istype(loc,/turf/simulated))
 			var/turf/simulated/T = src.loc
-			if(T.wet < 1)
-				T.wet = 1
-				if(T.wet_overlay)
-					T.overlays -= T.wet_overlay
-					T.wet_overlay = null
-				T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
-				T.overlays += T.wet_overlay
-				spawn(800)
-					if (istype(T) && T.wet < 2)
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
+			T.wet(800)
 	if(src.oddbutton && prob(5))
 		visible_message("Something flies out of [src]. He seems to be acting oddly.")
-		var/obj/effect/decal/cleanable/blood/gibs/gib = new /obj/effect/decal/cleanable/blood/gibs(src.loc)
+		var/obj/effect/decal/cleanable/blood/gibs/gib = getFromPool(/obj/effect/decal/cleanable/blood/gibs, src.loc)
+		gib.New(gib.loc)
 		//gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-		src.oldtarget = gib
+		src.oldtarget = get_turf(gib)
 	if(!src.target || src.target == null)
-		for (var/obj/effect/decal/cleanable/D in view(7,src))
-			for(var/T in src.target_types)
-				if(isnull(D.targeted_by) && (D.type == T || D.parent_type == T) && D != src.oldtarget)   // If the mess isn't targeted
-					src.oldtarget = D								 // or if it is but the bot is gone.
-					src.target = D									 // and it's stuff we clean?  Clean it.
-					D.targeted_by = src	// Claim the mess we are targeting.
-					return
+		for (var/turf/T in view(7,src))
+			if(target) break
+			if(istype(T,/turf/space)) continue
+			for(var/obj/effect/decal/cleanable/sickfilth in T.contents)
+				if(sickfilth && !(is_type_in_list(sickfilth, blacklisted_targets)))
+					if(!T.targetted_by && T!=oldtarget)
+						oldtarget = T								 // or if it is but the bot is gone.
+						target = T									 // and it's stuff we clean?  Clean it.
+						T.targetted_by = src	// Claim the messy tile we are targeting.
+						break
 
 	if(!src.target || src.target == null)
 		if(src.loc != src.oldloc)
@@ -217,7 +218,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			closest_loc = null
 			next_dest_loc = null
 
-			var/datum/signal/signal = new()
+			var/datum/signal/signal = getFromPool(/datum/signal)
 			signal.source = src
 			signal.transmission_method = 1
 			signal.data = list("findbeacon" = "patrol")
@@ -237,11 +238,11 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = AStar(src.loc, src.target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30)
 			if (!path) path = list()
 			if(src.path.len == 0)
 				src.oldtarget = src.target
-				target.targeted_by = null
+				target.targetted_by = null
 				src.target = null
 		return
 	if(src.path.len > 0 && src.target && (src.target != null))
@@ -252,7 +253,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 	if(src.target && (src.target != null))
 		patrol_path = null
-		if(src.loc == src.target.loc)
+		if(src.loc == src.target)
 			clean(src.target)
 			src.path = new()
 			src.target = null
@@ -295,42 +296,32 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		next_dest_loc = signal.source.loc
 		next_dest = signal.data["next_patrol"]
 
-/obj/machinery/bot/cleanbot/proc/get_targets()
-	src.target_types = new/list()
+/obj/machinery/bot/cleanbot/proc/get_targets() //This seems slightly wasteful, but it will only be called approximately once every six rounds so whatever
+	blacklisted_targets = list()
 
-	target_types += /obj/effect/decal/cleanable/blood/oil
-	target_types += /obj/effect/decal/cleanable/vomit
-	target_types += /obj/effect/decal/cleanable/blood/robot
-	target_types += /obj/effect/decal/cleanable/crayon
-	target_types += /obj/effect/decal/cleanable/liquid_fuel
-	target_types += /obj/effect/decal/cleanable/mucus
+	if(!src.blood)
+		blacklisted_targets += (/obj/effect/decal/cleanable/blood)
+	if(!src.crayon)
+		blacklisted_targets += (/obj/effect/decal/cleanable/crayon)
 
-	if(src.blood)
-		target_types += /obj/effect/decal/cleanable/blood/xeno/
-		target_types += /obj/effect/decal/cleanable/blood/xeno/xgibs
-		target_types += /obj/effect/decal/cleanable/blood/
-		target_types += /obj/effect/decal/cleanable/blood/tracks
-		target_types += /obj/effect/decal/cleanable/blood/gibs/
-		target_types += /obj/effect/decal/cleanable/dirt
-
-/obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
-	src.anchored = 1
-	src.icon_state = "cleanbot-c"
-	visible_message("\red [src] begins to clean up the [target]")
-	src.cleaning = 1
-	var/cleantime = 50
-	if(istype(target,/obj/effect/decal/cleanable/dirt))		// Clean Dirt much faster
-		cleantime = 10
-	spawn(cleantime)
+/obj/machinery/bot/cleanbot/proc/clean(var/turf/target)
+	anchored = 1
+	icon_state = "[src.icon_initial]-c"
+	visible_message("<span class='warning'>[src] begins to clean up the [target].</span>")
+	cleaning = 1
+	spawn(2 SECONDS)
+		for(var/obj/effect/decal/cleanable/C in target)
+			if(!(is_type_in_list(C,blacklisted_targets)))
+				spawn(5)
+				qdel(C)
 		src.cleaning = 0
-		del(target)
-		src.icon_state = "cleanbot[src.on]"
-		src.anchored = 0
-		src.target = null
+		icon_state = "[src.icon_initial][on]"
+		anchored = 0
+		target = null
 
 /obj/machinery/bot/cleanbot/explode()
 	src.on = 0
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
@@ -343,20 +334,20 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		user.drop_item()
-		del(W)
-		var/turf/T = get_turf(src.loc)
-		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
-		A.name = src.created_name
-		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
-		user.drop_from_inventory(src)
-		del(src)
+		if(user.drop_item(W))
+			qdel(W)
+			var/turf/T = get_turf(src.loc)
+			var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
+			A.name = src.created_name
+			to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
+			user.drop_from_inventory(src)
+			qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)

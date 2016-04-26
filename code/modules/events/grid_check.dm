@@ -8,9 +8,10 @@
 	power_failure(0)
 
 /datum/event/grid_check/announce()
-	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Automated Grid Check")
-	for(var/mob/M in player_list)
-		M << sound('sound/AI/poweroff.ogg')
+	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Automated Grid Check",alert='sound/AI/poweroff.ogg')
 
 /datum/event/grid_check/end()
+	if(universe.name != "Normal")
+		message_admins("Universe isn't normal, aborting power_restore().")//we don't want the power to come back up during Nar-Sie or a Supermatter Cascade, do we?
+		return
 	power_restore()

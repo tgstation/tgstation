@@ -46,12 +46,13 @@ var/list/uplink_items = list()
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/job = null
 
-/datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
+/datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U, mob/user)
 	U.uses -= max(cost, 0)
 	feedback_add_details("traitor_uplink_items_bought", name)
-	return new item(loc)
+	return new item(loc,user)
 
 /datum/uplink_item/proc/buy(var/obj/item/device/uplink/hidden/U, var/mob/user)
+
 
 	..()
 	if(!istype(U))
@@ -69,16 +70,35 @@ var/list/uplink_items = list()
 		if(cost > U.uses)
 			return 0
 
-		var/obj/I = spawn_item(get_turf(user), U)
+		var/obj/I = spawn_item(get_turf(user), U, user)
+		if(!I)
+			return 0
+		on_item_spawned(I,user)
+		var/icon/tempimage = icon(I.icon, I.icon_state)
+		end_icons += tempimage
+		var/tempstate = end_icons.len
 
+		var/bundlename = name
+		if(name == "Random Item" || name == "For showing that you are The Boss")
+			bundlename = I.name
+		if(I.tag)
+			bundlename = "[I.tag] bundle"
+			I.tag = null
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought [name] for [cost]."
-
+			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
+			stat_collection.uplink_purchase(src, I, user)
+			if(user.mind)
+				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
+				user.mind.spent_TC += cost
 		U.interact(user)
+
 		return 1
 	return 0
+
+/datum/uplink_item/proc/on_item_spawned(var/obj/I, var/mob/user)
+	return
 
 /*
 //
@@ -90,6 +110,35 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific
 	category = "Job Specific Tools"
 
+//Librarian
+/datum/uplink_item/jobspecific/etwenty
+	name = "The E20"
+	desc = "A seemingly innocent die, those who are not afraid to roll for attack will find it's effects quite explosive. Has a four second timer."
+	item = /obj/item/weapon/dice/d20/e20
+	cost = 3
+	job = list("Librarian")
+
+//Cargo Technician
+/datum/uplink_item/jobspecific/syndiepaper
+	name = "Extra Adhesive Wrapping Paper"
+	desc = "This extra-strong wrapping paper is perfect for concealing bodies or trapping a victim with no escape. Simply apply directly to the victim and wrap them up into a regular-looking delivery package. Takes about three seconds to wrap."
+	item = /obj/item/stack/package_wrap/syndie
+	cost = 2
+	job = list("Cargo Technician", "Quartermaster")
+
+/datum/uplink_item/jobspecific/syndiepaper/spawn_item(var/turf/loc, var/obj/item/device/uplink/U, mob/user)
+	U.uses -= max(cost, 0)
+	feedback_add_details("traitor_uplink_items_bought", name)
+	return new item(loc) //Fix for amount ref
+
+//Shaft Miner
+/datum/uplink_item/jobspecific/mastertrainer
+	name = "Master Trainer's Belt"
+	desc = "A Trainer's belt containing 6 random hostile mobs loyal to you alone."
+	item = /obj/item/weapon/storage/belt/lazarus/antag
+	cost = 4
+	job = list("Shaft Miner")
+
 //Clown
 /datum/uplink_item/jobspecific/clowngrenade
 	name = "1 Banana Grenade"
@@ -97,6 +146,28 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/clown_grenade
 	cost = 4
 	job = list("Clown")
+
+/datum/uplink_item/jobspecific/bsword
+	name = "Energized Bananium Sword"
+	desc = "When concealed a simple banana, when active a deadly means of executing swift justice.  Highly regarded for their utility on away missions from the Clown Planet"
+	item = /obj/item/weapon/melee/energy/sword/bsword
+	cost = 4
+	job = list("Clown")
+
+/datum/uplink_item/jobspecific/superglue
+	name = "1 Bottle of Superglue"
+	desc = "Considered illegal everywhere except for the Clown Planet, this water-resistant superglue can instantly bind human flesh to ANY material, permanently. One-time use."
+	item = /obj/item/weapon/glue
+	cost = 3
+	job = list("Clown", "Mime")
+
+//Security
+/datum/uplink_item/jobspecific/syndicuffs
+	name = "Syndicate Cuffs"
+	desc = "A pair of cuffs rigged with electronics and laced with a C4 charge. Can be toggled between explosion on application and explosion on removal."
+	item = /obj/item/weapon/handcuffs/syndicate
+	cost = 2
+	job = list("Security Officer", "Warden", "Head of Security")
 
 //Detective
 /datum/uplink_item/jobspecific/evidenceforger
@@ -117,7 +188,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific/ambrosiacruciatus
 	name = "Ambrosia Cruciatus Seeds"
 	desc = "Part of the notorious Ambrosia family, this species is nearly indistinguishable from Ambrosia Vulgaris- but its' branches contain a revolting toxin. Eight units are enough to drive victims insane after a three-minute delay."
-	item = /obj/item/seeds/ambrosiavulgarisseed/cruciatus
+	item = /obj/item/seeds/ambrosiacruciatusseed
 	cost = 2
 	job = list("Botanist")
 
@@ -132,7 +203,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/jobspecific/meatcleaver
 	name = "Meat Cleaver"
 	desc = "A mean looking meat cleaver that does damage comparable to an Energy Sword but with the added benefit of chopping your victim into hunks of meat after they've died and the chance to stun when thrown."
-	item = /obj/item/weapon/butch/meatcleaver
+	item = /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver
 	cost = 5
 	job = list("Chef")
 
@@ -174,7 +245,22 @@ var/list/uplink_items = list()
 	desc = "A powerful industrial spraygun that holds 600 units of any liquid, and can cover area faster than a standard spray bottle."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer
 	cost = 4
-	job = list("Chemist")
+	job = list("Chemist", "Chief Medical Officer")
+
+/datum/uplink_item/jobspecific/antisocial
+	name = "Explosive Hug Chemical"
+	desc = "30 units of Bicarodyne, a chemical that causes a devastating explosion when exposed to endorphins released in the body by a hug. Metabolizes quite slowly."
+	item = /obj/item/weapon/storage/box/syndie_kit/explosive_hug //Had to be put in a box because it didn't play well with reagent creation
+	cost = 4
+	job = list("Chemist", "Chief Medical Officer")
+
+//Medical Doctor
+/datum/uplink_item/jobspecific/wheelchair
+	name = "Syndicate Wheelchair"
+	desc = "A combat-modified motorized wheelchair. Forward thrust is sufficient to knock down and run over victims."
+	item = /obj/item/syndicate_wheelchair_kit
+	cost = 6
+	job = list("Medical Doctor", "Chief Medical Officer")
 
 //Engineer
 /datum/uplink_item/jobspecific/powergloves
@@ -182,7 +268,47 @@ var/list/uplink_items = list()
 	desc = "Insulated gloves that can utilize the power of the station to deliver a short arc of electricity at a target. Must be standing on a powered cable to use."
 	item = /obj/item/clothing/gloves/yellow/power
 	cost = 7
-	job = list("Station Engineer","Chief Engineer")
+	job = list("Station Engineer", "Chief Engineer")
+
+//Atmos Tech
+/datum/uplink_item/jobspecific/contortionist
+	name = "Contortionist's Jumpsuit"
+	desc = "A highly flexible jumpsuit that will help you navigate the ventilation loops of the station internally. Comes with pockets and ID slot, but can't be used without stripping off most gear, including backpack, belt, helmet, and exosuit. Free hands are also necessary to crawl around inside."
+	item = /obj/item/clothing/under/contortionist
+	cost = 4
+	job = list("Atmospheric Technician", "Chief Engineer")
+
+//Geneticist
+/datum/uplink_item/jobspecific/radgun
+	name = "Radgun"
+	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
+	item = /obj/item/weapon/gun/energy/radgun
+	cost = 6
+	job = list("Geneticist", "Chief Medical Officer")
+
+//Atmospheric Technician
+/datum/uplink_item/jobspecific/flaregun
+	name = "Modified Flaregun"
+	desc = "A modified flaregun, identical in most appearances to the regular kind, as well as 7 rounds of flare ammunition. Capable of firing flares at lethal velocity, as well as firing shotgun ammunition."
+	item = /obj/item/weapon/storage/box/syndie_kit/flaregun
+	cost = 4
+	job = list("Atmospheric Technician", "Chief Engineer")
+
+//Mechanic
+/datum/uplink_item/jobspecific/dev_analyser
+	name = "Modified Device Analyser"
+	desc = "A device analyser with the safety features disabled. Allows the user to replicate any kind of Syndicate equipment."
+	item = /obj/item/device/device_analyser/syndicate
+	cost = 4
+	job = list("Mechanic")
+
+//IAA - Internal Affairs Agent
+/datum/uplink_item/jobspecific/briefcase_smg
+	name = "Concealed SMG"
+	desc = "A modified briefcase capable of storing and firing a gun under a false bottom. Starts with an internal SMG and 18 rounds. Use a screwdriver to pry away the false bottom and make modifications."
+	item = /obj/item/weapon/storage/briefcase/false_bottomed/smg
+	cost = 6
+	job = list("Internal Affairs Agent")
 
 // DANGEROUS WEAPONS
 
@@ -197,8 +323,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/dangerous/ammo
 	name = "Ammo-357"
-	desc = "Seven additional rounds for the revolver. Reports indicate the presence of machinery aboard Nanotrasen space stations suitable for producing extra .357 cartridges."
-	item = /obj/item/ammo_magazine/a357
+	desc = "A speedloader and seven additional rounds for the revolver. Reports indicate the presence of machinery aboard Nanotrasen space stations suitable for producing extra .357 cartridges."
+	item = /obj/item/weapon/storage/box/syndie_kit/ammo
 	cost = 2
 
 /datum/uplink_item/dangerous/crossbow
@@ -219,6 +345,18 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/emps
 	cost = 3
 
+/datum/uplink_item/dangerous/viscerator
+	name = "Viscerator Grenade"
+	desc = "A single grenade containing a pair of incredibly destructive viscerators. Be aware that they will attack any nearby targets, including yourself. Emits a blinding flash upon detonation."
+	item = /obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
+	cost = 3
+
+/datum/uplink_item/dangerous/gatling
+	name = "Gatling Gun"
+	desc = "A huge minigun. Makes up for its lack of mobility and discretion with sheer firepower. Has 200 bullets."
+	item = /obj/item/weapon/gun/gatling
+	cost = 20
+	gamemodes = list("nuclear emergency")
 
 // STEALTHY WEAPONS
 
@@ -243,6 +381,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
 
+/datum/uplink_item/stealthy_weapons/knuckles
+	name = "Brass Knuckles"
+	desc = "A pair of metal knuckles that can be worn on your hands, increasing damage done by your punches."
+	item = /obj/item/clothing/gloves/knuckles
+	cost = 1
 
 // STEALTHY TOOLS
 
@@ -273,11 +416,17 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/mask/gas/voice
 	cost = 4
 
+/datum/uplink_item/stealthy_tools/dnascrambler
+	name = "DNA Scrambler"
+	desc = "A syringe with one injection that randomizes appearance and name upon use. A cheaper but less versatile alternative to an agent card and voice changer."
+	item = /obj/item/weapon/dnascrambler
+	cost = 2
+
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
+	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and projectiles pass over them."
 	item = /obj/item/device/chameleon
-	cost = 4
+	cost = 3
 
 
 // DEVICE AND TOOLS
@@ -297,6 +446,12 @@ var/list/uplink_items = list()
 	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
+
+/datum/uplink_item/device_tools/bugdetector
+	name = "Bug Detector"
+	desc = "A functional multitool that can detect certain surveillance devices. Its screen changes color if the AI or a pAI can see you, or if a tape recorder or voice analyzer is nearby. Examine it to see everything it detects."
+	item = /obj/item/device/multitool/ai_detect
+	cost = 2
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Space Suit"
@@ -337,7 +492,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
-	item = /obj/item/weapon/aiModule/syndicate
+	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/plastic_explosives
@@ -355,8 +510,14 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
-	item = /obj/item/device/radio/beacon/syndicate
+	item = /obj/item/beacon/syndicate
 	cost = 7
+
+/datum/uplink_item/device_tools/pdapinpointer
+	name = "PDA Pinpointer"
+	desc = "A pinpointer that tracks any PDA on the station. Useful for locating assassination targets or other high-value targets that you can't find. WARNING: Can only set once."
+	item = /obj/item/weapon/pinpointer/pdapinpointer
+	cost = 2
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
@@ -399,7 +560,7 @@ var/list/uplink_items = list()
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
-	category = "(Pointless) Badassery"
+	category = "Badassery"
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -412,6 +573,18 @@ var/list/uplink_items = list()
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
+/datum/uplink_item/badass/trophybelt
+ 	name = "Trophy Belt"
+ 	desc = "A belt for holding the heads you've collected."
+ 	item = /obj/item/weapon/storage/belt/skull
+ 	cost = 2
+
+/datum/uplink_item/badass/raincoat
+ 	name = "Raincoat"
+ 	desc = "It's hip to be square!"
+ 	item = /obj/item/clothing/suit/raincoat
+ 	cost = 1
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

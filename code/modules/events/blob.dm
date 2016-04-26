@@ -1,6 +1,6 @@
 /datum/event/blob
-	announceWhen	= 12
-	endWhen			= 120
+	announceWhen	= 30
+	endWhen			= 150
 
 	var/obj/effect/blob/core/Blob
 	var/list/datum/mind/infected_crew=list()
@@ -49,7 +49,7 @@
 	if (!possible_blobs.len)
 		return
 	for(var/mob/living/G in possible_blobs)
-		if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_ALIEN)
+		if(G.client && !G.client.holder && !G.client.is_afk() && G.client.desires_role(ROLE_BLOB))
 			var/datum/mind/blob = pick(possible_blobs)
 			infected_crew += blob
 			blob.special_role = "Blob"
@@ -97,15 +97,14 @@
 					infected_crew += core.overmind.mind
 
 		sleep(100) // 10s
-		command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		world << sound('sound/AI/outbreak7.ogg')
+		biohazard_alert()
 
 /datum/event/blob/proc/greetblob(user)
-	user << {"<B>\red You are infected by the Blob!</B>
+	to_chat(user, {"<B><span class='warning'>You are infected by the Blob!</B>
 <b>Your body is ready to give spawn to a new blob core which will eat this station.</b>
 <b>Find a good location to spawn the core and then take control and overwhelm the station!</b>
 <b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>
-<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"}
+<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b></span>"})
 
 /datum/event/blob/tick()
 	if(!Blob && infected_crew.len == 0)

@@ -14,7 +14,7 @@
 	var/repeat = 0
 
 /obj/item/device/violin/proc/playnote(var/note as text)
-	//world << "Note: [note]"
+//	to_chat(world, "Note: [note]")
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
 	Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
@@ -201,22 +201,22 @@
 			cur_acc[i] = "n"
 
 		for(var/line in song.lines)
-			//world << line
+//			to_chat(world, line)
 			for(var/beat in text2list(lowertext(line), ","))
-				//world << "beat: [beat]"
+//				to_chat(world, "beat: [beat]")
 				var/list/notes = text2list(beat, "/")
 				for(var/note in text2list(notes[1], "-"))
-					//world << "note: [note]"
+//					to_chat(world, "note: [note]")
 					if(!playing || !isliving(loc))//If the violin is playing, or isn't held by a person
 						playing = 0
 						return
-					if(lentext(note) == 0)
+					if(length(note) == 0)
 						continue
-					//world << "Parse: [copytext(note,1,2)]"
+//					to_chat(world, "Parse: [copytext(note,1,2)]")
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
-					for(var/i=2 to lentext(note))
+					for(var/i=2 to length(note))
 						var/ni = copytext(note,i,i+1)
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")
@@ -244,28 +244,19 @@
 	if(song)
 		if(song.lines.len > 0 && !(playing))
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\violin.dm:246: dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
 			dat += {"<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>
 				<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times.</A><BR><BR>"}
-			// END AUTOFIX
 		if(playing)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\violin.dm:249: dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
 			dat += {"<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>
 				Repeats left: [repeat].<BR><BR>"}
-			// END AUTOFIX
 	if(!edit)
 		dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
 	else
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\violin.dm:254: dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
 		dat += {"<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>
 			<A href='?src=\ref[src];newsong=1'>Start a New Song</A><BR>
 			<A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"}
-		// END AUTOFIX
 		if(song)
 			var/calctempo = (10/song.tempo)*60
 			dat += "Tempo : <A href='?src=\ref[src];tempo=10'>-</A><A href='?src=\ref[src];tempo=1'>-</A> [calctempo] BPM <A href='?src=\ref[src];tempo=-1'>+</A><A href='?src=\ref[src];tempo=-10'>+</A><BR><BR>"
@@ -300,11 +291,10 @@
 	onclose(user, "violin")
 
 /obj/item/device/violin/Topic(href, href_list)
-
-	if(!in_range(src, usr) || issilicon(usr) || !isliving(usr) || !usr.canmove || usr.restrained())
-		usr << browse(null, "window=violin;size=700x300")
-		onclose(usr, "violin")
+	if(..())
 		return
+
+	usr.set_machine(src)
 
 	if(href_list["newsong"])
 		song = new()
@@ -334,7 +324,7 @@
 				return
 			if(song.lines.len > 50)
 				return
-			if(lentext(newline) > 50)
+			if(length(newline) > 50)
 				newline = copytext(newline, 1, 50)
 			song.lines.Add(newline)
 
@@ -349,7 +339,7 @@
 			var/content = html_encode(input("Enter your line: ", "violin", song.lines[num]) as text|null)
 			if(!content)
 				return
-			if(lentext(content) > 50)
+			if(length(content) > 50)
 				content = copytext(content, 1, 50)
 			if(num > song.lines.len || num < 1)
 				return
@@ -371,11 +361,11 @@
 				if(!in_range(src, usr))
 					return
 
-				if(lentext(t) >= 3072)
+				if(length(t) >= 3072)
 					var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 					if(cont == "no")
 						break
-			while(lentext(t) > 3072)
+			while(length(t) > 3072)
 
 			//split into lines
 			spawn()
@@ -385,12 +375,12 @@
 					tempo = 600 / text2num(copytext(lines[1],6))
 					lines.Cut(1,2)
 				if(lines.len > 50)
-					usr << "Too many lines!"
+					to_chat(usr, "Too many lines!")
 					lines.Cut(51)
 				var/linenum = 1
 				for(var/l in lines)
-					if(lentext(l) > 50)
-						usr << "Line [linenum] too long!"
+					if(length(l) > 50)
+						to_chat(usr, "Line [linenum] too long!")
 						lines.Remove(l)
 					else
 						linenum++
@@ -399,7 +389,8 @@
 				song.tempo = tempo
 
 	add_fingerprint(usr)
-	for(var/mob/M in viewers(1, loc))
-		if((M.client && M.machine == src))
-			attack_self(M)
+	src.updateUsrDialog()
+	//for(var/mob/M in viewers(1, loc))
+	//	if((M.client && M.machine == src))
+	//		attack_self(M)
 	return

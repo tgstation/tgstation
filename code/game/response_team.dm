@@ -13,16 +13,16 @@ var/can_call_ert
 	set desc = "Send an emergency response team to the station"
 
 	if(!holder)
-		usr << "\red Only administrators may use this command."
+		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
 		return
 	if(!ticker)
-		usr << "\red The game hasn't started yet!"
+		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 	if(ticker.current_state == 1)
-		usr << "\red The round hasn't started yet!"
+		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 	if(send_emergency_team)
-		usr << "\red Central Command has already dispatched an emergency response team!"
+		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
 		return
 	if(alert("Do you want to dispatch an Emergency Response Team?",,"Yes","No") != "Yes")
 		return
@@ -31,7 +31,7 @@ var/can_call_ert
 			if("No")
 				return
 	if(send_emergency_team)
-		usr << "\red Looks like somebody beat you to it!"
+		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
 		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
@@ -44,37 +44,42 @@ client/verb/JoinResponseTeam()
 
 	if(istype(usr,/mob/dead/observer) || istype(usr,/mob/new_player))
 		if(!send_emergency_team)
-			usr << "No emergency response team is currently being sent."
+			to_chat(usr, "No emergency response team is currently being sent.")
 			return
 		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, "Emergency Response Team") || jobban_isbanned(usr, "Security Officer"))
-			usr << "<font color=red><b>You are jobbanned from the emergency reponse team!"
+			to_chat(usr, "<font color=red><b>You are jobbanned from the emergency reponse team!")
 			return
 
-		if(response_team_members.len > 5) usr << "The emergency response team is already full!"
+		if(response_team_members.len > 5) to_chat(usr, "The emergency response team is already full!")
 
 
-		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
+		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "ERT")
 			L.name = null//Reserving the place.
 			var/new_name = input(usr, "Pick a name","Name") as null|text
 			if(!new_name)//Somebody changed his mind, place is available again.
-				L.name = "Commando"
+				L.name = "ERT"
 				return
 			var/leader_selected = isemptylist(response_team_members)
 			var/mob/living/carbon/human/new_commando = create_response_team(L.loc, leader_selected, new_name)
-			del(L)
+			qdel(L)
+			L = null
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
-			new_commando << "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem."
-			new_commando << "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready."
+			to_chat(new_commando, "<span class='notice'>You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
+			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")
 			if(!leader_selected)
-				new_commando << "<b>As member of the Emergency Response Team, you answer only to your leader and CentComm officials.</b>"
+				to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer only to your leader and CentComm officials.</b>")
 			else
-				new_commando << "<b>As leader of the Emergency Response Team, you answer only to CentComm, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however."
+				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however.")
+
+			ticker.mode.ert += new_commando.mind
+
+			message_admins("[new_commando]/[usr.key] has joined the Emergency Response Team.")
 			return
 
 	else
-		usr << "You need to be an observer or new player to use this."
+		to_chat(usr, "You need to be an observer or new player to use this.")
 
 // returns a number of dead players in %
 proc/percentage_dead()
@@ -142,22 +147,23 @@ proc/trigger_armed_response_team(var/force = 0)
 	sleep(600 * 5)
 	send_emergency_team = 0 // Can no longer join the ERT.
 
-	var/area/security/nuke_storage/nukeloc = locate()//To find the nuke in the vault
-	var/obj/machinery/nuclearbomb/nuke = locate() in nukeloc
-	if(!nuke)
-		nuke = locate() in world
+	var/nuke_code
+	for(var/obj/machinery/nuclearbomb/nuke in machines)
+		nuke_code = nuke.r_code
 	var/obj/item/weapon/paper/P = new
-	P.info = "Your orders, Commander, are to use all means necessary to return the station to a survivable condition.<br>To this end, you have been provided with the best tools we can give in the three areas of Medicine, Engineering, and Security. The nuclear authorization code is: <b>[ nuke ? nuke.r_code : "AHH, THE NUKE IS GONE!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
+	P.info = "Your orders, Commander, are to use all means necessary to return the station to a survivable condition.<br>To this end, you have been provided with the best tools we can give in the three areas of Medicine, Engineering, and Security. The nuclear authorization code is: <b>[ nuke_code ? nuke_code : "No Nuke Found, Request Another!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
 	P.name = "Emergency Nuclear Code, and ERT Orders"
-	for (var/obj/effect/landmark/A in world)
+	for (var/obj/effect/landmark/A in landmarks_list)
 		if (A.name == "nukecode")
 			P.loc = A.loc
-			del(A)
+			qdel(A)
+			A = null
 			continue
 
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
-	//usr << "\red ERT has been temporarily disabled. Talk to a coder."
+
+//	to_chat(usr, "<span class='warning'>ERT has been temporarily disabled. Talk to a coder.</span>")
 	//return
 
 	var/mob/living/carbon/human/M = new(null)
@@ -198,7 +204,8 @@ proc/trigger_armed_response_team(var/force = 0)
 	for(var/x in all_hairs)
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
-		del(H) // delete the hair after it's all done
+		qdel(H) // delete the hair after it's all done
+		H = null
 
 //	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
 //hair
@@ -247,9 +254,9 @@ proc/trigger_armed_response_team(var/force = 0)
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			M.setGender(MALE)
 		else
-			M.gender = FEMALE
+			M.setGender(FEMALE)
 	//M.rebuild_appearance()
 	M.update_hair()
 	M.update_body()
@@ -274,6 +281,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	return M
 
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
+
 
 	//Special radio setup
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_ears)
@@ -303,17 +311,23 @@ proc/trigger_armed_response_team(var/force = 0)
 
 	//Backpack
 	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival/engineer(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 
 	var/obj/item/weapon/card/id/W = new(src)
-	W.assignment = "Emergency Response Team[leader_selected ? " Leader" : ""]"
+	W.assignment = "Emergency Responder[leader_selected ? " Leader" : ""]"
 	W.registered_name = real_name
 	W.name = "[real_name]'s ID Card ([W.assignment])"
-	W.icon_state = "centcom"
-	W.access = get_all_accesses()
-	W.access += get_all_centcom_access()
+	if(!leader_selected)
+		W.access = get_centcom_access("Emergency Responder")
+		W.icon_state = "ERT_empty"	//placeholder until revamp
+	else
+		W.access = get_centcom_access("Emergency Responders Leader")
+		W.icon_state = "ERT_leader"
 	equip_to_slot_or_del(W, slot_wear_id)
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+	L.imp_in = src
+	L.implanted = 1
 
 	return 1
 
