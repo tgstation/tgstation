@@ -366,3 +366,11 @@
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)
 	category = CAT_MISC
+
+/datum/table_recipe/bracers
+	name = "Bone Bracers"
+	result = /obj/item/clothing/gloves/bracer
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 2,
+				 /obj/item/stack/sheet/sinew = 1)
+	category = CAT_MISC
