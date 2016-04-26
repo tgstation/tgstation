@@ -196,7 +196,7 @@ var/const/MAX_SAVE_SLOTS = 8
 
 			randomize_appearance_for()
 			real_name = random_name(gender)
-			save_character_sqlite(src, theckey, default_slot)
+			save_character_sqlite(theckey, C, default_slot)
 			saveloaded = 1
 
 /datum/preferences/proc/setup_character_options(var/dat, var/user)
