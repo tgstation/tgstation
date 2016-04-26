@@ -193,6 +193,10 @@ var/const/MAX_SAVE_SLOTS = 8
 					if(load_save_sqlite(theckey, C, default_slot) && C)
 						saveloaded = 1
 						return
+					else
+						world.log << "[C.ckey] failed loading save slot."
+				else
+					world.log << "[C.ckey] failed loading preferences."
 
 			randomize_appearance_for()
 			real_name = random_name(gender)
