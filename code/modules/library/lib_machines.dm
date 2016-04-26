@@ -121,7 +121,7 @@
 
 var/global/datum/library_catalog/library_catalog = new()
 
-var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+var/global/list/library_section_names = list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
 
 /** Scanner **/
 /obj/machinery/libraryscanner

@@ -1,0 +1,7 @@
+author: xpcybic
+
+delete-after: True
+
+changes: 
+  - bugfix: "Fixed the check in/out computer prompting twice when filtering by category. Fixed selecting 'all' not actually working."
+  - spellcheck: "Corrected the radio frequencies on the DJ satellite and ace reporter intercom manuals"

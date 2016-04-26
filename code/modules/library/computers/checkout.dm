@@ -158,8 +158,8 @@
 				if(!scanner.cache.author)
 					scanner.cache.author = "Anonymous"
 
-				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
-					<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>
+				dat += {"<TT>Author: </TT><A href='?src=\ref[src];uploadauthor=1'>[scanner.cache.author]</A><BR>
+					<TT>Category: </TT><A href='?src=\ref[src];uploadcategory=1'>[upload_category]</A><BR>
 					<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"}
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
@@ -240,10 +240,10 @@
 			query.title = null
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category to search for:") in (list("Any") + library_section_names)
-		if(newcategory)
-			query.category = sanitize(newcategory)
-		else if(newcategory == "Any")
+		if(newcategory == "Any")
 			query.category = null
+		else
+			query.category = sanitize(newcategory)
 	if(href_list["setauthor"])
 		var/newauthor = input("Enter an author to search for:") as text|null
 		if(newauthor)
@@ -357,12 +357,12 @@
 	if(href_list["delbook"])
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
-	if(href_list["setauthor"])
+	if(href_list["uploadauthor"])
 		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
 		if(newauthor && scanner)
 			scanner.cache.author = newauthor
-	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+	if(href_list["uploadcategory"])
+		var/newcategory = input("Choose a category: ") in library_section_names
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
