@@ -117,6 +117,7 @@
 /mob/living/simple_animal/drone/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 
+	msg += desc
 	//Left hand items
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.blood_DNA)

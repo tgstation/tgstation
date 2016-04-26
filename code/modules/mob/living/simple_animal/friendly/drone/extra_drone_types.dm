@@ -61,7 +61,7 @@
 
 /mob/living/simple_animal/drone/free/Login()
 	..()
-	src << "<span class='notice'>You are a Free Drone! Your restrictive programming has been removed however you are NOT an antagonist.</span>"
+	src << "<span class='notice'>You are a Free Drone! Your restrictive programming has been removed however you are <b>NOT an antagonist</b>.</span>"
 
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
@@ -82,3 +82,13 @@
 	name = "free drone shell"
 	desc = "A shell of drone. This one seems to have a feeling of freedom radiating from it"
 	drone_type = /mob/living/simple_animal/drone/free
+
+
+/mob/living/simple_animal/drone/free/update_drone_hack(restore = 0)
+	return
+
+
+/mob/living/simple_animal/drone/free/pickVisualAppearence()
+	..()
+	hacked = 1
+	update_drone_icon()
