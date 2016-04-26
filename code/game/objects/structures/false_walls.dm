@@ -48,6 +48,9 @@
 			update_icon()
 	opening = 0
 
+/obj/structure/falsewall/attack_animal(mob/user)
+	qdel(src)
+
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
 		smooth = SMOOTH_FALSE
