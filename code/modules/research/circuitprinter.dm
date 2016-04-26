@@ -68,7 +68,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if(MAT_DIAMOND)
 			return (diamond_amount - (being_built.materials[M]) >= 0)
 		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0)
+			return (reagents.has_reagent(M, (being_built.materials[M])) != 0)
 
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
