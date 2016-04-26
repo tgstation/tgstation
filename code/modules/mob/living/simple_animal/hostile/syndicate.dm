@@ -168,4 +168,4 @@
 
 /mob/living/simple_animal/hostile/viscerator/New()
 	..()
-	deathmessage = "<b>[src]</b> is smashed into pieces!"
+	deathmessage = "[src] is smashed into pieces!"

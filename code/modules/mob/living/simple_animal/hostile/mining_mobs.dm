@@ -733,6 +733,76 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
 
+
+//Gutlunches
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/
+	name = "gutlunch"
+	desc = "A scavenger that eats raw meat, often found alongside ash walkers. Produces a thick, nutritious milk."
+	icon_state = "crab"
+	icon_living = "crab"
+	icon_dead = "crab_dead"
+	speak_emote = list("clicks")
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
+	density = 0
+	speak_chance = 1
+	turns_per_move = 8
+	environment_smash = 0
+	move_to_delay = 15
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "squishes"
+	friendly = "pinches"
+	a_intent = "help"
+	ventcrawler = 2
+	gold_core_spawnable = 2
+	stat_attack = 1
+	gender = MALE
+	stop_automated_movement = FALSE
+	stat_exclusive = TRUE
+	robust_searching = TRUE
+	search_objects = TRUE
+	del_on_death = TRUE
+	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/,
+						  /obj/effect/decal/cleanable/blood/gibs/, /obj/effect/decal/cleanable/blood/drip/,/obj/effect/decal/cleanable/trail_holder)
+	var/obj/item/udder/scavenger/udder = null
+
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/New()
+	udder = new()
+	deathmessage = "[src] is pulped into bugmash."
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/Destroy()
+	qdel(udder)
+	udder = null
+	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/attackby(obj/item/O, mob/user, params)
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		udder.milkAnimal(O, user)
+	else
+		..()
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/AttackingTarget()
+	if(is_type_in_list(target,wanted_objects)) //we eats
+		udder.generateMilk()
+		visible_message("<span class='notice'>[src] slurps up [target].</span>")
+		qdel(target)
+		HandleProcreation()
+	LoseTarget()
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/proc/HandleProcreation()
+	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
+		new /mob/living/simple_animal/hostile/asteroid/scavenger/(get_turf(src))
+
+/mob/living/simple_animal/hostile/asteroid/scavenger/female
+	gender = FEMALE
+
 //Nests
 
 /mob/living/simple_animal/hostile/spawner/lavaland
