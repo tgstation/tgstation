@@ -38,7 +38,7 @@
 		if(11)
 			new /obj/vehicle/lavaboat/dragon(src)
 		if(12)
-			new /obj/item/upgradescroll(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
@@ -66,6 +66,7 @@
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
 			new /obj/item/weapon/spellbook/oneuse/smoke(src)
+
 
 
 //Spooky special loot
