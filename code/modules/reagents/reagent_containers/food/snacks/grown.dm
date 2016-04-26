@@ -122,7 +122,7 @@
 						if(H.species && !(H.species.flags & NO_PAIN))
 							H.Weaken(3)
 					if(stinging_apply_reagents(M))
-						to_chat(H, "<span class='danger'>Your step on \the [src]'s stingers!</span>")
+						to_chat(H, "<span class='danger'>You step on \the [src]'s stingers!</span>")
 						potency -= rand(1,(potency/3)+1)
 	if(seed.juicy == 2)
 		if(M.Slip(3, 2))
