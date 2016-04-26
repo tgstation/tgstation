@@ -373,7 +373,7 @@
 /datum/table_recipe/boat
 	name = "goliath hide boat"
 	result = /obj/vehicle/lavaboat
-	reqs = list(/obj/item/asteroid/goliath_hide = 3)
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
 	time = 50
 	category = CAT_MISC
 
