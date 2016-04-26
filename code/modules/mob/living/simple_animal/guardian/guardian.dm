@@ -367,7 +367,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
 	var/allowmultiple = 0
-	var/allowling = 0
+	var/allowling = 1
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
 	var/list/guardians = user.hasparasites()
