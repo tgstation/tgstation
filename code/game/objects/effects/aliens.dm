@@ -180,7 +180,7 @@
 	var/obj/machinery/door/jammin = null
 
 /obj/effect/alien/weeds/Destroy()
-	if(linked_node)
+	if(linked_node && linked_node.connected_weeds)
 		linked_node.connected_weeds.Remove(src)
 		linked_node = null
 	if(jammin)
