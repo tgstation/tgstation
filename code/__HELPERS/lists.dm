@@ -351,6 +351,6 @@
 	if(!islist(l))
 		return l
 	. = l.Copy()
-	for(var/i = 1 to length(.))
+	for(var/i = 1 to l.len)
 		if(islist(.[i]))
 			.[i] = .(.[i])
