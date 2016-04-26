@@ -81,7 +81,7 @@
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, BRUTE)
+	M.apply_damage(0.5*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	var/effectivedamage = damage
@@ -436,11 +436,11 @@
 /datum/reagent/blob/cryogenic_liquid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(M.reagents)
-		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
-		M.reagents.add_reagent("ice", 0.4*reac_volume)
+		M.reagents.add_reagent("frostoil", 0.3*reac_volume)
+		M.reagents.add_reagent("ice", 0.3*reac_volume)
 	M.apply_damage(0.4*reac_volume, BURN)
 	if(M)
-		M.adjustStaminaLoss(0.4*reac_volume)
+		M.adjustStaminaLoss(0.3*reac_volume)
 
 //does burn damage and EMPs, slightly fragile
 /datum/reagent/blob/electromagnetic_web
@@ -569,11 +569,11 @@
 		T.MakeSlippery(TURF_WET_WATER)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
-	M.apply_damage(0.2*reac_volume, BRUTE)
+	M.apply_damage(0.1*reac_volume, BRUTE)
 	if(M)
-		M.apply_damage(0.4*reac_volume, OXY)
+		M.apply_damage(0.3*reac_volume, OXY)
 	if(M)
-		M.adjustStaminaLoss(0.4*reac_volume)
+		M.adjustStaminaLoss(0.3*reac_volume)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	extinguisharea(B, damage)
@@ -607,7 +607,7 @@
 /datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	reagent_vortex(M, 0, reac_volume)
-	M.apply_damage(0.4*reac_volume, BRUTE)
+	M.apply_damage(0.3*reac_volume, BRUTE)
 
 //does brute damage and throws or pushes nearby objects away from the target
 /datum/reagent/blob/b_sorium
@@ -622,7 +622,7 @@
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	reagent_vortex(M, 1, reac_volume)
-	M.apply_damage(0.4*reac_volume, BRUTE)
+	M.apply_damage(0.3*reac_volume, BRUTE)
 
 /datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
 	if(M && reac_volume)
