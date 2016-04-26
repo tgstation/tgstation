@@ -27,7 +27,7 @@
 	dir = direction
 
 // update iconstate and dpdir due to dir and type
-/obj/structure/disposalconstruct/proc/update()
+/obj/structure/disposalconstruct/update_icon()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
 	var/right = turn(dir, -90)
@@ -87,7 +87,7 @@
 // change visibility status and force update of icon
 /obj/structure/disposalconstruct/hide(var/intact)
 	invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
-	update()
+	update_icon()
 
 
 // flip and rotate verbs
@@ -104,7 +104,7 @@
 		return
 
 	dir = turn(dir, -90)
-	update()
+	update_icon()
 
 /obj/structure/disposalconstruct/AltClick(mob/user)
 	..()
@@ -138,7 +138,7 @@
 		if(DISP_SORTJUNCTION_FLIP)
 			ptype = DISP_SORTJUNCTION
 
-	update()
+	update_icon()
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()
@@ -210,7 +210,7 @@
 					return
 			else
 				if(CP)
-					update()
+					update_icon()
 					var/pdir = CP.dpdir
 					if(istype(CP, /obj/structure/disposalpipe/broken))
 						pdir = CP.dir
@@ -223,7 +223,7 @@
 			density = 0
 			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-		update()
+		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
@@ -235,7 +235,7 @@
 					if(!loc || !W.isOn())
 						return
 					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"
-					update() // TODO: Make this neat
+					update_icon() // TODO: Make this neat
 
 					if(ispipe)
 						var/pipetype = dpipetype()

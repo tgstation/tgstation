@@ -21,6 +21,7 @@
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	var/health = 50
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
@@ -61,9 +62,9 @@
 		else
 			overlays += "overlay_fire"
 
-/obj/machinery/firealarm/bullet_act(BLAH)
-	if(prob(50))
-		alarm()
+/obj/machinery/firealarm/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50 / severity))
@@ -74,11 +75,11 @@
 		emagged = 1
 		if(user)
 			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
-								"<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
+								"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(!emagged && detecting && temperature > T0C + 200)
+	if(!emagged && detecting && !stat && temperature > T0C + 200)
 		alarm()
 
 /obj/machinery/firealarm/proc/alarm()
@@ -201,3 +202,24 @@
 					qdel(src)
 					return
 	return ..()
+
+/obj/machinery/firealarm/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	if(!(stat & BROKEN))
+		health -= damage
+		if(health <= 0)
+			stat |= BROKEN
+			update_icon()
+		else if(prob(33))
+			alarm()

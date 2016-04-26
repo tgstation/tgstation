@@ -72,61 +72,45 @@ Note: Must be placed west/left of and R&D console to function.
 		A = A / max(1, (being_built.materials[M]))
 	return A
 
-/obj/machinery/r_n_d/protolathe/attackby(obj/item/O, mob/user, params)
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
-		if(linked_console)
-			linked_console.linked_lathe = null
-			linked_console = null
-		return
+//we eject the materials upon deconstruction.
+/obj/machinery/r_n_d/protolathe/deconstruction()
+	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.trans_to(G, G.reagents.maximum_volume)
+	materials.retrieve_all()
+	..()
 
-	if(exchange_parts(user, O))
-		return
+/obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)
 
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-				reagents.trans_to(G, G.reagents.maximum_volume)
-			materials.retrieve_all()
-			default_deconstruction_crowbar(O)
+	if(O.is_open_container()) //inserting reagents into the machine
+		return 1
+
+	if(istype(O,/obj/item/stack/sheet))
+		. = 1
+		if(!is_insertion_ready(user))
+			return
+		if(!materials.has_space( materials.get_item_material_amount(O) ))
+			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+			return 1
+
+		var/obj/item/stack/sheet/stack = O
+		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+		if(!in_range(src, stack) || !user.Adjacent(src))
+			return
+		var/amount_inserted = materials.insert_stack(O,amount)
+		if(!amount_inserted)
 			return 1
 		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
-			return 1
-	if (disabled)
-		return
-	if (!linked_console)
-		user << "<span class='warning'>The [src.name] must be linked to an R&D console first!</span>"
-		return 1
-	if (busy)
-		user << "<span class='warning'>The [src.name] is busy! Please wait for completion of previous operation.</span>"
-		return 1
-	if (O.is_open_container())
-		return
-	if (stat)
-		return 1
-	if(!istype(O,/obj/item/stack/sheet))
-		return 1
+			var/stack_name = stack.name
+			busy = 1
+			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
+			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
+			overlays += "protolathe_[stack_name]"
+			sleep(10)
+			overlays -= "protolathe_[stack_name]"
+			busy = 0
+		updateUsrDialog()
 
-	if(!materials.has_space( materials.get_item_material_amount(O) ))
-		user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
-		return 1
-
-	var/obj/item/stack/sheet/stack = O
-	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-	if(!in_range(src, stack) || !user.Adjacent(src))
-		return
-	var/amount_inserted = materials.insert_stack(O,amount)
-	if(!amount_inserted)
-		return 1
+	else if(user.a_intent != "harm")
+		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 	else
-		var/stack_name = stack.name
-		busy = 1
-		use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
-		user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
-		overlays += "protolathe_[stack_name]"
-		sleep(10)
-		overlays -= "protolathe_[stack_name]"
-		busy = 0
-	updateUsrDialog()
+		return 0

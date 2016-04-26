@@ -169,7 +169,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 			HS.amount = 1
 			use(1)
 	else
-		..()
+		return ..()
 
 
 //Step two - washing..... it's actually in washing machine code.

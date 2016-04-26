@@ -172,7 +172,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 		log_game("Plasma sheets ignited by [key_name(user)] in ([x],[y],[z])")
 		fire_act()
 	else
-		..()
+		return ..()
 
 /obj/item/stack/sheet/mineral/plasma/fire_act()
 	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
