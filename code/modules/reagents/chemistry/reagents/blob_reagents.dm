@@ -257,8 +257,8 @@
 
 /datum/reagent/blob/hallucinogenic_nectar/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.hallucination += 0.8*reac_volume
-	M.adjust_drugginess(0.8*reac_volume)
+	M.hallucination += reac_volume
+	M.adjust_drugginess(reac_volume)
 
 	if(M.reagents)
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
@@ -410,7 +410,7 @@
 
 /datum/reagent/blob/reactive_gelatin/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	var/damage = rand(0, 30)/25
+	var/damage = rand(5, 35)/25
 	M.apply_damage(damage*reac_volume, BRUTE)
 
 /datum/reagent/blob/reactive_gelatin/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -513,19 +513,18 @@
 	else
 		return damage * 1.25
 
-//does brute damage through armor(but not though bio resistance)
+//does brute damage through armor and bio resistance
 /datum/reagent/blob/penetrating_spines
 	name = "Penetrating Spines"
 	id = "penetrating_spines"
-	description = "will do medium brute damage through armor."
-	analyzerdescdamage = "Does medium brute damage, ignoring armor."
+	description = "will do medium brute damage through armor and bio resistance."
+	analyzerdescdamage = "Does medium brute damage, ignoring armor and bio resistance."
 	color = "#6E4664"
 	complementary_color = "#466E50"
 	blobbernaut_message = "stabs"
 	message = "The blob stabs you"
 
 /datum/reagent/blob/penetrating_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
 	M.adjustBruteLoss(0.6*reac_volume)
 
 /datum/reagent/blob/adaptive_nexuses
