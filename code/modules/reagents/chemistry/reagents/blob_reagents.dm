@@ -525,6 +525,10 @@
 	message = "The blob stabs you"
 
 /datum/reagent/blob/penetrating_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	if(M.stat == DEAD)
+		return
+	if(istype(M, /mob/living/simple_animal/hostile/blob))
+		return
 	M.adjustBruteLoss(0.6*reac_volume)
 
 /datum/reagent/blob/adaptive_nexuses
