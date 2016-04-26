@@ -43,7 +43,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	var/staticChoice = "static"
-	var/list/staticChoices = list("static", "blank", "letter")
+	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
@@ -82,6 +82,9 @@
 	access_card.flags |= NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
+
+	var/datum/action/generic/drone/select_filter/SF = new(src)
+	SF.Grant(src)
 
 
 /mob/living/simple_animal/drone/Destroy()

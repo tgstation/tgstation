@@ -252,7 +252,8 @@
 								"<span class='italics'>You hear welding.</span>")
 				update_icon()
 		else
-			togglelock(user)
+			if(!toggle(user))
+				togglelock(user)
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
