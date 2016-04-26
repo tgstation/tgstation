@@ -125,6 +125,7 @@
 	icon_state = "ebelt" //I'm doing this because I love you, syndicate son.
 	item_state = "ebelt"
 	storage_slots = 5
+	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
 	can_hold = list(
 		/obj/item/weapon/crowbar,
