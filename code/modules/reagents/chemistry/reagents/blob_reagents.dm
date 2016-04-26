@@ -583,7 +583,7 @@
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)
-				L.adjust_fire_stacks(-(reac_volume / 10))
+				L.adjust_fire_stacks(-2.5)
 				L.ExtinguishMob()
 
 //does brute damage and throws or pulls nearby objects at the target
