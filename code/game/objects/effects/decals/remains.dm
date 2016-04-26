@@ -23,6 +23,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains_skull"
 	item_state = "skull"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/remains.dmi', "right_hand" = 'icons/mob/in-hand/right/remains.dmi')
 	w_class = 1.0
 	force = 5
 	throwforce = 10
