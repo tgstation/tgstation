@@ -46,7 +46,7 @@
 				playsound(B, 'sound/machines/click.ogg', 30, 1)
 				B.active = TRUE
 				B.update_icon()
-			if(B.delayedlittle)
+			else if(B.delayedlittle)
 				holder.visible_message("<span class='notice'>\icon[B] Nothing happens.</span>")
 			else
 				holder.visible_message("<span class='notice'>\icon[B] The bomb seems to hesitate for a moment.</span>")
