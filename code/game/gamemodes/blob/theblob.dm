@@ -217,6 +217,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/device/analyzer))
 		user << "<b>The analyzer beeps once, then reports:</b><br>"
+		user << 'sound/machines/ping.ogg'
 		if(overmind)
 			user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
 			user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
