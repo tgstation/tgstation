@@ -1,3 +1,12 @@
+/proc/emergency_sanity_check()
+	if(SSshuttle.emergency.mode != SHUTTLE_IDLE)
+		var/confirm = alert(src, "Modification of the emergency shuttle while it is not idle can be highly dangerous, and may result in WEIRD UNPREDICTABLE SHIT. Are you SURE you want to continue? Obviously if you're not touching the emergency shuttle, then you're probably fine.", "Confirm", "Yes", "No")
+		if(confirm == "Yes")
+			return TRUE
+		else
+			return FALSE
+	else
+		return TRUE
 
 /client/proc/cmd_admin_destroy_shuttle()
 	set category = "Admin"
@@ -5,6 +14,9 @@
 
 	if (!holder)
 		src << "Only administrators may use this command."
+		return
+
+	if(!emergency_sanity_check())
 		return
 
 	var/list/names = list()
@@ -40,7 +52,7 @@
 		return
 
 	log_admin("ShuttleDestroy: [M]")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleDestroy on [M]</b><BR></span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleDestroy on [selected]</b><BR></span>")
 	feedback_add_details("admin_verb","SHTDEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_import_shuttle()
@@ -49,6 +61,9 @@
 
 	if (!holder)
 		src << "Only administrators may use this command."
+		return
+
+	if(!emergency_sanity_check())
 		return
 
 	var/datum/map_template/template
