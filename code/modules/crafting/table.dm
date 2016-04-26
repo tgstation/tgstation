@@ -37,6 +37,8 @@
 /obj/structure/table/proc/check_table()
 	table_contents = list()
 	for(var/obj/item/I in loc)
+		if(I.flags & HOLOGRAM)
+			break
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			table_contents[I.type] += S.amount
