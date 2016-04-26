@@ -145,6 +145,7 @@ var/next_external_rsc = 0
 		src << config.client_error_message
 		src << "Your version: [byond_version]"
 		src << "Required version: [config.client_error_version] or later"
+		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 		if (holder)
 			src << "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade"
 		else
@@ -155,6 +156,7 @@ var/next_external_rsc = 0
 		src << config.client_warn_message
 		src << "Your version: [byond_version]"
 		src << "Required version to remove this message: [config.client_warn_version] or later"
+		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
 	if (connection == "web")
 		if (!config.allowwebclient)
