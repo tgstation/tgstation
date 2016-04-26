@@ -157,7 +157,7 @@ Class Procs:
 		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
 
-/obj/machinery/proc/open_machine(var/drop = 1)
+/obj/machinery/proc/open_machine(drop = 1)
 	state_open = 1
 	density = 0
 	if(drop)
