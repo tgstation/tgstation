@@ -47,13 +47,17 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/proc/findtarget()
 	if(!real) return
-	for(var/mob/living/carbon/human/T in hearers(src,4))
+	for(var/mob/living/carbon/T in hearers(src,4))
+		if(!ishuman(T) && !ismonkey(T))
+			continue
 		if(!CanHug(T))
 			continue
 		if(T && (T.stat != DEAD && T.stat != UNCONSCIOUS) )
 
 			if(get_dist(src.loc, T.loc) <= 4)
 				target = T
+
+
 /obj/item/clothing/mask/facehugger/proc/followtarget()
 	if(!real) return // Why are you trying to path stupid toy
 	if(!target || target.stat == DEAD || target.stat == UNCONSCIOUS || target.status_flags & XENO_HOST)

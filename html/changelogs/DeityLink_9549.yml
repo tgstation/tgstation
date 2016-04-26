@@ -1,0 +1,15 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed the Adminbus being destroyable by Corrosive Acid.
+  - rscadd: Simple_Animals xenomorphs (the ones that aren't player controlled) now have a brand new AI! They will spread weeds, break lights near them, and queens will place nests and eggs. They will automatically drag monkeys and incapacitated humans into those nests. Incidentally this means that xenobio will be able to create real xenos if they manage to gold slime an alien queen into existence!
+  - tweak: NPC xenos no longer instantly break walls, instead they cover them with hyper acid that destroys them over 5 to 10 seconds. Not a very impactful change, but looks nice.
+  - imageadd: Mobs stuck onto xeno nests now visually appear partially inside nest.
+  - rscadd: Xeno weeds now progressively die out over time when the weed nodes are destroyed.
+  - tweak: Xeno eggs now check for nearby potential victims as soon as they become grown, rather than having to wait for a valid human to walk nearby. This way they can jump onto victims that had been stuck onto nests before they were fully grown.
+  - rscadd: You can attack burst xeno egg to fully remove them now.
+  - tweak: All hot weapons now deal full damage to xeno eggs, previously only lit welder did.
+  - tweak: Plasma cutters are now hot (which means you can light up your cigarette with one)
+  - tweak: Getting stuck onto a xeno nest will stop you from bleeding out (from external wounds), as well as keep you supplied on a bit of inaprovaline, leporazine, and dexaline, sensibly improving your chances of survival (as well as the chances for a successful facehugger rape).
+  - tweak: Facehuggers will now target monkeys as well as humans by themselves.
+  - tweak: monkeys now appear bellow bedsheets layer items when lying down.

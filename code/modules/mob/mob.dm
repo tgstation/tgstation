@@ -1489,12 +1489,12 @@ var/list/slot_equipment_priority = list( \
 		canmove = has_limbs
 
 	if(lying)
-		if(ishuman(src))
-			layer = 3.9
+		if(iscarbon(src))
+			layer = 3.9//so we move under bedsheets
 		density = 0
 		drop_hands()
 	else
-		if(ishuman(src))
+		if(iscarbon(src))
 			layer = 4
 		density = 1
 

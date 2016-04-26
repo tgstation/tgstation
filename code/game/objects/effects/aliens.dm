@@ -31,17 +31,17 @@
 	var/health = 200
 	var/turf/linked_turf
 
-	wall
-		name = "resin wall"
-		desc = "Purple slime solidified into a wall."
-		icon_state = "resinwall" //same as resin, but consistency ho!
+/obj/effect/alien/resin/wall
+	name = "resin wall"
+	desc = "Purple slime solidified into a wall."
+	icon_state = "resinwall" //same as resin, but consistency ho!
 
-	membrane
-		name = "resin membrane"
-		desc = "Purple slime just thin enough to let light pass through."
-		icon_state = "resinmembrane"
-		opacity = 0
-		health = 120
+/obj/effect/alien/resin/membrane
+	name = "resin membrane"
+	desc = "Purple slime just thin enough to let light pass through."
+	icon_state = "resinmembrane"
+	opacity = 0
+	health = 120
 
 /obj/effect/alien/resin/New()
 	..()
@@ -58,13 +58,11 @@
 	if(health <=0)
 		density = 0
 		qdel(src)
-	return
 
 /obj/effect/alien/resin/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
-	return
 
 /obj/effect/alien/resin/ex_act(severity)
 	switch(severity)
@@ -78,12 +76,10 @@
 			else
 				health-=25
 	healthcheck()
-	return
 
 /obj/effect/alien/resin/blob_act()
 	health-=50
 	healthcheck()
-	return
 
 /obj/effect/alien/resin/hitby(AM as mob|obj)
 	..()
@@ -98,7 +94,6 @@
 	health = max(0, health - tforce)
 	healthcheck()
 	..()
-	return
 
 /obj/effect/alien/resin/attack_hand()
 	usr.delayNextAttack(10)
@@ -113,7 +108,6 @@
 			O.show_message("<span class='warning'>[usr] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
-	return
 
 /obj/effect/alien/resin/attack_paw()
 	return attack_hand()
@@ -131,7 +125,6 @@
 		for(var/mob/O in oviewers(src))
 			O.show_message("<span class='warning'>[usr] slices the [name] apart!</span>", 1)
 	healthcheck()
-	return
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	/*if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
@@ -160,7 +153,6 @@
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
 	..()
-	return
 
 /obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group) return 0
@@ -173,6 +165,7 @@
  * Weeds
  */
 #define NODERANGE 3
+#define HEARTBEAT_RATE 300
 
 /obj/effect/alien/weeds
 	name = "weeds"
@@ -182,13 +175,17 @@
 	anchored = 1
 	density = 0
 	layer = 2
-	var/health = 15
+	var/health = 14
 	var/obj/effect/alien/weeds/node/linked_node = null
+	var/obj/machinery/door/jammin = null
 
 /obj/effect/alien/weeds/Destroy()
 	if(linked_node)
 		linked_node.connected_weeds.Remove(src)
 		linked_node = null
+	if(jammin)
+		jammin.jammed = null
+		jammin = null
 	..()
 
 /obj/effect/alien/weeds/node
@@ -200,14 +197,19 @@
 	var/node_range = NODERANGE
 	var/list/obj/effect/alien/weeds/connected_weeds
 
-/obj/effect/alien/weeds/node/Destroy()
-	for(var/obj/effect/alien/weeds/W in connected_weeds)
-		W.linked_node = null
-	..()
 
 /obj/effect/alien/weeds/node/New()
 	connected_weeds = new()
 	..(src.loc, src)
+
+/obj/effect/alien/weeds/node/Destroy()
+	for(var/obj/effect/alien/weeds/W in connected_weeds)
+		W.health -= 2 * get_dist(W, src)//so the further ones are more likely to disappear first
+		W.linked_node = null
+		spawn()
+			W.DieWeed()
+	connected_weeds = null
+	..()
 
 /obj/effect/alien/weeds/New(pos, var/obj/effect/alien/weeds/node/N)
 	..()
@@ -216,39 +218,49 @@
 		qdel(src)
 		return
 
+	for(var/obj/machinery/door/D in loc)
+		if(istype(D,/obj/machinery/door/mineral/resin))
+			continue
+		if(!D.density && !D.operating)
+			D.jammed = src
+			jammin = D
+
 	linked_node = N
 	if(linked_node)
 		linked_node.connected_weeds.Add(src)
 
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
-	spawn(rand(150, 200))
+	spawn(rand(100, 250))
 		if(src)
 			Life()
-	return
+
+/obj/effect/alien/weeds/node/New()
+	..()
+	spawn(HEARTBEAT_RATE)
+		heartbeat()
+
+/obj/effect/alien/weeds/node/proc/heartbeat()
+	flick("weednode-heartbeat",src)
+
+	for(var/obj/effect/alien/weeds/W in connected_weeds)
+		if(W.health == 15)
+			spawn()
+				W.Life()
+	spawn(HEARTBEAT_RATE)
+		if(!gcDestroyed)
+			heartbeat()
 
 /obj/effect/alien/weeds/proc/Life()
-	if(timestopped) return 0 //under effects of time magick
-
-	//set background = 1
+	health = 15
 	var/turf/U = get_turf(src)
-/*
-	if (locate(/obj/movable, U))
-		U = locate(/obj/movable, U)
-		if(U.density == 1)
-			del(src)
-			return
-
-Alien plants should do something if theres a lot of poison
-	if(U.poison> 200000)
-		health -= round(U.poison/200000)
-		update()
-		return
-*/
 	if (istype(U, /turf/space))
 		qdel(src)
 		return
 
-	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
+	if(!linked_node || !linked_node.loc)
+		return
+
+	if((get_dist(linked_node, src) > linked_node.node_range))
 		return
 
 	direction_loop:
@@ -256,7 +268,14 @@ Alien plants should do something if theres a lot of poison
 
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+			if (!istype(T) || T.density || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+				continue
+
+			var/obj/effect/alien/weeds/W = locate(/obj/effect/alien/weeds) in T
+			if (W)
+				if(!W.linked_node)
+					W.linked_node = linked_node
+					W.health = 15
 				continue
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
@@ -269,6 +288,18 @@ Alien plants should do something if theres a lot of poison
 			new /obj/effect/alien/weeds(T, linked_node)
 
 
+/obj/effect/alien/weeds/proc/DieWeed()
+	sleep(rand(100, 250))
+	if(!linked_node || !linked_node.loc)
+		if(prob(max(100-((health*6) + 20),0)))
+			qdel(src)
+
+		health--
+
+		DieWeed()
+	else
+		Life()
+
 /obj/effect/alien/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -279,7 +310,6 @@ Alien plants should do something if theres a lot of poison
 		if(3.0)
 			if (prob(5))
 				qdel(src)
-	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
 	user.delayNextAttack(10)
@@ -288,17 +318,14 @@ Alien plants should do something if theres a lot of poison
 	else
 		visible_message("<span class='warning'><B>[user] attacks \the [src] with \the [W]!</span>")
 
-	var/damage = W.force / 4.0
+	var/damage = W.force
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(!W.is_hot())
+		damage = damage / 4.0
 
-		if(WT.remove_fuel(0, user))
-			damage = 15
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+	src.health -= damage
+	src.healthcheck()
 
-	health -= damage
-	healthcheck()
 
 /obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
@@ -337,6 +364,11 @@ Alien plants should do something if theres a lot of poison
 	var/atom/target
 	var/ticks = 0
 	var/target_strength = 0
+
+/obj/effect/alien/acid/hyper
+	name = "hyper acid"
+	desc = "Burbling corrossive stuff. The radical kind."
+	icon_state = "acid-hyper"
 
 /obj/effect/alien/acid/New(loc, target)
 	..(loc)
@@ -378,6 +410,16 @@ Alien plants should do something if theres a lot of poison
 			visible_message("<span class='good'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
+/obj/effect/alien/acid/hyper/tick()
+	visible_message("<span class='good'><B>[src.target] begins to crumble under the acid!</B></span>")
+	spawn(rand(50,100))
+		visible_message("<span class='good'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>")
+		if(istype(target, /turf/simulated/wall))
+			var/turf/simulated/wall/W = target
+			W.dismantle_wall(1)
+		else
+			qdel(target)
+		qdel(src)
 /*
  * Egg
  */
@@ -428,8 +470,7 @@ Alien plants should do something if theres a lot of poison
 		return attack_hand(user)
 
 /obj/effect/alien/egg/attack_hand(user as mob)
-	to_chat(user, "It feels slimy.")
-	return
+	to_chat(user, "<span class='warning'>It feels slimy.</span>")
 
 /obj/effect/alien/egg/proc/GetFacehugger()
 	return locate(/obj/item/clothing/mask/facehugger) in contents
@@ -438,7 +479,11 @@ Alien plants should do something if theres a lot of poison
 	icon_state = "egg"
 	status = GROWN
 	new /obj/item/clothing/mask/facehugger(src)
-	return
+
+	for(var/mob/M in range(2,src))
+		if(CanHug(M))
+			Burst(0)
+			break
 
 /obj/effect/alien/egg/proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
 	if(status == GROWN || status == GROWING)
@@ -452,6 +497,7 @@ Alien plants should do something if theres a lot of poison
 				src.visible_message("<span class='warning'>The egg bursts apart, revealing nothing!</span>")
 				status = "GROWN"
 				getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
+				health = min(health,0)
 				return
 			child.forceMove(loc)
 			if(kill && istype(child))
@@ -461,31 +507,27 @@ Alien plants should do something if theres a lot of poison
 					if(CanHug(M))
 						child.Attach(M)
 						break
-
+				if(!ismob(child.loc))
+					child.findtarget()
+	health = min(health,0)
 
 /obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
-	return
 
 
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
-	if(health <= 0)
-		return
 	user.delayNextAttack(10)
 	if(W.attack_verb && W.attack_verb.len)
 		src.visible_message("<span class='warning'><B>[user] [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else
 		src.visible_message("<span class='warning'><B>[user] attacks \the [src] with \the [W]!</span>")
-	var/damage = W.force / 4.0
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	var/damage = W.force
 
-		if(WT.remove_fuel(0, user))
-			damage = 15
-			playsound(get_turf(src), 'sound/items/Welder.ogg', 100, 1)
+	if(!W.is_hot())
+		damage = damage / 4.0
 
 	src.health -= damage
 	src.healthcheck()
@@ -494,6 +536,8 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/egg/proc/healthcheck()
 	if(health <= 0)
 		Burst()
+	if(health <= -20)
+		qdel(src)
 
 /obj/effect/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)

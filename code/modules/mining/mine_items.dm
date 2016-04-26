@@ -244,6 +244,9 @@ proc/move_mining_shuttle()
 	drill_verb = "cutting"
 	drill_sound = 'sound/items/Welder.ogg'
 
+/obj/item/weapon/pickaxe/plasmacutter/is_hot()
+	return 1
+
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"

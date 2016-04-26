@@ -2245,6 +2245,34 @@
 	overdose = REAGENTS_OVERDOSE * 2 //No need for anyone to get suspicious.
 	custom_metabolism = 0.01
 
+/datum/reagent/stabilizine
+	name = "Stabilizine"
+	id = "stabilizine"
+	description = "A stabilizing chemical produced by alien nests to keep their occupants barely alive."
+	reagent_state = LIQUID
+	color = "#833484" //rgb: 131, 52, 132
+	custom_metabolism = 0.1
+
+/datum/reagent/stabilizine/on_mob_life(var/mob/living/M, var/alien)
+
+	if(..()) return 1
+
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		for(var/datum/organ/external/temp in H.organs)
+			if(temp.status & ORGAN_BLEEDING)
+				temp.clamp()
+
+	if(M.losebreath >= 10)
+		M.losebreath = max(10, M.losebreath - 5)
+
+	M.adjustOxyLoss(-2 * REM)
+
+	if(M.bodytemperature > 310)
+		M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	else if(M.bodytemperature < 311)
+		M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/nanites

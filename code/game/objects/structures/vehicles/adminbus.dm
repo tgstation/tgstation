@@ -13,6 +13,7 @@
 	layer = FLY_LAYER+1
 	pixel_x = -32
 	pixel_y = -32
+	unacidable = 1
 	var/can_move=1
 	var/list/passengers = list()
 	var/unloading = 0
