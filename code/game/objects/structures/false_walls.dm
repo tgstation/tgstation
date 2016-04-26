@@ -48,8 +48,12 @@
 			update_icon()
 	opening = 0
 
-/obj/structure/falsewall/attack_animal(mob/user)
-	qdel(src)
+/obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
+	if(user.environment_smash)
+		user.do_attack_animation(src)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		qdel(src)
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
