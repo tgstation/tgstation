@@ -357,7 +357,7 @@
 	result = /obj/item/clothing/suit/armor/bone
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 6)
-	category = CAT_MISC
+	category = CAT_PRIMAL
 
 /datum/table_recipe/bonetalisman
 	name = "Bone Talisman"
@@ -365,7 +365,7 @@
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)
-	category = CAT_MISC
+	category = CAT_PRIMAL
 
 /datum/table_recipe/bracers
 	name = "Bone Bracers"
@@ -373,11 +373,11 @@
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)
-	category = CAT_MISC
+	category = CAT_PRIMAL
 
 /datum/table_recipe/skullhelm
 	name = "Skull Helmet"
 	result = /obj/item/clothing/head/helmet/skull
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4)
-	category = CAT_MISC
+	category = CAT_PRIMAL
