@@ -254,3 +254,15 @@
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list("gluttonytoxin" = 1)
+
+/obj/item/weapon/reagent_containers/syringe/bluespace
+	name = "Bluespace Syringe"
+	desc = "An advanced syringe that can hold 60 units of chemicals"
+	amount_per_transfer_from_this = 20
+	volume = 60
+
+/obj/item/weapon/reagent_containers/syringe/noreact
+	name = "Cryo Syringe"
+	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
+	volume = 20
+	flags = NOREACT
