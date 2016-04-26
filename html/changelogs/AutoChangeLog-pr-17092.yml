@@ -1,0 +1,9 @@
+author: phil235
+delete-after: True
+changes: 
+  - rscadd: "More structures and machines are now breakable and/or destroyable with melee weapon. Additionally, Some structures and machines that are already breakable/destroyable are now affected by more attack methods (gun projectiles, thrown items, melee weapons, xeno/animal attacks, explosions)."
+  - rscadd: "Hitting any machine now always makes a sound."
+  - rscadd: "You can hit closed closets/crates and doors by using an item on harm intent (but it doesn't actually hurt them)."
+  - rscadd: "you can now burst filled water balloons with sharp items."
+  - bugfix: "Wooden barricade drops wood when destroyed."
+  - bugfix: "Slot machines with coins inside are deconstructable now."
