@@ -127,6 +127,27 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 
+/obj/item/stack/sheet/sinew
+	name = "watcher sinew"
+	icon = 'icons/obj/mining.dmi'
+	desc = "Long stringy filaments which presumably came from a watcher's wings."
+	singular_name = "watcher sinew"
+	icon_state = "sinew"
+	origin_tech = "biotech=4"
+
+		/*
+ * Plates
+ 		*/
+
+/obj/item/stack/sheet/animalhide/goliath_hide
+	name = "goliath hide plates"
+	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_hide"
+	singular_name = "hide plate"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
 
 
 //Step one - dehairing.

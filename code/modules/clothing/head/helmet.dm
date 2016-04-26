@@ -14,6 +14,8 @@
 	burn_state = FIRE_PROOF
 	flags_cover = HEADCOVERSEYES
 
+	dog_fashion = /datum/dog_fashion/head/helmet
+
 
 /obj/item/clothing/head/helmet/New()
 	..()
@@ -31,6 +33,7 @@
 	item_state = "helmetalt"
 	armor = list(melee = 15, bullet = 40, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0)
 	can_flashlight = 1
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -48,6 +51,7 @@
 	visor_flags_inv = HIDEMASK|HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
@@ -80,6 +84,7 @@
 	can_toggle = 1
 	toggle_cooldown = 20
 	active_sound = 'sound/items/WEEOO1.ogg'
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
@@ -100,6 +105,7 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 80
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -119,6 +125,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -129,6 +136,7 @@
 	icon_state = "roman"
 	item_state = "roman"
 	strip_delay = 100
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
@@ -143,6 +151,7 @@
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
@@ -152,6 +161,7 @@
 	item_state = "redtaghelm"
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/bluetaghelm
 	name = "blue laser tag helmet"
@@ -161,6 +171,7 @@
 	item_state = "bluetaghelm"
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/knight
 	name = "medieval helmet"
@@ -172,6 +183,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
+	dog_fashion = null
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"

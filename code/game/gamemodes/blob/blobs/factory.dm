@@ -26,6 +26,8 @@
 
 /obj/effect/blob/factory/Be_Pulsed()
 	. = ..()
+	if(naut)
+		return
 	if(spores.len >= max_spores)
 		return
 	if(spore_delay > world.time)

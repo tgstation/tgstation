@@ -86,8 +86,26 @@
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
+		. = 1
 	..()
-	. = 1
+
+/datum/reagent/medicine/synaphydramine
+	name = "Diphen-Synaptizine"
+	id = "synaphydramine"
+	description = "Reduces drowsiness, hallucinations, and Histamine from body."
+	color = "#EC536D" // rgb: 236, 83, 109
+
+/datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/M)
+	M.drowsyness = max(M.drowsyness-5, 0)
+	if(holder.has_reagent("mindbreaker"))
+		holder.remove_reagent("mindbreaker", 5)
+	if(holder.has_reagent("histamine"))
+		holder.remove_reagent("histamine", 5)
+	M.hallucination = max(0, M.hallucination - 10)
+	if(prob(30))
+		M.adjustToxLoss(1, 0)
+		. = 1
+	..()
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"

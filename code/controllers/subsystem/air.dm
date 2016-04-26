@@ -270,6 +270,8 @@ var/datum/subsystem/air/SSair
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		active_turfs -= T
+		if (T.blocks_air)
+			return
 		T.Initalize_Atmos(times_fired)
 
 
