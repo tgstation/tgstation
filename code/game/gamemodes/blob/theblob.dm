@@ -222,7 +222,7 @@
 
 /obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/device/analyzer))
+	if(istype(I, /obj/item/device/analyzer))
 		user << "<b>The analyzer beeps once, then reports:</b><br>"
 		user << 'sound/machines/ping.ogg'
 		if(overmind)
