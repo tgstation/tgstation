@@ -194,9 +194,9 @@ var/const/MAX_SAVE_SLOTS = 8
 						saveloaded = 1
 						return
 					else
-						world.log << "[C.ckey] failed loading save slot."
+						world.log << "[theckey] failed loading save slot."
 				else
-					world.log << "[C.ckey] failed loading preferences."
+					world.log << "[theckey] failed loading preferences."
 
 			randomize_appearance_for()
 			real_name = random_name(gender)
