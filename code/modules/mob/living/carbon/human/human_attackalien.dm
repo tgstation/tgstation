@@ -37,13 +37,10 @@
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
 			else
-				if (randn <= 99)
-					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-					drop_item()
-					visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-						"<span class='userdanger'>[M] disarmed [src]!</span>")
-				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-					visible_message("<span class='danger'>[M] has tried to disarm [src]!</span>", \
-						"<span class='userdanger'>[M] has tried to disarm [src]!</span>")
+				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				adjustStaminaLoss(45)
+				drop_item()
+				visible_message("<span class='danger'>[M] slammed into [src]!</span>", \
+						"<span class='userdanger'>[M] slammeded into [src]!</span>")
+
 	return
