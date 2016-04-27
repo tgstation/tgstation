@@ -57,6 +57,7 @@
 		if(!removingairlock)
 			src << "<span class='notice'>You start tearing apart the airlock...</span>"
 			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 			var/obj/machinery/door/airlock/A = target
 			removingairlock = 1
 			if(do_after(src, 200, 0, A, 1))
