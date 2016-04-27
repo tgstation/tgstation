@@ -122,6 +122,28 @@
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
 
+//Pod floor
+/obj/item/stack/tile/pod
+	name = "pod floor tile"
+	singular_name = "pod floor tile"
+	desc = "A grooved floor tile."
+	icon_state = "tile_pod"
+	turf_type = /turf/open/floor/pod
+
+/obj/item/stack/tile/pod/light
+	name = "light pod floor tile"
+	singular_name = "light pod floor tile"
+	desc = "A lightly colored grooved floor tile."
+	icon_state = "tile_podlight"
+	turf_type = /turf/open/floor/pod/light
+
+/obj/item/stack/tile/pod/dark
+	name = "dark pod floor tile"
+	singular_name = "dark pod floor tile"
+	desc = "A darkly colored grooved floor tile."
+	icon_state = "tile_poddark"
+	turf_type = /turf/open/floor/pod/dark
+
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
