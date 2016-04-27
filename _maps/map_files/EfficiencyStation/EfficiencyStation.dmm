@@ -37312,7 +37312,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/spellbook/oneuse/smoke{
+/obj/item/weapon/spellbook/oneuse/summonitem{
 	name = "mysterious old book of "
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
