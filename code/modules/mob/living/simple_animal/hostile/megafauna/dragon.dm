@@ -144,7 +144,12 @@
 	sleep(10)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
-		L.gib()
+		if(L.stat)
+			L.gib()
+		else
+			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+			L.adjustBruteLoss(60)
+			L.throw_at_fast(throwtarget)
 	for(var/mob/M in range(7,src))
 		shake_camera(M, 15, 1)
 
