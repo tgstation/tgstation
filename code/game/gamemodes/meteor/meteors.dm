@@ -221,7 +221,7 @@
 
 		//Flashing everyone
 		if(eye_safety < 2)
-			flick("e_flash", M.flash)
+			M.flash_eyes(visual = 1)
 			switch(eye_safety)
 				if(1)
 					M.Stun(2)

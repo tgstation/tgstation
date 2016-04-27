@@ -400,11 +400,11 @@
 	/* Oh jesus fucking christ bay
 	if(!custom_sprite) //Check for custom sprite
 		var/file = file2text("config/custom_sprites.txt")
-		var/lines = text2list(file, "\n")
+		var/lines = splittext(file, "\n")
 
 		for(var/line in lines)
 		// split & clean up
-			var/list/Entry = text2list(line, "-")
+			var/list/Entry = splittext(line, "-")
 			for(var/i = 1 to Entry.len)
 				Entry[i] = trim(Entry[i])
 
@@ -628,8 +628,7 @@
 		to_chat(src, "The bus' robustness protects you from the explosion.")
 		return
 
-	if(!blinded)
-		flick("flash", flash)
+	flash_eyes(visual = 1, affect_silicon = 1)
 
 	switch(severity)
 		if(1.0)
@@ -990,7 +989,7 @@
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
 				if(prob(8))
-					flick("noise", flash)
+					flash_eyes(visual = 1, type = /obj/screen/fullscreen/flash/noise)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
@@ -1062,7 +1061,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("<span class='danger'>The [M.name] has electrified []!</span>", src), 1)
 
-				flick("noise", flash)
+				flash_eyes(visual = 1, type = /obj/screen/fullscreen/flash/noise)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)

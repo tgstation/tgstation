@@ -44,7 +44,7 @@
 		return
 
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes(visual = 1)
 
 	var/b_loss = null
 	var/f_loss = null

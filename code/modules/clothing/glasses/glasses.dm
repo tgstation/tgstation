@@ -109,9 +109,6 @@
 	eyeprot = 3
 	species_fit = list("Vox")
 
-/obj/item/clothing/glasses/welding/proc/getMask()
-	return global_hud.darkMask
-
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
 
@@ -147,9 +144,6 @@
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 	origin_tech = "engineering=3;materials=3"
-
-/obj/item/clothing/glasses/welding/superior/getMask()
-	return null
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"

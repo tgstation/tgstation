@@ -1752,3 +1752,44 @@
 /mob/living/carbon/human/proc/get_footprint_type()
 	var/obj/item/clothing/shoes/S = shoes //Why isn't shoes just typecast in the first place?
 	return ((istype(S) && S.footprint_type) || (species && species.footprint_type) || /obj/effect/decal/cleanable/blood/tracks/footprints) //The shoes' footprint type overrides the mob's, for obvious reasons. Shoes with a falsy footprint_type will let the mob's footprint take over, though.
+
+/mob/living/carbon/human/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(..()) // we've been flashed
+		var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
+		var/damage = intensity - eyecheck()
+		if(visual)
+			return
+		if(!eyes)
+			return
+		switch(damage)
+			if(0)
+				to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
+			if(1)
+				to_chat(src, "<span class='warning'>Your eyes sting a little.</span>")
+				if(prob(40))
+					eyes.damage += 1
+
+			if(2)
+				src << "<span class='warning'>Your eyes burn.</span>"
+				eyes.damage += rand(2, 4)
+
+			else
+				to_chat(src,"<span class='warning'>Your eyes itch and burn severely!</span>")
+				eyes.damage += rand(12, 16)
+
+		if(eyes.damage > 10)
+			eye_blind += damage
+			eye_blurry += damage * rand(3, 6)
+
+			if(eyes.damage > 20)
+				if (prob(eyes.damage - 20))
+					to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
+					disabilities |= NEARSIGHTED
+				else if(prob(eyes.damage - 25))
+					to_chat(src, "<span class='warning'>You can't see anything!</span>")
+					disabilities |= BLIND
+			else
+				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
+		return 1
+	else
+		to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")

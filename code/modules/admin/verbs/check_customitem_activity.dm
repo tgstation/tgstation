@@ -40,11 +40,11 @@ var/inactive_keys = "None<br>"
 	var/list/ckeys_with_customitems = list()
 
 	var/file = file2text("config/custom_items.txt")
-	var/lines = text2list(file, "\n")
+	var/lines = splittext(file, "\n")
 
 	for(var/line in lines)
 		// split & clean up
-		var/list/Entry = text2list(line, ":")
+		var/list/Entry = splittext(line, ":")
 		for(var/i = 1 to Entry.len)
 			Entry[i] = trim(Entry[i])
 

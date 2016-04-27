@@ -202,7 +202,7 @@
 		dat += "<br>It is [grown_seed.biolum_colour ? "<font color='[grown_seed.biolum_colour]'>bio-luminescent</font>" : "bio-luminescent"]."
 
 	if(dat)
-		dat = list2text(dat)
+		dat = jointext(dat,"")
 		last_data = dat
 		dat += "<br><br>\[<a href='?src=\ref[src];print=1'>print report</a>\] \[<a href='?src=\ref[src];clear=1'>clear</a>\]"
 		user << browse(dat,"window=plant_analyzer_\ref[src];size=400x500")

@@ -582,7 +582,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			else
 				dat += "Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			//usr << browse(dat, "window=chem_master;size=575x400")
-			dat = list2text(dat)
+			dat = jointext(dat,"")
 			var/datum/browser/popup = new(usr, "[windowtype]", "[name]", 585, 400, src)
 			popup.set_content(dat)
 			popup.open()
@@ -726,7 +726,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					dat +="</tr>"
 
 			dat += "</table>"
-			dat = list2text(dat)
+			dat = jointext(dat,"")
 			var/datum/browser/popup = new(usr, "[windowtype]", "[name]", 585, 400, src)
 			popup.set_content(dat)
 			popup.open()
@@ -861,7 +861,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					<A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles ([max_bottle_size] units max each; 4 max)</A><BR>"}
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(user, "[windowtype]", "[name]", 575, 400, src)
 	popup.set_content(dat)
 	popup.open()
@@ -1460,7 +1460,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 	else
 		dat += "Please wait..."
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder", src)
 	popup.set_content(dat)
 	popup.open()

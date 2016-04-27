@@ -89,9 +89,9 @@ var/global/list/mixed_allowed = list(
 		var/keylist[]
 		for(var/datum/mind/mind in modePlayer)
 			keylist += mind
-		log_admin("The gamemode setup for mixed started with [modes.len] mode\s [list2text(modes, " ")] with [list2text(keylist, " ")] as antag\s.")
+		log_admin("The gamemode setup for mixed started with [modes.len] mode\s [jointext(modes, " ")] with [jointext(keylist, " ")] as antag\s.")
 		message_admins("The gamemode setup for mixed started with [modes.len] mode\s.")
-		world.log << "The gamemode setup for mixed started with [modes.len] mode\s [list2text(modes, " ")] with [list2text(keylist, " ")] as antag\s."
+		world.log << "The gamemode setup for mixed started with [modes.len] mode\s [jointext(modes, " ")] with [jointext(keylist, " ")] as antag\s."
 
 
 /datum/game_mode/mixed/post_setup()

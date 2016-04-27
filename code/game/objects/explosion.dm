@@ -37,7 +37,7 @@ var/explosion_shake_message_cooldown = 0
 			explosion_rec(epicenter, power)
 			return
 
-		var/start = world.timeofday
+		var/watch = start_watch()
 		epicenter = get_turf(epicenter)
 		if(!epicenter)
 			return
@@ -144,7 +144,7 @@ var/explosion_shake_message_cooldown = 0
 
 			T.ex_act(dist)
 
-		var/took = (world.timeofday-start)/10
+		var/took = stop_watch(watch)
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
 		if(Debug2)
 			world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."

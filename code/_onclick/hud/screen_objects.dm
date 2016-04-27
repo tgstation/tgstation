@@ -246,7 +246,7 @@
 /obj/screen/clicker
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "blank"
-	layer = 0
+	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	globalscreen = 1
 	screen_loc = ui_entire_screen
@@ -258,9 +258,9 @@
 	return 1
 
 /proc/screen_loc2turf(scr_loc, turf/origin)
-	var/list/screenxy = text2list(scr_loc, ",")
-	var/list/screenx = text2list(screenxy[1], ":")
-	var/list/screeny = text2list(screenxy[2], ":")
+	var/list/screenxy = splittext(scr_loc, ",")
+	var/list/screenx = splittext(screenxy[1], ":")
+	var/list/screeny = splittext(screenxy[2], ":")
 	var/X = screenx[1]
 	var/Y = screeny[1]
 	X = Clamp((origin.x + text2num(X) - (world.view + 1)), 1, world.maxx)

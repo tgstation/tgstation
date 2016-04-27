@@ -11,7 +11,7 @@ json_writer
 				if(i++ < L.len)
 					. += ","
 			.+= "}"
-			. = list2text(.)
+			. = jointext(.,"")
 
 		write(val)
 			if(isnum(val))
@@ -34,7 +34,7 @@ json_writer
 				if(i < L.len)
 					. += ","
 			. += "]"
-			. = list2text(.)
+			. = jointext(., "")
 
 		write_string(txt)
 			var/static/list/json_escape = list("\\", "\"", "'", "\n")

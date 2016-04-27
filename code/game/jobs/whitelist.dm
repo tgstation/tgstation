@@ -21,14 +21,14 @@ var/global/list/alien_whitelist = list()
 	if (!text)
 		diary << "Failed to load config/alienwhitelist.txt\n"
 	else
-		for(var/line in text2list(text, "\n"))
+		for(var/line in splittext(text, "\n"))
 			if(dd_hasprefix(line,"#"))
 				continue
 			if(!findtext(line,"-"))
 				continue
-			var/list/parts=text2list(line,"-")
+			var/list/parts=splittext(line,"-")
 			var/ckey=trim(lowertext(parts[1]))
-			var/specieslist=text2list(parts[2],",")
+			var/specieslist=splittext(parts[2],",")
 			for(var/species in specieslist)
 				species=lowertext(trim(species))
 				if(!(species in alien_whitelist))

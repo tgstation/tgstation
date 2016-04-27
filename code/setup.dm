@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-#if DM_VERSION < 508
-#error Your version of byond is too old, you need version 508 or higher
+#if DM_VERSION < 510
+#error Your version of byond is too old, you need version 510 or higher
 #endif
 #define RUNWARNING // disable if they re-enable run() in 507 or newer.
                    // They did, tested in 508.1296 - N3X

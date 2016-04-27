@@ -490,7 +490,7 @@ var/list/mechtoys = list(
 			RANK: [idrank]<br>
 			REASON: [reason]<br>
 			SUPPLY CRATE TYPE: [P.name]<br>
-			ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>
+			ACCESS RESTRICTION: [get_access_desc(P.access)]<br>
 			CONTENTS:<br>"}
 		reqform.info += P.manifest
 
@@ -688,7 +688,7 @@ var/list/mechtoys = list(
 			RANK: [idrank]<br>
 			REASON: [reason]<br>
 			SUPPLY CRATE TYPE: [P.name]<br>
-			ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>
+			ACCESS RESTRICTION: [get_access_desc(P.access)]<br>
 			CONTENTS:<br>"}
 		reqform.info += P.manifest
 		reqform.info += {"<hr>

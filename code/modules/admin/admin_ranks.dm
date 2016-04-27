@@ -14,7 +14,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		if(!length(line))				continue
 		if(copytext(line,1,2) == "#")	continue
 
-		var/list/List = text2list(line,"+")
+		var/list/List = splittext(line,"+")
 		if(!List.len)					continue
 
 		var/rank = ckeyEx(List[1])
@@ -74,7 +74,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 			if(copytext(line,1,2) == "#")	continue
 
 			//Split the line at every "-"
-			var/list/List = text2list(line, "-")
+			var/list/List = splittext(line, "-")
 			if(!List.len)					continue
 
 			//ckey is before the first "-"

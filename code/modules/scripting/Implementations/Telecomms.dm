@@ -140,7 +140,7 @@
 				@param replacestring: 	the string to replace the substring with
 
 	*/
-	interpreter.SetProc("replace",		/proc/replacetext)
+	interpreter.SetProc("replace",		/proc/n_replacetext)
 
 	/*
 		-> Locates an element/substring inside of a list or string
@@ -182,11 +182,10 @@
 	interpreter.SetProc("shuffle",		/proc/shuffle)
 	interpreter.SetProc("uniquevector",	/proc/uniquelist)
 
-	interpreter.SetProc("text2vector",	/proc/text2list)
-	interpreter.SetProc("text2vectorEx",/proc/text2listEx)
-	interpreter.SetProc("vector2text",	/proc/vg_list2text)
+	interpreter.SetProc("text2vector",	/proc/n_splittext)
+	interpreter.SetProc("text2vectorEx",/proc/splittextEx)
+	interpreter.SetProc("vector2text",	/proc/vg_jointext)
 
-	// Donkie~
 	// Strings
 	interpreter.SetProc("lower",		/proc/n_lower)
 	interpreter.SetProc("upper",		/proc/n_upper)
@@ -195,7 +194,7 @@
 	interpreter.SetProc("reverse",		/proc/reverse_text)
 	interpreter.SetProc("tonum",		/proc/n_str2num)
 	interpreter.SetProc("capitalize",	/proc/capitalize)
-	interpreter.SetProc("replacetextEx",/proc/replacetextEx)
+	interpreter.SetProc("replacetextEx",/proc/n_replacetextEx)
 
 	// Numbers
 	interpreter.SetProc("tostring",		/proc/n_num2str)

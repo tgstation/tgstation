@@ -56,7 +56,7 @@ var/global/datum/interactive_map/camera/adv_camera = new
 	z = text2num(z)
 	if (!z) z = mob.z
 	if (!(z in zlevels))
-		to_chat(mob, "zlevel([z]) good levels: [list2text(zlevels, " ")]")
+		to_chat(mob, "zlevel([z]) good levels: [jointext(zlevels, " ")]")
 		to_chat(mob, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
 		return
 

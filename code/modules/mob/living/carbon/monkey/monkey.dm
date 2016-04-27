@@ -655,7 +655,7 @@
 		return
 
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes(visual = 1)
 
 	switch(severity)
 		if(1.0)

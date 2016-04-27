@@ -90,7 +90,7 @@
 			else
 				dat += "The sleeper is empty."
 			dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
-		dat = list2text(dat)
+		dat = jointext(dat,"")
 		user << browse(dat, "window=sleeper;size=400x500")
 		onclose(user, "sleeper")
 	return

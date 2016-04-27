@@ -59,8 +59,8 @@
 
 			var/list/flashers = list()
 			for(var/mob/living/carbon/human/M in viewers(TO, null))
-				if(M:eyecheck() <= 0)
-					flick("e_flash", M.flash) // flash dose faggots
+				// if(M:eyecheck() <= 0) (this is now handled in flash_eyes)
+				if(M.flash_eyes(affect_silicon = 1))
 					flashers += M
 
 			var/y_distance = TO.y - FROM.y

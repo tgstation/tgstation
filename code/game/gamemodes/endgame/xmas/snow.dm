@@ -42,7 +42,6 @@
 		playsound(loc, 'sound/items/shovel.ogg', 50, 1)
 		snow_amount = SNOWCOVERING_LITTLE
 		icon_state = "snow_dug"
-		mouse_opacity = 0
 		new /obj/item/stack/sheet/snow(get_turf(src), 1)
 		new /obj/item/stack/sheet/snow(get_turf(src), 1)
 		new /obj/item/stack/sheet/snow(get_turf(src), 1)

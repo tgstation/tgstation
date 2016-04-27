@@ -166,7 +166,7 @@ var/global/datum/controller/vote/vote = new()
 			text = "<b>Vote Tied Between:</b><br>"
 			for(var/option in winners)
 				text += "\t[option]<br>"
-			feedbackanswer = list2text(winners, " ")
+			feedbackanswer = jointext(winners, " ")
 		. = pick(winners)
 		if(mode == "map")
 			if(!feedbackanswer)

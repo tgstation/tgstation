@@ -309,7 +309,7 @@ var/intercom_range_display_status = 0
 				var/oldcolor = initial(T.color)
 				var/newcolor = oldcolor
 				if(badtiles.len>0)
-					message_admins("Tile [formatJumpTo(T)] (BT: [basetype]) is next to: [list2text(badtiles,", ")]")
+					message_admins("Tile [formatJumpTo(T)] (BT: [basetype]) is next to: [jointext(badtiles,", ")]")
 					newcolor="#ff0000"
 				if(newcolor!=oldcolor)
 					T.color=newcolor

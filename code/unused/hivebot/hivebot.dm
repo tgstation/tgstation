@@ -55,7 +55,7 @@
 
 /mob/living/silicon/hivebot/ex_act(severity)
 	if(!blinded)
-		flick("flash", src.flash)
+		flash_eyes(visual = 1, affect_silicon = 1)
 
 	if (src.stat == 2 && src.client)
 		src.gib(1)
@@ -222,7 +222,7 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
 			if(prob(8))
-				flick("noise", src.flash)
+				flash_eyes(visual = 1, affect_silicon = 1)
 			src.adjustBruteLoss(damage)
 			src.updatehealth()
 		else

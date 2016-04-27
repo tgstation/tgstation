@@ -161,7 +161,7 @@
 			dat += "Breed viral culture in beaker: <A href='?src=\ref[src];virus=1'> Start</a>"
 			dat += "<BR>"
 	dat += "<br><hr><A href='?src=\ref[src];flush=1'>Flush system</a><BR>"
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(user, "dish_incubator", "Pathogenic Incubator", 575, 400, src)
 	popup.set_content(dat)
 	popup.open()

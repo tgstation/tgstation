@@ -164,6 +164,7 @@ var/global/obj/screen/clicker/catcher = new()
 		src.adding += using
 		mymob:schematics_background = using
 
+	reload_fullscreen()
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
@@ -215,82 +216,6 @@ var/global/obj/screen/clicker/catcher = new()
 			to_chat(usr, "<span class='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>")
 	else
 		to_chat(usr, "<span class='warning'>This mob type does not use a HUD.</span>")
-
-/*
-	The global hud:
-	Uses the same visual objects for all players.
-*/
-var/datum/global_hud/global_hud = new()
-
-/datum/global_hud
-	var/obj/screen/druggy
-	var/obj/screen/blurry
-	var/list/vimpaired
-	var/list/darkMask
-
-/datum/global_hud/New()
-	//420erryday psychedellic colours screen overlay for when you are high
-	druggy = getFromPool(/obj/screen)
-	druggy.screen_loc = ui_entire_screen
-	druggy.icon_state = "druggy"
-	druggy.layer = 17
-	druggy.mouse_opacity = 0
-
-	//that white blurry effect you get when you eyes are damaged
-	blurry = getFromPool(/obj/screen)
-	blurry.screen_loc = ui_entire_screen
-	blurry.icon_state = "blurry"
-	blurry.layer = 17
-	blurry.mouse_opacity = 0
-
-	var/obj/screen/O
-	var/i
-	//that nasty looking dither you  get when you're short-sighted
-	vimpaired = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen)
-	O = vimpaired[1]
-	O.screen_loc = "1,1 to 5,15"
-	O = vimpaired[2]
-	O.screen_loc = "5,1 to 10,5"
-	O = vimpaired[3]
-	O.screen_loc = "6,11 to 10,15"
-	O = vimpaired[4]
-	O.screen_loc = "11,1 to 15,15"
-
-	//welding mask overlay black/dither
-	darkMask = newlist(/obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen)
-	O = darkMask[1]
-	O.screen_loc = "3,3 to 5,13"
-	O = darkMask[2]
-	O.screen_loc = "5,3 to 10,5"
-	O = darkMask[3]
-	O.screen_loc = "6,11 to 10,13"
-	O = darkMask[4]
-	O.screen_loc = "11,3 to 13,13"
-	O = darkMask[5]
-	O.screen_loc = "1,1 to 15,2"
-	O = darkMask[6]
-	O.screen_loc = "1,3 to 2,15"
-	O = darkMask[7]
-	O.screen_loc = "14,3 to 15,15"
-	O = darkMask[8]
-	O.screen_loc = "3,14 to 13,15"
-
-	for(i = 1, i <= 4, i++)
-		O = vimpaired[i]
-		O.icon_state = "dither50"
-		O.layer = 17
-		O.mouse_opacity = 0
-
-		O = darkMask[i]
-		O.icon_state = "dither50"
-		O.layer = 17
-		O.mouse_opacity = 0
-
-	for(i = 5, i <= 8, i++)
-		O = darkMask[i]
-		O.icon_state = "black"
-		O.layer = 17
-		O.mouse_opacity = 0
 
 /datum/hud/proc/toggle_show_schematics_display(var/list/override = null,clear = 0, var/obj/item/device/rcd/R)
 	if(!isliving(mymob)) return

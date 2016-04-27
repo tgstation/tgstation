@@ -61,7 +61,7 @@ s
 			. += "<a href='?src=\ref[master.interface];select_paint=[our_list.Find(P)];set_dir=[dir]'[selected]><img src='[P.file_name][P.icon_state]_[dir].png'/></a>"
 
 	. += "</p>"
-	. = list2text(.)
+	. = jointext(.,"")
 
 /datum/rcd_schematic/tile/Topic(var/href, var/href_list)
 	if(href_list["select_paint"])

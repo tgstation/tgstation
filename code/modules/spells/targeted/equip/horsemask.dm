@@ -25,7 +25,7 @@
 	for(var/mob/living/target in targets)
 		target.visible_message(	"<span class='danger'>[target]'s face lights up in fire, and after the event a horse's head takes its place!</span>", \
 								"<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a horse!</span>")
-		flick("e_flash", target.flash)
+		target.flash_eyes(visual = 1)
 
 /spell/targeted/equip_item/horsemask/summon_item(var/new_type)
 	var/obj/item/new_item = new new_type

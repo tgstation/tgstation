@@ -134,7 +134,7 @@
 		if(2)
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
-	flick("noise", src:flash)
+	flash_eyes(visual = 1, type = /obj/screen/fullscreen/flash/noise)
 	to_chat(src, "<span class='danger'>*BZZZT*</span>")
 	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
 	..()
@@ -316,3 +316,7 @@
 		H.knock_out_teeth()
 	else
 		to_chat(H, "<span class='info'>Your self-preservation instinct prevents you from breaking your teeth on \the [src].</span>")
+
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+	if(affect_silicon)
+		return ..()

@@ -4,8 +4,8 @@ sudo: false
 
 env:
     global:
-    - BYOND_MAJOR="509"
-    - BYOND_MINOR="1307"
+    - BYOND_MAJOR="510"
+    - BYOND_MINOR="1336"
     matrix:
     - DM_MAPFILE="tgstation"
     - DM_MAPFILE="metaclub"

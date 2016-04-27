@@ -4,7 +4,7 @@
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 	//loop_checks = 0
-#define RECOMMENDED_VERSION 501
+#define RECOMMENDED_VERSION 510
 
 
 var/savefile/panicfile
@@ -56,7 +56,7 @@ var/savefile/panicfile
  * FOR MORE INFORMATION SEE: http://www.byond.com/forum/?post=1666940
  */
 #ifdef BORDER_USE_TURF_EXIT
-	if(byond_version < 507)
+	if(byond_version < 510)
 		warning("Your server's byond version does not meet the recommended requirements for this code. Please update BYOND to atleast 507.1248 or comment BORDER_USE_TURF_EXIT in global.dm")
 #elif
 	if(byond_version < RECOMMENDED_VERSION)
@@ -323,7 +323,7 @@ var/savefile/panicfile
 		if (!text)
 			diary << "Failed to load config/mods.txt\n"
 		else
-			var/list/lines = text2list(text, "\n")
+			var/list/lines = splittext(text, "\n")
 			for(var/line in lines)
 				if (!line)
 					continue
@@ -388,7 +388,7 @@ var/savefile/panicfile
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
-		s += ": [list2text(features, ", ")]"
+		s += ": [jointext(features, ", ")]"
 
 	/* does this help? I do not know */
 	if (src.status != s)

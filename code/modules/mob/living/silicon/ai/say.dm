@@ -130,7 +130,7 @@ var/const/VOX_DELAY = 600
 		if(index != vox_sounds.len)
 			dat += " / "
 
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -161,7 +161,7 @@ var/const/VOX_DELAY = 600
 	if(!message || announcing_vox > world.time)
 		return
 
-	var/list/words = text2list(trim(message), " ")
+	var/list/words = splittext(trim(message), " ")
 	var/list/incorrect_words = list()
 
 	if(words.len > 30)

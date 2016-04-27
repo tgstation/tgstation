@@ -214,7 +214,7 @@
 			for(var/light_to_ref in light_type_cur)
 				to_dump_all += "\ref[light_to_ref]"
 			to_dump_5 = to_dump_all.Copy(1, min(6, to_dump_all.len + 1))
-			dat += "<br><b>[T]: </b>[light_type_cur.len] | Dump to Waste: <a href='?src=\ref[src];dump=\ref[light_type_cur[1]]'>1</a><a href='?src=\ref[src];dump=[list2text(to_dump_5, ", ")]'>5</a><a href='?src=\ref[src];dump=[list2text(to_dump_all, ", ")]'>All</a>"
+			dat += "<br><b>[T]: </b>[light_type_cur.len] | Dump to Waste: <a href='?src=\ref[src];dump=\ref[light_type_cur[1]]'>1</a><a href='?src=\ref[src];dump=[jointext(to_dump_5, ", ")]'>5</a><a href='?src=\ref[src];dump=[jointext(to_dump_all, ", ")]'>All</a>"
 
 		dat += "<br><b><a href='?src=\ref[src];eject=supply'>Eject Supply Container</a></b>"
 
@@ -284,7 +284,7 @@
 			for(var/light_to_ref in light_type_cur)
 				to_dump_all += "\ref[light_to_ref]"
 			to_dump_5 = to_dump_all.Copy(1, min(6, to_dump_all.len + 1))
-			dat += "<br><b>[T]: </b>[light_type_cur.len] | Dump to Waste: <a href='?src=\ref[src];dump=\ref[light_type_cur[1]]'>1</a><a href='?src=\ref[src];dump=[list2text(to_dump_5, ", ")]'>5</a><a href='?src=\ref[src];dump=[list2text(to_dump_all, ", ")]'>All</a>"
+			dat += "<br><b>[T]: </b>[light_type_cur.len] | Dump to Waste: <a href='?src=\ref[src];dump=\ref[light_type_cur[1]]'>1</a><a href='?src=\ref[src];dump=[jointext(to_dump_5, ", ")]'>5</a><a href='?src=\ref[src];dump=[jointext(to_dump_all, ", ")]'>All</a>"
 
 	else
 		dat += "<h3>No supply container inserted. This should be impossible. Please ahelp this.</h3>"
@@ -528,7 +528,7 @@
 		if(!waste)
 			if(usr) to_chat(usr, "<span class='warning'>\The [src] doesn't have a waste container!</span>")
 			return 1
-		var/list/dumplist = text2list(href_list["dump"], ", ")
+		var/list/dumplist = splittext(href_list["dump"], ", ")
 		for(var/lightref in dumplist)
 			var/obj/item/weapon/light/L = locate(lightref)
 			if(L.loc == supply)

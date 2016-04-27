@@ -62,7 +62,7 @@
 					<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>
 					********************************<BR>"}
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
-		dat = list2text(dat)
+		dat = jointext(dat,"")
 		var/datum/browser/popup = new(user, "prisoner_implants", "Prisoner Implant Manager System", 400, 500, src)
 		popup.set_content(dat)
 		popup.open()

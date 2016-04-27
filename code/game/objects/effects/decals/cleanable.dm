@@ -1,7 +1,7 @@
 /obj/effect/decal/cleanable
 	var/list/random_icon_states = list()
 	var/targeted_by = null	//Used so cleanbots can claim a mess.
-	mouse_opacity = 0 //So it's not completely impossible to fix the brig after some asshole bombs and then dirt grenades the place. - N3X
+	mouse_opacity = 1 //N3X made this 0, which made it impossible to click things, and in the current 510 version right-click things.
 	w_type = NOT_RECYCLABLE
 
 	// For tracking shit across the floor.

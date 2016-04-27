@@ -400,7 +400,7 @@ turf/unsimulated/mineral/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_l
 				if(prob(50))
 					M.adjustBruteLoss(5)
 			else
-				flick("flash",M.flash)
+				M.flash_eyes(visual = 1)
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)

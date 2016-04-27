@@ -44,7 +44,9 @@
 	world << sound('sound/effects/cascade.ogg')
 
 	for(var/mob/M in player_list)
-		flick("e_flash", M.flash)
+		if(istype(M, /mob/living))
+			var/mob/living/L = M
+			L.flash_eyes(visual = 1)
 
 	if(emergency_shuttle.direction==2)
 		captain_announce("The emergency shuttle has returned due to bluespace distortion.")
@@ -184,7 +186,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			continue
 		if(M.current.stat!=2)
 			M.current.Weaken(10)
-			flick("e_flash", M.current.flash)
+			M.current.flash_eyes(visual = 1)
 		tcheck(80,1)
 
 		var/failed_objectives=0

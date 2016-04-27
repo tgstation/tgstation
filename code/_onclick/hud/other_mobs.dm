@@ -63,13 +63,6 @@
 	mymob.client.screen += list(mymob.fire, mymob.healths, mymob.pullin, mymob.oxygen, mymob.toxin, mymob.flash)
 
 /datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
-	mymob.blind = getFromPool(/obj/screen)
-	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
-	mymob.blind.icon_state = "blackimageoverlay"
-	mymob.blind.name = ""
-	mymob.blind.screen_loc = "1,1"
-	mymob.blind.layer = 0
-	mymob.blind.mouse_opacity = 1
 
 /datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
 
@@ -199,5 +192,3 @@
 	vampire_blood_display.layer = 20
 
 	mymob.client.screen += list(vampire_blood_display)
-
-

@@ -57,15 +57,15 @@
 		overlays.Add(open_state)
 
 /obj/screen/movable/spell_master/proc/open_spellmaster()
-	var/list/screen_loc_xy = text2list(screen_loc,",")
+	var/list/screen_loc_xy = splittext(screen_loc,",")
 
 	//Create list of X offsets
-	var/list/screen_loc_X = text2list(screen_loc_xy[1],":")
+	var/list/screen_loc_X = splittext(screen_loc_xy[1],":")
 	var/x_position = decode_screen_X(screen_loc_X[1])
 	var/x_pix = screen_loc_X[2]
 
 	//Create list of Y offsets
-	var/list/screen_loc_Y = text2list(screen_loc_xy[2],":")
+	var/list/screen_loc_Y = splittext(screen_loc_xy[2],":")
 	var/y_position = decode_screen_Y(screen_loc_Y[1])
 	var/y_pix = screen_loc_Y[2]
 

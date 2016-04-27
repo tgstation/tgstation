@@ -180,7 +180,7 @@ obj/machinery/seed_extractor/interact(mob/user as mob)
 			if(P.seed.teleporting) 		dat += "<span title=\"This plant possesses a high degree of temporal/spatial instability and may cause spontaneous bluespace disruptions.\">TELE </span>"
 			dat += "</td>"
 		dat += "</table>"
-	dat = list2text(dat)
+	dat = jointext(dat,"")
 	var/datum/browser/popup = new(user, "seed_ext", name, 1000, 400)
 	popup.set_content(dat)
 	popup.open()

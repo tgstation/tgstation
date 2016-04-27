@@ -190,7 +190,7 @@
 
 		else if(iscarbon(T))
 			var/mob/living/carbon/C = T
-			flick("e_flash", C.flash)
+			C.flash_eyes(visual = 1)
 			if (!(M_HULK in C.mutations))
 				C.silent += 15
 			C.Weaken(25)
