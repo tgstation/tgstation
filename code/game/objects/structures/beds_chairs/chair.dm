@@ -66,6 +66,8 @@
 		SK.loc = E
 		SK.master = E
 		qdel(src)
+	else
+		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
 	if(buckled_mobs.len)
@@ -213,6 +215,9 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
 		if(!item_chair || !ishuman(usr) || buckled_mobs.len || src.flags & NODECONSTRUCT)
+			return
+		if(usr.incapacitated())
+			usr << "<span class='warning'>You can't do that right now!</span>"
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)

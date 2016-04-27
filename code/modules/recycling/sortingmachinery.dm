@@ -44,6 +44,8 @@
 			icon_state = "gift[icon_state]"
 		else
 			user << "<span class='warning'>You need more paper!</span>"
+	else
+		return ..()
 
 /obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
 	if(istype(loc, /atom/movable))

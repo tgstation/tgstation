@@ -12,6 +12,7 @@
 	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
+	var/computer_health = 25
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -32,7 +33,10 @@
 	return 1
 
 /obj/machinery/computer/emp_act(severity)
-	if(prob(20/severity)) set_broken()
+	if(severity == 1)
+		take_damage(rand(15,30), BRUTE, 0)
+	else
+		take_damage(rand(15,25), BRUTE, 0)
 	..()
 
 /obj/machinery/computer/ex_act(severity, target)
@@ -42,25 +46,17 @@
 	switch(severity)
 		if(1)
 			qdel(src)
-			return
 		if(2)
-			if (prob(25))
+			if(prob(25))
 				qdel(src)
-				return
-			if (prob(50))
-				verbs.Cut()
-				set_broken()
+			else
+				take_damage(rand(20,30), BRUTE, 0)
 		if(3)
-			if (prob(25))
-				verbs.Cut()
-				set_broken()
-		else
-	return
+			take_damage(rand(10,30), BRUTE, 0)
 
-/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
-	if(prob(Proj.damage))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			set_broken()
+
+/obj/machinery/computer/bullet_act(obj/item/projectile/P)
+	take_damage(P.damage, P.damage_type, 0)
 	..()
 
 /obj/machinery/computer/update_icon()
@@ -83,26 +79,22 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/proc/set_broken()
-	if(circuit) //no circuit, no breaking
-		stat |= BROKEN
-		update_icon()
-	return
-
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
+			deconstruction()
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
-			if (src.stat & BROKEN)
+			if (stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
-				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/weapon/shard(src.loc)
+				new /obj/item/weapon/shard(src.loc)
 				A.state = 3
 				A.icon_state = "3"
 			else
@@ -110,30 +102,25 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	return
+	else
+		return ..()
 
-/obj/machinery/computer/attack_paw(mob/living/user)
-	user.do_attack_animation(src)
-	if(circuit)
-		if(prob(10))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its paws.</span>",\
-			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
-			"<span class='italics'>You hear a smashing sound.</span>")
-			set_broken()
+/obj/machinery/computer/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(stat & BROKEN)
+					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				else
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
 			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with its paws.</span>",\
-	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
-	"<span class='italics'>You hear hear a clicking sound.</span>")
-
-/obj/machinery/computer/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	if(circuit)
-		if(prob(80))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with its claws.</span>",\
-			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
-			"<span class='italics'>You hear a smashing sound.</span>")
-			set_broken()
-			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with its claws.</span>",\
-	"<span class='danger'>You smash against the [src.name] with your claws.</span>",\
-	"<span class='italics'>You hear a clicking sound.</span>")
+	computer_health = max(computer_health - damage, 0)
+	if(circuit) //no circuit, no breaking
+		if(!computer_health && !(stat & BROKEN))
+			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+			stat |= BROKEN
+			update_icon()

@@ -365,4 +365,4 @@
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 	else
-		..()
+		return ..()
