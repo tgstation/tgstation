@@ -953,14 +953,10 @@
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
-	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
-	else if(I.force)
-		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
-	else
-		return 0
+	H.send_item_attack_message(I, user, hit_area)
+
+	if(!I.force)
+		return 0 //item force is zero
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%

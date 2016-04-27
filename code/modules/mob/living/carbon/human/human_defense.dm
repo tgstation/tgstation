@@ -106,7 +106,7 @@
 	feedback_add_details("zone_targeted","[target_area]")
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
+	return dna.species.spec_attacked_by(I, user, def_zone, affecting, hit_area, a_intent, target_limb, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0

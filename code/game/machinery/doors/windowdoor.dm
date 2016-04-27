@@ -49,7 +49,7 @@
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
 			else
-				flick("[src.base_state]deny", src)
+				do_animate("deny")
 		return
 	if (!( ticker ))
 		return
@@ -68,7 +68,7 @@
 	if(allowed(user))
 		open_and_close()
 	else
-		flick("[src.base_state]deny", src)
+		do_animate("deny")
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
@@ -110,7 +110,7 @@
 			return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	flick("[src.base_state]opening", src)
+	do_animate("opening")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state ="[src.base_state]open"
 	sleep(10)
@@ -134,13 +134,11 @@
 		if(emagged)
 			return 0
 	src.operating = 1
-	flick("[src.base_state]closing", src)
+	do_animate("closing")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = src.base_state
 
 	src.density = 1
-//	if(src.visible)
-//		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(10)
@@ -148,10 +146,19 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/proc/take_damage(damage)
-	src.health = max(0, src.health - damage)
-	if (src.health <= 0)
-		if(!(flags&NODECONSTRUCT))
+/obj/machinery/door/window/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health = max(0, src.health - damage)
+	if(health <= 0)
+		if(!(flags & NODECONSTRUCT))
 			var/debris = list(
 				new /obj/item/weapon/shard(src.loc),
 				new /obj/item/weapon/shard(src.loc),
@@ -160,7 +167,7 @@
 				)
 			for(var/obj/fragment in debris)
 				transfer_fingerprints_to(fragment)
-		src.density = 0
+		density = 0
 		qdel(src)
 		return
 
@@ -172,84 +179,37 @@
 			if(prob(25))
 				qdel(src)
 			else
-				take_damage(120)
+				take_damage(120, BRUTE, 0)
 		if(3)
-			take_damage(60)
+			take_damage(60, BRUTE, 0)
 
 /obj/machinery/door/window/narsie_act()
 	color = "#7D1919"
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			take_damage(round(Proj.damage / 2))
-	..()
+/obj/machinery/door/window/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(round(P.damage / 2), P.damage_type, 0)
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200))
+		take_damage(round(exposed_volume / 200), BURN, 0)
 	..()
 
 //When an object is thrown at the window
-/obj/machinery/door/window/hitby(AM as mob|obj)
-
+/obj/machinery/door/window/hitby(atom/movable/AM)
 	..()
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
-	else
-		tforce = AM:throwforce
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	else if(isobj(AM))
+		var/obj/O = AM
+		tforce = O.throwforce
 	take_damage(tforce)
-	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
-	return
 
-
-/obj/machinery/door/window/mech_melee_attack(obj/mecha/M)
-	if(M.damtype == "brute")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		take_damage(M.force)
-	return
 
 
 /obj/machinery/door/window/attack_ai(mob/user)
 	return src.attack_hand(user)
-
-/obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
-	if(src.operating)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-	user.visible_message("<span class='danger'>[user] smashes against the [src.name]!</span>", \
-				"<span class='userdanger'>You smash against the [src.name]!</span>")
-	take_damage(damage)
-
-/obj/machinery/door/window/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	if(islarva(user))
-		return
-	attack_generic(user, 25)
-
-/obj/machinery/door/window/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0 && (M.melee_damage_type == BRUTE || M.melee_damage_type == BURN))
-		attack_generic(M, M.melee_damage_upper)
-
-/obj/machinery/door/window/attack_slime(mob/living/simple_animal/slime/user)
-	user.do_attack_animation(src)
-	if(!user.is_adult)
-		return
-	attack_generic(user, 25)
-
-/obj/machinery/door/window/attack_paw(mob/user)
-		return src.attack_hand(user)
-
-/obj/machinery/door/window/attack_hand(mob/user)
-	return src.attackby(user, user)
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !emagged)
@@ -263,32 +223,27 @@
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
 
-	//If it's in the process of opening/closing, ignore the click
-	if (src.operating)
-		return
-
-	if(istype(I, /obj/item/weapon/card/emag))
+	if(operating)
 		return
 
 	add_fingerprint(user)
-
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
-			if(src.density || src.operating)
+			if(density || operating)
 				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
 				return
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			src.p_open = !( src.p_open )
-			user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
+			panel_open = !panel_open
+			user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
-			if(p_open && !src.density && !src.operating)
+			if(panel_open && !density && !operating)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
 				if(do_after(user,40/I.toolspeed, target = src))
-					if(src.p_open && !src.density && !src.operating && src.loc)
+					if(panel_open && !density && !operating && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
 							if("left")
@@ -330,51 +285,31 @@
 
 						qdel(src)
 				return
+	return ..()
 
-
-	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
-		if(!hasPower())
-			if(src.density)
-				open(2)
-			else
-				close(2)
-			return
-
-	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card) )
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if( (I.flags&NOBLUDGEON) || !I.force )
-			return
-		var/aforce = I.force
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
-		if(I.damtype == BURN || I.damtype == BRUTE)
-			take_damage(aforce)
-		return
-
-	if (!src.requiresID())
-		//don't care who they are or what they have, act as if they're NOTHING
-		user = null
-
-	if (src.allowed(user))
-		if (src.density)
-			open()
+/obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
+	if(!hasPower())
+		if(density)
+			open(2)
 		else
-			close()
+			close(2)
+	else
+		user << "<span class='warning'>The door's motors resist your efforts to force it!</span>"
 
-	else if (src.density)
-		flick("[src.base_state]deny", src)
-
-	return
+/obj/machinery/door/window/do_animate(animation)
+	switch(animation)
+		if("opening")
+			flick("[src.base_state]opening", src)
+		if("closing")
+			flick("[src.base_state]closing", src)
+		if("deny")
+			flick("[src.base_state]deny", src)
 
 /obj/machinery/door/window/attack_hulk(mob/user)
 	..(user, 1)
 	user.visible_message("<span class='danger'>[user] smashes through the windoor!</span>", \
 						"<span class='danger'>You tear through the windoor!</span>")
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	take_damage(health)
 
 

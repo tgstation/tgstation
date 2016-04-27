@@ -293,12 +293,13 @@
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	threshhold.ChangeTurf(/turf/open/floor/pod)
 	var/turf/open/floor/pod/doorturf = threshhold
-	doorturf.blocks_air = 1 //So the air doesn't leak out
 	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
 	var/area/ZZ = get_area(threshhold)
 	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold
 	threshhold.overlays.Cut()
+
+	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
 
 	var/list/turfs = room["floors"]
 	for(var/turf/open/floor/A in turfs)
@@ -327,8 +328,29 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "fans"
 	name = "environmental regulation system"
+	desc = "A large machine releasing a constant gust of air."
 	anchored = 1
 	density = 1
+	var/arbitraryatmosblockingvar = TRUE
+
+/obj/structure/fans/tiny
+	name = "tiny fan"
+	desc = "A tiny fan, releasing a thin gust of air."
+	layer = TURF_LAYER + 0.8
+	density = 0
+	icon_state = "fan_tiny"
+
+/obj/structure/fans/New(loc)
+	..()
+	air_update_turf(1)
+
+/obj/structure/fans/Destroy()
+	arbitraryatmosblockingvar = FALSE
+	air_update_turf(1)
+	return ..()
+
+/obj/structure/fans/CanAtmosPass(turf/T)
+	return !arbitraryatmosblockingvar
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod

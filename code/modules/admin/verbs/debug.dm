@@ -675,12 +675,12 @@ var/global/list/g_fancy_list_of_types = null
 
 	for(var/obj/machinery/power/rad_collector/Rad in machines)
 		if(Rad.anchored)
-			if(!Rad.P)
+			if(!Rad.loaded_tank)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
 				Plasma.air_contents.assert_gas("plasma")
 				Plasma.air_contents.gases["plasma"][MOLES] = 70
 				Rad.drainratio = 0
-				Rad.P = Plasma
+				Rad.loaded_tank = Plasma
 				Plasma.loc = Rad
 
 			if(!Rad.active)

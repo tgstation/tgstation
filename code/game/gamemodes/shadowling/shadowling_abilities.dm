@@ -460,7 +460,7 @@
 				sp.start()
 				S.Weaken(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.hit(rand(80, 100))
+			W.take_damage(rand(80, 100))
 
 
 /obj/effect/proc_holder/spell/aoe_turf/drain_life //Deals stamina and oxygen damage to nearby humans and heals the shadowling. On a short cooldown because of the small range and situational usefulness

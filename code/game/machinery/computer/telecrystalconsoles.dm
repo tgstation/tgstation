@@ -29,21 +29,20 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		name = "[name] [rand(1,999)]"
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item))
-		if(uplinkholder)
-			user << "<span class='notice'>The [src] already has an uplink in it.</span>"
+	if(uplinkholder)
+		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
+		return
+	if(O.hidden_uplink)
+		var/obj/item/I = user.get_active_hand()
+		if(!user.drop_item())
 			return
-		if(O.hidden_uplink)
-			var/obj/item/I = user.get_active_hand()
-			if(!user.drop_item())
-				return
-			uplinkholder = I
-			I.loc = src
-			I.add_fingerprint(user)
-			update_icon()
-			updateUsrDialog()
-		else
-			user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
+		uplinkholder = I
+		I.loc = src
+		I.add_fingerprint(user)
+		update_icon()
+		updateUsrDialog()
+	else
+		user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()

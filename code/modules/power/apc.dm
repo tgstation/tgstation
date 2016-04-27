@@ -91,6 +91,7 @@
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
+	var/health = 50
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
@@ -442,7 +443,7 @@
 			user << "The wires have been [panel_open ? "exposed" : "unexposed"]"
 			update_icon()
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if (W.GetID())			// trying to unlock the interface with an ID card
 		if(emagged)
 			user << "<span class='warning'>The interface is broken!</span>"
 		else if(opened)
@@ -544,14 +545,21 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
+
+	else if(panel_open && !opened && is_wire_tool(W))
+		wires.interact(user)
 	else
-		if(panel_open && !opened && is_wire_tool(W))
-			wires.interact(user)
-		if(((stat & BROKEN) || malfhack) && !opened && W.force >= 5 && W.w_class >= 3 && prob(20))
+		return ..()
+
+/obj/machinery/power/apc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	..()
+	if((malfhack || (stat & BROKEN)) && !opened)
+		if(damage < 10)
+			return
+		health -= damage
+		if(health <= 0)
 			opened = 2
-			user.visible_message("<span class='warning'>[user.name] has knocked down the APC cover  with the [W.name].</span>", \
-				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
-				"<span class='italics'>You hear bang.</span>")
+			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
 			update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
@@ -590,25 +598,28 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(!user)
+	..()
+	if(malfhack || (stat & BROKEN))
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	if(opened == 0)
+		if(!panel_open)
+			panel_open = 1
+			update_icon()
+			visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
 
-	if(beenhit >= pick(3, 4) && panel_open != 1)
-		panel_open = 1
-		update_icon()
-		visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
+		else if(panel_open && !wires.is_all_cut())
+			wires.cut_all()
+			update_icon()
+			visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
+	else if(opened == 1)
+		if(cell)
+			cell.loc = user.loc
+			cell.updateicon()
+			cell = null
+			visible_message("<span class='danger'>The [src.name]'s power cell flies off!</span>")
+			charging = 0
+			update_icon()
 
-	else if(panel_open == 1 && !wires.is_all_cut())
-		wires.cut_all()
-		update_icon()
-		visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
-	else
-		beenhit += 1
-	return
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
