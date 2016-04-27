@@ -25,7 +25,6 @@
 		var/obj/effect/overlay/holograph/H = locate(holosign_type) in T
 		if(H)
 			user << "<span class='notice'>You use [src] to deactivate [H].</span>"
-			signs.Remove(H)
 			qdel(H)
 		else
 			if(!is_blocked_turf(T)) //can't put holograms on a tile that has dense stuff
@@ -44,8 +43,7 @@
 							return
 						if(is_blocked_turf(T)) //don't try to sneak dense stuff on our tile during the wait.
 							return
-					H = new holosign_type(get_turf(target))
-					signs += H
+					H = new holosign_type(get_turf(target), src)
 					user << "<span class='notice'>You create \a [H] with [src].</span>"
 				else
 					user << "<span class='notice'>[src] is projecting at max capacity!</span>"
@@ -55,10 +53,8 @@
 
 /obj/item/weapon/holosign_creator/attack_self(mob/user)
 	if(signs.len)
-		var/list/L = signs.Copy()
-		for(var/sign in L)
-			qdel(sign)
-			signs -= sign
+		for(var/H in signs)
+			qdel(H)
 		user << "<span class='notice'>You clear all active holograms.</span>"
 
 
@@ -83,6 +79,19 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	var/holo_integrity = 1
+	var/obj/item/weapon/holosign_creator/projector
+
+/obj/effect/overlay/holograph/New(loc, source_projector)
+	if(source_projector)
+		projector = source_projector
+		projector.signs += src
+	..()
+
+/obj/effect/overlay/holograph/Destroy()
+	if(projector)
+		projector.signs -= src
+		projector = null
+	return ..()
 
 /obj/effect/overlay/holograph/attacked_by(obj/item/I, mob/user)
 	..()

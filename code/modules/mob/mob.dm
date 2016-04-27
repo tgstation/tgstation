@@ -753,120 +753,6 @@ var/next_mob_id = 0
 /mob/proc/activate_hand(selhand)
 	return
 
-/mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
-
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-/mob/proc/Stun(amount, updating_canmove = 1)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/SetStunned(amount, updating_canmove = 1) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
-		stunned = max(amount,0)
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/AdjustStunned(amount, updating_canmove = 1)
-	if(status_flags & CANSTUN)
-		stunned = max(stunned + amount,0)
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/Weaken(amount, ignore_canweaken = 0, updating_canmove = 1)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/SetWeakened(amount, updating_canmove = 1)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0, updating_canmove = 1)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/Paralyse(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(max(paralysis,amount),0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/SetParalysis(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/AdjustParalysis(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(paralysis + amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/Sleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(max(sleeping,amount),0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/SetSleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(amount,0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/AdjustSleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(sleeping + amount,0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/Resting(amount)
-	resting = max(max(resting,amount),0)
-	update_canmove()
-
-/mob/proc/SetResting(amount)
-	resting = max(amount,0)
-	update_canmove()
-
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount,0)
-	update_canmove()
-
 /mob/proc/assess_threat() //For sec bot threat assessment
 	return
 
@@ -883,14 +769,6 @@ var/next_mob_id = 0
 	if(ghost)
 		ghost.notify_cloning(message, sound, source)
 		return ghost
-
-
-
-/mob/proc/adjustEarDamage()
-	return
-
-/mob/proc/setEarDamage()
-	return
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
@@ -1054,3 +932,15 @@ var/next_mob_id = 0
 			updatehealth()
 		if("resize")
 			update_transform()
+
+
+
+/mob/living/carbon/alien/adjustToxLoss(amount)
+	return
+
+/mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
+	if(amount > 0)
+		..(amount * 2)
+	else
+		..(amount)
+	return
