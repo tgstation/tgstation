@@ -30,7 +30,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/target_time = 0.5 // seconds
 	var/walk_speed = 1
 	var/nextwalk = 0
-	var/mob/living/carbon/human/target = null
+	var/mob/living/carbon/target = null
 
 /obj/item/clothing/mask/facehugger/can_contaminate()
 	return 0
@@ -68,9 +68,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		var/dist = get_dist(src.loc, target.loc)
 		if(dist > 4)
 			return //We'll let the facehugger do nothing for a bit, since it's fucking up.
-		var/obj/item/mask = target.get_body_part_coverage(MOUTH)
-		if(mask && istype(mask, /obj/item/clothing/mask/facehugger))
-			var/obj/item/clothing/mask/facehugger/F = mask
+		if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
+			var/obj/item/clothing/mask/facehugger/F = target.wear_mask
 			if(F.sterile) // Toy's won't prevent real huggers
 				findtarget()
 				return
