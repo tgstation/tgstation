@@ -670,20 +670,6 @@
 	else
 		clear_fullscreen("crit1")
 		clear_fullscreen("crit2")
-		if(oxyloss)
-			var/severity = 0
-			switch(oxyloss)
-				if(10 to 20) severity = 1
-				if(20 to 25) severity = 2
-				if(25 to 30) severity = 3
-				if(30 to 35) severity = 4
-				if(35 to 40) severity = 5
-				if(40 to 45) severity = 6
-				if(45 to INFINITY) severity = 7
-			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
-		else
-			clear_fullscreen("oxy")
-
 		//Fire and Brute damage overlay (BSSR)
 		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
 		if(hurtdamage)
@@ -735,7 +721,7 @@
 		if(!getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH))
+		if(paralysis || sleeping || (status_flags & FAKEDEATH))
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

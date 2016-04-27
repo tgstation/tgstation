@@ -25,7 +25,7 @@
 	name = "chest"
 	desc = "why is it detached..."
 	icon_state = "chest"
-	max_damage = 200
+	max_damage = INFINITY
 	body_part = CHEST
 
 
@@ -33,7 +33,7 @@
 	name = "head"
 	desc = "what a way to get a head in life..."
 	icon_state = "head"
-	max_damage = 200
+	max_damage = INFINITY
 	body_part = HEAD
 
 
@@ -41,7 +41,7 @@
 	name = "l_arm"
 	desc = "why is it detached..."
 	icon_state = "l_arm"
-	max_damage = 75
+	max_damage = INFINITY
 	body_part = ARM_LEFT
 
 
@@ -49,7 +49,7 @@
 	name = "l_leg"
 	desc = "why is it detached..."
 	icon_state = "l_leg"
-	max_damage = 75
+	max_damage = INFINITY
 	body_part = LEG_LEFT
 
 
@@ -57,7 +57,7 @@
 	name = "r_arm"
 	desc = "why is it detached..."
 	icon_state = "r_arm"
-	max_damage = 75
+	max_damage = INFINITY
 	body_part = ARM_RIGHT
 
 
@@ -65,7 +65,7 @@
 	name = "r_leg"
 	desc = "why is it detached..."
 	icon_state = "r_leg"
-	max_damage = 75
+	max_damage = INFINITY
 	body_part = LEG_RIGHT
 
 /obj/item/organ/severedtail

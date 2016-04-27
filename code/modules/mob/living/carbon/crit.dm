@@ -7,16 +7,20 @@
 	//// instead of game over black screen time /
 	/////////////////////////////////////////////
 	if(getBrainLoss() >= 100 && health < 0)
-		Weaken(1)
-		losebreath++
-		return
+		Weaken(30)
+		losebreath += 10
 
-	if(getBrainLoss() >= 120) // braindeath, the real killer
-		visible_message("<span class = 'danger'>[src]'s expression becomes completely blank, a lifeless look in their eyes.</span>")
+	if(getBrainLoss() >= 120 || (health + (getOxyLoss() / 2)) <= -500)
 		death()
 		return
 
-	if (health < 0)
+	if (health <= -100)
+		var/deathchance = min(99, ((getBrainLoss() * -5) + (health + (getOxyLoss() / 2))) * -0.01)
+		if (prob(deathchance))
+			death()
+			return
+
+	if (health < 0 && stat != 2)
 		if (prob(5))
 			emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
 		if (stuttering <= 5)

@@ -92,6 +92,7 @@
 	icon_state = "knockout2"
 	layer = CRIT_LAYER
 	blend_mode = 3
+	alpha = 230
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
