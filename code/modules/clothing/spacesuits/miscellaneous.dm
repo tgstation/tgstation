@@ -236,21 +236,6 @@ Contains:
 	flash_protect = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 
-/obj/item/clothing/suit/space/eva/clown
-	name = "cosmohonk suit"
-	icon_state = "cosmohonk"
-	item_state = "cosmohonk"
-	desc = "A lightweight space suit with... HONK"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-
-/obj/item/clothing/head/helmet/space/eva/clown
-	name = "cosmohonk helmet"
-	icon_state = "cosmohonk"
-	item_state = "cosmohonk"
-	desc = "A lightweight space helmet with... HONK"
-	flash_protect = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
@@ -340,5 +325,3 @@ Contains:
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-beserker"
 	item_state = "hardsuit0-beserker"
-
-
