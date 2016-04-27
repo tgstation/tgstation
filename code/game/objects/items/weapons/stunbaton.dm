@@ -80,9 +80,8 @@
 			user << "<span class='notice'>You remove the cell from [src].</span>"
 			status = 0
 			update_icon()
-			return
-		..()
-	return
+	else
+		return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
