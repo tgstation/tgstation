@@ -354,10 +354,10 @@
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
+		playsound(C.loc, 'sound/effects/hit_kick.ogg', 100, 1, 1)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	playsound(C.loc, 'sound/effects/hit_kick.ogg', 100, 1, 1)
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
