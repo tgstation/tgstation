@@ -53,6 +53,12 @@
 	contains = list(/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/internals/emergency_oxygen,
+					/obj/item/weapon/tank/internals/emergency_oxygen,
+					/obj/item/weapon/tank/internals/emergency_oxygen,
 					/obj/item/weapon/tank/internals/air,
 					/obj/item/weapon/tank/internals/air,
 					/obj/item/weapon/tank/internals/air)
@@ -104,6 +110,12 @@
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
+
+/datum/supply_pack/emergency/metalfoam
+	name = "Metal Foam Grenade Crate"
+	cost = 1000
+	contains = list(/obj/item/weapon/storage/box/metalfoam,)
+	crate_name = "metal foam grenade crate"
 
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
@@ -440,7 +452,7 @@
 
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
-	cost = 1000
+	cost = 1300
 	contains = list(/obj/item/weapon/storage/belt/utility,
 					/obj/item/weapon/storage/belt/utility,
 					/obj/item/weapon/storage/belt/utility,
@@ -452,7 +464,9 @@
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/hardhat,
 					/obj/item/clothing/head/hardhat,
-					/obj/item/clothing/head/hardhat)
+					/obj/item/clothing/head/hardhat,
+					/obj/item/clothing/glasses/meson/engine,
+					/obj/item/clothing/glasses/meson/engine,)
 	crate_name = "engineering gear crate"
 
 /datum/supply_pack/engineering/engine/spacesuit
@@ -467,6 +481,30 @@
 					/obj/item/clothing/mask/breath,)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/engineering/shieldgen
+	name = "Anti-breach Shield Projector Crate"
+	cost = 2500
+	contains = list(/obj/machinery/shieldgen,
+					/obj/machinery/shieldgen,)
+	crate_name = "anti-breach shield projector crate"
+
+/datum/supply_pack/engineering/grounding_rods
+	name = "Grounding Rod Crate"
+	cost = 2500
+	contains = list(/obj/machinery/power/grounding_rod,
+					/obj/machinery/power/grounding_rod,
+					/obj/machinery/power/grounding_rod,
+					/obj/machinery/power/grounding_rod)
+	crate_name = "grounding rod crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engineering/pacman
+	name = "P.A.C.M.A.N Generator Crate"
+	cost = 2500
+	contains = list(/obj/machinery/power/port_gen/pacman,)
+	crate_name = "PACMAN generator crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/solar
 	name = "Solar Panel Crate"
@@ -667,6 +705,13 @@
 	cost = 1000
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
+
+/datum/supply_pack/medical/defibs
+	name = "Defibrillator Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/defibrillator/loaded,
+					/obj/item/weapon/defibrillator/loaded,)
+	crate_name = "defibrillator crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
@@ -938,7 +983,7 @@
 	crate_name = "exotic seeds crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
-	name = "Beekeeping Starter Kit"
+	name = "Beekeeping Starter Crate"
 	cost = 1500
 	contains = list(/obj/structure/beebox,
 					/obj/item/honey_frame,
@@ -947,10 +992,10 @@
 					/obj/item/queen_bee/bought,
 					/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit)
-	crate_name = "beekeeping starter kit"
+	crate_name = "beekeeping starter crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_suits
-	name = "2 Beekeeper suits"
+	name = "Beekeeper Suit Crate"
 	cost = 1000
 	contains = list(/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit,
@@ -1094,6 +1139,20 @@
 					/obj/item/clothing/head/helmet/redtaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm)
 	crate_name = "laser tag crate"
+
+/datum/supply_pack/misc/lasertag/pins
+	name = "Laser Tag Firing Pins Crate"
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/item/weapon/storage/box/lasertagpins,)
+	crate_name = "laser tag firing pins crate"
+
+/datum/supply_pack/misc/clownpin
+	name = "Hilarious Firing Pin Crate"
+	cost = 5000
+	contraband = TRUE
+	contains = list(/obj/item/device/firing_pin/clown,)
+	crate_name = "hilarious firing pin crate"
 
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
