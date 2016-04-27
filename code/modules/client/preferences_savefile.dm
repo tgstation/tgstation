@@ -459,7 +459,8 @@ AND players.player_slot = ? ;"}, ckey, slot)
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
 
-	to_chat(user, "Sucessfully loaded [real_name].")
+	if(user)
+		to_chat(user, "Sucessfully loaded [real_name].")
 
 	return 1
 
