@@ -258,7 +258,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustOxyLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
 		return 0
-	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
+	oxyloss += amount
 	if(oxyloss < 0)
 		oxyloss = 0
 	if(updating_health)

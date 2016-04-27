@@ -86,13 +86,13 @@
 	layer = CRIT_LAYER
 	color = "#eeeeee"
 	blend_mode = 3
+	alpha = 230
 
 /obj/screen/fullscreen/crit2
 	icon = 'goon/icons/effects/overlays/knockout2.dmi'
 	icon_state = "knockout2"
 	layer = CRIT_LAYER
 	blend_mode = 3
-	alpha = 230
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
