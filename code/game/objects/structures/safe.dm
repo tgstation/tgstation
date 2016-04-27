@@ -145,6 +145,7 @@ FLOOR SAFES
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
+		. = 1 //no afterattack
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.drop_item())
@@ -157,10 +158,10 @@ FLOOR SAFES
 		else
 			user << "<span class='notice'>[I] won't fit in [src].</span>"
 			return
+	else if(istype(I, /obj/item/clothing/tie/stethoscope))
+		user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 	else
-		if(istype(I, /obj/item/clothing/tie/stethoscope))
-			user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
-			return
+		return ..()
 
 
 obj/structure/safe/blob_act()

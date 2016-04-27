@@ -29,7 +29,7 @@
 							 "<span class='notice'>You unfasten [src].</span>")
 		new /obj/item/sign_backing(get_turf(user))
 		qdel(src)
-	if(istype(O, /obj/item/weapon/pen))
+	else if(istype(O, /obj/item/weapon/pen))
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -77,6 +77,8 @@
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y
 		qdel(src)
+	else
+		return ..()
 
 /obj/item/sign_backing
 	name = "sign backing"
@@ -87,20 +89,16 @@
 	burn_state = FLAMMABLE
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
-	if(!isturf(target))
+	if(isturf(target) && proximity)
+		var/turf/T = target
+		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+							 "<span class='notice'>You attach a blank sign to [T].</span>")
+		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+		new /obj/structure/sign/basic(T)
+		user.drop_item()
+		qdel(src)
+	else
 		return ..()
-	if(!user.Adjacent(target))
-		return ..()
-	var/turf/T = target
-	if(!T || !istype(T))
-		return ..()
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach a blank sign to [T].</span>")
-	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
-	new /obj/structure/sign/basic(T)
-	user.drop_item()
-	qdel(src)
-	return
 
 /obj/structure/sign/map
 	name = "station map"

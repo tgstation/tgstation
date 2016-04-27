@@ -4,6 +4,7 @@
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
+	dog_fashion = /datum/dog_fashion/back
 	var/on = 1 // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat
@@ -504,14 +505,15 @@
 		user << "<span class='notice'>[name] can not be modified or attached.</span>"
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
-	..()
+	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
 			user << "<span class='notice'>The radio can now be attached and modified!</span>"
 		else
 			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
-	add_fingerprint(user)
+	else
+		return ..()
 
 /obj/item/device/radio/emp_act(severity)
 	emped++ //There's been an EMP; better count it
@@ -538,6 +540,7 @@
 /obj/item/device/radio/borg
 	name = "cyborg radio"
 	subspace_switchable = 1
+	dog_fashion = null
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
@@ -548,8 +551,6 @@
 	set_frequency(SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
-		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(keyslot)
@@ -570,7 +571,7 @@
 		else
 			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
 
-	if(istype(W, /obj/item/device/encryptionkey/))
+	else if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
 			user << "<span class='warning'>The radio can't hold another key!</span>"
 			return
@@ -583,7 +584,7 @@
 
 		recalculateChannels()
 
-	return
 
 /obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
+	dog_fashion = /datum/dog_fashion/back

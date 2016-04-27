@@ -213,14 +213,14 @@
 	take_damage(Proj.damage, Proj.damage_type, Proj)
 	return 0
 
-/obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
+/obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
-	if(W.damtype == BURN)
+	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [I]!</span>")
+	if(I.damtype == BURN)
 		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-	take_damage(W.force, W.damtype, user)
+	take_damage(I.force, I.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut

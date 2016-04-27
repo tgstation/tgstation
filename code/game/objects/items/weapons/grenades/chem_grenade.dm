@@ -3,7 +3,7 @@
 #define READY 3
 
 /obj/item/weapon/grenade/chem_grenade
-	name = "grenade"
+	name = "chemical grenade"
 	desc = "A custom made grenade."
 	icon_state = "chemg"
 	item_state = "flashbang"
@@ -65,6 +65,7 @@
 			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
+		. = 1 //no afterattack
 		if(beakers.len == 2)
 			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
@@ -79,6 +80,7 @@
 				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
+		. = 1 // no afterattack
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
@@ -122,14 +124,15 @@
 			new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(EMPTY)
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
-
+	else
+		return ..()
 
 /obj/item/weapon/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
 		stage = N
 	if(stage == EMPTY)
 		name = "[initial(name)] casing"
-		desc = "A do it yourself [initial(name)] casing!"
+		desc = "A do it yourself [initial(name)]!"
 		icon_state = initial(icon_state)
 	else if(stage == WIRED)
 		name = "unsecured [initial(name)]"
@@ -240,20 +243,22 @@
 
 /obj/item/weapon/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
 	name = "advanced release grenade"
-	desc = "A custom made advanced release grenade. It is able to be triggered more than once. Can be configured using a multitool."
+	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
 	icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/weapon/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
-		if(unit_spread < 100)
-			unit_spread += 5
-		else
-			unit_spread = 5
+		switch(unit_spread)
+			if(0 to 24)
+				unit_spread += 5
+			if(25 to 99)
+				unit_spread += 25
+			else
+				unit_spread = 5
 		user << "<span class='notice'> You set the time release to [unit_spread] units per detonation.</span>"
 		return
-	else
-		return ..()
+	..()
 
 /obj/item/weapon/grenade/chem_grenade/adv_release/prime()
 	if(stage != READY)

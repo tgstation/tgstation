@@ -126,13 +126,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.add_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(!lit && smoketime > 0 && W.is_hot())
 		var/lighting_text = is_lighter(W,user)
 		if(lighting_text)
 			light(lighting_text)
-			return
-	return
+	else
+		return ..()
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
@@ -418,9 +417,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user << "<span class='warning'>There is nothing to smoke!</span>"
 		else
-			user << "<span class='warning'>You can't put that in the pipe!</span>"
-	..()
-
+			return ..()
 
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user)
 	var/turf/location = get_turf(user)
@@ -516,8 +513,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!isliving(M))
-		return
 	if(lit)
 		M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)

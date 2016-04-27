@@ -20,7 +20,7 @@
 
 /obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
+	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
 		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 		sparks.set_up(1, 1, src)
 		sparks.start()
@@ -51,8 +51,10 @@
 	SpinAnimation()
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
-	if(isliving(target) && !locate(/obj/effect/nettingportal) in loc)
-		new/obj/effect/nettingportal(get_turf(target))
+	if(isliving(target))
+		var/turf/Tloc = get_turf(target)
+		if(!locate(/obj/effect/nettingportal) in Tloc)
+			new/obj/effect/nettingportal(Tloc)
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -98,7 +100,7 @@
 	range = 4
 
 /obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
-	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - drop a trap
+	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
 		new/obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))
 		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(target))

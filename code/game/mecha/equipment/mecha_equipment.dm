@@ -16,10 +16,6 @@
 	reliability = 1000
 	var/salvageable = 1
 
-/obj/item/mecha_parts/mecha_equipment/New()
-	..()
-	return
-
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
@@ -82,8 +78,8 @@
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	sleep(equip_cooldown)
-	set_ready_state(1)
+	spawn(equip_cooldown)
+		set_ready_state(1)
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
 	if(!chassis)

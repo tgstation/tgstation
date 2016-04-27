@@ -242,7 +242,7 @@
 			P.loc = src.loc
 			user << "<span class='notice'>You fit the pipe into \the [src].</span>"
 	else
-		..()
+		return ..()
 
 /obj/structure/girder/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
@@ -379,7 +379,7 @@
 		qdel(src)
 
 	else
-		..()
+		return ..()
 
 /obj/structure/girder/cult/narsie_act()
 	return
