@@ -49,8 +49,6 @@
 	if(head)
 		if(head.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
-		if(head.damaged)
-			msg += "<span class='warning'>[head.name] looks badly damaged!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
 
