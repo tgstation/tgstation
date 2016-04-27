@@ -144,5 +144,5 @@
 	// Reset the client's screen
 	mymob.client.reset_screen()
 	// Add everything to their screen
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
