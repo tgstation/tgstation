@@ -191,6 +191,8 @@ var/const/MAX_SAVE_SLOTS = 8
 			if(!IsGuestKey(thekey))
 				var/load_pref = load_preferences_sqlite(theckey)
 				if(load_pref)
+					if(!C)
+						WARNING("[__LINE__]: client C is null for [theckey].")
 					if(load_save_sqlite(theckey, C, default_slot) && C)
 						saveloaded = 1
 						return
