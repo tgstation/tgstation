@@ -440,7 +440,7 @@
 	w_class = 1
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/ore/glass || /obj/item/weapon/ore/glass/basalt))
+	if(istype(W,/obj/item/weapon/ore/glass))
 		user << "<span class='notice'>You fill the sandbag.</span>"
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		user.unEquip(src)
