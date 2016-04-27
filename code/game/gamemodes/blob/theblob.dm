@@ -220,9 +220,9 @@
 	take_damage(Proj.damage, Proj.damage_type, Proj)
 	return 0
 
-/obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/effect/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
+		user.changeNext_move(CLICK_CD_MELEE)
 		user << "<b>The analyzer beeps once, then reports:</b><br>"
 		user << 'sound/machines/ping.ogg'
 		if(overmind)
@@ -232,7 +232,11 @@
 		user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
 		user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
 		user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
-		return
+	else
+		return ..()
+
+/obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [I]!</span>")
