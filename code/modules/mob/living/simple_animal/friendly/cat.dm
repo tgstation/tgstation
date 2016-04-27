@@ -93,8 +93,8 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
-	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
-		Deploy_The_Cats()
+	//if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
+	//	Deploy_The_Cats()
 	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
 	..()
