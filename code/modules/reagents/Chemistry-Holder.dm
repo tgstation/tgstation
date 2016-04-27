@@ -375,7 +375,7 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							if (!istype(ME2.loc, /obj/item/weapon/grenade/chem_grenade))
-								ME2.visible_message("<span class='notice'>[bicon(my_atom.icon_state)] \The [my_atom]'s power is consumed in the reaction.</span>")
+								ME2.visible_message("<span class='notice'>[bicon(my_atom)] \The [my_atom]'s power is consumed in the reaction.</span>")
 							ME2.name = "used slime extract"
 							ME2.desc = "This extract has been used up."
 
