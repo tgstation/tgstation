@@ -155,6 +155,7 @@
 			if(species.default_blocks.len)
 				all_species[name]=species
 
+	speciesinit = 1
 
 
 /proc/setupfactions()
