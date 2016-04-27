@@ -888,6 +888,7 @@
 #include "code\modules\admin\check_antagonists.dm"
 #include "code\modules\admin\create_mob.dm"
 #include "code\modules\admin\create_object.dm"
+#include "code\modules\admin\create_poll.dm"
 #include "code\modules\admin\create_turf.dm"
 #include "code\modules\admin\holder2.dm"
 #include "code\modules\admin\IsBanned.dm"
