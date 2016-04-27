@@ -423,10 +423,10 @@
 	pixel_x = target.pixel_x
 	pixel_y = target.pixel_y
 
-	if(isturf(target))	//Turfs take twice as long to take down.
-		target_strength = 640
+	if(isturf(target))
+		target_strength = 250
 	else
-		target_strength = 320
+		target_strength = 200
 	tick()
 
 
@@ -467,13 +467,11 @@
 	z = target.z
 
 	switch(target_strength - ticks)
-		if(480)
-			visible_message("<span class='warning'>[target] is holding up against the acid!</span>")
-		if(320)
+		if(190)
 			visible_message("<span class='warning'>[target] is being melted by the acid!</span>")
-		if(160)
+		if(100)
 			visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
-		if(80)
+		if(40)
 			visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
 
 	spawn(1)
