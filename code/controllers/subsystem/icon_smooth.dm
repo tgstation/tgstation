@@ -13,7 +13,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	for(var/atom in smooth_queue)
 		ss_smooth_icon(atom)
 		smooth_queue -= atom
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			return
 
 /datum/subsystem/icon_smooth/Initialize()

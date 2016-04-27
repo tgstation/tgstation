@@ -52,7 +52,7 @@ var/datum/subsystem/machines/SSmachine
 				thing:auto_use_power() //add back the power state
 		else
 			processing.Remove(thing)
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			return
 
 /datum/subsystem/machines/proc/setup_template_powernets(list/cables)

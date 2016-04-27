@@ -147,7 +147,7 @@ var/datum/subsystem/air/SSair
 			thing.process()
 		else
 			networks.Remove(thing)
-		if(MC_TICK_CHECK)
+		if(MC_TICK_CHECK && McTickCheck)
 			return
 
 
@@ -162,7 +162,7 @@ var/datum/subsystem/air/SSair
 		currentrun.Cut(1, 2)
 		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
-		if(MC_TICK_CHECK)
+		if(MC_TICK_CHECK && McTickCheck)
 			return
 
 
@@ -175,7 +175,7 @@ var/datum/subsystem/air/SSair
 		var/turf/T = currentrun[1]
 		currentrun.Cut(1, 2)
 		T.super_conduct()
-		if(MC_TICK_CHECK)
+		if(MC_TICK_CHECK && McTickCheck)
 			return
 
 /datum/subsystem/air/proc/process_hotspots(resumed = 0)
@@ -190,7 +190,7 @@ var/datum/subsystem/air/SSair
 			H.process()
 		else
 			hotspots -= H
-		if(MC_TICK_CHECK)
+		if(MC_TICK_CHECK && McTickCheck)
 			return
 
 
@@ -200,7 +200,7 @@ var/datum/subsystem/air/SSair
 		high_pressure_delta.Cut(1,2)
 		T.high_pressure_movements()
 		T.pressure_difference = 0
-		if(MC_TICK_CHECK)
+		if(MC_TICK_CHECK && McTickCheck)
 			return
 
 /datum/subsystem/air/proc/process_active_turfs(resumed = 0)
@@ -215,7 +215,7 @@ var/datum/subsystem/air/SSair
 		currentrun.Cut(1, 2)
 		if (T)
 			T.process_cell(fire_count)
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			return
 
 /datum/subsystem/air/proc/process_excited_groups(resumed = 0)
@@ -232,7 +232,7 @@ var/datum/subsystem/air/SSair
 			EG.self_breakdown()
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
 			EG.dismantle()
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			return
 
 

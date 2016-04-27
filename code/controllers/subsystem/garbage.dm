@@ -62,7 +62,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/subsystem/garbage_collector/proc/HandleToBeQueued(time_to_stop)
 	var/list/tobequeued = src.tobequeued
 	while(tobequeued.len && world.timeofday < time_to_stop)
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			break
 		var/ref = tobequeued[1]
 		Queue(ref)
@@ -74,7 +74,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
 	var/list/queue = src.queue
 	while(queue.len && world.timeofday < time_to_stop)
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			break
 		var/refID = queue[1]
 		if (!refID)

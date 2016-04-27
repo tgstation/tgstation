@@ -33,5 +33,5 @@ var/datum/subsystem/fastprocess/SSfastprocess
 			thing.process(wait)
 		else
 			SSfastprocess.processing -= thing
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			return

@@ -48,7 +48,7 @@ var/datum/subsystem/events/SSevent
 			thing.process()
 		else
 			running.Remove(thing)
-		if (MC_TICK_CHECK)
+		if (MC_TICK_CHECK && McTickCheck)
 			return
 
 //checks if we should select a random event yet, and reschedules if necessary
