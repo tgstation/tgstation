@@ -139,7 +139,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 5
+	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
