@@ -7,16 +7,16 @@ Sorry Giacom. Please don't be mad :(
 	if(A && A.push_dir)
 		push_mob_back(src, A.push_dir)
 */
-#DEFINE ADMINWARNNUM	     100 //How many mobs in nullspace before we warn the admins that the server is about to reboot
-#DEFINE CREWWARNNUM 	 	 300 //How many mobs in nullspace before we warn the players that server is about to reboot
-#DEFINE SERVERRESTARTNUM	 500 //Reboot the server to prevent the imminent crash
+#Define ADMINWARNNUM	     100 //How many mobs in nullspace before we warn the admins that the server is about to reboot
+#Define CREWWARNNUM 	 	 300 //How many mobs in nullspace before we warn the players that server is about to reboot
+#Define SERVERRESTARTNUM	 500 //Reboot the server to prevent the imminent crash
 
 /mob/living
 	var/static/mobsInNullSpace = 0
 
 /mob/living/New()
 	. = ..()
-	if(isnull(get_turf(loc))
+	if(isnull(get_turf(loc)))
 		mobsInNullSpace++
 		if(mobsInNullSpace == ADMINWARNNUM)
 			warn_admins("Alert! There are currently over [ADMINWARNNUM] mobs that spawned in nullspace. An automatic server reboot may be imminent."
