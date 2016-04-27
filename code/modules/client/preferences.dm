@@ -184,10 +184,11 @@ var/const/MAX_SAVE_SLOTS = 8
 	client=C
 	if(istype(C))
 		var/theckey = C.ckey
+		var/thekey = C.key
 		spawn()
 			while(!speciesinit)
 				sleep(1)
-			if(!IsGuestKey(theckey))
+			if(!IsGuestKey(thekey))
 				var/load_pref = load_preferences_sqlite(theckey)
 				if(load_pref)
 					if(load_save_sqlite(theckey, C, default_slot) && C)
