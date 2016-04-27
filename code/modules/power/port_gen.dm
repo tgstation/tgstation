@@ -223,7 +223,7 @@ display round(lastgen) and plasmatank amount
 				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
+			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -231,8 +231,10 @@ display round(lastgen) and plasmatank amount
 				user << "<span class='notice'>You open the access panel.</span>"
 			else
 				user << "<span class='notice'>You close the access panel.</span>"
-		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
-			default_deconstruction_crowbar(O)
+			return
+		else if(default_deconstruction_crowbar(O))
+			return
+	return ..()
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
 	if(!emagged)

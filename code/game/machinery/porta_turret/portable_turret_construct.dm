@@ -73,7 +73,7 @@
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				user << "<span class='notice'>You start to remove the turret's interior metal armor...</span>"
 				if(do_after(user, 20/I.toolspeed, target = src))
-					if(!WT.isOn() || !WT.remove_fuel(5, user)) 
+					if(!WT.isOn() || !WT.remove_fuel(5, user))
 						return
 					build_step = PTURRET_BOLTED
 					user << "<span class='notice'>You remove the turret's interior metal armor.</span>"
@@ -136,7 +136,7 @@
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = I
-				if(!WT.isOn()) 
+				if(!WT.isOn())
 					return
 				if(WT.get_fuel() < 5)
 					user << "<span class='warning'>You need more fuel to complete this task!</span>"
@@ -174,7 +174,7 @@
 
 		finish_name = t
 		return
-	..()
+	return ..()
 
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)

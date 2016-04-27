@@ -195,7 +195,7 @@
 		user << "<span class='notice'>You link the vest to the console.</span>"
 		vest = V
 	else
-		..()
+		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)

@@ -109,6 +109,7 @@ var/bomb_set
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
 					SSobj.processing += core
+				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
@@ -137,8 +138,7 @@ var/bomb_set
 				else
 					user << "<span class='warning'>You need more metal to do that!</span>"
 				return
-		else
-			..()
+	return ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(timing < 0)
