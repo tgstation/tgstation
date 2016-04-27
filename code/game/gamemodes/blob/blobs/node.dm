@@ -15,6 +15,9 @@
 	SSobj.processing |= src
 	..(loc, h)
 
+/obj/effect/blob/node/scannerreport()
+	return "Gradually expands and sustains nearby blob spores and blobbernauts."
+
 /obj/effect/blob/node/update_icon()
 	overlays.Cut()
 	color = null
