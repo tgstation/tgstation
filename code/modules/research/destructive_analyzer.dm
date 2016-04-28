@@ -55,4 +55,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the [src.name]!</span>"
 		flick("d_analyzer_la", src)
+		spawn(10)
+			busy = 0
 

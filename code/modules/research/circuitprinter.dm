@@ -91,9 +91,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
 
-	if (O.is_open_container()) //inserting reagents into the machine
-		return 1
-
 	if (istype(O, /obj/item/stack/sheet/glass) || istype(O, /obj/item/stack/sheet/mineral/gold) || istype(O, /obj/item/stack/sheet/mineral/diamond))
 		. = 1
 		if(!is_insertion_ready(user))

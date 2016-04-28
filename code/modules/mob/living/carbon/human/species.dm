@@ -795,6 +795,11 @@
 
 			if(istype(J) && J.allow_thrust(0.01, H))
 				. -= 2
+			else
+				var/obj/item/organ/internal/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+				if(istype(T) && T.allow_thrust(0.01, H))
+					. -= 2
+
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
