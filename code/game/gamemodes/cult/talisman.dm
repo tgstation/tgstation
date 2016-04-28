@@ -321,8 +321,8 @@
 		log_game("Construct talisman failed - not a valid target")
 		
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/metal/target, mob/user, proximity_flag, click_parameters)
+   	..()
    	if(proximity_flag && istype(target) && iscultist(user))
-		..()
 		if(istype(W, /obj/item/weapon/paper/talisman/construction))
 			if(target.use(25))
 				amount = amount - 25
