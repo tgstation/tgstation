@@ -10,6 +10,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	layer = 6 //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 
 	var/can_die = FALSE //Used to prevent instagib/instakill attacks like the wand of death
 

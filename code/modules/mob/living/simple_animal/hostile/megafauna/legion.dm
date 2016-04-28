@@ -24,7 +24,6 @@
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
-	layer = 6
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	aggro_vision_range = 18
