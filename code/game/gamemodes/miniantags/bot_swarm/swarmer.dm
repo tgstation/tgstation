@@ -1,23 +1,42 @@
 ////Deactivated swarmer shell////
-/obj/item/unactivated_swarmer
+/obj/item/device/unactivated_swarmer
 	name = "unactivated swarmer"
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
+	origin_tech = "bluespace=4;materials=4;programming=6"
+	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
-/obj/item/unactivated_swarmer/New()
-	notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
+
+/obj/item/device/unactivated_swarmer/New()
+	if(!crit_fail)
+		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
 	..()
 
-/obj/item/unactivated_swarmer/Topic(href, href_list)
+/obj/item/device/unactivated_swarmer/Topic(href, href_list)
 	if(href_list["ghostjoin"])
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost))
 			attack_ghost(ghost)
 
-/obj/item/unactivated_swarmer/attack_ghost(mob/user)
+/obj/item/device/unactivated_swarmer/attackby(obj/item/weapon/W, mob/user, params)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver) && !crit_fail)
+		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
+			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
+			"<span class='italics'>You hear clicking.</span>")
+		name = "deactivated swarmer"
+		desc = "A shell of swarmer that was completely powered down. It no longer can activate itself."
+		crit_fail = 1
+
+/obj/item/device/unactivated_swarmer/attack_ghost(mob/user)
+	if(crit_fail)
+		return
+
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
+		return
+	if(crit_fail)
 		return
 	if(qdeleted(src))
 		user << "Swarmer has been occupied by someone else."
@@ -25,6 +44,13 @@
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))
 	S.key = user.key
 	qdel(src)
+
+
+/obj/item/device/unactivated_swarmer/deactivated
+	name = "deactivated swarmer"
+	desc = "A shell of swarmer that was completely powered down. It no longer can activate itself."
+	crit_fail = 1
+
 
 ////The Mob itself////
 
@@ -482,7 +508,7 @@
 		src << "<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>"
 		return
 	if(do_mob(src, src, 100))
-		if(Fabricate(/obj/item/unactivated_swarmer, 50))
+		if(Fabricate(/obj/item/device/unactivated_swarmer, 50))
 			playsound(loc,'sound/items/poster_being_created.ogg',50, 1, -1)
 
 /mob/living/simple_animal/hostile/swarmer/proc/RepairSelf()
