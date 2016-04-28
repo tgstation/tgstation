@@ -105,10 +105,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				var/tick = world.tick_usage
 				var/ticktime = world.time
 				del(A)
-				tick = (tick-world.tick_usage+((ticktime-world.time)/world.tick_lag*100))
+				tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
 				if (tick > highest_del_tickusage)
 					highest_del_tickusage = tick
-				time = time - world.timeofday
+				time = world.timeofday - time
 				if (time > highest_del_time)
 					highest_del_time = time
 				if (time > 15)
