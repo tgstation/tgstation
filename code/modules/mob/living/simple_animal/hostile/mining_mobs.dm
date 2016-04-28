@@ -733,6 +733,14 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
 
+/obj/item/weapon/legion_skull
+	name = "legion's head"
+	desc = "The once living, now empty eyes of the former human's skull cut deep into your soul."
+	icon = 'icons/obj/lavaland/legion_head.dmi'
+	icon_state = "head"
+
+/obj/item/weapon/legion_skull/attack_by
+
 //Nests
 
 /mob/living/simple_animal/hostile/spawner/lavaland
