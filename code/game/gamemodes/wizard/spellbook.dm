@@ -514,7 +514,7 @@
 				if(!isnull(CT.limit))
 					CT.limit++
 			qdel(O)
-	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
+	else if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
 		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
 		uses++
 		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)

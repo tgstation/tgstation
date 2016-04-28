@@ -2812,15 +2812,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
 "afq" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
 	possible_destinations = "pod_asteroid3";
@@ -2829,9 +2820,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
 "afr" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
@@ -3097,9 +3085,6 @@
 "afT" = (
 /obj/effect/landmark/start{
 	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 4
 	},
 /turf/open/floor/plasteel{
 	icon_state = "red";
@@ -3385,9 +3370,6 @@
 /obj/effect/landmark/start{
 	name = "Security Officer"
 	},
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plasteel{
 	icon_state = "redcorner";
 	dir = 1
@@ -3656,9 +3638,6 @@
 "ahb" = (
 /obj/effect/landmark/start{
 	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -4980,12 +4959,6 @@
 "ajl" = (
 /obj/structure/chair{
 	name = "Judge"
-	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
 	},
 /obj/machinery/light{
 	dir = 1
@@ -9134,9 +9107,6 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "arY" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -10596,12 +10566,6 @@
 	},
 /area/crew_quarters/sleep)
 "avm" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11199,9 +11163,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "awB" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/landmark/start{
 	name = "Assistant"
 	},
@@ -21660,12 +21621,6 @@
 	name = "Library Desk Door";
 	req_access_txt = "37"
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /turf/open/floor/wood,
 /area/library)
 "aTd" = (
@@ -24562,12 +24517,6 @@
 	},
 /area/crew_quarters/locker)
 "aZy" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Conference Room";
 	dir = 2
@@ -27025,9 +26974,6 @@
 	},
 /area/quartermaster/office)
 "beW" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/landmark/start{
 	name = "Cargo Technician"
 	},
@@ -36840,9 +36786,8 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/structure/mirror{
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -37504,14 +37449,9 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
-/obj/machinery/camera{
-	c_tag = "Medbay Treatment Center";
-	dir = 4;
-	network = list("SS13");
-	pixel_x = 0;
-	pixel_y = 0
+/obj/machinery/shower{
+	dir = 4
 	},
-/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -38113,16 +38053,28 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/supply)
 "bAp" = (
-/obj/machinery/iv_drip,
+/obj/structure/closet/secure_closet/medical1,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bAq" = (
-/obj/machinery/light,
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Treatment Center";
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -38497,9 +38449,6 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -39438,6 +39387,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -39815,11 +39765,11 @@
 	},
 /area/medical/sleeper)
 "bDD" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -28
 	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -39835,7 +39785,7 @@
 	dir = 8;
 	network = list("SS13")
 	},
-/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40879,7 +40829,7 @@
 	},
 /area/medical/cmo)
 "bFF" = (
-/obj/machinery/light/small,
+/obj/machinery/light,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40923,7 +40873,7 @@
 	},
 /area/medical/sleeper)
 "bFK" = (
-/obj/structure/closet/secure_closet/medical1,
+/obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -41806,9 +41756,6 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bHv" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the test chamber.";
 	dir = 8;
@@ -42746,9 +42693,6 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bIW" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plasteel{
 	dir = 6;
 	icon_state = "warning"
@@ -43409,9 +43353,6 @@
 /turf/open/floor/plating/airless,
 /area/toxins/test_area)
 "bKh" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plating/airless{
 	dir = 9;
 	icon_state = "warnplate"
@@ -44630,9 +44571,6 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bMD" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plating/airless{
 	dir = 10;
 	icon_state = "warnplate"
@@ -62770,9 +62708,6 @@
 	},
 /area/shuttle/escape)
 "cxr" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -63410,9 +63345,6 @@
 	},
 /area/shuttle/abandoned)
 "czb" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
@@ -63667,15 +63599,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_2)
 "czL" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
 	possible_destinations = "pod_asteroid4";
@@ -63684,9 +63607,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_4)
 "czM" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
@@ -73924,7 +73844,7 @@ awW
 awW
 arB
 cxu
-cxA
+cxC
 cxC
 cxH
 cxu
@@ -75651,10 +75571,10 @@ aTp
 aTp
 aac
 cmH
-cml
-cml
-cml
-cml
+aTp
+aTp
+aTp
+aTp
 coh
 aTp
 aTp
@@ -87001,7 +86921,7 @@ akC
 alj
 alY
 amI
-anq
+amI
 anM
 aop
 aoY
@@ -91103,8 +91023,8 @@ aeO
 afF
 agj
 agJ
-ahr
-ahr
+ahs
+ahs
 aiD
 agj
 ajz
@@ -92403,7 +92323,7 @@ anz
 aov
 aph
 aoc
-arc
+ata
 arY
 ata
 auh
@@ -100631,7 +100551,7 @@ arj
 arj
 asZ
 aua
-avB
+aua
 awB
 axY
 azh
@@ -112462,10 +112382,10 @@ asB
 aCR
 aEm
 aCR
-aHp
-aIF
-aHp
-aIF
+aPl
+aQv
+aPl
+aQv
 aCR
 aNY
 aCR
@@ -115813,11 +115733,11 @@ cxd
 cxe
 cwU
 cwL
-cxk
-cxk
-cxk
-cxk
-cxk
+cxa
+cxa
+cxa
+cxa
+cxa
 cwL
 cwU
 cxQ
@@ -117095,7 +117015,7 @@ cwL
 cwX
 cwL
 cwL
-cxk
+cxa
 cxj
 cwL
 cxq
@@ -117347,8 +117267,8 @@ aaa
 aaa
 crx
 cwG
-cwM
-cwM
+cwL
+cwL
 cwW
 cxa
 cwL

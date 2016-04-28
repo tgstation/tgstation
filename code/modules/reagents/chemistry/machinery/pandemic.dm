@@ -16,11 +16,6 @@
 	..()
 	update_icon()
 
-/obj/machinery/computer/pandemic/set_broken()
-	icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-	overlays.Cut()
-	stat |= BROKEN
-
 /obj/machinery/computer/pandemic/proc/GetVirusByIndex(index)
 	if(beaker && beaker.reagents)
 		if(beaker.reagents.reagent_list.len)
@@ -272,7 +267,9 @@
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
-		if(stat & (NOPOWER|BROKEN)) return
+		. = 1 //no afterattack
+		if(stat & (NOPOWER|BROKEN))
+			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
@@ -284,12 +281,10 @@
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
-
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		if(src.beaker)
-			beaker.loc = get_turf(src)
-		..()
-		return
 	else
-		..()
-	return
+		return ..()
+
+/obj/machinery/computer/pandemic/deconstruction()
+	if(beaker)
+		beaker.loc = get_turf(src)
+	..()

@@ -17,7 +17,7 @@
 	if(istype(container))
 		container.load(src, user)
 	else
-		..()
+		return ..()
 
 /obj/item/nuke_core/process()
 	if(cooldown < world.time - 60)
@@ -57,7 +57,7 @@
 		else
 			load(core, user)
 	else
-		..()
+		return ..()
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/weapon/screwdriver/nuke

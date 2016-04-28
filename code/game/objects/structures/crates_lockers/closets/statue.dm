@@ -114,27 +114,21 @@
 /obj/structure/closet/statue/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	if(health <= 0)
-		for(var/mob/M in src)
-			shatter(M)
-
-	return
+		shatter()
 
 /obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
-		for(var/mob/M in src)
-			shatter(M)
+		shatter()
 
 /obj/structure/closet/statue/blob_act()
-	for(var/mob/M in src)
-		shatter(M)
+	shatter()
 
-/obj/structure/closet/statue/attackby(obj/item/I, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	health -= I.force
+/obj/structure/closet/statue/attacked_by(obj/item/I, mob/living/user)
+	if(I.damtype != STAMINA)
+		health -= I.force
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	if(health <= 0)
-		for(var/mob/M in src)
-			shatter(M)
+		shatter()
 
 /obj/structure/closet/statue/MouseDrop_T()
 	return
@@ -151,9 +145,9 @@
 /obj/structure/closet/statue/update_icon()
 	return
 
-/obj/structure/closet/statue/proc/shatter(mob/user)
-	if(user)
-		user.dust()
+/obj/structure/closet/statue/proc/shatter()
+	for(var/mob/living/M in src)
+		M.dust()
 	dump_contents()
 	visible_message("<span class='danger'>[src] shatters!.</span>")
 	qdel(src)

@@ -66,6 +66,8 @@
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
+	else
+		return ..()
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
 	if(..())

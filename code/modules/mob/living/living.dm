@@ -41,7 +41,7 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter"))
+	staticOverlays.Add(list("static", "blank", "letter", "animal"))
 	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
 	staticOverlay.override = 1
 	staticOverlays["static"] = staticOverlay
@@ -53,6 +53,10 @@ Sorry Giacom. Please don't be mad :(
 	staticOverlay = getLetterImage(src)
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
+
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
 
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.

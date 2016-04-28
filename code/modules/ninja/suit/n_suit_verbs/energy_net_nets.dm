@@ -20,20 +20,29 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/proc/healthcheck()
+/obj/effect/energy_net/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+		else
+			return
+	health -= damage
 	if(health <=0)
-		density = 0
-		if(affecting)
-			var/mob/living/carbon/M = affecting
-			M.anchored = 0
-			for(var/mob/O in viewers(src, 3))
-				O.show_message("[M.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
-			if(!isnull(master))//As long as they still exist.
-				master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
-	return
 
-
+/obj/effect/energy_net/Destroy()
+	if(affecting)
+		var/mob/living/carbon/M = affecting
+		M.anchored = 0
+		for(var/mob/O in viewers(src, 3))
+			O.show_message("[M.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
+		if(master)//As long as they still exist.
+			master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
+	return ..()
 
 /obj/effect/energy_net/process(mob/living/carbon/M)
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
@@ -98,53 +107,39 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 /obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
-	health -= Proj.damage
-	healthcheck()
-	..()
+	. = ..()
+	take_damage(Proj.damage, Proj.damage_type)
 
 
 
 /obj/effect/energy_net/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			health-=50
+			qdel(src)
 		if(2)
-			health-=50
+			qdel(src)
 		if(3)
-			health-=prob(50)?50:25
-	healthcheck()
-	return
-
-
+			take_damage(rand(10,25), BRUTE, 0)
 
 /obj/effect/energy_net/blob_act()
-	health-=50
-	healthcheck()
-	return
+	qdel(src)
 
-
-
-/obj/effect/energy_net/hitby(AM as mob|obj)
+/obj/effect/energy_net/hitby(atom/movable/AM)
 	..()
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
-	else
-		tforce = AM:throwforce
-	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-	health = max(0, health - tforce)
-	healthcheck()
-	..()
-	return
-
+	else if(isobj(AM))
+		var/obj/O = AM
+		tforce = O.throwforce
+	take_damage(tforce)
 
 
 /obj/effect/energy_net/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
 	user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
 								"<span class='notice'>You easily destroy the energy net.</span>")
-	health-=50
-	healthcheck()
+	qdel(src)
 
 
 
@@ -155,25 +150,17 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
-	if (islarva(user))
-		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-	health -= rand(10, 20)
-	if(health > 0)
-		user.visible_message("<span class='danger'>[user] claws at the energy net!</span>", \
-					 "\green You claw at the net.")
-	else
-		user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
+	user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
 						 "\green You slice the energy net to pieces.")
-	healthcheck()
-	return
+	qdel(src)
 
 
 
-/obj/effect/energy_net/attackby(obj/item/weapon/W, mob/user, params)
-	var/aforce = W.force
-	health = max(0, health - aforce)
-	healthcheck()
+/obj/effect/energy_net/attacked_by(obj/item/weapon/W, mob/user)
 	..()
-	return
+	take_damage(W.force, W.damtype)
+
+
 
