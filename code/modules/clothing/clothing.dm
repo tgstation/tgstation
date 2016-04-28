@@ -108,14 +108,16 @@ BLIND     // can't see anything
 			. += image("icon"='icons/effects/effects.dmi', "icon_state"="helmetdam")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
-		
 
-/obj/item/clothing/head/proc/helm_damaged(mob/living/user)
+
+/obj/item/clothing/head/proc/helm_damaged(mob/living/carbon/user)
 	damaged += 1
 	if(damaged == 1)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 25, 1)
 		user << "<span class='userdanger'>Your [src] has been badly damaged!</span>"
 		desc += "<span class='warning'>It looks badly damaged!</span>\n"
+		overlays +=  image("icon"='icons/effects/effects.dmi', "icon_state"="helmetdam")
+		user.head_update(src)
 	if(damaged == 2)
 		playsound(src.loc, 'sound/effects/snap.ogg', 25, 1)
 		user << "<span class='userdanger'>Your [src] has been destroyed!</span>"
