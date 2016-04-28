@@ -92,7 +92,7 @@
 	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
-	var/datum/action/innate/mecha/strafe/strafing = new
+	var/datum/action/innate/mecha/strafe/strafing_action = new
 
 	//Action vars
 	var/thrusters_active = FALSE
@@ -1021,40 +1021,33 @@ var/year_integer = text2num(year) // = 2013???
 
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 
-/obj/mecha/proc/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
-		eject_action.chassis = src
-		eject_action.Grant(user)
-
-	internals_action.chassis = src
-	internals_action.Grant(user)
-
-	cycle_action.chassis = src
-	cycle_action.Grant(user)
-
-	lights_action.chassis = src
-	lights_action.Grant(user)
-
-	stats_action.chassis = src
-	stats_action.Grant(user)
-
-	strafing.chassis = src
-	strafing.Grant(user)
+		eject_action.Grant(user, src)
+	internals_action.Grant(user, src)
+	cycle_action.Grant(user, src)
+	lights_action.Grant(user, src)
+	stats_action.Grant(user, src)
+	strafing_action.Grant(user, src)
 
 
-/obj/mecha/proc/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
 		eject_action.Remove(user)
 	internals_action.Remove(user)
 	cycle_action.Remove(user)
 	lights_action.Remove(user)
 	stats_action.Remove(user)
-	strafing.Remove(user)
+	strafing_action.Remove(user)
 
 
 /datum/action/innate/mecha
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
 	var/obj/mecha/chassis
+
+/datum/action/innate/mecha/Grant(mob/living/L, obj/mecha/M)
+	chassis = M
+	..()
 
 /datum/action/innate/mecha/Destroy()
 	chassis = null
@@ -1083,7 +1076,7 @@ var/year_integer = text2num(year) // = 2013???
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.occupant_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
-
+	chassis.internals_action.UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
@@ -1100,6 +1093,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.occupant_message("You select [chassis.selected]")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
+		chassis.cycle_action.UpdateButtonIcon()
 		return
 	var/number = 0
 	for(var/A in chassis.equipment)
@@ -1114,6 +1108,7 @@ var/year_integer = text2num(year) // = 2013???
 				chassis.occupant_message("You switch to [chassis.selected]")
 				button_icon_state = "mech_cycle_equip_on"
 			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
+			chassis.cycle_action.UpdateButtonIcon()
 			return
 
 
@@ -1133,7 +1128,7 @@ var/year_integer = text2num(year) // = 2013???
 		button_icon_state = "mech_lights_off"
 	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
-
+	chassis.lights_action.UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_view_stats
 	name = "View Stats"
@@ -1164,6 +1159,7 @@ var/year_integer = text2num(year) // = 2013???
 
 	occupant_message("Toggled strafing mode [strafe?"on":"off"].")
 	log_message("Toggled strafing mode [strafe?"on":"off"].")
+	strafing_action.UpdateButtonIcon()
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
@@ -1175,12 +1171,11 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_toggle_thrusters/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	if(M.get_charge() > 0)
-		M.thrusters_active = !M.thrusters_active
-		button_icon_state = "mech_thrusters_[M.thrusters_active ? "on" : "off"]"
-		M.log_message("Toggled thrusters.")
-		M.occupant_message("<font color='[M.thrusters_active ?"blue":"red"]'>Thrusters [M.thrusters_active ?"en":"dis"]abled.")
+	if(chassis.get_charge() > 0)
+		chassis.thrusters_active = !chassis.thrusters_active
+		button_icon_state = "mech_thrusters_[chassis.thrusters_active ? "on" : "off"]"
+		chassis.log_message("Toggled thrusters.")
+		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
 
 /datum/action/innate/mecha/mech_defence_mode
@@ -1190,20 +1185,19 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
 	if(!isnull(forced_state))
-		M.defence_mode = forced_state
+		chassis.defence_mode = forced_state
 	else
-		M.defence_mode = !M.defence_mode
-	button_icon_state = "mech_defense_mode_[M.defence_mode ? "on" : "off"]"
-	if(M.defence_mode)
-		M.deflect_chance = M.defence_mode_deflect_chance
-		M.occupant_message("<span class='notice'>You enable [M] defence mode.</span>")
+		chassis.defence_mode = !chassis.defence_mode
+	button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]"
+	if(chassis.defence_mode)
+		chassis.deflect_chance = chassis.defence_mode_deflect_chance
+		chassis.occupant_message("<span class='notice'>You enable [chassis] defence mode.</span>")
 	else
-		M.deflect_chance = initial(M.deflect_chance)
-		M.occupant_message("<span class='danger'>You disable [M] defence mode.</span>")
-	M.log_message("Toggled defence mode.")
-
+		chassis.deflect_chance = initial(chassis.deflect_chance)
+		chassis.occupant_message("<span class='danger'>You disable [chassis] defence mode.</span>")
+	chassis.log_message("Toggled defence mode.")
+	chassis.thrusters_action.UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"
@@ -1212,26 +1206,25 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_overload_mode/Activate(forced_state = null)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
 	if(!isnull(forced_state))
-		M.leg_overload_mode = forced_state
+		chassis.leg_overload_mode = forced_state
 	else
-		M.leg_overload_mode = !M.leg_overload_mode
-	button_icon_state = "mech_overload_[M.leg_overload_mode ? "on" : "off"]"
-	M.log_message("Toggled leg actuators overload.")
-	if(M.leg_overload_mode)
-		M.leg_overload_mode = 1
-		M.bumpsmash = 1
-		M.step_in = min(1, round(M.step_in/2))
-		M.step_energy_drain = M.step_energy_drain*M.leg_overload_coeff
-		M.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
+		chassis.leg_overload_mode = !chassis.leg_overload_mode
+	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
+	chassis.log_message("Toggled leg actuators overload.")
+	if(chassis.leg_overload_mode)
+		chassis.leg_overload_mode = 1
+		chassis.bumpsmash = 1
+		chassis.step_in = min(1, round(chassis.step_in/2))
+		chassis.step_energy_drain = chassis.step_energy_drain*chassis.leg_overload_coeff
+		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
-		M.leg_overload_mode = 0
-		M.bumpsmash = 0
-		M.step_in = initial(M.step_in)
-		M.step_energy_drain = initial(M.step_energy_drain)
-		M.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
-
+		chassis.leg_overload_mode = 0
+		chassis.bumpsmash = 0
+		chassis.step_in = initial(chassis.step_in)
+		chassis.step_energy_drain = initial(chassis.step_energy_drain)
+		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
+	chassis.overload_action.UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_smoke
 	name = "Smoke"
@@ -1240,13 +1233,12 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_smoke/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	if(M.smoke_ready && M.smoke>0)
-		M.smoke_system.start()
-		M.smoke--
-		M.smoke_ready = 0
-		spawn(M.smoke_cooldown)
-			M.smoke_ready = 1
+	if(chassis.smoke_ready && chassis.smoke>0)
+		chassis.smoke_system.start()
+		chassis.smoke--
+		chassis.smoke_ready = 0
+		spawn(chassis.smoke_cooldown)
+			chassis.smoke_ready = 1
 
 
 /datum/action/innate/mecha/mech_zoom
@@ -1256,18 +1248,17 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_zoom/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
 	if(owner.client)
-		M.zoom_mode = !M.zoom_mode
-		button_icon_state = "mech_zoom_[M.zoom_mode ? "on" : "off"]"
-		M.log_message("Toggled zoom mode.")
-		M.occupant_message("<font color='[M.zoom_mode?"blue":"red"]'>Zoom mode [M.zoom_mode?"en":"dis"]abled.</font>")
-		if(M.zoom_mode)
+		chassis.zoom_mode = !chassis.zoom_mode
+		button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"
+		chassis.log_message("Toggled zoom mode.")
+		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
+		if(chassis.zoom_mode)
 			owner.client.view = 12
 			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else
 			owner.client.view = world.view//world.view - default mob view size
-
+		chassis.zoom_action.UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
@@ -1276,22 +1267,21 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_switch_damtype/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
 	var/new_damtype
-	switch(M.damtype)
+	switch(chassis.damtype)
 		if("tox")
 			new_damtype = "brute"
-			M.occupant_message("Your exosuit's hands form into fists.")
+			chassis.occupant_message("Your exosuit's hands form into fists.")
 		if("brute")
 			new_damtype = "fire"
-			M.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
+			chassis.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
 		if("fire")
 			new_damtype = "tox"
-			M.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
-	M.damtype = new_damtype.
+			chassis.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
+	chassis.damtype = new_damtype.
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
-
+	chassis.switch_damtype_action.UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
@@ -1300,8 +1290,7 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_toggle_phasing/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	M.phasing = !M.phasing
-	button_icon_state = "mech_phasing_[M.phasing ? "on" : "off"]"
-	M.occupant_message("<font color=\"[M.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
-
+	chassis.phasing = !chassis.phasing
+	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
+	chassis.occupant_message("<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
+	chassis.phasing_action.UpdateButtonIcon()

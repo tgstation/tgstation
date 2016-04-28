@@ -85,6 +85,7 @@
 		dismantle_wall()
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")

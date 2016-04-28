@@ -416,8 +416,8 @@
 
 
 /obj/structure/rack/mech_melee_attack(obj/mecha/M)
-	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-	rack_destroy()
+	if(..())
+		take_damage(M.force*2)
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1

@@ -103,6 +103,7 @@
 	attack_generic(1, user)
 
 /obj/effect/overlay/holograph/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 	qdel(src)
