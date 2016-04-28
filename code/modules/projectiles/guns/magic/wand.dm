@@ -143,7 +143,9 @@
 	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/door/zap_self()
-	return
+	user << "<span class='notice'>You feel vaguely more open with your feelings.</span>"
+	charges--
+	..()
 
 /////////////////////////////////////
 //WAND OF FIREBALL

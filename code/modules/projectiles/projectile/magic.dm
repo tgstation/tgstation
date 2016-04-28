@@ -94,9 +94,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	var/list/door_types = list(/obj/structure/mineral_door/wood,/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,\
-		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
-		/obj/structure/mineral_door/transparent/diamond)
+	var/list/door_types = list(subtypesof(/obj/structure/mineral_door))
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
@@ -105,12 +103,20 @@
 		CreateDoor(target)
 	else if (isturf(T) && T.density)
 		CreateDoor(T)
+	else if(istype(target, /obj/machinery/door))
+		OpenDoor(target)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
-	new door_type(T)
+	var/obj/structure/mineral_door/D = new door_type(T)
 	T.ChangeTurf(/turf/open/floor/plating)
+	D.open()
 
+/obj/item/projectile/magic/door/proc/OpenDoor(/obj/machinery/door/D)
+	if(istype(D,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = D
+		A.locked = 0
+	D.open()
 
 /obj/item/projectile/magic/change
 	name = "bolt of change"
