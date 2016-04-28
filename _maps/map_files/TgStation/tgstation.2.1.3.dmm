@@ -8651,7 +8651,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/filingcabinet/employment,
+/obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -9082,10 +9082,10 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "arV" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "arW" = (
