@@ -41,7 +41,7 @@ var/datum/subsystem/lighting/SSlighting
 		var/datum/light_source/LS = changed_lights[1]
 		changed_lights.Cut(1, 2)
 		LS.check()
-		if (MC_TICK_CHECK && McTickCheck)
+		if (MC_TICK_CHECK)
 			return
 
 	var/list/changed_turfs = src.changed_turfs
@@ -52,7 +52,7 @@ var/datum/subsystem/lighting/SSlighting
 		changed_turfs.Cut(1, 2)
 		if(T.lighting_changed)
 			T.redraw_lighting()
-		if (MC_TICK_CHECK && McTickCheck)
+		if (MC_TICK_CHECK)
 			return
 
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status

@@ -45,6 +45,8 @@
 	can_fire = 0
 
 /datum/subsystem/proc/pause()
+	if(!McTickCheck)
+		return 0
 	. = 1
 	if (!dynamic_wait)
 		Master.priority_queue += src

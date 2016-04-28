@@ -25,5 +25,5 @@ var/datum/subsystem/diseases/SSdisease
 			thing.process()
 		else
 			processing.Remove(thing)
-		if (MC_TICK_CHECK && McTickCheck)
+		if (MC_TICK_CHECK)
 			return

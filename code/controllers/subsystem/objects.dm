@@ -52,7 +52,7 @@ var/datum/subsystem/objects/SSobj
 			thing.process(wait)
 		else
 			SSobj.processing.Remove(thing)
-		if (MC_TICK_CHECK && McTickCheck)
+		if (MC_TICK_CHECK)
 			return
 
 	for(var/obj/burningobj in SSobj.burning)
