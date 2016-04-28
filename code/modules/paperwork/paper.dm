@@ -28,7 +28,6 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
-	//var/stamptype = "paper" //define what category of stamps we're using
 
 
 /obj/item/weapon/paper/New()
@@ -305,7 +304,7 @@
 
 	else if(istype(P, /obj/item/weapon/stamp))
 
-		if(!in_range(src, usr))
+		if(!in_range(src, user))
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"
