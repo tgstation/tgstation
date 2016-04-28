@@ -80,12 +80,12 @@
 		open_machine()
 	..(severity)
 
-/obj/machinery/sleeper/blob_act()
+/obj/machinery/sleeper/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		var/turf/T = get_turf(src)
 		for(var/atom/movable/A in src)
 			A.forceMove(T)
-			A.blob_act()
+			A.blob_act(B)
 		qdel(src)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)

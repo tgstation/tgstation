@@ -261,7 +261,7 @@
 	..()
 
 
-/mob/living/simple_animal/blob_act()
+/mob/living/simple_animal/blob_act(obj/effect/blob/B)
 	adjustBruteLoss(20)
 	return
 

@@ -29,7 +29,7 @@
 		overmind.blob_mobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blob_act()
+/mob/living/simple_animal/hostile/blob/blob_act(obj/effect/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
 			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
