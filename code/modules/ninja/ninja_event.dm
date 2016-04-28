@@ -7,7 +7,7 @@
 Contents:
 - The Ninja "Random" Event
 - Ninja creation code
-
+- coiax magic
 */
 
 /datum/round_event_control/ninja
