@@ -269,7 +269,7 @@
 
 
 /datum/admins/proc/makeAliens()
-	new /datum/round_event/alien_infestation{spawncount=3}()
+	new /datum/round_event/ghost_role/alien_infestation{spawncount=3}()
 	return 1
 
 /datum/admins/proc/makeSpaceNinja()
@@ -540,7 +540,7 @@
 
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
-	new /datum/round_event/abductor
+	new /datum/round_event/ghost_role/abductor
 	return 1
 
 /datum/admins/proc/makeRevenant()
