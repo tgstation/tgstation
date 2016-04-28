@@ -28,7 +28,6 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
-	..()
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
@@ -340,7 +339,8 @@
 				G.attackby(NG, user)
 			user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
 			qdel(src)
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/shard/Crossed(mob/AM)
 	if(istype(AM) && has_gravity(loc))

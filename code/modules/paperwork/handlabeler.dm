@@ -12,8 +12,6 @@
 	if(!proximity) return
 	if(!mode)	//if it's off, give up.
 		return
-	if(A == loc)	// if placing the labeller into something (e.g. backpack)
-		return		// don't set a label
 
 	if(!labels_left)
 		user << "<span class='warning'>No labels left!</span>"

@@ -397,13 +397,6 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
-
-/mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
-	if(O.flags & NOBLUDGEON)
-		return
-
-	..()
-
 /mob/living/simple_animal/movement_delay()
 	. = ..()
 

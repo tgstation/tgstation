@@ -18,18 +18,18 @@
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
-	if (W.GetID())
-		if(src.broken)
+	if(W.GetID())
+		if(broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
 			return
-		if(src.allowed(user))
-			src.locked = !( src.locked )
-			if(src.locked)
-				src.icon_state = src.icon_locked
+		if(allowed(user))
+			locked = !locked
+			if(locked)
+				icon_state = icon_locked
 				user << "<span class='danger'>You lock the [src.name]!</span>"
 				return
 			else
-				src.icon_state = src.icon_closed
+				icon_state = icon_closed
 				user << "<span class='danger'>You unlock the [src.name]!</span>"
 				return
 		else

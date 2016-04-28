@@ -21,17 +21,19 @@
 		icon_open = "[initial(icon_state)]_o_off"
 
 	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
-		updateUsrDialog()
 		return
 
-	if(exchange_parts(user, P))
+	else if(exchange_parts(user, P))
 		return
 
 	// Using a multitool lets you access the receiver's interface
-	if(istype(P, /obj/item/device/multitool))
+	else if(istype(P, /obj/item/device/multitool))
 		attack_hand(user)
 
-	default_deconstruction_crowbar(P)
+	else if(default_deconstruction_crowbar(P))
+		return
+	else
+		return ..()
 
 
 /obj/machinery/telecomms/attack_ai(mob/user)

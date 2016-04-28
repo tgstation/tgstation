@@ -97,15 +97,14 @@
 	return
 
 
-/obj/item/weapon/twohanded/mjollnir/attack(mob/M, mob/user)
+/obj/item/weapon/twohanded/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(wielded)
 		//if(charged == 5)
 		//charged = 0
 		playsound(src.loc, "sparks", 50, 1)
-		if(istype(M, /mob/living))
-			M.Stun(3)
-			shock(M)
+		M.Stun(3)
+		shock(M)
 
 /obj/item/weapon/twohanded/mjollnir/throw_impact(atom/target)
 	. = ..()

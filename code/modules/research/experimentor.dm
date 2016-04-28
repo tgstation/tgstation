@@ -25,7 +25,6 @@
 	var/recentlyExperimented = 0
 	var/mob/trackedIan
 	var/mob/trackedRuntime
-	var/obj/item/loaded_item = null
 	var/badThingCoeff = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
@@ -111,36 +110,14 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/r_n_d/experimentor/attackby(obj/item/O, mob/user, params)
-	if (shocked)
-		shock(user,50)
-
-	if (default_deconstruction_screwdriver(user, "h_lathe_maint", "h_lathe", O))
-		if(linked_console)
-			linked_console.linked_destroy = null
-			linked_console = null
-		return
-
-	if(exchange_parts(user, O))
-		return
-
-	if(panel_open && istype(O, /obj/item/weapon/crowbar))
-		default_deconstruction_crowbar(O)
-		return
-
-	if(!checkCircumstances(O))
-		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
-		return
-
-	if (disabled)
-		return
-	if (!linked_console)
-		user << "<span class='warning'>The [src] must be linked to an R&D console first!</span>"
-		return
-	if (loaded_item)
-		user << "<span class='warning'>The [src] is already loaded.</span>"
-		return
-	if (istype(O, /obj/item))
+/obj/machinery/r_n_d/experimentor/Insert_Item(obj/item/O, mob/user)
+	if(user.a_intent != "harm")
+		. = 1
+		if(!is_insertion_ready(user))
+			return
+		if(!checkCircumstances(O))
+			user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
+			return
 		if(!O.origin_tech)
 			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
@@ -158,7 +135,7 @@
 		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
 		flick("h_lathe_load", src)
 
-	return
+
 
 /obj/machinery/r_n_d/experimentor/default_deconstruction_crowbar(obj/item/O)
 	ejectItem()
@@ -640,7 +617,7 @@
 			spawn(cooldownMax)
 				cooldown = FALSE
 	else
-		user << "<span class='notice'>You aren't quite sure what to do with this yet.</span>"
+		user << "<span class='notice'>You aren't quite sure what to do with this, yet.</span>"
 
 //////////////// RELIC PROCS /////////////////////////////
 
