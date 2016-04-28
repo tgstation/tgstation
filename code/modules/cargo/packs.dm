@@ -114,7 +114,7 @@
 /datum/supply_pack/emergency/metalfoam
 	name = "Metal Foam Grenade Crate"
 	cost = 1000
-	contains = list(/obj/item/weapon/storage/box/metalfoam,)
+	contains = list(/obj/item/weapon/storage/box/metalfoam)
 	crate_name = "metal foam grenade crate"
 
 /datum/supply_pack/emergency/specialops
@@ -466,7 +466,7 @@
 					/obj/item/clothing/head/hardhat,
 					/obj/item/clothing/head/hardhat,
 					/obj/item/clothing/glasses/meson/engine,
-					/obj/item/clothing/glasses/meson/engine,)
+					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
 
 /datum/supply_pack/engineering/engine/spacesuit
@@ -478,7 +478,7 @@
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath,)
+					/obj/item/clothing/mask/breath)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -486,7 +486,7 @@
 	name = "Anti-breach Shield Projector Crate"
 	cost = 2500
 	contains = list(/obj/machinery/shieldgen,
-					/obj/machinery/shieldgen,)
+					/obj/machinery/shieldgen)
 	crate_name = "anti-breach shield projector crate"
 
 /datum/supply_pack/engineering/grounding_rods
@@ -502,7 +502,7 @@
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
 	cost = 2500
-	contains = list(/obj/machinery/power/port_gen/pacman,)
+	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -710,7 +710,7 @@
 	name = "Defibrillator Crate"
 	cost = 2500
 	contains = list(/obj/item/weapon/defibrillator/loaded,
-					/obj/item/weapon/defibrillator/loaded,)
+					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1141,21 +1141,21 @@
 					/obj/item/clothing/head/helmet/redtaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm,
-					/obj/item/clothing/head/helmet/bluetaghelm,)
+					/obj/item/clothing/head/helmet/bluetaghelm)
 	crate_name = "laser tag crate"
 
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/item/weapon/storage/box/lasertagpins,)
+	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
 
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"
 	cost = 5000
 	contraband = TRUE
-	contains = list(/obj/item/device/firing_pin/clown,)
+	contains = list(/obj/item/device/firing_pin/clown)
 	// It's /technically/ a toy. For the clown, at least.
 	crate_name = "toy crate"
 
