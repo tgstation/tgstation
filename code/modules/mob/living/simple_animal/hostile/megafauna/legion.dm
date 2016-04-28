@@ -84,6 +84,9 @@
 			src.loot = list(/obj/structure/closet/crate/necropolis)
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
+	return 1
+
 /obj/item/device/gps/internal/legion
 	icon_state = null
 	gpstag = "Echoing Signal"
