@@ -70,6 +70,7 @@
 /obj/item/weapon/restraints/handcuffs/sinew
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	item_state = "sinewcuff"
 	breakouttime = 300 //Deciseconds = 30s
