@@ -187,4 +187,4 @@ obj/structure/safe/ex_act(severity, target)
 
 
 /obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? 100 : 0

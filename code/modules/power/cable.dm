@@ -106,7 +106,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/hide(i)
 
 	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
+		invisibility = i ? 100 : 0
 	updateicon()
 
 /obj/structure/cable/proc/updateicon()

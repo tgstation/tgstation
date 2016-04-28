@@ -75,7 +75,7 @@
 			invis_objects -= O
 			var/turf/T = O.loc
 			if(T && T.intact)
-				O.invisibility = 101
+				O.invisibility = 100
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
 	if(!istype(loc,/mob/living/carbon/human))

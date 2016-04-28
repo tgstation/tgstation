@@ -40,7 +40,7 @@
 
 /obj/machinery/atmospherics/pipe/hide(i)
 	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
+		invisibility = i ? 100 : 0
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
