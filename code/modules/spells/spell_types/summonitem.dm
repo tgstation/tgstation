@@ -12,6 +12,7 @@
 	include_user = 1
 
 	var/obj/marked_item
+	var/allowed_type = /obj/item
 
 	action_icon_state = "summons"
 
@@ -24,6 +25,8 @@
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
 			for(var/obj/item in hand_items)
+				if(!(istype(item, allowed_type)
+					continue
 				if(ABSTRACT in item.flags)
 					continue
 				if(NODROP in item.flags)
@@ -114,3 +117,13 @@
 
 		if(message)
 			L << message
+
+/obj/effect/proc_holder/spell/targeted/summonitem/chaplain
+	name = "Recall Holy Weapon"
+	desc = "This spell can be used to instantly recall your holy weapon to your hand.."
+	invocation = "DEUS VULT"
+
+	var/obj/marked_item
+	var/allowed_type = /obj/item/weapon/nullrod
+
+	action_icon_state = "summons"
