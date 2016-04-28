@@ -226,11 +226,12 @@
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 	if(thermite >= 50)
+		var/burning_time = max(100,300 - thermite)
 		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
 		F.burn_tile()
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
-		spawn(max(100,300-thermite))
+		spawn(burning_time)
 			if(O)
 				qdel(O)
 	else
