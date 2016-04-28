@@ -7,9 +7,11 @@ Sorry Giacom. Please don't be mad :(
 	if(A && A.push_dir)
 		push_mob_back(src, A.push_dir)
 */
-#Define ADMINWARNNUM	     100 //How many mobs in nullspace before we warn the admins that the server is about to reboot
-#Define CREWWARNNUM 	 	 300 //How many mobs in nullspace before we warn the players that server is about to reboot
-#Define SERVERRESTARTNUM	 500 //Reboot the server to prevent the imminent crash
+#define DEFCON1		200
+#define DEFCON2  	400
+#define DEFCON3		600
+#define DEFCON4		800
+#define DEFCON5		1000
 
 /mob/living
 	var/static/mobsInNullSpace = 0
@@ -18,12 +20,17 @@ Sorry Giacom. Please don't be mad :(
 	. = ..()
 	if(isnull(get_turf(loc)))
 		mobsInNullSpace++
-		if(mobsInNullSpace == ADMINWARNNUM)
-			warn_admins("Alert! There are currently over [ADMINWARNNUM] mobs that spawned in nullspace. An automatic server reboot may be imminent."
-		if(mobsInNullSpace == CREWWARNNUM)
-			world << "<span class='cultlarge'>Alert! There are currently over [CREWWARNNUM] mobs that spawned in nullspace. An automatic server reboot may be imminent!"
-		if(mobsInNullSpace == SERVERRESTARTNUM)
-			world.reboot()
+		if(mobsInNullSpace == DEFCON1)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 1.")
+		if(mobsInNullSpace == DEFCON2)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 2.")
+		if(mobsInNullSpace == DEFCON3)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 3.")
+		if(mobsInNullSpace == DEFCON4)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 4.")
+		if(mobsInNullSpace == DEFCON5)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 5. It is strongly recommended that the server before forced to restart.")
+		stack_trace("Mob being instantiated in nullspace.")
 		del(src) //There are 1000 kittens in nullspace, let's not clog up the GC with them.
 	generateStaticOverlay()
 	if(staticOverlays.len)
