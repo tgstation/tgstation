@@ -66,8 +66,8 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 15
-	throwforce = 15
+	force = 8
+	throwforce = 5
 	damtype = BURN
 	SSobj.processing |= src
 
