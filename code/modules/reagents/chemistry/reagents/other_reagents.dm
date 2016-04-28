@@ -736,6 +736,7 @@
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes()
 			M.clean_blood()
+			M.wash_cream()
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
