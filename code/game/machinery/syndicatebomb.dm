@@ -16,10 +16,12 @@
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
+	var/delayedbig = FALSE	//delay wire pulsed?
+	var/delayedlittle  = FALSE	//activation wire pulsed?
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
-		var/volume = (timer <= 10 ? 40 : 10) // Tick louder when the bomb is closer to being detonated.
+		var/volume = (timer <= 5 ? 50 : 2) // Tick louder when the bomb is closer to being detonated.
 		playsound(loc, beepsound, volume, 0)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
@@ -250,6 +252,8 @@
 			holder.wires.shuffle_wires()
 		holder.defused = 0
 		holder.open_panel = 0
+		holder.delayedbig = FALSE
+		holder.delayedlittle = FALSE
 		holder.update_icon()
 		holder.updateDialog()
 

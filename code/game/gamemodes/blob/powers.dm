@@ -1,13 +1,13 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
-		src << "<span class='warning'>You cannot afford this!</span>"
+		src << "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>"
 		return 0
 	add_points(-cost)
 	return 1
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(point_rate = base_point_rate, placement_override = 0)
+/mob/camera/blob/proc/place_blob_core(point_rate, placement_override)
 	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)

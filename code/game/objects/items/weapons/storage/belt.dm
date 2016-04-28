@@ -119,6 +119,46 @@
 	new /obj/item/weapon/melee/baton/loaded(src)
 
 
+/obj/item/weapon/storage/belt/mining
+	name = "explorer belt"
+	desc = "A versatile belt, cherised by miners and hunters alike."
+	icon_state = "ebelt" //I'm doing this because I love you, syndicate son.
+	item_state = "ebelt"
+	storage_slots = 5
+	w_class = 4
+	max_w_class = 4 //Pickaxes are big.
+	can_hold = list(
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/wirecutters,
+		/obj/item/weapon/wrench,
+		/obj/item/device/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/device/analyzer,
+		/obj/item/weapon/extinguisher/mini,
+		/obj/item/device/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/weapon/resonator,
+		/obj/item/device/mining_scanner,
+		/obj/item/weapon/pickaxe,
+		/obj/item/stack/sheet/animalhide,
+		/obj/item/stack/sheet/sinew,
+		/obj/item/stack/sheet/bone,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle,
+		/obj/item/stack/medical,
+		/obj/item/weapon/kitchen/knife,
+		/obj/item/weapon/reagent_containers/hypospray/medipen,
+		/obj/item/device/gps,
+		/obj/item/weapon/storage/bag/ore,
+		/obj/item/weapon/survivalcapsule,
+		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/weapon/reagent_containers/pill,
+
+		)
+
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"

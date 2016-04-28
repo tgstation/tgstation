@@ -369,14 +369,14 @@
 	result = /obj/item/weapon/oar
 	reqs = list(/obj/item/stack/sheet/bone = 2)
 	time = 15
-	category = CAT_MISC
+	category = CAT_PRIMAL
 
 /datum/table_recipe/boat
 	name = "goliath hide boat"
 	result = /obj/vehicle/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
 	time = 50
-	category = CAT_MISC
+	category = CAT_PRIMAL
 
 //Dragon Boat
 

@@ -81,9 +81,6 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)
 
-	if(O.is_open_container()) //inserting reagents into the machine
-		return 1
-
 	if(istype(O,/obj/item/stack/sheet))
 		. = 1
 		if(!is_insertion_ready(user))
