@@ -26,7 +26,7 @@
 	H.quick_equip()
 
 /obj/screen/ling
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/ling/sting
 	name = "current sting"

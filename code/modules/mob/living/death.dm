@@ -64,7 +64,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	alpha = 0
 
 	if(!prev_lying && animation)

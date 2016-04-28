@@ -6,7 +6,7 @@
 
 /obj/effect/manifest/New()
 
-	src.invisibility = 101
+	src.invisibility = INVISIBILITY_ABSTRACT
 	return
 
 /obj/effect/manifest/proc/manifest()
