@@ -21,7 +21,7 @@
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
-	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/asteroid/goliath_hide = 8, /obj/item/stack/sheet/bone = 30)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/goliath_hide = 8, /obj/item/stack/sheet/bone = 30)
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 	var/swooping = 0
