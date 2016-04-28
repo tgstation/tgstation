@@ -32,7 +32,7 @@
 
 /obj/item/weapon/paper/contract/employment/attack(mob/living/M, mob/living/carbon/human/user)
 	var/deconvert = 0
-	if(M.mind == target && target.soulOwner == target)
+	if(M.mind == target && target.soulOwner != target)
 		if(user.mind && (user.mind.assigned_role == "Lawyer"))
 			deconvert = prob (25)
 		else if (user.mind && (user.mind.assigned_role =="Head of Personnel") || (user.mind.assigned_role == "Centcom Commander"))
