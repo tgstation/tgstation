@@ -308,7 +308,7 @@
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
-/obj/structure/closet/crate/dragon/tendril/New()
+/obj/structure/closet/crate/dragon/New()
 	..()
 	var/loot = rand(1,4)
 	switch(loot)
