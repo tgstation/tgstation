@@ -110,7 +110,7 @@
 	else if(O.is_open_container())
 		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount)
 	for(var/R in get_ingredient_list(make_type))

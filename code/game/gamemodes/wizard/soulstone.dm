@@ -104,6 +104,8 @@
 			user.Dizzy(120)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
+	else
+		return ..()
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 

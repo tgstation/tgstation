@@ -61,7 +61,7 @@
 				/obj/item/bodybag = 1,
 				/obj/item/clothing/glasses/meson = 2,
 				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/color/yellow/fake = 1,
+				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,

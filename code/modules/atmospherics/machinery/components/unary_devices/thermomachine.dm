@@ -85,6 +85,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(!..())

@@ -31,7 +31,7 @@
 	return ..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
-	if(M.damtype == "brute")
+	if(M.damtype == BRUTE || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		return 1
 	return 0
@@ -41,6 +41,7 @@
 	add_fingerprint(user)
 	if(structureclimber && structureclimber != user)
 		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
 		structureclimber.Weaken(2)
 		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
 	interact(user)
@@ -60,7 +61,7 @@
 	. = ..()
 	if(!climbable)
 		return
-	if(ismob(O) && user == O && ishuman(user))
+	if(ismob(O) && user == O && iscarbon(user))
 		if(user.canmove)
 			climb_structure(user)
 			return
@@ -81,6 +82,8 @@
 	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
+	if(istype(user, /mob/living/carbon/alien))
+		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
@@ -90,10 +93,8 @@
 									"<span class='notice'>You climb onto [src].</span>")
 				add_logs(user, src, "climbed onto")
 				user.Stun(climb_stun)
+				. = 1
 			else
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
 			density = 1
-			structureclimber = null
-			return 1
 	structureclimber = null
-	return ..()

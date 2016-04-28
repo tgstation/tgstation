@@ -166,10 +166,10 @@ Passive gate is similar to the regular pump except:
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/passive_gate/attackby(obj/item/weapon/W, mob/user, params)
-	if(!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	if(on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
-	return ..()
+/obj/machinery/atmospherics/components/binary/passive_gate/can_unwrench(mob/user)
+	if(..())
+		if(on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
+

@@ -23,9 +23,8 @@
 		C.loc = get_turf(src)
 		C.layer = layer+0.1
 		user.visible_message("<span class='notice'>[user] puts \the [C] on \the [src].</span>","<span class='notice'>You place \the [C] on \the [src].</span>")
-		return
-
-	..()
+	else
+		return ..()
 
 
 //Stick to the easel like glue
@@ -105,15 +104,14 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 		if(thePix != theOriginalPix) //colour changed
 			DrawPixelOn(theOriginalPix,pixX,pixY)
 		qdel(masterpiece)
-		return
 
 	//Drawing one pixel with a crayon
-	if(istype(I, /obj/item/toy/crayon))
+	else if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = I
 		DrawPixelOn(C.paint_color, pixX, pixY)
-		return
+	else
+		return ..()
 
-	..()
 
 //Clean the whole canvas
 /obj/item/weapon/canvas/attack_self(mob/user)

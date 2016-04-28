@@ -3,6 +3,8 @@
 	desc = "Use pools of blood to phase out of existence."
 	charge_max = 0
 	clothes_req = 0
+	//If you couldn't cast this while phased, you'd have a problem
+	phase_allowed = 1
 	selection_type = "range"
 	range = 1
 	cooldown_min = 0
