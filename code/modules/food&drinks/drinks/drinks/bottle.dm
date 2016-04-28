@@ -237,7 +237,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Extra-Strong Absinthe"
-	desc = "An strong alcoholic drink."
+	desc = "A strong alcoholic drink."
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
