@@ -59,9 +59,14 @@
 /datum/quest_message
 	var/timestamp
 	var/text
-/datum/quest_message/New(new_text, new_time = null)
+	var/list/spans
+
+/datum/quest_message/New(new_text, new_time = null, new_spans = null)
 	if(!new_time)
 		new_time = worldtime2text()
+	if(!new_spans)
+		new_spans = list()
 
 	timestamp = new_time
 	text = new_text
+	spans = new_spans

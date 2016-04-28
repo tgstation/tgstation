@@ -9,12 +9,17 @@
 	// ideas: syndicate monitoring device, abductor cube, box with a ? on it,
 	// rubick's cube
 	desc = "A seemingly discarded, dusty suitcase. It has a keypad."
+
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "secure"
+	item_state = "sec-case"
+
 	var/victory_desc = " The lights on it are all green."
 	var/failure_desc = " There are scorch marks visible at the seams."
 
-	icon_state = "secure"
 	// Might still catch on fire in lava, but only if the box wants to
 	burn_state = LAVA_PROOF
+	unacidable = TRUE
 	flags = HEAR
 
 	var/locked = TRUE
@@ -72,21 +77,26 @@
 	while(quest.messages.len)
 		var/datum/quest_message/message = quest.messages[1]
 		quest.messages.Remove(message)
-		src.audible_message("\icon[src] [message.text]")
-		// Pause between messages
+		say_message(message.text)
 		sleep(15)
+	if(quest.success && src.locked)
+		unlock()
 
 /obj/item/weapon/storage/briefcase/mystery/proc/say_message(text)
 	src.audible_message("\icon[src] [text]")
-	playsound(src, 'sound/effects/messagejump.ogg', 50, 0)
+	playsound(loc, 'sound/effects/messagejump.ogg', 50, 0)
 
 /obj/item/weapon/storage/briefcase/mystery/proc/unlock()
 	src.audible_message("<span class='notice'>Tinny congratulatory music plays, as you hear the [src] unlock.</span>", "The lights on the [src] all go green.")
 	playsound(loc, 'sound/effects/yourwinner.ogg', 50, 0)
 	locked = FALSE
 	desc += victory_desc
-	// It's not relockable, it is now an ordinary briefcase
+	// It's not relockable, it is now an "ordinary" briefcase
+	// unless certain special conditions are triggered
 
+/obj/item/weapon/storage/briefcase/mystery/ex_act(strength)
+	// Made from 100% obsidian
+	return
 
 /obj/item/weapon/storage/briefcase/mystery/Destroy()
 	// If for any reason it's blown up without playing by the rules,
@@ -101,11 +111,10 @@
 
 	return ..()
 
-/obj/item/weapon/storage/briefcase/mystery/attack_animal(mob/user)
-	if(locked)
-		boom(user)
-	else
-		return..()
+/obj/item/weapon/storage/briefcase/mystery/attack_alien(mob/user)
+	// We don't discriminate, aliens are allowed to get items they
+	// probably can't use from the box.
+	attack_hand(user)
 
 /obj/item/weapon/storage/briefcase/mystery/emag_act(mob/user)
 	if(locked)
@@ -155,7 +164,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/youtried
-	name = "'UTried' candy"
+	name = "UTried(tm) candy"
 	desc = "It\'s a delicious 'UTried' candy bar, still in its wrapper. For some reason, you can only open it a little bit.\nA warning on the side recommends you do not eat the candy too quickly in an attempt to end your life."
 	// Yes, this is an INFINITE candy bar. Which makes the empty wrapper
 	// even more disturbing.
