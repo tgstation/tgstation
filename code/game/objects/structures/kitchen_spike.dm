@@ -20,6 +20,8 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else
+		return ..()
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -48,8 +50,8 @@
 				qdel(src)
 		else
 			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
-		return
-	if(istype(I, /obj/item/weapon/grab))
+
+	else if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living/))
 			if(!buckled_mobs.len)
@@ -77,8 +79,8 @@
 					qdel(G)
 					return
 		user << "<span class='danger'>You can't use that on the spike!</span>"
-		return
-	..()
+	else
+		return ..()
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return

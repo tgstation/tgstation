@@ -46,11 +46,14 @@
 			update_icon()
 			return
 
-	open = !open
-	update_icon()
+	else if(user.a_intent != "harm")
+		open = !open
+		update_icon()
+	else
+		return ..()
 
 /obj/structure/guncase/attack_hand(mob/user)
-	if(isrobot(usr) || isalien(usr))
+	if(isrobot(user) || isalien(user))
 		return
 	if(contents.len && open)
 		ShowWindow(user)

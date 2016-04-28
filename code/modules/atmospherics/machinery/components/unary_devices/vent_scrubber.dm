@@ -310,12 +310,15 @@
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
 			return 0
-	if (!istype(W, /obj/item/weapon/wrench))
+	else
 		return ..()
-	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
-	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
+	if(..())
+		if (!(stat & NOPOWER) && on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded

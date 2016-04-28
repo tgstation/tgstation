@@ -120,7 +120,7 @@
 			upgrades -= U
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(busy)

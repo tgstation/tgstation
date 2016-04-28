@@ -32,10 +32,10 @@
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
 
 // Goliath hide. Expensive.
-/datum/export/goliath_hide
+/datum/export/stack/skin/goliath_hide
 	cost = 2500
 	unit_name = "goliath hide"
-	export_types = list(/obj/item/asteroid/goliath_hide)
+	export_types = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
 // Cat hide. Just in case Runtime is catsploding again.
 /datum/export/stack/skin/cat

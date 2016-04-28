@@ -41,6 +41,8 @@
 				src.transfer_fingerprints_to(R)
 				R.add_fingerprint(user)
 				qdel(src)
+	else
+		return ..()
 
 /obj/structure/transit_tube_pod/container_resist()
 	var/mob/living/user = usr

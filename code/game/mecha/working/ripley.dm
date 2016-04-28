@@ -25,7 +25,7 @@
 
 /obj/mecha/working/ripley/Destroy()
 	for(var/i=1, i <= hides, i++)
-		new /obj/item/asteroid/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
+		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	damage_absorption["brute"] =  initial(damage_absorption["brute"])
 	for(var/atom/movable/A in cargo)
 		A.loc = loc

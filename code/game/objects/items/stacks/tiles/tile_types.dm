@@ -63,9 +63,8 @@
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
-		return
 	else
-		..()
+		return ..()
 
 //Grass
 /obj/item/stack/tile/grass

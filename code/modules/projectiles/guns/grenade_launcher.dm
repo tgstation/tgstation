@@ -30,14 +30,7 @@
 			usr << "<span class='danger'>The grenade launcher cannot hold more grenades.</span>"
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		return
-
-	else if (locate (/obj/structure/table, src.loc))
-		return
-
-	else if(target == user)
+	if(target == user)
 		return
 
 	if(grenades.len)

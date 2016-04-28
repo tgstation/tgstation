@@ -100,8 +100,9 @@
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return
-	..()
+		return 1
+	else
+		return ..()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -152,7 +153,7 @@
 		loc = tank.loc
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
+	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
 	..()
 

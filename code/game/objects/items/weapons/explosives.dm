@@ -57,7 +57,7 @@
 	else if(is_wire_tool(I))
 		wires.interact(user)
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num

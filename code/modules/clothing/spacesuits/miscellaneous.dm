@@ -312,3 +312,16 @@ Contains:
 	name = "inquisitor's helmet"
 	icon_state = "hardsuit0-inq"
 	item_state = "hardsuit0-inq"
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker
+	name = "champion's hardsuit"
+	desc = "Voices echo from the hardsuit, driving the user insane."
+	icon_state = "hardsuit-beserker"
+	item_state = "hardsuit-beserker"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
+	name = "champion's helmet"
+	desc = "Peering into the eyes of the helmet is enough to seal damnation."
+	icon_state = "hardsuit0-beserker"
+	item_state = "hardsuit0-beserker"

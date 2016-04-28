@@ -69,6 +69,7 @@
 	new /obj/item/weapon/holosign_creator/engineering(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
+	new /obj/item/weapon/storage/box/emptysandbags(src)
 
 
 /obj/structure/closet/secure_closet/atmospherics
