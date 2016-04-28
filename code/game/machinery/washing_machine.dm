@@ -51,7 +51,7 @@
 			var/dye_color
 			if(istype(crayon,/obj/item/toy/crayon))
 				var/obj/item/toy/crayon/CR = crayon
-				dye_color = CR.colourName
+				dye_color = CR.paint_color
 			if(dye_color)
 				P.color = dye_color
 			qdel(crayon)
@@ -61,7 +61,7 @@
 		var/wash_color
 		if(istype(crayon,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = crayon
-			wash_color = CR.colourName
+			wash_color = CR.paint_color
 		else if(istype(crayon,/obj/item/weapon/stamp))
 			var/obj/item/weapon/stamp/ST = crayon
 			wash_color = ST.item_color
