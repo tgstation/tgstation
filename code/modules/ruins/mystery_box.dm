@@ -65,6 +65,9 @@
 	else
 		return ..()
 
+/obj/item/weapon/storage/briefcase/mystery/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	quest.Hear(message, speaker, message_langs, raw_message, radio_freq, spans)
+
 /obj/item/weapon/storage/briefcase/mystery/process()
 	while(quest.messages.len)
 		var/datum/quest_message/message = quest.messages[1]
