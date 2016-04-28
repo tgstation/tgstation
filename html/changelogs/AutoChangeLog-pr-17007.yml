@@ -1,0 +1,4 @@
+author: TechnoAlchemisto
+delete-after: True
+changes: 
+  - rscadd: "Syndicate bombs are now harder to detect"

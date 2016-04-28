@@ -145,7 +145,7 @@
 	if( thermite )
 		if(W.is_hot())
 			thermitemelt(user)
-		return
+			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
 

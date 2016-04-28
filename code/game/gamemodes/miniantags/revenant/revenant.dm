@@ -174,7 +174,8 @@
 		spawn(30)
 			inhibited = 0
 			update_action_buttons_icon()
-	..()
+	else
+		return ..()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)

@@ -20,6 +20,7 @@
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
@@ -54,6 +55,8 @@
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
+
+	dog_fashion = /datum/dog_fashion/head/nurse
 
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
@@ -99,6 +102,9 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 
+	dog_fashion = /datum/dog_fashion/head/rabbit
+
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
@@ -110,6 +116,8 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+
+	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
@@ -186,12 +194,15 @@
 	desc = "You can practically taste the fiesta."
 	flags_inv = HIDEHAIR
 
+	dog_fashion = /datum/dog_fashion/head/sombrero
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
 	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	dog_fashion = null
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -199,6 +210,7 @@
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	flags = NODROP
+	dog_fashion = null
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -221,6 +233,7 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	dog_fashion = /datum/dog_fashion/head/santa
 
 /obj/item/clothing/head/jester
 	name = "jester hat"

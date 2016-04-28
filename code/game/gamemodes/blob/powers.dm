@@ -1,13 +1,13 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
-		src << "<span class='warning'>You cannot afford this!</span>"
+		src << "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>"
 		return 0
 	add_points(-cost)
 	return 1
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(point_rate = base_point_rate, placement_override = 0)
+/mob/camera/blob/proc/place_blob_core(point_rate, placement_override)
 	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)
@@ -137,7 +137,7 @@
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
-	set name = "Create Blobbernaut (30)"
+	set name = "Create Blobbernaut (40)"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
@@ -150,7 +150,7 @@
 	if(B.health < B.maxhealth * 0.5)
 		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
-	if(!can_buy(30))
+	if(!can_buy(40))
 		return
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
@@ -163,7 +163,8 @@
 	blobber.overmind = src
 	blobber.update_icons()
 	blobber.notransform = 1 //stop the naut from moving around
-	blob_mobs.Add(blobber)
+	blobber.adjustHealth(blobber.maxHealth * 0.5)
+	blob_mobs += blobber
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	var/client/C = null
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.

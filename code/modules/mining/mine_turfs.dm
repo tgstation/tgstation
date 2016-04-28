@@ -563,11 +563,22 @@
 /turf/open/chasm/Entered(atom/movable/AM)
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
 		return
+	if(istype(AM, /obj/effect/portal))
+		// Portals aren't affected by gravity. Probably.
+		return
 	// Flies right over the chasm
 	if(istype(AM, /mob/living/simple_animal))
 		// apparently only simple_animals can fly??
 		var/mob/living/simple_animal/SA = AM
 		if(SA.flying)
+			return
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
+			var/obj/item/device/wormhole_jaunter/J = H.belt
+			// To freak out any bystanders
+			visible_message("[H] falls into [src]!")
+			J.chasm_react(H)
 			return
 	drop(AM)
 

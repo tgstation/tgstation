@@ -31,35 +31,35 @@
 		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
-	if(istype(user,/mob/living/silicon))
-		return
+
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/ammo_box/magazine/recharge))
 		if(anchored)
 			if(charging || panel_open)
-				return
+				return 1
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
 			if(!isarea(a) || a.power_equip == 0)
 				user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
-				return
+				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
 				var/obj/item/weapon/gun/energy/gun = G
 				if(!gun.can_charge)
 					user << "<span class='notice'>Your gun has no external power connector.</span>"
-					return
-			if(!user.drop_item())
-				return
+					return 1
 
+			if(!user.drop_item())
+				return 1
 			G.loc = src
 			charging = G
 			use_power = 2
 			update_icon()
 		else
 			user << "<span class='notice'>[src] isn't connected to anything!</span>"
+		return 1
 
-	if (anchored && !charging)
+	if(anchored && !charging)
 		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
 			return
 
@@ -69,6 +69,7 @@
 
 		if(exchange_parts(user, G))
 			return
+	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(issilicon(user))
