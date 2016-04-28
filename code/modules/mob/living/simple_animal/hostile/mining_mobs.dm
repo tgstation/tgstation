@@ -739,8 +739,6 @@
 	icon = 'icons/obj/lavaland/legion_head.dmi'
 	icon_state = "head"
 
-/obj/item/weapon/legion_skull/attack_by
-
 //Nests
 
 /mob/living/simple_animal/hostile/spawner/lavaland
