@@ -137,10 +137,6 @@ Class Procs:
 	dropContents()
 	return ..()
 
-/obj/machinery/attackby(obj/item/weapon/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	..()
-
 /obj/machinery/proc/locate_machinery()
 	return
 
@@ -157,10 +153,11 @@ Class Procs:
 		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
 
-/obj/machinery/proc/open_machine()
+/obj/machinery/proc/open_machine(drop = 1)
 	state_open = 1
 	density = 0
-	dropContents()
+	if(drop)
+		dropContents()
 	update_icon()
 	updateUsrDialog()
 
@@ -243,6 +240,57 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+/obj/machinery/mech_melee_attack(obj/mecha/M)
+	if(M.damtype == BRUTE || M.damtype == BURN)
+		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
+		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.
+		return 1
+	return 0
+
+/obj/machinery/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype, 1)
+
+/obj/machinery/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
+/obj/machinery/attack_alien(mob/living/carbon/alien/humanoid/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	add_hiddenprint(user)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	take_damage(20, BRUTE, 0)
+
+/obj/machinery/attack_animal(mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper > 0)
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
+		"<span class='danger'>You smash against the [src.name].</span>")
+		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)
+
+
+/obj/machinery/attack_paw(mob/living/user)
+	if(user.a_intent != "harm")
+		return attack_hand(user)
+	else
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>",\
+		"<span class='danger'>You smash against the [src.name] with your paws.</span>")
+		take_damage(4, BRUTE, 1)
+
+
 /obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))// For some reason attack_robot doesn't work
 		var/mob/living/silicon/robot/R = user
@@ -251,8 +299,6 @@ Class Procs:
 	else
 		return attack_hand(user)
 
-/obj/machinery/attack_paw(mob/user)
-	return attack_hand(user)
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)

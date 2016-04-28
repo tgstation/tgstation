@@ -258,7 +258,7 @@
 	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
 
 /turf/ChangeTurf(path)
-	if(!path || path == type) //Sucks this is here but it would cause problems otherwise.
+	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
 	for(var/obj/effect/decal/cleanable/decal in src.contents)

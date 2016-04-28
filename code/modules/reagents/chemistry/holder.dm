@@ -123,7 +123,7 @@ var/const/INJECT = 5 //injection
 
 	return id
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if(!target )
 		return
 	var/datum/reagents/R
@@ -150,8 +150,9 @@ var/const/INJECT = 5 //injection
 
 	update_total()
 	R.update_total()
-	R.handle_reactions()
-	src.handle_reactions()
+	if(!no_react)
+		R.handle_reactions()
+		src.handle_reactions()
 	return amount
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)

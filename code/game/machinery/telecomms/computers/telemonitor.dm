@@ -123,6 +123,5 @@
 	return
 
 /obj/machinery/computer/telecomms/monitor/attackby()
-	..()
-	src.updateUsrDialog()
-	return
+	. = ..()
+	updateUsrDialog()

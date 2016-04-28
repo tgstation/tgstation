@@ -35,7 +35,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = 5
+	max_w_class = 6
 	max_combined_w_class = 35
 	burn_state = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
@@ -71,7 +71,7 @@
 	return 0
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)) && !W.crit_fail)
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
@@ -326,6 +326,24 @@
 	icon_state = "duffle-eng"
 	item_state = "duffle-eng"
 	burn_state = FIRE_PROOF
+
+/obj/item/weapon/storage/backpack/dufflebag/drone
+	name = "drone dufflebag"
+	desc = "A large dufflebag for holding tools and hats."
+	icon_state = "duffle-drone"
+	item_state = "duffle-drone"
+	burn_state = FIRE_PROOF
+
+/obj/item/weapon/storage/backpack/dufflebag/drone/New()
+	..()
+
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil/random(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/clown
 	name = "clown's dufflebag"

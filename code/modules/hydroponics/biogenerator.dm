@@ -54,40 +54,63 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
-		if(beaker)
-			user << "<span class='warning'>A container is already loaded into the machine.</span>"
-		else
-			user.unEquip(O)
-			O.loc = src
-			beaker = O
-			user << "<span class='notice'>You add the container to the machine.</span>"
-			updateUsrDialog()
-	else if(processing)
+	if(processing)
 		user << "<span class='warning'>The biogenerator is currently processing.</span>"
+		return
+
+	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
+		if(beaker)
+			var/obj/item/weapon/reagent_containers/glass/B = beaker
+			B.loc = loc
+			beaker = null
+		update_icon()
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_deconstruction_crowbar(O))
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		. = 1 //no afterattack
+		if(!panel_open)
+			if(beaker)
+				user << "<span class='warning'>A container is already loaded into the machine.</span>"
+			else
+				if(!user.drop_item())
+					return
+				O.loc = src
+				beaker = O
+				user << "<span class='notice'>You add the container to the machine.</span>"
+				update_icon()
+				updateUsrDialog()
+		else
+			user << "<span class='warning'>Close the maintenance panel first.</span>"
+		return
+
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+		var/obj/item/weapon/storage/bag/plants/PB = O
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is already full! Activate it.</span>"
 		else
-			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				G.loc = src
+				PB.remove_from_storage(G, src)
 				i++
 			if(i<max_items)
 				user << "<span class='info'>You empty the plant bag into the biogenerator.</span>"
-			else if(O.contents.len == 0)
+			else if(PB.contents.len == 0)
 				user << "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>"
 			else
 				user << "<span class='info'>You fill the biogenerator to its capacity.</span>"
+		return 1 //no afterattack
 
-
-	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
-	else
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -97,21 +120,12 @@
 			user.unEquip(O)
 			O.loc = src
 			user << "<span class='info'>You put [O.name] in [src.name]</span>"
+		return 1 //no afterattack
 
-	if(!processing)
-		if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
-			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = loc
-				beaker = null
-
-	if(exchange_parts(user, O))
-		return
-
-	default_deconstruction_crowbar(O)
-
-	update_icon()
-	return
+	else if(user.a_intent != "harm")
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
+	else
+		return ..()
 
 /obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)
@@ -158,13 +172,8 @@
 			dat += "</div>"
 			dat += "<h3>Leather and Cloth:</h3>"
 			dat += "<div class='statusDisplay'>"
+			dat += "Roll of cloth: <A href='?src=\ref[src];create=cloth;amount=1'>Make</A><A href='?src=\ref[src];create=tencloth;amount=1'>x10</A> ([50/efficiency])<BR>"
 			dat += "Wallet: <A href='?src=\ref[src];create=wallet;amount=1'>Make</A> ([100/efficiency])<BR>"
-			dat += "Book bag: <A href='?src=\ref[src];create=bkbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Empty sandbag: <A href='?src=\ref[src];create=sdbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Plant bag: <A href='?src=\ref[src];create=ptbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Rag: <A href='?src=\ref[src];create=rag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Mining satchel: <A href='?src=\ref[src];create=mnbag;amount=1'>Make</A> ([200/efficiency])<BR>"
-			dat += "Chemistry bag: <A href='?src=\ref[src];create=chbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];create=gloves;amount=1'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];create=tbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Security belt: <A href='?src=\ref[src];create=sbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
@@ -292,33 +301,18 @@
 			if (check_cost(5/efficiency))
 				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty(src.loc)
+		if("cloth")
+			if (check_cost(50/efficiency))
+				return 0
+			else new/obj/item/stack/sheet/cloth(src.loc)
+		if("tencloth")
+			if (check_cost(500/efficiency))
+				return 0
+			else new/obj/item/stack/sheet/cloth/ten(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency))
 				return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
-		if("bkbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/books(src.loc)
-		if("sdbag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/emptysandbag(src.loc)
-		if("ptbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/plants(src.loc)
-		if("mnbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/ore(src.loc)
-		if("chbag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
-		if("rag")
-			if (check_cost(200/efficiency))
-				return 0
-			else new/obj/item/weapon/reagent_containers/glass/rag(src.loc)
 		if("gloves")
 			if (check_cost(250/efficiency))
 				return 0

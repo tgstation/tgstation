@@ -36,6 +36,8 @@
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
+	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
@@ -44,6 +46,7 @@
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
+
 
 
 /**********************Shuttle Computer**************************/
@@ -198,7 +201,7 @@
 				clear = FALSE
 				break
 			for(var/obj/obj in turf)
-				if(obj.density)
+				if(obj.density && obj.anchored)
 					clear = FALSE
 					break
 		if(!clear)
@@ -293,12 +296,13 @@
 	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	threshhold.ChangeTurf(/turf/open/floor/pod)
 	var/turf/open/floor/pod/doorturf = threshhold
-	doorturf.blocks_air = 1 //So the air doesn't leak out
 	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
 	var/area/ZZ = get_area(threshhold)
 	if(!is_type_in_list(ZZ, blacklist))
 		L.contents += threshhold
 	threshhold.overlays.Cut()
+
+	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
 
 	var/list/turfs = room["floors"]
 	for(var/turf/open/floor/A in turfs)
@@ -327,8 +331,29 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "fans"
 	name = "environmental regulation system"
+	desc = "A large machine releasing a constant gust of air."
 	anchored = 1
 	density = 1
+	var/arbitraryatmosblockingvar = TRUE
+
+/obj/structure/fans/tiny
+	name = "tiny fan"
+	desc = "A tiny fan, releasing a thin gust of air."
+	layer = TURF_LAYER + 0.8
+	density = 0
+	icon_state = "fan_tiny"
+
+/obj/structure/fans/New(loc)
+	..()
+	air_update_turf(1)
+
+/obj/structure/fans/Destroy()
+	arbitraryatmosblockingvar = FALSE
+	air_update_turf(1)
+	return ..()
+
+/obj/structure/fans/CanAtmosPass(turf/T)
+	return !arbitraryatmosblockingvar
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
@@ -428,3 +453,21 @@
 	anchored = 1
 	layer = MOB_LAYER - 0.2
 	density = 0
+
+/obj/item/weapon/emptysandbag
+	name = "empty sandbag"
+	desc = "A bag to be filled with sand."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "sandbag"
+	w_class = 1
+
+/obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/ore/glass))
+		user << "<span class='notice'>You fill the sandbag.</span>"
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
+		user.unEquip(src)
+		user.put_in_hands(I)
+		qdel(W)
+		qdel(src)
+		return
+	else return ..()

@@ -195,9 +195,7 @@
 
 /turf/open/floor/plating/asteroid/moon/airless
 	baseturf = /turf/open/floor/plating/asteroid/moon/airless
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/marble
 	name = "marble flooring"

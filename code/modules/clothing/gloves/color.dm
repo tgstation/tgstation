@@ -8,10 +8,6 @@
 	item_color="yellow"
 	burn_state = FIRE_PROOF
 
-/obj/item/clothing/gloves/color/yellow/fake
-	desc = "These gloves will protect the wearer from electric shock. They don't feel like rubber..."
-	siemens_coefficient = 1
-
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
@@ -36,6 +32,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
+	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/black/hos
 	item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
@@ -45,7 +42,7 @@
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
-		if(icon_state == initial(icon_state)) //only if not dyed
+		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
 			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)

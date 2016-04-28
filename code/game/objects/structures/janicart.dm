@@ -86,6 +86,8 @@
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
 			src.reagents.clear_reagents()
+	else
+		return ..()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
