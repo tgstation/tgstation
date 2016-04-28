@@ -174,7 +174,7 @@
 	src.icon_state = "pod_1"
 	//Get the clone body ready
 	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
+	H.adjustBrainLoss(60)
 	H.Paralyse(4)
 
 	clonemind.transfer_to(H)
