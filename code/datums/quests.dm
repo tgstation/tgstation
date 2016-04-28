@@ -48,7 +48,7 @@
 	return TRUE
 
 /datum/quest/just_say/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
-	if(findtext(message, word))
+	if(findtext(lowertext(message), word))
 		. = end()
 
 /datum/quest/just_say/potato

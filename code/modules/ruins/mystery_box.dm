@@ -24,6 +24,11 @@
 
 /obj/item/weapon/storage/briefcase/mystery/New()
 	..()
+
+	// We do not include a paper and pen in this mystery box
+	for(var/atom/movable/AM in src)
+		qdel(AM)
+
 	SSobj.processing += src
 
 	quest = new /datum/quest/just_say/potato()
@@ -32,21 +37,28 @@
 	add_loot()
 
 /obj/item/weapon/storage/briefcase/mystery/attack_hand(mob/user)
+	if ((src.loc == user) && (src.locked == 1))
+		user << "<span class='warning'>[src] is locked and cannot be opened.</span>"
+		return
+	else
+		return ..()
+
+/obj/item/weapon/storage/briefcase/mystery/attack_self(mob/user)
 	if(locked)
 		if(!warning_given)
+			user << "<span class='notice'>You press one of the buttons on the keypad...</span>"
 			//TODO set up a variety of warning messages
-			spawn(0)
-				src.audible_message("\icon \
-					You have just activated a SRVYBX Pro 9053!")
-				sleep(5)
-				src.audible_message("\icon Please be aware that Box Co. \
-					cannot accept any liability for \
-					any injuries, damage or consequences that result from the \
-					activation of this SRVYBX.")
-				sleep(10)
-				src.audible_message("\icon You continue at your own risk.")
-				warning_given = TRUE
+			say_message("You have just activated a SRVYBX Pro 9053!")
+			sleep(15)
+			say_message("Please be aware that Box Co. \
+				cannot accept any liability for \
+				any injuries, damage or consequences that result from the \
+				activation of this SRVYBX.")
+			sleep(15)
+			say_message("You continue at your own risk.")
+			warning_given = TRUE
 		else if(!quest.in_progress)
+			user << "<span class='notice'>You press one of the buttons on the keypad...</span>"
 			quest.begin()
 		else
 			quest.interact(src, user)
@@ -54,14 +66,19 @@
 		return ..()
 
 /obj/item/weapon/storage/briefcase/mystery/process()
-	while(quest.messages)
-		// wouldn't mind a popstart() to be honest
-		var/datum/quest_message/message = quest.messages[0]
-		quest.messages.Remove(0)
-		src.audible_message("\icon [message.text]")
+	while(quest.messages.len)
+		var/datum/quest_message/message = quest.messages[1]
+		quest.messages.Remove(message)
+		src.audible_message("\icon[src] [message.text]")
+		// Pause between messages
+		sleep(15)
+
+/obj/item/weapon/storage/briefcase/mystery/proc/say_message(text)
+	src.audible_message("\icon[src] [text]")
+	playsound(src, 'sound/effects/messagejump.ogg', 50, 0)
 
 /obj/item/weapon/storage/briefcase/mystery/proc/unlock()
-	src.audible_message("Tinny congratulatory music plays, as you hear the [src] unlock.", "The lights on the [src] all go green.")
+	src.audible_message("<span class='notice'>Tinny congratulatory music plays, as you hear the [src] unlock.</span>", "The lights on the [src] all go green.")
 	playsound(loc, 'sound/effects/yourwinner.ogg', 50, 0)
 	locked = FALSE
 	desc += victory_desc
@@ -87,12 +104,15 @@
 	else
 		return..()
 
+/obj/item/weapon/storage/briefcase/mystery/emag_act(mob/user)
+	if(locked)
+		// No.
+		user.visible_message("<span class='warning'>Sparks fly from the [src]!</span>")
+		boom()
+
 /obj/item/weapon/storage/briefcase/mystery/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/weapon/card/emag))
-			// No.
-			boom(user)
-		else if(istype(W, /obj/item/device/multitool))
+		if(istype(W, /obj/item/device/multitool))
 			user << "<span class='notice'>The [W] doesn't seem to be able to interface with the [src].</span>"
 		else
 			return ..()
@@ -105,7 +125,7 @@
 		// Anti-tamper shouldn't trigger when unlocked anyway
 		return
 
-	src.visible_message("[src]'s anti-tamper system activates! Light flashes through the gaps! You smell smoke...", "A harsh alarm sounds, and then a hiss. You smell smoke...")
+	src.visible_message("<span class='warning'>[src]'s anti-tamper system activates! Light flashes through the gaps! You smell smoke...</span>", "<span class='warning'>A harsh alarm sounds, and then a hiss. You smell smoke...</span>")
 	// TODO need some sort of harsh alarm sound effect plus cooking
 
 	for(var/atom/movable/AM in src)
@@ -119,17 +139,17 @@
 	locked = FALSE
 
 /obj/item/weapon/storage/briefcase/mystery/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] seems frustrated by the inability to open [src]! \He seems to be giving up on life.</span>")
+	user.visible_message("<span class='suicide'>[user] seems frustrated by the mystery posed by \the [src]! \He seems to be giving up on life.</span>")
 
-	// Don't waste this delicious soul if there's some UTried inside.
-	for(var/atom/movable/AM in src)
-		if(istype(AM, /obj/item/weapon/reagent_containers/food/snacks/candy/youtried))
-			var/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/YT = AM
-			src.audible_message("You hear a faint hum from inside the [src].")
-			YT.replicate(user)
-			break
+	// Don't waste this delicious soul
+	var/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/YT
+	YT = new(get_turf(user))
+	YT.flavour(user)
+	qdel(YT)
+
+	src.audible_message("<span class='notice'>You hear a faint hum from inside the [src].</span>")
 	return OXYLOSS
-	
+
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/youtried
 	name = "'UTried' candy"
@@ -144,17 +164,20 @@
 	poi_list |= src
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/youtried/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] eating the [src] far too quickly! It doesn't look like \he's going to stop!")
+	user.visible_message("<span class='suicide'>[user] eating the [src] far too quickly! It looks like they're trying to commit suicide through empty calories...")
 	src.visible_message("<span class='warning'>The [src] shines brightly for a moment, and then dims.</span>", "You hear a faint hum.")
 	replicate(user)
 	return (TOXLOSS | OXYLOSS)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/proc/flavour(mob/user)
+	src.name = initial(src.name) + " (" + user.real_name + " flavour)"
+	src.desc = initial(src.desc) + "\nThis bar seems to be flavoured with " + user.real_name + "."
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/youtried/proc/replicate(mob/user)
 
 	var/turf/T = get_turf(user)
 	var/obj/item/weapon/reagent_containers/food/snacks/candy/youtried/child = new(T)
-	child.name = " (" + user.real_name + " flavour)"
-	child.desc = " This bar seems to be flavoured with " + user.real_name + "."
+	child.flavour(user)
 	qdel(child)
 	// Why yes, this does make a new immortal candy bar and then teleport
 	// it somewhere else.
