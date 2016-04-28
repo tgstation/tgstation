@@ -48,6 +48,7 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
+	var/stunmod = 1		// multiplier for stun duration
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
@@ -87,7 +88,7 @@
 	// PROCS //
 	///////////
 
-
+	var/flying = 0
 
 //Called when admins use the Set Species verb, let's species
 //do some init stuff on the mob that got SS'd if necessary
@@ -1386,6 +1387,36 @@
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
+
+
+////////
+//Stun//
+////////
+
+/datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	. = stunmod * amount
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

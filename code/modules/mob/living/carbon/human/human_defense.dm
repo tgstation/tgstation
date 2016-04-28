@@ -369,3 +369,7 @@
 					skipcatch = 1 //can't catch the now embedded item
 
 	return ..()
+
+/mob/living/carbon/human/Stun(amount, updating_canmove = 1)
+	amount = dna.species.spec_stun(src,amount)
+	..()

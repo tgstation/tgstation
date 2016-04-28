@@ -54,3 +54,9 @@
 
 				S.step_action()
 
+/*
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
+	..()
+	if(dna && dna.species.id == "angel" && dna.species.flying)
+		return 1
+*/

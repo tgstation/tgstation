@@ -740,3 +740,133 @@ SYNDICATE BLACK OPS
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
 	sexes = 0
 
+/datum/species/angel
+	name = "Angel"
+	id = "angel"
+	default_color = "FFFFFF"
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
+	use_skintones = 1
+	flying = 0
+	skinned_type = /obj/item/stack/sheet/animalhide/human
+
+	var/datum/action/innate/flight/fly
+
+/*
+/datum/species/human/qualifies_for_rank(rank, list/features)
+	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
+		return 1	//Pure humans are always allowed in all roles.
+
+	//Mutants are not allowed in most roles.
+	if(rank in security_positions) //This list does not include lawyers.
+		return 0
+	if(rank in science_positions)
+		return 0
+	if(rank in medical_positions)
+		return 0
+	if(rank in engineering_positions)
+		return 0
+	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
+		return 0
+	return ..()
+
+
+/datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "mutationtoxin")
+		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
+		H.set_species(/datum/species/jelly/slime)
+		H.reagents.del_reagent(chem.type)
+		H.faction |= "slime"
+		return 1
+
+*/
+
+/datum/species/angel/on_species_gain(mob/living/carbon/human/H)
+	..()
+	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
+		H.dna.features["wings"] = "Angel"
+		H.update_body()
+	if(ishuman(H))
+		fly = new
+		fly.Grant(H)
+
+
+/datum/species/angel/on_species_loss(mob/living/carbon/human/H)
+	if(fly)
+		fly.Remove(H)
+	..()
+
+/datum/species/angel/spec_life(mob/living/carbon/human/H)
+	..()
+	HandleFlight(H)
+
+
+
+
+
+/datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
+	if(flying)
+		var/turf/T = get_turf(src)
+		if(!T) // No more runtimes from being stuck in nullspace.
+			return 0
+
+		var/datum/gas_mixture/environment = T.return_air()
+		if(environment && !(environment.return_pressure() > 30))
+			flying = 0
+			stunmod = 1
+			H.float(0)
+			return
+		H.float(1)
+	else
+		H.float(0)
+
+
+/datum/action/innate/flight
+	name = "Toggle Flight"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimesplit"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/flight/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/datum/species/angel/A = H.dna.species
+	A.flying = !A.flying
+	if(A.flying)
+		H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+		A.stunmod = 2
+	else
+		H << "<span class='notice'>You settle gently back onto the ground...</span>"
+		A.stunmod = 1
+
+
+/datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
+	var/obj/buckled_obj
+	if(H.buckled)
+		buckled_obj = H.buckled
+
+	H << "<span class='notice'>Your wings spazz out and launch you!</span>"
+
+	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+	H.accident(H.l_hand)
+	H.accident(H.r_hand)
+
+	var/olddir = H.dir
+
+	H.stop_pulling()
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(H)
+		step(buckled_obj, olddir)
+	else
+		for(var/i=1, i<5, i++)
+			spawn (i)
+				step(H, olddir)
+				H.spin(1,1)
+	return 1
+
+
+/datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
+	if(flying)
+		flyslip(H)
+	..()

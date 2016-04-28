@@ -142,4 +142,3 @@
 	var/list/permanent_huds = list()
 
 	var/resize = 1 //Badminnery resize
-	var/flying = 0 //whether it's flying or touching the ground.
