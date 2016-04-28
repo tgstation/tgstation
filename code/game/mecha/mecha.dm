@@ -1076,7 +1076,7 @@ var/year_integer = text2num(year) // = 2013???
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.occupant_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
-	chassis.internals_action.UpdateButtonIcon()
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
@@ -1093,7 +1093,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.occupant_message("You select [chassis.selected]")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
-		chassis.cycle_action.UpdateButtonIcon()
+		UpdateButtonIcon()
 		return
 	var/number = 0
 	for(var/A in chassis.equipment)
@@ -1108,7 +1108,7 @@ var/year_integer = text2num(year) // = 2013???
 				chassis.occupant_message("You switch to [chassis.selected]")
 				button_icon_state = "mech_cycle_equip_on"
 			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
-			chassis.cycle_action.UpdateButtonIcon()
+			UpdateButtonIcon()
 			return
 
 
@@ -1128,7 +1128,7 @@ var/year_integer = text2num(year) // = 2013???
 		button_icon_state = "mech_lights_off"
 	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
-	chassis.lights_action.UpdateButtonIcon()
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_view_stats
 	name = "View Stats"
@@ -1197,7 +1197,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.deflect_chance = initial(chassis.deflect_chance)
 		chassis.occupant_message("<span class='danger'>You disable [chassis] defence mode.</span>")
 	chassis.log_message("Toggled defence mode.")
-	chassis.thrusters_action.UpdateButtonIcon()
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"
@@ -1224,7 +1224,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.step_in = initial(chassis.step_in)
 		chassis.step_energy_drain = initial(chassis.step_energy_drain)
 		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
-	chassis.overload_action.UpdateButtonIcon()
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_smoke
 	name = "Smoke"
@@ -1258,7 +1258,7 @@ var/year_integer = text2num(year) // = 2013???
 			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else
 			owner.client.view = world.view//world.view - default mob view size
-		chassis.zoom_action.UpdateButtonIcon()
+		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
@@ -1281,7 +1281,7 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.damtype = new_damtype.
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
-	chassis.switch_damtype_action.UpdateButtonIcon()
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
@@ -1293,4 +1293,4 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.phasing = !chassis.phasing
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	chassis.occupant_message("<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
-	chassis.phasing_action.UpdateButtonIcon()
+	UpdateButtonIcon()
