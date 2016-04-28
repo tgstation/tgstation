@@ -350,7 +350,7 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -438,7 +438,7 @@
 		spawn(50)
 			qdel(src)
 
-/obj/item/asteroid/goliath_hide
+/obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/mining.dmi'
@@ -447,7 +447,7 @@
 	w_class = 3
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
 		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
 			var/obj/item/clothing/C = target
@@ -455,7 +455,7 @@
 			if(current_armor.["melee"] < 60)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
+				use(1)
 			else
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
@@ -478,6 +478,7 @@
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return
+
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
@@ -634,7 +635,7 @@
 	stat_attack = 1
 	robust_searching = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 //Goliath
 
@@ -648,10 +649,12 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/asteroid/goliath_hide = 1)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+
+
 
 //Legion
 

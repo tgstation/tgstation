@@ -3,10 +3,6 @@
 	if(legcuffed)
 		. += legcuffed.slowdown
 
-	var/obj/item/organ/internal/cyberimp/chest/thrusters/J = getorganslot("thrusters")
-	if(istype(J) && J.on)
-		. -= 2
-
 
 var/const/NO_SLIP_WHEN_WALKING = 1
 var/const/SLIDE = 2

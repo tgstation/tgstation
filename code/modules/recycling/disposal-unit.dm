@@ -34,7 +34,7 @@
 
 	air_contents = new/datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
-	update()
+	update_icon()
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in src.loc
@@ -66,11 +66,8 @@
 	trunk_check()
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
-	if(stat & BROKEN || !I || !user)
-		return
-
 	add_fingerprint(user)
-	if(mode<=0) // It's off
+	if(mode<=0)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(contents.len > 0)
 				user << "<span class='notice'>Eject the items first!</span>"
@@ -95,8 +92,22 @@
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 					Deconstruct()
-				return
-	return 1
+			return
+
+	if(user.a_intent != "harm")
+		if(!user.drop_item() || (I.flags & ABSTRACT))
+			return
+		place_item_in_disposal(I, user)
+		update_icon()
+		return 1 //no afterattack
+	else
+		return ..()
+
+/obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
+	I.loc = src
+	user.visible_message("[user.name] places \the [I] into \the [src].", \
+						"<span class='notice'>You place \the [I] into \the [src].</span>")
+
 
 // mouse drop another mob or self
 
@@ -133,7 +144,7 @@
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
-		update()
+		update_icon()
 
 // can breath normally in the disposal
 /obj/machinery/disposal/alter_health()
@@ -157,7 +168,7 @@
 
 	user.loc = src.loc
 	user.reset_perspective(null)
-	update()
+	update_icon()
 	return
 
 
@@ -166,7 +177,7 @@
 	if(stat & BROKEN)
 		return
 	flush = !flush
-	update()
+	update_icon()
 
 // ai as human but can't flush
 /obj/machinery/disposal/attack_ai(mob/user)
@@ -198,10 +209,10 @@
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 		AM.pipe_eject(0)
-	update()
+	update_icon()
 
 // update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/proc/update()
+/obj/machinery/disposal/update_icon()
 	return
 
 /obj/machinery/disposal/proc/flush()
@@ -222,12 +233,6 @@
 	flushing = 0
 	flush = 0
 
-/obj/machinery/disposal/bin/flush()
-	..()
-	if(mode == 2)
-		mode = 1
-	update()
-
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
 	for(var/obj/item/smallDelivery/O in src)
 		H.tomail = 1
@@ -239,7 +244,7 @@
 // called when area power changes
 /obj/machinery/disposal/power_change()
 	..()	// do default setting/reset of stat NOPOWER bit
-	update()	// update icon
+	update_icon()	// update icon
 	return
 
 
@@ -267,7 +272,7 @@
 		src.transfer_fingerprints_to(stored)
 		stored.anchored = 0
 		stored.density = 1
-		stored.update()
+		stored.update_icon()
 	..()
 
 //How disposal handles getting a storage dump from a storage object
@@ -294,26 +299,15 @@
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(!..())
-		return
-
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
 		user << "<span class='warning'>You empty the bag.</span>"
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
-		update()
-		return
-
-	if(!user.drop_item() || I.flags & ABSTRACT) // Dunno why this wasn't here before?
-		return
-
-	I.loc = src
-	user.visible_message("[user.name] places \the [I] into \the [src].", \
-						"<span class='notice'>You place \the [I] into \the [src].</span>")
-
-	update()
+		update_icon()
+	else
+		return ..()
 
 // user interaction
 /obj/machinery/disposal/bin/interact(mob/user, ai=0)
@@ -373,11 +367,11 @@
 			mode = 1
 		else
 			mode = 0
-		update()
+		update_icon()
 
 	if(href_list["handle"])
 		flush = text2num(href_list["handle"])
-		update()
+		update_icon()
 
 	if(href_list["eject"])
 		eject()
@@ -391,14 +385,20 @@
 		if(prob(75))
 			I.loc = src
 			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
-			update()
+			update_icon()
 		else
 			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
 
-/obj/machinery/disposal/bin/update()
+/obj/machinery/disposal/bin/flush()
+	..()
+	if(mode == 2)
+		mode = 1
+	update_icon()
+
+/obj/machinery/disposal/bin/update_icon()
 	overlays.Cut()
 	if(stat & BROKEN)
 		mode = 0
@@ -473,7 +473,7 @@
 	// if full enough, switch to ready mode
 	if(air_contents.return_pressure() >= SEND_PRESSURE)
 		mode = 2
-		update()
+		update_icon()
 	return
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
@@ -497,6 +497,11 @@
 		trunk = locate() in loc
 		if(trunk)
 			trunk.linked = src	// link the pipe trunk to self
+
+/obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
+	if(I.disposalEnterTry())
+		..()
+		flush()
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(!AM.disposalEnterTry())

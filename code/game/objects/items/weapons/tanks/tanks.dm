@@ -120,17 +120,14 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-
 	add_fingerprint(user)
-	if(istype(src.loc, /obj/item/assembly))
-		icon = src.loc
-
 	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
-	if(istype(W, /obj/item/device/assembly_holder))
+	else if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
+	else
+		return ..()
 
 /obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)

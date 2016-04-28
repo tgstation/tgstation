@@ -61,10 +61,10 @@
 
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(!allowed(user))
-		user << "<span class='info'>Access denied.</span>"
-		return
-	if( istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(!allowed(user))
+			user << "<span class='info'>Access denied.</span>"
+			return
 		if(!panel_open)
 			user << "<span class='notice'>You open the maintenance panel.</span>"
 			set_sign(new /datum/barsign/hiddensigns/signoff)
@@ -79,7 +79,7 @@
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
 			panel_open = 0
 
-	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
+	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
 		if(emagged) //Emagged, not broken by EMP
 			user << "<span class='warning'>Sign has been damaged beyond repair!</span>"
@@ -93,7 +93,8 @@
 			broken = 0
 		else
 			user << "<span class='warning'>You need at least two lengths of cable!</span>"
-
+	else
+		return ..()
 
 
 /obj/structure/sign/barsign/emp_act(severity)

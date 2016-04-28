@@ -47,11 +47,12 @@
 		power_change()
 		return
 
-	default_deconstruction_crowbar(O)
-
-	if (src.stat != 0) //NOPOWER etc
+	if(default_deconstruction_crowbar(O))
 		return
-	if (istype(O, /obj/item/weapon/grab))
+
+	if(stat) //NOPOWER etc
+		return
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		if(!user.Adjacent(G.affecting))
 			return
@@ -63,7 +64,8 @@
 			return
 		else
 			user << "<span class='danger'>The machine only accepts monkeys!</span>"
-	return
+	else
+		return ..()
 
 /obj/machinery/monkey_recycler/MouseDrop_T(mob/living/target, mob/living/user)
 	if(!istype(target))

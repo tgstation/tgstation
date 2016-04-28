@@ -358,24 +358,27 @@
 //weldingtool: unfasten and convert to obj/disposalconstruct
 
 /obj/structure/disposalpipe/attackby(obj/item/I, mob/user, params)
-
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
+		if(can_be_deconstructed(user))
+			if(W.remove_fuel(0,user))
+				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				user << "<span class='notice'>You start slicing the disposal pipe...</span>"
+				// check if anything changed over 2 seconds
+				if(do_after(user,30, target = src))
+					if(!src || !W.isOn()) return
+					Deconstruct()
+					user << "<span class='notice'>You slice the disposal pipe.</span>"
+	else
+		return ..()
 
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
-			// check if anything changed over 2 seconds
-			if(do_after(user,30, target = src))
-				if(!src || !W.isOn()) return
-				Deconstruct()
-				user << "<span class='notice'>You slice the disposal pipe.</span>"
-		else
-			return
+//checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
+/obj/structure/disposalpipe/proc/can_be_deconstructed()
+	. = 1
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/Deconstruct()
@@ -386,7 +389,7 @@
 		stored.dir = dir
 		stored.density = 0
 		stored.anchored = 1
-		stored.update()
+		stored.update_icon()
 		..()
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
@@ -514,9 +517,6 @@
 	return
 
 /obj/structure/disposalpipe/sortjunction/attackby(obj/item/I, mob/user, params)
-	if(..())
-		return
-
 	if(istype(I, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = I
 
@@ -528,6 +528,8 @@
 				sortTypes |= O.currTag
 				user << "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+	else
+		return ..()
 
 
 // next direction to move
@@ -635,47 +637,11 @@
 	update()
 	return
 
-	// Override attackby so we disallow trunkremoval when somethings ontop
-/obj/structure/disposalpipe/trunk/attackby(obj/item/I, mob/user, params)
-
-	//Disposal bins or chutes
-	/*
-	These shouldn't be required
-	var/obj/machinery/disposal/D = locate() in src.loc
-	if(D && D.anchored)
-		return
-
-	//Disposal outlet
-	var/obj/structure/disposaloutlet/O = locate() in src.loc
-	if(O && O.anchored)
-		return
-	*/
-
-	//Disposal constructors
-	var/obj/structure/disposalconstruct/C = locate() in src.loc
-	if(C && C.anchored)
-		return
-
-	var/turf/T = src.loc
-	if(T.intact)
-		return		// prevent interaction with T-scanner revealed pipes
-	src.add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
-
-		if(linked)
-			user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
-			return
-
-		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
-			if(do_after(user,30/I.toolspeed, target = src))
-				if(!src || !W.isOn()) return
-				Deconstruct()
-				user << "<span class='notice'>You slice the disposal pipe.</span>"
-		else
-			return
+/obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
+	if(linked)
+		user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
+	else
+		. = 1
 
 	// would transfer to next pipe segment, but we are in a trunk
 	// if not entering from disposal bin,
@@ -781,20 +747,17 @@
 	return
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
-	if(!I || !user)
-		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode==0)
 			mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "<span class='notice'>You remove the screws around the power connection.</span>"
-			return
 		else if(mode==1)
 			mode=0
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "<span class='notice'>You attach the screws around the power connection.</span>"
-			return
+
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
@@ -805,13 +768,12 @@
 				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
-				stored.update()
+				stored.update_icon()
 				stored.anchored = 0
 				stored.density = 1
 				qdel(src)
-			return
-		else
-			return
+	else
+		return ..()
 
 
 
