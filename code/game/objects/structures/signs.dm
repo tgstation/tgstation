@@ -109,8 +109,14 @@
 /obj/structure/sign/map/left
 	icon_state = "map-left"
 
+/obj/structure/sign/map/left/dream
+	icon_state = "map-left-DS"
+
 /obj/structure/sign/map/right
 	icon_state = "map-right"
+
+/obj/structure/sign/map/right/dream
+	icon_state = "map-right-DS"
 
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
