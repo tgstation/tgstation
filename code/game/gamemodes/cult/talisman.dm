@@ -321,18 +321,15 @@
 		log_game("Construct talisman failed - not a valid target")
 		
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/metal/target, mob/user, proximity_flag, click_parameters)
-   	..()
-   	if(proximity_flag && istype(target) && iscultist(user))
-		if(istype(W, /obj/item/weapon/paper/talisman/construction))
-			if(target.use(25))
-				amount = amount - 25
-				new /obj/structure/constructshell(get_turf(target))
-				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
-				if(amount == 0)
-					qdel(src)
-				qdel(W)
-			else
-				user << "<span class='warning'>The talisman requires at least 25 sheets of metal!</span>"
+	..()
+	if(proximity_flag && istype(target) && iscultist(user))
+		if(target.get_amount() >= 25)
+			new /obj/structure/constructshell(get_turf(target))
+			target.use(25)
+			user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+			qdel(src)
+		else
+			user << "<span class='warning'>The talisman requires at least 25 sheets of metal!</span>"
 			
 /obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
 	name = "cult shackles"
