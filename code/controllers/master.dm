@@ -163,13 +163,13 @@ var/global/datum/controller/master/Master = new()
 							priority_queue -= SS
 					if(SS.can_fire > 0)
 						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time || SS.paused)))
-							if(!priorityrunning && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
-								if(!SS.dynamic_wait)
-									priority_queue += SS
-								continue
 							//we can't reset SS.paused after we fire, incase it pauses again, so we cache it and
 							//	send it to SS.fire()
 							var/paused = SS.paused
+							if(!priorityrunning && !paused && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
+								if(!SS.dynamic_wait)
+									priority_queue += SS
+								continue
 							SS.paused = 0
 							ran_subsystems = 1
 							timer = world.timeofday
