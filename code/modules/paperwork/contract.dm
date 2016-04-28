@@ -105,9 +105,6 @@
 	else
 		..()
 
-
-
-
 /obj/item/weapon/paper/contract/infernal/update_text()
 	info = "This shouldn't be seen.  Error DEVIL:5"
 
@@ -135,26 +132,40 @@
 /obj/item/weapon/paper/contract/infernal/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	add_fingerprint(user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		if(user.IsAdvancedToolUser())
-			if(user.mind == target)
-				if(user.mind.soulOwner == user.mind)
-					if (contractType == CONTRACT_REVIVE)
-						user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
-					else
-						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-						if(FulfillContract()<=0)
-							user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
-						return
-				else
-					user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
-			else
-				user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
-		else
-			user << "<span class='notice'>You don't know how to read or write.</span>"
+		attempt_signature(user)
 	else if(istype(P, /obj/item/weapon/stamp))
 		user << "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>"
 	else if(P.is_hot())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
+
+/obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
+	add_fingerprint(user)
+	if(M == user && target == M.mind && M.mind.soulOwner == M.mind && attempt_signature(user))
+		user.visible_message("<span class='danger'>[user] slices their wrist with [src], and scrawls their name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			H.vessel.remove_reagent("blood",10)
+
+/obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user)
+	if(user.IsAdvancedToolUser())
+		if(user.mind == target)
+			if(user.mind.soulOwner == user.mind)
+				if (contractType == CONTRACT_REVIVE)
+					user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
+				else
+					user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
+					if(FulfillContract()<=0)
+						user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
+					return 1
+			else
+				user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
+		else
+			user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
+	else
+		user << "<span class='notice'>You don't know how to read or write.</span>"
+	return 0
+
+
 
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)

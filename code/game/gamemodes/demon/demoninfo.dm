@@ -323,7 +323,7 @@ var/global/list/lawlorify = list (
 		if(BANISH_FORMALDYHIDE)
 			if(istype(body, /mob/living/carbon))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("formaldehide")
+				return H.reagents.has_reagent("formaldehyde")
 			return 0
 		if(BANISH_RUNES)
 			if(body)
@@ -356,6 +356,7 @@ var/global/list/lawlorify = list (
 		reviveNumber++
 	if(body)
 		body.revive(1,0)
+		body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
 		if(istype(body, /mob/living/carbon/true_devil))
 			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)
