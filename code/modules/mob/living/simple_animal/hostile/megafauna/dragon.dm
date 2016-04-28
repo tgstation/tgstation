@@ -7,6 +7,7 @@
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "dragon"
 	icon_living = "dragon"
+	icon_dead = "dragon_dead"
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/dragon.dmi'
 	faction = list("mining")
@@ -27,20 +28,13 @@
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 	var/swooping = 0
+	deathmessage = "collapes into a pile of bones, it's flesh sloughing away."
+	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
-
-
-/mob/living/simple_animal/hostile/megafauna/dragon/death(gibbed)
-	if(can_die)
-		qdel(internal)
-	visible_message("<span class='danger'>[src] explodes in a shower of gore!</span>")
-	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
-	gib()
-	..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
 	if(swooping)
@@ -106,7 +100,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_rain()
 	visible_message("<span class='danger'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
-		if(prob(5))
+		if(prob(10))
 			new /obj/effect/overlay/temp/target(turf)
 
 
@@ -169,6 +163,7 @@
 
 	stop_automated_movement = FALSE
 	swooping = 0
+	density = 1
 
 /obj/item/device/gps/internal/dragon
 	icon_state = null
@@ -229,6 +224,7 @@
 	health = 500
 	melee_damage_upper = 30
 	melee_damage_lower = 30
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 
 //Blood
@@ -239,9 +235,11 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-/obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/living/carbon/human/user)
+/obj/item/weapon/dragons_blood/attack_self(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
+
+
 	var/mob/living/carbon/human/H = user
 	var/random = rand(1,5)
 
@@ -310,7 +308,7 @@
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
-/obj/structure/closet/crate/dragon/New()
+/obj/structure/closet/crate/necropolis/dragon/New()
 	..()
 	var/loot = rand(1,4)
 	switch(loot)

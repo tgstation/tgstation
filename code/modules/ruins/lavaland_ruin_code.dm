@@ -189,7 +189,10 @@
 		if(H.stat)
 			visible_message("<span class='warning'>Tendrils reach out from \the [src.name] pulling [H] in! Blood seeps over the eggs as [H] is devoured.</span>")
 			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
-			meat_counter ++
+			if(istype(H,/mob/living/simple_animal/hostile/megafauna/dragon))
+				meat_counter += 20
+			else
+				meat_counter ++
 			H.gib()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()

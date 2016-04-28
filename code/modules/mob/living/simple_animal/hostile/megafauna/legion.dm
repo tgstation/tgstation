@@ -80,7 +80,7 @@
 		if(last_legion)
 			src.loot = list(/obj/item/weapon/staff_of_storms)
 		else if(prob(5))
-			src.loot = list(/obj/structure/closet/crate/necropolis)
+			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
