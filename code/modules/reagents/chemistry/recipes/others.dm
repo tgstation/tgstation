@@ -517,3 +517,21 @@
 	result = "royal_bee_jelly"
 	required_reagents = list("mutagen" = 10, "honey" = 40)
 	result_amount = 5
+
+/datum/chemical_reaction/booster_enzyme
+	name = "booster_enzyme"
+	id = "booster_enzyme"
+	result = "booster_enzyme"
+	required_reagents = list("diethylamine" = 1, "ethanol" = 1, "sulfur" = 1, "carbon" = 1, "hydrogen" = 1, "oxygen" = 1, "strange_reagent" = 1)
+	result_amount = 4
+	required_temp = 373
+	mix_message = "The solution shows signs of life, forming shapes!"
+
+/datum/chemical_reaction/denatured_enzyme
+	name = "denatured_enzyme"
+	id = "denatured_enzyme"
+	result = null
+	required_reagents = list("booster_enzyme" = 1)
+	result_amount = 1
+	required_temp = 423
+	mix_message = "The solution burns, leaving behind a lifeless mass!"

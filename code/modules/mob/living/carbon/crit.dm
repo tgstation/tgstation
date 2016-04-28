@@ -21,6 +21,8 @@
 			return
 
 	if (health < 0 && stat != 2)
+		if(lasthealth > 0)
+			Paralyse(5)
 		if (prob(5))
 			emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
 		if (stuttering <= 5)

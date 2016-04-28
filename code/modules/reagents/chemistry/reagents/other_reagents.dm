@@ -1200,3 +1200,16 @@ datum/reagent/shadowling_blindness_smoke
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
+
+/datum/reagent/booster_enzyme
+	name = "Booster Enzyme"
+	id = "booster_enzyme"
+	description = "This booster enzyme helps the body to replicate beneficial chemicals."
+	color = rgb(127,160,192)
+
+/datum/reagent/booster_enzyme/on_mob_life(mob/living/M)
+	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
+		if(R.volume < 18)
+			M.reagents.add_reagent(R.id,2)
+	..()
+

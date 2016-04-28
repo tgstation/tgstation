@@ -15,6 +15,9 @@
 	return message
 
 /mob/living/carbon/can_speak_vocal(message)
-	if(silent)
+	if(losebreath)
+		emote("gasp")
+		return 0
+	if(silent || health < 0)
 		return 0
 	return ..()

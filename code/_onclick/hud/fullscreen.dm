@@ -86,7 +86,7 @@
 	layer = CRIT_LAYER
 	color = "#eeeeee"
 	blend_mode = 3
-	alpha = 230
+	alpha = 200
 
 /obj/screen/fullscreen/crit2
 	icon = 'goon/icons/effects/overlays/knockout2.dmi'

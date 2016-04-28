@@ -799,7 +799,8 @@
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
 				. += (health_deficiency / 25)
-
+			if(H.health < 0)
+				. += (health_deficiency / 25)
 			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 			if(hungry >= 70)
 				. += hungry / 50
