@@ -315,11 +315,11 @@
 //Dual Feed Shotgun
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube
-	name = "dual-feed shotgun"
+	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
-	icon_state = "cshotgun"
-	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
+	icon_state = "cycler"
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = 5
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
@@ -355,4 +355,4 @@
 /obj/item/ammo_box/magazine/internal/shot/tube
 	name = "dual feed shotgun internal tube"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	max_ammo = 6
+	max_ammo = 4
