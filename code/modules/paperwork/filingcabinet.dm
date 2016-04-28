@@ -216,7 +216,7 @@ var/list/employmentCabinets = list()
 
 
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
+/obj/structure/filingcabinet/employment/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
 		if (do_after(user,300,user))

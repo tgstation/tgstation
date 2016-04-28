@@ -146,7 +146,6 @@
 		S.key = user.key
 		S.mind.assigned_role = "Imp"
 		S.mind.special_role = "Imp"
-		ticker.mode.traitors += S.mind
 		var/datum/objective/newobjective = new
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
