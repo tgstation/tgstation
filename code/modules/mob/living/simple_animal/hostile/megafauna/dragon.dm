@@ -239,7 +239,6 @@
 	if(!istype(user))
 		return
 
-
 	var/mob/living/carbon/human/H = user
 	var/random = rand(1,5)
 
@@ -258,7 +257,7 @@
 		if(5)
 			user << "<span class='danger'>You don't feel so good...</span>"
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
-
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
 
 /datum/disease/transformation/dragon
@@ -303,7 +302,7 @@
 		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
 		O.ChangeTurf(/turf/open/floor/plating/lava/smooth)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		lava_cooldown = world.time + 300
+		lava_cooldown = world.time + 200
 
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
