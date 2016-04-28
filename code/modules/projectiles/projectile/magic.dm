@@ -113,7 +113,7 @@
 	var/door_type = pick(door_types)
 	var/obj/structure/mineral_door/D = new door_type(T)
 	T.ChangeTurf(/turf/open/floor/plating)
-	D.open()
+	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
 	if(istype(D,/obj/machinery/door/airlock))
