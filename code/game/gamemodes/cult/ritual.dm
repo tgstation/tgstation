@@ -28,12 +28,12 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	to use the -create talisman- rune (with ordinary paper on top) to get more talismans. Talismans are EXTREMELY powerful, therefore creating more talismans in a HIDDEN location should be one of your TOP PRIORITIES.<br><br>"
 
 	text += "<font color='red'><b>V. GROW THE CULT</b></font><br>There are certain basic strategies that all cultists should master. STUN talismans are the foundation of a successful cult. If you intend to convert the stunned person \
-	you should use cuffs or talisman of shackling on them and remove their headset before they recover (it takes about 10 seconds to recover). If you intend to sacrifice the victim, striking them quickly and repeatedly with your tome \
+	you should use cuffs or a talisman of shackling on them and remove their headset before they recover (it takes about 10 seconds to recover). If you intend to sacrifice the victim, striking them quickly and repeatedly with your tome \
 	will knock them out before they can recover. Sacrificed victims will their soul behind in a shard, these shards can be used on construct shells to make powerful servants for the cult. Remember you need TWO cultists standing near a \
 	conversion rune to convert someone. Your construct minions cannot trigger most runes, but they will count as cultists in helping you trigger more powerful runes like conversion or blood boil.<br><br>"
 
 	text += "<font color='red'><b>VI. VICTORY</b></font><br>You have two ultimate goals as a cultist, sacrifice your target, and summon Nar-Sie. Sacrificing the target involves killing that individual and then placing \
-	their corpse on a sacrifice rune and triggering that rune with three cultists. Do NOT lose the target's corpse! Only once the target is sacrificed can Nar-Sie be summoned. Summoning Nar-Sie will take nearly one minute \
+	their corpse on a sacrifice rune and triggering that rune with THREE cultists. Do NOT lose the target's corpse! Only once the target is sacrificed can Nar-Sie be summoned. Summoning Nar-Sie will take nearly one minute \
 	just to draw the massive rune needed. Do not create the rune until your cult is ready, the crew will receive the NAME and LOCATION of anyone who attempts to create the Nar-Sie rune. Once the Nar-Sie rune is drawn \
 	you must gathered 9 cultists (or constructs) over the rune and then click it to bring the Dark One into this world!<br><br>"
 
@@ -214,7 +214,34 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Talisman of Horror must be applied directly to the victim, it will shatter your victim's mind with visions of the endtimes that may incapitate them.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Shackling</b></font><br>The Talisman of Shackling must be applied directly to the victim, it has 4 uses and cuffs victims with magic shackles that disappear when removed.<br><br>"
+	 
+	text += "In addition to these runes, the cult has a small selection of equipment and constructs.<br><br>"
 
+	text += "<font color='red'><b>Equipment:</b></font><br><br>"
+
+	text += "<font color='red'><b>Cult Blade</b></font><br>Cult blades are a sharp weapons that, notably, cannot be used by noncultists. These blades are produced by the Rite and Talisman of Arming.<br><br>"
+
+	text += "<font color='red'><b>Cult Robes</b></font><br>Cult robes are heavily armored robes. These robes are produced by the Rite and Talisman of Arming.<br><br>"
+
+	text += "<font color='red'><b>Soulstone</b></font><br>A soulstone is a simple piece of magic, produced either via the starter talisman or by sacrificing humans. Using it on an unconscious or dead human, or on a Shade, will trap their soul in the stone, allowing its use in construct shells. \
+	<br>The soul within can also be released as a Shade.<br><br>"
+
+	text += "<font color='red'><b>Construct Shell</b></font><br>A construct shell is useless on its own, but placing a filled soulstone within it allows you to produce your choice of a <b>Wraith</b>, a <b>Juggernaut</b>, or an <b>Artificer</b>. \
+	<br>Each construct has uses, detailed below in Constructs. Construct shells can be produced via the starter talisman or the Rite of Fabrication.<br><br>"
+
+	text += "<font color='red'><b>Constructs:</b></font><br><br>"
+
+	text += "<font color='red'><b>Shade</b></font><br>While technically not a construct, the Shade is produced when released from a soulstone. It is quite fragile and has weak melee attacks, but is fully healed when recaptured by a soulstone.<br><br>"
+
+	text += "<font color='red'><b>Wraith</b></font><br>The Wraith is a fast, lethal melee attacker which can jaunt through walls. However, it is only slightly more durable than a shade.<br><br>"
+
+	text += "<font color='red'><b>Juggernaut</b></font><br>The Juggernaut is a slow, but durable, melee attacker which can produce temporary forcewalls. It will also reflect most lethal energy weapons.<br><br>"
+
+	text += "<font color='red'><b>Artificer</b></font><br>The Artificer is a weak and fragile construct, able to heal other constructs, produce more <font color='red'><b>soulstones</b></font> and <font color='red'><b>construct shells</b></font>, \
+	construct fortifying cult walls and flooring, and finally, it can release a few indiscriminate stunning missiles.<br><br>"
+
+	text += "<font color='red'><b>Harvester</b></font><br>If you see one, know that you have done all you can and your life is void.<br><br>" 
+	
 	var/datum/browser/popup = new(user, "tome", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
