@@ -127,16 +127,16 @@
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/pen/sleepy,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	crate_name = "special ops crate"
-	crate_type = /obj/structure/closet/crate
+	crate_name = "emergency crate"
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
 	cost = 14000
 	contains = list(/obj/item/weapon/storage/box/syndicate)
-	crate_name = "crate"
-	crate_type = /obj/structure/closet/crate
+	crate_name = "emergency crate"
+	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
@@ -405,7 +405,7 @@
 	contraband = TRUE
 	contains = list(/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer)
-	crate_name = "justice enforcer crate"
+	crate_name = "security clothing crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
@@ -491,7 +491,7 @@
 
 /datum/supply_pack/engineering/grounding_rods
 	name = "Grounding Rod Crate"
-	cost = 2500
+	cost = 1700
 	contains = list(/obj/machinery/power/grounding_rod,
 					/obj/machinery/power/grounding_rod,
 					/obj/machinery/power/grounding_rod,
@@ -708,7 +708,7 @@
 
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
-	cost = 1500
+	cost = 2500
 	contains = list(/obj/item/weapon/defibrillator/loaded,
 					/obj/item/weapon/defibrillator/loaded,)
 	crate_name = "defibrillator crate"
@@ -919,7 +919,7 @@
 	contraband = TRUE
 	cost = 5000
 	contains = list(/mob/living/simple_animal/butterfly)
-	crate_name = "butterflies crate"
+	crate_name = "entomology samples crate"
 
 /datum/supply_pack/organic/critter/butterfly/generate()
 	. = ..()
@@ -1137,7 +1137,11 @@
 					/obj/item/clothing/suit/bluetag,
 					/obj/item/clothing/suit/bluetag,
 					/obj/item/clothing/head/helmet/redtaghelm,
-					/obj/item/clothing/head/helmet/bluetaghelm)
+					/obj/item/clothing/head/helmet/redtaghelm,
+					/obj/item/clothing/head/helmet/redtaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm,)
 	crate_name = "laser tag crate"
 
 /datum/supply_pack/misc/lasertag/pins
@@ -1145,14 +1149,15 @@
 	cost = 2000
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins,)
-	crate_name = "laser tag firing pins crate"
+	crate_name = "laser tag crate"
 
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"
 	cost = 5000
 	contraband = TRUE
 	contains = list(/obj/item/device/firing_pin/clown,)
-	crate_name = "hilarious firing pin crate"
+	// It's /technically/ a toy. For the clown, at least.
+	crate_name = "toy crate"
 
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
@@ -1173,7 +1178,7 @@
 					/obj/item/weapon/poster/legit,
 					/obj/item/weapon/poster/legit,
 					/obj/item/weapon/poster/legit)
-	crate_name = "Corporate Posters Crate"
+	crate_name = "corporate posters crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
@@ -1412,4 +1417,4 @@
 					/obj/item/weapon/gun/projectile/automatic/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
-	crate_name = "foam force pistols crate"
+	crate_name = "foam force crate"
