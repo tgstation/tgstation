@@ -833,6 +833,13 @@
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
 	qdel(src)
 
+/obj/item/weapon/spellbook/oneuse/summonitem/chaplain
+	spell = /obj/effect/proc_holder/spell/targeted/summonitem/chaplain
+	spellname = "instant summons"
+	icon_state ="booksummons"
+	desc = "This book is bright and garish, very hard to miss."
+
+
 /obj/item/weapon/spellbook/oneuse/random/New()
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
 	new real_type(loc)
