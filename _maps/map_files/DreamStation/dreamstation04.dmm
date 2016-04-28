@@ -77706,14 +77706,14 @@
 /area/space)
 "cRz" = (
 /turf/closed/wall,
-/area/space)
+/area/space/nearstation)
 "cRA" = (
 /turf/open/floor/plating/airless,
 /area/space)
 "cRB" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "cRC" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -77895,11 +77895,131 @@
 "cRX" = (
 /turf/closed/wall/rust,
 /area/chapel/office)
-"cSl" = (
+"cRY" = (
+/obj/structure/cable/green{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cRZ" = (
+/obj/structure/cable/green{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/sign/map/left/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cSa" = (
+/obj/structure/cable/green{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cSb" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "maintenance access";
+	req_access_txt = "12"
+	},
+/obj/structure/cable/green{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cSc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
+"cSd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
+"cSe" = (
+/obj/structure/cable/green{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/green{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
+"cSf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"cSg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"cSh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"cSi" = (
+/obj/structure/sign/map/left/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
+"cSj" = (
+/obj/structure/sign/map/right/dream{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -77940,118 +78060,7 @@
 /area/hallway/primary/aft{
 	name = "Aft Port Hallway"
 	})
-"cSj" = (
-/obj/structure/sign/map/right/dream{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Aft Port Hallway"
-	})
-"cSi" = (
-/obj/structure/sign/map/left/dream{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Aft Port Hallway"
-	})
-"cSh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/map/right/dream{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cSg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/sign/map/right/dream{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/black,
-/area/bridge)
-"cSf" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/sign/map/left/dream{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/black,
-/area/bridge)
-"cSe" = (
-/obj/structure/cable/green{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/green{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port{
-	name = "Fore Port Hallway"
-	})
-"cSd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/map/left/dream{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port{
-	name = "Fore Port Hallway"
-	})
-"cSc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/map/right/dream{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port{
-	name = "Fore Port Hallway"
-	})
-"cSb" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "maintenance access";
-	req_access_txt = "12"
-	},
-/obj/structure/cable/green{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/hallway/primary/port{
-	name = "Fore Port Hallway"
-	})
-"cSa" = (
-/obj/structure/cable/green{
-	tag = "icon-2-8";
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/asmaint)
-"cRZ" = (
-/obj/structure/cable/green{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
+"cSl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -78059,20 +78068,9 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cRY" = (
-/obj/structure/cable/green{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/sign/map/right/dream{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
 
 (1,1,1) = {"
 aaa
@@ -87944,7 +87942,7 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aaa
 aaa
 aaa
@@ -87961,7 +87959,7 @@ aaa
 aae
 aae
 aaa
-cRA
+amd
 aaa
 aaa
 aaa
@@ -88212,7 +88210,7 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aaa
 aae
 aae
@@ -88222,7 +88220,7 @@ cRz
 aaa
 aaa
 aaa
-cRA
+amd
 aab
 aaa
 aaa
@@ -88721,18 +88719,18 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aae
 aaa
 aaa
 aaa
 aae
-cRA
+amd
 aaa
 aaa
 aaa
@@ -88972,7 +88970,7 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aae
 aae
 anR
@@ -88983,7 +88981,7 @@ aae
 aae
 aae
 aae
-cRA
+amd
 aaa
 aaa
 aaa
@@ -89754,7 +89752,7 @@ aae
 aae
 aaa
 aaa
-cRA
+amd
 aae
 aaa
 aaa
@@ -91567,7 +91565,7 @@ bbg
 bcC
 bee
 auq
-anR
+bhg
 cSc
 bjH
 bkH
@@ -99846,7 +99844,7 @@ cgO
 cgO
 cgO
 cgO
-cRA
+amd
 cRz
 aae
 aaa
@@ -100103,8 +100101,8 @@ cdx
 cdx
 cdi
 cgO
-cRA
-cRA
+amd
+amd
 cRB
 aae
 aae
@@ -100360,9 +100358,9 @@ cvL
 cIY
 cmf
 cgO
-cRA
-cRA
-cRA
+amd
+amd
+amd
 cRz
 aae
 aaa
