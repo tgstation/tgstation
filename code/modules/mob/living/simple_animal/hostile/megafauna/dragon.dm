@@ -18,6 +18,8 @@
 	move_to_delay = 10
 	ranged = 1
 	flying = 1
+	mob_size = MOB_SIZE_LARGE
+	pixel_x = -16
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
