@@ -28,7 +28,7 @@
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())

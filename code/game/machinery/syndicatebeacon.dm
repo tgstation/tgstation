@@ -172,9 +172,8 @@
 			anchored = 1
 			user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"
 			return
-	..()
-	return
-
+	else
+		return ..()
 
 /obj/machinery/power/singularity_beacon/Destroy()
 	if(active)

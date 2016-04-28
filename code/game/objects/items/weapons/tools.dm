@@ -248,9 +248,10 @@
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		flamethrower_screwdriver(I, user)
-	if(istype(I, /obj/item/stack/rods))
+	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	..()
+	else
+		return ..()
 
 
 /obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)

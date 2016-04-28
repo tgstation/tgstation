@@ -155,10 +155,6 @@
 	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
-/obj/machinery/readybutton/New()
-	..()
-
-
 /obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	user << "The device is a solid button, there's nothing you can do with it!"
 
