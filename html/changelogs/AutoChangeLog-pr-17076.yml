@@ -1,7 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - tweak: "Blobbernauts now spawn at half health."
-  - tweak: "Blobbernauts regeneration on blob is now 2.5 health per tick, from 5."
-  - tweak: "Blobbernauts now cost 40 resources to produce, from 30."
-  - rscdel: "Factories supporting blobbernauts do not spawn spores."

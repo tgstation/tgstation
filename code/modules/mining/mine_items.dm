@@ -36,6 +36,8 @@
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
+	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
@@ -44,6 +46,7 @@
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
+
 
 
 /**********************Shuttle Computer**************************/
@@ -450,3 +453,21 @@
 	anchored = 1
 	layer = MOB_LAYER - 0.2
 	density = 0
+
+/obj/item/weapon/emptysandbag
+	name = "empty sandbag"
+	desc = "A bag to be filled with sand."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "sandbag"
+	w_class = 1
+
+/obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/ore/glass))
+		user << "<span class='notice'>You fill the sandbag.</span>"
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
+		user.unEquip(src)
+		user.put_in_hands(I)
+		qdel(W)
+		qdel(src)
+		return
+	else return ..()

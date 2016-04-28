@@ -129,7 +129,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path)
+/turf/proc/ChangeTurf(path, defer_change = FALSE)
 	if(!path)
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -139,7 +139,8 @@
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
-	W.AfterChange()
+	if(!defer_change)
+		W.AfterChange()
 	W.blueprint_data = old_blueprint_data
 	return W
 
@@ -153,10 +154,11 @@
 
 	queue_smooth_neighbors(src)
 
-/turf/open/AfterChange()
+/turf/open/AfterChange(ignore_air)
 	..()
 	RemoveLattice()
-	Assimilate_Air()
+	if(!ignore_air)
+		Assimilate_Air()
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()

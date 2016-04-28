@@ -38,6 +38,7 @@
 	dog_fashion = null
 
 /obj/item/weapon/extinguisher/New()
+	..()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
@@ -53,7 +54,7 @@
 		// If we're in help intent, don't bash anyone with the
 		// extinguisher
 		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
-		return 1
+		return 0
 	else
 		return ..()
 
@@ -105,9 +106,9 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored)
+		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			spawn(0)
-				var/obj/B = usr.buckled
+				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)
 				step(B, movementdirection)
 				sleep(1)

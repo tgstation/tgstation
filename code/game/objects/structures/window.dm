@@ -12,7 +12,6 @@
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
-	var/disassembled = 0
 	var/wtype = "glass"
 	var/fulltile = 0
 	var/list/storeditems = list()
@@ -49,30 +48,28 @@
 
 	return
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		health -= Proj.damage
-		update_nearby_icons()
-	..()
-	if(health <= 0)
-		spawnfragments()
-	return
+/obj/structure/window/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 /obj/structure/window/ex_act(severity, target)
-	if(severity == 1)
-		qdel(src)
-	else
-		spawnfragments()
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			shatter()
+		if(3)
+			take_damage(rand(25,75), BRUTE, 0)
 
 /obj/structure/window/blob_act()
-	spawnfragments()
+	shatter()
 
 /obj/structure/window/narsie_act()
 	color = "#7D1919"
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		spawnfragments()
+		shatter()
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -102,20 +99,9 @@
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-
 	if(reinf)
 		tforce *= 0.25
-
-	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-	health = max(0, health - tforce)
-	if(health <= 7 && !reinf)
-		anchored = 0
-		update_nearby_icons()
-		step(src, get_dir(AM, src))
-
-	if(health <= 0)
-		spawnfragments()
-	update_nearby_icons()
+	take_damage(tforce)
 
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -130,7 +116,7 @@
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 	add_fingerprint(user)
-	hit(50)
+	take_damage(50)
 	return 1
 
 /obj/structure/window/attack_hand(mob/user)
@@ -145,44 +131,28 @@
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
+	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	health -= damage
-	if(health <= 0)
-		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-		spawnfragments()
-	else	//for nicer text~
-		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-
+	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+	take_damage(damage, damage_type)
 
 /obj/structure/window/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	if(islarva(user)) return
 	attack_generic(user, 15)
-	update_nearby_icons()
 
-/obj/structure/window/attack_animal(mob/living/user)
-	if(!isanimal(user))
+/obj/structure/window/attack_animal(mob/living/simple_animal/M)
+	if(!M.melee_damage_upper)
 		return
+	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
 
-	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
-		return
-
-	attack_generic(M, M.melee_damage_upper)
-	update_nearby_icons()
 
 /obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)
-	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
-
 	attack_generic(user, rand(10, 15))
-	update_nearby_icons()
+
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
@@ -243,8 +213,8 @@
 			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user << "<span class='notice'> You begin to disassemble [src]...</span>"
 			if(do_after(user, 40/I.toolspeed, target = src))
-				if(disassembled)
-					return //Prevents multiple deconstruction attempts
+				if(qdeleted(src))
+					return
 
 				if(reinf)
 					var/obj/item/stack/sheet/rglass/RG = new (user.loc)
@@ -261,25 +231,19 @@
 						G.add_fingerprint(user)
 
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				disassembled = 1
 				user << "<span class='notice'>You successfully disassemble [src].</span>"
 				qdel(src)
 			return
+	return ..()
 
-	if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
-		return
 
-	if(I.damtype == BRUTE || I.damtype == BURN)
-		user.changeNext_move(CLICK_CD_MELEE)
-		hit(I.force)
-	else
-		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+/obj/structure/window/attacked_by(obj/item/I, mob/living/user)
 	..()
-	return
+	take_damage(I.force, I.damtype)
 
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
 	if(..())
-		hit(M.force, 1)
+		take_damage(M.force, M.damtype)
 
 
 /obj/structure/window/proc/can_be_reached(mob/user)
@@ -290,20 +254,27 @@
 					return 0
 	return 1
 
-/obj/structure/window/proc/hit(damage, sound_effect = 1)
+/obj/structure/window/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	if(reinf)
 		damage *= 0.5
-	health = max(0, health - damage)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
 	update_nearby_icons()
-	if(sound_effect)
-		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	if(health <= 0)
-		spawnfragments()
-		return
+		shatter()
 
-/obj/structure/window/proc/spawnfragments()
-	if(qdeleted())
+/obj/structure/window/proc/shatter()
+	if(qdeleted(src))
 		return
+	playsound(src, "shatter", 70, 1)
 	var/turf/T = loc
 	for(var/obj/item/I in storeditems)
 		I.loc = T
@@ -378,8 +349,6 @@
 /obj/structure/window/Destroy()
 	density = 0
 	air_update_turf(1)
-	if(!disassembled && !(flags&NODECONSTRUCT))
-		playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
 	return ..()
 
@@ -403,13 +372,9 @@
 	if(smooth)
 		queue_smooth_neighbors(src)
 
-//merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
+//merges adjacent full-tile windows into one
 /obj/structure/window/update_icon()
-	//A little cludge here, since I don't know how it will work with slim windows. Most likely VERY wrong.
-	//this way it will only update full-tile ones
-	//This spawn is here so windows get properly updated when one gets deleted.
-	spawn(2)
-		if(!src) return
+	if(!qdeleted(src))
 		if(!fulltile)
 			return
 
@@ -427,7 +392,7 @@
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		hit(round(exposed_volume / 100), 0)
+		take_damage(round(exposed_volume / 100), BURN, 0)
 	..()
 
 /obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -447,16 +412,6 @@
 	reinf = 1
 	maxhealth = 50
 	explosion_block = 1
-
-/obj/structure/window/reinforced/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			spawnfragments()
-		if(3)
-			if(prob(50))
-				spawnfragments()
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"

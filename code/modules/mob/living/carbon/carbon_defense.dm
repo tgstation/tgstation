@@ -24,7 +24,7 @@
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(user, src))
 						return 1
-	..()
+	return ..()
 
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)

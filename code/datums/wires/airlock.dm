@@ -19,7 +19,7 @@
 	var/obj/machinery/door/airlock/A = holder
 	if(!istype(user, /mob/living/silicon) && A.isElectrified() && A.shock(user, 100))
 		return FALSE
-	if(A.p_open)
+	if(A.panel_open)
 		return TRUE
 
 /datum/wires/airlock/get_status()

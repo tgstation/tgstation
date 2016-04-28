@@ -82,18 +82,19 @@
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
-		var/obj/item/weapon/grab/G = W
-		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
-			var/mob/GM = G.affecting
-			for(var/obj/structure/transit_tube_pod/pod in loc)
-				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
-				if(do_after(user, 15, target = src) && GM && G && G.affecting == GM)
-					GM.Weaken(5)
-					src.Bumped(GM)
-					qdel(G)
-				break
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(istype(W, /obj/item/weapon/grab))
+		if(icon_state == "open")
+			var/obj/item/weapon/grab/G = W
+			if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
+				var/mob/GM = G.affecting
+				for(var/obj/structure/transit_tube_pod/pod in loc)
+					pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+					if(do_after(user, 15, target = src) && GM && G && G.affecting == GM)
+						GM.Weaken(5)
+						src.Bumped(GM)
+						qdel(G)
+					break
+	else if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(pod.contents)
 				user << "<span class='warning'>Empty the pod first!</span>"
@@ -103,7 +104,8 @@
 			pod.transfer_fingerprints_to(R)
 			R.add_fingerprint(user)
 			qdel(pod)
-	..(W, user)
+	else
+		return ..()
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")

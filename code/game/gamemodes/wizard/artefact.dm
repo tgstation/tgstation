@@ -62,7 +62,8 @@
 		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
 		qdel(src)
 		return
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/veilrender/vealrender
 	name = "veal render"
@@ -522,7 +523,6 @@ var/global/list/multiverse = list()
 			link = I
 			user << "You attach [I] to the doll."
 			update_targets()
-	..()
 
 /obj/item/voodoo/check_eye(mob/user)
 	if(loc != user)

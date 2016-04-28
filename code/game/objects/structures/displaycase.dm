@@ -27,13 +27,9 @@
 			dump()
 			qdel(src)
 		if (2)
-			if (prob(50))
-				src.health -= 15
-				src.healthcheck()
+			take_damage(rand(10,20), BRUTE, 0)
 		if (3)
-			if (prob(50))
-				src.health -= 5
-				src.healthcheck()
+			take_damage(5, BRUTE, 0)
 
 /obj/structure/displaycase/examine(mob/user)
 	..()
@@ -43,12 +39,9 @@
 		user << "<span class='notice'>Hooked up with an anti-theft system.</span>"
 
 
-/obj/structure/displaycase/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		health -= Proj.damage
-	..()
-	src.healthcheck()
-	return
+/obj/structure/displaycase/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 /obj/structure/displaycase/proc/dump()
 	if (showpiece)
@@ -61,24 +54,36 @@
 		dump()
 		qdel(src)
 
-/obj/structure/displaycase/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
-			src.density = 0
-			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", 70, 1)
-			update_icon()
+/obj/structure/displaycase/hitby(atom/movable/AM)
+	..()
+	if(isobj(AM))
+		var/obj/item/I = AM
+		take_damage(I.throwforce * 0.2)
 
-			//Activate Anti-theft
-			if(alert)
-				var/area/alarmed = get_area(src)
-				alarmed.burglaralert(src)
-				playsound(src, "sound/effects/alert.ogg", 50, 1)
+/obj/structure/displaycase/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health = max( health - damage, 0)
+	if(!health && !destroyed)
+		density = 0
+		destroyed = 1
+		new /obj/item/weapon/shard( src.loc )
+		playsound(src, "shatter", 70, 1)
+		update_icon()
 
-	else
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-	return
+		//Activate Anti-theft
+		if(alert)
+			var/area/alarmed = get_area(src)
+			alarmed.burglaralert(src)
+			playsound(src, "sound/effects/alert.ogg", 50, 1)
+
 
 /obj/structure/displaycase/proc/is_directional(atom/A)
 	try
@@ -115,23 +120,28 @@
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card) && electronics && !destroyed && allowed(user))
-		user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
-		open = !open
-		update_icon()
-		return
-	if(!alert && istype(W,/obj/item/weapon/crowbar))
-		if(destroyed && !showpiece)
-			user << "<span class='notice'>You remove the destroyed case</span>"
-			qdel(src)
-			return
-		user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
-		if(do_after(user, 20/W.toolspeed, target = src))
+	if(W.GetID() && electronics && !destroyed)
+		if(allowed(user))
 			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
 			open = !open
 			update_icon()
+		else
+			user <<  "<span class='warning'>Access denied.</span>"
+	else if(!alert && istype(W,/obj/item/weapon/crowbar))
+		if(destroyed)
+			if(showpiece)
+				user << "<span class='notice'>Remove the displayed object first.</span>"
+			else
+				user << "<span class='notice'>You remove the destroyed case</span>"
+				qdel(src)
+		else
+			user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
+			if(do_after(user, 20/W.toolspeed, target = src))
+				user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
+				open = !open
+				update_icon()
 	else if(open && !showpiece)
-		if(user.unEquip(W))
+		if(user.drop_item())
 			W.loc = src
 			showpiece = W
 			user << "<span class='notice'>You put [W] on display</span>"
@@ -148,14 +158,29 @@
 			health = initial(health)
 			update_icon()
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		src.health -= W.force
-		src.healthcheck()
-		..()
-	return
+		return ..()
+
+/obj/structure/displaycase/attacked_by(obj/item/weapon/W, mob/living/user)
+	..()
+	take_damage(W.force, W.damtype)
 
 /obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
+
+/obj/structure/displaycase/attack_alien(mob/living/carbon/alien/humanoid/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	take_damage(20, BRUTE, 0)
+
+/obj/structure/displaycase/attack_animal(mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper > 0)
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
+		"<span class='danger'>You smash against the [src.name].</span>")
+		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)
 
 /obj/structure/displaycase/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -166,11 +191,11 @@
 		update_icon()
 		return
 	else
+		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
 						 "<span class='notice'>You kick the display case.</span>")
-		src.health -= 2
-		healthcheck()
-		return
+		take_damage(2)
+
 
 
 /obj/structure/displaycase_chassis
@@ -191,16 +216,16 @@
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			qdel(src)
-			return
-	if(istype(I, /obj/item/weapon/electronics/airlock))
+
+	else if(istype(I, /obj/item/weapon/electronics/airlock))
 		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(user.unEquip(I) && do_after(user, 30, target = src))
 			I.loc = src
 			electronics = I
 			user << "<span class='notice'>You install the airlock electronics.</span>"
-			return
-	if(istype(I, /obj/item/stack/sheet/glass))
+
+	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 10)
 			user << "<span class='warning'>You need ten glass sheets to do this!</span>"
@@ -217,8 +242,8 @@
 				else
 					display.req_access = electronics.accesses
 			qdel(src)
-		return
-	return
+	else
+		return ..()
 
 
 /obj/structure/displaycase/captain
