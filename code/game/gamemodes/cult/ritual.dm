@@ -214,7 +214,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 	text += "<font color='red'><b>Cult Blade</b></font><br>Cult blades are sharp weapons that, notably, cannot be used by noncultists. These blades are produced by the Talisman of Arming.<br><br>"
 
-	text += "<font color='red'><b>Cult Bola</b></font><br>Cult blola are strong bolas, useful for snaring targets. These blades are produced by the Talisman of Arming.<br><br>
+	text += "<font color='red'><b>Cult Bola</b></font><br>Cult blola are strong bolas, useful for snaring targets. These blades are produced by the Talisman of Arming.<br><br>"
 
 	text += "<font color='red'><b>Cult Robes</b></font><br>Cult robes are heavily armored robes. These robes are produced by the Talisman of Arming.<br><br>"
 
