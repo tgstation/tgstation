@@ -608,14 +608,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm == "Yes")
-		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
-			return
-		else
-			mob.gib(no_brain = 1)
-
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		mob.gib(no_brain = 1)
 
 /client/proc/cmd_admin_check_contents(mob/living/M in mob_list)
 	set category = "Special Verbs"

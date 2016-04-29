@@ -60,7 +60,12 @@
 					D.locked = !D.locked
 					D.update_icon()
 			if(specialfunctions & SHOCK)
-				D.secondsElectrified = D.secondsElectrified ? 0 : -1
+				if(D.secondsElectrified)
+					D.secondsElectrified = -1
+					D.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+					add_logs(usr, D, "electrified")
+				else
+					D.secondsElectrified = 0
 			if(specialfunctions & SAFE)
 				D.safe = !D.safe
 	sleep(10)

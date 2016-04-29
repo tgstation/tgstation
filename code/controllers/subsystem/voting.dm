@@ -147,7 +147,7 @@ var/datum/subsystem/vote/SSvote
 	if(!mode)
 		if(started_time != null)
 			var/next_allowed_time = (started_time + config.vote_delay)
-			if(next_allowed_time > world.time)
+			if(next_allowed_time > world.time && !check_rights_for(usr.client,R_ADMIN))
 				return 0
 
 		reset()

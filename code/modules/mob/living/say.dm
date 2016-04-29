@@ -98,8 +98,13 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(!message)
 		return
 
+	var/turf/T = get_turf(src)
+
+	var/logged_msg = "\[[time_stamp()]\] [message]"
+	if(T)
+		logged_msg += " ([T.x], [T.y], [T.z])"
 	//Log of what we've said, plain message, no spans or junk
-	say_log += message
+	say_log += logged_msg
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)
@@ -111,7 +116,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		message_range = 1
 
 	//No screams in space, unless you're next to someone.
-	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = (environment)? environment.return_pressure() : 0
 	if(pressure < SOUND_MINIMUM_PRESSURE)
