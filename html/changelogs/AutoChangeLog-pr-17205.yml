@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Blobs attempting to attack the supermatter will instead be eaten by it."
+  - experiment: "This doesn't mean throwing a supermatter shard at the blob is a good idea; blobs attacking it will gradually damage it, eventually resulting in a massive explosion, and it will not consume blobs if on a space turf."
