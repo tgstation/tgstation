@@ -236,10 +236,46 @@
 	list_reagents = list("wine" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
-	name = "\[REDACTED\] Extra-Strong Absinthe"
-	desc = "An strong alcoholic drink brewed and distributed by \[REDACTED\] & \[REMOVED FOR SECURITY REASONS\] Inc."
+	name = "COMPANY Extra-Strong Absinthe"
+	desc = "An strong alcoholic drink brewed and distributed by FULL_COMPANY Inc."
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
+	..()
+	// There was a large fight in the coderbus about a player reference
+	// in absinthe. Ergo, this is why the name generation is now so
+	// complicated. Judge us kindly.
+	var/shortname = pickweight(
+		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
+	var/fullname
+	switch(name)
+		if("T&T")
+			fullname = "Terb and Tonte"
+		if("A&A")
+			fullname = "Ash and Asher"
+		if("Generic")
+			fullname = "Nanotrasen Cheap Imitations"
+	var/removals = list("\[REDACTED\]", "\[EXPLETIVE DELETED\]",
+		"\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]",
+		"\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]")
+	var/chance = 50
+
+	if(prob(chance))
+		shortname = pick_and_take(removals)
+
+	var/final_fullname = list()
+	for(var/word in splittext(fullname, " "))
+		if(prob(chance))
+			word = pick_and_take(removals)
+		final_fullname += word
+
+	fullname = jointext(final_fullname, " ")
+
+	// Actually finally setting the new name and desc
+	name = replacetext(name, "COMPANY", shortname)
+	desc = replacetext(desc, "FULL_COMPANY", fullname)
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
 	name = "Gwyn's Premium Absinthe"
