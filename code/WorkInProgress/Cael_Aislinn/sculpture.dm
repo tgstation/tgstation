@@ -22,6 +22,10 @@
 	var/scare_played = 0 //Did we rape everyone's ears yet ?
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent //Graciously stolen from spider code
 
+/mob/living/simple_animal/sculpture/New()
+	. = ..()
+	flags |= INVULNERABLE
+
 /mob/living/simple_animal/sculpture/Life()
 	if(timestopped)
 		return 0 //Under effects of time magick
@@ -71,7 +75,7 @@
 			in_darkness = 1
 
 	//Humans can observe SCP-173. If a single human observes him, he's observed for everyone
-	//Note that humans have a 180° field of vision for the purposes of this proc
+	//Note that humans have a 180ï¿½ field of vision for the purposes of this proc
 	for(var/mob/living/carbon/human/H in view(7, src))
 		if(H.stat)
 			continue
@@ -288,11 +292,12 @@
 //You cannot destroy SCP-173, fool!
 /mob/living/simple_animal/sculpture/ex_act(var/severity)
 
+// Commented this out because it LITERALLY PREVENTS ADMINS FROM REMOVING IT ENTIRELY
 //But seriously, you just can't
-/mob/living/simple_animal/sculpture/Del()
-
-	replace_SCP()
-	..()
+// /mob/living/simple_animal/sculpture/Del()
+//
+// 	replace_SCP()
+// 	..()
 
 //Someone tried to use a cheese to kill SCP, warp him at any blob start (nuke disk method
 /mob/living/simple_animal/sculpture/proc/replace_SCP()
