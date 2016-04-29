@@ -69,7 +69,6 @@
 	icon_state = "white"
 	item_state = "w_suit"
 	item_color = "white"
-	whiteness = 2
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
