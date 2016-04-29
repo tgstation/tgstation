@@ -12,7 +12,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
 
-
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
 		user.Weaken(5)
@@ -48,6 +47,15 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.drip(50)
+
+
+/obj/item/weapon/restraints/legcuffs/bola/cult
+	name = "nar'sian bola"
+	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
+	icon_state = "bola_cult"
+	breakouttime = 45
+	weaken = 1
+
 
 /obj/item/clothing/head/culthood
 	name = "ancient cultist hood"
