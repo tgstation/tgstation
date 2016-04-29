@@ -124,7 +124,8 @@ var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom, // Allows us to spawn instances
 	/client/proc/spawn_datum, //Allows us to spawn datums to the marked datum buffer
 	/client/proc/cmd_admin_dress, //Allows us to spawn clothing and dress a mob with it in one click
-	/client/proc/respawn_character //Allows us to re-spawn someone
+	/client/proc/respawn_character, //Allows us to re-spawn someone
+	/client/proc/debug_reagents //Allows us to spawn reagents in mobs/containers
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/Set_Holiday,
