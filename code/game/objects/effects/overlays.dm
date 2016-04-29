@@ -141,6 +141,9 @@
 	icon_state = gib_icon
 	..()
 
+/obj/effect/overlay/temp/gib_animation/ex_act(severity)
+	return //so the overlay isn't deleted by the explosion that gibbed the mob.
+
 /obj/effect/overlay/temp/gib_animation/animal
 	icon = 'icons/mob/animal.dmi'
 
