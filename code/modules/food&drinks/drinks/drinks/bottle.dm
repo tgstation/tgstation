@@ -251,7 +251,7 @@
 	var/fullname
 	switch(name)
 		if("T&T")
-			fullname = "Terb and Tonte"
+			fullname = "Teal and Tealer"
 		if("A&A")
 			fullname = "Ash and Asher"
 		if("Generic")
@@ -262,12 +262,12 @@
 	var/chance = 50
 
 	if(prob(chance))
-		shortname = pick_and_take(removals)
+		shortname = pick_n_take(removals)
 
 	var/final_fullname = list()
 	for(var/word in splittext(fullname, " "))
 		if(prob(chance))
-			word = pick_and_take(removals)
+			word = pick_n_take(removals)
 		final_fullname += word
 
 	fullname = jointext(final_fullname, " ")
