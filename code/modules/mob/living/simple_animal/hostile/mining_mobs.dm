@@ -249,8 +249,10 @@
 		if(!owner && !preserved)
 			inert = 1
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+			feedback_add_details("hivelord_core", "[src.type]|inert")
 		else
 			preserved = 1
+			feedback_add_details("hivelord_core", "[src.type]|implanted")
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
@@ -276,9 +278,11 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
+				feedback_add_details("hivelord_core","[src.type]|used|other")
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()

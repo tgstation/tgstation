@@ -390,6 +390,10 @@
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
+				feedback_add_details("mining_equipment_bought",
+					"[src.type]|[prize.equipment_path]")
+				// Add src.type to keep track of free golem purchases
+				// seperately.
 	updateUsrDialog()
 	return
 
@@ -428,6 +432,8 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Advanced Scanner")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+
+	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -488,6 +494,7 @@
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	feedback_add_details("jaunter", "U") // user activated
 	activate(user)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
@@ -527,11 +534,13 @@
 
 	if(triggered)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
+		feedback_add_details("jaunter","E") // EMP accidental activation
 		activate(usr)
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
 		user << "Your [src] activates, saving you from the chasm!</span>"
+		feedback_add_details("jaunter","C") // chasm automatic activation
 		activate(user)
 	else
 		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
@@ -885,6 +894,7 @@
 						H.attack_same = 0
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+				feedback_add_details("lazarus_injector", "[M.type]")
 				playsound(src,'sound/effects/refill.ogg',50,1)
 				icon_state = "lazarus_empty"
 				return
@@ -1064,6 +1074,7 @@
 		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
 	C.preserved = 1
+	feedback_add_details("hivelord_core", "[C.type]|stabilizer") // preserved
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
 
