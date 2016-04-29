@@ -909,6 +909,7 @@
 #include "code\modules\awaymissions\mission_code\blackmarketpackers.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
+#include "code\modules\awaymissions\mission_code\raisearm.dm"
 #include "code\modules\awaymissions\mission_code\researchbase.dm"
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
