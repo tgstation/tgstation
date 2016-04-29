@@ -192,3 +192,39 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 		2.7; "A-",\
 		0.8; "B-",\
 		0.3; "AB-")*/
+
+//Returns list of organs that are affected by items worn in the slot. For example, calling get_organ_by_slot(slot_belt) will return list(groin)
+//If H is null, a list of organ names is returned: list("l_arm", "l_hand")
+//If H isn't null, a list of organ objects from H is returned: list(H.get_organ("l_arm"), H.get_organ("l_hand"))
+
+/proc/get_organs_by_slot(input_slot, mob/living/carbon/human/H = null)
+	var/list/L
+
+	switch(input_slot)
+		if(slot_wear_suit) //Exosuit
+			L = list("chest", "groin", "l_arm", "l_hand", "r_arm", "r_hand", "l_leg", "l_foot", "r_leg", "r_foot")
+		if(slot_w_uniform) //Uniform
+			L = list("chest", "groin", "l_arm", "r_arm", "l_leg", "r_leg")
+		if(slot_gloves, slot_handcuffed) //Gloves
+			L = list("l_hand", "r_hand")
+		if(slot_l_hand)
+			L = list("l_hand")
+		if(slot_r_hand)
+			L = list("r_hand")
+		if(slot_wear_mask, slot_ears, slot_glasses, slot_head)
+			L = list("head")
+		if(slot_shoes)
+			L = list("l_foot", "r_foot")
+		if(slot_belt)
+			L = list("groin")
+		if(slot_back, slot_wear_id)
+			L = list("chest")
+		if(slot_legs, slot_legcuffed)
+			L = list("l_leg", "r_leg")
+
+	if(H)
+		for(var/organ in L)
+			L |= (H.get_organ(organ))
+			L.Remove(organ)
+
+	return L

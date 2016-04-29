@@ -197,6 +197,11 @@
 	affected.status = 0
 	affected.amputated = 0
 	affected.destspawn = 0
+
+	var/obj/item/weapon/organ/O = tool
+	if(istype(O))
+		affected.species = O.species
+
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon()
@@ -212,8 +217,8 @@
 				target.butchering_drops -= match //Remove it!
 				qdel(match)
 
-			target.butchering_drops += BP //Transfer
-			B.butchering_drops -= BP
+			target.butchering_drops.Add(BP) //Transfer
+			B.butchering_drops.Remove(BP)
 
 	affected.cancer_stage = B.cancer_stage
 

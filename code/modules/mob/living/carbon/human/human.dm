@@ -64,6 +64,22 @@
 	gender = NEUTER
 	meat_type = /obj/item/weapon/ore/diamond
 
+/mob/living/carbon/human/frankenstein/New(var/new_loc, delay_ready_dna = 0) //Just fuck my shit up: the mob
+	f_style = pick(facial_hair_styles_list)
+	h_style = pick(hair_styles_list)
+
+	var/list/valid_species = (all_species - list("Krampus", "Horror"))
+
+	var/datum/species/new_species = all_species[pick(valid_species)]
+	..(new_loc, new_species.name)
+	gender = pick(MALE, FEMALE, NEUTER, PLURAL)
+	meat_type = pick(typesof(/obj/item/weapon/reagent_containers/food/snacks/meat))
+
+	for(var/datum/organ/external/E in organs)
+		E.species = all_species[pick(valid_species)]
+
+	update_body()
+
 /mob/living/carbon/human/generate_static_overlay()
 	if(!istype(static_overlays,/list))
 		static_overlays = list()

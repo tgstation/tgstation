@@ -522,6 +522,7 @@ var/global/list/damage_icon_parts = list()
 			standing.icon	= 'icons/mob/uniform.dmi'
 
 		var/obj/item/clothing/under/under_uniform = w_uniform
+
 		if(species.name in under_uniform.species_fit) //Allows clothes to display differently for multiple species
 			if(species.uniform_icons)
 				standing.icon = species.uniform_icons
@@ -608,9 +609,18 @@ var/global/list/damage_icon_parts = list()
 		var/image/standing	= image("icon" = ((gloves.icon_override) ? gloves.icon_override : 'icons/mob/hands.dmi'), "icon_state" = "[t_state]")
 
 		var/obj/item/I = gloves
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.gloves_icons)
-				standing.icon = species.gloves_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_gloves, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.gloves_icons)
+				standing.icon = S.gloves_icons
+
+
 		if(gloves.dynamic_overlay)
 			if(gloves.dynamic_overlay["[GLOVES_LAYER]"])
 				var/image/dyn_overlay = gloves.dynamic_overlay["[GLOVES_LAYER]"]
@@ -650,9 +660,16 @@ var/global/list/damage_icon_parts = list()
 		var/image/standing = image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
 
 		var/obj/item/I = glasses
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.glasses_icons)
-				standing.icon = species.glasses_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_head, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.glasses_icons)
+				standing.icon = S.glasses_icons
 
 		if(glasses.cover_hair)
 			var/obj/Overlays/O = obj_overlays[GLASSES_OVER_HAIR_LAYER]
@@ -692,9 +709,16 @@ var/global/list/damage_icon_parts = list()
 		var/image/standing = image("icon" = ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi'), "icon_state" = "[ears.icon_state]")
 
 		var/obj/item/I = ears
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.ears_icons)
-				standing.icon = species.ears_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_head, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.ears_icons)
+				standing.icon = S.ears_icons
 
 		var/obj/Overlays/O = obj_overlays[EARS_LAYER]
 		O.icon = standing
@@ -720,10 +744,16 @@ var/global/list/damage_icon_parts = list()
 		//var/image/standing	= image("icon" = ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi'), "icon_state" = "[shoes.icon_state]")
 
 		var/obj/item/I = shoes
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.shoes_icons)
-				O.icon = species.shoes_icons
-				//standing.icon = species.shoes_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_shoes, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.gloves_icons)
+				O.icon = S.shoes_icons
 
 		O.overlays.len = 0
 		if(shoes.dynamic_overlay)
@@ -777,9 +807,16 @@ var/global/list/damage_icon_parts = list()
 			standing	= image("icon" = ((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'), "icon_state" = "[head.icon_state]")
 
 		var/obj/item/I = head
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.head_icons)
-				standing.icon = species.head_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_head, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.head_icons)
+				standing.icon = S.head_icons
 
 		if(head.dynamic_overlay)
 			if(head.dynamic_overlay["[HEAD_LAYER]"])
@@ -810,9 +847,17 @@ var/global/list/damage_icon_parts = list()
 		var/image/standing = image("icon" = ((belt.icon_override) ? belt.icon_override : 'icons/mob/belt.dmi'), "icon_state" = "[t_state]")
 
 		var/obj/item/I = belt
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.belt_icons)
-				standing.icon = species.belt_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_belt, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.belt_icons)
+				standing.icon = S.belt_icons
+
 		var/obj/Overlays/O = obj_overlays[BELT_LAYER]
 		O.icon = standing
 		O.icon_state = standing.icon_state
@@ -842,9 +887,16 @@ var/global/list/damage_icon_parts = list()
 			drop_hands()
 
 		var/obj/item/I = wear_suit
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.wear_suit_icons)
-				standing.icon = species.wear_suit_icons
+
+		var/datum/species/SP = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_wear_suit, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				SP = OE.species
+				break
+
+		if(SP.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(SP.wear_suit_icons)
+				standing.icon = SP.wear_suit_icons
 
 		if(wear_suit.dynamic_overlay)
 			if(wear_suit.dynamic_overlay["[SUIT_LAYER]"])
@@ -886,9 +938,16 @@ var/global/list/damage_icon_parts = list()
 		var/image/standing	= image("icon" = ((wear_mask.icon_override) ? wear_mask.icon_override : 'icons/mob/mask.dmi'), "icon_state" = "[wear_mask.icon_state]")
 
 		var/obj/item/I = wear_mask
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.wear_mask_icons)   //This REQUIRES the species to be listed in species_fit and also to have an appropriate dmi allocated in their species datum
-				standing.icon = species.wear_mask_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_wear_mask, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.wear_mask_icons)
+				standing.icon = S.wear_mask_icons
 
 		if(wear_mask.dynamic_overlay)
 			if(wear_mask.dynamic_overlay["[FACEMASK_LAYER]"])
@@ -918,9 +977,16 @@ var/global/list/damage_icon_parts = list()
 		var/image/standing	= image("icon" = ((back.icon_override) ? back.icon_override : 'icons/mob/back.dmi'), "icon_state" = "[back.icon_state]")
 
 		var/obj/item/I = back
-		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
-			if(species.back_icons)
-				standing.icon = species.back_icons
+
+		var/datum/species/S = species
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot_back, src)) //Display species-exclusive species correctly on attached limbs
+			if(OE.species)
+				S = OE.species
+				break
+
+		if(S.name in I.species_fit) //Allows clothes to display differently for multiple species
+			if(S.back_icons)
+				standing.icon = S.back_icons
 
 		var/obj/Overlays/O = obj_overlays[BACK_LAYER]
 		O.icon = standing

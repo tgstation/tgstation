@@ -11,11 +11,12 @@
 	var/cold_speed_protection = 300 //that cloth allows its wearer to keep walking at normal speed at lower temperatures
 
 //BS12: Species-restricted clothing check.
-/obj/item/clothing/mob_can_equip(M as mob, slot)
+/obj/item/clothing/mob_can_equip(mob/M, slot)
 
 	. = ..(M, slot, 1) //Default return value. If 1, item can be equipped. If 0, it can't be.
+	if(!.) return //Default return value is 0 - don't check for species
 
-	if(species_restricted && istype(M,/mob/living/carbon/human))
+	if(species_restricted && istype(M,/mob/living/carbon/human) && (slot != slot_l_store && slot != slot_r_store))
 
 		var/wearable = null
 		var/exclusive = null
@@ -24,21 +25,49 @@
 		if("exclude" in species_restricted)
 			exclusive = 1
 
-		if(H.species)
-			if(exclusive)
-				if(!(H.species.name in species_restricted))
-					wearable = 1
+		var/datum/species/base_species = H.species
+		if(!base_species) return
+
+		var/base_species_can_wear = 1 //If the body's main species can wear this
+
+		if(exclusive)
+			if(!species_restricted.Find(base_species.name))
+				wearable = 1
 			else
-				if(H.species.name in species_restricted)
+				base_species_can_wear = 0
+		else
+			if(species_restricted.Find(base_species.name))
+				wearable = 1
+			else
+				base_species_can_wear = 0
+
+		//Check ALL organs covered by the slot. If any of the organ's species can't wear this, return 0
+
+		for(var/datum/organ/external/OE in get_organs_by_slot(slot, H)) //Go through all organs covered by the item
+			if(!OE.species) //Species same as of the body
+				if(!base_species_can_wear) //And the body's species can't wear
+					wearable = 0
+					break
+				continue
+
+			if(exclusive)
+				if(!species_restricted.Find(OE.species.name))
 					wearable = 1
-
-			if(.) //If normally we CAN equip this item,
-				if(!wearable && (slot != 15 && slot != 16)) //But we are a species that CAN'T wear it (sidenote: slots 15 and 16 are pockets)
-					to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")//Let us know
-
+				else
+					to_chat(M, "<span class='warning'>Your misshapen [OE.display_name] prevents you from wearing \the [src].</span>")
+					return 0
+			else
+				if(species_restricted.Find(OE.species.name))
+					wearable = 1
+				else
+					to_chat(M, "<span class='warning'>Your misshapen [OE.display_name] prevents you from wearing \the [src].</span>")
 					return 0
 
-	return ..()
+		if(!wearable) //But we are a species that CAN'T wear it (sidenote: slots 15 and 16 are pockets)
+			to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")//Let us know
+			return 0
+
+	//return ..()
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears

@@ -3,6 +3,8 @@
 ****************************************************/
 /datum/organ/external
 	name = "external"
+
+	var/datum/species/species
 	var/icon_name = null
 	var/body_part = null
 	var/icon_position = 0
@@ -623,6 +625,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		src.status &= ~ORGAN_BLEEDING
 		src.status &= ~ORGAN_SPLINTED
 		src.status &= ~ORGAN_DEAD
+		src.species = null
+		
 		for(var/implant in implants)
 			qdel(implant)
 
@@ -630,9 +634,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/datum/organ/external/O in children)
 			O.droplimb(1)
 
-		var/obj/organ //Dropped limb object
+		var/obj/item/weapon/organ/organ //Dropped limb object
 		if(spawn_limb)
 			organ = generate_dropped_organ(organ_item)
+			if(species)
+				organ.species = src.species
+				organ.update_icon()
+
 		if(body_part == LOWER_TORSO)
 			to_chat(owner, "<span class='danger'>You are now sterile.</span>")
 
@@ -768,6 +776,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	src.status &= ~ORGAN_DESTROYED
 	src.status &= ~ORGAN_PEG
 	src.status |= ORGAN_ROBOT
+	src.species = null
 	src.destspawn = 0
 	for (var/datum/organ/external/T in children)
 		if(T)
@@ -782,6 +791,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	src.status &= ~ORGAN_DESTROYED
 	src.status &= ~ORGAN_ROBOT
 	src.status |= ORGAN_PEG
+	src.species = null
 	src.wounds.len = 0
 	for (var/datum/organ/external/T in children)
 		if(T)
@@ -834,9 +844,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(isFat && has_fat)
 		fat = "_fat"
 	var/icon_state = "[icon_name][gender][fat]"
-	var/baseicon = owner.race_icon
+	var/baseicon = (species ? species.icobase : owner.race_icon)
 	if(status & ORGAN_MUTATED)
-		baseicon = owner.deform_icon
+		baseicon = (species ? species.deform : owner.deform_icon)
 	else if(is_peg())
 		baseicon = 'icons/mob/human_races/o_peg.dmi'
 	else if(is_robotic())
@@ -1129,9 +1139,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/g = "m"
 	if(owner.gender == FEMALE)
 		g = "f"
-	var/baseicon = owner.race_icon
+
+	var/baseicon = (species ? species.icobase : owner.race_icon)
 	if(status & ORGAN_MUTATED)
-		baseicon = owner.deform_icon
+		baseicon = (species ? species.deform : owner.deform_icon)
+
 	if(is_peg())
 		baseicon = 'icons/mob/human_races/o_peg.dmi'
 	if(is_robotic())
@@ -1184,6 +1196,8 @@ obj/item/weapon/organ
 	//Currently the only "butchering drops" which are going to be stored here are teeth
 	var/list/butchering_drops = list()
 
+	var/datum/species/species
+
 	//Store health facts. Right now limited exclusively to cancer, but should likely include all limb stats eventually
 	var/cancer_stage = 0
 
@@ -1197,30 +1211,11 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			blood_DNA = list()
 		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
+	src.species = H.species
+
 	//Forming icon for the limb
 	//Setting base icon for this mob's race
-	var/icon/base
-	if(H.species && H.species.icobase)
-		base = icon(H.species.icobase)
-	else
-		base = icon('icons/mob/human_races/r_human.dmi')
-
-	if(base)
-		//Changing limb's skin tone to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_TONE)
-			if(H.s_tone >= 0)
-				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-			else
-				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
-
-/*	if(base)
-		//Changing limb's skin color to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
-			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)*/
-
-	icon = base
-	dir = SOUTH
-	src.transform = turn(src.transform, rand(70, 130))
+	update_icon(H)
 
 	for(var/datum/butchering_product/B in H.butchering_drops) //Go through all butchering products (like teeth) in the parent
 		if(B.stored_in_organ == src.part) //If they're stored in our organ,
@@ -1245,6 +1240,37 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			butchery = "[butchery][B.desc_modifier(src, user)]"
 	if(butchery)
 		to_chat(user, "<span class='warning'>[butchery]</span>")
+
+/obj/item/weapon/organ/update_icon(mob/living/carbon/human/H)
+	..()
+
+	if(!H && !species) return
+
+	var/icon/base
+	if(H)
+		if(H.species)
+			if(!src.species)
+				src.species = H.species //Also store the mob's species for later use
+
+			if(H.species.icobase)
+				base = icon(H.species.icobase)
+		else
+			base = icon('icons/mob/human_races/r_human.dmi')
+	else if(species)
+		base = icon(species.icobase)
+
+	if(base)
+		//Changing limb's skin tone to match owner
+		if(H)
+			if(!H.species || H.species.flags & HAS_SKIN_TONE)
+				if(H.s_tone >= 0)
+					base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+				else
+					base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+
+		icon = base
+		dir = SOUTH
+		src.transform = turn(src.transform, rand(70, 130))
 
 /****************************************************
 			   EXTERNAL ORGAN ITEMS DEFINES
