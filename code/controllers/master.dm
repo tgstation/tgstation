@@ -162,19 +162,20 @@ var/global/datum/controller/master/Master = new()
 						else
 							priority_queue -= SS
 					if(SS.can_fire > 0)
-						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time)))
-							if(!priorityrunning && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
-								if(!SS.dynamic_wait)
-									priority_queue += SS
-								continue
+						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time || SS.paused)))
 							//we can't reset SS.paused after we fire, incase it pauses again, so we cache it and
 							//	send it to SS.fire()
 							var/paused = SS.paused
+							if(!priorityrunning && !paused && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
+								if(!SS.dynamic_wait)
+									priority_queue += SS
+								continue
 							SS.paused = 0
 							ran_subsystems = 1
 							timer = world.timeofday
 							last_type_processed = SS.type
-							SS.last_fire = world.time
+							if (!paused) //only set this when we aren't resuming
+								SS.last_fire = world.time
 							var/tick_usage = world.tick_usage
 							SS.fire(paused) // Fire the subsystem
 
@@ -198,7 +199,7 @@ var/global/datum/controller/master/Master = new()
 								if(SS.paused)
 									SS.next_fire = world.time //run it next tick if we can, but don't priority queue it, as we are a dynamic wait subsystem
 								else //not paused, it ran all the way thru, normal wait time
-									SS.next_fire = world.time + SS.wait
+									SS.next_fire = SS.last_fire + SS.wait //we use last_fire so that its next fire is based off when it started this fire, not when it finished.
 							else
 								if(!paused)
 									SS.next_fire += SS.wait
