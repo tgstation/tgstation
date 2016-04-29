@@ -68,7 +68,7 @@
 #define PLASMA_OXYGEN_FULLBURN				10
 #define MIN_PLASMA_DAMAGE					1
 #define MAX_PLASMA_DAMAGE					10
-#define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
+#define MOLES_PLASMA_VISIBLE				0.01		//Moles in a standard cell after which plasma is visible
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
 #define MAX_CARBON_EFFICENCY				9
