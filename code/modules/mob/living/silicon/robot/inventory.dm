@@ -198,25 +198,25 @@
 //cycle_modules() - Cycles through the list of selected modules.
 /mob/living/silicon/robot/proc/cycle_modules()
 	var/slot_start = get_selected_module()
-	if(slot_start) deselect_module(slot_start) //Only deselect if we have a selected slot.
+	if(slot_start)
+		deselect_module(slot_start) //Only deselect if we have a selected slot.
 
 	var/slot_num
 	if(slot_start == 0)
 		slot_num = 1
-		slot_start = 2
+		slot_start = 4
 	else
 		slot_num = slot_start + 1
 
-	while(slot_start != slot_num) //If we wrap around without finding any free slots, just give up.
+	while(slot_num != slot_start) //If we wrap around without finding any free slots, just give up.
 		if(module_active(slot_num))
 			select_module(slot_num)
 			return
 		slot_num++
-		if(slot_num > 3) slot_num = 1 //Wrap around.
+		if(slot_num > 4) // not >3 otherwise cycling with just one item on module 3 wouldn't work
+			slot_num = 1 //Wrap around.
 
-	return
 
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
-	return
