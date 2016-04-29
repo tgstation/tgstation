@@ -360,7 +360,9 @@
 
 	flags = FPRINT
 	w_class = 4
-	fits_max_w_class = 3
-	max_combined_w_class = 63 // Fuck this var
+	storage_slots = 300
+	fits_max_w_class = 300 //There is no way this could go wrong, right?
+	max_combined_w_class = 300
+	display_contents_with_number = 1 //With lods of emone, you're gonna need some compression
 	can_only_hold = list("/obj/item/weapon/coin", "/obj/item/weapon/ore", "/obj/item/weapon/spacecash")
 	cant_hold = list()

@@ -255,7 +255,9 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/device/mining_scanner,
 					/obj/item/weapon/storage/bag/ore,
 					/obj/item/weapon/storage/bag/ore,
-					/obj/item/weapon/storage/bag/ore)
+					/obj/item/weapon/storage/bag/ore,
+					/obj/item/weapon/storage/bag/money,
+					/obj/item/weapon/storage/bag/money)
 	cost = 20
 	containertype = /obj/structure/closet/crate
 	containername = "Mining Equipment Crate"

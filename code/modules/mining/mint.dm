@@ -166,18 +166,24 @@ a.notsmelting {
 		if (src.output)
 			processing = 1
 			icon_state = "coinpress1"
-			var/obj/item/weapon/storage/bag/money/M
+			//var/obj/item/weapon/storage/bag/money/M
 			var/datum/material/po=materials.getMaterial(chosen)
 			if(!po)
 				chosen=null
 				processing=0
 				return
 			while(materials.storage[chosen] > 0 && coinsToProduce > 0)
-				if (locate(/obj/item/weapon/storage/bag/money,output.loc))
+			/*	if (locate(/obj/item/weapon/storage/bag/money,output.loc))
 					M = locate(/obj/item/weapon/storage/bag/money,output.loc)
+					if(M.can_be_inserted(po.cointype, 1))
+						new po.cointype(M)
+					else
+						new po.cointype(output.loc)
 				else
-					M = new/obj/item/weapon/storage/bag/money(output.loc)
-				new po.cointype(M)
+				//Can't seem to be able to get the can_be_inserted check to work, would always drop the coin at the output loc
+				*/
+					//M = new/obj/item/weapon/storage/bag/money(output.loc)
+				new po.cointype(output.loc)
 				materials.removeAmount(chosen, 1)
 				coinsToProduce--
 				newCoins++
