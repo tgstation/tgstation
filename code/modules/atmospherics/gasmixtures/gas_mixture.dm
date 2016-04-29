@@ -491,7 +491,8 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
-	sharer_temperature = sharer_temperature || sharer.temperature_archived
+	if(sharer)
+		sharer_temperature = sharer.temperature_archived
 	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity_archived()
@@ -502,7 +503,7 @@ var/list/gaslist_cache = null
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
-			sharer_temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
+			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
 			if(sharer)
 				sharer.temperature = sharer_temperature
 	return sharer_temperature
