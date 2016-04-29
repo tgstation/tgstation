@@ -19,13 +19,17 @@
 	if(emagged)
 		if(insults >= 1)
 			playsound(get_turf(src), 'sound/voice/binsult.ogg', 100, 1, vary = 0)//hueheuheuheuheuheuhe
-			user.show_message("<span class='warning'>[user]'s [name] gurgles, \"FUCK YOUR CUNT YOU SHIT EATING CUNT TILL YOU ARE A MASS EATING SHIT CUNT. EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS TO FUCK UP SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FROM THE DEPTHS OF SHIT\"</span>",2) //It's a hearable message silly!
+			user.visible_message("<span class='warning'>[user]'s [name] gurgles, \"FUCK YOUR CUNT YOU SHIT EATING COCKSUCKER MAN EAT A DONG FUCKING ASS RAMMING SHITFUCK. EAT PENISES IN YOUR FUCKFACE AND SHIT OUT ABORTIONS OF FUCK AND DO A SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT.\"</span>", \
+								"<span class='warning'>Your [name] gurgles, \"FUCK YOUR CUNT YOU SHIT EATING COCKSUCKER MAN EAT A DONG FUCKING ASS RAMMING SHITFUCK. EAT PENISES IN YOUR FUCKFACE AND SHIT OUT ABORTIONS OF FUCK AND DO A SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT.\"</span>", \
+								"<span class='warning'>You hear the computerized voice of a security hailer: \"FUCK YOUR CUNT YOU SHIT EATING COCKSUCKER MAN EAT A DONG FUCKING ASS RAMMING SHITFUCK. EAT PENISES IN YOUR FUCKFACE AND SHIT OUT ABORTIONS OF FUCK AND DO A SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT.\"</span>")
 			insults--
 		else
 			to_chat(user, "<span class='warning'>*BZZZZcuntZZZZT*</span>")
 	else
 		playsound(get_turf(src), 'sound/voice/halt.ogg', 100, 1, vary = 0)
-		user.show_message("<span class='warning'>[user]'s [name] rasps, \"Halt! Security!\"</span>",1)
+		user.visible_message("<span class='warning'>[user]'s [name] rasps, \"Halt! Security!\"</span>", \
+							"<span class='warning'>Your [name] rasps, \"Halt! Security!\"</span>", \
+							"<span class='warning'>You hear the computerized voice of a security hailer: \"Halt! Security!\"</span>")
 
 	spamcheck = 1
 	spawn(20)
