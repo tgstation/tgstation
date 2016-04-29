@@ -183,17 +183,6 @@
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					new_mob.languages |= HUMAN
 
-					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
-					switch(alien_caste)
-						if("Hunter")
-							new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-						if("Sentinel")
-							new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-						if("Drone")
-							new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
-						else
-							new_mob = new /mob/living/carbon/alien/larva(M.loc)
-					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
