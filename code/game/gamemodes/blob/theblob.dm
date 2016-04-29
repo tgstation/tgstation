@@ -56,6 +56,7 @@ var/list/blob_looks
 	layer = 6
 	var/spawning = 2
 	var/dying = 0
+	var/mob/camera/blob/overmind = null
 
 	var/looks = "new"
 
@@ -67,6 +68,8 @@ var/list/blob_looks
 	var/layer_new = 6
 	var/icon_new = "center"
 	var/icon_classic = "blob"
+
+	var/manual_remove = 0
 
 /obj/effect/blob/blob_act()
 	return
@@ -113,6 +116,13 @@ var/list/blob_looks
 			if(!spawning)
 				anim(target = B.loc, a_icon = icon, flick_anim = "connect_die", sleeptime = 50, direction = get_dir(B,src), lay = layer+0.3, offX = -16, offY = -16, col = "red")
 
+	if(!manual_remove)
+		for(var/obj/effect/blob/core/C in range(loc,4))
+			if((C != src) && C.overmind && (C.overmind.blob_warning <= world.time))
+				C.overmind.blob_warning = world.time + (10 SECONDS)
+				to_chat(C.overmind,"<span class='danger'>A blob died near your core!</span>")
+
+	overmind = null
 	..()
 
 /obj/effect/blob/projectile_check()
@@ -270,6 +280,7 @@ var/list/blob_looks = list(
 /obj/effect/blob/proc/aftermove()
 	for(var/obj/effect/blob/B in loc)
 		if(B != src)
+			manual_remove = 1
 			qdel(src)
 			return
 	update_icon()
@@ -349,6 +360,7 @@ var/list/blob_looks = list(
 			B.forceMove(T)
 	else
 		T.blob_act()//If we cant move in hit the turf
+		B.manual_remove = 1
 		B.Delete()
 
 	for(var/atom/A in T)//Hit everything in the turf
@@ -364,6 +376,7 @@ var/list/blob_looks = list(
 	else
 		new type(src.loc, newlook = looks)
 	spawning = 1//so we don't show red severed connections
+	manual_remove = 1
 	Delete()
 	return
 

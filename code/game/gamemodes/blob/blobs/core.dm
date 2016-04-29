@@ -1,16 +1,18 @@
 /obj/effect/blob/core
 	name = "blob core"
 	icon_state = "core"
+	desc = "Some big pulsating blob creature thingy"
 	health = 200
 	maxhealth = 200
 	fire_resist = 2
 	custom_process=1
-	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
 	var/mob/camera/blob/creator = null
 	layer = 7
+	var/core_warning_delay = 0
+	var/previous_health = 200
 
 	layer_new = 7
 	icon_new = "core"
@@ -35,6 +37,13 @@
 
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
+
+	for(var/mob/camera/blob/O in blob_overminds)
+		if(overmind && (O != overmind))
+			to_chat(O,"<span class='danger'>A blob core has been destroyed! [overmind] lost his life!</span>")
+		else
+			to_chat(O,"<span class='warning'>A blob core has been destroyed. It had no overmind in control.</span>")
+
 	if(overmind)
 		for(var/obj/effect/blob/resource/R in blob_resources)
 			if(R.overmind == overmind)
@@ -49,6 +58,14 @@
 	return
 
 /obj/effect/blob/core/update_health()
+	if(overmind)
+		overmind.update_health()
+		if((health < previous_health) && (core_warning_delay <= world.time))
+			resource_delay = world.time + (3 SECONDS)
+			to_chat(overmind,"<span class='danger'>YOUR CORE IS UNDER ATTACK!</span>")
+
+	previous_health = health
+
 	if(health <= 0)
 		dying = 1
 		playsound(get_turf(src), 'sound/effects/blobkill.ogg', 50, 1)

@@ -1,6 +1,7 @@
 /obj/effect/blob/factory
 	name = "factory blob"
 	icon_state = "factory"
+	desc = "Some antibodies-producing blob creature thingy"
 	health = 100
 	maxhealth = 100
 	fire_resist = 2
@@ -49,6 +50,8 @@
 	if(spores.len)
 		for(var/mob/living/simple_animal/hostile/blobspore/S in spores)
 			S.Die()
+	if(!manual_remove && overmind)
+		to_chat(overmind,"<span class='warning'>A factory blob that you had created has been destroyed.</span>")
 	..()
 
 /obj/effect/blob/factory/update_icon(var/spawnend = 0)

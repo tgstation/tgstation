@@ -18,14 +18,21 @@
 	var/max_blob_points = 100
 	var/maxjumprange = 20 //how far you can go in terms of non-blob tiles in a jump attempt
 
+	var/blob_warning = 0
+
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	blob_overminds += src
 	..()
 	spawn(10)
 		if(src.mind)
 			src.mind.special_role = "Blob"
+
+/mob/camera/blob/Destroy()
+	blob_overminds -= src
+	..()
 
 /mob/camera/blob/Login()
 	..()
