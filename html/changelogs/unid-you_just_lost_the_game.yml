@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-- rscadd: "Surgically attached limbs no longer magically transform when you attach them to another species' body (this means you can create a human with vox head, tajaran arms and muton legs)."
-- tweak: "Slightly changed how species restricted clothing works in respect to the above change. Now it's possible to, for example, wear vox magboots as a human - but only if both of the human's feet are vox talons."
