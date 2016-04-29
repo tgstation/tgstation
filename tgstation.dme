@@ -27,6 +27,7 @@
 #include "code\__DEFINES\bots.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\combat.dm"
+#include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\genetics.dm"
 #include "code\__DEFINES\hud.dm"

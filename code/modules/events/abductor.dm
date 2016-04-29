@@ -17,7 +17,7 @@
 	var/list/mob/dead/observer/candidates = get_candidates("abductor", null, ROLE_ABDUCTOR)
 
 	if(!candidates.len < 2)
-		return FALSE
+		return NOT_ENOUGH_PLAYERS
 	//Oh god why we can't have static functions
 	// I feel your pain, bro
 	var/number = ticker.mode.abductor_teams + 1
@@ -52,4 +52,4 @@
 
 	if(ticker.mode.config_tag != "abduction")
 		ticker.mode.abductors |= temp.abductors
-	return TRUE
+	return SUCCESSFUL_SPAWN

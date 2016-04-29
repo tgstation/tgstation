@@ -4,6 +4,9 @@
 	var/minimum_required = 1
 	var/role_name = "cancer rat" // Q U A L I T Y  M E M E S
 
+/datum/round_event/ghost_role/start()
+	try_spawning()
+
 /datum/round_event/ghost_role/proc/try_spawning()
 	// The event does not run until the spawning has been successful
 	// or attempted twice, to prevent the spawn(300) from being gc'd

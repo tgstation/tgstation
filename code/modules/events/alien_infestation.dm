@@ -46,12 +46,12 @@
 		// TODO do we throw an exception or just return a special
 		// value to indicate non-player number related failure
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
-		return kill()
+		return MAP_ERROR
 
 	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
 
 	if(!candidates.len)
-		return FALSE
+		return NOT_ENOUGH_PLAYERS
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
@@ -66,4 +66,7 @@
 		log_game("[new_xeno.key] was spawned as an alien by an event.")
 
 	if(successSpawn)
-		return TRUE
+		return SUCCESSFUL_SPAWN
+	else
+		// Like how did we get here?
+		return FALSE

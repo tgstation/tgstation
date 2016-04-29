@@ -1,7 +1,7 @@
 #define REVENANT_SPAWN_THRESHOLD 10
 
 /datum/round_event_control/revenant
-	name = "Spawn Revenant"
+	name = "Spawn Revenant" // Did you mean 'griefghost'?
 	typepath = /datum/round_event/revenant
 	weight = 7
 	max_occurrences = 1
@@ -9,33 +9,32 @@
 	min_players = 5
 
 
-/datum/round_event/revenant
-	var/key_of_revenant
+/datum/round_event/ghost_role/revenant
+	var/force_spawn
 
+/datum/round_event/ghost_role/revenant/New(my_force_spawn = FALSE)
+	..()
+	force_spawn = my_force_spawn
 
-/datum/round_event/revenant/proc/get_revenant(end_if_fail = 0)
-	var/deadMobs = 0
-	for(var/mob/M in dead_mob_list)
-		deadMobs++
-	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
-		message_admins("Random event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
-		return
-	key_of_revenant = null
-	if(!key_of_revenant)
-		var/list/candidates = get_candidates(ROLE_REVENANT)
-		if(!candidates.len)
-			if(end_if_fail)
-				return 0
-			return find_revenant()
-		var/client/C = pick(candidates)
-		key_of_revenant = C.key
-	if(!key_of_revenant)
-		if(end_if_fail)
-			return 0
-		return find_revenant()
-	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
+/datum/round_event/ghost_role/revenant/spawn_role()
+	if(!force_spawn)
+		var/deadMobs = 0
+		for(var/mob/M in dead_mob_list)
+			deadMobs++
+		if(deadMobs < REVENANT_SPAWN_THRESHOLD)
+			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
+			return WAITING_FOR_SOMETHING
+
+	var/list/mob/dead/observer/candidates = get_candidates("revenant", null, ROLE_REVENANT)
+	if(!candidates.len)
+		return NOT_ENOUGH_PLAYERS
+
+	var/mob/dead/observer/selected = popleft(candidates)
+
+	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = 1
 	var/list/spawn_locs = list()
+
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(isturf(L.loc))
 			switch(L.name)
@@ -49,28 +48,14 @@
 						spawn_locs += L.loc
 	if(!spawn_locs) //If we can't find either, just spawn the revenant at the player's location
 		spawn_locs += get_turf(player_mind.current)
-	if(!spawn_locs) //If we can't find THAT, then just retry
-		return find_revenant()
+	if(!spawn_locs) //If we can't find THAT, then just give up and cry
+		return MAP_ERROR
+
 	var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant/(pick(spawn_locs))
 	player_mind.transfer_to(revvie)
 	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
 	ticker.mode.traitors |= player_mind
-	message_admins("[key_of_revenant] has been made into a revenant by an event.")
-	log_game("[key_of_revenant] was spawned as a revenant by an event.")
-	return 1
-
-
-/datum/round_event/revenant/start()
-	get_revenant()
-
-
-/datum/round_event/revenant/proc/find_revenant()
-	message_admins("An event failed to spawn a revenant. Retrying momentarily...")
-	spawn(50)
-		if(get_revenant(1))
-			message_admins("[key_of_revenant] has been spawned as a revenant.")
-			log_game("[key_of_revenant] was spawned as a revenant by an event.")
-			return 0
-		message_admins("No candidates were available for becoming a revenant.")
-	return kill()
+	message_admins("[player_mind.key] has been made into a revenant by an event.")
+	log_game("[player_mind.key] was spawned as a revenant by an event.")
+	return SUCCESSFUL_SPAWN
