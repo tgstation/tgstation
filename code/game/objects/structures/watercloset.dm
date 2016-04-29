@@ -447,11 +447,15 @@
 
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
-		user.drop_item()
-		M.loc = get_turf(src)
-		M.Expand()
-		return
+		if(M.wrapped)
+			user << "<span class='notice'>You need to unwrap [src] first!</span>"
+			return
+		else
+			user << "<span class='notice'>You place [src] under a stream of water...</span>"
+			user.drop_item()
+			M.loc = get_turf(src)
+			M.Expand()
+			return
 
 	var/obj/item/I = O
 	if(!I || !istype(I))
