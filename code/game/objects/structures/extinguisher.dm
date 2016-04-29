@@ -5,9 +5,19 @@
 	icon_state = "extinguisher_closed"
 	anchored = 1
 	density = 0
-	var/obj/item/weapon/extinguisher/has_extinguisher = new/obj/item/weapon/extinguisher
+	var/obj/item/weapon/extinguisher/has_extinguisher
 	var/opened = 0
 
+/obj/structure/extinguisher_cabinet/New(loc, ndir, building)
+	..()
+	if(building)
+		dir = ndir
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
+		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
+		opened = 1
+		icon_state = "extinguisher_empty"
+	else
+		has_extinguisher = new /obj/item/weapon/extinguisher(src)
 
 /obj/structure/extinguisher_cabinet/ex_act(severity, target)
 	switch(severity)
@@ -24,16 +34,26 @@
 			return
 
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user, params)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench) && !has_extinguisher)
+		user << "<span class='notice'>You start unsecuring [name]...</span>"
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 60/I.toolspeed, target = src))
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			user << "<span class='notice'>You unsecure [name].</span>"
+			new /obj/item/wallframe/extinguisher_cabinet(loc)
+			qdel(src)
+		return
+
 	if(isrobot(user) || isalien(user))
 		return
-	if(istype(O, /obj/item/weapon/extinguisher))
+	if(istype(I, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
 			if(!user.drop_item())
 				return
-			contents += O
-			has_extinguisher = O
-			user << "<span class='notice'>You place [O] in [src].</span>"
+			contents += I
+			has_extinguisher = I
+			user << "<span class='notice'>You place [I] in [src].</span>"
 		else
 			opened = !opened
 	else
@@ -84,3 +104,10 @@
 			icon_state = "extinguisher_full"
 	else
 		icon_state = "extinguisher_empty"
+
+/obj/item/wallframe/extinguisher_cabinet
+	name = "extinguisher cabinet frame"
+	desc = "Used for building wall-mounted extinguisher cabinets."
+	icon = 'icons/obj/apc_repair.dmi'
+	icon_state = "extinguisher_frame"
+	result_path = /obj/structure/extinguisher_cabinet
