@@ -135,7 +135,6 @@
 /obj/effect/overlay/temp/gib_animation
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
-	randomdir = 0
 
 /obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
 	icon_state = gib_icon
