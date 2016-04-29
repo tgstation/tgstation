@@ -1,0 +1,5 @@
+author: Mercenaryblue
+delete-after: True
+changes: 
+  - rscadd: "Adds a basic paper plane to the game. Fold paper with alt-clicking."
+  - rscadd: "Paper planes are now fully compatible with every stamps on station."
