@@ -176,6 +176,19 @@ LINEN BINS
 	icon_state = "sheetian"
 	item_color = "ian"
 
+/obj/item/weapon/bedsheet/random
+	icon_state = "sheetrainbow"
+	item_color = "rainbow"
+	name = "random bedsheet"
+	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+
+/obj/item/weapon/bedsheet/random/New()
+	var/obj/item/weapon/bedsheet/B = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
+	name = initial(B.name)
+	desc = initial(B.desc)
+	icon_state = initial(B.icon_state)
+	item_state = initial(B.item_state)
+	item_color = initial(B.item_color)
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
