@@ -10,7 +10,7 @@
 //Tesla Gun
 /obj/item/weapon/gun/energy/shock_revolver
 	name = "tesla gun"
-	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operater as it is the target."
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
 	icon_state = "tesla"
 	item_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
