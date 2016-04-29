@@ -112,7 +112,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				if (time > highest_del_time)
 					highest_del_time = time
 				if (time > 15)
-					world.log << "Error: [type] took longer then 1.5 seconds to delete (took [time/10] seconds to delete)"
+					log_game("Error: [type]([refID]) took longer then 1.5 seconds to delete (took [time/10] seconds to delete)")
+					message_admins("Error: [type]([refID]) took longer then 1.5 seconds to delete (took [time/10] seconds to delete).")
 					postpone(time/5)
 					break
 				++delslasttick
