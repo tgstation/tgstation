@@ -86,7 +86,7 @@
 	..()
 
 
-/obj/machinery/r_n_d/server/blob_act()
+/obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
 	griefProtection()
 	..()
 

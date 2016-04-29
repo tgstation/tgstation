@@ -199,7 +199,7 @@
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/atom/proc/blob_act()
+/atom/proc/blob_act(obj/effect/blob/B)
 	return
 
 /atom/proc/fire_act()

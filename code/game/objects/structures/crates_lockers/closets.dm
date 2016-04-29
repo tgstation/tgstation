@@ -206,7 +206,7 @@
 		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
 		qdel(src)
 
-/obj/structure/closet/blob_act()
+/obj/structure/closet/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 

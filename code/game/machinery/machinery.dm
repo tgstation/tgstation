@@ -187,7 +187,7 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/blob_act()
+/obj/machinery/blob_act(obj/effect/blob/B)
 	if(!density)
 		qdel(src)
 	if(prob(75))

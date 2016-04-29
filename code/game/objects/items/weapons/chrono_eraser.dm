@@ -259,7 +259,7 @@
 /obj/effect/chrono_field/ex_act()
 	return
 
-/obj/effect/chrono_field/blob_act()
+/obj/effect/chrono_field/blob_act(obj/effect/blob/B)
 	return
 
 
