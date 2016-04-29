@@ -1281,7 +1281,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chips/cookable/communist
 
 /datum/recipe/xenochips
-	reagents = list ("sodiumchloride " = 2)
+	reagents = list ("sodiumchloride" = 2)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat,
