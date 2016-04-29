@@ -1,0 +1,5 @@
+author: Shadowmech88
+delete-after: True
+changes: 
+- rscadd: All metal foam reactions will now create metal foam floors if they are on a space tile. Metal foam floors are airtight, but flimsy.
+- tweak: Metal foam reactions made with aluminum will no longer create metal foam walls.

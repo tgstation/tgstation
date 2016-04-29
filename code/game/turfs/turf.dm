@@ -449,7 +449,7 @@
 		if(env)
 			W.air = env //Copy the old environment data over if both turfs were simulated
 
-		if (istype(W,/turf/simulated/floor))
+		if (istype(W,/turf/simulated/floor) && !W.can_exist_under_lattice)
 			W.RemoveLattice()
 
 		if(tell_universe)

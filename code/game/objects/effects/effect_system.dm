@@ -728,9 +728,13 @@ steam.start() -- spawns the effect
 		sleep(30)
 
 		if(metal)
-			var/obj/structure/foamedmetal/M = new(src.loc)
-			M.metal = metal
-			M.updateicon()
+			var/turf/T = get_turf(src)
+			if(istype(T, /turf/space))
+				T.ChangeTurf(/turf/simulated/floor/foamedmetal)
+			if(metal == 2)
+				var/obj/structure/foamedmetal/M = new(src.loc)
+				M.metal = metal
+				M.updateicon()
 
 		flick("[icon_state]-disolve", src)
 		sleep(5)
@@ -891,7 +895,7 @@ steam.start() -- spawns the effect
 	density = 1
 	opacity = 1 	// changed in New()
 	anchored = 1
-	name = "foamed metal"
+	name = "foamed metal wall"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
 
@@ -901,7 +905,6 @@ steam.start() -- spawns the effect
 		icon_state = "metalfoam"
 	else
 		icon_state = "ironfoam"
-
 
 /obj/structure/foamedmetal/ex_act(severity)
 	qdel(src)
@@ -920,13 +923,10 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/attack_hand(var/mob/user)
 	user.delayNextAttack(10)
 	if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
-		to_chat(user, "<span class='notice'>You smash through the metal foam wall.</span>")
-		for(var/mob/O in oviewers(user))
-			if ((O.client && !( O.blinded )))
-				to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
+		user.visible_message("<span class='warning'>[user] smashes through \the [src].</span>","<span class='notice'>You smash through \the [src].</span>")
 		qdel(src)
 	else
-		to_chat(user, "<span class='notice'>You hit the metal foam but bounce off it.</span>")
+		to_chat(user, "<span class='notice'>You hit \the [src] but bounce off it.</span>")
 	return
 
 /obj/structure/foamedmetal/kick_act()
@@ -940,21 +940,16 @@ steam.start() -- spawns the effect
 	if (istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		G.affecting.loc = src.loc
-		for(var/mob/O in viewers(src))
-			if (O.client)
-				to_chat(O, "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
+		visible_message("<span class='warning'>[G.assailant] smashes [G.affecting] through \the [src].</span>")
 		returnToPool(I)
 		qdel(src)
 		return
 
 	if(prob(I.force*20 - metal*25))
-		to_chat(user, "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
-		for(var/mob/O in oviewers(user))
-			if ((O.client && !( O.blinded )))
-				to_chat(O, "<span class='warning'>[user] smashes through the foamed metal.</span>")
+		user.visible_message("<span class='warning'>[user] smashes through \the [src].</span>","<span class='notice'>You smash through \the [src] with \the [I].</span>")
 		qdel(src)
 	else
-		to_chat(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
+		to_chat(user, "<span class='notice'>You hit \the [src] to no effect.</span>")
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group) return 0
@@ -980,6 +975,66 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/Destroy()
 	update_nearby_tiles()
 	..()
+
+/turf/simulated/floor/foamedmetal
+	name = "foamed metal floor"
+	desc = "A lightweight foamed metal floor."
+	icon_state = "foamedmetal"
+	icon_regular_floor = "foamedmetal"
+	icon_plating = "foamedmetal"
+	can_exist_under_lattice = 1
+
+/turf/simulated/floor/foamedmetal/attack_hand(mob/user as mob)
+	user.delayNextAttack(10)
+	if ((M_HULK in user.mutations) || (prob(50)))
+		user.visible_message("<span class='warning'>[user] smashes through \the [src].</span>","<span class='notice'>You smash through \the [src].</span>")
+		src.ChangeTurf(get_base_turf(src.z))
+	else
+		to_chat(user, "<span class='notice'>You hit \the [src] but bounce off it.</span>")
+
+/turf/simulated/floor/foamedmetal/attackby(obj/item/C as obj, mob/user as mob)
+	if(!(locate(/obj/structure/lattice) in contents))
+		if(istype(C, /obj/item/stack/rods))
+			return
+	else if(istype(C, /obj/item/stack/tile))
+		return
+	user.delayNextAttack(10)
+	if (istype(C, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = C
+		G.affecting.loc = src.loc
+		visible_message("<span class='warning'>[G.assailant] smashes [G.affecting] through \the [src].</span>")
+		returnToPool(C)
+		src.ChangeTurf(get_base_turf(src.z))
+		return
+
+	if(prob(C.force*20 - 25))
+		user.visible_message("<span class='warning'>[user] smashes through \the [src].</span>","<span class='notice'>You smash through \the [src] with \the [C].</span>")
+		src.ChangeTurf(get_base_turf(src.z))
+	else
+		to_chat(user, "<span class='notice'>You hit \the [src] to no effect.</span>")
+
+/turf/simulated/floor/foamedmetal/canBuildCatwalk()
+	if(locate(/obj/structure/catwalk) in contents)
+		return BUILD_FAILURE
+	return locate(/obj/structure/lattice) in contents
+
+/turf/simulated/floor/foamedmetal/canBuildLattice(var/material)
+	if(src.x >= (world.maxx - TRANSITIONEDGE) || src.x <= TRANSITIONEDGE)
+		return BUILD_FAILURE
+	else if (src.y >= (world.maxy - TRANSITIONEDGE || src.y <= TRANSITIONEDGE ))
+		return BUILD_FAILURE
+	else if(!(locate(/obj/structure/lattice) in contents) && !(istype(material,/obj/item/stack/sheet/wood)))
+		return 1
+	return BUILD_FAILURE
+
+/turf/simulated/floor/foamedmetal/canBuildPlating(var/material)
+	if(src.x >= (world.maxx - TRANSITIONEDGE) || src.x <= TRANSITIONEDGE)
+		return BUILD_FAILURE
+	else if (src.y >= (world.maxy - TRANSITIONEDGE || src.y <= TRANSITIONEDGE ))
+		return BUILD_FAILURE
+	else if((locate(/obj/structure/lattice) in contents) && !(istype(material,/obj/item/stack/tile/wood)))
+		return 1
+	return BUILD_FAILURE
 
 /datum/effect/effect/system/reagents_explosion
 	var/amount 						// TNT equivalent

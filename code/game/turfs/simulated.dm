@@ -10,6 +10,7 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 	var/drying = 0 // tracking if something is currently drying
+	var/can_exist_under_lattice = 0 //If 1, RemoveLattice() is not called when a turf is changed to this.
 /turf/simulated/New()
 	..()
 
