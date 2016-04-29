@@ -1,0 +1,7 @@
+author: Shadowmech88
+delete-after: True
+changes: 
+- rscadd: Adds the mahoguny and the siren as admin-spawnable guns.
+- rscadd: Adds buckshot shells, orderable from Cargo in the shotgun shells crate.
+- tweak: The shotgun shells crate now contains a box of each kind of shell instead of ten loose lethal shells.
+- tweak: The railgun and blunderbuss can now be worn in the belt slot.

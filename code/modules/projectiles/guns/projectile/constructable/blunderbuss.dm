@@ -9,7 +9,7 @@
 	force = 10
 	flags = FPRINT
 	siemens_coefficient = 1
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_BACK | SLOT_BELT
 	origin_tech = "materials=1;engineering=1;combat=1"
 	attack_verb = list("strikes", "hits", "bashes")
 	mech_flags = MECH_SCAN_ILLEGAL

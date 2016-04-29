@@ -279,7 +279,7 @@
 	icon_state = null
 	var/state = null
 
-/obj/item/weapon/gun_assembly/New(turf/T, var/input_state = null)
+/obj/item/weapon/gun_assembly/New(atom/T, var/input_state = null)
 	..(T)
 	state = input_state
 	if(!state)

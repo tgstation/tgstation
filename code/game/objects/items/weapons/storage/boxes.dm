@@ -455,6 +455,15 @@
 	for(var/i=0,i<15,i++)
 		new /obj/item/ammo_casing/shotgun/dart(src)
 
+/obj/item/weapon/storage/box/buckshotshells
+	name = "buckshot shells"
+	icon_state = "lethal shells"
+
+/obj/item/weapon/storage/box/buckshotshells/New()
+	..()
+	for(var/i=0,i<15,i++)
+		new /obj/item/ammo_casing/shotgun/buckshot(src)
+
 /obj/item/weapon/storage/box/labels
 	name = "label roll box"
 	desc = "A box of refill rolls for a hand labeler."

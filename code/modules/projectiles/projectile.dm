@@ -96,8 +96,11 @@ var/list/impact_master = list()
 	animate_movement = 0
 	var/linear_movement = 1
 
+	var/projectile_slowdown = 0 //The extra time spent sleeping after each step. Increasing this will make the projectile move more slowly.
+
 	var/penetration_message = 1 //Message that is shown when a projectile penetrates an object
 	var/fire_sound = 'sound/weapons/Gunshot.ogg' //sound that plays when the projectile is fired
+	var/rotate = 1 //whether the projectile is rotated based on angle or not
 
 /obj/item/projectile/proc/on_hit(var/atom/atarget, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
@@ -208,10 +211,11 @@ var/list/impact_master = list()
 			visible_message("<span class='notice'>\The [src] misses [M] narrowly!</span>")
 			forcedodge = -1
 		else
-			if(silenced)
-				to_chat(M, "<span class='warning'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-			else
-				visible_message("<span class='warning'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			if(!custom_impact)
+				if(silenced)
+					to_chat(M, "<span class='warning'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
+				else
+					visible_message("<span class='warning'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			admin_warn(M)
 			if(istype(firer, /mob))
 				if(!iscarbon(firer))
@@ -366,6 +370,9 @@ var/list/impact_master = list()
 	else
 		error = dist_y/2 - dist_x
 
+	if(!rotate)
+		return 1
+
 	target_angle = round(Get_Angle(starting,target))
 
 	if(linear_movement)
@@ -391,6 +398,8 @@ var/list/impact_master = list()
 			pixel_y = PixelY
 
 		bumped = 0
+
+		sleeptime += projectile_slowdown
 
 		sleep(sleeptime)
 
@@ -561,6 +570,9 @@ var/list/impact_master = list()
 			newangle += 180
 		else if(distx < 0)
 			newangle += 360
+
+	if(!rotate)
+		return
 
 	target_angle = round(newangle)
 

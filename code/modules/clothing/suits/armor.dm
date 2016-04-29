@@ -1,6 +1,6 @@
 
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/gun/lawgiver)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/gun/lawgiver,/obj/item/weapon/gun/siren,/obj/item/weapon/gun/mahoguny)
 	body_parts_covered = FULL_TORSO
 	flags = FPRINT
 	heat_conductivity = ARMOUR_HEAT_CONDUCTIVITY

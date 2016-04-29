@@ -635,3 +635,111 @@
 
 /obj/item/projectile/bullet/fire_plume/ex_act()
 	return
+
+/obj/item/projectile/bullet/mahoganut
+	name = "mahogany nut"
+	icon_state = "nut"
+	damage = 30
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
+	bounces = 1
+	fire_sound = 'sound/weapons/gunshot_1.ogg'
+	bounce_sound = null
+	projectile_slowdown = 0.5
+	kill_count = 100
+	embed = 0
+	rotate = 0
+
+/obj/item/projectile/bullet/leaf
+	name = "leaf"
+	icon_state = "leaf"
+	damage = 10
+	fire_sound = null
+	penetration = 0
+	embed = 0
+	rotate = 0
+
+/obj/item/projectile/bullet/liquid_blob
+	name = "blob of liquid"
+	icon_state = "liquid_blob"
+	damage = 0
+	penetration = 0
+	embed = 0
+	flags = FPRINT | NOREACT
+	custom_impact = 1
+	rotate = 0
+	var/hard = 0
+
+/obj/item/projectile/bullet/liquid_blob/New(atom/T, var/hardness = null)
+	..(T)
+	hard = hardness
+	if(hard)
+		damage = 30
+		create_reagents(10)
+	else
+		create_reagents(50)
+
+/obj/item/projectile/bullet/liquid_blob/OnFired()
+	src.icon += mix_color_from_reagents(reagents.reagent_list)
+	src.alpha = mix_alpha_from_reagents(reagents.reagent_list)
+	..()
+
+/obj/item/projectile/bullet/liquid_blob/Bump(atom/A as mob|obj|turf|area)
+	if(!A)
+		return
+	..()
+	if(reagents.total_volume)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			reagents.add_reagent(R.id, reagents.get_reagent_amount(R.id))
+		if(istype(A, /mob))
+			if(hard)
+				var/splash_verb = pick("dousing","completely soaking","drenching","splashing")
+				A.visible_message("<span class='warning'>\The [src] smashes into [A], [splash_verb] \him!</span>",
+										"<span class='warning'>\The [src] smashes into you, [splash_verb] you!</span>")
+			else
+				var/splash_verb = pick("douses","completely soaks","drenches","splashes")
+				A.visible_message("<span class='warning'>\The [src] [splash_verb] [A]!</span>",
+										"<span class='warning'>\The [src] [splash_verb] you!</span>")
+			splash_sub(reagents, get_turf(A), reagents.total_volume/2)
+		else
+			splash_sub(reagents, get_turf(src), reagents.total_volume/2)
+		splash_sub(reagents, A, reagents.total_volume)
+		return 1
+
+/obj/item/projectile/bullet/liquid_blob/OnDeath()
+	if(get_turf(src))
+		playsound(get_turf(src), 'sound/effects/slosh.ogg', 20, 1)
+
+/obj/item/projectile/bullet/buckshot
+	name = "buckshot pellet"
+	icon_state = "buckshot"
+	damage = 10
+	penetration = 0
+	rotate = 0
+	var/is_child = 0
+
+/obj/item/projectile/bullet/buckshot/New(atom/T, var/C = 0)
+	..(T)
+	is_child = C
+
+/obj/item/projectile/bullet/buckshot/OnFired()
+	if(!is_child)
+		var/list/turf/possible_turfs = list()
+		for(var/turf/T in orange(original,1))
+			possible_turfs += T
+		for(var/I = 1; I <=8; I++)
+			var/obj/item/projectile/bullet/buckshot/B = new (src.loc, 1)
+			var/turf/targloc = pick(possible_turfs)
+			B.original = targloc
+			var/turf/curloc = get_turf(src)
+			B.loc = get_turf(src)
+			B.starting = starting
+			B.shot_from = shot_from
+			B.silenced = silenced
+			B.current = curloc
+			B.OnFired()
+			B.yo = targloc.y - curloc.y
+			B.xo = targloc.x - curloc.x
+			B.inaccurate = inaccurate
+			spawn()
+				B.process()
+	..()
