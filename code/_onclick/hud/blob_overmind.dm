@@ -125,7 +125,7 @@
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = 0
-	blobpwrdisplay.plane = PLANE_UI_BASE
+	blobpwrdisplay.layer = 20
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()
