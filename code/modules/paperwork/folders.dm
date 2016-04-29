@@ -85,6 +85,7 @@
 	update_icon()
 
 /obj/item/weapon/folder/syndicate
+	icon_state = "folder_syndie"
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of The Syndicate.\""
 
@@ -102,4 +103,9 @@
 /obj/item/weapon/folder/syndicate/blue/New()
 	..()
 	new /obj/item/documents/syndicate/blue(src)
+	update_icon()
+
+/obj/item/weapon/folder/syndicate/mining/New()
+	..()
+	new /obj/item/documents/syndicate/mining(src)
 	update_icon()
