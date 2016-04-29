@@ -158,13 +158,8 @@ bool readFromFile() {
 			
 			//Found a hard del!
 			else if (currentLine.find("Path :") != std::string::npos) {				
-				//this is pretty ugly but the alternative was implementing regex which I haven't the slightest idea how to do
-				//it takes advantage of the formatting of the line to extract the amount of failures
-				std::string tmp;
-				char c;
-				int failures;
-				std::stringstream ss(nextLine);
-				ss >> tmp >> c >> failures;
+				unsigned int failures = (unsigned int)strtoul(nextLine.substr(11).c_str(), NULL, 10);
+
 				
 				totalHardDels += failures;
 				bool found = false;
@@ -172,7 +167,7 @@ bool readFromFile() {
 					
 					//We've already encountered this
 					if (currentLine == storedHardDel[i]->type) {
-						storedHardDel[i]->type += failures;
+						storedHardDel[i]->count += failures;
 						found = true;
 						break;
 					}
