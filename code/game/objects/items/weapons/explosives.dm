@@ -4,20 +4,19 @@
 	name = "C-4"
 	desc = "Used to put holes in specific areas without too much extra hole."
 	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = 2
 	origin_tech = "syndicate=2"
 	var/timer = 10
-	var/atom/target = null
 	var/open_panel = 0
-	var/image_overlay = null
+	parent_type = /obj/item/weapon/grenade/plastic/c4
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
-	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
+	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()

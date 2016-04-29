@@ -467,9 +467,9 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
-	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
+	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
-	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/c4,\
+	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/grenade/plastic/c4,\
 	/obj/item/device/powersink, /obj/item/weapon/storage/box/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
 	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\
@@ -642,7 +642,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halitem.icon_state = "revolver"
 							halitem.name = "Revolver"
 						if(2) //c4
-							halitem.icon = 'icons/obj/assemblies.dmi'
+							halitem.icon = 'icons/obj/grenade.dmi'
 							halitem.icon_state = "plastic-explosive0"
 							halitem.name = "Mysterious Package"
 							if(prob(25))
@@ -685,7 +685,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
 						if(3)
 							//src << "C4"
-							halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+							halimage = image('icons/obj/grenade.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 					if(client) client.images += halimage
