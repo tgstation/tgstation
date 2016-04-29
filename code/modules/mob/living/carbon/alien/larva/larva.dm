@@ -70,6 +70,7 @@
 	updatehealth()
 
 /mob/living/carbon/alien/larva/blob_act()
+	..()
 	if(flags & INVULNERABLE)
 		return
 	if(stat == 2)

@@ -17,6 +17,9 @@
 /obj/effect/overlay/singularity_pull()
 	return
 
+/obj/effect/overlay/blob_act()
+	return
+
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'

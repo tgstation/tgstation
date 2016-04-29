@@ -49,3 +49,15 @@ var/list/stationary_hearers = list(	/obj/item/device/radio/intercom,
 
 /mob/virtualhearer/singularity_act()
 	return
+
+/mob/virtualhearer/cultify()
+	return
+
+/mob/virtualhearer/singuloCanEat()
+	return 0
+
+/mob/virtualhearer/singularity_pull()
+	return
+
+/mob/virtualhearer/blob_act()
+	return

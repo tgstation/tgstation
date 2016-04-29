@@ -262,6 +262,7 @@
 
 
 /mob/living/carbon/slime/blob_act()
+	..()
 	if(flags & INVULNERABLE)
 		return
 	if (stat == 2)

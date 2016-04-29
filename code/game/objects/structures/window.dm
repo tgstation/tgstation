@@ -125,7 +125,7 @@
 			return
 
 /obj/structure/window/blob_act()
-
+	..()
 	health -= rand(30, 50)
 	healthcheck()
 

@@ -11,6 +11,8 @@
 	pass_flags = PASSBLOB
 	faction = "blob"
 
+	layer = 15
+
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
@@ -93,8 +95,26 @@
 /mob/camera/blob/emote(var/act,var/m_type=1,var/message = null)
 	return
 
+/mob/camera/blob/ex_act()
+	return
+
+/mob/camera/blob/singularity_act()
+	return
+
+/mob/camera/blob/cultify()
+	return
+
+/mob/camera/blob/singuloCanEat()
+	return 0
+
+/mob/camera/blob/singularity_pull()
+	return
+
 /mob/camera/blob/blob_act()
 	return
+
+/mob/camera/blob/Process_Spacemove(var/check_drift = 0)
+	return 1
 
 /mob/camera/blob/Stat()
 	..()

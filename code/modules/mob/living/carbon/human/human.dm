@@ -209,18 +209,6 @@
 			stat("Spacepod Charge", "[istype(S.battery) ? "[(S.battery.charge / S.battery.maxcharge) * 100]" : "No cell detected"]")
 			stat("Spacepod Integrity", "[!S.health ? "0" : "[(S.health / initial(S.health)) * 100]"]%")
 
-/mob/living/carbon/human/blob_act()
-	if(flags & INVULNERABLE)
-		return
-	if(stat == DEAD)
-		return
-
-	show_message("<span class='warning'>The blob attacks you!</span>")
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
-	return
-
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")

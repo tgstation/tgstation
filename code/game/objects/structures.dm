@@ -3,6 +3,7 @@ obj/structure
 	penetration_dampening = 5
 
 obj/structure/blob_act()
+	..()
 	if(prob(50))
 		qdel(src)
 

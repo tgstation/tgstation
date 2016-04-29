@@ -90,6 +90,7 @@
 	return
 
 /obj/item/blob_act()
+	..()
 	qdel(src)
 
 /obj/item/proc/restock() //used for borg recharging

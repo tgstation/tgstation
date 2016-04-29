@@ -94,7 +94,6 @@
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
 		R.overmind = src
-
 	return
 
 /mob/camera/blob/proc/create_core()

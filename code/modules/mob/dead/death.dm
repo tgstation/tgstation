@@ -38,3 +38,6 @@
 
 /mob/dead/update_canmove()
 	return
+
+/mob/dead/blob_act()
+	return

@@ -54,6 +54,7 @@
 	return
 
 /obj/structure/grille/blob_act()
+	..()
 	health -= rand(initial(health)*0.8, initial(health)*3) //Grille will always be blasted, but chances of leaving things over
 	healthcheck(hitsound = 1)
 

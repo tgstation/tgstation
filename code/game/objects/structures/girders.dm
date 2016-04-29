@@ -281,6 +281,7 @@
 		..()
 
 /obj/structure/girder/blob_act()
+	..()
 	if(prob(40))
 		qdel(src)
 

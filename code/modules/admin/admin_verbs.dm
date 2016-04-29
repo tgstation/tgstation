@@ -118,7 +118,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/smissmas,
 	/client/proc/achievement,
 	/client/proc/mommi_static,
-	/client/proc/makepAI
+	/client/proc/makepAI,
+	/client/proc/set_blob_looks,
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom, // Allows us to spawn instances
@@ -1035,6 +1036,19 @@ var/list/admin_verbs_mod = list(
 
 	holder.shuttle_magic()
 
+/client/proc/set_blob_looks()
+	set name = "Set Blob Looks"
+	set category = "Fun"
+
+	var/chosen = input("This will change the looks of every blob currently in the world.", "Blob Looks", blob_looks[1]) as null|anything in blob_looks
+
+	if(chosen)
+		for(var/obj/effect/blob/B in blobs)
+			B.looks = chosen
+			B.update_looks(1)
+
+	log_admin("[key_name(src)] set all blobs to use the \"[chosen]\" look.")
+	message_admins("<span class='notice'>[key_name_admin(src)] set all blobs to use the \"[chosen]\" look.</span>")
 
 /datum/admins/proc/media_stop_all()
 	set name = "Stop All Media"

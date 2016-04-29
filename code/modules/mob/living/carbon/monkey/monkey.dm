@@ -679,7 +679,8 @@
 /mob/living/carbon/monkey/blob_act()
 	if(flags & INVULNERABLE)
 		return
-	if (stat != 2)
+	..()
+	if (stat != DEAD)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))

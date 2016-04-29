@@ -499,6 +499,9 @@
 	. = ..()
 	verbs.len = 0
 
+/atom/movable/overlay/blob_act()
+	return
+
 /atom/movable/overlay/attackby(a, b, c)
 	if (src.master)
 		return src.master.attackby(a, b, c)

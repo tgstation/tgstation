@@ -292,6 +292,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 
 /mob/living/simple_animal/blob_act()
+	..()
 	adjustBruteLoss(20)
 	return
 
