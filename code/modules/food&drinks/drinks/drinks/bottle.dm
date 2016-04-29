@@ -236,8 +236,8 @@
 	list_reagents = list("wine" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
-	name = "T&T Extra-Strong Absinthe"
-	desc = "An strong alcoholic drink brewed and distributed by Terb & Tonte Inc."
+	name = "\[REDACTED\] Extra-Strong Absinthe"
+	desc = "An strong alcoholic drink brewed and distributed by \[REDACTED\] & \[REMOVED FOR SECURITY REASONS\] Inc."
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
