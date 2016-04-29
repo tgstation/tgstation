@@ -124,3 +124,39 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	
+/obj/item/weapon/sharpener/cult
+	name = "eldritch whetstone"
+	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
+	used = 0
+	increment = 10
+	max = 40
+	prefix = "darkened"
+
+/obj/item/clothing/suit/cultrobes/cult_shield
+	name = "empowered cultist armor"
+	desc = "Empowered garb which creates a powerful shield around the user."
+	icon_state = "cult_armor"
+	item_state = "cult_armor"
+	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
+	var/current_charges = 3
+	var/shield_state = "shield-red"
+
+/obj/item/clothing/suit/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
+	if(current_charges > 0)
+		var/datum/effect_system/spark_spread/s = new
+		s.set_up(2, 1, src)
+		s.start()
+		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
+		current_charges--
+		if(current_charges <= 0)
+			owner.visible_message("[owner]'s shield is destroyed!")
+			shield_state = "broken"
+			owner.update_inv_wear_suit()
+		return 1
+	return 0
+
+/obj/item/clothing/suit/cultrobes/cult_shield/worn_overlays(isinhands)
+    . = list()
+    if(!isinhands)
+        . += image(icon = 'icons/effects/effects.dmi', icon_state = "shield_state")
