@@ -9,9 +9,9 @@
 		visible_message("<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw...")
 		update_canmove()
 		update_icons()
-		status_flags |=CANPUSH
+		status_flags |= CANPUSH
 
-	return ..(gibbed)
+	return ..()
 
 //When the alien queen dies, all others must pay the price for letting her die.
 /mob/living/carbon/alien/humanoid/royal/queen/death(gibbed)

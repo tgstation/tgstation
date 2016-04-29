@@ -1,11 +1,8 @@
-/mob/living/carbon/monkey/gib_animation(animate)
-	..(animate, "gibbed-m")
+/mob/living/carbon/monkey/gib_animation()
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-m")
 
-/mob/living/carbon/monkey/dust_animation(animate)
-	..(animate, "dust-m")
-
-/mob/living/carbon/monkey/dust(var/animation = 1)
-	..()
+/mob/living/carbon/monkey/dust_animation()
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-m")
 
 /mob/living/carbon/monkey/death(gibbed)
 	if(stat == DEAD)
