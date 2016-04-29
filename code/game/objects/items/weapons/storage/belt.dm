@@ -127,6 +127,7 @@
 	storage_slots = 5
 	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
+	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,
@@ -156,6 +157,9 @@
 		/obj/item/weapon/survivalcapsule,
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/ore/bluespace_crystal,
+		/obj/item/weapon/reagent_containers/food/drinks,
+
 
 		)
 
