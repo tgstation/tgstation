@@ -234,7 +234,7 @@
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 			Consume(B)
 		else
-			if(B.health - 100 > 0)
+			if(B.health > 100)
 				B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and flinches away!</span>",\
 				"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 				B.take_damage(100, BURN, src)
