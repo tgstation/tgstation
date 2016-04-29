@@ -320,10 +320,10 @@
 	category = CAT_MISC
 
 /datum/table_recipe/chemical_payload
-	name = "Chemical Bomb Core (C4)"
+	name = "Chemical Payload (C4)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin/super = 1,
+		/obj/item/weapon/stock_parts/matter_bin = 1,
 		/obj/item/weapon/grenade/plastic/c4 = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
@@ -332,7 +332,7 @@
 	category = CAT_WEAPON
 
 /datum/table_recipe/chemical_payload2
-	name = "Chemical Bomb Core (gibtonite)"
+	name = "Chemical Payload (gibtonite)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin/super = 1,

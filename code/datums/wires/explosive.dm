@@ -11,18 +11,6 @@
 /datum/wires/explosive/proc/explode()
 	return
 
-
-/datum/wires/explosive/c4
-	holder_type = /obj/item/weapon/grenade/plastic/c4
-
-/datum/wires/explosive/c4/interactable(mob/user)
-	return TRUE
-
-/datum/wires/explosive/c4/explode()
-	var/obj/item/weapon/grenade/plastic/c4/P = holder
-	P.prime()
-
-
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox
 	randomize = TRUE
