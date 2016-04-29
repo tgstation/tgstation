@@ -410,3 +410,11 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define PLANT_WEED 1
 #define PLANT_MUSHROOM 2
 #define PLANT_ALIEN 3
+
+// Maploader bounds indices
+#define MAP_MINX 1
+#define MAP_MINY 2
+#define MAP_MINZ 3
+#define MAP_MAXX 4
+#define MAP_MAXY 5
+#define MAP_MAXZ 6

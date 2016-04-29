@@ -10,7 +10,7 @@
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 	origin_tech = "engineering=1"
 
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 
 	var/obj/item/device/toner/ink = null
@@ -82,7 +82,7 @@
 		user.reagents.add_reagent("colorful_reagent", 1)
 		user.reagents.reaction(user, TOUCH, 1)
 		return TOXLOSS
-		
+
 	else
 		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from \the [name]! It might be a suicide attempt if \the [name] had any toner.</span>")
 		return SHAME
@@ -104,7 +104,6 @@
 
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/device/toner))
 		if(ink)
 			user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
@@ -115,7 +114,8 @@
 		user << "<span class='notice'>You install \the [W] into \the [name].</span>"
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-
+	else
+		return ..()
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)

@@ -100,6 +100,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/clothing/gloves/color/black/krav_maga/sec(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"

@@ -195,6 +195,13 @@
 	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
 	take_damage(damage, BURN)
 
+/obj/effect/blob/emp_act(severity)
+	if(severity > 0)
+		if(overmind)
+			overmind.blob_reagent_datum.emp_reaction(src, severity)
+		if(prob(100 - severity * 30))
+			PoolOrNew(/obj/effect/overlay/temp/emp, get_turf(src))
+
 /obj/effect/blob/tesla_act(power)
 	..()
 	if(overmind)
@@ -213,14 +220,29 @@
 	take_damage(Proj.damage, Proj.damage_type, Proj)
 	return 0
 
-/obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
+/obj/effect/blob/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/analyzer))
+		user.changeNext_move(CLICK_CD_MELEE)
+		user << "<b>The analyzer beeps once, then reports:</b><br>"
+		user << 'sound/machines/ping.ogg'
+		if(overmind)
+			user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
+			user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
+			user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
+		user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
+		user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
+		user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
+	else
+		return ..()
+
+/obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
-	if(W.damtype == BURN)
+	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [I]!</span>")
+	if(I.damtype == BURN)
 		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-	take_damage(W.force, W.damtype, user)
+	take_damage(I.force, I.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
@@ -275,18 +297,27 @@
 	user << "It seems to be made of [get_chem_name()]."
 	return
 
+/obj/effect/blob/proc/scannerreport()
+	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
+
 /obj/effect/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blob_reagent_datum.name
 	return "an unknown variant"
 
 /obj/effect/blob/normal
+	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
 	maxhealth = 25
 	health_regen = 1
 	brute_resist = 0.25
+
+/obj/effect/blob/normal/scannerreport()
+	if(health <= 10)
+		return "Currently weak to brute damage."
+	return "N/A"
 
 /obj/effect/blob/normal/update_icon()
 	..()

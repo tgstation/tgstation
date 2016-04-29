@@ -37,6 +37,9 @@
 	..()
 	if(copy)
 		copy_type = copy.type
+		if(istype(copy, /obj/item/documents/photocopy)) // Copy Of A Copy Of A Copy
+			var/obj/item/documents/photocopy/C = copy
+			copy_type = C.copy_type
 
 /obj/item/documents/photocopy/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/red) || istype(O, /obj/item/toy/crayon/blue))

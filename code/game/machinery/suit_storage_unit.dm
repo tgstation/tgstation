@@ -275,7 +275,7 @@
 			if(!user.drop_item())
 				return
 			mask = I
-		else if(istype(I, /obj/item))
+		else
 			if(storage)
 				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 				return
@@ -285,6 +285,8 @@
 
 		I.loc = src
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
+		update_icon()
+		return
 
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
@@ -295,8 +297,7 @@
 		dump_contents()
 		return
 
-	update_icon()
-	return
+	return ..()
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
@@ -332,7 +333,7 @@
 			if(state_open)
 				close_machine()
 			else
-				open_machine()
+				open_machine(0)
 				if(occupant)
 					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE

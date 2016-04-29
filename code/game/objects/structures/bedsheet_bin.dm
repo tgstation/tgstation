@@ -19,6 +19,7 @@ LINEN BINS
 	item_color = "white"
 	burn_state = FLAMMABLE
 
+	dog_fashion = /datum/dog_fashion/head/ghost
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
@@ -40,7 +41,8 @@ LINEN BINS
 		C.add_fingerprint(user)
 		qdel(src)
 		user << "<span class='notice'>You tear [src] up.</span>"
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"

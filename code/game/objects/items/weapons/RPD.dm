@@ -605,7 +605,7 @@ var/global/list/RPD_recipes=list(
 				activate()
 
 				C.add_fingerprint(usr)
-				C.update()
+				C.update_icon()
 				return 1
 			return 0
 		else
