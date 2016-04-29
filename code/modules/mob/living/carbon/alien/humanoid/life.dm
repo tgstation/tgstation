@@ -421,7 +421,7 @@
 		if (client)
 			clear_fullscreens()
 
-			if(src.eye_blind || src.blindness)
+			if(src.eye_blind)
 				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			if (src.disabilities & NEARSIGHTED)
 				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired)
