@@ -2,7 +2,6 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "hydrotray3"
-	density = 1
 	anchored = 1
 	flags = OPENCONTAINER | PROXMOVE // PROXMOVE could be added and removed as necessary if it causes lag
 	volume = 100
@@ -85,14 +84,6 @@
 	//decay_reduction = scancount
 	weed_coefficient = 2/mattercount
 	internal_light = capcount
-
-/obj/machinery/portable_atmospherics/hydroponics/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
-	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
-	else
-		return 0
 
 //Makes the plant not-alive, with proper sanity.
 /obj/machinery/portable_atmospherics/hydroponics/proc/die()
