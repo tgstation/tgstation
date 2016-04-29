@@ -9,7 +9,7 @@
 "ai" = (/obj/structure/lattice,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/space,/area/space)
 "aj" = (/turf/open/floor/plating/airless,/area/ruin/onehalf/hallway)
 "ak" = (/turf/closed/wall,/area/ruin/onehalf/hallway)
-"al" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/turf/open/floor/plasteel/white,/area/ruin/onehalf/dorms_med)
+"al" = (/obj/machinery/sleeper/syndie{dir = 4},/turf/open/floor/plasteel/white,/area/ruin/onehalf/dorms_med)
 "am" = (/turf/open/floor/plasteel/white,/area/ruin/onehalf/dorms_med)
 "an" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/plasteel/white,/area/ruin/onehalf/dorms_med)
 "ao" = (/obj/structure/bed,/obj/item/weapon/bedsheet/black,/turf/open/floor/plasteel,/area/ruin/onehalf/dorms_med)
