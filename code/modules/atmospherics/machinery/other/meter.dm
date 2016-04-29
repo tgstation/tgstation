@@ -104,7 +104,7 @@
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
 	else
-		..()
+		return ..()
 
 /obj/machinery/meter/attack_ai(mob/user)
 	return src.attack_hand(user)

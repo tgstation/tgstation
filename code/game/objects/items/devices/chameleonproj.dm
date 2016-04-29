@@ -1,7 +1,7 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
 	throwforce = 5
@@ -105,7 +105,8 @@
 /obj/effect/dummy/chameleon/attack_alien()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/ex_act() //ok now THATS some serious protection against explosions right here
+/obj/effect/dummy/chameleon/ex_act(S, T)
+	contents_explosion(S, T)
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()

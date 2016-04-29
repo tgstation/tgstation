@@ -17,7 +17,7 @@
 	icon = 'icons/obj/card.dmi'
 	w_class = 1
 
-	var/list/files = list(  )
+	var/list/files = list()
 
 /obj/item/weapon/card/data
 	name = "data disk"
@@ -76,11 +76,10 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	slot_flags = SLOT_ID
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
-	slot_flags = SLOT_ID
-
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 

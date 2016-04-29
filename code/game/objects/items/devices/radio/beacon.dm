@@ -5,6 +5,7 @@
 	item_state = "beacon"
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
+	dog_fashion = null
 
 /obj/item/device/radio/beacon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	return

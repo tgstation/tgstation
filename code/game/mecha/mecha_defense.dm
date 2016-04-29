@@ -183,7 +183,7 @@
 			else
 				user << "<span class='warning'>You were unable to attach [W] to [src]!</span>"
 		return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(user))
 				var/obj/item/weapon/card/id/id_card
@@ -223,7 +223,7 @@
 			else
 				user << "<span class='warning'>You need two lengths of cable to fix this mech!</span>"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != "harm")
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
@@ -278,22 +278,25 @@
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 		return
+	else
+		return ..()
 
-	else if(!(W.flags&NOBLUDGEON))
-		user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
-		user.do_attack_animation(src)
-		log_message("Attacked by [W]. Attacker - [user]")
-		var/deflection = 1
-		var/dam_coeff = 1
-		for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
-			if(B.attack_react(user))
-				deflection *= B.deflect_coeff
-				dam_coeff *= B.damage_coeff
-				break
-		user.visible_message("<span class='danger'>[user] hits [src] with [W].</span>", "<span class='danger'>You hit [src] with [W].</span>")
-		take_damage(round(W.force*dam_coeff),W.damtype, user.dir, deflection, dam_coeff)
+/obj/mecha/attacked_by(obj/item/I, mob/living/user)
+	log_message("Attacked by [I]. Attacker - [user]")
+	var/deflection = deflect_chance
+	var/dam_coeff = 1
+	for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
+		if(B.attack_react(user))
+			deflection *= B.deflect_coeff
+			dam_coeff *= B.damage_coeff
+			break
+	if(prob(deflection))
+		user << "<span class='danger'>\The [I.name] bounces off [name]'s armor.</span>"
+		log_append_to_last("Armor saved.")
+	else
+		user.visible_message("<span class='danger'>[user] hits [src] with [I].</span>", "<span class='danger'>You hit [src] with [I].</span>")
+		take_damage(round(I.force*dam_coeff),I.damtype)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		return 1
 
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)

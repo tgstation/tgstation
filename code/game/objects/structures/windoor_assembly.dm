@@ -171,7 +171,7 @@
 					else
 						name = "wired windoor assembly"
 			else
-				..()
+				return ..()
 
 		if("02")
 
@@ -299,7 +299,7 @@
 
 
 			else
-				..()
+				return ..()
 
 	//Update to reflect changes(if applicable)
 	update_icon()

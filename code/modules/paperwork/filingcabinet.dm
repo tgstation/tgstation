@@ -55,8 +55,10 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
-	else
+	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"
+	else
+		return ..()
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)

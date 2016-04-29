@@ -61,11 +61,17 @@
 	item_state = "clown_hat"
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
+	actions_types = list(/datum/action/item_action/adjust)
+
+	dog_fashion = /datum/dog_fashion/head/clown
+
+/obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
+	AltClick(user)
 
 /obj/item/clothing/mask/gas/clown_hat/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return
-	
+
 	var/list/options = list()
 	options["True Form"] = "clown"
 	options["The Feminist"] = "sexyclown"

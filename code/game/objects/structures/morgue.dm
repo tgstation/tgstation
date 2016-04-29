@@ -63,7 +63,8 @@
 	add_fingerprint(user)
 
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
-	if (istype(P, /obj/item/weapon/pen))
+	add_fingerprint(user)
+	if(istype(P, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_hand() != P)
 			return
@@ -73,7 +74,8 @@
 			name = text("[]- '[]'", initial(name), t)
 		else
 			name = initial(name)
-	add_fingerprint(user)
+	else
+		return ..()
 
 /obj/structure/bodycontainer/container_resist()
 	open()

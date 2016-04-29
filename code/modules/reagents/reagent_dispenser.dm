@@ -28,7 +28,10 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
-	return
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		return 0 //so we can refill them via their afterattack.
+	else
+		return ..()
 
 /obj/structure/reagent_dispensers/New()
 	create_reagents(1000)
@@ -153,9 +156,9 @@
 			return
 		qdel(I)
 		cups++
-		return
 	else
-		..()
+		return ..()
+
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg."

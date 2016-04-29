@@ -117,7 +117,8 @@
 /obj/vehicle/attackby(obj/item/I, mob/user, params)
 	if(keytype && istype(I, keytype))
 		user << "Hold [I] in one of your hands while you drive \the [name]."
-
+	else
+		return ..()
 
 /obj/vehicle/Bump(atom/movable/M)
 	. = ..()
