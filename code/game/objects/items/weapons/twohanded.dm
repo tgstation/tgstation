@@ -118,17 +118,6 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-/obj/item/weapon/twohanded/offhand/hit_reaction()//if the actual twohanded weapon is a shield, we count as a shield too!
-	var/mob/user = loc
-	if(!istype(user))
-		return 0
-	var/obj/item/I = user.get_active_hand()
-	if(I == src)
-		I = user.get_inactive_hand()
-	if(!I)
-		return 0
-	return I.hit_reaction()
-
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
@@ -186,12 +175,10 @@
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-			W.spawnfragments() // this will qdel and spawn shards
+			W.shatter()
 		else if(istype(A,/obj/structure/grille))
 			var/obj/structure/grille/G = A
-			G.health = -6
-			G.destroyed += prob(25) // If this is set, healthcheck will completely remove the grille
-			G.healthcheck()
+			G.take_damage(16)
 
 
 /*
@@ -215,7 +202,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 50
+	block_chance = 75
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
@@ -282,7 +269,6 @@
 	item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
@@ -291,7 +277,8 @@
 			update_icon()
 		else
 			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
-
+	else
+		return ..()
 
 //spears
 /obj/item/weapon/twohanded/spear
@@ -323,9 +310,7 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(AM, /turf/open/floor)) //So you can actually melee with it
-		return
-	if(istype(AM, /turf/open/space)) //So you can actually melee with it
+	if(istype(AM, /turf/open)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
@@ -336,9 +321,10 @@
  //THIS MIGHT BE UNBALANCED SO I DUNNO
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
-	if(explosive)
-		explosive.prime()
-		qdel(src)
+	if(!.) //not caught
+		if(explosive)
+			explosive.prime()
+			qdel(src)
 
 
 /obj/item/weapon/twohanded/spear/AltClick()

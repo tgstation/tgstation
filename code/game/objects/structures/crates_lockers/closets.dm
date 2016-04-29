@@ -231,28 +231,31 @@
 					var/turf/T = get_turf(src)
 					new material_drop(T)
 					qdel(src)
+					return 0
 		else if(user.drop_item())
 			W.forceMove(loc)
-	else
-		if(istype(W, /obj/item/stack/packageWrap))
+			return 1
+	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
+		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.remove_fuel(0, user))
 			return
-		else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
-			var/obj/item/weapon/weldingtool/WT = W
-			if(!WT.remove_fuel(0, user))
+		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
+		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+			if(opened || !WT.isOn())
 				return
-			user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
-			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-			if(do_after(user, 40/WT.toolspeed, 1, target = src))
-				if(opened || !WT.isOn())
-					return
-				playsound(loc, 'sound/items/welder.ogg', 50, 1)
-				welded = !welded
-				visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
-								"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
-								"<span class='italics'>You hear welding.</span>")
-				update_icon()
-		else
+			playsound(loc, 'sound/items/welder.ogg', 50, 1)
+			welded = !welded
+			visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
+							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
+							"<span class='italics'>You hear welding.</span>")
+			update_icon()
+	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
+		if(!toggle(user))
 			togglelock(user)
+		return 1
+	else
+		return ..()
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
@@ -263,13 +266,19 @@
 		return
 	if(user == O) //try to climb onto it
 		return ..()
-	if(!opened || istype(O, /obj/structure/closet))
+	if(!opened)
+		return
+	if(!isturf(O.loc))
 		return
 
+	var/actuallyismob = 0
+	if(isliving(O))
+		actuallyismob = 1
+	else if(!istype(O, /obj/item))
+		return
+	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
-	var/mob/living/L = O
-	var/actuallyismob = istype(L)
 	user.visible_message("<span class='warning'>[user] [actuallyismob ? "tries to ":""]stuff [O] into [src].</span>", \
 				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
 				 	 	"<span class='italics'>You hear clanging.</span>")
@@ -278,12 +287,13 @@
 			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
 							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
+			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Weaken(2)
-			O.forceMove(get_turf(src))
+			O.forceMove(T)
 			close()
 	else
-		O.forceMove(get_turf(src))
+		O.forceMove(T)
 	return 1
 
 /obj/structure/closet/relaymove(mob/user)
@@ -306,6 +316,10 @@
 	if(!toggle(user))
 		togglelock(user)
 		return
+
+/obj/structure/closet/attack_alien(mob/living/user)
+	return attack_hand(user)
+
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)

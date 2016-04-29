@@ -536,7 +536,7 @@
 				var/mob/living/M = A
 				if(M in immune)
 					continue
-				M.stunned = 10
+				M.Stun(10, 1, 1)
 				M.anchored = 1
 				if(istype(M, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
@@ -566,7 +566,7 @@
 
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.stunned = 0
+	M.AdjustStunned(-10, 1, 1)
 	M.anchored = 0
 	if(istype(M, /mob/living/simple_animal/hostile))
 		var/mob/living/simple_animal/hostile/H = M

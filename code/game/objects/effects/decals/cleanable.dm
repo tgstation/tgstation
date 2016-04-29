@@ -18,9 +18,10 @@
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
 	qdel(C)
 
-/obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user,)
+/obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
+			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
 				user << "<span class='notice'>[src] isn't thick enough to scoop up!</span>"
 				return
@@ -33,7 +34,8 @@
 				qdel(src)
 				return
 	if(W.is_hot()) //todo: make heating a reagent holder proc
-		if(istype(W, /obj/item/clothing/mask/cigarette)) return
+		if(istype(W, /obj/item/clothing/mask/cigarette))
+			return
 		else
 			var/hotness = W.is_hot()
 			var/added_heat = (hotness / 100)

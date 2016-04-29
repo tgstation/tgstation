@@ -190,58 +190,57 @@
 
 
 /obj/structure/beebox/attack_hand(mob/user)
-	if(ishuman(user))
-		if(!user.bee_friendly())
-			//Time to get stung!
-			var/bees = FALSE
-			for(var/b in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
-				var/mob/living/simple_animal/hostile/poison/bees/B = b
-				if(B.isqueen)
-					continue
-				if(B.loc == src)
-					B.loc = get_turf(src)
-				B.target = user
-				bees = TRUE
-			if(bees)
-				visible_message("<span class='danger'>[user] disturbs the bees!</span>")
-		else
-			var/option = alert(user, "What Action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
-			if(!Adjacent(user))
-				return
-			switch(option)
-				if("Remove a Honey Frame")
-					if(!honey_frames.len)
-						user << "<span class='warning'>There are no honey frames to remove!</span>"
-						return
+	if(!user.bee_friendly())
+		//Time to get stung!
+		var/bees = FALSE
+		for(var/b in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
+			var/mob/living/simple_animal/hostile/poison/bees/B = b
+			if(B.isqueen)
+				continue
+			if(B.loc == src)
+				B.loc = get_turf(src)
+			B.target = user
+			bees = TRUE
+		if(bees)
+			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
+	else
+		var/option = alert(user, "What Action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+		if(!Adjacent(user))
+			return
+		switch(option)
+			if("Remove a Honey Frame")
+				if(!honey_frames.len)
+					user << "<span class='warning'>There are no honey frames to remove!</span>"
+					return
 
-					var/obj/item/honey_frame/HF = pick_n_take(honey_frames)
-					if(HF)
-						if(!user.put_in_active_hand(HF))
-							HF.loc = get_turf(src)
-						visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
+				var/obj/item/honey_frame/HF = pick_n_take(honey_frames)
+				if(HF)
+					if(!user.put_in_active_hand(HF))
+						HF.loc = get_turf(src)
+					visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
 
-						var/amtH = HF.honeycomb_capacity
-						var/fallen = 0
-						while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
-							var/obj/item/weapon/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
-							if(HC)
-								HC.loc = get_turf(user)
-								amtH--
-								fallen++
-						if(fallen)
-							var/multiple = fallen > 1
-							visible_message("<span class='notice'>[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>")
+					var/amtH = HF.honeycomb_capacity
+					var/fallen = 0
+					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
+						var/obj/item/weapon/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
+						if(HC)
+							HC.loc = get_turf(user)
+							amtH--
+							fallen++
+					if(fallen)
+						var/multiple = fallen > 1
+						visible_message("<span class='notice'>[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>")
 
-				if("Remove the Queen Bee")
-					if(!queen_bee || queen_bee.loc != src)
-						user << "<span class='warning'>There is no queen bee to remove!</span>"
-						return
-					var/obj/item/queen_bee/QB = new()
-					queen_bee.loc = QB
-					bees -= queen_bee
-					QB.queen = queen_bee
-					QB.name = queen_bee.name
-					if(!user.put_in_active_hand(QB))
-						QB.loc = get_turf(src)
-					visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
-					queen_bee = null
+			if("Remove the Queen Bee")
+				if(!queen_bee || queen_bee.loc != src)
+					user << "<span class='warning'>There is no queen bee to remove!</span>"
+					return
+				var/obj/item/queen_bee/QB = new()
+				queen_bee.loc = QB
+				bees -= queen_bee
+				QB.queen = queen_bee
+				QB.name = queen_bee.name
+				if(!user.put_in_active_hand(QB))
+					QB.loc = get_turf(src)
+				visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
+				queen_bee = null

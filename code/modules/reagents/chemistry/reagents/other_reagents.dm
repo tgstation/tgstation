@@ -220,7 +220,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustParalysis(-2, 0)
 		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0, 0)
+		M.AdjustWeakened(-2, 0)
 	else
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
@@ -369,7 +369,7 @@
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3, 0, 0)
+	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
 			return

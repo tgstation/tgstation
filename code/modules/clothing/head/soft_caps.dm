@@ -4,6 +4,9 @@
 	icon_state = "cargosoft"
 	item_state = "helmet"
 	item_color = "cargo"
+
+	dog_fashion = /datum/dog_fashion/head/cargo_tech
+
 	var/flipped = 0
 
 /obj/item/clothing/head/soft/dropped()
@@ -49,60 +52,70 @@
 	desc = "It's a baseball hat in a tasteless red colour."
 	icon_state = "redsoft"
 	item_color = "red"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
 	desc = "It's a baseball hat in a tasteless blue colour."
 	icon_state = "bluesoft"
 	item_color = "blue"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
 	desc = "It's a baseball hat in a tasteless green colour."
 	icon_state = "greensoft"
 	item_color = "green"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "yellowsoft"
 	item_color = "yellow"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	item_color = "grey"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
 	desc = "It's a baseball hat in a tasteless orange colour."
 	icon_state = "orangesoft"
 	item_color = "orange"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/mime
 	name = "white cap"
 	desc = "It's a baseball hat in a tasteless white colour."
 	icon_state = "mimesoft"
 	item_color = "mime"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/purple
 	name = "purple cap"
 	desc = "It's a baseball hat in a tasteless purple colour."
 	icon_state = "purplesoft"
 	item_color = "purple"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/black
 	name = "black cap"
 	desc = "It's a baseball hat in a tasteless black colour."
 	icon_state = "blacksoft"
 	item_color = "black"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
 	icon_state = "rainbowsoft"
 	item_color = "rainbow"
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/sec
 	name = "security cap"
@@ -111,9 +124,11 @@
 	item_color = "sec"
 	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
+	dog_fashion = null
 
 /obj/item/clothing/head/soft/emt
 	name = "EMT cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
 	icon_state = "emtsoft"
 	item_color = "emt"
+	dog_fashion = null

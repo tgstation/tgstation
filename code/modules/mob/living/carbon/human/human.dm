@@ -22,6 +22,9 @@
 	randomize_human(src)
 	dna.initialize_dna()
 
+	if(dna.species)
+		set_species(dna.species.type)
+
 	//initialise organs
 	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
@@ -820,6 +823,10 @@
 	staticOverlay = getLetterImage(src, "H", 1)
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
+
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))

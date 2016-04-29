@@ -9,21 +9,25 @@
 	put_on_delay = 50
 	unacidable = 1
 	burn_state = FIRE_PROOF
+	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
 	desc = "Strange-looking red hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
+	dog_fashion = /datum/dog_fashion/head/red_wizard
 
 /obj/item/clothing/head/wizard/yellow
 	name = "yellow wizard hat"
 	desc = "Strange-looking yellow hat-wear that most certainly belongs to a powerful magic user."
 	icon_state = "yellowwizard"
+	dog_fashion = null
 
 /obj/item/clothing/head/wizard/black
 	name = "black wizard hat"
 	desc = "Strange-looking black hat-wear that most certainly belongs to a real skeleton. Spooky."
 	icon_state = "blackwizard"
+	dog_fashion = null
 
 /obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
@@ -32,23 +36,27 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
 	icon_state = "marisa"
+	dog_fashion = null
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power."
 	icon_state = "magus"
 	item_state = "magus"
+	dog_fashion = null
 
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
+	dog_fashion = null
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"

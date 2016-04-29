@@ -30,4 +30,4 @@
 
 		qdel(src)
 	else
-		..()
+		return ..()
