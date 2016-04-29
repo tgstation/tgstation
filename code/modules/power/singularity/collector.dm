@@ -118,7 +118,6 @@ var/global/list/rad_collectors = list()
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
-	Z.layer = initial(Z.layer)
 	src.loaded_tank = null
 	if(active)
 		toggle_power()
