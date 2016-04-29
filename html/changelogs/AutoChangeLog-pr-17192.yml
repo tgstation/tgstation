@@ -1,5 +1,0 @@
-author: Incoming5643
-delete-after: True
-changes: 
-  - rscadd: "The staff/wand of door creation can now also be used to open airlock doors."
-  - rscadd: "Doors spawned by the staff/wand now start open. Keep this in mind the next time you try to turn every wall on the escape shuttle into a door."

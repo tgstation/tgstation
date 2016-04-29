@@ -1,4 +1,0 @@
-author: nullbear
-delete-after: True
-changes: 
-  - rscadd: "Adds a preference option, allowing players to toggle whether recipes with no matching components should be hidden."
