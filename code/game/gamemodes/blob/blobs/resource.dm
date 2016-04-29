@@ -8,6 +8,9 @@
 	point_return = 15
 	var/resource_delay = 0
 
+/obj/effect/blob/resource/scannerreport()
+	return "Gradually supplies the blob with resources, increasing the rate of expansion."
+
 /obj/effect/blob/resource/creation_action()
 	if(overmind)
 		overmind.resource_blobs += src

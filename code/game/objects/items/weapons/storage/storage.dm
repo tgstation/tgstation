@@ -157,7 +157,6 @@
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in contents)
 		O.screen_loc = "[cx],[cy]"
-		O.layer = 20
 		cx++
 		if(cx > mx)
 			cx = tx
@@ -176,7 +175,7 @@
 			ND.sample_object.mouse_opacity = 2
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = 20
+			ND.sample_object.plane = PLANE_UI_OBJECTS
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -186,7 +185,7 @@
 			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
-			O.layer = 20
+			O.plane = PLANE_UI_OBJECTS
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -309,7 +308,7 @@
 
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow))
+		if(!prevent_warning)
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
@@ -342,7 +341,6 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		W.dropped(M)
-	W.layer = initial(W.layer)
 	W.loc = new_location
 
 	if(usr)
@@ -366,16 +364,15 @@
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
 	..()
-
+	. = 1 //no afterattack
 	if(isrobot(user))
-		user << "<span class='warning'>You're a robot. No.</span>"
-		return 0	//Robots can't interact with storage items.
+		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
-		return 0
+		return
 
 	handle_item_insertion(W, 0 , user)
-	return 1
+
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	if(user.s_active == src && loc == user) //if you're already looking inside the storage item
@@ -463,11 +460,11 @@
 	boxes.master = src
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
-	boxes.layer = 19
+	boxes.plane = PLANE_UI_BASE
 	closer = new /obj/screen/close()
 	closer.master = src
 	closer.icon_state = "backpack_close"
-	closer.layer = 20
+	closer.plane = PLANE_UI_BASE
 	orient2hud()
 
 

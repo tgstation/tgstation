@@ -112,9 +112,10 @@
 
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
-	return 0
+		check_stability()
 
 
 /obj/machinery/am_shielding/update_icon()
@@ -132,11 +133,22 @@
 		shutdown_core()
 
 
-/obj/machinery/am_shielding/attackby(obj/item/W, mob/user, params)
-	if(W.force > 10)
-		stability -= W.force/2
+/obj/machinery/am_shielding/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	if(damage >= 10)
+		stability -= damage/2
 		check_stability()
-	..()
 
 
 //Call this to link a detected shilding unit to the controller
@@ -219,6 +231,5 @@
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
-		return
-	..()
-	return
+	else
+		return ..()

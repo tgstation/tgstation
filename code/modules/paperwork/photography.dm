@@ -201,7 +201,7 @@
 		var/atom/c = atoms[i]
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
+			if(c2.layer <= c.layer)//needs updating to account for plane
 				break
 		sorted.Insert(j+1, c)
 
@@ -422,12 +422,8 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc))
+	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	if(user.Adjacent(target))
-		var/list/bad_targets = list(/obj/structure, /obj/item/weapon/storage)
-		if(is_type_in_list(target, bad_targets))
-			return
 
 	captureimage(target, user, flag)
 

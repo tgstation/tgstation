@@ -89,7 +89,6 @@
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
@@ -113,6 +112,8 @@
 		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
 		qdel(I)
 		qdel(src)
+	else
+		return ..()
 
 
 /obj/item/weapon/throwing_star

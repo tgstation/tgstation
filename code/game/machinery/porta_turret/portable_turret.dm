@@ -301,7 +301,7 @@
 			invisibility = 0
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
-	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+	else if(I.GetID())
 		//Behavior lock/unlock mangement
 		if(allowed(user))
 			locked = !locked
@@ -313,41 +313,12 @@
 		M.buffer = src
 		user << "<span class='notice'>You add [src] to multitool buffer.</span>"
 	else
-		//if the turret was attacked with the intention of harming it:
-		user.changeNext_move(CLICK_CD_MELEE)
-		take_damage(I.force * 0.5)
-		if(I.force * 0.5 > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
-			if(!attacked && !emagged)
-				attacked = 1
-				spawn()
-					sleep(60)
-					attacked = 0
-		..()
+		return ..()
 
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
-		return
-	if(!(stat & BROKEN))
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked")
-		take_damage(M.melee_damage_upper)
-	else
-		M << "<span class='danger'>That object is useless to you.</span>"
-	return
-
-/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(!(stat & BROKEN))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
-		add_logs(M, src, "attacked")
-		take_damage(15)
-	else
-		M << "\green That object is useless to you."
-	return
+/obj/machinery/porta_turret/attacked_by(obj/item/I, mob/user)
+	if(I.force)
+		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+	take_damage(I.force * 0.5, I.damtype)
 
 
 /obj/machinery/porta_turret/emag_act(mob/user)
@@ -361,37 +332,20 @@
 		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
-	if(on)
-		if(!attacked && !emagged)
-			attacked = 1
-			spawn()
-				sleep(60)
-				attacked = 0
-
-	var/damage_dealt = 0
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		damage_dealt = Proj.damage
-
-	..()
-
-	if(damage_dealt)
-		if(prob(45))
-			spark_system.start()
-		take_damage(damage_dealt)
-
-	if(lasercolor == "b" && disabled == 0)
-		if(istype(Proj, /obj/item/projectile/beam/lasertag/redtag))
-			disabled = 1
-			qdel(Proj)
-			sleep(100)
-			disabled = 0
-	if(lasercolor == "r" && disabled == 0)
-		if(istype(Proj, /obj/item/projectile/beam/lasertag/bluetag))
-			disabled = 1
-			qdel(Proj)
-			sleep(100)
-			disabled = 0
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
+	if(!disabled)
+		if(lasercolor == "b")
+			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
+				disabled = 1
+				spawn(100)
+					disabled = 0
+		else if(lasercolor == "r")
+			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
+				disabled = 1
+				spawn(100)
+					disabled = 0
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -417,10 +371,30 @@
 		qdel(src)
 
 
-/obj/machinery/porta_turret/proc/take_damage(damage)
-	health -= damage
-	if(health <= 0)
-		die()
+/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		else
+			return
+	if(!(stat & BROKEN))
+		if(damage > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
+			if(prob(30))
+				spark_system.start()
+			if(on && !attacked && !emagged)
+				attacked = 1
+				spawn(60)
+					attacked = 0
+		health -= damage
+		if(health <= 0)
+			die()
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
 	health = 0
@@ -606,7 +580,7 @@
 	if(!(faction in target.faction))
 		return 0
 	return 1
-	
+
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(disabled)
 		return

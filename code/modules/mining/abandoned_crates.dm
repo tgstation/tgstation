@@ -178,7 +178,8 @@
 	if(locked)
 		if(istype(W, /obj/item/weapon/card/emag))
 			boom(user)
-		if(istype(W, /obj/item/device/multitool))
+			return
+		else if(istype(W, /obj/item/device/multitool))
 			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
 			if(attempts == 1)
 				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
@@ -199,8 +200,8 @@
 					else if(a)
 						++cows
 				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
-		else ..()
-	else ..()
+			return
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)

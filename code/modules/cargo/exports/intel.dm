@@ -7,6 +7,7 @@
 	message = "of enemy intelligence"
 	var/global/originals_recieved = list()
 	var/global/copies_recieved = list()
+	var/copy_path = null
 	export_types = list(/obj/item/documents/syndicate)
 
 /datum/export/intel/applies_to(obj/O, contr = 0, emag = 0)
@@ -23,6 +24,9 @@
 			return FALSE
 		if((C.copy_type in originals_recieved) || (C.copy_type in copies_recieved))
 			return FALSE
+		if(copy_path && !ispath(C.copy_type, copy_path))
+			return FALSE
+
 	else if(O.type in originals_recieved)
 		return FALSE
 
@@ -45,6 +49,7 @@
 	cost = 15000 // Allows double agents to earn some cargo points without failing their objectives.
 	unit_name = "photocopied article"
 	export_types = list(/obj/item/documents/photocopy)
+	copy_path = /obj/item/documents/syndicate
 
 
 
@@ -58,6 +63,7 @@
 	cost = 15000
 	unit_name = "photocopied article"
 	export_types = list(/obj/item/documents/photocopy)
+	copy_path = /obj/item/documents/nanotrasen
 
 // Selling Syndicate docs to Syndicate, why not?
 /datum/export/intel/syndie/recovered

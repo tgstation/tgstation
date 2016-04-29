@@ -12,8 +12,8 @@ RCD
 	opacity = 0
 	density = 0
 	anchored = 0
-	flags = CONDUCT
-	force = 10
+	flags = CONDUCT | NOBLUDGEON
+	force = 0
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
@@ -225,7 +225,6 @@ RCD
 	return ..()
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(isrobot(user))	//Make sure cyborgs can't load their RCDs
 		return
 	var/loaded = 0
@@ -247,7 +246,8 @@ RCD
 	if(loaded)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-	return
+	else
+		return ..()
 
 /obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
     var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD

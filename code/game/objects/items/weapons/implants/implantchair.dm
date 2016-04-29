@@ -84,8 +84,9 @@
 			return
 		if(put_mob(M))
 			qdel(G)
-	src.updateUsrDialog()
-	return
+		updateUsrDialog()
+	else
+		return ..()
 
 
 /obj/machinery/implantchair/go_out(mob/M)

@@ -153,7 +153,7 @@
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
-/mob/living/simple_animal/revenant/blob_act()
+/mob/living/simple_animal/revenant/blob_act(obj/effect/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
 /mob/living/simple_animal/revenant/singularity_act()
@@ -174,7 +174,8 @@
 		spawn(30)
 			inhibited = 0
 			update_action_buttons_icon()
-	..()
+	else
+		return ..()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)

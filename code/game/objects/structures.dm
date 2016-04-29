@@ -15,7 +15,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act()
+/obj/structure/blob_act(obj/effect/blob/B)
 	if(!density)
 		qdel(src)
 	if(prob(50))
@@ -31,7 +31,8 @@
 	return ..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
-	if(M.damtype == "brute")
+	M.do_attack_animation(src)
+	if(M.damtype == BRUTE || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		return 1
 	return 0
@@ -41,6 +42,7 @@
 	add_fingerprint(user)
 	if(structureclimber && structureclimber != user)
 		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
 		structureclimber.Weaken(2)
 		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
 	interact(user)

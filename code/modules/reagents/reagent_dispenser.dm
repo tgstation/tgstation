@@ -23,12 +23,15 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/blob_act()
+/obj/structure/reagent_dispensers/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
-	return
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		return 0 //so we can refill them via their afterattack.
+	else
+		return ..()
 
 /obj/structure/reagent_dispensers/New()
 	create_reagents(1000)
@@ -67,7 +70,7 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/watertank/blob_act()
+/obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
@@ -95,7 +98,7 @@
 	if(src)
 		qdel(src)
 
-/obj/structure/reagent_dispensers/fueltank/blob_act()
+/obj/structure/reagent_dispensers/fueltank/blob_act(obj/effect/blob/B)
 	boom()
 
 
@@ -153,9 +156,9 @@
 			return
 		qdel(I)
 		cups++
-		return
 	else
-		..()
+		return ..()
+
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg."
@@ -166,7 +169,7 @@
 	..()
 	reagents.add_reagent("beer",1000)
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act()
+/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/effect/blob/B)
 	explosion(src.loc,0,3,5,7,10)
 
 

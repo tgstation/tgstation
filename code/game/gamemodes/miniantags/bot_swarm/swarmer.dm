@@ -371,44 +371,47 @@
 	mouse_opacity = 1
 	var/health = 30
 
-/obj/effect/swarmer/destructible/proc/TakeDamage(damage)
+/obj/effect/swarmer/destructible/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
 	health -= damage
 	if(health <= 0)
 		qdel(src)
 
-/obj/effect/swarmer/destructible/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			TakeDamage(Proj.damage)
-	..()
+/obj/effect/swarmer/destructible/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
 
-/obj/effect/swarmer/destructible/attackby(obj/item/weapon/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon))
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		TakeDamage(I.force)
-	return
+/obj/effect/swarmer/destructible/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
 
 /obj/effect/swarmer/destructible/ex_act()
 	qdel(src)
-	return
 
-/obj/effect/swarmer/destructible/blob_act()
+/obj/effect/swarmer/destructible/blob_act(obj/effect/blob/B)
 	qdel(src)
-	return
 
 /obj/effect/swarmer/destructible/emp_act()
 	qdel(src)
-	return
 
-/obj/effect/swarmer/destructible/attack_animal(mob/living/user)
-	if(isanimal(user))
-		var/mob/living/simple_animal/S = user
-		S.do_attack_animation(src)
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(S.melee_damage_type == BRUTE || S.melee_damage_type == BURN)
-			TakeDamage(rand(S.melee_damage_lower, S.melee_damage_upper))
-	return
+/obj/effect/swarmer/destructible/attack_alien(mob/living/user)
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	take_damage(rand(20,30))
+
+/obj/effect/swarmer/destructible/attack_animal(mob/living/simple_animal/S)
+	S.do_attack_animation(src)
+	S.changeNext_move(CLICK_CD_MELEE)
+	if(S.melee_damage_upper)
+		take_damage(rand(S.melee_damage_lower, S.melee_damage_upper), S.melee_damage_type)
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"

@@ -17,7 +17,8 @@
 			label = txt
 			src.name = "[label] sign"
 			desc =	"It reads: [label]"
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/picket_sign/attack_self(mob/living/carbon/human/user)
 	if( last_wave + 20 < world.time )

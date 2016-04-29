@@ -49,22 +49,20 @@
 	cell.maxcharge = 30000
 
 
-/obj/mecha/combat/gygax/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
-	overload_action.chassis = src
-	overload_action.Grant(user)
+	overload_action.Grant(user, src)
 
-/obj/mecha/combat/gygax/dark/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()
-	thrusters_action.chassis = src
-	thrusters_action.Grant(user)
+	thrusters_action.Grant(user, src)
 
 
-/obj/mecha/combat/gygax/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Remove(user)
 
-/obj/mecha/combat/gygax/dark/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
 

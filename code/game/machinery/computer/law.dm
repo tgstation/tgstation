@@ -23,7 +23,7 @@
 			return
 		M.install(current.laws, user)
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD || S.syndicate)

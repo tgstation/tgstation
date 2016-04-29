@@ -1,4 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Clown mask appearance toggle now has an action button."

@@ -35,7 +35,7 @@
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && !parent_turret.on)
-		if(parent_turret.raised) 
+		if(parent_turret.raised)
 			return
 
 		if(!parent_turret.anchored)
@@ -50,7 +50,7 @@
 			parent_turret.invisibility = 0
 			qdel(src)
 
-	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+	else if(I.GetID())
 		if(parent_turret.allowed(user))
 			parent_turret.locked = !parent_turret.locked
 			user << "<span class='notice'>Controls are now [parent_turret.locked ? "locked" : "unlocked"].</span>"
@@ -62,17 +62,10 @@
 		M.buffer = parent_turret
 		user << "<span class='notice'>You add [parent_turret] to multitool buffer.</span>"
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		parent_turret.health -= I.force * 0.5
-		if(parent_turret.health <= 0)
-			parent_turret.die()
-		if(I.force * 0.5 > 2)
-			if(!parent_turret.attacked && !parent_turret.emagged)
-				parent_turret.attacked = 1
-				spawn()
-					sleep(30)
-					parent_turret.attacked = 0
-		..()
+		return ..()
+
+/obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
+	parent_turret.attacked_by(I, user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()
 	. = 0
@@ -83,5 +76,5 @@
 		visible_message("[parent_turret] hums oddly...")
 		parent_turret.emagged = 1
 		parent_turret.on = 0
-		sleep(40)
-		parent_turret.on = 1
+		spawn(40)
+			parent_turret.on = 1

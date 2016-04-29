@@ -140,7 +140,7 @@
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
-/mob/camera/blob/blob_act()
+/mob/camera/blob/blob_act(obj/effect/blob/B)
 	return
 
 /mob/camera/blob/Stat()

@@ -248,7 +248,7 @@
 				if(rand(0,1))
 					new /obj/item/stack/spacecash/c1000(T)
 				else
-					var/obj/item/weapon/moneybag/M = new(T)
+					var/obj/item/weapon/storage/bag/money/M = new(T)
 					for(var/i in 1 to rand(5,50))
 						new /obj/item/weapon/coin/gold(M)
 		if(14)

@@ -145,7 +145,7 @@
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
 	M.adjustOxyLoss(0.5*REM, 0)
-	M.Weaken(5, 0, 0)
+	M.Weaken(5, 0)
 	M.silent = max(M.silent, 5)
 	M.tod = worldtime2text()
 	..()
@@ -174,10 +174,9 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/structure/alien/weeds/))
+	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
-		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
-		alien_weeds.healthcheck()
+		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
 	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
@@ -493,7 +492,7 @@
 		switch(picked_option)
 			if(1)
 				M.Stun(3, 0)
-				M.Weaken(3, 0, 0)
+				M.Weaken(3, 0)
 				. = 1
 			if(2)
 				M.losebreath += 10
@@ -612,7 +611,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
-		M.Weaken(3, 0, 0)
+		M.Weaken(3, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -695,4 +694,9 @@
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
-	acidpwr = 20
+	acidpwr = 42.0
+
+/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
+	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
+	. = 1 // When the blitzkrieg raged and the bodies stank
+	..() // Pleased to meet you, hope you guess my name
