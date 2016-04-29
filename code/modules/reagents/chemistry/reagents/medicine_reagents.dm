@@ -80,7 +80,7 @@
 	M.drowsyness = max(M.drowsyness-5, 0)
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0, 0)
+	M.AdjustWeakened(-1, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -493,7 +493,7 @@
 	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0, 0)
+	M.AdjustWeakened(-1, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
@@ -703,7 +703,7 @@
 	if(prob(20))
 		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-1, 0)
-		M.AdjustWeakened(-1, 0, 0)
+		M.AdjustWeakened(-1, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -807,7 +807,7 @@
 		M.adjustFireLoss(-1*REM, 0)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0, 0)
+	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -1036,7 +1036,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0, 0)
+	M.AdjustWeakened(-1, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()

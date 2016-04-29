@@ -145,7 +145,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	..()
 	var/danger
 	danger = joined_player_list.len - ticker.mode.syndicates.len
-	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
+	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.

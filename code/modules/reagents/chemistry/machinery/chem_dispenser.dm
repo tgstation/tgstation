@@ -69,7 +69,7 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/blob_act()
+/obj/machinery/chem_dispenser/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		qdel(src)
 

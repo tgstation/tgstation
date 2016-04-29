@@ -201,7 +201,7 @@
 		var/atom/c = atoms[i]
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
+			if(c2.layer <= c.layer)//needs updating to account for plane
 				break
 		sorted.Insert(j+1, c)
 

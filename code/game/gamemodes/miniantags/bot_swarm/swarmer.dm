@@ -396,7 +396,7 @@
 /obj/effect/swarmer/destructible/ex_act()
 	qdel(src)
 
-/obj/effect/swarmer/destructible/blob_act()
+/obj/effect/swarmer/destructible/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/effect/swarmer/destructible/emp_act()

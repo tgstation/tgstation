@@ -15,7 +15,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act()
+/obj/structure/blob_act(obj/effect/blob/B)
 	if(!density)
 		qdel(src)
 	if(prob(50))
@@ -31,6 +31,7 @@
 	return ..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		return 1

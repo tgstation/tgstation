@@ -27,7 +27,7 @@
 	var/list/storage_objects = list(
 		/obj/structure/closet,
 		/obj/item/weapon/storage,
-		/obj/item/weapon/moneybag,
+		/obj/item/weapon/storage/bag/money,
 		/obj/item/weapon/folder, // Selling a folder of stamped manifests? Sure, why not!
 		/obj/structure/filingcabinet,
 		/obj/structure/ore_box,

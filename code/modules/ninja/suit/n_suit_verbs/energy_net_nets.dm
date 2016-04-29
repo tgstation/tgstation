@@ -121,7 +121,7 @@ It is possible to destroy the net by the occupant or someone else.
 		if(3)
 			take_damage(rand(10,25), BRUTE, 0)
 
-/obj/effect/energy_net/blob_act()
+/obj/effect/energy_net/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/effect/energy_net/hitby(atom/movable/AM)

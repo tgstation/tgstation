@@ -27,7 +27,6 @@
 */
 
 #define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
-#define LIGHTING_LAYER 15									//Drawing layer for lighting
 #define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
@@ -236,7 +235,7 @@
 /atom/movable/light
 	icon = LIGHTING_ICON
 	icon_state = LIGHTING_ICON_STATE
-	layer = LIGHTING_LAYER
+	plane = PLANE_LIGHTING
 	mouse_opacity = 0
 	blend_mode = BLEND_OVERLAY
 	invisibility = INVISIBILITY_LIGHTING
@@ -362,7 +361,6 @@
 		T.init_lighting()
 		T.update_lumcount(0)
 
-#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
 #undef LIGHTING_ICON
 #undef LIGHTING_ICON_STATE

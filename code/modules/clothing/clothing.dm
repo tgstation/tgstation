@@ -154,9 +154,7 @@ BLIND     // can't see anything
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	user.wear_mask_update(src, toggle_off = mask_adjusted)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
 
 
 
@@ -357,8 +355,10 @@ BLIND     // can't see anything
 			I.transform *= 0.5	//halve the size so it doesn't overpower the under
 			I.pixel_x += 8
 			I.pixel_y -= 8
+			var/oldlayer = I.layer
 			I.layer = FLOAT_LAYER
 			overlays += I
+			I.layer = oldlayer
 
 
 			if(istype(loc, /mob/living/carbon/human))
@@ -492,7 +492,6 @@ BLIND     // can't see anything
 		hastie.transform *= 2
 		hastie.pixel_x -= 8
 		hastie.pixel_y += 8
-		hastie.layer = initial(hastie.layer)
 		overlays = null
 		usr.put_in_hands(hastie)
 		hastie = null
