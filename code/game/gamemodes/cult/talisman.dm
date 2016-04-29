@@ -390,6 +390,6 @@
 	origin_tech = "materials=2;magnets=5"
 
 /obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>Your [src] shatter in a discharge of dark magic!</span>", \
-							"<span class='userdanger'>[user]'s [src] shatters in a discharge of dark magic!</span>")
+	user.visible_message("<span class='danger'>[user]'s [src] shatter in a discharge of dark magic!</span>", \
+							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
 	qdel(src)
