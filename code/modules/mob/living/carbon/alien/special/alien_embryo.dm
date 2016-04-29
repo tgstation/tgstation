@@ -6,7 +6,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
-	var/stage = 0
+	var/stage = 1
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -44,10 +44,11 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 					owner.take_organ_damage(1)
 			if(prob(4))
 				owner << "<span class='danger'>Your stomach hurts.</span>"
-				if(prob(20))
+				if(prob(40))
 					owner.adjustToxLoss(1)
+					owner.vomit(95)
 		if(5)
-			owner << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
+			owner << "<span class='danger'>Something it tearing its way out of your stomach!!!</span>"
 			owner.adjustToxLoss(10)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
