@@ -26,3 +26,9 @@
 /obj/structure/showcase/fakesec/New()
 	overlays += "security"
 	overlays += "security_key"
+
+/obj/structure/showcase/horrific_experiment
+	name = "horrific experiment"
+	desc = "Some sort of pod filled with blood and vicerea. You swear you can see it moving..."
+	icon = 'icons/obj/cloning.dmi'
+	icon_state = "pod_g"
