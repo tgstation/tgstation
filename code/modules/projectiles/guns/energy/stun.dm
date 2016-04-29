@@ -6,23 +6,23 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
+
+//Tesla Gun
 /obj/item/weapon/gun/energy/shock_revolver
-	name = "tesla revolver"
-	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	icon_state = "stunrevolver"
-	item_state = "gun"
+	name = "tesla gun"
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operater as it is the target."
+	icon_state = "tesla"
+	item_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
 	can_flashlight = 0
 	pin = null
 	ammo_x_offset = 1
 
-
 /obj/item/ammo_casing/energy/shock_revolver
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/magic/lightningbolt.ogg'
 	e_cost = 200
 	select_name = "stun"
 	projectile_type = /obj/item/projectile/shock_revolver
-
 
 /obj/item/projectile/shock_revolver
 	name = "shock bolt"
@@ -41,6 +41,16 @@
 		tesla_zap(src, 3, 10000)
 	qdel(chain)
 
+/obj/item/weapon/gun/energy/shock_revolver/update_icon()
+	overlays.Cut()
+	var/power_left = (power_supply.charge / power_supply.maxcharge)
+
+	if(!power_left)
+		overlays += "tesla_empty"
+	else if(power_left < 1)
+		overlays += "tesla_half"
+	else
+		overlays += "tesla_full"
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"
