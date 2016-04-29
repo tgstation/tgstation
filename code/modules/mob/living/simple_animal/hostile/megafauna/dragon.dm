@@ -73,7 +73,7 @@
 		var/obj/effect/overlay/temp/fireball/F = new(src.loc)
 		animate(F, pixel_z = 0, time = 12)
 		sleep(12)
-		explosion(T, 0, 0, 1, 0, 1, 1)
+		explosion(T, 0, 0, 1, 0, 1, 0)
 		qdel(F)
 		qdel(src)
 
