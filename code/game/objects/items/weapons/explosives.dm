@@ -2,9 +2,9 @@
 
 /obj/item/weapon/c4
 	name = "C-4"
-	desc = "Used to put holes in specific areas without too much extra hole."
+	desc = "Used to put holes in specific areas without too much extra hole. The wires look rather chewed up."
 	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
@@ -16,13 +16,10 @@
 	var/image_overlay = null
 
 /obj/item/weapon/c4/New()
-	wires = new /datum/wires/explosive/c4(src)
-	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
+	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()
-	qdel(wires)
-	wires = null
 	target = null
 	return ..()
 
@@ -49,15 +46,6 @@
 	sleep(10)
 	explode(get_turf(user))
 	user.gib(no_brain = 1)
-
-/obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		open_panel = !open_panel
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-	else if(is_wire_tool(I))
-		wires.interact(user)
-	else
-		return ..()
 
 /obj/item/weapon/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num

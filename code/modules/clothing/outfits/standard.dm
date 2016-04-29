@@ -167,7 +167,7 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/c4,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
 
 	var/obj/item/device/pda/heads/pda = H.belt
 	pda.owner = H.real_name
@@ -347,7 +347,7 @@
 		/obj/item/weapon/storage/firstaid/regular=1,\
 		/obj/item/weapon/storage/box/flashbangs=1,\
 		/obj/item/device/flashlight=1,\
-		/obj/item/weapon/c4=1)
+		/obj/item/weapon/grenade/plastic/x4=1)
 
 /datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
