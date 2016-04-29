@@ -85,6 +85,12 @@
 	if(!is_organic())
 		brute *= 0.66 //~2/3 damage for ROBOLIMBS
 		burn *= (status & (ORGAN_PEG) ? 2 : 0.66) //~2/3 damage for ROBOLIMBS 2x for peg
+	else
+		if(owner.species)
+			if(owner.species.brute_mod)
+				brute *= owner.species.brute_mod
+			if(owner.species.burn_mod)
+				burn *= owner.species.burn_mod
 
 	//If limb took enough damage, try to cut or tear it off
 	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO) //As hilarious as it is, getting hit on the chest too much shouldn't effectively gib you.
