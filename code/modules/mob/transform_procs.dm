@@ -132,6 +132,7 @@
 			if (W)
 				W.loc = loc
 				W.dropped(src)
+				W.layer = initial(W.layer)
 
 	//Make mob invisible and spawn animation
 	notransform = 1
