@@ -70,7 +70,7 @@
 /obj/structure/cult/pylon/process()
 	if((last_shot + heal_delay) <= world.time)
 		last_shot = world.time
-		for(var/mob/living/L in range(1, src))
+		for(var/mob/living/L in range(4, src))
 			if(iscultist(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H))
