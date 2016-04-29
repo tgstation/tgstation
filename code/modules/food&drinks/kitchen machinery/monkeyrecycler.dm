@@ -102,7 +102,7 @@
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		user << "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>"
 	else
 		user << "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>"
