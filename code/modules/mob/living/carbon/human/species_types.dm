@@ -749,6 +749,7 @@ SYNDICATE BLACK OPS
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
 	flying = 0
+	blacklisted = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 	var/datum/action/innate/flight/fly
@@ -787,7 +788,7 @@ SYNDICATE BLACK OPS
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "Angel"
 		H.update_body()
-	if(ishuman(H))
+	if(ishuman(H)&& !fly)
 		fly = new
 		fly.Grant(H)
 
@@ -795,49 +796,58 @@ SYNDICATE BLACK OPS
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
 		fly.Remove(H)
+	flying = 0
+	ToggleFlight(H,0)
+	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
+		H.dna.features["wings"] = "None"
+		H.update_body()
 	..()
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)
-	..()
 	HandleFlight(H)
-
-
-
-
 
 /datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
 	if(flying)
-		var/turf/T = get_turf(src)
-		if(!T) // No more runtimes from being stuck in nullspace.
-			return 0
-
-		var/datum/gas_mixture/environment = T.return_air()
-		if(environment && !(environment.return_pressure() > 30))
-			flying = 0
-			stunmod = 1
+		if(!CanFly(H))
+			ToggleFlight(H,0)
 			H.float(0)
-			return
+			return 0
 		H.float(1)
+		return 1
 	else
 		H.float(0)
+		return 0
 
+
+
+/datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
+	var/turf/T = get_turf(H)
+	if(!T)
+		return 0
+
+	var/datum/gas_mixture/environment = T.return_air()
+	if(environment && !(environment.return_pressure() > 30))
+		return 0
+	else
+		return 1
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
 	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/angel/A = H.dna.species
-	A.flying = !A.flying
-	if(A.flying)
-		H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
-		A.stunmod = 2
-	else
-		H << "<span class='notice'>You settle gently back onto the ground...</span>"
-		A.stunmod = 1
+	if(A.CanFly(H))
+		A.flying = !A.flying
+		if(A.flying)
+			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			A.ToggleFlight(H,A.flying)
+		else
+			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			A.ToggleFlight(H,A.flying)
 
 
 /datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
@@ -869,4 +879,25 @@ SYNDICATE BLACK OPS
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
 	if(flying)
 		flyslip(H)
+		ToggleFlight(H,0)
 	..()
+
+/datum/species/angel/negates_gravity()
+	return flying
+
+/datum/species/angel/space_move()
+	return flying
+
+/datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
+	if(flight)
+		flying = 1
+		stunmod = 2
+		speedmod = -1
+		H.pass_flags |= PASSTABLE
+		H.OpenWings()
+	else
+		flying = 0
+		stunmod = 1
+		speedmod = 0
+		H.pass_flags &= ~PASSTABLE
+		H.CloseWings()

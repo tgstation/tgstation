@@ -1398,9 +1398,15 @@
 	. = stunmod * amount
 
 
+//////////////
+//Space Move//
+//////////////
 
+/datum/species/proc/space_move()
+	return 0
 
-
+/datum/species/proc/negates_gravity()
+	return 0
 
 
 

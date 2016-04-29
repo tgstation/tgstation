@@ -324,7 +324,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("wings" in pref_species.mutant_bodyparts)	//TODO: make specific body parts be toggleable via config or something.
+				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
 					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Wings</h3>"
