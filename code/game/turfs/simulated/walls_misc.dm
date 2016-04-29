@@ -12,7 +12,7 @@
 	..()
 
 /turf/closed/wall/cult/break_wall()
-	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
+	new/obj/item/stack/sheet/metal/(get_turf(src), 1)
 	return (new /obj/structure/girder/cult(src))
 
 /turf/closed/wall/cult/devastate_wall()
