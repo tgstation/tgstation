@@ -45,7 +45,7 @@
 	message_admins("[key_name(user)] suicided with [src.name] at ([x],[y],[z])")
 	sleep(10)
 	explode(get_turf(user))
-	user.gib()
+	user.gib(no_brain = 1)
 
 /obj/item/weapon/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
