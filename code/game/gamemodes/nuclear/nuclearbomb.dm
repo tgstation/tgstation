@@ -326,7 +326,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
 
-/obj/machinery/nuclearbomb/blob_act()
+/obj/machinery/nuclearbomb/blob_act(obj/effect/blob/B)
 	if (timing == -1)
 		return
 	else

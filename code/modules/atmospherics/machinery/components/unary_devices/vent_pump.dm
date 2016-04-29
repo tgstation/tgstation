@@ -259,7 +259,9 @@
 					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 0
 				update_icon()
-				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+				var/image/I = image(src, loc, dir = dir)
+				I.plane = PLANE_UI_OBJECTS
+				pipe_vision_img = I
 			return 0
 	else
 		return ..()
@@ -289,7 +291,9 @@
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
 	welded = 0
 	update_icon()
-	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+	var/image/I = image(src, loc, dir = dir)
+	I.plane = PLANE_UI_OBJECTS
+	pipe_vision_img = I
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 
