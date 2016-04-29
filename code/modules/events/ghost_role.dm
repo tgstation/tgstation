@@ -7,20 +7,32 @@
 /datum/round_event/ghost_role/start()
 	try_spawning()
 
-/datum/round_event/ghost_role/proc/try_spawning()
-	// The event does not run until the spawning has been successful
-	// or attempted twice, to prevent the spawn(300) from being gc'd
+/datum/round_event/ghost_role/proc/try_spawning(sanity = 0)
+	// The event does not run until the spawning has been attempted
+	// to prevent us from getting gc'd halfway through
 	processing = FALSE
-	var/success = spawn_role()
-	if(success)
-		processing = TRUE
-	else
-		message_admins("Insufficient players for [role_name]. Retrying in 30s.")
+
+	var/status = spawn_role()
+	if(status == WAITING_FOR_SOMETHING)
+		message_admins("The event will not spawn a [role_name] until certain \
+			conditions are met. Waiting 30s and then retrying.")
 		spawn(300)
-			success = spawn_role()
-			if(!success)
-				message_admins("Insufficient players for [role_name]. Giving up.")
-			processing = TRUE
+			// I hope this doesn't end up running out of stack space
+			try_spawning()
+		return
+
+	if(status == MAP_ERROR)
+		message_admins("[role_name] cannot be spawned due to a map error.")
+	else if(status == NOT_ENOUGH_PLAYERS)
+		message_admins("[role_name] cannot be spawned due to lack of players \
+			signing up.")
+	else if(status == SUCCESSFUL_SPAWN)
+		message_admins("[role_name] spawned successfully.")
+	else
+		message_admins("An attempt to spawn [role_name] returned [status], \
+			this is a bug.")
+
+	processing = TRUE
 
 /datum/round_event/ghost_role/proc/spawn_role()
 	// Return true if role was successfully spawned, false if insufficent
@@ -37,4 +49,4 @@
 	var/list/candidates = priority_candidates + regular_candidates
 
 	return candidates
-	
+
