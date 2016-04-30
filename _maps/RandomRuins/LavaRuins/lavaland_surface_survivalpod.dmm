@@ -130,12 +130,12 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "t" = (
-/obj/machinery/door/airlock/survival_pod/vertical,
 /obj/effect/decal/cleanable/blood/footprints{
 	tag = "icon-blood1 (NORTH)";
 	icon_state = "blood1";
 	dir = 1
 	},
+/obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/pod/dark{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
