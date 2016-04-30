@@ -395,7 +395,7 @@
 			new i(loc)
 	if(!gibbed)
 		if(death_sound)
-			playsound(get_turf(src),death_sound, 200, 1
+			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
 			visible_message("<span class='danger'>[deathmessage]</span>")
 		else if(!del_on_death)
