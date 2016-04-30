@@ -329,6 +329,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
+	if(src.reagents && src.reagents.has_reagent("morphine"))
+		amount = amount * 0.75
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
 		update_stamina()
@@ -985,9 +987,30 @@ Sorry Giacom. Please don't be mad :(
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= config.health_threshold_crit && !stat)
-			src << "<span class='notice'>You're too exhausted to keep going...</span>"
-			Weaken(5)
-			setStaminaLoss(health - 2)
+			//src << "<span class='warning'>You feel awful!</span>"
+			//Weaken(5)
+			//setStaminaLoss(health - 2)
+		if(staminaloss > 130)
+			src.setStaminaLoss(130)
+		if(staminaloss >= 110)
+			src.emote("faint")
+		else if(staminaloss > 75)
+			if(prob(3))
+				src << "<span class = 'userdanger'>Your mind is overcome by pain!</span>"
+				confused += 3
+			if(prob(10))
+				src.emote("groan")
+				blur_eyes(6)
+			if(prob(28))
+				shake_camera(src, 2, 1)
+		else if(staminaloss > 50)
+			if(prob(8))
+				src << "<span class = 'warning'>You feel terrible!</span>"
+			if(prob(6))
+				src.emote("groan")
+				blur_eyes(5)
+			if(prob(6))
+				shake_camera(src, 1, 1)
 	update_health_hud()
 
 /mob/proc/update_sight()
@@ -1046,7 +1069,7 @@ Sorry Giacom. Please don't be mad :(
 	if(amount>0)
 		if(!old_eye_blurry)
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
+	else if(old_eye_blurry && !eye_blurry)
 		clear_fullscreen("blurry")
 
 /mob/proc/set_blurriness(amount)
@@ -1057,7 +1080,6 @@ Sorry Giacom. Please don't be mad :(
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
 	else if(old_eye_blurry)
 		clear_fullscreen("blurry")
-
 
 /mob/proc/damage_eyes(amount)
 	return

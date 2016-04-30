@@ -170,7 +170,7 @@
 			return
 		if(weakeyes)
 			Stun(2)
-		
+
 		if (damage == 1)
 			src << "<span class='warning'>Your eyes sting a little.</span>"
 			if(prob(40))
@@ -696,7 +696,7 @@
 			clear_fullscreen("oxy")
 
 		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+		var/hurtdamage = (getBruteLoss() + getFireLoss()) / 2 + damageoverlaytemp + getStaminaLoss()
 		if(hurtdamage)
 			var/severity = 0
 			switch(hurtdamage)

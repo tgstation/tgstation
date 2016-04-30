@@ -138,14 +138,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			bleed_ticker = max(bleed_ticker - blood_stopped, 0)
 			bleedsuppress = max(bleedsuppress - blood_stopped - 0.75, 0)
 			if(bleedsuppress == 0)
-				src << "<span class='warning'>The blood soaks through your bandage and you remove it.</span>"
+				src << "<span class='warning'>The blood soaks through your bandage, causing them to slip off.</span>"
 			blood_max = max(blood_max - blood_stopped, 0)
 
 		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
 			blood_max += 3
 		drip(blood_max)
 		bleed_ticker = max(bleed_ticker - 0.5, 0)
-		src << "You bled [blood_max], suppressed [blood_stopped], and have [bleed_ticker] left to bleed. Your bandage has [bleedsuppress] power left."
+		//src << "You bled [blood_max], suppressed [blood_stopped], and have [bleed_ticker] left to bleed. Your bandage has [bleedsuppress] power left."
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(amt as num)
@@ -273,6 +273,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
 	var/donor_rh = (findtext(donor,"+")>0)
 	var/receiver_rh = (findtext(receiver,"+")>0)
+
+	receiver << "[donor_rh] , [receiver_rh]"
 
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)

@@ -786,7 +786,7 @@
 			if(istype(J) && J.allow_thrust(0.01, H))
 				. -= 2
 		else
-			var/health_deficiency = (100 - H.health + H.staminaloss)
+			var/health_deficiency = (100 - H.health + (H.staminaloss / 2))
 			if(health_deficiency >= 40)
 				. += (health_deficiency / 25)
 

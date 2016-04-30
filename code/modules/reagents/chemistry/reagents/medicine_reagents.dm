@@ -541,13 +541,14 @@
 	addiction_threshold = 25
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/M)
-	M.status_flags |= IGNORESLOWDOWN
+	//M.status_flags |= IGNORESLOWDOWN
+	M.adjustStaminaLoss(-2.5*REM)
 	switch(current_cycle)
-		if(11)
+		if(20)
 			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
-		if(12 to 24)
+		if(21 to 39)
 			M.drowsyness += 1
-		if(24 to INFINITY)
+		if(40 to INFINITY)
 			M.Sleeping(2, 0)
 			. = 1
 	..()

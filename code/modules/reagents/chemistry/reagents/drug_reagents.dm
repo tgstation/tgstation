@@ -44,6 +44,8 @@
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
+	if(M.getStaminaLoss() > 0 && prob(6))
+		M << "<span class='notice'>The nicotine takes your mind off the pain.</span>"
 	..()
 	. = 1
 

@@ -245,9 +245,9 @@
 	if(blood_max)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
-		else if(bleed_ticker > 20)
+		else if(blood_max > 2)
 			msg += "<B>[t_He] [t_is] gushing blood!</B>\n"
-		else if(bleed_ticker > 10)
+		else if(blood_max > 1)
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 		else
 			msg += "[t_He] [t_is] bleeding slightly.\n"
@@ -325,4 +325,4 @@
 	msg += "*---------*</span>"
 
 	user << msg
-	user.visible_message("<b>[user]</b> looks at <b>[src]</b>.")
+	user.visible_message("<font size = '1'><b>[user]</b> looks at <b>[src]</b>.</font>")

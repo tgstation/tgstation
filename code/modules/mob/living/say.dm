@@ -108,6 +108,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
+		src.visible_message_band("<font size = '1'><b>[src]</b> chatters into their headset.</font>")
 		message_range = 1
 
 	//No screams in space, unless you're next to someone.
@@ -234,6 +235,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(stuttering)
 		message = stutter(message)
+	else if(staminaloss > 50)
+		message = stutter(message, round(staminaloss / 10))
 
 	if(slurring)
 		message = slur(message)

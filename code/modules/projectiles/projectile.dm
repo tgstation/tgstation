@@ -39,6 +39,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0
+	var/bleed
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 
 /obj/item/projectile/New()
@@ -80,6 +81,8 @@
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)
+	if(bleed)
+		L.bleed_ticker += bleed
 	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()

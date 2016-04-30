@@ -103,6 +103,35 @@ var/next_mob_id = 0
 						continue
 		M.show_message(msg,1,blind_message,2)
 
+// Same as visible_message, but doesn't display to people within a 1 tile radius of the source (used for radio emotes)
+
+/mob/proc/visible_message_band(message, self_message, blind_message)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	for(var/mob/M in get_hearers_in_view(7, src))
+		if(!M.client)
+			continue
+		if(in_range(M, src))
+			continue
+		var/msg = message
+		if(M == src) //the src always see the main message or self message
+			if(self_message)
+				msg = self_message
+		else
+			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+				if(blind_message) // then people see blind message if there is one, otherwise nothing.
+					msg = blind_message
+				else
+					continue
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
+					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+						msg = blind_message
+					else
+						continue
+		M.show_message(msg,1,blind_message,2)
+
 // Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"

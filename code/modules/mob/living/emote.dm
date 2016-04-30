@@ -74,10 +74,10 @@
 			m_type = 1
 
 		if ("faint","faints")
-			message = "<B>[src]</B> faints."
+			message = "<B>[src]</B> faints!"
 			if(sleeping)
 				return //Can't faint while asleep
-			SetSleeping(10) //Short-short nap
+			SetSleeping(7) //Short-short nap
 			m_type = 1
 
 		if ("flap","flaps")

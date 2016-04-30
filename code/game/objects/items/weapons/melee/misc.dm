@@ -24,13 +24,14 @@
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum."
+	desc = "An extremely solid wooden truncheon. A few whacks with this will put even the strongest, most belligerent man on the ground, writhing in pain."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = 3
+	hit_reaction_chance = 30
 	var/cooldown = 0
 	var/on = 1
 
@@ -51,33 +52,31 @@
 			return
 		if(!isliving(target))
 			return
-		if (user.a_intent == "harm")
-			if(!..()) return
-			if(!isrobot(target)) return
-		else
-			if(cooldown <= 0)
-				if(ishuman(target))
-					var/mob/living/carbon/human/H = target
-					if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
-						return
-				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-				target.Weaken(3)
-				add_logs(user, target, "stunned", src)
-				src.add_fingerprint(user)
-				target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
-					"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
-				if(!iscarbon(user))
-					target.LAssailant = null
-				else
-					target.LAssailant = user
-				cooldown = 1
-				spawn(40)
-					cooldown = 0
+		if(cooldown <= 0)
+			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+			//target.Weaken(3)
+			var/mob/living/carbon/human/H = target
+			H.adjustStaminaLoss(55)
+			if(prob(50))
+				shake_camera(H, 2, 1)
+			spawn(60)
+				H.adjustStaminaLoss(-15)
+			spawn(100)
+				H.adjustStaminaLoss(-15)
+			cooldown = 1
+			spawn(20)
+				cooldown = 0
+			..()
 		return
 	else
 		return ..()
 
 
+/obj/item/weapon/melee/classic_baton/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
+		owner.visible_message("<span class='danger'>[owner] counters the disarm with their [src]!</span>")
+		return 1
+	return 0
 
 /obj/item/weapon/melee/classic_baton/telescopic
 	name = "telescopic baton"

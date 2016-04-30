@@ -205,15 +205,17 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 	belt = /obj/item/device/pda/security
 	ears = /obj/item/device/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/navyblue
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/helmet/sec
+	head = /obj/item/clothing/head/beret/sec/navyofficer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	r_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	//r_pocket = /obj/item/device/assembly/flash/handheld
+	//suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	suit_store = /obj/item/weapon/gun/projectile/revolver/detective
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton=1,\
+		/obj/item/ammo_box/c38=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
