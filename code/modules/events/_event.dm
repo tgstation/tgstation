@@ -67,7 +67,7 @@
 	return E
 
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
-	var/processing = 1
+	var/processing = TRUE
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
@@ -150,7 +150,8 @@
 
 
 //Sets up the event then adds the event to the the list of running events
-/datum/round_event/New()
+/datum/round_event/New(my_processing = TRUE)
 	setup()
+	processing = my_processing
 	SSevent.running += src
 	return ..()

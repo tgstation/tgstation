@@ -12,13 +12,15 @@
 	minimum_required = 1
 	role_name = "alien larva"
 
+	// 50% chance of being incremented by one
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
-	spawncount = rand(1, 2)
+	if(prob(50))
+		spawncount++
 
 /datum/round_event/ghost_role/alien_infestation/kill()
 	if(!successSpawn && control)
