@@ -295,7 +295,7 @@
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
-		user.visible_message("<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+		user << "<span class='cultitalic'>You disturb [target] with visons of the end!</span>"
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
@@ -364,7 +364,7 @@
 		invoke(user, 1)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		C.visible_message("<span class='danger'>[user] begins restraining [C] with dark magic!</span>", \
-								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
+								"<span class='userdanger'>[user] begins shaping a dark magic around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
