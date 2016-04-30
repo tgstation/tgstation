@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-- rscadd: Vox traders now spawn with some money and coins.
-- rscadd: "When vox traders spawn, they have an option to start with a traveler's ID. The ID has no access, and is only used for identification. Lore-wise, a traveler's ID is required to legally travel in human-controlled territories."
