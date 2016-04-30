@@ -104,4 +104,4 @@ var/list/GPS_list = list()
 	flags = ABSTRACT
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
-	invisibility = 100
+	invisibility = INVISIBILITY_MAXIMUM

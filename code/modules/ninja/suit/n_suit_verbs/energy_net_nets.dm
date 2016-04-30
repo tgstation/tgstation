@@ -66,7 +66,7 @@ It is possible to destroy the net by the occupant or someone else.
 		//No need to check for countdown here since while() broke, it's implicit that it finished.
 
 		density = 0//Make the net pass-through.
-		invisibility = 101//Make the net invisible so all the animations can play out.
+		invisibility = INVISIBILITY_ABSTRACT//Make the net invisible so all the animations can play out.
 		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 		for(var/obj/item/W in M)
 			if(istype(M,/mob/living/carbon/human))

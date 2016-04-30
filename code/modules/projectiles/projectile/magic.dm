@@ -141,7 +141,7 @@
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()
-			M.invisibility = 101
+			M.invisibility = INVISIBILITY_ABSTRACT
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M

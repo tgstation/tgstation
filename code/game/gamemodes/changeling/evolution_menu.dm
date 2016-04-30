@@ -398,7 +398,7 @@ var/list/sting_paths
 				p.on_refund(src)
 		if(hud_used)
 			hud_used.lingstingdisplay.icon_state = null
-			hud_used.lingstingdisplay.invisibility = 101
+			hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
