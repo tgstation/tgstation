@@ -109,19 +109,20 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
+
 /obj/item/clothing/head/helmet/space/cult
-	name = "nar-sian bruiser's helmet"
+	name = "nar-sian hardened helmet"
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/cult
-	name = "nar-sian bruiser's armor"
+	name = "nar-sian hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
-	w_class = 3
+	w_class = 2
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	
@@ -131,7 +132,7 @@
 	used = 0
 	increment = 10
 	max = 40
-	prefix = "darkened"
+	prefix = "nar-sian"
 
 /obj/item/clothing/suit/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -160,3 +161,35 @@
     . = list()
     if(!isinhands)
         . += image(icon = 'icons/effects/effects.dmi', icon_state = "shield_state")
+        
+/obj/item/clothing/suit/cultrobes/berserker
+	name = "flagellant's rags"
+
+	desc = "bloody rags infused with dark magic; allowing the user to move at inhuman speeds, but at the cost of increased damage"
+	icon_state = "crusader-red"
+	item_state = "crusader-red"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	slowdown = -1
+
+/obj/item/clothing/suit/cultrobes/berserker/equipped(var/mob/living/carbon/human/user, slot)
+	if(user && slot == slot_wear_suit)	
+		var/datum/species/S = user.dna.species
+		S.brutemod *= 2
+		S.burnmod *= 2
+		S.coldmod *= 2
+	..()
+
+/obj/item/clothing/glasses/night/cultblind
+	desc = "may nar-sie guide you through the darkness and shield you from the light."
+	name = "zealot's blindfold"
+	icon_state = "blindfold"
+	item_state = "blindfold"
+	darkness_view = 8
+	flash_protect = 1
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+	name = "flask of unholy water"
+	desc = "toxic to nonbelievers, this water renews and reinvigorates the faithful of nar'sie."
+	icon_state = "holyflask"
+	color = "#333333"
+	list_reagents = list("unholywater" = 40)
