@@ -597,4 +597,3 @@
 	registered_name = "traveler"
 	assignment = "visitor"
 	icon_state = "trader"
-	virtual_wallet = 0 //No virtual wallet
