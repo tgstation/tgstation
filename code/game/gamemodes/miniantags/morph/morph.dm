@@ -126,12 +126,14 @@
 		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
 						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
-	if(gibbed)
-		for(var/atom/movable/AM in src)
-			AM.loc = loc
-			if(prob(90))
-				step(AM, pick(alldirs))
-	..(gibbed)
+	..()
+
+/mob/living/simple_animal/hostile/morph/Destroy()
+	for(var/atom/movable/AM in src)
+		AM.loc = loc
+		if(prob(90))
+			step(AM, pick(alldirs))
+	return ..()
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()

@@ -599,7 +599,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(confirm == "Yes")
 		M.gib()
 	else
-		M.gib(no_brain = 1)
+		M.gib(1)
 	feedback_add_details("admin_verb","GIB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_gib_self()
@@ -611,7 +611,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
 			return
 		else
-			mob.gib(no_brain = 1)
+			mob.gib(1, 1)
 
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")

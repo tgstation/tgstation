@@ -15,7 +15,11 @@
 
 	var/datum/plant_gene/target
 	var/operation = ""
-	var/rating = 0 // TODO: add failures, make it useful
+	var/rating = 0
+	var/max_extract_pot = 50
+	// The cap on potency gene extraction.
+	// This number is for T1, each upgraded part adds 5% for a tech level above T1.
+	// At T4, it reaches 95%.
 
 /obj/machinery/plantgenes/New()
 	..()
@@ -24,7 +28,6 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	RefreshParts()
 
@@ -32,6 +35,7 @@
 	rating = 0
 	for(var/obj/item/weapon/stock_parts/S in component_parts)
 		rating += S.rating-1
+	max_extract_pot = initial(max_extract_pot) + rating*5
 
 /obj/machinery/plantgenes/update_icon()
 	..()
@@ -90,7 +94,7 @@
 	if(!user)
 		return
 
-	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
 	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
 		popup.close()
 		return
@@ -114,16 +118,18 @@
 		switch(operation)
 			if("remove")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
-//				dat += "<span class='bad'>Failure may damage or destroy the sample!</span>" // No failures yet. TODO: add failures
 			if("extract")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
 				dat += "<span class='bad'>The sample will be destroyed in process!</span>"
+				if(istype(target, /datum/plant_gene/core/potency))
+					var/datum/plant_gene/core/gene = target
+					if(gene.value > max_extract_pot)
+						dat += "<br><br>This device's extraction capabilities are currently limited to [max_extract_pot] potency. "
+						dat += "Target gene will be degraded to [max_extract_pot] potency on extraction."
 			if("replace")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
-//				dat += "<span class='bad'>Failure may damage or destroy the sample!</span>" // No failures yet. TODO: add failures
 			if("insert")
 				dat += "<span class='highlight'>[disk.gene.get_name()]</span> gene into \the <span class='highlight'>[seed]</span>?<br>"
-//				dat += "<span class='bad'>Failure may damage or destroy the sample!</span>" // No failures yet. TODO: add failures
 		dat += "</div><div class='line'><a href='?src=\ref[src];gene=\ref[target];op=[operation]'>Confirm</a> "
 		dat += "<a href='?src=\ref[src];abort=1'>Abort</a></div>"
 		popup.set_content(dat)
@@ -274,6 +280,9 @@
 				if("extract")
 					if(disk && !disk.read_only)
 						disk.gene = G
+						if(istype(G, /datum/plant_gene/core/potency))
+							var/datum/plant_gene/core/gene = G
+							gene.value = min(gene.value, max_extract_pot)
 						disk.update_name()
 						qdel(seed)
 						seed = null
@@ -337,6 +346,19 @@
 		return // Already modded name and icon
 	seed.name = "experimental " + seed.name
 	seed.icon_state = "seed-x"
+
+
+
+// Gene modder for seed vault ship, built with high-end alien (?) parts.
+/obj/machinery/plantgenes/seedvault/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/plantgenes(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/quadultra(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator/femto(src)
+	RefreshParts()
 
 
 /*

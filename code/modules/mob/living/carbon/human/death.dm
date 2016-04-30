@@ -1,11 +1,8 @@
-/mob/living/carbon/human/gib_animation(animate)
-	..(animate, "gibbed-h")
+/mob/living/carbon/human/gib_animation()
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
 
-/mob/living/carbon/human/dust_animation(animate)
-	..(animate, "dust-h")
-
-/mob/living/carbon/human/dust(animation = 1)
-	..()
+/mob/living/carbon/human/dust_animation()
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs()
 	hgibs(loc, viruses, dna)

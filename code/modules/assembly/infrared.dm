@@ -193,7 +193,7 @@
 		left--
 	if(left < 1)
 		if(!(visible))
-			invisibility = 101
+			invisibility = INVISIBILITY_ABSTRACT
 		else
 			invisibility = 0
 	else

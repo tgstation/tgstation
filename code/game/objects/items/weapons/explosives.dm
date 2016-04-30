@@ -48,7 +48,7 @@
 	message_admins("[key_name(user)] suicided with [src.name] at ([x],[y],[z])")
 	sleep(10)
 	explode(get_turf(user))
-	user.gib(no_brain = 1)
+	user.gib(1, 1)
 
 /obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))

@@ -64067,8 +64067,15 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/structure/table/wood,
+/obj/structure/disposalpipe/segment,
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -2;
+	pixel_y = -6
+	},
+/turf/open/floor/wood,
+/area/library)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -108281,7 +108288,7 @@ aFu
 aHc
 aIw
 aJS
-aJS
+cAK
 aMJ
 aNP
 aOS
