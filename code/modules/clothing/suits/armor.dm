@@ -19,15 +19,10 @@
 	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/suit/armor/vest/alt
-	name = "armor"
 	desc = "An armored vest that protects against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
-	blood_overlay_type = "armor"
-	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
-
-
-
+	
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."
