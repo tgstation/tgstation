@@ -3,7 +3,7 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	force = 18
+	force = 15
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
@@ -43,7 +43,7 @@
 		M.unEquip(src)
 		M.put_in_active_hand(holy_weapon)
 		qdel(src)
-
+/*
 /obj/item/weapon/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
@@ -54,16 +54,16 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
-
+*/
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
 	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
 	w_class = 5
-	force = 5
+//	force = 5
 	slot_flags = SLOT_BACK
-	block_chance = 50
+//	block_chance = 50
 	var/shield_icon = "shield-red"
 
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
@@ -84,16 +84,16 @@
 	desc = "A weapon fit for a crusade!"
 	w_class = 5
 	slot_flags = SLOT_BACK|SLOT_BELT
-	block_chance = 30
-	sharpness = IS_SHARP
+/*	block_chance = 30
+	sharpness = IS_SHARP*/
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-
+/*
 /obj/item/weapon/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
-
+*/
 /obj/item/weapon/nullrod/claymore/darkblade
 	icon_state = "cultblade"
 	item_state = "cultblade"
@@ -156,9 +156,9 @@
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
-	armour_penetration = 100
+//	armour_penetration = 100
 	slot_flags = SLOT_BACK
-	sharpness = IS_SHARP
+//	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
 /obj/item/weapon/nullrod/hammmer
@@ -169,7 +169,7 @@
 	slot_flags = SLOT_BELT
 	w_class = 5
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
-
+/*
 /obj/item/weapon/nullrod/chainsaw
 	name = "chainsaw hand"
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
@@ -180,7 +180,7 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
-
+*/
 /obj/item/weapon/nullrod/clown
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "honkrender"
@@ -188,7 +188,7 @@
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrafices."
 	hitsound = 'sound/items/bikehorn.ogg'
-	sharpness = IS_SHARP
+//	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/whip
@@ -207,8 +207,8 @@
 		if(is_shadow(H))
 			var/phrase = pick("Die monster! You don't belong in this world!!!", "You steal men's souls and make them your slaves!!!", "Your words are as empty as your soul!!!", "Mankind ill needs a savior such as you!!!")
 			user.say("[phrase]")
-			H.adjustBruteLoss(8) //Bonus damage
-
+//			H.adjustBruteLoss(8) //Bonus damage
+/*
 /obj/item/weapon/nullrod/fedora
 	name = "athiest's fedora"
 	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
@@ -249,21 +249,21 @@
 	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
 	user.faction |= "carp"
 	used_blessing = TRUE
-
+*/
 /obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
 	w_class = 4
-	force = 15
-	block_chance = 40
+/*	force = 15
+	block_chance = 40*/
 	slot_flags = SLOT_BACK
-	sharpness = IS_BLUNT
+//	sharpness = IS_BLUNT
 	hitsound = "swing_hit"
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
 	item_state = "bostaff0"
-
+/*
 /obj/item/weapon/nullrod/tribal_knife
 	icon_state = "crysknife"
 	item_state = "crysknife"
@@ -287,3 +287,4 @@
 
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
+*/
