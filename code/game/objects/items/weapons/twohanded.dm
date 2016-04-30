@@ -109,7 +109,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")

@@ -26,7 +26,7 @@
 	throwforce = 25.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "combat=3"
@@ -47,7 +47,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")

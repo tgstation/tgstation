@@ -82,7 +82,8 @@
 		return
 
 	var/obj/item/W = get_active_hand()
-
+	var/item_attack_delay = 0
+	
 	if(W == A)
 		/*next_move = world.time + 6
 		if(W.flags&USEDELAY)
@@ -101,16 +102,16 @@
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(A.Adjacent(src, MAX_ITEM_DEPTH)) // see adjacent.dm
 		if(W)
-
+			item_attack_delay = W.attack_delay
 			var/resolved = W.preattack(A, src, 1, params)
 			if(!resolved)
 				resolved = A.attackby(W,src, params)
 				if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
-					delayNextAttack(10)
+					delayNextAttack(item_attack_delay)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1 indicates adjacency
 				else
-					delayNextAttack(10)
+					delayNextAttack(item_attack_delay)
 		else
 			if(ismob(A) || istype(W, /obj/item/weapon/grab))
 				delayNextAttack(10)
@@ -120,7 +121,7 @@
 	else // non-adjacent click
 		if(W)
 			if(ismob(A))
-				delayNextAttack(10)
+				delayNextAttack(item_attack_delay)
 			if(!W.preattack(A, src, 0,  params))
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 		else
