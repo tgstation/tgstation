@@ -236,15 +236,24 @@
 		return 5
 	//check the dock isn't occupied
 	var/currently_docked = S.get_docked()
-	// by someone other than us
-	if(currently_docked && currently_docked != src)
-		return 6
+	if(currently_docked)
+		// by someone other than us
+		if(currently_docked != src)
+			return 6
+		else
+		// This isn't an error, per se, but we can't let the shuttle code
+		// attempt to move us where we currently are, it will get weird.
+			return SHUTTLE_ALREADY_DOCKED
 	return 0	//0 means we can dock
 
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	var/status = canDock(S)
-	if(status)
+	if(status == SHUTTLE_ALREADY_DOCKED)
+		// We're already docked there, don't need to do anything.
+		// Triggering shuttle movement code in place is weird
+		return
+	else if(status)
 		. = status
 		throw EXCEPTION("request(): shuttle cannot dock, error: [status]")
 		return status	//we can't dock at S
@@ -364,7 +373,9 @@
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
 		var/status = canDock(S1)
-		if(status)
+		if(status == 7)
+			return SHUTTLE_ALREADY_DOCKED
+		else if(status)
 			throw EXCEPTION("dock(): shuttle cannot dock, error: [status]")
 			return status
 

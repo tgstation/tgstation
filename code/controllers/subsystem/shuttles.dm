@@ -195,13 +195,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
+	var/obj/docking_port/stationary/D = getDock(dockId)
+
 	if(!M)
 		return 1
 	if(timed)
-		if(M.request(getDock(dockId)))
+		if(M.request(D))
 			return 2
 	else
-		if(M.dock(getDock(dockId)))
+		if(M.dock(D))
 			return 2
 	return 0	//dock successful
 

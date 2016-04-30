@@ -98,6 +98,8 @@
 	if(!M)
 		usr << "<span class='warning'>The loaded template didn't have a mobile docking port!</span>"
 		// TODO maybe unload the template? Pff, let the admins clean up
+		usr << "<span class='notice'>If you know what you're doing, you can make your own. But this verb cannot help you past that point."
+		return
 
 	M.dockRoundstart()
 

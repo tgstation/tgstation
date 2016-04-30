@@ -132,8 +132,14 @@
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = L.return_air()
 
-	//Remove gas from surrounding area
-	var/datum/gas_mixture/removed = env.remove(gasefficency * env.total_moles())
+	var/datum/gas_mixture/removed
+
+	if(produces_gas)
+		//Remove gas from surrounding area
+		removed = env.remove(gasefficency * env.total_moles())
+	else
+		// Pass all the gas related code an empty gas container
+		removed = new()
 
 	if(!removed || !removed.total_moles())
 		if(takes_damage)
@@ -271,7 +277,7 @@
 	if(user.drop_item(W))
 		Consume(W)
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
-			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.\"</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
