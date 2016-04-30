@@ -330,7 +330,11 @@ var/global/datum/controller/vote/vote = new()
 		return
 
 	if(ismob(user))
-		user = user:client
+		var/mob/M = user
+		if(M.client)
+			user = M.client
+		else
+			CRASH("The user [M.name] of type [M.type] has been passed as a mob reference without a client to voting.interact()")
 
 	voting |= user
 	interface.show(user)

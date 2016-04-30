@@ -4,6 +4,9 @@
  * A large number of misc global procs.
  */
 
+/proc/SAFE_CRASH(var/msg)
+	CRASH(msg)
+
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
 	var/dy
