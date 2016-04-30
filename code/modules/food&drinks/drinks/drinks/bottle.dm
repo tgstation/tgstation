@@ -236,20 +236,23 @@
 	list_reagents = list("wine" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
-	name = "COMPANY Extra-Strong Absinthe"
+	name = "Extra-Strong Absinthe"
 	desc = "An strong alcoholic drink brewed and distributed by FULL_COMPANY Inc."
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
 	..()
+	redact()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
 	// There was a large fight in the coderbus about a player reference
 	// in absinthe. Ergo, this is why the name generation is now so
 	// complicated. Judge us kindly.
 	var/shortname = pickweight(
 		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
 	var/fullname
-	switch(name)
+	switch(shortname)
 		if("T&T")
 			fullname = "Teal and Tealer"
 		if("A&A")
@@ -264,7 +267,7 @@
 	if(prob(chance))
 		shortname = pick_n_take(removals)
 
-	var/final_fullname = list()
+	var/list/final_fullname = list()
 	for(var/word in splittext(fullname, " "))
 		if(prob(chance))
 			word = pick_n_take(removals)
@@ -273,14 +276,17 @@
 	fullname = jointext(final_fullname, " ")
 
 	// Actually finally setting the new name and desc
-	name = replacetext(name, "COMPANY", shortname)
-	desc = replacetext(desc, "FULL_COMPANY", fullname)
+	name = "[shortname] [initial(name)]"
+	desc = replacetext(initial(desc), "FULL_COMPANY", fullname)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
 	name = "Gwyn's Premium Absinthe"
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
+	return
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
