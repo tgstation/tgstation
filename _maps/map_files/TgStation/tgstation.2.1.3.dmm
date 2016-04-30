@@ -18726,8 +18726,7 @@
 	},
 /area/hallway/primary/central)
 "aMk" = (
-/obj/machinery/chem_
-/condimaster{
+/obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
 	},
 /obj/machinery/camera{
@@ -64100,7 +64099,7 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
-	},f
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -64735,16 +64734,7 @@
 	},
 /turf/open/space,
 /area/space)
-"cBZ" = (
-/obj/structure/table/wood,
-/obj/structure/disposalpipe/segment,
-/obj/item/toy/cards/deck/cas,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/turf/open/floor/wood,
-/area/library)
+
 (1,1,1) = {"
 aaa
 aaa
@@ -108291,7 +108281,7 @@ aFu
 aHc
 aIw
 aJS
-cBZ
+aJS
 aMJ
 aNP
 aOS
