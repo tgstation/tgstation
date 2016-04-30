@@ -284,6 +284,7 @@
 	health = INFINITY
 	maxhealth = INFINITY
 	var/team = WHITE_TEAM
+	constructable = FALSE
 	time_between_triggers = 1
 	alpha = 255
 
