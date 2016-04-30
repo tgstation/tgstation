@@ -98,6 +98,7 @@
 		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
 		/obj/structure/mineral_door/transparent/diamond)
 
+
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
 	var/atom/T = target.loc
@@ -105,12 +106,20 @@
 		CreateDoor(target)
 	else if (isturf(T) && T.density)
 		CreateDoor(T)
+	else if(istype(target, /obj/machinery/door))
+		OpenDoor(target)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
-	new door_type(T)
+	var/obj/structure/mineral_door/D = new door_type(T)
 	T.ChangeTurf(/turf/open/floor/plating)
+	D.Open()
 
+/obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+	if(istype(D,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = D
+		A.locked = 0
+	D.open()
 
 /obj/item/projectile/magic/change
 	name = "bolt of change"
@@ -132,7 +141,7 @@
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()
-			M.invisibility = 101
+			M.invisibility = INVISIBILITY_ABSTRACT
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M

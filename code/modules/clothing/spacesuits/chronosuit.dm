@@ -251,7 +251,7 @@
 	name = "Chronosuit View"
 	density = 0
 	anchored = 1
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
 	mouse_opacity = 0
 	var/mob/holder = null

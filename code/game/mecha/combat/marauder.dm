@@ -17,18 +17,13 @@
 	max_equip = 4
 	bumpsmash = 1
 
-/obj/mecha/combat/marauder/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
 	..()
-	smoke_action.chassis = src
-	smoke_action.Grant(user)
+	smoke_action.Grant(user, src)
+	thrusters_action.Grant(user, src)
+	zoom_action.Grant(user, src)
 
-	thrusters_action.chassis = src
-	thrusters_action.Grant(user)
-
-	zoom_action.chassis = src
-	zoom_action.Grant(user)
-
-/obj/mecha/combat/marauder/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	smoke_action.Remove(user)
 	thrusters_action.Remove(user)

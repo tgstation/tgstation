@@ -129,29 +129,13 @@
 	desc = "Just add water!"
 	icon_state = "monkeycube"
 	bitesize = 12
-	wrapped = 0
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/attack_self(mob/user)
-	if(wrapped)
-		Unwrap(user)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
 	new /mob/living/carbon/monkey(get_turf(src))
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Unwrap(mob/user)
-	icon_state = "monkeycube"
-	desc = "Just add water!"
-	user << "<span class='notice'>You unwrap the cube.</span>"
-	wrapped = 0
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"

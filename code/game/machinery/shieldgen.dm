@@ -53,7 +53,7 @@
 		if(2)
 			take_damage(50, BRUTE, 0)
 
-/obj/machinery/shield/blob_act()
+/obj/machinery/shield/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 

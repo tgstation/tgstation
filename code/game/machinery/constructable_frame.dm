@@ -377,12 +377,16 @@ to destroy them and players will be able to make replacements.
 	var/obj/item/weapon/circuitboard/newtype
 
 	if(istype(I, /obj/item/weapon/screwdriver))
+		var/new_setting = "Heater"
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(build_path == initial(heater.build_path))
 			newtype = freezer
+			new_setting = "Freezer"
 		else
 			newtype = heater
 		name = initial(newtype.name)
 		build_path = initial(newtype.build_path)
+		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
 
 /obj/item/weapon/circuitboard/thermomachine/freezer
 	name = "circuit board (Freezer)"
@@ -803,6 +807,6 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/scanning_module = 1,)

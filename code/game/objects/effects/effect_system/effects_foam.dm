@@ -208,7 +208,7 @@
 	qdel(src)
 
 
-/obj/structure/foamedmetal/blob_act()
+/obj/structure/foamedmetal/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 

@@ -62,7 +62,6 @@
 	flags_cover = MASKCOVERSEYES
 	burn_state = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
-
 	dog_fashion = /datum/dog_fashion/head/clown
 
 /obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
@@ -80,8 +79,12 @@
 
 	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
 
-	if(src && choice && !user.stat && in_range(user,src))
+	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
 		user << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
 		return 1
 
@@ -105,7 +108,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/gas/mime/attack_self(mob/user)
-	cycle_mask(usr)
+	cycle_mask(user)
 
 /obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
 	switch(icon_state)
@@ -118,6 +121,9 @@
 		if("sexymime")
 			icon_state = "mime"
 	user.update_inv_wear_mask()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
 	return 1
 

@@ -145,7 +145,7 @@
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
 	M.adjustOxyLoss(0.5*REM, 0)
-	M.Weaken(5, 0, 0)
+	M.Weaken(5, 0)
 	M.silent = max(M.silent, 5)
 	M.tod = worldtime2text()
 	..()
@@ -492,7 +492,7 @@
 		switch(picked_option)
 			if(1)
 				M.Stun(3, 0)
-				M.Weaken(3, 0, 0)
+				M.Weaken(3, 0)
 				. = 1
 			if(2)
 				M.losebreath += 10
@@ -611,7 +611,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
-		M.Weaken(3, 0, 0)
+		M.Weaken(3, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()

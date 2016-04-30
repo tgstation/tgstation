@@ -353,7 +353,7 @@
 	if(thruster_button)
 		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
-/mob/living/silicon/robot/blob_act()
+/mob/living/silicon/robot/blob_act(obj/effect/blob/B)
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
