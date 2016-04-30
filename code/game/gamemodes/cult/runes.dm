@@ -124,20 +124,22 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
+	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
 	if(invocation)
 		for(var/M in invokers)
 			var/mob/living/L = M
 			L.say(invocation)
 	var/oldtransform = transform
-	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
-	animate(transform = oldtransform, alpha = 255, time = 0)
-	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
+	spawn(0) //animate is a delay, we want to avoid being delayed
+		animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
+		animate(transform = oldtransform, alpha = 255, time = 0)
 
 /obj/effect/rune/proc/fail_invoke(var/mob/living/user)
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
 	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
-	animate(src, color = rgb(255, 0, 0), time = 0)
-	animate(src, color = initial(color), time = 5)
+	spawn(0) //animate is a delay, we want to avoid being delayed
+		animate(src, color = rgb(255, 0, 0), time = 0)
+		animate(src, color = initial(color), time = 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -584,7 +586,8 @@ var/list/teleport_runes = list()
 
 
 /obj/effect/rune/raise_dead/fail_invoke()
-	for(var/mob/living/M in orange(1,src))
+	..()
+	for(var/mob/living/M in range(1,src))
 		if(M.stat == DEAD)
 			M.visible_message("<span class='warning'>[M] twitches.</span>")
 
@@ -602,18 +605,20 @@ var/list/teleport_runes = list()
 	var/turf/E = get_turf(src)
 	..()
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
-	for(var/M in invokers)
-		var/mob/living/L = M
-		switch(invokers.len)
-			if(1 to 2)
-				L << "<span class='warning'>You feel a minute vibration pass through you...</span>"
-				playsound(E, 'sound/items/Welder2.ogg', 25, 1)
-			if(3 to 6)
-				L << "<span class='danger'>Your hair stands on end as a shockwave eminates from the rune!</span>"
-				playsound(E, 'sound/magic/Disable_Tech.ogg', 50, 1)
-			if(7 to INFINITY)
+	switch(invokers.len)
+		if(1 to 2)
+			playsound(E, 'sound/items/Welder2.ogg', 25, 1)
+			for(var/M in invokers)
+				M << "<span class='warning'>You feel a minute vibration pass through you...</span>"
+		if(3 to 6)
+			playsound(E, 'sound/magic/Disable_Tech.ogg', 50, 1)
+			for(var/M in invokers)
+				M << "<span class='danger'>Your hair stands on end as a shockwave eminates from the rune!</span>"
+		if(7 to INFINITY)
+			playsound(E, 'sound/magic/Disable_Tech.ogg', 100, 1)
+			for(var/M in invokers)
+				var/mob/living/L = M
 				L << "<span class=userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>"
-				playsound(E, 'sound/magic/Disable_Tech.ogg', 100, 1)
 				L.Weaken(2)
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
@@ -841,8 +846,8 @@ var/list/teleport_runes = list()
 	while(user in get_turf(src))
 		if(user.stat)
 			break
-		user.apply_damage(1, BRUTE)
-		sleep(30)
+		user.apply_damage(0.1, BRUTE)
+		sleep(3)
 
 	qdel(N)
 	if(new_human)
