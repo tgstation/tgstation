@@ -504,7 +504,8 @@ var/global/datum/controller/occupations/job_master
 
 		H.equip_or_collect(C, slot_wear_id)
 
-		C.update_virtual_wallet(wallet_funds)
+		if(C.virtual_wallet)
+			C.update_virtual_wallet(wallet_funds)
 
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
