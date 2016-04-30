@@ -29,6 +29,14 @@
 				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
 
+/obj/effect/spawner/lootdrop/gambling
+	name = "gambling valuables spawner"
+	loot = list(
+				/obj/item/weapon/gun/projectile/revolver/russian = 5,
+				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+				/obj/item/toy/cards/deck/syndicate = 2
+				)
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 
