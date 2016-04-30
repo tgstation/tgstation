@@ -9,6 +9,21 @@
 	bound_height = 96
 	burn_state = LAVA_PROOF
 	luminosity = 1
+	var/boss = FALSE
+
+/obj/structure/lavaland_door/attack_hand(mob/user)
+	if(boss)
+		return
+	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
+		return
+	var/safety = alert(user, "Are you sure you want to do this? You and everyone else on lavaland will likely die.", "Knock on the door?", "Proceed", "Abort")
+	if(safety == "Abort" || !in_range(src, user) || !src || boss || user.incapacitated())
+		return
+	boss = TRUE
+	visible_message("<span class='danger'>Legion emerges from the Necropolis!</span>")
+	message_admins("[key_name_admin(user)] has summoned Legion.")
+	log_game("[key_name(user)] summoned Legion.")
+	new /mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
 
 /obj/structure/lavaland_door/singularity_pull()
 	return 0
@@ -35,8 +50,6 @@
 
 /obj/machinery/lavaland_controller/Destroy()
 	return QDEL_HINT_LETMELIVE
-
-
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault

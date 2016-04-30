@@ -791,13 +791,3 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/legion
 	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
-
-/mob/living/simple_animal/hostile/spawner/lavaland/New()
-	..()
-	var/legion = FALSE
-	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
-		legion = TRUE
-		break
-	if(!legion)
-		new /mob/living/simple_animal/hostile/megafauna/legion(src.loc)
-		qdel(src)
