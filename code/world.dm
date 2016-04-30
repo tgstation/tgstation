@@ -2,7 +2,7 @@
 	mob = /mob/new_player
 	turf = /turf/open/space
 	area = /area/space
-	view = "15x15"
+	view = '420x69"
 	cache_lifespan = 7
 
 var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
