@@ -1,4 +1,5 @@
 /* Runtime Condenser by Nodrak
+ * Cleaned up and refactored by MrStonedOne
  * This will sum up identical runtimes into one, giving a total of how many times it occured. The first occurance
  * of the runtime will log the proc, source, usr and src, the rest will just add to the total. Infinite loops will
  * also be caught and displayed (if any) above the list of runtimes.
@@ -7,12 +8,23 @@
  * 1) Copy and paste your list of runtimes from Dream Daemon into input.exe
  * 2) Run RuntimeCondenser.exe
  * 3) Open output.txt for a condensed report of the runtimes
+ * 
+ * How to compile:
+ * Requires visual c++ compiler 2012 or any linux compiler with c++11 support.
+ * Windows:
+ *	Normal: cl.exe /EHsc /Ox /Qpar Main.cpp
+ *	Debug: cl.exe /EHsc /Zi Main.cpp
+ * Linux:
+ *	Normal: g++ -O3 -std=c++11 Main.cpp -o rc
+ *	Debug: g++ -g -Og -std=c++11 Main.cpp -o rc
+ * Any Compile errors most likely indicate lack of c++11 support. Google how to upgrade or nag coderbus for help..
  */
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 
@@ -31,20 +43,15 @@ struct harddel {
 	string type;
 	unsigned int count;
 };
-//Make all of these global. It's bad yes, but it's a small program so it really doesn't affect anything.
-
-//Because hardcoded numbers are bad :(
-//const unsigned short maxStorage = 1000;
-
 //What we use to read input
 string lastLine = "";
 string currentLine = "";
 string nextLine = "";
 
 //Stores lines we want to keep to print out
-vector<runtime*> storedRuntime;
-vector<runtime*> storedInfiniteLoop;
-vector<harddel*> storedHardDel;
+unordered_map<string,runtime*> storedRuntime;
+unordered_map<string,runtime*> storedInfiniteLoop;
+unordered_map<string,harddel*> storedHardDel;
 
 //Stat tracking stuff for output
 unsigned int totalRuntimes = 0;
@@ -57,13 +64,20 @@ unsigned int totalUniqueHardDels = 0;
 //Misc
 runtime* currentRuntime = NULL; //for storing the current runtime when we want to read the extra info on the next lines.
 
-void forward_progress(ifstream &inputFile) {
+//like substr, but returns an empty string if the string is smaller then start, rather then an exception.
+inline string safe_substr(string S, size_t start = 0, size_t end = string::npos) {
+	if (start > S.length())
+		start = S.length();
+	return S.substr(start, end);
+}
+inline void forward_progress(ifstream &inputFile) {
 	lastLine = currentLine;
 	currentLine	= nextLine;
 	getline(inputFile, nextLine);
 	//strip out any timestamps.
-	if (nextLine.substr(0,1) == "[" && nextLine.substr(3,1) == ":" && nextLine.substr(6,1) == ":" && nextLine.substr(9,1) == "]")
-		nextLine = nextLine.substr(10);
+	if (nextLine.length() >= 10)
+		if (nextLine[0] == '[' && nextLine[3] == ':' && nextLine[6] == ':' && nextLine[9] == ']')
+			nextLine = nextLine.substr(10);
 }	
 bool readFromFile() {
 	//Open file to read
@@ -80,7 +94,7 @@ bool readFromFile() {
 				forward_progress(inputFile);
 
 				//If we find this, we have new stuff to store
-				if (nextLine.find("usr:") != std::string::npos) {
+				if (safe_substr(nextLine, 2, 4) == "usr:") {
 					//Skip ahead
 					forward_progress(inputFile);
 					
@@ -92,7 +106,7 @@ bool readFromFile() {
 					//Skip ahead again
 					forward_progress(inputFile);
 
-					if (nextLine.find("src.loc:") != std::string::npos)
+					if (safe_substr(nextLine, 2, 8) == "src.loc:")
 						currentRuntime->loc = nextLine;
 					
 				}
@@ -100,86 +114,66 @@ bool readFromFile() {
 			}
 
 			//Found an infinite loop!
-			if (currentLine.find("Infinite loop suspected") != std::string::npos || currentLine.find("Maximum recursion level reached") != std::string::npos) {
+			if (safe_substr(currentLine, 0, 23) == "Infinite loop suspected" || safe_substr(currentLine, 0, 31) == "Maximum recursion level reached") {
 				totalInfiniteLoops++;
-				bool found = false;
-				for (int i=0; i < storedInfiniteLoop.size(); i++) {
-					//We've already encountered this
-					if (currentLine == storedInfiniteLoop[i]->text) {
-						storedInfiniteLoop[i]->count++;
-						found = true;
-						break;
-					}
-
-				}
-				//We've never encountered this
-				if (!found) {
-					runtime* R = new runtime;
-					storedInfiniteLoop.push_back(R);
+				runtime* R = storedInfiniteLoop[currentLine];
+				if (!R || R->text != currentLine) {
+					R = new runtime;
+					storedInfiniteLoop[currentLine] = R;
 					R->text = currentLine;
 					forward_progress(inputFile);
 					R->proc = nextLine;
+					R->count = 1;
 					currentRuntime = R;
 					totalUniqueInfiniteLoops++;
+				} else { //existed already
+					R->count++;
 				}
 				
 			}
 			//Found a runtime!
-			else if (currentLine.find("runtime error:") != std::string::npos) {
+			else if (safe_substr(currentLine, 0, 14) == "runtime error:") {
 				if (currentLine.length() <= 17) { //empty runtime, check next line.
-					if (nextLine.length() < 2) //runtime is on the line before this one.
+					if (nextLine.length() < 2) //runtime is on the line before this one. (byond bug)
 						nextLine = lastLine;
 					forward_progress(inputFile);
 					currentLine = "runtime error: " + currentLine;
 				}
 				totalRuntimes++;
-				bool found = false;
-				for (int i=0; i < storedRuntime.size(); i++) {
-					//We've already encountered this
-					if (currentLine == storedRuntime[i]->text) {
-						storedRuntime[i]->count++;
-						found = true;
-						break;
-					}
-
-				}
-
-				//We've never encountered this
-				if (!found) {
-					runtime* R = new runtime;
-					storedRuntime.push_back(R);
+				runtime* R = storedRuntime[currentLine];
+				if (!R || R->text != currentLine) {
+					R = new runtime;
+					storedRuntime[currentLine] = R;
 					R->text = currentLine;
 					R->proc = nextLine;
 					R->count = 1;
 					currentRuntime = R;
 					totalUniqueRuntimes++;
+				} else { //existed already
+					R->count++;
 				}
 			}
 			
 			//Found a hard del!
-			else if (currentLine.find("Path :") != std::string::npos) {				
-				unsigned int failures = (unsigned int)strtoul(nextLine.substr(11).c_str(), NULL, 10);
-
+			else if (safe_substr(currentLine, 0, 7) == "Path : ") {
+				string deltype = safe_substr(currentLine, 7);
+				if (deltype.substr(deltype.size()-1,1) == " ") //some times they have a single trailing space.
+					deltype = deltype.substr(0, deltype.size()-1);
+				
+				unsigned int failures = strtoul(safe_substr(nextLine, 11).c_str(), NULL, 10);
+				if (failures <= 0)
+					continue;
 				
 				totalHardDels += failures;
-				bool found = false;
-				for (int i=0; i < storedHardDel.size(); i++) {
-					
-					//We've already encountered this
-					if (currentLine == storedHardDel[i]->type) {
-						storedHardDel[i]->count += failures;
-						found = true;
-						break;
-					}
-				}
-			
-				//We've never encountered this
-				if (!found) {
-					harddel* D = new harddel;
-					storedHardDel.push_back(D);
-					D->type = currentLine;
+				harddel * D = storedHardDel[deltype];
+				if (!D || D->type != deltype) {
+					D = new harddel;
+					storedHardDel[deltype] = D;
+					D->type = deltype;
 					D->count = failures;
 					totalUniqueHardDels++;
+				} else {
+					D->count += failures;
 				}
 			}
 		}
@@ -188,7 +182,13 @@ bool readFromFile() {
 	}
 	return true;
 }
+bool runtimeComp(const runtime* a, const runtime* b) {
+    return a->count > b->count;
+}
 
+bool hardDelComp(const harddel* a, const harddel* b) {
+    return a->count > b->count;
+}
 bool writeToFile() {
 	//Open and clear the file
 	ofstream outputFile("Output.txt", ios::trunc);
@@ -212,9 +212,14 @@ bool writeToFile() {
 
 		//If we have infinite loops, display them first.
 		if(totalInfiniteLoops > 0) {
+			vector<runtime*> infiniteLoops;
+			infiniteLoops.reserve(storedInfiniteLoop.size());
+			for (unordered_map<string,runtime*>::iterator it=storedInfiniteLoop.begin(); it != storedInfiniteLoop.end(); it++)
+				infiniteLoops.push_back(it->second);
+			sort(infiniteLoops.begin(), infiniteLoops.end(), runtimeComp);
 			outputFile << "** Infinite loops **";
-			for (int i=0; i < storedInfiniteLoop.size(); i++) {
-				runtime* R = storedInfiniteLoop[i];
+			for (int i=0; i < infiniteLoops.size(); i++) {
+				runtime* R = infiniteLoops[i];
 				outputFile << endl << endl << "The following infinite loop has occurred " << R->count << " time(s).\n"; 
 				outputFile << R->text << endl;
 				if(R->proc.length()) 
@@ -234,8 +239,13 @@ bool writeToFile() {
 
 		//Do runtimes next
 		outputFile << "** Runtimes **";
-		for (int i=0; i < storedRuntime.size(); i++) {
-			runtime* R = storedRuntime[i];
+		vector<runtime*> runtimes;
+		runtimes.reserve(storedRuntime.size());
+		for (unordered_map<string,runtime*>::iterator it=storedRuntime.begin(); it != storedRuntime.end(); it++)
+			runtimes.push_back(it->second);
+		sort(runtimes.begin(), runtimes.end(), runtimeComp);
+		for (int i=0; i < runtimes.size(); i++) {
+			runtime* R = runtimes[i];
 			outputFile << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n"; 
 			outputFile << R->text << endl;
 			if(R->proc.length()) 
@@ -254,8 +264,13 @@ bool writeToFile() {
 		//and finally, hard deletes
 		if(totalHardDels > 0) {
 			outputFile << endl << "** Hard deletions **";
-			for(int i=0; i < storedHardDel.size(); i++) {
-				harddel* D = storedHardDel[i];
+			vector<harddel*> hardDels;
+			hardDels.reserve(storedHardDel.size());
+			for (unordered_map<string,harddel*>::iterator it=storedHardDel.begin(); it != storedHardDel.end(); it++)
+				hardDels.push_back(it->second);
+			sort(hardDels.begin(), hardDels.end(), hardDelComp);
+			for(int i=0; i < hardDels.size(); i++) {
+				harddel* D = hardDels[i];
 				outputFile << endl << D->type << " - " << D->count << " time(s).\n";
 			}
 		}
@@ -264,15 +279,6 @@ bool writeToFile() {
 		return false;
 	}
 	return true;
-}
-
-
-bool runtimeComp(const runtime* a, const runtime* b) {
-    return a->count > b->count;
-}
-
-bool hardDelComp(const harddel* a, const harddel* b) {
-    return a->count > b->count;
 }
 
 int main() {
@@ -287,9 +293,7 @@ int main() {
 		return 1;
 	}
 
-	std::sort(storedRuntime.begin(), storedRuntime.end(), runtimeComp);
-	std::sort(storedInfiniteLoop.begin(), storedInfiniteLoop.end(), runtimeComp);
-	std::sort(storedHardDel.begin(), storedHardDel.end(), hardDelComp);
+
 
 	if(writeToFile()) {
 		cout << "Output was successful!\n";
