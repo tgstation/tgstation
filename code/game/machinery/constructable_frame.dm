@@ -481,6 +481,13 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
+/obj/item/weapon/circuitboard/alchemizer
+	name = "circuit board (Alchemical Transformer)"
+	build_path = /obj/machinery/recycler/alchemizer
+	board_type = "machine"
+	origin_tech = "materials=8"
+	req_components = list()
+
 /obj/item/weapon/circuitboard/seed_extractor
 	name = "circuit board (Seed Extractor)"
 	build_path = /obj/machinery/seed_extractor
