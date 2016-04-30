@@ -311,7 +311,7 @@
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
 	for(var/i = 1; i <= 5; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
 
 
 /obj/item/weapon/storage/box/permits
@@ -378,8 +378,19 @@
 
 /obj/item/weapon/storage/box/firingpins/New()
 	..()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
+
+/obj/item/weapon/storage/box/lasertagpins
+	name = "box of laser tag firing pins"
+	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
+	icon_state = "id"
+
+/obj/item/weapon/storage/box/lasertagpins/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/device/firing_pin/tag/red(src)
+		new /obj/item/device/firing_pin/tag/blue(src)
 
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -772,6 +783,7 @@
 	..()
 	if(item_state)
 		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
+
 /obj/item/weapon/storage/box/emptysandbags
 	name = "box of empty sandbags"
 
@@ -784,3 +796,14 @@
 	new /obj/item/weapon/emptysandbag(src)
 	new /obj/item/weapon/emptysandbag(src)
 	new /obj/item/weapon/emptysandbag(src)
+
+/obj/item/weapon/storage/box/rndboards
+	name = "\proper the liberator's legacy"
+	desc = "A box containing a gift for worthy golems."
+
+/obj/item/weapon/storage/box/rndboards/New()
+	..()
+	new /obj/item/weapon/circuitboard/protolathe(src)
+	new /obj/item/weapon/circuitboard/destructive_analyzer(src)
+	new /obj/item/weapon/circuitboard/circuit_imprinter(src)
+	new /obj/item/weapon/circuitboard/rdconsole(src)

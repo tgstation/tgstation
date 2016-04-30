@@ -25,9 +25,10 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable
 	level = 1 //is underfloor
 	anchored =1
+	on_blueprints = TRUE
 	var/datum/powernet/powernet
 	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer"
+	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
@@ -149,10 +150,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			user << "<span class='danger'>The cable is not powered.</span>"
 		shock(user, 5, 0.2)
-
-	else
-		if (W.flags & CONDUCT)
-			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
 
@@ -468,7 +465,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	item_color = "red"
-	desc = "A coil of power cable."
+	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = 2
 	throw_speed = 3
@@ -782,6 +779,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon_state = "coil_white"
 
 /obj/item/stack/cable_coil/random/New()
-	item_color = pick("red","yellow","green","blue","pink")
+	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()

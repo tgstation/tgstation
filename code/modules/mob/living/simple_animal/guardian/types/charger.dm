@@ -10,6 +10,7 @@
 	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
+	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
@@ -56,7 +57,7 @@
 				blocked = 1
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "the [name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
+				if(H.check_shields(90, "[name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
 
@@ -64,6 +65,9 @@
 				L.drop_l_hand()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
 				L.apply_damage(20, BRUTE)
+				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+				shake_camera(L, 4, 3)
+				shake_camera(src, 2, 3)
 
 		charging = 0
 

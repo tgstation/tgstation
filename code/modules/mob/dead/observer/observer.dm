@@ -31,7 +31,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
-	var/data_hud_seen = 0 //this should one of the defines in __DEFINES/hud.dm
+	var/data_huds_on = 0 //Are data HUDs currently enabled?
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -565,33 +566,29 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/mind_initialize()
 	return
 
-/mob/dead/observer/proc/show_me_the_hud(hud_index)
-	var/datum/atom_hud/H = huds[hud_index]
-	H.add_hud_to(src)
-	data_hud_seen = hud_index
+/mob/dead/observer/proc/show_data_huds()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = huds[hudtype]
+		H.add_hud_to(src)
 
-/mob/dead/observer/verb/toggle_ghost_med_sec_diag_hud()
+/mob/dead/observer/proc/remove_data_huds()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = huds[hudtype]
+		H.remove_hud_from(src)
+
+/mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"
 	set desc = "Toggles whether you see medical/security/diagnostic HUDs"
 	set category = "Ghost"
 
-	if(data_hud_seen) //remove old huds
-		var/datum/atom_hud/H = huds[data_hud_seen]
-		H.remove_hud_from(src)
-
-	switch(data_hud_seen) //give new huds
-		if(0)
-			show_me_the_hud(DATA_HUD_SECURITY_ADVANCED)
-			src << "<span class='notice'>Security HUD set.</span>"
-		if(DATA_HUD_SECURITY_ADVANCED)
-			show_me_the_hud(DATA_HUD_MEDICAL_ADVANCED)
-			src << "<span class='notice'>Medical HUD set.</span>"
-		if(DATA_HUD_MEDICAL_ADVANCED)
-			show_me_the_hud(DATA_HUD_DIAGNOSTIC)
-			src << "<span class='notice'>Diagnostic HUD set.</span>"
-		if(DATA_HUD_DIAGNOSTIC)
-			data_hud_seen = 0
-			src << "<span class='notice'>HUDs disabled.</span>"
+	if(data_huds_on) //remove old huds
+		remove_data_huds()
+		src << "<span class='notice'>Data HUDs disabled.</span>"
+		data_huds_on = 0
+	else
+		show_data_huds()
+		src << "<span class='notice'>Data HUDs enabled.</span>"
+		data_huds_on = 1
 
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))

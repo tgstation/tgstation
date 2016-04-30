@@ -39,6 +39,7 @@ var/list/preferences_datums = list()
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
+	var/hide_recipes = 0
 	var/preferred_map = null
 
 	//character preferences
@@ -343,6 +344,7 @@ var/list/preferences_datums = list()
 			dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hide uncraftable recipes:</b> <a href='?_src_=prefs;preference=hide_recipes'>[(toggles & HIDE_RECIPES) ? "Yes" : "No"]</a><br>"
 			if(config.allow_Metadata)
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
@@ -1122,6 +1124,9 @@ var/list/preferences_datums = list()
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
+
+				if("hide_recipes")
+					toggles ^= HIDE_RECIPES
 
 				if("save")
 					save_preferences()

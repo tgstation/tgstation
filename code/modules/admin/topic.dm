@@ -1386,7 +1386,6 @@
 			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
-				I.layer = initial(I.layer)
 				I.dropped(M)
 
 		M.Paralyse(5)
@@ -1416,7 +1415,6 @@
 			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
-				I.layer = initial(I.layer)
 				I.dropped(M)
 
 		M.Paralyse(5)
@@ -1469,7 +1467,6 @@
 			M.unEquip(I)
 			if(I)
 				I.loc = M.loc
-				I.layer = initial(I.layer)
 				I.dropped(M)
 
 		if(istype(M, /mob/living/carbon/human))

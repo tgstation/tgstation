@@ -30,7 +30,7 @@ var/global/list/cards_against_space
 
 /obj/item/toy/cards/deck/cas/New()
 	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation
-		cards_against_space = list("cas_white" = file2list("config/cas_white.txt"),"cas_black" = file2list("config/cas_black.txt"))
+		cards_against_space = list("cas_white" = file2list("strings/cas_white.txt"),"cas_black" = file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
@@ -62,8 +62,12 @@ var/global/list/cards_against_space
 		return
 	var/obj/item/toy/cards/singlecard/cas/H = new/obj/item/toy/cards/singlecard/cas(user.loc)
 	var/datum/playingcard/choice = cards[1]
+	if (choice.name == "Blank Card")
+		H.blank = 1
 	H.name = choice.name
+	H.buffertext = choice.name
 	H.icon_state = choice.card_icon
+	H.card_face = choice.card_icon
 	H.parentdeck = src
 	src.cards -= choice
 	H.pickup(user)
@@ -79,12 +83,46 @@ var/global/list/cards_against_space
 	name = "CAS card"
 	desc = "A CAS card."
 	icon_state = "cas_white"
+	flipped = 0
+	var/card_face = "cas_white"
+	var/blank = 0
+	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
-	user << "<span class='notice'>The card reads: [name]</span>"
+	if (flipped)
+		user << "<span class='notice'>The card is face down.</span>"
+	else if (blank)
+		user << "<span class='notice'>The card is blank. Write on it with a pen.</span>"
+	else
+		user << "<span class='notice'>The card reads: [name]</span>"
 
 /obj/item/toy/cards/singlecard/cas/Flip()
-	return
+	set name = "Flip Card"
+	set category = "Object"
+	set src in range(1)
+	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+		return
+	if(!flipped)
+		name = "CAS card"
+	else if(flipped)
+		name = buffertext
+	flipped = !flipped
+	update_icon()
+
+/obj/item/toy/cards/singlecard/cas/update_icon()
+	if(flipped)
+		icon_state = "[card_face]_flipped"
+	else
+		icon_state = "[card_face]"
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
-	return
+	if(istype(I, /obj/item/weapon/pen))
+		if(!blank)
+			user << "You cannot write on that card."
+			return
+		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
+		if(!cardtext)
+			return
+		name = cardtext
+		buffertext = cardtext
+		blank = 0

@@ -197,7 +197,7 @@
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			A.layer = 20
+			A.plane = PLANE_UI_OBJECTS //need to move this to module init eventually
 
 			x++
 			if(x == 4)

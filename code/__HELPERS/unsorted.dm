@@ -495,14 +495,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return y
 
 
-/proc/anim(turf/location,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
+/proc/anim(turf/location, atom/movable/target, a_icon, a_icon_state as text, flick_anim as text, sleeptime = 0, direction as num)
 //This proc throws up either an icon or an animation for a specified amount of time.
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
 		animation.dir = direction
 	animation.icon = a_icon
-	animation.layer = target:layer+1
+	animation.layer = target.layer+1
+	animation.plane = target.plane
 	if(a_icon_state)
 		animation.icon_state = a_icon_state
 	else
@@ -949,8 +950,7 @@ var/list/WALLITEMS_INVERSE = list(
 		else
 			return "white"
 
-
-/proc/screen_loc2turf(scr_loc, turf/origin)
+/proc/params2turf(scr_loc, turf/origin)
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
@@ -959,6 +959,17 @@ var/list/WALLITEMS_INVERSE = list(
 	tX = tX[1]
 	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
 	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	return locate(tX, tY, tZ)
+
+/proc/screen_loc2turf(text, turf/origin)
+	var/tZ = splittext(text, ",")
+	var/tX = splittext(tZ[1], "-")
+	var/tY = text2num(tX[2])
+	tX = splittext(tZ[2], "-")
+	tX = text2num(tX[2])
+	tZ = origin.z
+	tX = max(1, min(origin.x + 7 - tX, world.maxx))
+	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(A)
@@ -1349,7 +1360,6 @@ proc/pick_closest_path(value)
 /proc/stoplag()
 	. = 1
 	sleep(world.tick_lag)
-#if DM_VERSION >= 510
 	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
 		. += 2
 		sleep(world.tick_lag*2)
@@ -1358,4 +1368,3 @@ proc/pick_closest_path(value)
 			sleep(world.tick_lag*4)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
-#endif

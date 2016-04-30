@@ -71,7 +71,7 @@ var/const/tk_maxrange = 15
 	flags = NOBLUDGEON | ABSTRACT
 	//item_state = null
 	w_class = 10
-	layer = 20
+	plane = PLANE_UI_OBJECTS
 
 	var/last_throw = 0
 	var/atom/movable/focus = null
@@ -173,6 +173,7 @@ var/const/tk_maxrange = 15
 	O.anchored = 1
 	O.density = 0
 	O.layer = FLY_LAYER
+	O.plane = PLANE_EFFECTS_UNLIT
 	O.dir = pick(cardinal)
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
@@ -183,9 +184,10 @@ var/const/tk_maxrange = 15
 
 /obj/item/tk_grab/update_icon()
 	overlays.Cut()
-	if(focus && focus.icon && focus.icon_state)
-		overlays += icon(focus.icon,focus.icon_state)
-	return
+	if(focus)
+		var/image/I = image(focus.icon, focus.icon_state)
+		I.plane = PLANE_UI_OBJECTS
+		overlays += I
 
 /obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using \his telekinesis to choke \himself! It looks like \he's trying to commit suicide.</span>")

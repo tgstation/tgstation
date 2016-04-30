@@ -16,6 +16,7 @@
 	//8 = blood, running
 	var/gibs_ready = 0
 	var/obj/crayon
+	var/obj/paper
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
@@ -44,15 +45,27 @@
 	for(var/obj/item/clothing/suit/hooded/ian_costume/IC in contents)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
 		qdel(IC)
-
+	
+	for(var/obj/item/weapon/paper/P in contents)
+		if(crayon)
+			var/dye_color
+			if(istype(crayon,/obj/item/toy/crayon))
+				var/obj/item/toy/crayon/CR = crayon
+				dye_color = CR.paint_color
+			if(dye_color)
+				P.color = dye_color
+			qdel(crayon)
+			crayon = null
+		
 	if(crayon)
 		var/wash_color
 		if(istype(crayon,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = crayon
-			wash_color = CR.colourName
+			wash_color = CR.paint_color
 		else if(istype(crayon,/obj/item/weapon/stamp))
 			var/obj/item/weapon/stamp/ST = crayon
 			wash_color = ST.item_color
+		
 
 		if(wash_color)
 			var/new_jumpsuit_icon_state = ""
@@ -196,6 +209,7 @@
 				state = 3
 		else
 			..()
+
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
@@ -203,7 +217,8 @@
 		istype(W,/obj/item/clothing/gloves) || \
 		istype(W,/obj/item/clothing/shoes) || \
 		istype(W,/obj/item/clothing/suit) || \
-		istype(W,/obj/item/weapon/bedsheet))
+		istype(W,/obj/item/weapon/bedsheet) || \
+		istype(W,/obj/item/weapon/paper))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )

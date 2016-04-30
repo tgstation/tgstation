@@ -47,6 +47,8 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
+
+	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
 	var/internal_tank_valve = ONE_ATMOSPHERE
@@ -90,13 +92,14 @@
 	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
+	var/datum/action/innate/mecha/strafe/strafing = new
 
 	//Action vars
 	var/thrusters_active = FALSE
 	var/defence_mode = FALSE
 	var/defence_mode_deflect_chance = 35
 	var/leg_overload_mode = FALSE
-	var/leg_overload_coeff = 2
+	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
 	var/smoke = 5
 	var/smoke_ready = 1
@@ -104,6 +107,7 @@
 	var/phasing = FALSE
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
+	var/strafe = FALSE //If we are strafing
 
 	var/static/list/armour_facings = list("[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR),
 "[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR),
@@ -500,7 +504,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(src.dir!=direction)
+	else if(src.dir!=direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -509,13 +513,6 @@
 		can_move = 0
 		spawn(step_in)
 			can_move = 1
-		if(leg_overload_mode)
-			health--
-			if(health < initial(health) - initial(health)/3)
-				leg_overload_mode = 0
-				step_in = initial(step_in)
-				step_energy_drain = initial(step_energy_drain)
-				occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
 		return 1
 	return 0
 
@@ -527,7 +524,10 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/current_dir = src.dir
 	var/result = step(src,direction)
+	if(strafe)
+		src.dir = current_dir
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -553,6 +553,11 @@
 		if(yes)
 			if(..()) //mech was thrown
 				return
+			if(bumpsmash)
+				var/mecha = src
+				obstacle.mech_melee_attack(mecha)
+				if(!obstacle || (obstacle && !obstacle.density))
+					step(src,dir)
 			if(istype(obstacle, /obj))
 				var/obj/O = obstacle
 				if(!O.anchored)
@@ -1033,6 +1038,9 @@ var/year_integer = text2num(year) // = 2013???
 	stats_action.chassis = src
 	stats_action.Grant(user)
 
+	strafing.chassis = src
+	strafing.Grant(user)
+
 
 /obj/mecha/proc/RemoveActions(var/mob/living/user, var/human_occupant = 0)
 	if(human_occupant)
@@ -1041,6 +1049,7 @@ var/year_integer = text2num(year) // = 2013???
 	cycle_action.Remove(user)
 	lights_action.Remove(user)
 	stats_action.Remove(user)
+	strafing.Remove(user)
 
 
 /datum/action/innate/mecha
@@ -1136,6 +1145,25 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")
 
 
+/datum/action/innate/mecha/strafe
+	name = "Toggle Strafing"
+	button_icon_state = "strafe"
+
+/datum/action/innate/mecha/strafe/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+
+	chassis.toggle_strafe()
+
+/obj/mecha/AltClick(mob/living/user)
+	if(user == occupant)
+		toggle_strafe()
+
+/obj/mecha/proc/toggle_strafe()
+	strafe = !strafe
+
+	occupant_message("Toggled strafing mode [strafe?"on":"off"].")
+	log_message("Toggled strafing mode [strafe?"on":"off"].")
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
@@ -1163,7 +1191,7 @@ var/year_integer = text2num(year) // = 2013???
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/M = chassis
-	if(forced_state)
+	if(!isnull(forced_state))
 		M.defence_mode = forced_state
 	else
 		M.defence_mode = !M.defence_mode
@@ -1185,7 +1213,7 @@ var/year_integer = text2num(year) // = 2013???
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/M = chassis
-	if(forced_state)
+	if(!isnull(forced_state))
 		M.leg_overload_mode = forced_state
 	else
 		M.leg_overload_mode = !M.leg_overload_mode
@@ -1193,11 +1221,13 @@ var/year_integer = text2num(year) // = 2013???
 	M.log_message("Toggled leg actuators overload.")
 	if(M.leg_overload_mode)
 		M.leg_overload_mode = 1
+		M.bumpsmash = 1
 		M.step_in = min(1, round(M.step_in/2))
 		M.step_energy_drain = M.step_energy_drain*M.leg_overload_coeff
 		M.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
 		M.leg_overload_mode = 0
+		M.bumpsmash = 0
 		M.step_in = initial(M.step_in)
 		M.step_energy_drain = initial(M.step_energy_drain)
 		M.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")

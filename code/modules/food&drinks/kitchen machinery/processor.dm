@@ -29,6 +29,29 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
+/obj/machinery/processor/process()
+	..()
+	// The irony
+	// To be clear, if it's grinding, then it can't suck them up
+	if(processing)
+		return
+	var/mob/living/simple_animal/slime/picked_slime
+	for(var/mob/living/simple_animal/slime/slime in range(1,src))
+		if(slime.loc == src)
+			continue
+		if(istype(slime, /mob/living/simple_animal/slime))
+			if(slime.stat)
+				picked_slime = slime
+				break
+	if(!picked_slime)
+		return
+	var/datum/food_processor_process/P = select_recipe(picked_slime)
+	if (!P)
+		return
+
+	src.visible_message("[picked_slime] is sucked into [src].")
+	picked_slime.loc = src
+
 /datum/food_processor_process
 	var/input
 	var/output
@@ -151,7 +174,8 @@
 	if(default_unfasten_wrench(user, O))
 		return
 
-	default_deconstruction_crowbar(O)
+	if(default_deconstruction_crowbar(O))
+		return
 
 	var/atom/movable/what = O
 	if(istype(O, /obj/item/weapon/grab))
@@ -164,15 +188,18 @@
 		what = G.affecting
 
 	var/datum/food_processor_process/P = select_recipe(what)
-	if (!P)
-		user << "<span class='warning'>That probably won't blend!</span>"
+	if(P)
+		user.visible_message("[user] put [what] into [src].", \
+			"You put the [what] into [src].")
+		user.drop_item()
+		what.loc = src
 		return 1
-
-	user.visible_message("[user] put [what] into [src].", \
-		"You put the [what] into [src].")
-	user.drop_item()
-	what.loc = src
-	return
+	else
+		if(user.a_intent != "harm")
+			user << "<span class='warning'>That probably won't blend!</span>"
+			return 1
+		else
+			return ..()
 
 /obj/machinery/processor/attack_hand(mob/user)
 	if (src.stat != 0) //NOPOWER etc

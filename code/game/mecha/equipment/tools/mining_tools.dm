@@ -13,7 +13,7 @@
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
 		return
-	if(istype(target, /turf) && !istype(target, /turf))
+	if(istype(target, /turf/open/space))
 		return
 	if(isobj(target))
 		var/obj/target_obj = target
@@ -48,10 +48,10 @@
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
 
-/turf/closed/wall/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+/turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			M.gets_drilled(drill.chassis.occupant)
+			M.gets_drilled()
 	drill.log_message("Drilled through [src]")
 	drill.move_ores()
 
@@ -86,8 +86,11 @@
 		var/obj/item/organ/limb/affecting = H.get_organ("chest")
 		affecting.take_damage(drill_damage)
 		H.update_damage_overlays(0)
+	else if(target.stat == DEAD && target.butcher_results)
+		target.harvest(chassis) // Butcher the mob with our drill.
 	else
 		target.take_organ_damage(drill_damage)
+
 	if(target)
 		target.Paralyse(10)
 		target.updatehealth()

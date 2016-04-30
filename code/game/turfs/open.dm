@@ -1,19 +1,13 @@
 /turf/open
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-
 	var/wet = 0
 	var/image/wet_overlay = null
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
-	if (blocks_air)
-		return
+
 	current_cycle = times_fired
 
 	//cache some vars

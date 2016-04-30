@@ -43,12 +43,40 @@
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
-	icon_state = "medwrench"
-	item_state = "wrench"
+	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
 	origin_tech = "materials=1;engineering=1;biotech=1"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
+
+/obj/item/weapon/wrench/medical/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take \his soul. It looks like \he's trying to commit suicide.</span>")
+	// TODO Make them glow with the power of the M E D I C A L W R E N C H
+	// during their ascension
+
+	// Stun stops them from wandering off
+	user.Stun(5)
+	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
+
+	// Let the sound effect finish playing
+	sleep(20)
+
+	if(!user)
+		return
+
+	for(var/obj/item/W in user)
+		user.unEquip(W)
+
+	var/obj/item/weapon/wrench/medical/W = new /obj/item/weapon/wrench/medical(loc)
+	W.add_fingerprint(user)
+	W.desc += " For some reason, it reminds you of [user.name]."
+
+	if(!user)
+		return
+
+	user.dust()
+
+	return OXYLOSS
 
 /*
  * Screwdriver
@@ -57,7 +85,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "screwdriver"
+	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
@@ -76,31 +104,10 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
-	if(!param_color)
-		param_color = pick("red","blue","purple","brown","green","cyan","yellow")
-
-	switch(param_color)
-		if ("red")
-			icon_state = "screwdriver2"
-			item_state = "screwdriver"
-		if ("blue")
-			icon_state = "screwdriver"
-			item_state = "screwdriver_blue"
-		if ("purple")
-			icon_state = "screwdriver3"
-			item_state = "screwdriver_purple"
-		if ("brown")
-			icon_state = "screwdriver4"
-			item_state = "screwdriver_brown"
-		if ("green")
-			icon_state = "screwdriver5"
-			item_state = "screwdriver_green"
-		if ("cyan")
-			icon_state = "screwdriver6"
-			item_state = "screwdriver_cyan"
-		if ("yellow")
-			icon_state = "screwdriver7"
-			item_state = "screwdriver_yellow"
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
+		icon_state = "screwdriver_[param_color]"
 
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
@@ -119,12 +126,8 @@
 	name = "powered screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver"
-	item_state = "screwdriver_brown"
+	icon_state = "screwdriver_cyborg"
 	toolspeed = 2
-
-/obj/item/weapon/screwdriver/cyborg/New(loc, var/param_color = null)
-	return ..(loc, "cyborg")
 
 /*
  * Wirecutters
@@ -133,7 +136,7 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "cutters"
+	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6
@@ -148,9 +151,10 @@
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()
-	if((!param_color && prob(50)) || param_color == "yellow")
-		icon_state = "cutters-y"
-		item_state = "cutters_yellow"
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("yellow","red")
+		icon_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
@@ -174,10 +178,8 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "cutters_cyborg"
 	toolspeed = 2
-
-/obj/item/weapon/wirecutters/cyborg/New(loc, var/param_color = null)
-	return ..(loc, "cyborg")
 
 /*
  * Welding Tool
@@ -246,9 +248,10 @@
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		flamethrower_screwdriver(I, user)
-	if(istype(I, /obj/item/stack/rods))
+	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	..()
+	else
+		return ..()
 
 
 /obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
@@ -509,7 +512,6 @@
 	slot_flags = SLOT_BELT
 	force = 5
 	throwforce = 7
-	item_state = "crowbar"
 	w_class = 2
 	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1"
@@ -522,8 +524,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/red
-	icon_state = "red_crowbar"
-	item_state = "crowbar_red"
+	icon_state = "crowbar_red"
 	force = 8
 
 /obj/item/weapon/crowbar/large
@@ -535,6 +536,7 @@
 	throw_range = 3
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
+	item_state = "crowbar"
 	toolspeed = 2
 
 /obj/item/weapon/crowbar/cyborg

@@ -67,6 +67,15 @@
 		qdel(src)
 	return
 
+/obj/item/weapon/restraints/handcuffs/sinew
+	name = "sinew restraints"
+	desc = "A pair of restraints fashioned from long strands of flesh."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "sinewcuff"
+	item_state = "sinewcuff"
+	breakouttime = 300 //Deciseconds = 30s
+	cuffsound = 'sound/weapons/cablecuff.ogg'
+
 /obj/item/weapon/restraints/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
@@ -160,6 +169,8 @@
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
 			qdel(src)
+	else
+		return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
@@ -309,4 +320,11 @@
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	breakouttime = 70
+	weaken = 1
+	
+/obj/item/weapon/restraints/legcuffs/bola/cult //cult variant, comes with armament talisman
+	name = "nar'sian bola"
+	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
+	icon_state = "bola_cult"
+	breakouttime = 45
 	weaken = 1

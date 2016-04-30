@@ -62,6 +62,15 @@
 		return
 	return ..()
 
+/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+		monkeys++
+		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user.drop_item()
+		qdel(O)
+		return
+	..()
+
 /datum/action/innate/camera_off/xenobio/Activate()
 	if(!target || !ishuman(target))
 		return
@@ -160,5 +169,5 @@
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
-				X.monkeys += 0.2
+				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)

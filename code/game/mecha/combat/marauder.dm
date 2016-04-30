@@ -7,6 +7,7 @@
 	deflect_chance = 25
 	damage_absorption = list("brute"=0.5,"fire"=0.7,"bullet"=0.45,"laser"=0.6,"energy"=0.7,"bomb"=0.7)
 	max_temperature = 60000
+	burn_state = LAVA_PROOF
 	infra_luminosity = 3
 	operation_req_access = list(access_cent_specops)
 	wreckage = /obj/structure/mecha_wreckage/marauder
@@ -14,6 +15,7 @@
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 4
+	bumpsmash = 1
 
 /obj/mecha/combat/marauder/GrantActions(var/mob/living/user, var/human_occupant = 0)
 	..()

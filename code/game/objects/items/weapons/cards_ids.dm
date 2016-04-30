@@ -17,7 +17,7 @@
 	icon = 'icons/obj/card.dmi'
 	w_class = 1
 
-	var/list/files = list(  )
+	var/list/files = list()
 
 /obj/item/weapon/card/data
 	name = "data disk"
@@ -43,16 +43,6 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/item/weapon/card/data/clown
-	name = "\proper the coordinates to clown planet"
-	icon_state = "data"
-	item_state = "card-id"
-	layer = 3
-	level = 2
-	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
-	function = "teleporter"
-	data = "Clown Land"
-
 /*
  * ID CARDS
  */
@@ -63,13 +53,21 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	flags = NOBLUDGEON
+	var/prox_check = TRUE //If the emag requires you to be in range
+
+/obj/item/weapon/card/emag/bluespace
+	name = "bluespace cryptographic sequencer"
+	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
+	color = rgb(40, 130, 255)
+	origin_tech = "bluespace=4;magnets=4;syndicate=5"
+	prox_check = FALSE
 
 /obj/item/weapon/card/emag/attack()
 	return
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
-	if(!proximity)
+	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
 
@@ -78,11 +76,10 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	slot_flags = SLOT_ID
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
-	slot_flags = SLOT_ID
-
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 

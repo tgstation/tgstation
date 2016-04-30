@@ -70,3 +70,5 @@
 			var/datum/alternate_appearance/AA = viewing_alternate_appearances[aakey]
 			if(AA)
 				AA.display_to(list(src))
+
+	update_client_colour()

@@ -84,7 +84,6 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
 
 	ident = rand(1, 999)
 	update_icons()
@@ -286,6 +285,7 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	if(usr.stat == DEAD)
+		src << "<span class='userdanger'>Alert: You are dead.</span>"
 		return //won't work if dead
 	robot_alerts()
 
@@ -445,9 +445,6 @@
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
-		return
-
 	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
@@ -470,6 +467,7 @@
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
@@ -604,11 +602,14 @@
 			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
-
 	else
-		if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
-			spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
+	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
+		spark_system.start()
+	..()
+
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user != src)//To prevent syndieborgs from emagging themselves
@@ -621,6 +622,13 @@
 			return
 		if(opened)//Cover is open
 			if((world.time - 100) < emag_cooldown)
+				return
+
+			if(syndicate)
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] but they were a syndicate cyborg.")
+				emag_cooldown = world.time
 				return
 
 			var/ai_is_antag = 0
@@ -636,7 +644,7 @@
 				return
 
 			if(wiresexposed)
-				user << "<span class='warning'>You must close the cover first!</span>"
+				user << "<span class='warning'>You must unexpose the wires first!</span>"
 				return
 			else
 				emag_cooldown = world.time
@@ -972,6 +980,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if(src.connected_ai)
+		connected_ai.connected_robots -= src
 		src.connected_ai = null
 	lawupdate = 0
 	lockcharge = 0

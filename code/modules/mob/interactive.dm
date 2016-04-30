@@ -577,7 +577,7 @@
 							if(istype(D,/obj/machinery/door/airlock))
 								var/obj/machinery/door/airlock/AL = D
 								if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
-									AL.p_open = 1
+									AL.panel_open = 1
 									AL.update_icon()
 									AL.shock(src,(100 - smartness)/2)
 									sleep(5)
@@ -589,7 +589,7 @@
 									if(!AL.wires.is_cut(WIRE_POWER2))
 										AL.wires.cut(WIRE_POWER2)
 									sleep(5)
-									AL.p_open = 0
+									AL.panel_open = 0
 									AL.update_icon()
 							D.open()
 
@@ -711,10 +711,7 @@
 	//this is boring, lets move
 	if(!doing && !IsDeadOrIncap() && !TARGET)
 		doing |= TRAVEL
-		if(nearby.len > 4)
-			//i'm crowded, time to leave
-			TARGET = pick(target_filter(urange(MAX_RANGE_FIND,src,1)))
-		else
+		if(!isTraitor || !traitorTarget)
 			var/choice = rand(1,50)
 			switch(choice)
 				if(1 to 30)
@@ -726,6 +723,8 @@
 					TARGET = pick(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
 				if(46 to 50)
 					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
+		else if(isTraitor && traitorTarget)
+			TARGET = traitorTarget
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
@@ -861,7 +860,7 @@
 	if(prob(10)) // 10% chance to broadcast it over the radio
 		chatmsg = ";"
 
-	if(prob(35) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
+	if(prob(chattyness) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
 		if(doing & INTERACTING)
 			if(prob(chattyness))
 				chatmsg += pick("This [nouns_objects] is a little [adjective_objects].",
@@ -895,7 +894,7 @@
 						curse_words = pick_list(NPC_SPEAK_FILE,"curse_words")
 						toSay += "[curse_words] "
 					chatmsg += "Hey [nouns_generic], why dont you go [toSay], you [nouns_insult]!"
-	else
+	else if(prob(chattyness))
 		chatmsg += pick(knownStrings)
 		if(prob(25)) // cut out some phrases now and then to make sure we're fresh and new
 			knownStrings -= pick(chatmsg)

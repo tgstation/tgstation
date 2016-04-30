@@ -19,6 +19,9 @@
 
 	var/image/obscured	//camerachunks
 
+	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
+
+
 /turf/New()
 	..()
 
@@ -126,16 +129,19 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path)
+/turf/proc/ChangeTurf(path, defer_change = FALSE)
 	if(!path)
 		return
-	if(path == type)
+	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
 		return src
+	var/old_blueprint_data = blueprint_data
 
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
-	W.AfterChange()
+	if(!defer_change)
+		W.AfterChange()
+	W.blueprint_data = old_blueprint_data
 	return W
 
 /turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
@@ -148,10 +154,11 @@
 
 	queue_smooth_neighbors(src)
 
-/turf/open/AfterChange()
+/turf/open/AfterChange(ignore_air)
 	..()
 	RemoveLattice()
-	Assimilate_Air()
+	if(!ignore_air)
+		Assimilate_Air()
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
@@ -271,3 +278,21 @@
 		var/atom/A = V
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
+
+
+/turf/proc/add_blueprints(atom/movable/AM)
+	var/image/I = new
+	I.appearance = AM.appearance
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.loc = src
+	I.dir = AM.dir
+	I.alpha = 128
+
+	if(!blueprint_data)
+		blueprint_data = list()
+	blueprint_data += I
+
+
+/turf/proc/add_blueprints_preround(atom/movable/AM)
+	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+		add_blueprints(AM)

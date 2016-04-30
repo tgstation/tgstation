@@ -62,10 +62,9 @@ var/const/SAFETY_COOLDOWN = 100
 	if(default_unfasten_wrench(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
-	..()
-	add_fingerprint(user)
-	return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
 	if(!emagged)

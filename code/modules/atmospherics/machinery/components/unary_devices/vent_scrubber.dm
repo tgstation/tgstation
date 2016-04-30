@@ -308,17 +308,35 @@
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
 				update_icon()
-				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+				var/image/I = image(src, loc, dir = dir)
+				I.plane = PLANE_UI_OBJECTS
+				pipe_vision_img = I
 			return 0
-	if (!istype(W, /obj/item/weapon/wrench))
+	else
 		return ..()
-	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
-	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
+	if(..())
+		if (!(stat & NOPOWER) && on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user)
+	if(!welded || !(do_after(user, 20, target = src)))
+		return
+	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
+	welded = 0
+	update_icon()
+	var/image/I = image(src, loc, dir = dir)
+	I.plane = PLANE_UI_OBJECTS
+	pipe_vision_img = I
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+
+
 
 #undef SIPHONING
 #undef SCRUBBING

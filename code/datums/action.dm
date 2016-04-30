@@ -89,8 +89,8 @@
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	current_button.overlays.Cut()
 	if(button_icon && button_icon_state)
-		var/image/img
-		img = image(button_icon, current_button, button_icon_state)
+		var/image/img = image(button_icon, current_button, button_icon_state)
+		img.plane = current_button.plane
 		img.pixel_x = 0
 		img.pixel_y = 0
 		current_button.overlays += img
@@ -100,6 +100,9 @@
 //Presets for item actions
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	button_icon_state = null
+	// If you want to override the normal icon being the item
+	// then change this to an icon state
 
 /datum/action/item_action/New(Target)
 	..()
@@ -121,12 +124,17 @@
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
 	current_button.overlays.Cut()
-	if(target)
+
+	if(button_icon && button_icon_state)
+		// If set, use the custom icon that we set instead
+		// of the item appereance
+		..(current_button)
+	else if(target)
 		var/obj/item/I = target
-		var/old = I.layer
-		I.layer = FLOAT_LAYER //AAAH
+		var/old = I.plane
+		I.plane = current_button.plane
 		current_button.overlays += I
-		I.layer = old
+		I.plane = old
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"

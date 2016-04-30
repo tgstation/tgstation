@@ -22,6 +22,9 @@
 	randomize_human(src)
 	dna.initialize_dna()
 
+	if(dna.species)
+		set_species(dna.species.type)
+
 	//initialise organs
 	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
@@ -32,10 +35,14 @@
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
+	//Note: Additional organs are generated/replaced on the dna.species level
+
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
 
 	make_blood()
+
+	martial_art = default_martial_art
 
 	..()
 
@@ -817,6 +824,10 @@
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
 
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
+
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -950,6 +961,9 @@
 	if(!getorganslot("lungs"))
 		var/obj/item/organ/internal/lungs/L = new()
 		L.Insert(src)
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/internal/tongue/T = new()
+		T.Insert(src)
 	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0

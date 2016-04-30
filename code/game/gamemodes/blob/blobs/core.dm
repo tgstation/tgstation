@@ -18,6 +18,7 @@
 /obj/effect/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
 	blob_cores += src
 	SSobj.processing |= src
+	poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
 		create_overmind(new_overmind)
@@ -25,6 +26,9 @@
 		update_icon()
 	point_rate = new_rate
 	..()
+
+/obj/effect/blob/core/scannerreport()
+	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
 
 /obj/effect/blob/core/update_icon()
 	overlays.Cut()
@@ -42,13 +46,15 @@
 		overmind.blob_core = null
 	overmind = null
 	SSobj.processing.Remove(src)
+	poi_list -= src
 	return ..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/effect/blob/core/ex_act(severity, target)
-	return
+	var/damage = 50 - 10 * severity //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity
+	take_damage(damage, BRUTE)
 
 /obj/effect/blob/core/check_health()
 	..()
@@ -68,7 +74,7 @@
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/effect/blob/normal/B in range(1, src))
 		if(prob(5))
-			B.change_to(/obj/effect/blob/shield, overmind)
+			B.change_to(/obj/effect/blob/shield/core, overmind)
 	..()
 
 

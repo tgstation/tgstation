@@ -179,9 +179,8 @@
 				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
 		else
 			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
-		return
 
-	if(istype(W, /obj/item/weapon/storage/bag/tray))
+	else if(istype(W, /obj/item/weapon/storage/bag/tray))
 		if(!compartment_access_check(user))
 			return
 		var/obj/item/weapon/storage/T = W
@@ -203,7 +202,8 @@
 		updateUsrDialog()
 		return
 
-	..()
+	else
+		return ..()
 
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
@@ -237,16 +237,20 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(component_parts && istype(W, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(W)
+	if(component_parts)
+		if(default_deconstruction_crowbar(W))
+			return
 
-	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
-		panel_open = !panel_open
-		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
-		overlays.Cut()
-		if(panel_open)
-			overlays += image(icon, "[initial(icon_state)]-panel")
-		updateUsrDialog()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(anchored)
+			panel_open = !panel_open
+			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
+			overlays.Cut()
+			if(panel_open)
+				overlays += image(icon, "[initial(icon_state)]-panel")
+			updateUsrDialog()
+		else
+			user << "<span class='warning'>You must first secure [src].</span>"
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
@@ -273,14 +277,14 @@
 					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
 				else
 					user << "<span class='notice'>The [name] is fully stocked.</span>"
-			return;
+			return
 		else
 			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
 	else
-		..()
+		return ..()
 
 
-/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
+/obj/machinery/vending/deconstruction()
 	var/product_list = list(product_records, hidden_records, coin_records)
 	for(var/i=1, i<=3, i++)
 		for(var/datum/data/vending_product/machine_content in product_list[i])
@@ -627,7 +631,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12)
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12,/obj/item/weapon/reagent_containers/food/drinks/flask = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 12)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"

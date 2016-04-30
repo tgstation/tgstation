@@ -28,7 +28,10 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
-	return
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		return 0 //so we can refill them via their afterattack.
+	else
+		return ..()
 
 /obj/structure/reagent_dispensers/New()
 	create_reagents(1000)
@@ -40,8 +43,8 @@
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
-	name = "watertank"
-	desc = "A watertank"
+	name = "water tank"
+	desc = "A water tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 
@@ -73,8 +76,8 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank
-	name = "fueltank"
-	desc = "A fueltank"
+	name = "fuel tank"
+	desc = "A fuel tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 
@@ -123,8 +126,8 @@
 
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "Water-Cooler"
-	desc = "A machine that dispenses water to drink"
+	name = "water cooler"
+	desc = "A machine that dispenses water to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
@@ -153,12 +156,12 @@
 			return
 		qdel(I)
 		cups++
-		return
 	else
-		..()
+		return ..()
+
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
-	desc = "A beer keg"
+	desc = "A beer keg."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 

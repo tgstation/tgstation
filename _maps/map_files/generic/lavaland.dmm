@@ -1710,6 +1710,8 @@
 /obj/item/weapon/pickaxe,
 /obj/item/device/gps/mining,
 /obj/item/device/gps/mining,
+/obj/item/device/gps/mining,
+/obj/item/device/gps/mining,
 /turf/open/floor/plasteel/purple/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 9;
@@ -2040,7 +2042,7 @@
 	},
 /area/mine/production)
 "ed" = (
-/turf/closed/mineral/random/high_chance,
+/turf/closed/mineral/random/high_chance/volcanic,
 /area/lavaland/surface/outdoors)
 "ee" = (
 /turf/closed/wall{
@@ -4497,10 +4499,10 @@ af
 af
 af
 af
-dq
-dq
-dq
-dq
+al
+al
+al
+al
 af
 af
 af
@@ -5266,7 +5268,7 @@ al
 al
 al
 al
-dq
+al
 af
 ab
 ab
@@ -6295,7 +6297,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -6815,7 +6817,7 @@ af
 af
 af
 af
-dq
+al
 al
 al
 al
@@ -7325,7 +7327,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -7582,8 +7584,8 @@ al
 al
 al
 al
-dq
-dq
+al
+al
 af
 af
 af
@@ -7846,7 +7848,7 @@ al
 af
 af
 af
-dq
+al
 al
 al
 al
@@ -8614,7 +8616,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -8871,8 +8873,8 @@ al
 al
 al
 al
-dq
-dq
+al
+al
 af
 af
 af
@@ -9645,7 +9647,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -9902,11 +9904,11 @@ al
 al
 al
 al
-dq
-dq
+al
+al
 af
 af
-dq
+al
 ab
 ab
 af
@@ -10683,16 +10685,16 @@ al
 al
 af
 af
-dq
+al
 af
 af
 af
 af
 af
-dq
+al
 af
 af
-dq
+al
 al
 al
 al
@@ -10948,8 +10950,8 @@ af
 af
 af
 af
-dq
-dq
+al
+al
 al
 al
 al
@@ -11204,9 +11206,9 @@ af
 af
 af
 af
-dq
-dq
-dq
+al
+al
+al
 al
 al
 al
@@ -11463,7 +11465,7 @@ af
 af
 af
 af
-dq
+al
 al
 al
 al
@@ -11720,7 +11722,7 @@ af
 af
 af
 af
-dq
+al
 al
 al
 al
@@ -11970,7 +11972,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -12227,9 +12229,9 @@ al
 al
 al
 al
-dq
-dq
-dq
+al
+al
+al
 af
 af
 af
@@ -12484,11 +12486,11 @@ al
 al
 al
 al
-dq
-dq
-dq
-dq
-dq
+al
+al
+al
+al
+al
 af
 af
 af
@@ -13007,9 +13009,9 @@ al
 al
 af
 af
-dq
-dq
-dq
+al
+al
+al
 af
 af
 af
@@ -13267,7 +13269,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -13781,7 +13783,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -13873,7 +13875,7 @@ ab
 af
 ab
 ee
-em
+eD
 eF
 ca
 ee
@@ -14038,7 +14040,7 @@ al
 al
 al
 al
-dq
+al
 af
 af
 af
@@ -14130,7 +14132,7 @@ af
 af
 ab
 ee
-en
+em
 eG
 eG
 ee
@@ -14295,7 +14297,7 @@ al
 al
 al
 al
-dq
+al
 ab
 af
 af
@@ -14310,7 +14312,7 @@ af
 af
 af
 af
-dq
+al
 al
 al
 al
@@ -14556,7 +14558,7 @@ ab
 af
 af
 af
-dq
+al
 af
 af
 af
@@ -14621,11 +14623,11 @@ af
 af
 af
 af
-dq
-dq
-dq
-dq
-dq
+al
+al
+al
+al
+al
 af
 af
 af
@@ -14817,8 +14819,8 @@ al
 al
 af
 af
-dq
-dq
+al
+al
 af
 af
 af
@@ -15084,8 +15086,8 @@ af
 af
 af
 af
-dq
-dq
+al
+al
 af
 af
 af
@@ -15400,8 +15402,8 @@ af
 af
 af
 al
-dq
-dq
+al
+al
 af
 af
 af
@@ -15657,7 +15659,7 @@ al
 al
 al
 al
-dq
+al
 ab
 af
 af
@@ -16942,7 +16944,7 @@ al
 al
 al
 al
-dq
+al
 af
 ab
 af
@@ -17199,7 +17201,7 @@ al
 al
 al
 al
-dq
+al
 ab
 ab
 af
@@ -17456,7 +17458,7 @@ al
 al
 al
 al
-dq
+al
 al
 ab
 af

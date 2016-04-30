@@ -24,6 +24,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 					continue
 				if(gamemode && (gamemode in I.exclude_modes))
 					continue
+			if(I.player_minimum && I.player_minimum > joined_player_list.len)
+				continue
+
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
 			filtered_uplink_items[category][item] = I
@@ -46,6 +49,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/surplus = 100 // Chance of being included in the surplus crate.
 	var/list/include_modes = list() // Game modes to allow this item in.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
+	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -135,7 +139,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
+	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -304,6 +308,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	cost = 12
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -634,6 +639,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/shoes/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 25
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
@@ -784,7 +790,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			for rapid healing, a medical HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
 	item = /obj/item/weapon/storage/firstaid/tactical
-	cost = 9
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/thermal
@@ -833,7 +839,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's \
 			'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
-	cost = 3
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/c4
@@ -856,7 +862,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			load on the grid, causing a stationwide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes."
 	item = /obj/item/device/powersink
-	cost = 10
+	cost = 6
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -895,7 +901,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/rad_laser
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targetting Device"
@@ -954,6 +960,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			cocktail which has a mild healing effect along with removing all stuns and increasing movement speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
+	player_minimum = 25
 
 /datum/uplink_item/implants/storage
 	name = "Storage Implant"
@@ -1075,6 +1082,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			but you never know. Contents are sorted to always be worth 50 TC."
 	item = /obj/structure/closet/crate
 	cost = 20
+	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)

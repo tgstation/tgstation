@@ -1,4 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscdel: "You can no longer drop survival capsules on top of dense objects, such as the windows in the emergency shuttle. You can still drop them on non-dense objects and mobs, however."

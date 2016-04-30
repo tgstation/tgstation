@@ -99,8 +99,13 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
+		if(!iscultist(user) && !iswizard(user) && !SS.usability)
+			user << "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>"
+			user.Dizzy(120)
+			return
 		SS.transfer_soul("CONSTRUCT",src,user)
-
+	else
+		return ..()
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 

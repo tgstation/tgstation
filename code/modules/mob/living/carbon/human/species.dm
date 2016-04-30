@@ -41,7 +41,7 @@
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
-
+	var/list/mutant_organs = list(/obj/item/organ/internal/tongue)		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
 	var/brutemod = 1	// multiplier for brute damage
@@ -127,6 +127,9 @@
 			C.unEquip(thing)
 	if(exotic_blood)
 		C.reagents.add_reagent(exotic_blood, 80)
+	for(var/path in mutant_organs)
+		var/obj/item/organ/internal/I = new path()
+		I.Insert(C)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species && C.dna.species.exotic_blood)
@@ -792,6 +795,11 @@
 
 			if(istype(J) && J.allow_thrust(0.01, H))
 				. -= 2
+			else
+				var/obj/item/organ/internal/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+				if(istype(T) && T.allow_thrust(0.01, H))
+					. -= 2
+
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
@@ -950,14 +958,10 @@
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
-	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
-	else if(I.force)
-		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
-	else
-		return 0
+	H.send_item_attack_message(I, user, hit_area)
+
+	if(!I.force)
+		return 0 //item force is zero
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
@@ -1386,4 +1390,3 @@
 #undef COLD_GAS_DAMAGE_LEVEL_1
 #undef COLD_GAS_DAMAGE_LEVEL_2
 #undef COLD_GAS_DAMAGE_LEVEL_3
-

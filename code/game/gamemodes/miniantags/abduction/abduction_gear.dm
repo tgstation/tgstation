@@ -98,6 +98,7 @@
 	if(istype(src.loc, /mob/living/carbon/human))
 		if(combat_cooldown != initial(combat_cooldown))
 			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
+			return
 		var/mob/living/carbon/human/M = src.loc
 		M.adjustStaminaLoss(-75)
 		M.SetParalysis(0)
@@ -590,7 +591,10 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
-	deconstructable = 0
+	flags = NODECONSTRUCT
+
+/obj/structure/table/optable/abductor/table_destroy()
+	return //can't destroy the abductor's only optable.
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
