@@ -2,7 +2,8 @@
 	// We expect 0 or more /clients in this list
 	var/list/priority_candidates = list()
 	var/minimum_required = 1
-	var/role_name = "cancer rat" // Q U A L I T Y  M E M E S
+	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
+	var/list/spawned_mobs = list()
 
 /datum/round_event/ghost_role/start()
 	try_spawning()
@@ -28,6 +29,9 @@
 			signing up.")
 	else if(status == SUCCESSFUL_SPAWN)
 		message_admins("[role_name] spawned successfully.")
+		if(!spawned_mobs.len)
+			message_admins("No mobs found in the `spawned_mobs` list, this is \
+				a bug.")
 	else
 		message_admins("An attempt to spawn [role_name] returned [status], \
 			this is a bug.")

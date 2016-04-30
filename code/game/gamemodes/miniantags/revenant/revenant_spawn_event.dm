@@ -2,7 +2,7 @@
 
 /datum/round_event_control/revenant
 	name = "Spawn Revenant" // Did you mean 'griefghost'?
-	typepath = /datum/round_event/revenant
+	typepath = /datum/round_event/ghost_role/revenant
 	weight = 7
 	max_occurrences = 1
 	earliest_start = 6000 //Meant to mix things up early-game.
@@ -11,6 +11,7 @@
 
 /datum/round_event/ghost_role/revenant
 	var/force_spawn
+	role_name = "revenant"
 
 /datum/round_event/ghost_role/revenant/New(my_force_spawn = FALSE)
 	..()
@@ -58,4 +59,5 @@
 	ticker.mode.traitors |= player_mind
 	message_admins("[player_mind.key] has been made into a revenant by an event.")
 	log_game("[player_mind.key] was spawned as a revenant by an event.")
+	spawned_mobs += revvie
 	return SUCCESSFUL_SPAWN

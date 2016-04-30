@@ -15,7 +15,7 @@
 /datum/round_event/ghost_role/slaughter/spawn_role()
 	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
 	if(!candidates.len)
-		return FALSE
+		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = popleft(candidates)
 
@@ -30,10 +30,8 @@
 					spawn_locs += L.loc
 
 	if(!spawn_locs)
-		// TODO do we throw an exception for unresolvable issues
-		// or abort
 		message_admins("No valid spawn locations found, aborting...")
-		return FALSE
+		return MAP_ERROR
 
 	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,(pick(spawn_locs)))
 	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
@@ -47,4 +45,5 @@
 	S << 'sound/magic/demon_dies.ogg'
 	message_admins("[selected] has been made into a slaughter demon by an event.")
 	log_game("[selected] was spawned as a slaughter demon by an event.")
-	return TRUE
+	spawned_mobs += S
+	return SUCCESSFUL_SPAWN

@@ -52,4 +52,6 @@
 
 	if(ticker.mode.config_tag != "abduction")
 		ticker.mode.abductors |= temp.abductors
+
+	spawned_mobs += list(agent, scientist)
 	return SUCCESSFUL_SPAWN
