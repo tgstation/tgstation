@@ -21,10 +21,10 @@
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 200
 	select_name = "stun"
-	projectile_type = /obj/item/projectile/shock_revolver
+	projectile_type = /obj/item/projectile/energy/shock_revolver
 
 
-/obj/item/projectile/shock_revolver
+/obj/item/projectile/energy/shock_revolver
 	name = "shock bolt"
 	icon_state = "purple_laser"
 	var/chain
@@ -35,7 +35,7 @@
 	spawn(1)
 		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
 
-/obj/item/projectile/shock_revolver/on_hit(atom/target)
+/obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
 		tesla_zap(src, 3, 10000)
