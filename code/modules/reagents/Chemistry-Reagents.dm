@@ -4985,3 +4985,47 @@ var/global/list/tonio_doesnt_remove=list("tonio", "blood")
 	sport = 5
 	color = "#CCFF66" //rgb: 204, 255, 51
 	custom_metabolism =  0.01
+
+/datum/reagent/antidepressant/citalopram
+	name = "Citalopram"
+	id = "citalopram"
+	description = "Stabilizes the mind a little."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	custom_metabolism = 0.01
+	data = 0
+
+/datum/reagent/antidepressant/citalopram/on_mob_life(var/mob/living/M as mob)
+	if(..()) return 1
+	if(volume <= 0.1)
+		if(data != -1)
+			data = -1
+			to_chat(M, "<span class='warning'>Your mind feels a little less stable..</span>")
+	else
+		if(world.time > data + 3000)
+			data = world.time
+			to_chat(M, "<span class='notice'>Your mind feels stable.. a little stable.</span>")
+
+/datum/reagent/antidepressant/paroxetine
+	name = "Paroxetine"
+	id = "paroxetine"
+	description = "Stabilizes the mind greatly, but has a chance of adverse effects."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	custom_metabolism = 0.01
+	data = 0
+
+/datum/reagent/antidepressant/paroxetine/on_mob_life(var/mob/living/M as mob)
+	if(..()) return 1
+	if(volume <= 0.1)
+		if(data != -1)
+			data = -1
+			to_chat(M, "<span class='warning'>Your mind feels much less stable.</span>")
+	else
+		if(world.time > data + 3000)
+			data = world.time
+			if(prob(90))
+				to_chat(M, "<span class='notice'>Your mind feels much more stable.</span>")
+			else
+				to_chat(M, "<span class='warning'>Your mind breaks apart.</span>")
+				M.hallucination += 200
