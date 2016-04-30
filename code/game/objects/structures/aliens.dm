@@ -166,7 +166,7 @@
 	icon_state = "weeds"
 	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
-	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
+	canSmoothWith = list(/obj/structure/alien/weeds, /obj/structure/alien/resin)
 	smooth = SMOOTH_MORE
 
 
