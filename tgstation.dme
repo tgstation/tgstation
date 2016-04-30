@@ -1626,6 +1626,7 @@
 #include "code\modules\research\xenobiology\xenobiology.dm"
 #include "code\modules\ruins\lavaland_ruin_code.dm"
 #include "code\modules\ruins\ruin_areas.dm"
+#include "code\modules\ruins\russian_invasion.dm"
 #include "code\modules\security levels\keycard authentication.dm"
 #include "code\modules\security levels\security levels.dm"
 #include "code\modules\shuttle\assault_pod.dm"
