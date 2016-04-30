@@ -63,7 +63,7 @@
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
 	return 0
 
-/obj/singularity/blob_act(severity)
+/obj/singularity/blob_act(obj/effect/blob/B)
 	return
 
 /obj/singularity/ex_act(severity, target)

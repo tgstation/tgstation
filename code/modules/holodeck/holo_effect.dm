@@ -7,7 +7,7 @@
 /obj/effect/holodeck_effect
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/holodeck_effect/proc/activate(var/obj/machinery/computer/holodeck/HC)
 	return

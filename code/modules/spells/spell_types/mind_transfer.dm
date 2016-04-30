@@ -35,6 +35,10 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "<span class='warning'>They are too far away!</span>"
 		return
 
+	if(istype(target, /mob/living/simple_animal/hostile/megafauna))
+		user << "<span class='warning'>This creature is too powerful to control!</span>"
+		return
+
 	if(target.stat == DEAD)
 		user << "<span class='warning'>You don't particularly want to be dead!</span>"
 		return

@@ -26,3 +26,22 @@
 
 
 /area/ruin/powered/snow_biodome
+
+
+// Ruins of "onehalf" ship
+/area/ruin/onehalf/hallway
+	name = "Hallway"
+	icon_state = "hallC"
+
+
+/area/ruin/onehalf/drone_bay
+	name = "Mining Drone Bay"
+	icon_state = "engine"
+
+/area/ruin/onehalf/dorms_med
+	name = "Crew Quarters"
+	icon_state = "Sleep"
+
+/area/ruin/onehalf/bridge
+	name = "Bridge"
+	icon_state = "bridge"

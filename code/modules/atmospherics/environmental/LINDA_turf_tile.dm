@@ -357,7 +357,7 @@
 				if(neighbor.archived_cycle < SSair.times_fired)
 					neighbor.archive()
 
-				neighbor.neighbor_conduct_with_src()
+				neighbor.neighbor_conduct_with_src(src)
 
 				neighbor.consider_superconductivity()
 
