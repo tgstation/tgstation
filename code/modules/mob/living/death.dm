@@ -1,4 +1,4 @@
-/mob/living/gib(animation = 1)
+/mob/living/gib(no_brain, no_organs)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
@@ -6,34 +6,39 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1) //to update alien nest overlay, forced because we don't exist anymore
 
-	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
-	if(animate)
-		gib_animation(animate)
-
+	if(!prev_lying)
+		gib_animation()
+	if(!no_organs)
+		spill_organs(no_brain)
 	spawn_gibs()
+	qdel(src)
 
-	end_animation(animate) // Will qdel(src)
+/mob/living/proc/gib_animation()
+	return
 
 /mob/living/proc/spawn_gibs()
 	gibs(loc, viruses)
 
-/mob/living/proc/gib_animation(animate, flick_name = "gibbed")
-	flick(flick_name, animate)
+/mob/living/proc/spill_organs(no_brain)
+	return
 
-/mob/living/dust(animation = 0)
+
+/mob/living/dust()
 	death(1)
-	var/atom/movable/overlay/animate = setup_animation(animation, 0)
-	if(animate)
-		dust_animation(animate)
 
+	if(buckled)
+		buckled.unbuckle_mob(src,force=1)
+
+	dust_animation()
 	spawn_dust()
-	end_animation(animate)
+	qdel(src)
+
+/mob/living/proc/dust_animation()
+	return
 
 /mob/living/proc/spawn_dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 
-/mob/living/proc/dust_animation(animate, flick_name = "")
-	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
 	unset_machine()
@@ -58,29 +63,3 @@
 	update_damage_hud()
 	update_health_hud()
 	update_canmove()
-
-
-/mob/living/proc/setup_animation(animation, prev_lying)
-	var/atom/movable/overlay/animate = null
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = INVISIBILITY_ABSTRACT
-	alpha = 0
-
-	if(!prev_lying && animation)
-		animate = new(loc)
-		animate.icon_state = "blank"
-		animate.icon = 'icons/mob/mob.dmi'
-		animate.master = src
-	return animate
-
-/mob/living/proc/end_animation(animate)
-	if(!animate)
-		qdel(src)
-	else
-		spawn(15)
-			if(animate)
-				qdel(animate)
-			if(src)
-				qdel(src)

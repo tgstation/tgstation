@@ -133,8 +133,8 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib(animation = 0)
-	dust(animation)
+/mob/living/simple_animal/hostile/statue/gib()
+	dust()
 
 
 // Stop attacking clientless mobs
