@@ -132,6 +132,27 @@
 	duration = 8
 	randomdir = 0
 
+/obj/effect/overlay/temp/gib_animation
+	icon = 'icons/mob/mob.dmi'
+	duration = 15
+
+/obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
+	icon_state = gib_icon
+	..()
+
+/obj/effect/overlay/temp/gib_animation/ex_act(severity)
+	return //so the overlay isn't deleted by the explosion that gibbed the mob.
+
+/obj/effect/overlay/temp/gib_animation/animal
+	icon = 'icons/mob/animal.dmi'
+
+/obj/effect/overlay/temp/dust_animation
+	icon = 'icons/mob/mob.dmi'
+	duration = 15
+
+/obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
+	icon_state = dust_icon
+	..()
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

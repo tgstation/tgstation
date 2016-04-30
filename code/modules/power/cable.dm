@@ -28,7 +28,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	on_blueprints = TRUE
 	var/datum/powernet/powernet
 	name = "power cable"
-	desc = "A flexible, superconducting cable for heavy-duty power transfer."
+	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
@@ -106,7 +106,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/hide(i)
 
 	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 /obj/structure/cable/proc/updateicon()
@@ -150,10 +150,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			user << "<span class='danger'>The cable is not powered.</span>"
 		shock(user, 5, 0.2)
-
-	else
-		if (W.flags & CONDUCT)
-			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
 
@@ -469,7 +465,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	item_color = "red"
-	desc = "A coil of power cable."
+	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = 2
 	throw_speed = 3
@@ -529,8 +525,9 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 
 /obj/item/stack/cable_coil/update_icon()
-	if (!item_color)
+	if(!item_color)
 		item_color = pick("red", "yellow", "blue", "green")
+	item_state = "coil_[item_color]"
 	if(amount == 1)
 		icon_state = "coil_[item_color]1"
 		name = "cable piece"

@@ -99,10 +99,13 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
+		if(!iscultist(user) && !iswizard(user) && !SS.usability)
+			user << "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>"
+			user.Dizzy(120)
+			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 	else
 		return ..()
-
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
@@ -217,7 +220,7 @@
 
 /obj/item/device/soulstone/proc/init_shade(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
-	T.invisibility = 101
+	T.invisibility = INVISIBILITY_ABSTRACT
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'

@@ -155,7 +155,7 @@
 					corrupt()
 
 
-/obj/item/weapon/stock_parts/cell/blob_act()
+/obj/item/weapon/stock_parts/cell/blob_act(obj/effect/blob/B)
 	ex_act(1)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()

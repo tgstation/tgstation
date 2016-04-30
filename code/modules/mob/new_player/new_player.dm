@@ -6,7 +6,7 @@
 
 	flags = NONE
 
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 	density = 0
 	stat = DEAD

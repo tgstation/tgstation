@@ -142,8 +142,10 @@
 	max_charges = 20 //20, 10, 10, 7
 	no_den_usage = 1
 
-/obj/item/weapon/gun/magic/wand/door/zap_self()
-	return
+/obj/item/weapon/gun/magic/wand/door/zap_self(mob/living/user)
+	user << "<span class='notice'>You feel vaguely more open with your feelings.</span>"
+	charges--
+	..()
 
 /////////////////////////////////////
 //WAND OF FIREBALL

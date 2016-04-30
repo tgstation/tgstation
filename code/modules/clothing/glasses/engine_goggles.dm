@@ -62,7 +62,7 @@
 			if(O.level != 1)
 				continue
 
-			if(O.invisibility == 101)
+			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.invisibility = 0
 				invis_objects += O
 
@@ -75,7 +75,7 @@
 			invis_objects -= O
 			var/turf/T = O.loc
 			if(T && T.intact)
-				O.invisibility = 101
+				O.invisibility = INVISIBILITY_MAXIMUM
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
 	if(!istype(loc,/mob/living/carbon/human))
