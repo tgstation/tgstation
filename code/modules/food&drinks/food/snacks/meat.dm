@@ -187,7 +187,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak
 	name = "steak"
-	desc = "A piece of hot spicy meat."
+	desc = "A piece of hot spicy meat made specifically for /tg/ headcoder Cheridan, xoxoxoxoxoxo."
 	icon_state = "meatsteak"
 	list_reagents = list("nutriment" = 5)
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
