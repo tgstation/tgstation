@@ -180,3 +180,82 @@
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
+
+
+//FISTROCKET
+
+/obj/item/organ/internal/cyberimp/fistrocket
+	name = "fist rocket implant"
+	desc = "A badass implant that lets you fire your fist off of your arm."
+	zone = "r_arm"
+	slot = "r_arm_device"
+	icon_state = "implant-toolkit"//placeholder
+	w_class = 3
+	actions_types = list(/datum/action/item_action/organ_action)
+	var/hasfist = 1
+
+/obj/item/organ/internal/cyberimp/fistrocket/ui_action_click()
+	var/mob/living/carbon/H = owner
+	var/list/hands = get_both_hands(H)
+	var/M = locate(/obj/item/rocketstump) in hands
+	if(M)
+		hasfist = 0
+	if(H.incapacitated())
+		H << "<span class='warning'>You can't do that while you're incapacitated.</span>"
+		return
+	if(!hasfist)
+		H << "<span class='warning'>You don't have a fist to shoot off!</span>"
+		return
+	H.visible_message("<span class='danger'>[H] shoots his fist off of \his arm!</span>", "<b><i>Your fist shoots off of your arm!</i></b>")
+	var/obj/item/weapon/rocketfist/fist = new(get_turf(H))
+//	var/atom/throw_target = get_edge_target_turf(H, get_dir(src, get_step_away(H, src)))
+	var/atom/throw_target = get_edge_target_turf(H, H.dir)
+	fist.throw_at_fast(throw_target, 7, 3, spin=0)
+	var/obj/item/rocketstump/stump = new(H)
+	H.put_in_hands(stump)
+	hasfist = 0
+
+
+/obj/item/weapon/rocketfist
+	name = "rocket fist"
+	desc = "A metal fist with a thruster on the back."
+	icon_state = "rocketfist"//placeholder
+	item_state = "gun"//placeholder
+	flags =  CONDUCT
+	w_class = 3
+	force = 5
+	var/thrusters = 1//controls whether or not the throw impact will have the full effect. turns off after the first throw
+
+/obj/item/weapon/rocketfist/throw_impact(atom/hit_atom)
+	..()
+	if(thrusters && iscarbon(hit_atom))
+		thrusters = 0
+		var/mob/living/carbon/C = hit_atom
+		C.visible_message("<span class='danger'>[C] is hit by [src]!</span>", "<span class='userdanger'>[src] violently crashes into you!</span>")
+		C.Weaken(3)
+		C.adjustBruteLoss(40)//todo: figure out how to make this respond to armor normally
+		//when sprites are acquired this part will line will set their icon to remove the flames, signifying the thrusters are out
+	else if(thrusters && !iscarbon(hit_atom))
+		thrusters = 0
+		return
+
+/obj/item/rocketstump
+	name = "stump"
+	desc = "Without your metal fist, you are left with nothing but an unusable stump."
+	icon_state = "stump"//placeholder
+	item_state = "gun"//placeholder
+	flags = NODROP | ABSTRACT
+	slot_flags = null
+	w_class = 5
+
+/obj/item/rocketstump/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/rocketfist))
+		user << "<span class='notice'>You begin reattaching [I] to your stump...</span>"
+		playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
+		if(do_after(user, 20, target = src))
+			user << "<span class='notice'>You finish reattaching [I].</span>"
+			for(var/obj/item/organ/internal/cyberimp/fistrocket/implant in user)//i feel like this isn't the best way to do this
+				implant.hasfist = 1
+			qdel(I)
+			qdel(src)
+
