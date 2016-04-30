@@ -13,7 +13,7 @@
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
-/obj/structure/sign/blob_act()
+/obj/structure/sign/blob_act(obj/effect/blob/B)
 	qdel(src)
 	return
 

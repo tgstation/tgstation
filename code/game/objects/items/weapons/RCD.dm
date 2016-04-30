@@ -7,7 +7,7 @@ RCD
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build and deconstruct walls and floors."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0

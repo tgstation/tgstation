@@ -127,7 +127,7 @@
 		if(rand(1,2)==2)
 			if(lowertext(newletter)=="o")
 				newletter="u"
-			if(lowertext(newletter)=="s")
+			if(lowertext(newletter)=="t")
 				newletter="ch"
 			if(lowertext(newletter)=="a")
 				newletter="ah"
@@ -135,15 +135,15 @@
 				newletter="oo"
 			if(lowertext(newletter)=="c")
 				newletter=" NAR "
-			if(lowertext(newletter)=="t")
+			if(lowertext(newletter)=="s")
 				newletter=" SIE "
 		if(rand(1,4)==4)
 			if(newletter==" ")
-				newletter=" GLORY "
+				newletter=" no hope... "
 			if(newletter=="H")
-				newletter=" HAIL "
+				newletter=" IT COMES... "
 
-		switch(rand(1,10))
+		switch(rand(1,15))
 			if(1)
 				newletter="'"
 			if(2)
@@ -152,6 +152,8 @@
 				newletter="fth"
 			if(4)
 				newletter="nglu"
+			if(5)
+				newletter="glor"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 

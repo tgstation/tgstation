@@ -72,6 +72,7 @@
 	var/list/loot = list() //list of things spawned at mob's loc when it dies
 	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
 	var/deathmessage = ""
+	var/death_sound = null //The sound played on death
 
 	var/allow_movement_on_non_turfs = FALSE
 
@@ -111,32 +112,6 @@
 		else
 			stat = CONSCIOUS
 
-/mob/living/simple_animal/blind_eyes()
-	return
-
-/mob/living/simple_animal/blur_eyes()
-	return
-
-/mob/living/simple_animal/adjust_blindness()
-	return
-
-/mob/living/simple_animal/adjust_blurriness()
-	return
-
-/mob/living/simple_animal/set_blindness()
-	return
-
-/mob/living/simple_animal/set_blurriness()
-	return
-
-/mob/living/simple_animal/become_blind()
-	return
-
-/mob/living/simple_animal/setEarDamage()
-	return
-
-/mob/living/simple_animal/adjustEarDamage()
-	return
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -261,7 +236,7 @@
 	..()
 
 
-/mob/living/simple_animal/blob_act()
+/mob/living/simple_animal/blob_act(obj/effect/blob/B)
 	adjustBruteLoss(20)
 	return
 
@@ -417,6 +392,8 @@
 	if(loot.len)
 		for(var/i in loot)
 			new i(loc)
+	if(death_sound)
+		playsound(get_turf(src),death_sound, 200, 1)
 	if(deathmessage && !gibbed)
 		visible_message("<span class='danger'>[deathmessage]</span>")
 	else if(!del_on_death)
