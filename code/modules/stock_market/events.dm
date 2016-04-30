@@ -129,7 +129,7 @@
 	A.subtitle = "Investors panic, bailout pending"
 	if (prob(15))
 		A.opinion = rand(-1, 1)
-	var/article = "Another one might bite the dust: [company.current_trend > 0 ? "despite their positive trend" : "in line with their failing model"], [company.name] is files for bankruptcy citing [pick(bankrupt_reason)]. The president of %country% has been asked to bail the company out, "
+	var/article = "Another one might bite the dust: [company.current_trend > 0 ? "despite their positive trend" : "in line with their failing model"], [company.name] files for bankruptcy citing [pick(bankrupt_reason)]. The president of %country% has been asked to bail the company out, "
 	if (!A.opinion)
 		article += "but no answer has been given by the government to date. Our tip to stay safe is: %sell%"
 	else if (A.opinion > 0)
