@@ -253,6 +253,7 @@
 			new s.type(loc,s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
+		s.layer = initial(s.layer)
 
 /obj/machinery/mineral/ore_redemption/power_change()
 	..()
@@ -861,6 +862,7 @@
 	throw_range = 5
 	var/loaded = 1
 	var/malfunctioning = 0
+	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
 	origin_tech = "biotech=4"
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
@@ -869,6 +871,9 @@
 	if(istype(target, /mob/living) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
+			if(M.sentience_type != revive_type)
+				user << "<span class='info'>[src] does not work on this sort of creature.</span>"
+				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)
@@ -993,8 +998,7 @@
 				var/client/C = user.client
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state)
-					I.plane = PLANE_EFFECTS_UNLIT
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
 					C.images += I
 					spawn(30)
 						if(C)
@@ -1012,7 +1016,7 @@
 			C.icon_state = M.scan_state
 
 /obj/effect/overlay/temp/mining_overlay
-	plane = PLANE_EFFECTS_UNLIT
+	layer = 20
 	icon = 'icons/turf/smoothrocks.dmi'
 	anchored = 1
 	mouse_opacity = 0

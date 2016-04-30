@@ -16,7 +16,10 @@
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
-#define INVISIBILITY_MAXIMUM 100
+#define INVISIBILITY_MAXIMUM 100 //the maximum allowed for "real" objects
+
+#define INVISIBILITY_ABSTRACT 101 //only used for abstract objects (e.g. spacevine_controller), things that are not really there.
+
 
 #define BORGMESON 1
 #define BORGTHERM 2

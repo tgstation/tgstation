@@ -56,7 +56,7 @@
 			A.icon = 'icons/effects/weather_effects.dmi'
 			A.icon_state = start_up_overlay
 		else
-			A.invisibility = 100
+			A.invisibility = INVISIBILITY_MAXIMUM
 			A.opacity = 0
 //Ash storms
 

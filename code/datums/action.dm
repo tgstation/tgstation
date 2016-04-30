@@ -89,8 +89,8 @@
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	current_button.overlays.Cut()
 	if(button_icon && button_icon_state)
-		var/image/img = image(button_icon, current_button, button_icon_state)
-		img.plane = current_button.plane
+		var/image/img
+		img = image(button_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
 		current_button.overlays += img
@@ -131,10 +131,10 @@
 		..(current_button)
 	else if(target)
 		var/obj/item/I = target
-		var/old = I.plane
-		I.plane = current_button.plane
+		var/old = I.layer
+		I.layer = FLOAT_LAYER //AAAH
 		current_button.overlays += I
-		I.plane = old
+		I.layer = old
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"

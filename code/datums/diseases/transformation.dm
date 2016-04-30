@@ -48,11 +48,12 @@
 		affected_mob.canmove = 0
 		affected_mob.icon = null
 		affected_mob.overlays.Cut()
-		affected_mob.invisibility = 101
+		affected_mob.invisibility = INVISIBILITY_ABSTRACT
 		for(var/obj/item/W in affected_mob)
 			if(istype(W, /obj/item/weapon/implant))
 				qdel(W)
 				continue
+			W.layer = initial(W.layer)
 			W.loc = affected_mob.loc
 			W.dropped(affected_mob)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
