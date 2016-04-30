@@ -260,6 +260,7 @@
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	modules += new /obj/item/weapon/pen(src)
+	modules += new /obj/item/toy/crayon/spraycan/borg(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/instrument/violin(src)
 	modules += new /obj/item/device/instrument/guitar(src)

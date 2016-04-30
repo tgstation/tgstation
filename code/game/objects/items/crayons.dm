@@ -233,3 +233,24 @@
 	if(G)
 		paint_color = G.color_hex
 		update_icon()
+
+/obj/item/toy/crayon/spraycan/borg
+	desc = "A metallic container containing shiny paint."
+	// Use depletion of uses to determine what the energy cost is
+	uses = 100
+
+/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
+	..()
+	if(!isrobot(user))
+		return FALSE
+	var/mob/living/silicon/robot/borgy
+
+	var/starting_uses = initial(uses)
+	var/diff = starting_uses - uses
+	if(diff)
+		uses = starting_uses
+		// 25 is our cost per unit of paint, making it cost 25 energy per
+		// normal tag, 50 per window, and 250 per attack
+		var/cost = diff * 25
+
+		borgy.cell.use(cost)
