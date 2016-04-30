@@ -713,6 +713,7 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	layer = 6.1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
 	if(isturf(src.loc))

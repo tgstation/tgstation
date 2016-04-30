@@ -31,7 +31,7 @@
 "E" = (/obj/structure/disposalpipe/segment{dir = 1;icon_state = "pipe-c"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "F" = (/obj/structure/disposalpipe/trunk{dir = 8},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "H" = (/obj/machinery/chem_master/condimaster,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"G" = (/obj/machinery/plantgenes,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"G" = (/obj/machinery/plantgenes/seedvault,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 
 (1,1,1) = {"
 aabbaaaaaaaaaaaaaaaa

@@ -48,7 +48,7 @@
 		affected_mob.canmove = 0
 		affected_mob.icon = null
 		affected_mob.overlays.Cut()
-		affected_mob.invisibility = 101
+		affected_mob.invisibility = INVISIBILITY_ABSTRACT
 		for(var/obj/item/W in affected_mob)
 			if(istype(W, /obj/item/weapon/implant))
 				qdel(W)

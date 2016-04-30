@@ -862,6 +862,7 @@
 	throw_range = 5
 	var/loaded = 1
 	var/malfunctioning = 0
+	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
 	origin_tech = "biotech=4"
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
@@ -870,6 +871,9 @@
 	if(istype(target, /mob/living) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
+			if(M.sentience_type != revive_type)
+				user << "<span class='info'>[src] does not work on this sort of creature.</span>"
+				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)

@@ -3,7 +3,7 @@
 	var/group = ""
 	var/hidden = FALSE
 	var/contraband = FALSE
-	var/cost = 7 // Minimum cost, or infinite points are possible.
+	var/cost = 700 // Minimum cost, or infinite points are possible.
 	var/access = FALSE
 	var/list/contains = null
 	var/crate_name = "crate"

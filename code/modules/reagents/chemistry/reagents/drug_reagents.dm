@@ -62,7 +62,7 @@
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0, 0)
+	M.AdjustWeakened(-1, 0)
 	..()
 	. = 1
 
@@ -160,7 +160,7 @@
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-2, 0)
 	M.AdjustStunned(-2, 0)
-	M.AdjustWeakened(-2, 0, 0)
+	M.AdjustWeakened(-2, 0)
 	M.adjustStaminaLoss(-2, 0)
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
@@ -237,7 +237,7 @@
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0, 0)
+	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)
