@@ -20887,7 +20887,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
-/obj/item/weapon/circuitboard/solar_control,
+/obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
 /obj/item/weapon/paper/solar,
 /turf/open/floor/plasteel{
@@ -31654,15 +31654,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/powermonitor{
+/obj/item/weapon/circuitboard/computer/powermonitor{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/stationalert{
+/obj/item/weapon/circuitboard/computer/stationalert{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/weapon/circuitboard/atmos_alert{
+/obj/item/weapon/circuitboard/computer/atmos_alert{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -31675,11 +31675,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/secure_data{
+/obj/item/weapon/circuitboard/computer/secure_data{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/security{
+/obj/item/weapon/circuitboard/computer/security{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -31696,16 +31696,16 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/cloning{
+/obj/item/weapon/circuitboard/computer/cloning{
 	pixel_x = 0
 	},
-/obj/item/weapon/circuitboard/med_data{
+/obj/item/weapon/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/clonescanner,
-/obj/item/weapon/circuitboard/clonepod,
-/obj/item/weapon/circuitboard/scan_consolenew,
+/obj/item/weapon/circuitboard/machine/clonescanner,
+/obj/item/weapon/circuitboard/machine/clonepod,
+/obj/item/weapon/circuitboard/computer/scan_consolenew,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -33760,11 +33760,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/borgupload{
+/obj/item/weapon/circuitboard/computer/borgupload{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/aiupload{
+/obj/item/weapon/circuitboard/computer/aiupload{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -33804,14 +33804,14 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/message_monitor{
+/obj/item/weapon/circuitboard/computer/message_monitor{
 	pixel_y = -5
 	},
-/obj/item/weapon/circuitboard/arcade/battle{
+/obj/item/weapon/circuitboard/computer/arcade/battle{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/arcade/orion_trail{
+/obj/item/weapon/circuitboard/computer/arcade/orion_trail{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel{
@@ -33823,8 +33823,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/mining,
-/obj/item/weapon/circuitboard/autolathe{
+/obj/item/weapon/circuitboard/computer/mining,
+/obj/item/weapon/circuitboard/machine/autolathe{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -33837,17 +33837,17 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/pandemic{
+/obj/item/weapon/circuitboard/computer/pandemic{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/circuitboard/rdconsole,
-/obj/item/weapon/circuitboard/rdserver{
+/obj/item/weapon/circuitboard/computer/rdconsole,
+/obj/item/weapon/circuitboard/machine/rdserver{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/destructive_analyzer,
-/obj/item/weapon/circuitboard/protolathe,
+/obj/item/weapon/circuitboard/machine/destructive_analyzer,
+/obj/item/weapon/circuitboard/machine/protolathe,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -34518,15 +34518,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/crew{
+/obj/item/weapon/circuitboard/computer/crew{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/card{
+/obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/communications{
+/obj/item/weapon/circuitboard/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -35451,11 +35451,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/robotics{
+/obj/item/weapon/circuitboard/computer/robotics{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/mecha_control{
+/obj/item/weapon/circuitboard/computer/mecha_control{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -56963,14 +56963,14 @@
 /area/bridge)
 "bOg" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/telecomms/processor,
-/obj/item/weapon/circuitboard/telecomms/processor,
-/obj/item/weapon/circuitboard/telecomms/receiver,
-/obj/item/weapon/circuitboard/telecomms/server,
-/obj/item/weapon/circuitboard/telecomms/server,
-/obj/item/weapon/circuitboard/telecomms/bus,
-/obj/item/weapon/circuitboard/telecomms/bus,
-/obj/item/weapon/circuitboard/telecomms/broadcaster,
+/obj/item/weapon/circuitboard/machine/telecomms/processor,
+/obj/item/weapon/circuitboard/machine/telecomms/processor,
+/obj/item/weapon/circuitboard/machine/telecomms/receiver,
+/obj/item/weapon/circuitboard/machine/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
@@ -79097,7 +79097,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/weapon/circuitboard/teleporter,
+/obj/item/weapon/circuitboard/computer/teleporter,
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria";
 	dir = 5
@@ -96286,7 +96286,7 @@
 	},
 /area/shuttle/syndicate)
 "cXz" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
@@ -97775,8 +97775,8 @@
 	},
 /area/shuttle/abandoned)
 "daw" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/cyborgrecharger,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/cyborgrecharger,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -97944,7 +97944,7 @@
 	},
 /area/shuttle/abandoned)
 "daO" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -98040,7 +98040,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 1;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98057,7 +98057,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 1;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98352,7 +98352,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 2;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98369,7 +98369,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 2;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98465,7 +98465,7 @@
 	},
 /area/shuttle/abandoned)
 "dbC" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -98643,7 +98643,7 @@
 	},
 /area/shuttle/abandoned)
 "dbS" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -98654,8 +98654,8 @@
 	},
 /area/shuttle/abandoned)
 "dbT" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/autolathe,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/autolathe,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -98787,8 +98787,8 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "dcd" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/chem_dispenser,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/chem_dispenser,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -98798,7 +98798,7 @@
 	},
 /area/shuttle/abandoned)
 "dce" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"

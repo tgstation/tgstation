@@ -7,7 +7,7 @@
 "g" = (/obj/structure/closet/crate/secure/loot,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
 "h" = (/obj/structure/table,/obj/machinery/button/door{id = "mechaship1"; name = "Mecha Cargo Ship Doors"},/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
 "i" = (/obj/structure/table,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"j" = (/obj/structure/computerframe,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
+"j" = (/obj/structure/frame/computer,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
 "k" = (/obj/effect/decal/cleanable/vomit/old,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
 "l" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
 "m" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
