@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: "EMP grenades now properly delete themselves after they trigger."
