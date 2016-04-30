@@ -11,7 +11,7 @@
 
 	return ..()
 
-/mob/living/carbon/brain/gib(animation = 0)
+/mob/living/carbon/brain/gib()
 	if(container)
 		qdel(container)//Gets rid of the MMI if there is one
 	if(loc)

@@ -55,23 +55,6 @@
 						stomach_contents.Remove(A)
 					src.gib()
 
-/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
-	death(1)
-	for(var/obj/item/organ/internal/I in internal_organs)
-		if(no_brain && istype(I, /obj/item/organ/internal/brain))
-			continue
-		if(I)
-			I.Remove(src)
-			I.loc = get_turf(src)
-			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
-
-	for(var/mob/M in src)
-		if(M in stomach_contents)
-			stomach_contents.Remove(M)
-		M.loc = loc
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
-	. = ..()
-
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
 	shock_damage *= siemens_coeff
