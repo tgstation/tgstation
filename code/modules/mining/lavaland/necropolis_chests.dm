@@ -87,6 +87,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
+		feedback_add_details("wisp_lantern","F") // freed
 
 	else
 		if(wisp.orbiting)
@@ -100,6 +101,7 @@
 			wisp.loc = src
 			user << "You return the wisp to the latern."
 			icon_state = "lantern-blue"
+			feedback_add_details("wisp_lantern","R") // returned
 
 /obj/item/device/wisp_lantern/New()
 	..()
@@ -143,6 +145,7 @@
 
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 	user.forceMove(get_turf(linked))
+	feedback_add_details("warp_cube","[src.type]")
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 
 /obj/item/device/warp_cube/red
@@ -215,6 +218,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
+		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in their place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))

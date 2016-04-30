@@ -13,6 +13,7 @@
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
 	if(src.energy >= 200)
+		feedback_add_details("engine_started","[src.type]")
 		var/obj/singularity/S = new creation_type(T, 50)
 		transfer_fingerprints_to(S)
 		qdel(src)
