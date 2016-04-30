@@ -20,6 +20,8 @@
 	if(safety == "Abort" || !in_range(src, user) || !src || boss || user.incapacitated())
 		return
 	boss = TRUE
+	user << "You knock on the door."
+	playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 	visible_message("<span class='danger'>Legion emerges from the Necropolis!</span>")
 	message_admins("[key_name_admin(user)] has summoned Legion.")
 	log_game("[key_name(user)] summoned Legion.")
