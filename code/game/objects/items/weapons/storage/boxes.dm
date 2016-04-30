@@ -311,7 +311,7 @@
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
 	for(var/i = 1; i <= 5; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
 
 
 /obj/item/weapon/storage/box/permits
