@@ -337,3 +337,14 @@
 				found += U
 		found |= F
 	return found
+
+
+
+//Blueprint Subtypes
+
+/obj/item/areaeditor/blueprints/cyborg
+	name = "station schematics"
+	desc = "A digital copy of the station blueprints stored in your memory."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "blueprints"
+	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
