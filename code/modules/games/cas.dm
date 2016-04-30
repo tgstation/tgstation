@@ -53,6 +53,7 @@ var/global/list/cards_against_space
 		P.name = "Blank Card"
 		P.card_icon = "cas_white"
 		cards += P
+	shuffle(cards) // distribute blank cards throughout deck
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
@@ -81,7 +82,7 @@ var/global/list/cards_against_space
 		if(!user.unEquip(SC))
 			user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
 			return
-		var/datum/playingcard/RC
+		var/datum/playingcard/RC // replace null datum for the re-added card
 		RC = new()
 		RC.name = "[SC.name]"
 		RC.card_icon = SC.card_face
