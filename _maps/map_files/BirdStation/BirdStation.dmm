@@ -56,7 +56,7 @@
 "abd" = (/obj/machinery/door/window{dir = 4; name = "Infirmary"; req_access_txt = "150"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "abe" = (/obj/machinery/door/window/westright{name = "Tool Storage"; req_access_txt = "150"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "abf" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/syndicate,/obj/item/weapon/crowbar/red,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
-"abg" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
+"abg" = (/obj/machinery/sleeper/syndie{dir = 4},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "abh" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "Infirmary"; req_access_txt = "150"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "abi" = (/obj/machinery/door/window{dir = 8; name = "Tool Storage"; req_access_txt = "150"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "abj" = (/obj/structure/table,/obj/item/weapon/gun/syringe{pixel_x = 1; pixel_y = 2},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
