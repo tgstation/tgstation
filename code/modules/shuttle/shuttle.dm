@@ -235,7 +235,9 @@
 	if(height-dheight > S.height-S.dheight)
 		return 5
 	//check the dock isn't occupied
-	if(S.get_docked())
+	var/currently_docked = S.get_docked()
+	// by someone other than us
+	if(currently_docked && currently_docked != src)
 		return 6
 	return 0	//0 means we can dock
 
