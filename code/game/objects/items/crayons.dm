@@ -243,7 +243,7 @@
 	..()
 	if(!isrobot(user))
 		return FALSE
-	var/mob/living/silicon/robot/borgy
+	var/mob/living/silicon/robot/borgy = user
 
 	var/starting_uses = initial(uses)
 	var/diff = starting_uses - uses

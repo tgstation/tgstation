@@ -130,6 +130,7 @@
 	modules += new /obj/item/weapon/wrench/cyborg(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/toy/crayon/spraycan/borg(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
 
@@ -261,6 +262,7 @@
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	modules += new /obj/item/weapon/pen(src)
 	modules += new /obj/item/toy/crayon/spraycan/borg(src)
+	modules += new /obj/item/weapon/hand_labeler/borg(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/instrument/violin(src)
 	modules += new /obj/item/device/instrument/guitar(src)
