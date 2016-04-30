@@ -253,6 +253,7 @@
 			new s.type(loc,s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
+		s.layer = initial(s.layer)
 
 /obj/machinery/mineral/ore_redemption/power_change()
 	..()
@@ -389,6 +390,10 @@
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
+				feedback_add_details("mining_equipment_bought",
+					"[src.type]|[prize.equipment_path]")
+				// Add src.type to keep track of free golem purchases
+				// seperately.
 	updateUsrDialog()
 	return
 
@@ -427,6 +432,8 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Advanced Scanner")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+
+	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -487,6 +494,7 @@
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	feedback_add_details("jaunter", "U") // user activated
 	activate(user)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
@@ -526,11 +534,13 @@
 
 	if(triggered)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
+		feedback_add_details("jaunter","E") // EMP accidental activation
 		activate(usr)
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
 		user << "Your [src] activates, saving you from the chasm!</span>"
+		feedback_add_details("jaunter","C") // chasm automatic activation
 		activate(user)
 	else
 		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
@@ -861,6 +871,7 @@
 	throw_range = 5
 	var/loaded = 1
 	var/malfunctioning = 0
+	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
 	origin_tech = "biotech=4"
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
@@ -869,6 +880,9 @@
 	if(istype(target, /mob/living) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
+			if(M.sentience_type != revive_type)
+				user << "<span class='info'>[src] does not work on this sort of creature.</span>"
+				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)
@@ -884,6 +898,7 @@
 						H.attack_same = 0
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+				feedback_add_details("lazarus_injector", "[M.type]")
 				playsound(src,'sound/effects/refill.ogg',50,1)
 				icon_state = "lazarus_empty"
 				return
@@ -993,8 +1008,7 @@
 				var/client/C = user.client
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state)
-					I.plane = PLANE_EFFECTS_UNLIT
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
 					C.images += I
 					spawn(30)
 						if(C)
@@ -1012,7 +1026,7 @@
 			C.icon_state = M.scan_state
 
 /obj/effect/overlay/temp/mining_overlay
-	plane = PLANE_EFFECTS_UNLIT
+	layer = 20
 	icon = 'icons/turf/smoothrocks.dmi'
 	anchored = 1
 	mouse_opacity = 0
@@ -1064,6 +1078,7 @@
 		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
 	C.preserved = 1
+	feedback_add_details("hivelord_core", "[C.type]|stabilizer") // preserved
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
 

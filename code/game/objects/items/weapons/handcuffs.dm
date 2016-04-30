@@ -105,9 +105,11 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/red
 	icon_state = "cuff_red"
+	item_state = "coil_red"
 
 /obj/item/weapon/restraints/handcuffs/cable/yellow
 	icon_state = "cuff_yellow"
+	item_state = "coil_yellow"
 
 /obj/item/weapon/restraints/handcuffs/cable/blue
 	icon_state = "cuff_blue"
@@ -115,18 +117,23 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/green
 	icon_state = "cuff_green"
+	item_state = "coil_green"
 
 /obj/item/weapon/restraints/handcuffs/cable/pink
 	icon_state = "cuff_pink"
+	item_state = "coil_pink"
 
 /obj/item/weapon/restraints/handcuffs/cable/orange
 	icon_state = "cuff_orange"
+	item_state = "coil_orange"
 
 /obj/item/weapon/restraints/handcuffs/cable/cyan
 	icon_state = "cuff_cyan"
+	item_state = "coil_cyan"
 
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
+	item_state = "coil_white"
 
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
@@ -191,6 +198,7 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
+	item_state = "coil_white"
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used

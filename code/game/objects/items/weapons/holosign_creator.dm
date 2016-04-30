@@ -97,7 +97,7 @@
 	..()
 	take_damage(I.force * 0.5, I.damtype)
 
-/obj/effect/overlay/holograph/blob_act()
+/obj/effect/overlay/holograph/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/effect/overlay/holograph/attack_animal(mob/living/simple_animal/M)
@@ -112,6 +112,7 @@
 	attack_generic(1, user)
 
 /obj/effect/overlay/holograph/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 	qdel(src)

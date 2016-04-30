@@ -1,6 +1,5 @@
 /atom
 	layer = 2
-	plane = PLANE_GAME
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
@@ -199,7 +198,7 @@
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/atom/proc/blob_act()
+/atom/proc/blob_act(obj/effect/blob/B)
 	return
 
 /atom/proc/fire_act()

@@ -38,7 +38,7 @@
 /mob/living/carbon/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
 
-/mob/living/carbon/brain/blob_act()
+/mob/living/carbon/brain/blob_act(obj/effect/blob/B)
 	return
 
 /mob/living/carbon/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
