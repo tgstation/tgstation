@@ -3,7 +3,7 @@
 ///////////////////////////////////
 
 /datum/design/ripley_main
-	name = "Exosuit Module (APLU \"Ripley\" Central Control module)"
+	name = "APLU \"Ripley\" Central Control module"
 	desc = "Allows for the construction of a \"Ripley\" Central Control module."
 	id = "ripley_main"
 	req_tech = list("programming" = 3)
@@ -13,7 +13,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/ripley_peri
-	name = "Exosuit Module (APLU \"Ripley\" Peripherals Control module)"
+	name = "APLU \"Ripley\" Peripherals Control module"
 	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	req_tech = list("programming" = 3)
@@ -23,7 +23,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/odysseus_main
-	name = "Exosuit Module (\"Odysseus\" Central Control module)"
+	name = "\"Odysseus\" Central Control module"
 	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
 	id = "odysseus_main"
 	req_tech = list("programming" = 3,"biotech" = 2)
@@ -33,7 +33,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/odysseus_peri
-	name = "Exosuit Module (\"Odysseus\" Peripherals Control module)"
+	name = "\"Odysseus\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
 	id = "odysseus_peri"
 	req_tech = list("programming" = 3,"biotech" = 2)
@@ -43,7 +43,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/gygax_main
-	name = "Exosuit Module (\"Gygax\" Central Control module)"
+	name = "\"Gygax\" Central Control module"
 	desc = "Allows for the construction of a \"Gygax\" Central Control module."
 	id = "gygax_main"
 	req_tech = list("programming" = 4)
@@ -53,7 +53,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/gygax_peri
-	name = "Exosuit Module (\"Gygax\" Peripherals Control module)"
+	name = "\"Gygax\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
 	id = "gygax_peri"
 	req_tech = list("programming" = 4)
@@ -63,7 +63,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/gygax_targ
-	name = "Exosuit Module (\"Gygax\" Weapons & Targeting Control module)"
+	name = "\"Gygax\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 	id = "gygax_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
@@ -73,7 +73,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/durand_main
-	name = "Exosuit Module (\"Durand\" Central Control module)"
+	name = "\"Durand\" Central Control module"
 	desc = "Allows for the construction of a \"Durand\" Central Control module."
 	id = "durand_main"
 	req_tech = list("programming" = 4)
@@ -83,7 +83,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/durand_peri
-	name = "Exosuit Module (\"Durand\" Peripherals Control module)"
+	name = "\"Durand\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
 	id = "durand_peri"
 	req_tech = list("programming" = 4)
@@ -93,7 +93,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/durand_targ
-	name = "Exosuit Module (\"Durand\" Weapons & Targeting Control module)"
+	name = "\"Durand\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
 	id = "durand_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
@@ -103,7 +103,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/honker_main
-	name = "Exosuit Module (\"H.O.N.K\" Central Control module)"
+	name = "\"H.O.N.K\" Central Control module"
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
 	id = "honker_main"
 	req_tech = list("programming" = 3)
@@ -113,7 +113,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/honker_peri
-	name = "Exosuit Module (\"H.O.N.K\" Peripherals Control module)"
+	name = "\"H.O.N.K\" Peripherals Control module"
 	desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
 	id = "honker_peri"
 	req_tech = list("programming" = 3)
@@ -123,7 +123,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/honker_targ
-	name = "Exosuit Module (\"H.O.N.K\" Weapons & Targeting Control module)"
+	name = "\"H.O.N.K\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
 	id = "honker_targ"
 	req_tech = list("programming" = 3)
@@ -133,7 +133,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/phazon_main
-	name = "Exosuit Module (\"Phazon\" Central Control module)"
+	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
 	req_tech = list("programming" = 5, "materials" = 7, "powerstorage" = 6)
@@ -143,7 +143,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/phazon_peri
-	name = "Exosuit Module (\"Phazon\" Peripherals Control module)"
+	name = "\"Phazon\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
 	req_tech = list("programming" = 5, "bluespace" = 6)
@@ -153,7 +153,7 @@
 	category = list("Exosuit Modules")
 
 /datum/design/phazon_targ
-	name = "Exosuit Module (\"Phazon\" Weapons & Targeting Control module)"
+	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
 	req_tech = list("programming" = 5, "magnets" = 6)
