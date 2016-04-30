@@ -15,7 +15,8 @@
 /obj/item/candle/New()
 	..()
 	if(start_lit)
-		light()
+		// No visible message
+		light(null)
 
 /obj/item/candle/update_icon()
 	var/i
@@ -55,21 +56,22 @@
 		light() //honk
 	return
 
-/obj/item/candle/proc/light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
+/obj/item/candle/proc/light(flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
 	if(!src.lit)
 		src.lit = 1
 		//src.damtype = "fire"
-		usr.visible_message(flavor_text)
+		if(flavor_text)
+			usr.visible_message(flavor_text)
 		SetLuminosity(CANDLE_LUMINOSITY)
-		if(!infinite)
-			SSobj.processing |= src
+		SSobj.processing |= src
 		update_icon()
 
 
 /obj/item/candle/process()
 	if(!lit)
 		return
-	wax--
+	if(!infinite)
+		wax--
 	if(!wax)
 		new/obj/item/trash/candle(src.loc)
 		if(istype(src.loc, /mob))
