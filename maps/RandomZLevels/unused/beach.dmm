@@ -20,9 +20,9 @@
 "t" = (/obj/structure/closet/gmcloset{icon_closed = "black"; icon_state = "black"; name = "formal wardrobe"},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "u" = (/obj/structure/closet/secure_closet/bar,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "v" = (/obj/structure/table/woodentable,/obj/item/weapon/book/manual/barman_recipes,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
-"w" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
-"x" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
-"y" = (/obj/structure/table/woodentable,/obj/item/clothing/glasses/sunglasses,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"w" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker,/obj/machinery/chem_dispenser/soda_dispenser/mapping{pixel_y = 24},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"x" = (/obj/structure/table/woodentable,/obj/machinery/chem_dispenser/brewer/mapping{pixel_y = 20},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"y" = (/obj/structure/table/woodentable,/obj/item/clothing/glasses/sunglasses,/obj/machinery/chem_dispenser/booze_dispenser{pixel_y = 28},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "z" = (/obj/machinery/vending/boozeomat{emagged = 1},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "A" = (/obj/machinery/vending/cigarette,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "B" = (/obj/machinery/vending/cola,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
@@ -32,17 +32,19 @@
 "F" = (/obj/machinery/door/mineral/wood,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "G" = (/obj/effect/overlay/palmtree_l,/turf/unsimulated/beach/sand,/area/awaymission/beach)
 "H" = (/turf/unsimulated/wall{tag = "icon-sandstone0"; icon_state = "sandstone0"},/area/awaymission/beach)
-"I" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
-"J" = (/obj/item/weapon/beach_ball,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"K" = (/obj/structure/stool,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"L" = (/mob/living/simple_animal/crab,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"M" = (/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"N" = (/mob/living/simple_animal/crab/Coffee,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"O" = (/obj/structure/stool/bed/chair,/turf/unsimulated/beach/sand,/area/awaymission/beach)
-"P" = (/turf/unsimulated/beach/coastline,/area/awaymission/beach)
-"Q" = (/turf/unsimulated/beach/coastline{density = 1; opacity = 1},/area/awaymission/beach)
-"R" = (/turf/unsimulated/beach/water,/area/awaymission/beach)
-"S" = (/turf/unsimulated/beach/water{density = 1; opacity = 1},/area/awaymission/beach)
+"I" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"J" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"K" = (/obj/item/weapon/beach_ball,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"L" = (/obj/item/weapon/stool,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"M" = (/mob/living/simple_animal/crab/kickstool,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"N" = (/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"O" = (/mob/living/simple_animal/crab/snowy,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"P" = (/mob/living/simple_animal/crab/Coffee,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"Q" = (/obj/structure/bed/chair,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"R" = (/turf/unsimulated/beach/coastline,/area/awaymission/beach)
+"S" = (/turf/unsimulated/beach/coastline{density = 1; opacity = 1},/area/awaymission/beach)
+"T" = (/turf/unsimulated/beach/water,/area/awaymission/beach)
+"U" = (/turf/unsimulated/beach/water{density = 1; opacity = 1},/area/awaymission/beach)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -52,22 +54,22 @@ bklmbbbbbbbbnoooooooooopbbqrqrqrqrqrqrqa
 bbbbbbbbbbbbstuvwxyzABCsbbbbbbbbbbbbbbba
 bbbbbbbbbbbbDEEEEEEEEEEsbbbbbbbbbbbbbbba
 bbbbbbbbbbbbFEEEEEEEEEEsbbbbbbbbbGbbbbba
-bbfbbbbbbbbbHxIxxxxxxxxDbbbGbbJbbbbbbbba
-bbbbbbbbbbbbbKKKKKKKKKKbbbbbbbbbbbbbbbba
+bbfbbbbbbbbbHIJIIIIIIIIDbbbGbbKbbbbbbbba
+bbbbbbbbbbbbbLLLLLLLLLLbbbbbbbbbbbbbbbba
+bbbMbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfbbbbbbba
+bbbbbbGNbbObbbbbbbbbbbGbbbbbPbbbNbbbbbfa
+bbbKbbbbbbbbbQbQbQbQbQbQbbbbbbbbbbQbQbba
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-bbbLbbbbbbbbbbbbbbbbbbbbbbbbbbbfbbbbbbba
-bbbbbbGMbbbbbbbbbbbbbbGbbbbbNbbbMbbbbbfa
-bbbJbbbbbbLbbObObObObObObbbbbbbbbbObObba
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
-PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPQ
 RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRS
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTU
 "}

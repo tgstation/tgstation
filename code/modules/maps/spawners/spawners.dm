@@ -845,6 +845,14 @@
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
 		)
 
+/obj/map/spawner/mobs/humanoid/wiz
+	name = "wizard spawner"
+	icon_state = "mob_wiz"
+	amount = 2
+	chance = 50
+	toSpawn = list(/mob/living/simple_animal/hostile/humanoid/wizard)
+
+
 // Robutts /////////////////////////////////////////////////////
 
 /obj/map/spawner/robot/any
