@@ -43,8 +43,8 @@
 
 	// EXPAND DONG
 	if(isturf(T))
-		// Do pretty fadeout animation for 1s.
-		new /obj/effect/overlay/bluespacify(T)
+		// This is normally where a growth animation would occur
+//		new /obj/effect/overlay/bluespacify(T)
 		spawn(10)
 			// Nom.
 			for(var/atom/movable/A in T)
@@ -118,3 +118,6 @@
 		return
 
 	qdel(user)
+
+/turf/unsimulated/wall/supermatter/singularity_act()
+	return

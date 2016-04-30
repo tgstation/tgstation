@@ -928,6 +928,8 @@ var/global/list/image/blood_overlays = list()
 
 //handling the pulling of the item for singularity
 /obj/item/singularity_pull(S, current_size)
+	if(flags & INVULNERABLE)
+		return
 	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
 		if(current_size >= STAGE_FOUR)
 			//throw_at(S, 14, 3)

@@ -157,6 +157,8 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	return
 
 /obj/singularity_act()
+	if(flags & INVULNERABLE)
+		return
 	ex_act(1)
 	if(src)
 		qdel(src)
