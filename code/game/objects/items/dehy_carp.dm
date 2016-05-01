@@ -44,7 +44,7 @@
 		for(var/F in factions)
 			if(F == "neutral")
 				factions -= F
-		mobtype.faction = factions
+		M.faction = factions
 	if (!owner || owner.faction != M.faction)
 		visible_message("<span class='warning'>You have a bad feeling about this.</span>") //welcome to the hostile carp enjoy your die
 	else
