@@ -177,12 +177,12 @@
 	nodamage = 1
 	color = "#33CCFF"
 	var/turf/T
-	var/power = 5
+	var/power = 4
 	var/rangecooldown = 3
 
 /obj/item/projectile/gravipulse/Range()
+	T = get_turf(src)
 	if(src.range > 3 && rangecooldown < 1)
-		T = get_turf(src)
 		for(var/atom/movable/A in orange(T,2))
 			if(A.anchored)
 				continue
@@ -191,10 +191,13 @@
 	rangecooldown--
 
 /obj/item/projectile/gravipulse/on_hit()
+	T = get_turf(src)
 	for(var/atom/movable/A in orange(T,power))
+		if(A == src)
+			continue
 		if(A.anchored)
 			continue
-		for(var/i=0 to power)
+		for(var/iter=0 to power)
 			step_away(A,T)
 			sleep(1)
 
@@ -202,20 +205,25 @@
 	color = "#FF6600"
 
 /obj/item/projectile/gravipulse/alt/Range()
+	T = get_turf(src)
 	if(src.range > 3 && rangecooldown < 1)
-		T = get_turf(src)
 		for(var/atom/movable/A in orange(T,2))
 			if(A.anchored)
 				continue
-			A.throw_at(T,1,1)
+			step_towards(A,T)
 		rangecooldown = 3
 	rangecooldown--
 
 /obj/item/projectile/gravipulse/alt/on_hit()
+	T = get_turf(src)
 	for(var/atom/movable/A in orange(T,power))
+		if(A == src)
+			continue
 		if(A.anchored)
 			continue
-		A.throw_at(T,power,1)
+		for(var/iter=0 to power)
+			step_towards(A,T)
+			sleep(1)
 
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"

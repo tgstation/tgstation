@@ -141,6 +141,7 @@
 	e_cost = 0
 	fire_sound = "sound/weapons/wave.ogg"
 	select_name = "repulse"
+	delay = 120
 
 /obj/item/ammo_casing/energy/gravipulse/alt
 	projectile_type = /obj/item/projectile/gravipulse/alt
