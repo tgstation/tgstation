@@ -172,8 +172,12 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
-		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-		qdel(src)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/open/floor/plating/asteroid))
+			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+			qdel(src)
+		else
+			visible_message("<span class='danger'>The [src.name] tries to burrow into [T], but fails! It looks confused.</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
