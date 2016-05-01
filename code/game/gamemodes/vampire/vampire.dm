@@ -266,7 +266,7 @@
 	var/dat
 	if (you_are)
 		dat = "<span class='danger'>You are a Vampire!</br></span>"
-	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers and use coffins to regenerate your body if injured.
+	dat += {"To drink blood from somebody, just bite their head (switch to harm intent, enable biting and attack the victim in the head with an empty hand). Drink blood to gain new powers and use coffins to regenerate your body if injured.
 You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel, and especially Holy Water."}
 	to_chat(vampire.current, dat)
 	to_chat(vampire.current, "<B>You must complete the following tasks:</B>")
