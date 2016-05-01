@@ -11,7 +11,7 @@
 /obj/machinery/power/tesla_coil/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/tesla_coil(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/tesla_coil(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
 
@@ -63,7 +63,7 @@
 /obj/machinery/power/grounding_rod/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/grounding_rod(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/grounding_rod(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
 

@@ -35,7 +35,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/protolathe(src)
+	component_parts += new /obj/item/weapon/circuitboard/machine/protolathe(src)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)

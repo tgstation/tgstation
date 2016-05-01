@@ -94,7 +94,7 @@ display round(lastgen) and plasmatank amount
 	var/max_sheets = 100
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/board_path = /obj/item/weapon/circuitboard/machine/pacman
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 260
 	var/current_heat = 0
@@ -316,7 +316,7 @@ display round(lastgen) and plasmatank amount
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)
 
@@ -326,6 +326,6 @@ display round(lastgen) and plasmatank amount
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)

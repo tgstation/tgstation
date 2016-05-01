@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 1000
-	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
@@ -16,7 +15,7 @@
 /obj/machinery/recharge_station/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)

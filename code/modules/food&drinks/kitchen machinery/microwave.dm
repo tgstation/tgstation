@@ -25,7 +25,7 @@
 /obj/machinery/microwave/New()
 	create_reagents(100)
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)

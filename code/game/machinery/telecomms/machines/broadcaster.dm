@@ -19,7 +19,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	machinetype = 5
 	/*heatgen = 0
 	delay = 7*/
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
@@ -96,7 +95,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 /obj/machinery/telecomms/broadcaster/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/broadcaster(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/telecomms/broadcaster(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)

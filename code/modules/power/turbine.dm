@@ -58,7 +58,7 @@
 	desc = "A computer to remotely control a gas turbine."
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
-	circuit = /obj/item/weapon/circuitboard/turbine_computer
+	circuit = /obj/item/weapon/circuitboard/computer/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
@@ -67,7 +67,7 @@
 /obj/machinery/power/compressor/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/power_compressor(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -189,7 +189,7 @@
 /obj/machinery/power/turbine/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
+	component_parts += new /obj/item/weapon/circuitboard/machine/power_turbine(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)

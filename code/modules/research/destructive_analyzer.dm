@@ -16,7 +16,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/destructive_analyzer(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

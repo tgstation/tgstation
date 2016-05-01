@@ -169,7 +169,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/New()
 	..()
-	component_parts += new /obj/item/weapon/circuitboard/thermomachine/freezer(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/thermomachine/freezer(null)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
@@ -189,7 +189,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/New()
 	..()
-	component_parts += new /obj/item/weapon/circuitboard/thermomachine/heater(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/thermomachine/heater(null)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()

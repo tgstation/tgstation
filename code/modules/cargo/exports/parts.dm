@@ -13,7 +13,7 @@
 /datum/export/solar/control_board
 	cost = 150
 	unit_name = "solar panel control board"
-	export_types = list(/obj/item/weapon/circuitboard/solar_control)
+	export_types = list(/obj/item/weapon/circuitboard/computer/solar_control)
 
 
 

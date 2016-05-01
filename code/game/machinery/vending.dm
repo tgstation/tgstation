@@ -59,7 +59,7 @@
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
 		component_parts = list()
-		var/obj/item/weapon/circuitboard/vendor/V = new(null)
+		var/obj/item/weapon/circuitboard/machine/vendor/V = new(null)
 		V.set_type(type)
 		component_parts += V
 		component_parts += new refill_canister

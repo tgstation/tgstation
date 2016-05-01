@@ -16,7 +16,7 @@
 /obj/machinery/dna_scannernew/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/clonescanner(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

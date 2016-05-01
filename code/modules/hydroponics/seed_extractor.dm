@@ -51,7 +51,7 @@
 /obj/machinery/seed_extractor/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/seed_extractor(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	RefreshParts()

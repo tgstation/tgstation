@@ -18,7 +18,6 @@
 	machinetype = 3
 	//heatgen = 100
 	//delay = 5
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
@@ -39,7 +38,7 @@
 /obj/machinery/telecomms/processor/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/processor(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/telecomms/processor(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(null)

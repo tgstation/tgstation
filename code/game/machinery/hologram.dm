@@ -46,7 +46,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 /obj/machinery/hologram/holopad/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/holopad(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/holopad(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	RefreshParts()
 

@@ -31,7 +31,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/sleeper(null)
 	RefreshParts()
 	update_icon()
 

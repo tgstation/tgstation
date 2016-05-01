@@ -44,7 +44,7 @@
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/arcade))
+		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/computer/arcade))
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
@@ -93,7 +93,7 @@
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/arcade/battle
+	circuit = /obj/item/weapon/circuitboard/computer/arcade/battle
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -327,7 +327,7 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/arcade/orion_trail
+	circuit = /obj/item/weapon/circuitboard/computer/arcade/orion_trail
 	var/busy = 0 //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0

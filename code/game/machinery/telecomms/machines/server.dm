@@ -17,7 +17,6 @@
 	idle_power_usage = 15
 	machinetype = 4
 	//heatgen = 50
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()
@@ -36,7 +35,7 @@
 /obj/machinery/telecomms/server/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/server(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)

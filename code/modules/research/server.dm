@@ -17,7 +17,7 @@
 /obj/machinery/r_n_d/server/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
@@ -177,7 +177,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	circuit = /obj/item/weapon/circuitboard/rdservercontrol
+	circuit = /obj/item/weapon/circuitboard/computer/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())

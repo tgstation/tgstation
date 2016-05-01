@@ -17,7 +17,6 @@
 	idle_power_usage = 30
 	machinetype = 1
 	//heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
 
@@ -55,7 +54,7 @@
 /obj/machinery/telecomms/receiver/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/receiver(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/telecomms/receiver(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)

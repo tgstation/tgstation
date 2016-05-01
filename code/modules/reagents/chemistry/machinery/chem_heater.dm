@@ -14,7 +14,7 @@
 /obj/machinery/chem_heater/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_heater(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/chem_heater(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()

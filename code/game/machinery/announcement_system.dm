@@ -33,7 +33,7 @@ var/list/announcement_systems = list()
 	radio = new /obj/item/device/radio/headset/ai(src)
 
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/announcement_system(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/announcement_system(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 2)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()

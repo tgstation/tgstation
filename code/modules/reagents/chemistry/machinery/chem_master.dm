@@ -336,7 +336,7 @@
 /obj/machinery/chem_master/constructable/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_master(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
