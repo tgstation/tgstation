@@ -5937,6 +5937,11 @@
 	},
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
+"rV" = (
+/obj/structure/table/wood,
+/obj/item/weapon/book/manual/random,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -66629,7 +66634,7 @@ ad
 rM
 rN
 rS
-rT
+rV
 rO
 rO
 rU
