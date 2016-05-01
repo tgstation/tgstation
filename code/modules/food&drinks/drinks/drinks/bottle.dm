@@ -237,7 +237,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Extra-Strong Absinthe"
-	desc = "An strong alcoholic drink brewed and distributed by FULL_COMPANY Inc."
+	desc = "An strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
@@ -276,8 +276,8 @@
 	fullname = jointext(final_fullname, " ")
 
 	// Actually finally setting the new name and desc
-	name = "[shortname] [initial(name)]"
-	desc = replacetext(initial(desc), "FULL_COMPANY", fullname)
+	name = "[shortname] [name]"
+	desc = "[desc] [fullname] Inc."
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
