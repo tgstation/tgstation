@@ -63,8 +63,9 @@
 		stored_magazine.update_icon()
 		stored_magazine = null
 		update_icon()
-		user.update_inv_r_hand()
-		user.update_inv_l_hand()
+		if(user)
+			user.update_inv_r_hand()
+			user.update_inv_l_hand()
 		return 1
 	return 0
 
@@ -204,7 +205,7 @@
 /obj/item/weapon/gun/projectile/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, struggle = 0)
 	..()
 	if(!chambered && stored_magazine && !stored_magazine.ammo_count() && gun_flags &AUTOMAGDROP) //auto_mag_drop decides whether or not the mag is dropped once it empties
-		RemoveMag()
+		RemoveMag(user)
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 	return
 
@@ -231,4 +232,3 @@
 			if(istype(AC))
 				bullets += 1
 	return bullets
-

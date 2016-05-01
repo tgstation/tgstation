@@ -99,7 +99,8 @@
 					sleep(35)
 		M.current.verbs -= /client/proc/vampire_rejuvinate
 		sleep(200)
-		M.current.verbs += /client/proc/vampire_rejuvinate
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_rejuvinate
 
 /client/proc/vampire_returntolife()
 	set category = "Vampire"
@@ -140,8 +141,9 @@
 		M.current.remove_vampire_powers()
 
 		sleep(rand(300,450))
-		to_chat(src, "<span class='sinister'>Your corpse twitches slightly. It's safe to assume nobody noticed.</span>")
-		src.verbs += /client/proc/vampire_returntolife
+		if(src)
+			to_chat(src, "<span class='sinister'>Your corpse twitches slightly. It's safe to assume nobody noticed.</span>")
+			src.verbs += /client/proc/vampire_returntolife
 		return 1
 
 /client/proc/vampire_hypnotise()
@@ -160,7 +162,8 @@
 	M.current.visible_message("<span class='warning'>[M.current.name]'s eyes flash briefly as he stares into [C.name]'s eyes</span>")
 	M.current.verbs -= /client/proc/vampire_hypnotise
 	spawn(1800)
-		M.current.verbs += /client/proc/vampire_hypnotise
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_hypnotise
 	var/enhancements = ((C.weakened ? 2 : 0) + (C.stunned ? 1 : 0) + (C.sleeping || C.paralysis ? 3 : 0))
 	if(do_mob(M.current, C, 10 - enhancements))
 		M.current.remove_vampire_blood(10)
@@ -214,7 +217,8 @@
 	M.current.remove_vampire_blood(50)
 	M.current.verbs -= /client/proc/vampire_disease
 	sleep(1800)
-	M.current.verbs += /client/proc/vampire_disease
+	if(M && M.current)
+		M.current.verbs += /client/proc/vampire_disease
 
 /client/proc/vampire_glare()
 	set category = "Vampire"
@@ -234,7 +238,8 @@
 		//M.vampire.bloodusable -= 10
 		M.current.verbs -= /client/proc/vampire_glare
 		spawn(300)
-			M.current.verbs += /client/proc/vampire_glare
+			if(M && M.current)
+				M.current.verbs += /client/proc/vampire_glare
 		var/list/close_mobs = list()
 		var/list/dist_mobs = list()
 		for(var/mob/living/carbon/C in view(1))
@@ -275,7 +280,8 @@
 		M.current.regenerate_icons()
 		M.current.verbs -= /client/proc/vampire_shapeshift
 		sleep(1800)
-		M.current.verbs += /client/proc/vampire_shapeshift
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_shapeshift
 
 /client/proc/vampire_screech()
 	set category = "Vampire"
@@ -303,7 +309,8 @@
 		M.current.remove_vampire_blood(30)
 		M.current.verbs -= /client/proc/vampire_screech
 		sleep(1800)
-		M.current.verbs += /client/proc/vampire_screech
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_screech
 
 /client/proc/vampire_enthrall()
 	set category = "Vampire"
@@ -326,7 +333,8 @@
 				M.current.handle_enthrall(C)
 				M.current.verbs -= /client/proc/vampire_enthrall
 				sleep((VAMP_CHARISMA in M.vampire.powers) ? 600 : 1800)
-				M.current.verbs += /client/proc/vampire_enthrall
+				if(M && M.current)
+					M.current.verbs += /client/proc/vampire_enthrall
 				return
 		else
 			to_chat(M.current, "<span class='warning'>Either you or your target moved, and you couldn't finish enthralling them!</span>")
@@ -448,7 +456,8 @@
 		M.current.remove_vampire_blood(75)
 		M.current.verbs -= /client/proc/vampire_bats
 		sleep(1200)
-		M.current.verbs += /client/proc/vampire_bats
+		if(M && M.current) // Because our vampire can be completely destroyed after the sleep ends, who knows
+			M.current.verbs += /client/proc/vampire_bats
 
 /client/proc/vampire_jaunt()
 	set category = "Vampire"
@@ -463,7 +472,8 @@
 		new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
 		ethereal_jaunt(M.current, duration, "batify", "debatify", 0)
 		sleep(600)
-		M.current.verbs += /client/proc/vampire_jaunt
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_jaunt
 
 // Blink for vamps
 // Less smoke spam.
@@ -511,7 +521,8 @@
 			usr.loc = picked
 		M.current.verbs -= /client/proc/vampire_shadowstep
 		sleep(20 SECONDS)
-		M.current.verbs += /client/proc/vampire_shadowstep
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_shadowstep
 
 /client/proc/vampire_shadowmenace()
 	set category = "Vampire"
@@ -560,7 +571,8 @@
 		M.current.put_in_any_hand_if_possible(D)
 		M.current.verbs -= /client/proc/vampire_spawncape
 		sleep(300)
-		M.current.verbs += /client/proc/vampire_spawncape
+		if(M && M.current)
+			M.current.verbs += /client/proc/vampire_spawncape
 
 /mob/proc/remove_vampire_blood(amount = 0)
 	var/bloodold

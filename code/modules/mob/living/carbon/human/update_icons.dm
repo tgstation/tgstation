@@ -1102,7 +1102,7 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/proc/update_tail_showing(var/update_icons=1)
 	//overlays_standing[TAIL_LAYER] = null
 	overlays -= obj_overlays[TAIL_LAYER]
-	if(species.tail && species.flags & HAS_TAIL)
+	if(species && species.tail && species.flags & HAS_TAIL)
 		if(!wear_suit || !is_slot_hidden(wear_suit.body_parts_covered,HIDEJUMPSUIT))
 			var/obj/Overlays/O = obj_overlays[TAIL_LAYER]
 			O.icon = 'icons/effects/species.dmi'
