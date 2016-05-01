@@ -84,7 +84,26 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
-	invis_view = SEE_INVISIBLE_MINIMUM
+
+/obj/item/clothing/glasses/material/mining
+	name = "Optical Material Scanner"
+	desc = "Used by miners to detect ores deep within the rock."
+	icon_state = "material"
+	item_state = "glasses"
+	origin_tech = "magnets=3;engineering=3"
+	darkness_view = 0
+
+/obj/item/clothing/glasses/material/mining/gar
+	name = "gar material scanner"
+	icon_state = "garm"
+	item_state = "garm"
+	desc = "Do the impossible, see the invisible!"
+	force = 10
+	throwforce = 20
+	throw_speed = 4
+	attack_verb = list("sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
