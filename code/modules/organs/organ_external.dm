@@ -625,7 +625,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		src.status &= ~ORGAN_BLEEDING
 		src.status &= ~ORGAN_SPLINTED
 		src.status &= ~ORGAN_DEAD
-		src.species = null
 		
 		for(var/implant in implants)
 			qdel(implant)
@@ -637,9 +636,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/item/weapon/organ/organ //Dropped limb object
 		if(spawn_limb)
 			organ = generate_dropped_organ(organ_item)
-			if(species)
+			if(species) //Transfer species to the generated organ
 				organ.species = src.species
 				organ.update_icon()
+
+		src.species = null
 
 		if(body_part == LOWER_TORSO)
 			to_chat(owner, "<span class='danger'>You are now sterile.</span>")
