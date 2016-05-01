@@ -240,8 +240,10 @@
 	flags = NOBLUDGEON
 	slot = "hivecore"
 	force = 0
+	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/inert = 0
 	var/preserved = 0
+	var/list/spawned_brood = list()
 
 /obj/item/organ/internal/hivelord_core/New()
 	..()
@@ -251,6 +253,23 @@
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 		else
 			preserved = 1
+
+/obj/item/organ/internal/hivelord_core/ui_action_click()
+	var/spawn_amount = 1
+	if(!inert)
+		spawn_amount++
+
+	for(var/a in spawned_brood)
+		if(!istype(a, /mob/living/simple_animal/hostile/asteroid/hivelordbrood) || qdeleted(a))
+			spawned_brood -= a
+			continue
+	spawn_amount -= spawned_brood.len
+
+	for(var/i = 1 to spawn_amount)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/B = new (owner.loc)
+		B.link_host(owner)
+		spawned_brood |= B
+
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
@@ -302,6 +321,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
+	flying = 1
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -316,7 +336,89 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
-		qdel(src)
+		death()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
+	name = "blood brood"
+	desc = "A living string of blood and alien materials."
+	icon_state = "bloodbrood"
+	icon_living = "bloodbrood"
+	icon_aggro = "bloodbrood"
+	attacktext = "pierces"
+	color = "#C80000"
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/death()
+	if(loc) // Splash the turf we are on with blood
+		reagents.reaction(get_turf(src))
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/New()
+	create_reagents(30)
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/AttackingTarget()
+	..()
+	if(iscarbon(target))
+		transfer_reagents(target, 1)
+
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/attack_hand(mob/living/carbon/human/M)
+	if("\ref[M]" in faction)
+		reabsorb_host(M)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/attack_paw(mob/living/carbon/monkey/M)
+	if("\ref[M]" in faction)
+		reabsorb_host(M)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if("\ref[M]" in faction)
+		reabsorb_host(M)
+	else
+		return ..()
+
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/reabsorb_host(mob/living/carbon/C)
+	C.visible_message("<span class='notice'>[src] is reabsorbed by [C]'s body.</span>", \
+								"<span class='notice'>[src] is reabsorbed by your body.</span>")
+	transfer_reagents(C)
+	death()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, var/volume = 30)
+	if(!reagents.total_volume)
+		return
+
+	volume = min(volume, reagents.total_volume)
+
+	var/fraction = min(volume/reagents.total_volume, 1)
+	reagents.reaction(C, INJECT, fraction)
+
+	var/datum/reagent/blood/B
+	for(var/datum/reagent/blood/d in reagents.reagent_list)
+		B = d
+		break
+	if(B)
+		C.inject_blood(src, min(B.volume, volume))
+
+	reagents.trans_to(C, volume)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
+	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
+	var/datum/reagent/B = C.take_blood(src, 30)
+	if(!B)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(H.dna.species.exotic_blood && H.reagents.total_volume)
+				H.reagents.trans_to(src, 10)
+
+	else
+		reagents.reagent_list += B
+		reagents.update_total()
+
+	color = mix_color_from_reagents(reagents.reagent_list)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"

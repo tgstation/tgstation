@@ -275,11 +275,14 @@
 		return 0
 	return ..()
 
-/datum/action/item_action/organ_action/toggle
-
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
 	name = "Toggle [target.name]"
+	button.name = name
+
+/datum/action/item_action/organ_action/use/New(Target)
+	..()
+	name = "Use [target.name]"
 	button.name = name
 
 
