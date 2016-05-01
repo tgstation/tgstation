@@ -7,6 +7,7 @@
 /obj/item/toy/carpplushie/dehy_carp
 	var/mob/owner = null	//Carp doesn't attack owner, set when using in hand
 	var/owned = 0	//Boolean, no owner to begin with
+	var/mobtype = /mob/living/simple_animal/hostile/carp //So admins can change what mob spawns via var fuckery
 
 //Attack self
 /obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
@@ -36,7 +37,7 @@
 	//Wait for animation to end
 	sleep(6)
 	//Make space carp
-	var/mob/living/simple_animal/hostile/carp/C = new /mob/living/simple_animal/hostile/carp(get_turf(src))
+	var/mobtype/C = new mobtype(get_turf(src))
 	//Make carp non-hostile to user, and their allies
 	if(owner)
 		var/list/factions = owner.faction
