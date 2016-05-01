@@ -77,9 +77,9 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
-/obj/item/weapon/storage/box/engineer/syndie
+/obj/item/weapon/storage/box/syndie
 
-/obj/item/weapon/storage/box/engineer/syndie/New()
+/obj/item/weapon/storage/box/syndie/New()
 	..()
 	contents = list()
 	new /obj/item/clothing/mask/gas/syndicate(src)
