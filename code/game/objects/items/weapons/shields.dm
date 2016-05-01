@@ -26,7 +26,7 @@
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)

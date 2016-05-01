@@ -52,7 +52,7 @@ MASS SPECTROMETER
 
 			var/mob/living/L = locate() in O
 
-			if(O.invisibility == 101)
+			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.invisibility = 0
 				if(L)
 					flick_sonar(O)
@@ -60,7 +60,7 @@ MASS SPECTROMETER
 					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
-							O.invisibility = 101
+							O.invisibility = INVISIBILITY_MAXIMUM
 			else
 				if(L)
 					flick_sonar(O)
@@ -71,7 +71,7 @@ MASS SPECTROMETER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1
@@ -89,7 +89,7 @@ MASS SPECTROMETER
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
 		scanchems = 0
-	return
+
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
@@ -109,8 +109,8 @@ MASS SPECTROMETER
 	else
 		chemscan(user, M)
 
-	src.add_fingerprint(user)
-	return
+	add_fingerprint(user)
+
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
@@ -250,7 +250,7 @@ MASS SPECTROMETER
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3

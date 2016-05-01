@@ -210,6 +210,7 @@
 /obj/item/clothing/tie/scarf
 	name = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/tie/scarf/red
 	name = "red scarf"

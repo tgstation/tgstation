@@ -105,6 +105,7 @@
 	addiction_threshold = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/M)
+<<<<<<< HEAD
 	M.AdjustParalysis(-2, 0)
 	M.AdjustStunned(-2, 0)
 	M.AdjustWeakened(-2, 0, 0)
@@ -122,6 +123,14 @@
 		M.adjustToxLoss(1)
 		M.Jitter(30)
 		M.emote(pick("groan","moan"))
+=======
+	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
+	if(prob(5))
+		M << "<span class='notice'>[high_message]</span>"
+	M.AdjustParalysis(-1, 0)
+	M.AdjustStunned(-1, 0)
+	M.AdjustWeakened(-1, 0)
+>>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	..()
 	. = 1
 
@@ -273,6 +282,16 @@
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
+<<<<<<< HEAD
+=======
+	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	if(prob(5))
+		M << "<span class='notice'>[high_message]</span>"
+	M.AdjustParalysis(-2, 0)
+	M.AdjustStunned(-2, 0)
+	M.AdjustWeakened(-2, 0)
+	M.adjustStaminaLoss(-2, 0)
+>>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.AdjustParalysis(-2.5, 0)
 	M.AdjustStunned(-2.5, 0)
@@ -403,6 +422,7 @@
 	return ..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
+<<<<<<< HEAD
 	var/check = rand(0,100)
 	if(check < 8)
 		M.visible_message("<span class = 'danger'><b>[M.name]</b> has a wild look in their eyes!</span>")
@@ -416,6 +436,15 @@
 	M.druggy = max(M.druggy, 15)
 	if(check < 20)
 		M.confused += 10
+=======
+	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
+	if(prob(5))
+		M << "<span class='notice'>[high_message]</span>"
+	M.AdjustParalysis(-3, 0)
+	M.AdjustStunned(-3, 0)
+	M.AdjustWeakened(-3, 0)
+	M.adjustStaminaLoss(-5, 0)
+>>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)
 	M.hallucination += 10

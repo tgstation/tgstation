@@ -81,9 +81,18 @@
 	M.drowsyness = max(M.drowsyness-5, 0)
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
+<<<<<<< HEAD
 	M.AdjustWeakened(-1, 0, 0)
 	if(prob(50))
 		M.adjustBrainLoss(-1, 0)
+=======
+	M.AdjustWeakened(-1, 0)
+	if(holder.has_reagent("mindbreaker"))
+		holder.remove_reagent("mindbreaker", 5)
+	M.hallucination = max(0, M.hallucination - 10)
+	if(prob(30))
+		M.adjustToxLoss(1, 0)
+>>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 		. = 1
 	..()
 
@@ -574,8 +583,13 @@
 		M.adjustFireLoss(-1)
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
+<<<<<<< HEAD
 	M.AdjustWeakened(-1, 0, 0)
 	M.adjustStaminaLoss(-2*REM, 0)
+=======
+	M.AdjustWeakened(-1, 0)
+	M.adjustStaminaLoss(-1*REM, 0)
+>>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	..()
 	. = 1
 
@@ -879,11 +893,15 @@
 	if(prob(20))
 		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-1, 0)
+<<<<<<< HEAD
 		M.AdjustWeakened(-1, 0, 0)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(C.has_medical_effect(/datum/medical_effect/heartfailure))
 				C.remove_medical_effect(/datum/medical_effect/heartfailure)
+=======
+		M.AdjustWeakened(-1, 0)
+>>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -1007,7 +1025,7 @@
 		M.adjustFireLoss(-1*REM, 0)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0, 0)
+	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -1238,7 +1256,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0, 0)
+	M.AdjustWeakened(-1, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()

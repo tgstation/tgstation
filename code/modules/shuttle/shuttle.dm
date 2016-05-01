@@ -3,7 +3,7 @@
 
 //NORTH default dir
 /obj/docking_port
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	icon = 'icons/obj/device.dmi'
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
@@ -385,7 +385,7 @@
 	return 1
 
 /obj/onShuttleMove()
-	if(invisibility >= 101)
+	if(invisibility >= INVISIBILITY_ABSTRACT)
 		return 0
 	. = ..()
 

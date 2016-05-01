@@ -243,7 +243,7 @@
 		merge(S)
 		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
 	else
-		..()
+		return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA

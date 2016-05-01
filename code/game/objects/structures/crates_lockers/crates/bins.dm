@@ -34,7 +34,7 @@
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 	else
-		..()
+		return ..()
 
 /obj/structure/closet/crate/bin/proc/do_animate()
 	playsound(loc, open_sound, 15, 1, -3)

@@ -156,6 +156,8 @@
 
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+/datum/plant_gene/trait/proc/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	return
 /datum/plant_gene/trait/proc/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 /datum/plant_gene/trait/proc/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
@@ -177,11 +179,28 @@
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
 	// Applies other trait effects (teleporting, etc) to the target by on_slip.
-	// For code, see grown.dm
 	name = "Slippery Skin"
 	rate = 0.1
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
+/datum/plant_gene/trait/slip/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	if(iscarbon(target))
+		var/obj/item/seeds/seed = G.seed
+		var/mob/living/carbon/M = target
+
+		var/stun_len = seed.potency * rate
+		if(istype(G) && ispath(G.trash, /obj/item/weapon/grown))
+			return
+
+		if(!istype(G, /obj/item/weapon/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
+			stun_len /= 3
+
+		var/stun = max(stun_len * 2, 1)
+		var/weaken = max(stun_len, 0.5)
+
+		if(M.slip(stun, weaken, G))
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_slip(src, M)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
@@ -189,18 +208,18 @@
 	// Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
 	// Multiplies max charge by (rate*1000) when used in potato power cells.
 	name = "Electrical Activity"
-	rate = 0.01
+	rate = 0.2
 	origin_tech = list("powerstorage" = 4)
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
-	var/power = G.seed.potency*rate*5
+	var/power = G.seed.potency*rate
 	if(prob(power))
 		C.electrocute_act(round(power), G, 1, 1)
 
 /datum/plant_gene/trait/cell_charge/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		var/power = G.seed.potency*rate*5
+		var/power = G.seed.potency*rate
 		if(prob(power))
 			C.electrocute_act(round(power), G, 1, 1)
 

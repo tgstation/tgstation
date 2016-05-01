@@ -102,12 +102,15 @@
 			stun_overlay.pixel_y = 10
 			stun_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA
 			overlays += stun_overlay
-		AdjustStunned(-1)
+		AdjustStunned(-1, 1, 1)
 		if(!stunned && stun_overlay)
 			overlays -= stun_overlay
 			stun_overlay = null
 	if(weakened)
-		AdjustWeakened(-1, ignore_canweaken=1)
+		AdjustWeakened(-1, 1, 1)
+	if(!stunned && stun_overlay)
+		overlays -= stun_overlay
+		stun_overlay = null
 
 /mob/living/proc/handle_disabilities()
 	//Eyes

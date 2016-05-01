@@ -49,7 +49,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
 	icon_aggro = "Basilisk_alert"
@@ -108,7 +108,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -186,7 +186,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Hivelord"
 	icon_living = "Hivelord"
 	icon_aggro = "Hivelord_alert"
@@ -289,7 +289,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Hivelordbrood"
 	icon_living = "Hivelordbrood"
 	icon_aggro = "Hivelordbrood"
@@ -321,7 +321,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
@@ -350,7 +350,7 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -398,7 +398,7 @@
 
 /obj/effect/goliath_tentacle/
 	name = "Goliath tentacle"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle"
 	var/latched = 0
 	anchored = 1
@@ -438,7 +438,7 @@
 		spawn(50)
 			qdel(src)
 
-/obj/item/asteroid/goliath_hide
+/obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/mining.dmi'
@@ -447,7 +447,7 @@
 	w_class = 3
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
 		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
 			var/obj/item/clothing/C = target
@@ -455,7 +455,7 @@
 			if(current_armor.["melee"] < 60)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
+				use(1)
 			else
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
@@ -489,7 +489,7 @@
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
 	desc = "The wumborian fugu rapidly increases its body mass in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Fugu"
 	icon_living = "Fugu"
 	icon_aggro = "Fugu"
@@ -635,7 +635,7 @@
 	stat_attack = 1
 	robust_searching = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 1)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 //Goliath
 
@@ -649,7 +649,7 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/asteroid/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
@@ -733,8 +733,129 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
 
-//Nests
+/obj/item/weapon/legion_skull
+	name = "legion's head"
+	desc = "The once living, now empty eyes of the former human's skull cut deep into your soul."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "skull"
 
+
+//Gutlunches
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch
+	name = "gutlunch"
+	desc = "A scavenger that eats raw meat, often found alongside ash walkers. Produces a thick, nutritious milk."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "gutlunch"
+	icon_living = "gutlunch"
+	icon_dead = "gutlunch"
+	speak_emote = list("warbles", "quavers")
+	emote_hear = list("trills.")
+	emote_see = list("sniffs.", "burps.")
+	density = 0
+	speak_chance = 1
+	turns_per_move = 8
+	environment_smash = 0
+	move_to_delay = 15
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "squishes"
+	friendly = "pinches"
+	a_intent = "help"
+	ventcrawler = 2
+	gold_core_spawnable = 2
+	stat_attack = 1
+	gender = NEUTER
+	stop_automated_movement = FALSE
+	stat_exclusive = TRUE
+	robust_searching = TRUE
+	search_objects = TRUE
+	del_on_death = TRUE
+
+	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
+	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/female = 55)
+
+	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/,
+						  /obj/effect/decal/cleanable/blood/gibs/, /obj/effect/decal/cleanable/blood/drip/,/obj/effect/decal/cleanable/trail_holder)
+	var/obj/item/udder/gutlunch/udder = null
+
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/New()
+	udder = new()
+	deathmessage = "[src] is pulped into bugmash."
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()
+	qdel(udder)
+	udder = null
+	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons()
+	overlays.Cut()
+	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
+		overlays += "gl_full"
+	..()
+
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		udder.milkAnimal(O, user)
+		regenerate_icons()
+	else
+		..()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
+	if(is_type_in_list(target,wanted_objects)) //we eats
+		udder.generateMilk()
+		regenerate_icons()
+		visible_message("<span class='notice'>[src] slurps up [target].</span>")
+		qdel(target)
+	..()
+
+
+/obj/item/udder/gutlunch
+	name = "nutrient sac"
+
+/obj/item/udder/gutlunch/New()
+	reagents = new(50)
+	reagents.my_atom = src
+
+/obj/item/udder/gutlunch/generateMilk()
+	if(prob(60))
+		reagents.add_reagent("cream", rand(2, 5))
+	if(prob(45))
+		reagents.add_reagent("salglu_solution", rand(2,5))
+
+
+//Male gutlunch. They're smaller and more colorful!
+/mob/living/simple_animal/hostile/asteroid/gutlunch/male
+	gender = MALE
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/male/New()
+	..()
+	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
+	resize = 0.85
+	update_transform()
+
+
+//Lady gutlunch. They make the babby.
+/mob/living/simple_animal/hostile/asteroid/gutlunch/female
+	name = "guthen"
+	gender = FEMALE
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/female/Life()
+	..()
+	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
+		make_babies()
+
+/mob/living/simple_animal/hostile/asteroid/gutlunch/female/make_babies()
+	if(..())
+		udder.reagents.clear_reagents()
+		regenerate_icons()
+
+
+//Nests
 /mob/living/simple_animal/hostile/spawner/lavaland
 	name = "necropolis tendril"
 	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."

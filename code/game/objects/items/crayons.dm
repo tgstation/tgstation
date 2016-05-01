@@ -113,15 +113,16 @@
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/toy/crayon))
-		switch(W:colourName)
+	if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/C = W
+		switch(C.colourName)
 			if("mime")
 				usr << "This crayon is too sad to be contained in this box."
 				return
 			if("rainbow")
 				usr << "This crayon is too powerful to be contained in this box."
 				return
-	..()
+	return ..()
 
 //Spraycan stuff
 

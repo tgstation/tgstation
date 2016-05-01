@@ -288,6 +288,8 @@
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
+	else
+		return ..()
 
 /obj/machinery/photocopier/ex_act(severity, target)
 	switch(severity)
@@ -307,7 +309,7 @@
 					toner = 0
 
 
-/obj/machinery/photocopier/blob_act()
+/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		qdel(src)
 	else

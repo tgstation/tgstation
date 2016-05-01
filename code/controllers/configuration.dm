@@ -197,6 +197,11 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/client_warn_version = 0
+	var/client_warn_message = "Your version of byond may have issues or be blocked from accessing this server in the future."
+	var/client_error_version = 0
+	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -401,6 +406,15 @@
 						protected_config.autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
 					config.generate_minimaps = 1
+				if("client_warn_version")
+					config.client_warn_version = text2num(value)
+				if("client_warn_message")
+					config.client_warn_message = value
+				if("client_error_version")
+					config.client_error_version = text2num(value)
+				if("client_error_message")
+					config.client_error_message = value
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

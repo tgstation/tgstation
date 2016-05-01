@@ -260,7 +260,7 @@
 				for(var/obj/machinery/dna_scannernew/dna in T.contents)
 					dna.open_machine()
 				for(var/obj/structure/window/window in T.contents)
-					window.hit(rand(30,80))
+					window.take_damage(rand(30,80))
 					if(window && window.fulltile)
 						PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
 				for(var/obj/machinery/light/light in T.contents)

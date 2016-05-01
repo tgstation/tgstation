@@ -459,6 +459,9 @@
 
 	return result
 
+/obj/machinery/mecha_part_fabricator/deconstruction()
+	for(var/material in resources)
+		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
@@ -467,17 +470,13 @@
 	if(exchange_parts(user, W))
 		return
 
-	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
-			default_deconstruction_crowbar(W)
-			return 1
-		else
-			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
-			return 1
+	if(default_deconstruction_crowbar(W))
+		return 1
 
 	if(istype(W, /obj/item/stack))
+		if(panel_open)
+			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
+			return 1
 		var/material
 		switch(W.type)
 			if(/obj/item/stack/sheet/mineral/gold)
@@ -519,7 +518,8 @@
 			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
 		else
 			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
-		return
+	else
+		return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)

@@ -38,8 +38,7 @@
 	var/drowsy = 0
 	var/stamina = 0
 	var/jitter = 0
-	var/forcedodge = 0
-	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
+	var/forcedodge = 0 //to pass through everything
 
 /obj/item/projectile/New()
 	permutated = list()

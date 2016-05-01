@@ -13,12 +13,8 @@
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
-	reliability = 1000
 	var/salvageable = 1
-
-/obj/item/mecha_parts/mecha_equipment/New()
-	..()
-	return
+	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -54,7 +50,15 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]"
+	var/txt = "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;"
+	if(chassis.selected == src)
+		txt += "<b>[src.name]</b>"
+	else if(selectable)
+		txt += "<a href='?src=\ref[chassis];select_equip=\ref[src]'>[src.name]</a>"
+	else
+		txt += "[src.name]"
+
+	return txt
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
 	return range&RANGED
@@ -82,8 +86,8 @@
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	sleep(equip_cooldown)
-	set_ready_state(1)
+	spawn(equip_cooldown)
+		set_ready_state(1)
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
 	if(!chassis)
@@ -106,7 +110,7 @@
 	chassis = M
 	src.loc = M
 	M.log_message("[src] initialized.")
-	if(!M.selected)
+	if(!M.selected && selectable)
 		M.selected = src
 	src.update_chassis_page()
 	return

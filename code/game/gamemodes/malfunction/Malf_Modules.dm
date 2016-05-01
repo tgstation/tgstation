@@ -9,14 +9,11 @@
 
 	var/power_type
 
-
 /datum/AI_Module/large/
 	uses = 1
 
 /datum/AI_Module/small/
 	uses = 5
-
-//////DOOMSDAY DEVICE
 
 /datum/AI_Module/large/nuke_station
 	module_name = "Doomsday Device"
@@ -81,7 +78,6 @@
 			var/message = "[timer] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
-
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
@@ -105,11 +101,6 @@
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/fireproof_core
-
-
-
-//////END DOOMSDAY DEVICE
-
 
 /mob/living/silicon/ai/proc/fireproof_core()
 	set category = "Malfunction"
@@ -161,7 +152,7 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
+		if(D.z != ZLEVEL_STATION)
 			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
@@ -191,6 +182,8 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
+		if(D.z != ZLEVEL_STATION)
+			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
@@ -254,7 +247,6 @@
 	src << "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
 	verbs -= /mob/living/silicon/ai/proc/mech_takeover
 
-
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
 	mod_pick_name = "burnpigs"
@@ -302,8 +294,6 @@
 		AA.emagged = 1
 	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
-
-
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine Overload"
@@ -622,7 +612,6 @@
 				temp = AM.description
 	src.use(usr)
 	return
-
 
 /datum/AI_Module/large/eavesdrop
 	module_name = "Enhanced Surveillance"

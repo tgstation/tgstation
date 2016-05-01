@@ -38,7 +38,10 @@
 			connect_to_network()
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
+
+	return ..()
 
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	being_shocked = 1
@@ -77,7 +80,10 @@
 	if(default_unfasten_wrench(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
+
+	return ..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	flick("coil_shock_1", src)

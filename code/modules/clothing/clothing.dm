@@ -154,9 +154,7 @@ BLIND     // can't see anything
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	user.wear_mask_update(src, toggle_off = mask_adjusted)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
 
 
 

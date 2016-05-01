@@ -11,7 +11,7 @@
 /obj/item/device/export_scanner/examine(user)
 	..()
 	if(!cargo_console)
-		user << "<span class='notice'>You had to link it to supply console for it to work.</span>"
+		user << "<span class='notice'>The [src] is currently not linked to a cargo console.</span>"
 
 /obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
 	if(!istype(O) || !proximity)

@@ -2504,7 +2504,7 @@
 "aWj" = (/obj/item/weapon/circuitboard/security,/turf/open/floor/plating,/area/maintenance/asmaint2)
 "aWk" = (/obj/structure/window/reinforced,/obj/structure/flora/kirbyplants{icon_state = "plant-17"; layer = 4.1},/turf/open/floor/plasteel/whitebot,/area/maintenance/fore{name = "Security Maintenance"})
 "aWl" = (/obj/machinery/vending/assist,/turf/open/floor/plasteel/warning{icon_state = "warning"; dir = 10},/area/maintenance/fore{name = "Security Maintenance"})
-"aWm" = (/obj/structure/table,/obj/item/clothing/gloves/color/yellow/fake,/obj/item/clothing/gloves/color/yellow/fake,/obj/item/clothing/gloves/color/yellow/fake,/turf/open/floor/plasteel/warning,/area/maintenance/fore{name = "Security Maintenance"})
+"aWm" = (/obj/structure/table,/obj/item/clothing/gloves/color/fyellow,/obj/item/clothing/gloves/color/fyellow,/obj/item/clothing/gloves/color/fyellow,/turf/open/floor/plasteel/warning,/area/maintenance/fore{name = "Security Maintenance"})
 "aWn" = (/obj/machinery/power/apc{dir = 4; name = "Security Maintenance APC"; pixel_x = 24},/obj/structure/cable/cyan,/obj/machinery/atmospherics/pipe/simple/cyan/hidden,/turf/open/floor/plating,/area/maintenance/fore{name = "Security Maintenance"})
 "aWo" = (/obj/structure/table,/obj/item/weapon/cautery,/obj/item/weapon/surgicaldrill,/obj/item/weapon/circular_saw{pixel_y = 9},/turf/open/floor/plasteel/white,/area/security/warden)
 "aWp" = (/obj/structure/bodycontainer/morgue,/obj/effect/landmark{name = "revenantspawn"},/turf/open/floor/plasteel/white,/area/security/warden)

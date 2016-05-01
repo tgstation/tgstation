@@ -47,11 +47,12 @@
 		power_change()
 		return
 
-	default_deconstruction_crowbar(O)
-
-	if (src.stat != 0) //NOPOWER etc
+	if(default_deconstruction_crowbar(O))
 		return
-	if (istype(O, /obj/item/weapon/grab))
+
+	if(stat) //NOPOWER etc
+		return
+	if(istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		if(!user.Adjacent(G.affecting))
 			return
@@ -63,7 +64,8 @@
 			return
 		else
 			user << "<span class='danger'>The machine only accepts monkeys!</span>"
-	return
+	else
+		return ..()
 
 /obj/machinery/monkey_recycler/MouseDrop_T(mob/living/target, mob/living/user)
 	if(!istype(target))
@@ -100,7 +102,7 @@
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		user << "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>"
 	else
 		user << "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>"

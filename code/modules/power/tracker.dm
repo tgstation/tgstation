@@ -71,8 +71,8 @@
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
 			qdel(src)
-		return
-	..()
+	else
+		return ..()
 
 // Tracker Electronic
 

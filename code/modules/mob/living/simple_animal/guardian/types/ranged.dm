@@ -95,7 +95,7 @@
 	name = "snare"
 	desc = "You shouldn't be seeing this!"
 	var/mob/living/simple_animal/hostile/guardian/spawner
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 
 /obj/item/effect/snare/Crossed(AM as mob|obj)

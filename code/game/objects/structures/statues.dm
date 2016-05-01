@@ -8,7 +8,7 @@
 	icon_state = ""
 	density = 1
 	anchored = 0
-	var/hardness = 1
+	var/health = 100
 	var/oreAmount = 7
 	var/mineralType = "metal"
 
@@ -75,11 +75,12 @@
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
-
 	else
-		hardness -= W.force/100
-		..()
-		CheckHardness()
+		return ..()
+
+/obj/structure/statue/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
 
 /obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -90,14 +91,25 @@
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
-/obj/structure/statue/bullet_act(obj/item/projectile/Proj)
-	hardness -= Proj.damage
-	..()
-	CheckHardness()
-	return
+/obj/structure/statue/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
-/obj/structure/statue/proc/CheckHardness()
-	if(hardness <= 0)
+/obj/structure/statue/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		else
+			return
+	health -= damage
+	if(health <= 0)
 		Dismantle(1)
 
 /obj/structure/statue/proc/Dismantle(devastated = 0)
@@ -126,21 +138,15 @@
 		if(1)
 			Dismantle(1)
 		if(2)
-			if(prob(20))
-				Dismantle(1)
-			else
-				hardness--
-				CheckHardness()
+			take_damage(rand(60,110), BRUTE, 0)
 		if(3)
-			hardness -= 0.1
-			CheckHardness()
-	return
+			take_damage(10, BRUTE, 0)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	hardness = 3
+	health = 300
 	luminosity = 2
 	mineralType = "uranium"
 	var/last_event = 0
@@ -158,7 +164,7 @@
 
 /obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
-	..()
+	return ..()
 
 /obj/structure/statue/uranium/Bumped(atom/user)
 	radiate()
@@ -185,7 +191,7 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	hardness = 2
+	health = 200
 	mineralType = "plasma"
 	desc = "This statue is suitably made from plasma."
 
@@ -220,13 +226,12 @@
 		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
 		ignite(W.is_hot())
-		return
-	..()
+	else
+		return ..()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
 	atmos_spawn_air("plasma=400;TEMP=1000")
-	hardness = 0
-	CheckHardness()
+	Dismantle(1)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
@@ -235,7 +240,7 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	hardness = 3
+	health = 300
 	mineralType = "gold"
 	desc = "This is a highly valuable statue made from gold."
 
@@ -262,7 +267,7 @@
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	hardness = 3
+	health = 300
 	mineralType = "silver"
 	desc = "This is a valuable statue made from silver."
 
@@ -289,7 +294,7 @@
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	hardness = 10
+	health = 1000
 	mineralType = "diamond"
 	desc = "This is a very expensive diamond statue"
 
@@ -308,7 +313,7 @@
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	hardness = 3
+	health = 300
 	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -323,7 +328,7 @@
 
 /obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user, params)
 	honk()
-	..()
+	return ..()
 
 /obj/structure/statue/bananium/attack_hand(mob/user)
 	honk()
@@ -343,7 +348,7 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	hardness = 0.5
+	health = 50
 	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
@@ -354,7 +359,7 @@
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
-	hardness = 0.5
+	health = 50
 	mineralType = "snow"
 
 /obj/structure/statue/snow/snowman

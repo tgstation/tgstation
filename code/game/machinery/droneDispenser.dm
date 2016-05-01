@@ -172,7 +172,7 @@
 		visible_message("<span class='notice'>[src] [end_create_message]</span>")
 	icon_state = icon_recharging
 	sleep(cooldownTime)
-	if(stat != BROKEN)
+	if(!(stat & BROKEN))
 		icon_state = icon_on
 	else
 		icon_state = icon_off
@@ -210,36 +210,50 @@
 		user << "<span class='notice'>You insert [stack] sheet[stack > 1 ? "s" : ""] to [src].</span>"
 		if((O && O.loc == src) || !stack)
 			qdel(O)
-		return
-	if(istype(O, /obj/item/weapon/weldingtool) && (stat & BROKEN))
-		var/obj/item/weapon/weldingtool/WT = O
-		if(!WT.isOn())
+	else if(istype(O, /obj/item/weapon/weldingtool))
+		if(stat & BROKEN)
+			var/obj/item/weapon/weldingtool/WT = O
+			if(!WT.isOn())
+				return
+			if(WT.get_fuel() < 1)
+				user << "<span class='warning'>You need more fuel to complete this task!</span>"
+				return
+			playsound(src, 'sound/items/Welder.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] begins patching up [src] with [WT].</span>", \
+								 "<span class='notice'>You begin restoring the damage to [src]...</span>")
+			if(!do_after(user, 40/O.toolspeed, target = src))
+				return
+			if(!src || !WT.remove_fuel(1, user)) return
+			user.visible_message("<span class='notice'>[user] fixes [src]!</span>", \
+								 "<span class='notice'>You restore [src] to operation.</span>")
+			stat &= ~BROKEN
+			health = max_health
+			if(!stat)
+				icon_state = icon_on
+		else
+			user << "<span class='warning'>[src] doesn't need repairs.</span>"
+	else
+		return ..()
+
+/obj/machinery/droneDispenser/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		else
 			return
-		if(WT.get_fuel() < 1)
-			user << "<span class='warning'>You need more fuel to complete this task!</span>"
-			return
-		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] begins patching up [src] with [WT].</span>", \
-							 "<span class='notice'>You begin restoring the damage to [src]...</span>")
-		if(!do_after(user, 40/O.toolspeed, target = src))
-			return
-		if(!src || !WT.remove_fuel(1, user)) return
-		user.visible_message("<span class='notice'>[user] fixes [src]!</span>", \
-							 "<span class='notice'>You restore [src] to operation.</span>")
-		stat -= BROKEN
-		icon_state = icon_on
-		return
-	if(O.force && stat != BROKEN)
-		user.visible_message("<span class='danger'>[user] hits [src] with [O]!</span>", \
-							 "<span class='warning'>You hit [src] with [O]!</span>")
-		playsound(src, O.hitsound, 50, 1)
-		health = Clamp(health - O.force, 0, max_health)
-		if(health <= 0)
-			if(break_message)
-				audible_message("<span class='warning'>[src] [break_message]</span>")
-			if(break_sound)
-				playsound(src, break_sound, 50, 1)
-			stat = BROKEN
-			icon_state = icon_off
-		return
-	..()
+	health = max(health - damage, 0)
+	if(!health && !(stat & BROKEN))
+		if(break_message)
+			audible_message("<span class='warning'>[src] [break_message]</span>")
+		if(break_sound)
+			playsound(src, break_sound, 50, 1)
+		stat |= BROKEN
+		icon_state = icon_off
+
