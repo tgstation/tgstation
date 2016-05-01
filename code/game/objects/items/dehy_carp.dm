@@ -37,7 +37,7 @@
 	//Wait for animation to end
 	sleep(6)
 	//Make space carp
-	var /mob/living/M = new mobtype(get_turf(src))
+	var/mob/living/M = new mobtype(get_turf(src))
 	//Make carp non-hostile to user, and their allies
 	if(owner)
 		var/list/factions = owner.faction
