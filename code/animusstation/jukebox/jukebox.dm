@@ -1,52 +1,8 @@
 #define TURNTABLE_CHANNEL 10
 
-/*
-/mob/var/datum/hear_music/hear_music
-#define NONE_MUSIC 0
-#define UPLOADING 1
-#define PLAYING 2
-
-/datum/hear_music
-	var/mob/target = null
-	//var/sound/sound
-	var/status = NONE_MUSIC
-	var/stop = 0
-
-	proc/play(sound/S)
-		status = NONE_MUSIC
-		if(!target)
-			return
-		if(!S)
-			return
-		status = UPLOADING
-		target << browse_rsc(S)
-		//sound = S
-		if(target.hear_music != src)
-			qdel(src)
-		if(!stop)
-			target << S
-			status = PLAYING
-		else
-			qdel(src)
-
-	proc/stop()
-		if(!target)
-			return
-		if(status == PLAYING)
-			var/sound/S = sound(null)
-			S.channel = 10
-			S.wait = 1
-			target << S
-			qdel(src)
-		else if(status == UPLOADING)
-			stop = 1
-		target.hear_music = null
-
-*/
 /mob/var/sound/music
 
 /datum/turntable_soundtrack
-	var/f_name
 	var/name
 	var/path
 
@@ -107,7 +63,7 @@
 
 	var/i = 0
 	for(var/datum/turntable_soundtrack/D in turntable_soundtracks)
-		t += "<td height='50' weight='50'><A href='?src=\ref[src];on=\ref[D]'>[D.f_name]</font>[D.name]</font></A></td>"
+		t += "<td height='50' weight='50'><A href='?src=\ref[src];on=\ref[D]'>[D.name]</font></A></td>"
 		i++
 		if(i == 3)
 			i = 0
@@ -115,11 +71,11 @@
 
 	if(disk)
 		if(disk.data)
-			t += "<td height='50' weight='50'><A href='?src=\ref[src];on=\ref[disk.data]'>[disk.data.f_name]</font>[disk.data.name]</font></A></td>"
+			t += "<td height='50' weight='50'><A href='?src=\ref[src];on=\ref[disk.data]'>[disk.data.name]</font></A></td>"
 		else
 			t += "<td height='50' weight='50'>Disk empty</font></td>"
 
-	var/datum/browser/iface = new(user, "jukebox", "The Jukebox", 400,700)
+	var/datum/browser/iface = new(user, "jukebox", "The Jukebox", 400,850)
 	iface.set_content(t)
 	iface.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	iface.open()
