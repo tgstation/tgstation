@@ -82,6 +82,9 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
+	if(lying && istype(A, /turf/) && !istype(A, /turf/space/))
+		scramble(A)
+
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
@@ -342,3 +345,31 @@
 		if(T)
 			T.Click(location, control, params)
 	return 1
+
+/mob/proc/scramble(var/atom/A)
+	var/direction
+	if(stat || buckled || paralysis || stunned || sleeping || (status_flags & FAKEDEATH) || restrained() || (weakened > 5))
+		return
+	if(!istype(src.loc, /turf/))
+		return
+	if(!A || !x || !y || !A.x || !A.y) return
+	if(scrambling)
+		return
+	var/dx = A.x - x
+	var/dy = A.y - y
+	if(!dx && !dy) return
+
+	if(abs(dx) < abs(dy))
+		if(dy > 0)	direction = NORTH
+		else		direction = SOUTH
+	else
+		if(dx > 0)	direction = EAST
+		else		direction = WEST
+	if(direction)
+		scrambling = 1
+		sleep(2)
+		src.visible_message("\red <b>[src]</b> scrambling!")
+		sleep(11)
+		Move(get_step(src,direction))
+		scrambling = 0
+		dir = 2
