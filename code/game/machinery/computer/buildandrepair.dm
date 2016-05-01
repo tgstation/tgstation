@@ -191,6 +191,8 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		target_dept = (target_dept == dept_list.len) ? 1 : (target_dept + 1)
 		user << "<span class='notice'>You set the board to \"[dept_list[target_dept]]\".</span>"
+	else
+		return ..()
 
 /obj/item/weapon/circuitboard/computer/card/minor/examine(user)
 	..()
@@ -278,7 +280,8 @@
 			name = "circuit board (RD Console)"
 			build_path = /obj/machinery/computer/rdconsole/core
 			user << "<span class='notice'>Defaulting access protocols.</span>"
-	return
+	else
+		return ..()
 
 /obj/item/weapon/circuitboard/computer/mecha_control
 	name = "circuit board (Exosuit Control Console)"
@@ -309,11 +312,14 @@
 			user << "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>"
 		else
 			user << "<span class='notice'>The spectrum chip is unresponsive.</span>"
-	if(istype(I,/obj/item/weapon/card/emag))
+	else if(istype(I,/obj/item/weapon/card/emag))
 		if(!emagged)
 			contraband = TRUE
 			emagged = TRUE
 			user << "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>"
+	else
+		return ..()
+
 
 /obj/item/weapon/circuitboard/computer/cargo/request
 	name = "circuit board (Supply Request Console)"
@@ -348,6 +354,8 @@
 			shuttleId = chosen_id
 		else
 			shuttleId = initial(shuttleId)
+	else
+		return ..()
 
 /obj/item/weapon/circuitboard/computer/labor_shuttle
 	name = "circuit board (Labor Shuttle)"
@@ -398,4 +406,5 @@
 			name = "circuit board (Book Inventory Management Console)"
 			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
-	return
+	else
+		return ..()

@@ -37,22 +37,20 @@
 
 /obj/machinery/telecomms/processor/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/telecomms/processor(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/analyzer(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/amplifier(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 2)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/processor(null)
+	B.apply_default_parts(src)
 
-
-
-
+/obj/item/weapon/circuitboard/machine/telecomms/processor
+	name = "circuit board (Processor Unit)"
+	build_path = /obj/machinery/telecomms/processor
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 3,
+							/obj/item/weapon/stock_parts/subspace/filter = 1,
+							/obj/item/weapon/stock_parts/subspace/treatment = 2,
+							/obj/item/weapon/stock_parts/subspace/analyzer = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/amplifier = 1)
 
 
 //Preset Processors

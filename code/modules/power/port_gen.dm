@@ -106,16 +106,31 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/stack/cable_coil(src, 1)
-	component_parts += new /obj/item/stack/cable_coil(src, 1)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new board_path(src)
+	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
+	B.apply_default_parts(src)
+
 	var/obj/sheet = new sheet_path(null)
 	sheet_name = sheet.name
-	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/pacman
+	name = "circuit board (PACMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman
+	origin_tech = "programming=3;powerstorage=3;plasmatech=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
+/obj/item/weapon/circuitboard/machine/pacman/super
+	name = "circuit board (SUPERPACMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman/super
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
+
+/obj/item/weapon/circuitboard/machine/pacman/mrs
+	name = "circuit board (MRSPACMAN-type Generator)"
+	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
+	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
