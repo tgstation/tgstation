@@ -21,7 +21,7 @@
 	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("pen_acid", 20)
 	user.reagents.add_reagent("antihol", 10)
-	user.reagents.add_reagent("mannitol", 10)
+	user.reagents.add_reagent("mannitol", 75)
 
 	for(var/datum/disease/D in user.viruses)
 		D.cure()
