@@ -172,14 +172,7 @@
 
 	var/inertia_dir = 0
 
-	var/music_lastplayed = "null"
-
 	var/job = null//Living
-
-	var/const/blindness = 1//Carbon
-	var/const/deafness = 2//Carbon
-	var/const/muteness = 4//Carbon
-
 
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
