@@ -21,7 +21,7 @@
 
 /obj/machinery/party/turntable/New()
 	..()
-	for(var/obj/machinery/party/turntable/TT) // NO WAY
+	for(var/obj/machinery/party/turntable/TT)
 		if(TT != src)
 			qdel(src)
 	turntable_soundtracks = list()
@@ -141,7 +141,7 @@
 	var/area/A = get_area(src)
 	for(var/mob/M)
 		var/inRange = (get_area(M) in A.related)
-		if(A == "Bar") 							 // kostuli kostulnie
+		if(A == "Bar")
 			var/area/crew_quarters/theatre/T
 			var/area/crew_quarters/kitchen/K
 			inRange+=(get_area(M) in K.related)
@@ -150,25 +150,21 @@
 			create_sound(M)
 			continue
 		if(inRange && (M.music.volume != volume || update))
-			//world << "In range. Volume: [M.music.volume]. Update: [update]"
-			M.music.status = SOUND_UPDATE//|SOUND_STREAM
+			M.music.status = SOUND_UPDATE
 			M.music.volume = volume
 			M << M.music
 		else if(!inRange && M.music.volume != 0)
-			//world << "!In range. Volume: [M.music.volume]."
-			M.music.status = SOUND_UPDATE//|SOUND_STREAM
+			M.music.status = SOUND_UPDATE
 			M.music.volume = 0
 			M << M.music
 
 /obj/machinery/party/turntable/proc/create_sound(mob/M)
-	//var/area/A = get_area(src)
-	//var/inRange = (get_area(M) in A.related)
 	var/sound/S = sound(track.path)
 	S.repeat = 1
 	S.channel = TURNTABLE_CHANNEL
 	S.falloff = 2
 	S.wait = 0
 	S.volume = 0
-	S.status = 0 //SOUND_STREAM
+	S.status = 0
 	M.music = S
 	M << S

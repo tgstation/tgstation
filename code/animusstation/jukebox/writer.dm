@@ -12,7 +12,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "writer_off"
 	var/coin = 0
-	//var/obj/item/weapon/disk/music/disk
 	var/mob/retard //current user
 	var/retard_name
 	var/writing = 0
@@ -44,7 +43,6 @@
 			retard = usr
 			retard_name = retard.name
 			var/N = sanitize(input("Name of music") as text|null)
-			//retard << "Please stand still while your data is uploading"
 			if(N)
 				var/sound/S = input("Your music file") as sound|null
 				if(S)
