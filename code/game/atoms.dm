@@ -98,7 +98,6 @@ var/global/list/ghdel_profiling = list()
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
 		M.hitby(src,speed,src.dir)
-
 		log_attack("<font color='red'>[hit_atom] ([M ? M.ckey : "what"]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
 
 	else if(isobj(hit_atom))
