@@ -118,8 +118,6 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 0
 	if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 		return 0
-	if(loc == M)
-		return 0
 	if(stat != CONSCIOUS)
 		return 0
 	if(!sterile) M.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
