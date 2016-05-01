@@ -24,7 +24,7 @@
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
-	species = /mob/living/simple_animal/pet/dog
+	animal_species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back

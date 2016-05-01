@@ -301,17 +301,3 @@ var/global/chicken_count = 0
 /obj/item/udder/Destroy()
 	qdel(reagents)
 	return ..()
-
-
-/obj/item/udder/scavenger
-	name = "milksac"
-
-/obj/item/udder/scavenger/New()
-	reagents = new(50)
-	reagents.my_atom = src
-
-/obj/item/udder/scavenger/generateMilk()
-	if(prob(15))
-		reagents.add_reagent("cream", rand(5, 10))
-	if(prob(10))
-		reagents.add_reagent("salglu_solution", rand(5,10))
