@@ -178,13 +178,17 @@
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 5
+	var/rangecooldown = 3
 
 /obj/item/projectile/gravipulse/Range()
-	T = get_turf(src)
-	for(var/atom/movable/A in orange(T,power))
-		if(A.anchored)
-			continue
-		step_away(A,T)
+	if(src.range > 3 && rangecooldown < 1)
+		T = get_turf(src)
+		for(var/atom/movable/A in orange(T,2))
+			if(A.anchored)
+				continue
+			step_away(A,T)
+		rangecooldown = 3
+	rangecooldown--
 
 /obj/item/projectile/gravipulse/on_hit()
 	for(var/atom/movable/A in orange(T,power))
@@ -198,11 +202,14 @@
 	color = "#FF6600"
 
 /obj/item/projectile/gravipulse/alt/Range()
-	T = get_turf(src)
-	for(var/atom/movable/A in orange(T,power))
-		if(A.anchored)
-			continue
-		A.throw_at(T,1,1)
+	if(src.range > 3 && rangecooldown < 1)
+		T = get_turf(src)
+		for(var/atom/movable/A in orange(T,2))
+			if(A.anchored)
+				continue
+			A.throw_at(T,1,1)
+		rangecooldown = 3
+	rangecooldown--
 
 /obj/item/projectile/gravipulse/alt/on_hit()
 	for(var/atom/movable/A in orange(T,power))
