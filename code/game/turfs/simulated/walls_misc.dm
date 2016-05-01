@@ -1,4 +1,4 @@
-/turf/simulated/wall/cult
+/turf/closed/wall/cult
 	name = "runed wall"
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
@@ -7,26 +7,26 @@
 	builtin_sheet = null
 	canSmoothWith = null
 
-/turf/simulated/wall/cult/New()
+/turf/closed/wall/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
-/turf/simulated/wall/cult/break_wall()
+/turf/closed/wall/cult/break_wall()
 	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
 	return (new /obj/structure/girder/cult(src))
 
-/turf/simulated/wall/cult/devastate_wall()
+/turf/closed/wall/cult/devastate_wall()
 	new /obj/effect/decal/cleanable/blood(src)
 	new /obj/effect/decal/remains/human(src)
 
-/turf/simulated/wall/cult/narsie_act()
+/turf/closed/wall/cult/narsie_act()
 	return
 
-/turf/simulated/wall/vault
+/turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
 
-/turf/simulated/wall/ice
+/turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
@@ -35,7 +35,7 @@
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 
-/turf/simulated/wall/rust
+/turf/closed/wall/rust
 	name = "rusted wall"
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
@@ -43,7 +43,7 @@
 	walltype = "arust"
 	hardness = 45
 
-/turf/simulated/wall/r_wall/rust
+/turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
@@ -51,32 +51,32 @@
 	walltype = "rrust"
 	hardness = 15
 
-/turf/simulated/wall/shuttle
+/turf/closed/wall/shuttle
 	name = "wall"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
 	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
-/turf/simulated/wall/shuttle/smooth
+/turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/simulated/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
-/turf/simulated/wall/shuttle/smooth/nodiagonal
+/turf/closed/wall/shuttle/smooth/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "shuttle_nd"
 
-/turf/simulated/wall/shuttle/smooth/overspace
+/turf/closed/wall/shuttle/smooth/overspace
 	icon_state = "overspace"
 	fixed_underlay = list("space"=1)
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
-/turf/simulated/wall/shuttle/interior/copyTurf(turf/T)
+/turf/closed/wall/shuttle/interior/copyTurf(turf/T)
 	if(T.type != type)
 		T.ChangeTurf(type)
 		if(underlays.len)
@@ -92,13 +92,13 @@
 	T.transform = transform
 	return T
 
-/turf/simulated/wall/shuttle/copyTurf(turf/T)
+/turf/closed/wall/shuttle/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
 
 
 //why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way
-/turf/simulated/wall/shuttle/shuttleRotate(rotation)
+/turf/closed/wall/shuttle/shuttleRotate(rotation)
 	var/matrix/M = transform
 	M.Turn(rotation)
 	transform = M

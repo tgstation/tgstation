@@ -11,7 +11,7 @@
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "giftcrate3"
+	icon_state = "giftdeliverypackage3"
 	item_state = "gift1"
 	burn_state = FLAMMABLE
 
@@ -19,7 +19,7 @@
 	..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	icon_state = "giftcrate[rand(1,5)]"
+	icon_state = "giftdeliverypackage[rand(1,5)]"
 
 /obj/item/weapon/a_gift/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] peeks inside the [src.name] and cries \himself to death! It looks like they were on the naughty list...</span>")

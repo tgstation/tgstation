@@ -112,7 +112,7 @@
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
 			user << "<span class='notice'>[src] already has a cell.</span>"
@@ -125,16 +125,17 @@
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
+			update_icon()
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
 			user << "<span class='notice'>You remove the cell from [src].</span>"
-
-	update_icon()
-	return
+			update_icon()
+	else
+		return ..()
 
 /obj/item/weapon/defibrillator/emag_act(mob/user)
 	if(safety)

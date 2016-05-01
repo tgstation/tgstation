@@ -462,7 +462,7 @@ var/list/admin_verbs_hideable = list(
 			holder.fakekey = new_key
 			createStealthKey()
 			if(isobserver(mob))
-				mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+				mob.invisibility = INVISIBILITY_ABSTRACT //JUST IN CASE
 				mob.alpha = 0 //JUUUUST IN CASE
 				mob.name = " "
 				mob.mouse_opacity = 0
@@ -625,7 +625,7 @@ var/list/admin_verbs_hideable = list(
 	if (amount > 0)
 		var/area/area
 		var/list/candidates
-		var/turf/simulated/floor/tile
+		var/turf/open/floor/tile
 		var/j,k
 		var/mob/living/carbon/human/mob
 

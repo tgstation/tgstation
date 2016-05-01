@@ -244,9 +244,6 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
@@ -267,6 +264,13 @@
 	else
 		return ..()
 
+/obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
+	if(..())
+		if(!(stat & NOPOWER) && on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
+
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
@@ -278,6 +282,16 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded
+
+/obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user)
+	if(!welded || !(do_after(user, 20, target = src)))
+		return
+	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
+	welded = 0
+	update_icon()
+	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+
 
 #undef INT_BOUND
 #undef EXT_BOUND

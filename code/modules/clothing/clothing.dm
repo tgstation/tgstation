@@ -154,9 +154,7 @@ BLIND     // can't see anything
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	user.wear_mask_update(src, toggle_off = mask_adjusted)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
 
 
 
@@ -178,7 +176,7 @@ BLIND     // can't see anything
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
 	var/obj/held_item
-	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade, /obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
 
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)

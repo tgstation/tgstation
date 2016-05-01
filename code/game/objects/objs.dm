@@ -14,6 +14,19 @@
 	var/burn_world_time //What world time the object will burn up completely
 	var/being_shocked = 0
 
+	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
+	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
+
+/obj/New()
+	..()
+
+	if(on_blueprints && isturf(loc))
+		var/turf/T = loc
+		if(force_blueprints)
+			T.add_blueprints(src)
+		else
+			T.add_blueprints_preround(src)
+
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists

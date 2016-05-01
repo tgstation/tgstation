@@ -28,7 +28,7 @@
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
 		if(AREA_SPACE)
-			text += "<p>According to the [src.name], you are now in <b>outer space</b>.  Hold your breath.</p> \
+			text += "<p>According to the [src.name], you are now in an unclaimed territory.</p> \
 			<p><a href='?src=\ref[src];create_area=1'>Mark this place as new area.</a></p>"
 		if(AREA_SPECIAL)
 			text += "<p>This place is not noted on the [src.name].</p>"
@@ -81,6 +81,14 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
+	var/list/image/showing = list()
+	var/client/viewing
+
+
+/obj/item/areaeditor/blueprints/Destroy()
+	clear_viewer()
+
+	return ..()
 
 
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
@@ -89,6 +97,11 @@
 	if(get_area_type() == AREA_STATION)
 		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
+	if(!viewing)
+		. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+	else
+		. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
+		. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -101,7 +114,44 @@
 		if(get_area_type()!=AREA_STATION)
 			return
 		edit_area()
-	updateUsrDialog()
+	if(href_list["view_blueprints"])
+		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
+	if(href_list["hide_blueprints"])
+		clear_viewer(usr,"<span class='notice'>You flip the blueprints over to view the simple information diagram.</span>")
+	if(href_list["refresh"])
+		clear_viewer(usr)
+		set_viewer(usr)
+
+	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
+
+/obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
+	. = list()
+	for(var/tt in RANGE_TURFS(viewsize, T))
+		var/turf/TT = tt
+		if(TT.blueprint_data)
+			. += TT.blueprint_data
+
+/obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
+	if(user && user.client)
+		if(viewing)
+			clear_viewer()
+		viewing = user.client
+		showing = get_images(get_turf(user), viewing.view)
+		viewing.images |= showing
+		if(message)
+			user << message
+
+/obj/item/areaeditor/blueprints/proc/clear_viewer(mob/user, message = "")
+	if(viewing)
+		viewing.images -= showing
+		viewing = null
+	showing.Cut()
+	if(message)
+		user << message
+
+/obj/item/areaeditor/blueprints/dropped(mob/user)
+	..()
+	clear_viewer()
 
 
 /obj/item/areaeditor/proc/get_area()
@@ -112,7 +162,7 @@
 
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
-	if (istype(A,/area/space))
+	if(A.outdoors)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
@@ -143,6 +193,7 @@
 			else
 				usr << "<span class='warning'>Error! Please notify administration.</span>"
 				return
+
 	var/list/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
@@ -150,6 +201,8 @@
 	if(length(str) > 50)
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
+	var/area/old = get_area(get_turf(src))
+	var/old_gravity = old.has_gravity
 
 	var/area/A
 	for(var/key in turfs)
@@ -166,6 +219,7 @@
 		A.setup(str)
 		A.contents += turfs
 		A.SetDynamicLighting()
+	A.has_gravity = old_gravity
 	interact()
 	return 1
 
@@ -205,13 +259,13 @@
 
 
 /obj/item/areaeditor/proc/check_tile_is_border(turf/T2,dir)
-	if (istype(T2, /turf/space))
+	if (istype(T2, /turf/open/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
-	if (istype(T2, /turf/simulated/wall))
+	if (istype(T2, /turf/closed/wall))
 		return BORDER_2NDTILE
-	if (!istype(T2, /turf/simulated))
+	if (!istype(T2, /turf))
 		return BORDER_BETWEEN
 
 	for (var/obj/structure/window/W in T2)

@@ -7,6 +7,10 @@
 #define MELEE 1
 #define RANGED 2
 
+#define FRONT_ARMOUR 1
+#define SIDE_ARMOUR 2
+#define BACK_ARMOUR 3
+
 
 /obj/mecha
 	name = "mecha"
@@ -29,6 +33,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
+	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
@@ -42,6 +47,8 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
+
+	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
 	var/internal_tank_valve = ONE_ATMOSPHERE
@@ -85,13 +92,14 @@
 	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
+	var/datum/action/innate/mecha/strafe/strafing_action = new
 
 	//Action vars
 	var/thrusters_active = FALSE
 	var/defence_mode = FALSE
 	var/defence_mode_deflect_chance = 35
 	var/leg_overload_mode = FALSE
-	var/leg_overload_coeff = 2
+	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
 	var/smoke = 5
 	var/smoke_ready = 1
@@ -99,8 +107,12 @@
 	var/phasing = FALSE
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
+	var/strafe = FALSE //If we are strafing
 
-
+	var/static/list/armour_facings = list("[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR),
+"[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR),
+"[SOUTH]" = list("[NORTH]" = FRONT_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[SOUTH]" = BACK_ARMOUR ),
+"[WEST]" = list("[NORTH]" = SIDE_ARMOUR, "[EAST]" = FRONT_ARMOUR, "[SOUTH]" = SIDE_ARMOUR, "[WEST]" = BACK_ARMOUR) )
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
@@ -492,7 +504,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(src.dir!=direction)
+	else if(src.dir!=direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -501,13 +513,6 @@
 		can_move = 0
 		spawn(step_in)
 			can_move = 1
-		if(leg_overload_mode)
-			health--
-			if(health < initial(health) - initial(health)/3)
-				leg_overload_mode = 0
-				step_in = initial(step_in)
-				step_energy_drain = initial(step_energy_drain)
-				occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
 		return 1
 	return 0
 
@@ -519,7 +524,10 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/current_dir = src.dir
 	var/result = step(src,direction)
+	if(strafe)
+		src.dir = current_dir
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -545,6 +553,11 @@
 		if(yes)
 			if(..()) //mech was thrown
 				return
+			if(bumpsmash)
+				var/mecha = src
+				obstacle.mech_melee_attack(mecha)
+				if(!obstacle || (obstacle && !obstacle.density))
+					step(src,dir)
 			if(istype(obstacle, /obj))
 				var/obj/O = obstacle
 				if(!O.anchored)
@@ -1008,36 +1021,33 @@ var/year_integer = text2num(year) // = 2013???
 
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 
-/obj/mecha/proc/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
-		eject_action.chassis = src
-		eject_action.Grant(user)
-
-	internals_action.chassis = src
-	internals_action.Grant(user)
-
-	cycle_action.chassis = src
-	cycle_action.Grant(user)
-
-	lights_action.chassis = src
-	lights_action.Grant(user)
-
-	stats_action.chassis = src
-	stats_action.Grant(user)
+		eject_action.Grant(user, src)
+	internals_action.Grant(user, src)
+	cycle_action.Grant(user, src)
+	lights_action.Grant(user, src)
+	stats_action.Grant(user, src)
+	strafing_action.Grant(user, src)
 
 
-/obj/mecha/proc/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
 		eject_action.Remove(user)
 	internals_action.Remove(user)
 	cycle_action.Remove(user)
 	lights_action.Remove(user)
 	stats_action.Remove(user)
+	strafing_action.Remove(user)
 
 
 /datum/action/innate/mecha
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
 	var/obj/mecha/chassis
+
+/datum/action/innate/mecha/Grant(mob/living/L, obj/mecha/M)
+	chassis = M
+	..()
 
 /datum/action/innate/mecha/Destroy()
 	chassis = null
@@ -1066,7 +1076,7 @@ var/year_integer = text2num(year) // = 2013???
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.occupant_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
-
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
@@ -1083,6 +1093,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.occupant_message("You select [chassis.selected]")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
+		UpdateButtonIcon()
 		return
 	var/number = 0
 	for(var/A in chassis.equipment)
@@ -1097,6 +1108,7 @@ var/year_integer = text2num(year) // = 2013???
 				chassis.occupant_message("You switch to [chassis.selected]")
 				button_icon_state = "mech_cycle_equip_on"
 			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
+			UpdateButtonIcon()
 			return
 
 
@@ -1116,7 +1128,7 @@ var/year_integer = text2num(year) // = 2013???
 		button_icon_state = "mech_lights_off"
 	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
-
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_view_stats
 	name = "View Stats"
@@ -1128,6 +1140,26 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")
 
 
+/datum/action/innate/mecha/strafe
+	name = "Toggle Strafing"
+	button_icon_state = "strafe"
+
+/datum/action/innate/mecha/strafe/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+
+	chassis.toggle_strafe()
+
+/obj/mecha/AltClick(mob/living/user)
+	if(user == occupant)
+		toggle_strafe()
+
+/obj/mecha/proc/toggle_strafe()
+	strafe = !strafe
+
+	occupant_message("Toggled strafing mode [strafe?"on":"off"].")
+	log_message("Toggled strafing mode [strafe?"on":"off"].")
+	strafing_action.UpdateButtonIcon()
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
@@ -1139,12 +1171,11 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_toggle_thrusters/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	if(M.get_charge() > 0)
-		M.thrusters_active = !M.thrusters_active
-		button_icon_state = "mech_thrusters_[M.thrusters_active ? "on" : "off"]"
-		M.log_message("Toggled thrusters.")
-		M.occupant_message("<font color='[M.thrusters_active ?"blue":"red"]'>Thrusters [M.thrusters_active ?"en":"dis"]abled.")
+	if(chassis.get_charge() > 0)
+		chassis.thrusters_active = !chassis.thrusters_active
+		button_icon_state = "mech_thrusters_[chassis.thrusters_active ? "on" : "off"]"
+		chassis.log_message("Toggled thrusters.")
+		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
 
 /datum/action/innate/mecha/mech_defence_mode
@@ -1154,20 +1185,19 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	if(forced_state)
-		M.defence_mode = forced_state
+	if(!isnull(forced_state))
+		chassis.defence_mode = forced_state
 	else
-		M.defence_mode = !M.defence_mode
-	button_icon_state = "mech_defense_mode_[M.defence_mode ? "on" : "off"]"
-	if(M.defence_mode)
-		M.deflect_chance = M.defence_mode_deflect_chance
-		M.occupant_message("<span class='notice'>You enable [M] defence mode.</span>")
+		chassis.defence_mode = !chassis.defence_mode
+	button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]"
+	if(chassis.defence_mode)
+		chassis.deflect_chance = chassis.defence_mode_deflect_chance
+		chassis.occupant_message("<span class='notice'>You enable [chassis] defence mode.</span>")
 	else
-		M.deflect_chance = initial(M.deflect_chance)
-		M.occupant_message("<span class='danger'>You disable [M] defence mode.</span>")
-	M.log_message("Toggled defence mode.")
-
+		chassis.deflect_chance = initial(chassis.deflect_chance)
+		chassis.occupant_message("<span class='danger'>You disable [chassis] defence mode.</span>")
+	chassis.log_message("Toggled defence mode.")
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"
@@ -1176,24 +1206,25 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_overload_mode/Activate(forced_state = null)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	if(forced_state)
-		M.leg_overload_mode = forced_state
+	if(!isnull(forced_state))
+		chassis.leg_overload_mode = forced_state
 	else
-		M.leg_overload_mode = !M.leg_overload_mode
-	button_icon_state = "mech_overload_[M.leg_overload_mode ? "on" : "off"]"
-	M.log_message("Toggled leg actuators overload.")
-	if(M.leg_overload_mode)
-		M.leg_overload_mode = 1
-		M.step_in = min(1, round(M.step_in/2))
-		M.step_energy_drain = M.step_energy_drain*M.leg_overload_coeff
-		M.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
+		chassis.leg_overload_mode = !chassis.leg_overload_mode
+	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
+	chassis.log_message("Toggled leg actuators overload.")
+	if(chassis.leg_overload_mode)
+		chassis.leg_overload_mode = 1
+		chassis.bumpsmash = 1
+		chassis.step_in = min(1, round(chassis.step_in/2))
+		chassis.step_energy_drain = chassis.step_energy_drain*chassis.leg_overload_coeff
+		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
-		M.leg_overload_mode = 0
-		M.step_in = initial(M.step_in)
-		M.step_energy_drain = initial(M.step_energy_drain)
-		M.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
-
+		chassis.leg_overload_mode = 0
+		chassis.bumpsmash = 0
+		chassis.step_in = initial(chassis.step_in)
+		chassis.step_energy_drain = initial(chassis.step_energy_drain)
+		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_smoke
 	name = "Smoke"
@@ -1202,13 +1233,12 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_smoke/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	if(M.smoke_ready && M.smoke>0)
-		M.smoke_system.start()
-		M.smoke--
-		M.smoke_ready = 0
-		spawn(M.smoke_cooldown)
-			M.smoke_ready = 1
+	if(chassis.smoke_ready && chassis.smoke>0)
+		chassis.smoke_system.start()
+		chassis.smoke--
+		chassis.smoke_ready = 0
+		spawn(chassis.smoke_cooldown)
+			chassis.smoke_ready = 1
 
 
 /datum/action/innate/mecha/mech_zoom
@@ -1218,18 +1248,17 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_zoom/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
 	if(owner.client)
-		M.zoom_mode = !M.zoom_mode
-		button_icon_state = "mech_zoom_[M.zoom_mode ? "on" : "off"]"
-		M.log_message("Toggled zoom mode.")
-		M.occupant_message("<font color='[M.zoom_mode?"blue":"red"]'>Zoom mode [M.zoom_mode?"en":"dis"]abled.</font>")
-		if(M.zoom_mode)
+		chassis.zoom_mode = !chassis.zoom_mode
+		button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"
+		chassis.log_message("Toggled zoom mode.")
+		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
+		if(chassis.zoom_mode)
 			owner.client.view = 12
 			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else
 			owner.client.view = world.view//world.view - default mob view size
-
+		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
@@ -1238,22 +1267,21 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_switch_damtype/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
 	var/new_damtype
-	switch(M.damtype)
+	switch(chassis.damtype)
 		if("tox")
 			new_damtype = "brute"
-			M.occupant_message("Your exosuit's hands form into fists.")
+			chassis.occupant_message("Your exosuit's hands form into fists.")
 		if("brute")
 			new_damtype = "fire"
-			M.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
+			chassis.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
 		if("fire")
 			new_damtype = "tox"
-			M.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
-	M.damtype = new_damtype.
+			chassis.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
+	chassis.damtype = new_damtype.
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
-
+	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
@@ -1262,8 +1290,7 @@ var/year_integer = text2num(year) // = 2013???
 /datum/action/innate/mecha/mech_toggle_phasing/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	var/obj/mecha/M = chassis
-	M.phasing = !M.phasing
-	button_icon_state = "mech_phasing_[M.phasing ? "on" : "off"]"
-	M.occupant_message("<font color=\"[M.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
-
+	chassis.phasing = !chassis.phasing
+	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
+	chassis.occupant_message("<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
+	UpdateButtonIcon()

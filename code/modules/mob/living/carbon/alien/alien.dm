@@ -35,6 +35,8 @@
 
 	internal_organs += new /obj/item/organ/internal/brain/alien
 	internal_organs += new /obj/item/organ/internal/alien/hivenode
+	internal_organs += new /obj/item/organ/internal/tongue/alien
+
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
 
@@ -134,14 +136,6 @@
 
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
-
-/mob/living/carbon/alien/Stun(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-	else
-		// add some movement delay
-		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
-	return
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)

@@ -14,9 +14,8 @@
 			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
 		else
 			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
-		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())

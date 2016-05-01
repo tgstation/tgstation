@@ -228,14 +228,14 @@
 
 				if(GRAB_AGGRESSIVE)
 					move_delay = world.time + 10
-					if(!prob(50))
+					if(!prob(25))
 						return 1
 					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s grip!</span>")
 					qdel(G)
 
 				if(GRAB_NECK)
 					move_delay = world.time + 10
-					if(!prob(15))
+					if(!prob(5))
 						return 1
 					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s headlock!</span>")
 					qdel(G)
@@ -294,7 +294,7 @@
 				L.loc = get_step(L, direct)
 			L.dir = direct
 		if(3) //Incorporeal move, but blocked by holy-watered tiles
-			var/turf/simulated/floor/stepTurf = get_step(L, direct)
+			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf.flags & NOJAUNT)
 				L << "<span class='warning'>Holy energies block your path.</span>"
 				L.notransform = 1
@@ -328,7 +328,7 @@
 			continue
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(istype(turf,/turf/open/space))
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue

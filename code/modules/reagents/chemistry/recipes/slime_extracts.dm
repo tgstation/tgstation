@@ -311,9 +311,9 @@
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
 	spawn(50)
 		if(holder && holder.my_atom)
-			var/turf/simulated/T = get_turf(holder.my_atom)
+			var/turf/open/T = get_turf(holder.my_atom)
 			if(istype(T))
-				T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 50)
+				T.atmos_spawn_air("plasma=50;TEMP=1000")
 
 //Yellow
 
@@ -467,7 +467,6 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/docility/P = new /obj/item/slimepotion/docility
 	P.loc = get_turf(holder.my_atom)
-
 
 //Black
 /datum/chemical_reaction/slimemutate2
@@ -681,3 +680,18 @@
 	S.colour = pick("grey","orange", "metal", "blue", "purple", "dark purple", "dark blue", "green", "silver", "yellow", "gold", "yellow", "red", "silver", "pink", "cerulean", "sepia", "bluespace", "pyrite", "light pink", "oil", "adamantine", "black")
 	S.loc = get_turf(holder.my_atom)
 	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
+
+/datum/chemical_reaction/slime_transfer
+	name = "Transfer Potion"
+	id = "slimetransfer"
+	result = null
+	required_reagents = list("blood" = 1)
+	result_amount = 1
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime_transfer/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/transference/P = new /obj/item/slimepotion/transference
+	P.loc = get_turf(holder.my_atom)
+

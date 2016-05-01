@@ -258,7 +258,7 @@
 
 				var/area/usrarea = get_area(usr.loc)
 				var/usrturf = get_turf(usr.loc)
-				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != 1)
+				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || usr.z != 1)
 					usr << "<span class='warning'>You can only use this on the station!</span>"
 					return
 

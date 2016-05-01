@@ -123,7 +123,7 @@ var/global/list/RPD_recipes=list(
 /obj/item/weapon/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
 	flags = CONDUCT
 	force = 10
@@ -524,7 +524,7 @@ var/global/list/RPD_recipes=list(
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 
-	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
@@ -605,7 +605,7 @@ var/global/list/RPD_recipes=list(
 				activate()
 
 				C.add_fingerprint(usr)
-				C.update()
+				C.update_icon()
 				return 1
 			return 0
 		else

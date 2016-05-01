@@ -45,20 +45,20 @@ var/datum/subsystem/minimap/SSminimap
 	// Scale it up to our target size.
 	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
 
-	var/counter = 128
+	var/counter = 512
 	// Loop over turfs and generate icons.
 	for(var/T in block(locate(x1, y1, z), locate(x2, y2, z)))
 		generate_tile(T, minimap)
 
-		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every 128 tiles
+		//byond bug, this fixes OOM crashes by flattening and reseting the minimap icon holder every so and so tiles
 		counter--
 		if(counter <= 0)
-			counter = 128
+			counter = 512
 			var/icon/flatten = new /icon()
 			flatten.Insert(minimap, "", SOUTH, 1, 0)
 			del(minimap)
 			minimap = flatten
-			sleep(world.tick_lag) //we have to sleep in order to get byond to clear out the proc's garbage bin
+			stoplag() //we have to sleep in order to get byond to clear out the proc's garbage bin
 
 		CHECK_TICK
 
@@ -73,7 +73,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/obj/obj
 	var/list/obj_icons = list()
 	// Don't use icons for space, just add objects in space if they exist.
-	if(istype(tile, /turf/space))
+	if(istype(tile, /turf/open/space))
 		obj = locate(/obj/structure/lattice/catwalk) in tile
 		if(obj)
 			tile_icon = new /icon('icons/obj/smooth_structures/catwalk.dmi', "catwalk", SOUTH)

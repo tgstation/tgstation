@@ -179,3 +179,9 @@
 		icon_state = icon_dead
 	else
 		icon_state = icon_living
+
+/datum/action/generic/drone/select_filter
+	name = "Select Vision Filter"
+	button_icon_state = "drone_vision"
+	procname = /mob/living/simple_animal/drone/verb/toggle_statics
+

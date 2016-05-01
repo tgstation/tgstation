@@ -26,7 +26,6 @@
 
 
 /obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_hand() != W)
@@ -57,10 +56,8 @@
 				update_icon()
 			I.update_icon()
 
-	/*else if(istype(W, /obj/item/ammo_casing/shotgun/implanter))
-		var/obj/item/ammo_casing/shotgun/implanter/I = W
-		if(I.implanter)
-			src.attackby(I.implanter, user, params) */ // COMING SOON -- c0
+	else
+		return ..()
 
 /obj/item/weapon/implantcase/New()
 	..()

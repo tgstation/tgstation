@@ -32,7 +32,8 @@
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
-	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_world_topic = 0				// log all world.Topic() calls
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -196,6 +197,11 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/client_warn_version = 0
+	var/client_warn_message = "Your version of byond may have issues or be blocked from accessing this server in the future."
+	var/client_error_version = 0
+	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -281,6 +287,8 @@
 					config.log_pda = 1
 				if("log_hrefs")
 					config.log_hrefs = 1
+				if("log_world_topic")
+					config.log_world_topic = 1
 				if("allow_admin_ooccolor")
 					config.allow_admin_ooccolor = 1
 				if("allow_vote_restart")
@@ -398,6 +406,15 @@
 						protected_config.autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
 					config.generate_minimaps = 1
+				if("client_warn_version")
+					config.client_warn_version = text2num(value)
+				if("client_warn_message")
+					config.client_warn_message = value
+				if("client_error_version")
+					config.client_error_version = text2num(value)
+				if("client_error_message")
+					config.client_error_message = value
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

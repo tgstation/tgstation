@@ -5,7 +5,12 @@ var/datum/subsystem/lighting/SSlighting
 /datum/subsystem/lighting
 	name = "Lighting"
 	priority = 1
-	wait = 6
+	wait = 1
+	dynamic_wait = 1
+	dwait_delta = 4
+	dwait_buffer = 0.1
+	dwait_lower = 1
+	dwait_upper = 5
 	display = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating

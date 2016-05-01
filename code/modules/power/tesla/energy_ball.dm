@@ -14,6 +14,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
+										/obj/structure/sign,
 										/obj/machinery/gateway)
 
 /obj/singularity/energy_ball
@@ -33,7 +34,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
-	
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting
@@ -84,7 +85,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
-	
+
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)

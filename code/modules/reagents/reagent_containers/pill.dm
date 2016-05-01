@@ -29,8 +29,9 @@
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
-		if(!do_mob(user, M, self_delay))
-			return 0
+		if(self_delay)
+			if(!do_mob(user, M, self_delay))
+				return 0
 		M << "<span class='notice'>You [apply_method] [src].</span>"
 
 	else

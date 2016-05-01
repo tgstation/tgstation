@@ -30,7 +30,7 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/weapon/skub = 1
+		/obj/item/device/megaphone/clown = 1
 		)
 
 	backpack = /obj/item/weapon/storage/backpack/clown

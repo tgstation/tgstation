@@ -20,6 +20,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	materials = list(MAT_METAL=80)
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
@@ -65,6 +66,14 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP_ACCURATE
 
+/obj/item/weapon/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.zone_selected == "eyes")
+		if(user.disabilities & CLUMSY && prob(50))
+			M = user
+		return eyestab(M,user)
+	else
+		return ..()
+
 /obj/item/weapon/kitchen/knife/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
@@ -81,10 +90,11 @@
 /obj/item/weapon/kitchen/knife/butcher
 	name = "butcher's cleaver"
 	icon_state = "butch"
-	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
+	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags = CONDUCT
 	force = 15
-	throwforce = 8
+	throwforce = 10
+	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 3
 
@@ -117,7 +127,9 @@
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	force = 8
 	throwforce = 12//fuck git
-
+	materials = list()
+	origin_tech = null
+	attack_verb = list("shanked", "shivved")
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"

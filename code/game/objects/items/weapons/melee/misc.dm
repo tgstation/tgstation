@@ -160,7 +160,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/open/space))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
@@ -174,7 +174,7 @@
 	..()
 	if(ismob(target))
 		var/mob/M
-		if(src.loc == M) //target caught the sword
+		if(src.loc == M)
 			M.drop_item()
 	consume_everything(target)
 

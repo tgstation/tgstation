@@ -148,7 +148,7 @@
 				M.bodytemperature -= rand(20,25)
 	..()
 
-/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
@@ -312,7 +312,7 @@
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
 	if(reac_volume >= 3)
@@ -369,7 +369,7 @@
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
 		reagentdecal.reagents.add_reagent("flour", reac_volume)
 

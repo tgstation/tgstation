@@ -27,7 +27,7 @@
 	for(var/obj/structure/flora/tree/pine/xmas in world)
 		if(xmas.z != 1)
 			continue
-		for(var/turf/simulated/floor/T in orange(1,xmas))
+		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)

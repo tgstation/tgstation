@@ -14,6 +14,7 @@
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 	var/delay = 0								//Delay for energy weapons
+	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
 
 /obj/item/ammo_casing/New()
 	..()

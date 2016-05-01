@@ -22,7 +22,7 @@
 	deflect_chance = 15
 	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
 	max_temperature = 35000
-	leg_overload_coeff = 1
+	leg_overload_coeff = 100
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
@@ -49,22 +49,20 @@
 	cell.maxcharge = 30000
 
 
-/obj/mecha/combat/gygax/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
-	overload_action.chassis = src
-	overload_action.Grant(user)
+	overload_action.Grant(user, src)
 
-/obj/mecha/combat/gygax/dark/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/dark/GrantActions(mob/living/user, human_occupant = 0)
 	..()
-	thrusters_action.chassis = src
-	thrusters_action.Grant(user)
+	thrusters_action.Grant(user, src)
 
 
-/obj/mecha/combat/gygax/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Remove(user)
 
-/obj/mecha/combat/gygax/dark/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
 

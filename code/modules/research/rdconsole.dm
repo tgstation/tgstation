@@ -337,6 +337,13 @@ proc/CallMaterialName(ID)
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
+		var/coeff
+
+		if(linked_lathe)
+			coeff = linked_lathe.efficiency_coeff
+		else
+			coeff = 1
+
 		var/g2g = 1
 		if(linked_lathe)
 			var/datum/design/being_built = files.known_designs[href_list["build"]]
@@ -386,7 +393,7 @@ proc/CallMaterialName(ID)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
-					spawn(32*amount)
+					spawn(32*amount/coeff)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
 							var/already_logged = 0
 							for(var/i = 0, i<amount, i++)

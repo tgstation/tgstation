@@ -4,11 +4,11 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/simulated/floor/plating/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors)
+/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/open/floor/plating/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	while(num_spawned < nodes)
-		var/turf/simulated/F = locate(rand(RANDOM_LOWER_X, RANDOM_UPPER_X), rand(RANDOM_LOWER_Y, RANDOM_UPPER_Y), target_z)
+		var/turf/F = locate(rand(RANDOM_LOWER_X, RANDOM_UPPER_X), rand(RANDOM_LOWER_Y, RANDOM_UPPER_Y), target_z)
 
 		river_nodes += new /obj/effect/landmark/river_waypoint(F)
 		num_spawned++
@@ -49,7 +49,7 @@
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
-				var/turf/simulated/river_turf = new turf_type(cur_turf)
+				var/turf/open/river_turf = new turf_type(cur_turf)
 				river_turf.Spread(30, 25)
 
 	for(var/WP in river_nodes)
@@ -59,15 +59,15 @@
 /obj/effect/landmark/river_waypoint
 	name = "river waypoint"
 	var/connected = 0
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 
 /turf/proc/Spread(probability = 30, prob_loss = 25)
 	if(probability <= 0)
 		return
 
-	for(var/turf/simulated/F in orange(1, src))
-		if(!F.density || istype(F, /turf/simulated/mineral))
+	for(var/turf/F in orange(1, src))
+		if(!F.density || istype(F, /turf/closed/mineral))
 			var/turf/L = new src.type(F)
 
 			if(L && prob(probability))

@@ -6,6 +6,7 @@
 	var/weight = 10				//The weight this event has in the random-selection process.
 								//Higher weights are more likely to be picked.
 								//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
+								//0 here does NOT disable the event, it just makes it extremely unlikely
 
 	var/earliest_start = 12000	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
 	var/min_players = 0			//The minimum amount of alive, non-AFK human players on server required to start the event.
@@ -39,6 +40,8 @@
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time)
+		return FALSE
+	if(wizardevent != SSevent.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE

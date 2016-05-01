@@ -529,7 +529,7 @@
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
-	var/turf/simulated/location = get_turf(src)
+	var/turf/location = get_turf(src)
 	if(!location)
 		return
 

@@ -27,7 +27,7 @@
 	return (BRUTELOSS)
 
 /obj/item/seeds/kudzu/proc/plant(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/turf/T = get_turf(src)
 	message_admins("Kudzu planted by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)

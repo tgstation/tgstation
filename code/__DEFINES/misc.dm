@@ -177,7 +177,7 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 7
+#define ZLEVEL_SPACEMAX 9
 #define ZLEVEL_MINING 5
 #define ZLEVEL_SPACEMIN 3
 #define ZLEVEL_ABANDONNEDTSAT 3
@@ -316,6 +316,7 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_ARTIFICIAL 2
 #define SENTIENCE_OTHER 3
 #define SENTIENCE_MINEBOT 4
+#define SENTIENCE_BOSS 5
 
 //Fire stuff, for burn_state
 #define LAVA_PROOF -2
@@ -368,10 +369,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 /////////////////////////////////////
 //this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
 #ifndef TILE_BOUND
-#if DM_VERSION >= 510
-#warn this version of 510 is too old, You should use byond 510.1332 or later when using 510.
-#endif
-#define TILE_BOUND 256
+#error this version of 510 is too old, You must use byond 510.1332 or later. (TILE_BOUND is not defined)
 #endif
 
 // Disabling certain features
@@ -413,3 +411,11 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define PLANT_WEED 1
 #define PLANT_MUSHROOM 2
 #define PLANT_ALIEN 3
+
+// Maploader bounds indices
+#define MAP_MINX 1
+#define MAP_MINY 2
+#define MAP_MINZ 3
+#define MAP_MAXX 4
+#define MAP_MAXY 5
+#define MAP_MAXZ 6

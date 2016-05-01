@@ -20,16 +20,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
-	var/points = 5000						//number of trade-points we have
-	var/points_per_manifest = 200			//points gained per manifest returned
-	var/points_per_crate = 500			//points gained per crate returned
-	var/points_per_intel = 25000			//points gained per intel returned
-	var/points_per_plasma = 500			//points gained per plasma returned
-	var/points_per_design = 2500			//points gained per max reliability research design returned (only for initilally unreliable designs)
+	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
-	var/list/techLevels = list()
-	var/list/researchDesigns = list()
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()

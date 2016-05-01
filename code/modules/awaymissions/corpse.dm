@@ -12,7 +12,10 @@
 	var/instant = FALSE	//fires on New
 	var/flavour_text = "The mapper forgot to set this!"
 	var/faction = null
+	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
+	var/random = FALSE		//Don't set a name or gender, just go random
 	var/objectives = null
+	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	density = 1
@@ -20,6 +23,9 @@
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
+		return
+	if(!uses)
+		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -58,8 +64,9 @@
 
 /obj/effect/mob_spawn/proc/create(ckey)
 	var/mob/living/M = new mob_type(loc) //living mobs only
-	M.real_name = mob_name ? mob_name : M.name
-	M.gender = mob_gender
+	if(!random)
+		M.real_name = mob_name ? mob_name : M.name
+		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)
 	if(death)
@@ -77,7 +84,10 @@
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
-	qdel(src)
+	if(uses > 0)
+		uses--
+	if(!permanent && !uses)
+		qdel(src)
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human
@@ -206,6 +216,25 @@
 	qdel(src)
 
 
+/obj/effect/mob_spawn/mouse
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/mouse
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/cow
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/cow
+	death = FALSE
+	roundstart = FALSE
+	mob_gender = FEMALE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+
+
+
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
 /obj/effect/mob_spawn/human/syndicatesoldier
@@ -263,6 +292,18 @@
 	has_id = 1
 	id_job = "Medical Doctor"
 	id_access = "Medical Doctor"
+
+/obj/effect/mob_spawn/human/doctor/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	radio = null
+	back = null
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a space doctor!"
+
 
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
@@ -450,3 +491,23 @@
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 	new_spawn << "You were convincted of: [crime]."
 
+//For ghost bar.
+/obj/effect/mob_spawn/human/alive/space_bar_patron
+	name = "Bar cryogenics"
+	mob_name = "Bar patron"
+	random = TRUE
+	permanent = TRUE
+	uses = -1
+	uniform = /obj/item/clothing/under/rank/bartender
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+
+
+/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
+	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
+	if(despawn == "No" || !loc || !Adjacent(user))
+		return
+	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
+	qdel(user)

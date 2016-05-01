@@ -140,7 +140,7 @@
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
-/mob/camera/blob/blob_act()
+/mob/camera/blob/blob_act(obj/effect/blob/B)
 	return
 
 /mob/camera/blob/Stat()
@@ -165,7 +165,7 @@
 			return 0
 	else
 		var/area/A = get_area(NewLoc)
-		if(istype(NewLoc, /turf/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+		if(istype(NewLoc, /turf/open/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
 		loc = NewLoc
 		return 1

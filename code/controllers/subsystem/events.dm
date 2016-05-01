@@ -27,8 +27,6 @@ var/datum/subsystem/events/SSevent
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
 			continue				//don't want this one! leave it for the garbage collector
-		if(E.wizardevent && !wizardmode)
-			E.weight = 0
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
@@ -199,10 +197,6 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
-	for(var/datum/round_event_control/E in SSevent.control)
-		E.weight = initial(E.weight)
-		if((E.wizardevent && !wizardmode) || (!E.wizardevent && wizardmode))
-			E.weight = 0
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 

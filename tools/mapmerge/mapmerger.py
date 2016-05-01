@@ -10,20 +10,31 @@ def main(map_folder, tgm=0):
         for filename in [f for f in filenames if f.endswith(".dmm")]:
             list_of_files.append(pathlib.Path(root, filename))
 
+    last_dir = ""
     for i in range(0, len(list_of_files)):
-        to_print = "[{}]: {}".format(i, list_of_files[i])
-        print(to_print)
-        print("".join("-" for _ in range(len(to_print))))
+        this_dir = list_of_files[i].parent
+        if last_dir != this_dir:
+            print("--------------------------------")
+            last_dir = this_dir
+        print("[{}]: {}".format(i, str(list_of_files[i])[len(map_folder):]))
 
-    in_list = input("List the maps you want to merge (example: 1,2,3,4,5):\n")
+    print("--------------------------------")
+    in_list = input("List the maps you want to merge (example: 1,3-5,12):\n")
     in_list = in_list.replace(" ", "")
     in_list = in_list.split(",")
 
     valid_indices = list()
     for m in in_list:
-        index = string_to_num(m)
-        if index >= 0 and index < len(list_of_files):
-            valid_indices.append(index)
+        index_range = m.split("-")
+        if len(index_range) == 1:
+            index = string_to_num(index_range[0])
+            if index >= 0 and index < len(list_of_files):
+                valid_indices.append(index)
+        elif len(index_range) == 2:
+            index0 = string_to_num(index_range[0])
+            index1 = string_to_num(index_range[1])
+            if index0 >= 0 and index0 <= index1 and index1 < len(list_of_files):
+                valid_indices.extend(range(index0, index1 + 1))
 
     if tgm == "1":
         print("\nMaps will be converted to tgm.")
@@ -34,7 +45,7 @@ def main(map_folder, tgm=0):
 
     print("\nMerging these maps:")
     for i in valid_indices:
-        print(list_of_files[i])
+        print(str(list_of_files[i])[len(map_folder):])
     merge = input("\nPress Enter to merge...")
     if merge == "abort":
         print("\nAborted map merge.")
@@ -42,14 +53,15 @@ def main(map_folder, tgm=0):
     else:
         for i in valid_indices:
             path_str = str(list_of_files[i])
+            path_str_pretty = path_str[len(map_folder):]
             try:
                 if map_helpers.merge_map(path_str, path_str + ".backup", tgm) != 1:
-                    print("ERROR MERGING: {}".format(list_of_files[i]))
+                    print("ERROR MERGING: {}".format(path_str_pretty))
                     continue
-                print("MERGED: {}".format(path_str))
+                print("MERGED: {}".format(path_str_pretty))
             except FileNotFoundError:
                 print("\nERROR: File not found! Make sure you run 'Prepare Maps.bat' before merging.")
-                print(path_str + " || " + path_str+".backup")
+                print(path_str_pretty + " || " + path_str_pretty + ".backup")
 
     print("\nFinished merging.")
 

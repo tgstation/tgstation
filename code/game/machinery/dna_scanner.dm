@@ -159,9 +159,10 @@
 			return
 
 		var/mob/M = G.affecting
-		M.loc = loc
-		user.stop_pulling()
+		M.forceMove(loc)
 		qdel(G)
+		return
+	return ..()
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
 	if(..(user,1,0)) //don't set the machine, since there's no dialog

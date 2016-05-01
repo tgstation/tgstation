@@ -45,13 +45,13 @@
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(!B.placed)
-			B.place_blob_core()
+			B.place_blob_core(B.base_point_rate, 0)
 		B.transport_core()
 
 /obj/screen/blob/Blobbernaut
 	icon_state = "ui_blobbernaut"
-	name = "Produce Blobbernaut (30)"
-	desc = "Produces a strong, smart blobbernaut from a factory blob for 30 points.<br>The factory blob used will become fragile and briefly unable to produce spores."
+	name = "Produce Blobbernaut (40)"
+	desc = "Produces a strong, smart blobbernaut from a factory blob for 40 points.<br>The factory blob used will become fragile and unable to produce spores."
 
 /obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))

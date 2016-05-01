@@ -19,37 +19,32 @@
 				qdel(src)
 	return
 
-/obj/effect/spider/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.attack_verb.len)
-		visible_message("<span class='danger'>[user] has [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
-	else
-		visible_message("<span class='danger'>[user] has attacked \the [src] with \the [W]!</span>")
-
-	var/damage = W.force / 4
-
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-
-		if(WT.remove_fuel(0, user))
-			damage = 15
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-
-	health -= damage
-	healthcheck()
-
-/obj/effect/spider/bullet_act(obj/item/projectile/Proj)
+/obj/effect/spider/attacked_by(obj/item/I, mob/user)
 	..()
-	health -= Proj.damage
-	healthcheck()
+	var/damage = I.force
+	take_damage(damage, I.damtype, 1)
 
-/obj/effect/spider/proc/healthcheck()
+/obj/effect/spider/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
+
+/obj/effect/spider/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BURN)
+			damage *= 2
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		if(BRUTE)//the stickiness of the web mutes all attack sounds except fire damage type
+			damage *= 0.25
+		else
+			return
+	health -= damage
 	if(health <= 0)
 		qdel(src)
 
 /obj/effect/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		health -= 5
-		healthcheck()
+		take_damage(5, BURN, 0)
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
@@ -124,14 +119,6 @@
 		src.loc = user.loc
 	else
 		..()
-
-/obj/effect/spider/spiderling/proc/die()
-	visible_message("<span class='alert'>[src] dies!</span>")
-	qdel(src)
-
-/obj/effect/spider/spiderling/healthcheck()
-	if(health <= 0)
-		die()
 
 /obj/effect/spider/spiderling/process()
 	if(travelling_in_vent)

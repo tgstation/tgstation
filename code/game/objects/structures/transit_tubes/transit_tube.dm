@@ -54,9 +54,11 @@ obj/structure/transit_tube/ex_act(severity, target)
 				R.add_fingerprint(user)
 				src.destroy_diagonals()
 				qdel(src)
-	if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in src.loc)
 			pod.attackby(W, user)
+	else
+		return ..()
 
 //destroys disconnected decorative diagonals
 /obj/structure/transit_tube/proc/destroy_diagonals()

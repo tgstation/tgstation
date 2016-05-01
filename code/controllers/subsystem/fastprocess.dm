@@ -2,12 +2,13 @@ var/datum/subsystem/fastprocess/SSfastprocess
 
 /datum/subsystem/fastprocess
 	name = "Fast Process"
-	priority = -1
+	priority = 12
 	wait = 1
 	dynamic_wait = 1
-	dwait_upper = 300
+	dwait_upper = 10
+	dwait_buffer = 0
 	dwait_lower = 1
-	dwait_delta = 7
+	dwait_delta = 6
 
 	var/list/processing = list()
 	var/list/currentrun = list()

@@ -64,6 +64,7 @@
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
+	poi_list |= src
 	radio = new(src)
 	radio.listening = 0
 	investigate_log("has been created.", "supermatter")
@@ -72,6 +73,7 @@
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
 	qdel(radio)
+	poi_list -= src
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
@@ -89,7 +91,7 @@
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(istype(L, /turf/space))	// Stop processing this stuff if we've been ejected.
+	if(istype(L, /turf/open/space))	// Stop processing this stuff if we've been ejected.
 		return
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
@@ -223,6 +225,19 @@
 	qdel(src)
 	return(gain)
 
+/obj/machinery/power/supermatter_shard/blob_act(obj/effect/blob/B)
+	if(B && !istype(loc, /turf/open/space)) //does nothing in space
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
+		if(B.health > 100)
+			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and flinches away!</span>",\
+			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+			B.take_damage(100, BURN, src)
+		else
+			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and rapidly flashes to ash.</span>",\
+			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+			Consume(B)
+
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -291,7 +306,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && !istype(AM, /obj/effect))
+	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 

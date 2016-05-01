@@ -613,3 +613,11 @@
 	required_reagents = list("hooch" = 1, "absinthe" = 1, "manlydorf" = 1, "syndicatebomb" = 1)
 	result_amount = 4
 	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
+
+/datum/chemical_reaction/arnold_palmer
+	name = "Arnold Palmer"
+	id = "arnold_palmer"
+	result = "arnold_palmer"
+	required_reagents = list("tea" = 1, "lemonjuice" = 1)
+	result_amount = 2
+	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."

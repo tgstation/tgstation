@@ -40,7 +40,7 @@
 		return 1
 
 //Curiosity killed the cat's wagging tail.
-datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
@@ -56,6 +56,7 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
+	mutant_organs = list(/obj/item/organ/internal/tongue/lizard)
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -73,14 +74,6 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		randname += " [lastname]"
 
 	return randname
-
-var/regex/lizard_hiss = new("s+", "g")
-var/regex/lizard_hiSS = new("S+", "g")
-/datum/species/lizard/handle_speech(message)
-	if(copytext(message, 1, 2) != "*")
-		message = lizard_hiss.Replace(message, "sss")
-		message = lizard_hiSS.Replace(message, "SSS")
-	return message
 
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
@@ -188,34 +181,30 @@ var/regex/lizard_hiSS = new("S+", "g")
 	eyes = "jelleyes"
 	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
-	var/recently_changed = 1
+	exotic_blood = "slimejelly"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
-	if(!H.reagents.get_reagent_amount("slimejelly"))
-		if(recently_changed)
-			H.reagents.add_reagent("slimejelly", 80)
-			recently_changed = 0
-		else
-			H.reagents.add_reagent("slimejelly", 5)
-			H.adjustBruteLoss(5)
-			H << "<span class='danger'>You feel empty!</span>"
+	if(!H.reagents.get_reagent_amount(exotic_blood))
+		H.reagents.add_reagent(exotic_blood, 5)
+		H.adjustBruteLoss(5)
+		H << "<span class='danger'>You feel empty!</span>"
 
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume < 100)
-			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 2.5
-		if(S.volume < 50)
-			if(prob(5))
-				H << "<span class='danger'>You feel drained!</span>"
-		if(S.volume < 10)
-			H.losebreath++
+	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
+
+	if(jelly_amount < 100)
+		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
+			H.reagents.add_reagent(exotic_blood, 0.5)
+			H.nutrition -= 2.5
+	if(jelly_amount < 50)
+		if(prob(5))
+			H << "<span class='danger'>You feel drained!</span>"
+	if(jelly_amount < 10)
+		H.losebreath++
 
 /datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "slimejelly")
+	if(chem.id == exotic_blood)
 		return 1
 
 /*
@@ -250,19 +239,20 @@ var/regex/lizard_hiSS = new("S+", "g")
 		callback.Remove(C)
 	..()
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	if(recently_changed)
+/datum/species/jelly/slime/on_species_gain(mob/living/carbon/C)
+	..()
+	if(ishuman(C))
 		slime_split = new
-		slime_split.Grant(H)
+		slime_split.Grant(C)
 
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume >= 200)
-			if(prob(5))
-				H << "<span class='notice'>You feel very bloated!</span>"
-		if(S.volume < 200)
-			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 2.5
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
+	if(jelly_amount >= 200)
+		if(prob(5))
+			H << "<span class='notice'>You feel very bloated!</span>"
+	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		H.reagents.add_reagent(exotic_blood, 0.5)
+		H.nutrition -= 2.5
 
 	..()
 
@@ -386,6 +376,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	name = "Human?"
 	id = "fly"
 	say_mod = "buzzes"
+	mutant_organs = list(/obj/item/organ/internal/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -394,8 +385,6 @@ var/regex/lizard_hiSS = new("S+", "g")
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
-/datum/species/fly/handle_speech(message)
-	return replacetext(message, "z", stutter("zz"))
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable))
@@ -424,11 +413,9 @@ var/regex/lizard_hiSS = new("S+", "g")
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	var/list/myspan = null
 
-
 /datum/species/skeleton/New()
 	..()
 	myspan = list(pick(SPAN_SANS,SPAN_PAPYRUS)) //pick a span and stick with it for the round
-
 
 /datum/species/skeleton/get_spans()
 	return myspan
@@ -447,22 +434,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
-
-/datum/species/zombie/handle_speech(message)
-	var/list/message_list = splittext(message, " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
-
-		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
-			message_list[insertpos] = inserttext + "..."
-
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
-
-	return jointext(message_list, " ")
+	mutant_organs = list(/obj/item/organ/internal/tongue/zombie)
 
 /datum/species/cosmetic_zombie
 	name = "Human"
@@ -478,25 +450,10 @@ var/regex/lizard_hiSS = new("S+", "g")
 	say_mod = "gibbers"
 	sexes = 0
 	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
+	mutant_organs = list(/obj/item/organ/internal/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
-
-/datum/species/abductor/handle_speech(message)
-	//Hacks
-	var/mob/living/carbon/human/user = usr
-	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.dna.species.id != "abductor")
-			continue
-		else
-			var/datum/species/abductor/target_spec = H.dna.species
-			if(target_spec.team == team)
-				H << rendered
-	for(var/mob/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
-	return ""
-
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -623,6 +580,7 @@ var/global/list/synth_flesh_disguises = list()
 		miss_sound = S.miss_sound
 		meat = S.meat
 		mutant_bodyparts = S.mutant_bodyparts.Copy()
+		mutant_organs = S.mutant_organs.Copy()
 		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
