@@ -140,6 +140,8 @@
 	var/ooc_during_round = 0
 	var/emojis = 0
 
+	var/punpun_persistence = 1
+
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
 	var/run_speed = 0
@@ -583,6 +585,8 @@
 					config.no_summon_magic			= 1
 				if("no_summon_events")
 					config.no_summon_events			= 1
+				if("punpun_persistence")
+					config.punpun_persistence		= text2num(value)
 				if("reactionary_explosions")
 					config.reactionary_explosions	= 1
 				if("bombcap")

@@ -329,6 +329,15 @@ MIDROUND_ANTAG_LIFE_CHECK 0.7
 #NO_SUMMON_MAGIC
 #NO_SUMMON_EVENTS
 
+
+##Pun Pun Persistence
+# This allows Pun Pun, the bartender's monkey, to keep its hat and/or mask from round
+# to round, along with changing its successors name if it died last round.
+# 0 to disable
+# 1 to enable
+# 2 to enable, but turns facehuggers passed into next round into toy facehuggers
+PUNPUN_PERSISTENCE 1
+
 ##Comment for "normal" explosions, which ignore obstacles
 ##Uncomment for explosions that react to doors and walls
 REACTIONARY_EXPLOSIONS
@@ -345,6 +354,3 @@ REACTIONARY_EXPLOSIONS
 BOMBCAP 20
 ## LagHell (7, 14, 28)
 #BOMBCAP 28
-
-
-
