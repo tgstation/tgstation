@@ -108,7 +108,10 @@
 		// 50 per label. Magical cyborg paper doesn't come cheap.
 		var/cost = diff * 50
 
-		borgy.cell.use(cost)
+		// If the cyborg manages to use a module without a cell, they get the paper
+		// for free.
+		if(borgy.cell)
+			borgy.cell.use(cost)
 
 /obj/item/hand_labeler_refill
 	name = "hand labeler paper roll"

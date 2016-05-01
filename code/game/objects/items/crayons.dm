@@ -252,5 +252,7 @@
 		// 25 is our cost per unit of paint, making it cost 25 energy per
 		// normal tag, 50 per window, and 250 per attack
 		var/cost = diff * 25
-
-		borgy.cell.use(cost)
+		// Cyborgs shouldn't be able to use modules without a cell. But if they do
+		// it's free.
+		if(borgy.cell)
+			borgy.cell.use(cost)
