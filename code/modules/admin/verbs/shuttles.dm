@@ -103,7 +103,11 @@
 			qdel(S)
 		return
 
-	M.dockRoundstart()
+	var/status = M.dockRoundstart()
+	if(status)
+		log_admin("The imported shuttle [map]/[M] failed to travel to its roundstart \
+			location (error code [status]). Please fix or delete the imported shuttle \
+			before continuing any more shuttle import hijinks.")
 
 	log_admin("[key_name_admin(usr)] - ShuttleImport: [map] - [M]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleImport: [map] - [M]</b><BR></span>")
