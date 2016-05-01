@@ -3560,7 +3560,7 @@
 			if(alert(usr, "Would you like the new shuttle docking port to be assigned to [shuttle_to_add_to.name]? [shuttle_to_add_to.linked_port ? "NOTE: It already has a shuttle docking port." : ""]", "Admin abuse", "Yes", "No") != "Yes")
 				shuttle_to_add_to = null
 
-		var/obj/structure/docking_port/shuttle/D = new( get_turf(usr) )
+		var/obj/docking_port/shuttle/D = new( get_turf(usr) )
 		D.dir = usr.dir
 
 		if(istype(shuttle_to_add_to))
@@ -3579,7 +3579,7 @@
 		var/name = input(usr,"What would you like to name this docking port?","Admin abuse","[A ? "[A.name]" : "Space [rand(100,999)]"]") as text|null
 		if(!name) return
 
-		var/obj/structure/docking_port/destination/D = new( get_turf(usr) )
+		var/obj/docking_port/destination/D = new( get_turf(usr) )
 		D.dir = usr.dir
 		D.areaname = name
 
@@ -3609,12 +3609,12 @@
 
 		var/list/docking_ports_to_pick_from = all_docking_ports.Copy()
 		var/list/options = list()
-		for(var/obj/structure/docking_port/destination/D in (docking_ports_to_pick_from - S.docking_ports))
+		for(var/obj/docking_port/destination/D in (docking_ports_to_pick_from - S.docking_ports))
 			var/name = D.areaname
 			options += name
 			options[name] = D
 
-		var/obj/structure/docking_port/destination/choice = options[(input(usr,"Select a docking port to add to [S.name]","Admin abuse") in options)]
+		var/obj/docking_port/destination/choice = options[(input(usr,"Select a docking port to add to [S.name]","Admin abuse") in options)]
 		if(!istype(choice)) return
 
 		S.docking_ports |= choice
@@ -3625,7 +3625,7 @@
 		feedback_add_details("admin_shuttle_magic_used","AT")
 
 		var/list/L = list()
-		for(var/obj/structure/docking_port/destination/D in get_turf(usr) )
+		for(var/obj/docking_port/destination/D in get_turf(usr) )
 			var/name = "[D.name] ([D.areaname])"
 			L += name
 			L[name]=D
@@ -3633,7 +3633,7 @@
 		if(!L.len)
 			to_chat(usr, "Please stand on the docking port you wish to make a transit area.")
 
-		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a new transit area for the shuttle","Admin abuse") as null|anything in (L + list("Cancel"))) ]
+		var/obj/docking_port/port_to_link = L[ (input(usr,"Select a new transit area for the shuttle","Admin abuse") as null|anything in (L + list("Cancel"))) ]
 		if(!istype(port_to_link)) return
 
 		var/datum/shuttle/shuttle_to_link = selected_shuttle
@@ -3653,7 +3653,7 @@
 		feedback_inc("admin_shuttle_magic_used",1)
 		feedback_add_details("admin_shuttle_magic_used","SC")
 
-		var/obj/structure/docking_port/shuttle/D = new(get_turf(usr.loc))
+		var/obj/docking_port/shuttle/D = new(get_turf(usr.loc))
 		D.dir = usr.dir
 
 		var/area/A = get_area(D)
@@ -3702,13 +3702,13 @@
 		if(!istype(S)) return
 
 		var/list/possible_ports = list()
-		for(var/obj/structure/docking_port/destination/D in S.docking_ports)
+		for(var/obj/docking_port/destination/D in S.docking_ports)
 			var/name = D.areaname
 			possible_ports += name
 			possible_ports[name] = D
 
 		var/choice = input(usr, "Select a docking port for [capitalize(S.name)] to travel to", "Shuttle movement") in (possible_ports + list("Cancel"))
-		var/obj/structure/docking_port/destination/target_port = possible_ports[choice]
+		var/obj/docking_port/destination/target_port = possible_ports[choice]
 
 		if(!target_port)
 			return
@@ -3783,7 +3783,7 @@
 				var/choice2 = input(usr,"Select a location to modify","Shuttle editing") in locations
 				var/variable_to_edit = locations[choice2]
 
-				var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new [choice2] location for [S.name] ([S.type])","Shuttle editing",S.docking_ports)
+				var/obj/docking_port/destination/D = select_port_from_list(usr,"Select a new [choice2] location for [S.name] ([S.type])","Shuttle editing",S.docking_ports)
 				if(istype(D))
 					S.vars[variable_to_edit] = D
 					to_chat(usr, "[S.name]'s [variable_to_edit] has been changed to [D.areaname]")
@@ -3858,14 +3858,14 @@
 		feedback_add_details("admin_shuttle_magic_used","TP2")
 
 		var/list/destinations = list()
-		for(var/obj/structure/docking_port/destination/D in all_docking_ports)
+		for(var/obj/docking_port/destination/D in all_docking_ports)
 			var/name = "[D.areaname][D.docked_with ? " (docked to [D.docked_with.areaname])" : ""]"
 			destinations += name
 			destinations[name]=D
 
 		var/choice = input(usr,"Select a docking port to teleport to","Finding a docking port") in destinations
 
-		var/obj/structure/docking_port/destination/target = destinations[choice]
+		var/obj/docking_port/destination/target = destinations[choice]
 		if(!target) return
 
 		usr.forceMove(get_turf(target))
@@ -3916,8 +3916,8 @@
 			if(choice != "Yes")
 				return
 
-		if( !(locate(/obj/structure/docking_port/shuttle) in A) )
-			to_chat(usr, "Please create a shuttle docking port (/obj/structure/docking_port/shuttle) in this area!")
+		if( !(locate(/obj/docking_port/shuttle) in A) )
+			to_chat(usr, "Please create a shuttle docking port (/obj/docking_port/shuttle) in this area!")
 			return
 
 		var/name = input(usr, "Please name the new shuttle", "Shuttlify", A.name) as text|null
@@ -3947,14 +3947,14 @@
 		var/datum/shuttle/S = selected_shuttle
 		if(!istype(S)) return
 
-		for(var/obj/structure/docking_port/destination/D in S.docking_ports)
+		for(var/obj/docking_port/destination/D in S.docking_ports)
 			var/name = "[D.name] [D.areaname]"
 			L+=name
 			L[name]=D
 
 		L += "---other destinations---"
 
-		for(var/obj/structure/docking_port/destination/D in all_docking_ports - S.docking_ports)
+		for(var/obj/docking_port/destination/D in all_docking_ports - S.docking_ports)
 			var/name = D.areaname
 			L+=name
 			L[name]=D
@@ -3967,7 +3967,7 @@
 			if(!A) return
 			if(!T) return
 
-			var/obj/structure/docking_port/destination/temp = new(T)
+			var/obj/docking_port/destination/temp = new(T)
 			temp.invisibility = 101
 			temp.areaname = A.name
 			temp.dir = usr.dir
@@ -3980,7 +3980,7 @@
 			qdel(temp)
 			return
 		else
-			var/obj/structure/docking_port/destination/D = L[choice]
+			var/obj/docking_port/destination/D = L[choice]
 			if(!D) return
 
 			S.move_to_dock(D)

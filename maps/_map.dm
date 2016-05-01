@@ -192,7 +192,7 @@ proc/change_base_turf(var/choice,var/new_base_path,var/update_old_base = 0)
 				T.ChangeTurf(new_base_path)
 	var/datum/zLevel/L = map.zLevels[choice]
 	L.base_turf = new_base_path
-	for(var/obj/structure/docking_port/destination/D in all_docking_ports)
+	for(var/obj/docking_port/destination/D in all_docking_ports)
 		if(D.z == choice)
 			D.base_turf_type = new_base_path
 

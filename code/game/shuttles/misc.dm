@@ -14,11 +14,11 @@ var/global/datum/shuttle/arrival/arrival_shuttle = new(starting_area = /area/shu
 
 /datum/shuttle/arrival/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/arrival/station)
+	add_dock(/obj/docking_port/destination/arrival/station)
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/arrival/station
+/obj/docking_port/destination/arrival/station
 	areaname = "station arrivals"
 
 
@@ -40,8 +40,8 @@ var/global/datum/shuttle/transport/transport_shuttle = new(starting_area = /area
 
 /datum/shuttle/transport/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/transport/station)
-	add_dock(/obj/structure/docking_port/destination/transport/centcom)
+	add_dock(/obj/docking_port/destination/transport/station)
+	add_dock(/obj/docking_port/destination/transport/centcom)
 
 /obj/machinery/computer/shuttle_control/transport
 	machine_flags = 0 //No screwtoggle / emaggable to prevent mortals from fucking with shit
@@ -56,10 +56,10 @@ var/global/datum/shuttle/transport/transport_shuttle = new(starting_area = /area
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/transport/station
+/obj/docking_port/destination/transport/station
 	areaname = "station arrivals (docking port 1)"
 
-/obj/structure/docking_port/destination/transport/centcom
+/obj/docking_port/destination/transport/centcom
 	areaname = "central command"
 
 
@@ -80,10 +80,10 @@ var/global/datum/shuttle/admin/admin_shuttle = new(starting_area = /area/shuttle
 
 /datum/shuttle/admin/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/admin/centcom)
-	add_dock(/obj/structure/docking_port/destination/salvage/arrivals) //We share a docking port with the salvage shuttle - this should turn out fine
+	add_dock(/obj/docking_port/destination/admin/centcom)
+	add_dock(/obj/docking_port/destination/salvage/arrivals) //We share a docking port with the salvage shuttle - this should turn out fine
 
-/obj/structure/docking_port/destination/admin/centcom
+/obj/docking_port/destination/admin/centcom
 	areaname = "centcom hangar bay"
 
 /obj/machinery/computer/shuttle_control/admin_shuttle

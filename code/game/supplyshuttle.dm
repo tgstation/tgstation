@@ -191,7 +191,7 @@ var/list/mechtoys = list(
 
 /datum/controller/supply_shuttle/proc/send()
 
-	var/obj/structure/docking_port/destination
+	var/obj/docking_port/destination
 
 	if(!at_station) //not at station
 		destination = cargo_shuttle.dock_station

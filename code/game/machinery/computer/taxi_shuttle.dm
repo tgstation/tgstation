@@ -34,7 +34,7 @@ var/global/list/taxi_computers = list()
 	..()
 	icon_state = "syndishuttle"
 
-/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(var/obj/structure/docking_port/destination/destination, var/wait_time)
+/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(var/obj/docking_port/destination/destination, var/wait_time)
 	/*if(shuttle.moving)
 		return
 	if(!shuttle.can_move())

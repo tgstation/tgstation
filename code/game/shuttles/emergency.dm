@@ -14,35 +14,35 @@ var/global/datum/shuttle/escape/escape_shuttle = new(starting_area=/area/shuttle
 
 	destroy_everything = 1 //Can't stop us
 
-	var/obj/structure/docking_port/destination/dock_centcom
-	var/obj/structure/docking_port/destination/dock_station
+	var/obj/docking_port/destination/dock_centcom
+	var/obj/docking_port/destination/dock_station
 
 /datum/shuttle/escape/is_special()
 	return 1
 
 /datum/shuttle/escape/initialize()
 	.=..()
-	dock_station = add_dock(/obj/structure/docking_port/destination/escape/shuttle/station)
-	dock_centcom = add_dock(/obj/structure/docking_port/destination/escape/shuttle/centcom)
+	dock_station = add_dock(/obj/docking_port/destination/escape/shuttle/station)
+	dock_centcom = add_dock(/obj/docking_port/destination/escape/shuttle/centcom)
 
-	set_transit_dock(/obj/structure/docking_port/destination/escape/shuttle/transit)
+	set_transit_dock(/obj/docking_port/destination/escape/shuttle/transit)
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/escape/shuttle/station
+/obj/docking_port/destination/escape/shuttle/station
 	areaname = "escape shuttle docking"
 
-/obj/structure/docking_port/destination/escape/shuttle/centcom
+/obj/docking_port/destination/escape/shuttle/centcom
 	areaname = "central command"
 
-/obj/structure/docking_port/destination/escape/shuttle/transit
+/obj/docking_port/destination/escape/shuttle/transit
 	areaname = "hyperspace (emergency shuttle)"
 
 //pods later
 /*
-/obj/structure/docking_port/destination/escape/pod1/station
+/obj/docking_port/destination/escape/pod1/station
 	areaname = "escape shuttle docking"
 
-/obj/structure/docking_port/destination/escape/pod1/centcom
+/obj/docking_port/destination/escape/pod1/centcom
 	areaname = "central command"
 */

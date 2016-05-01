@@ -7,8 +7,8 @@ var/global/datum/shuttle/mining/mining_shuttle = new(starting_area = /area/shutt
 
 /datum/shuttle/mining/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/mining/station)
-	add_dock(/obj/structure/docking_port/destination/mining/outpost)
+	add_dock(/obj/docking_port/destination/mining/station)
+	add_dock(/obj/docking_port/destination/mining/outpost)
 
 /obj/machinery/computer/shuttle_control/mining/New() //Main shuttle_control code is in code/game/machinery/computer/shuttle_computer.dm
 	link_to(mining_shuttle)
@@ -16,8 +16,8 @@ var/global/datum/shuttle/mining/mining_shuttle = new(starting_area = /area/shutt
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/mining/station
+/obj/docking_port/destination/mining/station
 	areaname = "mining dock"
 
-/obj/structure/docking_port/destination/mining/outpost
+/obj/docking_port/destination/mining/outpost
 	areaname = "mining outpost"

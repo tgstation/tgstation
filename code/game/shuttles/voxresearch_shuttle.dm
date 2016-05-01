@@ -7,8 +7,8 @@ var/global/datum/shuttle/voxresearch/voxresearch_shuttle = new(starting_area = /
 
 /datum/shuttle/voxresearch/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/voxresearch/station)
-	add_dock(/obj/structure/docking_port/destination/voxresearch/outpost)
+	add_dock(/obj/docking_port/destination/voxresearch/station)
+	add_dock(/obj/docking_port/destination/voxresearch/outpost)
 
 /obj/machinery/computer/shuttle_control/voxresearch/New() //Main shuttle_control code is in code/game/machinery/computer/shuttle_computer.dm
 	link_to(voxresearch_shuttle)
@@ -16,8 +16,8 @@ var/global/datum/shuttle/voxresearch/voxresearch_shuttle = new(starting_area = /
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/voxresearch/station
+/obj/docking_port/destination/voxresearch/station
 	areaname = "Genetic Research Station"
 
-/obj/structure/docking_port/destination/voxresearch/outpost
+/obj/docking_port/destination/voxresearch/outpost
 	areaname = "Asteroid"

@@ -27,16 +27,16 @@
 	var/area/linked_area
 
 	//The shuttle's linked shuttle docking port - essential
-	var/obj/structure/docking_port/shuttle/linked_port
+	var/obj/docking_port/shuttle/linked_port
 
 	//The shuttle's current location
-	var/obj/structure/docking_port/destination/current_port
+	var/obj/docking_port/destination/current_port
 
 	//The shuttle's transit location
-	var/obj/structure/docking_port/destination/transit_port
+	var/obj/docking_port/destination/transit_port
 
 	//The shuttle's destination
-	var/obj/structure/docking_port/destination/destination_port
+	var/obj/docking_port/destination/destination_port
 
 	//List of ALL docking ports on the shuttle. Setup at initialize(), the shuttle can only move docking ports in this list
 	//(which means those which are placed in the shuttle's area on the map). This exists to prevent shuttles from moving on top
@@ -118,12 +118,12 @@
 
 	//This line below used to cause weird bugs with some maps (https://github.com/d3athrow/vgstation13/issues/6773)
 
-	//var/obj/structure/docking_port/shuttle/shuttle_docking_port = locate() in linked_area.contents.Copy()
+	//var/obj/docking_port/shuttle/shuttle_docking_port = locate() in linked_area.contents.Copy()
 
 	//I have no idea what was causing it, but after replacing it with the following five lines everything started working as intended
-	var/obj/structure/docking_port/shuttle/shuttle_docking_port
+	var/obj/docking_port/shuttle/shuttle_docking_port
 
-	for(var/obj/structure/docking_port/shuttle/S in linked_area)
+	for(var/obj/docking_port/shuttle/S in linked_area)
 		shuttle_docking_port = S
 		break
 	//
@@ -138,7 +138,7 @@
 		//The following few lines ensure that if there's a docking port at the shuttle's starting location, the shuttle is docked to it
 		var/turf/check_turf = shuttle_docking_port.get_docking_turf()
 		if(check_turf)
-			for(var/obj/structure/docking_port/P in check_turf.contents)
+			for(var/obj/docking_port/P in check_turf.contents)
 				shuttle_docking_port.dock(P)
 				src.current_port = shuttle_docking_port.docked_with
 				break
@@ -153,7 +153,7 @@
 		. = INIT_NO_PORT
 
 
-	for(var/obj/structure/docking_port/D in linked_area)
+	for(var/obj/docking_port/D in linked_area)
 		docking_ports_aboard |= D
 
 	return
@@ -179,12 +179,12 @@
 //Adds a docking port to list of travel destinations, accepts path or the port itself
 /datum/shuttle/proc/add_dock(var/D)
 	if(ispath(D))
-		for(var/obj/structure/docking_port/destination/dock in all_docking_ports)
+		for(var/obj/docking_port/destination/dock in all_docking_ports)
 			if(istype(dock,D))
 				dock.link_to_shuttle(src)
 				return dock
-	else if(istype(D,/obj/structure/docking_port/destination))
-		var/obj/structure/docking_port/destination/dock = D
+	else if(istype(D,/obj/docking_port/destination))
+		var/obj/docking_port/destination/dock = D
 		dock.link_to_shuttle(src)
 		return dock
 
@@ -193,11 +193,11 @@
 //Adds a docking port as a transit area, accepts path or the port itself
 /datum/shuttle/proc/set_transit_dock(var/D)
 	if(ispath(D))
-		for(var/obj/structure/docking_port/destination/dock in all_docking_ports)
+		for(var/obj/docking_port/destination/dock in all_docking_ports)
 			if(istype(dock,D))
 				transit_port = dock
 				return dock
-	else if(istype(D,/obj/structure/docking_port/destination))
+	else if(istype(D,/obj/docking_port/destination))
 		transit_port = D
 	return D
 
@@ -217,7 +217,7 @@
 //This is the proc you generally want to use when moving a shuttle. Runs all sorts of checks (cooldown, if already moving, etc)
 //If you want to bypass it, set destination_port to something and call pre_flight()
 //Alternatively, call move_to_dock(destination)
-/datum/shuttle/proc/travel_to(var/obj/structure/docking_port/D, var/obj/machinery/computer/shuttle_control/broadcast = null, var/mob/user)
+/datum/shuttle/proc/travel_to(var/obj/docking_port/D, var/obj/machinery/computer/shuttle_control/broadcast = null, var/mob/user)
 	if(!D) return 0 //no docking port
 	if(!linked_port) return 0 //no shuttle port
 
@@ -319,7 +319,7 @@
 	moving = 0
 
 //This is the proc you want to use to FORCE a shuttle to move. It always moves it, unless the shuttle or its area don't exist. Transit is skipped, after_flight() is called
-/datum/shuttle/proc/move_to_dock(var/obj/structure/docking_port/D, var/ignore_innacuracy = 0) //A direct proc with no bullshit
+/datum/shuttle/proc/move_to_dock(var/obj/docking_port/D, var/ignore_innacuracy = 0) //A direct proc with no bullshit
 	if(!D) return
 	if(!linked_port) return
 
@@ -333,11 +333,11 @@
 	moved_shuttles += src
 
 	//See all destination ports in current area
-	for(var/obj/structure/docking_port/destination/dock in linked_area)
+	for(var/obj/docking_port/destination/dock in linked_area)
 		//If somebody is docked to it (and it isn't us (that would be weird but better be sure))
 		if(dock.docked_with && !(dock.docked_with == linked_port))
 			//Get the docking port that's docked to it, and then its shuttle
-			var/obj/structure/docking_port/shuttle/S = dock.docked_with
+			var/obj/docking_port/shuttle/S = dock.docked_with
 			if(!S || !S.linked_shuttle) continue
 
 			docked_shuttles |= S.linked_shuttle
@@ -376,7 +376,7 @@
 		if(docked_shuttles.len)
 			for(var/datum/shuttle/S in docked_shuttles)
 				if(S in moved_shuttles) continue
-				var/obj/structure/docking_port/destination/our_moved_dock = docked_shuttles[S]
+				var/obj/docking_port/destination/our_moved_dock = docked_shuttles[S]
 				if(!our_moved_dock) continue
 
 				moved_shuttles |= S
@@ -455,14 +455,14 @@
 
 /datum/shuttle/proc/move(var/mob/user) //a very simple proc which selects a random area and sends the shuttle there
 	var/list/possible_locations = list()
-	for(var/obj/structure/docking_port/destination/S in src.docking_ports)
+	for(var/obj/docking_port/destination/S in src.docking_ports)
 		if(S == current_port) continue
 		if(S.docked_with) continue
 
 		possible_locations += S
 
 	if(!possible_locations.len) return
-	var/obj/structure/docking_port/destination/target = pick(possible_locations)
+	var/obj/docking_port/destination/target = pick(possible_locations)
 
 	travel_to(target,,user)
 
@@ -675,7 +675,7 @@
 
 		//Delete the old turf
 		var/replacing_turf_type = get_base_turf(old_turf.z)
-		var/obj/structure/docking_port/destination/D = linked_port.docked_with
+		var/obj/docking_port/destination/D = linked_port.docked_with
 
 		if(D && istype(D)) replacing_turf_type = D.base_turf_type
 

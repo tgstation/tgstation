@@ -3,8 +3,8 @@ var/global/datum/shuttle/supply/cargo_shuttle = new(starting_area = /area/shuttl
 /datum/shuttle/supply
 	name = "supply shuttle"
 
-	var/obj/structure/docking_port/destination/dock_centcom
-	var/obj/structure/docking_port/destination/dock_station
+	var/obj/docking_port/destination/dock_centcom
+	var/obj/docking_port/destination/dock_station
 
 	pre_flight_delay = 0
 
@@ -17,11 +17,11 @@ var/global/datum/shuttle/supply/cargo_shuttle = new(starting_area = /area/shuttl
 
 /datum/shuttle/supply/initialize()
 	.=..()
-	dock_centcom = add_dock(/obj/structure/docking_port/destination/supply/centcom)
-	dock_station = add_dock(/obj/structure/docking_port/destination/supply/station)
+	dock_centcom = add_dock(/obj/docking_port/destination/supply/centcom)
+	dock_station = add_dock(/obj/docking_port/destination/supply/station)
 
-/obj/structure/docking_port/destination/supply/centcom
+/obj/docking_port/destination/supply/centcom
 	areaname = "centcom loading bay"
 
-/obj/structure/docking_port/destination/supply/station
+/obj/docking_port/destination/supply/station
 	areaname = "cargo bay"

@@ -62,17 +62,17 @@
 	mining_shuttle.name = "Asteroid Shuttle" //There is only one shuttle on defficiency now - the asteroid shuttle
 	mining_shuttle.req_access = list() //It's shared by miners and researchers, so remove access requirements
 
-/obj/structure/docking_port/destination/mining/station
+/obj/docking_port/destination/mining/station
 	areaname = "main station dock"
 
-/obj/structure/docking_port/destination/mining/outpost
+/obj/docking_port/destination/mining/outpost
 	areaname = "mining outpost"
 
 /datum/shuttle/mining/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/mining/station)
-	add_dock(/obj/structure/docking_port/destination/mining/outpost)
-	add_dock(/obj/structure/docking_port/destination/research/outpost)
+	add_dock(/obj/docking_port/destination/mining/station)
+	add_dock(/obj/docking_port/destination/mining/outpost)
+	add_dock(/obj/docking_port/destination/research/outpost)
 
 //All security airlocks have randomized wires
 /obj/machinery/door/airlock/glass_security/New()

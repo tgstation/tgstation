@@ -15,10 +15,10 @@ var/global/datum/shuttle/taxi/b/taxi_b = new(starting_area = TAXI_B_STARTING_ARE
 	var/move_time_access = 20
 	var/move_time_no_access = 60
 
-	var/obj/structure/docking_port/destination/dock_medical_silicon
-	var/obj/structure/docking_port/destination/dock_engineering_cargo
-	var/obj/structure/docking_port/destination/dock_security_science
-	var/obj/structure/docking_port/destination/dock_abandoned
+	var/obj/docking_port/destination/dock_medical_silicon
+	var/obj/docking_port/destination/dock_engineering_cargo
+	var/obj/docking_port/destination/dock_security_science
+	var/obj/docking_port/destination/dock_abandoned
 
 	collision_type = COLLISION_DISPLACE
 
@@ -40,12 +40,12 @@ var/global/datum/shuttle/taxi/b/taxi_b = new(starting_area = TAXI_B_STARTING_ARE
 
 /datum/shuttle/taxi/a/initialize()
 	.=..()
-	dock_medical_silicon = add_dock(/obj/structure/docking_port/destination/taxi/a/medbay_silicon)
-	dock_engineering_cargo = add_dock(/obj/structure/docking_port/destination/taxi/a/engi_cargo)
-	dock_security_science = add_dock(/obj/structure/docking_port/destination/taxi/a/sec_sci)
-	dock_abandoned = add_dock(/obj/structure/docking_port/destination/taxi/a/derelict)
+	dock_medical_silicon = add_dock(/obj/docking_port/destination/taxi/a/medbay_silicon)
+	dock_engineering_cargo = add_dock(/obj/docking_port/destination/taxi/a/engi_cargo)
+	dock_security_science = add_dock(/obj/docking_port/destination/taxi/a/sec_sci)
+	dock_abandoned = add_dock(/obj/docking_port/destination/taxi/a/derelict)
 
-	set_transit_dock(/obj/structure/docking_port/destination/taxi/a/transit)
+	set_transit_dock(/obj/docking_port/destination/taxi/a/transit)
 
 //TAXI B
 
@@ -54,48 +54,48 @@ var/global/datum/shuttle/taxi/b/taxi_b = new(starting_area = TAXI_B_STARTING_ARE
 
 /datum/shuttle/taxi/b/initialize()
 	.=..()
-	dock_medical_silicon = add_dock(/obj/structure/docking_port/destination/taxi/b/medbay_silicon)
-	dock_engineering_cargo = add_dock(/obj/structure/docking_port/destination/taxi/b/engi_cargo)
-	dock_security_science = add_dock(/obj/structure/docking_port/destination/taxi/b/sec_sci)
-	dock_abandoned = add_dock(/obj/structure/docking_port/destination/taxi/b/derelict)
+	dock_medical_silicon = add_dock(/obj/docking_port/destination/taxi/b/medbay_silicon)
+	dock_engineering_cargo = add_dock(/obj/docking_port/destination/taxi/b/engi_cargo)
+	dock_security_science = add_dock(/obj/docking_port/destination/taxi/b/sec_sci)
+	dock_abandoned = add_dock(/obj/docking_port/destination/taxi/b/derelict)
 
-	set_transit_dock(/obj/structure/docking_port/destination/taxi/b/transit)
+	set_transit_dock(/obj/docking_port/destination/taxi/b/transit)
 
 //Taxi computers are located in code\game\machinery\computer\taxi_shuttle.dm
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/taxi
+/obj/docking_port/destination/taxi
 	areaname = "taxi"
 
-/obj/structure/docking_port/destination/taxi/a/medbay_silicon
+/obj/docking_port/destination/taxi/a/medbay_silicon
 	areaname = "Medical and Silicon Station"
 
-/obj/structure/docking_port/destination/taxi/a/engi_cargo
+/obj/docking_port/destination/taxi/a/engi_cargo
 	areaname = "Engineering and Cargo Station"
 
-/obj/structure/docking_port/destination/taxi/a/sec_sci
+/obj/docking_port/destination/taxi/a/sec_sci
 	areaname = "Security and Science Station"
 
-/obj/structure/docking_port/destination/taxi/a/derelict
+/obj/docking_port/destination/taxi/a/derelict
 	areaname = "Abandoned Station"
 
-/obj/structure/docking_port/destination/taxi/a/transit
+/obj/docking_port/destination/taxi/a/transit
 	areaname = "Hyperspace (taxi A)"
 
-/obj/structure/docking_port/destination/taxi/b/medbay_silicon
+/obj/docking_port/destination/taxi/b/medbay_silicon
 	areaname = "Medical and Silicon Station"
 
-/obj/structure/docking_port/destination/taxi/b/engi_cargo
+/obj/docking_port/destination/taxi/b/engi_cargo
 	areaname = "Engineering and Cargo Station"
 
-/obj/structure/docking_port/destination/taxi/b/sec_sci
+/obj/docking_port/destination/taxi/b/sec_sci
 	areaname = "Security and Science Station"
 
-/obj/structure/docking_port/destination/taxi/b/derelict
+/obj/docking_port/destination/taxi/b/derelict
 	areaname = "Abandoned Station"
 
-/obj/structure/docking_port/destination/taxi/b/transit
+/obj/docking_port/destination/taxi/b/transit
 	areaname = "Hyperspace (taxi B)"
 
 #undef TAXI_A_NAME

@@ -7,8 +7,8 @@ var/global/datum/shuttle/research/research_shuttle = new(starting_area = /area/s
 
 /datum/shuttle/research/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/research/station)
-	add_dock(/obj/structure/docking_port/destination/research/outpost)
+	add_dock(/obj/docking_port/destination/research/station)
+	add_dock(/obj/docking_port/destination/research/outpost)
 
 /obj/machinery/computer/shuttle_control/research/New() //Main shuttle_control code is in code/game/machinery/computer/shuttle_computer.dm
 	link_to(research_shuttle)
@@ -16,8 +16,8 @@ var/global/datum/shuttle/research/research_shuttle = new(starting_area = /area/s
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/research/station
+/obj/docking_port/destination/research/station
 	areaname = "main research department"
 
-/obj/structure/docking_port/destination/research/outpost
+/obj/docking_port/destination/research/outpost
 	areaname = "research outpost"

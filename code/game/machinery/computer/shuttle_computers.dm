@@ -13,7 +13,7 @@
 
 	var/datum/shuttle/shuttle
 
-	var/obj/structure/docking_port/selected_port
+	var/obj/docking_port/selected_port
 
 	var/allow_selecting_all = 0 //if 1, allow selecting ALL ports, not only those of linked shuttle
 								//only abusable by admins
@@ -30,7 +30,7 @@
 /obj/machinery/computer/shuttle_control/proc/announce(var/message)
 	return say(message)
 
-/obj/machinery/computer/shuttle_control/proc/get_doc_href(var/obj/structure/docking_port/D, var/bonus_parameters=null)
+/obj/machinery/computer/shuttle_control/proc/get_doc_href(var/obj/docking_port/D, var/bonus_parameters=null)
 	if(!D) return "ERROR"
 	var/name = capitalize(D.areaname)
 	var/span_s = "<a href='?src=\ref[src];select=\ref[D][bonus_parameters]'>"
@@ -86,7 +86,7 @@
 				//Write a list of all possible areas
 			var/text
 			if(allow_selecting_all)
-				for(var/obj/structure/docking_port/destination/D in all_docking_ports)
+				for(var/obj/docking_port/destination/D in all_docking_ports)
 					if(D.docked_with)
 						continue
 					else
@@ -94,7 +94,7 @@
 
 					dat += " | [text] | "
 			else
-				for(var/obj/structure/docking_port/destination/D in shuttle.docking_ports)
+				for(var/obj/docking_port/destination/D in shuttle.docking_ports)
 					if(D.docked_with)
 						continue
 					else
@@ -161,14 +161,14 @@
 
 		var/list/ports = list()
 
-		for(var/obj/structure/docking_port/shuttle/S in shuttle.linked_area)
+		for(var/obj/docking_port/shuttle/S in shuttle.linked_area)
 			var/name = capitalize(S.areaname)
 			ports += name
 			ports[name] = S
 
 		var/choice = input("Select a docking port to link this shuttle to","Shuttle maintenance") in ports
 		if(!Adjacent(usr) && !isAdminGhost(usr) && !isAI(usr)) return
-		var/obj/structure/docking_port/shuttle/S = ports[choice]
+		var/obj/docking_port/shuttle/S = ports[choice]
 
 		if(S)
 			S.link_to_shuttle(shuttle)
@@ -180,7 +180,7 @@
 		if(!allowed(usr))
 			to_chat(usr, "<font color='red'>Access denied.</font>")
 			return
-		var/obj/structure/docking_port/A = locate(href_list["select"]) in all_docking_ports
+		var/obj/docking_port/A = locate(href_list["select"]) in all_docking_ports
 		if(!A)
 			return
 

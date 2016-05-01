@@ -17,22 +17,22 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 	can_rotate = 0 //Sleepers, body scanners and multi-tile airlocks aren't rotated properly
 
 	var/returned_home = 0
-	var/obj/structure/docking_port/destination/dock_home
+	var/obj/docking_port/destination/dock_home
 
 /datum/shuttle/vox/is_special()
 	return 1
 
 /datum/shuttle/vox/initialize()
 	.=..()
-	dock_home = add_dock(/obj/structure/docking_port/destination/vox/station)
-	add_dock(/obj/structure/docking_port/destination/vox/northeast_solars)
-	add_dock(/obj/structure/docking_port/destination/vox/southeast_solars)
-	add_dock(/obj/structure/docking_port/destination/vox/southwest_solars)
-	add_dock(/obj/structure/docking_port/destination/vox/mining)
+	dock_home = add_dock(/obj/docking_port/destination/vox/station)
+	add_dock(/obj/docking_port/destination/vox/northeast_solars)
+	add_dock(/obj/docking_port/destination/vox/southeast_solars)
+	add_dock(/obj/docking_port/destination/vox/southwest_solars)
+	add_dock(/obj/docking_port/destination/vox/mining)
 
-	set_transit_dock(/obj/structure/docking_port/destination/vox/transit)
+	set_transit_dock(/obj/docking_port/destination/vox/transit)
 
-/datum/shuttle/vox/travel_to(var/obj/structure/docking_port/D, var/obj/machinery/computer/shuttle_control/broadcast = null, var/mob/user)
+/datum/shuttle/vox/travel_to(var/obj/docking_port/D, var/obj/machinery/computer/shuttle_control/broadcast = null, var/mob/user)
 	if(D == dock_home)
 		if(ticker && istype(ticker.mode, /datum/game_mode/heist))
 			switch(alert(usr,"Returning to the deep space will end your raid and report your success or failure. Are you sure?","Vox Skipjack","Yes","No"))
@@ -64,23 +64,23 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/vox/station
+/obj/docking_port/destination/vox/station
 	areaname = "deep space"
 
-/obj/structure/docking_port/destination/vox/northeast_solars
+/obj/docking_port/destination/vox/northeast_solars
 	areaname = "north east solars"
 
-/obj/structure/docking_port/destination/vox/northwest_solars
+/obj/docking_port/destination/vox/northwest_solars
 	areaname = "north west solars"
 
-/obj/structure/docking_port/destination/vox/southeast_solars
+/obj/docking_port/destination/vox/southeast_solars
 	areaname = "south east solars"
 
-/obj/structure/docking_port/destination/vox/southwest_solars
+/obj/docking_port/destination/vox/southwest_solars
 	areaname = "south west solars"
 
-/obj/structure/docking_port/destination/vox/mining
+/obj/docking_port/destination/vox/mining
 	areaname = "vox trading outpost"
 
-/obj/structure/docking_port/destination/vox/transit
+/obj/docking_port/destination/vox/transit
 	areaname = "hyperspace (vox skipjack)"

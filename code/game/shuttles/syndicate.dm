@@ -22,16 +22,16 @@ var/global/datum/shuttle/syndicate/syndicate_shuttle = new(starting_area = /area
 
 /datum/shuttle/syndicate/initialize()
 	.=..()
-	add_dock(/obj/structure/docking_port/destination/syndicate/start)
-	add_dock(/obj/structure/docking_port/destination/syndicate/northwest)
-	add_dock(/obj/structure/docking_port/destination/syndicate/northeast)
-	add_dock(/obj/structure/docking_port/destination/syndicate/southwest)
-	add_dock(/obj/structure/docking_port/destination/syndicate/south)
-	add_dock(/obj/structure/docking_port/destination/syndicate/southeast)
-	add_dock(/obj/structure/docking_port/destination/syndicate/commssat)
-	add_dock(/obj/structure/docking_port/destination/syndicate/mining)
+	add_dock(/obj/docking_port/destination/syndicate/start)
+	add_dock(/obj/docking_port/destination/syndicate/northwest)
+	add_dock(/obj/docking_port/destination/syndicate/northeast)
+	add_dock(/obj/docking_port/destination/syndicate/southwest)
+	add_dock(/obj/docking_port/destination/syndicate/south)
+	add_dock(/obj/docking_port/destination/syndicate/southeast)
+	add_dock(/obj/docking_port/destination/syndicate/commssat)
+	add_dock(/obj/docking_port/destination/syndicate/mining)
 
-	set_transit_dock(/obj/structure/docking_port/destination/syndicate/transit)
+	set_transit_dock(/obj/docking_port/destination/syndicate/transit)
 
 /obj/machinery/computer/shuttle_control/syndicate
 	icon_state = "syndishuttle"
@@ -45,32 +45,32 @@ var/global/datum/shuttle/syndicate/syndicate_shuttle = new(starting_area = /area
 
 //code/game/objects/structures/docking_port.dm
 
-/obj/structure/docking_port/destination/syndicate/start
+/obj/docking_port/destination/syndicate/start
 	areaname = "syndicate outpost"
 
-/obj/structure/docking_port/destination/syndicate/northwest
+/obj/docking_port/destination/syndicate/northwest
 	areaname = "north west of the station"
 
-/obj/structure/docking_port/destination/syndicate/north
+/obj/docking_port/destination/syndicate/north
 	areaname = "north of the station"
 
-/obj/structure/docking_port/destination/syndicate/northeast
+/obj/docking_port/destination/syndicate/northeast
 	areaname = "north east of the station"
 
-/obj/structure/docking_port/destination/syndicate/southwest
+/obj/docking_port/destination/syndicate/southwest
 	areaname = "south west of the station"
 
-/obj/structure/docking_port/destination/syndicate/south
+/obj/docking_port/destination/syndicate/south
 	areaname = "south of the station"
 
-/obj/structure/docking_port/destination/syndicate/southeast
+/obj/docking_port/destination/syndicate/southeast
 	areaname = "south east of the station"
 
-/obj/structure/docking_port/destination/syndicate/commssat
+/obj/docking_port/destination/syndicate/commssat
 	areaname = "south of the Communications Satelite"
 
-/obj/structure/docking_port/destination/syndicate/mining
+/obj/docking_port/destination/syndicate/mining
 	areaname = "north east of the mining asteroid"
 
-/obj/structure/docking_port/destination/syndicate/transit
+/obj/docking_port/destination/syndicate/transit
 	areaname = "hyperspace (syndicate shuttle)"
