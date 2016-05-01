@@ -203,16 +203,16 @@ var/const/MAX_SAVE_SLOTS = 8
 
 /datum/preferences/proc/try_load_save_sqlite(var/theckey, var/theclient, var/theslot)
 	var/attempts = 0
-	while(!load_save_sqlite(theckey, theclient, theslot) && attempts < 100)
-		sleep(10)
+	while(!load_save_sqlite(theckey, theclient, theslot) && attempts < 5)
+		sleep(15)
 		attempts++
-	if(attempts >= 100)//failsafe so people don't get locked out of the round forever
+	if(attempts >= 5)//failsafe so people don't get locked out of the round forever
 		randomize_appearance_for()
 		real_name = random_name(gender)
-		log_debug("Player [theckey] FAILED to load save 100 times and has been randomized.")
-		log_admin("Player [theckey] FAILED to load save 100 times and has been randomized.")
+		log_debug("Player [theckey] FAILED to load save 5 times and has been randomized.")
+		log_admin("Player [theckey] FAILED to load save 5 times and has been randomized.")
 		if(theclient)
-			alert(theclient, "For some reason you've failed to load your save slot 100 times now, so you've been generated a random character. Don't worry, it didn't overwrite your old one.","Randomized Character", "OK")
+			alert(theclient, "For some reason you've failed to load your save slot 5 times now, so you've been generated a random character. Don't worry, it didn't overwrite your old one.","Randomized Character", "OK")
 	saveloaded = 1
 
 /datum/preferences/proc/setup_character_options(var/dat, var/user)
