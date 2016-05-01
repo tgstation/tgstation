@@ -88,6 +88,13 @@ Doesn't work on other aliens/AI.*/
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
 		user << {"<span class='noticealien'>You said: "[msg]" to [M]</span>"}
+		for(var/mob/ded in dead_mob_list)
+			ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
+				<span class='name'>[user]</span> \
+				<span class='game say'>Alien Whisper --> </span> \
+				<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
+				<span class='name'>[M]</span> \
+				<span class='noticealien'>[msg]</span>"
 	else
 		return 0
 	return 1
