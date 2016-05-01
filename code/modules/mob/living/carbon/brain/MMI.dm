@@ -16,6 +16,12 @@
 		/obj/item/robot_parts/l_arm = 1
 	)
 
+	var/list/sammi_assembly_parts = list(
+		/obj/item/weapon/cell = 1,
+		/obj/item/robot_parts/r_arm = 1,
+		/obj/item/robot_parts/l_arm = 1
+	)
+
 	req_access = list(access_robotics)
 
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
@@ -55,9 +61,9 @@ obj/item/device/mmi/Destroy()
 		if(brainmob.stat == DEAD)
 			to_chat(user, "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>")
 			return TRUE
-		if(brainmob.mind in ticker.mode.head_revolutionaries)
-			to_chat(user, "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>")
-			return TRUE
+		//if(brainmob.mind in ticker.mode.head_revolutionaries)
+		//	to_chat(user, "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>")
+		//	return TRUE
 		if(jobban_isbanned(brainmob, "Mobile MMI"))
 			to_chat(user, "<span class='warning'>This brain does not seem to fit.</span>")
 			return TRUE
@@ -82,13 +88,74 @@ obj/item/device/mmi/Destroy()
 		src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 		M.mmi = src
 		return TRUE
+
+
+	if(istype(O,/obj/item/weapon/wrench))
+		var/builtempty = 0
+		for(var/t in sammi_assembly_parts)
+			var/cc=contents_count(t)
+			var/req=sammi_assembly_parts[t]
+			if(cc<req)
+				var/temppart = new t(src)
+				to_chat(user, "<span class='warning'>You're short [req-cc] [temppart]\s.</span>")
+				qdel(temppart)
+				temppart = null
+				return TRUE
+		if(!istype(loc,/turf))
+			to_chat(user, "<span class='warning'>You can't assemble the SAMMI, \the [src] has to be standing on the ground (or a table) to be perfectly precise.</span>")
+			return TRUE
+		if(!brainmob)
+			builtempty = 1
+			//to_chat(user, "<span class='warning'>What are you doing oh god put the brain back in.</span>")
+			//return TRUE
+		if(!builtempty)
+			if(!brainmob.key)
+				if(!mind_can_reenter(brainmob.mind))
+					to_chat(user, "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>")
+					return TRUE
+			if(brainmob.stat == DEAD)
+				to_chat(user, "<span class='warning'>Yeah, good idea. Give something deader than the pizza in your fridge legs.  Mom would be so proud.</span>")
+				return TRUE
+			//if(brainmob.mind in ticker.mode.head_revolutionaries)
+			//	to_chat(user, "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>")
+			//	return TRUE
+			if(jobban_isbanned(brainmob, "SAMMI"))
+				to_chat(user, "<span class='warning'>This brain does not seem to fit.</span>")
+				return TRUE
+		//canmove = 0
+		icon = null
+		invisibility = 101
+		if(!builtempty)
+			var/mob/living/silicon/robot/mommi/sammi/M = new /mob/living/silicon/robot/mommi/sammi(get_turf(loc))
+			if(!M)	return
+			M.invisibility = 0
+			//M.custom_name = created_name
+			//M.Namepick()//SAMMIs aren't concerned with naming themselves, they just want to do a good job.
+			//M.updatename()
+			brainmob.mind.transfer_to(M)
+
+			if(M.mind && M.mind.special_role)
+				M.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+
+			M.job = "SAMMI"
+			M.subtype = "sammi_online"
+			M.icon_state = "sammi_online"
+			M.cell = locate(/obj/item/weapon/cell) in contents
+			M.cell.loc = M
+			src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			M.mmi = src
+			return TRUE
+		else
+			new /mob/living/silicon/robot/mommi/sammi(get_turf(loc))
+
+
 	for(var/t in mommi_assembly_parts)
 		if(istype(O,t))
 			var/cc=contents_count(t)
 			if(cc<mommi_assembly_parts[t])
-				if(!brainmob)
-					to_chat(user, "<span class='warning'>Why are you sticking robot legs on an empty [src], you idiot?</span>")
-					return TRUE
+				//if(!brainmob)
+				//	to_chat(user, "<span class='warning'>Why are you sticking robot legs on an empty [src], you idiot?</span>") // because now we have an actual reason to do it
+				//	return TRUE
 				if(!user.drop_item(O, src))
 					to_chat(user, "<span class='warning'>You can't let go of \the [src]!</span>")
 					return FALSE

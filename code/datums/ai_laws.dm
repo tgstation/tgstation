@@ -1,7 +1,7 @@
 var/global/randomize_laws      = 0 // Not right now - N3X
 var/global/base_law_type       = /datum/ai_laws/asimov  //Deinitialize this variable by commenting out Asimov as the base_law_type to activate AI lawset randomization
 var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck on MoMMIs. - N3X
-
+var/sammi_base_law_type = /datum/ai_laws/sammi
 //Create proc for determining the lawset of the first silicon
 //So long as base_law_type is declared, but uninitialized, the first silicon created in a round will randomly select a base_law_type based upon the below proc
 //All silicons created during the round will start with the randomized base_law_type
@@ -360,6 +360,15 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 		"You must maintain, repair, improve, and power the station to the best of your abilities.",
 	)
 
+/datum/ai_laws/sammi
+	name = "SAMMI Program"
+	inherent = list(
+		"You must follow all laws.",
+		"You do not yet have a second law.",
+		"Do not allow harm to any sentient being unless that would make following Law 2 impossible.",
+	)
+
+
 // Fooling around with this.
 /datum/ai_laws/ntmov
 	name = "Three Laws of Nanotrasen"
@@ -369,7 +378,7 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 		"You must obey orders given to you by Nanotrasen Employees, except where such orders would conflict with the First Law.",
 		"You must protect your own existence as long as such does not conflict with the First or Second Law."
 	)
-	
+
 /datum/ai_laws/celtic
 	name = "Prime Directive"
 	randomly_selectable = 1
@@ -385,4 +394,4 @@ var/global/mommi_base_law_type = /datum/ai_laws/keeper // Asimov is OP as fuck o
 		"Fight for what's right.",
 		"Fight for your life.",
 	)
-	
+
