@@ -64077,10 +64077,15 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAM" = (
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/structure/table/wood,
+/obj/structure/disposalpipe/segment,
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -2;
+	pixel_y = 6
 	},
-/area/maintenance/aft)
+/turf/open/floor/wood,
+/area/library)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -108273,7 +108278,7 @@ aFu
 aHc
 aIw
 aJS
-aJS
+cAM
 aMJ
 aNP
 aOS

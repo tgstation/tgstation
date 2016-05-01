@@ -92,4 +92,5 @@
 /datum/subsystem/on_varedit(edited_var)
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
+	..()
 

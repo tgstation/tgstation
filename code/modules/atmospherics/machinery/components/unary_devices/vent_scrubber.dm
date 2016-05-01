@@ -308,9 +308,7 @@
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
 				update_icon()
-				var/image/I = image(src, loc, dir = dir)
-				I.plane = PLANE_UI_OBJECTS
-				pipe_vision_img = I
+				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
 			return 0
 	else
 		return ..()
@@ -331,9 +329,7 @@
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
 	welded = 0
 	update_icon()
-	var/image/I = image(src, loc, dir = dir)
-	I.plane = PLANE_UI_OBJECTS
-	pipe_vision_img = I
+	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 

@@ -688,7 +688,6 @@ The _flatIcons list is a cache for generated icon files.
 		curblend = A.blend_mode
 
 	// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
-	// TODO: Needs to support overlays/underlays on different planes from parent
 	var/list/layers = list()
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.

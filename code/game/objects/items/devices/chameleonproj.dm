@@ -36,7 +36,7 @@
 			user << "<span class='notice'>Scanned [target].</span>"
 			var/obj/temp = new/obj()
 			temp.appearance = target.appearance
-			temp.plane = initial(target.plane) // scanning things in your inventory
+			temp.layer = initial(target.layer) // scanning things in your inventory
 			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/toggle()

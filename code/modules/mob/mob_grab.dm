@@ -12,7 +12,7 @@
 	var/allow_upgrade = 1
 	var/last_upgrade = 0
 
-	plane = PLANE_UI_OBJECTS
+	layer = 21
 	item_state = "nothing"
 	w_class = 5
 

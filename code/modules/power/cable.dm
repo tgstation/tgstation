@@ -106,7 +106,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/hide(i)
 
 	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 /obj/structure/cable/proc/updateicon()
@@ -525,8 +525,9 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 
 /obj/item/stack/cable_coil/update_icon()
-	if (!item_color)
+	if(!item_color)
 		item_color = pick("red", "yellow", "blue", "green")
+	item_state = "coil_[item_color]"
 	if(amount == 1)
 		icon_state = "coil_[item_color]1"
 		name = "cable piece"

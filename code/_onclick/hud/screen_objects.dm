@@ -9,7 +9,7 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
-	plane = PLANE_UI_BASE
+	layer = 20
 	unacidable = 1
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
@@ -29,6 +29,7 @@
 	maptext_width = 480
 
 /obj/screen/swap_hand
+	layer = 19
 	name = "swap hand"
 
 /obj/screen/swap_hand/Click()
@@ -50,6 +51,7 @@
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
+	layer = 19
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -84,11 +86,9 @@
 	..()
 	if(!active_overlay)
 		active_overlay = image("icon"=icon, "icon_state"="hand_active")
-		active_overlay.plane = PLANE_UI_BASE
 	if(!handcuff_overlay)
 		var/state = (slot_id == slot_r_hand) ? "markus" : "gabrielle"
 		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
-		handcuff_overlay.plane = PLANE_UI_OBJECTS
 
 	overlays.Cut()
 
@@ -136,6 +136,7 @@
 	name = "drop"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_drop"
+	layer = 19
 
 /obj/screen/drop/Click()
 	usr.drop_item_v()
@@ -284,6 +285,7 @@
 	name = "resist"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_resist"
+	layer = 19
 
 /obj/screen/resist/Click()
 	if(isliving(usr))
@@ -377,9 +379,7 @@
 
 /obj/screen/zone_sel/update_icon(mob/user)
 	overlays.Cut()
-	var/image/overlay = image('icons/mob/screen_gen.dmi', "[selecting]")
-	overlay.plane = PLANE_UI_BASE
-	overlays += overlay
+	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/alien
@@ -392,6 +392,23 @@
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
+
+
+/obj/screen/flash
+	name = "flash"
+	icon_state = "blank"
+	blend_mode = BLEND_ADD
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	layer = 17
+
+/obj/screen/damageoverlay
+	icon = 'icons/mob/screen_full.dmi'
+	icon_state = "oxydamageoverlay0"
+	name = "dmg"
+	blend_mode = BLEND_MULTIPLY
+	screen_loc = "CENTER-7,CENTER-7"
+	mouse_opacity = 0
+	layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
 
 /obj/screen/healths
 	name = "health"
