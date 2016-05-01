@@ -51,7 +51,7 @@
 		src << "<span class='warning'>Something went wrong, the selected shuttle doesn't exist anymore."
 		return
 
-	log_admin("ShuttleDestroy: [M]")
+	log_admin("[key_name_admin(usr)] - ShuttleDestroy: [M]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleDestroy on [selected]</b><BR></span>")
 	feedback_add_details("admin_verb","SHTDEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -96,13 +96,15 @@
 				qdel(bad)
 
 	if(!M)
-		usr << "<span class='warning'>The loaded template didn't have a mobile docking port!</span>"
-		// TODO maybe unload the template? Pff, let the admins clean up
-		usr << "<span class='notice'>If you know what you're doing, you can make your own. But this verb cannot help you past that point."
+		usr << "<span class='warning'>The loaded template didn't have a mobile docking port! The template has been deleted.</span>"
+		for(var/S in template.get_affected_turfs(T,centered = TRUE))
+			for(var/atom/AM in S.recursiveContents())
+				qdel(AM)
+			qdel(S)
 		return
 
 	M.dockRoundstart()
 
-	log_admin("ShuttleImport: [map] - [M]")
+	log_admin("[key_name_admin(usr)] - ShuttleImport: [map] - [M]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleImport: [map] - [M]</b><BR></span>")
 	feedback_add_details("admin_verb","SHTIMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
