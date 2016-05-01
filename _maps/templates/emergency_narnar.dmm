@@ -28,23 +28,24 @@
 "B" = (/obj/effect/rune/true_sight,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/gibs/body,/obj/effect/decal/cleanable/blood/gibs/core,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "C" = (/mob/living/simple_animal/hostile/construct/armored,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "D" = (/obj/effect/rune/true_sight,/obj/effect/decal/remains/human,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"E" = (/obj/machinery/door/airlock/cult,/obj/docking_port/mobile/emergency,/turf/open/floor/plating,/area/shuttle/escape)
+"E" = (/obj/machinery/door/airlock/cult,/obj/docking_port/mobile/emergency{name = "shuttle 667"},/turf/open/floor/plating,/area/shuttle/escape)
 "F" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "G" = (/obj/structure/extinguisher_cabinet{has_extinguisher = null; icon_state = "extinguisher_empty"; opened = 1; pixel_x = 27; pixel_y = 0},/obj/item/weapon/extinguisher{safety = 0},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "H" = (/mob/living/simple_animal/hostile/construct/wraith,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "I" = (/obj/effect/rune/narsie,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"J" = (/mob/living/simple_animal/hostile/carp/eyeball{faction = list("cult")},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"K" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"L" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"M" = (/obj/machinery/door/airlock/cult/glass,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"N" = (/obj/structure/dresser,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"O" = (/obj/structure/showcase/horrific_experiment,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"P" = (/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"Q" = (/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"R" = (/obj/structure/table/wood,/obj/item/weapon/tome,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"S" = (/obj/structure/bed,/obj/item/weapon/bedsheet/cult,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"T" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"U" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"J" = (/mob/living/simple_animal/hostile/carp/eyeball{faction = list("cult"); name = "left eyeball"},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"K" = (/mob/living/simple_animal/hostile/carp/eyeball{faction = list("cult"); name = "right eyeball"},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"L" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"M" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"N" = (/obj/machinery/door/airlock/cult/glass,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"O" = (/obj/structure/dresser,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"P" = (/obj/structure/showcase/horrific_experiment,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"Q" = (/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"R" = (/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"S" = (/obj/structure/table/wood,/obj/item/weapon/tome,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"T" = (/obj/structure/bed,/obj/item/weapon/bedsheet/cult,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
+"U" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"V" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
 
 (1,1,1) = {"
 aabcccccbaa
@@ -61,12 +62,12 @@ bjzHjIjHzjb
 cjjjjjjjjjc
 cjADjCjDAjc
 cjjAjzjAjjc
-bjjjJjJvjjb
-xjvjKjKjjLb
-bbqMbscrccb
-xjjjNbtKjOc
-bjjjLbjjjPb
-bQQRSbtjjOc
-bbTTTTTTTbb
-abUUUUUUUba
+bjjjJjKvjjb
+xjvjLjLjjMb
+bbqNbscrccb
+xjjjObtLjPc
+bjjjMbjjjQb
+bRRSTbtjjPc
+bbUUUUUUUbb
+abVVVVVVVba
 "}

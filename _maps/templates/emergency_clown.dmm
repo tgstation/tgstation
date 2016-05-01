@@ -35,7 +35,7 @@
 "aI" = (/turf/closed/wall/shuttle{icon_state = "swall7"; dir = 2},/area/shuttle/escape)
 "aJ" = (/turf/closed/wall/shuttle{icon_state = "swallc4"; dir = 2},/area/shuttle/escape)
 "aK" = (/obj/structure/table,/obj/item/toy/sword,/turf/open/floor/noslip,/area/shuttle/escape)
-"aL" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency,/turf/open/floor/plating,/area/shuttle/escape)
+"aL" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Snappop(tm)!"},/turf/open/floor/plating,/area/shuttle/escape)
 "aM" = (/obj/structure/extinguisher_cabinet{pixel_x = -5; pixel_y = 30},/obj/item/toy/snappop,/turf/open/floor/bluespace,/area/shuttle/escape)
 "aN" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/obj/item/toy/snappop,/turf/open/floor/bluespace,/area/shuttle/escape)
 "aO" = (/obj/structure/bed,/obj/item/weapon/bedsheet/random,/turf/open/floor/noslip,/area/shuttle/escape)
