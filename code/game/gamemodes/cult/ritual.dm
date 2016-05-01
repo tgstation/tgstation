@@ -44,7 +44,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 
 /mob/living/proc/cult_innate_comm()
 	set category = "Cultist"
-	set name = "Imperfect Communion"
+	set name = "Emergency Communion"
 
 	if(!iscultist(usr) || usr.incapacitated())
 		return
