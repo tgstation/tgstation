@@ -10,7 +10,7 @@
 	walltype = "rwall"
 	hardness = 100 // Hulk can't do dick.
 
-	explosion_block = 2
+	explosion_block = 9999
 	girder_type = /obj/structure/girder/reinforced
 
 	penetration_dampening = 40
