@@ -255,7 +255,11 @@
 		return
 	else if(status)
 		. = status
-		throw EXCEPTION("request(): shuttle cannot dock, error: [status]")
+		spawn(0)
+			var/msg = "request(): shuttle [src] cannot dock at [S], \
+				error: [status]"
+			message_admins(msg)
+			throw EXCEPTION(msg)
 		return status	//we can't dock at S
 
 	switch(mode)
@@ -376,7 +380,11 @@
 		if(status == 7)
 			return SHUTTLE_ALREADY_DOCKED
 		else if(status)
-			throw EXCEPTION("dock(): shuttle cannot dock, error: [status]")
+			spawn(0)
+				var/msg = "dock(): shuttle [src] cannot dock at [S1], \
+					error: [status]"
+				message_admins(msg)
+				throw EXCEPTION(msg)
 			return status
 
 		if(canMove())
