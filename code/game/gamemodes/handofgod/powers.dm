@@ -139,11 +139,11 @@
 			var/obj/item/clothing/head/helmet/plate/crusader/prophet/P = new popehat()
 
 			if(H.equip_to_slot_if_possible(P,slot_in_backpack,0,1,1))
-				success = "It is in your backpack"
+				success = "It is in your backpack."
 			else
 				H.unEquip(H.head)
 				H.equip_to_slot_or_del(P,slot_head)
-				success = "It is in your head"
+				success = "It is on your head."
 
 			if(success)
 				H << "<span class='boldnotice'>A powerful hat has been bestowed upon you, you will need to wear it to utilize your staff fully.</span>"
