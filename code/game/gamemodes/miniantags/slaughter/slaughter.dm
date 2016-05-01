@@ -18,7 +18,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	var/feast_sound = 'sound/magic/Demon_consume.ogg'
-	var/death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/magic/demon_dies.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -59,10 +59,6 @@
 		speed = 1
 	else
 		speed = 0
-
-/mob/living/simple_animal/slaughter/death()
-	playsound(get_turf(src),death_sound, 200, 1)
-	..()
 
 /obj/effect/decal/cleanable/blood/innards
 	icon = 'icons/obj/surgery.dmi'

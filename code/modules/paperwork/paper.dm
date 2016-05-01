@@ -40,6 +40,7 @@
 
 
 /obj/item/weapon/paper/update_icon()
+
 	if(burn_state == ON_FIRE)
 		icon_state = "paper_onfire"
 		return
@@ -303,11 +304,11 @@
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
-		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
+
+		if(!in_range(src, user))
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"
-
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
@@ -336,7 +337,6 @@
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
-
 
 
 	add_fingerprint(user)
@@ -401,7 +401,6 @@
 
 /obj/item/weapon/paper/crumpled/update_icon()
 	return
-
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

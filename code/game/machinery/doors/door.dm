@@ -179,7 +179,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 
 
-/obj/machinery/door/blob_act()
+/obj/machinery/door/blob_act(obj/effect/blob/B)
 	if(prob(40))
 		qdel(src)
 	return

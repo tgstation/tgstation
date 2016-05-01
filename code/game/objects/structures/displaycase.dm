@@ -48,7 +48,7 @@
 		showpiece.loc = src.loc
 		showpiece = null
 
-/obj/structure/displaycase/blob_act()
+/obj/structure/displaycase/blob_act(obj/effect/blob/B)
 	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		dump()

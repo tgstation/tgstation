@@ -23,7 +23,7 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/blob_act()
+/obj/structure/reagent_dispensers/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		qdel(src)
 
@@ -70,7 +70,7 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/watertank/blob_act()
+/obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
@@ -98,7 +98,7 @@
 	if(src)
 		qdel(src)
 
-/obj/structure/reagent_dispensers/fueltank/blob_act()
+/obj/structure/reagent_dispensers/fueltank/blob_act(obj/effect/blob/B)
 	boom()
 
 
@@ -169,7 +169,7 @@
 	..()
 	reagents.add_reagent("beer",1000)
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act()
+/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/effect/blob/B)
 	explosion(src.loc,0,3,5,7,10)
 
 

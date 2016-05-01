@@ -9,7 +9,6 @@
 	var/slice_path    // for sliceable food. path of the item resulting from the slicing
 	var/slices_num
 	var/eatverb
-	var/wrapped = 0
 	var/dried_type = null
 	var/dry = 0
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
@@ -65,9 +64,6 @@
 				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
 				return 0
 
-			if(wrapped)
-				M << "<span class='warning'>You can't eat wrapped food!</span>"
-				return 0
 			else if(fullness <= 50)
 				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
@@ -81,8 +77,6 @@
 				return 0
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
-				if(wrapped)
-					return 0
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")

@@ -40,7 +40,7 @@
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
 		if(imp_in)
-			imp_in.gib(no_brain = 1)
+			imp_in.gib(1)
 		qdel(src)
 		return
 	timed_explosion()
@@ -72,7 +72,7 @@
 	sleep(delay/4)
 	explosion(src,heavy,medium,weak,weak, flame_range = weak)
 	if(imp_in)
-		imp_in.gib(no_brain = 1)
+		imp_in.gib(1)
 	qdel(src)
 
 /obj/item/weapon/implant/explosive/macro

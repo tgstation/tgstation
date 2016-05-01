@@ -253,7 +253,7 @@
 		if(istype(A,/obj/structure/chair))
 			user << "<span class='danger'>There is already a chair here.</span>"
 			return
-		if(A.density)
+		if(A.density && !(A.flags & ON_BORDER))
 			user << "<span class='danger'>There is already something here.</span>"
 			return
 

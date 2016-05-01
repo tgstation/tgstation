@@ -117,9 +117,9 @@
 
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
-		A.blob_act()
+		A.blob_act(src)
 	if(istype(loc, /turf/closed/wall))
-		loc.blob_act() //don't ask how a wall got on top of the core, just eat it
+		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
@@ -155,11 +155,11 @@
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T, 5)) //is the target turf impassable
 		make_blob = FALSE
-		T.blob_act() //hit the turf if it is
+		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
 		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
 			make_blob = FALSE
-		A.blob_act() //also hit everything in the turf
+		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
@@ -177,7 +177,7 @@
 			return B
 		else
 			blob_attack_animation(T, controller)
-			T.blob_act() //if we can't move in hit the turf again
+			T.blob_act(src) //if we can't move in hit the turf again
 			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return null
 	else
