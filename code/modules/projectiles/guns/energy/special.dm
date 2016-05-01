@@ -207,6 +207,14 @@
 	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
+/obj/item/weapon/gun/energy/gravity_gun
+	name = "gravitron beamgun"
+	desc = "A projector that blasts high intensity gravitron beams. Has two modes, repulse, and attract."
+	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
+	item_state = null
+	icon_state = "gravity_gun"
+	fire_delay = 60 //Prevents mass destruction by gravity fuckery
+
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
