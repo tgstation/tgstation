@@ -168,6 +168,48 @@
 	spawn(4)
 		qdel(src)
 
+/obj/item/projectile/gravipulse //code copied from mecha gravipults
+	name = "gravitron bolt"
+	icon_state = "spark"
+	hitsound = "sound/weapons/wave.ogg"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
+	color = "#33CCFF"
+	var/turf/T
+	var/power = 5
+
+/obj/item/projectile/gravipulse/Range()
+	T = get_turf(src)
+	for(var/atom/movable/A in orange(T,power))
+		if(A.anchored)
+			continue
+		step_away(A,T)
+
+/obj/item/projectile/gravipulse/on_hit()
+	for(var/atom/movable/A in orange(T,power))
+		if(A.anchored)
+			continue
+		for(var/i=0 to power)
+			step_away(A,T)
+			sleep(1)
+
+/obj/item/projectile/gravipulse/alt
+	color = "#FF6600"
+
+/obj/item/projectile/gravipulse/alt/Range()
+	T = get_turf(src)
+	for(var/atom/movable/A in orange(T,power))
+		if(A.anchored)
+			continue
+		A.throw_at(T,1,1)
+
+/obj/item/projectile/gravipulse/alt/on_hit()
+	for(var/atom/movable/A in orange(T,power))
+		if(A.anchored)
+			continue
+		A.throw_at(T,power,1)
+
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"
 	icon_state = "spark"

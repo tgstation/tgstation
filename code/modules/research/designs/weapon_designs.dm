@@ -204,6 +204,16 @@
 	build_path = /obj/item/weapon/gun/energy/wormhole_projector
 	category = list("Weapons")
 
+/datum/design/gravitygun
+	name = "Gravitron Blaster"
+	desc = "A dual-mode projector that blasts high powered gravitrons."
+	id = "gravitygun"
+	req_tech = list("combat" = 6, "materials" = 7, "bluespace" = 5, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 9000, MAT_GOLD = 9000, MAT_URANIUM = 7000, MAT_GLASS = 10000, MAT_METAL = 10000, MAT_DIAMOND = 4000) //Self recharging 5x5 AOE fuckery justifies the price.
+	build_path = /obj/item/weapon/gun/energy/gravity_gun
+	category = list("Weapons")
+
 /datum/design/reciever
 	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
