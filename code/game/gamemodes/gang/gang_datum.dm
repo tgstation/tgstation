@@ -2,9 +2,9 @@
 //Datum-based gangs
 
 /datum/gang
-	var/name = "ERROR"
-	var/color = "white"
-	var/color_hex = "#FFFFFF"
+	var/name = "SYNDICATE"
+	var/color = "red"
+	var/color_hex = "#DA0000"
 	var/list/datum/mind/gangsters = list() //gang B Members
 	var/list/datum/mind/bosses = list() //gang A Bosses
 	var/list/obj/item/device/gangtool/gangtools = list()
