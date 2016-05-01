@@ -928,4 +928,4 @@ var/next_mob_id = 0
 			updatehealth()
 		if("resize")
 			update_transform()
-
+	..()
