@@ -139,7 +139,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
+	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -790,7 +790,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			for rapid healing, a medical HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
 	item = /obj/item/weapon/storage/firstaid/tactical
-	cost = 9
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/thermal
@@ -839,7 +839,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's \
 			'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
-	cost = 3
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/c4
@@ -862,7 +862,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			load on the grid, causing a stationwide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes."
 	item = /obj/item/device/powersink
-	cost = 10
+	cost = 6
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -901,7 +901,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/rad_laser
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targetting Device"

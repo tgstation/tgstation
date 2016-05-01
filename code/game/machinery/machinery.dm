@@ -153,10 +153,11 @@ Class Procs:
 		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
 
-/obj/machinery/proc/open_machine()
+/obj/machinery/proc/open_machine(drop = 1)
 	state_open = 1
 	density = 0
-	dropContents()
+	if(drop)
+		dropContents()
 	update_icon()
 	updateUsrDialog()
 
@@ -186,7 +187,7 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/blob_act()
+/obj/machinery/blob_act(obj/effect/blob/B)
 	if(!density)
 		qdel(src)
 	if(prob(75))
@@ -240,6 +241,7 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.

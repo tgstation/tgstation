@@ -54,7 +54,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
-/obj/machinery/r_n_d/circuit_imprinter/blob_act()
+/obj/machinery/r_n_d/circuit_imprinter/blob_act(obj/effect/blob/B)
 	if (prob(50))
 		qdel(src)
 
@@ -90,9 +90,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	..()
 
 /obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
-
-	if (O.is_open_container()) //inserting reagents into the machine
-		return 1
 
 	if (istype(O, /obj/item/stack/sheet/glass) || istype(O, /obj/item/stack/sheet/mineral/gold) || istype(O, /obj/item/stack/sheet/mineral/diamond))
 		. = 1

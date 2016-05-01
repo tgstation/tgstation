@@ -52,7 +52,7 @@ MASS SPECTROMETER
 
 			var/mob/living/L = locate() in O
 
-			if(O.invisibility == 101)
+			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.invisibility = 0
 				if(L)
 					flick_sonar(O)
@@ -60,7 +60,7 @@ MASS SPECTROMETER
 					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
-							O.invisibility = 101
+							O.invisibility = INVISIBILITY_MAXIMUM
 			else
 				if(L)
 					flick_sonar(O)

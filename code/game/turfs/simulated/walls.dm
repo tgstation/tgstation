@@ -80,11 +80,12 @@
 		..()
 	return
 
-/turf/closed/wall/blob_act()
+/turf/closed/wall/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		dismantle_wall()
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	if(M.damtype == "brute")
 		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
@@ -226,11 +227,12 @@
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 	if(thermite >= 50)
+		var/burning_time = max(100,300 - thermite)
 		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
 		F.burn_tile()
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
-		spawn(max(100,300-thermite))
+		spawn(burning_time)
 			if(O)
 				qdel(O)
 	else

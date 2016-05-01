@@ -195,7 +195,7 @@
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	name = "blood-red hardsuit helmet"
-	desc = "A dual-mode advanced helmet designed for work in special operations. It is in travel mode. Property of Gorlex Marauders."
+	desc = "A dual-mode advanced helmet designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
 	alt_desc = "A dual-mode advanced helmet designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
@@ -221,7 +221,7 @@
 		return
 	on = !on
 	if(on || force)
-		user << "<span class='notice'>You switch your hardsuit to travel mode.</span>"
+		user << "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>"
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
@@ -230,7 +230,7 @@
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		user << "<span class='notice'>You switch your hardsuit to combat mode.</span>"
+		user << "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>"
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)
@@ -272,7 +272,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/syndi
 	name = "blood-red hardsuit"
-	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in travel mode. Property of Gorlex Marauders."
+	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
 	alt_desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_hardsuit"
@@ -290,7 +290,7 @@
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit helmet"
-	desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in travel mode. Property of Gorlex Marauders."
+	desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in EVA mode. Property of Gorlex Marauders."
 	alt_desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit0-syndielite"
 	item_color = "syndielite"

@@ -45,7 +45,7 @@
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(!B.placed)
-			B.place_blob_core()
+			B.place_blob_core(B.base_point_rate, 0)
 		B.transport_core()
 
 /obj/screen/blob/Blobbernaut

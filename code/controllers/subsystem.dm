@@ -6,6 +6,7 @@
 	var/priority = 0		//priority affects order of initialization. Higher priorities are initialized first, lower priorities later. Can be decimal and negative values.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
 	var/display = 100		//display affects order the subsystem is displayed in the MC tab
+	var/McTickCheck = 1
 
 	// Dynamic Wait
 	// A system for scaling a subsystem's fire rate based on lag.
@@ -44,6 +45,8 @@
 	can_fire = 0
 
 /datum/subsystem/proc/pause()
+	if(!McTickCheck)
+		return 0
 	. = 1
 	if (!dynamic_wait)
 		Master.priority_queue += src

@@ -216,7 +216,7 @@
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && buildstage != 0) //can't break the electronics if there isn't any inside.
 		health -= damage
 		if(health <= 0)
 			stat |= BROKEN

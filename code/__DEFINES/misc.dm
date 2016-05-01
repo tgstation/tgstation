@@ -316,6 +316,7 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_ARTIFICIAL 2
 #define SENTIENCE_OTHER 3
 #define SENTIENCE_MINEBOT 4
+#define SENTIENCE_BOSS 5
 
 //Fire stuff, for burn_state
 #define LAVA_PROOF -2

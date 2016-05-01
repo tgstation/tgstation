@@ -237,7 +237,7 @@
 
 /obj/machinery/teleport
 	name = "teleport"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/teleporter.dmi'
 	density = 1
 	anchored = 1
 
@@ -297,6 +297,9 @@
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
+		if(power_station && power_station.engaged)
+			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
+			update_icon()
 		return
 	if(exchange_parts(user, W))
 		return
@@ -450,9 +453,12 @@
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
-		src.engaged = !src.engaged
-		use_power(5000)
-		visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
+		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
+			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
+		else
+			src.engaged = !src.engaged
+			use_power(5000)
+			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
 		visible_message("<span class='alert'>No target detected.</span>")
 		src.engaged = 0
@@ -469,7 +475,7 @@
 /obj/machinery/teleport/station/update_icon()
 	if(panel_open)
 		icon_state = "controller-o"
-	else if(stat & NOPOWER)
+	else if(stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
 	else
 		icon_state = "controller"

@@ -3,7 +3,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/list/table_contents = list()
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC)
+	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
 
 
 /obj/structure/table/MouseDrop(mob/living/user)

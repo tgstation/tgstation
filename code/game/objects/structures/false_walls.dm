@@ -48,6 +48,14 @@
 			update_icon()
 	opening = 0
 
+/obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
+	if(user.environment_smash)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		qdel(src)
+
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
 		smooth = SMOOTH_FALSE

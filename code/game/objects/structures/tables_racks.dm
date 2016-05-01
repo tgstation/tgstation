@@ -53,7 +53,7 @@
 		if(3)
 			take_damage(rand(40,80), BRUTE, 0)
 
-/obj/structure/table/blob_act()
+/obj/structure/table/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 
@@ -408,7 +408,7 @@
 		if(3)
 			take_damage(rand(5,25), BRUTE, 0)
 
-/obj/structure/rack/blob_act()
+/obj/structure/rack/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 	else
@@ -416,8 +416,8 @@
 
 
 /obj/structure/rack/mech_melee_attack(obj/mecha/M)
-	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-	rack_destroy()
+	if(..())
+		take_damage(M.force*2)
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1

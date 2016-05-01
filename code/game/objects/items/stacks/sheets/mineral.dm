@@ -28,6 +28,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/weapon/ore/glass, 1, one_per_turf = 0, on_floor = 1), \
 /*	new/datum/stack_recipe("sandstone wall", ???), \
 		new/datum/stack_recipe("sandstone floor", ???),\ */
 	)
@@ -53,13 +54,13 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	amount = 30
 
 /*
- * Sandbags(
+ * Sandbags
  */
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
 	icon = 'icons/obj/items.dmi'
-	icon_state = "sandbag"
+	icon_state = "sandbags"
 	singular_name = "sandbag"
 	force = 5
 	throwforce = 5

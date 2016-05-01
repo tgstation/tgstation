@@ -61690,8 +61690,12 @@
 /area/library)
 "bVL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper,
 /obj/machinery/light,
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -2;
+	pixel_y = 6
+	},
 /turf/open/floor/wood,
 /area/library)
 "bVM" = (
