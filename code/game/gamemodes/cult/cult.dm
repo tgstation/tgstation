@@ -23,36 +23,6 @@
 		if(is_sacrifice_target(mind))	return 0
 	return 1
 
-/proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
-	if(!message)
-		return
-	if(say)
-		user.say("O bidai nabora se[pick("'","`")]sma!")
-	else
-		user.whisper("O bidai nabora se[pick("'","`")]sma!")
-	sleep(10)
-	if(!user)
-		return
-	if(say)
-		user.say(message)
-	else
-		user.whisper(message)
-	var/my_message = "Error, message null. You should probably report this."
-	for(var/mob/M in mob_list)
-		if(iscultist(M) || (M in dead_mob_list))
-			if(clear || !ishuman(user))
-				my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
-			else //Emergency comms
-				my_message = "<span class='purple'><i>Acolyte ???:</i> <b>[message]</b></span>"
-			if(M in dead_mob_list)
-				M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]"
-			else
-				M << my_message
-
-	log_say("[user.real_name]/[user.key] : [message]")
-
-
-
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
@@ -120,6 +90,7 @@
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes around and on it. You must do this after sacrificing your target."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
 	if("sacrifice" in cult_objectives)
@@ -139,12 +110,12 @@
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
-		memorize_cult_objectives(cult_mind)
+		add_cultist(cult_mind, 0)
 	..()
+
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)
 	if(!istype(mob))
 		return
-	mob.cult_add_comm()
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
@@ -180,14 +151,17 @@
 			B.show_to(mob)
 		return 1
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
+/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
-		cult_mind.current.Paralyse(5)
+		if(stun)
+			cult_mind.current.Paralyse(5)
 		cult += cult_mind
 		cult_mind.current.faction |= "cult"
-		cult_mind.current.cult_add_comm()
+		cult_mind.current.verbs += /mob/living/proc/cult_help
+		var/datum/action/innate/cultcomm/C = new()
+		C.Grant(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has been converted to the cult!</span>"
 	if(jobban_isbanned(cult_mind.current, ROLE_CULTIST))
@@ -195,18 +169,21 @@
 	return 1
 
 
-/datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
+/datum/game_mode/cult/add_cultist(datum/mind/cult_mind, stun) //INHERIT
 	if (!..(cult_mind))
 		return
 	memorize_cult_objectives(cult_mind)
 
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
+/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.faction -= "cult"
-		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
-		cult_mind.current.Paralyse(5)
+		cult_mind.current.verbs -= /mob/living/proc/cult_help
+		for(var/datum/action/innate/cultcomm/C in cult_mind.current.actions)
+			qdel(C)
+		if(stun)
+			cult_mind.current.Paralyse(5)
 		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
