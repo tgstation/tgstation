@@ -24,7 +24,7 @@
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	new /obj/item/weapon/storage/box/beanbag(src)
-	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)
 	new /obj/item/weapon/storage/belt/bandolier(src)
 

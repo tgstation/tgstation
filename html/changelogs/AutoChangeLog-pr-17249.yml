@@ -1,0 +1,9 @@
+author: Joan
+delete-after: True
+changes: 
+  - experiment: "You can examine tomes, soulstones, and construct shells to see what you can do with them."
+  - rscadd: "Releasing a shade from a soulstone now allows you to reuse that soulstone for capturing shades or souls, instead of preventing the stone's use forever if the shade dies."
+  - imageadd: "Runes now actually pulse red on failure."
+  - rscadd: "The Summon Cultist rune no longer includes the cultists invoking it in the selection menu."
+  - tweak: "Imperfect Communication renamed to Emergency Communication."
+  - rscdel: "You can no longer hide the Nar-Sie rune with a Talisman of Veiling/Revealing."

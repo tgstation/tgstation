@@ -1,6 +1,10 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum
+	var/var_edited = 0 //Warrenty void if seal is broken
+
+/datum/proc/on_varedit(modified_var) //called whenever a var is edited
+	var_edited = 1
 	return
 
 /client/proc/debug_variables(datum/D in world)
@@ -218,6 +222,8 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
 		body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
 
+	if(D.var_edited)
+		body += "<br><font size='1' color='red'><b>Var Edited</b></font>"
 	body += "</div>"
 
 	body += "</div></td>"
