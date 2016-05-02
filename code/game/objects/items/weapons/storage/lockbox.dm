@@ -17,29 +17,28 @@
 	var/icon_broken = "lockbox+b"
 
 
-/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if (W.GetID())
-		if(src.broken)
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.GetID())
+		if(broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
 			return
-		if(src.allowed(user))
-			src.locked = !( src.locked )
-			if(src.locked)
-				src.icon_state = src.icon_locked
+		if(allowed(user))
+			locked = !locked
+			if(locked)
+				icon_state = icon_locked
 				user << "<span class='danger'>You lock the [src.name]!</span>"
 				return
 			else
-				src.icon_state = src.icon_closed
+				icon_state = icon_closed
 				user << "<span class='danger'>You unlock the [src.name]!</span>"
 				return
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 			return
 	if(!locked)
-		..()
+		return ..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
-	return
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -48,16 +47,16 @@
 		return 0
 	..()
 
-/obj/item/weapon/storage/lockbox/emag_act(mob/user as mob)
+/obj/item/weapon/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = 1
 		locked = 0
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("\The [src] has been broken by [] with an electromagnetic card!", user), 1, text("<span class='italics'>You hear a faint electrical spark.</span>"), 2)
+		if(user)
+			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
-/obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
+/obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
 		user << "<span class='warning'>It's locked!</span>"
 	else
@@ -82,9 +81,8 @@
 
 /obj/item/weapon/storage/lockbox/loyalty/New()
 	..()
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/loyalty(src)
 	new /obj/item/weapon/implanter/loyalty(src)
 
 
@@ -114,7 +112,6 @@
 	..()
 	new /obj/item/clothing/tie/medal/silver/valor(src)
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/tie/medal/conduct(src)
 	new /obj/item/clothing/tie/medal/gold/captain(src)

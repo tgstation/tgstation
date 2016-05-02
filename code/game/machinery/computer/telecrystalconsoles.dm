@@ -2,7 +2,6 @@
 
 var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 
-
 /obj/machinery/computer/telecrystals
 	name = "\improper Telecrystal assignment station"
 	desc = "A device used to manage telecrystals during group operations. You shouldn't be looking at this particular one..."
@@ -14,7 +13,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker
 	name = "\improper Telecrystal upload/receive station"
 	desc = "A device used to manage telecrystals during group operations. To use, simply insert your uplink. With your uplink installed \
-	you can upload your telecrystals to the group's pool using the console, or be assigned additional telecrystals by your lieutenant."
+			you can upload your telecrystals to the group's pool using the console, or be assigned additional telecrystals by your lieutenant."
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
@@ -29,33 +28,26 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	else
 		name = "[name] [rand(1,999)]"
 
-
-/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item))
-
-		if(uplinkholder)
-			user << "<span class='notice'>The [src] already has an uplink in it.</span>"
+/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
+	if(uplinkholder)
+		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
+		return
+	if(O.hidden_uplink)
+		var/obj/item/I = user.get_active_hand()
+		if(!user.drop_item())
 			return
-
-		if(O.hidden_uplink)
-			var/obj/item/P = user.get_active_hand()
-			if(!user.drop_item())
-				return
-			uplinkholder = P
-			P.loc = src
-			P.add_fingerprint(user)
-			update_icon()
-			updateUsrDialog()
-		else
-			user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
-
-
+		uplinkholder = I
+		I.loc = src
+		I.add_fingerprint(user)
+		update_icon()
+		updateUsrDialog()
+	else
+		user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
 	if(uplinkholder)
 		overlays += "[initial(icon_state)]-closed"
-
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)
@@ -63,25 +55,25 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		uplinkholder = null
 		update_icon()
 
-/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(var/amt, var/addLog = 1)
+/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
-		if(amt <= uplinkholder.hidden_uplink.uses)
-			uplinkholder.hidden_uplink.uses -= amt
+		if(amt <= uplinkholder.hidden_uplink.telecrystals)
+			uplinkholder.hidden_uplink.telecrystals -= amt
 			linkedboss.storedcrystals += amt
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
-/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(var/amt, var/addLog = 1)
+/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= linkedboss.storedcrystals)
-			uplinkholder.hidden_uplink.uses += amt
+			uplinkholder.hidden_uplink.telecrystals += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
 				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
 
 ///////
 
-/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user as mob)
+/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(user)
@@ -94,7 +86,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
 
 	if(uplinkholder)
-		dat += "[uplinkholder.hidden_uplink.uses] telecrystals remain in this uplink.<BR>"
+		dat += "[uplinkholder.hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
 		if(linkedboss)
 			dat += "Donate TC: <a href='byond://?src=\ref[src];donate1=1'>1</a> | <a href='byond://?src=\ref[src];donate5=1'>5</a>"
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
@@ -137,11 +129,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	var/list/TCstations = list()
 	var/list/transferlog = list()
 
-/obj/machinery/computer/telecrystals/boss/proc/logTransfer(var/logmessage)
+/obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
 	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
-	for(var/obj/machinery/computer/telecrystals/uplinker/A in range(scanrange, src.loc))
+	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
 		if(!A.linkedboss)
 			TCstations += A
 			A.linkedboss = src
@@ -152,16 +144,16 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
 	var/danger
-	danger = player_list.len
-	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
+	danger = joined_player_list.len - ticker.mode.syndicates.len
+	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 
-/obj/machinery/computer/telecrystals/boss/proc/scaleTC(var/amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
+/obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
 	storedcrystals += amt * NUKESCALINGMODIFIER
 
 /////////
 
-/obj/machinery/computer/telecrystals/boss/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(user)
@@ -177,7 +169,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
 		dat += "[A.name] | "
 		if(A.uplinkholder)
-			dat += "[A.uplinkholder.hidden_uplink.uses] telecrystals."
+			dat += "[A.uplinkholder.hidden_uplink.telecrystals] telecrystals."
 		if(storedcrystals)
 			dat+= "<BR>Add TC: <a href ='?src=\ref[src];give1=\ref[A]'>1</a> | <a href ='?src=\ref[src];give5=\ref[A]'>5</a>"
 		dat += "<BR>"

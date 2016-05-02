@@ -55,8 +55,10 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
-	else
+	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"
+	else
+		return ..()
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
@@ -114,7 +116,8 @@
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
-			if(!S)	continue
+			if(!S)
+				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
 			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
@@ -144,7 +147,8 @@
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
-			if(!M)	continue
+			if(!M)
+				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
 			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"

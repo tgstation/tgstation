@@ -5,10 +5,9 @@
 	icon_state = "pointer"
 	item_state = "pen"
 	var/pointer_icon_state
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
-	m_amt = 500
-	g_amt = 500
+	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = 2 //Increased to 2, because diodes are w_class 2. Conservation of matter.
 	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
@@ -39,11 +38,6 @@
 	..()
 	diode = new /obj/item/weapon/stock_parts/micro_laser/ultra
 
-
-
-/obj/item/device/laser_pointer/attack(mob/living/M, mob/user)
-	laser_act(M, user)
-
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
@@ -54,23 +48,19 @@
 			user << "<span class='notice'>You install a [diode.name] in [src].</span>"
 		else
 			user << "<span class='notice'>[src] already has a diode installed.</span>"
-		return
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(diode)
 			user << "<span class='notice'>You remove the [diode.name] from \the [src].</span>"
 			diode.loc = get_turf(src.loc)
 			diode = null
-		return
-	..()
-	return
+	else
+		return ..()
 
-/obj/item/device/laser_pointer/afterattack(var/atom/target, var/mob/living/user, flag, params)
-	if(flag)	//we're placing the object on a table or in backpack
-		return
-	laser_act(target, user)
+/obj/item/device/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
+	laser_act(target, user, params)
 
-/obj/item/device/laser_pointer/proc/laser_act(var/atom/target, var/mob/living/user)
+/obj/item/device/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
 	if( !(user in (viewers(7,target))) )
 		return
 	if (!diode)
@@ -81,7 +71,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna && (H.dna.check_mutation(HULK) || NOGUNS in H.dna.species.specflags))
+		if(H.dna.check_mutation(HULK) || NOGUNS in H.dna.species.specflags)
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 
@@ -98,8 +88,8 @@
 	//human/alien mobs
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(user.zone_sel.selecting == "eyes")
-			add_logs(user, C, "shone in the eyes", object="laser pointer")
+		if(user.zone_selected == "eyes")
+			add_logs(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -115,16 +105,16 @@
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
-	//robots and AI
-	else if(issilicon(target))
+	//robots
+	else if(isrobot(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
-			flick("e_flash", S.flash)
+			S.flash_eyes(affect_silicon = 1)
 			S.Weaken(rand(5,10))
 			S << "<span class='danger'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
-			add_logs(user, S, "shone in the sensors", object="laser pointer")
+			add_logs(user, S, "shone in the sensors", src)
 		else
 			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
 
@@ -134,19 +124,26 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(1)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", object="laser pointer")
+			add_logs(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
 	var/list/showto = list()
-	for(var/mob/M in range(7,targloc))
+	for(var/mob/M in viewers(7,targloc))
 		if(M.client)
 			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
-	I.pixel_x = target.pixel_x + rand(-5,5)
-	I.pixel_y = target.pixel_y + rand(-5,5)
+	var/list/click_params = params2list(params)
+	if(click_params)
+		if(click_params["icon-x"])
+			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+		if(click_params["icon-y"])
+			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+	else
+		I.pixel_x = target.pixel_x + rand(-5,5)
+		I.pixel_y = target.pixel_y + rand(-5,5)
 
 	if(outmsg)
 		user << outmsg
@@ -159,7 +156,7 @@
 			recharging = 1
 			SSobj.processing |= src
 		if(energy <= 0)
-			user << "<span class='warning'>The [src]'s battery is overused, it needs time to recharge!</span>"
+			user << "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
 	flick_overlay(I, showto, 10)

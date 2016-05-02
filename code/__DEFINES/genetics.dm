@@ -8,6 +8,7 @@
 #define EPILEPSY	"Epilepsy"
 #define MUTATE		"Unstable DNA"
 #define COUGH		"Cough"
+#define DWARFISM	"Dwarfism"
 #define CLOWNMUT	"Clumsiness"
 #define TOURETTES	"Tourettes Syndrome"
 #define DEAFMUT		"Deafness"
@@ -15,7 +16,6 @@
 #define RACEMUT		"Monkified"
 #define BADSIGHT	"Near Sightness"
 #define LASEREYES	"Laser Eyes"
-#define STEALTH		"Cloak Of Darkness"
 #define CHAMELEON	"Chameleon"
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
@@ -24,6 +24,11 @@
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
+
+#define UI_CHANGED "ui changed"
+#define UE_CHANGED "ue changed"
+
+#define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
 
 // String identifiers for associative list lookup
 
@@ -61,7 +66,7 @@
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
 
-#define DNA_STRUC_ENZYMES_BLOCKS	23
+#define DNA_STRUC_ENZYMES_BLOCKS	19
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -73,6 +78,7 @@
 #define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	64
 #define TR_KEEPSRC		128
+#define TR_KEEPORGANS	256
 
 //Organ stuff, It's here because "Genetics" is the most relevant file for organs
 #define ORGAN_ORGANIC   1

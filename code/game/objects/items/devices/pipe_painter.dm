@@ -4,6 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
+	flags = NOBLUDGEON
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
 		"red"			= rgb(255,0,0),
@@ -15,15 +16,14 @@
 	)
 	var/mode = "grey"
 
-	m_amt = 5000
-	g_amt = 2000
+	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 
-/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob, proximity_flag)
+/obj/item/device/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
 	//Make sure we only paint adjacent items
-	if(proximity_flag!= 1)
+	if(!proximity_flag)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
+	if(!istype(A,/obj/machinery/atmospherics/pipe))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A
@@ -33,7 +33,7 @@
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_node_icon() //updates the neighbors
 
-/obj/item/device/pipe_painter/attack_self(mob/user as mob)
+/obj/item/device/pipe_painter/attack_self(mob/user)
 	mode = input("Which colour do you want to use?","Pipe painter") in modes
 
 /obj/item/device/pipe_painter/examine()

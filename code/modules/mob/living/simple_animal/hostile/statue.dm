@@ -16,6 +16,7 @@
 	speed = -1
 	maxHealth = 50000
 	health = 50000
+	healable = 0
 
 	harm_intent_damage = 70
 	melee_damage_lower = 68
@@ -44,6 +45,7 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
+	gold_core_spawnable = 1
 
 
 // No movement while seen code.
@@ -56,13 +58,13 @@
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
 
 	// Give nightvision
-	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	see_invisible = SEE_INVISIBLE_NOLIGHTING
 
 	// Set creator
 	if(creator)
 		src.creator = creator
 
-/mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
+/mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
 			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
@@ -96,12 +98,12 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
+/mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
-	if(T && destination)
+	if(T && destination && T.lighting_object)
 		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)
@@ -115,7 +117,7 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
-			if(M.client && CanAttack(M) && !issilicon(M))
+			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
 				if(!M.eye_blind)
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
@@ -131,13 +133,13 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib(var/animation = 0)
-	dust(animation)
+/mob/living/simple_animal/hostile/statue/gib()
+	dust()
 
 
 // Stop attacking clientless mobs
 
-/mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
+/mob/living/simple_animal/hostile/statue/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
@@ -161,7 +163,7 @@
 	clothes_req = 0
 	range = 14
 
-/obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets)
+/obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets,mob/user = usr)
 	for(var/turf/T in targets)
 		for(var/obj/machinery/light/L in T)
 			L.flicker()
@@ -177,11 +179,11 @@
 	clothes_req = 0
 	range = 10
 
-/obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets)
+/obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in living_mob_list)
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
-			L.eye_blind = max(L.eye_blind, 4)
+			L.blind_eyes(4)
 	return
 
 //Toggle Night Vision
@@ -196,12 +198,30 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(target.see_invisible == SEE_INVISIBLE_LIVING)
-			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
-			name = "Toggle Nightvision \[ON\]"
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
+				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"
+
 		else
-			target.see_invisible = SEE_INVISIBLE_LIVING
-			name = "Toggle Nightvision \[OFF\]"
-	return
+			if(target.see_invisible == SEE_INVISIBLE_LIVING)
+				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				target.see_invisible = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"
+
+
+/mob/living/simple_animal/hostile/statue/sentience_act()
+	faction -= "neutral"
+
+/mob/living/simple_animal/hostile/statue/restrained()
+	. = ..()
+	if(can_be_seen(loc))
+		return 1

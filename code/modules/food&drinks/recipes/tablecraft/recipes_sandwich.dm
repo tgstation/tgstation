@@ -14,6 +14,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sandwich
+	category = CAT_FOOD
 
 /datum/table_recipe/grilledcheesesandwich
 	name = "Grilled cheese sandwich"
@@ -22,6 +23,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
+	category = CAT_FOOD
 
 /datum/table_recipe/slimesandwich
 	name = "Jelly sandwich"
@@ -30,6 +32,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
+	category = CAT_FOOD
 
 /datum/table_recipe/cherrysandwich
 	name = "Jelly sandwich"
@@ -38,6 +41,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
+	category = CAT_FOOD
 
 /datum/table_recipe/icecreamsandwich
 	name = "Icecream sandwich"
@@ -47,6 +51,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+	category = CAT_FOOD
 
 /datum/table_recipe/notasandwich
 	name = "Not a sandwich"
@@ -55,6 +60,7 @@
 		/obj/item/clothing/mask/fakemoustache = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/notasandwich
+	category = CAT_FOOD
 
 
 

@@ -1,4 +1,4 @@
-/proc/priority_announce(var/text, var/title = "", var/sound = 'sound/AI/attention.ogg', var/type)
+/proc/priority_announce(text, title = "", sound = 'sound/AI/attention.ogg', type)
 	if(!text)
 		return
 
@@ -27,9 +27,11 @@
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << announcement
+			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				continue
 			M << sound(sound)
 
-/proc/print_command_report(var/text = "", var/title = "Central Command Update")
+/proc/print_command_report(text = "", title = "Central Command Update")
 	for (var/obj/machinery/computer/communications/C in machines)
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -37,14 +39,17 @@
 			P.info = text
 			C.messagetitle.Add("[title]")
 			C.messagetext.Add(text)
+			P.update_icon()
 
-/proc/minor_announce(var/message, var/title = "Attention:", var/alert)
+/proc/minor_announce(message, title = "Attention:", alert)
 	if(!message)
 		return
 
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>"
+			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				continue
 			if(alert)
 				M << sound('sound/misc/notice1.ogg')
 			else

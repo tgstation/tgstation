@@ -1,10 +1,13 @@
+
 /client
 		////////////////
 		//ADMIN THINGS//
 		////////////////
 	var/datum/admins/holder = null
-	var/buildmode		= 0
+	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
+	var/AI_Interact		= 0
 
+	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 
@@ -14,7 +17,7 @@
 	var/datum/preferences/prefs = null
 	var/move_delay		= 1
 	var/moving			= null
-	var/adminobs		= null
+
 	var/area			= null
 
 		///////////////
@@ -22,14 +25,11 @@
 		///////////////
 	var/ambience_playing= null
 	var/played			= 0
-
 		////////////
 		//SECURITY//
 		////////////
-	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
-
 
 		////////////////////////////////////
 		//things that require the database//
@@ -40,5 +40,13 @@
 
 	preload_rsc = PRELOAD_RSC
 
+	var/global/obj/screen/click_catcher/void
+
 	// Used by html_interface module.
 	var/hi_last_pos
+
+
+	//datum that controls the displaying and hiding of tooltips
+	var/datum/tooltip/tooltips
+
+

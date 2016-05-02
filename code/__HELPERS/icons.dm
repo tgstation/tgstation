@@ -217,7 +217,7 @@ world
 
 
 	// Multiply all alpha values by this float
-/icon/proc/ChangeOpacity(opacity = 1.0)
+/icon/proc/ChangeOpacity(opacity = 1)
 	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
 
 // Convert to grayscale
@@ -783,7 +783,8 @@ The _flatIcons list is a cache for generated icon files.
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
 	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)	continue//If layer is greater than what we need, skip it.
+		if(I:layer>A.layer)
+			continue//If layer is greater than what we need, skip it.
 		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
@@ -799,10 +800,14 @@ The _flatIcons list is a cache for generated icon files.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)	I.pixel_x--
-			if(2)	I.pixel_x++
-			if(3)	I.pixel_y--
-			if(4)	I.pixel_y++
+			if(1)
+				I.pixel_x--
+			if(2)
+				I.pixel_x++
+			if(3)
+				I.pixel_y--
+			if(4)
+				I.pixel_y++
 		overlays += I//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
@@ -867,10 +872,34 @@ The _flatIcons list is a cache for generated icon files.
 	del(atom_icon)
 	return text_image
 
+var/global/list/friendly_animal_types = list()
+
+// Pick a random animal instead of the icon, and use that instead
+/proc/getRandomAnimalImage(atom/A)
+	if(!friendly_animal_types.len)
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
+			if(initial(SA.gold_core_spawnable) == 2)
+				friendly_animal_types += SA
+
+
+	var/mob/living/simple_animal/SA = pick(friendly_animal_types)
+
+	var/icon = initial(SA.icon)
+	var/icon_state = initial(SA.icon_state)
+
+	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
+
+	if(ispath(SA, /mob/living/simple_animal/butterfly))
+		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
+
+	// For debugging
+	final_image.text = initial(SA.name)
+	return final_image
 
 //Find's the average colour of the icon
 //By vg's ComicIronic
-/proc/AverageColour(var/icon/I)
+/proc/AverageColour(icon/I)
 	var/list/colours = list()
 	for(var/x_pixel = 1 to I.Width())
 		for(var/y_pixel = 1 to I.Height())
@@ -889,7 +918,7 @@ The _flatIcons list is a cache for generated icon files.
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
-/proc/DrawPixel(var/icon/I,var/colour,var/drawX,var/drawY)
+/proc/DrawPixel(icon/I,colour,drawX,drawY)
 	if(!I)
 		return 0
 
@@ -906,7 +935,7 @@ The _flatIcons list is a cache for generated icon files.
 
 
 //Interface for easy drawing of one pixel on an atom.
-/atom/proc/DrawPixelOn(var/colour, var/drawX, var/drawY)
+/atom/proc/DrawPixelOn(colour, drawX, drawY)
 	var/icon/I = new(icon)
 	var/icon/J = DrawPixel(I, colour, drawX, drawY)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
@@ -915,4 +944,39 @@ The _flatIcons list is a cache for generated icon files.
 	return 0
 
 
+var/global/list/humanoid_icon_cache = list()
+//For creating consistent icons for human looking simple animals
+/proc/get_flat_human_icon(var/icon_id,var/outfit,var/datum/preferences/prefs)
+	if(!icon_id || !humanoid_icon_cache[icon_id])
+		var/mob/living/carbon/human/dummy/body = new()
+
+		if(prefs)
+			prefs.copy_to(body)
+		if(outfit)
+			body.equipOutfit(outfit, TRUE)
+
+		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+
+		body.dir = NORTH
+		var/icon/partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=NORTH)
+
+		body.dir = SOUTH
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=SOUTH)
+
+		body.dir = WEST
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=WEST)
+
+		body.dir = EAST
+		partial = getFlatIcon(body)
+		out_icon.Insert(partial,dir=EAST)
+
+		qdel(body)
+
+		humanoid_icon_cache[icon_id] = out_icon
+		return out_icon
+	else
+		return humanoid_icon_cache[icon_id]
 

@@ -6,7 +6,7 @@ var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
 	icon_state = "x2"
 	var/id = null			//id of this bump_teleporter.
 	var/id_target = null	//id of bump_teleporter which this moves you to.
-	invisibility = 101 		//nope, can't see this
+	invisibility = INVISIBILITY_ABSTRACT 		//nope, can't see this
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -17,7 +17,7 @@ var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
 
 /obj/effect/bump_teleporter/Destroy()
 	BUMP_TELEPORTERS -= src
-	..()
+	return ..()
 
 /obj/effect/bump_teleporter/Bumped(atom/user)
 	if(!ismob(user))

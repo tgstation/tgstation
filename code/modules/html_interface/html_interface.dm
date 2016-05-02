@@ -63,6 +63,8 @@ Closes the interface on all clients.
 When working with byond:// links make sure to reference the HTML interface object and NOT the original object. Topic() will still be called on
 your object, but it will pass through the HTML interface first allowing interception at a higher level.
 
+If you want to use custom resources(images/css/js) with an existing interface:
+You have to use modules/client/asset_cache to ensure they get sent BEFORE the interface opens
 
 	** Sample code **
 
@@ -105,6 +107,10 @@ mob/verb/test()
 	// The initial height of the browser control, used when the window is first shown to a client.
 	var/height
 
+	// A type associated list of assets the interface needs.
+	//Sent to the client when the interface opens on the client for the first time.
+	var/static/list/asset_list
+
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
 	html_interfaces.Add(src)
 
@@ -126,12 +132,20 @@ mob/verb/test()
 /*                 * Hooks */
 /datum/html_interface/proc/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 
-/datum/html_interface/proc/sendResources(client/client)
-	client << browse_rsc('jquery.min.js')
-	client << browse_rsc('bootstrap.min.js')
-	client << browse_rsc('bootstrap.min.css')
-	client << browse_rsc('html_interface.css')
-	client << browse_rsc('html_interface.js')
+//if you need to override this, either call ..() or add your resources to asset_list
+/datum/html_interface/proc/registerResources(var/list/resources = list())
+	resources["jquery.min.js"] = 'js/jquery.min.js'
+	resources["bootstrap.min.js"] = 'js/bootstrap.min.js'
+	resources["bootstrap.min.css"] = 'css/bootstrap.min.css'
+	resources["html_interface.css"] = 'css/html_interface.css'
+	resources["html_interface.js"] = 'js/html_interface.js'
+	var/assetlist = list()
+	for (var/R in resources)
+		register_asset(R,resources[R])
+		assetlist += R
+	if (!asset_list)
+		asset_list = list()
+	asset_list[type] = assetlist
 
 /datum/html_interface/proc/createWindow(datum/html_interface_client/hclient)
 	winclone(hclient.client, "window", "browser_\ref[src]")
@@ -207,19 +221,18 @@ mob/verb/test()
 	hclient = getClient(hclient, TRUE)
 
 	if (istype(hclient))
-		// This needs to be commented out due to BYOND bug http://www.byond.com/forum/?post=1487244
-		// /client/proc/send_resources() executes this per client to avoid the bug, but by using it here files may be deleted just as the HTML is loaded,
-		// causing file not found errors.
-//		src.sendResources(hclient.client)
+		if ((type in asset_list) && islist(asset_list[type]))
+			send_asset_list(hclient.client, asset_list[type], TRUE)
 
-		if (winexists(hclient.client, "browser_\ref[src]"))
-			src._renderTitle(hclient, TRUE)
-			src._renderLayout(hclient)
-		else
+		if (!winexists(hclient.client, "browser_\ref[src]"))
 			src.createWindow(hclient)
-			hclient.is_loaded = FALSE
-			hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
-			winshow(hclient.client, "browser_\ref[src]", TRUE)
+			//src._renderTitle(hclient, TRUE)
+			//src._renderLayout(hclient)
+
+		hclient.is_loaded = FALSE
+		hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
+
+		winshow(hclient.client, "browser_\ref[src]", TRUE)
 
 		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 

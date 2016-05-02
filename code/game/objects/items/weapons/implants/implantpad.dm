@@ -6,10 +6,10 @@
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	var/obj/item/weapon/implantcase/case = null
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 
 
 /obj/item/weapon/implantpad/update_icon()
@@ -19,7 +19,7 @@
 		icon_state = "implantpad-0"
 
 
-/obj/item/weapon/implantpad/attack_hand(mob/user as mob)
+/obj/item/weapon/implantpad/attack_hand(mob/user)
 	if(case && (user.l_hand == src || user.r_hand == src))
 		user.put_in_active_hand(case)
 
@@ -33,17 +33,15 @@
 
 
 /obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
-	..()
 	if(istype(C, /obj/item/weapon/implantcase))
 		if(!case)
 			if(!user.unEquip(C))
 				return
 			C.loc = src
 			case = C
+		update_icon()
 	else
-		return
-	update_icon()
-
+		return ..()
 
 /obj/item/weapon/implantpad/attack_self(mob/user)
 	user.set_machine(src)
@@ -52,12 +50,6 @@
 		if(case.imp)
 			if(istype(case.imp, /obj/item/weapon/implant))
 				dat += case.imp.get_data()
-				if(istype(case.imp, /obj/item/weapon/implant/tracking))
-					dat += {"ID (1-100):
-					<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
-					<A href='byond://?src=\ref[src];tracking_id=-1'>-</A> [case.imp:id]
-					<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
-					<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
 		else
 			dat += "The implant casing is empty."
 	else
@@ -72,11 +64,6 @@
 		return
 	if((usr.contents.Find(src)) || ((in_range(src, usr) && istype(loc, /turf))))
 		usr.set_machine(src)
-		if(href_list["tracking_id"])
-			var/obj/item/weapon/implant/tracking/T = case.imp
-			T.id += text2num(href_list["tracking_id"])
-			T.id = min(100, T.id)
-			T.id = max(1, T.id)
 
 		if(istype(loc, /mob))
 			attack_self(loc)

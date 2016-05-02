@@ -25,7 +25,6 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	flag = "bullet"
 
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
 	..()
@@ -37,7 +36,6 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
 	damage = 60
-	flag = "bullet"
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
@@ -82,7 +80,7 @@
 		return
 	A.ex_act(2)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
-	for(var/mob/M in range(10, src))
+	for(var/mob/M in urange(10, src))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
 	qdel(src)
@@ -120,8 +118,18 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	var/splash = 0
 
-obj/item/projectile/kinetic/New()
+/obj/item/projectile/kinetic/super
+	damage = 11
+	range = 4
+
+/obj/item/projectile/kinetic/hyper
+	damage = 12
+	range = 5
+	splash = 1
+
+/obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return
@@ -132,20 +140,22 @@ obj/item/projectile/kinetic/New()
 		damage *= 4
 	..()
 
-/obj/item/projectile/kinetic/Range()
-	range--
-	if(range <= 0)
-		new /obj/item/effect/kinetic_blast(src.loc)
-		qdel(src)
+/obj/item/projectile/kinetic/on_range()
+	new /obj/item/effect/kinetic_blast(src.loc)
+	..()
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
 	var/turf/target_turf= get_turf(target)
-	if(istype(target_turf, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = target_turf
+	if(istype(target_turf, /turf/closed/mineral))
+		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
-
+	if(src.splash)
+		for(var/turf/T in range(splash, target_turf))
+			if(istype(T, /turf/closed/mineral))
+				var/turf/closed/mineral/M = T
+				M.gets_drilled(firer)
 
 
 /obj/item/effect/kinetic_blast
@@ -177,8 +187,10 @@ obj/item/projectile/kinetic/New()
 /obj/item/ammo_casing/energy/wormhole/New(var/obj/item/weapon/gun/energy/wormhole_projector/wh)
 	gun = wh
 
-/obj/item/projectile/beam/wormhole/on_hit(var/atom/target)
+/obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
+		var/turf/portal_destination = pick(orange(6, src))
+		do_teleport(target, portal_destination)
 		return ..()
 	if(!gun)
 		qdel(src)
@@ -206,29 +218,31 @@ obj/item/projectile/kinetic/New()
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 1
+	range = 3
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure < 30)
-		name = "full strength plasma blast"
-		damage *= 3
-		range += 3
+	if(environment)
+		var/pressure = environment.return_pressure()
+		if(pressure < 30)
+			name = "full strength plasma blast"
+			damage *= 3
 	..()
 
-/obj/item/projectile/plasma/on_hit(var/atom/target)
-	if(istype(target, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = target
+/obj/item/projectile/plasma/on_hit(atom/target)
+	. = ..()
+	if(istype(target, /turf/closed/mineral))
+		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-	return ..()
+		range = max(range - 1, 1)
+		return -1
 
 /obj/item/projectile/plasma/adv
-	range = 2
+	range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 3
+	range = 6

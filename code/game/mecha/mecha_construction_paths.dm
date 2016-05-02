@@ -34,7 +34,7 @@
 			S.use(5)
 	return 1
 
-/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
+/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
@@ -81,7 +81,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/ripley_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/ripley_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/ripley_chassis/spawn_result()
@@ -155,7 +155,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/ripley/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/ripley/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/ripley/custom_action(index, diff, atom/used_atom, mob/user)
@@ -291,7 +291,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/gygax_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/gygax_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/gygax_chassis/spawn_result()
@@ -300,7 +300,7 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "gygax0"
 	const_holder.density = 1
-	del(src)
+	qdel(src)
 	return
 
 
@@ -336,7 +336,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Advanced capacitor is installed."),
 					 //8
-					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv,
+					 list("key"=/obj/item/weapon/stock_parts/capacitor,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Advanced scanner module is secured."),
 					 //9
@@ -344,7 +344,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Advanced scanner module is installed."),
 					 //10
-					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Weapon control module is secured."),
 					 //11
@@ -388,7 +388,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/gygax/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/gygax/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/gygax/custom_action(index, diff, atom/used_atom, mob/user)
@@ -473,42 +473,48 @@
 				holder.icon_state = "gygax8"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs advanced scanner module to the [holder].", "<span class='notice'>You install advanced scanner module to the [holder].</span>")
-				qdel(used_atom)
+				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.unEquip(I)
+				I.loc = holder
 				holder.icon_state = "gygax11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 				holder.icon_state = "gygax9"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the advanced scanner module.", "<span class='notice'>You secure the advanced scanner module.</span>")
+				user.visible_message("[user] secures the advanced scanner module.", "<span class='notice'>You secure the scanner module.</span>")
 				holder.icon_state = "gygax12"
 			else
-				user.visible_message("[user] removes the advanced scanner module from the [holder].", "<span class='notice'>You remove the advanced scanner module from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/scanning_module/adv(get_turf(holder))
+				user.visible_message("[user] removes the advanced scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
+				var/obj/item/I = locate(/obj/item/weapon/stock_parts/scanning_module) in holder
+				I.loc = get_turf(holder)
 				holder.icon_state = "gygax10"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs advanced capacitor to the [holder].", "<span class='notice'>You install advanced capacitor to the [holder].</span>")
-				qdel(used_atom)
+				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.unEquip(I)
+				I.loc = holder
 				holder.icon_state = "gygax13"
 			else
-				user.visible_message("[user] unfastens the advanced scanner module.", "<span class='notice'>You unfasten the advanced scanner module.</span>")
+				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 				holder.icon_state = "gygax11"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the advanced capacitor.", "<span class='notice'>You secure the advanced capacitor.</span>")
+				user.visible_message("[user] secures the  capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 				holder.icon_state = "gygax14"
 			else
-				user.visible_message("[user] removes the advanced capacitor from the [holder].", "<span class='notice'>You remove the advanced capacitor from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/capacitor/adv(get_turf(holder))
+				user.visible_message("[user] removes the  capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
+				var/obj/item/I = locate(/obj/item/weapon/stock_parts/capacitor) in holder
+				I.loc = get_turf(holder)
 				holder.icon_state = "gygax12"
 		if(6)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
 				holder.icon_state = "gygax15"
 			else
-				user.visible_message("[user] unfastens the advanced capacitor.", "<span class='notice'>You unfasten the advanced capacitor.</span>")
+				user.visible_message("[user] unfastens the capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
 				holder.icon_state = "gygax13"
 		if(5)
 			if(diff==FORWARD)
@@ -551,7 +557,9 @@
 	return 1
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
-	..()
+	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
+	M.CheckParts(holder)
+	qdel(holder)
 	feedback_inc("mecha_gygax_created",1)
 	return
 
@@ -570,7 +578,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/firefighter_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/firefighter_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/firefighter_chassis/spawn_result()
@@ -579,7 +587,7 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "fireripley0"
 	const_holder.density = 1
-	del(src)
+	qdel(src)
 	return
 
 
@@ -648,7 +656,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/firefighter/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/firefighter/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/firefighter/custom_action(index, diff, atom/used_atom, mob/user)
@@ -788,7 +796,7 @@
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
-/datum/construction/mecha/honker_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/honker_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/honker_chassis/custom_action(step, atom/used_atom, mob/user)
@@ -801,7 +809,7 @@
 	var/obj/item/mecha_parts/chassis/const_holder = holder
 	const_holder.construct = new /datum/construction/mecha/honker(const_holder)
 	const_holder.density = 1
-	del(src)
+	qdel(src)
 	return
 
 
@@ -820,7 +828,7 @@
 					 list("key"=/obj/item/weapon/bikehorn),//11
 					 )
 
-/datum/construction/mecha/honker/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/honker/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/mecha/honker/custom_action(step, atom/used_atom, mob/user)
@@ -870,7 +878,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/durand_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/durand_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/durand_chassis/spawn_result()
@@ -914,7 +922,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Super capacitor is installed."),
 					 //8
-					 list("key"=/obj/item/weapon/stock_parts/capacitor/super,
+					 list("key"=/obj/item/weapon/stock_parts/capacitor,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Phasic scanner module is secured."),
 					 //9
@@ -922,7 +930,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Phasic scanner module is installed."),
 					 //10
-					 list("key"=/obj/item/weapon/stock_parts/scanning_module/phasic,
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Weapon control module is secured."),
 					 //11
@@ -967,7 +975,7 @@
 					)
 
 
-/datum/construction/reversible/mecha/durand/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/durand/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/durand/custom_action(index, diff, atom/used_atom, mob/user)
@@ -1052,42 +1060,48 @@
 				holder.icon_state = "durand8"
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
-				qdel(used_atom)
+				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.unEquip(I)
+				I.loc = holder
 				holder.icon_state = "durand11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 				holder.icon_state = "durand9"
 		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the phasic scanner module.", "<span class='notice'>You secure the phasic scanner module.</span>")
+				user.visible_message("[user] secures the scanner module.", "<span class='notice'>You secure the scanner module.</span>")
 				holder.icon_state = "durand12"
 			else
-				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the phasic scanner module from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/scanning_module/phasic(get_turf(holder))
+				user.visible_message("[user] removes the scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
+				var/obj/item/I = locate(/obj/item/weapon/stock_parts/scanning_module) in holder
+				I.loc = get_turf(holder)
 				holder.icon_state = "durand10"
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install super capacitor to the [holder].</span>")
-				qdel(used_atom)
+				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.unEquip(I)
+				I.loc = holder
 				holder.icon_state = "durand13"
 			else
-				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the phasic scanner module.</span>")
+				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 				holder.icon_state = "durand11"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the super capacitor.", "<span class='notice'>You secure the super capacitor.</span>")
+				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 				holder.icon_state = "durand14"
 			else
-				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the super capacitor from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/capacitor/super(get_turf(holder))
+				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
+				var/obj/item/I = locate(/obj/item/weapon/stock_parts/capacitor) in holder
+				I.loc = get_turf(holder)
 				holder.icon_state = "durand12"
 		if(6)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
 				holder.icon_state = "durand15"
 			else
-				user.visible_message("[user] unfastens the super capacitor.", "<span class='notice'>You unfasten the super capacitor.</span>")
+				user.visible_message("[user] unfastens the super capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
 				holder.icon_state = "durand13"
 		if(5)
 			if(diff==FORWARD)
@@ -1130,7 +1144,9 @@
 	return 1
 
 /datum/construction/reversible/mecha/durand/spawn_result()
-	..()
+	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
+	M.CheckParts(holder)
+	qdel(holder)
 	feedback_inc("mecha_durand_created",1)
 	return
 
@@ -1152,7 +1168,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/phazon_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/phazon_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/phazon_chassis/spawn_result()
@@ -1205,7 +1221,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="The bluespace crystal is installed."),
 					 //10
-					 list("key"=/obj/item/bluespace_crystal,
+					 list("key"=/obj/item/weapon/ore/bluespace_crystal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Super capacitor is secured."),
 					 //12
@@ -1213,7 +1229,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Super capacitor is installed."),
 					 //12
-					 list("key"=/obj/item/weapon/stock_parts/capacitor/super,
+					 list("key"=/obj/item/weapon/stock_parts/capacitor,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Phasic scanner module is secured."),
 					 //13
@@ -1221,7 +1237,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Phasic scanner module is installed."),
 					 //14
-					 list("key"=/obj/item/weapon/stock_parts/scanning_module/phasic,
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Weapon control module is secured."),
 					 //15
@@ -1266,7 +1282,7 @@
 					)
 
 
-/datum/construction/reversible/mecha/phazon/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/phazon/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/phazon/custom_action(index, diff, atom/used_atom, mob/user)
@@ -1351,35 +1367,41 @@
 				holder.icon_state = "phazon8"
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
-				qdel(used_atom)
+				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.unEquip(I)
+				I.loc = holder
 				holder.icon_state = "phazon11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 				holder.icon_state = "phazon9"
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the phasic scanner module.", "<span class='notice'>You secure the phasic scanner module.</span>")
+				user.visible_message("[user] secures the phasic scanner module.", "<span class='notice'>You secure the scanner module.</span>")
 				holder.icon_state = "phazon12"
 			else
-				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the phasic scanner module from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/scanning_module/phasic(get_turf(holder))
+				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
+				var/obj/item/I = locate(/obj/item/weapon/stock_parts/scanning_module) in holder
+				I.loc = get_turf(holder)
 				holder.icon_state = "phazon10"
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install super capacitor to the [holder].</span>")
-				qdel(used_atom)
+				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.unEquip(I)
+				I.loc = holder
 				holder.icon_state = "phazon13"
 			else
-				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the phasic scanner module.</span>")
+				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 				holder.icon_state = "phazon11"
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the super capacitor.", "<span class='notice'>You secure the super capacitor.</span>")
+				user.visible_message("[user] secures the super capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 				holder.icon_state = "phazon14"
 			else
-				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the super capacitor from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/capacitor/super(get_turf(holder))
+				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
+				var/obj/item/I = locate(/obj/item/weapon/stock_parts/capacitor) in holder
+				I.loc = get_turf(holder)
 				holder.icon_state = "phazon12"
 		if(10)
 			if(diff==FORWARD)
@@ -1387,7 +1409,7 @@
 				qdel(used_atom)
 				holder.icon_state = "phazon15"
 			else
-				user.visible_message("[user] unsecures the super capacitor from the [holder].", "<span class='notice'>You unsecure the super capacitor from the [holder].</span>")
+				user.visible_message("[user] unsecures the super capacitor from the [holder].", "<span class='notice'>You unsecure the capacitor from the [holder].</span>")
 				holder.icon_state = "phazon13"
 		if(9)
 			if(diff==FORWARD)
@@ -1395,7 +1417,7 @@
 				holder.icon_state = "phazon16"
 			else
 				user.visible_message("[user] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>")
-				new /obj/item/bluespace_crystal(get_turf(holder))
+				new /obj/item/weapon/ore/bluespace_crystal(get_turf(holder))
 				holder.icon_state = "phazon14"
 		if(8)
 			if(diff==FORWARD)
@@ -1456,7 +1478,9 @@
 	return 1
 
 /datum/construction/reversible/mecha/phazon/spawn_result()
-	..()
+	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
+	M.CheckParts(holder)
+	qdel(holder)
 	feedback_inc("mecha_phazon_created",1)
 	return
 
@@ -1477,7 +1501,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/odysseus_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/odysseus_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/odysseus_chassis/spawn_result()
@@ -1550,7 +1574,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/odysseus/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/odysseus/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/odysseus/custom_action(index, diff, atom/used_atom, mob/user)

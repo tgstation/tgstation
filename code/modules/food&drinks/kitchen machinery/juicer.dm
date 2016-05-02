@@ -15,6 +15,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = "grapejuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = "grapejuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = "banana",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = "lemonjuice",
@@ -35,7 +37,7 @@
 	return
 
 
-/obj/machinery/juicer/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/juicer/attackby(obj/item/O, mob/user, params)
 	if(default_unfasten_wrench(user, O))
 		return
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
@@ -62,17 +64,17 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/juicer/attack_paw(mob/user as mob)
+/obj/machinery/juicer/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/juicer/attack_ai(mob/user as mob)
+/obj/machinery/juicer/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/juicer/attack_hand(mob/user as mob)
+/obj/machinery/juicer/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/juicer/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/juicer/interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
@@ -96,7 +98,7 @@
 		beaker_contents = "\The [src]  has attached a beaker with something."
 		is_beaker_ready = 1
 	else
-		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
+		beaker_contents = "\The [src]  has attached a beaker and the beaker is full!"
 
 	var/dat = {"
 <b>Processing chamber contains:</b><br>
@@ -138,18 +140,18 @@
 	beaker = null
 	update_icon()
 
-/obj/machinery/juicer/proc/get_juice_id(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
+/obj/machinery/juicer/proc/get_juice_id(obj/item/weapon/reagent_containers/food/snacks/grown/O)
 	for (var/i in allowed_items)
 		if (istype(O, i))
 			return allowed_items[i]
 
-/obj/machinery/juicer/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	if (!istype(O))
+/obj/machinery/juicer/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
+	if (!istype(O) || !O.seed)
 		return 5
-	else if (O.potency == -1)
+	else if (O.seed.potency == -1)
 		return 5
 	else
-		return round(5*sqrt(O.potency))
+		return round(5*sqrt(O.seed.potency))
 
 /obj/machinery/juicer/proc/juice()
 	power_change() //it is a portable machine
@@ -172,12 +174,15 @@
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
 

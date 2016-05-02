@@ -119,43 +119,23 @@
 	desc = "Vegan meat, on a stick."
 	bonus_reagents = list("nutriment" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/kebab/tail
+	name = "lizard-tail kebab"
+	desc = "Severed lizard tail on a stick."
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
 	desc = "Just add water!"
 	icon_state = "monkeycube"
 	bitesize = 12
-	wrapped = 0
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
-	if(!proximity) return
-	if(istype(O,/obj/structure/sink) && !wrapped)
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
-		user.drop_item()
-		loc = get_turf(O)
-		return Expand()
-	..()
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/attack_self(mob/user)
-	if(wrapped)
-		Unwrap(user)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
 	new /mob/living/carbon/monkey(get_turf(src))
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Unwrap(mob/user)
-	icon_state = "monkeycube"
-	desc = "Just add water!"
-	user << "<span class='notice'>You unwrap the cube.</span>"
-	wrapped = 0
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped
-	desc = "Still wrapped in some paper."
-	icon_state = "monkeycubewrap"
-	wrapped = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"
@@ -205,3 +185,25 @@
 	bonus_reagents = list("nutriment" = 1, "capsaicin" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
 	filling_color = "#FA8072"
+
+#define LUMP "lump"
+#define STAR "star"
+#define LIZARD "lizard"
+#define CORGI "corgi"
+
+/obj/item/weapon/reagent_containers/food/snacks/nugget
+    name = "chicken nugget"
+    filling_color = "#B22222"
+    bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+    list_reagents = list("nutriment" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/nugget/New()
+    ..()
+    var/shape = pick(LUMP, STAR, LIZARD, CORGI)
+    desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+    icon_state = "nugget_[shape]"
+
+#undef LUMP
+#undef STAR
+#undef LIZARD
+#undef CORGI

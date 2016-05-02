@@ -10,15 +10,11 @@
 	if(!mother)
 		return
 	var/list/map = mother.map
-	for(var/turf/simulated/T in map)
+	for(var/turf/T in map)
 		SSair.remove_from_active(T)
-	for(var/turf/simulated/T in map)
+	for(var/turf/open/T in map)
 		if(T.air)
-			T.air.oxygen = T.oxygen
-			T.air.nitrogen = T.nitrogen
-			T.air.carbon_dioxide = T.carbon_dioxide
-			T.air.toxins = T.toxins
-			T.air.temperature = T.temperature
+			T.air.copy_from_turf(T)
 		SSair.add_to_active(T)
 
 //Only places atoms/turfs on area borders
@@ -33,7 +29,7 @@
 		if(is_border(T))
 			place(T)
 
-/datum/mapGeneratorModule/border/proc/is_border(var/turf/T)
+/datum/mapGeneratorModule/border/proc/is_border(turf/T)
 	for(var/direction in list(SOUTH,EAST,WEST,NORTH))
 		if (get_step(T,direction) in mother.map)
 			continue

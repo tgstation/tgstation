@@ -169,9 +169,9 @@
 					blackbox.messages += blackbox_msg
 
 	spawn(50)
-		PlaceInPool(virt)
+		qdel(virt)
 
-/proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
+/proc/Broadcast_SimpleMessage(source, frequency, text, data, mob/M, compression, level)
 
   /* ###### Prepare the radio connection ###### */
 
@@ -179,7 +179,7 @@
 		var/mob/living/carbon/human/H = new
 		M = H
 
-	var/datum/radio_frequency/connection = radio_controller.return_frequency(frequency)
+	var/datum/radio_frequency/connection = SSradio.return_frequency(frequency)
 
 	var/display_freq = connection.frequency
 
@@ -209,7 +209,7 @@
 	// --- Broadcast to syndicate radio! ---
 
 	else if(data == 3)
-		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
+		var/datum/radio_frequency/syndicateconnection = SSradio.return_frequency(SYND_FREQ)
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
 			var/turf/position = get_turf(R)

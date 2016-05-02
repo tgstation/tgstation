@@ -4,10 +4,10 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	can_fire = 1
 	priority = 0
 
-	var/restart_timeout = 250				//delay when restarting server
+	can_fire = 1 // This needs to fire before round start.
+
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
 
@@ -21,7 +21,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-		//These bible variables should be a preference
+	//These bible variables should be a preference
 	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
 	var/Bible_item_state					//item_state the chaplain has chosen for his bible
 	var/Bible_name							//name of the bible
@@ -41,7 +41,12 @@ var/datum/subsystem/ticker/ticker
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
+	var/queue_delay = 0
+	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
+
 	var/obj/screen/cinematic = null			//used for station explosion cinematic
+
+	var/maprotatechecked = 0
 
 
 /datum/subsystem/ticker/New()
@@ -54,9 +59,10 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/Initialize(timeofday, zlevel)
 	if (zlevel)
 		return ..()
-	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
-	setupGenetics()
+	if(!syndicate_code_phrase)
+		syndicate_code_phrase	= generate_code_phrase()
+	if(!syndicate_code_response)
+		syndicate_code_response	= generate_code_phrase()
 	setupFactions()
 	..()
 
@@ -64,9 +70,8 @@ var/datum/subsystem/ticker/ticker
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = config.lobby_countdown * 10
-			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
+			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
 			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
-			crewmonitor.generateMiniMaps() // start generating minimaps (this is a background process)
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
@@ -97,11 +102,13 @@ var/datum/subsystem/ticker/ticker
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
+			check_queue()
+			check_maprotate()
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
-				auto_toggle_ooc(1) // Turn it on
-				declare_completion()
+				toggle_ooc(1) // Turn it on
+				declare_completion(force_ending)
 				spawn(50)
 					if(mode.station_was_nuked)
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
@@ -133,7 +140,8 @@ var/datum/subsystem/ticker/ticker
 		mode = config.pick_mode(master_mode)
 		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
-			del(mode)
+			qdel(mode)
+			mode = null
 			SSjob.ResetOccupations()
 			return 0
 
@@ -144,7 +152,8 @@ var/datum/subsystem/ticker/ticker
 
 	if(!Debug2)
 		if(!can_continue)
-			del(mode)
+			qdel(mode)
+			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
@@ -162,7 +171,8 @@ var/datum/subsystem/ticker/ticker
 		mode.announce()
 
 	current_state = GAME_STATE_PLAYING
-	auto_toggle_ooc(0) // Turn it off
+	if(!config.ooc_during_round)
+		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
@@ -171,8 +181,7 @@ var/datum/subsystem/ticker/ticker
 	equip_characters()
 	data_core.manifest()
 
-	master_controller.roundHasStarted()
-
+	Master.RoundStart()
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
 	world << sound('sound/AI/welcome.ogg')
@@ -192,24 +201,23 @@ var/datum/subsystem/ticker/ticker
 			if(S.name != "AI")
 				qdel(S)
 
-		if(!admins.len)
-			send2irc("Server", "Round just started with no admins online!")
+		var/list/adm = get_admin_counts()
+		if(!adm["present"])
+			send2irc("Server", "Round just started with no active admins online!")
 
 	return 1
 
-
-	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
-	if( cinematic )	return	//already a cinematic in progress!
+//Plus it provides an easy way to make cinematics for other events. Just use this as a template
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
+	if( cinematic )
+		return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
 		hi.closeAll()
-
-	auto_toggle_ooc(1) // Turn it on
 	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	var/obj/structure/stool/bed/temp_buckle = new(src)
+	var/obj/structure/bed/temp_buckle = new(src)
 	if(station_missed)
 		for(var/mob/M in mob_list)
 			M.buckled = temp_buckle				//buckles the mob so it can't do anything
@@ -237,6 +245,10 @@ var/datum/subsystem/ticker/ticker
 					world << sound('sound/effects/explosionfar.ogg')
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("gang war") //Gang Domination (just show the override screen)
+					cinematic.icon_state = "intro_malf_still"
+					flick("intro_malf",cinematic)
+					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -252,8 +264,6 @@ var/datum/subsystem/ticker/ticker
 		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
-
-
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name
@@ -282,8 +292,11 @@ var/datum/subsystem/ticker/ticker
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					sleep(100)
-					if(cinematic)	del(cinematic)
-					if(temp_buckle)	del(temp_buckle)
+					if(cinematic)
+						qdel(cinematic)
+						cinematic = null
+					if(temp_buckle)
+						qdel(temp_buckle)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -293,10 +306,11 @@ var/datum/subsystem/ticker/ticker
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
-	sleep(300)
-
-	if(cinematic)	qdel(cinematic)		//end the cinematic
-	if(temp_buckle)	qdel(temp_buckle)	//release everybody
+	spawn(300)
+		if(cinematic)
+			qdel(cinematic)		//end the cinematic
+		if(temp_buckle)
+			qdel(temp_buckle)	//release everybody
 	return
 
 
@@ -364,7 +378,7 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(round( 100.0 *  start_state.score(end_state), 0.1), 100.0)
+	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
@@ -372,8 +386,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
 		if(station_evacuated)
 			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
-		else
-			world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
 	world << "<BR>"
 
 	//Silicon laws report
@@ -390,7 +403,8 @@ var/datum/subsystem/ticker/ticker
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
+				if(robo.mind)
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
@@ -407,7 +421,7 @@ var/datum/subsystem/ticker/ticker
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)()
+			call(mode, handler)(force_ending)
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -426,6 +440,14 @@ var/datum/subsystem/ticker/ticker
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
+	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(SSgarbage.didntgc.len)
+		var/dellog = ""
+		for(var/path in SSgarbage.didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
+		world.log << dellog
+
 	return 1
 
 /datum/subsystem/ticker/proc/send_random_tip()
@@ -433,3 +455,40 @@ var/datum/subsystem/ticker/ticker
 	if(randomtips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 
+/datum/subsystem/ticker/proc/check_queue()
+	if(!queued_players.len || !config.hard_popcap)
+		return
+
+	queue_delay++
+	var/mob/new_player/next_in_line = queued_players[1]
+
+	switch(queue_delay)
+		if(5) //every 5 ticks check if there is a slot available
+			if(living_player_count() < config.hard_popcap)
+				if(next_in_line && next_in_line.client)
+					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>"
+					next_in_line << sound('sound/misc/notice1.ogg')
+					next_in_line.LateChoices()
+					return
+				queued_players -= next_in_line //Client disconnected, remove he
+			queue_delay = 0 //No vacancy: restart timer
+		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
+			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
+			queued_players -= next_in_line
+			queue_delay = 0
+
+/datum/subsystem/ticker/proc/check_maprotate()
+	if (!config.maprotation || !SERVERTOOLS)
+		return
+	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
+		return
+	if (maprotatechecked)
+		return
+
+	maprotatechecked = 1
+
+	//map rotate chance defaults to 75% of the length of the round (in minutes)
+	if (!prob((world.time/600)*config.maprotatechancedelta))
+		return
+	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
+		maprotate()

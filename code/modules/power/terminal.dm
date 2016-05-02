@@ -25,9 +25,9 @@
 		master.disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/terminal/hide(var/i)
+/obj/machinery/power/terminal/hide(i)
 	if(i)
-		invisibility = 101
+		invisibility = INVISIBILITY_MAXIMUM
 		icon_state = "term-f"
 	else
 		invisibility = 0
@@ -48,9 +48,9 @@
 		. = 1
 
 
-/obj/machinery/power/terminal/proc/dismantle(var/mob/living/user)
-	if(istype(loc, /turf/simulated))
-		var/turf/simulated/T = loc
+/obj/machinery/power/terminal/proc/dismantle(mob/living/user)
+	if(istype(loc, /turf))
+		var/turf/T = loc
 		if(T.intact)
 			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return
@@ -63,7 +63,7 @@
 			if(do_after(user, 50, target = src))
 				if(master && master.can_terminal_dismantle())
 					if(prob(50) && electrocute_mob(user, powernet, src))
-						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 						s.set_up(5, 1, master)
 						s.start()
 						return
@@ -75,6 +75,5 @@
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		dismantle(user)
-		return
-
-	..()
+	else
+		return ..()

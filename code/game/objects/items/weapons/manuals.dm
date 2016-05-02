@@ -709,7 +709,7 @@
 
 				<h2>Microwave:</h2>
 				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
-				It can cook multiple items at once. Use the higher power settings for faster (and riskier) cooking.
+				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
 				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
@@ -733,9 +733,12 @@
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
+				<h2>Sharing your food:</h2>
+				You can put your meals on your kitchen counter or load them in the snack vending machines.
 				</body>
 				</html>
 			"}
+
 
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
@@ -903,6 +906,13 @@
 			</html>
 
 			"}
+
+/obj/item/weapon/book/manual/wiki/chemistry
+	name = "Chemistry Textbook"
+	icon_state ="chemistrybook"
+	author = "Nanotrasen"
+	title = "Chemistry Textbook"
+	page_link = "Guide_to_chemistry"
 
 /obj/item/weapon/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"

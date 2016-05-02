@@ -8,15 +8,15 @@
 	icon_state = ""
 	density = 1
 	anchored = 0
-	var/hardness = 1
+	var/health = 100
 	var/oreAmount = 7
 	var/mineralType = "metal"
 
 /obj/structure/statue/Destroy()
 	density = 0
-	..()
+	return ..()
 
-/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob, params)
+/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -24,20 +24,20 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40, target = src))
+			if(do_after(user,40/W.toolspeed, target = src))
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
 				anchored = 0
 		else
-			if (!istype(src.loc, /turf/simulated/floor))
+			if (!istype(src.loc, /turf/open/floor))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40/W.toolspeed, target = src))
 				if(!src.loc || anchored)
 					return
 				user.visible_message("[user] has secured the [name]'s bolts.", \
@@ -45,6 +45,7 @@
 				anchored = 1
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30, target = src))
@@ -67,20 +68,21 @@
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 40/W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
-
 	else
-		hardness -= W.force/100
-		..()
-		CheckHardness()
+		return ..()
 
-/obj/structure/statue/attack_hand(mob/living/user as mob)
+/obj/structure/statue/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
+
+/obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
@@ -89,14 +91,25 @@
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
-/obj/structure/statue/bullet_act(obj/item/projectile/Proj)
-	hardness -= Proj.damage
-	..()
-	CheckHardness()
-	return
+/obj/structure/statue/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
-/obj/structure/statue/proc/CheckHardness()
-	if(hardness <= 0)
+/obj/structure/statue/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		else
+			return
+	health -= damage
+	if(health <= 0)
 		Dismantle(1)
 
 /obj/structure/statue/proc/Dismantle(devastated = 0)
@@ -125,21 +138,15 @@
 		if(1)
 			Dismantle(1)
 		if(2)
-			if(prob(20))
-				Dismantle(1)
-			else
-				hardness--
-				CheckHardness()
+			take_damage(rand(60,110), BRUTE, 0)
 		if(3)
-			hardness -= 0.1
-			CheckHardness()
-	return
+			take_damage(10, BRUTE, 0)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	hardness = 3
+	health = 300
 	luminosity = 2
 	mineralType = "uranium"
 	var/last_event = 0
@@ -157,7 +164,7 @@
 
 /obj/structure/statue/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
-	..()
+	return ..()
 
 /obj/structure/statue/uranium/Bumped(atom/user)
 	radiate()
@@ -175,8 +182,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(12)
+			radiation_pulse(get_turf(src), 3, 3, 12, 0)
 			last_event = world.time
 			active = null
 			return
@@ -185,7 +191,7 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	hardness = 2
+	health = 200
 	mineralType = "plasma"
 	desc = "This statue is suitably made from plasma."
 
@@ -198,25 +204,34 @@
 		PlasmaBurn(exposed_temperature)
 
 
-/obj/structure/statue/plasma/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
+	var/burn = FALSE
 	if(istype(Proj,/obj/item/projectile/beam))
 		PlasmaBurn(2500)
+		burn = TRUE
 	else if(istype(Proj,/obj/item/projectile/ion))
 		PlasmaBurn(500)
+		burn = TRUE
+	if(burn)
+		if(Proj.firer)
+			message_admins("Plasma statue ignited by [key_name_admin(Proj.firer)](<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in ([x],[y],[z])")
+		else
+			message_admins("Plasma statue ignited by [Proj]. No known firer.(<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("Plasma statue ignited by [Proj] in ([x],[y],[z]). No known firer.")
 	..()
 
-/obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+/obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(W))
-		return
-	..()
+		ignite(W.is_hot())
+	else
+		return ..()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 400)
-	hardness = 0
-	CheckHardness()
+	atmos_spawn_air("plasma=400;TEMP=1000")
+	Dismantle(1)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
@@ -225,7 +240,7 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	hardness = 3
+	health = 300
 	mineralType = "gold"
 	desc = "This is a highly valuable statue made from gold."
 
@@ -252,7 +267,7 @@
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	hardness = 3
+	health = 300
 	mineralType = "silver"
 	desc = "This is a valuable statue made from silver."
 
@@ -279,7 +294,7 @@
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	hardness = 10
+	health = 1000
 	mineralType = "diamond"
 	desc = "This is a very expensive diamond statue"
 
@@ -298,7 +313,7 @@
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	hardness = 3
+	health = 300
 	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -313,7 +328,7 @@
 
 /obj/structure/statue/bananium/attackby(obj/item/weapon/W, mob/user, params)
 	honk()
-	..()
+	return ..()
 
 /obj/structure/statue/bananium/attack_hand(mob/user)
 	honk()
@@ -333,10 +348,21 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	hardness = 0.5
+	health = 50
 	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
 	name = "Statue of an assistant"
 	desc = "A cheap statue of sandstone for a greyshirt."
 	icon_state = "assist"
+
+/////////////////////snow/////////////////////////////////////////
+
+/obj/structure/statue/snow
+	health = 50
+	mineralType = "snow"
+
+/obj/structure/statue/snow/snowman
+	name = "snowman"
+	desc = "Several lumps of snow put together to form a snowman."
+	icon_state = "snowman"

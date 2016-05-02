@@ -40,7 +40,7 @@
 	if(!config.sql_enabled)
 		return
 
-/proc/sql_report_death(var/mob/living/carbon/human/H)
+/proc/sql_report_death(mob/living/carbon/human/H)
 	if(!config.sql_enabled)
 		return
 	if(!H)
@@ -75,7 +75,7 @@
 			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
 
 
-/proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
+/proc/sql_report_cyborg_death(mob/living/silicon/robot/H)
 	if(!config.sql_enabled)
 		return
 	if(!H)

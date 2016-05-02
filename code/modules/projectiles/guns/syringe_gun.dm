@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -17,7 +17,7 @@
 	..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
-/obj/item/weapon/gun/syringe/proc/newshot()
+/obj/item/weapon/gun/syringe/newshot()
 	if(!syringes.len) return
 
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
@@ -45,7 +45,7 @@
 	..()
 	user << "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
 
-/obj/item/weapon/gun/syringe/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
 		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
@@ -60,7 +60,7 @@
 
 	return 1
 
-/obj/item/weapon/gun/syringe/attackby(var/obj/item/A as obj, mob/user as mob, params, var/show_msg = 1)
+/obj/item/weapon/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = 1)
 	if(istype(A, /obj/item/weapon/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
 			if(!user.unEquip(A))
@@ -78,3 +78,14 @@
 	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to six syringes."
 	icon_state = "rapidsyringegun"
 	max_syringes = 6
+
+/obj/item/weapon/gun/syringe/syndicate
+	name = "dart pistol"
+	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
+	icon_state = "syringe_pistol"
+	item_state = "gun" //Smaller inhand
+	w_class = 2
+	origin_tech = "combat=2;syndicate=2"
+	force = 2 //Also very weak because it's smaller
+	suppressed = 1 //Softer fire sound
+	can_unsuppress = 0 //Permanently silenced

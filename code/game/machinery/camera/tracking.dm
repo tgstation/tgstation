@@ -22,7 +22,7 @@
 	return T
 
 
-/mob/living/silicon/ai/proc/ai_camera_list(var/camera)
+/mob/living/silicon/ai/proc/ai_camera_list(camera)
 	if (!camera)
 		return 0
 
@@ -73,7 +73,7 @@
 
 	return targets
 
-/mob/living/silicon/ai/verb/ai_camera_track(var/target_name in trackable_mobs())
+/mob/living/silicon/ai/verb/ai_camera_track(target_name in trackable_mobs())
 	set name = "track"
 	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
@@ -85,7 +85,8 @@
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
-	if(!istype(target))	return
+	if(!istype(target))
+		return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
@@ -122,7 +123,7 @@
 				else
 					sleep(10)
 					continue
-			
+
 			else
 				cameraticks = 0
 				U.tracking = 0
@@ -137,7 +138,7 @@
 
 			sleep(10)
 
-/proc/near_camera(var/mob/living/M)
+/proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
 		return 0
 	if(isrobot(M))
@@ -148,7 +149,7 @@
 		return 0
 	return 1
 
-/obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
 	if (!src.can_use())
@@ -156,7 +157,7 @@
 	user.eyeobj.setLoc(get_turf(src))
 
 
-/mob/living/silicon/ai/attack_ai(var/mob/user as mob)
+/mob/living/silicon/ai/attack_ai(mob/user)
 	ai_camera_list()
 
 /proc/camera_sort(list/L)

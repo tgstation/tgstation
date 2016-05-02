@@ -6,10 +6,11 @@ var/datum/subsystem/events/SSevent
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
+	var/list/currentrun = list()
 
 	var/scheduled = 0			//The next world.time that a naturally occuring random event can be selected.
-	var/frequency_lower = 3000	//5 minutes lower bound.
-	var/frequency_upper = 9000	//15 minutes upper bound. Basically an event will happen every 5 to 15 minutes.
+	var/frequency_lower = 1800	//3 minutes lower bound.
+	var/frequency_upper = 6000	//10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = 0
@@ -26,24 +27,29 @@ var/datum/subsystem/events/SSevent
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
 			continue				//don't want this one! leave it for the garbage collector
-		if(E.wizardevent && !wizardmode)
-			E.weight = 0
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
 	..()
 
 
-/datum/subsystem/events/fire()
-	checkEvent()
-	var/i=1
-	for(var/thing in running)
-		if(thing)
-			thing:process()
-			++i
-			continue
-		running.Cut(i,i+1)
+/datum/subsystem/events/fire(resumed = 0)
+	if(!resumed)
+		checkEvent() //only check these if we aren't resuming a paused fire
+		src.currentrun = running.Copy()
 
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+
+	while(currentrun.len)
+		var/datum/thing = currentrun[1]
+		currentrun.Cut(1, 2)
+		if(thing)
+			thing.process()
+		else
+			running.Remove(thing)
+		if (MC_TICK_CHECK)
+			return
 
 //checks if we should select a random event yet, and reschedules if necessary
 /datum/subsystem/events/proc/checkEvent()
@@ -62,12 +68,14 @@ var/datum/subsystem/events/SSevent
 //		if(E)	E.runEvent()
 		return
 
+	var/gamemode = ticker.mode.config_tag
+	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
+	// Only alive, non-AFK human players count towards this.
+
 	var/sum_of_weights = 0
 	for(var/datum/round_event_control/E in control)
-		if(E.occurrences >= E.max_occurrences)	continue
-		if(E.earliest_start >= world.time)		continue
-		if(E.holidayID)
-			if(!holidays || !holidays[E.holidayID])			continue
+		if(!E.canSpawnEvent(players_amt, gamemode))
+			continue
 		if(E.weight < 0)						//for round-start events etc.
 			if(E.runEvent() == PROCESS_KILL)
 				E.max_occurrences = 0
@@ -81,10 +89,8 @@ var/datum/subsystem/events/SSevent
 	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
-		if(E.occurrences >= E.max_occurrences)	continue
-		if(E.earliest_start >= world.time)		continue
-		if(E.holidayID)
-			if(!holidays || !holidays[E.holidayID])			continue
+		if(!E.canSpawnEvent(players_amt, gamemode))
+			continue
 		sum_of_weights -= E.weight
 
 		if(sum_of_weights <= 0)				//we've hit our goal
@@ -95,7 +101,6 @@ var/datum/subsystem/events/SSevent
 				message_admins("Random Event triggering: [E.name] ([E.typepath])")
 			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
-
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
 	var/list/safe_areas = list(
@@ -171,13 +176,14 @@ var/datum/subsystem/events/SSevent
 
 //sets up the holidays and holidays list
 /datum/subsystem/events/proc/getHoliday()
-	if(!config.allow_holidays)	return		// Holiday stuff was not enabled in the config!
+	if(!config.allow_holidays)
+		return		// Holiday stuff was not enabled in the config!
 
 	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
 
-	for(var/H in typesof(/datum/holiday) - /datum/holiday)
+	for(var/H in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new H()
 		if(holiday.shouldCelebrate(DD, MM, YY))
 			holiday.celebrate()
@@ -191,10 +197,6 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
-	for(var/datum/round_event_control/E in SSevent.control)
-		E.weight = initial(E.weight)
-		if((E.wizardevent && !wizardmode) || (!E.wizardevent && wizardmode))
-			E.weight = 0
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 

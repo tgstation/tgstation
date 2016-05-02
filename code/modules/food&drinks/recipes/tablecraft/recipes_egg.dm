@@ -11,6 +11,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
+	category = CAT_FOOD
 
 /datum/table_recipe/omelette
 	name = "omelette"
@@ -19,6 +20,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/omelette
+	category = CAT_FOOD
 
 /datum/table_recipe/chocolateegg
 	name = "Chocolate egg"
@@ -27,6 +29,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
+	category = CAT_FOOD
 
 /datum/table_recipe/eggsbenedict
 	name = "Eggs benedict"
@@ -36,3 +39,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/benedict
+	category = CAT_FOOD

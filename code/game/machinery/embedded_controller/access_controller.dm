@@ -21,6 +21,14 @@
 /obj/machinery/doorButtons/initialize()
 	findObjsByTag()
 
+/obj/machinery/doorButtons/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		req_access = list()
+		req_one_access = list()
+		playsound(src.loc, "sparks", 100, 1)
+		user << "<span class='warning'>You short out the access controller.</span>"
+
 /obj/machinery/doorButtons/proc/removeMe()
 
 
@@ -34,11 +42,11 @@
 	var/busy
 
 /obj/machinery/doorButtons/access_button/findObjsByTag()
-	for(var/obj/machinery/doorButtons/airlock_controller/A in world)
+	for(var/obj/machinery/doorButtons/airlock_controller/A in machines)
 		if(A.idSelf == idSelf)
 			controller = A
 			break
-	for(var/obj/machinery/door/airlock/I in world)
+	for(var/obj/machinery/door/airlock/I in machines)
 		if(I.id_tag == idDoor)
 			door = I
 			break
@@ -47,6 +55,9 @@
 	if(..())
 		return
 	if(busy)
+		return
+	if(!allowed(user))
+		user << "<span class='warning'>Access denied.</span>"
 		return
 	if(controller && !controller.busy && door)
 		if(controller.stat & NOPOWER)
@@ -104,15 +115,18 @@
 		exteriorAirlock = null
 
 /obj/machinery/doorButtons/airlock_controller/Destroy()
-	for(var/obj/machinery/doorButtons/access_button/A in world)
+	for(var/obj/machinery/doorButtons/access_button/A in machines)
 		if(A.controller == src)
 			A.controller = null
-	..()
+	return ..()
 
 /obj/machinery/doorButtons/airlock_controller/Topic(href, href_list)
 	if(..())
 		return
 	if(busy)
+		return
+	if(!allowed(usr))
+		usr << "<span class='warning'>Access denied.</span>"
 		return
 	switch(href_list["command"])
 		if("close_exterior")
@@ -147,7 +161,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.close())
-			if(stat & NOPOWER || lostPower || !A || A.gc_destroyed)
+			if(stat & NOPOWER || lostPower || !A || qdeleted(A))
 				goIdle(1)
 				return
 			A.bolt()
@@ -193,11 +207,11 @@
 	A.unbolt()
 	spawn()
 		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !A.gc_destroyed)
+			if(stat | (NOPOWER) && !lostPower && A && !qdeleted(A))
 				A.bolt()
 		goIdle(1)
 
-/obj/machinery/doorButtons/airlock_controller/proc/goIdle(var/update)
+/obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = 0
 	busy = 0
 	if(update)
@@ -222,7 +236,7 @@
 	update_icon()
 
 /obj/machinery/doorButtons/airlock_controller/findObjsByTag()
-	for(var/obj/machinery/door/airlock/A in world)
+	for(var/obj/machinery/door/airlock/A in machines)
 		if(A.id_tag == idInterior)
 			interiorAirlock = A
 		else if(A.id_tag == idExterior)

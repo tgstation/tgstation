@@ -39,7 +39,7 @@ FLOOR SAFES
 			I.loc = src
 
 
-/obj/structure/safe/proc/check_unlocked(mob/user as mob, canhear)
+/obj/structure/safe/proc/check_unlocked(mob/user, canhear)
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
 			user << "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>"
@@ -72,7 +72,7 @@ FLOOR SAFES
 		icon_state = initial(icon_state)
 
 
-/obj/structure/safe/attack_hand(mob/user as mob)
+/obj/structure/safe/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<center>"
 	dat += "<a href='?src=\ref[src];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=\ref[src];decrement=1'>-</a> [dial * 5] <a href='?src=\ref[src];increment=1'>+</a>"
@@ -86,7 +86,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Topic(href, href_list)
-	if(!ishuman(usr))	return
+	if(!ishuman(usr))
+		return
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0
@@ -142,8 +143,9 @@ FLOOR SAFES
 				updateUsrDialog()
 
 
-/obj/structure/safe/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
+		. = 1 //no afterattack
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.drop_item())
@@ -156,13 +158,13 @@ FLOOR SAFES
 		else
 			user << "<span class='notice'>[I] won't fit in [src].</span>"
 			return
+	else if(istype(I, /obj/item/clothing/tie/stethoscope))
+		user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 	else
-		if(istype(I, /obj/item/clothing/tie/stethoscope))
-			user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
-			return
+		return ..()
 
 
-obj/structure/safe/blob_act()
+obj/structure/safe/blob_act(obj/effect/blob/B)
 	return
 
 obj/structure/safe/ex_act(severity, target)
@@ -185,4 +187,4 @@ obj/structure/safe/ex_act(severity, target)
 
 
 /obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0

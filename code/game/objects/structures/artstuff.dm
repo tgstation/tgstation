@@ -9,13 +9,13 @@
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
 	density = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 15
 	var/obj/item/weapon/canvas/painting = null
 
 
 //Adding canvases
-/obj/structure/easel/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/easel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/canvas))
 		var/obj/item/weapon/canvas/C = I
 		user.unEquip(C)
@@ -23,9 +23,8 @@
 		C.loc = get_turf(src)
 		C.layer = layer+0.1
 		user.visible_message("<span class='notice'>[user] puts \the [C] on \the [src].</span>","<span class='notice'>You place \the [C] on \the [src].</span>")
-		return
-
-	..()
+	else
+		return ..()
 
 
 //Stick to the easel like glue
@@ -52,7 +51,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	desc = "draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/whichGlobalBackup = 1 //List index
 
 /obj/item/weapon/canvas/nineteenXnineteen
@@ -81,7 +80,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 
 
 //One pixel increments
-/obj/item/weapon/canvas/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/weapon/canvas/attackby(obj/item/I, mob/user, params)
 	//Click info
 	var/list/click_params = params2list(params)
 	var/pixX = text2num(click_params["icon-x"])
@@ -105,18 +104,17 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 		if(thePix != theOriginalPix) //colour changed
 			DrawPixelOn(theOriginalPix,pixX,pixY)
 		qdel(masterpiece)
-		return
 
 	//Drawing one pixel with a crayon
-	if(istype(I, /obj/item/toy/crayon))
+	else if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = I
-		DrawPixelOn(C.colour, pixX, pixY)
-		return
+		DrawPixelOn(C.paint_color, pixX, pixY)
+	else
+		return ..()
 
-	..()
 
 //Clean the whole canvas
-/obj/item/weapon/canvas/attack_self(var/mob/user)
+/obj/item/weapon/canvas/attack_self(mob/user)
 	if(!user)
 		return
 	var/icon/blank = getGlobalBackup()

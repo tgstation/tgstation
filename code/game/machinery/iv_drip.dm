@@ -37,13 +37,20 @@
 
 			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
-				if(0 to 9)		filling.icon_state = "reagent0"
-				if(10 to 24) 	filling.icon_state = "reagent10"
-				if(25 to 49)	filling.icon_state = "reagent25"
-				if(50 to 74)	filling.icon_state = "reagent50"
-				if(75 to 79)	filling.icon_state = "reagent75"
-				if(80 to 90)	filling.icon_state = "reagent80"
-				if(91 to INFINITY)	filling.icon_state = "reagent100"
+				if(0 to 9)
+					filling.icon_state = "reagent0"
+				if(10 to 24)
+					filling.icon_state = "reagent10"
+				if(25 to 49)
+					filling.icon_state = "reagent25"
+				if(50 to 74)
+					filling.icon_state = "reagent50"
+				if(75 to 79)
+					filling.icon_state = "reagent75"
+				if(80 to 90)
+					filling.icon_state = "reagent80"
+				if(91 to INFINITY)
+					filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
 			overlays += filling
@@ -72,7 +79,7 @@
 			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
 
 
-/obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(beaker))
 			user << "<span class='warning'>There is already a reagent container loaded!</span>"
@@ -109,7 +116,7 @@
 					// speed up transfer on blood packs
 					transfer_amount = 10
 				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INGEST, fraction,0) //make reagents reacts, but don't spam messages
+				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
@@ -124,27 +131,31 @@
 
 			var/mob/living/carbon/human/T = attached
 
-			if(!istype(T)) return
-			if(!T.dna)
-				return
-			if(NOCLONE in T.mutations)
+			if(!istype(T))
 				return
 
-			if(NOBLOOD in T.dna.species.specflags)
+			if(T.disabilities & NOCLONE)
 				return
 
-			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
-				visible_message("\The [src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			var/datum/reagent/B = T.take_blood(beaker,amount)
+			if((NOBLOOD in T.dna.species.specflags) && !T.dna.species.exotic_blood)
+				return
 
-			if (B)
-				beaker.reagents.reagent_list |= B
-				beaker.reagents.update_total()
-				beaker.on_reagent_change()
-				beaker.reagents.handle_reactions()
+			if(T.dna.species.exotic_blood)
+				T.reagents.trans_to(beaker, amount)
 				update_icon()
+			else
+				// If the human is losing too much blood, beep.
+				if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE && prob(5))
+					visible_message("\The [src] beeps loudly.")
+					playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+				var/datum/reagent/B = T.take_blood(beaker,amount)
+
+				if (B)
+					beaker.reagents.reagent_list |= B
+					beaker.reagents.update_total()
+					beaker.on_reagent_change()
+					beaker.reagents.handle_reactions()
+					update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
 	if (!ishuman(user))

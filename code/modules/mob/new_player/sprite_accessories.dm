@@ -17,20 +17,28 @@
 	conversion in savefile.dm
 */
 /proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female)
-	if(!istype(L))		L = list()
-	if(!istype(male))	male = list()
-	if(!istype(female))	female = list()
+	if(!istype(L))
+		L = list()
+	if(!istype(male))
+		male = list()
+	if(!istype(female))
+		female = list()
 
 	for(var/path in typesof(prototype))
-		if(path == prototype)	continue
+		if(path == prototype)
+			continue
 		var/datum/sprite_accessory/D = new path()
 
-		if(D.icon_state)	L[D.name] = D
-		else				L += D.name
+		if(D.icon_state)
+			L[D.name] = D
+		else
+			L += D.name
 
 		switch(D.gender)
-			if(MALE)	male += D.name
-			if(FEMALE)	female += D.name
+			if(MALE)
+				male += D.name
+			if(FEMALE)
+				female += D.name
 			else
 				male += D.name
 				female += D.name
@@ -42,6 +50,8 @@
 	var/name			//the preview name of the accessory
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
+	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
+	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 
 //////////////////////
 // Hair Definitions //
@@ -619,6 +629,21 @@
 	icon_state = "male_stripe"
 	gender = MALE
 
+/datum/sprite_accessory/underwear/male_commie
+	name = "Mens Striped Commie Boxer"
+	icon_state = "male_commie"
+	gender = MALE
+
+/datum/sprite_accessory/underwear/male_uk
+	name = "Mens Striped UK Boxer"
+	icon_state = "male_uk"
+	gender = MALE
+
+/datum/sprite_accessory/underwear/male_usastripe
+	name = "Mens Striped Freedom Boxer"
+	icon_state = "male_assblastusa"
+	gender = MALE
+
 /datum/sprite_accessory/underwear/male_kinky
 	name = "Mens Kinky"
 	icon_state = "male_kinky"
@@ -694,6 +719,31 @@
 	icon_state = "female_blackalt"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_white_neko
+	name = "Ladies White Neko"
+	icon_state = "female_neko_white"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_black_neko
+	name = "Ladies Black Neko"
+	icon_state = "female_neko_black"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_usastripe
+	name = "Ladies Freedom"
+	icon_state = "female_assblastusa"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_uk
+	name = "Ladies UK"
+	icon_state = "female_uk"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_commie
+	name = "Ladies Commie"
+	icon_state = "female_commie"
+	gender = FEMALE
+
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////
@@ -753,6 +803,11 @@
 /datum/sprite_accessory/undershirt/uk
 	name = "UK Shirt"
 	icon_state = "uk"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/usa
+	name = "USA Shirt"
+	icon_state = "shirt_assblastusa"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/ilovent
@@ -971,82 +1026,90 @@
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
 	icon_state = null
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/white_norm
 	name = "Normal White"
 	icon_state = "white_norm"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal Black"
 	icon_state = "black_norm"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/white_short
 	name = "Short White"
 	icon_state = "white_short"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/black_short
 	name = "Short Black"
 	icon_state = "black_short"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/white_knee
 	name = "Knee-high White"
 	icon_state = "white_knee"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/black_knee
 	name = "Knee-high Black"
 	icon_state = "black_knee"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/thin_knee
 	name = "Knee-high Thin"
 	icon_state = "thin_knee"
-	gender = FEMALE
 
 /datum/sprite_accessory/socks/striped_knee
 	name = "Knee-high Striped"
 	icon_state = "striped_knee"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/rainbow_knee
 	name = "Knee-high Rainbow"
 	icon_state = "rainbow_knee"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high White"
 	icon_state = "white_thigh"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high Black"
 	icon_state = "black_thigh"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/thin_thigh
 	name = "Thigh-high Thin"
 	icon_state = "thin_thigh"
-	gender = FEMALE
 
 /datum/sprite_accessory/socks/striped_thigh
 	name = "Thigh-high Striped"
 	icon_state = "striped_thigh"
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/rainbow_thigh
 	name = "Thigh-high Rainbow"
 	icon_state = "rainbow_thigh"
-	gender = NEUTER
+
+/datum/sprite_accessory/socks/usa_knee
+	name = "Knee-High Freedom Stripes"
+	icon_state = "assblastusa_knee"
+
+/datum/sprite_accessory/socks/usa_thigh
+	name = "Thigh-high Freedom Stripes"
+	icon_state = "assblastusa_thigh"
+
+/datum/sprite_accessory/socks/uk_knee
+	name = "Knee-High UK Stripes"
+	icon_state = "uk_knee"
+
+/datum/sprite_accessory/socks/uk_thigh
+	name = "Thigh-high UK Stripes"
+	icon_state = "uk_thigh"
+
+/datum/sprite_accessory/socks/commie_knee
+	name = "Knee-High Commie Stripes"
+	icon_state = "commie_knee"
+
+/datum/sprite_accessory/socks/commie_thigh
+	name = "Thigh-high Commie Stripes"
+	icon_state = "commie_thigh"
 
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
-	gender = FEMALE
 
 //////////.//////////////////
 // MutantParts Definitions //
@@ -1094,69 +1157,87 @@
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
-/datum/sprite_accessory/tails/smooth
+/datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
 	icon_state = "smooth"
 
-/datum/sprite_accessory/tails_animated/smooth
+/datum/sprite_accessory/tails_animated/lizard/smooth
 	name = "Smooth"
 	icon_state = "smooth"
 
-/datum/sprite_accessory/tails/light
+/datum/sprite_accessory/tails/lizard/light
 	name = "Light"
 	icon_state = "light"
 
-/datum/sprite_accessory/tails_animated/light
+/datum/sprite_accessory/tails_animated/lizard/light
 	name = "Light"
 	icon_state = "light"
 
-/datum/sprite_accessory/tails/dstripe
+/datum/sprite_accessory/tails/lizard/dstripe
 	name = "Dark Stripe"
 	icon_state = "dstripe"
 
-/datum/sprite_accessory/tails_animated/dstripe
+/datum/sprite_accessory/tails_animated/lizard/dstripe
 	name = "Dark Stripe"
 	icon_state = "dstripe"
 
-/datum/sprite_accessory/tails/lstripe
+/datum/sprite_accessory/tails/lizard/lstripe
 	name = "Light Stripe"
 	icon_state = "lstripe"
 
-/datum/sprite_accessory/tails_animated/lstripe
+/datum/sprite_accessory/tails_animated/lizard/lstripe
 	name = "Light Stripe"
 	icon_state = "lstripe"
 
-/datum/sprite_accessory/tails/dtiger
+/datum/sprite_accessory/tails/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
 
-/datum/sprite_accessory/tails_animated/dtiger
+/datum/sprite_accessory/tails_animated/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
 
-/datum/sprite_accessory/tails/ltiger
+/datum/sprite_accessory/tails/lizard/ltiger
 	name = "Light Tiger"
 	icon_state = "ltiger"
 
-/datum/sprite_accessory/tails_animated/ltiger
+/datum/sprite_accessory/tails_animated/lizard/ltiger
 	name = "Light Tiger"
 	icon_state = "ltiger"
 
-/datum/sprite_accessory/tails/club
+/datum/sprite_accessory/tails/lizard/club
 	name = "Club"
 	icon_state = "club"
 
-/datum/sprite_accessory/tails_animated/club
+/datum/sprite_accessory/tails_animated/lizard/club
 	name = "Club"
 	icon_state = "club"
 
-/datum/sprite_accessory/tails/aqua
+/datum/sprite_accessory/tails/lizard/aqua
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/tails_animated/aqua
+/datum/sprite_accessory/tails_animated/lizard/aqua
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/tails/human/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails_animated/human/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/human/cat
+	name = "Cat"
+	icon_state = "cat"
+	color_src = HAIR
+
+/datum/sprite_accessory/tails_animated/human/cat
+	name = "Cat"
+	icon_state = "cat"
+	color_src = HAIR
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1203,6 +1284,16 @@
 /datum/sprite_accessory/horns/angler
 	name = "Angeler"
 	icon_state = "angler"
+
+/datum/sprite_accessory/ears/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/ears/cat
+	name = "Cat"
+	icon_state = "cat"
+	hasinner = 1
+	color_src = HAIR
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'

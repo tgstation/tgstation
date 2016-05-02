@@ -1,3 +1,7 @@
+
+/obj/effect
+	icon = 'icons/effects/effects.dmi'
+
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
@@ -7,7 +11,7 @@
 	unacidable = 1//Can't destroy energy portals.
 	var/obj/item/target = null
 	var/creator = null
-	anchored = 1.0
+	anchored = 1
 	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)

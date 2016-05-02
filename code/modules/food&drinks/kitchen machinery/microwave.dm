@@ -14,7 +14,6 @@
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
 	var/efficiency = 0
-	var/microwavepower = 1
 
 
 // see code/modules/food/recipes_microwave.dm for recipes
@@ -47,7 +46,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/microwave/attackby(obj/item/O, mob/user, params)
 	if(operating)
 		return
 	if(!broken && dirty<100)
@@ -67,7 +66,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20, target = src))
+			if (do_after(user,20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -78,7 +77,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20, target = src))
+			if (do_after(user,20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
@@ -162,13 +161,13 @@
 		..()
 	updateUsrDialog()
 
-/obj/machinery/microwave/attack_paw(mob/user as mob)
+/obj/machinery/microwave/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/microwave/attack_ai(mob/user as mob)
+/obj/machinery/microwave/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/microwave/attack_hand(mob/user as mob)
+/obj/machinery/microwave/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -178,7 +177,7 @@
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/microwave/interact(mob/user) // The microwave Menu
 	if(panel_open || !anchored)
 		return
 	var/dat = "<div class='statusDisplay'>"
@@ -203,12 +202,6 @@
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
 		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
 		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
-		dat += "Microwave Power: [microwavepower*200]W<BR>"
-		dat += "<A href='?src=\ref[src];action=power;amount=1'>200W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=2'>400W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=3'>600W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=4'>800W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=5'>1000W</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
@@ -224,7 +217,7 @@
 		return
 	start()
 
-	if (prob(max(microwavepower*5/efficiency-5,dirty*5))) //a clean unupgraded microwave on lowest power has no risk of failure
+	if (prob(max(5/efficiency-5,dirty*5))) //a clean unupgraded microwave has no risk of failure
 		muck_start()
 		if (!microwaving(4))
 			muck_finish()
@@ -251,7 +244,7 @@
 			if(F.cooked_type)
 				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
 				F.initialize_cooked_food(S, efficiency)
-				feedback_add_details("food_made","[F.name]")
+				feedback_add_details("food_made","[F.type]")
 			else
 				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 				if(dirty < 100)
@@ -260,12 +253,12 @@
 
 		return
 
-/obj/machinery/microwave/proc/microwaving(var/seconds as num)
+/obj/machinery/microwave/proc/microwaving(seconds as num)
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(max(14-2*microwavepower-2*efficiency,2)) // standard power means sleep(10). The higher the power and the better the efficiency, the faster the cooking
+		sleep(max(12-2*efficiency,2)) // standard microwave means sleep(10). The better the efficiency, the faster the cooking
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()
@@ -315,7 +308,7 @@
 			qdel(S)
 
 /obj/machinery/microwave/proc/broke()
-	var/datum/effect/effect/system/spark_spread/s = new
+	var/datum/effect_system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
 	icon_state = "mwb" // Make it look all busted up and shit
@@ -340,10 +333,5 @@
 
 		if ("dispose")
 			dispose()
-		if ("power")
-			var/amount = text2num(href_list["amount"])
-			if(amount<1 || amount>5)
-				return
-			microwavepower = amount
 	updateUsrDialog()
 	return

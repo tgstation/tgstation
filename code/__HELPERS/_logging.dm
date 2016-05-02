@@ -1,8 +1,3 @@
-//print an error message to world.log
-#define ERROR(MSG) error("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
-/proc/error(msg)
-	world.log << "## ERROR: [msg]"
-
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/warning(msg)
@@ -23,6 +18,14 @@
 	admin_log.Add(text)
 	if (config.log_admin)
 		diary << "\[[time_stamp()]]ADMIN: [text]"
+
+/proc/log_adminsay(text)
+	if (config.log_adminchat)
+		log_admin("ASAY: [text]")
+		
+/proc/log_dsay(text)
+	if (config.log_adminchat)
+		log_admin("DSAY: [text]")
 
 /proc/log_game(text)
 	if (config.log_game)
@@ -64,17 +67,9 @@
 	if (config.log_attack)
 		diaryofmeanpeople << "\[[time_stamp()]]ATTACK: [text]"
 
-/proc/log_adminsay(text)
-	if (config.log_adminchat)
-		diary << "\[[time_stamp()]]ADMINSAY: [text]"
-
 /proc/log_pda(text)
 	if (config.log_pda)
 		diary << "\[[time_stamp()]]PDA: [text]"
-
-/proc/log_chat(text)
-	if (config.log_pda) //reusing this for now, can change if needed
-		diary << "\[[time_stamp()]]CHAT: [text]"
 
 /proc/log_comment(text)
 	if (config.log_pda)

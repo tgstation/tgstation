@@ -13,23 +13,26 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(H.z != 1)	continue //lets not try to strand people in space or stuck in the wizards den
+		if(H.z != 1)
+			continue //lets not try to strand people in space or stuck in the wizards den
 		moblocs += H.loc
 		mobs += H
 
-	if(!mobs) return
+	if(!mobs)
+		return
 
 	shuffle(moblocs)
 	shuffle(mobs)
 
 	for(var/mob/living/carbon/human/H in mobs)
-		if(!moblocs)	break //locs aren't always unique, so this may come into play
+		if(!moblocs)
+			break //locs aren't always unique, so this may come into play
 		do_teleport(H, moblocs[moblocs.len])
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(0, H.loc)
 		smoke.start()
 
 //---//
@@ -49,19 +52,21 @@
 		mobnames += H.real_name
 		mobs += H
 
-	if(!mobs) return
+	if(!mobs)
+		return
 
 	shuffle(mobnames)
 	shuffle(mobs)
 
 	for(var/mob/living/carbon/human/H in mobs)
-		if(!mobnames)	break
+		if(!mobnames)
+			break
 		H.real_name = mobnames[mobnames.len]
 		mobnames.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(0, H.loc)
 		smoke.start()
 
 //---//
@@ -77,10 +82,12 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(!H.mind || H.mind in ticker.mode.wizards)	continue //the wizard(s) are spared on this one
+		if(!H.stat || !H.mind || (H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices))
+			continue //the wizard(s) are spared on this one
 		mobs += H
 
-	if(!mobs) return
+	if(!mobs)
+		return
 
 	shuffle(mobs)
 
@@ -92,6 +99,6 @@
 		mobs -= mobs[mobs.len]
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(0, H.loc)
 		smoke.start()

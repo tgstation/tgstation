@@ -12,8 +12,6 @@
 	if(!proximity) return
 	if(!mode)	//if it's off, give up.
 		return
-	if(A == loc)	// if placing the labeller into something (e.g. backpack)
-		return		// don't set a label
 
 	if(!labels_left)
 		user << "<span class='warning'>No labels left!</span>"
@@ -38,6 +36,9 @@
 
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		return
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
@@ -52,7 +53,7 @@
 	else
 		user << "<span class='notice'>You turn off [src].</span>"
 
-/obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/hand_labeler/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!user.unEquip(I))
@@ -68,4 +69,4 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	item_state = "electropack"
-	w_class = 1.0
+	w_class = 1

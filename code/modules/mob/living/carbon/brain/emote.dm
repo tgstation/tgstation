@@ -1,4 +1,4 @@
-/mob/living/carbon/brain/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/brain/emote(act,m_type=1,message = null)
 	if(!(container && istype(container, /obj/item/device/mmi)))//No MMI, no emotes
 		return
 
@@ -6,8 +6,6 @@
 		var/t1 = findtext(act, "-", 1, null)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
 
 	if(src.stat == DEAD)
 		return
@@ -22,16 +20,16 @@
 			message = "<B>[src]</B> lets out a distressed noise."
 			m_type = 2
 
-		if ("beep")
+		if ("beep","beeps")
 			src << "You beep."
 			message = "<B>[src]</B> beeps."
 			m_type = 2
 
-		if ("blink")
+		if ("blink","blinks")
 			message = "<B>[src]</B> blinks."
 			m_type = 1
 
-		if ("boop")
+		if ("boop","boops")
 			src << "You boop."
 			message = "<B>[src]</B> boops."
 			m_type = 2
@@ -45,7 +43,7 @@
 			message = "<B>[src]</B> plays a loud tone."
 			m_type = 2
 
-		if ("whistle")
+		if ("whistle","whistles")
 			src << "You whistle."
 			message = "<B>[src]</B> whistles."
 			m_type = 2
@@ -55,6 +53,7 @@
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			return
 
 	if (message)
 		log_emote("[name]/[key] : [message]")

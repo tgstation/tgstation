@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
@@ -14,21 +14,12 @@
 	//6 = blood, open door
 	//7 = blood, closed door
 	//8 = blood, running
-	var/panel = 0
-	//0 = closed
-	//1 = open
-	var/hacked = 1 //Bleh, screw hacking, let's have it hacked by default.
-	//0 = not hacked
-	//1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
+	var/obj/paper
 
-/obj/machinery/washing_machine/verb/start()
-	set name = "Start Washing"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || usr.restrained() || !usr.canmove)
+/obj/machinery/washing_machine/AltClick(mob/user)
+	if(!user.canUseTopic(src))
 		return
 
 	if( state != 4 )
@@ -50,15 +41,31 @@
 		WL.amount = HH.amount
 		qdel(HH)
 
-
+	//Corgi costume says goodbye
+	for(var/obj/item/clothing/suit/hooded/ian_costume/IC in contents)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+		qdel(IC)
+	
+	for(var/obj/item/weapon/paper/P in contents)
+		if(crayon)
+			var/dye_color
+			if(istype(crayon,/obj/item/toy/crayon))
+				var/obj/item/toy/crayon/CR = crayon
+				dye_color = CR.paint_color
+			if(dye_color)
+				P.color = dye_color
+			qdel(crayon)
+			crayon = null
+		
 	if(crayon)
 		var/wash_color
 		if(istype(crayon,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = crayon
-			wash_color = CR.colourName
+			wash_color = CR.paint_color
 		else if(istype(crayon,/obj/item/weapon/stamp))
 			var/obj/item/weapon/stamp/ST = crayon
 			wash_color = ST.item_color
+		
 
 		if(wash_color)
 			var/new_jumpsuit_icon_state = ""
@@ -179,12 +186,9 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	icon_state = "wm_[state][panel]"
+	icon_state = "wm_[state]0"
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
-		panel = !panel
-		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
+/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
@@ -197,14 +201,15 @@
 		else
 			..()
 	else if(istype(W,/obj/item/weapon/grab))
-		if( (state == 1) && hacked)
+		if(state == 1)
 			var/obj/item/weapon/grab/G = W
-			if(ishuman(G.assailant) && iscorgi(G.affecting))
+			if(iscorgi(G.affecting))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3
 		else
 			..()
+
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
 		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
@@ -212,7 +217,8 @@
 		istype(W,/obj/item/clothing/gloves) || \
 		istype(W,/obj/item/clothing/shoes) || \
 		istype(W,/obj/item/clothing/suit) || \
-		istype(W,/obj/item/weapon/bedsheet))
+		istype(W,/obj/item/weapon/bedsheet) || \
+		istype(W,/obj/item/weapon/paper))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )
@@ -245,9 +251,6 @@
 		if ( istype(W,/obj/item/clothing/head/syndicatefake ) )
 			user << "This item does not fit."
 			return
-//		if ( istype(W,/obj/item/clothing/head/powered ) )
-//			user << "This item does not fit."
-//			return
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			user << "This item does not fit."
 			return
@@ -269,7 +272,7 @@
 		..()
 	update_icon()
 
-/obj/machinery/washing_machine/attack_hand(mob/user as mob)
+/obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)
 		if(1)
 			state = 2

@@ -29,7 +29,7 @@
 /obj/structure/mineral_door/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
@@ -65,9 +65,9 @@
 
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates) return
-	if(ismob(user))
-		var/mob/M = user
-		if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
+	if(isliving(user))
+		var/mob/living/M = user
+		if(world.time - M.last_bumped <= 60) return //NOTE do we really need that?
 		if(M.client)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
@@ -129,14 +129,16 @@
 		if(do_after(user,digTool.digspeed*hardness, target = src) && src)
 			user << "<span class='notice'>You finish digging.</span>"
 			Dismantle()
-	else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
-		hardness -= W.force/100
-		user << "<span class='danger'>You hit the [name] with your [W.name]!</span>"
-		CheckHardness()
-	else
+	else if(user.a_intent != "harm")
 		attack_hand(user)
-	return
+	else
+		return ..()
 
+/obj/structure/mineral_door/attacked_by(obj/item/I, mob/user)
+	..()
+	if(I.damtype != STAMINA)
+		hardness -= I.force/100
+		CheckHardness()
 
 /obj/structure/mineral_door/bullet_act(obj/item/projectile/Proj)
 	hardness -= Proj.damage
@@ -218,18 +220,19 @@
 	mineralType = "plasma"
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_hot(W))
+	if(W.is_hot())
 		message_admins("Plasma mineral door ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma mineral door ignited by [key_name(user)] in ([x],[y],[z])")
 		TemperatureAct(100)
-	..()
+	else
+		return ..()
 
 /obj/structure/mineral_door/transparent/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		TemperatureAct(exposed_temperature)
 
 /obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct(temperature)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
+	atmos_spawn_air("plasma=500;TEMP=1000")
 	hardness = 0
 	CheckHardness()
 
@@ -242,7 +245,7 @@
 	hardness = 1
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 30
 
 /obj/structure/mineral_door/wood/Dismantle(devastated = 0)

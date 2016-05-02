@@ -5,7 +5,7 @@
 	var/image/collar = null
 	var/image/pettag = null
 
-/mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
 		var/obj/item/clothing/tie/petcollar/P = O
 		pcollar = P
@@ -14,7 +14,8 @@
 		regenerate_icons()
 		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
 		if(P.tagname)
-			name = P.tagname
+			real_name = "\proper [P.tagname]"
+			name = real_name
 		qdel(P)
 		return
 	if(istype(O, /obj/item/weapon/newspaper))
@@ -33,9 +34,10 @@
 		pcollar = new(src)
 		regenerate_icons()
 
-/mob/living/simple_animal/pet/revive()
-	..()
-	regenerate_icons()
+/mob/living/simple_animal/pet/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		regenerate_icons()
+		. = 1
 
 /mob/living/simple_animal/pet/death(gibbed)
 	..(gibbed)

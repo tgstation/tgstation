@@ -15,21 +15,20 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem
-	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
+	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator, 5 - perfect health
 	var/handling_hal = 0
-	var/hal_crit = 0
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
 		return
-	
+
 	//Least obvious
 	var/list/minor = list("sounds"=20,"bolts_minor"=10,"whispers"=15,"message"=5)
 	//Something's wrong here
 	var/list/medium = list("hudscrew"=15,"items"=15,"dangerflash"=15,"bolts"=10,"flood"=10,"husks"=10,"battle"=10)
 	//AAAAH
 	var/list/major = list("fake"=10,"death"=5,"xeno"=10,"singulo"=10,"delusion"=10)
-	
+
 	var/grade = 0
 	var/current = list()
 	var/trip_length = 0
@@ -83,14 +82,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		I.color = col_mod
 	return I
 
-/obj/effect/hallucination/simple/proc/Show(var/update=1)
+/obj/effect/hallucination/simple/proc/Show(update=1)
 	if(active)
 		if(target.client) target.client.images.Remove(current_image)
 		if(update)
 			current_image = GetImage()
 		if(target.client) target.client.images |= current_image
 
-/obj/effect/hallucination/simple/update_icon(var/new_state,var/new_icon,var/new_px=0,var/new_py=0)
+/obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
 	image_state = new_state
 	if(new_icon)
 		image_icon = new_icon
@@ -107,6 +106,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/Destroy()
 	if(target.client) target.client.images.Remove(current_image)
 	active = 0
+	return ..()
 
 #define FAKE_FLOOD_EXPAND_TIME 30
 #define FAKE_FLOOD_MAX_RADIUS 7
@@ -123,11 +123,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/fake_flood/New(loc,var/mob/living/carbon/T)
 	..()
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			src.loc = U.loc
 			break
-	image_state = pick("plasma","sleeping_agent")
+	image_state = pick("plasma","nitrous_oxide")
 	flood_images += image(image_icon,src,image_state,MOB_LAYER)
 	flood_turfs += get_turf(src.loc)
 	if(target.client) target.client.images |= flood_images
@@ -139,28 +139,29 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		radius++
 		if(radius > FAKE_FLOOD_MAX_RADIUS)
 			qdel(src)
+			return
 		Expand()
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
-	return
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
-	if(!flood_turfs) //for qdel
-		return
 	for(var/turf/T in circlerangeturfs(loc,radius))
 		if((T in flood_turfs)|| T.blocks_air)
 			continue
 		flood_images += image(image_icon,T,image_state,MOB_LAYER)
 		flood_turfs += T
-	if(target.client) target.client.images |= flood_images
-	return
+	if(target.client)
+		target.client.images |= flood_images
 
 /obj/effect/hallucination/fake_flood/Destroy()
 	SSobj.processing.Remove(src)
-	del(flood_turfs)
-	if(target.client) target.client.images.Remove(flood_images)
+	qdel(flood_turfs)
+	flood_turfs = list()
+	if(target.client)
+		target.client.images.Remove(flood_images)
 	target = null
-	del(flood_images)
-	return
+	qdel(flood_images)
+	flood_images = list()
+	return ..()
 
 /obj/effect/hallucination/simple/xeno
 	image_icon = 'icons/mob/alien.dmi'
@@ -171,47 +172,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	name = "alien hunter ([rand(1, 1000)])"
 	return
 
-/obj/effect/hallucination/simple/xeno/throw_at(atom/target, range, speed) // TODO : Make diagonal trhow into proc/property
-	if(!target || !src || (flags & NODROP))	return 0
-
-	src.throwing = 1
-
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
-
-	var/tdist_x = dist_x;
-	var/tdist_y = dist_y;
-
-	if(dist_x <= dist_y)
-		tdist_x = dist_y;
-		tdist_y = dist_x;
-
-	var/error = tdist_x/2 - tdist_y
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x) || (src.x > target.x))) || ((dist_x <= dist_y) && ((src.y < target.y) || (src.y > target.y))) || (src.x > target.x)) && dist_travelled < range) || !has_gravity(src)))
-
-		if(!src.throwing) break
-		if(!istype(src.loc, /turf)) break
-
-		var/atom/step = get_step(src, get_dir(src,target))
-		if(!step)
-			break
-		src.Move(step, get_dir(src, step))
-		hit_check()
-		error += (error < 0) ? tdist_x : -tdist_y;
-		dist_travelled++
-		dist_since_sleep++
-		if(dist_since_sleep >= speed)
-			dist_since_sleep = 0
-			sleep(1)
-
-
-	src.throwing = 0
-	src.throw_impact(get_turf(src))
-	
-	return 1
-
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
 	if(A == target)
@@ -220,28 +180,29 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
-	var/obj/machinery/atmospherics/unary/vent_pump/pump = null
+	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/xeno/xeno = null
 
 /obj/effect/hallucination/xeno_attack/New(loc,var/mob/living/carbon/T)
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			pump = U
 			break
-	xeno = new(pump.loc,target)
-	sleep(10)
-	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(target,7,1)
-	sleep(10)
-	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(pump,7,1)
-	sleep(10)
-	var/xeno_name = xeno.name
-	target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
-	sleep(10)
-	qdel(xeno)
-	target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
+	if(pump)
+		xeno = new(pump.loc,target)
+		sleep(10)
+		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
+		sleep(10)
+		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
+		sleep(10)
+		var/xeno_name = xeno.name
+		target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
+		sleep(10)
+		qdel(xeno)
+		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
 	qdel(src)
 
 /obj/effect/hallucination/singularity_scare
@@ -273,13 +234,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/singularity/proc/Eat(atom/OldLoc, Dir)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
-		target.sleeping = 20
-		target.hal_crit = 1
 		target.hal_screwyhud = 1
+		target.SetSleeping(20)
 		spawn(rand(50,100))
-			target.sleeping = 0
-			target.hal_crit = 0
 			target.hal_screwyhud = 0
+			target.SetSleeping(0)
 
 /obj/effect/hallucination/battle
 
@@ -319,29 +278,33 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion
 	var/list/image/delusions = list()
 
-/obj/effect/hallucination/delusion/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
-	var/kind = rand(1,3)
+	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon")
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H == target)
 			continue
-		if(H in view(target))
+		if(skip_nearby && (H in view(target)))
 			continue
 		switch(kind)
-			if(1)//Clown
+			if("clown")//Clown
 				A = image('icons/mob/animal.dmi',H,"clown")
-			if(2)//Carp
+			if("carp")//Carp
 				A = image('icons/mob/animal.dmi',H,"carp")
-			if(3)//Corgi
+			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
-			if(4)//Skeletons
+			if("skeleton")//Skeletons
 				A = image('icons/mob/human.dmi',H,"skeleton_s")
+			if("demon")//Demon
+				A = image('icons/mob/mob.dmi',H,"daemon")
+			if("custom")
+				A = image(custom_icon_file, H, custom_icon)
 		A.override = 1
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(300)
+	sleep(duration)
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
@@ -407,7 +370,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	var/health = 100
 
-/obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/living/user as mob, params)
+/obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -418,7 +381,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	src.health -= P.force
 	return
 
-/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
+/obj/effect/fake_attacker/Crossed(mob/M, somenumber)
 	if(M == my_target)
 		step_away(src,my_target,2)
 		if(prob(30))
@@ -470,7 +433,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
-						my_target.eye_blurry += 3
+						my_target.blur_eyes(3)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
@@ -489,7 +452,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	collapse = 1
 	updateimage()
 
-/obj/effect/fake_attacker/proc/fake_blood(var/mob/target)
+/obj/effect/fake_attacker/proc/fake_blood(mob/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
@@ -502,11 +465,11 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/sneakers/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
-	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
-	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
+	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
+	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
+	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
-	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/c4,\
+	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/grenade/plastic/c4,\
 	/obj/item/device/powersink, /obj/item/weapon/storage/box/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
 	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\
@@ -521,7 +484,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target = T
 	var/image/I = null
 	var/count = 0
-	for(var/obj/machinery/door/airlock/A in range(target,7))
+	for(var/obj/machinery/door/airlock/A in range(7, target))
 		if(count>door_number && door_number>0)
 			break
 		count++
@@ -581,7 +544,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target << chosen
 	qdel(src)
 
-/mob/living/carbon/proc/hallucinate(var/hal_type) // Todo -> proc / defines
+/mob/living/carbon/proc/hallucinate(hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
 			new /obj/effect/hallucination/xeno_attack(src.loc,src)
@@ -679,7 +642,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halitem.icon_state = "revolver"
 							halitem.name = "Revolver"
 						if(2) //c4
-							halitem.icon = 'icons/obj/assemblies.dmi'
+							halitem.icon = 'icons/obj/grenade.dmi'
 							halitem.icon_state = "plastic-explosive0"
 							halitem.name = "Mysterious Package"
 							if(prob(25))
@@ -708,10 +671,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			//src << "Danger Flash"
 			if(!halimage)
 				var/list/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
+				for(var/turf/open/floor/F in view(src,world.view))
 					possible_points += F
 				if(possible_points.len)
-					var/turf/simulated/floor/target = pick(possible_points)
+					var/turf/open/floor/target = pick(possible_points)
 
 					switch(rand(1,3))
 						if(1)
@@ -722,7 +685,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
 						if(3)
 							//src << "C4"
-							halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+							halimage = image('icons/obj/grenade.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 					if(client) client.images += halimage
@@ -731,20 +694,18 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 						halimage = null
 		if("death")
 			//Fake death
-			src.sleeping = 20
-			hal_crit = 1
 			hal_screwyhud = 1
+			SetSleeping(20)
 			spawn(rand(50,100))
-				src.sleeping = 0
-				hal_crit = 0
 				hal_screwyhud = 0
+				SetSleeping(0)
 		if("husks")
 			if(!halbody)
 				var/list/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
+				for(var/turf/open/floor/F in view(src,world.view))
 					possible_points += F
 				if(possible_points.len)
-					var/turf/simulated/floor/target = pick(possible_points)
+					var/turf/open/floor/target = pick(possible_points)
 					switch(rand(1,4))
 						if(1)
 							var/image/body = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)

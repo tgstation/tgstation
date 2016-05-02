@@ -48,15 +48,19 @@
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard)
+/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
 	canmove = 0
-	src.loc = paicard
-	card = paicard
+	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
+		var/newcardloc = P
+		P = new /obj/item/device/paicard(newcardloc)
+		P.setPersonality(src)
+	loc = P
+	card = P
 	sradio = new(src)
 	if(card)
 		if(!card.radio)
-			card.radio = new /obj/item/device/radio(src.card)
+			card.radio = new /obj/item/device/radio(card)
 		radio = card.radio
 
 	//PDA
@@ -88,13 +92,7 @@
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/pai/check_eye(var/mob/user as mob)
-	if (!src.current)
-		return null
-	user.reset_view(src.current)
-	return 1
-
-/mob/living/silicon/pai/blob_act()
+/mob/living/silicon/pai/blob_act(obj/effect/blob/B)
 	return 0
 
 /mob/living/silicon/pai/restrained()
@@ -134,15 +132,15 @@
 	..()
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (src.stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
-		if(2.0)
+		if(2)
 			if (src.stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
-		if(3.0)
+		if(3)
 			if (src.stat != 2)
 				adjustBruteLoss(30)
 
@@ -151,68 +149,11 @@
 
 // See software.dm for Topic()
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
-
-/mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
-	usr:cameraFollow = null
-	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
-		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
-
-	// ok, we're alive, camera is good and in our network...
-
-	set_machine(src)
-	current = C
-	reset_view(C)
-	return 1
-
-
-/mob/living/silicon/pai/cancel_camera()
-	set category = "pAI Commands"
-	set name = "Cancel Camera View"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-
-/mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
+/mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
-/mob/living/silicon/pai/on_forcemove(var/atom/newloc)
-	if(card)
-		card.loc = newloc
-	else //something went very wrong.
-		CRASH("pAI without card")
-	loc = card
-
-//Addition by Mord_Sith to define AI's network change ability
-/*
-/mob/living/silicon/pai/proc/pai_network_change()
-	set category = "pAI Commands"
-	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-	var/cameralist[0]
-
-	if(usr.stat == 2)
-		usr << "You can't change your camera network because you are dead!"
-		return
-
-	for (var/obj/machinery/camera/C in Cameras)
-		if(!C.status)
-			continue
-		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
-				cameralist[C.network] = C.network
-
-	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "\blue Switched to [src.network] camera network."
-//End of code by Mord_Sith
-*/
-
-
+/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+	return 1
 /*
 // Debug command - Maybe should be added to admin verbs later
 /mob/verb/makePAI(var/turf/t in view())

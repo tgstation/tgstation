@@ -1,6 +1,5 @@
-
 /obj/item/weapon/restraints
-	var/breakouttime = 600
+	breakouttime = 600
 
 //Handcuffs
 
@@ -13,10 +12,10 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
-	m_amt = 500
+	materials = list(MAT_METAL=500)
 	origin_tech = "materials=1"
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -47,33 +46,70 @@
 		else
 			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
-/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
-	if(!target.handcuffed)
-		if(!user.drop_item())
-			return
-		//target.throw_alert("handcuffed", src) // Can't do this because escaping cuffs isn't standardized. Also zipties.
-		if(trashtype)
-			target.handcuffed = new trashtype(target)
-			qdel(src)
-		else
-			loc = target
-			target.handcuffed = src
-		target.update_inv_handcuffed(0)
+/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
+	if(target.handcuffed)
 		return
+
+	if(!user.drop_item() && !dispense)
+		return
+
+	var/obj/item/weapon/restraints/handcuffs/cuffs = src
+	if(trashtype)
+		cuffs = new trashtype()
+	else if(dispense)
+		cuffs = new type()
+
+	cuffs.loc = target
+	target.handcuffed = cuffs
+
+	target.update_handcuffed()
+	if(trashtype && !dispense)
+		qdel(src)
+	return
+
+/obj/item/weapon/restraints/handcuffs/sinew
+	name = "sinew restraints"
+	desc = "A pair of restraints fashioned from long strands of flesh."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "sinewcuff"
+	item_state = "sinewcuff"
+	breakouttime = 300 //Deciseconds = 30s
+	cuffsound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/weapon/restraints/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
 	item_state = "coil_red"
+	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	var/datum/robot_energy_storage/wirestorage = null
+
+/obj/item/weapon/restraints/handcuffs/cable/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+	if(!istype(C))
+		return
+	if(wirestorage && wirestorage.energy < 15)
+		user << "<span class='warning'>You need at least 15 wire to restrain [C]!</span>"
+		return
+	return ..()
+
+/obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
+	if(wirestorage)
+		if(!wirestorage.use_charge(15))
+			user << "<span class='warning'>You need at least 15 wire to restrain [target]!</span>"
+			return
+		return ..(target, user, 1)
+
+	return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/red
 	icon_state = "cuff_red"
+	item_state = "coil_red"
 
 /obj/item/weapon/restraints/handcuffs/cable/yellow
 	icon_state = "cuff_yellow"
+	item_state = "coil_yellow"
 
 /obj/item/weapon/restraints/handcuffs/cable/blue
 	icon_state = "cuff_blue"
@@ -81,20 +117,38 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/green
 	icon_state = "cuff_green"
+	item_state = "coil_green"
 
 /obj/item/weapon/restraints/handcuffs/cable/pink
 	icon_state = "cuff_pink"
+	item_state = "coil_pink"
 
 /obj/item/weapon/restraints/handcuffs/cable/orange
 	icon_state = "cuff_orange"
+	item_state = "coil_orange"
 
 /obj/item/weapon/restraints/handcuffs/cable/cyan
 	icon_state = "cuff_cyan"
+	item_state = "coil_cyan"
 
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
+	item_state = "coil_white"
 
-/obj/item/weapon/restraints/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/restraints/handcuffs/alien
+	icon_state = "handcuffAlien"
+
+/obj/item/weapon/restraints/handcuffs/fake
+	name = "fake handcuffs"
+	desc = "Fake handcuffs meant for gag purposes."
+	breakouttime = 10 //Deciseconds = 1s
+
+/obj/item/weapon/restraints/handcuffs/fake/kinky
+	name = "kinky handcuffs"
+	desc = "Fake handcuffs meant for erotic roleplay."
+	icon_state = "handcuffGag"
+
+/obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
@@ -108,6 +162,22 @@
 		else
 			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
 			return
+	else if(istype(I, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = I
+		if(M.amount < 6)
+			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
+			return
+		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
+		if(do_after(user, 35, target = src))
+			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
+			M.use(6)
+			user.put_in_hands(S)
+			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
+			if(!remove_item_from_storage(user))
+				user.unEquip(src)
+			qdel(src)
+	else
+		return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
@@ -118,7 +188,7 @@
 			if(do_mob(user, C, 30))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-					C.update_inv_handcuffed(0)
+					C.update_handcuffed()
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else
@@ -128,6 +198,8 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
+	item_state = "coil_white"
+	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 
@@ -149,7 +221,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "materials=1"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -172,7 +244,7 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/weapon/restraints/legcuffs/beartrap/attack_self(mob/user as mob)
+/obj/item/weapon/restraints/legcuffs/beartrap/attack_self(mob/user)
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
@@ -193,7 +265,7 @@
 					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
 						C.legcuffed = src
 						src.loc = C
-						C.update_inv_legcuffed(0)
+						C.update_inv_legcuffed()
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
@@ -218,7 +290,7 @@
 	..()
 	spawn(100)
 		if(!istype(loc, /mob))
-			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
 			qdel(src)
@@ -229,3 +301,31 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
+
+/obj/item/weapon/restraints/legcuffs/bola
+	name = "bola"
+	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
+	icon_state = "bola"
+	breakouttime = 35//easy to apply, easy to break out of
+	gender = NEUTER
+	var/weaken = 0
+
+/obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
+	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+		return//abort
+	var/mob/living/carbon/C = hit_atom
+	if(!C.legcuffed)
+		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
+		C.legcuffed = src
+		src.loc = C
+		C.update_inv_legcuffed()
+		feedback_add_details("handcuffs","B")
+		C << "<span class='userdanger'>\The [src] ensnares you!</span>"
+		C.Weaken(weaken)
+
+/obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant
+	name = "reinforced bola"
+	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
+	icon_state = "bola_r"
+	breakouttime = 70
+	weaken = 1

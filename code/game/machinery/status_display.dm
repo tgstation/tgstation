@@ -44,14 +44,17 @@
 
 /obj/machinery/status_display/New()
 	..()
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, frequency)
+	if(SSradio)
+		SSradio.add_object(src, frequency)
+
+/obj/machinery/status_display/initialize()
+	if(SSradio)
+		SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	..()
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
+	return ..()
 
 // timed process
 
@@ -80,20 +83,9 @@
 			remove_display()
 		if(1)				//emergency shuttle timer
 			if(SSshuttle.emergency.timer)
-				var/line1
-				var/line2 = get_shuttle_timer()
-				switch(SSshuttle.emergency.mode)
-					if(SHUTTLE_RECALL)
-						line1 = "-RCL-"
-					if(SHUTTLE_CALL)
-						line1 = "-ETA-"
-					if(SHUTTLE_DOCKED)
-						line1 = "-ETD-"
-					if(SHUTTLE_ESCAPE)
-						line1 = "-ESC-"
-					if(SHUTTLE_STRANDED)
-						line1 = "-ERR-"
-						line2 = "??:??"
+				var/line1 = "-[SSshuttle.emergency.getModeStr()]-"
+				var/line2 = SSshuttle.emergency.getTimerStr()
+
 				if(length(line2) > CHARS_PER_LINE)
 					line2 = "Error!"
 				update_display(line1, line2)
@@ -130,7 +122,7 @@
 					line2 = "Docked"
 			else
 				line1 = "CARGO"
-				line2 = get_supply_shuttle_timer()
+				line2 = SSshuttle.supply.getTimerStr()
 				if(lentext(line2) > CHARS_PER_LINE)
 					line2 = "Error"
 
@@ -167,18 +159,6 @@
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
-
-/obj/machinery/status_display/proc/get_shuttle_timer()
-	var/timeleft = SSshuttle.emergency.timeLeft()
-	if(timeleft > 0)
-		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
-	return "00:00"
-
-/obj/machinery/status_display/proc/get_supply_shuttle_timer()
-	var/timeleft = SSshuttle.supply.timeLeft()
-	if(timeleft > 0)
-		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
-	return "00:00"
 
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)
@@ -287,7 +267,7 @@
 		return
 
 
-/obj/machinery/ai_status_display/proc/set_picture(var/state)
+/obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
 		overlays.Cut()

@@ -17,7 +17,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
 
@@ -26,7 +26,7 @@
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
 
-/obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
@@ -84,7 +84,7 @@
 //CIG PACK//
 ////////////
 /obj/item/weapon/storage/fancy/cigarettes
-	name = "\improper Space Cigarettes packet"
+	name = "Space Cigarettes"
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
@@ -93,7 +93,7 @@
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list(/obj/item/clothing/mask/cigarette)
+	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette
 
@@ -101,6 +101,9 @@
 	..()
 	flags |= NOREACT
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
+	for(var/obj/item/clothing/mask/cigarette/cig in src)
+		cig.desc = "\An [name] brand [cig.name]."
+	name = "\improper [name] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
 	overlays.Cut()
@@ -115,7 +118,8 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
 	if(istype(W,/obj/item/clothing/mask/cigarette))
-		reagents.trans_to(W,(reagents.total_volume/contents.len))
+		if(reagents)
+			reagents.trans_to(W,(reagents.total_volume/contents.len))
 	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -123,7 +127,7 @@
 		return
 	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(cig)
-		if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
+		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
 			remove_from_storage(W, M)
 			M.equip_to_slot_if_possible(W, slot_wear_mask)
@@ -135,22 +139,22 @@
 		user << "<span class='notice'>There are no [icon_type]s left in the pack.</span>"
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
+	name = "DromedaryCo"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "dromedary"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift
-	name = "\improper Uplift Smooth packet"
+	name = "Uplift Smooth"
 	desc = "Your favorite brand, now menthol flavored."
 	icon_state = "uplift"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust
-	name = "\improper Robust packet"
+	name = "Robust"
 	desc = "Smoked by the robust."
 	icon_state = "robust"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold
-	name = "\improper Robust Gold packet"
+	name = "Robust Gold"
 	desc = "Smoked by the truly robust."
 	icon_state = "robustg"
 
@@ -160,12 +164,12 @@
 		reagents.add_reagent("gold",1)
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
-	name = "\improper Carp Classic packet"
+	name = "Carp Classic"
 	desc = "Since 2313."
 	icon_state = "carp"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	name = "cigarette packet"
+	name = "unknown"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
@@ -173,15 +177,17 @@
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("omnizine",15)
+	name = "cigarette packet"
 
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori
-	name = "\improper Midori Tabako packet"
+	name = "Midori Tabako"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims
-	name ="\improper Shady Jim's Super Slims"
+	name ="Shady Jim's Super Slims"
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjim"
 
