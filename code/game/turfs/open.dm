@@ -62,9 +62,18 @@
 		else
 			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING) && !(lube&SLIDE))
 				return 0
-
+		if(istype(C, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = C
+			if(istype(H.shoes))
+				if(H.shoes.flags&NOSLIP && lube&SLIDE && !lube&GALOSHES_DONT_HELP)
+					var/olddir = C.dir
+					if(lube&SLIDE)
+						for(var/i=1, i<4, i++)
+							spawn (i)
+								step(C, olddir)
+					return 1
 		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
@@ -107,7 +116,7 @@
 		else
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
 		overlays += wet_overlay
-	addtimer(src, "HandleWet", 30, 1)
+	HandleWet()
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
@@ -115,10 +124,9 @@
 	if(wet == TURF_WET_PERMAFROST)
 		wet = TURF_WET_ICE
 	else
-		spawn(rand(0,20))
-			wet = TURF_DRY
-			if(wet_overlay)
-				overlays -= wet_overlay
+		wet = TURF_DRY
+		if(wet_overlay)
+			overlays -= wet_overlay
 
 /turf/open/proc/HandleWet()
 	if(!wet_time && wet < TURF_WET_ICE)
@@ -151,5 +159,5 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(src, "HandleWet", 30, 1)
+		addtimer(src, "HandleWet", rand(10,20))
 

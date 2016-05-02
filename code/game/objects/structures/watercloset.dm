@@ -182,7 +182,7 @@
 	else
 		if(istype(loc, /turf/open))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(min = 10, max = 5)
+			tile.MakeSlippery(min = 5, max = 1)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
