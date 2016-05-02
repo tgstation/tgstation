@@ -92,27 +92,6 @@
 			playsound(M.loc, 'sound/effects/bamf.ogg', 50, 0)
 	return 1
 
-//This shouldn't fucking exist, just spawn a meteor damnit
-/obj/item/projectile/meteor
-	name = "meteor"
-	icon = 'icons/obj/meteor.dmi'
-	icon_state = "smallf"
-	damage = 0
-	damage_type = BRUTE
-	nodamage = 1
-	flag = "bullet"
-
-/obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area)
-	if(A == firer)
-		loc = A.loc
-		return
-
-	//Copied straight from small meteor code
-	spawn(0)
-		playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 10, 1)
-		explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
-		qdel(src)
-
 //Simple fireball
 /obj/item/projectile/simple_fireball
 	name = "fireball"

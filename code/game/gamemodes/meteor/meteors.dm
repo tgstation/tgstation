@@ -108,96 +108,118 @@
 
 	while(!istype(pickedstart, /turf/space))
 
-	var/atom/movable/M
 	if(meteorpath)
-		M = new meteorpath(pickedstart)
+		new meteorpath(pickedstart, pickedgoal)
 	else
 		var/list/possible_meteors = list()
 		if(!max_meteor_size || max_meteor_size >= 1) //Small waves
-			possible_meteors[/obj/effect/meteor/small] = 40
-			possible_meteors[/obj/effect/meteor/small/flash] = 5
+			possible_meteors[/obj/item/projectile/meteor/small] = 80
+			possible_meteors[/obj/item/projectile/meteor/small/flash] = 8
 		if(!max_meteor_size || max_meteor_size >= 2) //Medium waves
-			possible_meteors[/obj/effect/meteor] = 55
-			possible_meteors[/obj/effect/meteor/radioactive] = 5
+			possible_meteors[/obj/item/projectile/meteor] = 100
+			possible_meteors[/obj/item/projectile/meteor/radioactive] = 10
 		if(!max_meteor_size || max_meteor_size >= 3) //Big waves
-			possible_meteors[/obj/effect/meteor/big] = 5
-			possible_meteors[/obj/effect/meteor/big/cluster] = 5
+			possible_meteors[/obj/item/projectile/meteor/big] = 10
+			possible_meteors[/obj/item/projectile/meteor/big/cluster] = 1
 		var/chosen = pick(possible_meteors)
-		M = new chosen(pickedstart)
-	if(M)
-		walk_towards(M, pickedgoal, 1)
-	return
+		new chosen(pickedstart, pickedgoal)
 
 /*
  * Below are all meteor types
  */
 
-/obj/effect/meteor
+/obj/item/projectile/meteor
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "medium"
 	density = 1
 	anchored = 1 //You can't push or pull it to prevent exploiting
-	pass_flags = PASSTABLE
+	grillepasschance = 0
+	mouse_opacity = 1
+
+/obj/item/projectile/meteor/New(atom/start, atom/end)
+	..()
+	if(end)
+		throw_at(end)
+
+/obj/item/projectile/meteor/throw_at(atom/end)
+	original = end
+	starting = loc
+	current = loc
+	OnFired()
+	yo = target.y - y
+	xo = target.x - x
+	process()
 
 //Since meteors explode on impact, we won't allow chain reactions like this
 //Maybe one day I wil code explosive recoil, but in the meantime who bombs meteor waves anyways ?
-/obj/effect/meteor/ex_act()
+/obj/item/projectile/meteor/ex_act()
 
 	return
 
 //We don't want meteors to bump into eachother and explode, so they pass through eachother
 //Reflection on bumping would be better, but I would reckon I'm not sure on how to achieve it
-/obj/effect/meteor/Cross(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/obj/item/projectile/meteor/Cross(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 
-	if(istype(mover, /obj/effect/meteor))
+	if(istype(mover, /obj/item/projectile/meteor))
 		return 1 //Just move through it, no questions asked
+	if(isliving(mover))
+		return 0 //Collision
 	else
 		return ..() //Refer to atom/proc/Cross
 
-/obj/effect/meteor/Bump(atom/A)
+/obj/item/projectile/meteor/Bump(atom/A)
+
 	if(loc == null)
 		return
+
 	explosion(get_turf(src), 2, 4, 6, 8, 0, 1, 0) //Medium meteor, medium boom
 	qdel(src)
 
-/obj/effect/meteor/Move()
+/obj/item/projectile/meteor/process()
+	if(z != starting.z)
+		qdel(src)
+		return
 	..()
-	return
 
-/obj/effect/meteor/radioactive
+/obj/item/projectile/meteor/radioactive
 	name = "radioactive meteor"
 	desc = "The Engineer's bane"
 	icon_state = "medium_radioactive"
 
-/obj/effect/meteor/radioactive/Bump(atom/a)
+/obj/item/projectile/meteor/radioactive/Bump(atom/a)
+
 	if(loc == null)
 		return
+
 	for(var/mob/living/M in viewers(src, null))
 		M.radiation += rand(5, 10)
 
 	..()
 
-/obj/effect/meteor/small
+/obj/item/projectile/meteor/small
 	name = "small meteor"
 	desc = "The mineral version of armed C4, coming right for your walls."
 	icon_state = "small"
 	pass_flags = PASSTABLE
 
-/obj/effect/meteor/small/Bump(atom/A)
+/obj/item/projectile/meteor/small/Bump(atom/A)
 	if(loc == null)
 		return
+
 	explosion(get_turf(src), -1, 1, 3, 4, 0, 1, 0) //Tiny meteor doesn't cause too much damage
 	qdel(src)
 
-/obj/effect/meteor/small/flash
+/obj/item/projectile/meteor/small/flash
 	name = "flash meteor"
 	desc = "A absolutely stunning rock specimen of blinding beauty."
 	icon_state = "small_flash"
 
-/obj/effect/meteor/small/flash/Bump(atom/A)
+/obj/item/projectile/meteor/small/flash/Bump(atom/A)
+
 	if(loc == null)
 		return
+
 	//Adjusted from flashbangs, should be its own global proc
 	visible_message("<span class='danger'>BANG</span>")
 	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
@@ -245,17 +267,20 @@
 				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
 				M.sdisabilities |= DEAF
 
-	..()
+	explosion(get_turf(src), -1, 1, 3, 4, 0, 1, 0) //Tiny meteor doesn't cause too much damage
+	qdel(src)
 
-/obj/effect/meteor/piercing
+/obj/item/projectile/meteor/piercing
 	name = "piercing meteor"
 	desc = "Takes a page out of armor-piercing rounds, blowing its way through cover once, and then blowing up normally."
 	icon_state = "medium_piercing"
 	var/pierce_health = 1 //When 0, piercing meteor explodes like normal
 
-/obj/effect/meteor/piercing/Bump(atom/A)
+/obj/item/projectile/meteor/piercing/Bump(atom/A)
+
 	if(loc == null)
 		return
+
 	if(pierce_health)
 		explosion(get_turf(A), 1, 0, 0, 0, 0, 1, 0) //Blow up the resisting object
 		pierce_health--
@@ -263,55 +288,50 @@
 		explosion(get_turf(src), 2, 4, 6, 8, 0, 1, 0) //Blow ourselves up, in glory
 		qdel(src)
 
-/obj/effect/meteor/big
+/obj/item/projectile/meteor/big
 	name = "large meteor"
 	desc = "It might look large, but it is only a small splinter of a much bigger thing."
 	icon_state = "big"
-	pass_flags = 0 //Nope, you're not dodging that table
 
-/obj/effect/meteor/big/Bump(atom/A)
+/obj/item/projectile/meteor/big/Bump(atom/A)
+
 	if(loc == null)
 		return
+
 	explosion(get_turf(src), 4, 6, 8, 8, 0, 1, 0) //You have been visited by the nuclear meteor
 	qdel(src)
 
-/obj/effect/meteor/big/cluster
+/obj/item/projectile/meteor/big/cluster
 	name = "cluster meteor"
 	desc = "Makes up for its lack of explosiveness by splitting into multiple, fairly explosive meteors."
 	icon_state = "big_cluster"
 
-/obj/effect/meteor/big/cluster/Bump(atom/A)
+/obj/item/projectile/meteor/big/cluster/Bump(atom/A)
+
 	if(loc == null)
 		return
 
 	explosion(get_turf(A), 1, 0, 0, 0, 0, 1, 0) //Enough to destroy whatever was in the way
-	var/failcount = 0
 	for(var/i = 0, i < 3, i++)
-		if(failcount >= 5)
-			break
-		var/obj/effect/meteor/M = new /obj/effect/meteor(get_turf(src))
-		var/c_endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
 		var/c_endx = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE)
+		var/c_endy = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)
 		var/c_pickedgoal = locate(c_endx, c_endy, 1)
-		if(!c_pickedgoal)
-			qdel(M)
-			i-- //Try again
-			failcount++ //Keep a track of failures
-		walk_towards(M, c_pickedgoal, 1)
+		if(c_pickedgoal)
+			new /obj/item/projectile/meteor(get_turf(src), c_pickedgoal)
 	qdel(src)
 
 //Placeholder for actual meteors of this kind, will be included SOON
-/obj/effect/meteor/boss
+/obj/item/projectile/meteor/boss
 	name = "apocalytic meteor"
 	desc = "And behold, a white meteor. And on that meteor..."
 
-/obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/projectile/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe)) //Yeah, you can totally do that
 		qdel(src)
+		return
 	..()
 
-/obj/effect/meteor/Destroy()
-	walk(src, 0) //This cancels the walk_towards() proc
+/obj/item/projectile/meteor/Destroy()
 	..()
 
 /obj/effect/meteor/gib    //non explosive meteor, appears to be a corpse spinning in space before impacting something and spraying gibs everywhere
@@ -319,7 +339,9 @@
 	icon_state = "human"
 
 /obj/effect/meteor/gib/Bump(atom/A)
+
 	if(loc == null)
 		return
+
 	new /obj/effect/gibspawner/human(src.loc)
 	qdel(src)
