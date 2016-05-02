@@ -384,14 +384,14 @@
 	required_reagents = list("fuel" = 1, // kerosene
 							 "cleaner" = 1, // propylene glycol
 							 "sugar" = 1, // artifical sweeteners
-							 "acid" = 1, // sulfuric acid
+							 "sacid" = 1, // sulfuric acid
 							 "rum" = 1, // rum
 							 "acetone" = 1, // acetone
 							 "tomatojuice" = 1, // red dye no 2
 							 "radium" = 1, // scumm
 							 "lube" = 1, // axle grease
-							 "pacid" = 1, // battery acid
-							 "pepperoni" = 1) // and/or pepperoni
+							 "facid" = 1, // battery acid
+							 "liquidgibs" = 1) // and/or pepperoni
 	result_amount = 10 // as you can probably imagine, it's one of the most caustic, volatile substances known to man
 	mix_message = "The substance mixes together, emitting a rank piratey odor and seemingly dissolving some of the container..." // the stuff eats right through these mugs, and the cook is losinng a fortune replacing them!
 
