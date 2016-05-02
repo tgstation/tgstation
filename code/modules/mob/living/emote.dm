@@ -272,7 +272,7 @@
 			message = "<B>[src]</B> sulks down sadly."
 			m_type = 1
 
-		if ("surrender","surrender")
+		if ("surrender","surrenders")
 			message = "<B>[src]</B> puts their hands on their head and falls to the ground, they surrender!"
 			if(sleeping)
 				return //Can't surrender while asleep.
