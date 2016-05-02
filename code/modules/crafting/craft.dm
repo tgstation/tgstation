@@ -31,7 +31,7 @@
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
 	. += range(2, user.loc)
-	. += user.contents
+	. += user.hands
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()

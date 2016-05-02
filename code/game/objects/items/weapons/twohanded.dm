@@ -336,16 +336,6 @@
 		if(input)
 			src.war_cry = input
 
-//Placeholder C4 "grenade" for use on this spear
-/obj/item/weapon/grenade/C4
-	name = "C-4"
-	desc = "A brick of C-4."
-
-/obj/item/weapon/grenade/C4/prime()
-	update_mob()
-	explosion(src.loc,-1,1,3)
-	qdel(src)
-
 /obj/item/weapon/twohanded/spear/CheckParts(list/content)
 	..()
 	if(explosive)
