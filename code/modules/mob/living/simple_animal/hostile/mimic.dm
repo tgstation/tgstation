@@ -164,9 +164,9 @@ var/global/list/crate_mimic_disguises = list(\
 	.=..()
 
 /mob/living/simple_animal/hostile/mimic/crate/Destroy()
-	..()
-
 	Die()
+	
+	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/initialize()
 	..()
