@@ -1,5 +1,3 @@
-
-
 /obj/item/weapon/banner
 	name = "banner"
 	icon = 'icons/obj/items.dmi'

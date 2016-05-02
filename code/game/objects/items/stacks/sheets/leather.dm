@@ -135,6 +135,14 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon_state = "sinew"
 	origin_tech = "biotech=4"
 
+
+var/global/list/datum/stack_recipe/sinew_recipes = list ( \
+	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/sinew/New(var/loc, var/amount=null)
+	recipes = sinew_recipes
+	return ..()
 		/*
  * Plates
  		*/

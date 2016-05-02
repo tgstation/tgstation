@@ -119,6 +119,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	flags = NODROP | OPENCONTAINER | NOBLUDGEON
+	slot_flags = 0
 
 	var/obj/item/weapon/watertank/tank
 
