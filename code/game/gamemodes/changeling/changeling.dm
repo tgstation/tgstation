@@ -15,7 +15,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
-	antag_flag = BE_CHANGELING
+	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
@@ -80,7 +80,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
-	var/list/team_objectives = typesof(/datum/objective/changeling_team_objective) - /datum/objective/changeling_team_objective
+	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
 	var/list/possible_team_objectives = list()
 	for(var/T in team_objectives)
 		var/datum/objective/changeling_team_objective/CTO = T
@@ -97,6 +97,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
+		ticker.mode.update_changeling_icons_added(changeling)
 	..()
 	return
 
@@ -105,8 +106,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
-		if(character.client.prefs.be_special & BE_CHANGELING)
-			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+		if(ROLE_CHANGELING in character.client.prefs.be_special)
+			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
@@ -300,8 +301,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /datum/changeling/New(var/gender=FEMALE)
 	..()
 	var/honorific
-	if(gender == FEMALE)	honorific = "Ms."
-	else					honorific = "Mr."
+	if(gender == FEMALE)
+		honorific = "Ms."
+	else
+		honorific = "Mr."
 	if(possible_changeling_IDs.len)
 		changelingID = pick(possible_changeling_IDs)
 		possible_changeling_IDs -= changelingID
@@ -331,32 +334,35 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return 1
 	return 0
 
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target)
-	var/datum/changelingprofile/prof = stored_profiles[1]
-	if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
-		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
-		return
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target, var/verbose=1)
+	if(stored_profiles.len)
+		var/datum/changelingprofile/prof = stored_profiles[1]
+		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
+			if(verbose)
+				user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+			return
 	if(!target)
 		return
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
-		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
+		if(verbose)
+			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
-		user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+		if(verbose)
+			user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
 		return
 	if(has_dna(target.dna))
-		user << "<span class='warning'>We already have this DNA in storage!</span>"
-	if(!check_dna_integrity(target))
-		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
+		if(verbose)
+			user << "<span class='warning'>We already have this DNA in storage!</span>"
+		return
+	if(!target.has_dna())
+		if(verbose)
+			user << "<span class='warning'>[target] is not compatible with our biology.</span>"
 		return
 	return 1
 
-/datum/changeling/proc/add_profile(var/mob/living/carbon/human/H, var/mob/living/carbon/user, protect = 0)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
-
-	var/datum/changelingprofile/prof = new()
+/datum/changeling/proc/create_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
+	var/datum/changelingprofile/prof = new
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
 	var/datum/dna/new_dna = new H.dna.type
@@ -365,24 +371,41 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	prof.name = H.real_name
 	prof.protected = protect
 
+	prof.underwear = H.underwear
+	prof.undershirt = H.undershirt
+	prof.socks = H.socks
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
-		var/obj/item/I = H.vars[slot]
-		if(!I)
+		if(slot in H.vars)
+			var/obj/item/I = H.vars[slot]
+			if(!I)
+				continue
+			prof.name_list[slot] = I.name
+			prof.appearance_list[slot] = I.appearance
+			prof.flags_cover_list[slot] = I.flags_cover
+			prof.item_color_list[slot] = I.item_color
+			prof.item_state_list[slot] = I.item_state
+			prof.exists_list[slot] = 1
+		else
 			continue
-		prof.name_list[slot] = I.name
-		prof.appearance_list[slot] = I.appearance
-		prof.flags_cover_list[slot] = I.flags_cover
-		prof.item_color_list[slot] = I.item_color
-		prof.item_state_list[slot] = I.item_state
-		prof.exists_list[slot] = 1
+
+	return prof
+
+/datum/changeling/proc/add_profile(datum/changelingprofile/prof)
+	if(stored_profiles.len > dna_max)
+		if(!push_out_profile())
+			return
 
 	stored_profiles += prof
 	absorbedcount++
 
+/datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
+	var/datum/changelingprofile/prof = create_profile(H, protect)
+	add_profile(prof)
 	return prof
 
-/datum/changeling/proc/remove_profile(var/mob/living/carbon/human/H, force = 0)
+/datum/changeling/proc/remove_profile(mob/living/carbon/human/H, force = 0)
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		if(H.real_name == prof.name)
 			if(prof.protected && !force)
@@ -402,13 +425,17 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return 1
 	return 0
 
-/proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
+/proc/changeling_transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
-	user.dna = chosen_dna
-	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
-	domutcheck(user)
-	updateappearance(user)
+	user.underwear = chosen_prof.underwear
+	user.undershirt = chosen_prof.undershirt
+	user.socks = chosen_prof.socks
+
+	chosen_dna.transfer_identity(user, 1)
+	user.updateappearance(mutcolor_update=1)
+	user.update_body()
+	user.domutcheck()
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in slots)
@@ -452,5 +479,35 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/list/item_color_list = list()
 	var/list/item_state_list = list()
 
+	var/underwear
+	var/undershirt
+	var/socks
+
 /datum/changelingprofile/Destroy()
 	qdel(dna)
+	return ..()
+
+/datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
+	newprofile.name = name
+	newprofile.protected = protected
+	newprofile.dna = new dna.type
+	dna.copy_dna(newprofile.dna)
+	newprofile.name_list = name_list.Copy()
+	newprofile.appearance_list = appearance_list.Copy()
+	newprofile.flags_cover_list = flags_cover_list.Copy()
+	newprofile.exists_list = exists_list.Copy()
+	newprofile.item_color_list = item_color_list.Copy()
+	newprofile.item_state_list = item_state_list.Copy()
+	newprofile.underwear = underwear
+	newprofile.undershirt = undershirt
+	newprofile.socks = socks
+
+/datum/game_mode/proc/update_changeling_icons_added(datum/mind/changling_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	hud.join_hud(changling_mind.current)
+	set_antag_hud(changling_mind.current, "changling")
+
+/datum/game_mode/proc/update_changeling_icons_removed(datum/mind/changling_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
+	hud.leave_hud(changling_mind.current)
+	set_antag_hud(changling_mind.current, null)

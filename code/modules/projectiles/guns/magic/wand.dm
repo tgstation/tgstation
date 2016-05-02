@@ -86,7 +86,7 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user)
-	user.revive()
+	user.revive(full_heal = 1)
 	user << "<span class='notice'>You feel great!</span>"
 	charges--
 	..()
@@ -123,8 +123,8 @@
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user)
 	do_teleport(user, user, 10)
-	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(10, 0, user.loc)
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(3, user.loc)
 	smoke.start()
 	charges--
 	..()
@@ -142,8 +142,10 @@
 	max_charges = 20 //20, 10, 10, 7
 	no_den_usage = 1
 
-/obj/item/weapon/gun/magic/wand/door/zap_self()
-	return
+/obj/item/weapon/gun/magic/wand/door/zap_self(mob/living/user)
+	user << "<span class='notice'>You feel vaguely more open with your feelings.</span>"
+	charges--
+	..()
 
 /////////////////////////////////////
 //WAND OF FIREBALL

@@ -38,9 +38,13 @@
 				if(prob(1))
 					src << "<span class='danger'>You mutate!</span>"
 					randmutb(src)
-					domutcheck(src,null)
 					emote("gasp")
+					domutcheck()
 		..()
+
+/mob/living/carbon/monkey/handle_chemicals_in_body()
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
 	if(abs(310.15 - breath.temperature) > 50)
@@ -76,13 +80,13 @@
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		switch(bodytemperature)
 			if(360 to 400)
-				throw_alert("temp","hot",1)
+				throw_alert("temp", /obj/screen/alert/hot, 1)
 				adjustFireLoss(2)
 			if(400 to 460)
-				throw_alert("temp","hot",2)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
 				adjustFireLoss(3)
 			if(460 to INFINITY)
-				throw_alert("temp","hot",3)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(on_fire)
 					adjustFireLoss(8)
 				else
@@ -92,13 +96,13 @@
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)
-					throw_alert("temp","cold",1)
+					throw_alert("temp", /obj/screen/alert/cold, 1)
 					adjustFireLoss(0.5)
 				if(120 to 200)
-					throw_alert("temp","cold",2)
+					throw_alert("temp", /obj/screen/alert/cold, 2)
 					adjustFireLoss(1.5)
 				if(-INFINITY to 120)
-					throw_alert("temp","cold",3)
+					throw_alert("temp", /obj/screen/alert/cold, 3)
 					adjustFireLoss(3)
 		else
 			clear_alert("temp")
@@ -113,41 +117,22 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure","highpressure",2)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure","highpressure",1)
+			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure","lowpressure",1)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
 			adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-			throw_alert("pressure","lowpressure",2)
+			throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 	return
 
-
-/mob/living/carbon/monkey/handle_hud_icons()
-
-	handle_hud_icons_health()
-
-	return 1
-
 /mob/living/carbon/monkey/handle_random_events()
 	if (prob(1) && prob(2))
-		spawn(0)
-			emote("scratch")
-			return
-
-
-/mob/living/carbon/monkey/handle_changeling()
-	if(mind && hud_used)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
+		emote("scratch")
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)

@@ -22,7 +22,7 @@
 			if(prob(2))
 				affected_mob.emote("yawn")
 			if(prob(2))
-				affected_mob << "<span class='danger'>Your don't feel like yourself.</span>"
+				affected_mob << "<span class='danger'>You don't feel like yourself.</span>"
 			if(prob(5))
 				affected_mob.adjustBrainLoss(1)
 				affected_mob.updatehealth()

@@ -52,21 +52,19 @@
 	if(isnull(M.key)) return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!istype(H.dna, /datum/dna))
-			return 0
 		if(H.gloves)
 			if(fingerprintslast != H.ckey)
-				fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
 				fingerprintslast = H.ckey
 			return 0
-		if(!( fingerprints ))
+		if(!fingerprints)
 			if(fingerprintslast != H.ckey)
-				fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
+				fingerprintshidden += "\[[time_stamp()]\] Real name: [H.real_name], Key: [H.key]"
 				fingerprintslast = H.ckey
 			return 1
 	else
 		if(fingerprintslast != M.ckey)
-			fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
+			fingerprintshidden += "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]"
 			fingerprintslast = M.ckey
 	return
 
@@ -75,17 +73,15 @@
 	if(isnull(M)) return
 	if(isnull(M.key)) return
 	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
 
 		//Fibers~
-		add_fibers(M)
+		add_fibers(H)
 
 		//Now, lets get to the dirty work.
-		//First, make sure their DNA makes sense.
-		var/mob/living/carbon/human/H = M
-		check_dna_integrity(H)	//sets up dna and its variables if it was missing somehow
 
 		//Check if the gloves (if any) hide fingerprints
 		if(H.gloves)

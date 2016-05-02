@@ -149,7 +149,7 @@
 			var/list/the_targets = list(T,T1,T2)
 			spawn(0)
 				for(var/a=0, a<5, a++)
-					var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
+					var/obj/effect/particle_effect/water/W = PoolOrNew(/obj/effect/particle_effect/water, get_turf(chassis))
 					if(!W)
 						return
 					var/turf/my_target = pick(the_targets)
@@ -195,30 +195,36 @@
 	energy_drain = 250
 	range = MELEE|RANGED
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
-	var/disabled = 0 //malf
+
+/obj/item/mecha_parts/mecha_equipment/rcd/New()
+	rcd_list += src
+	..()
+
+/obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
+ 	rcd_list -= src
+ 	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
-	if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
-		disabled = 1
-	else
-		disabled = 0
+	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
+		return
+
 	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
-	if(!action_checks(target) || disabled || get_dist(chassis, target)>3)
+	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return
 	playsound(chassis, 'sound/machines/click.ogg', 50, 1)
 
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/simulated/wall))
-				var/turf/simulated/wall/W = target
+			if (istype(target, /turf/closed/wall))
+				var/turf/closed/wall/W = target
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ChangeTurf(/turf/simulated/floor/plating)
+					W.ChangeTurf(/turf/open/floor/plating)
 					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
-			else if (istype(target, /turf/simulated/floor))
-				var/turf/simulated/floor/F = target
+			else if (istype(target, /turf/open/floor))
+				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -231,23 +237,22 @@
 					qdel(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(1)
-			if(istype(target, /turf/space))
-				var/turf/space/S = target
+			if(istype(target, /turf/open/space))
+				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.ChangeTurf(/turf/simulated/floor/plating)
+					S.ChangeTurf(/turf/open/floor/plating)
 					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
-			else if(istype(target, /turf/simulated/floor))
-				var/turf/simulated/floor/F = target
+			else if(istype(target, /turf/open/floor))
+				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
-					if(disabled) return
-					F.ChangeTurf(/turf/simulated/wall)
+					F.ChangeTurf(/turf/closed/wall)
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
-			if(istype(target, /turf/simulated/floor))
+			if(istype(target, /turf/open/floor))
 				occupant_message("Building Airlock...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -260,8 +265,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/do_after_cooldown(var/atom/target)
 	. = ..()
-	if(disabled)
-		return 0
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Topic(href,href_list)
 	..()
@@ -382,9 +385,9 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	if(istype(new_turf, /turf/simulated/floor))
-		var/turf/simulated/floor/T = new_turf
-		if(!istype(T, /turf/simulated/floor/plating))
+	if(istype(new_turf, /turf/open/floor))
+		var/turf/open/floor/T = new_turf
+		if(!istype(T, /turf/open/floor/plating))
 			if(!T.broken && !T.burnt)
 				new T.floor_tile(T)
 			T.make_plating()

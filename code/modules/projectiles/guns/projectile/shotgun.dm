@@ -3,7 +3,7 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
@@ -12,6 +12,9 @@
 	var/recentpump = 0 // to prevent spammage
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user, params)
+	. = ..()
+	if(.)
+		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
@@ -30,7 +33,8 @@
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
-	if(recentpump)	return
+	if(recentpump)
+		return
 	pump(user)
 	recentpump = 1
 	spawn(10)
@@ -52,7 +56,8 @@
 		chambered = null
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump_reload(mob/M)
-	if(!magazine.ammo_count())	return 0
+	if(!magazine.ammo_count())
+		return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 
@@ -62,13 +67,16 @@
 	if (chambered)
 		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
+/obj/item/weapon/gun/projectile/shotgun/lethal
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
+
 // RIOT SHOTGUN //
 
 /obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shotriot
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 
 /obj/item/weapon/gun/projectile/shotgun/riot/attackby(obj/item/A, mob/user, params)
@@ -85,8 +93,8 @@
 ///////////////////////
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction
-	name = "bolt action rifle"
-	desc = "This piece of junk looks like something that could have been used 700 years ago."
+	name = "\improper Mosin Nagant"
+	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
 	slot_flags = 0 //no SLOT_BACK sprite, alas
@@ -113,6 +121,42 @@
 	..()
 	user << "The bolt is [bolt_open ? "open" : "closed"]."
 
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted
+	name = "enchanted bolt action rifle"
+	desc = "Careful not to lose your head."
+	var/guns_left = 30
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/New()
+	..()
+	bolt_open = 1
+	pump()
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/dropped()
+	..()
+	guns_left = 0
+
+/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+	..()
+	if(guns_left)
+		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new
+		GUN.guns_left = src.guns_left - 1
+		user.drop_item()
+		user.swap_hand()
+		user.put_in_hands(GUN)
+	else
+		user.drop_item()
+	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
+
+
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted
+	max_ammo =1
+	ammo_type = /obj/item/ammo_casing/a762/enchanted
+
+
+
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
@@ -122,12 +166,12 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
 	unique_rename = 1
 	unique_reskin = 1
@@ -175,14 +219,15 @@
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	slot_flags = null
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
 	unique_rename = 0
 	unique_reskin = 0
+	var/slung = 0
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
@@ -192,10 +237,17 @@
 			slot_flags = SLOT_BACK
 			icon_state = "ishotgunsling"
 			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
+			slung = 1
 			update_icon()
 		else
 			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
 			return
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/update_icon()
+	..()
+	if (slung && (slot_flags & SLOT_BELT) )
+		slung = 0
+		icon_state = "ishotgun-sawn"
 
 // Sawing guns related procs //
 
@@ -234,7 +286,9 @@
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = "[icon_state]-sawn"
-		w_class = 3.0
+		if(current_skin)
+			current_skin = "[current_skin]-sawn"
+		w_class = 3
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
@@ -248,11 +302,11 @@
 // Bulldog shotgun //
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	name = "syndicate shotgun"
+	name = "\improper 'Bulldog' Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -260,7 +314,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	action_button_name = null
+	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin
@@ -298,5 +352,5 @@
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5

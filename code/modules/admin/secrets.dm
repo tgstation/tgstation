@@ -25,7 +25,8 @@
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR><BR>
+			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
@@ -101,7 +102,8 @@
 					dat += "[line]<BR>"
 				dat+= "*******<BR><BR>"
 				for(var/datum/job/job in SSjob.occupations)
-					if(!job)	continue
+					if(!job)
+						continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 				usr << browse(dat, "window=jobdebug;size=600x500")
 
@@ -200,7 +202,7 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 			else if (ticker.mode)
 				alert("The game mode is [ticker.mode.name]")
@@ -220,8 +222,8 @@
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
-				if(H.dna && H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.blood_type]</td></tr>"
+				if(H.ckey)
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=DNA;size=440x410")
 		if("fingerprints")
@@ -231,12 +233,7 @@
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
 				if(H.ckey)
-					if(H.dna && H.dna.uni_identity)
-						dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
-					else if(H.dna && !H.dna.uni_identity)
-						dat += "<tr><td>[H]</td><td>H.dna.uni_identity = null</td></tr>"
-					else if(!H.dna)
-						dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=fingerprints;size=440x410")
 
@@ -259,8 +256,7 @@
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = species_list[result]
 				for(var/mob/living/carbon/human/H in mob_list)
-					hardset_dna(H, null, null, null, null, newtype)
-					H.regenerate_icons()
+					H.set_species(newtype)
 
 		if("corgi")
 			if(!check_rights(R_FUN))
@@ -309,7 +305,7 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
@@ -351,11 +347,9 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
 
-			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be between 4 and 128)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
+			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
 			if (newBombCap < 4)
 				return
-			if (newBombCap > 128)
-				newBombCap = 128
 
 			MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
 			MAX_EX_HEAVY_RANGE = round(newBombCap/2)
@@ -382,7 +376,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
-			for(var/obj/machinery/light/L in world)
+			for(var/obj/machinery/light/L in machines)
 				L.broken()
 
 		if("whiteout")
@@ -391,66 +385,12 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","WO")
 			message_admins("[key_name_admin(usr)] fixed all lights")
-			for(var/obj/machinery/light/L in world)
+			for(var/obj/machinery/light/L in machines)
 				L.fix()
 
 		if("floorlava")
-			if(!check_rights(R_FUN))
-				return
-			if(floorIsLava)
-				usr << "The floor is lava already."
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","LF")
-
-			//Options
-			var/length = input(usr, "How long will the lava last? (in seconds)", "Length", 180) as num
-			length = min(abs(length), 1200)
-
-			var/damage = input(usr, "How deadly will the lava be?", "Damage", 2) as num
-			damage = min(abs(damage), 100)
-
-			var/sure = alert(usr, "Are you sure you want to do this?", "Confirmation", "YES!", "Nah")
-			if(sure == "Nah")
-				return
-			floorIsLava = 1
-
-			message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.")
-
-			for(var/turf/simulated/floor/F in world)
-				if(F.z == ZLEVEL_STATION)
-					F.name = "lava"
-					F.desc = "The floor is LAVA!"
-					F.overlays += "lava"
-					F.lava = 1
-
-			spawn(0)
-				for(var/i = i, i < length, i++) // 180 = 3 minutes
-					if(damage)
-						for(var/mob/living/carbon/L in living_mob_list)
-							if(istype(L.loc, /turf/simulated/floor)) // Are they on LAVA?!
-								var/turf/simulated/floor/F = L.loc
-								if(F.lava)
-									var/safe = 0
-									for(var/obj/structure/O in F.contents)
-										if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
-											safe = 1
-											break
-									if(!safe)
-										L.adjustFireLoss(damage)
-
-
-					sleep(10)
-
-				for(var/turf/simulated/floor/F in world) // Reset everything.
-					if(F.z == ZLEVEL_STATION)
-						F.name = initial(F.name)
-						F.desc = initial(F.desc)
-						F.overlays.Cut()
-						F.lava = 0
-						F.update_icon()
-				floorIsLava = 0
-			return
+			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
+			storm.weather_start_up()
 
 		if("virus")
 			if(!check_rights(R_FUN))
@@ -483,7 +423,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","EgL")
-			for(var/obj/machinery/door/airlock/W in world)
+			for(var/obj/machinery/door/airlock/W in machines)
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
@@ -559,12 +499,12 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OM")
-			usr.client.only_me()
+			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in world)
+			for(var/obj/machinery/door/airlock/maintenance/M in machines)
 				M.check_access()
 				if (access_maint_tunnels in M.req_access)
 					M.req_access = list(access_brig)
@@ -572,7 +512,7 @@
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in world)
+			for(var/obj/machinery/door/airlock/maintenance/M in machines)
 				M.check_access()
 				if (access_maint_tunnels in M.req_access)
 					M.req_access = list()
@@ -586,6 +526,16 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+
+		if("ctfbutton")
+			if(!check_rights(R_ADMIN))
+				return
+			var/ctf_enabled = 0
+			for(var/obj/machinery/capture_the_flag/CTF in machines)
+				ctf_enabled = !CTF.ctf_enabled
+				CTF.ctf_enabled = !CTF.ctf_enabled
+			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+
 	if(E)
 		E.processing = 0
 		if(E.announceWhen>0)

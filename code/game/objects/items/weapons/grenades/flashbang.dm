@@ -13,14 +13,13 @@
 		bang(get_turf(M), M)
 
 	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
-		var/damage = round(30/(get_dist(B,get_turf(src))+1))
-		B.health -= damage
-		B.update_icon()
+		var/damage = round(40/(get_dist(B,get_turf(src))+1))
+		B.take_damage(damage, BURN)
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	M.show_message("<span class='warning'>BANG</span>", 2)
-	playsound(loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
 
 //Checking for protection
 	var/ear_safety = M.check_ear_prot()
@@ -32,7 +31,7 @@
 		M << "<span class='userdanger'><font size=3>AAAAGH!</font></span>"
 		M.Weaken(15) //hella stunned
 		M.Stun(15)
-		M.eye_stat += 8
+		M.adjust_eye_damage(8)
 
 	if(M.flash_eyes(affect_silicon = 1))
 		M.Stun(max(10/distance, 3))
@@ -44,6 +43,7 @@
 		M.Stun(10)
 		M.Weaken(10)
 	if(!ear_safety)
+		M << sound('sound/weapons/flash_ring.ogg',0,1,0,100)
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
 		M.setEarDamage(M.ear_damage + rand(0, 5), max(M.ear_deaf,15))

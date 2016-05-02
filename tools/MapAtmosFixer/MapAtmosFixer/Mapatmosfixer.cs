@@ -291,7 +291,7 @@ namespace MapAtmosFixer
         {
             //Dirty shit, don't read this
             if (line.Contains("/obj/machinery/atmospherics/portables_connector") &&
-                //!line.Contains("/turf/simulated/floor/plating") &&                        // Most of the time connectors on plating want to be visible..
+                //!line.Contains("/turf/open/floor/plating") &&                        // Most of the time connectors on plating want to be visible..
                 !line.Contains("/obj/machinery/atmospherics/portables_connector/visible"))  // Makes sure we don't update same line twice
             {
                 line = line.Replace("/obj/machinery/atmospherics/portables_connector",

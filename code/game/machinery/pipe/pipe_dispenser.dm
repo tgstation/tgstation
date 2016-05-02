@@ -33,6 +33,8 @@
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_HE];dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_HE];dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=[PIPE_HE_MANIFOLD];dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=[PIPE_HE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_JUNCTION];dir=1'>Junction</A><BR>
 <A href='?src=\ref[src];make=[PIPE_HEAT_EXCHANGE];dir=1'>Heat Exchanger</A><BR>
 "}
@@ -79,7 +81,7 @@
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40, target = src))
+			if (do_after(user, 40/W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -92,7 +94,7 @@
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20, target = src))
+			if (do_after(user, 20/W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
@@ -110,7 +112,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -173,7 +175,7 @@ Nah
 				return
 
 			C.add_fingerprint(usr)
-			C.update()
+			C.update_icon()
 			wait = 1
 			spawn(15)
 				wait = 0
@@ -186,7 +188,7 @@ Nah
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())

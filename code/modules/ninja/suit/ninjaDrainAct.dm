@@ -28,7 +28,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(cell && cell.charge)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && cell.charge> 0 && !maxcapacity)
@@ -71,7 +71,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(charge)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && charge > 0 && !maxcapacity)
@@ -278,7 +278,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(S.cell && S.cell.charge && S.cell.use(1000))
 		. = DRAIN_MOB_SHOCK
 		//Got that electric touch
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		playsound(src, "sparks", 50, 1)
 		visible_message("<span class='danger'>[H] electrocutes [src] with their touch!</span>", "<span class='userdanger'>[H] electrocutes you with their touch!</span>")

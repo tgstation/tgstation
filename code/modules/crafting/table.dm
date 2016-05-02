@@ -1,14 +1,17 @@
 
 /obj/structure/table
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/list/table_contents = list()
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC)
+	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
 
 
-/obj/structure/table/MouseDrop(atom/over)
-	if(over != usr)
+/obj/structure/table/MouseDrop(mob/living/user)
+	if(!istype(user))
 		return
-	interact(usr)
+	if(!user.IsAdvancedToolUser())
+		return
+	tablecraft(user)
 
 /obj/structure/table/proc/check_contents(datum/table_recipe/R)
 	check_table()
@@ -56,46 +59,49 @@
 		else
 			possible_tools += I.type
 	possible_tools += table_contents
-	var/i = R.tools.len
-	var/I
-	for(var/A in R.tools)
-		I = possible_tools.Find(A)
-		if(I)
-			possible_tools.Cut(I, I+1)
-			i--
-		else
-			break
-	return !i
+	main_loop:
+		for(var/A in R.tools)
+			for(var/I in possible_tools)
+				if(ispath(I,A))
+					possible_tools -= I
+					continue main_loop
+			return 0
+	return 1
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
 	var/send_feedback = 1
-	if(check_contents(R) && check_tools(user, R))
-		if(do_after(user, R.time, target = src))
-			if(!check_contents(R) || !check_tools(user, R))
+	if(check_contents(R))
+		if(check_tools(user, R))
+			if(do_after(user, R.time, target = src))
+				if(!check_contents(R))
+					return ", missing component."
+				if(!check_tools(user, R))
+					return ", missing tool."
+				var/atom/movable/I = new R.result (loc)
+				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
+					var/obj/item/weapon/reagent_containers/food/snacks/S = I
+					S.create_reagents(S.volume)
+					feedback_add_details("food_made","[S.type]")
+					send_feedback = 0
+				var/list/parts = del_reqs(R, I)
+				for(var/A in parts)
+					if(istype(A, /obj/item))
+						var/atom/movable/B = A
+						B.loc = I
+						B.pixel_x = initial(B.pixel_x)
+						B.pixel_y = initial(B.pixel_y)
+					else
+						if(!I.reagents)
+							I.reagents = new /datum/reagents()
+						I.reagents.reagent_list.Add(A)
+				I.CheckParts()
+				if(send_feedback)
+					feedback_add_details("object_crafted","[I.type]")
 				return 0
-			var/atom/movable/I = new R.result (loc)
-			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
-				var/obj/item/weapon/reagent_containers/food/snacks/S = I
-				S.create_reagents(S.volume)
-				feedback_add_details("food_made","[S.type]")
-				send_feedback = 0
-			var/list/parts = del_reqs(R, I)
-			for(var/A in parts)
-				if(istype(A, /obj/item))
-					var/atom/movable/B = A
-					B.loc = I
-					B.pixel_x = initial(B.pixel_x)
-					B.pixel_y = initial(B.pixel_y)
-				else
-					if(!I.reagents)
-						I.reagents = new /datum/reagents()
-					I.reagents.reagent_list.Add(A)
-			I.CheckParts()
-			if(send_feedback)
-				feedback_add_details("object_crafted","[I.type]")
-			return 1
-	return 0
+			return "."
+		return ", missing tool."
+	return ", missing component."
 
 /obj/structure/table/proc/del_reqs(datum/table_recipe/R, atom/movable/resultobject)
 	var/list/Deletion = list()
@@ -173,12 +179,10 @@
 
 	return Deletion
 
-/obj/structure/table/interact(mob/user)
+/obj/structure/table/proc/tablecraft(mob/user)
 	if(user.incapacitated() || user.lying || !Adjacent(user))
 		return
 	check_table()
-	if(!table_contents.len)
-		return
 	user.face_atom(src)
 	var/dat = "<h3>Crafting menu</h3>"
 	if(busy)
@@ -223,21 +227,22 @@
 	if(href_list["make"])
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
-		interact(usr)
-		if(construct_item(usr, TR))
+		tablecraft(usr)
+		var/fail_msg = construct_item(usr, TR)
+		if(!fail_msg)
 			usr << "<span class='notice'>[TR.name] constructed.</span>"
 		else
-			usr << "<span class ='warning'>Construction failed.</span>"
+			usr << "<span class ='warning'>Construction failed[fail_msg]</span>"
 		busy = 0
-		interact(usr)
+		tablecraft(usr)
 	if(href_list["forwardCat"])
 		viewing_category = next_cat()
 		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
-		interact(usr)
+		tablecraft(usr)
 	if(href_list["backwardCat"])
 		viewing_category = prev_cat()
 		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
-		interact(usr)
+		tablecraft(usr)
 
 //Next works nicely with modular arithmetic
 /obj/structure/table/proc/next_cat()
@@ -267,28 +272,24 @@
 	if(name_text)
 		for(var/A in R.reqs)
 			if(ispath(A, /obj))
-				var/obj/O = new A
-				req_text += " [R.reqs[A]] [O.name]"
-				qdel(O)
-			if(ispath(A, /datum/reagent))
-				var/datum/reagent/RE = new A
-				req_text += " [R.reqs[A]] [RE.name]"
-				qdel(RE)
+				var/obj/O = A
+				req_text += " [R.reqs[A]] [initial(O.name)]"
+			else if(ispath(A, /datum/reagent))
+				var/datum/reagent/RE = A
+				req_text += " [R.reqs[A]] [initial(RE.name)]"
 
 		if(R.chem_catalysts.len)
 			catalist_text += ", Catalysts:"
 			for(var/C in R.chem_catalysts)
 				if(ispath(C, /datum/reagent))
-					var/datum/reagent/RE = new C
-					catalist_text += " [R.chem_catalysts[C]] [RE.name]"
-					qdel(RE)
+					var/datum/reagent/RE = C
+					catalist_text += " [R.chem_catalysts[C]] [initial(RE.name)]"
 
 		if(R.tools.len)
 			tool_text += ", Tools:"
 			for(var/O in R.tools)
 				if(ispath(O, /obj))
-					var/obj/T = new O
-					tool_text += " [R.tools[O]] [T.name]"
-					qdel(T)
+					var/obj/T = O
+					tool_text += " [R.tools[O]] [initial(T.name)]"
 
 		. = "[name_text][req_text][tool_text][catalist_text]<BR>"

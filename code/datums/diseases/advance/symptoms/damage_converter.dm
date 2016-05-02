@@ -47,15 +47,16 @@ Bonus
 
 		for(var/obj/item/organ/limb/L in parts)
 			L.heal_damage(get_damage, get_damage, 0)
+		M.adjustToxLoss(get_damage*parts.len)
 
 	else
 		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
 			M.adjustFireLoss(-get_damage)
 			M.adjustBruteLoss(-get_damage)
+			M.adjustToxLoss(get_damage)
 		else
 			return
 
-	M.adjustToxLoss(get_damage)
 	return 1
 
 

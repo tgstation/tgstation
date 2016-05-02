@@ -1,51 +1,47 @@
-
 /datum/wires/r_n_d
-	random = 1
 	holder_type = /obj/machinery/r_n_d
-	wire_count = 6
+	randomize = TRUE
 
-var/const/RD_WIRE_HACK = 1		// Hacks the r_n_d machine
-var/const/RD_WIRE_SHOCK = 2		// Shocks the user, 50% chance
-var/const/RD_WIRE_DISABLE = 4   // Disables the machine
+/datum/wires/r_n_d/New(atom/holder)
+	wires = list(
+		WIRE_HACK, WIRE_DISABLE,
+		WIRE_SHOCK
+	)
+	add_duds(5)
+	..()
 
-
-/datum/wires/r_n_d/CanUse(mob/living/L)
+/datum/wires/r_n_d/interactable(mob/user)
 	var/obj/machinery/r_n_d/R = holder
 	if(R.panel_open)
-		return 1
-	return 0
+		return TRUE
 
-
-/datum/wires/r_n_d/UpdatePulsed(index)
+/datum/wires/r_n_d/get_status()
 	var/obj/machinery/r_n_d/R = holder
-	switch(index)
-		if(RD_WIRE_HACK)
+	var/list/status = list()
+	status += "The red light is [R.disabled ? "off" : "on"]."
+	status += "The green light is [R.shocked ? "off" : "on"]."
+	status += "The blue light is [R.hacked ? "off" : "on"]."
+	return status
+
+/datum/wires/r_n_d/on_pulse(wire)
+	var/obj/machinery/r_n_d/R = holder
+	switch(wire)
+		if(WIRE_HACK)
 			R.hacked = !R.hacked
-		if(RD_WIRE_DISABLE)
+		if(WIRE_DISABLE)
 			R.disabled = !R.disabled
-		if(RD_WIRE_SHOCK)
-			var/Rshock = R.shocked
-			R.shocked = !R.shocked
+		if(WIRE_SHOCK)
+			R.shocked = TRUE
 			spawn(100)
 				if(R)
-					R.shocked = Rshock
+					R.shocked = FALSE
 
-
-/datum/wires/r_n_d/UpdateCut(index,mended)
+/datum/wires/r_n_d/on_cut(wire, mend)
 	var/obj/machinery/r_n_d/R = holder
-	switch(index)
-		if(RD_WIRE_HACK)
-			R.hacked = !mended
-		if(RD_WIRE_DISABLE)
-			R.disabled = !mended
-		if(RD_WIRE_SHOCK)
-			R.shocked = !mended
-
-
-/datum/wires/r_n_d/GetInteractWindow()
-	. = ..()
-	var/obj/machinery/r_n_d/R = holder
-	. += text("<br>The red light is [R.disabled ? "off" : "on"].<br>")
-	. += text("The green light is [R.shocked ? "off" : "on"].<br>")
-	. += text("The blue light is [R.hacked ? "off" : "on"].<br>")
-
+	switch(wire)
+		if(WIRE_HACK)
+			R.hacked = !mend
+		if(WIRE_DISABLE)
+			R.disabled = !mend
+		if(WIRE_SHOCK)
+			R.shocked = !mend

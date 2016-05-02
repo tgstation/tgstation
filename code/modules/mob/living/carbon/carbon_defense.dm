@@ -1,4 +1,4 @@
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
 	if(!skipcatch)	//ugly, but easy
 		if(in_throw_mode && !get_active_hand())	//empty active hand and we're in throw mode
 			if(canmove && !restrained())
@@ -24,7 +24,7 @@
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(user, src))
 						return 1
-	..()
+	return ..()
 
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
@@ -82,7 +82,7 @@
 				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
 				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
 
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 				var/power = M.powerlevel + rand(0,3)

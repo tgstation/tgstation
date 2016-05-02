@@ -28,7 +28,7 @@
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
-	while (!istype(pickedstart, /turf/space))
+	while (!istype(pickedstart, /turf/open/space))
 		var/startSide = pick(cardinal)
 		pickedstart = spaceDebrisStartLoc(startSide, 1)
 		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
@@ -114,14 +114,14 @@
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
+		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
 			get_hit()
 
 	return .
 
 /obj/effect/meteor/Destroy()
 	walk(src,0) //this cancels the walk_towards() proc
-	..()
+	return ..()
 
 /obj/effect/meteor/New()
 	..()
@@ -159,9 +159,11 @@
 
 /obj/effect/meteor/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
+		make_debris()
 		qdel(src)
 		return
-	..()
+	else
+		return ..()
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
@@ -237,8 +239,7 @@
 	..(heavy)
 	explosion(src.loc, 0, 0, 4, 3, 0)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
-	for(var/mob/living/L in view(5, src))
-		L.irradiate(40)
+	radiation_pulse(get_turf(src), 2, 5, 50, 1)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -257,7 +258,7 @@
 
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		new /obj/effect/decal/cleanable/blood (T)
 
 /obj/effect/meteor/meaty/Bump(atom/A)
@@ -271,7 +272,7 @@
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		new /obj/effect/decal/cleanable/xenoblood (T)
 
 //Station buster Tunguska

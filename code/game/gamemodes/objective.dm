@@ -224,11 +224,10 @@
 	for(var/mob/living/player in player_list)
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
-						continue
+				if(istype(player, /mob/living/silicon)) //Borgs are technically dead anyways
+					continue
 				if(get_area(player) == A)
-					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 0
 	return 1
 
@@ -248,21 +247,19 @@
 	for(var/mob/living/player in player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
-						continue
+				if(istype(player, /mob/living/silicon))
+					continue
 				if(get_area(player) == A)
-					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 0
 
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
-						continue
+				if(istype(player, /mob/living/silicon))
+					continue
 				if(get_area(player) == A)
-					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 1
 	return 0
 
@@ -290,6 +287,46 @@
 	return 1
 
 
+/datum/objective/purge
+	explanation_text = "Ensure no mutant humanoid species are present aboard the escape shuttle."
+	dangerrating = 25
+	martyr_compatible = 1
+
+/datum/objective/purge/check_completion()
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 1
+
+	var/area/A = SSshuttle.emergency.areaInstance
+
+	for(var/mob/living/player in player_list)
+		if(get_area(player) == A && player.mind && player.stat != DEAD && istype(player, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = player
+			if(H.dna.species.id != "human")
+				return 0
+
+	return 1
+
+
+/datum/objective/robot_army
+	explanation_text = "Have at least eight active cyborgs synced to you."
+	dangerrating = 25
+	martyr_compatible = 0
+
+/datum/objective/robot_army/check_completion()
+	if(!istype(owner.current, /mob/living/silicon/ai))
+		return 0
+	var/mob/living/silicon/ai/A = owner.current
+
+	var/counter = 0
+
+	for(var/mob/living/silicon/robot/R in A.connected_robots)
+		if(R.stat != DEAD)
+			counter++
+
+	if(counter < 8)
+		return 0
+	return 1
+
 /datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
@@ -303,13 +340,15 @@
 		return 0
 	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
 		return 1
+	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
+		return 1
 	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	var/turf/location = get_turf(owner.current)
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/simulated/floor/plasteel/shuttle/red)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/open/floor/plasteel/shuttle/red)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	if(location.onCentcom() || location.onSyndieBase())
@@ -383,6 +422,11 @@
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = 1
 
+/datum/objective/nuclear/check_completion()
+	if(ticker && ticker.mode && ticker.mode.station_was_nuked)
+		return 1
+	return 0
+
 
 var/global/list/possible_items = list()
 /datum/objective/steal
@@ -440,15 +484,17 @@ var/global/list/possible_items = list()
 	return steal_target
 
 /datum/objective/steal/check_completion()
-	if(!steal_target)	return 1
-	if(!isliving(owner.current))	return 0
+	if(!steal_target)
+		return 1
+	if(!isliving(owner.current))
+		return 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 
 	for(var/obj/I in all_items) //Check for items
 		if(istype(I, steal_target))
-			if(targetinfo && targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+			if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 				return 1
-			else //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+			else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 				return 1
 
 		if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
@@ -461,8 +507,9 @@ var/global/list/possible_items = list()
 		if(istype(owner.current, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = owner.current
 			var/list/slots = list ("backpack" = slot_in_backpack)
-			for(var/obj/item/I in targetinfo.special_equipment)
-				H.equip_in_one_of_slots(I, slots)
+			for(var/eq_path in targetinfo.special_equipment)
+				var/obj/O = new eq_path
+				H.equip_in_one_of_slots(O, slots)
 				H.update_icons()
 
 var/global/list/possible_items_special = list()
@@ -573,7 +620,7 @@ var/global/list/possible_items_special = list()
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
+		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
 			if(M.stat==2)
 				captured_amount+=1.5
 			else
@@ -646,7 +693,8 @@ var/global/list/possible_items_special = list()
 	explanation_text = "Steal at least five guns!"
 
 /datum/objective/summon_guns/check_completion()
-	if(!isliving(owner.current))	return 0
+	if(!isliving(owner.current))
+		return 0
 	var/guncount = 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 	for(var/obj/I in all_items) //Check for guns
@@ -810,7 +858,7 @@ var/global/list/possible_items_special = list()
 				var/turf/cloc = get_turf(changeling.current)
 				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
 					for(var/name in check_names) //Is he (disguised as) one of the staff?
-						if(H.dna && H.dna.real_name == name)
+						if(H.dna.real_name == name)
 							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
 							success++ //A living changeling staff member made it to centcomm
 							continue changelings

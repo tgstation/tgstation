@@ -7,6 +7,10 @@
 	var/making_mage = 0
 	var/mages_made = 1
 	var/time_checked = 0
+	var/bullshit_mode = 0 // requested by hornygranny
+	var/time_check = 1500
+	var/spawn_delay_min = 500
+	var/spawn_delay_max = 700
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
@@ -15,7 +19,7 @@
 /datum/game_mode/wizard/raginmages/post_setup()
 	..()
 	var/playercount = 0
-	if(!max_mages)
+	if(!max_mages && !bullshit_mode)
 		for(var/mob/living/player in mob_list)
 			if(player.client && player.stat != 2)
 				playercount += 1
@@ -24,6 +28,8 @@
 				max_mages = 20
 			if(max_mages < 1)
 				max_mages = 1
+	if(bullshit_mode)
+		max_mages = INFINITY
 /datum/game_mode/wizard/raginmages/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
 		wizard.current << "<B>You are the Space Wizard!</B>"
@@ -48,15 +54,22 @@
 		if(wizard.current.stat==UNCONSCIOUS)
 			if(wizard.current.health < 0)
 				wizard.current << "<font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font>"
-				wizard.current.stat = 2
+				wizard.current.death()
 			continue
 		wizards_alive++
-
-	if (wizards_alive)
-		if(!time_checked) time_checked = world.time
-		if(world.time > time_checked + 1500 && (mages_made < max_mages))
+	if(!time_checked)
+		time_checked = world.time
+	if(bullshit_mode)
+		if(world.time > time_checked + time_check)
+			max_mages = INFINITY
 			time_checked = world.time
 			make_more_mages()
+			return ..()
+	if (wizards_alive)
+		if(world.time > time_checked + time_check && (mages_made < max_mages))
+			time_checked = world.time
+			make_more_mages()
+
 	else
 		if(mages_made >= max_mages)
 			finished = 1
@@ -75,11 +88,11 @@
 	mages_made++
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	spawn(rand(500, 700))
+	spawn(rand(spawn_delay_min, spawn_delay_max))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)
-				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+			if(G.client && !G.client.holder && !G.client.is_afk() && (ROLE_WIZARD in G.client.prefs.be_special))
+				if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate"))
 					if(age_check(G.client))
 						candidates += G
 		if(!candidates.len)
@@ -124,13 +137,24 @@
 	..(1)
 
 /datum/game_mode/wizard/raginmages/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)	return
+	if(!G_found || !G_found.key)
+		return
 
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
 
 	G_found.client.prefs.copy_to(new_character)
-	ready_dna(new_character)
+	new_character.dna.update_dna_identity()
 	new_character.key = G_found.key
 
 	return new_character
+
+/datum/game_mode/wizard/raginmages/bullshit
+	name = "very ragin' bullshit mages"
+	config_tag = "veryraginbullshitmages"
+	required_players = 20
+	use_huds = 1
+	bullshit_mode = 1
+	time_check = 250
+	spawn_delay_min = 50
+	spawn_delay_max = 150

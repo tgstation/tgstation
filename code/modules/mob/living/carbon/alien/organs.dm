@@ -1,6 +1,5 @@
 /obj/item/organ/internal/alien
 	origin_tech = "biotech=5"
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
@@ -30,7 +29,8 @@
 
 /obj/item/organ/internal/alien/plasmavessel
 	name = "plasma vessel"
-	origin_tech = "biotech=5;plasma=2"
+	icon_state = "plasma"
+	origin_tech = "biotech=5;plasmatech=2"
 	w_class = 3
 	zone = "chest"
 	slot = "plasmavessel"
@@ -48,17 +48,19 @@
 
 /obj/item/organ/internal/alien/plasmavessel/large
 	name = "large plasma vessel"
+	icon_state = "plasma_large"
 	w_class = 4
 	storedPlasma = 200
 	max_plasma = 500
 	plasma_rate = 15
 
 /obj/item/organ/internal/alien/plasmavessel/large/queen
-	origin_tech = "biotech=6;plasma=3"
+	origin_tech = "biotech=6;plasmatech=3"
 	plasma_rate = 20
 
 /obj/item/organ/internal/alien/plasmavessel/small
 	name = "small plasma vessel"
+	icon_state = "plasma_small"
 	w_class = 2
 	storedPlasma = 100
 	max_plasma = 150
@@ -66,6 +68,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
+	icon_state = "plasma_tiny"
 	w_class = 1
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
@@ -100,10 +103,12 @@
 
 /obj/item/organ/internal/alien/hivenode
 	name = "hive node"
+	icon_state = "hivenode"
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
 	w_class = 1
+	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
 /obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
@@ -114,9 +119,40 @@
 	M.faction -= "alien"
 	..()
 
+//When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
+/obj/item/organ/internal/alien/hivenode/proc/queen_death()
+	if(!owner|| owner.stat == DEAD)
+		return
+	if(isalien(owner)) //Different effects for aliens than humans
+		owner << "<span class='userdanger'>Your Queen has been struck down!</span>"
+		owner << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."
+		owner.emote("roar")
+		owner.Stun(10) //Actually just slows them down a bit.
+
+	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
+		owner << "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"
+		owner.emote("scream")
+		owner.Weaken(5)
+
+	owner.jitteriness += 30
+	owner.confused += 30
+	owner.stuttering += 30
+
+	recent_queen_death = 1
+	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
+	spawn(2400) //four minutes
+		if(qdeleted(src)) //In case the node is deleted
+			return
+		recent_queen_death = 0
+		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+			return
+		owner << "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>"
+		owner.clear_alert("alien_noqueen")
+
 
 /obj/item/organ/internal/alien/resinspinner
 	name = "resin spinner"
+	icon_state = "stomach-x"
 	zone = "mouth"
 	slot = "resinspinner"
 	origin_tech = "biotech=5;materials=4"
@@ -125,6 +161,7 @@
 
 /obj/item/organ/internal/alien/acid
 	name = "acid gland"
+	icon_state = "acid"
 	zone = "mouth"
 	slot = "acidgland"
 	origin_tech = "biotech=5;materials=2;combat=2"
@@ -133,6 +170,7 @@
 
 /obj/item/organ/internal/alien/neurotoxin
 	name = "neurotoxin gland"
+	icon_state = "neurotox"
 	zone = "mouth"
 	slot = "neurotoxingland"
 	origin_tech = "biotech=5;combat=5"
@@ -141,6 +179,7 @@
 
 /obj/item/organ/internal/alien/eggsac
 	name = "egg sac"
+	icon_state = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
 	w_class = 4

@@ -75,9 +75,9 @@
 
 		if ("faint","faints")
 			message = "<B>[src]</B> faints."
-			if(src.sleeping)
+			if(sleeping)
 				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
+			SetSleeping(10) //Short-short nap
 			m_type = 1
 
 		if ("flap","flaps")
@@ -86,7 +86,7 @@
 				m_type = 2
 
 		if ("flip","flips")
-			if (!src.restrained() || !src.resting || !src.sleeping)
+			if (!restrained() || !resting || !sleeping)
 				src.SpinAnimation(7,1)
 				m_type = 2
 
@@ -144,6 +144,9 @@
 			m_type = 1
 
 		if ("me")
+			if(jobban_isbanned(src, "emote"))
+				src << "You cannot send custom emotes (banned)"
+				return
 			if (src.client)
 				if(client.prefs.muted & MUTE_IC)
 					src << "You cannot send IC messages (muted)."

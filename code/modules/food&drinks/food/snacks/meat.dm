@@ -37,15 +37,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human/slice, reagents_per_slice)
 	..()
+	slice.subjectname = subjectname
+	slice.subjectjob = subjectjob
 	if(subjectname)
-		slice.subjectname = subjectname
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
-		slice.subjectjob = subjectjob
 		slice.name = "raw [subjectjob] cutlet"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()
+	S.subjectname = subjectname
+	S.subjectjob = subjectjob
 	if(subjectname)
 		S.name = "[subjectname] meatsteak"
 	else if(subjectjob)
@@ -114,6 +116,10 @@
 	name = "synthmeat"
 	desc = "A synthetic slab of meat."
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
+	name = "meat product"
+	desc = "A slab of station reclaimed and chemically processed meat product."
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	name = "monkey meat"
 
@@ -164,7 +170,17 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/spider
 
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath
+	name = "goliath meat"
+	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
+	list_reagents = list("nutriment" = 3, "toxin" = 5)
+	icon_state = "goliathmeat"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
+	visible_message("\The [src] finishes cooking!")
+	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
+	SSobj.burning -= src
+	qdel(src)
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -194,7 +210,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/spider
 	name = "spider steak"
 
-
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
+	name = "goliath steak"
+	desc = "A delicious, lava cooked steak."
+	burn_state = LAVA_PROOF
+	icon_state = "goliathsteak"
+	trash = null
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 

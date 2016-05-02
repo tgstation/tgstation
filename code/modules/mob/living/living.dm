@@ -24,6 +24,8 @@ Sorry Giacom. Please don't be mad :(
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
+	faction |= "\ref[src]"
+
 
 /mob/living/Destroy()
 	..()
@@ -39,7 +41,7 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter"))
+	staticOverlays.Add(list("static", "blank", "letter", "animal"))
 	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
 	staticOverlay.override = 1
 	staticOverlays["static"] = staticOverlay
@@ -51,6 +53,10 @@ Sorry Giacom. Please don't be mad :(
 	staticOverlay = getLetterImage(src)
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
+
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
 
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
@@ -84,21 +90,25 @@ Sorry Giacom. Please don't be mad :(
 	if(now_pushing)
 		return 1
 
-	//BubbleWrap: Should stop you pushing a restrained person out of the way
-	if(istype(M, /mob/living))
-		for(var/mob/MM in range(M, 1))
-			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
-				return 1
-			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
-				return 1
+	//Should stop you pushing a restrained person out of the way
+	if(isliving(M))
+		var/mob/living/L = M
+		if((L.pulledby && L.restrained()) || L.grabbed_by.len)
+			if(!(world.time % 5))
+				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
+			return 1
+
+		if(L.pulling)
+			if(ismob(L.pulling))
+				var/mob/P = L.pulling
+				if(P.restrained())
+					if(!(world.time % 5))
+						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
+					return 1
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mobs.len) // mutual brohugs all around!
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
@@ -127,9 +137,9 @@ Sorry Giacom. Please don't be mad :(
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
 		return 1
-	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
 		return 1
 
 //Called when we bump onto an obj
@@ -140,6 +150,8 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(!client && (mob_size < MOB_SIZE_SMALL))
+		return
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
@@ -160,9 +172,10 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Pull"
 	set category = "Object"
 
-	if(AM.Adjacent(src))
-		src.start_pulling(AM)
-	return
+	if(istype(AM) && AM.Adjacent(src))
+		start_pulling(AM)
+	else
+		stop_pulling()
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
@@ -186,19 +199,17 @@ Sorry Giacom. Please don't be mad :(
 		death()
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
+	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
 
 /mob/living/ex_act(severity, target)
 	..()
-	if(client && !eye_blind)
-		flick("flash", src.flash)
+	flash_eyes()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	update_stat()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -206,27 +217,6 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
 
-
-//sort of a legacy burn method for /electrocute, /shock, and the e_chair
-/mob/living/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
-		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/extradam = 0	//added to when organ is at max dam
-		for(var/obj/item/organ/limb/affecting in H.organs)
-			if(!affecting)	continue
-			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
-				H.update_damage_overlays(0)
-		H.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
-		var/mob/living/carbon/monkey/M = src
-		M.adjustFireLoss(burn_amount)
-		M.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/silicon/ai))
-		return 0
 
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
 	var/temperature = actual
@@ -253,81 +243,115 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
+/mob/living/proc/adjustBruteLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates()
+/mob/living/proc/adjustOxyLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setOxyLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	oxyloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates()
+/mob/living/proc/adjustToxLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setToxLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	toxloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
+/mob/living/proc/adjustFireLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates()
+/mob/living/proc/adjustCloneLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/proc/setCloneLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
 	cloneloss = amount
-	handle_regular_status_updates()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates()
+	if(status_flags & GODMODE)
+		return 0
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(status_flags & GODMODE)
+		return 0
 	brainloss = amount
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
-	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
+	return
 
-/mob/living/proc/setStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
+	if(status_flags & GODMODE)
+		return 0
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
+	if(updating_stamina)
+		update_stamina()
+
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
+	return
+
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
+	return
+
+/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
+	if(status_flags & GODMODE)
+		return 0
 	staminaloss = amount
+	if(updating_stamina)
+		update_stamina()
+
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
+	return
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -346,7 +370,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
-			sleeping = 20 //Short nap
+			SetSleeping(20) //Short nap
 	update_canmove()
 
 /mob/proc/get_contents()
@@ -385,7 +409,7 @@ Sorry Giacom. Please don't be mad :(
 	return 0
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
@@ -399,95 +423,94 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
+	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
 
-//damage/heal the mob ears and adjust the deaf amount
-/mob/living/adjustEarDamage(damage, deaf)
-	ear_damage = max(0, ear_damage + damage)
-	ear_deaf = max(0, ear_deaf + deaf)
-
-//pass a negative argument to skip one of the variable
-/mob/living/setEarDamage(damage, deaf)
-	if(damage >= 0)
-		ear_damage = damage
-	if(deaf >= 0)
-		ear_deaf = deaf
-
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	src.updatehealth()
+/mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(-brute, updating_health)
+	adjustFireLoss(-burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+/mob/living/proc/take_organ_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	if(updating_health)
+		updatehealth()
 
 // heal MANY external organs, in random order
-/mob/living/proc/heal_overall_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	src.updatehealth()
+/mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(-brute, updating_health)
+	adjustFireLoss(-burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
 // damage MANY external organs, in random order
-/mob/living/proc/take_overall_damage(brute, burn)
-	adjustBruteLoss(brute)
-	adjustFireLoss(burn)
-	src.updatehealth()
+/mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
+	adjustBruteLoss(brute, updating_health)
+	adjustFireLoss(burn, updating_health)
+	if(updating_health)
+		updatehealth()
 
-/mob/living/proc/revive()
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
+//proc used to ressuscitate a mob
+/mob/living/proc/revive(full_heal = 0, admin_revive = 0)
+	if(full_heal)
+		fully_heal(admin_revive)
+	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+		dead_mob_list -= src
+		living_mob_list += src
+		suiciding = 0
+		stat = UNCONSCIOUS //the mob starts unconscious,
+		blind_eyes(1)
+		updatehealth() //then we check if the mob should wake up.
+		update_canmove()
+		update_sight()
+		reload_fullscreen()
+		. = 1
+
+//proc used to completely heal a mob.
+/mob/living/proc/fully_heal(admin_revive = 0)
+	setToxLoss(0, 0)
+	setOxyLoss(0, 0)
+	setCloneLoss(0, 0)
 	setBrainLoss(0)
-	setStaminaLoss(0)
-	SetParalysis(0)
-	SetStunned(0)
-	SetWeakened(0)
+	setStaminaLoss(0, 0)
+	SetParalysis(0, 0)
+	SetStunned(0, 0)
+	SetWeakened(0, 0)
+	SetSleeping(0, 0)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
+	set_blindness(0)
+	set_blurriness(0)
+	set_eye_damage(0)
+	cure_nearsighted()
+	cure_blind()
 	disabilities = 0
-	eye_blind = 0
-	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	hallucination = 0
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
-	suiciding = 0
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.handcuffed = initial(C.handcuffed)
-		for(var/obj/item/weapon/restraints/R in C.contents) //actually remove cuffs from inventory
-			qdel(R)
-		if(C.reagents)
-			for(var/datum/reagent/R in C.reagents.reagent_list)
-				C.reagents.clear_reagents()
-			C.reagents.addiction_list = list()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
-	stat = CONSCIOUS
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
-		human_mob.remove_all_embedded_objects()
+	updatehealth()
+	update_canmove()
 
-	update_fire()
-	regenerate_icons()
+
+//proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
+/mob/living/proc/can_be_revived()
+	. = 1
+	if(health <= config.health_threshold_dead)
+		return 0
 
 /mob/living/proc/update_damage_overlays()
 	return
-
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -505,7 +528,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
@@ -517,7 +540,7 @@ Sorry Giacom. Please don't be mad :(
 
 	var/cuff_dragged = 0
 	if (restrained())
-		for(var/mob/living/M in range(src, 1))
+		for(var/mob/living/M in range(1, src))
 			if (M.pulling == src && !M.incapacitated())
 				cuff_dragged = 1
 	if (!cuff_dragged && pulling && !throwing && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
@@ -546,18 +569,17 @@ Sorry Giacom. Please don't be mad :(
 			if ((get_dist(src, pulling) > 1 || diag))
 				if (isliving(pulling))
 					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+					var/pull_ok = 1
+					if (M.grabbed_by.len)
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-								qdel(G)
+							visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
+							qdel(G)
 						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
+							pull_ok = 0
+						if (M.grabbed_by.len)
+							pull_ok = 0
+					if (pull_ok)
 						var/atom/movable/t = M.pulling
 						M.stop_pulling()
 
@@ -577,10 +599,22 @@ Sorry Giacom. Please don't be mad :(
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
-	for(var/mob/living/simple_animal/slime/M in oview(1,src))
-		M.UpdateFeed(src)
+/mob/living/movement_delay()
+	. = ..()
+	if(istype(loc, /turf/open))
+		var/turf/open/T = loc
+		. += T.slowdown
+	switch(m_intent)
+		if("run")
+			if(drowsyness > 0)
+				. += 6
+			. += config.run_speed
+		if("walk")
+			. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
+	if(!has_gravity(M))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
@@ -589,7 +623,7 @@ Sorry Giacom. Please don't be mad :(
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (istype(M.loc, /turf) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -605,8 +639,8 @@ Sorry Giacom. Please don't be mad :(
 			if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				H.existing_dirs += newdir
 				H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-				if(check_dna_integrity(M)) //blood DNA
-					var/mob/living/carbon/DNA_helper = pulling
+				if(M.has_dna()) //blood DNA
+					var/mob/living/carbon/DNA_helper = M
 					H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
@@ -616,32 +650,33 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time)
+	if(!isliving(src) || next_move > world.time || stat || weakened || stunned || paralysis)
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(!stat && canmove && !restrained())
+	if(!restrained())
 		var/resisting = 0
 		for(var/obj/O in requests)
 			qdel(O)
 			resisting++
-		for(var/obj/item/weapon/grab/G in grabbed_by)
+		for(var/X in grabbed_by)
+			var/obj/item/weapon/grab/G = X
 			resisting++
 			if(G.state == GRAB_PASSIVE)
 				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
 					if(prob(25))
-						visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s grip!</span>")
+						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
 						if(prob(5))
-							visible_message("<span class='warning'>[src] has broken free of [G.assailant]'s headlock!</span>")
+							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
 							qdel(G)
 		if(resisting)
-			visible_message("<span class='warning'>[src] resists!</span>")
+			visible_message("<span class='danger'>[src] resists!</span>")
 			return
 
 	//unbuckling yourself
@@ -649,10 +684,9 @@ Sorry Giacom. Please don't be mad :(
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(stat == CONSCIOUS && !stunned && !weakened && !paralysis)
-			var/obj/C = loc
-			C.container_resist(src)
+	else if(isobj(loc))
+		var/obj/C = loc
+		C.container_resist(src)
 
 	else if(canmove)
 		if(on_fire)
@@ -674,12 +708,12 @@ Sorry Giacom. Please don't be mad :(
 	return name
 
 /mob/living/update_gravity(has_gravity)
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return
 	if(has_gravity)
 		clear_alert("weightless")
 	else
-		throw_alert("weightless")
+		throw_alert("weightless", /obj/screen/alert/weightless)
 	float(!has_gravity)
 
 /mob/living/proc/float(on)
@@ -692,14 +726,14 @@ Sorry Giacom. Please don't be mad :(
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
-		var/final_pixel_y = get_standard_pixel_y_offset(lying)
-		animate(src, pixel_y = final_pixel_y, time = 10)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
 		floating = 0
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(check_eye_prot() < intensity && (override_blindness_check || !(disabilities & BLIND)))
-		flick("e_flash", flash)
+		overlay_fullscreen("flash", type)
+		addtimer(src, "clear_fullscreen", 25, FALSE, "flash", 25)
 		return 1
 
 //this returns the mob's protection against eye damage (number between -1 and 2)
@@ -748,12 +782,17 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return(gain)
 
-/mob/living/singularity_pull(S)
-	step_towards(src,S)
+/mob/living/singularity_pull(S, current_size)
+	if(current_size >= STAGE_SIX)
+		throw_at_fast(S,14,3, spin=1)
+	else
+		step_towards(src,S)
 
 /mob/living/narsie_act()
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/construct/harvester, src, null, 1)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+	else
+		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return
@@ -765,28 +804,17 @@ Sorry Giacom. Please don't be mad :(
 	var/final_pixel_y = initial(pixel_y)
 	if(end_pixel_y)
 		final_pixel_y = end_pixel_y
+
 	var/direction = get_dir(src, A)
-	switch(direction)
-		if(NORTH)
-			pixel_y_diff = 8
-		if(SOUTH)
-			pixel_y_diff = -8
-		if(EAST)
-			pixel_x_diff = 8
-		if(WEST)
-			pixel_x_diff = -8
-		if(NORTHEAST)
-			pixel_x_diff = 8
-			pixel_y_diff = 8
-		if(NORTHWEST)
-			pixel_x_diff = -8
-			pixel_y_diff = 8
-		if(SOUTHEAST)
-			pixel_x_diff = 8
-			pixel_y_diff = -8
-		if(SOUTHWEST)
-			pixel_x_diff = -8
-			pixel_y_diff = -8
+	if(direction & NORTH)
+		pixel_y_diff = 8
+	else if(direction & SOUTH)
+		pixel_y_diff = -8
+
+	if(direction & EAST)
+		pixel_x_diff = 8
+	else if(direction & WEST)
+		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
@@ -795,24 +823,46 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/do_attack_animation(atom/A)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	..(A, final_pixel_y)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
-	//Show an image of the wielded weapon over the person who got dunked.
+	// What icon do we use for the attack?
 	var/image/I
-	if(hand)
-		if(l_hand)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
-	else
-		if(r_hand)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
-	if(I)
-		var/list/viewing = list()
-		for(var/mob/M in viewers(A))
-			if(M.client)
-				viewing |= M.client
-		flick_overlay(I,viewing,5)
-		I.pixel_z = 16 //lift it up...
-		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+	if(hand && l_hand) // Attacked with item in left hand.
+		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
+	else if(!hand && r_hand) // Attacked with item in right hand.
+		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
+	else // Attacked with a fist?
+		return
+
+	// Who can see the attack?
+	var/list/viewing = list()
+	for(var/mob/M in viewers(A))
+		if(M.client)
+			viewing |= M.client
+	flick_overlay(I, viewing, 5) // 5 ticks/half a second
+
+	// Scale the icon.
+	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	// Set the direction of the icon animation.
+	var/direction = get_dir(src, A)
+	if(direction & NORTH)
+		I.pixel_y = -16
+	else if(direction & SOUTH)
+		I.pixel_y = 16
+
+	if(direction & EAST)
+		I.pixel_x = -16
+	else if(direction & WEST)
+		I.pixel_x = 16
+
+	if(!direction) // Attacked self?!
+		I.pixel_z = 16
+
+	// And animate the attack!
+	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
@@ -833,13 +883,13 @@ Sorry Giacom. Please don't be mad :(
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/space))
+	else if(istype(get_turf(src), /turf/open/space))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 
 	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/G = C.airs["a1"]
+		var/datum/gas_mixture/G = C.AIR1
 
 		if(G.total_moles() < 10)
 			loc_temp = environment.temperature
@@ -883,7 +933,7 @@ Sorry Giacom. Please don't be mad :(
 		return 0
 	if(invisibility || alpha == 0)//cloaked
 		return 0
-	if(digitalcamo)
+	if(digitalcamo || digitalinvis)
 		return 0
 
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
@@ -895,3 +945,44 @@ Sorry Giacom. Please don't be mad :(
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection()
 	return 0
+
+/mob/living/proc/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1; i <= butcher_results[path];i++)
+				new path(src.loc)
+			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	gib()
+
+/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return
+	if(no_dextery)
+		if(be_close && in_range(M, src))
+			return 1
+	else
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	return
+/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
+
+/mob/living/carbon/proc/update_stamina()
+	return
+
+/mob/living/carbon/human/update_stamina()
+	if(staminaloss)
+		var/total_health = (health - staminaloss)
+		if(total_health <= config.health_threshold_crit && !stat)
+			src << "<span class='notice'>You're too exhausted to keep going...</span>"
+			Weaken(5)
+			setStaminaLoss(health - 2)
+	update_health_hud()
+
+/mob/proc/update_sight()
+	return

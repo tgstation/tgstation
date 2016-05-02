@@ -5,14 +5,13 @@
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/electropack/part2 = null
-	w_class = 5.0
+	w_class = 5
 	flags = CONDUCT
 
 /obj/item/assembly/shock_kit/Destroy()
 	qdel(part1)
 	qdel(part2)
-	..()
-	return
+	return ..()
 
 /obj/item/assembly/shock_kit/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -37,7 +36,7 @@
 	return
 
 /obj/item/assembly/shock_kit/receive_signal()
-	if(istype(loc, /obj/structure/stool/bed/chair/e_chair))
-		var/obj/structure/stool/bed/chair/e_chair/C = loc
+	if(istype(loc, /obj/structure/chair/e_chair))
+		var/obj/structure/chair/e_chair/C = loc
 		C.shock()
 	return

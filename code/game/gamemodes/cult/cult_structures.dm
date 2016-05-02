@@ -8,7 +8,6 @@
 	desc = "A bloodstained altar dedicated to Nar-Sie"
 	icon_state = "talismanaltar"
 
-
 /obj/structure/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
@@ -24,6 +23,7 @@
 	name = "desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
+	luminosity = 1
 
 /obj/effect/gateway
 	name = "gateway"
@@ -32,4 +32,4 @@
 	icon_state = "hole"
 	density = 1
 	unacidable = 1
-	anchored = 1.0
+	anchored = 1

@@ -4,7 +4,7 @@
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
 	var/mobs_only = 0
-	invisibility = 101 // nope cant see this shit
+	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
 	anchored = 1
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
@@ -144,20 +144,20 @@
 	M.Move(dest)
 
 	if(entersparks)
-		var/datum/effect/effect/system/spark_spread/s = new
+		var/datum/effect_system/spark_spread/s = new
 		s.set_up(4, 1, src)
 		s.start()
 	if(exitsparks)
-		var/datum/effect/effect/system/spark_spread/s = new
+		var/datum/effect_system/spark_spread/s = new
 		s.set_up(4, 1, dest)
 		s.start()
 
 	if(entersmoke)
-		var/datum/effect/effect/system/smoke_spread/s = new
+		var/datum/effect_system/smoke_spread/s = new
 		s.set_up(4, 1, src, 0)
 		s.start()
 	if(exitsmoke)
-		var/datum/effect/effect/system/smoke_spread/s = new
+		var/datum/effect_system/smoke_spread/s = new
 		s.set_up(4, 1, dest, 0)
 		s.start()
 

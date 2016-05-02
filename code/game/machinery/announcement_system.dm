@@ -65,6 +65,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/Destroy()
 	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	return ..()
 
 /obj/machinery/announcement_system/power_change()
 	..()
@@ -72,27 +73,18 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		if(!panel_open)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-			panel_open = 1
-		else
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
-			panel_open = 0
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		panel_open = !panel_open
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
 		update_icon()
+	else if(default_deconstruction_crowbar(P))
 		return
-
-	if(panel_open)
-		default_deconstruction_crowbar(P)
-		if(istype(P, /obj/item/device/multitool) && broken)
-			user << "<span class='notice'>You reset [src]'s firmware.</span>"
-			broken = 0
-			update_icon()
-
-/obj/machinery/announcement_system/attack_hand(mob/user)
-	if(can_be_used_by(user))
-		Interact(user)
+	else if(istype(P, /obj/item/device/multitool) && panel_open && broken)
+		user << "<span class='notice'>You reset [src]'s firmware.</span>"
+		broken = 0
+		update_icon()
+	else
+		return ..()
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")
@@ -119,10 +111,7 @@ var/list/announcement_systems = list()
 
 //config stuff
 
-/obj/machinery/announcement_system/proc/Interact(mob/user)
-	if(!can_be_used_by(user))
-		return
-
+/obj/machinery/announcement_system/interact(mob/user)
 	if(broken)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
@@ -137,8 +126,6 @@ var/list/announcement_systems = list()
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
-	if(!can_be_used_by(usr) || usr.lying || usr.stat || usr.stunned)
-		return
 	if(broken)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
@@ -165,7 +152,7 @@ var/list/announcement_systems = list()
 		update_icon()
 
 	add_fingerprint(usr)
-	Interact(usr)
+	interact(usr)
 	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
@@ -174,7 +161,7 @@ var/list/announcement_systems = list()
 	if(broken)
 		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
 		return
-	Interact(user)
+	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
 	broken = 1

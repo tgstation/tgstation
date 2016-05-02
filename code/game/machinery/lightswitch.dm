@@ -5,7 +5,7 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
+	anchored = 1
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null

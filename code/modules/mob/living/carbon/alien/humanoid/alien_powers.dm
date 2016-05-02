@@ -5,34 +5,6 @@ These are general powers. Specific powers are stored under the appropriate alien
 /*Alien spit now works like a taser shot. It won't home in on the target but will act the same once it does hit.
 Doesn't work on other aliens/AI.*/
 
-/datum/action/spell_action/alien
-
-/datum/action/spell_action/alien/UpdateName()
-	var/obj/effect/proc_holder/alien/ab = target
-	return ab.name
-
-/datum/action/spell_action/alien/IsAvailable()
-	if(!target)
-		return 0
-	var/obj/effect/proc_holder/alien/ab = target
-
-	if(usr)
-		return ab.cost_check(ab.check_turf,usr,1)
-	else
-		if(owner)
-			return ab.cost_check(ab.check_turf,owner,1)
-	return 1
-
-/datum/action/spell_action/alien/CheckRemoval()
-	if(!iscarbon(owner))
-		return 1
-
-	var/mob/living/carbon/C = owner
-	if(target.loc && !(target.loc in C.internal_organs))
-		return 1
-
-	return 0
-
 
 /obj/effect/proc_holder/alien
 	name = "Alien Power"
@@ -45,6 +17,10 @@ Doesn't work on other aliens/AI.*/
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/alien/New()
+	..()
+	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
 	if(!istype(usr,/mob/living/carbon))
@@ -73,7 +49,7 @@ Doesn't work on other aliens/AI.*/
 		if(!silent)
 			user << "<span class='noticealien'>Not enough plasma stored.</span>"
 		return 0
-	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/space)))
+	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/open/space)))
 		if(!silent)
 			user << "<span class='noticealien'>Bad place for a garden!</span>"
 		return 0
@@ -90,8 +66,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		src << "There's already a weed node here."
 		return 0
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("<span class='alertalien'>[user] has planted some alien weeds!</span>"), 1)
+	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
 
@@ -102,7 +77,10 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_whisper"
 
 /obj/effect/proc_holder/alien/whisper/fire(mob/living/carbon/user)
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as mob in oview(user)
+	var/list/options = list()
+	for(var/mob/living/Ms in oview(user))
+		options += Ms
+	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	if(!M)
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
@@ -161,14 +139,14 @@ Doesn't work on other aliens/AI.*/
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		// TURF CHECK
-		else if(istype(target, /turf/simulated))
+		else if(istype(target, /turf))
 			var/turf/T = target
 			// R WALL
-			if(istype(T, /turf/simulated/wall/r_wall))
+			if(istype(T, /turf/closed/wall/r_wall))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 			// R FLOOR
-			if(istype(T, /turf/simulated/floor/engine))
+			if(istype(T, /turf/open/floor/engine))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		else// Not a type we can acid.
@@ -229,7 +207,7 @@ Doesn't work on other aliens/AI.*/
 	var/list/structures = list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
-		"resin nest" = /obj/structure/stool/bed/nest)
+		"resin nest" = /obj/structure/bed/nest)
 
 	action_icon_state = "alien_resin"
 
@@ -238,8 +216,10 @@ Doesn't work on other aliens/AI.*/
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice) return 0
-
+	if(!choice)
+		return 0
+	if (!cost_check(check_turf,user))
+		return 0
 	user << "<span class='notice'>You shape a [choice].</span>"
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
@@ -258,7 +238,9 @@ Doesn't work on other aliens/AI.*/
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
 			A.loc = user.loc
-			A.update_pipe_vision()
+			if(isliving(A))
+				var/mob/M = A
+				M.reset_perspective()
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
 
@@ -282,6 +264,24 @@ Doesn't work on other aliens/AI.*/
 
 	return 1
 
+/obj/effect/proc_holder/alien/sneak
+	name = "Sneak"
+	desc = "Blend into the shadows to stalk your prey."
+	var/active = 0
+
+	action_icon_state = "alien_sneak"
+
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
+	if(!active)
+		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
+		user.sneaking = 1
+		active = 1
+		user << "<span class='noticealien'>You blend into the shadows...</span>"
+	else
+		user.alpha = initial(user.alpha)
+		user.sneaking = 0
+		active = 0
+		user << "<span class='noticealien'>You reveal yourself!</span>"
 
 
 /mob/living/carbon/proc/getPlasma()
@@ -295,6 +295,10 @@ Doesn't work on other aliens/AI.*/
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	for(var/X in abilities)
+		var/obj/effect/proc_holder/alien/APH = X
+		if(APH.has_action)
+			APH.action.UpdateButtonIcon()
 	return 1
 
 /mob/living/carbon/alien/adjustPlasma(amount)

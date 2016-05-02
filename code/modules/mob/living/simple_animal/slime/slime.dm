@@ -17,6 +17,7 @@
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("chirps")
+	bubble_icon = "slime"
 
 	layer = 5
 
@@ -24,6 +25,7 @@
 
 	maxHealth = 150
 	health = 150
+	healable = 0
 	gender = NEUTER
 
 	nutrition = 700
@@ -47,7 +49,6 @@
 
 	var/number = 0 // Used to understand when someone is talking to it
 
-	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
 	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
 
@@ -62,6 +63,7 @@
 
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
+	var/force_stasis = FALSE
 
 	///////////TIME FOR SUBSPECIES
 
@@ -70,9 +72,16 @@
 	var/list/slime_mutation[4]
 
 /mob/living/simple_animal/slime/New()
+	var/datum/action/innate/slime/feed/F = new
+	F.Grant(src)
 	if(is_adult)
+		var/datum/action/innate/slime/reproduce/R = new
+		R.Grant(src)
 		health = 200
 		maxHealth = 200
+	else
+		var/datum/action/innate/slime/evolve/E = new
+		E.Grant(src)
 	create_reagents(100)
 	spawn (0)
 		number = rand(1, 1000)
@@ -91,7 +100,7 @@
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
-		if(mood)
+		if(mood && !stat)
 			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
 	else
 		icon_state = icon_dead
@@ -101,37 +110,43 @@
 	if(bodytemperature >= 330.23) // 135 F
 		return -1	// slimes become supercharged at high temperatures
 
-	var/tally = 0
+	. = ..()
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)
-		tally += (health_deficiency / 25)
+		. += (health_deficiency / 25)
 
 	if(bodytemperature < 183.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+		. += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
 		if(reagents.has_reagent("morphine")) // morphine slows slimes down
-			tally *= 2
+			. *= 2
 
 		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
-			tally *= 5
+			. *= 5
 
 	if(health <= 0) // if damaged, the slime moves twice as slow
-		tally *= 2
+		. *= 2
 
-	return tally + config.slime_delay
+	. += config.slime_delay
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
-			if(1 to 2)	probab = 20
-			if(3 to 4)	probab = 30
-			if(5 to 6)	probab = 40
-			if(7 to 8)	probab = 60
-			if(9)		probab = 70
-			if(10)		probab = 95
+			if(1 to 2)
+				probab = 20
+			if(3 to 4)
+				probab = 30
+			if(5 to 6)
+				probab = 40
+			if(7 to 8)
+				probab = 60
+			if(9)
+				probab = 70
+			if(10)
+				probab = 95
 		if(prob(probab))
 			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition() && !Atkcool)
@@ -149,13 +164,17 @@
 
 		if(!docile)
 			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= 10)
+		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(is_adult)
 				stat(null, "You can reproduce!")
 			else
 				stat(null, "You can evolve!")
 
-		stat(null,"Power Level: [powerlevel]")
+		if(stat == UNCONSCIOUS)
+			stat(null,"You are knocked out by high levels of CO2!")
+		else
+			stat(null,"Power Level: [powerlevel]")
+
 
 /mob/living/simple_animal/slime/adjustFireLoss(amount)
 	..(-abs(amount)) // Heals them
@@ -177,7 +196,7 @@
 	..()
 
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
-	if(isliving(A) && A != src)
+	if(isliving(A) && A != src && usr == src)
 		var/mob/living/Food = A
 		if(CanFeedon(Food))
 			Feedon(Food)
@@ -196,8 +215,8 @@
 	if(..()) //successful slime attack
 		if(M == src)
 			return
-		if(Victim)
-			Victim = null
+		if(buckled)
+			Feedstop(silent=1)
 			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
 			return
 		attacked += 5
@@ -223,13 +242,13 @@
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(10)
+		adjustBruteLoss(15)
 		discipline_slime(user)
 
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
-	if(Victim)
-		if(Victim == M)
+	if(buckled)
+		if(buckled == M)
 			if(prob(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -243,11 +262,11 @@
 		else
 			M.do_attack_animation(src)
 			if(prob(30))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [Victim]!</span>")
+				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>")
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [buckled]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				discipline_slime(M)
@@ -272,7 +291,7 @@
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user, src))
 					return 1
-	if(istype(W,/obj/item/stack/sheet/mineral/plasma)) //Let's you feed slimes plasma.
+	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
 		else
@@ -298,9 +317,6 @@
 			discipline_slime(user)
 	..()
 
-/mob/living/simple_animal/slime/show_inv(mob/user)
-	return
-
 /mob/living/simple_animal/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
 	if(!client)
@@ -318,6 +334,8 @@
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
+		if (stat == UNCONSCIOUS) // Slime stasis
+			msg += "<span class='deadsay'>It appears to be alive but unresponsive.</span>\n"
 		if (src.getBruteLoss())
 			msg += "<span class='warning'>"
 			if (src.getBruteLoss() < 40)
@@ -327,7 +345,6 @@
 			msg += "</span>\n"
 
 		switch(powerlevel)
-
 			if(2 to 3)
 				msg += "It is flickering gently with a little electrical activity.\n"
 
@@ -345,8 +362,7 @@
 	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
-
-	if(stat == DEAD)
+	if(stat)
 		return
 
 	if(prob(80) && !client)
@@ -356,10 +372,10 @@
 			if(Discipline == 1)
 				attacked = 0
 
-	if(Victim || Target)
-		Victim = null
+	if(Target)
 		Target = null
-		anchored = 0
+	if(buckled)
+		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
 
 	spawn(0)
 		SStun = 1
@@ -377,3 +393,13 @@
 
 /mob/living/simple_animal/slime/pet
 	docile = 1
+
+/mob/living/simple_animal/slime/can_unbuckle()
+	return 0
+
+/mob/living/simple_animal/slime/can_buckle()
+	return 0
+
+/mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
+	if(..())
+		return 3

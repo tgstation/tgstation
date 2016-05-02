@@ -7,6 +7,7 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	anchored = 1
 	density = 1
+	on_blueprints = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -33,7 +34,7 @@
 
 	air_contents = new/datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
-	update()
+	update_icon()
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in src.loc
@@ -49,7 +50,7 @@
 	eject()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -65,11 +66,8 @@
 	trunk_check()
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
-	if(stat & BROKEN || !I || !user)
-		return
-
 	add_fingerprint(user)
-	if(mode<=0) // It's off
+	if(mode<=0)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(contents.len > 0)
 				user << "<span class='notice'>Eject the items first!</span>"
@@ -89,24 +87,40 @@
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-				if(do_after(user,20, target = src))
+				if(do_after(user,20/I.toolspeed, target = src))
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 					Deconstruct()
-				return
-	return 1
+			return
+
+	if(user.a_intent != "harm")
+		if(!user.drop_item() || (I.flags & ABSTRACT))
+			return
+		place_item_in_disposal(I, user)
+		update_icon()
+		return 1 //no afterattack
+	else
+		return ..()
+
+/obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
+	I.loc = src
+	user.visible_message("[user.name] places \the [I] into \the [src].", \
+						"<span class='notice'>You place \the [I] into \the [src].</span>")
+
 
 // mouse drop another mob or self
-//
+
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
-	if(istype(target) && user == target)
+	if(istype(target))
 		stuff_mob_in(target, user)
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(target.buckled)
+	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+		return
+	if(target.buckled || target.buckled_mobs.len)
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
@@ -121,10 +135,7 @@
 	if(do_mob(user, target, 20))
 		if (!loc)
 			return
-		if (target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		target.loc = src
+		target.forceMove(src)
 		if(user == target)
 			user.visible_message("[user] climbs into [src].", \
 									"<span class='notice'>You climb into [src].</span>")
@@ -132,7 +143,8 @@
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
-		update()
+			target.LAssailant = user
+		update_icon()
 
 // can breath normally in the disposal
 /obj/machinery/disposal/alter_health()
@@ -154,11 +166,9 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 
-	if (user.client)
-		user.client.eye = user.client.mob
-		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
-	update()
+	user.reset_perspective(null)
+	update_icon()
 	return
 
 
@@ -167,7 +177,7 @@
 	if(stat & BROKEN)
 		return
 	flush = !flush
-	update()
+	update_icon()
 
 // ai as human but can't flush
 /obj/machinery/disposal/attack_ai(mob/user)
@@ -195,13 +205,14 @@
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
+	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in src)
-		AM.loc = src.loc
+		AM.forceMove(T)
 		AM.pipe_eject(0)
-	update()
+	update_icon()
 
 // update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/proc/update()
+/obj/machinery/disposal/update_icon()
 	return
 
 /obj/machinery/disposal/proc/flush()
@@ -212,7 +223,7 @@
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
 	sleep(5)
-	if(gc_destroyed)
+	if(qdeleted(src))
 		return
 	var/obj/structure/disposalholder/H = new()
 	newHolderDestination(H)
@@ -221,12 +232,6 @@
 	H.start(src)
 	flushing = 0
 	flush = 0
-
-/obj/machinery/disposal/bin/flush()
-	..()
-	if(mode == 2)
-		mode = 1
-	update()
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
 	for(var/obj/item/smallDelivery/O in src)
@@ -239,25 +244,23 @@
 // called when area power changes
 /obj/machinery/disposal/power_change()
 	..()	// do default setting/reset of stat NOPOWER bit
-	update()	// update icon
+	update_icon()	// update icon
 	return
 
 
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
-
+	var/turf/T = get_turf(src)
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.loc = src.loc
+			AM.forceMove(T)
 			AM.pipe_eject(0)
-			spawn(1)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM.throw_at_fast(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -269,12 +272,15 @@
 		src.transfer_fingerprints_to(stored)
 		stored.anchored = 0
 		stored.density = 1
-		stored.update()
+		stored.update_icon()
 	..()
 
 //How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		src_object.remove_from_storage(I, src)
 	return 1
 
@@ -293,32 +299,15 @@
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(!..())
-		return
-
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
 		user << "<span class='warning'>You empty the bag.</span>"
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
-		update()
-		return
-
-	var/obj/item/weapon/grab/G = I
-	if(istype(G))	// handle grabbed mob
-		if(ismob(G.affecting))
-			stuff_mob_in(G.affecting, user)
-		return
-
-	if(!user.drop_item())
-		return
-
-	I.loc = src
-	user.visible_message("[user.name] places \the [I] into \the [src].", \
-						"<span class='notice'>You place \the [I] into \the [src].</span>")
-
-	update()
+		update_icon()
+	else
+		return ..()
 
 // user interaction
 /obj/machinery/disposal/bin/interact(mob/user, ai=0)
@@ -378,11 +367,11 @@
 			mode = 1
 		else
 			mode = 0
-		update()
+		update_icon()
 
 	if(href_list["handle"])
 		flush = text2num(href_list["handle"])
-		update()
+		update_icon()
 
 	if(href_list["eject"])
 		eject()
@@ -396,14 +385,20 @@
 		if(prob(75))
 			I.loc = src
 			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
-			update()
+			update_icon()
 		else
 			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
 
-/obj/machinery/disposal/bin/update()
+/obj/machinery/disposal/bin/flush()
+	..()
+	if(mode == 2)
+		mode = 1
+	update_icon()
+
+/obj/machinery/disposal/bin/update_icon()
 	overlays.Cut()
 	if(stat & BROKEN)
 		mode = 0
@@ -478,8 +473,12 @@
 	// if full enough, switch to ready mode
 	if(air_contents.return_pressure() >= SEND_PRESSURE)
 		mode = 2
-		update()
+		update_icon()
 	return
+
+/obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
+	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 
 
 //Delivery Chute
@@ -498,6 +497,11 @@
 		trunk = locate() in loc
 		if(trunk)
 			trunk.linked = src	// link the pipe trunk to self
+
+/obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
+	if(I.disposalEnterTry())
+		..()
+		flush()
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(!AM.disposalEnterTry())
@@ -520,7 +524,7 @@
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
 			M << "<span class='warning'>You hit the edge of the chute.</span>"
 			return
-		M.loc = src
+		M.forceMove(src)
 	flush()
 
 /atom/movable/proc/disposalEnterTry()

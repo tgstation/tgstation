@@ -21,6 +21,15 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
 	category = CAT_FOOD
 
+/datum/table_recipe/fudgedice
+	name = "Fudge dice"
+	reqs = list(
+		/obj/item/weapon/dice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/fudgedice
+	category = CAT_FOOD
+
 /datum/table_recipe/chocoorange
 	name = "Choco orange"
 	reqs = list(
@@ -147,7 +156,7 @@
 /datum/table_recipe/fuegoburrito
 	name ="Fuego plasma burrito"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
 	)
@@ -238,4 +247,26 @@
 	)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/melonkeg
+	category = CAT_FOOD
+
+/datum/table_recipe/honeybar
+	name = "Honey nut bar"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/oat = 1,
+		/datum/reagent/consumable/honey = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/honeybar
+	category = CAT_FOOD
+
+
+/datum/table_recipe/stuffedlegion
+	name = "Stuffed legion"
+	time = 40
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath = 1,
+		/obj/item/weapon/legion_skull = 1,
+		/datum/reagent/consumable/ketchup = 2,
+		/datum/reagent/consumable/capsaicin = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	category = CAT_FOOD

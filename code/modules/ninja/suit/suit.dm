@@ -25,7 +25,7 @@ Contents:
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
@@ -39,11 +39,11 @@ Contents:
 		//Main function variables.
 	var/s_initialized = 0//Suit starts off.
 	var/s_coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
-	var/s_cost = 5.0//Base energy cost each ntick.
-	var/s_acost = 25.0//Additional cost for additional powers active.
-	var/s_delay = 40.0//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
-	var/a_transfer = 20.0//How much reagent is transferred when injecting.
-	var/r_maxamount = 80.0//How much reagent in total there is.
+	var/s_cost = 5//Base energy cost each ntick.
+	var/s_acost = 25//Additional cost for additional powers active.
+	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
+	var/a_transfer = 20//How much reagent is transferred when injecting.
+	var/r_maxamount = 80//How much reagent in total there is.
 
 		//Support function variables.
 	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
@@ -51,8 +51,8 @@ Contents:
 	var/s_busy = 0//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
-	var/s_bombs = 10.0//Number of starting ninja smoke bombs.
-	var/a_boost = 3.0//Number of adrenaline boosters.
+	var/s_bombs = 10//Number of starting ninja smoke bombs.
+	var/a_boost = 3//Number of adrenaline boosters.
 
 
 /obj/item/clothing/suit/space/space_ninja/New()
@@ -66,7 +66,7 @@ Contents:
 
 	//Research Init
 	stored_research = new()
-	for(var/T in typesof(/datum/tech) - /datum/tech)//Store up on research.
+	for(var/T in subtypesof(/datum/tech))//Store up on research.
 		stored_research += new T(src)
 
 	//Reagent Init
@@ -81,12 +81,14 @@ Contents:
 	//Cell Init
 	cell = new/obj/item/weapon/stock_parts/cell/high
 	cell.charge = 9000
+	cell.name = "black power cell"
+	cell.icon_state = "bscell"
 
 
 /obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)
 		affecting << browse(null, "window=hack spideros")
-	..()
+	return ..()
 
 
 //Simply deletes all the attachments and self, killing all related procs.

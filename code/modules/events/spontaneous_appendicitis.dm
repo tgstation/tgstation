@@ -4,6 +4,7 @@
 	weight = 20
 	max_occurrences = 4
 	earliest_start = 6000
+	min_players = 5 // To make your chance of getting help a bit higher.
 
 /datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))

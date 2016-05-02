@@ -1,12 +1,13 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
+	var/ratingdesc
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
@@ -16,12 +17,33 @@
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/chargerate = 100 //how much power is given every tick in a recharger
+	var/self_recharge = 0 //does it self recharge, over time, or not?
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
+	SSobj.processing |= src
 	charge = maxcharge
-	desc = "This cell has a power rating of [maxcharge], and you should not swallow it."
+	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
+	desc = desc + ratingdesc
 	updateicon()
+
+/obj/item/weapon/stock_parts/cell/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
+/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
+	if(modified_var == "self_recharge")
+		if(self_recharge)
+			SSobj.processing |= src
+		else
+			SSobj.processing -= src
+	..()
+
+/obj/item/weapon/stock_parts/cell/process()
+	if(self_recharge)
+		give(chargerate * 0.25)
+	else
+		return PROCESS_KILL
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()
@@ -33,14 +55,15 @@
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
-	return 100.0*charge/maxcharge
+	return 100*charge/maxcharge
 
 // use power from a cell
 /obj/item/weapon/stock_parts/cell/proc/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
-	if(charge < amount)	return 0
+	if(charge < amount)
+		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		feedback_add_details("cell_used","[src.type]")
@@ -54,7 +77,8 @@
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
-	if(crit_fail)	return 0
+	if(crit_fail)
+		return 0
 	if(!prob(reliability))
 		minor_fault++
 		if(prob(minor_fault))
@@ -122,7 +146,7 @@
 
 /obj/item/weapon/stock_parts/cell/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
 				if(prob(50))
@@ -132,7 +156,7 @@
 					corrupt()
 
 
-/obj/item/weapon/stock_parts/cell/blob_act()
+/obj/item/weapon/stock_parts/cell/blob_act(obj/effect/blob/B)
 	ex_act(1)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
@@ -145,7 +169,7 @@
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	origin_tech = "powerstorage=0"
+	origin_tech = null
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
 	rating = 2
@@ -156,7 +180,7 @@
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
-	origin_tech = "powerstorage=0"
+	origin_tech = null
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	materials = list(MAT_GLASS=40)
 	rating = 2.5
@@ -165,9 +189,9 @@
 	..()
 	charge = 0
 
-/obj/item/weapon/stock_parts/cell/pulse //80 pulse shots
+/obj/item/weapon/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
-	maxcharge = 16000
+	maxcharge = 40000
 	rating = 3
 	chargerate = 1500
 
@@ -187,6 +211,13 @@
 	materials = list(MAT_GLASS=60)
 	rating = 3
 	chargerate = 1500
+
+/obj/item/weapon/stock_parts/cell/high/plus
+	name = "high-capacity power cell+"
+	desc = "Where did these come from?"
+	icon_state = "h+cell"
+	maxcharge = 15000
+	chargerate = 2250
 
 /obj/item/weapon/stock_parts/cell/high/empty/New()
 	..()
@@ -239,8 +270,9 @@
 	materials = list(MAT_GLASS=80)
 	rating = 6
 	chargerate = 30000
-	use()
-		return 1
+
+/obj/item/weapon/stock_parts/cell/infinite/use()
+	return 1
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
@@ -261,6 +293,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	materials = list()
+	self_recharge = 1 // Infused slime cores self-recharge, over time
 
 /obj/item/weapon/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"

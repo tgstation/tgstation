@@ -3,9 +3,9 @@
 	name = "blank picket sign"
 	desc = "It's blank"
 	force = 5
-	w_class = 4.0
+	w_class = 4
 	attack_verb = list("bashed","smacked")
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 	var/label = ""
 	var/last_wave = 0
@@ -17,7 +17,8 @@
 			label = txt
 			src.name = "[label] sign"
 			desc =	"It reads: [label]"
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/picket_sign/attack_self(mob/living/carbon/human/user)
 	if( last_wave + 20 < world.time )

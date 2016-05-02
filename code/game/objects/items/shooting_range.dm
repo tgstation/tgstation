@@ -11,7 +11,7 @@
 	removeOverlays()
 	if(pinnedLoc)
 		pinnedLoc.nullPinnedTarget()
-	..()
+	return ..()
 
 /obj/item/target/proc/nullPinnedLoc()
 	pinnedLoc = null
@@ -30,7 +30,9 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			removeOverlays()
-			usr << "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>"
+			user << "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>"
+	else
+		return ..()
 
 /obj/item/target/attack_hand(mob/user)
 	if(pinnedLoc)
@@ -47,8 +49,17 @@
 	desc = "A shooting target that looks like a xenomorphic alien."
 	hp = 2350
 
+/obj/item/target/clown
+	icon_state = "target_c"
+	desc = "A shooting target that looks like a useless clown."
+	hp = 2000
+
 #define DECALTYPE_SCORCH 1
 #define DECALTYPE_BULLET 2
+
+/obj/item/target/clown/bullet_act(obj/item/projectile/P)
+	..()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/target/bullet_act(obj/item/projectile/P)
 	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"

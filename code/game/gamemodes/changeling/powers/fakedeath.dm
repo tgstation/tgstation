@@ -12,6 +12,7 @@
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 	user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
 	user.status_flags |= FAKEDEATH		//play dead
+	user.update_stat()
 	user.update_canmove()
 	if(user.stat != DEAD)
 		user.emote("deathgasp")

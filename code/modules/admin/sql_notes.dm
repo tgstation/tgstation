@@ -3,19 +3,19 @@
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	if(!target_ckey)
-		var/new_ckey = ckey(input(usr,"Who would you like to add a note for?","Enter a ckey",null) as text|null)
+		var/new_ckey = ckey(input(usr,"Who would you like to add a note for?","Enter a ckey",null) as text)
 		if(!new_ckey)
 			return
+		new_ckey = sanitizeSQL(new_ckey)
 		var/DBQuery/query_find_ckey = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[new_ckey]'")
 		if(!query_find_ckey.Execute())
 			var/err = query_find_ckey.ErrorMsg()
-			log_game("SQL ERROR obtaining ckey from notes table. Error : \[[err]\]\n")
+			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
 			return
 		if(!query_find_ckey.NextRow())
-			usr << "<span class='redtext'>[new_ckey] has not been seen before, you can only add notes to known players.</span>"
-			return
-		else
-			target_ckey = new_ckey
+			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add them to the watchlist?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+				return
+		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(!notetext)
 		notetext = input(usr,"Write your Note","Add Note") as message
@@ -147,7 +147,8 @@
 		var/search
 		output += "<center><a href='?_src_=holder;addnoteempty=1'>\[Add Note\]</a></center>"
 		output += ruler
-		index = sanitizeSQL(index)
+		if(!isnum(index))
+			index = sanitizeSQL(index)
 		switch(index)
 			if(1)
 				search = "^."
@@ -168,9 +169,6 @@
 		output += ruler
 	usr << browse(output, "window=show_notes;size=900x500")
 
-/proc/regex_note_sql_extract(str, exp)
-	return new /datum/regex(str, exp, call(LIBREGEX_LIBRARY, "regEx_find")(str, exp))
-
 #define NOTESFILE "data/player_notes.sav"
 //if the AUTOCONVERT_NOTES is turned on, anytime a player connects this will be run to try and add all their notes to the databas
 /proc/convert_notes_sql(ckey)
@@ -183,13 +181,13 @@
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if (config && config.server_name)
+		if(config && config.server_name)
 			server = config.server_name
-		var/regex = "^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$"
-		var/datum/regex/results = regex_note_sql_extract(notetext, regex)
-		var/timestamp = results.str(2)
-		notetext = results.str(3)
-		var/adminckey = results.str(4)
+		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
+		note.Find(notetext)
+		var/timestamp = note.group[1]
+		notetext = note.group[2]
+		var/adminckey = note.group[3]
 		var/DBQuery/query_convert_time = dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
 		if(!query_convert_time.Execute())
 			var/err = query_convert_time.ErrorMsg()

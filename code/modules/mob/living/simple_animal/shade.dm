@@ -7,6 +7,7 @@
 	icon_living = "shade"
 	maxHealth = 50
 	health = 50
+	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
 	response_help  = "puts their hand through"
@@ -15,9 +16,9 @@
 	speak_chance = 1
 	melee_damage_lower = 5
 	melee_damage_upper = 15
-	attacktext = "drains the life from"
+	attacktext = "metaphysically strikes"
 	minbodytemp = 0
-	maxbodytemp = 4000
+	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	speed = -1
 	stop_automated_movement = 1

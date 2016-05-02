@@ -31,22 +31,20 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2)
-				M << "<span class='notice'>Your eyes itch.</span>"
+				M << "<span class='warning'>Your eyes itch.</span>"
 			if(3, 4)
-				M << "<span class='notice'>Your eyes ache.</span>"
-				M.eye_blurry = 10
-				M.eye_stat += 1
+				M << "<span class='warning'><b>Your eyes burn!</b></span>"
+				M.blur_eyes(10)
+				M.adjust_eye_damage(1)
 			else
-				M << "<span class='danger'>Your eyes burn horrificly!</span>"
-				M.eye_blurry = 20
-				M.eye_stat += 5
-				if (M.eye_stat >= 10)
-					M.disabilities |= NEARSIGHT
-					if (prob(M.eye_stat - 10 + 1) && !(M.eye_blind))
-						M << "<span class='danger'>You go blind!</span>"
-						M.disabilities |= BLIND
-						M.eye_blind = 1
-	return
+				M << "<span class='userdanger'>Your eyes burn horrificly!</span>"
+				M.blur_eyes(20)
+				M.adjust_eye_damage(5)
+				if(M.eye_damage >= 10)
+					M.become_nearsighted()
+					if(prob(M.eye_damage - 10 + 1))
+						if(M.become_blind())
+							M << "<span class='userdanger'>You go blind!</span>"
 
 
 /*

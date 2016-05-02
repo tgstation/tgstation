@@ -77,7 +77,7 @@
 						<b>Airtank:</b> [M.return_pressure()]kPa<br>
 						<b>Pilot:</b> [M.occupant||"None"]<br>
 						<b>Location:</b> [get_area(M)||"Unknown"]<br>
-						<b>Active equipment:</b> [M.selected||"None"]"}
+						<b>Active equipment:</b> [M.selected||"None"]<br>"}
 	if(istype(M, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = M
 		answer += "<b>Used cargo space:</b> [RM.cargo.len/RM.cargo_capacity*100]%<br>"

@@ -209,7 +209,7 @@
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato = 2
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 	category = CAT_FOOD

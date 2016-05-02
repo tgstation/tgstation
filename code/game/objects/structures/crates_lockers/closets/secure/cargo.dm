@@ -5,7 +5,7 @@
 
 /obj/structure/closet/secure_closet/quartermaster/New()
 	..()
-	new /obj/item/clothing/cloak/qm(src)
+	new /obj/item/clothing/suit/cloak/qm(src)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
@@ -14,5 +14,6 @@
 	new /obj/item/device/megaphone/cargo(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/clothing/head/soft(src)
+	new /obj/item/device/export_scanner(src)
+	new /obj/item/weapon/door_remote/quartermaster(src)
