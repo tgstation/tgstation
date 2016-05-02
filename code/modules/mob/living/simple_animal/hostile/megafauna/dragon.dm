@@ -290,6 +290,7 @@
 	w_class = 4
 	force = 25
 	damtype = BURN
+	burn_state = LAVA_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
 	var/lava_cooldown = 0
 
