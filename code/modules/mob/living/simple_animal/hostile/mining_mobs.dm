@@ -764,17 +764,17 @@
 	stat_attack = 1
 	gender = NEUTER
 	stop_automated_movement = FALSE
+	stop_automated_movement_when_pulled = TRUE
 	stat_exclusive = TRUE
 	robust_searching = TRUE
 	search_objects = TRUE
 	del_on_death = TRUE
+	loot = list(/obj/effect/decal/cleanable/blood/gibs)
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
-	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/female = 55)
+	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	loot = list(/obj/effect/decal/cleanable/blood/gibs)
-	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/,
-						  /obj/effect/decal/cleanable/blood/gibs/, /obj/effect/decal/cleanable/blood/drip/,/obj/effect/decal/cleanable/trail_holder)
+	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
 
@@ -793,7 +793,6 @@
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
 		overlays += "gl_full"
 	..()
-
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -826,10 +825,11 @@
 
 
 //Male gutlunch. They're smaller and more colorful!
-/mob/living/simple_animal/hostile/asteroid/gutlunch/male
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck
+	name = "gubbuck"
 	gender = MALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/male/New()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
 	..()
 	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
 	resize = 0.85
@@ -837,16 +837,16 @@
 
 
 //Lady gutlunch. They make the babby.
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen
 	name = "guthen"
 	gender = FEMALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female/Life()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
 	..()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female/make_babies()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
 	if(..())
 		udder.reagents.clear_reagents()
 		regenerate_icons()
