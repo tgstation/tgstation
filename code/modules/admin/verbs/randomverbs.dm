@@ -69,14 +69,15 @@
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
-	if (!holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone, input nothing to cancel.")) as text
 
-	if (!msg)
+	if(!msg)
 		return
+
 	to_chat(world, "[msg]")
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
 	message_admins("<span class='notice'><B>GlobalNarrate: [key_name_admin(usr)] : [msg]<BR></B></span>", 1)
@@ -96,9 +97,9 @@
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = input("Message:", text("Enter the text you wish to appear to your target, input nothing to cancel.")) as text
 
-	if( !msg )
+	if(!msg)
 		return
 
 	to_chat(M, msg)
@@ -114,9 +115,9 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = input("Message:", text("Enter the text you wish to appear to your target, input nothing to cancel.")) as text
 
-	if( !msg )
+	if(!msg)
 		return
 
 	for(var/mob/M in view())
@@ -380,7 +381,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+
+	var/input = ckey(input(src, "Please specify which key will be respawned. Input nothing to cancel.", "Key", ""))
 	if(!input)
 		return
 

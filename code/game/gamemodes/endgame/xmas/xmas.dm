@@ -29,5 +29,9 @@
 /client/proc/smissmas()
 	set category = "Fun"
 	set name = "Execute Smissmas"
-	if(!holder)	return
+	if(!holder)
+		return
+	var/confirm = alert(src, "Are you sure? This will tamper with the universal state of all things!", "Confirm", "Yes", "No")
+	if(confirm != "Yes")
+		return
 	SetUniversalState(/datum/universal_state/christmas)

@@ -905,15 +905,19 @@ var/global/floorIsLava = 0
 	set name = "Announce"
 	set desc="Announce your desires to the world"
 
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
-	if(message)
-		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
-		to_chat(world, "<span class='notice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]</span>")
-		log_admin("Announce: [key_name(usr)] : [message]")
-	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/message = input("Global message to send, input nothing to cancel.", "Admin Announce", null, null) as message
+
+	if(!message)
+		return
+
+	if(!check_rights(R_SERVER, 0))
+		message = adminscrub(message, 500)
+	to_chat(world, "<span class='notice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]</span>")
+	log_admin("Announce: [key_name(usr)] : [message]")
+	feedback_add_details("admin_verb", "A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
