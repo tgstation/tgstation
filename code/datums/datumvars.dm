@@ -3,6 +3,12 @@
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
 
+	var/list/hooks = list() // List of hooks (text strings) to look out for.
+
+// Allows for a lot more code reuseability/modularity, preventing dependency and path issues. See hook_readme.dm for more info.
+/datum/proc/Hook(trigger = null, list/params = null) // A proc to allow hooking into unique behaviours and procedures without having to typecast.
+	return
+
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
 	return
