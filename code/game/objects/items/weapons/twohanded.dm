@@ -318,14 +318,13 @@
 		explosive.prime()
 		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO
+ //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
 	if(!.) //not caught
 		if(explosive)
 			explosive.prime()
 			qdel(src)
-
 
 /obj/item/weapon/twohanded/spear/AltClick()
 	..()
@@ -358,12 +357,6 @@
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
 		return
-	var/obj/item/weapon/c4/C4 = locate() in contents
-	if(C4)
-		var /obj/item/weapon/grenade/C4/C42 = new /obj/item/weapon/grenade/C4(src)
-		qdel(C4)
-		explosive = C42
-		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
 	update_icon()
 
 // CHAINSAW

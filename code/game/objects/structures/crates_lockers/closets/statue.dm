@@ -120,7 +120,7 @@
 	if(user.environment_smash)
 		shatter()
 
-/obj/structure/closet/statue/blob_act()
+/obj/structure/closet/statue/blob_act(obj/effect/blob/B)
 	shatter()
 
 /obj/structure/closet/statue/attacked_by(obj/item/I, mob/living/user)

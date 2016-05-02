@@ -173,7 +173,7 @@
 	icon_living = "none"
 	icon_dead = "none"
 	desc = "You shouldn't be seeing this."
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	unsuitable_atmos_damage = 0
 	stat_attack = 2
 	gold_core_spawnable = 0

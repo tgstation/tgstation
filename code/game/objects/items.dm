@@ -134,7 +134,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		qdel(X)
 	return ..()
 
-/obj/item/blob_act()
+/obj/item/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/item/ex_act(severity, target)

@@ -13,11 +13,13 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	can_fire = 1 // This needs to fire before round start.
 
 	var/collection_timeout = 300// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
-	var/max_run_time = 1		// how long, in deciseconds, can we run before waiting for the next tick
 	var/delslasttick = 0		// number of del()'s we've done this tick
 	var/gcedlasttick = 0		// number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
+	
+	var/highest_del_time = 0
+	var/highest_del_tickusage = 0
 
 	var/list/queue = list() 	// list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
@@ -53,15 +55,17 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	..(msg)
 
 /datum/subsystem/garbage_collector/fire()
-	var/time_to_stop = world.timeofday + max_run_time
-	HandleToBeQueued(time_to_stop)
-	HandleQueue(time_to_stop)
+	HandleToBeQueued()
+	if (!paused)
+		HandleQueue()
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/subsystem/garbage_collector/proc/HandleToBeQueued(time_to_stop)
+/datum/subsystem/garbage_collector/proc/HandleToBeQueued()
 	var/list/tobequeued = src.tobequeued
-	while(tobequeued.len && world.timeofday < time_to_stop)
+	var/starttime = world.time
+	var/starttimeofday = world.timeofday
+	while(tobequeued.len && starttime == world.time && starttimeofday == world.timeofday)
 		if (MC_TICK_CHECK)
 			break
 		var/ref = tobequeued[1]
@@ -73,7 +77,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
 	var/list/queue = src.queue
-	while(queue.len && world.timeofday < time_to_stop)
+	var/starttime = world.time
+	var/starttimeofday = world.timeofday
+	while(queue.len && starttime == world.time && starttimeofday == world.timeofday)
 		if (MC_TICK_CHECK)
 			break
 		var/refID = queue[1]
@@ -84,23 +90,37 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		var/GCd_at_time = queue[refID]
 		if(GCd_at_time > time_to_kill)
 			break // Everything else is newer, skip them
-
+		queue.Cut(1, 2)
 		var/datum/A
 		if (!istext(refID))
-			del(A)
+			del(refID)
 		else
 			A = locate(refID)
 			if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 				// Something's still referring to the qdel'd object.  Kill it.
-				testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
-				didntgc["[A.type]"]++
+				var/type = A.type
+				testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
+				didntgc["[type]"]++
+				var/time = world.timeofday
+				var/tick = world.tick_usage
+				var/ticktime = world.time
 				del(A)
+				tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
+				if (tick > highest_del_tickusage)
+					highest_del_tickusage = tick
+				time = world.timeofday - time
+				if (time > highest_del_time)
+					highest_del_time = time
+				if (time > 15)
+					log_game("Error: [type]([refID]) took longer then 1.5 seconds to delete (took [time/10] seconds to delete)")
+					message_admins("Error: [type]([refID]) took longer then 1.5 seconds to delete (took [time/10] seconds to delete).")
+					postpone(time/5)
+					break
 				++delslasttick
 				++totaldels
 			else
 				++gcedlasttick
 				++totalgcs
-		queue.Cut(1, 2)
 
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
 	if (istype(A) && isnull(A.gc_destroyed))

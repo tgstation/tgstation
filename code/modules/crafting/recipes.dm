@@ -48,7 +48,6 @@
 	time = 40
 	category = CAT_WEAPON
 
-
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
@@ -320,12 +319,13 @@
 	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC
 
+
 /datum/crafting_recipe/chemical_payload
-	name = "chemical payload (C4)"
+	name = "Chemical Payload (C4)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin/super = 1,
-		/obj/item/weapon/c4 = 1,
+		/obj/item/weapon/stock_parts/matter_bin = 1,
+		/obj/item/weapon/grenade/plastic/c4 = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
@@ -333,7 +333,7 @@
 	category = CAT_WEAPON
 
 /datum/crafting_recipe/chemical_payload2
-	name = "chemical payload (gibtonite)"
+	name = "Chemical Payload (gibtonite)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,

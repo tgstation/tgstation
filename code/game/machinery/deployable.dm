@@ -79,7 +79,7 @@
 		if(2)
 			take_damage(25, BRUTE, 0)
 
-/obj/structure/barricade/blob_act()
+/obj/structure/barricade/blob_act(obj/effect/blob/B)
 	take_damage(25, BRUTE, 0)
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.

@@ -1,4 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Charger holoparasites now play a sound when hitting a target, as well as shaking the target's camera."

@@ -1,6 +1,0 @@
-author: Bawhoppen
-delete-after: True
-changes: 
-  - tweak: "Sandbags are no longer tablecrafted. Now you just put in sand (or ash) by hand to make them."
-  - rscadd: "Miners and Engis now get boxes of empty sandbags in their lockers. Miners also get a few premade aswell."
-  - rscadd: "You can now break sandstone down into normal sand."
