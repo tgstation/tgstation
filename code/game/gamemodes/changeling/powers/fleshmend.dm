@@ -20,8 +20,7 @@
 
 /obj/effect/proc_holder/changeling/fleshmend/process()
 	if(recent_uses > 1)
-		recent_uses -= (1 / healing_ticks)
-		recent_uses = max(recent_uses, 1)
+		recent_uses = max(1, recent_uses - (1 / healing_ticks))
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
@@ -36,7 +35,7 @@
 			H.remove_all_embedded_objects()
 		// The healing itself - doesn't heal toxin damage (that's anatomic panacea) and
 		// effectiveness decreases with each use in a short timespan
-		for(var/i = 0, i < healing_ticks, i++)
+		for(var/i in 1 to healing_ticks)
 			if(user)
 				var/healpertick = -(total_healing / healing_ticks)
 				user.adjustBruteLoss(healpertick / recent_uses, 0)
