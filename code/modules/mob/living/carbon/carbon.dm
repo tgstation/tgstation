@@ -115,12 +115,18 @@
 	if(damage <= 0)
 		damage = 0
 
-	if(take_overall_damage(0, damage, used_weapon = "[source]") == 0) // godmode
-		return 0
-
-	//src.burn_skin(shock_damage)
-	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
-	//src.updatehealth()
+	if(dna.mutantrace == "slime")
+		heal_overall_damage(damage/2, damage/2)
+		Jitter(10)
+		Stun(5)
+		Weaken(5)
+		//It would be cool if someone added an animation of some electrical shit going through the body
+	else
+		if(take_overall_damage(0, damage, used_weapon = "[source]") == 0) // godmode
+			return 0
+		Jitter(20)
+		Stun(10)
+		Weaken(10)
 
 	visible_message( \
 		"<span class='warning'>[src] was shocked by the [source]!</span>", \
@@ -132,13 +138,7 @@
 	)
 
 	//if(src.stunned < shock_damage)	src.stunned = shock_damage
-
-	Jitter(20) //Shake that body, friend
-	Stun(10) // this should work for now, more is really silly and makes you lay there forever
-
 	//if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-
-	Weaken(10)
 
 	var/datum/effect/effect/system/spark_spread/SparkSpread = new
 	SparkSpread.set_up(5, 1, loc)
