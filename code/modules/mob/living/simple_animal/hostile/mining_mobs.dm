@@ -91,10 +91,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
 		if(isliving(target))
-			var/mob/living/L = target
-			if(L.bodytemperature > 200)
-				L.bodytemperature = 200
-				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
+			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)

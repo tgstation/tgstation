@@ -253,12 +253,5 @@
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
-
-/obj/structure/displaycase/labcage/New()
-	..()
-	var/obj/item/clothing/mask/facehugger/A = new /obj/item/clothing/mask/facehugger(src)
-	A.sterile = 1
-	A.name = "Lamarr"
-	showpiece = A
-	update_icon()
+	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 
