@@ -25,6 +25,7 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/weapon/door_remote/chief_engineer(src)
 	new /obj/item/weapon/pipe_dispenser(src)
+	new /obj/item/weapon/gun/energy/disabler(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
