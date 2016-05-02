@@ -420,3 +420,8 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXX 4
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
+
+// Pun Pun persistence
+#define PUNPUN_PERSISTENCE_DISABLED 0
+#define PUNPUN_PERSISTENCE_ENABLED 1
+#define PUNPUN_PERSISTENCE_ENABLED_SANS_FACEHUGGER 2

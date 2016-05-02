@@ -14,7 +14,8 @@
 	if(relic_hat)
 		equip_to_slot_or_del(new relic_hat, slot_head)
 	if(relic_mask)
-		if(config.punpun_persistence == 2)
+		if(config.punpun_persistence == \
+			PUNPUN_PERSISTENCE_ENABLED_SANS_FACEHUGGER)
 			// SAFETY MODE ENABLED, CALMLY STEP AWAY FROM THE FACEHUGGER
 			if(ispath(relic_mask, /obj/item/clothing/mask/facehugger))
 				relic_mask = /obj/item/clothing/mask/facehugger/toy
@@ -42,7 +43,7 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
-	if(!config.punpun_persistence)
+	if(config.punpun_persistence == PUNPUN_PERSISTENCE_DISABLED)
 		return
 	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 	S["ancestor_name"] 		>> ancestor_name
@@ -51,7 +52,7 @@
 	S["relic_mask"]			>> relic_mask
 
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
-	if(!config.punpun_persistence)
+	if(config.punpun_persistence == PUNPUN_PERSISTENCE_DISABLED)
 		return
 	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 	if(gibbed)
