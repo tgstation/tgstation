@@ -87,11 +87,13 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
-		user << {"<span class='noticealien'>You said: "[msg]" to [M]</span>"}
-		for(var/mob/ded in dead_mob_list)
+		user << "<span class='noticealien'>You said: "[msg]" to [M]</span>"
+		for(var/ded in dead_mob_list)
+			if(!isobserver(ded))
+				continue
 			ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
 				<span class='name'>[user]</span> \
-				<span class='game say'>Alien Whisper --> </span> \
+				<b><span class='noticealien'>Alien Whisper --> </span></b> \
 				<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
 				<span class='name'>[M]</span> \
 				<span class='noticealien'>[msg]</span>"
@@ -120,7 +122,7 @@ Doesn't work on other aliens/AI.*/
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
+			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return

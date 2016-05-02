@@ -118,10 +118,12 @@
 			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 			user << "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>"
 			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>"
-			for(var/mob/ded in dead_mob_list)
+			for(var/ded in dead_mob_list)
+				if(!isobserver(ded))
+					continue
 				ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
 					<span class='name'>[user]</span> \
-					<span class='game say'>Revenant Transmit --></span> \
+					<span class='revenboldnotice'>Revenant Transmit --></span> \
 					<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
 					<span class='name'>[M]</span> \
 					<span class='revennotice'>[msg]</span>"
