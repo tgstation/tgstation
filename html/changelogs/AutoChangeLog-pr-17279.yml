@@ -1,4 +1,0 @@
-author: RandomMarine
-delete-after: True
-changes: 
-  - tweak: "Medical HUDs improved. To better prioritize patients, subjects deep into critical condition have a blinking red outline around the entire HUD icon, and will blink more rapidly when very close to death."
