@@ -58,9 +58,7 @@ var/religion_name = null
 
 	return capitalize(name)
 
-/proc/station_name()
-	if(station_name)
-		return station_name
+/proc/new_station_name()
 	var/random = rand(1,5)
 	var/name = ""
 
@@ -115,8 +113,12 @@ var/religion_name = null
 
 	return station_name
 
-/proc/world_name(var/name)
+/proc/station_name()
+	if(!station_name)
+		station_name = new_station_name()
+	return station_name
 
+/proc/set_world_name(var/name)
 
 	station_name = name
 
@@ -124,8 +126,6 @@ var/religion_name = null
 		world.name = "[config.server_name]: [name]"
 	else
 		world.name = name
-
-	return name
 
 var/syndicate_name = null
 /proc/syndicate_name()

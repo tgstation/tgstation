@@ -1092,7 +1092,7 @@ window "mainwindow"
 		right-click = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
-		title = "Space Station 13"
+		/*title = "Space Station 13"*/
 		titlebar = true
 		statusbar = true
 		can-close = true
