@@ -121,9 +121,11 @@
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if (!mover)
+	if(!mover)
 		return 1
-	return ..() //Nothing found to block so return success!
+	. = ..()
+	if(.)
+		return !density //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
