@@ -378,11 +378,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
-
-	resting = !resting
+	
 	if(resting)//prevents wavedashing
-		src << "You start to get to your feet"
+		src << "You start to get to your feet."
 		sleep(3)
+	
+	resting = !resting
 	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 	update_canmove()
 
