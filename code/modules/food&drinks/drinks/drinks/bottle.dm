@@ -237,7 +237,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "T&T Extra-Strong Absinthe"
-	desc = "  
+	desc = {"  
   
 According to all known laws
 of aviation,
@@ -4800,7 +4800,7 @@ All right. Take ten, everybody.
 Wrap it up, guys.
 
   
-I had virtually no rehearsal for that."
+I had virtually no rehearsal for that."}
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
