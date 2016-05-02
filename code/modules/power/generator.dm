@@ -10,24 +10,16 @@
 
 	var/thermal_efficiency = 0.65
 
-	var/obj/machinery/atmospherics/binary/circulator/circ1
-	var/obj/machinery/atmospherics/binary/circulator/circ2
+	var/tmp/obj/machinery/atmospherics/binary/circulator/circ1
+	var/tmp/obj/machinery/atmospherics/binary/circulator/circ2
 
-	var/last_circ1_gen		= 0
-	var/last_circ2_gen		= 0
-	var/last_thermal_gen	= 0
-	var/stored_energy		= 0
-	var/lastgen1			= 0
-	var/lastgen2			= 0
-	var/effective_gen		= 0
-	var/lastgenlev			= 0
-	var/max_power			= 500000 //Amount of W produced at which point the meter caps.
-	var/startup_ticks		= 5 // Amount of ticks needed of continuous thermal power generation to actually emit power.
-	var/startup_ticks_max	= 5
+	var/tmp/last_gen    = 0
+	var/tmp/lastgenlev  = 0 // Used in update_icon()
+	var/const/max_power = 500000 // Amount of W produced at which point the meter caps.
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
-	var/datum/html_interface/nanotrasen/interface
+	var/tmp/datum/html_interface/nanotrasen/interface
 
 /obj/machinery/power/generator/New()
 	..()
@@ -84,14 +76,6 @@
 			X
 		</div>
 	</div>
-	<div class="item">
-		<div class="itemLabel">
-			Thermal output:
-		</div>
-		<div class="itemContent" id="thermal_out">
-			X
-		</div>
-	</div>
 	<div id="operatable">
 	<table style="width: 100%; font-size: 12px;">
 		<tr>
@@ -100,14 +84,6 @@
 					<h1 id="circ1">
 						Primary Circulator (right)
 					</h1>
-					<div class="item">
-						<div class="itemLabel">
-							Turbine Output:
-						</div>
-						<div class="itemContent" id="circ1_turbine">
-							X
-						</div>
-					</div>
 					<div class="item">
 						<div class="itemLabel">
 							Flow Capacity:
@@ -159,14 +135,6 @@
 					<h1 id="circ2">
 						Secondary Circulator (left)
 					</h1>
-					<div class="item">
-						<div class="itemLabel">
-							Turbine Output:
-						</div>
-						<div class="itemContent" id="circ2_turbine">
-							X
-						</div>
-					</div>
 					<div class="item">
 						<div class="itemLabel">
 							Flow Capacity:
@@ -287,9 +255,6 @@
 	if(!operable())
 		return
 
-	if(startup_ticks)
-		return
-
 	overlays += "teg_mid"
 
 	if(lastgenlev != 0)
@@ -297,14 +262,7 @@
 
 /obj/machinery/power/generator/process()
 	if(!operable())
-		stored_energy = 0
 		return
-
-	lastgen2			= lastgen1
-	lastgen1			= 0
-	last_thermal_gen	= 0
-	last_circ1_gen		= 0
-	last_circ2_gen		= 0
 
 	var/datum/gas_mixture/air1 = circ1.return_transfer_air()
 	var/datum/gas_mixture/air2 = circ2.return_transfer_air()
@@ -317,7 +275,7 @@
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
 			var/energy_transfer = delta_temperature * air2_heat_capacity * air1_heat_capacity / (air2_heat_capacity + air1_heat_capacity)
 			var/heat = energy_transfer * (1 - thermal_efficiency)
-			last_thermal_gen = energy_transfer * thermal_efficiency / 4
+			last_gen = energy_transfer * thermal_efficiency * 0.05
 
 			if(air2.temperature > air1.temperature)
 				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
@@ -332,42 +290,22 @@
 
 	//Update the gas networks.
 	if(circ1.network2)
-		circ1.network2.update = 1
+		circ1.network2.update = TRUE
 
 	if(circ2.network2)
-		circ2.network2.update = 1
+		circ2.network2.update = TRUE
 
-	//Power
-	last_circ1_gen = circ1.return_stored_energy()
-	last_circ2_gen = circ2.return_stored_energy()
-	stored_energy += last_thermal_gen + last_circ1_gen + last_circ2_gen
-	lastgen1 = stored_energy * 0.4 //Smoothened power generation to prevent slingshotting as pressure is equalized, then restored by pumps.
-	stored_energy -= lastgen1
-	effective_gen = (lastgen1 + lastgen2) / 2
+	add_avail(last_gen)
 
 	//Update icon overlays and power usage only if displayed level has changed.
-	var/genlev = Clamp(round(11 * effective_gen / max_power), 0, 11)
+	var/genlev = Clamp(round(11 * last_gen / max_power), 0, 11)
 
-	if(effective_gen > 100 && genlev == 0)
+	if(last_gen > 100 && genlev == 0)
 		genlev = 1
 
 	if(genlev != lastgenlev)
 		lastgenlev = genlev
 		update_icon()
-
-	// Make it so dorks have to actually keep the TEG producing power for more than 5 ticks before it starts producing power.
-	// No more making power with a jamming TEG.
-	if(last_thermal_gen)
-		if(startup_ticks <= 0)
-			add_avail(effective_gen)
-
-		else
-			startup_ticks--
-			if(startup_ticks == 0)
-				update_icon()
-
-	else
-		startup_ticks = startup_ticks_max
 
 	updateUsrDialog()
 
@@ -395,25 +333,12 @@
 	interface.updateContent("circ1", "Primary circulator ([vertical ? "top"		: "right"])")
 	interface.updateContent("circ2", "Primary circulator ([vertical ? "bottom"	: "left"])")
 
-	if(startup_ticks)
-		if(last_thermal_gen)
-			interface.updateContent("total_out", "<span class='average'>Charging: [startup_ticks * 2] seconds</span>") // One tick is ~2 seconds.
-		else
-			interface.updateContent("total_out", "<span class='bad'>Stopped</span>") // If the turbines are generating more than 1e5 W (0.1 MW) say jammed because at that point it's probably not just no thermal transfer at all.
-	else
-		interface.updateContent("total_out", format_watts(effective_gen))
-
-	interface.updateContent("thermal_out", format_watts(last_thermal_gen))
+	interface.updateContent("total_out", format_watts(last_gen))
 
 	if(!circ1 || !circ2)	//From this point on it's circulator data.
 		return
 
-	//CIRCULATOR 1
-	if(circ1.air2.return_pressure() > circ1.air1.return_pressure()) // Jammed circulator.
-		interface.updateContent("circ1_turbine",	"<span class='bad'>Jammed</span>")
-	else
-		interface.updateContent("circ1_turbine",	format_watts(last_circ1_gen))
-
+	// CIRCULATOR 1
 	interface.updateContent("circ1_flow_cap",		"[round(circ1.volume_capacity_used * 100)] %")
 
 	interface.updateContent("circ1_in_pressure",	"[round(circ1.air1.return_pressure(),	0.1)] kPa")
@@ -422,12 +347,8 @@
 	interface.updateContent("circ1_out_pressure",	"[round(circ1.air2.return_pressure(),	0.1)] kPa")
 	interface.updateContent("circ1_out_temp",		"[round(circ1.air2.temperature,		0.1)] K")
 
-	//CIRCULATOR 2
-	if(circ2.air2.return_pressure() > circ2.air1.return_pressure()) // Jammed circulator.
-		interface.updateContent("circ2_turbine",	"<span class='bad'>Jammed</span>")
-	else
-		interface.updateContent("circ2_turbine",	format_watts(last_circ2_gen))
 
+	// CIRCULATOR 2
 	interface.updateContent("circ2_flow_cap",		"[round(circ2.volume_capacity_used * 100)] %")
 
 	interface.updateContent("circ2_in_pressure",	"[round(circ2.air1.return_pressure(),	0.1)] kPa")
