@@ -87,7 +87,7 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
-		user << "<span class='noticealien'>You said: "[msg]" to [M]</span>"
+		user << "<span class='noticealien'>You said: \"[msg]\" to [M]</span>"
 		for(var/ded in dead_mob_list)
 			if(!isobserver(ded))
 				continue
