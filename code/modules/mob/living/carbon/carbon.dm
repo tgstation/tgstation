@@ -3,8 +3,8 @@
 	update_hud()
 	return
 
-/mob/living/carbon/Bump(var/atom/movable/AM, yes)
-	if(now_pushing || !yes)
+/mob/living/carbon/Bump(var/atom/movable/AM)
+	if(now_pushing)
 		return
 	..()
 	if(istype(AM, /mob/living/carbon) && prob(10))

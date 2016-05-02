@@ -263,8 +263,8 @@
 				M.show_message("<span class='danger'>[src] has been attacked with the [O] by [user].</span>")
 	*/
 
-/mob/living/simple_animal/hostile/retaliate/cluwne/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
+/mob/living/simple_animal/hostile/retaliate/cluwne/Bump(atom/movable/AM as mob|obj)
+	if(now_pushing)
 		return
 	if(ismob(AM))
 		var/mob/M = AM

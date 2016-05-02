@@ -23,7 +23,7 @@
 	update_nearby_tiles()
 	..()
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/machinery/shield/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(!height || air_group) return 0
 	else return ..()
 
@@ -597,7 +597,7 @@
 					G = gen_secondary
 				G.storedpower -= 20
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/machinery/shieldwall/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(!mover)

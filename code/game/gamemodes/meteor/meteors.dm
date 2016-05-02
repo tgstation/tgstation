@@ -148,12 +148,12 @@
 
 //We don't want meteors to bump into eachother and explode, so they pass through eachother
 //Reflection on bumping would be better, but I would reckon I'm not sure on how to achieve it
-/obj/effect/meteor/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/obj/effect/meteor/Cross(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 
 	if(istype(mover, /obj/effect/meteor))
 		return 1 //Just move through it, no questions asked
 	else
-		return ..() //Refer to atom/proc/CanPass
+		return ..() //Refer to atom/proc/Cross
 
 /obj/effect/meteor/Bump(atom/A)
 	if(loc == null)

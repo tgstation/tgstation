@@ -408,8 +408,8 @@ var/list/beam_master = list()
 			qdel(X)
 			X = null
 			break
-		for(var/atom/O in TT)
-			if(!O.CanPass(src))
+		for(var/atom/movable/O in TT)
+			if(!O.Cross(src))
 				qdel(X)
 				broke = 1
 				break

@@ -44,7 +44,7 @@
 			if (!istype(target)) // Avoid spreading to unsimulated/space/etc. turfs
 				continue
 
-			if(origin.CanPass(null, target, 0, 0) && target.CanPass(null, origin, 0, 0))
+			if(origin.Cross(null, target, 0, 0) && target.Cross(null, origin, 0, 0))
 				if(!locate(/obj/effect/decal/cleanable/liquid_fuel) in target)
 					getFromPool(/obj/effect/decal/cleanable/liquid_fuel, target, amount*0.25)
 					amount *= 0.75
@@ -71,7 +71,7 @@
 		var/turf/simulated/O = get_step(S,d)
 		if(locate(/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel) in O)
 			continue
-		if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
+		if(O.Cross(null, S, 0, 0) && S.Cross(null, O, 0, 0))
 			var/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/FF = getFromPool(/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel, O, amount*0.25, d)
 
 			if(amount + FF.amount > 0.4) //if we make a patch with not enough fuel, we balance it out properly to ensure even burn

@@ -143,28 +143,10 @@
 		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			if (Dir & 1)
-				if (Dir & 4)
-					if (step(src, NORTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, NORTH)
-				else if (Dir & 8)
-					if (step(src, NORTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, NORTH)
-			else if (Dir & 2)
-				if (Dir & 4)
-					if (step(src, SOUTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, SOUTH)
-				else if (Dir & 8)
-					if (step(src, SOUTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, SOUTH)
+			if (step(src, Dir & NORTH|SOUTH))
+				. = step(src, Dir & EAST|WEST)
+			else if (step(src, Dir & EAST|WEST))
+				. = step(src, Dir & NORTH|SOUTH)
 
 	if(. && locked_atoms && locked_atoms.len)	//The move was succesful, update locked atoms.
 		spawn(0)
@@ -283,16 +265,13 @@
 /atom/movable/Crossed(atom/movable/AM)
 	return
 
-/atom/movable/Bump(atom/Obstacle, yes)
+/atom/movable/Bump(atom/Obstacle)
 	if(src.throwing)
 		src.throw_impact(Obstacle)
 		src.throwing = 0
 
-	if ((Obstacle && yes))
+	if (Obstacle)
 		Obstacle.Bumped(src)
-	return
-	..()
-	return
 
 /atom/movable/proc/forceMove(atom/destination,var/no_tp=0)
 	if(destination)

@@ -193,7 +193,7 @@
 	icon = 'icons/obj/doors/doorresearch.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_research
 	var/const/AIRLOCK_WIRE_IDSCAN = 0
-	
+
 /obj/machinery/door/airlock/glass_research
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/doorresearchglass.dmi'
@@ -212,7 +212,7 @@
 	heat_proof = 1
 	penetration_dampening = 3
 	var/const/AIRLOCK_WIRE_IDSCAN = 0
- 
+
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorminingglass.dmi'
@@ -668,8 +668,8 @@ About the new airlock wires panel:
 			if (user)
 				src.attack_ai(user)
 
-/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	if (src.isElectrified())
+/obj/machinery/door/airlock/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if (isElectrified())
 		if (istype(mover, /obj/item))
 			var/obj/item/i = mover
 			if (i.materials && (i.materials.getAmount(MAT_IRON) > 0))

@@ -56,7 +56,7 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 /turf/simulated/floor/melt() // Melting is different.
 	burn_tile()
 
-//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+//turf/simulated/floor/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0

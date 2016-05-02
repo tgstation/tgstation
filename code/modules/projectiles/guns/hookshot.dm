@@ -313,7 +313,7 @@
 	var/datum/chain/chain_datum = null
 	var/rewinding = 0
 
-/obj/effect/overlay/chain/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/effect/overlay/chain/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return 1
 
 /obj/effect/overlay/chain/update_icon()

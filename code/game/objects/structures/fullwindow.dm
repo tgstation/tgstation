@@ -22,11 +22,11 @@
 	..(loc)
 	flags |= ON_BORDER
 
-/obj/structure/window/full/CheckExit(atom/movable/O as mob|obj, target as turf)
+/obj/structure/window/full/Uncross(atom/movable/O as mob|obj, target as turf)
 
 	return 1
 
-/obj/structure/window/full/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/obj/structure/window/full/Cross(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1

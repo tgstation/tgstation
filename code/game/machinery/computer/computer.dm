@@ -23,7 +23,7 @@
 	if(ticker)
 		initialize()
 
-/obj/machinery/computer/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/machinery/computer/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSMACHINE))
 		return 1
 	return ..()

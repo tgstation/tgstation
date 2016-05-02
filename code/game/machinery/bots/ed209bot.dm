@@ -109,7 +109,7 @@
 			if((lasercolor == "r") && (name == "ED-209 Security Robot"))
 				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
-/obj/machinery/bot/ed209/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/machinery/bot/ed209/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover,/obj/machinery/bot/ed209))
 		return 1
 	else

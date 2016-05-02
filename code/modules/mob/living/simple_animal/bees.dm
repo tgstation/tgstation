@@ -61,7 +61,7 @@
 
 	qdel(src)
 
-/mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/mob/living/simple_animal/bee/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return 1
 
 /mob/living/simple_animal/bee/attackby(var/obj/item/O as obj, var/mob/user as mob)

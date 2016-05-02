@@ -37,7 +37,7 @@
 
 /* Server vote on 16-12-2014 to disable wallmoving (10-7 Y)
 // Shit be ethereal.
-/obj/structure/bed/chair/vehicle/wizmobile/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/bed/chair/vehicle/wizmobile/Cross(atom/movable/mover, turf/target height=1.5, air_group = 0)
 	return 1
 */
 

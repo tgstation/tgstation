@@ -128,7 +128,7 @@ var/list/blob_looks
 /obj/effect/blob/projectile_check()
 	return PROJREACT_BLOB
 
-/obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/effect/blob/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0))	return 1
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0

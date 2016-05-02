@@ -365,7 +365,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 		qdel(src)
 	return
 
-/obj/structure/window/barricade/snow/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
+/obj/structure/window/barricade/snow/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 	if(air_group || (height==0))
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))

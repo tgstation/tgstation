@@ -223,7 +223,7 @@ Attach to transfer valve and open. BOOM.
 
 				//Spread the fire.
 				if(!(locate(/obj/fire) in enemy_tile))
-					if( prob( 50 + 50 * (firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier)) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
+					if( prob( 50 + 50 * (firelevel/zas_settings.Get(/datum/ZAS_Setting/fire_firelevel_multiplier)) ) && S.Cross(null, enemy_tile, 0,0) && enemy_tile.Cross(null, S, 0,0))
 						new/obj/fire(enemy_tile)
 
 	//seperate part of the present gas

@@ -142,7 +142,7 @@
 
 	sleep(sleeptime)
 
-/obj/item/projectile/nikita/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/item/projectile/nikita/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return (!density || !height || air_group)
 
 /obj/item/projectile/nikita/proc/check_user()

@@ -160,7 +160,7 @@
 	var/obj/structure/morgue/connected = null
 	anchored = 1.0
 
-/obj/structure/m_tray/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/m_tray/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if (istype(mover, /obj/item/weapon/dummy))
 		return 1
 	else
@@ -394,7 +394,7 @@
 	var/obj/structure/crematorium/connected = null
 	anchored = 1.0
 
-/obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/c_tray/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if (istype(mover, /obj/item/weapon/dummy))
 		return 1
 	else

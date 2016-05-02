@@ -99,18 +99,18 @@ obj/structure/ex_act(severity)
 		var/list/large_dense = list()
 		for(var/atom/movable/border_obstacle in T)
 			if(border_obstacle.flags&ON_BORDER)
-				if(!border_obstacle.CanPass(AM, AM.loc) && AM != border_obstacle)
+				if(!border_obstacle.Cross(AM, AM.loc) && AM != border_obstacle)
 					return ..()
 			else if(border_obstacle != src)
 				large_dense += border_obstacle
 
 		//Then, check the turf itself
-		if (!T.CanPass(AM, T))
+		if (!T.Cross(AM, T))
 			return ..()
 
 		//Finally, check objects/mobs to block entry that are not on the border
 		for(var/atom/movable/obstacle in large_dense)
-			if(!obstacle.CanPass(AM, AM.loc) && AM != obstacle)
+			if(!obstacle.Cross(AM, AM.loc) && AM != obstacle)
 				return ..()
 		AM.loc = src.loc
 		to_chat(AM, "<span class='info'>You slip under the tube.</span>")

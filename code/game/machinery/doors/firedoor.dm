@@ -457,28 +457,30 @@ var/global/list/alert_overlays_global = list()
 	air_properties_vary_with_direction = 1
 	flags = ON_BORDER
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/machinery/door/firedoor/border_only/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-
-	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		//if(air_group) return 0
+	if(get_dir(loc, target) == dir || get_dir(loc, mover) == dir)
 		return !density
-	else
-		return 1
+	return 1
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/firedoor/CanAStarPass()
 	return !density
 
 
-/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+/obj/machinery/door/firedoor/border_only/Uncross(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(loc, target) == dir)
-		return !density
-	else
-		return 1
+	if(flags & ON_BORDER)
+		if(target) //Are we doing a manual check to see
+			if(get_dir(loc, target) == dir)
+				return !density
+		else if(mover.dir == dir) //Or are we using move code
+			if(density)	Bumped(mover)
+			return !density
+	return 1
+
 
 /obj/machinery/door/firedoor/multi_tile
 	icon = 'icons/obj/doors/DoorHazard2x1.dmi'

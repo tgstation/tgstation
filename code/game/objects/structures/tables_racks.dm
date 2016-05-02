@@ -294,7 +294,7 @@
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/table/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
@@ -304,8 +304,8 @@
 			return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flipped)
+		if(get_dir(loc, target) == dir || get_dir(loc, mover) == dir)
 			return !density
 		else
 			return 1
@@ -343,14 +343,16 @@
 				return 1
 	return 1
 
-/obj/structure/table/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.checkpass(PASSTABLE))
+/obj/structure/table/Uncross(atom/movable/mover as mob|obj, target as turf)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	if (flipped)
-		if (get_dir(loc, target) == dir)
+	if(flags & ON_BORDER)
+		if(target) //Are we doing a manual check to see
+			if(get_dir(loc, target) == dir)
+				return !density
+		else if(mover.dir == dir) //Or are we using move code
+			if(density)	Bumped(mover)
 			return !density
-		else
-			return 1
 	return 1
 
 /obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
@@ -697,14 +699,11 @@
 		del(src)
 		return
 
-/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/rack/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
-		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	else
-		return 0
+	return !density
 
 /obj/structure/rack/Bumped(atom/AM)
 	if (istype(AM, /obj/structure/bed/chair/vehicle/wizmobile))

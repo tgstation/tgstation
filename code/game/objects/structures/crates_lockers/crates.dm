@@ -361,7 +361,7 @@
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/closet/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0 || wall_mounted)) return 1
 	if(istype(mover, /obj/structure/closet/crate)) return 0
 	return (!density)

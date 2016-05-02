@@ -597,11 +597,11 @@
 			occupant_message("The syringe is too far away.")
 			return 0
 		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
-			if(!(D.CanPass(S,src.loc)))
+			if(!(D.Cross(S,src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0
 		for(var/obj/machinery/door/D in S.loc)//Checks for doors
-			if(!(D.CanPass(S,src.loc)))
+			if(!(D.Cross(S,src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0
 		S.reagents.trans_to(src, S.reagents.total_volume)

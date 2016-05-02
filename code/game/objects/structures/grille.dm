@@ -115,7 +115,7 @@
 	return
 
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/obj/structure/grille/Cross(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(air_group || (height == 0))
 		return 1
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
@@ -261,7 +261,7 @@
 	icon_state = "grillecult"
 	health = 40 //Make it strong enough to avoid people breaking in too easily
 
-/obj/structure/grille/cult/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/obj/structure/grille/cult/Cross(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(air_group || !broken)
 		return 0 //Make sure air doesn't drain
 	..()

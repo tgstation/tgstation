@@ -127,7 +127,7 @@
 		user.visible_message("<span class='warning'>\the [user] hits \the [src] with \the [O]!</span>","<span class='warning'>You hit \the [src] with \the [O]!</span>")
 		angry_swarm(user)
 
-/obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/machinery/apiary/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))

@@ -119,7 +119,7 @@
 	var/turf/target_turf = get_step(src,dir)
 	//CanReachThrough(src.loc, target_turf, src)
 	var/can_fit_under = 0
-	if(target_turf.ZCanPass(get_turf(src),1))
+	if(target_turf.ZCross(get_turf(src),1))
 		can_fit_under = 1
 
 	..(dir)
@@ -128,7 +128,7 @@
 	for(var/d in cardinal)
 		var/turf/O = get_step(T,d)
 		//Simple pass check.
-		if(O.ZCanPass(T, 1) && !(O in open) && !(O in closed) && O in possibles)
+		if(O.ZCross(T, 1) && !(O in open) && !(O in closed) && O in possibles)
 			open += O
 			*/
 

@@ -144,7 +144,7 @@
 				return
 		M:loc = T
 
-/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/item/tape/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(!density) return 1
 	if(air_group || (height==0)) return 1
 

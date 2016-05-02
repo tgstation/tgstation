@@ -212,9 +212,6 @@ var/global/list/ghdel_profiling = list()
 /atom/proc/allow_drop()
 	return 1
 
-/atom/proc/CheckExit()
-	return 1
-
 /atom/proc/HasProximity(atom/movable/AM as mob|obj) //IF you want to use this, the atom must have the PROXMOVE flag, and the moving atom must also have the PROXMOVE flag currently to help with lag
 	return
 
@@ -358,7 +355,7 @@ its easier to just keep the beam vertical.
 				qdel(X)
 				break
 			for(var/obj/O in TT)
-				if(!O.CanPass(light))
+				if(!O.Cross(light))
 					broken = 1
 					break
 				else if(O.density)

@@ -1118,9 +1118,9 @@ default behaviour is:
 			return 1
 		return 0
 
-/mob/living/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/Bump(atom/movable/AM as mob|obj)
 	spawn(0)
-		if ((!( yes ) || now_pushing) || !loc)
+		if (now_pushing || !loc)
 			return
 		now_pushing = 1
 		if (istype(AM, /obj/structure/bed/roller)) //no pushing rollerbeds that have people on them
@@ -1156,7 +1156,7 @@ default behaviour is:
 					continue
 				if(A.density)
 					if(A.flags&ON_BORDER)
-						dense = !A.CanPass(src, src.loc)
+						dense = !A.Cross(src, src.loc)
 					else
 						dense = 1
 				if(dense) break

@@ -62,7 +62,7 @@ var/list/mechtoys = list(
 	..()
 	to_chat(user, "It appears to be [anchored? "anchored to" : "unachored from"] the floor, [airtight? "and it seems to be airtight as well." : "but it does not seem to be airtight."]")
 
-/obj/structure/plasticflaps/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/plasticflaps/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(60)
 

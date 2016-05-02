@@ -278,7 +278,7 @@ steam.start() -- spawns the effect
 		spawn ( 20 )
 			M.coughedtime = 0
 
-/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/effect/effect/smoke/bad/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
@@ -951,7 +951,7 @@ steam.start() -- spawns the effect
 	else
 		to_chat(user, "<span class='notice'>You hit \the [src] to no effect.</span>")
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+/obj/structure/foamedmetal/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group) return 0
 	return !density
 

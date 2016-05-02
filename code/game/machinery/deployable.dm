@@ -141,7 +141,7 @@ for reference:
 		src.explode()
 	return
 
-/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
+/obj/machinery/deployable/barrier/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 	if(air_group || (height==0))
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
