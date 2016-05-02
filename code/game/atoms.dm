@@ -75,7 +75,6 @@
 				L.unEquip(M)
 			M.loc = src
 		contents += A
-	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)

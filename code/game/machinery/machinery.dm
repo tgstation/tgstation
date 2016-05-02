@@ -326,7 +326,6 @@ Class Procs:
 /obj/machinery/CheckParts(list/content)
 	..()
 	RefreshParts()
-	return
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
