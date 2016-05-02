@@ -40,6 +40,7 @@
 	var/eye_blurry = 0		//Carbon
 	var/ear_deaf = 0		//Carbon
 	var/ear_damage = 0		//Carbon
+	var/scrambling = 0
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
