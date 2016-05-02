@@ -42,6 +42,23 @@
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
 
+
+/obj/item/weapon/reagent_containers/hypospray/medical
+	name = "medical hypospray"
+	desc = "A hypospray variant incapable of holding contents other than medicine. Comes pre-equipped with a medical mix to treat critical patients on the field."
+	icon_state = "hypo_medical"
+	amount_per_transfer_from_this = 10
+	volume = 30
+	list_reagents = list("salglu_solution" = 15, "epinephrine" = 7.5, "sal_acid" = 7.5)
+
+/obj/item/weapon/reagent_containers/hypospray/medical/New()
+	..()
+	reagents.check_type = /datum/reagent/medicine
+
+/obj/item/weapon/reagent_containers/hypospray/medical/emag_act(mob/user)
+	user << "You disable the reagent check. It can now accept any reagent."
+	reagents.check_type = null
+
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
 	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
@@ -63,11 +80,11 @@
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
-	amount_per_transfer_from_this = 10
-	volume = 10
+	amount_per_transfer_from_this = 5
+	volume = 5
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	list_reagents = list("epinephrine" = 10)
+	list_reagents = list("epinephrine" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)

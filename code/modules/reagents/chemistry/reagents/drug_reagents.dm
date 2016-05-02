@@ -43,7 +43,6 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
 	if(prob(50))
-		M.Jitter(5)
 		M.AdjustStunned(-1, 0)
 		M.AdjustParalysis(-1, 0)
 		M.AdjustWeakened(-1, 0)
@@ -51,50 +50,45 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/nicotine/overdose_process(mob/living/M)
-	if(prob(75))
-		return
-	var/effect = rand(1,7)
-	switch(volume)
-		if(1 to 49)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> looks nervous!</span>")
-					M.confused += 15
-					M.adjustToxLoss(2)
-					M.Jitter(10)
-					M.emote("twitch")
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> is all sweaty!</span>")
-					M.bodytemperature += rand(15,30)
-					M.adjustToxLoss(3)
-				if(7)
-					M.adjustToxLoss(4)
-					M.emote("twitch")
-					M.Jitter(10)
-		if(50 to INFINITY)
-			switch(effect)
-				if(1 to 3)
-					M << "<span class = 'userdanger'>You can't breathe!</span>"
-					M.emote("gasp")
-					M.adjustOxyLoss(15)
-					M.adjustToxLoss(3)
-					M.Stun(1)
-				if(4 to 6)
-					M << "<span class = 'userdanger'>You feel terrible!</span>"
-					M.emote("drool")
-					M.Jitter(10)
-					M.Weaken(1)
-					M.confused += 33
-				if(7)
-					M.emote("collapse")
-					M << "<span class = 'userdanger'>Your heart is pounding!</span>"
-					M.Paralyse(5)
-					M.Jitter(30)
-					M.adjustToxLoss(6)
-					M.adjustOxyLoss(20)
-	..()
-
+/datum/reagent/drug/nicotine/overdose_process(mob/living/M, severity)
+	var/effect = ..(M, severity)
+	switch(severity)
+		if(1)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> looks nervous!</span>")
+				M.confused += 15
+				M.adjustToxLoss(2)
+				M.Jitter(10)
+				M.emote("twitch")
+			else if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> is all sweaty!</span>")
+				M.bodytemperature += rand(15,30)
+				M.adjustToxLoss(3)
+			else if(effect <= 7)
+				M.adjustToxLoss(4)
+				M.emote("twitch")
+				M.Jitter(10)
+		if(2)
+			if(effect <= 2)
+				M << "<span class = 'userdanger'>You can't breathe!</span>"
+				M.emote("gasp")
+				M.adjustOxyLoss(15)
+				M.adjustToxLoss(3)
+				M.Stun(1)
+			else if(effect <= 4)
+				M << "<span class = 'userdanger'>You feel terrible!</span>"
+				M.emote("drool")
+				M.Jitter(10)
+				M.Weaken(1)
+				M.confused += 33
+			else if(effect <= 7)
+				M.emote("collapse")
+				M << "<span class = 'userdanger'>Your heart is pounding!</span>"
+				M.Paralyse(5)
+				M.Jitter(30)
+				M.adjustToxLoss(6)
+				M.adjustOxyLoss(20)
+	. = 1
 /datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
@@ -105,7 +99,6 @@
 	addiction_threshold = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/M)
-<<<<<<< HEAD
 	M.AdjustParalysis(-2, 0)
 	M.AdjustStunned(-2, 0)
 	M.AdjustWeakened(-2, 0, 0)
@@ -123,82 +116,48 @@
 		M.adjustToxLoss(1)
 		M.Jitter(30)
 		M.emote(pick("groan","moan"))
-=======
-	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
-	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
->>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	..()
 	. = 1
 
-/datum/reagent/drug/crank/overdose_process(mob/living/M)
-	if(prob(75))
-		return
-	var/effect = rand(1,7)
-	switch(volume)
-		if(1 to 39)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> looks confused!</span>")
-					M.confused += 20
-					M.Jitter(20)
-					M.emote("scream")
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> is all sweaty!</span>")
-					M.bodytemperature += rand(5,30)
-					M.adjustToxLoss(1)
-					M.adjustBrainLoss(1)
-					M.Stun(2)
-				if(7)
-					M.emote("grumble")
-					M.Jitter(30)
-		if(40 to INFINITY)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> is sweating like a pig!</span>")
-					M.bodytemperature += rand(20,100)
-					M.adjustToxLoss(5)
-					M.Stun(3)
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> starts tweaking the hell out!</span>")
-					M.emote("scream")
-					M.adjustToxLoss(2)
-					M.adjustBrainLoss(8)
-					M.Jitter(100)
-					M.Weaken(3)
-					M.confused += 25
-					M.ForceContractDisease(new /datum/disease/berserker(0))
-				if(7)
-					M.emote("scream")
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> nervously scratches at their skin!</span>")
-					M.Jitter(10)
-					M.adjustBruteLoss(5)
-					M.emote("twitch")
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustBrainLoss(5*REM)
-	..()
-
-/datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustBrainLoss(5*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
+/datum/reagent/drug/crank/overdose_process(mob/living/M, severity)
+	var/effect = ..(M, severity)
+	switch(severity)
+		if(1)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> looks confused!</span>")
+				M.confused += 20
+				M.Jitter(20)
+				M.emote("scream")
+			if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> is all sweaty!</span>")
+				M.bodytemperature += rand(5,30)
+				M.adjustToxLoss(1)
+				M.adjustBrainLoss(1)
+				M.Stun(2)
+			if(effect <= 7)
+				M.emote("grumble")
+				M.Jitter(30)
+		if(2)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> is sweating like a pig!</span>")
+				M.bodytemperature += rand(20,100)
+				M.adjustToxLoss(5)
+				M.Stun(3)
+			if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> starts tweaking the hell out!</span>")
+				M.emote("scream")
+				M.adjustToxLoss(2)
+				M.adjustBrainLoss(8)
+				M.Jitter(100)
+				M.Weaken(3)
+				M.confused += 25
+				M.ForceContractDisease(new /datum/disease/berserker(0))
+			if(effect <= 7)
+				M.emote("scream")
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> nervously scratches at their skin!</span>")
+				M.Jitter(10)
+				M.adjustBruteLoss(5)
+				M.emote("twitch")
 	. = 1
 
 /datum/reagent/drug/krokodil
@@ -232,44 +191,39 @@
 		M.adjustBruteLoss(2)
 	..()
 
-/datum/reagent/drug/krokodil/overdose_process(mob/living/M)
-	if(prob(75))
-		return
-	var/effect = rand(1,7)
-	switch(volume)
-		if(1 to 39)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> looks dazed!</span>")
-					M.Stun(3)
-					M.emote("drool")
-				if(4 to 6)
-					M.bodytemperature -= 40
-					M.emote("shiver")
-				if(7)
-					M << "<span class = 'userdanger'>Your skin is cracking and bleeding!</span>"
-					M.adjustBruteLoss(5)
-					M.adjustToxLoss(2)
-					M.adjustBrainLoss(1)
-					M.emote("cry")
-		if(40 to INFINITY)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> sways and falls over!</span>")
-					M.adjustToxLoss(3)
-					M.adjustBrainLoss(3)
-					M.Weaken(8)
-					M.emote("faint")
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> skin is rotting away!</span>")
-					M.adjustBruteLoss(25)
-					M.emote("scream")
-					M.set_species(/datum/species/cosmetic_zombie)
-					M.emote("faint")
-				if(7)
-					M.emote("shiver")
-					M.bodytemperature -= 70
-	..()
+/datum/reagent/drug/krokodil/overdose_process(mob/living/M, severity)
+	var/effect = ..(M, severity)
+	switch(severity)
+		if(1)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> looks dazed!</span>")
+				M.Stun(3)
+				M.emote("drool")
+			if(effect <= 4)
+				M.bodytemperature -= 40
+				M.emote("shiver")
+			if(effect <= 7)
+				M << "<span class = 'userdanger'>Your skin is cracking and bleeding!</span>"
+				M.adjustBruteLoss(5)
+				M.adjustToxLoss(2)
+				M.adjustBrainLoss(1)
+				M.emote("cry")
+		if(2)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> sways and falls over!</span>")
+				M.adjustToxLoss(3)
+				M.adjustBrainLoss(3)
+				M.Weaken(8)
+				M.emote("faint")
+			if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> skin is rotting away!</span>")
+				M.adjustBruteLoss(25)
+				M.emote("scream")
+				M.set_species(/datum/species/cosmetic_zombie)
+				M.emote("faint")
+			if(effect <= 7)
+				M.emote("shiver")
+				M.bodytemperature -= 70
 	. = 1
 
 /datum/reagent/drug/methamphetamine
@@ -282,16 +236,6 @@
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
-<<<<<<< HEAD
-=======
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
-	M.AdjustParalysis(-2, 0)
-	M.AdjustStunned(-2, 0)
-	M.AdjustWeakened(-2, 0)
-	M.adjustStaminaLoss(-2, 0)
->>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.AdjustParalysis(-2.5, 0)
 	M.AdjustStunned(-2.5, 0)
@@ -306,35 +250,30 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	if(prob(75))
-		return
-	var/effect = rand(1,7)
-	switch(volume)
-		if(1 to 59)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> can't seem to control their legs!</span>") // i do meth
-					M.Weaken(4) // so i can work longer
-					M.confused += 20 // so i can earn more
-				if(4 to 6) // so i can do more meth
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>") // i do meth
-					M.drop_item() // so i can work longer
-				if(7) // so i can earn more
-					M.emote("laugh") // so i can do more meth
-		if(60 to INFINITY)
+/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M, severity)
+	var/effect = ..(M, severity)
+	switch(severity)
+		if(1)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> can't seem to control their legs!</span>") // i do meth
+				M.Weaken(4) // so i can work longer
+				M.confused += 20 // so i can earn more
+			else if(effect <= 4) // so i can do more meth
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>") // i do meth
+				M.Stun(1) // so i can work longer
+			else if(effect <= 7) // so i can earn more
+				M.emote("laugh") // so i can do more meth
+		if(2)
 			M.reagents.add_reagent("triplemeth", 10)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
-					M.drop_item()
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
-					M.Weaken(10)
-					M.Jitter(10)
-				if(7)
-					M.emote("laugh")
-	..()
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+				M.drop_item()
+			else if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
+				M.Weaken(10)
+				M.Jitter(10)
+			else if(effect <= 7)
+				M.emote("laugh")
 	. = 1
 
 /datum/reagent/drug/triplemeth
@@ -363,34 +302,30 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/triplemeth/overdose_process(mob/living/M)
-	if(prob(75))
-		return
-	var/effect = rand(1,7)
-	switch(volume)
-		if(1 to 39)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> can't seem to control their legs!</span>") // i do meth
-					M.Weaken(4) // so i can work longer
-					M.confused += 12 // so i can earn more
-				if(4 to 6) // so i can do more meth
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>") // i do meth
-					M.drop_item() // so i can work longer
-				if(7) // so i can earn more
-					M.emote("laugh") // so i can do more meth
-		if(40 to INFINITY)
+/datum/reagent/drug/triplemeth/overdose_process(mob/living/M, severity)
+	var/effect = ..(M, severity)
+	switch(severity)
+		if(1)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> can't seem to control their legs!</span>") // i do meth
+				M.Weaken(4) // so i can work longer
+				M.confused += 12 // so i can earn more
+			else if(effect <= 4) // so i can do more meth
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>") // i do meth
+				M.drop_item() // so i can work longer
+			else if(effect <= 7) // so i can earn more
+				M.emote("laugh") // so i can do more meth
+		if(2)
 			M.reagents.add_reagent("triplemeth", 10)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
-					M.drop_item()
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
-					M.Weaken(10)
-					M.Jitter(10)
-				if(7)
-					M.emote("laugh")
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+				M.drop_item()
+			else if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
+				M.Weaken(10)
+				M.Jitter(10)
+			else if(effect <= 7)
+				M.emote("laugh")
 	..()
 	. = 1
 
@@ -422,7 +357,6 @@
 	return ..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
-<<<<<<< HEAD
 	var/check = rand(0,100)
 	if(check < 8)
 		M.visible_message("<span class = 'danger'><b>[M.name]</b> has a wild look in their eyes!</span>")
@@ -436,15 +370,6 @@
 	M.druggy = max(M.druggy, 15)
 	if(check < 20)
 		M.confused += 10
-=======
-	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
-	if(prob(5))
-		M << "<span class='notice'>[high_message]</span>"
-	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
-	M.adjustStaminaLoss(-5, 0)
->>>>>>> 9e5edd4d59bf7aa841f5ed59c9ac617607ad6fb0
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)
 	M.hallucination += 10
@@ -459,56 +384,52 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
-	if(prob(75))
-		return
-	var/effect = rand(1,7)
-	switch(volume)
-		if(1 to 39)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> flails around like a lunatic!</span>")
-					M.confused += 25
-					M.Jitter(10)
-					M.emote("scream")
-					M.ForceContractDisease(new /datum/disease/berserker(0))
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> eyes dilate!</span>")
-					M.bodytemperature += rand(5,30)
-					M.adjustToxLoss(2)
-					M.adjustBrainLoss(1)
-					M.Stun(3)
-					M.emote("twitch")
-					M.blur_eyes(7)
-					M.ForceContractDisease(new /datum/disease/berserker(0))
-				if(7)
-					M.emote("faint")
-					M.ForceContractDisease(new /datum/disease/berserker(0))
+/datum/reagent/drug/bath_salts/overdose_process(mob/living/M, severity)
+	var/effect = ..(M, severity)
+	switch(severity)
+		if(1)
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> flails around like a lunatic!</span>")
+				M.confused += 25
+				M.Jitter(10)
+				M.emote("scream")
+				M.ForceContractDisease(new /datum/disease/berserker(0))
+			else if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> eyes dilate!</span>")
+				M.bodytemperature += rand(5,30)
+				M.adjustToxLoss(2)
+				M.adjustBrainLoss(1)
+				M.Stun(3)
+				M.emote("twitch")
+				M.blur_eyes(7)
+				M.ForceContractDisease(new /datum/disease/berserker(0))
+			else if(effect <= 7)
+				M.emote("faint")
+				M.ForceContractDisease(new /datum/disease/berserker(0))
 		if(40 to INFINITY)
-			switch(effect)
-				if(1 to 3)
-					M.visible_message("<span class = 'danger'><b>[M.name]'s</b> eyes dilate!</span>")
-					M.bodytemperature += rand(5,30)
-					M.adjustToxLoss(2)
-					M.adjustBrainLoss(1)
-					M.Stun(3)
-					M.emote("twitch")
-					M.blur_eyes(7)
-					M.ForceContractDisease(new /datum/disease/berserker(0))
-				if(4 to 6)
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> convulses violently and falls to the floor!</span>")
-					M.emote("gasp")
-					M.adjustToxLoss(2)
-					M.adjustBrainLoss(1)
-					M.Jitter(50)
-					M.Weaken(8)
-					M.ForceContractDisease(new /datum/disease/berserker(0))
-				if(7)
-					M.emote("scream")
-					M.visible_message("<span class = 'danger'><b>[M.name]</b> tears at their own skin!</span>")
-					M.adjustBruteLoss(5)
-					M.emote("twitch")
-					M.ForceContractDisease(new /datum/disease/berserker(0))
+			if(effect <= 2)
+				M.visible_message("<span class = 'danger'><b>[M.name]'s</b> eyes dilate!</span>")
+				M.bodytemperature += rand(5,30)
+				M.adjustToxLoss(2)
+				M.adjustBrainLoss(1)
+				M.Stun(3)
+				M.emote("twitch")
+				M.blur_eyes(7)
+				M.ForceContractDisease(new /datum/disease/berserker(0))
+			if(effect <= 4)
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> convulses violently and falls to the floor!</span>")
+				M.emote("gasp")
+				M.adjustToxLoss(2)
+				M.adjustBrainLoss(1)
+				M.Jitter(50)
+				M.Weaken(8)
+				M.ForceContractDisease(new /datum/disease/berserker(0))
+			if(effect <= 7)
+				M.emote("scream")
+				M.visible_message("<span class = 'danger'><b>[M.name]</b> tears at their own skin!</span>")
+				M.adjustBruteLoss(5)
+				M.emote("twitch")
+				M.ForceContractDisease(new /datum/disease/berserker(0))
 	..()
 
 /datum/reagent/drug/aranesp

@@ -17,6 +17,7 @@ var/const/INJECT = 5 //injection
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
+	var/check_type = null
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -138,6 +139,9 @@ var/const/INJECT = 5 //injection
 	var/trans_data = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/T = reagent
+		if(R.check_type)
+			if(!istype(T, R.check_type))
+				continue
 		if(T.id == "blood" && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			H.inject_blood(my_atom, amount)
@@ -248,10 +252,13 @@ var/const/INJECT = 5 //injection
 		if(C && R)
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
-					if(R.overdose_threshold)
-						if(R.volume >= R.overdose_threshold && !R.overdosed)
-							R.overdosed = 1
-							need_mob_update += R.overdose_start(C)
+					var/OD = R.check_overdose(C)
+					if(OD)
+						switch(OD)
+							if(1)
+								R.overdose_process(C, 1)
+							if(2)
+								R.overdose_process(C, 2)
 					if(R.addiction_threshold)
 						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
 							var/datum/reagent/new_reagent = new R.type()

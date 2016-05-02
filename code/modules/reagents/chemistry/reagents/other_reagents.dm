@@ -1205,8 +1205,11 @@ datum/reagent/shadowling_blindness_smoke
 	color = rgb(127,160,192)
 
 /datum/reagent/booster_enzyme/on_mob_life(mob/living/M)
-	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
+	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		if(R.volume < 18)
 			M.reagents.add_reagent(R.id,2)
+	for(var/datum/reagent/medicine/RE in M.reagents.reagent_list)
+		if(RE.volume < 18)
+			M.reagents.add_reagent(RE.id,2)
 	..()
 

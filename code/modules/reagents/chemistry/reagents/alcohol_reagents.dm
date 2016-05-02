@@ -568,9 +568,30 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
 	id = "grog"
-	description = "Watered down rum, Nanotrasen approves!"
-	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 1 //Basically nothing
+	description = "A highly caustic and nigh-undrinkable substance often associated with piracy."
+	color = rgb(0,255,0)
+	boozepwr = 50 //STRONG STUFF
+
+/datum/reagent/consumable/ethanol/grog/on_mob_life(mob/living/M)
+	if(prob(15))
+		M.adjustToxLoss(1)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/grog/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(method == TOUCH || method == VAPOR)
+		if(prob(75))
+			M.adjustBruteLoss(25)
+			M.emote("scream")
+			M << "span class = 'userdanger'>Your face has become disfigured!</span>"
+			M.real_name = "Unknown"
+		else
+			M.adjustBruteLoss(5)
+	var/temp = "Captain [M.real_name]"
+	M.fully_replace_character_name(M.real_name, temp)
+	return ..()
 
 /datum/reagent/consumable/ethanol/aloe
 	name = "Aloe"
