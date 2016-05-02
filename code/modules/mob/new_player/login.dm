@@ -58,5 +58,4 @@
 				client.prefs.lastchangelog = changelog_hash
 				client.prefs.save_preferences()
 				winset(client, "rpane.changelog", "background-color=none;font-style=;")
-			handle_privacy_poll()
 			client.playtitlemusic()
