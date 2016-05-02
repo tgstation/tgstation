@@ -74,6 +74,10 @@ To draw a rune, use an arcane tome.
 	else
 		fail_invoke(user)
 
+/obj/effect/rune/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
+		attack_hand(M)
+
 /obj/effect/rune/proc/talismanhide() //for talisman of revealing/hiding
 	visible_message("<span class='danger'>[src] fades away.</span>")
 	invisibility = INVISIBILITY_OBSERVER
