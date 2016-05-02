@@ -206,7 +206,7 @@
 		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
 		qdel(src)
 
-/obj/structure/closet/blob_act()
+/obj/structure/closet/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 
@@ -251,7 +251,7 @@
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
-		if(!toggle(user))
+		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
 	else

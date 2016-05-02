@@ -24,7 +24,7 @@
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
-	species = /mob/living/simple_animal/pet/dog
+	animal_species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
@@ -164,7 +164,7 @@
 						usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 						return
 
-					if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
+					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
@@ -200,7 +200,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
-	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
+	if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
 		return
 

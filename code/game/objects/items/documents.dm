@@ -28,6 +28,9 @@
 	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence. These documents are verified with a blue wax seal."
 	icon_state = "docs_blue"
 
+/obj/item/documents/syndicate/mining
+	desc = "\"Top Secret\" documents detailing Syndicate plasma mining operations."
+
 /obj/item/documents/photocopy
 	desc = "A copy of some top-secret documents. Nobody will notice they aren't the originals... right?"
 	var/forgedseal = 0

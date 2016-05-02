@@ -147,15 +147,12 @@
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
-		if(!cube.wrapped)
-			cube.Expand()
+		cube.Expand()
 
 	// Dehydrated carp
 	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
-
-	return
 
 /*
  *	Water reaction to a mob
@@ -260,7 +257,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(2)
+		T.MakeSlippery(TURF_WET_LUBE)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"

@@ -8,13 +8,14 @@
 /obj/machinery/sleeper
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper-open"
+	icon_state = "sleeper"
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
+	var/controls_inside = FALSE
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
 		list("oculine"),
@@ -32,6 +33,7 @@
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
 	RefreshParts()
+	update_icon()
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -48,10 +50,9 @@
 		available_chems |= possible_chems[i]
 
 /obj/machinery/sleeper/update_icon()
+	icon_state = initial(icon_state)
 	if(state_open)
-		icon_state = "sleeper-open"
-	else
-		icon_state = "sleeper"
+		icon_state += "-open"
 
 /obj/machinery/sleeper/container_resist()
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
@@ -80,12 +81,12 @@
 		open_machine()
 	..(severity)
 
-/obj/machinery/sleeper/blob_act()
+/obj/machinery/sleeper/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		var/turf/T = get_turf(src)
 		for(var/atom/movable/A in src)
 			A.forceMove(T)
-			A.blob_act()
+			A.blob_act(B)
 		qdel(src)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
@@ -95,7 +96,7 @@
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
 	if(!state_open && !occupant)
-		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
@@ -109,6 +110,10 @@
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+
+	if(controls_inside && state == notcontained_state)
+		state = default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
+
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
@@ -173,3 +178,12 @@
 	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/health = occupant.health > min_health || chem == "epinephrine"
 	return amount && health
+
+
+/obj/machinery/sleeper/syndie
+	icon_state = "sleeper_s"
+	controls_inside = TRUE
+
+
+/obj/machinery/sleeper/old
+	icon_state = "oldpod"

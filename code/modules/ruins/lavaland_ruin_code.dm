@@ -9,6 +9,23 @@
 	bound_height = 96
 	burn_state = LAVA_PROOF
 	luminosity = 1
+	var/boss = FALSE
+
+/obj/structure/lavaland_door/attack_hand(mob/user)
+	if(boss)
+		return
+	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
+		return
+	var/safety = alert(user, "Are you sure you want to do this? You and everyone else on lavaland will likely die.", "Knock on the door?", "Proceed", "Abort")
+	if(safety == "Abort" || !in_range(src, user) || !src || boss || user.incapacitated())
+		return
+	boss = TRUE
+	user << "You knock on the door."
+	playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+	visible_message("<span class='danger'>Legion emerges from the Necropolis!</span>")
+	message_admins("[key_name_admin(user)] has summoned Legion.")
+	log_game("[key_name(user)] summoned Legion.")
+	new /mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
 
 /obj/structure/lavaland_door/singularity_pull()
 	return 0
@@ -21,22 +38,20 @@
 	desc = "Controls the weather."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
-	var/ongoing_weather = FALSE
+	var/datum/weather/ongoing_weather = FALSE
 	var/weather_cooldown = 0
 
 /obj/machinery/lavaland_controller/process()
 	if(ongoing_weather || weather_cooldown > world.time)
 		return
-	ongoing_weather = TRUE
 	weather_cooldown = world.time + rand(3500, 6500)
 	var/datum/weather/ash_storm/LAVA = new /datum/weather/ash_storm
+	ongoing_weather = LAVA
 	LAVA.weather_start_up()
-	ongoing_weather = FALSE
+	ongoing_weather = null
 
 /obj/machinery/lavaland_controller/Destroy()
 	return QDEL_HINT_LETMELIVE
-
-
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
@@ -189,7 +204,10 @@
 		if(H.stat)
 			visible_message("<span class='warning'>Tendrils reach out from \the [src.name] pulling [H] in! Blood seeps over the eggs as [H] is devoured.</span>")
 			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
-			meat_counter ++
+			if(istype(H,/mob/living/simple_animal/hostile/megafauna/dragon))
+				meat_counter += 20
+			else
+				meat_counter ++
 			H.gib()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()

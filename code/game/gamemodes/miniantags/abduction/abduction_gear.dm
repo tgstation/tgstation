@@ -349,6 +349,9 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/paper/abductor/update_icon()
 	return
 
+/obj/item/weapon/paper/abductor/AltClick()
+	return
+
 #define BATON_STUN 0
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
