@@ -125,7 +125,7 @@
 	w_class = 2
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	
+
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
@@ -160,25 +160,31 @@
 /obj/item/clothing/suit/cultrobes/cult_shield/worn_overlays(isinhands)
     . = list()
     if(!isinhands)
-        . += image(icon = 'icons/effects/effects.dmi', icon_state = "shield_state")
-        
+        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
+
 /obj/item/clothing/suit/cultrobes/berserker
 	name = "flagellant's rags"
-
 	desc = "bloody rags infused with dark magic; allowing the user to move at inhuman speeds, but at the cost of increased damage"
 	icon_state = "crusader-red"
 	item_state = "crusader-red"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
 	slowdown = -1
-
+/*
 /obj/item/clothing/suit/cultrobes/berserker/equipped(var/mob/living/carbon/human/user, slot)
-	if(user && slot == slot_wear_suit)	
-		var/datum/species/S = user.dna.species
-		S.brutemod *= 2
-		S.burnmod *= 2
-		S.coldmod *= 2
-	..()
+    var/datum/species/S = user.dna.species
+    if(user && slot == slot_wear_suit)
+        S.brutemod *= 2
+        S.burnmod *= 2
 
+/obj/item/clothing/suit/cultrobes/berserker/dropped(var/mob/living/carbon/human/user)
+	var/datum/species/S = user.dna.species
+	if(!ishuman(loc))
+		world << "DROPPING [S.brutemod] [S.burnmod]"
+		S.brutemod *= 0.5
+		S.burnmod *= 0.5
+		world << "DROPPED [S.brutemod] [S.burnmod]"
+	return ..()
+  */   	    	
 /obj/item/clothing/glasses/night/cultblind
 	desc = "may nar-sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"

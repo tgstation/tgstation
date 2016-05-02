@@ -143,7 +143,6 @@
 	user.forceMove(get_turf(actual_selected_rune))
 	return ..()
 
-
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
@@ -319,7 +318,7 @@
 	if(iscultist(user))
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
-		
+
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/metal/target, mob/user, proximity_flag, click_parameters)
 	..()
 	if(proximity_flag && istype(target) && iscultist(user))
@@ -330,7 +329,18 @@
 			qdel(src)
 		else
 			user << "<span class='warning'>The talisman requires at least 25 sheets of metal!</span>"
-			
+			user << sound('sound/effects/magic.ogg',0,1,25)
+			qdel(src)
+	if(proximity_flag && istype(target, /obj/item/stack/sheet/plasteel) && iscultist(user))
+		var/A = target.amount
+		var/turf/T = get_turf(target)
+		new /obj/item/stack/sheet/runed_metal(T,A)
+		user << "<span class='warning'>The talisman clings to the plasteel and runes of power appear on the surface!</span>"
+		user << sound('sound/effects/magic.ogg',0,1,25)
+		qdel(src)
+	else
+		user << "<span class='warning'>The talisman requires metal or plasteel!</span>"
+
 /obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
 	name = "cult shackles"
 	desc = "shackles that bind the wrists with sinister magic."
