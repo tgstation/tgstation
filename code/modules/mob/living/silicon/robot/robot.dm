@@ -189,7 +189,7 @@
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich", "Peacekeeper")
 			switch(icontype)
 				if("Waitress")
 					icon_state = "service_female"
@@ -202,6 +202,9 @@
 				if("Rich")
 					icon_state = "maximillion"
 					animation_length=60
+				if("Peacekeeper")
+					icon_state = "peacekeeper"
+					animation_length=54
 				else
 					icon_state = "service_male"
 					animation_length=43
