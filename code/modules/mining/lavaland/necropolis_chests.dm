@@ -364,14 +364,14 @@
 	w_class = 3
 	burn_state = LAVA_PROOF
 
-/datum/table_recipe/oar
+/datum/crafting_recipe/oar
 	name = "goliath bone oar"
 	result = /obj/item/weapon/oar
 	reqs = list(/obj/item/stack/sheet/bone = 2)
 	time = 15
 	category = CAT_PRIMAL
 
-/datum/table_recipe/boat
+/datum/crafting_recipe/boat
 	name = "goliath hide boat"
 	result = /obj/vehicle/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)

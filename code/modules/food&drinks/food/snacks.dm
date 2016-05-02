@@ -20,6 +20,7 @@
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
+
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
 		return
@@ -157,7 +158,10 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts()
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/content)
+	..()
+	create_reagents(volume)
+	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]

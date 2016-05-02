@@ -44,6 +44,8 @@
 
 	martial_art = default_martial_art
 
+	handcrafting = new(src)
+
 	..()
 
 /mob/living/carbon/human/prepare_data_huds()

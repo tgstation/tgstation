@@ -66,7 +66,15 @@
 		hulk.do_attack_animation(src)
 	return
 
-/atom/proc/CheckParts()
+/atom/proc/CheckParts(list/content)
+	for(var/A in content)
+		if(istype(A, /atom/movable))
+			var/atom/movable/M = A
+			if(istype(M.loc, /mob/living))
+				var/mob/living/L = M.loc
+				L.unEquip(M)
+			M.loc = src
+		contents += A
 	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)

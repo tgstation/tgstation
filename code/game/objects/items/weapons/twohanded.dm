@@ -347,7 +347,8 @@
 	explosion(src.loc,-1,1,3)
 	qdel(src)
 
-/obj/item/weapon/twohanded/spear/CheckParts()
+/obj/item/weapon/twohanded/spear/CheckParts(list/content)
+	..()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)
 		explosive = null

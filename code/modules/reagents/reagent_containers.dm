@@ -24,6 +24,13 @@
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
+/obj/item/weapon/reagent_containers/CheckParts(list/content)
+	..()
+	var/datum/reagents/RS = new(volume)
+	for(var/datum/reagent/R in contents)
+		RS.reagent_list.Add(R)
+	RS.trans_to(src, volume)
+
 /obj/item/weapon/reagent_containers/attack_self(mob/user)
 	if(possible_transfer_amounts.len)
 		var/i=0
