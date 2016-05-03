@@ -50,7 +50,7 @@
 
 
 /obj/item/weapon/restraints/legcuffs/bola/cult
-	name = "nar'sian bola"
+	name = "nar'sien bola"
 	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	breakouttime = 45
@@ -117,17 +117,17 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/cult
-	name = "nar-sian hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
+	name = "nar-sien hardened helmet"
+	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/cult
-	name = "nar-sian hardened armor"
+	name = "nar-sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
+	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	w_class = 2
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -146,7 +146,7 @@
 	used = 0
 	increment = 5
 	max = 40
-	prefix = "nar-sian"
+	prefix = "nar-sien"
 
 /obj/item/clothing/suit/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -185,10 +185,10 @@
         . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
 
 /obj/item/clothing/suit/cultrobes/berserker
-	name = "flagellant's rags"
-	desc = "bloody rags infused with dark magic; allowing the user to move at inhuman speeds, but at the cost of increased damage"
-	icon_state = "rags"
-	item_state = "rags"
+	name = "flagellant's robes"
+	desc = "blood-soaked robes infused with dark magic; allowing the user to move at inhuman speeds, but at the cost of increased damage"
+	icon_state = "cultrobes"
+	item_state = "cultrobes"
 	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
 	slowdown = -1
 	
@@ -235,7 +235,7 @@
 	desc = "you peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state ="bluespace"
-	color = "#000000"
+	color = "#ff0000"
 	var/global/curselimit = 0
 	
 /obj/item/device/shuttle_curse/attack_self(mob/user)
@@ -254,17 +254,16 @@
 		playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
 		qdel(src)
 		sleep(20)
-		var/list/delays = list("A fuel technician just slit his own throat and begged for death... the shuttle will be delayed by two minutes",
+		var/global/list/curses = list("A fuel technician just slit his own throat and begged for death... the shuttle will be delayed by two minutes",
 		"The shuttle's navigation programming was replaced by a file containing two words:'IT COMES'... the shuttle will be delayed by two minutes",
 		"The shuttle's custodian tore out his guts and began painting strange shapes on the floor... the shuttle will be delayed by two minutes",
 		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh... the shuttle will be delayed by two minutes",
 		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine... the shuttle will be delayed by two minutes",
 		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh... the shuttle will be delayed by two minutes")
-		var/message = pick(delays)
-		delays -= message
+		var/message = pick(curses)
+		curses -= message
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
-		
 		
 /obj/item/device/cult_shift
 	name = "veil shifter"
