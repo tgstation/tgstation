@@ -328,6 +328,8 @@
 		if(target.use(25))
 			new /obj/structure/constructshell(T)
 			user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+			user << sound('sound/effects/magic.ogg',0,1,25)
+			PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
 			qdel(src)
 	if(proximity_flag && istype(target, /obj/item/stack/sheet/plasteel) && iscultist(user))
 		var/A = target.amount
@@ -336,6 +338,7 @@
 		target.use(A)
 		user << "<span class='warning'>The talisman clings to the plasteel and runes of power appear on the surface!</span>"
 		user << sound('sound/effects/magic.ogg',0,1,25)
+		PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
 		qdel(src)
 	else
 		user << "<span class='warning'>The talisman requires metal or plasteel!</span>"
