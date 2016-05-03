@@ -8,7 +8,6 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Optimumtact = Host
-Shaps = Host
 kingofkosmos = Game Master
 MrStonedOne = Game Master
 microscopics = Game Master
@@ -110,3 +109,11 @@ Folix = Game Master
 Bawhoppennn = Game Master
 Anturke = Host
 Lumipharon = Game Master
+bgobandit = Game Master
+coiax = Game Master
+RandomMarine = Game Master
+PKPenguin321 = Game Master
+TechnoAlchemist = Game Master
+Shaps = Host
+
+

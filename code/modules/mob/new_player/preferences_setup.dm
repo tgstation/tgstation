@@ -15,7 +15,8 @@
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
 	if(!pref_species)
-		pref_species = new /datum/species/human()
+		var/rando_race = pick(config.roundstart_races)
+		pref_species = new rando_race()
 	backbag = 1
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)

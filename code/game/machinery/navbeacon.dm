@@ -97,7 +97,8 @@
 			updateDialog()
 		else
 			user << "<span class='warning'>You must open the cover first!</span>"
-	return
+	else
+		return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)

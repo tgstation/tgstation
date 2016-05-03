@@ -2,6 +2,7 @@
 Mineral Sheets
 	Contains:
 		- Sandstone
+		- Sandbags
 		- Diamond
 		- Snow
 		- Uranium
@@ -13,6 +14,7 @@ Mineral Sheets
 		- Adamantine
 		- Mythril
 		- Enriched Uranium
+		- Bones
 */
 
 /obj/item/stack/sheet/mineral
@@ -26,6 +28,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/weapon/ore/glass, 1, one_per_turf = 0, on_floor = 1), \
 /*	new/datum/stack_recipe("sandstone wall", ???), \
 		new/datum/stack_recipe("sandstone floor", ???),\ */
 	)
@@ -49,6 +52,32 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/sandstone/thirty
 	amount = 30
+
+/*
+ * Sandbags
+ */
+
+/obj/item/stack/sheet/mineral/sandbags
+	name = "sandbags"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "sandbags"
+	singular_name = "sandbag"
+	force = 5
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=2"
+
+var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
+	new/datum/stack_recipe("sandbags", /obj/structure/barricade/sandbags, 1, time = 25, one_per_turf = 1, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/mineral/sandbags/New(var/loc, var/amount=null)
+	recipes = sandbag_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
 
 /*
  * Diamond
@@ -144,10 +173,10 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 		log_game("Plasma sheets ignited by [key_name(user)] in ([x],[y],[z])")
 		fire_act()
 	else
-		..()
+		return ..()
 
 /obj/item/stack/sheet/mineral/plasma/fire_act()
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, amount*10)
+	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
 	qdel(src)
 
 /*
@@ -257,7 +286,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	sheettype = "snow"
 
 var/global/list/datum/stack_recipe/snow_recipes = list ( \
-	new/datum/stack_recipe("Snow Wall",/turf/simulated/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	)
@@ -345,3 +374,6 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 /obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
 	recipes = abductor_recipes
 	..()
+
+
+

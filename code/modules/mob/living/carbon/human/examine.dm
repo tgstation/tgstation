@@ -252,9 +252,23 @@
 		else
 			msg += "[t_He] [t_is] bleeding slightly.\n"
 
-
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"
+
+	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
+		switch(drunkenness)
+			if(11 to 21)
+				msg += "[t_He] [t_is] slightly flushed.\n"
+			if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
+				msg += "[t_He] [t_is] flushed.\n"
+			if(41.01 to 51)
+				msg += "[t_He] [t_is] quite flushed and [t_his] breath smells of alcohol.\n"
+			if(51.01 to 61)
+				msg += "[t_He] is very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
+			if(61.01 to 91)
+				msg += "[t_He] looks like a drunken mess.\n"
+			if(91.01 to INFINITY)
+				msg += "[t_He] is a shitfaced, slobbering wreck.\n"
 
 	msg += "</span>"
 
@@ -324,5 +338,5 @@
 
 	msg += "*---------*</span>"
 
-	user << msg
 	user.visible_message("<font size = '1'><b>[user]</b> looks at <b>[src]</b>.</font>")
+	user << msg

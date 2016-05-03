@@ -140,7 +140,7 @@
 		update_icon()
 		return
 
-	..()
+	return ..()
 
 
 /obj/structure/particle_accelerator/Move()

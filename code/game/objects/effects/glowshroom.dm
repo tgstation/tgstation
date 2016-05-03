@@ -56,7 +56,7 @@ obj/effect/glowshroom/glowcap
 			if(prob(spreadIntoAdjacentChance))
 				spreadsIntoAdjacent = 1
 
-			for(var/turf/simulated/floor/earth in view(3,src))
+			for(var/turf/open/floor/earth in view(3,src))
 				if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 					possibleLocs += earth
 
@@ -117,10 +117,11 @@ obj/effect/glowshroom/glowcap
 	floor = 1
 	return 1
 
-/obj/effect/glowshroom/attackby(obj/item/weapon/W, mob/user, params)
+/obj/effect/glowshroom/attacked_by(obj/item/I, mob/user)
 	..()
-	endurance -= W.force
-	CheckEndurance()
+	if(I.damtype != STAMINA)
+		endurance -= I.force
+		CheckEndurance()
 
 /obj/effect/glowshroom/ex_act(severity, target)
 	switch(severity)

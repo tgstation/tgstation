@@ -193,7 +193,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"pda_crate.png"			= 'icons/pda_icons/pda_crate.png',
 		"pda_cuffs.png"			= 'icons/pda_icons/pda_cuffs.png',
 		"pda_eject.png"			= 'icons/pda_icons/pda_eject.png',
-		"pda_exit.png"			= 'icons/pda_icons/pda_exit.png',
 		"pda_flashlight.png"	= 'icons/pda_icons/pda_flashlight.png',
 		"pda_honk.png"			= 'icons/pda_icons/pda_honk.png',
 		"pda_mail.png"			= 'icons/pda_icons/pda_mail.png',

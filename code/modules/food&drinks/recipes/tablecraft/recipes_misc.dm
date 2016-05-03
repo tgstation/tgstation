@@ -248,3 +248,12 @@
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/melonkeg
 	category = CAT_FOOD
+
+/datum/table_recipe/honeybar
+	name = "Honey nut bar"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/oat = 1,
+		/datum/reagent/consumable/honey = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/honeybar
+	category = CAT_FOOD

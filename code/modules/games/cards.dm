@@ -12,6 +12,7 @@
 	icon = 'playing_cards.dmi'
 	icon_state = "deck"
 	w_class = 2
+	flags = NOBLUDGEON
 
 	var/list/cards = list()
 

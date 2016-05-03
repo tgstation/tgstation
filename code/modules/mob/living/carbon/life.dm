@@ -298,14 +298,11 @@
 
 	if(staminaloss)
 		if(sleeping)
-			src << "<span class='notice'>You rest comfortably.</span>"
-			adjustStaminaLoss(-2)
+			adjustStaminaLoss(-3)
 			if(buckled)
 				adjustStaminaLoss(-3)
 				if(prob(8))
 					src << "<span class='notice'>You rest comfortably.</span>"
-		//else
-			//adjustStaminaLoss(-3)
 
 	if(sleeping)
 		handle_dreams()

@@ -36,8 +36,7 @@
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
 		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
 			var/obj/item/weapon/storage/U = I.loc
-			user.client.screen -= I
-			U.contents.Remove(I)
+			U.remove_from_storage(I, src)
 		else if(user.l_hand == I)					//in a hand
 			user.drop_l_hand()
 		else if(user.r_hand == I)					//in a hand

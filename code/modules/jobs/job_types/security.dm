@@ -157,7 +157,8 @@ Detective
 	r_pocket = /obj/item/weapon/lighter
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
-		/obj/item/weapon/melee/classic_baton=1)
+		/obj/item/weapon/melee/classic_baton=1,\
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -211,7 +212,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	//r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/device/assembly/flash/handheld
 	//suit_store = /obj/item/weapon/gun/energy/gun/advtaser
 	suit_store = /obj/item/weapon/gun/projectile/revolver/detective
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton=1,\

@@ -50,7 +50,7 @@
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
 			qdel(src)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(anchored)
 			if(0)
@@ -76,7 +76,7 @@
 						anchored  = 0
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 	//Finishing the frame
-	if(istype(W,/obj/item/stack/sheet))
+	else if(istype(W,/obj/item/stack/sheet))
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
@@ -101,6 +101,8 @@
 				S.use(1)
 				new /obj/structure/reflector/box (src.loc)
 				qdel(src)
+	else
+		return ..()
 
 /obj/structure/reflector/proc/get_reflection(srcdir,pdir)
 	return 0

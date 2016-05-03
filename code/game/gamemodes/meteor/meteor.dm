@@ -1,8 +1,9 @@
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
-	var/const/meteordelay = 2000
-	var/nometeors = 1
+	var/meteordelay = 2000
+	var/nometeors = 0
+	var/rampupdelta = 5
 	required_players = 0
 
 
@@ -11,17 +12,23 @@
 	world << "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>"
 
 
-/datum/game_mode/meteor/post_setup()
-//	defer_powernet_rebuild = 2//Might help with the lag
-	spawn(meteordelay)
-		nometeors = 0
-	..()
-
-
 /datum/game_mode/meteor/process()
-	if(nometeors) return
+	if(nometeors || meteordelay > world.time - round_start_time) 
+		return
+	
+	var/list/wavetype = meteors_normal
+	var/meteorminutes = (world.time - round_start_time - meteordelay) / 10 / 60
+	
+	
+	if (prob(meteorminutes))
+		wavetype = meteors_threatening
 
-	spawn() spawn_meteors(1, meteors_normal)
+	if (prob(meteorminutes/2))
+		wavetype = meteors_catastrophic
+
+	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
+
+	spawn_meteors(ramp_up_final, wavetype)
 
 
 /datum/game_mode/meteor/declare_completion()

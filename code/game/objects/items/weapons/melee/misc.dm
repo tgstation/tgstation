@@ -24,14 +24,13 @@
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
-	desc = "An extremely solid wooden truncheon. A few whacks with this will put even the strongest, most belligerent man on the ground, writhing in pain."
+	desc = "Not as PR friendly or effective as Nanotrasen's new flagship stunbatons, but smashing someone in the joints with this a few times will still bring them to their knees."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = 3
-	hit_reaction_chance = 30
 	var/cooldown = 0
 	var/on = 1
 
@@ -72,11 +71,6 @@
 		return ..()
 
 
-/obj/item/weapon/melee/classic_baton/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
-		owner.visible_message("<span class='danger'>[owner] counters the disarm with their [src]!</span>")
-		return 1
-	return 0
 
 /obj/item/weapon/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -159,7 +153,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/open/space))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
@@ -173,7 +167,7 @@
 	..()
 	if(ismob(target))
 		var/mob/M
-		if(src.loc == M) //target caught the sword
+		if(src.loc == M)
 			M.drop_item()
 	consume_everything(target)
 

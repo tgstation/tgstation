@@ -73,15 +73,16 @@
 /obj/effect/overlay/temp/guardian/phase/out
 	icon_state = "phaseout"
 
-/obj/effect/overlay/temp/guardian/charge
+/obj/effect/overlay/temp/decoy
+	desc = "It's a decoy!"
 	duration = 15
 
 /obj/effect/overlay/temp/decoy/New(loc, atom/mimiced_atom)
 	..()
 	alpha = initial(alpha)
 	if(mimiced_atom)
-		icon = mimiced_atom.icon
-		icon_state = mimiced_atom.icon_state
+		name = mimiced_atom.name
+		appearance = mimiced_atom.appearance
 		dir = mimiced_atom.dir
 	animate(src, alpha = 0, time = duration)
 
@@ -106,7 +107,7 @@
 	icon_state = "wallglow"
 	layer = TURF_LAYER + 0.07
 
-/obj/effect/overlay/temp/cult/turf/floor
+/obj/effect/overlay/temp/cult/turf/open/floor
 	icon_state = "floorglow"
 	duration = 5
 

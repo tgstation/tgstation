@@ -71,7 +71,7 @@ MASS SPECTROMETER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1
@@ -89,7 +89,7 @@ MASS SPECTROMETER
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
 		scanchems = 0
-	return
+
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
@@ -109,8 +109,8 @@ MASS SPECTROMETER
 	else
 		chemscan(user, M)
 
-	src.add_fingerprint(user)
-	return
+	add_fingerprint(user)
+
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
@@ -241,7 +241,7 @@ MASS SPECTROMETER
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
@@ -281,28 +281,30 @@ MASS SPECTROMETER
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user << "<span class='info'>Nitrogen: [round(n2_concentration*100)] %</span>"
+			user << "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>"
 		else
-			user << "<span class='alert'>Nitrogen: [round(n2_concentration*100)] %</span>"
+			user << "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>"
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user << "<span class='info'>Oxygen: [round(o2_concentration*100)] %</span>"
+			user << "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>"
 		else
-			user << "<span class='alert'>Oxygen: [round(o2_concentration*100)] %</span>"
+			user << "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>"
 
 		if(co2_concentration > 0.01)
-			user << "<span class='alert'>CO2: [round(co2_concentration*100)] %</span>"
+			user << "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] %</span>"
 		else
-			user << "<span class='info'>CO2: [round(co2_concentration*100)] %</span>"
+			user << "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] %</span>"
 
-		if(plasma_concentration > 0.01)
-			user << "<span class='info'>Plasma: [round(plasma_concentration*100)] %</span>"
+		if(plasma_concentration > 0.005)
+			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 		user << "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>"
 
 

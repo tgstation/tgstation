@@ -109,6 +109,7 @@ var/bomb_set
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
 					SSobj.processing += core
+				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
@@ -137,8 +138,7 @@ var/bomb_set
 				else
 					user << "<span class='warning'>You need more metal to do that!</span>"
 				return
-		else
-			..()
+	return ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(timing < 0)
@@ -392,7 +392,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
 	if(loc == initial(loc))
 		for(var/N in nuke_tiles)
-			var/turf/simulated/floor/T = N
+			var/turf/open/floor/T = N
 			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
@@ -433,6 +433,12 @@ This is here to make the tiles around the station mininuke change when it's arme
 	if(blobstart.len > 0)
 		var/turf/targetturf = get_turf(pick(blobstart))
 		var/turf/diskturf = get_turf(src)
+		if(ismob(loc))
+			var/mob/M = loc
+			M.remove_from_mob(src)
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = loc
+			S.remove_from_storage(src, diskturf)
 		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
 		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
 		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")

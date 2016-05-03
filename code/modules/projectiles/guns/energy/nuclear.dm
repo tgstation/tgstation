@@ -36,7 +36,7 @@
 	slot_flags = null
 	w_class = 5
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-	heavy_weapon = 1
+	weapon_weight = WEAPON_MEDIUM
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2

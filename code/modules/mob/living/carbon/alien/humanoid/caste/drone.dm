@@ -1,8 +1,8 @@
 /mob/living/carbon/alien/humanoid/drone
 	name = "alien drone"
 	caste = "d"
-	maxHealth = 100
-	health = 100
+	maxHealth = 125
+	health = 125
 	icon_state = "aliend_s"
 
 
@@ -16,7 +16,6 @@
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()
-	. += 1
 
 /obj/effect/proc_holder/alien/evolve
 	name = "Evolve to Praetorian"

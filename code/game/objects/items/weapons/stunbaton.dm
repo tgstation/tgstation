@@ -13,6 +13,8 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
+	var/cooldown = 0
+	var/delay = 0
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -80,9 +82,8 @@
 			user << "<span class='notice'>You remove the cell from [src].</span>"
 			status = 0
 			update_icon()
-			return
-		..()
-	return
+	else
+		return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
@@ -99,6 +100,8 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	if(cooldown > 0)
+		return
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
@@ -114,6 +117,9 @@
 
 	var/mob/living/L = M
 
+	cooldown = 1
+	spawn(delay)
+		cooldown = 0
 	if(user.a_intent != "harm")
 		if(status)
 			if(baton_stun(L, user))
@@ -186,3 +192,59 @@
 /obj/item/weapon/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()
+
+
+/obj/item/weapon/melee/baton/experimental
+	name = "experimental stunbaton"
+	desc = "The terrifying product of an effort to reverse engineer a high-class stunbaton. You are 100% positive use of this constitutes a war crime."
+	hitcost = 3000
+	icon_state = "stunbaton"
+	item_state = "baton"
+	slot_flags = SLOT_BELT
+	delay = 30
+
+
+/obj/item/weapon/melee/baton/experimental/baton_stun(mob/living/L, mob/user)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(!R || !R.cell || !R.cell.use(hitcost))
+			return 0
+	else
+		if(!deductcharge(hitcost))
+			return 0
+
+	user.lastattacked = L
+	L.lastattacker = user
+
+	shake_camera(L, 10, 2)
+	L.adjustStaminaLoss(100)
+	spawn(80)
+		L.adjustStaminaLoss(-30)
+	spawn(150)
+		L.adjustStaminaLoss(-20)
+	L.electrocute_act(20, src)
+	L.apply_effect(STUTTER, stunforce * 5)
+
+	L.visible_message("<span class='danger'>[user] has jolted [L] with [src]!</span>", \
+							"<span class='userdanger'>[user] has jolted you with [src]!</span>")
+	playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.forcesay(hit_appends)
+
+	add_logs(user, L, "stunned")
+	return 1
+
+/obj/item/weapon/melee/baton/experimental/update_icon()
+	if(status)
+		icon_state = "stunbaton_active"
+	else if(!bcell)
+		icon_state = "stunbaton_nocell"
+	else
+		icon_state = "stunbaton"

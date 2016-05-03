@@ -69,14 +69,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				B.volume += 0.1 // regenerate blood VERY slowly
 				if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
-					reagents.remove_reagent("nutriment", 0.1)
 				if(reagents.has_reagent("salglu_solution"))	//Salglu restores blood
 					B.volume += 0.4
 					reagents.remove_reagent("nutriment", 0.1)
 				if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
-
 		var/datum/disease/F = new /datum/disease/shock
 		if(blood_volume < 520 && !src.HasDisease(F))
 			if(prob((560-blood_volume)/25))
@@ -115,37 +113,38 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				death()
 
 		//Bleeding out
-		blood_max = 0
-		for(var/obj/item/organ/limb/org in organs)
-			var/brutedamage = org.brute_dam
+	blood_max = 0
+	for(var/obj/item/organ/limb/org in organs)
+		var/brutedamage = org.brute_dam
 
-			//We want an accurate reading of .len
-			listclearnulls(org.embedded_objects)
-			blood_max += 0.5*org.embedded_objects.len
+		//We want an accurate reading of .len
+		listclearnulls(org.embedded_objects)
+		blood_max += 0.5*org.embedded_objects.len
 
-			blood_max += bleed_ticker * 0.02
+		if(brutedamage > 30)
+			blood_max += 0.5
+		if(brutedamage > 50)
+			blood_max += 1
+		if(brutedamage > 70)
+			blood_max += 2
 
-			if(brutedamage > 30)
-				blood_max += 0.5
-			if(brutedamage > 50)
-				blood_max += 1
-			if(brutedamage > 70)
-				blood_max += 2
-		var/blood_stopped = 0
+	blood_max += bleeding * 0.12
+	var/blood_stopped = 0
 
-		if(bleedsuppress > 0)
-			blood_stopped = min(blood_max / 2, 1.5)
-			bleed_ticker = max(bleed_ticker - blood_stopped, 0)
-			bleedsuppress = max(bleedsuppress - blood_stopped - 0.75, 0)
-			if(bleedsuppress == 0)
-				src << "<span class='warning'>The blood soaks through your bandage, causing them to slip off.</span>"
-			blood_max = max(blood_max - blood_stopped, 0)
+	if(bleedsuppress > 0)
+		blood_stopped = min(blood_max / 2, 1.5)
+		bleeding = max(bleeding - blood_stopped, 0)
+		bleedsuppress = max(bleedsuppress - blood_stopped - 0.75, 0)
+		if(bleedsuppress == 0)
+			src << "<span class='warning'>The blood soaks through your bandage, causing them to slip off.</span>"
+		blood_max = max(blood_max - blood_stopped, 0)
 
-		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
-			blood_max += 3
-		drip(blood_max)
-		bleed_ticker = max(bleed_ticker - 0.5, 0)
-		//src << "You bled [blood_max], suppressed [blood_stopped], and have [bleed_ticker] left to bleed. Your bandage has [bleedsuppress] power left."
+	if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
+		blood_max += 3
+	drip(blood_max)
+	bleeding = max(bleeding - 0.5, 0)
+		//src << "You bled [blood_max], suppressed [blood_stopped], and have [bleeding] left to bleed. Your bandage has [bleedsuppress] power left."
+
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/human/proc/drip(amt as num)
@@ -273,8 +272,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
 	var/donor_rh = (findtext(donor,"+")>0)
 	var/receiver_rh = (findtext(receiver,"+")>0)
-
-	receiver << "[donor_rh] , [receiver_rh]"
 
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)

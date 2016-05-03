@@ -117,7 +117,7 @@
 		Builds a filled rectangle of item from one corner turf to the
 		 other, on multiple z-levels if necessary. The corners may be
 		 specified in any order.
-		item is a type path like /turf/wall or /obj/barrel{full=1}.
+		item is a type path like /turf/closed/wall or /obj/barrel{full=1}.
 	swapmap.BuildRectangle(turf/corner1,turf/corner2,item)
 		Builds an unfilled rectangle of item from one corner turf to
 		 the other, on multiple z-levels if necessary.
@@ -420,7 +420,7 @@ swapmap
 		Build procs: Take 2 turfs as corners, plus an item type.
 		An item may be like:
 
-		/turf/wall
+		/turf/closed/wall
 		/obj/fence{icon_state="iron"}
 	 */
 	proc/BuildFilledRectangle(turf/T1,turf/T2,item)

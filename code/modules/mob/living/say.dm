@@ -235,8 +235,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(stuttering)
 		message = stutter(message)
-	else if(staminaloss > 50)
-		message = stutter(message, round(staminaloss / 10))
 
 	if(slurring)
 		message = slur(message)

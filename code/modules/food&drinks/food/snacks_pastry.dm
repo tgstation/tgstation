@@ -266,3 +266,11 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/honeybun
+	name = "honey bun"
+	desc = "A sticky pastry bun glazed with honey."
+	icon_state = "honeybun"
+	bonus_reagents = list("nutriment" = 1, "honey" = 1)
+	list_reagents = list("nutriment" = 5, "honey" = 5)
+	filling_color = "#F2CE91"

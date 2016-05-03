@@ -357,6 +357,15 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipment")
 
+/datum/design/portaseeder
+	name = "Portable Seed Extractor"
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
+	build_type = PROTOLATHE
+	req_tech = list("biotech" = 2, "materials" = 2)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 100)
+	build_path = /obj/item/weapon/storage/bag/plants/portaseeder
+	category = list("Equipment")
+
 /datum/design/air_horn
 	name = "Air Horn"
 	desc = "Damn son, where'd you find this?"
@@ -436,6 +445,16 @@ datum/design/diagnostic_hud_night
 	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
+
+/datum/design/diskplantgene
+	name = "plant data disk"
+	desc = "A disk for storing plant genetic data."
+	id = "diskplantgene"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	build_path = /obj/item/weapon/disk/plantgene
+	category = list("Electronics")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

@@ -156,7 +156,7 @@
 	return newphrase
 
 
-/proc/stutter(n, severity = 0)
+/proc/stutter(n)
 	var/te = html_decode(n)
 	var/t = ""//placed before the message. Not really sure what it's for.
 	n = length(n)//length of the entire word
@@ -164,14 +164,17 @@
 	p = 1//1 is the start of any word
 	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
 		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(50 + severity) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")) || (n_letter == "w" && prob(50)))
-			if (prob(3 + severity))
+		if (prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
+			if (prob(10))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
-				if (prob(7 + severity))
+				if (prob(20))
 					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-				else if(prob(5 + severity))
-					n_letter = text("[n_letter]-[n_letter]")
+				else
+					if (prob(5))
+						n_letter = null
+					else
+						n_letter = text("[n_letter]-[n_letter]")
 		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
@@ -339,14 +342,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(issilicon(M))
 		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
-			if(R.emagged || R.syndicate) //Count as antags
-				return 1
-			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth).
-				if(R.connected_ai)
-					if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
-						return 0 //AI is the real traitor here, so the borg itself is not a traitor
-					return 1 //Slaved but also a traitor
-				return 1 //Unslaved, traitor
+			if(R.mind && R.mind.special_role)
+				if(R.laws && R.laws.zeroth && R.syndicate)
+					if(R.connected_ai)
+						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
+							return 0 //AI is the real traitor here, so the borg itself is not a traitor
+						return 1 //Slaved but also a traitor
+					return 1 //Unslaved, traitor
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
@@ -397,6 +399,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(source)
 				var/obj/screen/alert/notify_jump/A = O.throw_alert("\ref[source]_notify_jump", /obj/screen/alert/notify_jump)
 				if(A)
+					if(O.client.prefs && O.client.prefs.UI_style)
+						A.icon = ui_style2icon(O.client.prefs.UI_style)
 					A.desc = message
 					A.attack_not_jump = attack_not_jump
 					A.jump_target = source
@@ -433,6 +437,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 
 /proc/IsAdminGhost(var/mob/user)
+	if(!user)		//Are they a mob? Auto interface updates call this with a null src
+		return
 	if(!user.client) // Do they have a client?
 		return
 	if(!isobserver(user)) // Are they a ghost?

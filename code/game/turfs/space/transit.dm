@@ -1,18 +1,24 @@
-/turf/space/transit
+/turf/open/space/transit
 	icon_state = "black"
 	dir = SOUTH
-	baseturf = /turf/space/transit
+	baseturf = /turf/open/space/transit
 
-/turf/space/transit/horizontal
+/turf/open/space/transit/horizontal
 	dir = WEST
 
-/turf/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	if(!AM)
 		return
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
-	var/_z = rand(ZLEVEL_SPACEMIN,ZLEVEL_SPACEMAX)	//select a random space zlevel
+	var/list/possible_transtitons = list()
+	var/k = 1
+	for(var/a in map_transition_config)
+		if(map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
+			possible_transtitons += k
+		k++
+	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf
 	var/_x
@@ -39,14 +45,14 @@
 
 
 //Overwrite because we dont want people building rods in space.
-/turf/space/transit/attackby()
+/turf/open/space/transit/attackby()
 	return
 
-/turf/space/transit/New()
+/turf/open/space/transit/New()
 	update_icon()
 	..()
 
-/turf/space/transit/proc/update_icon()
+/turf/open/space/transit/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1

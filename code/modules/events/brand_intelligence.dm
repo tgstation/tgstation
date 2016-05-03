@@ -2,6 +2,8 @@
 	name = "Brand Intelligence"
 	typepath = /datum/round_event/brand_intelligence
 	weight = 5
+
+	min_players = 15
 	max_occurrences = 1
 
 /datum/round_event/brand_intelligence

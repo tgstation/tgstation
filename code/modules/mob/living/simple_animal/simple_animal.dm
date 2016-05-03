@@ -206,8 +206,8 @@
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
 			bodytemperature += diff
 
-		if(istype(T,/turf/simulated))
-			var/turf/simulated/ST = T
+		if(istype(T,/turf/open))
+			var/turf/open/ST = T
 			if(ST.air)
 				var/ST_gases = ST.air.gases
 				ST.air.assert_gases(arglist(hardcoded_gases))
@@ -277,7 +277,7 @@
 	if(stat)
 		return
 	if(act == "scream")
-		message = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
+		message = "makes a loud and pained whimper." //ugly hack to stop animals screaming when crushed :P
 		act = "me"
 	..(act, m_type, message)
 
@@ -396,13 +396,6 @@
 	else
 		adjustBruteLoss(damage)
 		updatehealth()
-
-
-/mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
-	if(O.flags & NOBLUDGEON)
-		return
-
-	..()
 
 /mob/living/simple_animal/movement_delay()
 	. = ..()

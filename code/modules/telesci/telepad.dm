@@ -40,7 +40,10 @@
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+	if(default_deconstruction_crowbar(I))
+		return
+
+	return ..()
 
 
 //CARGO TELEPAD//
@@ -64,7 +67,7 @@
 		else if(!anchored)
 			anchored = 1
 			user << "<span class='caution'>\The [src] is now secured.</span>"
-	if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "<span class='caution'>You unscrew the telepad's tracking beacon.</span>"
@@ -73,12 +76,20 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "<span class='caution'>You screw in the telepad's tracking beacon.</span>"
 			stage = 0
-	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
-		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user << "<span class='caution'>You disassemble the telepad.</span>"
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		new /obj/item/stack/sheet/glass(get_turf(src))
-		qdel(src)
+	else if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
+			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			user << "<span class='notice'>You start disassembling [src]...</span>"
+			if(do_after(user,20/WT.toolspeed, target = src))
+				if(!WT.isOn())
+					return
+				user << "<span class='notice'>You disassemble [src].</span>"
+				new /obj/item/stack/sheet/metal(get_turf(src))
+				new /obj/item/stack/sheet/glass(get_turf(src))
+				qdel(src)
+	else
+		return ..()
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon

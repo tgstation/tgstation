@@ -39,10 +39,17 @@
 			beaker.reagents.handle_reactions()
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user))
+	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
+		return
+
+	if(exchange_parts(user, I))
+		return
+
+	if(default_deconstruction_crowbar(I))
 		return
 
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+		. = 1 //no afterattack
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
@@ -53,18 +60,11 @@
 		I.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		icon_state = "mixer1b"
-
-	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
+	return ..()
 
-	if(exchange_parts(user, I))
-		return
-
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			eject_beaker()
-			default_deconstruction_crowbar(I)
-			return 1
+/obj/machinery/chem_heater/deconstruction()
+	eject_beaker()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)

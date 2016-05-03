@@ -1,9 +1,13 @@
-/obj/effect/decal/point
-	name = "arrow"
+/obj/effect/overlay/temp/point
+	name = "pointer"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "arrow"
 	layer = 16
-	mouse_opacity = 0
+	duration = 25
+
+/obj/effect/overlay/temp/point/New(loc, set_invis = 0)
+	..()
+	invisibility = set_invis
 
 // Used for spray that you spray at walls, tables, hydrovats etc
 /obj/effect/decal/spraystill

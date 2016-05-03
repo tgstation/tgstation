@@ -23,7 +23,7 @@
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
 	max_heat_protection_temperature = null
 	armor = list(melee = 25, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100)
-	flags = ABSTRACT | NODROP | THICKMATERIAL
+	flags = ABSTRACT | NODROP | THICKMATERIAL | STOPSPRESSUREDMAGE
 
 
 /obj/item/clothing/shoes/shadowling

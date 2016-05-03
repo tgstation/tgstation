@@ -18,6 +18,8 @@
 	..()
 	if(!affected_mob.dna)
 		cure()
+	if(affected_mob.dna.species.specflags & NOTRANSSTING) //Only species that can be spread by transformation sting can be spread by the retrovirus
+		cure()
 
 	if(!strain_data["dna"])
 		//Absorbs the target DNA.

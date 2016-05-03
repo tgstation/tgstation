@@ -4,13 +4,16 @@
 		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
-		if(distro)
+		if(distro && targloc)
 			targloc = spread(targloc, curloc, distro)
 		if(!throw_proj(target, targloc, user, params))
 			return 0
 		if(i > 1)
 			newshot()
-	user.changeNext_move(CLICK_CD_RANGE)
+	if(click_cooldown_override)
+		user.changeNext_move(click_cooldown_override)
+	else
+		user.changeNext_move(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return 1

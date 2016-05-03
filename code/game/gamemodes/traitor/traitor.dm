@@ -15,6 +15,7 @@
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
+	enemy_minimum_age = 0
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
@@ -74,7 +75,7 @@
 		return
 	if(ticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
-			if(!jobban_isbanned(character.client, ROLE_TRAITOR) && !jobban_isbanned(character.client, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)

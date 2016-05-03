@@ -6,7 +6,6 @@
 	spread_text = "Medical complication"
 	spread_flags = NON_CONTAGIOUS
 	cure_text = "Epinephrine and restoring blood count"
-	cures = list("salglu_solution")
 	agent = ""
 	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
 	desc = "The patient has been subjected to extreme pain, substantial bloodloss, or acutely traumatic events. Their condition will rapidly deteriorate unless treated quickly."

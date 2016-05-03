@@ -108,7 +108,7 @@
 /obj/machinery/computer/holodeck/process()
 	if(damaged)
 		if(prob(10))
-			for(var/turf/simulated/T in linked)
+			for(var/turf/T in linked)
 				if(prob(5))
 					var/datum/effect_system/spark_spread/s = new
 					s.set_up(2, 1, T)
@@ -143,7 +143,7 @@
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/T in linked)
-		if(!T.intact || istype(T,/turf/space))
+		if(!T.intact || istype(T,/turf/open/space))
 			return 0
 	return 1
 

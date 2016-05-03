@@ -625,7 +625,7 @@ var/list/admin_verbs_hideable = list(
 	if (amount > 0)
 		var/area/area
 		var/list/candidates
-		var/turf/simulated/floor/tile
+		var/turf/open/floor/tile
 		var/j,k
 		var/mob/living/carbon/human/mob
 

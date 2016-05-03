@@ -12,7 +12,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	var/health = 10
+	var/health = 20
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -66,24 +66,46 @@
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			qdel(src)
-		return
-	else if (W)
-		src.add_fingerprint(user)
-		src.health -= W.force
-		src.healthcheck()
+	else
+		return ..()
+
+/obj/machinery/power/solar/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
+
+/obj/machinery/power/solar/hitby(AM as mob|obj)
 	..()
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 20
+	else if(isobj(AM))
+		var/obj/item/I = AM
+		tforce = I.throwforce
+	take_damage(tforce)
 
-/obj/machinery/power/solar/proc/healthcheck()
-	if (src.health <= 0)
-		if(!(stat & BROKEN))
-			set_broken()
+/obj/machinery/power/solar/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(stat & BROKEN)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
+				else
+					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
-			qdel(src)
 			return
-	return
-
+	health -= damage
+	if(health <= 0)
+		playsound(src, "shatter", 70, 1)
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
+	else if(health <= 10)
+		if(!(stat & BROKEN))
+			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+			set_broken()
 
 /obj/machinery/power/solar/update_icon()
 	..()
@@ -132,7 +154,6 @@
 	stat |= BROKEN
 	unset_control()
 	update_icon()
-	return
 
 
 /obj/machinery/power/solar/ex_act(severity, target)
@@ -140,11 +161,9 @@
 	if(!qdeleted(src))
 		switch(severity)
 			if(2)
-				if(prob(50))
-					set_broken()
+				take_damage(rand(10,20), BRUTE, 0)
 			if(3)
-				if(prob(25))
-					set_broken()
+				take_damage(rand(5,15), BRUTE, 0)
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -255,7 +274,7 @@
 			tracker = 0
 			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1
-	..()
+	return ..()
 
 //
 // Solar Control Computer
@@ -270,6 +289,7 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
+	var/health = 25
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
@@ -443,9 +463,33 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
-	else
+	else if(user.a_intent != "harm" && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)
-	return
+	else
+		return ..()
+
+/obj/machinery/power/solar_control/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
+
+/obj/machinery/power/solar_control/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(stat & BROKEN)
+					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				else
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
+	if(health <= 0 && !(stat & BROKEN))
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		stat |= BROKEN
+		update_icon()
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
@@ -489,11 +533,9 @@
 	if(!qdeleted(src))
 		switch(severity)
 			if(2)
-				if(prob(50))
-					set_broken()
+				take_damage(rand(20,30), BRUTE, 0)
 			if(3)
-				if(prob(25))
-					set_broken()
+				take_damage(rand(10,20), BRUTE, 0)
 
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))

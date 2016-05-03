@@ -2,6 +2,10 @@
  #define SAWN_OFF     1
  #define SAWN_SAWING -1
 
+ #define WEAPON_LIGHT 0
+ #define WEAPON_MEDIUM 1
+ #define WEAPON_HEAVY 2
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -32,8 +36,9 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
+	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
-	var/heavy_weapon = 0
+	var/weapon_weight = WEAPON_LIGHT
 
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
@@ -90,13 +95,13 @@
 /obj/item/weapon/gun/equipped(mob/living/user as mob, slot)
 	..()
 	if(slot == slot_s_store)
-		user.visible_message("<span class='danger'>[user] holsters a gun on their armor.</span>")
+		user.visible_message("<font size = '1'><span class='danger'>[user] holsters a gun on their armor.</span></font>")
 	else if(slot == slot_belt)
-		user.visible_message("<span class='danger'>[user] holsters a gun on their belt.</span>")
+		user.visible_message("<font size = '1'><span class='danger'>[user] holsters a gun on their belt.</span></font>")
 	else if(slot == slot_back)
-		user.visible_message("<span class='danger'>[user] slings a gun around their back.</span>")
+		user.visible_message("<font size = '1'><span class='danger'>[user] slings a gun around their back.</span></font>")
 	else
-		user.visible_message("<span class='danger'><b>[user]</b> grabs a gun.</span>")
+		user.visible_message("<span class='danger'><b>[user]</b> draws a gun.</span>")
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -129,7 +134,7 @@
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
-	if(heavy_weapon)
+	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_hand())
 			if(prob(15))
 				if(user.drop_item())
@@ -141,6 +146,8 @@
 
 
 /obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
+	if(firing_burst)
+		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -174,7 +181,9 @@
 				user.drop_item()
 				return
 
-
+	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_hand())
+		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
+		return
 
 	process_fire(target,user,1,params)
 
@@ -186,7 +195,6 @@
 		return 0
 
 	return 1
-
 
 /obj/item/weapon/gun/proc/handle_pins(mob/living/user)
 	if(pin)
@@ -208,13 +216,14 @@ obj/item/weapon/gun/proc/newshot()
 	if(semicd)
 		return
 
-	if(heavy_weapon)
+	if(weapon_weight)
 		if(user.get_inactive_hand())
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
 
 	if(burst_size > 1)
+		firing_burst = 1
 		for(var/i = 1 to burst_size)
 			if(!user)
 				break
@@ -236,6 +245,7 @@ obj/item/weapon/gun/proc/newshot()
 			process_chamber()
 			update_icon()
 			sleep(fire_delay)
+		firing_burst = 0
 	else
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed, zone_override))

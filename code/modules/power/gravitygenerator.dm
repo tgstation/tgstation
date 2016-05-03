@@ -180,13 +180,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 // Fixing the gravity generator.
 /obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
-	var/old_broken_state = broken_state
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You secure the screws of the framework.</span>"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				broken_state++
+				update_icon()
+				return
 		if(GRAV_NEEDS_WELDING)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = I
@@ -194,8 +195,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					user << "<span class='notice'>You mend the damaged framework.</span>"
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
+					update_icon()
 				else if(WT.isOn())
 					user << "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>"
+				return
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
@@ -204,17 +207,18 @@ var/const/GRAV_NEEDS_WRENCH = 3
 					user << "<span class='notice'>You add the plating to the framework.</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 					broken_state++
+					update_icon()
 				else
 					user << "<span class='warning'>You need 10 sheets of plasteel!</span>"
+				return
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You secure the plating to the framework.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				set_fix()
-		else
-			..()
-	if(old_broken_state != broken_state)
-		update_icon()
+				return
+	return ..()
+
 
 /obj/machinery/gravity_generator/main/attack_hand(mob/user)
 	if(!..())

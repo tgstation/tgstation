@@ -260,8 +260,9 @@ function checkchangelog($payload, $merge = false) {
 		$file .= "\n";
 	}
 	$content = array (
+		'branch' 	=> $payload['pull_request']['base']['ref'],
 		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'],
-		'content'	=> base64_encode($file)
+		'content' 	=> base64_encode($file)
 	);
 	$scontext = array('http' => array(
         'method'	=> 'PUT',

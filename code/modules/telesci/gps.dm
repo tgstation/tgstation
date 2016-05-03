@@ -1,7 +1,7 @@
 var/list/GPS_list = list()
 /obj/item/device/gps
 	name = "global positioning system"
-	desc = "Helping lost spacemen find their way through the planets since 2016."
+	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = 2
@@ -10,6 +10,7 @@ var/list/GPS_list = list()
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
+	var/tracking = TRUE
 
 /obj/item/device/gps/New()
 	..()
@@ -30,7 +31,24 @@ var/list/GPS_list = list()
 		overlays -= "emp"
 		overlays += "working"
 
+/obj/item/device/gps/AltClick(mob/user)
+	if(!in_range(src, user))
+		return
+	if(emped)
+		user << "It's busted!"
+	if(tracking)
+		overlays -= "working"
+		user << "[src] is no longer tracking, or visible to other GPS devices."
+		tracking = FALSE
+	else
+		overlays += "working"
+		user << "[src] is now tracking, and visible to other GPS devices."
+		tracking = TRUE
+
 /obj/item/device/gps/attack_self(mob/user)
+	if(!tracking)
+		user << "[src] is turned off. Use alt+click to toggle it back on."
+		return
 
 	var/obj/item/device/gps/t = ""
 	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
@@ -49,9 +67,10 @@ var/list/GPS_list = list()
 			var/tracked_gpstag = G.gpstag
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
-			else
+			else if(G.tracking)
 				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
-
+			else
+				continue
 	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 800))
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -62,7 +81,7 @@ var/list/GPS_list = list()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
 		a = uppertext(copytext(sanitize(a), 1, 5))
-		if(src.loc == usr)
+		if(in_range(src, usr))
 			gpstag = a
 			name = "global positioning system ([gpstag])"
 			attack_self(usr)

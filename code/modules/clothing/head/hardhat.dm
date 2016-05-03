@@ -11,6 +11,8 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	burn_state = FIRE_PROOF
 
+	dog_fashion = /datum/dog_fashion/head
+
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
 	if(!isturf(user.loc))
 		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
@@ -50,11 +52,13 @@
 	icon_state = "hardhat0_orange"
 	item_state = "hardhat0_orange"
 	item_color = "orange"
+	dog_fashion = null
 
 /obj/item/clothing/head/hardhat/red
 	icon_state = "hardhat0_red"
 	item_state = "hardhat0_red"
 	item_color = "red"
+	dog_fashion = null
 	name = "firefighter helmet"
 	flags = STOPSPRESSUREDMAGE
 	heat_protection = HEAD
@@ -71,16 +75,19 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/hardhat/dblue
 	icon_state = "hardhat0_dblue"
 	item_state = "hardhat0_dblue"
 	item_color = "dblue"
+	dog_fashion = null
 
 /obj/item/clothing/head/hardhat/atmos
 	icon_state = "hardhat0_atmos"
 	item_state = "hardhat0_atmos"
 	item_color = "atmos"
+	dog_fashion = null
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL

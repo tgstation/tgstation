@@ -4,8 +4,8 @@
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
 	icon_state = "hypo"
-	amount_per_transfer_from_this = 10
-	volume = 50
+	amount_per_transfer_from_this = 5
+	volume = 30
 	possible_transfer_amounts = list()
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
@@ -59,15 +59,15 @@
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "emergency medipen"
+	name = "emergeny medipen"
 	desc = "An old, generic branded medipen for use during emergencies. Useful for stabilizing patients and numbing pain."
 	icon_state = "medipen"
 	item_state = "medipen"
+	amount_per_transfer_from_this = 20
+	volume = 20
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	volume = 17.5
-	amount_per_transfer_from_this = 17.5
-	list_reagents = list("epinephrine" = 10, "morphine" = 7.5)
+	list_reagents = list("epinephrine" = 10, "morphine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
@@ -103,14 +103,6 @@
 	volume = 20
 	amount_per_transfer_from_this = 20
 	list_reagents = list("ephedrine" = 10, "coffee" = 10)
-
-/obj/item/weapon/reagent_containers/hypospray/medipen/emergency
-	name = "emergency medipen"
-	desc = "An old, generic branded medipen for use during emergencies. Useful for stabilizing patients and numbing pain."
-	icon_state = "stimpen"
-	volume = 17.5
-	amount_per_transfer_from_this = 17.5
-	list_reagents = list("epinephrine" = 10, "morphine" = 7.5)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/traitor
 	desc = "A modified stimulants autoinjector for use in combat situations. Has a mild healing effect."

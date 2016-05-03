@@ -202,6 +202,7 @@
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
+		. = 1 //no afterattack
 		if(locked)
 			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
 			return
@@ -215,7 +216,6 @@
 		reagent_glass = W
 		user << "<span class='notice'>You insert [W].</span>"
 		show_controls(user)
-		return
 
 	else
 		var/current_health = health

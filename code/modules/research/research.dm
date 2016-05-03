@@ -273,7 +273,7 @@ research holder datum.
 	for(var/i=current_level+1, i<=level, i++)
 		if(i == initial(level))
 			continue
-		cost += i*5*rare
+		cost += i*rare
 
 	return cost
 

@@ -25,9 +25,10 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable
 	level = 1 //is underfloor
 	anchored =1
+	on_blueprints = TRUE
 	var/datum/powernet/powernet
 	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer"
+	desc = "A flexible, superconducting cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
@@ -782,6 +783,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon_state = "coil_white"
 
 /obj/item/stack/cable_coil/random/New()
-	item_color = pick("red","yellow","green","blue","pink")
+	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()

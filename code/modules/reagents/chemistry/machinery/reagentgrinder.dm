@@ -56,7 +56,8 @@
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 				/obj/item/weapon/reagent_containers/pill = list(),
-				/obj/item/weapon/reagent_containers/food = list()
+				/obj/item/weapon/reagent_containers/food = list(),
+				/obj/item/weapon/reagent_containers/honeycomb = list()
 		)
 
 		var/list/juice_items = list (
@@ -103,16 +104,16 @@
 				return
 
 		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
-				if (beaker)
-						return 1
-				else
+				if (!beaker)
 						if(!user.drop_item())
 								return 1
 						beaker =  I
 						beaker.loc = src
 						update_icon()
 						src.updateUsrDialog()
-						return 0
+				else
+						user << "<span class='warning'>There's already a container inside.</span>"
+				return 1 //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -139,17 +140,20 @@
 						user << "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>"
 
 				src.updateUsrDialog()
-				return 0
-
-		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				user << "<span class='warning'>Cannot refine into a reagent!</span>"
 				return 1
 
-		user.unEquip(I)
-		I.loc = src
-		holdingitems += I
-		src.updateUsrDialog()
-		return 0
+		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
+				if(user.a_intent == "harm")
+						return ..()
+				else
+						user << "<span class='warning'>Cannot refine into a reagent!</span>"
+						return 1
+
+		if(user.drop_item())
+				I.loc = src
+				holdingitems += I
+				src.updateUsrDialog()
+				return 0
 
 /obj/machinery/reagentgrinder/attack_paw(mob/user)
 		return src.attack_hand(user)
@@ -272,7 +276,7 @@
 						return juice_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(obj/item/weapon/grown/O)
-		if (!istype(O))
+		if (!istype(O) || !O.seed)
 				return 5
 		else if (O.seed.potency == -1)
 				return 5
@@ -280,7 +284,7 @@
 				return round(O.seed.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
-		if (!istype(O))
+		if (!istype(O) || !O.seed)
 				return 5
 		else if (O.seed.potency == -1)
 				return 5

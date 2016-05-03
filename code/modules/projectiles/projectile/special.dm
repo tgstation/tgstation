@@ -147,14 +147,14 @@
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
 	var/turf/target_turf= get_turf(target)
-	if(istype(target_turf, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = target_turf
+	if(istype(target_turf, /turf/closed/mineral))
+		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
 	if(src.splash)
 		for(var/turf/T in range(splash, target_turf))
-			if(istype(T, /turf/simulated/mineral))
-				var/turf/simulated/mineral/M = T
+			if(istype(T, /turf/closed/mineral))
+				var/turf/closed/mineral/M = T
 				M.gets_drilled(firer)
 
 
@@ -234,8 +234,8 @@
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = target
+	if(istype(target, /turf/closed/mineral))
+		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
 		range = max(range - 1, 1)
 		return -1

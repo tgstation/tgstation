@@ -20,6 +20,7 @@
 	var/sheet_per_ore = 1
 	var/point_upgrade = 1
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 15), ("silver" = 16), ("gold" = 18), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
+	speed_process = 1
 
 /obj/machinery/mineral/ore_redemption/New()
 	..()
@@ -92,7 +93,7 @@
 	if (!powered())
 		return
 	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		var/obj/item/weapon/card/id/I = user.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
@@ -111,12 +112,13 @@
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
 		updateUsrDialog()
 		return
-	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			empty_content()
-			default_deconstruction_crowbar(W)
-		return 1
-	..()
+	if(default_deconstruction_crowbar(W))
+		return
+
+	return ..()
+
+/obj/machinery/mineral/ore_redemption/deconstruction()
+	empty_content()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
 	if(O.refined_type)
@@ -276,30 +278,36 @@
 	anchored = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				   200),
-		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    100),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    150),
-		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
-		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   300),
-		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     400),
-		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     400),
-		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     400),
-		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                    500),
-		new /datum/data/mining_equipment("GAR mesons",			/obj/item/clothing/glasses/meson/gar,							   500),
-		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   600),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 600),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   750),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   800),
-		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  1000),
-		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack						,	              2000),
-		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
-		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  2000),
-		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              2500),
-		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  3000),
-		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
+		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    	50),
+		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				  		200),
+		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    		100),
+		new /datum/data/mining_equipment("Absinthe",            /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
+		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    		150),
+		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						          		200),
+		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300),
+		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300),
+		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
+		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
+		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
+		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
+		new /datum/data/mining_equipment("Explorer Belt",		/obj/item/weapon/storage/belt/mining,									500),
+		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 		600),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
+		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
+		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
+		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack						,	              		2000),
+		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000),
+		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		2000),
+		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		2500),
+		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		3000),
+		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   		500),
+		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		800),
+		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_ugprade,      			   			   		400),
+		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_ugprade/health,      			   	       		400),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
+		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000),
 		)
 
 /datum/data/mining_equipment/
@@ -401,19 +409,18 @@
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
 		return
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(I)
-		return 1
-	..()
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer Belt", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Kinetic Accelerator")
-			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
+		if("Survival Capsule and Explorer Belt")
+			new /obj/item/weapon/storage/belt/mining(src.loc)
+			new /obj/item/weapon/survivalcapsule(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
 		if("Mining Drone")
@@ -468,7 +475,7 @@
 
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -477,28 +484,58 @@
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
+	slot_flags = SLOT_BELT
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
+	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
+	activate(user)
+
+/obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
 		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		return FALSE
+	return TRUE
+
+/obj/item/device/wormhole_jaunter/proc/activate(mob/user)
+	if(!turf_check(user))
 		return
+
+	var/list/L = list()
+	for(var/obj/item/device/radio/beacon/B in world)
+		var/turf/T = get_turf(B)
+		if(T.z == ZLEVEL_STATION)
+			L += B
+	if(!L.len)
+		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
+		return
+	var/chosen_beacon = pick(L)
+	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
+	J.target = chosen_beacon
+	try_move_adjacent(J)
+	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	qdel(src)
+
+/obj/item/device/wormhole_jaunter/emp_act(power)
+	var/triggered = FALSE
+
+	if(usr.get_item_by_slot(slot_belt) == src)
+		if(power == 1)
+			triggered = TRUE
+		else if(power == 2 && prob(50))
+			triggered = TRUE
+
+	if(triggered)
+		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
+		activate(usr)
+
+/obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
+	if(user.get_item_by_slot(slot_belt) == src)
+		user << "Your [src] activates, saving you from the chasm!</span>"
+		activate(user)
 	else
-		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-		var/list/L = list()
-		for(var/obj/item/device/radio/beacon/B in world)
-			var/turf/T = get_turf(B)
-			if(T.z == ZLEVEL_STATION)
-				L += B
-		if(!L.len)
-			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
-			return
-		var/chosen_beacon = pick(L)
-		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
-		J.target = chosen_beacon
-		try_move_adjacent(J)
-		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		qdel(src)
+		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
+
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -511,6 +548,8 @@
 		return
 	if(istype(M, /atom/movable))
 		if(do_teleport(M, target, 6))
+			// KERPLUNK
+			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 			if(iscarbon(M))
 				var/mob/living/carbon/L = M
 				L.Weaken(3)
@@ -529,12 +568,12 @@
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
 	w_class = 3
-	force = 8
+	force = 15
 	throwforce = 10
 	var/cooldown = 0
 	var/fieldsactive = 0
-	var/burst_time = 50
-	var/fieldlimit = 3
+	var/burst_time = 30
+	var/fieldlimit = 4
 	origin_tech = "magnets=2;combat=2"
 
 /obj/item/weapon/resonator/upgraded
@@ -543,7 +582,7 @@
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "magnets=3;combat=3"
-	fieldlimit = 5
+	fieldlimit = 6
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
@@ -582,8 +621,8 @@
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
-	if(istype(proj_turf, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = proj_turf
+	if(istype(proj_turf, /turf/closed/mineral))
+		var/turf/closed/mineral/M = proj_turf
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			M.gets_drilled(creator)
@@ -593,7 +632,7 @@
 		var/pressure = environment.return_pressure()
 		if(pressure < 50)
 			name = "strong resonance field"
-			resonance_damage = 50
+			resonance_damage = 60
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
@@ -645,11 +684,13 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	environment_smash = 0
+	check_friendly_fire = 1
 	attacktext = "drills"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	ranged = 1
+	sentience_type = SENTIENCE_MINEBOT
 	ranged_message = "shoots"
-	ranged_cooldown_cap = 3
+	ranged_cooldown_time = 30
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	speak_emote = list("states")
@@ -748,6 +789,65 @@
 		SetOffenseBehavior()
 	. = ..()
 
+/**********************Minebot Upgrades**********************/
+
+//Melee
+
+/obj/item/device/mine_bot_ugprade
+	name = "minebot melee upgrade"
+	desc = "A minebot upgrade."
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+
+/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+	if(!istype(M) || !proximity)
+		return
+	upgrade_bot(M, user)
+
+/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if(M.melee_damage_upper != initial(M.melee_damage_upper))
+		user << "[src] already has a combat upgrade installed!"
+		return
+	M.melee_damage_lower = 22
+	M.melee_damage_upper = 22
+	qdel(src)
+
+//Health
+
+/obj/item/device/mine_bot_ugprade/health
+	name = "minebot chassis upgrade"
+
+/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if(M.maxHealth != initial(M.maxHealth))
+		user << "[src] already has a reinforced chassis!"
+		return
+	M.maxHealth = 170
+	qdel(src)
+
+
+//Cooldown
+
+/obj/item/device/mine_bot_ugprade/cooldown
+	name = "minebot cooldown upgrade"
+
+/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	name = "minebot cooldown upgrade"
+	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
+		user << "[src] already has a decreased weapon cooldown!"
+		return
+	M.ranged_cooldown_time = 10
+	qdel(src)
+
+
+//AI
+/obj/item/slimepotion/sentience/mining
+	name = "minebot AI upgrade"
+	desc = "Can be used to grant sentience to minebots."
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+	sentience_type = SENTIENCE_MINEBOT
+
+
 /**********************Lazarus Injector**********************/
 
 /obj/item/weapon/lazarus_injector
@@ -809,8 +909,8 @@
 /**********************Mining Scanners**********************/
 
 /obj/item/device/mining_scanner
-	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
-	name = "mining scanner"
+	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
+	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
 	w_class = 2
@@ -835,49 +935,91 @@
 /obj/item/device/mining_scanner/admin
 
 /obj/item/device/mining_scanner/admin/attack_self(mob/user)
-	for(var/turf/simulated/mineral/M in world)
+	for(var/turf/closed/mineral/M in world)
 		if(M.scan_state)
 			M.icon_state = M.scan_state
 	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Requires you to wear mesons to function properly."
-	name = "advanced mining scanner"
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear meson scanners for optimal results. This one has an extended range."
+	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/cooldown = 0
+	var/cooldown = 35
+	var/on_cooldown = 0
+	var/range = 7
+	var/meson = TRUE
 	origin_tech = "engineering=3;magnets=3"
 
+/obj/item/device/t_scanner/adv_mining_scanner/material
+	meson = FALSE
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results. This one has an extended range."
+
+/obj/item/device/t_scanner/adv_mining_scanner/lesser
+	name = "automatic mining scanner"
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear meson scanners for optimal results."
+	range = 4
+	cooldown = 50
+
+/obj/item/device/t_scanner/adv_mining_scanner/lesser/material
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
+	meson = FALSE
+
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
-	if(!cooldown)
-		cooldown = 1
-		spawn(35)
-			cooldown = 0
+	if(!on_cooldown)
+		on_cooldown = 1
+		spawn(cooldown)
+			on_cooldown = 0
 		var/turf/t = get_turf(src)
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
 		if(!mobs.len)
 			return
-		mineral_scan_pulse(mobs, t)
+		if(meson)
+			mineral_scan_pulse(mobs, t, range)
+		else
+			mineral_scan_pulse_material(mobs, t, range)
 
+//For use with mesons
 /proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()
-	for(var/turf/simulated/mineral/M in range(range, T))
+	for(var/turf/closed/mineral/M in range(range, T))
 		if(M.scan_state)
 			minerals += M
 	if(minerals.len)
 		for(var/mob/user in mobs)
 			if(user.client)
 				var/client/C = user.client
-				for(var/turf/simulated/mineral/M in minerals)
+				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
 					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
 					C.images += I
 					spawn(30)
 						if(C)
 							C.images -= I
+
+//For use with material scanners
+/proc/mineral_scan_pulse_material(list/mobs, turf/T, range = world.view)
+	var/list/minerals = list()
+	for(var/turf/closed/mineral/M in range(range, T))
+		if(M.scan_state)
+			minerals += M
+	if(minerals.len)
+		for(var/turf/closed/mineral/M in minerals)
+			var/obj/effect/overlay/temp/mining_overlay/C = PoolOrNew(/obj/effect/overlay/temp/mining_overlay, M)
+			C.icon_state = M.scan_state
+
+/obj/effect/overlay/temp/mining_overlay
+	layer = 20
+	icon = 'icons/turf/smoothrocks.dmi'
+	anchored = 1
+	mouse_opacity = 0
+	duration = 30
+	pixel_x = -4
+	pixel_y = -4
+
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining
@@ -909,18 +1051,95 @@
 /*********************Hivelord stabilizer****************/
 
 /obj/item/weapon/hivelordstabilizer
-	name = "hivelord stabilizer"
+	name = "stabilizing serum"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
-	desc = "Inject a hivelord core with this stabilizer to preserve its healing powers indefinitely."
+	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = 1
 	origin_tech = "biotech=1"
 
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/internal/M, mob/user)
 	var/obj/item/organ/internal/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/internal/hivelord_core))
-		user << "<span class='warning'>The stabilizer only works on hivelord cores.</span>"
+		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
 	C.preserved = 1
-	user << "<span class='notice'>You inject the hivelord core with the stabilizer. It will no longer go inert.</span>"
+	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
+
+
+
+/****************Explorer's Suit**************************/
+
+/obj/item/clothing/suit/hooded/explorer
+	name = "explorer suit"
+	desc = "An armoured suit for exploring harsh environments."
+	icon_state = "explorer"
+	item_state = "explorer"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	hooded = 1
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	hoodtype = /obj/item/clothing/head/explorer
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
+
+/obj/item/clothing/head/explorer
+	name = "explorer hood"
+	desc = "An armoured hood for exploring harsh environments."
+	icon_state = "explorer"
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+
+/****************Golem Point Vendor**************************/
+
+/obj/machinery/mineral/equipment_vendor/golem
+	name = "golem ship equipment vendor"
+	desc = "A modified mining equipment vendor. It seems a few selections were replaced."
+	prize_list = list(
+		new /datum/data/mining_equipment("Stimpack",				/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    	50),
+		new /datum/data/mining_equipment("Stimpack Bundle",			/obj/item/weapon/storage/box/medipens/utility,	 				  		200),
+		new /datum/data/mining_equipment("Whiskey",             	/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    		100),
+		new /datum/data/mining_equipment("Absinthe",            	/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
+		new /datum/data/mining_equipment("Soap",                	/obj/item/weapon/soap/nanotrasen, 						          		200),
+		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
+		new /datum/data/mining_equipment("Laser Pointer",       	/obj/item/device/laser_pointer, 				                   		300),
+		new /datum/data/mining_equipment("Alien Toy",           	/obj/item/clothing/mask/facehugger/toy, 		                   		300),
+		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
+		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
+		new /datum/data/mining_equipment("Stabilizing Serum",		/obj/item/weapon/hivelordstabilizer,		                     		400),
+		new /datum/data/mining_equipment("Shelter Capsule",			/obj/item/weapon/survivalcapsule,			                     		400),
+		new /datum/data/mining_equipment("GAR scanners",			/obj/item/clothing/glasses/meson/gar,					  		   		500),
+		new /datum/data/mining_equipment("Sulphuric Acid",			/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,        		500),
+		new /datum/data/mining_equipment("Brute First-Aid Kit",		/obj/item/weapon/storage/firstaid/brute,						   		600),
+		new /datum/data/mining_equipment("Advanced Scanner",		/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
+		new /datum/data/mining_equipment("Resonator",           	/obj/item/weapon/resonator,                                    	   		800),
+		new /datum/data/mining_equipment("Lazarus Injector",    	/obj/item/weapon/lazarus_injector,                                		1000),
+		new /datum/data/mining_equipment("Silver Pickaxe",			/obj/item/weapon/pickaxe/silver,				                  		1000),
+		new /datum/data/mining_equipment("Grey Slime Extract",		/obj/item/slime_extract/grey,				       		           		1000),
+		new /datum/data/mining_equipment("Diamond Pickaxe",			/obj/item/weapon/pickaxe/diamond,				                  		2000),
+		new /datum/data/mining_equipment("Super Resonator",     	/obj/item/weapon/resonator/upgraded,                              		2500),
+		new /datum/data/mining_equipment("Point Transfer Card", 	/obj/item/weapon/card/mining_point_card,               			   		500),
+		new /datum/data/mining_equipment("Mining Drone",        	/mob/living/simple_animal/hostile/mining_drone,                   		800),
+		new /datum/data/mining_equipment("Drone Melee Upgrade", 	/obj/item/device/mine_bot_ugprade,      			   			   		400),
+		new /datum/data/mining_equipment("Drone Health Upgrade",	/obj/item/device/mine_bot_ugprade/health,      			   	       		400),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade",	/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
+		new /datum/data/mining_equipment("Drone AI Upgrade",    	/obj/item/slimepotion/sentience/mining,      			   	      		1000),
+		new /datum/data/mining_equipment("The Liberator's Legacy",  /obj/item/weapon/storage/box/rndboards,      			      			2000),
+		)
+
+/obj/machinery/mineral/equipment_vendor/golem/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor/golem(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()

@@ -10,6 +10,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
+	flags = NOBLUDGEON
 	w_class = 1
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"
@@ -105,13 +106,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
-	dat += "<a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"
+	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
 	if ((!isnull(cartridge)) && (mode == 0))
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
 	if (mode)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
-	dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
 	dat += "<br>"
 
@@ -269,8 +269,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (total_moles)
 						for(var/id in env_gases)
 							var/gas_level = env_gases[id][MOLES]/total_moles
-							if(id in hardcoded_gases || gas_level > 0.01)
-								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
+							if(id in hardcoded_gases || gas_level > 0.001)
+								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
@@ -279,7 +279,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -287,7 +287,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -295,10 +295,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //BASIC FUNCTIONS===================================
 
-			if("Close")//Self explanatory
-				U.unset_machine()
-				U << browse(null, "window=pda")
-				return
 			if("Refresh")//Refresh, goes to the end of the proc.
 			if("Return")//Return
 				if(mode<=9)
@@ -733,7 +729,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
-	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
 		if(!user.unEquip(C))
@@ -782,7 +777,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
 		user << "<span class='notice'>You scan \the [C].</span>"
-	return
+	else
+		return ..()
 
 /obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user)
 	if(istype(C))
@@ -826,23 +822,26 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/weapon/tank/T = A
 				atmosanalyzer_scan(T.air_contents, user, T)
 			else if (istype(A, /obj/machinery/portable_atmospherics))
-				var/obj/machinery/portable_atmospherics/T = A
-				atmosanalyzer_scan(T.air_contents, user, T)
+				var/obj/machinery/portable_atmospherics/PA = A
+				atmosanalyzer_scan(PA.air_contents, user, PA)
 			else if (istype(A, /obj/machinery/atmospherics/pipe))
-				var/obj/machinery/atmospherics/pipe/T = A
-				atmosanalyzer_scan(T.parent.air, user, T)
+				var/obj/machinery/atmospherics/pipe/P = A
+				atmosanalyzer_scan(P.parent.air, user, P)
 			else if (istype(A, /obj/machinery/power/rad_collector))
-				var/obj/machinery/power/rad_collector/T = A
-				if(T.P) atmosanalyzer_scan(T.P.air_contents, user, T)
+				var/obj/machinery/power/rad_collector/RC = A
+				if(RC.loaded_tank)
+					atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
 			else if (istype(A, /obj/item/weapon/flamethrower))
-				var/obj/item/weapon/flamethrower/T = A
-				if(T.ptank) atmosanalyzer_scan(T.ptank.air_contents, user, T)
+				var/obj/item/weapon/flamethrower/F = A
+				if(F.ptank)
+					atmosanalyzer_scan(F.ptank.air_contents, user, F)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		if (!A:info)
+		var/obj/item/weapon/paper/PP = A
+		if (!PP.info)
 			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
 			return
-		notehtml = A:info
+		notehtml = PP.info
 		note = replacetext(notehtml, "<BR>", "\[br\]")
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")

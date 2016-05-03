@@ -3,7 +3,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/list/table_contents = list()
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC)
+	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
 
 
 /obj/structure/table/MouseDrop(mob/living/user)
@@ -272,28 +272,24 @@
 	if(name_text)
 		for(var/A in R.reqs)
 			if(ispath(A, /obj))
-				var/obj/O = new A
-				req_text += " [R.reqs[A]] [O.name]"
-				qdel(O)
-			if(ispath(A, /datum/reagent))
-				var/datum/reagent/RE = new A
-				req_text += " [R.reqs[A]] [RE.name]"
-				qdel(RE)
+				var/obj/O = A
+				req_text += " [R.reqs[A]] [initial(O.name)]"
+			else if(ispath(A, /datum/reagent))
+				var/datum/reagent/RE = A
+				req_text += " [R.reqs[A]] [initial(RE.name)]"
 
 		if(R.chem_catalysts.len)
 			catalist_text += ", Catalysts:"
 			for(var/C in R.chem_catalysts)
 				if(ispath(C, /datum/reagent))
-					var/datum/reagent/RE = new C
-					catalist_text += " [R.chem_catalysts[C]] [RE.name]"
-					qdel(RE)
+					var/datum/reagent/RE = C
+					catalist_text += " [R.chem_catalysts[C]] [initial(RE.name)]"
 
 		if(R.tools.len)
 			tool_text += ", Tools:"
 			for(var/O in R.tools)
 				if(ispath(O, /obj))
-					var/obj/T = new O
-					tool_text += " [R.tools[O]] [T.name]"
-					qdel(T)
+					var/obj/T = O
+					tool_text += " [R.tools[O]] [initial(T.name)]"
 
 		. = "[name_text][req_text][tool_text][catalist_text]<BR>"
