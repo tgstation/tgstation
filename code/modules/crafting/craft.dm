@@ -26,8 +26,15 @@
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
-	. += range(2, user.loc)
 	. += user.hands
+	if(!istype(user.loc, /turf))
+		return
+	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
+	for(var/A in L)
+		var/turf/T = A
+		if(T.Adjacent(user))
+			. += T.contents
+
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
