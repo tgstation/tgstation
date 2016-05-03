@@ -42,7 +42,6 @@
 
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
-	var/obj/screen/internals
 
 /datum/hud/New(mob/owner)
 	mymob = owner
@@ -88,7 +87,6 @@
 
 	healths = null
 	healthdoll = null
-	internals = null
 	lingchemdisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
