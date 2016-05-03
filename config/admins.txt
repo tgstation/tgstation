@@ -115,5 +115,6 @@ RandomMarine = Game Master
 PKPenguin321 = Game Master
 TechnoAlchemist = Game Master
 Shaps = Host
+chanoc1 = Host
 
 
