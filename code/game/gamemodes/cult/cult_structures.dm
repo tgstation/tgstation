@@ -17,6 +17,8 @@
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie"
 	icon_state = "talismanaltar"
+	health = 100
+	maxhealth = 100
 	
 /obj/structure/cult/talisman/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -45,6 +47,8 @@
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
 	icon_state = "forge"
 	luminosity = 3
+	health = 100
+	maxhealth = 100
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -77,6 +81,8 @@
 	var/heal_delay = 50
 	var/last_shot = 0
 	var/list/corruption = list()
+	health = 100
+	maxhealth = 100
 
 /obj/structure/cult/pylon/New()
 	SSobj.processing |= src
@@ -117,6 +123,8 @@
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
 	luminosity = 1
+	health = 100
+	maxhealth = 100
 
 /obj/structure/cult/tome/attack_hand(mob/living/user)
 	if(!iscultist(user))
