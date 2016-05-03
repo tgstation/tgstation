@@ -146,8 +146,63 @@
 
 		user << "<span class='notice'>You stop charging [target].</span>"
 
+/obj/item/device/harmalarm
+	name = "Sonic Harm Prevention Tool"
+	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
+	icon_state = "megaphone"
+	var/cooldown = 0
+	var/emagged = 0
 
+/obj/item/device/harmalarm/emag_act(mob/user)
+	emagged = !emagged
+	if(emagged)
+		user << "<font color='red'>You short out the safeties on the [src]!</font>"
+	else
+		user << "<font color='red'>You reset the safeties on the [src]!</font>"
 
+/obj/item/device/harmalarm/attack_self(mob/user)
+	var/safety = !emagged
+	if(cooldown < world.time&&cooldown > 0)
+		user << "<font color='red'>The device is still recharging!</font>"
+
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.cell.charge < 1200)
+			user << "<font color='red'>You don't have enough charge to do this!</font>"
+			return
+		R.cell.charge -= 1000
+		if(R.emagged)
+			safety = 0
+
+	if(safety == 1)
+		for(var/mob/living/M in get_hearers_in_view(9, user))
+			if(iscarbon(M))
+				M.confused += 6
+				M << "<font color='red' size='3'>MY EARS</font>"
+			M << "<font color='red' size='7'>HUMAN HARM</font>"
+		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 70, 3)
+		cooldown = world.time + 200
+		message_admins("[key_name_admin(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) used a cyborg Harm Alarm in ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
+		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		return
+
+	if(safety == 0)
+		for(var/mob/living/M in get_hearers_in_view(9, user))
+			if(iscarbon(M))
+				M.confused += 15
+				M.Weaken(1)
+				M.stuttering += 30
+				M.adjustEarDamage(0, 15)
+				M.Jitter(25)
+				M << "<font color='red' size='3'>AAAAAAAAAAAAGGGGGGGGGGGGGGGHHHHHHHH</font>"
+			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
+		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
+		cooldown = world.time + 600
+		message_admins("[key_name_admin(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) used an emagged cyborg Harm Alarm in ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
+		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		return
+
+	return
 
 /**********************************************************************
 						HUD/SIGHT things

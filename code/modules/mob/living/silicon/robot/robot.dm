@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service","Peacekeeper")
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
@@ -234,6 +234,16 @@
 			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
+
+		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			hands.icon_state = "security"
+			icon_state = "secborg"
+			animation_length = 28
+			modtype = "Sec"  //No idea what this does
+			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+			status_flags &= ~CANPUSH
+			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)

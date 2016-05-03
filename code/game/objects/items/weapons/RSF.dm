@@ -112,3 +112,77 @@ RSF
 		matter--
 		user << "The RSF now holds [matter]/30 fabrication-units."
 		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
+
+/obj/item/weapon/rsf/cookie
+	name = "Cookie Synthesizer"
+	desc = "A self-recharging device used to rapidly deploy cookies."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rcd"
+	opacity = 0
+	density = 0
+	anchored = 0
+	flags = NOBLUDGEON
+	matter = 10
+	w_class = 3
+	var/toxin = 0
+	var/emagged = 0
+
+/obj/item/weapon/rsf/cookie/New()
+	desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
+	return
+
+/obj/item/weapon/rsf/cookie/attackby()
+	return
+
+/obj/item/weapon/rsf/cookie/emag_act(mob/user)
+	emagged = !emagged
+	if(emagged)
+		user << "<span class='warning'>You short out the [src]'s reagent safety checker!</span>"
+	else
+		user << "<span class='warning'>You reset the [src]'s reagent safety checker!</span>"
+		toxin = 0
+
+/obj/item/weapon/rsf/cookie/attack_self(mob/user)
+	if(isrobot(user)&&!toxin)
+		toxin = 1
+		user << "Cookie Synthesizer Hacked"
+		return
+	else if(emagged&&!toxin)
+		toxin = 1
+		user << "Cookie Synthesizer Hacked"
+		return
+	else
+		toxin = 0
+		user << "Cookie Synthesizer Reset"
+		return
+	return
+
+/obj/item/weapon/rsf/cookie/process()
+	if (matter < 10)
+		matter++
+
+/obj/item/weapon/rsf/cookie/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
+		return
+	if(matter < 1)
+		user << "<span class='warning'>The [src] doesn't have enough matter left. Wait for it to recharge!</span>"
+		return
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(!R.cell || R.cell.charge < 400)
+			user << "<span class='warning'>You do not have enough power to use [src].</span>"
+			return
+	var/turf/T = get_turf(A)
+	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+	user << "Fabricating Cookie.."
+	var/obj/item/weapon/reagent_containers/food/snacks/cookie/S = new /obj/item/weapon/reagent_containers/food/snacks/cookie(T)
+	if(toxin)
+		S.list_reagents = list("chloralhydrate2" = 15, "nutriment" = 5, "vitamin" = 5)
+	if (isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		R.cell.charge -= 100
+	else
+		matter--
+		desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."

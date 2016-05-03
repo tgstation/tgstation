@@ -207,3 +207,23 @@ Borg Shaker
 	recharge_time = 3
 
 	reagent_ids = list("beer2")
+
+/obj/item/weapon/reagent_containers/borghypo/peace
+	name = "Peace Hypospray"
+
+/obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.emagged)
+			reagent_ids = list("dizzysolution","tiresolution","tirizine","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
+		else
+			reagent_ids = list("dizzysolution","tiresolution")
+
+	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
+	if(!chosen_reagent)
+		return
+	mode = chosen_reagent
+	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
+	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
+	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
+	return
