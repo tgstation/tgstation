@@ -115,7 +115,7 @@
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
 	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-		if(istype(C,type) || C.stat || !C.butcher_results) //That last one is a work around for hologram cats
+		if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 			continue
 		if(C.type in family)
 			family[C.type] += 1
@@ -125,11 +125,11 @@
 	memory_saved = 1
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
+	cats_deployed = 1
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
-	cats_deployed = 1
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"

@@ -149,7 +149,7 @@
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
 
-/obj/structure/particle_accelerator/blob_act()
+/obj/structure/particle_accelerator/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		qdel(src)
 

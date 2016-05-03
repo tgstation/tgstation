@@ -48,7 +48,6 @@
 	new /obj/item/weapon/survivalcapsule(src)
 
 
-
 /**********************Shuttle Computer**************************/
 
 /obj/machinery/computer/shuttle/mining
@@ -164,6 +163,24 @@
 	throwforce = 7
 	w_class = 2
 
+/obj/item/weapon/emptysandbag
+	name = "empty sandbag"
+	desc = "A bag to be filled with sand."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "sandbag"
+	w_class = 1
+
+/obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/ore/glass))
+		user << "<span class='notice'>You fill the sandbag.</span>"
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
+		user.unEquip(src)
+		user.put_in_hands(I)
+		qdel(W)
+		qdel(src)
+		return
+	else
+		return ..()
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
@@ -222,7 +239,7 @@
 	var/turf/cur_turf
 	var/x_size = 5
 	var/y_size = 5
-	var/list/walltypes = list(/turf/closed/wall/shuttle/survival_pod)
+	var/list/walltypes = list(/turf/closed/wall/shuttle/survival/pod)
 	var/floor_type = /turf/open/floor/pod
 	var/room
 
@@ -315,45 +332,81 @@
 //Pod turfs and objects
 
 
-//Floor
+//Floors
 /turf/open/floor/pod
 	name = "pod floor"
 	icon_state = "podfloor"
 	icon_regular_floor = "podfloor"
+	floor_tile = /obj/item/stack/tile/pod
+
+/turf/open/floor/pod/light
+	icon_state = "podfloor_light"
+	icon_regular_floor = "podfloor_light"
+	floor_tile = /obj/item/stack/tile/pod/light
+
+/turf/open/floor/pod/dark
+	icon_state = "podfloor_dark"
+	icon_regular_floor = "podfloor_dark"
+	floor_tile = /obj/item/stack/tile/pod/dark
+
+//Walls
+/turf/closed/wall/shuttle/survival
+	name = "pod wall"
+	desc = "An easily-compressable wall used for temporary shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "smooth"
+	walltype = "shuttle"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/shuttle/survival/nodiagonal
+	smooth = SMOOTH_MORE
+
+/turf/closed/wall/shuttle/survival/pod
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+
+//Window
+/obj/structure/window/shuttle/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/smooth_structures/pod_window.dmi'
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+
+//Door
+/obj/machinery/door/airlock/survival_pod
+	name = "airlock"
+	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_pod
+	opacity = 0
+	glass = 1
+
+/obj/machinery/door/airlock/survival_pod/vertical
+	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_pod/vertical
+
+/obj/structure/door_assembly/door_assembly_pod
+	name = "pod airlock assembly"
+	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/survival_pod
+	anchored = 1
+	state = 1
+	mineral = "glass"
+	material = "glass"
+
+/obj/structure/door_assembly/door_assembly_pod/vertical
+	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
 
 //Table
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "table"
 	smooth = SMOOTH_FALSE
-
-/obj/structure/fans
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
-	icon_state = "fans"
-	name = "environmental regulation system"
-	desc = "A large machine releasing a constant gust of air."
-	anchored = 1
-	density = 1
-	var/arbitraryatmosblockingvar = TRUE
-
-/obj/structure/fans/tiny
-	name = "tiny fan"
-	desc = "A tiny fan, releasing a thin gust of air."
-	layer = TURF_LAYER + 0.8
-	density = 0
-	icon_state = "fan_tiny"
-
-/obj/structure/fans/New(loc)
-	..()
-	air_update_turf(1)
-
-/obj/structure/fans/Destroy()
-	arbitraryatmosblockingvar = FALSE
-	air_update_turf(1)
-	return ..()
-
-/obj/structure/fans/CanAtmosPass(turf/T)
-	return !arbitraryatmosblockingvar
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
@@ -412,19 +465,36 @@
 		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
 
-//Walls
+//Fans
+/obj/structure/fans
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "fans"
+	name = "environmental regulation system"
+	desc = "A large machine releasing a constant gust of air."
+	anchored = 1
+	density = 1
+	var/arbitraryatmosblockingvar = TRUE
 
-/turf/closed/wall/shuttle/survival_pod
-	name = "wall"
-	desc = "An easily-compressable wall used for temporary shelter."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "smooth"
-	walltype = "shuttle"
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival_pod, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle)
+/obj/structure/fans/tiny
+	name = "tiny fan"
+	desc = "A tiny fan, releasing a thin gust of air."
+	layer = TURF_LAYER + 0.8
+	density = 0
+	icon_state = "fan_tiny"
+
+/obj/structure/fans/New(loc)
+	..()
+	air_update_turf(1)
+
+/obj/structure/fans/Destroy()
+	arbitraryatmosblockingvar = FALSE
+	air_update_turf(1)
+	return ..()
+
+/obj/structure/fans/CanAtmosPass(turf/T)
+	return !arbitraryatmosblockingvar
 
 //Signs
-
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
 	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
@@ -437,15 +507,7 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival"
 
-//Door
-
-/obj/machinery/door/airlock/survival_pod
-	name = "airlock"
-	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
-	opacity = 0
-	glass = 1
-
+//Fluff
 /obj/structure/tubes
 	icon_state = "tubes"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
@@ -454,20 +516,3 @@
 	layer = MOB_LAYER - 0.2
 	density = 0
 
-/obj/item/weapon/emptysandbag
-	name = "empty sandbag"
-	desc = "A bag to be filled with sand."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sandbag"
-	w_class = 1
-
-/obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/ore/glass))
-		user << "<span class='notice'>You fill the sandbag.</span>"
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
-		user.unEquip(src)
-		user.put_in_hands(I)
-		qdel(W)
-		qdel(src)
-		return
-	else return ..()

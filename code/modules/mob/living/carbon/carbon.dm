@@ -341,7 +341,7 @@
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
-/mob/living/carbon/blob_act()
+/mob/living/carbon/blob_act(obj/effect/blob/B)
 	if (stat == DEAD)
 		return
 	else

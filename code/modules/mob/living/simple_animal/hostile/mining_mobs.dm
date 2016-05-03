@@ -635,7 +635,7 @@
 	stat_attack = 1
 	robust_searching = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 1, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 //Goliath
 
@@ -713,6 +713,7 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	layer = 6.1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
 	if(isturf(src.loc))

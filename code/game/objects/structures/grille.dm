@@ -23,7 +23,7 @@
 		else
 			take_damage(rand(5,10), BRUTE, 0)
 
-/obj/structure/grille/blob_act()
+/obj/structure/grille/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/structure/grille/Bumped(atom/user)

@@ -49,7 +49,8 @@
 	paralysis = 0
 	stunned = 0
 	weakened = 0
-	sleeping = 0
+	set_drugginess(0)
+	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)
 	hide_fullscreens()
@@ -64,7 +65,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	alpha = 0
 
 	if(!prev_lying && animation)
