@@ -302,7 +302,8 @@
 
 /obj/effect/blob/examine(mob/user)
 	..()
-	if(user.research_scanner)
+	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
+	if(user.research_scanner || (user in hud_to_check.hudusers))
 		user << "<b>Your HUD displays an extensive report...</b><br>"
 		chemeffectreport(user)
 		typereport(user)
