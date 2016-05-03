@@ -53,7 +53,7 @@
 	if(cooldowntime)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Rags","Nar-Sian Hardsuit")
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
 	switch(choice)
 		if("Shielded Robe")
 			var/obj/item/clothing/suit/cultrobes/cult_shield/N = new(get_turf(src))
@@ -61,7 +61,7 @@
 		if("Flagellant's Rags")
 			var/obj/item/clothing/suit/cultrobes/berserker/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
-		if("Nar-Sian Hardsuit")
+		if("Nar-Sien Hardsuit")
 			new /obj/item/clothing/head/helmet/space/cult(get_turf(src))
 			var /obj/item/clothing/suit/space/cult/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
@@ -81,8 +81,9 @@
 /obj/structure/cult/pylon/New()
 	SSobj.processing |= src
 	corruption += get_turf(src)
-	for(var/i = 0, i < 4, i++)
-		for(var/turf/T in corruption)
+	for(var/i in 1 to 4)
+		for(var/t in corruption)
+			var/turf/T = t
 			corruption |= T.GetAtmosAdjacentTurfs()	
 	..()
 
