@@ -31,15 +31,15 @@
 /obj/item/weapon/gun/energy/gun/dragnet/snare
 	name = "Energy Snare Launcher"
 	desc = "Fires an energy snare that slows the target down"
-	ammo_type = /obj/item/ammo_casing/energy/trap
+	ammo_type = list(/obj/item/ammo_casing/energy/trap)
 
 /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg
 	can_charge = 0
-	ammo_type = /obj/item/ammo_casing/energy/trap/cyborg
+	ammo_type = list(/obj/item/ammo_casing/energy/trap/cyborg)
 
 /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/newshot()
-	..()
 	robocharge()
+	..()
 
 /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/emp_act()
 	return

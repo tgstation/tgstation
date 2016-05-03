@@ -118,12 +118,7 @@ RSF
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
-	opacity = 0
-	density = 0
-	anchored = 0
-	flags = NOBLUDGEON
 	matter = 10
-	w_class = 3
 	var/toxin = 0
 	var/emagged = 0
 

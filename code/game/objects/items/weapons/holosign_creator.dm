@@ -92,7 +92,7 @@
 			creation_time = 10
 			if(signs.len)
 				for(var/H in signs)
-				qdel(H)
+					qdel(H)
 			return
 		else if(R.emagged&&!shock)
 			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
@@ -238,9 +238,11 @@
 	holo_integrity = 3
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/attack_hand(mob/living/user)
-	if(!shock(user, 70))
-		holo_integrity -= 1
+	if(ismob(user))
+		var/mob/living/M = user
+		M.electrocute_act(15,"Energy Barrier", safety=1)
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/Bumped(atom/user)
 	if(ismob(user))
-		shock(user, 70)
+		var/mob/living/M = user
+		M.electrocute_act(15,"Energy Barrier", safety=1)

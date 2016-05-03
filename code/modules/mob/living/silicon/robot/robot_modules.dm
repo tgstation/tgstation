@@ -226,7 +226,7 @@
 	modules += new /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg(src)
 	modules += new /obj/item/weapon/rsf/cookie(src)
 	modules += new /obj/item/device/harmalarm(src)
-	modules += new /obj/item/weapon/reagent_containers/borghypo/peace
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
 	modules += new /obj/item/weapon/holosign_creator/cyborg(src)
 
 	emag = new /obj/item/borg/stun(src)
