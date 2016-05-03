@@ -124,9 +124,18 @@
 	if(cooldowntime)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
-	var/obj/item/weapon/paper/talisman/supply/N = new(get_turf(src))
-	N.uses = 1
-	user << "<span class='cultitalic'>You summon a [N.name] from the archives!</span>"
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shift")
+	switch(choice)
+		if("Supply Talisman")
+			var/obj/item/weapon/paper/talisman/supply/N = new(get_turf(src))
+			N.uses = 2
+			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+		if("Shuttle Curse")
+			var/obj/item/device/shuttle_curse/N = new(get_turf(src))
+			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+		if("Veil Shift")
+			var /obj/item/device/cult_shift/N = new(get_turf(src))
+			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
 	cooldowntime = world.time + 2400
 	spawn(cooldowntime)
 	cooldowntime = 0
