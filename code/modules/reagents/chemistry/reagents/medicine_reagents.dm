@@ -459,7 +459,7 @@
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
 	id = "pen_acid"
-	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Has a chance of dealing brute damage."
+	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
