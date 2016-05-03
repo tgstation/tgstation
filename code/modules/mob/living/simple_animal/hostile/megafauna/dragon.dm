@@ -192,7 +192,9 @@
 
 /obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
 	if(summon_cooldown > world.time)
+		user << "You just recently called out for aid. You don't want to annoy the spirits."
 		return
+	user << "You call out for aid, attempting to summon spirits to your side."
 	notify_ghosts("[user] is raising their [src], calling for your help!", source = user)
 	summon_cooldown = world.time + 600
 
