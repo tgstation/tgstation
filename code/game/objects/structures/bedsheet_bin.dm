@@ -8,8 +8,9 @@ LINEN BINS
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "sheet"
+	icon_state = "sheetwhite"
 	item_state = "bedsheet"
+	slot_flags = SLOT_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1
