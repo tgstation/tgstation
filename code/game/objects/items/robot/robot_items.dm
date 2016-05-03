@@ -164,6 +164,7 @@
 	var/safety = !emagged
 	if(cooldown > world.time)
 		user << "<font color='red'>The device is still recharging!</font>"
+		return
 
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user

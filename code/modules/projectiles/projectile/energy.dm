@@ -120,6 +120,8 @@
 	range = 10
 
 /obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
+	if(!ismob(target) || blocked >= 100)
+		qdel(src)
 	if(iscarbon(target))
 		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
 		B.Crossed(target)
