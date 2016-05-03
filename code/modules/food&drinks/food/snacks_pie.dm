@@ -27,7 +27,42 @@
 		var/turf/T = get_turf(hit_atom)
 		new/obj/effect/decal/cleanable/pie_smudge(T)
 		reagents.reaction(hit_atom, TOUCH)
-		qdel(src)
+
+		if(!ismob(hit_atom)) //if the creampie misses
+			qdel(src)
+			return
+		if(ismob(hit_atom)) //let check the species
+			var/mob/living/H = hit_atom
+			var/image/creamoverlay = image('icons/effects/creampie.dmi')
+
+			if(istype(H, /mob/living/carbon/human))
+				//if(istype(H, carbon/human/mutant/lizard))
+					//creamoverlay.icon_state = "creampie_lizard"
+				creamoverlay.icon_state = "creampie_human"
+			else if(istype(H, /mob/living/carbon/monkey))
+				creamoverlay.icon_state = "creampie_monkey"
+			else if(istype(H, /mob/living/carbon/alien))
+				creamoverlay.icon_state = "creampie_xenomorph"
+				if(istype(H, /mob/living/carbon/alien/humanoid/royal)) //lets not mess with queens yet
+					return
+			//else if(istype(H, /mob/living/silicon/robot))
+				//var/modtype
+				//var/mob/living/silicon/robot/borg = H
+				//borg.modtype = modtype
+				//creamoverlay.icon_state = "creampie_[modtype]borg"
+			else if(istype(H, /mob/living/silicon/ai))
+				creamoverlay.icon_state = "creampie_ai"
+			else if(istype(H, /mob/living/simple_animal/drone))
+				creamoverlay.icon_state = "creampie_drone"
+			else if(istype(H, /mob/living/simple_animal/pet/dog/corgi))
+				creamoverlay.icon_state = "creampie_corgi"
+			else return //if the target mob isn't compatible
+
+			if(!istype(H, /mob/living/silicon/robot) && !istype(H, /mob/living/carbon/alien))
+				H.Weaken(1) //splat!
+				H.adjust_blurriness(1) //the cream is all over your face
+			visible_message("<span class='userdanger'>[H] was creamed by the [src]!!</span>")
+			H.overlays += creamoverlay
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis
