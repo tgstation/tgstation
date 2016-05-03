@@ -226,4 +226,3 @@ Borg Shaker
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
 	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
-	return

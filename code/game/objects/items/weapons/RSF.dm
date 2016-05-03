@@ -125,7 +125,6 @@ RSF
 
 /obj/item/weapon/cookiesynth/New()
 	desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
-	return
 
 /obj/item/weapon/cookiesynth/attackby()
 	return
@@ -142,16 +141,12 @@ RSF
 	if(isrobot(user)&&!toxin)
 		toxin = 1
 		user << "Cookie Synthesizer Hacked"
-		return
 	else if(emagged&&!toxin)
 		toxin = 1
 		user << "Cookie Synthesizer Hacked"
-		return
 	else
 		toxin = 0
 		user << "Cookie Synthesizer Reset"
-		return
-	return
 
 /obj/item/weapon/cookiesynth/process()
 	if (matter < 10)
