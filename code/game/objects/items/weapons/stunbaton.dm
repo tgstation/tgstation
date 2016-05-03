@@ -240,11 +240,3 @@
 
 	add_logs(user, L, "stunned")
 	return 1
-
-/obj/item/weapon/melee/baton/experimental/update_icon()
-	if(status)
-		icon_state = "stunbaton_active"
-	else if(!bcell)
-		icon_state = "stunbaton_nocell"
-	else
-		icon_state = "stunbaton"
