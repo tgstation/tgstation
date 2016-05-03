@@ -1,8 +1,0 @@
-author: nullbear
-delete-after: True
-changes: 
-  - rscadd: "A reminder for crew to avoid mopping floors in cold rooms, as
-the water will freeze and provide a dangerous slipping hazard known as
-'ice'. Running on it is not recommended."
-  - rscadd: "Frostoil is an effective chemical for rapidly cooling areas
-in the event of a fire."

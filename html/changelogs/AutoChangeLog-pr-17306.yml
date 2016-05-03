@@ -1,0 +1,6 @@
+author: coiax, Robustin
+delete-after: True
+changes: 
+  - tweak: "Changeling Fleshmend is much less effective when used repeatedly
+in a short time. Changeling Panacea is much more effective at purging
+reagents, reducing radiation and now reduces braindamage."
