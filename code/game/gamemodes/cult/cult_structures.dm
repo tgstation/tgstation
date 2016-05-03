@@ -3,6 +3,8 @@
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
 	var/cooldowntime = 0
+	var/health = 100
+	var/maxhealth = 100
 
 /obj/structure/cult/proc/getETA() //dunc and oranges are life-savers
     var/time = round((0-(world.time-cooldowntime))/600, 1)
