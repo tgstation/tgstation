@@ -844,10 +844,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/c4
 	name = "Composition C-4"
-	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls or connect \
-			a signaler to its wiring to make it remotely detonable. It has a modifiable timer with a \
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
+			an assembly to it in order to alter the way it detonates. It has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/weapon/c4
+	item = /obj/item/weapon/grenade/plastic/c4
 	cost = 1
 
 /datum/uplink_item/device_tools/c4bag
@@ -855,6 +855,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c4
 	cost = 9 //10% discount!
+
+/datum/uplink_item/device_tools/x4bag
+	name = "Bag of X-4 explosives"
+	desc = "Contains 3 X-4 plastic explosives. Similar, but more powerful than C-4. X-4 can be placed on a solid surface, such as a wall or window, and it will \
+			blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a wider, deeper, hole."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/x4
+	cost = 4 //
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
