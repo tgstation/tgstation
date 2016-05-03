@@ -120,3 +120,11 @@
 	volume = 60
 	amount_per_transfer_from_this = 30
 	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	name = "Survival Medipen"
+	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. "
+	icon_state = "stimpen"
+	volume = 70
+	amount_per_transfer_from_this = 70
+	list_reagents = list("kelotane" = 10, "bicaridine" = 10, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "antitoxin" = 10, "epinephrine" = 10)
