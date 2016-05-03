@@ -16,13 +16,12 @@
 	density = 0
 	heat_proof = 1
 	glass = 1
-	var/blocked = 0
 	var/nextstate = null
 	sub_door = 1
 	closingLayer = 3.11
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
-	if(p_open || operating)
+	if(panel_open || operating)
 		return
 	if(!density)
 		return ..()
@@ -43,14 +42,6 @@
 	if(operating)
 		return//Already doing something.
 
-	if(istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0, user))
-			blocked = !blocked
-			user << text("<span class='danger'>You [blocked?"welded":"unwelded"] \the [src]</span>")
-			update_icon()
-			return
-
 	if(istype(C, /obj/item/weapon/wrench) && panel_open)
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
@@ -68,35 +59,41 @@
 		qdel(src)
 		return
 
-	if(istype(C, /obj/item/weapon/crowbar) || (istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1))
-		if(blocked || operating)
-			return
-		if(density)
-			open()
-			return
-		else	//close it up again	//fucking 10/10 commenting here einstein
-			close()
-			return
-
 	if(istype(C, /obj/item/weapon/screwdriver))
 		default_deconstruction_screwdriver(user, icon_state, icon_state, C)
 		return
 
+	return ..()
+
+/obj/machinery/door/firedoor/try_to_activate_door(mob/user)
 	return
 
-/obj/machinery/door/firedoor/attack_ai(mob/user)
-	add_fingerprint(user)
-	if(blocked || operating || stat & NOPOWER)
+/obj/machinery/door/firedoor/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
+	if(W.remove_fuel(0, user))
+		welded = !welded
+		user << "<span class='danger'>You [welded?"welded":"unwelded"] \the [src]</span>"
+		update_icon()
+
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
+	if(welded || operating)
 		return
 	if(density)
 		open()
 	else
 		close()
-	return
+
+/obj/machinery/door/firedoor/attack_ai(mob/user)
+	add_fingerprint(user)
+	if(welded || operating || stat & NOPOWER)
+		return
+	if(density)
+		open()
+	else
+		close()
 
 /obj/machinery/door/firedoor/attack_alien(mob/user)
 	add_fingerprint(user)
-	if(blocked)
+	if(welded)
 		user << "<span class='warning'>[src] refuses to budge!</span>"
 		return
 	open()
@@ -107,33 +104,25 @@
 			flick("door_opening", src)
 		if("closing")
 			flick("door_closing", src)
-	return
-
 
 /obj/machinery/door/firedoor/update_icon()
 	overlays.Cut()
 	if(density)
 		icon_state = "door_closed"
-		if(blocked)
+		if(welded)
 			overlays += "welded"
 	else
 		icon_state = "door_open"
-		if(blocked)
+		if(welded)
 			overlays += "welded_open"
-	return
 
 /obj/machinery/door/firedoor/open()
-	..()
+	. = ..()
 	latetoggle()
-	return
 
 /obj/machinery/door/firedoor/close()
-	..()
-	if(locate(/mob/living) in get_turf(src))
-		open()
-		return
+	. = ..()
 	latetoggle()
-	return
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
@@ -145,8 +134,6 @@
 		if(CLOSED)
 			nextstate = null
 			close()
-	return
-
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
@@ -329,3 +316,4 @@
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
+	return ..()

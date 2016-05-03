@@ -35,7 +35,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = 5
+	max_w_class = 6
 	max_combined_w_class = 35
 	burn_state = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
@@ -71,7 +71,7 @@
 	return 0
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)) && !W.crit_fail)
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
@@ -280,7 +280,7 @@
 
 /obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
 	if(intact)
-		invisibility = 101
+		invisibility = INVISIBILITY_MAXIMUM
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
@@ -484,8 +484,14 @@
 	..()
 	contents = list()
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/c4(src)
+		new /obj/item/weapon/grenade/plastic/c4(src)
 	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/x4/New()
+	..()
+	contents = list()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/grenade/plastic/x4(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
 	desc = "A large dufflebag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."

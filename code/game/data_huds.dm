@@ -16,7 +16,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(HEALTH_HUD, STATUS_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -83,8 +83,12 @@
 			return "health10"
 		if(1 to 5)
 			return "health1"
-		if(-99 to 0)
+		if(-50 to 0)
 			return "health0"
+		if(-85 to -50)
+			return "health-50"
+		if(-99 to -85)
+			return "health-85"
 		else
 			return "health-100"
 	return "0"

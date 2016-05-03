@@ -1,4 +1,3 @@
-
 /mob/camera/god/proc/ability_cost(cost = 0,structures = 0, requires_conduit = 0, can_place_near_enemy_nexus = 0)
 	if(faith < cost)
 		src << "<span class='danger'>You lack the faith!</span>"
@@ -127,7 +126,7 @@
 		var/mob/living/carbon/human/H = choice.current
 		var/popehat = null
 		var/popestick = null
-
+		var/success = ""
 		switch(side)
 			if("red")
 				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/red
@@ -139,22 +138,28 @@
 		if(popehat)
 			var/obj/item/clothing/head/helmet/plate/crusader/prophet/P = new popehat()
 
-			H.unEquip(H.head)
-			H << "<span class='boldnotice'>A powerful hat has been bestowed upon your head, you will need to wear this to utilize your staff fully..</span>"
-			H.equip_to_slot_or_del(P,slot_head)
+			if(H.equip_to_slot_if_possible(P,slot_in_backpack,0,1,1))
+				success = "It is in your backpack."
+			else
+				H.unEquip(H.head)
+				H.equip_to_slot_or_del(P,slot_head)
+				success = "It is on your head."
+
+			if(success)
+				H << "<span class='boldnotice'>A powerful hat has been bestowed upon you, you will need to wear it to utilize your staff fully.</span>"
+				H << "<span class='boldnotice'>[success]</span>"
 
 		if(popestick)
 			var/obj/item/weapon/godstaff/G = new popestick()
 			G.god = src
-			var/success = ""
-			if(!H.put_in_hands(G))
-				if(!H.equip_to_slot_if_possible(G,slot_in_backpack,0,1,1))
+			if(!H.equip_to_slot_if_possible(G,slot_in_backpack,0,1,1))
+				if(!H.put_in_hands(G))
 					G.loc = get_turf(H)
 					success = "It is on the floor..."
 				else
-					success = "It is in your backpack..."
+					success = "It is in your hands..."
 			else
-				success = "It is in your hands..."
+				success = "It is in your backpack..."
 
 			if(success)
 				H << "<span class='boldnotice'>A powerful staff has been bestowed upon you, you can use this to convert the false god's structures!</span>"

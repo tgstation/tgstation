@@ -2302,11 +2302,16 @@
 /turf/open/floor/plating,
 /area/aisat)
 "aee" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/indestructible/opshuttle,
-/area/shuttle/syndicate)
+/obj/structure/sign/map/right/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
 "aef" = (
 /obj/structure/table,
 /obj/item/device/aicard,
@@ -2848,12 +2853,12 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "afr" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
 	},
-/area/shuttle/syndicate)
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 "afs" = (
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. Evilly";
@@ -5601,6 +5606,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "alw" = (
@@ -5659,6 +5667,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -19748,7 +19759,7 @@
 /obj/machinery/conveyor{
 	dir = 9;
 	id = "QMLoad";
-	verted = -1
+	verted = 1
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -27432,16 +27443,17 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bcC" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable/cyan{
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bcD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	tag = "icon-manifold-r-f (NORTH)";
+	dir = 1
 	},
 /turf/open/floor/plating{
 	broken = 1;
@@ -28187,14 +28199,13 @@
 /area/maintenance/asmaint)
 "bee" = (
 /obj/structure/cable/green{
-	tag = "icon-1-2";
-	icon_state = "1-2"
+	tag = "icon-4-8";
+	icon_state = "4-8"
 	},
 /obj/structure/cable/green{
-	tag = "icon-2-8";
-	icon_state = "2-8"
+	tag = "icon-1-4";
+	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bef" = (
@@ -29738,17 +29749,13 @@
 	name = "Fore Port Hallway"
 	})
 "bhi" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "maintenance access";
-	req_access_txt = "12"
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
 	},
-/obj/structure/cable/green{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/asmaint)
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 "bhj" = (
 /obj/structure/sign/bluecross_2,
 /turf/closed/wall,
@@ -30108,6 +30115,9 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (WEST)";
 	dir = 8
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port{
@@ -31167,19 +31177,14 @@
 	name = "Fore Port Hallway"
 	})
 "bjH" = (
-/obj/structure/cable/green{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	tag = "icon-1-4";
-	icon_state = "1-4"
-	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=AIW";
 	location = "QM"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/green{
+	tag = "icon-2-4";
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port{
 	name = "Fore Port Hallway"
@@ -31847,9 +31852,6 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -31877,12 +31879,12 @@
 	pixel_x = 32;
 	pixel_y = -40
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (NORTH)";
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	tag = "icon-manifold-r-f (WEST)";
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port{
@@ -33696,10 +33698,7 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bog" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/plantbgone,
-/obj/item/weapon/reagent_containers/spray/plantbgone,
-/obj/item/weapon/reagent_containers/spray/plantbgone,
+/obj/machinery/plantgenes,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "boh" = (
@@ -52601,6 +52600,9 @@
 	c_tag = "Central Hallway South 3";
 	network = list("SS13")
 	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWu" = (
@@ -53900,34 +53902,8 @@
 	name = "Aft Port Hallway"
 	})
 "bYl" = (
-/obj/structure/sign/directions{
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "cargo bay";
-	pixel_y = -24;
-	tag = "icon-direction_supply"
-	},
-/obj/structure/sign/directions{
-	dir = 4;
-	icon_state = "direction_bridge";
-	name = "bridge";
-	pixel_y = -32;
-	tag = "icon-direction_bridge"
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 1;
-	icon_state = "direction_eng";
-	pixel_x = 0;
-	pixel_y = -40;
-	tag = "icon-direction_eng (NORTH)"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
-	},
-/obj/machinery/camera{
-	c_tag = "Aft Port Hallway West 3";
-	dir = 1;
-	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft{
@@ -55360,10 +55336,6 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "cbf" = (
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -61544,11 +61516,6 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "cnx" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
-	},
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -64419,14 +64386,9 @@
 /turf/closed/wall,
 /area/maintenance/asmaint2)
 "ctk" = (
-/obj/structure/cable/green{
-	tag = "icon-1-2";
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "ctl" = (
@@ -71423,7 +71385,8 @@
 /obj/machinery/conveyor{
 	dir = 6;
 	id = "QMLoad";
-	tag = "cargoshuttledown"
+	tag = "cargoshuttledown";
+	verted = -1
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -77739,14 +77702,22 @@
 /area/space)
 "cRz" = (
 /turf/closed/wall,
-/area/space)
+/area/space/nearstation)
 "cRA" = (
-/turf/open/floor/plating/airless,
-/area/space)
+/obj/structure/cable/green{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
 "cRB" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "cRC" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -77759,6 +77730,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/weapon/reagent_containers/spray/plantbgone,
+/obj/item/weapon/reagent_containers/spray/plantbgone,
+/obj/item/weapon/reagent_containers/spray/plantbgone,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "cRD" = (
@@ -77925,6 +77899,182 @@
 "cRX" = (
 /turf/closed/wall/rust,
 /area/chapel/office)
+"cRY" = (
+/obj/structure/cable/green{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cRZ" = (
+/obj/structure/cable/green{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cSa" = (
+/obj/structure/cable/green{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cSb" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "maintenance access";
+	req_access_txt = "12"
+	},
+/obj/structure/cable/green{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"cSc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
+"cSd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
+"cSe" = (
+/obj/structure/cable/green{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/green{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
+"cSf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"cSg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"cSh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/right/dream{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"cSi" = (
+/obj/structure/sign/map/left/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
+"cSj" = (
+/obj/structure/sign/map/right/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
+"cSk" = (
+/obj/structure/sign/directions{
+	dir = 4;
+	icon_state = "direction_supply";
+	name = "cargo bay";
+	pixel_y = -24;
+	tag = "icon-direction_supply"
+	},
+/obj/structure/sign/directions{
+	dir = 4;
+	icon_state = "direction_bridge";
+	name = "bridge";
+	pixel_y = -32;
+	tag = "icon-direction_bridge"
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 1;
+	icon_state = "direction_eng";
+	pixel_x = 0;
+	pixel_y = -40;
+	tag = "icon-direction_eng (NORTH)"
+	},
+/obj/machinery/camera{
+	c_tag = "Aft Port Hallway West 3";
+	dir = 1;
+	network = list("SS13")
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
+"cSl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/sign/map/left/dream{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft{
+	name = "Aft Port Hallway"
+	})
 
 (1,1,1) = {"
 aaa
@@ -87796,7 +87946,7 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aaa
 aaa
 aaa
@@ -87813,7 +87963,7 @@ aaa
 aae
 aae
 aaa
-cRA
+amd
 aaa
 aaa
 aaa
@@ -88064,7 +88214,7 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aaa
 aae
 aae
@@ -88074,7 +88224,7 @@ cRz
 aaa
 aaa
 aaa
-cRA
+amd
 aab
 aaa
 aaa
@@ -88573,18 +88723,18 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aae
 aaa
 aaa
 aaa
 aae
-cRA
+amd
 aaa
 aaa
 aaa
@@ -88824,7 +88974,7 @@ aaa
 aaa
 aaa
 aaa
-cRA
+amd
 aae
 aae
 anR
@@ -88835,7 +88985,7 @@ aae
 aae
 aae
 aae
-cRA
+amd
 aaa
 aaa
 aaa
@@ -89606,7 +89756,7 @@ aae
 aae
 aaa
 aaa
-cRA
+amd
 aae
 aaa
 aaa
@@ -89809,7 +89959,7 @@ aaa
 aaa
 aaa
 aaa
-afr
+acj
 acm
 acm
 acm
@@ -90060,7 +90210,7 @@ aaa
 aaa
 aaa
 aaa
-afr
+acj
 acm
 acm
 acm
@@ -91187,7 +91337,7 @@ bnF
 bUK
 bVJ
 bXf
-bVb
+cSi
 bUI
 cbe
 cda
@@ -91418,9 +91568,9 @@ aZo
 bbg
 bcC
 bee
-awe
-bhi
-bie
+auq
+bhg
+cSc
 bjH
 bkH
 bmr
@@ -91444,7 +91594,7 @@ bnG
 bUL
 bVK
 bXg
-bVb
+cSj
 bUI
 bZI
 cdb
@@ -91674,11 +91824,11 @@ aXL
 aBD
 bbh
 bcD
-auq
-auq
-bhg
-bif
-bjI
+cSa
+awe
+cSb
+bie
+cSe
 bkI
 bms
 bnH
@@ -91703,14 +91853,14 @@ bVL
 bXh
 bYl
 bUI
-bZI
+afr
 cda
 cfb
 cgL
 cgN
 ckg
 clL
-bZI
+bhi
 bUI
 cqX
 cnQ
@@ -91934,7 +92084,7 @@ bcE
 bef
 bfB
 bhg
-big
+bif
 bjI
 bkJ
 bmt
@@ -91958,7 +92108,7 @@ bmt
 bmt
 bVM
 bXi
-bYm
+cSk
 bUI
 cbf
 cdc
@@ -92373,7 +92523,7 @@ acy
 acm
 acm
 acm
-aee
+acm
 acm
 acm
 acm
@@ -93921,7 +94071,7 @@ aaa
 aaa
 aaa
 aaa
-aei
+acL
 acm
 acm
 acm
@@ -99698,7 +99848,7 @@ cgO
 cgO
 cgO
 cgO
-cRA
+amd
 cRz
 aae
 aaa
@@ -99955,8 +100105,8 @@ cdx
 cdx
 cdi
 cgO
-cRA
-cRA
+amd
+amd
 cRB
 aae
 aae
@@ -100212,9 +100362,9 @@ cvL
 cIY
 cmf
 cgO
-cRA
-cRA
-cRA
+amd
+amd
+amd
 cRz
 aae
 aaa
@@ -104527,7 +104677,7 @@ aYl
 aYl
 aYl
 aRV
-big
+cSd
 bjR
 blf
 bmL
@@ -104551,7 +104701,7 @@ bTH
 bmL
 bVM
 bXi
-bYm
+cSl
 caa
 cbF
 cdG
@@ -104784,7 +104934,7 @@ bdl
 bez
 bgg
 aRV
-big
+cSc
 bjR
 bkT
 bmH
@@ -104808,7 +104958,7 @@ bTL
 bmH
 bVM
 bXi
-bYm
+aee
 caa
 cbL
 cdH
@@ -105848,7 +105998,7 @@ cmo
 cnY
 cpN
 crF
-ctj
+ctk
 cpP
 cpP
 cpP
@@ -106105,8 +106255,8 @@ cmp
 ckD
 cpO
 crG
-ctk
 ccg
+cRA
 ccg
 ccg
 ccg
@@ -114512,7 +114662,7 @@ ahw
 ahw
 ahv
 akQ
-alw
+cRY
 alU
 alU
 ant
@@ -114829,7 +114979,7 @@ bQz
 bze
 bUc
 bhC
-bWs
+cSh
 bXD
 bZb
 cav
@@ -117082,7 +117232,7 @@ ahw
 ahw
 ahv
 akV
-alw
+cRZ
 alZ
 amO
 anD
@@ -119187,7 +119337,7 @@ btz
 btz
 btz
 bBh
-bDd
+cSf
 bFw
 bHE
 bJG
@@ -119444,7 +119594,7 @@ bvs
 bxw
 bzG
 bBh
-bDd
+cSg
 bFz
 bHI
 bJG

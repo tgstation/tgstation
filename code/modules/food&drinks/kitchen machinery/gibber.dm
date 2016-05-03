@@ -94,7 +94,7 @@
 		src.startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
-	if (istype(P, /obj/item/weapon/grab))
+	if(istype(P, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = P
 		if(!iscarbon(G.affecting))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
@@ -117,19 +117,22 @@
 			qdel(G)
 			update_icon()
 
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
+	else if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
-	if(exchange_parts(user, P))
+	else if(exchange_parts(user, P))
 		return
 
-	if(default_pry_open(P))
+	else if(default_pry_open(P))
 		return
 
-	if(default_unfasten_wrench(user, P))
+	else if(default_unfasten_wrench(user, P))
 		return
 
-	default_deconstruction_crowbar(P)
+	else if(default_deconstruction_crowbar(P))
+		return
+	else
+		return ..()
 
 
 

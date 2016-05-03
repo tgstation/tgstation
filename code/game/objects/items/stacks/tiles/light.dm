@@ -20,7 +20,6 @@
 		state = 0 //fine
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)
-	..()
 	if(istype(O,/obj/item/weapon/crowbar))
 		new/obj/item/stack/sheet/metal(user.loc)
 		amount--
@@ -28,3 +27,5 @@
 		if(amount <= 0)
 			user.unEquip(src, 1)
 			qdel(src)
+	else
+		return ..()

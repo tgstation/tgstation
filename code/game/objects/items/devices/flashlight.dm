@@ -304,17 +304,20 @@ obj/item/device/flashlight/lamp/bananalamp
 		..()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity) return
-	if(istype(A, /obj/item/weapon/storage/) && A.loc == user)
+/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+	if(!proximity)
 		return
-	if (emp_cur_charges > 0)
+
+	if(emp_cur_charges > 0)
 		emp_cur_charges -= 1
-		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
-											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
+
 		if(ismob(A))
 			var/mob/M = A
 			add_logs(user, M, "attacked", "EMP-light")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
+								"<span class='userdanger'>[user] blinks \the [src] at you.")
+		else
+			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
 		A.emp_act(1)
 	else

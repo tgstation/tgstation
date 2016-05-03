@@ -162,6 +162,7 @@
 	item_state = "cardborg"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
+	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
@@ -257,6 +258,7 @@
 	allowed = list(,)
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/ian_hood
+	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/head/ian_hood
 	name = "corgi hood"

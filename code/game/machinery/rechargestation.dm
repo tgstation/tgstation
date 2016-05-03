@@ -79,7 +79,9 @@
 	if(default_pry_open(P))
 		return
 
-	default_deconstruction_crowbar(P)
+	if(default_deconstruction_crowbar(P))
+		return
+	return ..()
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if(..(user,1,set_machine = 0))

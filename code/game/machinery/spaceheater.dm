@@ -164,7 +164,7 @@
 	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
 		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)

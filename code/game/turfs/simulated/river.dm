@@ -59,7 +59,7 @@
 /obj/effect/landmark/river_waypoint
 	name = "river waypoint"
 	var/connected = 0
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 
 /turf/proc/Spread(probability = 30, prob_loss = 25)

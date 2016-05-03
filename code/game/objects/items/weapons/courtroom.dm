@@ -34,4 +34,4 @@
 		user.visible_message("<span class='warning'>[user] strikes \the [src] with \the [I].</span>")
 		user.changeNext_move(CLICK_CD_MELEE)
 	else
-		return
+		return ..()

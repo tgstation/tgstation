@@ -65,6 +65,7 @@
 			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
+		. = 1 //no afterattack
 		if(beakers.len == 2)
 			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
@@ -79,6 +80,7 @@
 				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
+		. = 1 // no afterattack
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
@@ -122,7 +124,8 @@
 			new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(EMPTY)
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
-
+	else
+		return ..()
 
 /obj/item/weapon/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
@@ -264,13 +267,15 @@
 	var/total_volume = 0
 	for(var/obj/item/weapon/reagent_containers/RC in beakers)
 		total_volume += RC.reagents.total_volume
-
+	if(!total_volume)
+		qdel(src)
+		qdel(nadeassembly)
+		return
 	var/fraction = unit_spread/total_volume
 	var/datum/reagents/reactants = new(unit_spread)
 	reactants.my_atom = src
 	for(var/obj/item/weapon/reagent_containers/RC in beakers)
 		RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, threatscale, 1, 1)
-
 	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
 
 	if(nadeassembly)
@@ -280,14 +285,11 @@
 		var/area/A = get_area(T)
 		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
-
+	else
+		addtimer(src, "prime", det_time)
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
 	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
-
-	if(total_volume < unit_spread) // If that was the last detonation, delete the grenade to prevent reusing it. Keep in mind, an explosion might destroy the grenade before it can detonate again anyways.
-		update_mob()
-		qdel(src)
 
 
 

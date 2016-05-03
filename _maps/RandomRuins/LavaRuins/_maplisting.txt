@@ -6,7 +6,7 @@
 
 ##BIODOMES
 _maps/RandomRuins/LavaRuins/lavaland_surface_biodome_winter.dmm
-_maps/RandomRuins/LavaRuins/lavaland__biodome_beach.dmm
+_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm
 _maps/RandomRuins/LavaRuins/lavaland_biodome_clown_planet.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_cube.dmm
 
@@ -15,6 +15,7 @@ _maps/RandomRuins/LavaRuins/lavaland_surface_prisoner_crash.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_seed_vault.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_golem_ship.dmm
+_maps/RandomRuins/LavaRuins/lavaland_surface_animal_hospital.dmm
 
 ##SIN
 _maps/RandomRuins/LavaRuins/lavaland_surface_envy.dmm
@@ -29,4 +30,5 @@ _maps/RandomRuins/LavaRuins/lavaland_surface_ufo_crash.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_ww_vault.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_automated_trade_outpost.dmm
 _maps/RandomRuins/LavaRuins/lavaland_surface_xeno_nest.dmm
+_maps/RandomRuins/LavaRuins/lavaland_fountain_hall.dmm
 _maps/RandomRuins/LavaRuins/lavaland_gym.dmm

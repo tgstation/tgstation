@@ -50,16 +50,8 @@
 
 /obj/item/weapon/grown/Crossed(atom/movable/AM)
 	if(seed)
-		var/datum/plant_gene/trait/slip/S = seed.get_gene(/datum/plant_gene/trait/slip)
-		if(S && iscarbon(AM))
-			var/stunratio = 0.6
-			var/mob/living/carbon/M = AM
-			var/stun = min(seed.potency * S.rate * stunratio, 6)
-			var/weaken = min(seed.potency * S.rate * stunratio, 6)
-			if(M.slip(stun, weaken, src))
-				for(var/datum/plant_gene/trait/T in seed.genes)
-					T.on_slip(src, M)
-				return 1
+		for(var/datum/plant_gene/trait/T in seed.genes)
+			T.on_cross(src, AM)
 	..()
 
 

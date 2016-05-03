@@ -16,16 +16,11 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	var/quote = ascii2text(34)
-	var/map_file = file2text(path)
-	var/key_len = length(copytext(map_file,2,findtext(map_file,quote,2,0)))
-	//assuming one map per file since more makes no sense for templates anyway
-	var/mapstart = findtext(map_file,"\n(1,1,") //todo replace with something saner
-	var/content = copytext(map_file,findtext(map_file,quote+"\n",mapstart,0)+2,findtext(map_file,"\n"+quote,mapstart,0)+1)
-	var/line_len = length(copytext(content,1,findtext(content,"\n",2,0)))
-
-	width = line_len/key_len
-	height = length(content)/(line_len+1)
+	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	if(bounds)
+		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+		height = bounds[MAP_MAXY]
+	return bounds
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -37,14 +32,17 @@
 	if(T.y+height > world.maxy)
 		return
 
-	maploader.load_map(get_file(), T.x-1, T.y-1, T.z)
+	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	if(!bounds)
+		return 0
 
 	//initialize things that are normally initialized after map load
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 
-	for(var/L in block(T,locate(T.x+width-1, T.y+height-1, T.z)))
+	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A
@@ -60,6 +58,7 @@
 	SSair.setup_template_machinery(atmos_machines)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	return 1
 
 /datum/map_template/proc/get_file()
 	if(mapfile)

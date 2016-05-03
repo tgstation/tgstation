@@ -26,7 +26,7 @@
 	stunned = 1
 	icon = null
 	overlays.Cut()
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
@@ -140,7 +140,7 @@
 	stunned = 1
 	icon = null
 	overlays.Cut()
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
@@ -244,7 +244,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
 /mob/proc/AIize()
@@ -314,7 +314,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in organs)
 		qdel(t)
 
@@ -365,7 +365,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in organs)
 		qdel(t)
 
@@ -395,7 +395,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in organs)
 		qdel(t)
 
@@ -454,7 +454,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
@@ -484,7 +484,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 
 	for(var/t in organs)
 		qdel(t)
