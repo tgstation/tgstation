@@ -67,19 +67,30 @@
 	return 0
 
 //helper for getting the appropriate health status
-/proc/RoundHealth(health)
-	switch(health)
+/proc/RoundHealth(mob/living/M)
+	if(M.stat == DEAD)
+		return "health-100" //what's our health? it doesn't matter, we're dead
+	var/resulthealth = round((M.health / M.maxHealth) * 100, 1)
+	switch(resulthealth)
 		if(100 to INFINITY)
 			return "health100"
-		if(70 to 100)
+		if(85 to 100)
+			return "health90"
+		if(75 to 85)
 			return "health80"
-		if(50 to 70)
+		if(65 to 75)
+			return "health70"
+		if(55 to 65)
 			return "health60"
-		if(30 to 50)
+		if(45 to 55)
+			return "health50"
+		if(35 to 45)
 			return "health40"
-		if(18 to 30)
-			return "health25"
-		if(5 to 18)
+		if(25 to 35)
+			return "health30"
+		if(15 to 25)
+			return "health20"
+		if(5 to 15)
 			return "health10"
 		if(1 to 5)
 			return "health1"
@@ -103,20 +114,28 @@
 	var/turf/T = get_turf(src)
 	if (T) crewmonitor.queueUpdate(T.z)
 
-//called when a carbon changes health
-/mob/living/carbon/proc/med_hud_set_health()
+//called when a living mob changes health
+/mob/living/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
-	if(stat == DEAD)
-		holder.icon_state = "hudhealth-100"
-	else
-		holder.icon_state = "hud[RoundHealth(health)]"
+	holder.icon_state = "hud[RoundHealth(src)]"
+
+//for carbon suit sensors
+/mob/living/carbon/med_hud_set_health()
+	..()
 
 	var/turf/T = get_turf(src)
-	if (T)
+	if(T)
 		crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
-/mob/living/carbon/proc/med_hud_set_status()
+/mob/living/proc/med_hud_set_status()
+	var/image/holder = hud_list[STATUS_HUD]
+	if(stat == DEAD)
+		holder.icon_state = "huddead"
+	else
+		holder.icon_state = "hudhealthy"
+
+/mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	if(stat == DEAD)
 		holder.icon_state = "huddead"
