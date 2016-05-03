@@ -6,6 +6,12 @@
 	density = 1
 	anchored = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
+	var/storage_amount = 1000
+	var/clear = 0
+	var/starting_reagent
+	var/starting_amount = 1000
+	var/list/starting_params = list()
+	var/usage_mode = 1
 
 /obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
@@ -28,18 +34,47 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
+	var/hotness = W.is_hot()
+	if(hotness)
+		var/added_heat = (hotness / 100) //ishot returns a temperature
+		if(reagents)
+			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
+				reagents.chem_temp += added_heat
+				user << "<span class='notice'>You heat [src] with [W].</span>"
+				reagents.handle_reactions()
+			else
+				user << "<span class='warning'>[src] is already hotter than [W]!</span>"
+
 	if(istype(W, /obj/item/weapon/reagent_containers))
 		return 0 //so we can refill them via their afterattack.
 	else
 		return ..()
 
+/obj/structure/reagent_dispensers/attack_hand(mob/user)
+	..()
+	usage_mode = !usage_mode
+	user << "<span class='notice'>You set [src] for [usage_mode ? "removing reagents from" : "inserting reagents into"] [src].</span>"
+
 /obj/structure/reagent_dispensers/New()
-	create_reagents(1000)
+	create_reagents(storage_amount)
+	if(starting_reagent)
+		reagents.add_reagent(starting_reagent, starting_amount, starting_params)
 	..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
-	user << "It contains [reagents.total_volume] units."
+	if(clear)
+		user << "It contains:"
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				user << "[R.volume] units of [R.name]"
+	else
+		if(reagents.reagent_list.len)
+			if(user.can_see_reagents()) //Show each individual reagent
+				for(var/datum/reagent/R in reagents.reagent_list)
+					user << "[R.volume] units of [R.name]"
+			else
+				user << "It contains [reagents.total_volume] units of various reagents."
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
@@ -47,10 +82,7 @@
 	desc = "A water tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
-
-/obj/structure/reagent_dispensers/watertank/New()
-	..()
-	reagents.add_reagent("water",1000)
+	starting_reagent = "water"
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
@@ -80,11 +112,7 @@
 	desc = "A fuel tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
-
-/obj/structure/reagent_dispensers/fueltank/New()
-	..()
-	reagents.add_reagent("welding_fuel",1000)
-
+	starting_reagent = "welding_fuel"
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()

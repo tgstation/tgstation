@@ -93,28 +93,36 @@
 	id = "capsaicin"
 	description = "This is what makes chilis hot."
 	color = "#B31008" // rgb: 179, 16, 8
+	var/fire_multiplier = 1
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT * fire_multiplier
 			if(holder.has_reagent("cryostylane"))
 				holder.remove_reagent("cryostylane", 5)
 			if(isslime(M))
-				M.bodytemperature += rand(5,20)
+				M.bodytemperature += rand(5,20) * fire_multiplier
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT * fire_multiplier
 			if(isslime(M))
-				M.bodytemperature += rand(10,20)
+				M.bodytemperature += rand(10,20) * fire_multiplier
 		if(25 to 35)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT * fire_multiplier
 			if(isslime(M))
-				M.bodytemperature += rand(15,20)
+				M.bodytemperature += rand(15,20) * fire_multiplier
 		if(35 to INFINITY)
-			M.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT * fire_multiplier
 			if(isslime(M))
-				M.bodytemperature += rand(20,25)
+				M.bodytemperature += rand(20,25) * fire_multiplier
 	..()
+
+/datum/reagent/consumable/capsaicin/ghostchilijuice
+	name = "Capsaicin Oil"
+	id = "capsaicin"
+	description = "This is what makes chilis hot."
+	color = "#B31008" // rgb: 179, 16, 8
+	fire_multiplier = 3
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"

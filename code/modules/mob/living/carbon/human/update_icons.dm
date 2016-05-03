@@ -93,7 +93,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 	dna.species.handle_body(src)
 
 /mob/living/carbon/human/update_fire()
-	..("Standing")
+	switch(fire_stacks)
+		if(1 to 9)
+			..("Generic_mob_burning")
+		if(10 to 14)
+			..("Standing")
+		if(15 to 20)
+			..("human_fire")
+	..("Generic_mob_burning")
 
 
 /mob/living/carbon/human/proc/update_augments()
