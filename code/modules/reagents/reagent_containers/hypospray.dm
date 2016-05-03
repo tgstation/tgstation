@@ -127,4 +127,4 @@
 	icon_state = "stimpen"
 	volume = 90
 	amount_per_transfer_from_this = 90
-	list_reagents = list("kelotane" = 10, "bicaridine" = 10, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "antitoxin" = 5, "epinephrine" = 10)
+	list_reagents = list("kelotane" = 10, "bicaridine" = 10, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "antitoxin" = 10, "epinephrine" = 10)
