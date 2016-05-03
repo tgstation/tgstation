@@ -78,6 +78,11 @@ var/global/datum/controller/master/Master = new()
 	if(mining_type == "lavaland")
 		seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
+		for(var/mob/living/simple_animal/L in mob_list)
+			if("mining" in L.faction)
+				var/area/A = get_area(L)
+				if(istype(A, /area/ruin))
+					qdel(L)
 	else
 		make_mining_asteroid_secrets()
 
