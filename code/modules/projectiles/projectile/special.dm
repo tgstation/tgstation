@@ -169,7 +169,7 @@
 		qdel(src)
 
 /obj/item/projectile/gravipulse //code copied from mecha gravipults
-	name = "gravitron bolt"
+	name = "zero-point energy bolt"
 	icon_state = "spark"
 	hitsound = "sound/weapons/wave.ogg"
 	damage = 0
