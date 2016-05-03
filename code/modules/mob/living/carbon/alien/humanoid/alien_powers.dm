@@ -93,7 +93,7 @@ Doesn't work on other aliens/AI.*/
 				continue
 			ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
 				<span class='name'>[user]</span> \
-				<b><span class='noticealien'>Alien Whisper --> </span></b> \
+				<span class='alertalien'>Alien Whisper --> </span> \
 				<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
 				<span class='name'>[M]</span> \
 				<span class='noticealien'>[msg]</span>"
