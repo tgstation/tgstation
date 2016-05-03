@@ -186,7 +186,7 @@
 
 /obj/item/clothing/suit/cultrobes/berserker
 	name = "flagellant's robes"
-	desc = "blood-soaked robes infused with dark magic; allowing the user to move at inhuman speeds, but at the cost of increased damage"
+	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
 	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
@@ -201,7 +201,7 @@
 		user.Weaken(5)
    	    	
 /obj/item/clothing/glasses/night/cultblind
-	desc = "may nar-sie guide you through the darkness and shield you from the light."
+	desc = "May nar-sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	item_state = "blindfold"
@@ -218,7 +218,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
-	desc = "toxic to nonbelievers, this water renews and reinvigorates the faithful of nar'sie."
+	desc = "Toxic to nonbelievers; this water renews and reinvigorates the faithful of nar'sie."
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list("unholywater" = 40)
@@ -232,7 +232,7 @@
 	
 /obj/item/device/shuttle_curse
 	name = "cursed orb"
-	desc = "you peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
+	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state ="bluespace"
 	color = "#ff0000"
@@ -267,7 +267,7 @@
 		
 /obj/item/device/cult_shift
 	name = "veil shifter"
-	desc = "the veil between worlds is weak, this relic teleports you forward a small distance. it may be used twice before its power is lost."
+	desc = "The veil between worlds is weak, this relic teleports you forward a small distance. It may be used twice before its power is lost."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shifter"
 	var/uses = 2
