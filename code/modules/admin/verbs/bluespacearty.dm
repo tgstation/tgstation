@@ -16,7 +16,7 @@
 
 	explosion(target.loc, 0, 0, 0, 0)
 
-	var/turf/simulated/floor/T = get_turf(target)
+	var/turf/open/floor/T = get_turf(target)
 	if(istype(T))
 		if(prob(80))
 			T.break_tile_to_plating()
@@ -28,7 +28,7 @@
 	message_admins("[target.name] has been hit by Bluespace Artillery fired by [usr]")
 
 	if(target.health <= 1)
-		target.gib()
+		target.gib(no_brain = 1)
 	else
 		target.adjustBruteLoss(min(99,(target.health - 1)))
 		target.Stun(20)

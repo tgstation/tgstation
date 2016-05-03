@@ -1,17 +1,14 @@
-/turf/simulated/floor/mech_bay_recharge_floor               //        Whos idea it was
+/turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
 	name = "mech bay recharge station"                      //        Recharging turfs
 	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
-/turf/simulated/floor/mech_bay_recharge_floor/break_tile()
-	src.ChangeTurf(/turf/simulated/floor/plating)
+/turf/open/floor/mech_bay_recharge_floor/break_tile()
+	src.ChangeTurf(/turf/open/floor/plating)
 
-/turf/simulated/floor/mech_bay_recharge_floor/airless
+/turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
-
+	initial_gas_mix = "TEMP=2.7"
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
@@ -76,7 +73,9 @@
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
@@ -105,7 +104,10 @@
 			data += "<div class='statusDisplay'>No mech detected.</div>"
 		else
 			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			if(recharge_port.recharging_mech.cell.crit_fail)
+
+			if(!recharge_port.recharging_mech.cell)
+				data += "<span class='bad'>WARNING : the mech cell is missing!</span></div>"
+			else if(recharge_port.recharging_mech.cell.crit_fail)
 				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
 			else
 				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"

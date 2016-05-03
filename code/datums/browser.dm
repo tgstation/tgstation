@@ -169,7 +169,7 @@
 
 /datum/browser/alert/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout >= world.time))
-		sleep (1)
+		stoplag()
 
 /datum/browser/alert/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)

@@ -66,11 +66,11 @@
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
+	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
 
-/datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
+		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
@@ -174,10 +174,9 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/structure/alien/weeds/))
+	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
-		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
-		alien_weeds.healthcheck()
+		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
 	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
@@ -695,4 +694,9 @@
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
-	acidpwr = 20
+	acidpwr = 42.0
+
+/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
+	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
+	. = 1 // When the blitzkrieg raged and the bodies stank
+	..() // Pleased to meet you, hope you guess my name

@@ -91,25 +91,28 @@
 /obj/item/weapon/defibrillator/MouseDrop(obj/over_object)
 	if(ismob(src.loc))
 		var/mob/M = src.loc
-		switch(over_object.name)
-			if("r_hand")
-				if(M.r_hand)
-					return
-				if(!M.unEquip(src))
-					return
-				M.put_in_r_hand(src)
-			if("l_hand")
-				if(M.l_hand)
-					return
-				if(!M.unEquip(src))
-					return
-				M.put_in_l_hand(src)
+		if(istype(over_object, /obj/screen/inventory/hand))
+			var/obj/screen/inventory/hand/H = over_object
+
+			switch(H.slot_id)
+				if(slot_r_hand)
+					if(M.r_hand)
+						return
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if(slot_l_hand)
+					if(M.l_hand)
+						return
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
 		paddles.unwield()
 		toggle_paddles()
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
 			user << "<span class='notice'>[src] already has a cell.</span>"
@@ -122,16 +125,17 @@
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
+			update_icon()
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
 			user << "<span class='notice'>You remove the cell from [src].</span>"
-
-	update_icon()
-	return
+			update_icon()
+	else
+		return ..()
 
 /obj/item/weapon/defibrillator/emag_act(mob/user)
 	if(safety)
@@ -493,8 +497,10 @@
 
 						if (H.suiciding || (H.disabilities & NOCLONE))
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
-						else if ((tplus > tlimit) || !H.getorgan(/obj/item/organ/internal/heart))
-							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"
+						else if (tplus > tlimit)
+							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
+						else if (!H.getorgan(/obj/item/organ/internal/heart))
+							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
 						else if(total_burn >= 180 || total_brute >= 180)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 						else if(H.get_ghost())

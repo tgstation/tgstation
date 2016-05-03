@@ -235,16 +235,40 @@
 	if(pale)
 		msg += "[t_He] [t_has] pale skin.\n"
 
+	var/datum/disease/F = new /datum/disease/shock
+	if(src.HasDisease(F))
+		msg += "[t_He] looks dazed and confused.\n"
+
+
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	if(blood_max)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
-		else
+		else if(blood_max > 2)
+			msg += "<B>[t_He] [t_is] gushing blood!</B>\n"
+		else if(blood_max > 1)
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+		else
+			msg += "[t_He] [t_is] bleeding slightly.\n"
 
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"
+
+	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
+		switch(drunkenness)
+			if(11 to 21)
+				msg += "[t_He] [t_is] slightly flushed.\n"
+			if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
+				msg += "[t_He] [t_is] flushed.\n"
+			if(41.01 to 51)
+				msg += "[t_He] [t_is] quite flushed and [t_his] breath smells of alcohol.\n"
+			if(51.01 to 61)
+				msg += "[t_He] is very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
+			if(61.01 to 91)
+				msg += "[t_He] looks like a drunken mess.\n"
+			if(91.01 to INFINITY)
+				msg += "[t_He] is a shitfaced, slobbering wreck.\n"
 
 	msg += "</span>"
 
@@ -314,4 +338,5 @@
 
 	msg += "*---------*</span>"
 
+	user.visible_message("<font size = '1'><b>[user]</b> looks at <b>[src]</b>.</font>")
 	user << msg

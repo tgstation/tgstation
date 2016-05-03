@@ -22,7 +22,7 @@
 	deflect_chance = 15
 	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
 	max_temperature = 35000
-	leg_overload_coeff = 1
+	leg_overload_coeff = 100
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4

@@ -5,7 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 35 // 35 players - 5 players to be the nuke ops = 30 players remaining
+	required_players = 30 // 30 players - 5 players to be the nuke ops = 25 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
@@ -234,8 +234,8 @@
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued && are_operatives_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
+		feedback_set_details("round_end_result","halfwin - evacuation - disk not secured")
+		world << "<FONT size = 3><B>Neutral Victory!</B></FONT>"
 		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued &&  crew_evacuated)
@@ -305,7 +305,7 @@
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
 
-	var/tc = 30
+	var/tc = 25
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0

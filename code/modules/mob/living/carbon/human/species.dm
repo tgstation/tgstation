@@ -31,7 +31,7 @@
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/need_nutrition = 1  //Does it need to eat food on a regular basis?
-	var/exotic_blood = null	// If your race wants to bleed something other than bog standard blood, change this.
+	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
 	var/list/no_equip = list()	// slots the race can't equip stuff to
@@ -41,7 +41,7 @@
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
-
+	var/list/mutant_organs = list(/obj/item/organ/internal/tongue)		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
 	var/brutemod = 1	// multiplier for brute damage
@@ -119,11 +119,21 @@
 		return 0
 	return 1
 
+/datum/species/proc/on_species_gain(mob/living/carbon/C)
+	// Drop the items the new species can't wear
+	for(var/slot_id in no_equip)
+		var/obj/item/thing = C.get_item_by_slot(slot_id)
+		if(thing)
+			C.unEquip(thing)
+	if(exotic_blood)
+		C.reagents.add_reagent(exotic_blood, 80)
+	for(var/path in mutant_organs)
+		var/obj/item/organ/internal/I = new path()
+		I.Insert(C)
+
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
-	if(C.dna.species)
-		if(C.dna.species.exotic_blood)
-			var/datum/reagent/EB = C.dna.species.exotic_blood
-			C.reagents.del_reagent(initial(EB.id))
+	if(C.dna.species && C.dna.species.exotic_blood)
+		C.reagents.del_reagent(C.dna.species.exotic_blood)
 
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
@@ -785,8 +795,13 @@
 
 			if(istype(J) && J.allow_thrust(0.01, H))
 				. -= 2
+			else
+				var/obj/item/organ/internal/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+				if(istype(T) && T.allow_thrust(0.01, H))
+					. -= 2
+
 		else
-			var/health_deficiency = (100 - H.health + H.staminaloss)
+			var/health_deficiency = (100 - H.health + H.staminaloss * 0.5)
 			if(health_deficiency >= 40)
 				. += (health_deficiency / 25)
 
@@ -943,14 +958,13 @@
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
-	if(I.attack_verb && I.attack_verb.len)
-		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
-	else if(I.force)
-		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
-						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
-	else
-		return 0
+	H.send_item_attack_message(I, user, hit_area)
+	if(I.damtype == BRUTE && I.is_sharp())
+		H.bleeding += I.force
+		H << "You're now bleeding [H.bleeding]."
+
+	if(!I.force)
+		return 0 //item force is zero
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
@@ -965,7 +979,7 @@
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
 				var/turf/location = H.loc
-				if(istype(location, /turf/simulated))
+				if(istype(location, /turf))
 					location.add_blood(H)
 				if(ishuman(user))
 					var/mob/living/carbon/human/M = user
@@ -1379,4 +1393,3 @@
 #undef COLD_GAS_DAMAGE_LEVEL_1
 #undef COLD_GAS_DAMAGE_LEVEL_2
 #undef COLD_GAS_DAMAGE_LEVEL_3
-

@@ -6,6 +6,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
+	materials = list(MAT_GLASS=500)
 	burn_state = FLAMMABLE
 	burntime = 5
 	spillable = 1
@@ -486,6 +487,30 @@
 				icon_state = "gibbfloats"
 				name = "Gibbfloat"
 				desc = "Dr. Gibb with ice cream on top."
+			if("whiskey_sour")
+				icon_state = "whiskey_sour"
+				name = "Whiskey Sour"
+				desc = "Lemon juice mixed with whiskey and a dash of sugar. Surprisingly satisfying."
+			if("fetching_fizz")
+				icon_state = "fetching_fizz"
+				name = "Fetching Fizz"
+				desc = "Induces magnetism in the imbiber. Started as a barroom prank but evolved to become popular with miners and scrappers. Metallic aftertaste."
+			if("hearty_punch")
+				icon_state = "hearty_punch"
+				name = "Hearty Punch"
+				desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
+			if("absinthe")
+				icon_state = "absinthe"
+				name = "glass of absinthe"
+				desc = "It's as strong as it smells."
+			if("bacchus_blessing")
+				icon_state = "glass_brown2"
+				name = "Bacchus' Blessing"
+				desc = "You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?"
+			if("arnold_palmer")
+				icon_state = "arnold_palmer"
+				name = "Arnold Palmer"
+				desc = "You feel like taking a few golf swings after a few swigs of this."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
@@ -514,6 +539,7 @@
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
+	materials = list(MAT_GLASS=100)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
 	if (gulp_size < 15)
@@ -623,7 +649,6 @@
 		..()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/user)
-
 	if(user.a_intent == "harm" && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
@@ -634,7 +659,8 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target,target_self=1)) return
+	if((!proximity) || !check_allowed_items(target,target_self=1))
+		return
 
 	else if(reagents.total_volume && user.a_intent == "harm")
 		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \

@@ -120,7 +120,7 @@
 
 /datum/stockEvent/bankruptcy/proc/generateBankruptcyArticle()
 	var/datum/article/A = new
-	var/list/bankrupt_reason = list("investor pessimism", "failure of product lines", "economic recession", "overblown inflation", "overblown deflation", "collapsed pyramid schemes", "a Ponzi scheme", "economic terrorism", "extreme hedonism", "unfavourable economic climate", "rampant government corruption", "cartelling competitors", "some total bullshit", "volatile plans")
+	var/list/bankrupt_reason = list("investor pessimism", "failure of product lines", "economic recession", "overblown inflation", "overblown deflation", "collapsed pyramid schemes", "a Ponzi scheme", "economic terrorism", "extreme hedonism", "unfavourable economic climate", "rampant government corruption", "divine conspiracy", "some total bullshit", "volatile plans")
 	A.about = company
 	A.headline = pick(	"[company.name] filing for bankruptcy", \
 						"[company.name] unable to pay, investors run", \
@@ -160,12 +160,12 @@
 	else
 		position = ucfirsts(company.industry.detokenize("Lead %industrial% Engineer"))
 	offenses = ""
-	var/list/O = list("corruption", "murder", "jaywalking", "assault", "battery", "drug possession", "burglary", "theft", "larceny", "bribery",
+	var/list/O = list("corruption", "murder", "grand theft", "assault", "battery", "drug possession", "burglary", "theft", "grand sabotage", "bribery",
 						"disorderly conduct", "treason", "sedition", "shoplifting", "tax evasion", "tax fraud", "insurance fraud", "perjury", "kidnapping", "manslaughter", "vandalism", "forgery", "extortion", "embezzlement",
-						"public indecency", "public intoxication", "trespassing", "loitering", "littering", "vigilantism", "squatting", "panhandling", "arson", "spacepodjacking", "shuttlejacking", "carjacking", "boatjacking",
-						"aircraft piracy", "spacecraft piracy", "music piracy", "tabletop game piracy", "software piracy", "escaping from space prison", "seniornapping", "adultnapping", "horsenappinng", "corginapping", "catnapping",
-						"sleeping on the job", "terrorism", "counterterrorism", "drug distribution", "vouyerism", "owning a computer", "owning a cellphone", "owning a PDA", "owning a smartphone", "owning a pAI", "adultery",
-						"committing an unnatural act with another person", "corrupting public morals", "skateboarding without a license", "car piracy")
+						"public indecency", "public intoxication", "trespassing", "loitering", "littering", "vigilantism", "squatting", "panhandling", "arson", "spacepodjacking", "shuttlejacking", "carjacking", "singularityjacking",
+						"dereliction of duty", "spacecraft piracy", "music piracy", "tabletop game piracy", "software piracy", "escaping from space prison", "seniornapping", "clownnapping", "corginapping", "catnapping",
+						"sleeping on the job", "terrorism", "counterterrorism", "drug distribution", "insubordination", "jaywalking", "owning a computer", "owning a cellphone", "owning a PDA", "owning a pAI", "adultery",
+						"committing an unnatural act with another person", "corrupting public morals", "skateboarding without a license", "shitcurity", "bestiality", "erotic roleplay")
 	while (prob(60) && O.len > 2)
 		var/offense = pick(O)
 		O -= offense
@@ -217,7 +217,7 @@
 	A.subtitle = "[A.author] reporting directly from the courtroom"
 	if (prob(15))
 		A.opinion = rand(-1, 1)
-	var/article = "[pick("Police", "Law enforcement")] forces issued a statement that [tname], the [position] of [company.name], the %famous% %industrial% %company% was arrested %this_time%. The trial has been scheduled and the statement reports that the arrested individual is being charged with [offenses]. "
+	var/article = "[pick("Security", "Law enforcement")] forces issued a statement that [tname], the [position] of [company.name], the %famous% %industrial% %company% was arrested %this_time%. The trial has been scheduled and the statement reports that the arrested individual is being charged with [offenses]. "
 	if (!A.opinion)
 		article += "While we cannot predict the outcome of this trial, our tip to stay safe is: %sell%"
 	else if (A.opinion > 0)

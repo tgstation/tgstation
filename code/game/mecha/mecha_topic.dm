@@ -130,7 +130,8 @@
 		. += {"<div class='wr'>
 						<div class='header'>Equipment</div>
 						<div class='links'>"}
-		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
+		for(var/X in equipment)
+			var/obj/item/mecha_parts/mecha_equipment/W = X
 			. += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
 		. += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
 		. += "</div></div>"

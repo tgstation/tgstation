@@ -9,8 +9,9 @@
 	var/maxhealth = 200
 	var/health = 200
 	var/datum/gang/gang
-	var/operating = 0	//-1=broken, 0=standby, 1=takeover
+	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
+	var/datum/effect_system/spark_spread/spark_system
 
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
@@ -19,10 +20,12 @@
 	..()
 	SetLuminosity(2)
 	poi_list |= src
+	spark_system = new
+	spark_system.set_up(5, 1, src)
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
-	if(operating == -1)
+	if(stat & BROKEN)
 		user << "<span class='danger'>It looks completely busted.</span>"
 		return
 
@@ -52,30 +55,31 @@
 		else
 			SSmachine.processing -= src
 
-/obj/machinery/dominator/proc/healthcheck(damage)
-	var/iconname = "dominator"
-	if(gang)
-		iconname += "-[gang.color]"
-		SetLuminosity(3)
-
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-
+/obj/machinery/dominator/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(src, 'sound/effects/bang.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		else
+			return
 	health -= damage
 
 	if(health > (maxhealth/2))
 		if(prob(damage*2))
-			sparks.set_up(5, 1, src)
-			sparks.start()
-	else if(operating >= 0)
-		sparks.set_up(5, 1, src)
-		sparks.start()
+			spark_system.start()
+	else if(!(stat & BROKEN))
+		spark_system.start()
 		overlays += "damage"
 
-	if(operating != -1)
+	if(!(stat & BROKEN))
 		if(health <= 0)
 			set_broken()
-		else
-			icon_state = iconname
 
 	if(health <= -100)
 		new /obj/item/stack/sheet/plasteel(src.loc)
@@ -107,17 +111,19 @@
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
 	overlays.Cut()
-	operating = -1
+	operating = 0
+	stat |= BROKEN
 	SSmachine.processing -= src
 
 /obj/machinery/dominator/Destroy()
-	if(operating != -1)
+	if(!(stat & BROKEN))
 		set_broken()
 	poi_list.Remove(src)
+	qdel(spark_system)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
-	healthcheck(100)
+	take_damage(100, BURN, 0)
 	..()
 
 /obj/machinery/dominator/ex_act(severity, target)
@@ -128,31 +134,26 @@
 		if(1)
 			qdel(src)
 		if(2)
-			healthcheck(120)
+			take_damage(120, BRUTE, 0)
 		if(3)
-			healthcheck(30)
+			take_damage(30, BRUTE, 0)
 	return
 
-/obj/machinery/dominator/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			var/damage = Proj.damage
-			if(Proj.forcedodge)
-				damage *= 0.5
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
-			healthcheck(damage)
-	..()
+/obj/machinery/dominator/bullet_act(obj/item/projectile/P)
+	. = ..()
+	if(P.damage)
+		var/damage_amount = P.damage
+		if(P.forcedodge)
+			damage_amount *= 0.5
+		visible_message("<span class='danger'>[src] was hit by [P].</span>")
+		take_damage(damage_amount, P.damage_type, 0)
+
 
 /obj/machinery/dominator/blob_act()
-	healthcheck(110)
-
-/obj/machinery/dominator/attackby(obj/I, mob/user, params)
-
-	return
+	take_damage(110, BRUTE, 0)
 
 /obj/machinery/dominator/attack_hand(mob/user)
-	if(operating)
+	if(operating || (stat & BROKEN))
 		examine(user)
 		return
 
@@ -185,8 +186,9 @@
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
 		src.name = "[gang.name] Gang [src.name]"
-		healthcheck(0)
 		operating = 1
+		icon_state = "dominator-[gang.color]"
+		SetLuminosity(3)
 		SSmachine.processing += src
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
@@ -194,46 +196,14 @@
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
 
-/obj/machinery/dominator/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	user.visible_message("<span class='danger'>[user] smashes against [src] with its claws.</span>",\
-	"<span class='danger'>You smash against [src] with your claws.</span>",\
-	"<span class='italics'>You hear metal scraping.</span>")
-	healthcheck(15)
-
-/obj/machinery/dominator/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
-		return
-	healthcheck(M.melee_damage_upper)
-
-/obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
-	if(M.damtype == "brute")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		healthcheck(M.force)
-	return
-
 /obj/machinery/dominator/attack_hulk(mob/user)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
 	"<span class='danger'>You punch [src].</span>",\
 	"<span class='italics'>You hear metal being slammed.</span>")
-	healthcheck(5)
+	take_damage(5)
 
-/obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon))
-		add_fingerprint(user)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if( (I.flags&NOBLUDGEON) || !I.force )
-			return
-		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
-		visible_message("<span class='danger'>[user] has hit \the [src] with [I].</span>")
-		if(I.damtype == BURN || I.damtype == BRUTE)
-			healthcheck(I.force)
-		return
+/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
+	add_fingerprint(user)
+	..()
+
+

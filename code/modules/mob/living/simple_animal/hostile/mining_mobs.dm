@@ -60,7 +60,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
-	ranged_cooldown_cap = 20
+	ranged_cooldown_time = 30
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -73,7 +73,6 @@
 	a_intent = "harm"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
@@ -210,23 +209,21 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
-	ranged_cooldown_cap = 0
+	ranged_cooldown_time = 20
 	environment_smash = 0
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/internal/hivelord_core)
-	var/next_brood = 0
-	var/brood_cooldown = 20
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	if(world.time >= next_brood)
+	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction
-		next_brood = world.time + brood_cooldown
+		ranged_cooldown = world.time + ranged_cooldown_time
 	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -252,6 +249,8 @@
 		if(!owner && !preserved)
 			inert = 1
 			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+		else
+			preserved = 1
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
@@ -332,8 +331,7 @@
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
-	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
-	ranged_cooldown_cap = 8
+	ranged_cooldown_time = 120
 	friendly = "wails at"
 	speak_emote = list("bellows")
 	vision_range = 4
@@ -352,14 +350,14 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = 4.1})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
 	handle_preattack()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
-	if(ranged_cooldown <= 2 && !pre_attack)
+	if(ranged_cooldown <= world.time + ranged_cooldown_time*0.25 && !pre_attack)
 		pre_attack++
 	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
@@ -376,19 +374,18 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf/simulated)))
+	if(!(istype(tturf, /turf)))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
-		ranged_cooldown = ranged_cooldown_cap
+		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
 		pre_attack = 0
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
-	if(ranged_cooldown)
-		ranged_cooldown--
+	ranged_cooldown -= 10
 	handle_preattack()
 	. = ..()
 
@@ -408,8 +405,8 @@
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = turftype
+	if(istype(turftype, /turf/closed/mineral))
+		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
 	spawn(10)
 		Trip()
@@ -441,7 +438,7 @@
 		spawn(50)
 			qdel(src)
 
-/obj/item/asteroid/goliath_hide
+/obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/mining.dmi'
@@ -450,15 +447,15 @@
 	w_class = 3
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor.["melee"] < 80)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
+			if(current_armor.["melee"] < 60)
+				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
+				use(1)
 			else
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
@@ -481,6 +478,7 @@
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return
+
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
@@ -636,9 +634,8 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
 	robust_searching = 1
-	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
-				/obj/item/weapon/ore/diamond{layer = 4.1})
-
+	loot = list()
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 //Goliath
 
@@ -652,9 +649,12 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	loot = list(/obj/item/asteroid/goliath_hide{layer = 4.1})
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
+	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+
+
 
 //Legion
 
@@ -768,11 +768,13 @@
 	layer = 2
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
+	anchored = TRUE
 
 /obj/effect/collapse/New()
 	..()
 	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
 	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
@@ -780,7 +782,7 @@
 		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
-				T.ChangeTurf(/turf/simulated/chasm/straight_down/lava_land_surface)
+				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
 		qdel(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath

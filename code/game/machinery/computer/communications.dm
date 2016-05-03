@@ -325,8 +325,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(istype(I, /obj/item/weapon/card/id))
 		attack_hand(user)
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
 	if(!emagged)

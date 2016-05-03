@@ -12,7 +12,7 @@
 
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15
-	weaken = 3
+	bleed = 7
 	stamina = 50
 
 /obj/item/projectile/bullet/weakbullet3
@@ -125,6 +125,21 @@
 	weaken = 4
 	stun = 4
 
+/obj/item/projectile/bullet/honker
+	damage = 0
+	weaken = 5
+	stun = 5
+	forcedodge = 1
+	nodamage = 1
+	hitsound = 'sound/items/bikehorn.ogg'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana"
+	range = 200
+
+/obj/item/projectile/bullet/honker/New()
+	..()
+	SpinAnimation()
+
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(istype(target, /atom/movable))
@@ -163,6 +178,7 @@
 		if(blocked != 100) // not completely blocked
 			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 				return 1
 			else

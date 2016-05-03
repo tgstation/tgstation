@@ -160,7 +160,7 @@
 	filling_color = "#9370DB"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	M.maxHealth += round(seed.endurance / 4)
@@ -230,7 +230,7 @@
 	var/effect_path = /obj/effect/glowshroom
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/obj/effect/glowshroom/planted = new effect_path(user.loc)
 	planted.delay = planted.delay - seed.production * 100 //So the delay goes DOWN with better stats instead of up. :I

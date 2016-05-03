@@ -86,8 +86,26 @@
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
+		. = 1
 	..()
-	. = 1
+
+/datum/reagent/medicine/synaphydramine
+	name = "Diphen-Synaptizine"
+	id = "synaphydramine"
+	description = "Reduces drowsiness, hallucinations, and Histamine from body."
+	color = "#EC536D" // rgb: 236, 83, 109
+
+/datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/M)
+	M.drowsyness = max(M.drowsyness-5, 0)
+	if(holder.has_reagent("mindbreaker"))
+		holder.remove_reagent("mindbreaker", 5)
+	if(holder.has_reagent("histamine"))
+		holder.remove_reagent("histamine", 5)
+	M.hallucination = max(0, M.hallucination - 10)
+	if(prob(30))
+		M.adjustToxLoss(1, 0)
+		. = 1
+	..()
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
@@ -536,18 +554,19 @@
 	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/M)
-	M.status_flags |= IGNORESLOWDOWN
+	//M.status_flags |= IGNORESLOWDOWN
+	M.adjustStaminaLoss(-2.5*REM)
 	switch(current_cycle)
-		if(11)
+		if(16)
 			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
-		if(12 to 24)
+		if(17 to 32)
 			M.drowsyness += 1
-		if(24 to INFINITY)
+		if(33 to INFINITY)
 			M.Sleeping(2, 0)
 			. = 1
 	..()
@@ -766,6 +785,9 @@
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
 	M.adjustToxLoss(-0.2*REM, 0)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.drunkenness = max(H.drunkenness - 10, 0)
 	..()
 	. = 1
 

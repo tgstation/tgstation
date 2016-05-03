@@ -196,7 +196,7 @@
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	if(!supress_message)
-		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+		visible_message("<span class='danger'>[user] has grabbed [src] passively!</span>")
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)

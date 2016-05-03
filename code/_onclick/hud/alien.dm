@@ -37,50 +37,34 @@
 //equippable shit
 
 //hands
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "right hand"
 	inv_box.icon = 'icons/mob/screen_alien.dmi'
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_r_active"
+	inv_box.icon_state = "hand_r"
 	inv_box.screen_loc = ui_rhand
-	inv_box.layer = 19
 	inv_box.slot_id = slot_r_hand
-	r_hand_hud_object = inv_box
-	if(owner.handcuffed)
-		inv_box.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
 	static_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "left hand"
 	inv_box.icon = 'icons/mob/screen_alien.dmi'
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_l_active"
+	inv_box.icon_state = "hand_l"
 	inv_box.screen_loc = ui_lhand
-	inv_box.layer = 19
 	inv_box.slot_id = slot_l_hand
-	l_hand_hud_object = inv_box
-	if(owner.handcuffed)
-		inv_box.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
 	static_inventory += inv_box
 
 //begin buttons
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
 	static_inventory += using
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
 	static_inventory += using
 
 	using = new /obj/screen/act_intent/alien()
@@ -129,6 +113,12 @@
 	zone_select = new /obj/screen/zone_sel/alien()
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select
+
+	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[inv.slot_id] = inv
+			inv.update_icon()
 
 /datum/hud/alien/persistant_inventory_update()
 	if(!mymob)

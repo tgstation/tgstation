@@ -79,10 +79,11 @@
 	mouse_opacity = 1
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
+	var/alerttooltipstyle = ""
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
 /obj/screen/alert/MouseExited()
@@ -216,17 +217,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
 	icon_state = "alien_tox"
+	alerttooltipstyle = "alien"
 
 /obj/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Too Hot"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
 	icon_state = "alien_fire"
+	alerttooltipstyle = "alien"
 
 /obj/screen/alert/alien_vulnerable
 	name = "Severed Matriarchy"
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
 	icon_state = "alien_noqueen"
+	alerttooltipstyle = "alien"
+
+//BLOBS
+
+/obj/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut_nofactory"
+	alerttooltipstyle = "blob"
 
 //GUARDIANS
 
@@ -234,6 +246,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Charge Ready"
 	desc = "You are ready to charge at a location!"
 	icon_state = "guardian_charge"
+	alerttooltipstyle = "parasite"
+
+/obj/screen/alert/canstealth
+	name = "Stealth Ready"
+	desc = "You are ready to enter stealth!"
+	icon_state = "guardian_canstealth"
+	alerttooltipstyle = "parasite"
+
+/obj/screen/alert/instealth
+	name = "In Stealth"
+	desc = "You are in stealth and your next attack will do bonus damage!"
+	icon_state = "guardian_instealth"
+	alerttooltipstyle = "parasite"
 
 //SILICONS
 
@@ -285,7 +310,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/notify_cloning
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
-	icon_state = "ghost_frame"
+	icon_state = "template"
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
@@ -296,7 +321,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/notify_jump
 	name = "Body created"
 	desc = "A body was created. You can enter it."
-	icon_state = "ghost_frame"
+	icon_state = "template"
 	timeout = 300
 	var/atom/jump_target = null
 	var/attack_not_jump = null

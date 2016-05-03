@@ -74,18 +74,17 @@
 	return null
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
-				return ..()
+				return
 			W.loc = src
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
 			return
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/cloning/attack_hand(mob/user)
 	if(..())
@@ -374,7 +373,8 @@
 	if(subject.dna.species)
 		R.fields["mrace"] = subject.dna.species.type
 	else
-		R.fields["mrace"] = /datum/species/human
+		var/datum/species/rando_race = pick(config.roundstart_races)
+		R.fields["mrace"] = rando_race.type
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)

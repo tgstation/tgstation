@@ -84,7 +84,7 @@
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
-	if(!istype(target) || istype(target, /turf/space))
+	if(!istype(target) || istype(target, /turf/open/space))
 		return
 	target.color = "#" + item_color
 	return

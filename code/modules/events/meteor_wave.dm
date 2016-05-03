@@ -2,6 +2,7 @@
 	name = "Meteor Wave"
 	typepath = /datum/round_event/meteor_wave
 	weight = 5
+	min_players = 5
 	max_occurrences = 3
 
 /datum/round_event/meteor_wave

@@ -1,3 +1,4 @@
+var/global/default_martial_art = new/datum/martial_art
 /mob/living/carbon/human
 	languages = HUMAN
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD)
@@ -53,3 +54,5 @@
 	var/name_override //For temporary visible name changes
 
 	var/heart_attack = 0
+
+	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects

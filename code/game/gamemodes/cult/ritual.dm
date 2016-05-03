@@ -29,7 +29,7 @@ This file contains the arcane tome files as well as innate cultist emergency com
 		if(usr.incapacitated())
 			return	//Hard to drawn intrinsic symbols when you're bleeding out in your cell.
 		var/turf/location = loc
-		if(istype(location, /turf/simulated))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
+		if(istype(location, /turf))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
 			location.add_blood(usr)				// TO-DO change this to a badly drawn rune
 		apply_damage(10,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
 		apply_damage(10,BRUTE, "r_arm")

@@ -472,3 +472,13 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
 	category = list ("Misc. Machinery")
+
+/datum/design/plantgenes
+	name = "Machine Design (Plant DNA Manipulator Board)"
+	desc = "The circuit board for a plant DNA manipulator."
+	id = "plantgenes"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/plantgenes
+	category = list ("Misc. Machinery")

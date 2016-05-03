@@ -227,7 +227,7 @@
 				if(istype(player, /mob/living/silicon)) //Borgs are technically dead anyways
 					continue
 				if(get_area(player) == A)
-					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 0
 	return 1
 
@@ -250,7 +250,7 @@
 				if(istype(player, /mob/living/silicon))
 					continue
 				if(get_area(player) == A)
-					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 0
 
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
@@ -259,7 +259,7 @@
 				if(istype(player, /mob/living/silicon))
 					continue
 				if(get_area(player) == A)
-					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 1
 	return 0
 
@@ -348,7 +348,7 @@
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/simulated/floor/plasteel/shuttle/red)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/open/floor/plasteel/shuttle/red)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	if(location.onCentcom() || location.onSyndieBase())

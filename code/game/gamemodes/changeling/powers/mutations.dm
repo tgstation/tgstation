@@ -88,7 +88,7 @@
 		H.update_hair()
 
 		if(blood_on_castoff)
-			var/turf/simulated/T = get_turf(H)
+			var/turf/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
 				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
@@ -165,7 +165,7 @@
 		return
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
-		T.table_destroy(1)
+		T.table_destroy()
 
 	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target

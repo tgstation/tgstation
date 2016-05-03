@@ -18,16 +18,19 @@
 	var/mopspeed = 30
 
 /obj/item/weapon/mop/New()
+	..()
 	create_reagents(mopcap)
 
 
-obj/item/weapon/mop/proc/clean(turf/simulated/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
+obj/item/weapon/mop/proc/clean(turf/A)
+	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1))
 		A.clean_blood()
-		A.thermite = 0
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)
+		if(istype(A, /turf/closed))
+			var/turf/closed/C = A
+			C.thermite = 0
 	reagents.reaction(A, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 
@@ -39,10 +42,9 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		user << "<span class='warning'>Your mop is dry!</span>"
 		return
 
-	var/turf/simulated/turf = A
+	var/turf/turf = A
 	if(is_cleanable(A))
 		turf = A.loc
-	A = null
 
 	if(istype(turf))
 		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
@@ -55,7 +57,8 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 /obj/effect/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap))
 		return
-	..()
+	else
+		return ..()
 
 
 /obj/item/weapon/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)

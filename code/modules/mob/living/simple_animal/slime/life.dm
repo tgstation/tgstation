@@ -16,15 +16,22 @@
 	if(..())
 		if(buckled)
 			handle_feeding()
-		handle_nutrition()
-		handle_targets()
-		if (!ckey)
-			handle_mood()
-			handle_speech()
+		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+			handle_nutrition()
+			handle_targets()
+			if (!ckey)
+				handle_mood()
+				handle_speech()
+
+// Unlike most of the simple animals, slimes support UNCONSCIOUS
+/mob/living/simple_animal/slime/update_stat()
+	if(stat == UNCONSCIOUS && health > 0)
+		return
+	..()
 
 /mob/living/simple_animal/slime/proc/AIprocess()  // the master AI process
 
-	if(AIproc || stat == DEAD || client)
+	if(AIproc || stat || client)
 		return
 
 	var/hungry = 0
@@ -84,15 +91,14 @@
 					if(!Atkcool && Target.Adjacent(src))
 						Feedon(Target)
 
+			else if(Target in view(7, src))
+				if(!Target.Adjacent(src))
+				// Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
+					step_to(src, Target)
 			else
-				if(Target in view(7, src))
-					if(!Target.Adjacent(src)) // Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
-						step_to(src, Target)
-
-				else
-					Target = null
-					AIproc = 0
-					break
+				Target = null
+				AIproc = 0
+				break
 
 		var/sleeptime = movement_delay()
 		if(sleeptime <= 0)
@@ -109,10 +115,7 @@
 	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
 
 	//Account for massive pressure differences
 
@@ -129,7 +132,27 @@
 	else
 		Tempstun = 0
 
+	if(stat != DEAD)
+		var/co2_percentage =0
+		if("co2" in environment.gases)
+			co2_percentage = environment.gases["co2"][MOLES] / environment.total_moles()
+		var/stasis = (co2_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
+
+		if(stat == CONSCIOUS && stasis)
+			src << "<span class='danger'>High levels of CO2 put you in stasis!</span>"
+			stat = UNCONSCIOUS
+			powerlevel = 0
+			rabid = 0
+			update_canmove()
+			regenerate_icons()
+		else if(stat == UNCONSCIOUS && !stasis)
+			src << "<span class='notice'>You wake up from the stasis.</span>"
+			stat = CONSCIOUS
+			update_canmove()
+			regenerate_icons()
+
 	updatehealth()
+
 
 	return //TODO: DEFERRED
 
@@ -152,13 +175,16 @@
 
 /mob/living/simple_animal/slime/handle_status_effects()
 	..()
-	if(prob(30))
+	if(prob(30) && !stat)
 		adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_feeding()
 	if(!ismob(buckled))
 		return
 	var/mob/M = buckled
+
+	if(stat)
+		Feedstop(silent = 1)
 
 	if(M.stat == DEAD) // our victim died
 		if(!client)

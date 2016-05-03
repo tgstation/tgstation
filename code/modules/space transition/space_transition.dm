@@ -150,7 +150,7 @@ var/list/z_levels_list = list()
 					D = D.neigbours["[dirside]"]
 				zdestination = D.z_value
 			D = grid["[zlevelnumber]"]
-			for(var/turf/space/S in turfblock)
+			for(var/turf/open/space/S in turfblock)
 				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
 				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
 				S.destination_z = zdestination

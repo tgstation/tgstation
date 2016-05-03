@@ -41,10 +41,6 @@
 			return 0
 	return ..()
 
-/obj/structure/plasticflaps/attackby(obj/item/weapon/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	..()
-
 /obj/structure/plasticflaps/ex_act(severity)
 	..()
 	switch(severity)
@@ -70,6 +66,6 @@
 /obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
 	var/turf/T = get_turf(loc)
 	if(T)
-		if(istype(T, /turf/simulated/floor))
+		if(istype(T, /turf/open/floor))
 			T.blocks_air = 0
 	return ..()

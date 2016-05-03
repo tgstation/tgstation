@@ -201,6 +201,50 @@
 		being_used = 0
 		..()
 
+/obj/item/slimepotion/transference
+	name = "consciousness transference potion"
+	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle6"
+	origin_tech = "biotech=6"
+	var/prompted = 0
+	var/animal_type = SENTIENCE_ORGANIC
+
+/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/user)
+	if(prompted || !ismob(M))
+		return
+	if(!isanimal(M) || M.ckey) //much like sentience, these will not work on something that is already player controlled
+		user << "<span class='warning'>[M] already has a higher consciousness!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'>[M] is dead!</span>"
+		return ..()
+	var/mob/living/simple_animal/SM = M
+	if(SM.sentience_type != animal_type)
+		user << "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" //no controlling machines
+		return ..()
+	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
+		user << "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>"
+		return
+
+	prompted = 1
+	if(alert("This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
+		prompted = 0
+		return
+
+	user << "<span class='notice'>You drink the potion then place your hands on [SM]...</span>"
+
+
+	user.mind.transfer_to(SM)
+	SM.languages = user.languages
+	SM.faction = user.faction
+	SM.sentience_act() //Same deal here as with sentience
+	user.death()
+	SM << "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>"
+	SM << "<span class='warning'>You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>"
+	SM.name = "[SM.name] as [user.real_name]"
+	qdel(src)
+
 /obj/item/slimepotion/steroid
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
@@ -508,7 +552,7 @@
 			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
 				unfreeze_mob(M)
 				stopped_atoms -= M
-		sleep(1)
+		stoplag()
 
 	//End
 	for(var/mob/living/M in stopped_atoms)
@@ -546,10 +590,10 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor/bluespace
+	turf_type = /turf/open/floor/bluespace
 
 
-/turf/simulated/floor/bluespace
+/turf/open/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
@@ -569,10 +613,10 @@
 	throw_range = 7
 	flags = CONDUCT
 	max_amount = 60
-	turf_type = /turf/simulated/floor/sepia
+	turf_type = /turf/open/floor/sepia
 
 
-/turf/simulated/floor/sepia
+/turf/open/floor/sepia
 	slowdown = 2
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"

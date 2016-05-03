@@ -14,7 +14,7 @@
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/M)
 	M.set_drugginess(15)
-	if(isturf(M.loc) && !istype(M.loc, /turf/space))
+	if(isturf(M.loc) && !istype(M.loc, /turf/open/space))
 		if(M.canmove)
 			if(prob(10)) step(M, pick(cardinal))
 	if(prob(7))
@@ -43,7 +43,9 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1, 0)
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.adjustStaminaLoss(-1*REM, 0)
+	if(M.getStaminaLoss() > 0 && prob(6))
+		M << "<span class='notice'>The nicotine takes your mind off the pain.</span>"
 	..()
 	. = 1
 

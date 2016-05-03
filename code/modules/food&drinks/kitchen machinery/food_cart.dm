@@ -101,7 +101,7 @@
 	else if(O.is_open_container())
 		return
 	else
-		..()
+		. = ..()
 	updateDialog()
 
 /obj/machinery/food_cart/Topic(href, href_list)

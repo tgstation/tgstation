@@ -178,7 +178,7 @@ BLIND     // can't see anything
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
 	var/obj/held_item
-	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade, /obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
 
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
@@ -313,6 +313,18 @@ BLIND     // can't see anything
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
 
+/obj/item/clothing/under/attack_self(mob/user)
+	if(!can_adjust)
+		user << "<span class='warning'>You cannot tear any cloth off of [src]</span>!"
+		return
+
+	if(!adjusted)
+		rolldown()
+	can_adjust = 0
+
+	user.visible_message("<span class='notice'>[user] tears the sleeves from [src] into strips.</span>", \
+						"<span class='notice'>You tear the sleeves from [src] into strips.</span>")
+	new /obj/item/stack/medical/gauze/improvised(user.loc)
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()

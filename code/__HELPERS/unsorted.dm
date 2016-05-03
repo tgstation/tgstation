@@ -901,8 +901,8 @@ var/list/WALLITEMS_INVERSE = list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in hardcoded_gases || gas_concentration > 0.01) //ensures the four primary gases are always shown.
-				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
@@ -949,8 +949,7 @@ var/list/WALLITEMS_INVERSE = list(
 		else
 			return "white"
 
-
-/proc/screen_loc2turf(scr_loc, turf/origin)
+/proc/params2turf(scr_loc, turf/origin)
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
@@ -959,6 +958,17 @@ var/list/WALLITEMS_INVERSE = list(
 	tX = tX[1]
 	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
 	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	return locate(tX, tY, tZ)
+
+/proc/screen_loc2turf(text, turf/origin)
+	var/tZ = splittext(text, ",")
+	var/tX = splittext(tZ[1], "-")
+	var/tY = text2num(tX[2])
+	tX = splittext(tZ[2], "-")
+	tX = text2num(tX[2])
+	tZ = origin.z
+	tX = max(1, min(origin.x + 7 - tX, world.maxx))
+	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(A)
@@ -1070,7 +1080,7 @@ B --><-- A
 			break
 		loc = targetloc
 		lastloc = loc
-		sleep(0.6)
+		stoplag()
 
 	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
@@ -1349,7 +1359,6 @@ proc/pick_closest_path(value)
 /proc/stoplag()
 	. = 1
 	sleep(world.tick_lag)
-#if DM_VERSION >= 510
 	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
 		. += 2
 		sleep(world.tick_lag*2)
@@ -1358,4 +1367,3 @@ proc/pick_closest_path(value)
 			sleep(world.tick_lag*4)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
-#endif

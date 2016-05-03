@@ -4,6 +4,7 @@
 	weight = 5
 	max_occurrences = 1
 
+	min_players = 5
 	earliest_start = 18000 // 30 min
 
 	gamemode_blacklist = list("nuclear","wizard","revolution","abduction")

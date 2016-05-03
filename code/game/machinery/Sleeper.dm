@@ -105,6 +105,8 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	return ..()
+
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

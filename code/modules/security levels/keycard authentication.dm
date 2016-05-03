@@ -26,9 +26,6 @@ var/datum/events/keycard_events = new()
 	qdel(ev)
 	. = ..()
 
-/obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user, params)
-	return
-
 /obj/machinery/keycard_auth/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 					datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

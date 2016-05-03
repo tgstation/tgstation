@@ -221,6 +221,5 @@
 	return
 
 /obj/machinery/computer/telecomms/server/attackby()
-	..()
-	src.updateUsrDialog()
-	return
+	. = ..()
+	updateUsrDialog()

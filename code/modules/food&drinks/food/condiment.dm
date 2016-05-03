@@ -165,6 +165,13 @@
 	list_reagents = list("rice" = 30)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/soysauce
+	name = "soy sauce"
+	desc = "A salty soy-based flavoring."
+	icon_state = "soysauce"
+	list_reagents = list("soysauce" = 50)
+	possible_states = list()
+
 
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!

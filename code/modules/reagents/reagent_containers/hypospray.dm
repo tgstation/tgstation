@@ -59,15 +59,15 @@
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "epinephrine medipen"
-	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
+	name = "emergeny medipen"
+	desc = "An old, generic branded medipen for use during emergencies. Useful for stabilizing patients and numbing pain."
 	icon_state = "medipen"
 	item_state = "medipen"
-	amount_per_transfer_from_this = 10
-	volume = 10
+	amount_per_transfer_from_this = 20
+	volume = 20
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	list_reagents = list("epinephrine" = 10)
+	list_reagents = list("epinephrine" = 10, "morphine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)

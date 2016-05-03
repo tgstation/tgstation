@@ -482,6 +482,10 @@
 	var/shield_state = "shield-old"
 	var/shield_on = "shield-old"
 
+/obj/item/clothing/suit/space/hardsuit/shielded/New()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+	..()
+
 /obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new

@@ -100,6 +100,8 @@
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("CONSTRUCT",src,user)
+	else
+		return ..()
 
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////

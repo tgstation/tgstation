@@ -137,21 +137,25 @@
 			if(T.disabilities & NOCLONE)
 				return
 
-			if(NOBLOOD in T.dna.species.specflags)
+			if((NOBLOOD in T.dna.species.specflags) && !T.dna.species.exotic_blood)
 				return
 
-			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
-				visible_message("\The [src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			var/datum/reagent/B = T.take_blood(beaker,amount)
-
-			if (B)
-				beaker.reagents.reagent_list |= B
-				beaker.reagents.update_total()
-				beaker.on_reagent_change()
-				beaker.reagents.handle_reactions()
+			if(T.dna.species.exotic_blood)
+				T.reagents.trans_to(beaker, amount)
 				update_icon()
+			else
+				// If the human is losing too much blood, beep.
+				if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE && prob(5))
+					visible_message("\The [src] beeps loudly.")
+					playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+				var/datum/reagent/B = T.take_blood(beaker,amount)
+
+				if (B)
+					beaker.reagents.reagent_list |= B
+					beaker.reagents.update_total()
+					beaker.on_reagent_change()
+					beaker.reagents.handle_reactions()
+					update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
 	if (!ishuman(user))

@@ -36,6 +36,11 @@
 			user << "<span class='warning'>You cannot glare at allies!</span>"
 			revert_cast()
 			return
+		var/mob/living/L = user
+		if(L.incorporeal_move) //Other abilities can still be used, but glare needed balancing
+			user << "<span class='warning'>You cannot glare while shadow walking!</span>"
+			revert_cast()
+			return
 		var/mob/living/carbon/human/M = target
 		user.visible_message("<span class='warning'><b>[user]'s eyes flash a blinding red!</b></span>")
 		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
@@ -455,7 +460,7 @@
 				sp.start()
 				S.Weaken(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.hit(rand(80, 100))
+			W.take_damage(rand(80, 100))
 
 
 /obj/effect/proc_holder/spell/aoe_turf/drain_life //Deals stamina and oxygen damage to nearby humans and heals the shadowling. On a short cooldown because of the small range and situational usefulness
@@ -523,6 +528,10 @@
 					return
 				if(thrallToRevive.stat != CONSCIOUS)
 					user << "<span class='warning'>[thrallToRevive] must be conscious to become empowered.</span>"
+					revert_cast()
+					return
+				if(thrallToRevive.dna.species.id == "l_shadowling")
+					user << "<span class='warning'>[thrallToRevive] is already empowered.</span>"
 					revert_cast()
 					return
 				var/empowered_thralls = 0

@@ -14,6 +14,7 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	unique_name = 1
+	a_intent = "harm"
 	var/mob/camera/blob/overmind = null
 	var/obj/effect/blob/factory/factory = null
 
@@ -36,7 +37,7 @@
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
 				H.color = "#000000"
-		adjustHealth(-maxHealth*0.025)
+		adjustHealth(-maxHealth*0.0125)
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()

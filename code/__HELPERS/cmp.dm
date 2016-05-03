@@ -36,3 +36,6 @@ var/cmp_field = "name"
 	if(a.display == b.display)
 		return sorttext(b.name, a.name)
 	return a.display - b.display
+
+/proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
+	return B.priority - A.priority

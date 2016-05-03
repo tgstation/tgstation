@@ -7,6 +7,9 @@
 		spellremove(src)
 	for(var/infection in viruses)
 		qdel(infection)
+	for(var/cc in client_colours)
+		qdel(cc)
+	client_colours = null
 	ghostize()
 	return ..()
 
@@ -102,6 +105,36 @@ var/next_mob_id = 0
 					else
 						continue
 		M.show_message(msg,1,blind_message,2)
+
+// Same as visible_message, but doesn't display to people within a 1 tile radius of the source (used for radio emotes)
+
+/mob/proc/visible_message_band(message, self_message, blind_message)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	for(var/mob/M in get_hearers_in_view(7, src))
+		if(!M.client)
+			continue
+		if(in_range(M, src))
+			continue
+		var/msg = message
+		if(M == src) //the src always see the main message or self message
+			if(self_message)
+				msg = self_message
+		else
+			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+				if(blind_message) // then people see blind message if there is one, otherwise nothing.
+					msg = blind_message
+				else
+					continue
+			else if(T.lighting_object)
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
+					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+						msg = blind_message
+					else
+						continue
+		M.show_message(msg,1,blind_message,2)
+
 
 // Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
@@ -316,18 +349,14 @@ var/next_mob_id = 0
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/decal/point))
+	if(istype(A, /obj/effect/overlay/temp/point))
 		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
 		return 0
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.invisibility = invisibility
-	spawn (20)
-		if(P)
-			qdel(P)
+	PoolOrNew(/obj/effect/overlay/temp/point, list(tile,invisibility))
 
 	return 1
 
@@ -584,21 +613,10 @@ var/next_mob_id = 0
 		if (nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_RECALL)
-				ETA = "RCL"
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-			if(SHUTTLE_ESCAPE)
-				ETA = "ESC"
-			if(SHUTTLE_STRANDED)
-				ETA = "ERR"
+
+		var/ETA = SSshuttle.emergency.getModeStr()
 		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
 
 	if(client && client.holder)

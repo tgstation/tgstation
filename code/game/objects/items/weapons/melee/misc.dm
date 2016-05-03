@@ -24,7 +24,7 @@
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum."
+	desc = "Not as PR friendly or effective as Nanotrasen's new flagship stunbatons, but smashing someone in the joints with this a few times will still bring them to their knees."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
@@ -51,28 +51,21 @@
 			return
 		if(!isliving(target))
 			return
-		if (user.a_intent == "harm")
-			if(!..()) return
-			if(!isrobot(target)) return
-		else
-			if(cooldown <= 0)
-				if(ishuman(target))
-					var/mob/living/carbon/human/H = target
-					if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
-						return
-				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-				target.Weaken(3)
-				add_logs(user, target, "stunned", src)
-				src.add_fingerprint(user)
-				target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
-					"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
-				if(!iscarbon(user))
-					target.LAssailant = null
-				else
-					target.LAssailant = user
-				cooldown = 1
-				spawn(40)
-					cooldown = 0
+		if(cooldown <= 0)
+			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+			//target.Weaken(3)
+			var/mob/living/carbon/human/H = target
+			H.adjustStaminaLoss(55)
+			if(prob(50))
+				shake_camera(H, 2, 1)
+			spawn(60)
+				H.adjustStaminaLoss(-15)
+			spawn(100)
+				H.adjustStaminaLoss(-15)
+			cooldown = 1
+			spawn(20)
+				cooldown = 0
+			..()
 		return
 	else
 		return ..()
@@ -160,7 +153,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/open/space))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
@@ -174,7 +167,7 @@
 	..()
 	if(ismob(target))
 		var/mob/M
-		if(src.loc == M) //target caught the sword
+		if(src.loc == M)
 			M.drop_item()
 	consume_everything(target)
 

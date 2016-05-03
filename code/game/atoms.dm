@@ -18,6 +18,17 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+
+/atom/Destroy()
+	if(alternate_appearances)
+		for(var/aakey in alternate_appearances)
+			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
+			qdel(AA)
+		alternate_appearances = null
+
+	return ..()
+
+
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -254,7 +265,7 @@ var/list/blood_splatter_icons = list()
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/add_blood(mob/living/carbon/human/M)
 	if(!..())
 		return 0
 
@@ -279,7 +290,7 @@ var/list/blood_splatter_icons = list()
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(src, /turf/simulated))
+	if(istype(src, /turf))
 		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)
@@ -319,7 +330,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
+	if(istype(get_turf(src), /turf/open/space))
 		return 1
 	else
 		return 0
@@ -357,6 +368,7 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
 
 //This is called just before maps and objects are initialized, use it to spawn other mobs/objects
 //effects at world start up without causing runtimes
@@ -375,7 +387,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf/simulated) )
+	if(istype(src,/turf) )
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
 		// Make toxins vomit look different
 		if(toxvomit)

@@ -2,7 +2,7 @@
 	if(stat == DEAD)
 		return
 	if(!gibbed)
-		emote("me", 1, "sparks and its screen flickers, its systems slowly coming to a halt.")
+		visible_message("<b>[src]</b> lets out a flurry of sparks, its screen flickering as its systems slowly halt.")
 	stat = DEAD
 
 

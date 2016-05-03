@@ -12,7 +12,6 @@ env:
     - DM_MAPFILE="ministation"
     - DM_MAPFILE="dreamstation"
     - DM_MAPFILE="birdstation"
-    - DM_MAPFILE="asteroidstation"
     - DM_MAPFILE="efficiencystation"
 
 
@@ -42,9 +41,9 @@ before_script:
   - cd tgui && npm install && cd ..
   - chmod +x ./install-byond.sh
   - ./install-byond.sh
+  - shopt -s globstar
 
 script:
-  - shopt -s globstar
   - (! grep 'step_[xy]' _maps/**/*.dmm)
   - md5sum -c - <<< "49bc6b1b9ed56c83cceb6674bd97cb34 *html/changelogs/example.yml"
   - tools/check_filedirs.sh tgstation.dme

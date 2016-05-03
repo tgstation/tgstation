@@ -49,8 +49,7 @@
 			src.updateUsrDialog()
 			return
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()

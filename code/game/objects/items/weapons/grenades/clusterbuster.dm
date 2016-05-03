@@ -124,3 +124,7 @@
 /obj/item/weapon/grenade/clusterbuster/soap
 	name = "Slipocalypse"
 	payload = /obj/item/weapon/grenade/spawnergrenade/syndiesoap
+
+/obj/item/weapon/grenade/clusterbuster/clf3
+	name = "WELCOME TO HELL"
+	payload = /obj/item/weapon/grenade/chem_grenade/clf3

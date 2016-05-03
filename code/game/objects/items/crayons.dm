@@ -113,15 +113,16 @@
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/toy/crayon))
-		switch(W:colourName)
+	if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/C = W
+		switch(C.colourName)
 			if("mime")
 				usr << "This crayon is too sad to be contained in this box."
 				return
 			if("rainbow")
 				usr << "This crayon is too powerful to be contained in this box."
 				return
-	..()
+	return ..()
 
 //Spraycan stuff
 
@@ -132,7 +133,7 @@
 	var/capped = 1
 	instant = 1
 	edible = 0
-	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
+	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

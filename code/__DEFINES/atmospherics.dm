@@ -30,9 +30,12 @@
 #define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
 #define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
 #define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
-#define MINIMUM_AIR_RATIO_TO_SUSPEND		0.005	//Minimum ratio of air that must move to/from a tile to suspend group processing
+#define MINIMUM_AIR_RATIO_TO_SUSPEND		0.1		//Ratio of air that must move to/from a tile to reset group processing
+#define MINIMUM_AIR_RATIO_TO_MOVE			0.001	//Minimum ratio of air that must move to/from a tile
 #define MINIMUM_AIR_TO_SUSPEND				(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
-#define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND) //Either this must be active
+#define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE) //Either this must be active
+#define EXCITED_GROUP_BREAKDOWN_CYCLES		4
+#define EXCITED_GROUP_DISMANTLE_CYCLES		16
 #define MINIMUM_TEMPERATURE_TO_MOVE			(T20C+100)			//or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND		0.012
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended

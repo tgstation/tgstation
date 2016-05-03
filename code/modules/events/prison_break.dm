@@ -2,6 +2,7 @@
 	name = "Prison Break"
 	typepath = /datum/round_event/prison_break
 	max_occurrences = 2
+	min_players = 5
 
 /datum/round_event/prison_break
 	announceWhen = 50

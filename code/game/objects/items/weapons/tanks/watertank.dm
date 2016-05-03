@@ -81,15 +81,16 @@
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
 	var/mob/M = src.loc
-	if(istype(M))
-		switch(over_object.name)
-			if("r_hand")
+	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		switch(H.slot_id)
+			if(slot_r_hand)
 				if(M.r_hand)
 					return
 				if(!M.unEquip(src))
 					return
 				M.put_in_r_hand(src)
-			if("l_hand")
+			if(slot_l_hand)
 				if(M.l_hand)
 					return
 				if(!M.unEquip(src))
@@ -99,8 +100,9 @@
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return
-	..()
+		return 1
+	else
+		return ..()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -151,7 +153,7 @@
 		loc = tank.loc
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
+	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
 	..()
 
