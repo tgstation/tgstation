@@ -265,9 +265,10 @@
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
-				if(player.client.desires_role(role, display_to_user=poll)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
-					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
-						drafted += player.mind
+				if(!player.mind in drafted || !player.mind in candidates) // Players were getting placed in candidates AND drafted lists.
+					if(player.client.desires_role(role, display_to_user=poll)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+						if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
+							drafted += player.mind
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
