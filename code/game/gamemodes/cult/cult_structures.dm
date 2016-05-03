@@ -8,16 +8,16 @@
 
 /obj/structure/cult/proc/getETA() //dunc and oranges are life-savers
     var/time = round((0-(world.time-cooldowntime))/600, 1)
-    var/eta = "[time] minutes"
+    var/eta = "[time] minutes."
     if(time == 1)
-        eta = "about one minute"
+        eta = "about one minute."
     else if(time == 0)
-        eta = "less than a minute"
+        eta = "less than a minute."
     return eta
          
 /obj/structure/cult/talisman
 	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie"
+	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
 	health = 100
 	maxhealth = 100
@@ -46,7 +46,7 @@
 	
 /obj/structure/cult/forge
 	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
+	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	luminosity = 3
 	health = 100
@@ -77,7 +77,7 @@
 
 /obj/structure/cult/pylon
 	name = "pylon"
-	desc = "A floating crystal that slowly heals those faithful to Nar'Sie"
+	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	luminosity = 5
 	var/heal_delay = 50
@@ -122,7 +122,7 @@
 
 /obj/structure/cult/tome
 	name = "archives"
-	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
+	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	luminosity = 1
 	health = 100
@@ -153,7 +153,7 @@
 	
 /obj/effect/gateway
 	name = "gateway"
-	desc = "You're pretty sure that abyss is staring back"
+	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
