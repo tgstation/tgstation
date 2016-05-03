@@ -242,6 +242,17 @@
 	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
 	category = list("Misc", "Medical Designs")
 
+/datum/design/toolarm
+	name = "Toolbox Arm"
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Standard tools available."
+	id = "tool_arm"
+	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 3, "powerstorage" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 3500, MAT_GLASS = 500)
+	construction_time=200
+	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
+	category = list("Misc")
+
 
 /////////////////////////////////////////
 ////////////Regular Implants/////////////
