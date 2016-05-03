@@ -82,7 +82,7 @@
 
 	add_logs(firer, L, "shot", src, reagent_note)
 	if(bleed)
-		L.bleed_ticker += bleed
+		L.bleeding += bleed
 	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
