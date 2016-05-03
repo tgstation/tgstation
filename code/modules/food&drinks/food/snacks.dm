@@ -154,7 +154,9 @@
 //Called when you finish tablecrafting a snack.
 /obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/content)
 	..()
-	create_reagents(volume)
+	reagents.reagent_list.Cut()
+	for(var/obj/item/weapon/reagent_containers/RC in contents)
+		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
 	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
