@@ -116,8 +116,6 @@
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
-
-
 /obj/item/clothing/head/helmet/space/cult
 	name = "nar-sian hardened helmet"
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
@@ -134,11 +132,19 @@
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
+/obj/item/clothing/suit/space/cult/pickup(mob/living/user)
+	..()
+	if(!iscultist(user))
+		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.Dizzy(30)
+		user.Weaken(5)
+
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	used = 0
-	increment = 10
+	increment = 5
 	max = 40
 	prefix = "nar-sian"
 
@@ -150,6 +156,14 @@
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
 	var/current_charges = 3
 	var/shield_state = "shield-red"
+	
+/obj/item/clothing/suit/cultrobes/cult_shield/pickup(mob/living/user)
+	..()
+	if(!iscultist(user))
+		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.Dizzy(30)
+		user.Weaken(5)
 
 /obj/item/clothing/suit/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges > 0)
@@ -173,26 +187,19 @@
 /obj/item/clothing/suit/cultrobes/berserker
 	name = "flagellant's rags"
 	desc = "bloody rags infused with dark magic; allowing the user to move at inhuman speeds, but at the cost of increased damage"
-	icon_state = "crusader-red"
-	item_state = "crusader-red"
+	icon_state = "rags"
+	item_state = "rags"
 	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
 	slowdown = -1
-/*
-/obj/item/clothing/suit/cultrobes/berserker/equipped(var/mob/living/carbon/human/user, slot)
-    var/datum/species/S = user.dna.species
-    if(user && slot == slot_wear_suit)
-        S.brutemod *= 2
-        S.burnmod *= 2
-
-/obj/item/clothing/suit/cultrobes/berserker/dropped(var/mob/living/carbon/human/user)
-	var/datum/species/S = user.dna.species
-	if(!ishuman(loc))
-		world << "DROPPING [S.brutemod] [S.burnmod]"
-		S.brutemod *= 0.5
-		S.burnmod *= 0.5
-		world << "DROPPED [S.brutemod] [S.burnmod]"
-	return ..()
-  */   	    	
+	
+/obj/item/clothing/suit/cultrobes/berserker/pickup(mob/living/user)
+	..()
+	if(!iscultist(user))
+		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.Dizzy(30)
+		user.Weaken(5)
+   	    	
 /obj/item/clothing/glasses/night/cultblind
 	desc = "may nar-sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
@@ -200,6 +207,14 @@
 	item_state = "blindfold"
 	darkness_view = 8
 	flash_protect = 1
+	
+/obj/item/clothing/glasses/night/cultblind/pickup(mob/living/user)
+	..()
+	if(!iscultist(user))
+		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.Dizzy(30)
+		user.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
@@ -207,3 +222,90 @@
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list("unholywater" = 40)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+	name = "flask of unholy water"
+	desc = "toxic to nonbelievers, this water renews and reinvigorates the faithful of nar'sie."
+	icon_state = "holyflask"
+	color = "#333333"
+	list_reagents = list("unholywater" = 40)
+	
+/obj/item/device/shuttle_curse
+	name = "cursed orb"
+	desc = "you peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state ="bluespace"
+	color = "#000000"
+	var/global/curselimit = 0
+	
+/obj/item/device/shuttle_curse/attack_self(mob/user)
+	if(!iscultist(user))
+		user.Weaken(5)
+		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
+		return
+	if(curselimit > 1)
+		user << "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>"
+		return
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+		var/cursetime = 1500
+		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
+		SSshuttle.emergency.setTimer(timer)
+		user << "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>"
+		playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
+		qdel(src)
+		sleep(20)
+		var/list/delays = list("A fuel technician just slit his own throat and begged for death... the shuttle will be delayed by two minutes",
+		"The shuttle's navigation programming was replaced by a file containing two words:'IT COMES'... the shuttle will be delayed by two minutes",
+		"The shuttle's custodian tore out his guts and began painting strange shapes on the floor... the shuttle will be delayed by two minutes",
+		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh... the shuttle will be delayed by two minutes",
+		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine... the shuttle will be delayed by two minutes",
+		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh... the shuttle will be delayed by two minutes")
+		var/message = pick(delays)
+		delays -= message
+		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
+		curselimit++
+		
+		
+/obj/item/device/cult_shift
+	name = "veil shifter"
+	desc = "the veil between worlds is weak, this relic teleports you forward a small distance. it may be used twice before its power is lost."
+	icon = 'icons/obj/cult.dmi'
+	icon_state ="shifter"
+	var/uses = 2
+	
+/obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
+	var/mob/living/carbon/human/H = user
+	if(H.pulling && (istype(H.pulling, /mob/living)))
+		var/mob/living/victim =	H.pulling
+		if(!victim.anchored)
+			victim.forceMove(locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z))
+	return
+
+/obj/item/device/cult_shift/attack_self(mob/user)
+	if(!iscultist(user))
+		user.Weaken(5)
+		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
+		return
+	uses--
+	if (uses<1)
+		qdel(src)
+	var/mob/living/carbon/human/H = user
+	var/turf/destination = get_teleport_loc(H.loc,H,9,1,3,1,0,1)
+	var/turf/mobloc = get_turf(H.loc)//Safety
+
+	if(destination&&istype(mobloc, /turf))//So we don't teleport out of containers
+		spawn(0)
+			playsound(H.loc, "sparks", 50, 1)
+			anim(mobloc,src,'icons/mob/mob.dmi',,"cultout",,H.dir)
+
+		handle_teleport_grab(destination, H)
+		H.loc = destination
+
+		spawn(0)
+			PoolOrNew(/obj/effect/particle_effect/sparks, H.loc)
+			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
+			playsound(H.loc, "sparks", 50, 1)
+			anim(H.loc,H,'icons/mob/mob.dmi',,"cultin",,H.dir)
+			
+	else
+		H << "<span class='danger'>The veil cannot be torn here!</span>"
