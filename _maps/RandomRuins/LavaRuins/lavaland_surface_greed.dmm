@@ -1,0 +1,43 @@
+"a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"d" = (/turf/closed/wall/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"e" = (/obj/structure/table/wood/poker,/obj/item/weapon/gun/projectile/revolver/russian/soul,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
+"f" = (/obj/structure/cursed_slot_machine,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
+"g" = (/obj/structure/table/wood/poker,/obj/item/weapon/coin/mythril,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
+"h" = (/obj/structure/table/wood/poker,/obj/item/weapon/coin/diamond,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
+"i" = (/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
+"j" = (/obj/structure/table/wood/poker,/obj/item/weapon/coin/adamantine,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
+"k" = (/obj/machinery/computer/arcade/battle{emagged = 1},/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"l" = (/obj/item/weapon/coin/gold,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"m" = (/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"n" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c1000,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"o" = (/obj/item/weapon/moneybag,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"p" = (/obj/structure/table/wood/poker,/obj/item/weapon/ore/gold,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"q" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c50,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"r" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"s" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c200,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"t" = (/obj/machinery/door/airlock/gold,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaabbaabaaabbbaaaa
+abbaaaaaabaaabbbaaaa
+abbbaaaabbbaaaabbaaa
+aabbbaaaaaaaaaabbbba
+aabbbacccccccaaaabbb
+aabaaacdddddcaaaabbb
+aaaaaccdefgdccaaabba
+aaaaccddhijddccaabaa
+aaaacddklmlkddcaabaa
+bbbacdnomlmopdcaabaa
+bbaacdqlmmmmrdcaabba
+abaacdsmmollrdcaabba
+aaaacdddlmmdddcaabbb
+aaaacccdmmldcccaaabb
+aaaaaacdlmodcaaaaaab
+aaaaaacddmddcaaaabbb
+aabbaaccdtdccaaaabbb
+abbbaaaaaaaaaaaaabbb
+abbbbbaaaaaaaaabbbbb
+bbbbaaaaaaaaaaabbbbb
+"}

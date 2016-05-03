@@ -14,17 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\ministation.dm"
-#include "_maps\map_files\MiniStation\cargopacks.dm"
-#include "_maps\map_files\MiniStation\misc.dm"
-#include "_maps\map_files\MiniStation\readme.dm"
-#include "_maps\map_files\MiniStation\telecomms.dm"
-#include "_maps\map_files\MiniStation\uplink_item.dm"
-#include "_maps\map_files\MiniStation\MiniStation.dmm"
-#include "_maps\map_files\MiniStation\z5.dmm"
-#include "_maps\map_files\MiniStation\backup\MiniStation.dmm"
-#include "_maps\map_files\MiniStation\job\jobs.dm"
-#include "_maps\map_files\MiniStation\job\removed.dm"
+#include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"

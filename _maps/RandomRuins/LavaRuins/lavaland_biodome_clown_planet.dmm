@@ -1,0 +1,68 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/r_wall,/area/ruin/powered)
+"c" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"e" = (/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"f" = (/obj/item/weapon/reagent_containers/food/snacks/grown/banana,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"g" = (/turf/closed/mineral,/area/ruin/powered)
+"h" = (/obj/item/weapon/bikehorn,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"i" = (/obj/item/weapon/grown/bananapeel,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"j" = (/turf/closed/mineral/clown,/area/ruin/powered)
+"k" = (/obj/structure/ore_box,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"l" = (/turf/open/floor/plating/asteroid,/area/ruin/powered)
+"m" = (/obj/item/weapon/grown/bananapeel,/turf/open/floor/plating/asteroid,/area/ruin/powered)
+"n" = (/turf/closed/mineral/gibtonite,/area/ruin/powered)
+"o" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"p" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+"q" = (/obj/machinery/door/airlock/clown,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"r" = (/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"s" = (/obj/item/weapon/grown/bananapeel,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"t" = (/turf/closed/wall/mineral/wood,/area/ruin/powered)
+"u" = (/obj/structure/table/wood,/obj/item/weapon/banhammer,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"v" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/sexyclown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"w" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"x" = (/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"y" = (/obj/machinery/door/airlock/clown,/obj/item/weapon/grown/bananapeel,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"z" = (/obj/item/weapon/grown/bananapeel,/mob/living/simple_animal/hostile/retaliate/clown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"A" = (/obj/structure/table/wood,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"B" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pie/cream,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"C" = (/obj/structure/table/wood,/obj/item/weapon/sord,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"D" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn/rubberducky,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"E" = (/obj/item/weapon/grenade/clusterbuster/soap,/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
+"F" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"G" = (/obj/structure/table/wood,/obj/item/weapon/restraints/handcuffs/fake,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"H" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn/airhorn,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"I" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bccccccccccccccccccccccccccccb
+bcddddddddddddddddddddddddddcb
+bcdefeeeeeeegggggggggggggggdcb
+bcdeeheieefeeggggggggggjgjgdcb
+bcdeeeeeheeeeekkggggjllllmgdcb
+bcdeeeeeieeeeeeeggggglllllgdcb
+bcdeeheeeeheeieeeeggglnjgggdcb
+bcdeheeoeeeeeeeeoellllgggjgdcb
+bcdeeeeeheeieheeeelmllgggggdcb
+bcdeeheeeeeeeeeeeggggggggggdcb
+bcdeeeeeeeheeeeheggggggggggdcb
+bcdeeeeeeeeefeeeegggggeegggdcb
+bcdeeeeheeeeeeheegggggefeeedcb
+pcqrrrsrrreeeeeeeeeeeeeeeeidcb
+bcdeeeeeereeeheeeeeefeeheehdcb
+bcdeeheeerefeeeoeeeeeeeeeeedcb
+bcdeeeeeereeeeehettttteeoeedcb
+bcdefeheereheeeeetuvwteeeeedcb
+bcdeeeeeireeeeeeetrrxteiehedcb
+bcdeheeeerrrrrsrryrrxteeeeedcb
+bcdeeeoeheeeeeeeetxzxteheeedcb
+bcdeieeeeABCDBefetxxEteeefedcb
+bcdeeeheeBAFGHheetttttieeeedcb
+bcdefeeeeeeheeeeeeeeeeeheeedcb
+bcdeeeeeeeeeeeeoeeeeheeeeehdcb
+bcddddddddddddddddddddddddddcb
+bccccccccccccccccccccccccccccb
+bbbbbIbbbbbbbbbbbbbbbbbbbbbbbb
+"}
