@@ -43,7 +43,20 @@
 	..()
 	wanted_objects = subtypesof(/obj/mecha/combat)
 
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
+	name = "Nanotrasen Mecha Pilot"
+	desc = "Death to the Syndicate. This variant comes in MECHA DEATH flavour."
+	icon_living = "nanotrasen"
+	icon_state = "nanotrasen"
+	faction = list("nanotrasen")
+	spawn_mecha_type = /obj/mecha/combat/marauder/loaded
 
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/nanotrasen
+	name = "Nanotrasen Mecha Pilot"
+	desc = "Death to the Syndicate. This variant comes in MECHA DEATH flavour."
+	icon_living = "nanotrasen"
+	icon_state = "nanotrasen"
+	faction = list("nanotrasen")
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/New()
@@ -99,6 +112,7 @@
 	ranged = 0
 	minimum_distance = 1
 
+	walk(M,0)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/mecha/M)
@@ -253,6 +267,10 @@
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))
 				return 1
+			else if (M.occupant && CanAttack(M.occupant))
+				return 1
+			else
+				return 0
 
 	. = ..()
 
