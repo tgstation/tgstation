@@ -121,6 +121,10 @@
 
 				PoolOrNew(/obj/effect/hotspot,J)
 				J.hotspot_expose(700,50,1)
+				for(var/mob/living/L in J)
+					if(L != src)
+						L.adjustFireLoss(20)
+						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0)
 	if(stat)
