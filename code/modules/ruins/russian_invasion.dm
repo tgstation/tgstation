@@ -19,8 +19,6 @@
 		user << "You feed [P.amount] sheets into the machine. It now has [points] sheets of plasma fueling it."
 		qdel(P)
 
-
-
 /obj/structure/russian_portal/proc/select_reinforcement(mob/user)
 	var/selection = input(user, "Request Reinforcements", "Portal") as null|anything in list("Prisoner (4)", "Conscript (8)", "Spetsnaz (20)", "Commissar (20)", "Spare Ammo (10)", "Medical Supplies (10)")
 	if(!selection || !Adjacent(user))
@@ -79,9 +77,6 @@
 				new /obj/item/weapon/storage/firstaid/regular(loc)
 			else
 				user << "Not enough points!"
-
-
-
 
 /obj/structure/russian_portal/attack_hand(mob/user)
 	if(..())
@@ -172,3 +167,9 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = {"You are a bear. Roar! Help your russian allies on their secret military mission."}
+
+
+/obj/effect/mob_spawn/human/russian_commander
+	name = "russian commander"
+	outfit_type = /datum/outfit/soviet
+	flavour_text = {"Following the KS13 disaster, the Russian space program was officially cancelled.."}
