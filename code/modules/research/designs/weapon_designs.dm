@@ -205,12 +205,12 @@
 	category = list("Weapons")
 
 /datum/design/gravitygun
-	name = "Gravitron Blaster"
-	desc = "A dual-mode projector that blasts high powered gravitrons."
+	name = "Zero-Point Energy Manipulator"
+	desc = "A multi-mode device that manipulates Zero-Point Energy."
 	id = "gravitygun"
-	req_tech = list("combat" = 6, "materials" = 7, "bluespace" = 5, "powerstorage" = 5)
+	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 5, "powerstorage" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 9000, MAT_GOLD = 9000, MAT_URANIUM = 7000, MAT_GLASS = 10000, MAT_METAL = 10000, MAT_DIAMOND = 4000) //Self recharging 5x5 AOE fuckery justifies the price.
+	materials = list(MAT_SILVER = 7000, MAT_GOLD = 7000, MAT_URANIUM = 6000, MAT_GLASS = 60000, MAT_METAL = 60000, MAT_DIAMOND = 3000) //Self recharging 5x5 AOE fuckery justifies the price.
 	build_path = /obj/item/weapon/gun/energy/gravity_gun
 	category = list("Weapons")
 

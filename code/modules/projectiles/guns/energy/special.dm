@@ -208,10 +208,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/gravity_gun
-	name = "gravitron beamgun"
-	desc = "A projector that blasts high intensity gravitron beams. Has two modes, repulse, and attract."
-	fire_delay = 80
+	name = "Zero-Point Energy Manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy."
+	fire_delay = 70
 	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
+	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=5"
 	item_state = null
 	icon_state = "gravity_gun"
 
