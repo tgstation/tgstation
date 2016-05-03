@@ -102,7 +102,7 @@
 "bX" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel{icon_state = "whitehall"; dir = 1},/area/bridge)
 "bY" = (/turf/open/floor/plasteel{icon_state = "whitehall"; dir = 1},/area/bridge)
 "bZ" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/toolbox/emergency,/turf/open/floor/plasteel,/area/bridge)
-"ca" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/obj/item/ammo_box/c45,/obj/item/ammo_box/magazine/m45,/obj/item/ammo_box/magazine/m45,/obj/structure/table/reinforced,/turf/open/floor/plasteel,/area/bridge)
+"ca" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911{desc = "The Captain's sidearm from his time in Space 'Nam. Or so they say, for all you know they bought it from a surplus store."; name = "Captain's M1911"},/obj/item/ammo_box/c45,/obj/item/ammo_box/magazine/m45,/obj/item/ammo_box/magazine/m45,/obj/structure/table/reinforced,/turf/open/floor/plasteel,/area/bridge)
 "cb" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/open/floor/plasteel,/area/bridge)
 "cc" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 2; on = 1},/turf/open/floor/plasteel,/area/bridge)
 "cd" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/pen,/turf/open/floor/plasteel,/area/bridge)
