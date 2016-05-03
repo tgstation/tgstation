@@ -44,9 +44,12 @@
 
 	martial_art = default_martial_art
 
-	handcrafting = new(src)
+	handcrafting = new()
 
 	..()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.craft(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...

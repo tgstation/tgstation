@@ -365,15 +365,6 @@
 /datum/action/innate/proc/Deactivate()
 	return
 
-/datum/action/innate/crafting
-	name = "Crafting Menu"
-	button_icon_state = "craft"
-
-/datum/action/innate/crafting/Activate()
-	var/mob/living/carbon/human/H = owner
-	H.handcrafting.craft(H)
-
-
 //Preset for action that call specific procs (consider innate).
 /datum/action/generic
 	check_flags = 0

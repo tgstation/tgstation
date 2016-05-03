@@ -4,10 +4,6 @@
 	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
 	var/datum/action/innate/crafting/button
 
-/datum/personal_crafting/New(mob/living/carbon/human/H)
-	button = new()
-	button.Grant(H)
-
 /datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
 	main_loop:
 		for(var/A in R.reqs)
@@ -67,9 +63,7 @@
 	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
-	world << "construct is called"
 	var/list/contents = get_surroundings(user)
-	world << "contents have [contents.len] items"
 	var/send_feedback = 1
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
@@ -97,7 +91,6 @@
 	var/amt
 	main_loop:
 		for(var/A in R.reqs)
-			world << "[A] is being collected"
 			amt = R.reqs[A]
 			surroundings = get_environment(user)
 			if(ispath(A, /datum/reagent))
@@ -142,7 +135,6 @@
 						amt -= S.amount
 						if(!locate(S.type) in Deletion)
 							Deletion += S
-							world << "[S] added to deletion list"
 						else
 							data = S.amount
 							S = locate(S.type) in Deletion
@@ -153,7 +145,6 @@
 				while(amt > 0)
 					I = locate(A) in surroundings
 					Deletion += I
-					world << "[I] was added to deletion list"
 					surroundings -= I
 					amt--
 	var/list/partlist = list(R.parts.len)
@@ -183,7 +174,6 @@
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
-		world << "Now deleting [DL]"
 		qdel(DL)
 
 /datum/personal_crafting/proc/craft(mob/user)
@@ -228,13 +218,10 @@
 	return
 
 /datum/personal_crafting/Topic(href, href_list)
-	world << "href_list is [href_list]"
 	if(usr.stat || usr.lying)
 		return
 	if(href_list["make"])
-		world << "make is hit"
 		var/datum/crafting_recipe/TR = locate(href_list["make"])
-		world << "[TR.name] is located"
 		busy = 1
 		craft(usr)
 		var/fail_msg = construct_item(usr, TR)

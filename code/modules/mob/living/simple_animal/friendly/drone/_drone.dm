@@ -60,7 +60,7 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
-
+	var/datum/personal_crafting/handcrafting
 
 /mob/living/simple_animal/drone/New()
 	..()
@@ -85,7 +85,10 @@
 
 	var/datum/action/generic/drone/select_filter/SF = new(src)
 	SF.Grant(src)
+	handcrafting = new()
 
+/mob/living/simple_animal/drone/OpenCraftingMenu()
+	handcrafting.craft(src)
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
