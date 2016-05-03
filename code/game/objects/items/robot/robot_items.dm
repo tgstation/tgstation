@@ -185,6 +185,10 @@
 		cooldown = world.time + 200
 		message_admins("[key_name_admin(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) used a cyborg Harm Alarm in ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		if(isrobot(user))
+			var/mob/living/silicon/R = user
+			R.connected_ai << "<span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span>"
+
 		return
 
 	if(safety == 0)
