@@ -84,6 +84,8 @@
 
 	preloadRuinTemplates()
 
+	load_all_ruins()
+
 /proc/preloadRuinTemplates()
 	var/list/potentialSpaceRuins = generateMapList(filename = "_maps/RandomRuins/SpaceRuins/_maplisting.txt", blacklist = "config/spaceRuinBlacklist.txt")
 	for(var/ruin in potentialSpaceRuins)
