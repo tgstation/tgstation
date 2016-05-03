@@ -56,6 +56,8 @@
 		return 0
 	var/mob/living/carbon/C = eater
 	var/covered = ""
+	if(!C.getorganslot("stomach"))
+		return 0
 	if(C.is_mouth_covered(head_only = 1))
 		covered = "headgear"
 	else if(C.is_mouth_covered(mask_only = 1))

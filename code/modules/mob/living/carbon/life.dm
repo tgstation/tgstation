@@ -276,21 +276,12 @@
 
 
 /mob/living/carbon/handle_stomach()
-	set waitfor = 0
-	for(var/mob/living/M in stomach_contents)
-		if(M.loc != src)
+	var/obj/item/organ/internal/stomach/S = getorganslot("stomach")
+	if(S)
+		S.handle_stomach()
+	else if(stomach_contents)
+		for(var/mob/living/M in stomach_contents) //nowhere to go but out
 			stomach_contents.Remove(M)
-			continue
-		if(istype(M, /mob/living/carbon) && stat != DEAD)
-			if(M.stat == DEAD)
-				M.death(1)
-				stomach_contents.Remove(M)
-				qdel(M)
-				continue
-			if(SSmob.times_fired%3==1)
-				if(!(M.status_flags & GODMODE))
-					M.adjustBruteLoss(5)
-				nutrition += 10
 
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
@@ -377,6 +368,54 @@
 	if(hallucination)
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)
+
+	if(drunkenness)
+		var/obj/item/organ/internal/liver/L = getorganslot("liver")
+		if(L)
+			L.handle_sobering()
+
+		if(drunkenness >= 6)
+			if(prob(25))
+				slurring += 2
+			jitteriness = max(jitteriness - 3, 0)
+
+		if(drunkenness >= 11 && slurring < 5)
+			slurring += 1.2
+
+		if(drunkenness >= 41)
+			if(prob(25))
+				confused += 2
+			Dizzy(10)
+
+		if(drunkenness >= 51)
+			if(prob(5))
+				confused += 10
+				vomit()
+			Dizzy(25)
+
+		if(drunkenness >= 61)
+			if(prob(50))
+				blur_eyes(5)
+
+		if(drunkenness >= 71)
+			blur_eyes(5)
+
+		if(drunkenness >= 81)
+			adjustToxLoss(0.2)
+			if(prob(5) && !stat)
+				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+
+		if(drunkenness >= 91)
+			adjustBrainLoss(0.4)
+			if(prob(20) && !stat)
+				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
+					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+				else
+					src << "<span class='warning'>Just a quick nap...</span>"
+					Sleeping(45)
+
+		if(drunkenness >= 101)
+			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
