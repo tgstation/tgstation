@@ -87,7 +87,7 @@
 		else
 			fire_rain()
 
-	else if(prob(10+anger_modifier) && !client)
+	else if(prob(10+anger_modifier) && !client && !swooping)
 		if(health > maxHealth/2)
 			swoop_attack()
 		else
@@ -150,6 +150,8 @@
 	sleep(10)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
+		if(L == src)
+			continue
 		if(L.stat)
 			visible_message("<span class='danger'>[src] slams down on [L], crushing them!</span>")
 			L.gib()
