@@ -97,7 +97,7 @@ Warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/vest/warden
+	suit = /obj/item/clothing/suit/armor/vest
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/beret/sec/navywarden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -208,7 +208,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/helmet/sec
+	head = /obj/item/clothing/head/beret/sec
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
