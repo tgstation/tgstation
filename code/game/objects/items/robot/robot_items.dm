@@ -162,7 +162,7 @@
 
 /obj/item/device/harmalarm/attack_self(mob/user)
 	var/safety = !emagged
-	if(cooldown < world.time&&cooldown > 0)
+	if(cooldown > world.time)
 		user << "<font color='red'>The device is still recharging!</font>"
 
 	if(isrobot(user))

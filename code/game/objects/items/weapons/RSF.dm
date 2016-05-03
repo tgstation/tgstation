@@ -6,7 +6,7 @@ RSF
 /obj/item/weapon/rsf
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
@@ -113,23 +113,24 @@ RSF
 		user << "The RSF now holds [matter]/30 fabrication-units."
 		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 
-/obj/item/weapon/rsf/cookie
+/obj/item/weapon/cookiesynth
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
-	matter = 10
+	var/matter = 10
 	var/toxin = 0
 	var/emagged = 0
+	w_class = 3
 
-/obj/item/weapon/rsf/cookie/New()
+/obj/item/weapon/cookiesynth/New()
 	desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
 	return
 
-/obj/item/weapon/rsf/cookie/attackby()
+/obj/item/weapon/cookiesynth/attackby()
 	return
 
-/obj/item/weapon/rsf/cookie/emag_act(mob/user)
+/obj/item/weapon/cookiesynth/emag_act(mob/user)
 	emagged = !emagged
 	if(emagged)
 		user << "<span class='warning'>You short out the [src]'s reagent safety checker!</span>"
@@ -137,7 +138,7 @@ RSF
 		user << "<span class='warning'>You reset the [src]'s reagent safety checker!</span>"
 		toxin = 0
 
-/obj/item/weapon/rsf/cookie/attack_self(mob/user)
+/obj/item/weapon/cookiesynth/attack_self(mob/user)
 	if(isrobot(user)&&!toxin)
 		toxin = 1
 		user << "Cookie Synthesizer Hacked"
@@ -152,11 +153,11 @@ RSF
 		return
 	return
 
-/obj/item/weapon/rsf/cookie/process()
+/obj/item/weapon/cookiesynth/process()
 	if (matter < 10)
 		matter++
 
-/obj/item/weapon/rsf/cookie/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/cookiesynth/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
