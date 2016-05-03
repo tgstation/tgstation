@@ -328,7 +328,7 @@
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << sound('sound/hallucinations/turn_around1.ogg',0,1,50)
 		M.Weaken(2)
-		M.throw_at_fast(throwtarget, ((Clamp((5 - (Clamp(1 - 2, 0, 1))), 3, 5))), 1,src)
+		M.throw_at_fast(throwtarget, 5, 1,src)
 		return 0
 	else
 		PoolOrNew(/obj/effect/overlay/temp/cult/door, src.loc)
