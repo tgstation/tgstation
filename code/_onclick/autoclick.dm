@@ -13,12 +13,14 @@
 	selected_target = null
 
 /client/MouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if(selected_target)
+	if(selected_target && !istype(over_object, /obj/screen))
 		selected_target = over_object
 
 /mob/proc/CanMobAutoclick(object, location, params)
 
 /mob/living/CanMobAutoclick(object, location, params)
+	if(istype(object, /obj/screen))
+		return 0
 	var/obj/item/h = get_active_hand()
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
