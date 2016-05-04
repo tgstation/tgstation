@@ -7,7 +7,7 @@
 	throw_range = 4
 	throw_speed = 1
 	flags = NOBLUDGEON
-	force = 3
+	force = 4
 	attack_verb = list("blown up", "exploded", "detonated")
 	materials = list(MAT_METAL=50, MAT_GLASS=30)
 	origin_tech = "syndicate=3;combat=2"

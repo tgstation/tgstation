@@ -6,8 +6,8 @@
 	flags = CONDUCT
 	sharpness = IS_SHARP
 	w_class = 4
-	force = 30
-	throwforce = 10
+	force = 39
+	throwforce = 13
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
@@ -38,8 +38,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	w_class = 2
-	force = 15
-	throwforce = 25
+	force = 20
+	throwforce = 33
 	embed_chance = 75
 
 /obj/item/weapon/melee/cultblade/dagger/attack(mob/living/target, mob/living/carbon/human/user)

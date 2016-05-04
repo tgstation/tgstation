@@ -54,7 +54,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
-	throwforce = 10
+	throwforce = 13
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
@@ -90,7 +90,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	materials = list(MAT_METAL=6000, MAT_PLASMA=6000)
-	throwforce = 10
+	throwforce = 13
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
@@ -261,8 +261,8 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon_state = "bone"
 	singular_name = "bone"
 	desc = "Someone's been drinking their milk."
-	force = 7
-	throwforce = 5
+	force = 9
+	throwforce = 7
 	w_class = 3
 	throw_speed = 1
 	throw_range = 3

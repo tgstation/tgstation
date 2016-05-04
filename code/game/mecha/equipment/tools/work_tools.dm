@@ -8,7 +8,7 @@
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 10
-	var/dam_force = 20
+	var/dam_force = 26
 	var/obj/mecha/working/ripley/cargo_holder
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)

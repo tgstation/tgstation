@@ -27,7 +27,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
-	force = 2
+	force = 3
 	throwforce = 1
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -45,8 +45,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 40
-	throwforce = 10
+	force = 52
+	throwforce = 13
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -62,8 +62,8 @@
 	item_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 40
-	throwforce = 10
+	force = 52
+	throwforce = 13
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -82,8 +82,8 @@
 	icon_state = "wiredrod"
 	item_state = "rods"
 	flags = CONDUCT
-	force = 9
-	throwforce = 10
+	force = 12
+	throwforce = 13
 	w_class = 3
 	materials = list(MAT_METAL=1150, MAT_GLASS=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
@@ -121,8 +121,8 @@
 	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
 	icon_state = "throwingstar"
 	item_state = "eshield0"
-	force = 2
-	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
+	force = 3
+	throwforce = 26 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
 	embedded_pain_multiplier = 4
 	w_class = 2
@@ -137,9 +137,9 @@
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
-	force = 3
+	force = 4
 	w_class = 2
-	throwforce = 5
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
@@ -152,9 +152,9 @@
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
-		force = 20
+		force = 26
 		w_class = 3
-		throwforce = 23
+		throwforce = 30
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -175,8 +175,8 @@
 	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
-	force = 3
-	throwforce = 2
+	force = 4
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
 	w_class = 2
@@ -196,8 +196,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
-	force = 5
-	throwforce = 5
+	force = 7
+	throwforce = 7
 	w_class = 2
 	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
@@ -207,8 +207,8 @@
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
@@ -229,8 +229,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
 	item_state = "stick"
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
@@ -253,7 +253,7 @@
 	item_state = "mounted_chainsaw"
 	flags = NODROP | ABSTRACT
 	w_class = 5.0
-	force = 21
+	force = 27
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
@@ -270,7 +270,7 @@
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
 	icon_state = "tailclub"
-	force = 14
+	force = 18
 	throwforce = 1 // why are you throwing a club do you even weapon
 	throw_speed = 1
 	throw_range = 1

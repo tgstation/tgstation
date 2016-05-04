@@ -5,8 +5,8 @@
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
 	w_class = 3
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT

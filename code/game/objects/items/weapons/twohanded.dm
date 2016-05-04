@@ -152,12 +152,12 @@
 	icon_state = "fireaxe0"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
-	throwforce = 15
+	force = 7
+	throwforce = 20
 	w_class = 4
 	slot_flags = SLOT_BACK
-	force_unwielded = 5
-	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
+	force_unwielded = 7
+	force_wielded = 31 // Was 18, Buffed - RobRichards/RR : Was 24, Buffed - Yackemflam
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -188,13 +188,13 @@
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
-	force_unwielded = 3
-	force_wielded = 34
+	force_unwielded = 4
+	force_wielded = 44 // I am death, destroyer of worlds
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
@@ -285,12 +285,12 @@
 	icon_state = "spearglass0"
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-	force = 10
+	force = 13
 	w_class = 4
 	slot_flags = SLOT_BACK
-	force_unwielded = 10
-	force_wielded = 18
-	throwforce = 20
+	force_unwielded = 13
+	force_wielded = 23
+	throwforce = 26
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
 	armour_penetration = 10
@@ -354,9 +354,9 @@
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon_state = "chainsaw_off"
 	flags = CONDUCT
-	force = 13
+	force = 17
 	w_class = 5
-	throwforce = 13
+	throwforce = 17
 	throw_speed = 2
 	throw_range = 4
 	materials = list(MAT_METAL=13000)
@@ -392,9 +392,9 @@
 	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
-	force_unwielded = 15
-	force_wielded = 25
-	throwforce = 20
+	force_unwielded = 20
+	force_wielded = 33
+	throwforce = 26
 	throw_speed = 4
 	attack_verb = list("gored")
 

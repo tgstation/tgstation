@@ -73,7 +73,7 @@ MASS SPECTROMETER
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
-	throwforce = 3
+	throwforce = 4
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7

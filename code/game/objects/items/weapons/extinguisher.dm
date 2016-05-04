@@ -6,11 +6,11 @@
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
-	throwforce = 10
+	throwforce = 13
 	w_class = 3
 	throw_speed = 2
 	throw_range = 7
-	force = 10
+	force = 13
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
@@ -29,9 +29,9 @@
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
 	flags = null //doesn't CONDUCT
-	throwforce = 2
+	throwforce = 3
 	w_class = 2
-	force = 3
+	force = 4
 	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"

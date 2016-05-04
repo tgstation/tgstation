@@ -14,7 +14,7 @@ RCD
 	anchored = 0
 	flags = CONDUCT | NOBLUDGEON
 	force = 0
-	throwforce = 10
+	throwforce = 13
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3

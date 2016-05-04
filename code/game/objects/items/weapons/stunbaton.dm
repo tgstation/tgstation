@@ -4,8 +4,8 @@
 	icon_state = "stunbaton"
 	item_state = "baton"
 	slot_flags = SLOT_BELT
-	force = 10
-	throwforce = 7
+	force = 13
+	throwforce = 9
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
@@ -171,8 +171,8 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	stunforce = 5
 	hitcost = 2500
 	slot_flags = null

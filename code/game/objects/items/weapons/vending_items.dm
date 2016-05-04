@@ -6,8 +6,8 @@
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
 	flags = CONDUCT
-	force = 7
-	throwforce = 10
+	force = 9
+	throwforce = 13
 	throw_speed = 1
 	throw_range = 7
 	w_class = 4

@@ -15,7 +15,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
-	force = 5
+	force = 7
 	w_class = 1
 	throwforce = 0
 	throw_speed = 3
@@ -55,9 +55,9 @@
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 	flags = CONDUCT
-	force = 10
+	force = 13
 	w_class = 2
-	throwforce = 10
+	throwforce = 13
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 6
@@ -92,8 +92,8 @@
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags = CONDUCT
-	force = 15
-	throwforce = 10
+	force = 20
+	throwforce = 13
 	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 3
@@ -103,16 +103,16 @@
 	icon_state = "buckknife"
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
-	force = 20
-	throwforce = 20
+	force = 26
+	throwforce = 26
 	origin_tech = "materials=2;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 
 
 /obj/item/weapon/kitchen/knife/combat/survival
 	name = "survival knife"
-	force = 15
-	throwforce = 15
+	force = 20
+	throwforce = 20
 
 /obj/item/weapon/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
@@ -125,8 +125,8 @@
 	icon_state = "carrotshiv"
 	item_state = "carrotshiv"
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
-	force = 8
-	throwforce = 12//fuck git
+	force = 10
+	throwforce = 16 //fuck git
 	materials = list()
 	origin_tech = null
 	attack_verb = list("shanked", "shivved")
@@ -135,8 +135,8 @@
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
-	force = 8
-	throwforce = 5
+	force = 10
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 7
 	w_class = 3

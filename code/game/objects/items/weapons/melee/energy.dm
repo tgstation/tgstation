@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
-	var/force_on = 30 //force when active
-	var/throwforce_on = 20
+	var/force_on = 39 //force when active
+	var/throwforce_on = 26
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 2
@@ -23,10 +23,10 @@
 	name = "energy axe"
 	desc = "An energised battle axe."
 	icon_state = "axe0"
-	force = 40
-	force_on = 150
-	throwforce = 25
-	throwforce_on = 30
+	force = 52
+	force_on = 195
+	throwforce = 33
+	throwforce_on = 39
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
@@ -46,8 +46,8 @@
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
@@ -121,8 +121,8 @@
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
 	icon_state = "esaw"
-	force_on = 30
-	force = 18 //About as much as a spear
+	force_on = 39
+	force = 23 //About as much as a spear
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	origin_tech = "materials=3;biotech=3;syndicate=3"
 	icon = 'icons/obj/surgery.dmi'
@@ -204,7 +204,7 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
-	force = 30	//Normal attacks deal esword damage
+	force = 39	//Normal attacks deal esword damage
 	hitsound = 'sound/weapons/blade1.ogg'
 	active = 1
 	throwforce = 1//Throwing or dropping the item deletes it.

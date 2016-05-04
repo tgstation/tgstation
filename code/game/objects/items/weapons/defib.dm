@@ -7,8 +7,8 @@
 	icon_state = "defibunit"
 	item_state = "defibunit"
 	slot_flags = SLOT_BACK
-	force = 5
-	throwforce = 6
+	force = 7
+	throwforce = 8
 	w_class = 4
 	origin_tech = "biotech=4"
 	actions_types = list(/datum/action/item_action/toggle_paddles)
@@ -286,7 +286,7 @@
 	icon_state = "defibpaddles"
 	item_state = "defibpaddles"
 	force = 0
-	throwforce = 6
+	throwforce = 8
 	w_class = 4
 	flags = NODROP
 

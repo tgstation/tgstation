@@ -3,7 +3,7 @@
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
 	flags = CONDUCT
-	force = 8
+	force = 10
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
@@ -28,13 +28,13 @@
 /obj/item/weapon/storage/briefcase/lawyer/New()
 	new /obj/item/weapon/stamp/law(src)
 	..()
-	
+
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
 	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	icon_state = "briefcase"
 	flags = CONDUCT
-	force = 10
+	force = 13
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4

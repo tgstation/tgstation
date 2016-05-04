@@ -4,7 +4,7 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
-	throwforce = 5
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2

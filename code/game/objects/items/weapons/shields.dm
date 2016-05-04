@@ -8,8 +8,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 10
-	throwforce = 5
+	force = 13
+	throwforce = 7
 	throw_speed = 2
 	throw_range = 3
 	w_class = 4
@@ -53,8 +53,8 @@
 	desc = "A shield capable of stopping most melee attacks. Protects user from almost all energy projectiles. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
-	force = 3
-	throwforce = 3
+	force = 4
+	throwforce = 4
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1
@@ -76,15 +76,15 @@
 	icon_state = "eshield[active]"
 
 	if(active)
-		force = 10
-		throwforce = 8
+		force = 13
+		throwforce = 10
 		throw_speed = 2
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = 3
-		throwforce = 3
+		force = 4
+		throwforce = 4
 		throw_speed = 3
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
@@ -97,8 +97,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "teleriot0"
 	slot_flags = null
-	force = 3
-	throwforce = 3
+	force = 4
+	throwforce = 4
 	throw_speed = 3
 	throw_range = 4
 	w_class = 3
@@ -115,15 +115,15 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 
 	if(active)
-		force = 8
-		throwforce = 5
+		force = 10
+		throwforce = 7
 		throw_speed = 2
 		w_class = 4
 		slot_flags = SLOT_BACK
 		user << "<span class='notice'>You extend \the [src].</span>"
 	else
-		force = 3
-		throwforce = 3
+		force = 4
+		throwforce = 4
 		throw_speed = 3
 		w_class = 3
 		slot_flags = null

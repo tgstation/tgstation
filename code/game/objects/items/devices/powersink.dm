@@ -7,7 +7,7 @@
 	item_state = "electronic"
 	w_class = 4
 	flags = CONDUCT
-	throwforce = 5
+	throwforce = 7
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=750)
