@@ -304,5 +304,5 @@
 
 
 /obj/item/weapon/claymore/hog
-	force = 30
+	force = 39
 	armour_penetration = 15
