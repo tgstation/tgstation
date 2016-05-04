@@ -187,7 +187,7 @@
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(isrobot(user))
-			var/mob/living/silicon/R = user
+			var/mob/living/silicon/robot/R = user
 			R.connected_ai << "<span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span>"
 
 		return
@@ -202,7 +202,7 @@
 				M.Jitter(25)
 				M.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
 				"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-				"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!"
+				"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
 			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
