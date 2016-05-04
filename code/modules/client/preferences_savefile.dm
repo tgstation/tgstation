@@ -244,6 +244,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	if(!S["adminmusicvolume"])		//AHHHH I COULDN'T THINK OF A BETTER WAY TO CHECK IF THIS ISNT SET
+		adminmusicvolume = initial(adminmusicvolume)
 
 	return 1
 
