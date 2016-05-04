@@ -209,7 +209,10 @@
 				else
 					pointed(M)
 			m_type = 1
-
+		if ("pout","pouts")
+			message = "<B>[src]</B> pouts."
+			m_type = 2
+		
 		if ("scream","screams")
 			message = "<B>[src]</B> screams!"
 			m_type = 2
