@@ -38,7 +38,7 @@
 	id = "prisoner-crash"
 	description = "This incredibly high security shuttle clearly didn't have \
 		'avoiding lavafilled hellscapes' as a design priority. As such, it \
-		has crashed, waking the prisoners from their cryostatis, and setting \
+		has crashed, waking the prisoners from their cryostasis, and setting \
 		them loose on the wastes. If they live long enough, that is."
 	suffix = "lavaland_surface_prisoner_crash.dmm"
 	cost = 20
