@@ -142,6 +142,7 @@
 	fire_sound = "sound/weapons/wave.ogg"
 	select_name = "repulse"
 	delay = 120
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
 
 /obj/item/ammo_casing/energy/gravipulse/alt
 	projectile_type = /obj/item/projectile/gravipulse/alt

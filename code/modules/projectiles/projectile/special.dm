@@ -192,6 +192,14 @@
 		rangecooldown = 3
 	rangecooldown--
 
+/obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
+	if(C)
+		power = C.gun.power
+		highpower = C.gun.highpower
+
+/obj/item/ammo_casing/energy/gravipulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G
+
 /obj/item/projectile/gravipulse/on_hit()
 	T = get_turf(src)
 	for(var/atom/movable/A in orange(T,power))

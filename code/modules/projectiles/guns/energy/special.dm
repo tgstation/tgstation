@@ -215,6 +215,8 @@
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=5"
 	item_state = null
 	icon_state = "gravity_gun"
+	var/power = 4
+	var/highpower = 1
 
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
