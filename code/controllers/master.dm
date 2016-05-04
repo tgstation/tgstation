@@ -76,7 +76,7 @@ var/global/datum/controller/master/Master = new()
 
 	var/mining_type = MINETYPE
 	if(mining_type == "lavaland")
-		var/lavaland_budget = 50
+		var/lavaland_budget = 60
 		seedRuins(5, lavaland_budget, \
 			/area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()

@@ -63,12 +63,14 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 
 /proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
-	var/overall_sanity = 10000
+	var/overall_sanity = 1000
+
+	var/ruins = potentialRuins.Copy()
 
 	while(budget > 0 && overall_sanity > 0)
 		overall_sanity--
 		// Pick a ruin
-		var/datum/map_template/ruin/ruin = potentialRuins[pick(potentialRuins)]
+		var/datum/map_template/ruin/ruin = ruins[pick(ruins)]
 		// Can we afford it
 		if(ruin.cost > budget)
 			continue
@@ -91,8 +93,10 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			// No clue why we have this as some magical self deleting
 			// object when a proc would do perfectly well
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
-			R.Load(potentialRuins,ruin)
+			R.Load(ruins,ruin)
 			budget -= ruin.cost
+			if(!ruin.allow_duplicates)
+				ruins -= ruin
 
 	if(!overall_sanity)
 		world.log << "Ruin loader gave up with [budget] left to spend."

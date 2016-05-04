@@ -2,7 +2,8 @@
 	prefix = "_maps/RandomRuins/LavaRuins/"
 
 /datum/map_template/ruin/lavaland/biodome
-	cost = 15
+	cost = 5
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/biodome/beach
 	name = "Biodome Beach"
@@ -27,11 +28,14 @@
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
-/datum/map_template/ruin/lavaland/biodome/cube
-	name = "Biodome Cube"
-	id = "biodome-cube"
-	description = "It's a cube?"
+/datum/map_template/ruin/lavaland/cube
+	name = "The Wishgranter Cube"
+	id = "wishgranter-cube"
+	description = "Nothing good can come from this. Learn from their mistakes \
+		and turn around."
 	suffix = "lavaland_surface_cube.dmm"
+	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/prisoners
 	name = "Prisoner Crash"
@@ -41,7 +45,8 @@
 		has crashed, waking the prisoners from their cryostasis, and setting \
 		them loose on the wastes. If they live long enough, that is."
 	suffix = "lavaland_surface_prisoner_crash.dmm"
-	cost = 20
+	cost = 15
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/seed_vault
 	name = "Seed Vault"
@@ -51,7 +56,7 @@
 		fledgling civilizations. However, all the inhabitants seem to do is \
 		grow drugs and guns."
 	suffix = "lavaland_surface_seed_vault.dmm"
-	cost = 20
+	cost = 10
 
 /datum/map_template/ruin/lavaland/ash_walker
 	name = "Ash Walker Nest"
@@ -70,7 +75,7 @@
 		inside this ship. They frequently leave to mine more minerals, \
 		which they somehow turn into more of them. Seem very intent on \
 		research and individual liberty, and also geology based naming?"
-	cost = 20
+	cost = 25
 	suffix = "lavaland_surface_golem_ship.dmm"
 
 /datum/map_template/ruin/lavaland/animal_hospital
@@ -78,8 +83,9 @@
 	id = "animal-hospital"
 	description = "Rats with cancer do not live very long. And the ones that \
 		wake up from cryostasis seem to commit suicide out of boredom."
-	cost = 10
+	cost = 5
 	suffix = "lavaland_surface_animal_hospital.dmm"
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
@@ -114,6 +120,8 @@
 	id = "sloth"
 	description = "..."
 	suffix = "lavaland_surface_sloth.dmm"
+	cost = 0
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ato
 	name = "Automated Trade Outpost"
@@ -128,13 +136,13 @@
 	description = "Turns out that keeping your abductees unconcious is really \
 		important. Who knew?"
 	suffix = "lavaland_surface_ufo_crash.dmm"
-	cost = 15
+	cost = 10
 
 /datum/map_template/ruin/lavaland/ww_vault
-	name = "Wishgranter Vault"
+	name = "Wildwest Vault"
 	id = "ww-vault"
-	description = "So many people died trying to reach it. And so many people \
-		will die when they reach it."
+	description = "Turns out this vault only has cowboys and no elderitch \
+		evil slumberings."
 	suffix = "lavaland_surface_ww_vault.dmm"
 	cost = 35
 
@@ -161,5 +169,4 @@
 	description = "The patrons at this gym are serious about health, and \
 		making sure people work on their cardio."
 	suffix = "lavaland_gym.dmm"
-	cost = 25
-
+	cost = 10
