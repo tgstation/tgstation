@@ -42,7 +42,7 @@ var/list/blob_looks
 	icon_state = "center"
 	luminosity = 2
 	desc = "Some blob creature thingy"
-	density = 1
+	density = 0 //Necessary for spore pathfinding
 	opacity = 0
 	anchored = 1
 	penetration_dampening = 17
@@ -131,7 +131,8 @@ var/list/blob_looks
 /obj/effect/blob/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0))	return 1
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
-	return !density
+	mover.Bump(src) //Only automatic for dense objects
+	return 0
 
 /obj/effect/blob/beam_connect(var/obj/effect/beam/B)
 	..()
