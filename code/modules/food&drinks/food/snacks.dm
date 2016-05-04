@@ -152,11 +152,17 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/content)
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/content, datum/crafting_recipe/R)
 	..()
 	reagents.reagent_list.Cut()
 	for(var/obj/item/weapon/reagent_containers/RC in contents)
 		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
+	contents_loop:
+		for(var/A in contents)
+			for(var/B in initial(R.parts))
+				if(istype(A, B))
+					continue contents_loop
+			qdel(A)
 	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)

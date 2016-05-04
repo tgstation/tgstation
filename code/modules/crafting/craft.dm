@@ -82,7 +82,7 @@
 					return ", missing tool."
 				var/list/parts = del_reqs(R, contents, user)
 				var/atom/movable/I = new R.result (user.loc)
-				I.CheckParts(parts)
+				I.CheckParts(parts, R)
 				if(send_feedback)
 					feedback_add_details("object_crafted","[I.type]")
 				return 0
