@@ -251,7 +251,7 @@
 	materials = list (MAT_METAL = 3500, MAT_GLASS = 500)
 	construction_time=200
 	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
-	category = list("Misc")
+	category = list("Misc", "Medical Designs")
 
 
 /////////////////////////////////////////
