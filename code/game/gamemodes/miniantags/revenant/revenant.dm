@@ -41,7 +41,7 @@
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	speed = 0
+	speed = 1
 	unique_name = 1
 
 	var/essence = 75 //The resource, and health, of revenants.
