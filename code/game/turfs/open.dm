@@ -96,19 +96,39 @@
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+			if(wet_setting == TURF_WET_ICE)
+				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
+			else
+				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		else
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
 		overlays += wet_overlay
 
-	spawn(rand(790, 820)) // Purely so for visual effect
-		if(!istype(src, /turf)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
-			return
-		MakeDry(wet_setting)
+	if(wet < TURF_WET_ICE)
+		addtimer(src, "MakeDry", rand(790, 820))
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
-	if(wet > wet_setting)
+	if(!istype(src, /turf)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
 		return
-	wet = TURF_DRY
-	if(wet_overlay)
-		overlays -= wet_overlay
+	if(wet > wet_setting || !wet)
+		return
+	if(wet == TURF_WET_PERMAFROST)
+		wet = TURF_WET_ICE
+	else
+		wet = TURF_DRY
+		if(wet_overlay)
+			overlays -= wet_overlay
+
+/turf/open/proc/HandleWet()
+	if(!istype(src, /turf))
+		return
+	if(!wet || wet > TURF_WET_ICE)
+		return
+	if(air.temperature < T0C && wet != TURF_WET_ICE)
+		MakeDry(TURF_WET_ICE)
+		MakeSlippery(TURF_WET_ICE)
+	else if (wet == TURF_WET_ICE)
+		MakeDry(TURF_WET_ICE)
+		MakeSlippery(TURF_WET_WATER)
+	else if (air.temperature > T0C + 40) // Warm rooms will dry up rather quickly.
+		addtimer(src, "MakeDry", 100, 1, TURF_WET_ICE)

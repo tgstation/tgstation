@@ -188,6 +188,12 @@
 	..()
 	diag_hud_set_bothealth()
 
+/mob/living/simple_animal/bot/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/simple_animal/bot/med_hud_set_status()
+	return //we use a different hud
+
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
 	set background = BACKGROUND_ENABLED
 	diag_hud_set_botmode()
