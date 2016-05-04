@@ -149,6 +149,13 @@ var/last_irc_status = 0
 					C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
 
+	else if("crossmessage" in input)
+		if(!key_valid)
+			return
+		else
+			if(input["crossmessage"] == "Ahelp")
+				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
+
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
