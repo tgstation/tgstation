@@ -154,7 +154,7 @@ var/last_irc_status = 0
 			return
 		else
 			if(input["crossmessage"] == "Ahelp")
-				message_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
+				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
