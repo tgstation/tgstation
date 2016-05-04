@@ -244,12 +244,12 @@
 
 /datum/design/toolarm
 	name = "Toolbox Arm"
-	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Standard tools available."
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "tool_arm"
 	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4, "powerstorage" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list (MAT_METAL = 2500, MAT_GLASS = 750, MAT_SILVER = 600)
-	construction_time=190
+	materials = list (MAT_METAL = 2000, MAT_GLASS = 750, MAT_SILVER = 600)
+	construction_time=150
 	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
 	category = list("Misc", "Medical Designs")
 
