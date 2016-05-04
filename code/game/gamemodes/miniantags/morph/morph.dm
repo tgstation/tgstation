@@ -54,12 +54,16 @@
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
 	if(morphed)
-		return //we use no hud while morphed
+		var/image/holder = hud_list[HEALTH_HUD]
+		holder.icon_state = null
+		return //we hide medical hud while morphed
 	..()
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_status()
 	if(morphed)
-		return //we use no hud while morphed
+		var/image/holder = hud_list[STATUS_HUD]
+		holder.icon_state = null
+		return //we hide medical hud while morphed
 	..()
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
