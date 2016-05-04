@@ -1,5 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscdel: "Cultists no longer communicate via tomes."
-  - rscadd: "Cultists now communicate via the 'Communion' action button."
