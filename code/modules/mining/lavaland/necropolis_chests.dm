@@ -36,7 +36,7 @@
 		if(10)
 			new /obj/item/organ/internal/heart/cursed(src)
 		if(11)
-			new /obj/vehicle/lavaboat/dragon(src)
+			new /obj/item/device/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
@@ -383,6 +383,18 @@
 	category = CAT_PRIMAL
 
 //Dragon Boat
+
+
+/obj/item/device/ship_in_a_bottle
+	name = "ship in a bottle"
+	desc = "A tiny ship inside a bottle."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "ship_bottle"
+
+/obj/item/device/ship_in_a_bottle/attack_self(mob/user)
+	user << "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	new /obj/vehicle/lavaboat/dragon(get_turf(src))
 
 /obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"
