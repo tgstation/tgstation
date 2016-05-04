@@ -67,6 +67,7 @@
 		stay clear."
 	suffix = "lavaland_surface_ash_walker1.dmm"
 	cost = 20
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Free Golem Ship"
@@ -77,6 +78,7 @@
 		research and individual liberty, and also geology based naming?"
 	cost = 25
 	suffix = "lavaland_surface_golem_ship.dmm"
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/animal_hospital
 	name = "Animal Hospital"
