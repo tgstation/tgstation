@@ -23,9 +23,18 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-
+	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
+	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/Destroy()
 	..()
@@ -36,7 +45,7 @@ Sorry Giacom. Please don't be mad :(
 			D.client.images.Remove(I)
 			qdel(I)
 	staticOverlays.len = 0
-
+	remove_from_all_data_huds()
 	return QDEL_HINT_HARDDEL_NOW
 
 
@@ -213,7 +222,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
-
+	med_hud_set_health()
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage

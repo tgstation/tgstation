@@ -63,3 +63,5 @@
 	update_damage_hud()
 	update_health_hud()
 	update_canmove()
+	med_hud_set_health()
+	med_hud_set_status()
