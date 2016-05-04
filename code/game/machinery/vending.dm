@@ -1969,6 +1969,9 @@ var/global/num_vending_terminals = 1
 		/obj/item/clothing/under/blackpants = 10,
 		/obj/item/clothing/under/redpants = 10,
 		/obj/item/clothing/under/greypants = 10,
+		/obj/item/clothing/under/dress/plaid_purple = 10,
+		/obj/item/clothing/under/dress/plaid_red = 10,
+		/obj/item/clothing/under/dress/plaid_blue = 10,
 		/obj/item/clothing/under/greaser = 10,
 		)
 	contraband = list(
