@@ -1,0 +1,6 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "The Service and the Standard cyborg module now have a spraycan built in, for
+hijinks and passing on important urban messages. The Service cyborg module also has a cyborg-hand labeler, in case anything needs to be labelled."
+  - rscadd: "Centcom Suicide Prevention wishes to remind the station: Please do not kill yourself with a hand labeler."
