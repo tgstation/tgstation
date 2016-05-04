@@ -168,7 +168,7 @@
 	spawn(4)
 		qdel(src)
 
-/obj/item/projectile/gravipulse //code copied from mecha gravipults
+/obj/item/projectile/gravipulse
 	name = "zero-point energy bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
@@ -179,13 +179,13 @@
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
-	var/highpower = 1
+	var/throwpower = 1
 	var/rangecooldown = 3
 
 /obj/item/projectile/gravipulse/Range()
 	T = get_turf(src)
-	if(src.range > 3 && rangecooldown < 1)
-		for(var/atom/movable/A in orange(T,highpower))
+	if(src.range > max(throwpower, 3) && rangecooldown < 1)
+		for(var/atom/movable/A in orange(T,throwpower))
 			if(A.anchored)
 				continue
 			step_away(A,T)
@@ -193,9 +193,9 @@
 	rangecooldown--
 
 /obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
-	if(C)
-		power = C.gun.power
-		highpower = C.gun.highpower
+	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+		power = max(C.gun.power, 15)
+		throwpower = max(C.gun.throwpower, 15)
 
 /obj/item/ammo_casing/energy/gravipulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
 	gun = G
@@ -207,9 +207,9 @@
 			continue
 		if(A.anchored)
 			continue
-		if(A in range(T,highpower))
+		if(A in range(T,throwpower))
 			var/turf/target = get_turf(A)
-			for(var/iter=0 to highpower)
+			for(var/iter=0 to throwpower)
 				target = get_step_away(A,T)
 			A.throw_at(target,range+1,1)
 		for(var/iter=0 to power)
@@ -227,7 +227,7 @@
 /obj/item/projectile/gravipulse/alt/Range()
 	T = get_turf(src)
 	if(src.range > 3 && rangecooldown < 1)
-		for(var/atom/movable/A in orange(T,highpower))
+		for(var/atom/movable/A in orange(T,throwpower))
 			if(A.anchored)
 				continue
 			step_towards(A,T)
@@ -241,8 +241,8 @@
 			continue
 		if(A.anchored)
 			continue
-		if(A in range(T,highpower))
-			A.throw_at(T,highpower+1,1)
+		if(A in range(T,throwpower))
+			A.throw_at(T,throwpower+1,1)
 			continue
 		for(var/iter=0 to power)
 			step_towards(A,T)

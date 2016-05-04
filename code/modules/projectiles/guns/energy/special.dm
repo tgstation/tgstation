@@ -216,7 +216,7 @@
 	item_state = null
 	icon_state = "gravity_gun"
 	var/power = 4
-	var/highpower = 1
+	var/throwpower = 1
 
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
