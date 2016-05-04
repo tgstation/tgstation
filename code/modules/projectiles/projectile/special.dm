@@ -170,7 +170,8 @@
 
 /obj/item/projectile/gravipulse //code copied from mecha gravipults
 	name = "zero-point energy bolt"
-	icon_state = "spark"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "chronofield"
 	hitsound = "sound/weapons/wave.ogg"
 	damage = 0
 	damage_type = BRUTE
@@ -178,12 +179,13 @@
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
+	var/highpower = 1
 	var/rangecooldown = 3
 
 /obj/item/projectile/gravipulse/Range()
 	T = get_turf(src)
 	if(src.range > 3 && rangecooldown < 1)
-		for(var/atom/movable/A in orange(T,2))
+		for(var/atom/movable/A in orange(T,highpower))
 			if(A.anchored)
 				continue
 			step_away(A,T)
@@ -197,9 +199,19 @@
 			continue
 		if(A.anchored)
 			continue
+		if(A in range(T,highpower))
+			var/turf/target = get_turf(A)
+			for(var/iter=0 to highpower)
+				target = get_step_away(A,T)
+			A.throw_at(target,range+1,1)
 		for(var/iter=0 to power)
 			step_away(A,T)
 			sleep(1)
+	for(var/turf/F in range(T,power))
+		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
+		F.overlays += gravfield
+		spawn(5)
+		F.overlays -= gravfield
 
 /obj/item/projectile/gravipulse/alt
 	color = "#FF6600"
@@ -207,7 +219,7 @@
 /obj/item/projectile/gravipulse/alt/Range()
 	T = get_turf(src)
 	if(src.range > 3 && rangecooldown < 1)
-		for(var/atom/movable/A in orange(T,2))
+		for(var/atom/movable/A in orange(T,highpower))
 			if(A.anchored)
 				continue
 			step_towards(A,T)
@@ -221,9 +233,17 @@
 			continue
 		if(A.anchored)
 			continue
+		if(A in range(T,highpower))
+			A.throw_at(T,highpower+1,1)
+			continue
 		for(var/iter=0 to power)
 			step_towards(A,T)
 			sleep(1)
+	for(var/turf/F in range(T,power))
+		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
+		F.overlays += gravfield
+		spawn(5)
+		F.overlays -= gravfield
 
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"

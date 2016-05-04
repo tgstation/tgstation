@@ -208,8 +208,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/gravity_gun
-	name = "Zero-Point Energy Manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy."
+	name = "Zero-Point Energy Field Manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
 	fire_delay = 70
 	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=5"
