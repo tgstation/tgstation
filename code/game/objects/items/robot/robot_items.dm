@@ -179,12 +179,11 @@
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
 				M.confused += 6
-				M.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
-				"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
-				"<span class='danger'>The siren pierces your hearing!</span>")
+				M << "<font color='red' size='3'>MY EARS</font>"
 			M << "<font color='red' size='7'>HUMAN HARM</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 70, 3)
 		cooldown = world.time + 200
+		message_admins("[key_name_admin(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) used a cyborg Harm Alarm in ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(isrobot(user))
 			var/mob/living/silicon/R = user
@@ -200,12 +199,11 @@
 				M.stuttering += 30
 				M.adjustEarDamage(0, 15)
 				M.Jitter(25)
-				M.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-				"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-				"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!"
+				M << "<font color='red' size='3'>AAAAAAAAAAAAGGGGGGGGGGGGGGGHHHHHHHH</font>"
 			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
+		message_admins("[key_name_admin(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) used an emagged cyborg Harm Alarm in ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
 /**********************************************************************
