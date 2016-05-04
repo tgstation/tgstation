@@ -183,7 +183,7 @@
 	if(newstruct.mind)
 		if(stoner && iscultist(stoner) || cultoverride)
 			if(ticker.mode.name == "cult")
-				ticker.mode:add_cultist(newstruct.mind)
+				ticker.mode:add_cultist(newstruct.mind, 0)
 			else
 				ticker.mode.cult += newstruct.mind
 			ticker.mode.update_cult_icons_added(newstruct.mind)
@@ -213,7 +213,7 @@
 	if(U)
 		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))
-		ticker.mode.add_cultist(S.mind,2)
+		ticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
 	icon_state = "soulstone2"

@@ -709,7 +709,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		step_towards(O, get_turf(M))
 	return ..()
 
-/datum/reagent/consumable/ethanol/hearty_punch //Another reference. Heals those in critical condition extremely quickly. If you die with it in your system, it will be removed and you will live!
+// Another reference. Heals those in critical condition extremely quickly.
+/datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	id = "hearty_punch"
 	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."

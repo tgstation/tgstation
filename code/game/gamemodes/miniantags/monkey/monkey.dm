@@ -15,7 +15,7 @@
 	var/carriers_to_make = 1
 	var/list/carriers = list()
 
-	var/monkeys_to_win = 0
+	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
 
 	var/players_per_carrier = 30

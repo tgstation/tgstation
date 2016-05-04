@@ -425,7 +425,7 @@
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
 			return 1
 
-	else if(istype(O, /obj/item/weapon/melee/baton))
+	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
 		if(B.bcell)
 			if(B.bcell.charge > 0 && B.status == 1)
@@ -440,12 +440,12 @@
 				playsound(src, "sparks", 50, 1)
 				return
 
-	else if(istype(O, /obj/item/weapon/mop))
+	if(istype(O, /obj/item/weapon/mop))
 		O.reagents.add_reagent("water", 5)
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
 		user << "<span class='notice'>You place [src] under a stream of water...</span>"
 		user.drop_item()
@@ -453,22 +453,21 @@
 		M.Expand()
 		return
 
-	var/obj/item/I = O
-	if(!I || !istype(I))
+	if(!istype(O))
 		return
-	if(I.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
 	if(user.a_intent != "harm")
-		user << "<span class='notice'>You start washing [I]...</span>"
+		user << "<span class='notice'>You start washing [O]...</span>"
 		busy = 1
 		if(!do_after(user, 40, target = src))
 			busy = 0
 			return 1
 		busy = 0
 		O.clean_blood()
-		user.visible_message("<span class='notice'>[user] washes [I] using [src].</span>", \
-							"<span class='notice'>You wash [I] using [src].</span>")
+		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
+							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
 	else
 		return ..()
