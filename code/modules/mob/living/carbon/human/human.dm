@@ -851,6 +851,14 @@
 	update_icons()	//apply the now updated overlays to the mob
 
 
+/mob/living/carbon/human/wash_cream()
+	var/image/creamoverlay = image('icons/effects/creampie.dmi')
+	var/mob/living/carbon/human/H = src
+	if(H.dna && H.dna.species && ("tail_lizard" in H.dna.species.mutant_bodyparts))
+		creamoverlay.icon_state = "creampie_lizard"
+	else creamoverlay.icon_state = "creampie_human"
+	overlays -= creamoverlay
+
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
