@@ -40,6 +40,8 @@
 	name = "infinite laser gun"
 	desc = "Spray and /pray."
 	icon_state = "laseradmin"
+	item_state = "laseradmin"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	projectile_type = /obj/item/projectile/beam
 	charge_cost = 0
 
