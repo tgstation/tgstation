@@ -9,6 +9,7 @@
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
+	dog_fashion = null
 
 /obj/item/device/radio/intercom/New()
 	..()

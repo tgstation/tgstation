@@ -457,12 +457,6 @@
 						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
 	return 0
 
-/mob/living/silicon/adjustEarDamage()
-	return
-
-/mob/living/silicon/setEarDamage()
-	return
-
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
@@ -489,33 +483,3 @@
 		animate(src, transform = ntransform, time = 2,easing = EASE_IN|EASE_OUT)
 	return ..()
 
-
-/mob/living/silicon/Stun(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		update_stat()
-
-/mob/living/silicon/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
-		stunned = max(amount,0)
-		update_stat()
-
-/mob/living/silicon/AdjustStunned(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(stunned + amount,0)
-		update_stat()
-
-/mob/living/silicon/Weaken(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		update_stat()
-
-/mob/living/silicon/SetWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		update_stat()
-
-/mob/living/silicon/AdjustWeakened(amount, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		update_stat()

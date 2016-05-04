@@ -78,7 +78,7 @@
 			M.buffer = null
 			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
 	src.attack_hand(user)

@@ -255,7 +255,7 @@
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30,
-		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3)
+		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, /mob/living/simple_animal/hostile/megafauna/dragon = 2)
 
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -563,6 +563,23 @@
 /turf/open/chasm/Entered(atom/movable/AM)
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
 		return
+	if(istype(AM, /obj/effect/portal))
+		// Portals aren't affected by gravity. Probably.
+		return
+	// Flies right over the chasm
+	if(istype(AM, /mob/living/simple_animal))
+		// apparently only simple_animals can fly??
+		var/mob/living/simple_animal/SA = AM
+		if(SA.flying)
+			return
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
+			var/obj/item/device/wormhole_jaunter/J = H.belt
+			// To freak out any bystanders
+			visible_message("[H] falls into [src]!")
+			J.chasm_react(H)
+			return
 	drop(AM)
 
 
@@ -621,6 +638,9 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/uranium/volcanic = 35, /turf/closed/mineral/diamond/volcanic = 30, /turf/closed/mineral/gold/volcanic = 45,
+		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20)
 
 /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

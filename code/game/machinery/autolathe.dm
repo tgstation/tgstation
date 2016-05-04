@@ -89,7 +89,8 @@
 	popup.set_content(dat)
 	popup.open()
 
-	return
+/obj/machinery/autolathe/deconstruction()
+	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
 	if (busy)
@@ -105,12 +106,15 @@
 
 	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
-			materials.retrieve_all()
 			default_deconstruction_crowbar(O)
 			return 1
 		else if(is_wire_tool(O))
 			wires.interact(user)
 			return 1
+
+	if(user.a_intent == "harm") //so we can hit the machine
+		return ..()
+
 	if(stat)
 		return 1
 
@@ -124,7 +128,7 @@
 			files.AddDesign2Known(D.blueprint)
 
 		busy = 0
-		return
+		return 1
 
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
@@ -153,6 +157,7 @@
 			qdel(O)
 	busy = 0
 	src.updateUsrDialog()
+	return 1
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())

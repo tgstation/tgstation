@@ -31,7 +31,7 @@
 	var/oldloc = null
 
 	#define HULL_BREACH		1
-	#define BRIDGE_MODE		2
+	#define LINE_SPACE_MODE		2
 	#define FIX_TILE		3
 	#define AUTO_TILE		4
 	#define PLACE_TILE		5
@@ -95,7 +95,7 @@
 			bmode = dir2text(targetdirection)
 		else
 			bmode = "disabled"
-		dat += "Bridge Mode : <A href='?src=\ref[src];operation=bridgemode'>[bmode]</A><BR>"
+		dat += "Line Mode : <A href='?src=\ref[src];operation=linemode'>[bmode]</A><BR>"
 
 	return dat
 
@@ -148,7 +148,7 @@
 			if(specialtiles && tiletype != null)
 				empty_tiles()
 
-		if("bridgemode")
+		if("linemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
 			switch(setdir)
 				if("north")
@@ -185,15 +185,13 @@
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
 	if(!target && emagged < 2)
-		if(targetdirection != null) //The bot is in bridge mode.
-			//Try to find a space tile immediately in our selected direction.
+		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
-			if(istype(T, /turf/open/space))
+			if(istype(T, /turf/open/space)) //Check for space
 				target = T
-
-			else //Find a space tile farther way!
-				target = scan(/turf/open/space)
-			process_type = BRIDGE_MODE
+				process_type = LINE_SPACE_MODE
+			if(istype(T, /turf/open/floor)) //Check for floor
+				target = T
 
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
@@ -277,7 +275,7 @@
 			if(is_hull_breach(scan_target)) //Ensure that the targeted space turf is actually part of the station, and not random space.
 				result = scan_target
 				anchored = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
-		if(BRIDGE_MODE) //Only space turfs in our chosen direction are considered.
+		if(LINE_SPACE_MODE) //Space turfs in our chosen direction are considered.
 			if(get_dir(src, scan_target) == targetdirection)
 				result = scan_target
 				anchored = 1
@@ -304,57 +302,55 @@
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
 	if(istype(target_turf, /turf/open/space/))
-		 //Must be a hull breach or in bridge mode to continue.
+		 //Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
 			target = null
 			return
 	else if(!istype(target_turf, /turf/open/floor))
 		return
-	anchored = 1
-	icon_state = "floorbot-c"
 	if(istype(target_turf, /turf/open/space/)) //If we are fixing an area not part of pure space, it is
+		anchored = 1
+		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
-		spawn(50)
-			if(mode == BOT_REPAIRING)
-				if(autotile) //Build the floor and include a tile.
-					target_turf.ChangeTurf(/turf/open/floor/plasteel)
-				else //Build a hull plating without a floor tile.
-					target_turf.ChangeTurf(/turf/open/floor/plating)
-				mode = BOT_IDLE
-				update_icon()
-				anchored = 0
-				target = null
+		sleep(50)
+		if(mode == BOT_REPAIRING && src.loc == target_turf)
+			if(autotile) //Build the floor and include a tile.
+				target_turf.ChangeTurf(/turf/open/floor/plasteel)
+			else //Build a hull plating without a floor tile.
+				target_turf.ChangeTurf(/turf/open/floor/plating)
+
 	else
 		var/turf/open/floor/F = target_turf
-		if(replacetiles && F.type != initial(tiletype.turf_type))
-			mode = BOT_REPAIRING
-			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
-			spawn(50)
-				if(mode == BOT_REPAIRING && F && specialtiles)
-					F.broken = 0
-					F.burnt = 0
-					F.ChangeTurf(initial(tiletype.turf_type))
-					mode = BOT_IDLE
-					specialtiles -= 1
-					if(specialtiles == 0)
-						speak("Requesting refill of custom floortiles to continue replacing.")
-					update_icon()
-					anchored = 0
-					target = null
-			
-		else if(F.type != initial(tiletype.turf_type))
+
+		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
+			anchored = 1
+			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
-			spawn(50)
-				if(mode == BOT_REPAIRING && F)
-					F.broken = 0
-					F.burnt = 0
-					F.ChangeTurf(/turf/open/floor/plasteel)
-					mode = BOT_IDLE
-					update_icon()
-					anchored = 0
-					target = null
+			sleep(50)
+			if(mode == BOT_REPAIRING && F && src.loc == F)
+				F.broken = 0
+				F.burnt = 0
+				F.ChangeTurf(/turf/open/floor/plasteel)
+
+		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
+			anchored = 1
+			icon_state = "floorbot-c"
+			mode = BOT_REPAIRING
+			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
+			sleep(50)
+			if(mode == BOT_REPAIRING && F && src.loc == F)
+				F.broken = 0
+				F.burnt = 0
+				F.ChangeTurf(initial(tiletype.turf_type))
+				specialtiles -= 1
+				if(specialtiles == 0)
+					speak("Requesting refill of custom floortiles to continue replacing.")
+	mode = BOT_IDLE
+	update_icon()
+	anchored = 0
+	target = null
 
 /mob/living/simple_animal/bot/floorbot/update_icon()
 	icon_state = "floorbot[on]"

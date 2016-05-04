@@ -342,6 +342,7 @@
 								R += num2text(A.volume) + "),"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
+						mechsyringe.reagents.reaction(M, INJECT)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
 						M.take_organ_damage(2)
 						add_logs(originaloccupant, M, "shot", "syringegun")

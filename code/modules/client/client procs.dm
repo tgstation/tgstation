@@ -2,8 +2,7 @@
 	//SECURITY//
 	////////////
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
-#define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
-									//I would just like the code ready should it ever need to be used.
+
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -103,8 +102,6 @@ var/next_external_rsc = 0
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
-	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
-		return null
 
 #if (PRELOAD_RSC == 0)
 	if(external_rsc_urls && external_rsc_urls.len)
@@ -142,6 +139,24 @@ var/next_external_rsc = 0
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
+
+	if (byond_version < config.client_error_version)		//Out of date client.
+		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
+		src << config.client_error_message
+		src << "Your version: [byond_version]"
+		src << "Required version: [config.client_error_version] or later"
+		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
+		if (holder)
+			src << "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade"
+		else
+			del(src)
+			return 0
+	else if (byond_version < config.client_warn_version)	//We have words for this client.
+		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
+		src << config.client_warn_message
+		src << "Your version: [byond_version]"
+		src << "Required version to remove this message: [config.client_warn_version] or later"
+		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
 	if (connection == "web")
 		if (!config.allowwebclient)
@@ -193,6 +208,7 @@ var/next_external_rsc = 0
 
 	if(!void)
 		void = new()
+		void = void.MakeGreed()
 
 	screen += void
 

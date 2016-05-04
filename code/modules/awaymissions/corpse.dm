@@ -216,6 +216,25 @@
 	qdel(src)
 
 
+/obj/effect/mob_spawn/mouse
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/mouse
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/cow
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/cow
+	death = FALSE
+	roundstart = FALSE
+	mob_gender = FEMALE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+
+
+
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
 /obj/effect/mob_spawn/human/syndicatesoldier
@@ -273,6 +292,18 @@
 	has_id = 1
 	id_job = "Medical Doctor"
 	id_access = "Medical Doctor"
+
+/obj/effect/mob_spawn/human/doctor/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	radio = null
+	back = null
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a space doctor!"
+
 
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
@@ -351,11 +382,26 @@
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
 	roundstart = FALSE
-	mob_name = "Space Bartender"
-	name = "sleeper"
+	random = TRUE
+	name = "bartender sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
+
+/obj/effect/mob_spawn/human/beach
+	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform = /obj/item/clothing/under/shorts/red
+	pocket1 = /obj/item/weapon/storage/wallet/random
+
+/obj/effect/mob_spawn/human/beach/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	mob_name = "Beach Bum"
+	name = "beach bum sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a beach bum!"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 

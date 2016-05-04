@@ -12,11 +12,17 @@
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
-	icon_state = "armor"
-	item_state = "armor"
+	icon_state = "armoralt"
+	item_state = "armoralt"
 	blood_overlay_type = "armor"
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	dog_fashion = /datum/dog_fashion/back
 
+/obj/item/clothing/suit/armor/vest/alt
+	desc = "An armored vest that protects against most types of damage."
+	icon_state = "armor"
+	item_state = "armor"
+	
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."
@@ -39,19 +45,20 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "A red jacket with silver rank pips and body armor strapped on top."
-	icon_state = "warden_jacket"
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	icon_state = "warden_alt"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 70
 	burn_state = FLAMMABLE
+	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
-	icon_state = "warden_alt"
+	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	icon_state = "warden_jacket"
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -61,6 +68,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
@@ -69,6 +77,7 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	armor = list(melee = 50, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
@@ -88,6 +97,15 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 80
 	put_on_delay = 60
+
+/obj/item/clothing/suit/armor/bone
+	name = "bone armor"
+	desc = "A tribal armor plate, crafted from animal bone."
+	icon_state = "bonearmor"
+	item_state = "bonearmor"
+	blood_overlay_type = "armor"
+	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	body_parts_covered = CHEST
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
@@ -120,6 +138,7 @@
 	icon_state = "detective-armor"
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton/telescopic)
 	burn_state = FLAMMABLE
+	dog_fashion = null
 
 
 //Reactive armor
@@ -319,3 +338,5 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+
+

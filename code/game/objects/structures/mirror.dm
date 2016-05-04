@@ -42,32 +42,21 @@
 
 
 /obj/structure/mirror/proc/shatter()
-	if(shattered)
-		return
-	shattered = 1
 	icon_state = "mirror_broke"
 	playsound(src, "shatter", 70, 1)
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
-	if(prob(Proj.damage * 2))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			if(!shattered)
-				shatter()
-			else
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-	..()
+/obj/structure/mirror/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(I.damtype == STAMINA)
-		return
-	if(shattered)
-		if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		var/obj/item/weapon/weldingtool/WT = I
+		if(shattered)
+			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -78,59 +67,60 @@
 					shattered = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
-				return
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-
-	if(prob(I.force * 2))
-		visible_message("<span class='warning'>[user] smashes [src] with [I].</span>")
-		shatter()
 	else
-		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
+		return ..()
 
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
+
+/obj/structure/mirror/ex_act(severity)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				qdel(src)
+			else
+				take_damage(5)
+		if(3)
+			if(prob(75))
+				take_damage(5)
+
+/obj/structure/mirror/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+		if(BURN)
+		else
+			return
+	if(!shattered)
+		if(damage)
+			shatter()
+	else if(sound_effect)
+		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+
+/obj/structure/mirror/proc/attack_generic(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
+	take_damage(5)
 
 /obj/structure/mirror/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(islarva(user))
-		return
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
+	attack_generic(user)
 
-
-/obj/structure/mirror/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
+/obj/structure/mirror/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper <= 0)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
-
+	attack_generic(M)
 
 /obj/structure/mirror/attack_slime(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
+	attack_generic(user)
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton","agent")
+	var/list/races_blacklist = list("skeleton", "agent")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()

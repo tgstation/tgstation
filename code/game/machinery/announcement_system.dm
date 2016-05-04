@@ -73,26 +73,18 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		if(!panel_open)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-			panel_open = 1
-		else
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
-			panel_open = 0
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		panel_open = !panel_open
+		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
 		update_icon()
+	else if(default_deconstruction_crowbar(P))
 		return
-
-	if(panel_open)
-		default_deconstruction_crowbar(P)
-		if(istype(P, /obj/item/device/multitool) && broken)
-			user << "<span class='notice'>You reset [src]'s firmware.</span>"
-			broken = 0
-			update_icon()
-			return
-
-	return ..()
+	else if(istype(P, /obj/item/device/multitool) && panel_open && broken)
+		user << "<span class='notice'>You reset [src]'s firmware.</span>"
+		broken = 0
+		update_icon()
+	else
+		return ..()
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")

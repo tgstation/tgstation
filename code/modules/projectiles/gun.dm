@@ -36,6 +36,7 @@
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
+	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 
@@ -135,6 +136,8 @@
 
 
 /obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
+	if(firing_burst)
+		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -210,6 +213,7 @@ obj/item/weapon/gun/proc/newshot()
 			recoil = initial(recoil)
 
 	if(burst_size > 1)
+		firing_burst = 1
 		for(var/i = 1 to burst_size)
 			if(!user)
 				break
@@ -231,6 +235,7 @@ obj/item/weapon/gun/proc/newshot()
 			process_chamber()
 			update_icon()
 			sleep(fire_delay)
+		firing_burst = 0
 	else
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed, zone_override))

@@ -540,38 +540,35 @@
 	if(C.stat)
 		user << "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>"
 		return
-	switch(user.a_intent)
-		if("disarm")
-			if(!wielded)
-				return ..()
-			if(!ishuman(target))
-				return ..()
-			var/mob/living/carbon/human/H = target
-			var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
-										  "[user] smacks [H] with the butt of [src]!", \
-										  "[user] broadsides [H] with [src]!", \
-										  "[user] smashes [H]'s head with [src]!", \
-										  "[user] beats [H] with front of [src]!", \
-										  "[user] twirls and slams [H] with [src]!")
-			H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
-								   "<span class='userdanger'>[pick(fluffmessages)]</span>")
-			playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			H.adjustStaminaLoss(rand(13,20))
-			if(prob(10))
-				H.visible_message("<span class='warning'>[H] collapses!</span>", \
-									   "<span class='userdanger'>Your legs give out!</span>")
-				H.Weaken(4)
-			if(H.staminaloss && !H.sleeping)
-				var/total_health = (H.health - H.staminaloss)
-				if(total_health <= config.health_threshold_crit && !H.stat)
-					H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
-										   "<span class='userdanger'>[user] knocks you unconscious!</span>")
-					H.SetSleeping(30)
-					H.adjustBrainLoss(25)
-			return
-		else
+	if(user.a_intent == "disarm")
+		if(!wielded)
 			return ..()
-	return ..()
+		if(!ishuman(target))
+			return ..()
+		var/mob/living/carbon/human/H = target
+		var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
+									  "[user] smacks [H] with the butt of [src]!", \
+									  "[user] broadsides [H] with [src]!", \
+									  "[user] smashes [H]'s head with [src]!", \
+									  "[user] beats [H] with front of [src]!", \
+									  "[user] twirls and slams [H] with [src]!")
+		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
+							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+		H.adjustStaminaLoss(rand(13,20))
+		if(prob(10))
+			H.visible_message("<span class='warning'>[H] collapses!</span>", \
+								   "<span class='userdanger'>Your legs give out!</span>")
+			H.Weaken(4)
+		if(H.staminaloss && !H.sleeping)
+			var/total_health = (H.health - H.staminaloss)
+			if(total_health <= config.health_threshold_crit && !H.stat)
+				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
+									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
+				H.SetSleeping(30)
+				H.adjustBrainLoss(25)
+	else
+		return ..()
 
 /obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(wielded)
