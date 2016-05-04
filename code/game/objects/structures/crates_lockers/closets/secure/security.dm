@@ -77,8 +77,8 @@
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
-	new /obj/item/weapon/door_remote/head_of_security(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/pinpointer(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -101,6 +101,7 @@
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/clothing/gloves/color/black/krav_maga/sec(src)
+	new /obj/item/weapon/door_remote/head_of_security(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
