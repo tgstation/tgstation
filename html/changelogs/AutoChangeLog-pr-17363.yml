@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Improved medical HUDs to work on all living creatures."
+  - rscadd: "Drones and swarmers, being machines, require a diagnostic HUD for analysis instead."

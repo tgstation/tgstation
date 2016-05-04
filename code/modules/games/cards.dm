@@ -122,8 +122,10 @@
 	w_class        = 1
 
 	var/concealed  = 0
+	var/blank = 0
 	var/list/cards = list()
 	var/datum/html_interface/hi
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/hand/New(loc)
 	. = ..()
@@ -138,7 +140,17 @@
 	return ..()
 
 /obj/item/weapon/hand/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/hand))
+	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
+		var/datum/playingcard/P = cards[1]
+		if(!blank)
+			user << "You cannot write on that card."
+			return
+		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
+		if(!cardtext)
+			return
+		P.name = cardtext
+		blank = 0
+	else if(istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
 		for(var/datum/playingcard/P in src.cards) H.cards.Add(P)

@@ -2,25 +2,11 @@
 	create_reagents(1000)
 	..()
 
-/mob/living/carbon/prepare_huds()
-	..()
-	prepare_data_huds()
-
-/mob/living/carbon/proc/prepare_data_huds()
-	..()
-	med_hud_set_health()
-	med_hud_set_status()
-
-/mob/living/carbon/updatehealth()
-	..()
-	med_hud_set_health()
-
 /mob/living/carbon/Destroy()
 	for(var/atom/movable/guts in internal_organs)
 		qdel(guts)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
-	remove_from_all_data_huds()
 	if(dna)
 		qdel(dna)
 	return ..()
@@ -54,23 +40,6 @@
 						A.loc = loc
 						stomach_contents.Remove(A)
 					src.gib()
-
-/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
-	death(1)
-	for(var/obj/item/organ/internal/I in internal_organs)
-		if(no_brain && istype(I, /obj/item/organ/internal/brain))
-			continue
-		if(I)
-			I.Remove(src)
-			I.loc = get_turf(src)
-			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
-
-	for(var/mob/M in src)
-		if(M in stomach_contents)
-			stomach_contents.Remove(M)
-		M.loc = loc
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
-	. = ..()
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)

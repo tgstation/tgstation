@@ -1,13 +1,12 @@
-/mob/living/silicon/robot/gib(animation = 1)
-	..()
 
 /mob/living/silicon/robot/spawn_gibs()
 	robogibs(loc, viruses)
 
-/mob/living/silicon/robot/gib_animation(animate)
-	..(animate, "gibbed-r")
+/mob/living/silicon/robot/gib_animation()
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-r")
 
-/mob/living/silicon/robot/dust(animation = 1)
+
+/mob/living/silicon/robot/dust()
 	if(mmi)
 		qdel(mmi)
 	..()
@@ -15,8 +14,8 @@
 /mob/living/silicon/robot/spawn_dust()
 	new /obj/effect/decal/remains/robot(loc)
 
-/mob/living/silicon/robot/dust_animation(animate)
-	..(animate, "dust-r")
+/mob/living/silicon/robot/dust_animation()
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-r")
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)

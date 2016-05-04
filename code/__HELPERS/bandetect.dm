@@ -6,7 +6,7 @@
 
 	if(!query.Execute())
 		world.log << "SQL ERROR doing datediff. Error : \[[query.ErrorMsg()]\]\n"
-		return
+		return FALSE
 
 	if(query.NextRow())
 		var/diff = text2num(query.item[1])
@@ -15,6 +15,7 @@
 			if(diff < 0)
 				msg += " They are also apparently from the future."
 			message_admins("[key_name_admin(src)] [msg]")
+	return TRUE
 #undef YOUNG
 
 
@@ -22,6 +23,7 @@
 	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
 	if(!http)
 		world.log << "Failed to connect to byond age check for [src.ckey]"
+		return FALSE
 
 	var/F = file2text(http["CONTENT"])
 	if(F)
@@ -31,4 +33,4 @@
 		var/y = R.group[1]
 		var/m = R.group[2]
 		var/d = R.group[3]
-		join_date_check(y,m,d)
+		return join_date_check(y,m,d)
