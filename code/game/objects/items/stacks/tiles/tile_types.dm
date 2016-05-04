@@ -4,8 +4,8 @@
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
 	w_class = 3
-	force = 1
-	throwforce = 1
+	force = 5 // Impossible to get anyhow
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
@@ -149,9 +149,9 @@
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
-	force = 6
+	force = 12
 	materials = list(MAT_METAL=500)
-	throwforce = 10
+	throwforce = 13
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/open/floor/plasteel

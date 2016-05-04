@@ -19,7 +19,7 @@ effective or pretty fucking useless.
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
 	icon_state = "batterer"
-	throwforce = 5
+	throwforce = 7
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
@@ -75,7 +75,7 @@ effective or pretty fucking useless.
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject. A strange microlaser is hooked on to the scanning end."
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	throwforce = 3
+	throwforce = 4
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7

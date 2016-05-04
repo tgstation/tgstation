@@ -3,7 +3,7 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	force = 18
+	force = 23
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
@@ -61,7 +61,7 @@
 	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
 	w_class = 5
-	force = 5
+	force = 7
 	slot_flags = SLOT_BACK
 	block_chance = 50
 	var/shield_icon = "shield-red"
@@ -145,7 +145,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
-	force = 2
+	force = 3
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -219,7 +219,7 @@
 	force = 0
 	throw_speed = 4
 	throw_range = 7
-	throwforce = 20
+	throwforce = 26
 
 /obj/item/weapon/nullrod/armblade
 	name = "dark blessing"
@@ -236,7 +236,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	item_state = "carp_plushie"
-	force = 15
+	force = 20
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	hitsound = 'sound/weapons/bite.ogg'
 	var/used_blessing = FALSE
@@ -254,7 +254,7 @@
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
 	w_class = 4
-	force = 15
+	force = 20
 	block_chance = 40
 	slot_flags = SLOT_BACK
 	sharpness = IS_BLUNT

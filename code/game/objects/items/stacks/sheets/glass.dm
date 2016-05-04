@@ -276,8 +276,8 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	w_class = 1
-	force = 5
-	throwforce = 10
+	force = 7
+	throwforce = 13
 	item_state = "shard-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")

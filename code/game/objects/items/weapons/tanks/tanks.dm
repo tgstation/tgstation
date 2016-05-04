@@ -5,8 +5,8 @@
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
-	force = 5
-	throwforce = 10
+	force = 7
+	throwforce = 13
 	throw_speed = 1
 	throw_range = 4
 	actions_types = list(/datum/action/item_action/set_internals)

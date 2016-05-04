@@ -15,7 +15,7 @@
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-	force = 10
+	force = 13
 	dog_fashion = /datum/dog_fashion/back
 
 
@@ -45,7 +45,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
-	force = 10
+	force = 13
 
 /obj/item/weapon/tank/internals/anesthetic/New()
 	..()
@@ -61,7 +61,7 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
-	force = 10
+	force = 13
 	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/weapon/tank/internals/air/New()
@@ -81,7 +81,7 @@
 	icon_state = "plasma"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
-	force = 8
+	force = 10
 
 
 /obj/item/weapon/tank/internals/plasma/New()
@@ -119,7 +119,7 @@
 	desc = "A tank of plasma gas."
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
-	force = 10
+	force = 13
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
 /obj/item/weapon/tank/internals/plasmaman/New()
@@ -139,7 +139,7 @@
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
 	slot_flags = SLOT_BELT
-	force = 5
+	force = 7
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
@@ -159,7 +159,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 2
-	force = 4
+	force = 5
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 

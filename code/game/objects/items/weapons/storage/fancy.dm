@@ -76,7 +76,7 @@
 	icon_type = "candle"
 	item_state = "candlebox5"
 	storage_slots = 5
-	throwforce = 2
+	throwforce = 3
 	slot_flags = SLOT_BELT
 	spawn_type = /obj/item/candle
 

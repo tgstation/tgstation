@@ -21,8 +21,8 @@
 	icon_state = "wrench"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
-	throwforce = 7
+	force = 7
+	throwforce = 9
 	w_class = 2
 	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
@@ -44,8 +44,8 @@
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
 	icon_state = "wrench_medical"
-	force = 2 //MEDICAL
-	throwforce = 4
+	force = 3 //MEDICAL
+	throwforce = 5
 	origin_tech = "materials=1;engineering=1;biotech=1"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
 
@@ -88,9 +88,9 @@
 	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
+	force = 7
 	w_class = 1
-	throwforce = 5
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=75)
@@ -139,7 +139,7 @@
 	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 6
+	force = 8
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2
@@ -192,8 +192,8 @@
 	item_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	hitsound = "swing_hit"
 	throw_speed = 3
 	throw_range = 5
@@ -284,7 +284,7 @@
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			force = 15
+			force = 20 //Warning, may fuck up the blob
 			damtype = "fire"
 			if(prob(5))
 				remove_fuel(1)
@@ -379,7 +379,7 @@
 	if(welding)
 		if(get_fuel() >= 1)
 			user << "<span class='notice'>You switch [src] on.</span>"
-			force = 15
+			force = 20
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
@@ -392,7 +392,7 @@
 			user << "<span class='notice'>You switch [src] off.</span>"
 		else
 			user << "<span class='warning'>[src] shuts off!</span>"
-		force = 3
+		force = 4
 		damtype = "brute"
 		hitsound = "swing_hit"
 		update_icon()
@@ -510,8 +510,8 @@
 	icon_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5
-	throwforce = 7
+	force = 7
+	throwforce = 9
 	w_class = 2
 	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1"
@@ -525,12 +525,12 @@
 
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
-	force = 8
+	force = 10
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
-	force = 12
+	force = 16
 	w_class = 3
 	throw_speed = 3
 	throw_range = 3
@@ -543,5 +543,5 @@
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
 	icon = 'icons/obj/items_cyborg.dmi'
-	force = 10
+	force = 13
 	toolspeed = 2

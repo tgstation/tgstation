@@ -13,7 +13,7 @@ AI MODULES
 	item_state = "electronic"
 	desc = "An AI Module for programming laws to an AI."
 	flags = CONDUCT
-	force = 5
+	force = 7
 	w_class = 2
 	throwforce = 0
 	throw_speed = 3

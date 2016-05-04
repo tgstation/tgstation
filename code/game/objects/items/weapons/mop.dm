@@ -5,8 +5,8 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
-	force = 3
-	throwforce = 5
+	force = 4
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 7
 	w_class = 3
@@ -77,7 +77,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 	mopcap = 10
 	icon_state = "advmop"
 	item_state = "mop"
-	force = 6
-	throwforce = 8
+	force = 8
+	throwforce = 10
 	throw_range = 4
 	mopspeed = 20

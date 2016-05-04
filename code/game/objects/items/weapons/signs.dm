@@ -2,7 +2,7 @@
 	icon_state = "picket"
 	name = "blank picket sign"
 	desc = "It's blank"
-	force = 5
+	force = 7
 	w_class = 4
 	attack_verb = list("bashed","smacked")
 	burn_state = FLAMMABLE
