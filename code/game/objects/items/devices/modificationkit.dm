@@ -1,6 +1,6 @@
 /obj/item/modkit
 	name = "modification kit"
-	desc = "A one-use kit, which enables kinetic accelerators to be fired with only one hand."
+	desc = "A one-use kit, which enables kinetic accelerators to be fired with only one hand, as well as allowing less dextrous races to use the tool."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
 	var/uses = 1
@@ -16,6 +16,7 @@
 	user <<"<span class='notice'>You modify the [C], making it less unwieldy.</span>"
 	C.name = "compact [C.name]"
 	C.weapon_weight = WEAPON_LIGHT
+	C.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	uses --
 	if(!uses)
 		qdel(src)
