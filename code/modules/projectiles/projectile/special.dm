@@ -208,9 +208,7 @@
 		if(A.anchored)
 			continue
 		if(A in range(T,throwpower))
-			var/turf/target = get_turf(A)
-			for(var/iter=0 to throwpower)
-				target = get_step_away(A,T)
+			var/turf/target = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
 			A.throw_at(target,range+1,1)
 		for(var/iter=0 to power)
 			step_away(A,T)
