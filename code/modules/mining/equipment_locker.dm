@@ -507,7 +507,7 @@
 	var/radio_channel = "Supply"
 
 	var/ticks_in_crit = 0
-	var/threshold = 5
+	var/threshold = 2
 
 /obj/item/device/wormhole_lifebelt/New()
 	. = ..()
@@ -541,7 +541,7 @@
 		ticks_in_crit += 1
 		if(ticks_in_crit >= threshold)
 			feedback_add_details("jaunter", "M") // medical activation
-			//belt_radio.talk_into(src, "Medical activation for [user] but yeah, go do whatever.", radio_channel)
+			belt_radio.talk_into(src, "Medical activation for [user] but yeah, go do whatever.", radio_channel)
 			activate(user)
 	else
 		ticks_in_crit = 0
