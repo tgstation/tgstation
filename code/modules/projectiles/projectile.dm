@@ -628,3 +628,7 @@ var/list/impact_master = list()
 
 /obj/item/projectile/kick_act() //Can't be kicked around
 	return
+
+/obj/item/projectile/attack_hand(mob/user)
+	if(timestopped)
+		..()
