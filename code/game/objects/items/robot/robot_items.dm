@@ -183,12 +183,12 @@
 				"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
 				"<span class='danger'>The siren pierces your hearing!</span>")
 			M << "<font color='red' size='7'>HUMAN HARM</font>"
-		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(isrobot(user))
 			var/mob/living/silicon/robot/R = user
-			R.connected_ai << "<span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span>"
+			R.connected_ai << "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>"
 
 		return
 
@@ -196,9 +196,9 @@
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
 				M.confused += 15
-				M.Weaken(1)
+				M.Weaken(2)
 				M.stuttering += 30
-				M.adjustEarDamage(0, 15)
+				M.adjustEarDamage(0, 20)
 				M.Jitter(25)
 				M.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
 				"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
