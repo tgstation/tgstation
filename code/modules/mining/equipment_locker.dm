@@ -292,7 +292,7 @@
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Explorer Belt",		/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
-		new /datum/data/mining_equipment("Wormhole Lifebelt",   /obj/item/device/wormhole_lifebelt,										600),
+		new /datum/data/mining_equipment("Wormhole Lifebelt",   /obj/item/device/wormhole_lifebelt,										750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
@@ -418,7 +418,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer Belt", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer Belt", "Resonator", "Mining Drone", "Advanced Scanner", "Wormhole Lifebelt")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
@@ -432,6 +432,8 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Advanced Scanner")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+		if("Wormhole Lifebelt")
+			new /obj/item/device/wormhole_lifebelt(src.loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -505,7 +507,7 @@
 	var/radio_channel = "Supply"
 
 	var/ticks_in_crit = 0
-	var/threshold = 2
+	var/threshold = 5
 
 /obj/item/device/wormhole_lifebelt/New()
 	. = ..()
@@ -539,7 +541,7 @@
 		ticks_in_crit += 1
 		if(ticks_in_crit >= threshold)
 			feedback_add_details("jaunter", "M") // medical activation
-			belt_radio.talk_into(src, "Medical activation for [user] but yeah, go do whatever.", radio_channel)
+			//belt_radio.talk_into(src, "Medical activation for [user] but yeah, go do whatever.", radio_channel)
 			activate(user)
 	else
 		ticks_in_crit = 0
@@ -556,19 +558,43 @@
 		return FALSE
 	return TRUE
 
+/obj/item/device/wormhole_lifebelt/proc/get_beacons(mob/user)
+	var/golem_mode = FALSE
+	var/list/L = list()
+	// The shoes send you home, to where you belong
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && istype(H.dna.species, /datum/species/golem))
+			golem_mode = TRUE
+
+
+	for(var/obj/item/device/radio/beacon/B in world)
+		var/turf/T = get_turf(B)
+		if(golem_mode)
+			if(istype(T.loc, /area/ruin/powered/golem_ship))
+				L += B
+		else if(T.z == ZLEVEL_STATION)
+			L += B
+
+	// If no beacons found for golems, home in on dat gold statue.
+	if(!L.len && golem_mode)
+		for(var/obj/structure/statue/gold/rd/S in world)
+			var/turf/T = get_turf(S)
+			if(istype(T.loc, /area/ruin/powered/golem_ship))
+				L += S
+
+	return L
+
 /obj/item/device/wormhole_lifebelt/proc/activate(mob/user)
 	if(!turf_check(user))
 		return
 
-	var/list/L = list()
-	for(var/obj/item/device/radio/beacon/B in world)
-		var/turf/T = get_turf(B)
-		if(T.z == ZLEVEL_STATION)
-			L += B
-	if(!L.len)
+	var/list/beacons = get_beacons(user)
+
+	if(!beacons.len)
 		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
 		return
-	var/chosen_beacon = pick(L)
+	var/chosen_beacon = pick(beacons)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new(get_turf(src), chosen_beacon, lifespan=100)
 	J.target = chosen_beacon
 	try_move_adjacent(J)
@@ -1175,41 +1201,19 @@
 
 /obj/machinery/mineral/equipment_vendor/golem
 	name = "golem ship equipment vendor"
-	desc = "A modified mining equipment vendor. It seems a few selections were replaced."
-	prize_list = list(
-		new /datum/data/mining_equipment("Stimpack",				/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    	50),
-		new /datum/data/mining_equipment("Stimpack Bundle",			/obj/item/weapon/storage/box/medipens/utility,	 				  		200),
-		new /datum/data/mining_equipment("Whiskey",             	/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    		100),
-		new /datum/data/mining_equipment("Absinthe",            	/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
-		new /datum/data/mining_equipment("Soap",                	/obj/item/weapon/soap/nanotrasen, 						          		200),
-		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
-		new /datum/data/mining_equipment("Laser Pointer",       	/obj/item/device/laser_pointer, 				                   		300),
-		new /datum/data/mining_equipment("Alien Toy",           	/obj/item/clothing/mask/facehugger/toy, 		                   		300),
-		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
-		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
-		new /datum/data/mining_equipment("Stabilizing Serum",		/obj/item/weapon/hivelordstabilizer,		                     		400),
-		new /datum/data/mining_equipment("Shelter Capsule",			/obj/item/weapon/survivalcapsule,			                     		400),
-		new /datum/data/mining_equipment("GAR scanners",			/obj/item/clothing/glasses/meson/gar,					  		   		500),
-		new /datum/data/mining_equipment("Sulphuric Acid",			/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,        		500),
-		new /datum/data/mining_equipment("Brute First-Aid Kit",		/obj/item/weapon/storage/firstaid/brute,						   		600),
-		new /datum/data/mining_equipment("Advanced Scanner",		/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
-		new /datum/data/mining_equipment("Resonator",           	/obj/item/weapon/resonator,                                    	   		800),
-		new /datum/data/mining_equipment("Lazarus Injector",    	/obj/item/weapon/lazarus_injector,                                		1000),
-		new /datum/data/mining_equipment("Silver Pickaxe",			/obj/item/weapon/pickaxe/silver,				                  		1000),
-		new /datum/data/mining_equipment("Grey Slime Extract",		/obj/item/slime_extract/grey,				       		           		1000),
-		new /datum/data/mining_equipment("Diamond Pickaxe",			/obj/item/weapon/pickaxe/diamond,				                  		2000),
-		new /datum/data/mining_equipment("Super Resonator",     	/obj/item/weapon/resonator/upgraded,                              		2500),
-		new /datum/data/mining_equipment("Point Transfer Card", 	/obj/item/weapon/card/mining_point_card,               			   		500),
-		new /datum/data/mining_equipment("Mining Drone",        	/mob/living/simple_animal/hostile/mining_drone,                   		800),
-		new /datum/data/mining_equipment("Drone Melee Upgrade", 	/obj/item/device/mine_bot_ugprade,      			   			   		400),
-		new /datum/data/mining_equipment("Drone Health Upgrade",	/obj/item/device/mine_bot_ugprade/health,      			   	       		400),
-		new /datum/data/mining_equipment("Drone Ranged Upgrade",	/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
-		new /datum/data/mining_equipment("Drone AI Upgrade",    	/obj/item/slimepotion/sentience/mining,      			   	      		1000),
-		new /datum/data/mining_equipment("The Liberator's Legacy",  /obj/item/weapon/storage/box/rndboards,      			      			2000),
-		)
 
 /obj/machinery/mineral/equipment_vendor/golem/New()
 	..()
+	desc += "\nIt seems a few selections have been added."
+	prize_list += list(
+		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
+		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/weapon/reagent_containers/food/snacks/monkeycube,        		300),
+		new /datum/data/mining_equipment("Toolbelt",				/obj/item/weapon/storage/belt/utility,	    							350),
+		new /datum/data/mining_equipment("Sulphuric Acid",			/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,        		500),
+		new /datum/data/mining_equipment("Grey Slime Extract",		/obj/item/slime_extract/grey,				       		           		1000),
+		new /datum/data/mining_equipment("The Liberator's Legacy",  /obj/item/weapon/storage/box/rndboards,      			      			2000),
+		)
+
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor/golem(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -1217,3 +1221,4 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
+
