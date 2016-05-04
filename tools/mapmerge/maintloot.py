@@ -26,6 +26,8 @@ if __name__=='__main__':
         #atom is a string
         for atom in atoms:
             if atom.startswith(lootdrop_path):
+                if(key in follow_up):
+                    print("Hey, '{}' has multiple maintlootdrops...")
                 follow_up.add(key)
 
     # Count the number of times each map key appears
@@ -58,3 +60,5 @@ if __name__=='__main__':
 
     for area, total in tally.items():
         print("{}: {}".format(area, total))
+
+    print("TOTAL: {}".format(sum(tally.values())))
