@@ -87,7 +87,7 @@
 		else
 			fire_rain()
 
-	else if(prob(10+anger_modifier) && !client)
+	else if(prob(10+anger_modifier) && !client && !swooping)
 		if(health > maxHealth/2)
 			swoop_attack()
 		else
@@ -121,6 +121,10 @@
 
 				PoolOrNew(/obj/effect/hotspot,J)
 				J.hotspot_expose(700,50,1)
+				for(var/mob/living/L in J)
+					if(L != src)
+						L.adjustFireLoss(20)
+						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0)
 	if(stat)
@@ -150,6 +154,8 @@
 	sleep(10)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
+		if(L == src)
+			continue
 		if(L.stat)
 			visible_message("<span class='danger'>[src] slams down on [L], crushing them!</span>")
 			L.gib()
@@ -190,7 +196,9 @@
 
 /obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
 	if(summon_cooldown > world.time)
+		user << "You just recently called out for aid. You don't want to annoy the spirits."
 		return
+	user << "You call out for aid, attempting to summon spirits to your side."
 	notify_ghosts("[user] is raising their [src], calling for your help!", source = user)
 	summon_cooldown = world.time + 600
 
