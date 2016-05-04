@@ -223,13 +223,6 @@
 	color = "#333333"
 	list_reagents = list("unholywater" = 40)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
-	name = "flask of unholy water"
-	desc = "toxic to nonbelievers, this water renews and reinvigorates the faithful of nar'sie."
-	icon_state = "holyflask"
-	color = "#333333"
-	list_reagents = list("unholywater" = 40)
-	
 /obj/item/device/shuttle_curse
 	name = "cursed orb"
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
