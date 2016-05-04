@@ -19,9 +19,9 @@
 		egg.loc = get_turf(user)
 
 	user.reagents.add_reagent("mutadone", 10)
-	user.reagents.add_reagent("potass_iodide", 10)
-	user.reagents.add_reagent("charcoal", 20)
+	user.reagents.add_reagent("pen_acid", 20)
 	user.reagents.add_reagent("antihol", 10)
+	user.reagents.add_reagent("mannitol", 25)
 
 	for(var/datum/disease/D in user.viruses)
 		D.cure()

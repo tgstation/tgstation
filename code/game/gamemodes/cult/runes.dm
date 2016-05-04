@@ -323,7 +323,7 @@ var/list/teleport_runes = list()
 	..()
 	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
 					  			"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
-	ticker.mode.add_cultist(new_cultist.mind)
+	ticker.mode.add_cultist(new_cultist.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))
 	new_cultist.mind.special_role = "Cultist"
 	new_cultist << "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
@@ -840,7 +840,7 @@ var/list/teleport_runes = list()
 	N.health = 20
 	N.mouse_opacity = 0
 	new_human.key = ghost_to_spawn.key
-	ticker.mode.add_cultist(new_human.mind)
+	ticker.mode.add_cultist(new_human.mind, 0)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
 
 	while(user in get_turf(src))
