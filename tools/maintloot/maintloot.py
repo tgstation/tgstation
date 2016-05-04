@@ -250,6 +250,11 @@ if __name__=='__main__':
             if atom.startswith(lootdrop_path):
                 follow_up.add(key)
 
+    # Count the number of times each map key appears
+    appears = collections.Counter()
+    for coord, key in grid.items():
+        if key in follow_up:
+            appears[key] += 1
 
     tally = collections.Counter()
     for key in follow_up:
@@ -269,8 +274,9 @@ if __name__=='__main__':
 
             elif atom.startswith(area_path):
                 area = atom
-        tally[area] += count
 
-    print(tally)
-    for k,v in tally.items():
-        print(k,v)
+        # Multiply by the number of times this model is used
+        tally[area] += (count * appears[key])
+
+    for area, total in tally.items():
+        print("{}: {}".format(area, total))
