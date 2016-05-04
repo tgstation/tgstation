@@ -7,7 +7,6 @@
 		lavawracked hellscape? It is clearly a mystery."
 
 	var/cost = null
-	var/enabled = FALSE
 
 	var/prefix = null
 	var/suffix = null

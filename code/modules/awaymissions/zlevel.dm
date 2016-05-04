@@ -29,40 +29,12 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		return
 
 
-/proc/generateMapList(filename, blacklist)
+/proc/generateMapList(filename)
 	var/list/potentialMaps = list()
-	var/list/blacklistedMaps = list()
 	var/list/Lines = file2list(filename)
 
 	if(!Lines.len)
 		return
-
-	if(blacklist)
-		var/list/Blines = file2list(blacklist)
-		for (var/t in Blines)
-			if (!t)
-				continue
-
-			t = trim(t)
-			if (length(t) == 0)
-				continue
-			else if (copytext(t, 1, 2) == "#")
-				continue
-
-			var/pos = findtext(t, " ")
-			var/name = null
-
-			if (pos)
-				name = lowertext(copytext(t, 1, pos))
-
-			else
-				name = lowertext(t)
-
-			if (!name)
-				continue
-
-			blacklistedMaps.Add(t)
-
 	for (var/t in Lines)
 		if (!t)
 			continue
@@ -87,40 +59,43 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		potentialMaps.Add(t)
 
+	return potentialMaps
 
 
-	return (potentialMaps - blacklistedMaps)
+/proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
+	var/overall_sanity = 10000
 
-
-/proc/seedRuins(z_level = 1, ruin_number = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
-	ruin_number = min(ruin_number, potentialRuins.len)
-
-	while(ruin_number)
-		var/sanity = 0
+	while(budget > 0 && overall_sanity > 0)
+		overall_sanity--
+		// Pick a ruin
+		var/datum/map_template/ruin/ruin = potentialRuins[pick(potentialRuins)]
+		// Can we afford it
+		if(ruin.cost > budget)
+			continue
+		// If so, try to place it
 		var/valid = FALSE
-		var/datum/map_template/template = potentialRuins[pick(potentialRuins)]
-		while(!valid)
+		var/sanity = 100
+		// And if we can't fit it anywhere, give up, try again
+		while(!valid && sanity > 0)
 			valid = TRUE
-			sanity++
-			if(sanity > 100)
-				ruin_number--
-				break
+			sanity--
 			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
 
-			for(var/turf/check in template.get_affected_turfs(T,1))
+			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
 				if(!(istype(new_area, whitelist)))
 					valid = FALSE
-					break
+					continue
 
-			if(valid)
-				world.log << "Ruin \"[template.mappath]\" placed at ([T.x], [T.y], [T.z])"
-				var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
-				R.Load(potentialRuins,template)
-				potentialRuins -= template
-				ruin_number --
+			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			// No clue why we have this as some magical self deleting
+			// object when a proc would do perfectly well
+			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
+			R.Load(potentialRuins,ruin)
+			budget -= ruin.cost
 
-	return
+	if(!overall_sanity)
+		world.log << "Ruin loader gave up with [budget] left to spend."
 
 /obj/effect/ruin_loader
 	name = "random ruin"
