@@ -365,7 +365,7 @@
 	reqs = list(/obj/item/stack/sheet/bone = 4)
 	category = CAT_PRIMAL
 
-/datum/table_recipe/drakecloak
+/datum/crafting_recipe/drakecloak
 	name = "Ash Drake Cloak"
 	result = /obj/item/clothing/suit/hooded/cloak/drake
 	time = 60
