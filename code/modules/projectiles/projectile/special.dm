@@ -184,7 +184,7 @@
 
 /obj/item/projectile/gravipulse/Range()
 	T = get_turf(src)
-	if(src.range > max(throwpower, 3) && rangecooldown < 1)
+	if(src.range > min(throwpower, 3) && rangecooldown < 1)
 		for(var/atom/movable/A in orange(T,throwpower))
 			if(A.anchored)
 				continue
@@ -194,8 +194,8 @@
 
 /obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = max(C.gun.power, 15)
-		throwpower = max(C.gun.throwpower, 15)
+		power = min(C.gun.power, 15)
+		throwpower = min(C.gun.throwpower, 15)
 
 /obj/item/ammo_casing/energy/gravipulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
 	gun = G
