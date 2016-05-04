@@ -118,6 +118,7 @@
 							RG.data += data
 							continue main_loop
 						else
+							surroundings -= RC
 							amt -= RG.volume
 							RC.reagents.reagent_list -= RG
 							RC.reagents.conditional_update(RC)
