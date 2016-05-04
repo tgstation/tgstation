@@ -1,2 +1,3 @@
 author: Sood
-changes: []
+changes:
+    - bugfix: Players will no longer be selected twice for the same antag role.
