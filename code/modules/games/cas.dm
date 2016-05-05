@@ -53,6 +53,7 @@ var/global/list/cards_against_space
 		P.name = "Blank Card"
 		P.card_icon = "cas_white"
 		cards += P
+	shuffle(cards) // distribute blank cards throughout deck
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
@@ -73,6 +74,21 @@ var/global/list/cards_against_space
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	update_icon()
+
+/obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/toy/cards/singlecard/cas))
+		var/obj/item/toy/cards/singlecard/cas/SC = I
+		if(!user.unEquip(SC))
+			user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
+			return
+		var/datum/playingcard/RC // replace null datum for the re-added card
+		RC = new()
+		RC.name = "[SC.name]"
+		RC.card_icon = SC.card_face
+		cards += RC
+		user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
+		qdel(SC)
 	update_icon()
 
 /obj/item/toy/cards/deck/cas/update_icon()
