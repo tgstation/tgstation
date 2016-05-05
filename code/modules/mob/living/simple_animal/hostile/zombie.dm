@@ -34,7 +34,7 @@
 	var/removingairlock = 0
 
 /mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN
-	desc = "This guy seems to have gotten lost on his way to the space leather club."
+	desc = "This guy seems to have gotten lost on his way to the leather club."
 	
 /mob/living/simple_animal/hostile/zombie/darkholme/New()
 	..()
