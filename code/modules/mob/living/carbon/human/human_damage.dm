@@ -9,7 +9,7 @@
 		total_burn	+= O.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	update_stat()
-	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
+	if(((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
 		if(on_fire)
 			shred_clothing()

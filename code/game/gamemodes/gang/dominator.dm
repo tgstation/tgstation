@@ -101,7 +101,7 @@
 				SSshuttle.emergency.timer = world.time
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			else
-				priority_announce("All hostile activity within station systems have ceased.","Network Alert")
+				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
 			if(get_security_level() == "delta")
 				set_security_level("red")
@@ -119,6 +119,7 @@
 	if(!(stat & BROKEN))
 		set_broken()
 	poi_list.Remove(src)
+	gang = null
 	qdel(spark_system)
 	return ..()
 
