@@ -168,7 +168,7 @@
 	stamina = 15
 
 /obj/item/projectile/cult/Bump(atom/A, yes)
-	if(iscultist(A) || isconstruct(A))
+	if(iscultist(A) || isconstruct(A) || istype(A, /mob/living/simple_animal/shade))
 		loc = A.loc
 		return 0
 	return ..()
