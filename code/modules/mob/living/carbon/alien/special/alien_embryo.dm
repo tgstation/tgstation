@@ -48,7 +48,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 					owner.adjustToxLoss(1)
 					owner.vomit(95)
 		if(5)
-			owner << "<span class='danger'>Something it tearing its way out of your stomach!!!</span>"
+			owner << "<span class='danger'>Something is tearing its way out of your stomach!</span>"
 			owner.adjustToxLoss(10)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
