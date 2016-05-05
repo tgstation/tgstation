@@ -92,7 +92,7 @@
 
 /datum/martial_art/wrestling/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
 	..()
-	H << "<span class = 'userdanger'>SNAP INTO A JLIM SIM!</span>"
+	H << "<span class = 'userdanger'>SNAP INTO A THIN TIM!</span>"
 	H << "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>"
 	drop.Grant(H)
 	kick.Grant(H)
