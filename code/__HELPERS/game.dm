@@ -430,11 +430,116 @@ var/list/DummyCache = list()
 	return hex2num(copytext(hexa, 6, 8))
 
 /proc/GetHexColors(const/hexa)
-	return list(\
-		GetRedPart(hexa),\
-		GetGreenPart(hexa),\
-		GetBluePart(hexa)\
-	)
+	return list(
+		GetRedPart(hexa),
+		GetGreenPart(hexa),
+		GetBluePart(hexa),
+		)
+
+/proc/rgb2hsl(var/red, var/grn, var/blu)
+
+	red /= 255
+	grn /= 255
+	blu /= 255
+
+	var/lo = min(red, grn, blu)
+	var/hi = max(red, grn, blu)
+	var/hue = 0
+	var/sat = 0
+	var/lgh = (lo + hi)/2
+
+	if(lo != hi)
+		if(lgh < 0.5)
+			sat = (hi - lo) / (hi + lo)
+		else
+			sat = (hi - lo) / (2 - hi - lo)
+		if(red == hi)
+			hue = (grn - blu) / (hi - lo)
+		else if(grn == hi)
+			hue = 2 + (blu - red) / (hi - lo)
+		else
+			hue = 4 + (red - grn) / (hi - lo)
+		if(hue<0)
+			hue += 6
+
+	lgh = round(lgh * 255, 1)
+	sat = round(sat * 255, 1)
+
+	hue = round((hue / 6) * 255, 1)
+
+	return list(
+		hue,
+		sat,
+		lgh,
+		)
+
+/proc/hsl2rgb(var/hue, var/sat, var/lgh)
+
+	hue /= 255
+	sat /= 255
+	lgh /= 255
+
+	var/red = 0
+	var/grn = 0
+	var/blu = 0
+
+	if(!sat)
+		red = lgh
+		grn = lgh
+		blu = lgh
+	else
+		var/temp1 = 0
+		var/temp2 = 0
+		var/temp3 = 0
+		if(lgh < 0.5)
+			temp2 = lgh * (1 + sat)
+		else
+			temp2 = lgh + sat - lgh * sat
+		temp1 = 2 * lgh - temp2
+
+		temp3 = hue + 1/3
+		if(temp3 > 1)
+			temp3--
+		if(6*temp3<1)
+			red = temp1 + (temp2 - temp1) * 6 * temp3
+		else if(2*temp3<1)
+			red = temp2
+		else if(3*temp3<2)
+			red = temp1 + (temp2 - temp1) * ((2/3) - temp3) * 6
+		else
+			red = temp1
+
+		temp3 = hue
+		if(6*temp3<1)
+			grn = temp1 + (temp2 - temp1) * 6 * temp3
+		else if(2*temp3<1)
+			grn = temp2
+		else if(3*temp3<2)
+			grn = temp1 + (temp2 - temp1) * ((2/3) - temp3) * 6
+		else
+			grn = temp1
+
+		temp3 = hue - 1/3
+		if(temp3 < 0)
+			temp3++
+		if(6*temp3<1)
+			blu = temp1 + (temp2 - temp1) * 6 * temp3
+		else if(2*temp3<1)
+			blu = temp2
+		else if(3*temp3<2)
+			blu = temp1 + (temp2 - temp1) * ((2/3) - temp3) * 6
+		else
+			blu = temp1
+
+	red = round(red*255, 1)
+	grn = round(grn*255, 1)
+	blu = round(blu*255, 1)
+
+	return list(
+		red,
+		grn,
+		blu,
+		)
 
 /proc/MixColors(const/list/colors)
 	var/list/reds = new

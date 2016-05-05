@@ -20,7 +20,7 @@ var/list/word_to_uristrune_table = null
 
 
 
-/proc/get_uristrune_cult(word1, word2, word3)
+/obj/effect/rune/proc/get_uristrune_cult(word1, word2, word3,var/mob/living/M = null)
 	var/animated
 
 	if((word1 == cultwords["travel"] && word2 == cultwords["self"])						\
@@ -55,7 +55,11 @@ var/list/word_to_uristrune_table = null
 			 | word_to_uristrune_bit(word2) \
 			 | word_to_uristrune_bit(word3)
 
-	return get_uristrune(bits, animated)
+	if(M && istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		return get_uristrune(bits, animated, H.species.blood_color)
+	else
+		return get_uristrune(bits, animated)
 
 /proc/get_uristrune_name(word1, word2, word3)
 	if((word1 == cultwords["travel"] && word2 == cultwords["self"]))
@@ -111,8 +115,8 @@ var/list/word_to_uristrune_table = null
 
 var/list/uristrune_cache = list()
 
-/proc/get_uristrune(symbol_bits, animated = 0)
-	var/lookup = "[symbol_bits]-[animated]"
+/obj/effect/rune/proc/get_uristrune(symbol_bits, animated = 0, bloodcolor = "#A10808")
+	var/lookup = "[symbol_bits]-[animated]-[bloodcolor]"
 
 	if(lookup in uristrune_cache)
 		return uristrune_cache[lookup]
@@ -123,9 +127,19 @@ var/list/uristrune_cache = list()
 		if(symbol_bits & (1 << i))
 			I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
 
+	var/finalblood = bloodcolor
+	var/list/blood_hsl = rgb2hsl(GetRedPart(bloodcolor),GetGreenPart(bloodcolor),GetBluePart(bloodcolor))
+	if(blood_hsl.len)
+		var/list/blood_rbg = hsl2rgb(blood_hsl[1],blood_hsl[2],128)//producing a color that is neither too bright nor too dark
+		if(blood_hsl.len)
+			finalblood = rgb(blood_rbg[1],blood_rbg[2],blood_rbg[3])
 
-	I.SwapColor(rgb(0, 0, 0, 100), rgb(100, 0, 0, 200))
-	I.SwapColor(rgb(0, 0, 0, 50), rgb(150, 0, 0, 200))
+	var/bc1 = finalblood
+	var/bc2 = finalblood
+	bc1 += "C8"
+	bc2 += "64"
+	I.SwapColor(rgb(0, 0, 0, 100), bc1)
+	I.SwapColor(rgb(0, 0, 0, 50), bc1)
 
 	for(var/x = 1, x <= 32, x++)
 		for(var/y = 1, y <= 32, y++)
@@ -138,7 +152,7 @@ var/list/uristrune_cache = list()
 				var/w = I.GetPixel(x - 1, y)
 
 				if(n == "#000000" || s == "#000000" || e == "#000000" || w == "#000000")
-					I.DrawBox(rgb(200, 0, 0, 200), x, y)
+					I.DrawBox(bc1, x, y)
 
 				else
 					var/ne = I.GetPixel(x + 1, y + 1)
@@ -147,37 +161,26 @@ var/list/uristrune_cache = list()
 					var/sw = I.GetPixel(x - 1, y - 1)
 
 					if(ne == "#000000" || se == "#000000" || nw == "#000000" || sw == "#000000")
-						I.DrawBox(rgb(200, 0, 0, 100), x, y)
+						I.DrawBox(bc2, x, y)
 
-	var/icon/result = icon(I, "")
+	I.MapColors(0.5,0,0,0,0.5,0,0,0,0.5)//we'll darken that color a bit
 
-	result.Insert(I,  "", frame = 1, delay = 10)
+	icon = I
 
-	if(animated == 1)
-		var/icon/I2 = icon(I, "")
-		I2.MapColors(rgb(0xff,0x0c,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
-		I2.SetIntensity(1.04)
-
-		var/icon/I3 = icon(I, "")
-		I3.MapColors(rgb(0xff,0x18,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
-		I3.SetIntensity(1.08)
-
-		var/icon/I4 = icon(I, "")
-		I4.MapColors(rgb(0xff,0x24,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
-		I4.SetIntensity(1.12)
-
-		var/icon/I5 = icon(I, "")
-		I5.MapColors(rgb(0xff,0x30,0,0), rgb(0,0,0,0), rgb(0,0,0,0), rgb(0,0,0,0xff))
-		I5.SetIntensity(1.16)
-
-		result.Insert(I2, "", frame = 2, delay = 4)
-		result.Insert(I3, "", frame = 3, delay = 3)
-		result.Insert(I4, "", frame = 4, delay = 2)
-		result.Insert(I5, "", frame = 5, delay = 6)
-		result.Insert(I4, "", frame = 6, delay = 2)
-		result.Insert(I3, "", frame = 7, delay = 2)
-		result.Insert(I2, "", frame = 8, delay = 2)
-
-	uristrune_cache[lookup] = result
-
-	return result
+	if(animated)//This masterpiece of a color matrix stack produces a nice animation no matter which color was the blood used for the rune.
+		animate(src, color = list(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0), time = 10, loop = -1)//1
+		animate(color = list(1.125,0.06,0,0,0,1.125,0.06,0,0.06,0,1.125,0,0,0,0,1,0,0,0,0), time = 2)//2
+		animate(color = list(1.25,0.12,0,0,0,1.25,0.12,0,0.12,0,1.25,0,0,0,0,1,0,0,0,0), time = 2)//3
+		animate(color = list(1.375,0.19,0,0,0,1.375,0.19,0,0.19,0,1.375,0,0,0,0,1,0,0,0,0), time = 1.5)//4
+		animate(color = list(1.5,0.27,0,0,0,1.5,0.27,0,0.27,0,1.5,0,0,0,0,1,0,0,0,0), time = 1.5)//5
+		animate(color = list(1.625,0.35,0.06,0,0.06,1.625,0.35,0,0.35,0.06,1.625,0,0,0,0,1,0,0,0,0), time = 1)//6
+		animate(color = list(1.75,0.45,0.12,0,0.12,1.75,0.45,0,0.45,0.12,1.75,0,0,0,0,1,0,0,0,0), time = 1)//7
+		animate(color = list(1.875,0.56,0.19,0,0.19,1.875,0.56,0,0.56,0.19,1.875,0,0,0,0,1,0,0,0,0), time = 1)//8
+		animate(color = list(2,0.67,0.27,0,0.27,2,0.67,0,0.67,0.27,2,0,0,0,0,1,0,0,0,0), time = 5)//9
+		animate(color = list(1.875,0.56,0.19,0,0.19,1.875,0.56,0,0.56,0.19,1.875,0,0,0,0,1,0,0,0,0), time = 1)//8
+		animate(color = list(1.75,0.45,0.12,0,0.12,1.75,0.45,0,0.45,0.12,1.75,0,0,0,0,1,0,0,0,0), time = 1)//7
+		animate(color = list(1.625,0.35,0.06,0,0.06,1.625,0.35,0,0.35,0.06,1.625,0,0,0,0,1,0,0,0,0), time = 1)//6
+		animate(color = list(1.5,0.27,0,0,0,1.5,0.27,0,0.27,0,1.5,0,0,0,0,1,0,0,0,0), time = 1)//5
+		animate(color = list(1.375,0.19,0,0,0,1.375,0.19,0,0.19,0,1.375,0,0,0,0,1,0,0,0,0), time = 1)//4
+		animate(color = list(1.25,0.12,0,0,0,1.25,0.12,0,0.12,0,1.25,0,0,0,0,1,0,0,0,0), time = 1)//3
+		animate(color = list(1.125,0.06,0,0,0,1.125,0.06,0,0.06,0,1.125,0,0,0,0,1,0,0,0,0), time = 1)//2

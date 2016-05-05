@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: The color of cult runes now matches the species blood color of whoever wrote it.
+  - tweak: Tweaked the way cult runes look and pulsate a bit.

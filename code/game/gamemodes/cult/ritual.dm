@@ -196,8 +196,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		V.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 1, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 	return
 
-/obj/effect/rune/proc/check_icon()
-	icon = get_uristrune_cult(word1, word2, word3)
+/obj/effect/rune/proc/check_icon(var/mob/M = null)
+	get_uristrune_cult(word1, word2, word3, M)
 
 /obj/item/weapon/tome
 	name = "arcane tome"
@@ -480,7 +480,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 			R.word1 = w1
 			R.word2 = w2
 			R.word3 = w3
-			R.check_icon()
+			R.check_icon(H)
 			R.blood_DNA = list()
 			R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 		return
