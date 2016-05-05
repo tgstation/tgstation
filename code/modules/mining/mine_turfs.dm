@@ -572,14 +572,18 @@
 		var/mob/living/simple_animal/SA = AM
 		if(SA.flying)
 			return
-	if(istype(AM, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = AM
-		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
-			var/obj/item/device/wormhole_jaunter/J = H.belt
-			// To freak out any bystanders
-			visible_message("[H] falls into [src]!")
-			J.chasm_react(H)
-			return
+	if(istype(AM, /mob/living))
+		var/mob/living/M = AM
+		for(var/atom/movable/thing in M.GetAllContents())
+			if(!istype(thing, /obj/item))
+				continue
+			var/obj/item/I = thing
+			// Is anything inside you going to save you?
+			var/outcome = I.chasm_react(M)
+			if(outcome)
+				// To freak out any bystanders
+				visible_message("[M] falls into [src]!")
+				return
 	drop(AM)
 
 
