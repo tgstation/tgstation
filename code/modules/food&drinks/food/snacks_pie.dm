@@ -61,8 +61,7 @@
 			visible_message("<span class='userdanger'>[H] was creamed by the [src]!!</span>")
 			H.overlays += creamoverlay
 
-		update_icon()
-	qdel(src)
+			qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis
