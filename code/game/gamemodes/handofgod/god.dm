@@ -31,9 +31,9 @@
 	update_icons()
 	build_hog_construction_lists()
 
-	//Force nexuses after 2 minutes in hand of god mode
+	//Force nexuses after 15 minutes in hand of god mode
 	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
-		addtimer(src, "forceplacenexus", 1200, FALSE)
+		addtimer(src, "forceplacenexus", 9000, FALSE)
 
 
 //Rebuilds the list based on the gamemode's lists
@@ -197,12 +197,13 @@
 		return
 
 	msg = say_quote(msg, get_spans())
-	var/rendered = "<font color='#045FB4'><i><span class='game say'>Divine Telepathy, <span class='name'>[name]</span> <span class='message'>[msg]</span></span></i></font>"
+	var/rendered = "<font color='[src.side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
 
 	for(var/mob/M in mob_list)
-		if(is_handofgod_myfollowers(M) || isobserver(M))
-			M.show_message(rendered, 2)
-	src << rendered
+		if(is_handofgod_god(M) || is_handofgod_myfollowers(M))
+			M << rendered
+		if(isobserver(M))
+			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
 
 
 /mob/camera/god/emote(act,m_type = 1 ,msg = null)

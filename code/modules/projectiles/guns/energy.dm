@@ -163,3 +163,4 @@
 			SSobj.processing |= src
 		else
 			SSobj.processing -= src
+	..()

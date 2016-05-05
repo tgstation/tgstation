@@ -5,9 +5,18 @@
 	desc = "It's a cape that can be worn on your back."
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
+	item_state = "qmcloak"
 	w_class = 2
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
+/obj/item/clothing/head/cloakhood
+	name = "cloak hood"
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "golhood"
+	desc = "A hood for a cloak"
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling themself with [src]! It looks like they're trying to commit suicide.</span>")
@@ -51,6 +60,27 @@
 	icon_state = "capcloak"
 	allowed = list(/obj/item/weapon/gun/energy/laser/captain)
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 10)
+
+/obj/item/clothing/suit/hooded/cloak/drake
+	name = "ash drake hide cloak"
+	icon_state = "golclo"
+	desc = "A cloak fashioned from the hide of an ash drake, offers incredible defense while still remaining lightweight. "
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear)
+	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
+	hooded = 1
+	hoodtype = /obj/item/clothing/head/cloakhood/drake
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	unacidable = 1
+
+/obj/item/clothing/head/cloakhood/drake
+	name = "ash drake hide hood"
+	icon_state = "golhood"
+	desc = "A stiff hood made of ash drake hide."
+	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
 
 /* //wip
 /obj/item/clothing/cloak/wizard //Not actually obtainable until proper balancing can be done
