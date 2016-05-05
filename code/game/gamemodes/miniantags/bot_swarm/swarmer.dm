@@ -31,12 +31,14 @@
 
 /obj/item/device/unactivated_swarmer/attack_ghost(mob/user)
 	if(crit_fail)
+		user << "This swarmer shell is completely depowered. You cannot activate it."
 		return
 
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
 		return
 	if(crit_fail)
+		user << "Swarmer has been depowered."
 		return
 	if(qdeleted(src))
 		user << "Swarmer has been occupied by someone else."
