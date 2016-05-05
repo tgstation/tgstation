@@ -12,7 +12,7 @@
 	desc = "A silicate barrier, used to keep things out and in sight. Fragile."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "window"
-	density = 1
+	density = 0 //Necessary for NPC mobs pathfinding
 	layer = 3.2 //Just above airlocks //For some reason I guess
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1
@@ -150,17 +150,18 @@
 	if(flags & ON_BORDER)
 		if(target) //Are we doing a manual check to see
 			if(get_dir(loc, target) == dir)
-				return !density
+				return 0
 		else if(mover.dir == dir) //Or are we using move code
-			if(density)	mover.Bump(src)
-			return !density
+			mover.Bump(src)
+			return 0
 	return 1
 
 /obj/structure/window/Cross(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(loc, target) == dir || get_dir(loc, mover) == dir)
-		return !density
+	if(mover && (get_dir(loc, target) == dir || get_dir(loc, mover) == dir))
+		mover.Bump(src)
+		return 0
 	return 1
 
 //Someone threw something at us, please advise
@@ -457,7 +458,7 @@
 	dir = ini_dir
 	update_nearby_tiles()
 
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
+//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_icons().
 /obj/structure/window/proc/update_nearby_tiles(var/turf/T)
 
 

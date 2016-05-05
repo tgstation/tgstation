@@ -11,6 +11,7 @@
 	sheetamount = 2
 	mouse_opacity = 2 // Complete opacity //What in the name of everything is this variable ?
 	layer = 3.21 // Windows are at 3.2.
+	density = 1
 
 	penetration_dampening = 1
 
@@ -52,7 +53,7 @@
 		var/junction = 0 //Will be used to determine from which side the window is connected to other windows
 		if(anchored)
 			for(var/obj/structure/window/full/W in orange(src, 1))
-				if(W.anchored && W.density) //Only counts anchored, not-destroyed full-tile windows.
+				if(W.anchored) //Only counts anchored full-tile windows.
 					if(abs(x-W.x)-abs(y-W.y)) 	//Doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
 		icon_state = "[base_state][junction]"
