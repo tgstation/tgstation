@@ -23,9 +23,18 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-
+	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
+	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/Destroy()
 	..()
@@ -36,7 +45,7 @@ Sorry Giacom. Please don't be mad :(
 			D.client.images.Remove(I)
 			qdel(I)
 	staticOverlays.len = 0
-
+	remove_from_all_data_huds()
 	return QDEL_HINT_HARDDEL_NOW
 
 
@@ -210,7 +219,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
-
+	med_hud_set_health()
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -428,18 +437,6 @@ Sorry Giacom. Please don't be mad :(
 		t = "head"
 	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
-
-//damage/heal the mob ears and adjust the deaf amount
-/mob/living/adjustEarDamage(damage, deaf)
-	ear_damage = max(0, ear_damage + damage)
-	ear_deaf = max(0, ear_deaf + deaf)
-
-//pass a negative argument to skip one of the variable
-/mob/living/setEarDamage(damage, deaf)
-	if(damage >= 0)
-		ear_damage = damage
-	if(deaf >= 0)
-		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
@@ -998,174 +995,3 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/proc/update_sight()
 	return
-
-/mob/proc/blind_eyes(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = max(eye_blind, amount)
-		if(!old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-
-/mob/proc/adjust_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind += amount
-		if(!old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
-			blind_minimum = 1
-		eye_blind = max(eye_blind+amount, blind_minimum)
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
-
-/mob/proc/set_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = amount
-		if(client && !old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
-			blind_minimum = 1
-		eye_blind = blind_minimum
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
-
-/mob/proc/blur_eyes(amount)
-	if(amount>0)
-		var/old_eye_blurry = eye_blurry
-		eye_blurry = max(amount, eye_blurry)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-
-/mob/proc/adjust_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(eye_blurry+amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
-
-/mob/proc/set_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
-
-
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/living/carbon/damage_eyes(amount)
-	if(amount>0)
-		eye_damage = amount
-		if(eye_damage > 20)
-			if(eye_damage > 30)
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-			else
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-
-
-/mob/proc/set_eye_damage(amount)
-	return
-
-/mob/living/carbon/set_eye_damage(amount)
-	eye_damage = max(amount,0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/living/carbon/adjust_eye_damage(amount)
-	eye_damage = max(eye_damage+amount, 0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-/mob/proc/adjust_drugginess(amount)
-	return
-
-/mob/living/carbon/adjust_drugginess(amount)
-	var/old_druggy = druggy
-	if(amount>0)
-		druggy += amount
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		druggy = max(druggy+amount, 0)
-		if(!druggy)
-			clear_fullscreen("high")
-			clear_alert("high")
-
-/mob/proc/set_drugginess(amount)
-	return
-
-/mob/living/carbon/set_drugginess(amount)
-	var/old_druggy = druggy
-	druggy = amount
-	if(amount>0)
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		clear_fullscreen("high")
-		clear_alert("high")
-
-/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
-	return
-
-/mob/living/carbon/cure_blind()
-	if(disabilities & BLIND)
-		disabilities &= ~BLIND
-		adjust_blindness(-1)
-		return 1
-
-/mob/proc/cure_nearsighted()
-	return
-
-/mob/living/carbon/cure_nearsighted()
-	if(disabilities & NEARSIGHT)
-		disabilities &= ~NEARSIGHT
-		clear_fullscreen("nearsighted")
-		return 1
-
-/mob/proc/become_nearsighted()
-	return
-
-/mob/living/carbon/become_nearsighted()
-	if(!(disabilities & NEARSIGHT))
-		disabilities |= NEARSIGHT
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		return 1
-
-/mob/proc/become_blind()
-	return
-
-/mob/living/carbon/become_blind()
-	if(!(disabilities & BLIND))
-		disabilities |= BLIND
-		blind_eyes(1)
-		return 1

@@ -122,39 +122,42 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
-		var/turf/T = get_turf(src)
-		if (level==1 && isturf(T) && T.intact)
-			user << "<span class='warning'>You must remove the plating first!</span>"
-			return 1
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-		add_fingerprint(user)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(can_unwrench(user))
+			var/turf/T = get_turf(src)
+			if (level==1 && isturf(T) && T.intact)
+				user << "<span class='warning'>You must remove the plating first!</span>"
+				return 1
+			var/datum/gas_mixture/int_air = return_air()
+			var/datum/gas_mixture/env_air = loc.return_air()
+			add_fingerprint(user)
 
-		var/unsafe_wrenching = FALSE
-		var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+			var/unsafe_wrenching = FALSE
+			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (internal_pressure > 2*ONE_ATMOSPHERE)
-			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
-			unsafe_wrenching = TRUE //Oh dear oh dear
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+			if (internal_pressure > 2*ONE_ATMOSPHERE)
+				user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
+				unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"<span class='notice'>You unfasten \the [src].</span>", \
-				"<span class='italics'>You hear ratchet.</span>")
-			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+			if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))
+				user.visible_message( \
+					"[user] unfastens \the [src].", \
+					"<span class='notice'>You unfasten \the [src].</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 
-			//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
-			if(unsafe_wrenching)
-				unsafe_pressure_release(user, internal_pressure)
-			Deconstruct()
-
+				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
+				if(unsafe_wrenching)
+					unsafe_pressure_release(user, internal_pressure)
+				Deconstruct()
 	else
 		return ..()
 
+
+/obj/machinery/atmospherics/proc/can_unwrench(mob/user)
+	return can_unwrench
 
 // Throws the user when they unwrench a pipe with a major difference between the internal and environmental pressure.
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)

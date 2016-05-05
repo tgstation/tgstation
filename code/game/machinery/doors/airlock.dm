@@ -35,8 +35,6 @@ var/list/airlock_overlays = list()
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = 0
-	var/welded = null
-	var/locked = 0
 	var/lights = 1 // bolt lights show by default
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
@@ -46,11 +44,10 @@ var/list/airlock_overlays = list()
 	var/lockdownbyai = 0
 	var/doortype = /obj/structure/door_assembly/door_assembly_0
 	var/justzap = 0
-	var/safe = 1
 	normalspeed = 1
 	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
-	var/autoclose = 1
+	autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/detonated = 0
 	var/doorOpen = 'sound/machines/airlock.ogg'
@@ -267,7 +264,7 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closed", icon)
-			if(p_open)
+			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
@@ -285,7 +282,7 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closed", icon)
-			if(p_open)
+			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
@@ -298,7 +295,7 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closed", icon)
-			if(p_open)
+			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
@@ -311,7 +308,7 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_closing", icon)
 			if(lights && hasPower())
 				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
-			if(p_open)
+			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
 
 		if(AIRLOCK_OPEN)
@@ -320,7 +317,7 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("[airlock_material]_open", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_open", icon)
-			if(p_open)
+			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 
 		if(AIRLOCK_OPENING)
@@ -331,7 +328,7 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_opening", icon)
 			if(lights && hasPower())
 				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
-			if(p_open)
+			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
 	//doesn't use overlays.Cut() for performance reasons
@@ -379,13 +376,12 @@ var/list/airlock_overlays = list()
 				playsound(src,doorDeni,50,0,3)
 				sleep(6)
 				update_icon(AIRLOCK_CLOSED)
-				icon_state = "closed"
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
-	if(charge && !p_open && in_range(user, src))
+	if(charge && !panel_open && in_range(user, src))
 		user << "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
-	if(charge && p_open)
+	if(charge && panel_open)
 		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
@@ -579,7 +575,7 @@ var/list/airlock_overlays = list()
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
 
-	if(src.p_open)
+	if(panel_open)
 		wires.interact(user)
 	else
 		..()
@@ -600,7 +596,7 @@ var/list/airlock_overlays = list()
 			usr.unset_machine()
 			return
 
-	if((in_range(src, usr) && istype(src.loc, /turf)) && src.p_open)
+	if((in_range(src, usr) && istype(src.loc, /turf)) && panel_open)
 		usr.set_machine(src)
 
 
@@ -802,134 +798,29 @@ var/list/airlock_overlays = list()
 	add_fingerprint(usr)
 	if(!nowindow)
 		updateUsrDialog()
-	return
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
-	if(!(istype(usr, /mob/living/silicon) || IsAdminGhost(user)))
+	if(!issilicon(user) && !IsAdminGhost(user))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
-	if(istype(C, /obj/item/device/detective_scanner))
-		return
-
-	if(istype(C, /obj/item/weapon/card/emag))
-		return
-
-	src.add_fingerprint(user)
-	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weapon/weldingtool/W = C
-		if(W.remove_fuel(0,user))
-			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
-							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
-							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40/C.toolspeed, 1, target = src))
-				if(density && !operating)//Door must be closed to weld.
-					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
-						return
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-					welded = !welded
-					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
-										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
-					update_icon()
-		return
-	else if(istype(C, /obj/item/weapon/screwdriver))
-		if(p_open && detonated)
+	add_fingerprint(user)
+	if(istype(C, /obj/item/weapon/screwdriver))
+		if(panel_open && detonated)
 			user << "<span class='warning'>[src] has no maintenance panel!</span>"
 			return
-		src.p_open = !( src.p_open )
-		user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the airlock.</span>"
+		panel_open = !panel_open
+		user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>"
 		src.update_icon()
 	else if(is_wire_tool(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.plugin(src, user)
-	else if(istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
-		var/beingcrowbarred = null
-		if(istype(C, /obj/item/weapon/crowbar) )
-			beingcrowbarred = 1 //derp, Agouri
-		else
-			beingcrowbarred = 0
-		if(p_open && charge)
-			user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(!do_after(user, 150/C.toolspeed, target = src))
-				user << "<span class='warning'>You slip and [charge] detonates!</span>"
-				charge.ex_act(1)
-				user.Weaken(3)
-				return
-			user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
-								 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
-			charge.loc = get_turf(user)
-			charge = null
-			return
-		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!hasPower()) && !src.locked) )
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			user.visible_message("[user] removes the electronics from the airlock assembly.", \
-								 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-			if(do_after(user,40/C.toolspeed, target = src))
-				if(src.loc)
-					if(src.doortype)
-						var/obj/structure/door_assembly/A = new src.doortype(src.loc)
-						A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
-					else
-						new /obj/structure/door_assembly/door_assembly_0(src.loc)
-						//If you come across a null doortype, it will produce the default assembly instead of disintegrating.
-
-					if(emagged)
-						user << "<span class='warning'>You discard the damaged electronics.</span>"
-						qdel(src)
-						return
-					user << "<span class='notice'>You remove the airlock electronics.</span>"
-
-					var/obj/item/weapon/electronics/airlock/ae
-					if(!electronics)
-						ae = new/obj/item/weapon/electronics/airlock( src.loc )
-						if(req_one_access)
-							ae.one_access = 1
-							ae.accesses = src.req_one_access
-						else
-							ae.accesses = src.req_access
-					else
-						ae = electronics
-						electronics = null
-						ae.loc = src.loc
-
-					qdel(src)
-					return
-		else if(hasPower())
-			user << "<span class='warning'>The airlock's motors resist your efforts to force it!</span>"
-		else if(locked)
-			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
-		else if( !welded && !operating)
-			if(density)
-				if(beingcrowbarred == 0) //being fireaxe'd
-					var/obj/item/weapon/twohanded/fireaxe/F = C
-					if(F:wielded)
-						spawn(0)
-							open(2)
-					else
-						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
-				else
-					spawn(0)
-						open(2)
-			else
-				if(beingcrowbarred == 0)
-					var/obj/item/weapon/twohanded/fireaxe/F = C
-					if(F:wielded)
-						spawn(0)
-							close(2)
-					else
-						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
-				else
-					spawn(0)
-						close(2)
-
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
 	else if(istype(C, /obj/item/device/doorCharge))
-		if(!p_open)
+		if(!panel_open)
 			user << "<span class='warning'>The maintenance panel must be open to apply [C]!</span>"
 			return
 		if(emagged)
@@ -942,25 +833,113 @@ var/list/airlock_overlays = list()
 			return
 		user << "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>"
 		user.drop_item()
-		p_open = 0
+		panel_open = 0
 		update_icon()
-		var/obj/item/device/doorCharge/newCharge = C //This is necessary, for some reason
-		newCharge.loc = src
-		charge = newCharge
-		return
-	else if(istype(C, /obj/item/weapon/rcd)) //Do not attack the airlock if the user is holding an RCD
-		return
+		C.loc = src
+		charge = C
 	else
-		..()
-	return
+		return ..()
+
+
+/obj/machinery/door/airlock/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
+	if(!operating && density)
+		if(W.remove_fuel(0,user))
+			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
+							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
+							"<span class='italics'>You hear welding.</span>")
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user,40/W.toolspeed, 1, target = src))
+				if(density && !operating)//Door must be closed to weld.
+					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
+						return
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					welded = !welded
+					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
+										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+					update_icon()
+
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
+	var/beingcrowbarred = null
+	if(istype(I, /obj/item/weapon/crowbar) )
+		beingcrowbarred = 1
+	else
+		beingcrowbarred = 0
+	if(panel_open && charge)
+		user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
+		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		if(!do_after(user, 150/I.toolspeed, target = src))
+			user << "<span class='warning'>You slip and [charge] detonates!</span>"
+			charge.ex_act(1)
+			user.Weaken(3)
+			return
+		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
+							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
+		charge.loc = get_turf(user)
+		charge = null
+		return
+	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+		user.visible_message("[user] removes the electronics from the airlock assembly.", \
+							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+		if(do_after(user,40/I.toolspeed, target = src))
+			if(src.loc)
+				if(src.doortype)
+					var/obj/structure/door_assembly/A = new src.doortype(src.loc)
+					A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
+				else
+					new /obj/structure/door_assembly/door_assembly_0(src.loc)
+					//If you come across a null doortype, it will produce the default assembly instead of disintegrating.
+
+				if(emagged)
+					user << "<span class='warning'>You discard the damaged electronics.</span>"
+					qdel(src)
+					return
+				user << "<span class='notice'>You remove the airlock electronics.</span>"
+
+				var/obj/item/weapon/electronics/airlock/ae
+				if(!electronics)
+					ae = new/obj/item/weapon/electronics/airlock( src.loc )
+					if(req_one_access)
+						ae.one_access = 1
+						ae.accesses = src.req_one_access
+					else
+						ae.accesses = src.req_access
+				else
+					ae = electronics
+					electronics = null
+					ae.loc = src.loc
+
+				qdel(src)
+				return
+	else if(hasPower())
+		user << "<span class='warning'>The airlock's motors resist your efforts to force it!</span>"
+	else if(locked)
+		user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
+	else if( !welded && !operating)
+		if(beingcrowbarred == 0) //being fireaxe'd
+			var/obj/item/weapon/twohanded/fireaxe/F = I
+			if(F.wielded)
+				spawn(0)
+					if(density)
+						open(2)
+					else
+						close(2)
+			else
+				user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
+		else
+			spawn(0)
+				if(density)
+					open(2)
+				else
+					close(2)
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma airlock ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
 		ignite(C.is_hot())
-		return
-	..()
+	else
+		return ..()
 
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
@@ -969,7 +948,7 @@ var/list/airlock_overlays = list()
 		if(!hasPower() || wires.is_cut(WIRE_OPEN))
 			return 0
 	if(charge && !detonated)
-		p_open = 1
+		panel_open = 1
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
 		charge.loc = get_turf(src)
@@ -1069,18 +1048,7 @@ var/list/airlock_overlays = list()
 	return
 
 
-/obj/machinery/door/airlock/proc/autoclose()
-	if(!qdeleted(src) && !density && !operating && !locked && !welded && autoclose)
-		close()
-
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
-		user << "If you see this, it means airlock/change_paintjob() was called with something other than an airlock painter. Check your code!"
-		return
-
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
 	if(!W.can_use(user))
 		return
 

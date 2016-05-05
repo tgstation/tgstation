@@ -92,7 +92,7 @@
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/pai/blob_act()
+/mob/living/silicon/pai/blob_act(obj/effect/blob/B)
 	return 0
 
 /mob/living/silicon/pai/restrained()

@@ -175,7 +175,7 @@ Nah
 				return
 
 			C.add_fingerprint(usr)
-			C.update()
+			C.update_icon()
 			wait = 1
 			spawn(15)
 				wait = 0

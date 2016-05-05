@@ -15,6 +15,7 @@
 	throw_speed	= 4
 	throw_range	= 20
 	origin_tech = "syndicate=3;engineering=1"
+	flags = NOBLUDGEON
 
 	var/obj/machinery/camera/current = null
 

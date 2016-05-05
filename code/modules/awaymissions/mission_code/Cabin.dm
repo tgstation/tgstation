@@ -48,7 +48,7 @@
 			active = 1
 			toggleFireplace()
 		else
-			..()
+			return ..()
 	else
 		W.fire_act()
 

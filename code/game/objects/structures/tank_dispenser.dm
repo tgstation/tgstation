@@ -48,9 +48,11 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else
+	else if(user.a_intent != "harm")
 		user << "<span class='notice'>[I] does not fit into [src].</span>"
 		return
+	else
+		return ..()
 	if(full)
 		user << "<span class='notice'>[src] can't hold anymore of [I].</span>"
 		return

@@ -131,14 +131,14 @@ field_generator power level display
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 
 	else
-		..()
+		return ..()
 
 
 /obj/machinery/field/generator/emp_act()
 	return 0
 
 
-/obj/machinery/field/generator/blob_act()
+/obj/machinery/field/generator/blob_act(obj/effect/blob/B)
 	if(active)
 		return 0
 	else

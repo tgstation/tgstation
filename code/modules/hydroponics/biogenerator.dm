@@ -54,40 +54,63 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
-		if(beaker)
-			user << "<span class='warning'>A container is already loaded into the machine.</span>"
-		else
-			user.unEquip(O)
-			O.loc = src
-			beaker = O
-			user << "<span class='notice'>You add the container to the machine.</span>"
-			updateUsrDialog()
-	else if(processing)
+	if(processing)
 		user << "<span class='warning'>The biogenerator is currently processing.</span>"
+		return
+
+	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
+		if(beaker)
+			var/obj/item/weapon/reagent_containers/glass/B = beaker
+			B.loc = loc
+			beaker = null
+		update_icon()
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_deconstruction_crowbar(O))
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		. = 1 //no afterattack
+		if(!panel_open)
+			if(beaker)
+				user << "<span class='warning'>A container is already loaded into the machine.</span>"
+			else
+				if(!user.drop_item())
+					return
+				O.loc = src
+				beaker = O
+				user << "<span class='notice'>You add the container to the machine.</span>"
+				update_icon()
+				updateUsrDialog()
+		else
+			user << "<span class='warning'>Close the maintenance panel first.</span>"
+		return
+
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+		var/obj/item/weapon/storage/bag/plants/PB = O
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is already full! Activate it.</span>"
 		else
-			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				G.loc = src
+				PB.remove_from_storage(G, src)
 				i++
 			if(i<max_items)
 				user << "<span class='info'>You empty the plant bag into the biogenerator.</span>"
-			else if(O.contents.len == 0)
+			else if(PB.contents.len == 0)
 				user << "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>"
 			else
 				user << "<span class='info'>You fill the biogenerator to its capacity.</span>"
+		return 1 //no afterattack
 
-
-	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
-	else
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -97,21 +120,12 @@
 			user.unEquip(O)
 			O.loc = src
 			user << "<span class='info'>You put [O.name] in [src.name]</span>"
+		return 1 //no afterattack
 
-	if(!processing)
-		if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
-			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = loc
-				beaker = null
-
-	if(exchange_parts(user, O))
-		return
-
-	default_deconstruction_crowbar(O)
-
-	update_icon()
-	return
+	else if(user.a_intent != "harm")
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
+	else
+		return ..()
 
 /obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)

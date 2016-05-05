@@ -62,8 +62,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain*get_shot_amount())
-	sleep(equip_cooldown)
-	set_ready_state(1)
+	spawn(equip_cooldown)
+		set_ready_state(1)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
@@ -205,7 +205,7 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
-	return "[..()]\[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
+	return "[..()] \[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rearm()

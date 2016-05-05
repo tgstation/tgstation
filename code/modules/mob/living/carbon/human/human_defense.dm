@@ -106,7 +106,7 @@
 	feedback_add_details("zone_targeted","[target_area]")
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
+	return dna.species.spec_attacked_by(I, user, def_zone, affecting, hit_area, a_intent, target_limb, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0
@@ -315,6 +315,7 @@
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
 	if(M.occupant.a_intent == "harm")
+		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
 		var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))

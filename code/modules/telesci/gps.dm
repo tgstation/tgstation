@@ -101,6 +101,7 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/internal
 	icon_state = null
+	flags = ABSTRACT
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
-	invisibility = 100
+	invisibility = INVISIBILITY_MAXIMUM

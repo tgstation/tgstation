@@ -197,6 +197,12 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/client_warn_version = 0
+	var/client_warn_message = "Your version of byond may have issues or be blocked from accessing this server in the future."
+	var/client_error_version = 0
+	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+	var/cross_name = "Other server"
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -354,6 +360,12 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("cross_server_address")
+					global.cross_address = value
+					if(value != "byond:\\address:port")
+						global.cross_allowed = 1
+				if("cross_comms_name")
+					cross_name = value
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
@@ -401,6 +413,15 @@
 						protected_config.autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
 					config.generate_minimaps = 1
+				if("client_warn_version")
+					config.client_warn_version = text2num(value)
+				if("client_warn_message")
+					config.client_warn_message = value
+				if("client_error_version")
+					config.client_error_version = text2num(value)
+				if("client_error_message")
+					config.client_error_message = value
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

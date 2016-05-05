@@ -69,7 +69,9 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	if(default_unfasten_wrench(user, P))
 		return
 
-	default_deconstruction_crowbar(P)
+	if(default_deconstruction_crowbar(P))
+		return
+	return ..()
 
 
 /obj/machinery/hologram/holopad/AltClick(mob/living/carbon/human/user)

@@ -52,6 +52,7 @@
 	melee_damage_upper = 15
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	languages = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
@@ -84,6 +85,17 @@
 /mob/living/simple_animal/hostile/swarmer/New()
 	..()
 	verbs -= /mob/living/verb/pulled
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+
+
+/mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/hostile/swarmer/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	holder.icon_state = "hudstat"
 
 /mob/living/simple_animal/hostile/swarmer/Stat()
 	..()
@@ -371,44 +383,47 @@
 	mouse_opacity = 1
 	var/health = 30
 
-/obj/effect/swarmer/destructible/proc/TakeDamage(damage)
+/obj/effect/swarmer/destructible/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
 	health -= damage
 	if(health <= 0)
 		qdel(src)
 
-/obj/effect/swarmer/destructible/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			TakeDamage(Proj.damage)
-	..()
+/obj/effect/swarmer/destructible/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
 
-/obj/effect/swarmer/destructible/attackby(obj/item/weapon/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon))
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		TakeDamage(I.force)
-	return
+/obj/effect/swarmer/destructible/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
 
 /obj/effect/swarmer/destructible/ex_act()
 	qdel(src)
-	return
 
-/obj/effect/swarmer/destructible/blob_act()
+/obj/effect/swarmer/destructible/blob_act(obj/effect/blob/B)
 	qdel(src)
-	return
 
 /obj/effect/swarmer/destructible/emp_act()
 	qdel(src)
-	return
 
-/obj/effect/swarmer/destructible/attack_animal(mob/living/user)
-	if(isanimal(user))
-		var/mob/living/simple_animal/S = user
-		S.do_attack_animation(src)
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(S.melee_damage_type == BRUTE || S.melee_damage_type == BURN)
-			TakeDamage(rand(S.melee_damage_lower, S.melee_damage_upper))
-	return
+/obj/effect/swarmer/destructible/attack_alien(mob/living/user)
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	take_damage(rand(20,30))
+
+/obj/effect/swarmer/destructible/attack_animal(mob/living/simple_animal/S)
+	S.do_attack_animation(src)
+	S.changeNext_move(CLICK_CD_MELEE)
+	if(S.melee_damage_upper)
+		take_damage(rand(S.melee_damage_lower, S.melee_damage_upper), S.melee_damage_type)
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"

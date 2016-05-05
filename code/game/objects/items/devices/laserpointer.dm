@@ -5,7 +5,7 @@
 	icon_state = "pointer"
 	item_state = "pen"
 	var/pointer_icon_state
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = 2 //Increased to 2, because diodes are w_class 2. Conservation of matter.
@@ -38,11 +38,6 @@
 	..()
 	diode = new /obj/item/weapon/stock_parts/micro_laser/ultra
 
-
-
-/obj/item/device/laser_pointer/attack(mob/living/M, mob/user)
-	laser_act(M, user)
-
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
@@ -53,20 +48,16 @@
 			user << "<span class='notice'>You install a [diode.name] in [src].</span>"
 		else
 			user << "<span class='notice'>[src] already has a diode installed.</span>"
-		return
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(diode)
 			user << "<span class='notice'>You remove the [diode.name] from \the [src].</span>"
 			diode.loc = get_turf(src.loc)
 			diode = null
-		return
-	..()
-	return
+	else
+		return ..()
 
 /obj/item/device/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
-	if(flag)	//we're placing the object on a table or in backpack
-		return
 	laser_act(target, user, params)
 
 /obj/item/device/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
@@ -165,7 +156,7 @@
 			recharging = 1
 			SSobj.processing |= src
 		if(energy <= 0)
-			user << "<span class='warning'>The [src]'s battery is overused, it needs time to recharge!</span>"
+			user << "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
 	flick_overlay(I, showto, 10)

@@ -244,9 +244,6 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
@@ -266,6 +263,13 @@
 			return 0
 	else
 		return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
+	if(..())
+		if(!(stat & NOPOWER) && on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()

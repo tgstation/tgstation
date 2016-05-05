@@ -6,6 +6,14 @@
 var/global/use_preloader = FALSE
 var/global/dmm_suite/preloader/_preloader = new
 
+/dmm_suite
+		// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
+	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
+		// /^[\s\n]+"?|"?[\s\n]+$|^"|"$/g
+	var/static/regex/trimQuotesRegex = new/regex({"^\[\\s\n]+"?|"?\[\\s\n]+$|^"|"$"}, "g")
+		// /^[\s\n]+|[\s\n]+$/
+	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
+	var/static/list/modelCache = list()
 
 /**
  * Construct the model map and control the loading process
@@ -17,92 +25,120 @@ var/global/dmm_suite/preloader/_preloader = new
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num)
-	if(!z_offset)//what z_level we are creating the map on
-		z_offset = world.maxz+1
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num)
+	var/tfile = dmm_file//the map file we're creating
+	if(isfile(tfile))
+		tfile = file2text(tfile)
 
 	if(!x_offset)
-		x_offset = 0
-
+		x_offset = 1
 	if(!y_offset)
-		y_offset = 0
-	var/quote = ascii2text(34)
-	var/tfile = file2text(dmm_file)//the map file we're creating
-	var/tfile_len = length(tfile)
-	var/lpos = 1 // the models definition index
+		y_offset = 1
+	if(!z_offset)
+		z_offset = world.maxz + 1
 
-	///////////////////////////////////////////////////////////////////////////////////////
-	//first let's map model keys (e.g "aa") to their contents (e.g /turf/open/space{variables})
-	///////////////////////////////////////////////////////////////////////////////////////
+	var/list/bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/list/grid_models = list()
-	var/key_len = length(copytext(tfile,2,findtext(tfile,quote,2,0)))//the length of the model key (e.g "aa" or "aba")
+	var/key_len = 0
 
-	//proceed line by line
-	for(lpos=1; lpos<tfile_len; lpos=findtext(tfile,"\n",lpos,0)+1)
-		var/tline = copytext(tfile,lpos,findtext(tfile,"\n",lpos,0))
-		if(copytext(tline,1,2) != quote)//we reached the map "layout"
-			break
-		var/model_key = copytext(tline,2,2+key_len)
-		var/model_contents = copytext(tline,findtext(tfile,"=")+3,length(tline))
-		grid_models[model_key] = model_contents
-		sleep(-1)
+	dmmRegex.next = 1
+	while(dmmRegex.Find(tfile, dmmRegex.next))
 
-	///////////////////////////////////////////////////////////////////////////////////////
-	//now let's fill the map with turf and objects using the constructed model map
-	///////////////////////////////////////////////////////////////////////////////////////
+		// "aa" = (/type{vars=blah})
+		if(dmmRegex.group[1]) // Model
+			var/key = dmmRegex.group[1]
+			if(grid_models[key]) // Duplicate model keys are ignored in DMMs
+				continue
+			if(key_len != length(key))
+				if(!key_len)
+					key_len = length(key)
+				else
+					throw EXCEPTION("Inconsistant key length in DMM")
+			if(!measureOnly)
+				grid_models[key] = dmmRegex.group[2]
 
-	//position of the currently processed square
-	var/zcrd=-1
-	var/ycrd=y_offset
-	var/xcrd=x_offset
+		// (1,1,1) = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+		else if(dmmRegex.group[3]) // Coords
+			if(!key_len)
+				throw EXCEPTION("Coords before model definition in DMM")
 
-	for(var/zpos=findtext(tfile,"\n(1,1,",lpos,0);zpos!=0;zpos=findtext(tfile,"\n(1,1,",zpos+1,0))	//in case there's several maps to load
+			var/xcrdStart = text2num(dmmRegex.group[3]) + x_offset - 1
+			//position of the currently processed square
+			var/xcrd
+			var/ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
+			var/zcrd = text2num(dmmRegex.group[5]) + z_offset - 1
 
-		zcrd++
-		world.maxz = max(world.maxz, zcrd+z_offset)//create a new z_level if needed
+			if(zcrd > world.maxz)
+				if(cropMap)
+					continue
+				else
+					world.maxz = zcrd //create a new z_level if needed
 
-		var/zgrid = copytext(tfile,findtext(tfile,quote+"\n",zpos,0)+2,findtext(tfile,"\n"+quote,zpos,0)+1) //copy the whole map grid
-		var/z_depth = length(zgrid)
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
+			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
-		//if exceeding the world max x or y, increase it
-		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0)))
-		var/x_tilecount = x_depth/key_len
-		if(world.maxx<x_tilecount)
-			world.maxx=x_tilecount
+			var/list/gridLines = splittext(dmmRegex.group[6], "\n")
 
-		var/y_depth = z_depth / (x_depth+1)//x_depth + 1 because we're counting the '\n' characters in z_depth
-		if(world.maxy<y_depth)
-			world.maxy=y_depth
+			var/leadingBlanks = 0
+			while(leadingBlanks < gridLines.len && gridLines[++leadingBlanks] == "")
+			if(leadingBlanks > 1)
+				gridLines.Cut(1, leadingBlanks) // Remove all leading blank lines.
 
-		//then proceed it line by line, starting from top
-		ycrd = y_depth
+			if(!gridLines.len) // Skip it if only blank lines exist.
+				continue
 
-		for(var/gpos=1;gpos!=0;gpos=findtext(zgrid,"\n",gpos,0)+1)
-			var/grid_line = copytext(zgrid,gpos,findtext(zgrid,"\n",gpos,0))
+			if(gridLines.len && gridLines[gridLines.len] == "")
+				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
-			//fill the current square using the model map
-			xcrd=0
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
+			ycrd += gridLines.len - 1 // Start at the top and work down
 
+			if(!cropMap && ycrd > world.maxy)
+				if(!measureOnly)
+					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
+			else
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], min(ycrd, world.maxy))
 
-			for(var/mpos in 1 to x_depth step key_len)
-				xcrd++
-				var/model_key = copytext(grid_line,mpos,mpos+key_len)
-				parse_grid(grid_models[model_key],xcrd+x_offset,ycrd+y_offset,zcrd+z_offset)
+			var/maxx = xcrdStart
+			if(measureOnly)
+				for(var/line in gridLines)
+					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
+			else
+				for(var/line in gridLines)
+					if(ycrd <= world.maxy && ycrd >= 1)
+						xcrd = xcrdStart
+						for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+							if(xcrd > world.maxx)
+								if(cropMap)
+									break
+								else
+									world.maxx = xcrd
 
-			//reached end of current map
-			if(gpos+x_depth+1>z_depth)
-				break
+							if(xcrd >= 1)
+								var/model_key = copytext(line, tpos, tpos + key_len)
+								if(!grid_models[model_key])
+									throw EXCEPTION("Undefined model key in DMM.")
+								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
+								CHECK_TICK
 
-			ycrd--
-			CHECK_TICK
+							maxx = max(maxx, xcrd)
+							++xcrd
+					--ycrd
 
-
-		//reached End Of File
-		if(findtext(tfile,quote+"}",zpos,0)+2==tfile_len)
-			break
+			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx)
 
 		CHECK_TICK
 
+	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
+		return null
+	else
+		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+			var/turf/T = t
+			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+			T.AfterChange(TRUE)
+		return bounds
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
@@ -127,41 +163,55 @@ var/global/dmm_suite/preloader/_preloader = new
 		same construction as those contained in a .dmm file, and instantiates them.
 	*/
 
-	var/list/members = list()//will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
-	var/list/members_attributes = list()//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
+	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+	var/list/members_attributes //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
+	var/list/cached = modelCache[model]
+	var/index
 
+	if(cached)
+		members = cached[1]
+		members_attributes = cached[2]
+	else
 
-	/////////////////////////////////////////////////////////
-	//Constructing members and corresponding variables lists
-	////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		//Constructing members and corresponding variables lists
+		////////////////////////////////////////////////////////
 
-	var/index=1
-	var/old_position = 1
-	var/dpos
+		members = list()
+		members_attributes = list()
+		index = 1
 
-	do
-		//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
-		dpos= find_next_delimiter_position(model,old_position,",","{","}")//find next delimiter (comma here) that's not within {...}
+		var/old_position = 1
+		var/dpos
 
-		var/full_def = copytext(model,old_position,dpos)//full definition, e.g : /obj/foo/bar{variables=derp}
-		var/atom_def = text2path(copytext(full_def,1,findtext(full_def,"{")))//path definition, e.g /obj/foo/bar
-		members.Add(atom_def)
-		old_position = dpos + 1
+		do
+			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
+			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
-		//transform the variables in text format into a list (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
-		var/list/fields = list()
+			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
+			var/variables_start = findtext(full_def, "{")
+			var/atom_def = text2path(trim_text(copytext(full_def, 1, variables_start))) //path definition, e.g /obj/foo/bar
+			old_position = dpos + 1
 
-		var/variables_start = findtext(full_def,"{")
-		if(variables_start)//if there's any variable
-			full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
-			fields = readlist(full_def, ";")
+			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				continue
+			members.Add(atom_def)
 
-		//then fill the members_attributes list with the corresponding variables
-		members_attributes.len++
-		members_attributes[index++] = fields
-		CHECK_TICK
+			//transform the variables in text format into a list (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
+			var/list/fields = list()
 
-	while(dpos != 0)
+			if(variables_start)//if there's any variable
+				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
+				fields = readlist(full_def, ";")
+
+			//then fill the members_attributes list with the corresponding variables
+			members_attributes.len++
+			members_attributes[index++] = fields
+
+			CHECK_TICK
+		while(dpos != 0)
+
+		modelCache[model] = list(members, members_attributes)
 
 
 	////////////////
@@ -169,10 +219,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	////////////////
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
-
-	//in case of multiples turfs on one tile,
-	//will contains the images of all underlying turfs, to simulate the DMM multiple tiles piling
-	var/list/turfs_underlays = list()
 
 	//first instance the /area and remove it from the members list
 	index = members.len
@@ -187,7 +233,6 @@ var/global/dmm_suite/preloader/_preloader = new
 
 		if(use_preloader && instance)
 			_preloader.load(instance)
-	members.Remove(members[index])
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
@@ -203,11 +248,10 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
-		while(index <= members.len)
-			turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
-			var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
-			add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
-			T = UT
+		while(index <= members.len - 1) // Last item is an /area
+			var/underlay = T.appearance
+			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
@@ -226,7 +270,11 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	var/turf/T = locate(x,y,z)
 	if(T)
-		instance = new path (T)//first preloader pass
+		if(ispath(path, /turf))
+			T.ChangeTurf(path, TRUE)
+			instance = T
+		else
+			instance = new path (T)//first preloader pass
 
 	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 		_preloader.load(instance)
@@ -236,16 +284,11 @@ var/global/dmm_suite/preloader/_preloader = new
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
 /dmm_suite/proc/trim_text(what as text,trim_quotes=0)
-	while(length(what) && (findtext(what," ",1,2)))
-		what=copytext(what,2,0)
-	while(length(what) && (findtext(what," ",length(what),0)))
-		what=copytext(what,1,length(what))
 	if(trim_quotes)
-		while(length(what) && (findtext(what,quote,1,2)))
-			what=copytext(what,2,0)
-		while(length(what) && (findtext(what,quote,length(what),0)))
-			what=copytext(what,1,length(what))
-	return what
+		return trimQuotesRegex.Replace(what, "")
+	else
+		return trimRegex.Replace(what, "")
+
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
@@ -317,14 +360,6 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	return to_return
 
-//simulates the DM multiple turfs on one tile underlaying
-/dmm_suite/proc/add_underlying_turf(turf/placed,turf/underturf, list/turfs_underlays)
-	if(underturf.density)
-		placed.density = 1
-	if(underturf.opacity)
-		placed.opacity = 1
-	placed.underlays += turfs_underlays
-
 //atom creation method that preloads variables at creation
 /atom/New()
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -353,7 +388,10 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /dmm_suite/preloader/proc/load(atom/what)
 	for(var/attribute in attributes)
-		what.vars[attribute] = attributes[attribute]
+		var/value = attributes[attribute]
+		if(islist(value))
+			value = deepCopyList(value)
+		what.vars[attribute] = value
 	use_preloader = FALSE
 
 /area/template_noop

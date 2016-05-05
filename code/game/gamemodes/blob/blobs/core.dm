@@ -27,6 +27,9 @@
 	point_rate = new_rate
 	..()
 
+/obj/effect/blob/core/scannerreport()
+	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
+
 /obj/effect/blob/core/update_icon()
 	overlays.Cut()
 	color = null
@@ -71,7 +74,7 @@
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/effect/blob/normal/B in range(1, src))
 		if(prob(5))
-			B.change_to(/obj/effect/blob/shield, overmind)
+			B.change_to(/obj/effect/blob/shield/core, overmind)
 	..()
 
 
