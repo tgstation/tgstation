@@ -26,7 +26,8 @@
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
-	. += user.hands
+	. += user.r_hand
+	. += user.l_hand
 	if(!istype(user.loc, /turf))
 		return
 	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
