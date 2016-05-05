@@ -166,6 +166,7 @@
 	damage = 5
 	damage_type = BURN
 	stamina = 15
+	paralyze = 1
 
 /obj/item/projectile/cult/Bump(atom/A, yes)
 	if(iscultist(A) || isconstruct(A) || istype(A, /mob/living/simple_animal/shade))
@@ -199,7 +200,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
-						use magic missile, repair allied constructs (by clicking on them), \
+						fire a disabling projectile, repair allied constructs and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
 
