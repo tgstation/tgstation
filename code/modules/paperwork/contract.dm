@@ -253,9 +253,13 @@
 	return ..()
 
 /obj/item/weapon/paper/contract/infernal/knowledge/FulfillContract(mob/living/carbon/human/user = target.current)
+	if(!istype(user) || !user.mind)
+		return -1
 	user.dna.add_mutation(XRAY)
-	for(var/U in huds)
+	//Apparently antag-hud is too powerful.
+	/*for(var/U in huds)
 		var/datum/atom_hud/H = U
 		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
-			H.add_hud_to(usr)
+			H.add_hud_to(usr)*/
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/view_range(null))
 	return ..()
