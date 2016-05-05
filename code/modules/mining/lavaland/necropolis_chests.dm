@@ -36,7 +36,7 @@
 		if(10)
 			new /obj/item/organ/internal/heart/cursed(src)
 		if(11)
-			new /obj/item/device/ship_in_a_bottle(src)
+			new /obj/item/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
