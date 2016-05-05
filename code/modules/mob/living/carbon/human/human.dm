@@ -956,7 +956,7 @@
 					if(hal_screwyhud == 5)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.name][icon_num]")
+						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 				for(var/t in get_missing_limbs()) //Missing limbs
 					hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[t]6")
 			else
