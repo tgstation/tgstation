@@ -28,6 +28,7 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/greentext/New()
 	..()
@@ -75,6 +76,8 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/weapon/greentext/Destroy()
+	if(burn_state != ON_FIRE)
+		return QDEL_HINT_LETMELIVE
 	poi_list.Remove(src)
 	for(var/mob/M in mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
