@@ -1,62 +1,103 @@
-"a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"b" = (/turf/closed/wall/r_wall,/area/ruin/powered/snow_biodome)
-"c" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"e" = (/turf/open/floor/plating/ice,/area/ruin/powered/snow_biodome)
-"f" = (/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"g" = (/obj/structure/flora/rock/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"h" = (/obj/structure/flora/bush,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"i" = (/turf/closed/wall/mineral/wood,/area/ruin/powered/snow_biodome)
-"j" = (/obj/structure/dresser,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"k" = (/obj/structure/bed,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"l" = (/obj/structure/bookcase/random,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"m" = (/obj/structure/flora/tree/pine,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"n" = (/obj/structure/flora/grass/both,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"o" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"p" = (/obj/structure/flora/tree/dead,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"q" = (/obj/machinery/door/airlock/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"r" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (EAST)"; icon_state = "comfychair"; dir = 4},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"s" = (/obj/structure/table/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"t" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (WEST)"; icon_state = "comfychair"; dir = 8},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"u" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"v" = (/obj/structure/displaycase/captain,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"w" = (/obj/structure/bed/dogbed,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"x" = (/obj/structure/flora/tree/pine/xmas,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"y" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered/snow_biodome)
-"z" = (/obj/machinery/door/airlock/silver,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"A" = (/obj/structure/flora/rock/pile/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"B" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "bridge"},/area/ruin/powered/snow_biodome)
-"C" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ac" = (/obj/item/stack/medical/ointment,/obj/structure/table,/obj/item/stack/medical/bruise_pack,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ad" = (/obj/structure/table,/obj/item/stack/medical/gauze,/obj/item/stack/medical/gauze,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ae" = (/obj/machinery/power/smes,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"af" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ag" = (/obj/structure/reagent_dispensers/beerkeg,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ah" = (/obj/item/weapon/reagent_containers/food/drinks/mug,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ai" = (/obj/machinery/shower,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aj" = (/obj/structure/sink,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ak" = (/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"al" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"am" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"an" = (/obj/structure/toilet{dir = 8},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"ao" = (/turf/open/floor/plating/ice,/area/ruin/powered/snow_biodome)
+"ap" = (/obj/structure/flora/rock/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aq" = (/turf/closed/wall/mineral/wood,/area/ruin/powered/snow_biodome)
+"ar" = (/obj/machinery/door/airlock/wood,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"as" = (/obj/structure/fans,/turf/closed/wall/mineral/wood,/area/ruin/powered/snow_biodome)
+"at" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"au" = (/obj/structure/bed,/obj/item/weapon/bedsheet/blue,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"av" = (/obj/structure/bookcase/random,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aw" = (/obj/structure/table/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"ax" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/beans,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"ay" = (/obj/structure/closet/crate/trashcart,/obj/item/trash/semki,/obj/item/trash/candy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"az" = (/obj/structure/flora/tree/pine,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aA" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (EAST)"; icon_state = "comfychair"; dir = 4},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aB" = (/obj/structure/flora/rock/pile/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aC" = (/obj/structure/flora/tree/dead,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aD" = (/obj/machinery/door/airlock/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aE" = (/obj/structure/extinguisher_cabinet,/turf/closed/wall/mineral/wood,/area/ruin/powered/snow_biodome)
+"aF" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/mug/coco,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aG" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (WEST)"; icon_state = "comfychair"; dir = 8},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aH" = (/mob/living/simple_animal/hostile/skeleton/eskimo,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aI" = (/obj/structure/flora/bush,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aJ" = (/obj/vehicle/atv,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aK" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aL" = (/obj/structure/displaycase/captain,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aM" = (/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aN" = (/obj/structure/bed/dogbed,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aO" = (/obj/machinery/door/airlock/glass_large,/obj/structure/fans/tiny,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aP" = (/obj/structure/fans/tiny,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aQ" = (/obj/structure/flora/grass/both,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aR" = (/obj/structure/flora/tree/pine/xmas,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aS" = (/obj/structure/rack,/obj/item/clothing/suit/hooded/wintercoat/science,/obj/item/clothing/shoes/winterboots,/obj/item/clothing/gloves/fingerless,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aT" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"aU" = (/obj/machinery/vending/coffee,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aV" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aW" = (/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aX" = (/turf/open/floor/pod/light,/area/ruin/powered/snow_biodome)
+"aY" = (/obj/structure/chair/stool,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"aZ" = (/obj/machinery/door/airlock/hatch,/obj/structure/fans/tiny,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"ba" = (/obj/machinery/door/airlock/silver,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bb" = (/obj/machinery/door/airlock/silver,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
+"bc" = (/obj/structure/table,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bd" = (/obj/structure/table,/obj/item/weapon/pen,/obj/item/weapon/paper_bin,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"be" = (/obj/structure/table,/obj/machinery/microwave,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bf" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bg" = (/obj/item/weapon/twohanded/required/chainsaw,/obj/structure/closet,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bh" = (/obj/structure/filingcabinet,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bi" = (/obj/machinery/computer/monitor,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bj" = (/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bk" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bl" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "bridge"},/area/ruin/powered/snow_biodome)
+"bm" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/snow_biodome)
+"bn" = (/obj/item/clothing/mask/balaclava,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bo" = (/obj/structure/table,/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bp" = (/obj/structure/table,/obj/item/weapon/pen,/obj/item/weapon/paper,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"bq" = (/obj/machinery/light/built{dir = 1},/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
+"br" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/glass_large,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bccccccccccccccccccccccccccccb
-bcddddddddddddddddddddddddddcb
-bcdeefgfffffffffhiiiiiiiiiidcb
-bcdfeeffffhfffffhijkilllllidcb
-bcdfeeeemfffmffnfiooioooooidcb
-bcdpfeeeffpffffffiqiiorstoidcb
-bcdfheeeefffhffffioooorstoidcb
-bcdhfffeefffhmhfnuvoooooowidcb
-bcdffhfeeefffffffiiiiqqiiiidcb
-bcdfffffeeffffgffffffffffffdcb
-bcdfmfffeeemffffhffffffffxfdcb
-bcdfffffeeeffpfnfffffffffffdcb
-bcdnfffffeeeefffffmfffmhhffdcb
-yczfAfmffeeeeeffffffpffffffdcb
-bcdffffffffeeffmfffhffngfffdcb
-bcdfffpffhfeeefffffffffffmfdcb
-bcdfmffffmfeeeeffffmffpffffdcb
-bcdffffgffBBBBBBfpffffffnffdcb
-bcdffnhhffBBBBBBffffgfhffffdcb
-bcdfffhfffffeeeffffffhfffffdcb
-bcdffffnpfhfffeeefffffmfAmfdcb
-bcdffffffffffhffeefmffhhfffdcb
-bcdhfmfffhfmffffeefffnhhffhdcb
-bcdfffffffffhhfhfeeeffffpffdcb
-bcdhhffmfffffpfffffeeffffffdcb
-bcddddddddddddddddddddddddddcb
-bccccccccccccccccccccccccccccb
-bbbbbCbbbbbbbbbbbbbbbbbbbbbbbb
+aaaaaaaaaaaaaaaaaaababababababababababababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababababacadaeafaeagahabaiajababababaaaaaaaaaaaa
+aaaaaaaaabababakabafafafafalafahafamafafanabakabababaaaaaaaa
+aaaaaaababaoapakababaqaraqaqaqasaqaqaqaqababakakapababaaaaaa
+aaaaababaoaoakakakakaqatauaqavawaxavavaqayakazakakakababaaaa
+aaaaabakaoaoaoakazakaqatauaqataAawatataqakakakaBakakakabaaaa
+aaababaCakaoaoakakakaqaDaqaEataAaFaGaHaqakaIaJakakazakababaa
+aaabakakaIaoaoaoakakaqatatataHatatatataqakakakakakakakakabaa
+aaabakakakakaoaoaoakaKaLatataMaMatataNaqakapakaCakakakakabaa
+aaabakakakaIakaoaoakaqaqaqaqaOaPaqaqaqaqakakakakaQakakakabaa
+ababababakakakaoaoakakakakakapakakaRakakakakakakakakabababab
+abaSaSaTazakakakaoaoaoazakakakakaIakakakakakakakakakaTaUaVab
+abaWaWaTakakakakaoaoaoakakaCakaQakakakakakakakakakakaTaWaWab
+abaWaWaTaBakakakakaoaoaoaoakakakakakazakakakazaIaIakaTaXaYab
+aZaXaXbaakakazakakaoaoaoaoaoakakakakakakaCakakakakakbbaXbcab
+abaWbdaTakakakakakakaoaoaoakakazakakakaIakakaQapakakaTaXbeab
+abaWaYaTakakaCakakaIakaoaoaoakakakakakakakakakakakazaTbfbgab
+abbhbiaTaIakakakakazakaoaoaoaoakakakakazakakaCakakakaTbjbkab
+ababababakakakapakakblblblblblblakaCakakakakakakaQakabababab
+ababakakakaQaIaIakakblblblblblblakakakakapakaIakakakakakabaa
+ababakakakakaIakakakakakaoaoaoakakakakakakaIakakakakakakabaa
+aaabakakakakakaQaCakaIakakaoaoaoaoakakakakakazakaBazakakabaa
+aaababakakakakakakakakakakaIakaoaoaoakazakakaIaIakakakababaa
+aaaaabakakazakakakaIakazakakakakaoaoaoakakaQaIaIakakakabaaaa
+aaaaababakakakakakakakakaIakakakakaoaoaoakakakakaCakababaaaa
+aaaabmababakakazakakababababaOaPababababakakakakakababbmaaaa
+aaaabmbmabababakakakabaSbnaXaXaXaXaWboabakakakabababbmbmaaaa
+aaaaaabmbmbmabababababaSaWaXaXaXaXaWbpabababababbmbmbmaaaaaa
+aaaaaaaabmbmbmbmbqbmababababbraPababababbmbqbmbmbmaaaaaaaaaa
+aaaaaaaaaaaaaabmbmbmbmbmbmbmbmbmbmbmbmbmbmbmbmaaaaaaaaaaaaaa
 "}

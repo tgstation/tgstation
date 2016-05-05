@@ -224,10 +224,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	var/datum/reagent/blood/our = get_blood(vessel)
 
-	if (!injected || !our)
+	if (!injected || !our || !dna)
 		return
 
-	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"],injected.data["species"],our.data["species"]) )
+	if(blood_incompatible(injected.data["blood_type"], dna.blood_type,injected.data["species"], dna.species.id) )
 		reagents.add_reagent("toxin",amount * 0.5)
 		our.on_merge(injected.data) //still transfer viruses and such, even if incompatibles bloods
 		reagents.update_total()

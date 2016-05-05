@@ -60283,9 +60283,7 @@
 	pixel_y = 0
 	},
 /obj/item/weapon/folder/blue,
-/obj/item/clothing/head/collectable/HoS{
-	desc = "It's your turn to demand excessive paperwork, signatures, stamps, and hire more clowns! Papers, please!";
-	icon_state = "hopcap";
+/obj/item/clothing/head/collectable/HoP{
 	name = "novelty HoP hat"
 	},
 /obj/machinery/light/small{

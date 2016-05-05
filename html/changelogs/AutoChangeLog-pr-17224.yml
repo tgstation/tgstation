@@ -1,4 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - tweak: "Hitting a locker or crate with an ID, PDA with ID, or wallet with ID will try to toggle the lock instead of trying to open it."

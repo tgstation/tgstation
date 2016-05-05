@@ -1,7 +1,7 @@
 /obj/mecha/proc/get_armour_facing(srcdir,adir)
 	var/facing_hit = armour_facings["[srcdir]"]["[adir]"]
 	var/damage_modifier = facing_modifiers[facing_hit]
-	return damage_modifier
+	return damage_modifier || 1 //always return non-0
 
 /obj/mecha/proc/take_damage(amount, type="brute", adir = 0, booster_deflection_modifier = 1, booster_damage_modifier = 1)
 	var/facing_modifier = 1
