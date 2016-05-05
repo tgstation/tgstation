@@ -141,10 +141,11 @@
 	cost = 10
 
 /datum/map_template/ruin/lavaland/ww_vault
-	name = "Wildwest Vault"
+	name = "Wishgranter Vault"
 	id = "ww-vault"
-	description = "Turns out this vault only has cowboys and no elderitch \
-		evil slumberings."
+	description = "Scrawled on the large double doors is both a message and a \
+		warning: 'meat grinder requires sacri...'. You're not so sure about \
+		this anymore."
 	suffix = "lavaland_surface_ww_vault.dmm"
 	cost = 35
 
