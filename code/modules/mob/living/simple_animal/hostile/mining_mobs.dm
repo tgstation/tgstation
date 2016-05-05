@@ -251,7 +251,7 @@
 		else
 			preserved = 1
 
-/obj/item/organ/internal/hivelord_core/ui_action_click()
+/obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
 	if(!inert)
 		spawn_amount++
