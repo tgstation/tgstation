@@ -743,6 +743,12 @@
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 
+/obj/item/toy/talking/friendlydoll
+	name = "friendly looking doll"
+	desc = "A lovable, friendly looking doll. It has a string on its back."
+	icon_state = "friendlydoll"
+	messages = list ("I'm fun for the whole family!", "Oh!~ Dont touch me there.", "Abstinence works!", "You can pull on more than my string!", "Give me some latex!", "I'm itchy.")
+
 
 /*
 || A Deck of Cards for playing various games of chance ||
