@@ -60,6 +60,8 @@
 			src << "<span class='notice'>You start tearing apart the airlock...</span>"
 			playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 			sleep(20)
+			if(get_dist(src, target) > 1)
+				return
 			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			if(do_after(src, 160, 0, A, 1))
 				playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
