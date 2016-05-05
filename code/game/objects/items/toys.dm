@@ -1478,3 +1478,103 @@
 	name = "Warden action figure"
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
+
+/*
+ * Figurines that you can put clothes on and various accesories
+ */
+
+/obj/item/toy/figurine
+	name = "Figurine"
+	desc = "A small figurine you can dress up, it doesn't appear to have any items on it"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "md"
+	var/cooldown = 0
+	burn_state = FLAMMABLE
+	w_class = 2
+	var/firstEquip = 1
+	var/firstHatEquip = 1
+	var/obj/item/toy/figurine/list/equipTypes = list(/obj/item/toy/figurineEquipment/hat,
+																									 /obj/item/toy/figurineEquipment/pants)
+	var/obj/item/toy/figurine/list/pixelYShift = list(9,-6)
+	var/obj/item/toy/figurine/list/pixelXShift = list(1,0)
+	var/obj/item/toy/figurine/list/equipedList[2]
+
+	//time to get real freaky with it baby
+	var/numHats = 0
+	var/hatCap = 1000 //lol change this shit but i wanna fuck around first
+
+//debug equipment
+/obj/item/toy/figurineEquipment
+	name = "Figurine equipment"
+	desc = "A piece of equipment that you can attach to a figure Debug Item only"
+	icon = 'icons/obj/toy.dmi'
+	var/cooldown = 0
+	burn_state = FLAMMABLE
+	w_class = 2
+
+//debug equipment
+/obj/item/toy/figurineEquipment/hat
+	name = "Figurine Hat"
+	desc = "A hat for a figurine Debug Item only"
+
+/obj/item/toy/figurineEquipment/hat/redHat
+	name = "Red Figurine Hat"
+	desc = "Classy and red, a fashionable hat any figurine would wear"
+	icon_state = "hat"
+
+/obj/item/toy/figurineEquipment/pants
+	name = "Figurine Pants"
+	desc = "A pair of pants fit for a figurine"
+
+/obj/item/toy/figurineEquipment/pants/bluePants
+		name = "Blue Figurine Pants"
+		desc = "A pair of pants fit for a figurine"
+		icon_state = "pants"
+
+
+//just calls equipment proc bellow when u attempt to attach
+/obj/item/toy/figurine/attackby(obj/item/I, mob/user, params)
+	attachEquipment(I, user)
+	..()
+
+//goes through a loop checking if the equipment ur equiping is already on figurine
+//if not equip it with pre-defined variables above then update
+/obj/item/toy/figurine/proc/attachEquipment(obj/item/I, mob/user, notifyAttach = 1)
+	//keeping this if to save processing time
+	if(istype(I, /obj/item/toy/figurineEquipment))
+		if(istype(I,/obj/item/toy/figurineEquipment/hat) && numHats < hatCap && ! firstHatEquip==1)
+			//theres a better way to do this but my brain doesn't want to think of one
+			pixelYShift[1] = 13 + numHats*4
+			pixelXShift[1] += rand(-2,2)
+			numHats++
+			equipedList[1] = null
+		else if(istype(I,/obj/item/toy/figurineEquipment/hat) && numHats < hatCap && firstHatEquip==1)
+			firstHatEquip = 0
+		for(var/i = 1; i<=equipedList.len; i++)
+			if(istype(I,equipTypes[i]))
+				if(equipedList[i])
+					if(user)
+						user << "<span class='warning'>[src] already has a [I].</span>"
+				else
+					if(user)
+						if(!user.drop_item())
+							return
+					equipedList[i] = I
+					I.loc = src
+					if(user && notifyAttach)
+						user << "<span class='notice'>You attach [I] to [src].</span>"
+						if(firstEquip == 1)
+							src.desc = "A small figurine thats been dressed, it has the following items on it [I]"
+							firstEquip = 0
+						else
+							src.desc += ", [I]"
+					I.pixel_y += pixelYShift[i]
+					I.pixel_x += pixelXShift[i]
+					I.layer = FLOAT_LAYER
+					overlays += I
+
+					if(istype(loc, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = loc
+						H.update_inv_w_uniform()
+
+					return 1
