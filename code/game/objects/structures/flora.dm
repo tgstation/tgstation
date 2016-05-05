@@ -258,11 +258,9 @@
 	icon_state = "rockpile"
 	density = 0
 
-
 /obj/structure/flora/rock/volcanic
 	icon_state = "basalt"
 	desc = "A volcanic rock"
-
 
 /obj/structure/flora/rock/volcanic/New()
 	..()
