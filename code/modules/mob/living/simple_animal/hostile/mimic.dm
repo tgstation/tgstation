@@ -164,7 +164,11 @@ var/global/list/crate_mimic_disguises = list(\
 	.=..()
 
 /mob/living/simple_animal/hostile/mimic/crate/Destroy()
-	Die()
+	if(copied_object)
+		var/obj/structure/C = new copied_object(get_turf(src))
+		//Drop all loot!
+		for(var/atom/movable/AM in src)
+			AM.forceMove(C)
 	
 	..()
 
@@ -175,14 +179,6 @@ var/global/list/crate_mimic_disguises = list(\
 		if(I.anchored || I.density) continue
 
 		I.forceMove(src)
-
-/mob/living/simple_animal/hostile/mimic/crate/Die()
-	if(copied_object)
-		var/obj/structure/C = new copied_object(get_turf(src))
-		//Drop all loot!
-		for(var/atom/movable/AM in src)
-			AM.loc = C
-	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/attackby(obj/W, mob/user)
 	if(angry) //If we're angry - proceed as normal
