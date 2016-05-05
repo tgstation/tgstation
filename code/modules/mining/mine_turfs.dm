@@ -574,7 +574,7 @@
 			return
 	if(istype(AM, /mob/living))
 		var/mob/living/M = AM
-		for(var/atom/movable/thing in M)
+		for(var/atom/movable/thing in M.GetAllContents())
 			if(!istype(thing, /obj/item))
 				continue
 			var/obj/item/I = thing

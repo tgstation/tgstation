@@ -300,6 +300,7 @@
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Modification Kit",    /obj/item/modkit,                                	                	1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
+		new /datum/data/mining_equipment("Advanced Wormhole Lifebelt",   /obj/item/device/wormhole_lifebelt/advanced,					2000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            2000),
@@ -491,11 +492,14 @@
 		technology. It bares the hallmarks of the work of the Free Golems, as \
 		Nanotrasen has turned its eyes to bluespace for more accurate \
 		teleportation.\n\
-		It's designed to be worn around the waist, monitoring lifesigns and \
-		acceleration. In the event of a medical emergency, or a fall severe \
-		enough to qualify as fatal, it activates.\n\
-		The wormholes it creates are unpleasant to travel through though, to \
-		say the least."
+		The belt has slots for modular sensors allowing it to activate \
+		automatically. \
+		The wormholes it creates are unpleasant to travel through though, for \
+		those who aren't carved out of living stone."
+	var/desc_sensors = "\nThis lifebelt will activate automatically in the \
+		event of sudden acceleration, generally indicating that the user has \
+		fallen into a chasm."
+
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -510,11 +514,13 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_cargo
 	var/radio_channel = "Supply"
 
+	var/medical_sensors = FALSE
 	var/ticks_in_crit = 0
 	var/threshold = 2
 
 /obj/item/device/wormhole_lifebelt/New()
 	. = ..()
+	desc += desc_sensors
 	SSobj.processing += src
 
 	belt_radio = new /obj/item/device/radio(src)
@@ -530,6 +536,9 @@
 	. = ..()
 
 /obj/item/device/wormhole_lifebelt/process()
+	if(!medical_sensors)
+		return
+
 	var/mob/living/carbon/human/user
 	if(istype(loc, /mob/living/carbon/human))
 		user = loc
@@ -563,14 +572,9 @@
 	return TRUE
 
 /obj/item/device/wormhole_lifebelt/proc/get_beacons(mob/user)
-	var/golem_mode = FALSE
-	var/list/L = list()
 	// The shoes send you home, to where you belong
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		if(H.dna && istype(H.dna.species, /datum/species/golem))
-			golem_mode = TRUE
-
+	var/golem_mode = isgolem(user)
+	var/list/L = list()
 
 	for(var/obj/item/device/radio/beacon/B in world)
 		var/turf/T = get_turf(B)
@@ -605,6 +609,7 @@
 	visible_message("<span class='warning'>A [J] appears!</span>", "<span class='notice'>You hear sparks.</span>")
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
+	return TRUE
 
 /obj/item/device/wormhole_lifebelt/emp_act(power)
 	var/triggered = FALSE
@@ -622,19 +627,20 @@
 
 /obj/item/device/wormhole_lifebelt/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
-		. = TRUE
-		user << "[src] activates, saving you from the chasm!</span>"
 		feedback_add_details("jaunter","C") // chasm automatic activation
-		activate(user)
+		. = activate(user)
+		if(.)
+			user << "[src] activates, saving you from the chasm!</span>"
 	else
 		user << "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
 		. = FALSE
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
-	name = "lifebelt tunnel"
+	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
+
 	desc = "A stable hole in the universe made by a wormhole lifebelt. \
 		Turbulent doesn't even begin to describe how rough passage through \
 		one of these is, but at least it will always get you somewhere near a \
@@ -648,14 +654,36 @@
 			// KERPLUNK
 			M.visible_message("<span class='warning'>[M] appears from nowhere!</span>", null, "<span class='warning'>There is a loud ker-plunk noise!</span>")
 			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
+
 			if(iscarbon(M))
 				var/mob/living/carbon/L = M
+				// Golems are extremely resistant to the stress of
+				//  wormhole travel.
+				if(isgolem(L))
+					L.Weaken(1)
+					return
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
+					// aproximately x3 telearmor rads
+					L.rad_act(50)
 					spawn(20)
 						if(L)
 							L.vomit(20)
+
+/proc/isgolem(mob/M)
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.dna && istype(H.dna.species, /datum/species/golem))
+			return TRUE
+	return FALSE
+
+/obj/item/device/wormhole_lifebelt/advanced
+	name = "advanced wormhole lifebelt"
+	medical_sensors = TRUE
+	desc_sensors = "\nIn addition to the standard chasm detection suite, this \
+		belt has sophisticated medical sensors, activating if the user drops \
+		into a critical condition."
 
 /**********************Resonator**********************/
 
