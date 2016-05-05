@@ -44,9 +44,16 @@
 			else if(istype(H, /mob/living/carbon/monkey))
 				creamoverlay.icon_state = "creampie_monkey"
 			else if(istype(H, /mob/living/carbon/alien))
-				creamoverlay.icon_state = "creampie_xenomorph"
-				if(istype(H, /mob/living/carbon/alien/humanoid/royal)) //lets not mess with queen yet
+				if(istype(H, /mob/living/carbon/alien/humanoid/royal)) //lets not mess with queens yet
+					qdel(src)
 					return
+				else if(H.stat == DEAD)
+					creamoverlay.icon_state = "creampie_xeno_dead"
+				else if(H.paralysis || H.stunned || H.weakened)
+					creamoverlay.icon_state = "creampie_xeno_crit" //somehow it keep using sleep overlay
+				else if(H.lying || H.resting || H.sleeping)
+					creamoverlay.icon_state = "creampie_xeno_sleep"
+				else creamoverlay.icon_state = "creampie_xenomorph"
 			else if(istype(H, /mob/living/silicon/ai))
 				creamoverlay.icon_state = "creampie_ai"
 			else if(istype(H, /mob/living/simple_animal/drone))

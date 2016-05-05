@@ -176,5 +176,11 @@ proc/alien_type_present(var/alienpath)
 
 /mob/living/carbon/alien/humanoid/wash_cream()
 	var/image/creamoverlay = image('icons/effects/creampie.dmi')
-	creamoverlay.icon_state = "creampie_xenomorph"
+	if(stat == DEAD)
+		creamoverlay.icon_state = "creampie_xeno_dead"
+	else if(paralysis || stunned || weakened)
+		creamoverlay.icon_state = "creampie_xeno_crit"
+	else if(lying || resting || sleeping)
+		creamoverlay.icon_state = "creampie_xeno_sleep"
+	else creamoverlay.icon_state = "creampie_xenomorph"
 	overlays -= creamoverlay
