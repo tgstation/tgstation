@@ -115,6 +115,11 @@
 	put_on_delay = 40
 	can_hold_items = 1
 
+/obj/item/clothing/shoes/workboots/mining
+	name = "mining boots"
+	desc = "Nanotrasen-issue insulated mining boots, perfect for kicking monsters."
+	burn_state = FIRE_PROOF
+
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
