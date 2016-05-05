@@ -193,7 +193,7 @@
 	H.remove_overlay(HAIR_LAYER)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
-	if(!HD || HD.status == ORGAN_ROBOTIC) //Decapitated or robotic head
+	if(!HD) //Decapitated
 		return
 
 	if(H.disabilities & HUSK)
@@ -488,8 +488,8 @@
 		if(!(type in I.species_exception))
 			return 0
 
-	var/R = H.has_right_hand(1)
-	var/L = H.has_left_hand(1)
+	var/R = H.has_right_hand()
+	var/L = H.has_left_hand()
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
 

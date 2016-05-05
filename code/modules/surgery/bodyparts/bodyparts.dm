@@ -1,6 +1,7 @@
 
 /obj/item/bodypart
 	name = "limb"
+	desc = "why is it detached..."
 	var/mob/living/carbon/human/owner = null
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
@@ -264,7 +265,7 @@
 
 /obj/item/bodypart/chest
 	name = "chest"
-	desc = "why is it detached..."
+	desc = "It's impolite to stare at a person's chest."
 	icon_state = "chest"
 	max_damage = 200
 	body_zone = "chest"
@@ -280,7 +281,6 @@
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
-	desc = "why is it detached..."
 	icon_state = "l_arm"
 	max_damage = 75
 	body_zone ="l_arm"
@@ -290,7 +290,6 @@
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
-	desc = "why is it detached..."
 	icon_state = "r_arm"
 	max_damage = 75
 	body_zone = "r_arm"
@@ -300,7 +299,6 @@
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
-	desc = "why is it detached..."
 	icon_state = "l_leg"
 	max_damage = 75
 	body_zone = "l_leg"
@@ -310,7 +308,6 @@
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
-	desc = "why is it detached..."
 	icon_state = "r_leg"
 	max_damage = 75
 	body_zone = "r_leg"

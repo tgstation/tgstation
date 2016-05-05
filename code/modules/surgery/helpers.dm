@@ -23,11 +23,11 @@
 					if(!S.possible_locs.Find(selected_zone))
 						continue
 					if(affecting)
-						if(S.requires_missing_bodypart)
+						if(!S.requires_bodypart)
 							continue
 						if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
 							continue
-					else if(H && !S.requires_missing_bodypart) //human with no limb in surgery zone when we need a limb
+					else if(H && S.requires_bodypart) //human with no limb in surgery zone when we need a limb
 						continue
 					if(!S.can_start(user, M))
 						continue
@@ -52,11 +52,11 @@
 						if(H)
 							affecting = H.get_bodypart(check_zone(selected_zone))
 						if(affecting)
-							if(procedure.requires_missing_bodypart)
+							if(!procedure.requires_bodypart)
 								return
 							if(procedure.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
 								return
-						else if(H && !procedure.requires_missing_bodypart)
+						else if(H && procedure.requires_bodypart)
 							return
 						if(!procedure.can_start(user, M))
 							return

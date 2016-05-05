@@ -34,7 +34,7 @@
 		var/mob/living/carbon/human/H = M
 		affecting = H.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
-			user << "<span class='warning'>[H] doesn't have [parse_zone(user.zone_selected)]!</span>"
+			user << "<span class='warning'>[H] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
 			return
 		if(stop_bleeding)
 			if(H.bleedsuppress)
@@ -79,7 +79,7 @@
 		var/mob/living/carbon/human/H = M
 		affecting = H.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
-			user << "<span class='warning'>[H] doesn't have [parse_zone(user.zone_selected)]!</span>"
+			user << "<span class='warning'>[H] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
 			return
 		if(stop_bleeding)
 			if(!H.bleedsuppress) //so you can't stack bleed suppression

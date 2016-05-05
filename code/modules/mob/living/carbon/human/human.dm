@@ -148,7 +148,8 @@
 
 	take_overall_damage(b_loss,f_loss)
 	//attempt to dismember bodyparts
-	for(var/obj/item/bodypart/BP in bodyparts)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
 		if(prob(50/severity) && BP.body_zone != "head" && BP.body_zone != "chest")
 			BP.dismember()
 	..()

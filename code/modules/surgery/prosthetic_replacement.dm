@@ -3,7 +3,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/add_prosthetic)
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
-	requires_missing_bodypart = 1
+	requires_bodypart = FALSE //need a missing limb
 
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(target))

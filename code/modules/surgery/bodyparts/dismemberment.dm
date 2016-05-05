@@ -15,7 +15,7 @@
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
-	for(var/i = 1; i < t_range; i++)
+	for(var/i in 1 to t_range-1)
 		var/turf/new_turf = get_step(target_turf, direction)
 		target_turf = new_turf
 		if(new_turf.density)
@@ -26,11 +26,12 @@
 
 /obj/item/bodypart/chest/dismember()
 	var/mob/living/carbon/human/H = owner
-	if(!istype(H) || !H.dna.species:has_dismemberment) //human's species don't allow dismemberment
+	if(!istype(H) || !H.dna.species.has_dismemberment) //human's species don't allow dismemberment
 		return 0
 
 	var/organ_spilled = 0
 	var/turf/T = get_turf(H)
+	T.add_blood(H)
 	playsound(get_turf(owner), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in owner.internal_organs)
 		var/obj/item/organ/O = X
@@ -289,12 +290,12 @@
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(noheal)
-	return
+	return 0
 
 /mob/living/carbon/human/regenerate_limbs(noheal)
 	var/list/limb_list = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
 	for(var/Z in limb_list)
-		regenerate_limb(Z, noheal)
+		. += regenerate_limb(Z, noheal)
 
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return
@@ -302,7 +303,7 @@
 /mob/living/carbon/human/regenerate_limb(limb_zone, noheal)
 	var/obj/item/bodypart/L
 	if(get_bodypart(limb_zone))
-		return
+		return 0
 	L = newBodyPart(limb_zone, 0, 0, src)
 	if(L)
 		if(!noheal)

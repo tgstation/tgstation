@@ -2,7 +2,7 @@
 
 /obj/item/bodypart/head
 	name = "head"
-	desc = "what a way to get a head in life..."
+	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon_state = "head"
 	max_damage = 200
 	body_zone = "head"

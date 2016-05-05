@@ -10,7 +10,7 @@
 	var/list/possible_locs = list() 							//Multiple locations -- c0
 	var/ignore_clothes = 0										//This surgery ignores clothes
 	var/obj/item/organ/organ									//Operable body part
-	var/requires_missing_bodypart = 0							//Surgery available only when a bodypart is present, or only when it is missing.
+	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
 
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list

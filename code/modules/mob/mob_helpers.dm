@@ -28,21 +28,28 @@
 	return zone
 
 
-/proc/ran_zone(zone, probability = 80, list/exceptions)
+/proc/ran_zone(zone, probability = 80)
+
 	zone = check_zone(zone)
 
-	if(!islist(exceptions))
-		exceptions = list()
-
-	if(prob(probability) && !locate(zone) in exceptions)
+	if(prob(probability))
 		return zone
 
-	var/list/choices = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
-	choices = difflist(choices, exceptions) //Strip away zones to ignore
-	if(!choices.len)
-		return 0
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
+	switch(t)
+		if(1)
+			return "head"
+		if(2)
+			return "chest"
+		if(3 to 6)
+			return "l_arm"
+		if(7 to 10)
+			return "r_arm"
+		if(11 to 14)
+			return "l_leg"
+		if(15 to 18)
+			return "r_leg"
 
-	zone = pick(choices) //Pick a random zone
 	return zone
 
 /proc/above_neck(zone)
