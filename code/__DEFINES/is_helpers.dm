@@ -32,6 +32,8 @@
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
+#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
