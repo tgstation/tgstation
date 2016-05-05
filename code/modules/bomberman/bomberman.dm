@@ -254,9 +254,6 @@ var/global/list/bombermangear = list()
 /obj/structure/bomberman/cultify()
 	return
 
-/obj/structure/bomberman/singuloCanEat()
-	return 0
-
 ///////////////////////////////FLAME/EXPLOSION//////////////////////////
 /obj/structure/bomberflame
 	name = "explosion"
@@ -412,9 +409,6 @@ obj/structure/bomberflame/Destroy()
 /obj/structure/bomberflame/cultify()
 	return
 
-/obj/structure/bomberflame/singuloCanEat()
-	return 0
-
 
 ///////////////////////////////SOFT WALLS/////////////////////////////
 /obj/structure/softwall
@@ -463,9 +457,6 @@ obj/structure/bomberflame/Destroy()
 /obj/structure/softwall/cultify()
 	return
 
-/obj/structure/softwall/singuloCanEat()
-	return 0
-
 ///////////////////////////////HARD WALLS/////////////////////////////
 /turf/unsimulated/wall/bomberman
 	name = "hard wall"
@@ -478,9 +469,6 @@ obj/structure/bomberflame/Destroy()
 
 /turf/unsimulated/wall/cultify()
 	return
-
-/turf/unsimulated/wall/singuloCanEat()
-	return 0
 
 ///////////////////////////////POWER-UPS//////////////////////////////
 /obj/structure/powerup
@@ -658,10 +646,6 @@ obj/structure/bomberflame/Destroy()
 
 /obj/structure/powerup/cultify()
 	return
-
-/obj/structure/powerup/singuloCanEat()
-	return 0
-
 
 ///////////////////////////////CLOTHING///////////////////////////////
 /obj/item/clothing/suit/space/bomberman
@@ -1387,9 +1371,6 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 
 /obj/structure/planner/cultify()
 	return
-
-/obj/structure/planner/singuloCanEat()
-	return 0
 
 /obj/structure/planner/spawnpoint
 	name = "Spawn Point"

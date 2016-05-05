@@ -86,9 +86,6 @@
 /obj/effect/tracker/cultify()
 	return
 
-/obj/effect/tracker/singuloCanEat()
-	return 0
-
 /obj/effect/tracker/singularity_act()
 	return
 

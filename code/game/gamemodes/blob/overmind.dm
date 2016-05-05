@@ -111,9 +111,6 @@
 /mob/camera/blob/cultify()
 	return
 
-/mob/camera/blob/singuloCanEat()
-	return 0
-
 /mob/camera/blob/singularity_pull()
 	return
 

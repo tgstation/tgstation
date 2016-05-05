@@ -3,6 +3,7 @@
 //Added spess ghoasts/cameras to this so they don't add to the lag. - N3X.
 
 //Added a singuloCanEat proc to atoms. This list is now kinda obsolete.
+//Removed singuloCanEat proc from the repo.  This is now here ironically - Probe 4/30/16
 //var/global/list/uneatable = list(
 //	/obj/effect/overlay,
 //	/mob/dead,

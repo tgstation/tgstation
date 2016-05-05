@@ -14,5 +14,3 @@
 /mob/camera/cultify()
 	return
 
-/mob/camera/singuloCanEat()
-	return 0

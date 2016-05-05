@@ -776,6 +776,3 @@ var/global/list/loopModeNames=list(
 
 /obj/machinery/media/jukebox/superjuke/adminbus/cultify()
 	return
-
-/obj/machinery/media/jukebox/superjuke/adminbus/singuloCanEat()
-	return 0

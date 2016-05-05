@@ -84,9 +84,6 @@
 /obj/effect/portal/cultify()
 	return
 
-/obj/effect/portal/singuloCanEat()
-	return 0
-
 /obj/effect/portal/singularity_act()
 	return
 

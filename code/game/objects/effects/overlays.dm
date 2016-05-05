@@ -8,9 +8,6 @@
 /obj/effect/overlay/cultify()
 	return
 
-/obj/effect/overlay/singuloCanEat()
-	return 0
-
 /obj/effect/overlay/singularity_act()
 	return
 

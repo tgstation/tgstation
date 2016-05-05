@@ -476,6 +476,3 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 /mob/new_player/cultify()
 	return
-
-/mob/new_player/singuloCanEat()
-	return 0

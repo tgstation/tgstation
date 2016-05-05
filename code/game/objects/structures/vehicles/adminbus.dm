@@ -415,9 +415,6 @@
 /obj/structure/bed/chair/vehicle/adminbus/cultify()
 	return
 
-/obj/structure/bed/chair/vehicle/adminbus/singuloCanEat()
-	return 0
-
 /obj/structure/bed/chair/vehicle/adminbus/singularity_act()
 	return 0
 
@@ -505,9 +502,6 @@
 /obj/structure/hookshot/cultify()
 	return
 
-/obj/structure/hookshot/singuloCanEat()
-	return 0
-
 /obj/structure/hookshot/singularity_act()
 	return 0
 
@@ -556,9 +550,6 @@
 /obj/structure/singulo_chain/cultify()
 	return
 
-/obj/structure/singulo_chain/singuloCanEat()
-	return 0
-
 /obj/structure/singulo_chain/singularity_act()
 	return 0
 
@@ -580,9 +571,6 @@
 
 /obj/structure/buslight/cultify()
 	return
-
-/obj/structure/buslight/singuloCanEat()
-	return 0
 
 /obj/structure/buslight/singularity_act()
 	return 0
@@ -610,9 +598,6 @@
 
 /obj/structure/teleportwarp/cultify()
 	return
-
-/obj/structure/teleportwarp/singuloCanEat()
-	return 0
 
 /obj/structure/teleportwarp/singularity_act()
 	return 0

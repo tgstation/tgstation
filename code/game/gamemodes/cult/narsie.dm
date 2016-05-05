@@ -216,9 +216,7 @@ var/global/list/narsie_list = list()
 
 //OLD BEHAVIOUR
 	else if(narsie_behaviour == "Nar-Singulo")
-		if(!(A.singuloCanEat()))
-			return 0
-
+		
 		if (istype(A, /mob/living/))
 			var/mob/living/C2 = A
 
@@ -248,9 +246,7 @@ var/global/list/narsie_list = list()
 					continue
 
 				if (dist > consume_range && canPull(AM2))
-					if(!(AM2.singuloCanEat()))
-						continue
-
+					
 					if (101 == AM2.invisibility)
 						continue
 
@@ -263,9 +259,7 @@ var/global/list/narsie_list = list()
 
 
 /obj/machinery/singularity/narsie/consume(const/atom/A) //This one is for the small ones.
-	if(!(A.singuloCanEat()))
-		return 0
-
+	
 	if (istype(A, /mob/living/))
 		var/mob/living/C2 = A
 
@@ -295,8 +289,6 @@ var/global/list/narsie_list = list()
 				continue
 
 			if (dist > consume_range && canPull(AM2))
-				if(!(AM2.singuloCanEat()))
-					continue
 
 				if (101 == AM2.invisibility)
 					continue
@@ -459,8 +451,6 @@ var/global/mr_clean_targets = list(
 	update_icon()
 
 /obj/machinery/singularity/narsie/large/clean/consume(const/atom/A)
-	if(!(A.singuloCanEat()))
-		return 0
 
 	if (istype(A, /mob/living/))
 
@@ -491,8 +481,6 @@ var/global/mr_clean_targets = list(
 				continue
 
 			if (dist > consume_range && canPull(AM))
-				if(!(AM.singuloCanEat()))
-					continue
 
 				if (101 == AM.invisibility)
 					continue

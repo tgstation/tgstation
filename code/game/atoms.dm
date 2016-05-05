@@ -224,9 +224,6 @@ var/global/list/ghdel_profiling = list()
 /atom/proc/bite_act(mob/living/carbon/human/user) //Called when this atom is bitten. If returns 1, same as kick_act()
 	return 1
 
-/atom/proc/singuloCanEat()
-	return 1
-
 /atom/proc/bullet_act(var/obj/item/projectile/Proj)
 	return 0
 

@@ -130,8 +130,6 @@
 	..()
 
 // Variety of overrides so the overlays don't get affected by weird things.
-/atom/movable/lighting_overlay/singuloCanEat()
-	return 0
 
 /atom/movable/lighting_overlay/ex_act(severity)
 	return 0

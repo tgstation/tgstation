@@ -30,9 +30,6 @@ var/global/list/all_docking_ports = list()
 		if(src == S.destination_port) S.destination_port = null
 
 //just in case
-/obj/docking_port/singuloCanEat() //This proc does nothing so remember NOT to use this
-	return //we are eternal
-
 /obj/docking_port/singularity_pull()
 	return //we are eternal
 
