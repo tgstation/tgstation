@@ -31,8 +31,7 @@
 		if(!ismob(hit_atom)) //if the creampie misses
 			qdel(src)
 			return
-
-		else //if the creampie hits
+		if(ismob(hit_atom)) //let check the species
 			var/mob/living/H = hit_atom
 			var/image/creamoverlay = image('icons/effects/creampie.dmi')
 
