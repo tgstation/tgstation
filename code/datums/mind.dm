@@ -150,11 +150,7 @@
 
 /datum/mind/proc/remove_cultist()
 	if(src in ticker.mode.cult)
-		ticker.mode.cult -= src
-		ticker.mode.update_cult_icons_removed(src)
-		var/datum/game_mode/cult/cult = ticker.mode
-		if(istype(cult))
-			cult.memorize_cult_objectives(src)
+		ticker.mode.remove_cultist(src, 0, 0)
 	special_role = null
 	remove_objectives()
 	remove_antag_equip()
@@ -1005,12 +1001,11 @@
 		switch(href_list["cult"])
 			if("clear")
 				remove_cultist()
-				current << "<span class='userdanger'>You have been brainwashed! You are no longer a cultist!</span>"
 				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 				log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
 				if(!(src in ticker.mode.cult))
-					ticker.mode.add_cultist(src)
+					ticker.mode.add_cultist(src, 0)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
 			if("tome")

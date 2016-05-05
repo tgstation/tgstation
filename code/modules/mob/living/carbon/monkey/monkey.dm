@@ -38,13 +38,6 @@
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
-/mob/living/carbon/monkey/prepare_data_huds()
-	//Prepare our med HUD...
-	..()
-	//...and display it.
-	for(var/datum/atom_hud/data/human/medical/hud in huds)
-		hud.add_to_hud(src)
-
 /mob/living/carbon/monkey/movement_delay()
 	if(reagents)
 		if(reagents.has_reagent("morphine"))

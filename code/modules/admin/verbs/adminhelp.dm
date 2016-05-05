@@ -137,12 +137,26 @@
 	var/list/adm = get_admin_counts(requiredflags)
 	. = adm["present"]
 	if(. <= 0)
+		var/final = ""
 		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
-			send2irc(source, "[msg] - No admins online")
+			final = "[msg] - No admins online"
 		else
-			send2irc(source, "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])")
+			final = "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])"
+		send2irc(source,final)
+		send2otherserver(source,final)
+
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)
 		shell("python nudge.py [msg] [msg2]")
 	return
+
+/proc/send2otherserver(source,msg,type = "Ahelp")
+	if(global.cross_allowed)
+		var/list/message = list()
+		message["message"] = "[source]: [msg]"
+		message["source"] = "([config.cross_name])"
+		message["key"] = global.comms_key
+		message["crossmessage"] = type
+
+		world.Export("[global.cross_address]?[list2params(message)]")
