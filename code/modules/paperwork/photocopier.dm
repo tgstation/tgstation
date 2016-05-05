@@ -120,7 +120,7 @@
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
-					var/obj/item/documents/photocopy/P = new /obj/item/documents/photocopy(loc)
+					new /obj/item/documents/photocopy(loc)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
 					sleep(15)
@@ -183,6 +183,15 @@
 				photocopy.loc = src.loc
 			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
 			photocopy = null
+			updateUsrDialog()
+		else if(doccopy)
+			if(!istype(usr,/mob/living/silicon/ai)) // honk honk honk
+				doccopy.loc = usr.loc
+				usr.put_in_hands(doccopy)
+			else
+				doccopy.loc = src.loc
+			usr << "<span class='notice'>You take [doccopy] out of [src].</span>"
+			doccopy = null
 			updateUsrDialog()
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
