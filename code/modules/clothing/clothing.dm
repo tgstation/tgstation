@@ -19,38 +19,6 @@
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
-	//Var modification - PLEASE be careful with this I know who you are and where you live
-	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
-	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
-
-
-/obj/item/clothing/Destroy()
-	dropped()
-	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
-	return ..()
-
-
-/obj/item/clothing/dropped(mob/user)
-	..()
-	if(user_vars_remembered && user_vars_remembered.len)
-		for(var/variable in user_vars_remembered)
-			if(variable in user.vars)
-				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
-					user.vars[variable] = user_vars_remembered[variable]
-		user_vars_remembered = list()
-
-
-/obj/item/clothing/equipped(mob/user, slot)
-	..()
-
-	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
-		for(var/variable in user_vars_to_edit)
-			if(variable in user.vars)
-				user_vars_remembered[variable] = user.vars[variable]
-				user.vars[variable] = user_vars_to_edit[variable]
-
-
-
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
@@ -148,7 +116,7 @@ BLIND     // can't see anything
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 25, 1)
 		user << "<span class='userdanger'>Your [src] has been badly damaged!</span>"
 		desc += "<span class='warning'>It looks badly damaged!</span>\n"
-		overlays +=  image("icon"='icons/effects/effects.dmi', "icon_state"="helmetdam")
+		overlays +=  image("icon"='icons/effects/effects.dmi', "icon_state"="helmetdam2")
 		user.head_update(src)
 	if(damaged == 2)
 		playsound(src.loc, 'sound/effects/snap.ogg', 25, 1)
@@ -202,7 +170,9 @@ BLIND     // can't see anything
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	user.wear_mask_update(src, toggle_off = mask_adjusted)
-	user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 
 
