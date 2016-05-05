@@ -47,9 +47,14 @@
 		clear_fullscreen(category)
 
 /datum/hud/proc/reload_fullscreen()
-	var/list/screens = mymob.screens
-	for(var/category in screens)
-		mymob.client.screen |= screens[category]
+	if(mymob && mymob.client && mymob.stat != DEAD)
+		var/list/screens = mymob.screens
+		for(var/category in screens)
+			var/obj/A = screens[category]
+			if(istype(A, /atom) && !istype(A, /obj/screen))
+				log_debug("Wrong type of object in screens, type [A.type]")
+				continue
+			mymob.client.screen |= A
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen1_full.dmi'
