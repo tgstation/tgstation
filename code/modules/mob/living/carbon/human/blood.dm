@@ -266,7 +266,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if("O-")
 			return list("O-")
 		if("O+")
-			return list("O+")
+			return list("O-", "O+")
 
 /proc/blood_splatter(target,datum/reagent/blood/source,large)
 
