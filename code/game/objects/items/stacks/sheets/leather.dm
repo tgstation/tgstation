@@ -157,6 +157,16 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	w_class = 3
 	layer = 4
 
+/obj/item/stack/sheet/animalhide/ashdrake
+	name = "ash drake hide"
+	desc = "The strong, scaled hide of an ash drake."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "dragon_hide"
+	singular_name = "drake plate"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
+
 
 //Step one - dehairing.
 

@@ -188,7 +188,7 @@
 			M.confused = 1
 		M.confused += 3
 		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
-			ticker.mode.remove_cultist(M.mind)
+			ticker.mode.remove_cultist(M.mind, 1, 1)
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
