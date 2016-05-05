@@ -39,6 +39,13 @@
 /mob/living/simple_animal/hostile/zombie/darkholme/New()
 	..()
 	name = pick("Leatherman","Leatherhead")
+	
+mob/living/simple_animal/hostile/zombie/gymboss
+	name = "boss of this gym"
+	desc = "There seems to be something shiny embedded in his waist."
+	butcher_results = list(/obj/item/weapon/storage/belt/champion/wrestling = 1)
+	attacktext = "spanks"
+	
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	..()
