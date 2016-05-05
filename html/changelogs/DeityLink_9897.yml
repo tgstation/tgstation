@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: NPC hostile mobs with ranged weapons will no longer fire if there's a friendly unity between them and their target. Hivebots, aliens, syndicate agents, russians, etc, should stop killing each others now.

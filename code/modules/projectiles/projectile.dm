@@ -632,3 +632,34 @@ var/list/impact_master = list()
 /obj/item/projectile/attack_hand(mob/user)
 	if(timestopped)
 		..()
+
+/obj/item/projectile/friendlyCheck
+	invisibility = 101
+	rotate = 0
+	damage = 0
+	nodamage = 1
+	var/atom/impact = null
+
+/obj/item/projectile/friendlyCheck/process()
+	OnFired()
+	while(!impact && loc && (kill_count > 0))
+		if(dist_x > dist_y)
+			bresenham_step(dist_x,dist_y,dx,dy)
+		else
+			bresenham_step(dist_y,dist_x,dy,dx)
+	return impact
+
+/obj/item/projectile/proc/get_hit_atom(var/atom/A)
+	if(istype(A, /obj/structure/bed/chair/vehicle))
+		var/obj/structure/bed/chair/vehicle/JC = A
+		if(JC.occupant)
+			return JC.occupant
+	return A
+
+/obj/item/projectile/friendlyCheck/Bump(var/atom/A)
+	if(bumped)
+		return 0
+	bumped = 1
+
+	if(ismob(A) || isturf(A) || isobj(A))
+		impact = get_hit_atom(A)

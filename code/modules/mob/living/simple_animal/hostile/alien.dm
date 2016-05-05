@@ -121,7 +121,11 @@ var/list/nest_locations = list()
 					D.attackby(CB,src)
 					qdel(CB)
 
-/mob/living/simple_animal/hostile/alien/CanAttack(var/atom/the_target)//they don't kill mindless monkeys so they can drag them to nests with a higher chance of a successful impregnation.
+/mob/living/simple_animal/hostile/alien/CanAttack(var/atom/the_target)
+	if(isalien(the_target))
+		return 0
+
+	//they don't harm mindless monkeys so they can drag them to nests with a higher chance of a successful impregnation.
 	if(istype(the_target,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/M = the_target
 		if(!M.client)
@@ -359,11 +363,6 @@ var/list/nest_locations = list()
 	dead_mob_list -= src
 
 	qdel(src)
-
-/mob/living/simple_animal/hostile/alien/CanAttack(var/atom/the_target)
-	if(isalien(the_target))
-		return 0
-	return ..(the_target)
 
 /mob/living/simple_animal/hostile/alien/adjustBruteLoss(amount,var/damage_type) // Weak to Fire
 	if(damage_type == BURN)

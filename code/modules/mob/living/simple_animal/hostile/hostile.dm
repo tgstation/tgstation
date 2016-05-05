@@ -27,6 +27,7 @@
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
+	var/friendly_fire = 0 //If set to 1, they won't hesitate to shoot their target even if a friendly is in the way.
 
 /mob/living/simple_animal/hostile/resetVariables()
 	..("wanted_objects", "friends", args)
@@ -274,43 +275,59 @@
 	if(istype(H))
 		src.friends |= H.friends
 
-/mob/living/simple_animal/hostile/proc/OpenFire(var/target)
-
-
-	var/tturf = get_turf(target)
+/mob/living/simple_animal/hostile/proc/OpenFire(var/atom/ttarget)
+	var/target_turf = get_turf(ttarget)
 	if(rapid)
 		spawn(1)
-			Shoot(tturf, src.loc, src)
-			if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
-			if(casingtype)
-				new casingtype(get_turf(src))
+			TryToShoot(target_turf)
 		spawn(4)
-			Shoot(tturf, src.loc, src)
-			if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
-			if(casingtype)
-				new casingtype(get_turf(src))
+			TryToShoot(target_turf)
 		spawn(6)
-			Shoot(tturf, src.loc, src)
-			if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
-			if(casingtype)
-				new casingtype(get_turf(src))
+			TryToShoot(target_turf)
 	else
-		Shoot(tturf, src.loc, src)
-		if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
-		if(casingtype)
-			new casingtype
-	ranged_cooldown = ranged_cooldown_cap
+		TryToShoot(target_turf)
 	return
 
-/mob/living/simple_animal/hostile/proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
-	if(target == start)
-		return
-	if(!istype(target, /turf))
-		return
+/mob/living/simple_animal/hostile/proc/TryToShoot(var/atom/target_turf)
+	if(Shoot(target_turf, src.loc, src))
+		ranged_cooldown = ranged_cooldown_cap
+		if(ranged_message)
+			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
+		if(casingtype)
+			new casingtype(get_turf(src))
 
-	var/obj/item/projectile/A = new projectiletype(user:loc)
+/mob/living/simple_animal/hostile/proc/Shoot(var/atom/target, var/atom/start, var/mob/user, var/bullet = 0)
+	if(target == start)
+		return 0
+	if(!istype(target, /turf))
+		return 0
+
+	//Friendly Fire check
+	if(!friendly_fire)
+		var/obj/item/projectile/friendlyCheck/fC = getFromPool(/obj/item/projectile/friendlyCheck,user.loc)
+		fC.current = target
+		var/turf/T = get_turf(user)
+		var/turf/U = get_turf(target)
+		fC.original = target
+		fC.target = U
+		fC.current = T
+		fC.starting = T
+		fC.yo = target.y - start.y
+		fC.xo = target.x - start.x
+
+		var/atom/potentialImpact = fC.process()
+		if(potentialImpact && !CanAttack(potentialImpact))
+			returnToPool(fC)
+			return 0
+		returnToPool(fC)
+	//Friendly Fire check - End
+
+	var/obj/item/projectile/A = new projectiletype(user.loc)
+
+	if(!A)
+		return 0
+
 	playsound(user, projectilesound, 100, 1)
-	if(!A)	return
 
 	A.current = target
 
@@ -320,12 +337,13 @@
 	A.target = U
 	A.current = T
 	A.starting = T
-	A.yo = target:y - start:y
-	A.xo = target:x - start:x
+	A.yo = target.y - start.y
+	A.xo = target.x - start.x
 	spawn()
 		A.OnFired()
 		A.process()
-	return
+
+	return 1
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
