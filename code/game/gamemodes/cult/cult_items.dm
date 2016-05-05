@@ -146,18 +146,31 @@
 	used = 0
 	increment = 5
 	max = 40
-	prefix = "nar-sien"
+	prefix = "darkened"
 
-/obj/item/clothing/suit/cultrobes/cult_shield
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
 	var/shield_state = "shield-red"
+	hooded = 1
+	hoodtype = /obj/item/clothing/head/cult_hoodie
 	
-/obj/item/clothing/suit/cultrobes/cult_shield/pickup(mob/living/user)
+/obj/item/clothing/head/cult_hoodie
+	name = "empowered cultist armor"
+	desc = "Empowered garb which creates a powerful shield around the user."
+	icon_state = "cult_hoodalt"
+	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
@@ -165,7 +178,7 @@
 		user.Dizzy(30)
 		user.Weaken(5)
 
-/obj/item/clothing/suit/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(2, 1, src)
@@ -179,20 +192,34 @@
 		return 1
 	return 0
 
-/obj/item/clothing/suit/cultrobes/cult_shield/worn_overlays(isinhands)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
     . = list()
     if(!isinhands)
         . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
 
-/obj/item/clothing/suit/cultrobes/berserker
+/obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
+	flags_inv = HIDEJUMPSUIT
+	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
 	slowdown = -1
+	hooded = 1
+	hoodtype = /obj/item/clothing/head/berserkerhood
 	
-/obj/item/clothing/suit/cultrobes/berserker/pickup(mob/living/user)
+/obj/item/clothing/head/berserkerhood
+	name = "flagellant's robes"
+	desc = "Blood-soaked garb infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
+	icon_state = "culthood"
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
+	
+/obj/item/clothing/suit/hooded/cultrobes/berserker/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
@@ -247,12 +274,12 @@
 		playsound(user.loc, "sound/effects/Glassbr1.ogg", 50, 1)
 		qdel(src)
 		sleep(20)
-		var/global/list/curses = list("A fuel technician just slit his own throat and begged for death... the shuttle will be delayed by two minutes",
-		"The shuttle's navigation programming was replaced by a file containing two words:'IT COMES'... the shuttle will be delayed by two minutes",
-		"The shuttle's custodian tore out his guts and began painting strange shapes on the floor... the shuttle will be delayed by two minutes",
-		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh... the shuttle will be delayed by two minutes",
-		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine... the shuttle will be delayed by two minutes",
-		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh... the shuttle will be delayed by two minutes")
+		var/global/list/curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by two minutes.",
+		"The shuttle's navigation programming was replaced by a file containing two words, IT COMES.The shuttle will be delayed by two minutes.",
+		"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by two minutes.",
+		"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by two minutes.",
+		"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by two minutes.",
+		"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by two minutes.")
 		var/message = pick(curses)
 		curses -= message
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
