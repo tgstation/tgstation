@@ -5,7 +5,7 @@
 "e" = (/obj/structure/closet,/mob/living/simple_animal/hostile/zombie,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "f" = (/obj/structure/punching_bag,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "g" = (/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"h" = (/obj/structure/window{icon_state = "window";dir = 1},/obj/item/weapon/shard{icon_state = "medium"},/mob/living/simple_animal/hostile/zombie{name = "Boss of This Gym"},/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"h" = (/obj/structure/window{icon_state = "window";dir = 1},/obj/item/weapon/shard{icon_state = "medium"},/mob/living/simple_animal/hostile/zombie/gymboss,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "i" = (/obj/structure/window{icon_state = "window";dir = 1},/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "j" = (/obj/structure/window{icon_state = "window";dir = 1},/obj/structure/window{icon_state = "window";dir = 4},/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "k" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
