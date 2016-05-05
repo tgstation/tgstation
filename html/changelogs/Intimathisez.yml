@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "Flesh to stone now lasts for 2.5 minutes rather than 8.5 minutes."
