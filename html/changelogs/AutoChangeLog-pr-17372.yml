@@ -1,0 +1,6 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Revenants are slower while revealed."
+  - rscdel: "Revenants can no longer cast inside dense objects."
+  - tweak: "Lying down will cure Blight much, much faster."
