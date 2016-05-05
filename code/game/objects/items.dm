@@ -572,3 +572,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/proc/is_sharp()
 	return sharpness
+
+/obj/item/proc/chasm_react(mob/user)
+	return FALSE
