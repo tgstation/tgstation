@@ -18,7 +18,7 @@
 
 /obj/item/weapon/paper/contract/employment/New(atom/loc, mob/living/nOwner)
 	. = ..()
-	if(!nOwner.mind)
+	if(!nOwner || !nOwner.mind)
 		qdel(src)
 		return -1
 	target = nOwner.mind

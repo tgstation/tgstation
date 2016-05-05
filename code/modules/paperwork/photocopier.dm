@@ -64,11 +64,13 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
+					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/weapon/paper/contract/employment))
-						var/obj/item/weapon/paper/contract/employment/c = copy
-						new /obj/item/weapon/paper/contract/employment (loc, c.target)
-						toner--
-					else
+						var/obj/item/weapon/paper/contract/employment/E = copy
+						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target)
+						if(c)
+							copy_as_paper = 0
+					if(copy_as_paper)
 						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
 						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
 							if(toner > 10)	//lots of toner, make it dark
@@ -247,7 +249,7 @@
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
-				user << "<span class='warning'>The photocopier catches fire, smelling of brimstone!</span>"
+				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
 				burn_state = ON_FIRE
 			else
 				if(!user.drop_item())
