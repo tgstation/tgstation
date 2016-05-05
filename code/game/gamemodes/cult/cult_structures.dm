@@ -12,15 +12,14 @@
     if(time == 1)
         eta = "about one minute."
     else if(time == 0)
-        eta = "less than a minute."
+        eta = "less than thirty seconds."
     return eta
          
 /obj/structure/cult/talisman
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
-	health = 100
-	maxhealth = 100
+
 	
 /obj/structure/cult/talisman/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -29,6 +28,9 @@
 	if(cooldowntime)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
+	cooldowntime = world.time + 2400
+	spawn(2400)
+	cooldowntime = 0
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
 	switch(choice)
 		if("Eldritch Whetstone")
@@ -40,17 +42,13 @@
 		if("Flask of Unholy Water")
 			var/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with a [N.name]!</span>"
-	cooldowntime = world.time + 2400
-	spawn(cooldowntime)
-	cooldowntime = 0
+	
 	
 /obj/structure/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	luminosity = 3
-	health = 100
-	maxhealth = 100
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -59,21 +57,21 @@
 	if(cooldowntime)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
+	cooldowntime = world.time + 2400
+	spawn(2400)
+	cooldowntime = 0
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
 	switch(choice)
 		if("Shielded Robe")
-			var/obj/item/clothing/suit/cultrobes/cult_shield/N = new(get_turf(src))
+			var/obj/item/clothing/suit/hooded/cultrobes/cult_shield/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
-		if("Flagellant's Rags")
-			var/obj/item/clothing/suit/cultrobes/berserker/N = new(get_turf(src))
+		if("Flagellant's Robe")
+			var/obj/item/clothing/suit/hooded/cultrobes/berserker/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
 		if("Nar-Sien Hardsuit")
 			new /obj/item/clothing/head/helmet/space/cult(get_turf(src))
 			var /obj/item/clothing/suit/space/cult/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
-	cooldowntime = world.time + 2400
-	spawn(cooldowntime)
-	cooldowntime = 0
 
 /obj/structure/cult/pylon
 	name = "pylon"
@@ -83,8 +81,6 @@
 	var/heal_delay = 50
 	var/last_shot = 0
 	var/list/corruption = list()
-	health = 100
-	maxhealth = 100
 
 /obj/structure/cult/pylon/New()
 	SSobj.processing |= src
@@ -102,7 +98,7 @@
 /obj/structure/cult/pylon/process()
 	if((last_shot + heal_delay) <= world.time)
 		last_shot = world.time
-		for(var/mob/living/L in range(1, src))
+		for(var/mob/living/L in range(4, src))
 			if(iscultist(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H))
@@ -125,8 +121,6 @@
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	luminosity = 1
-	health = 100
-	maxhealth = 100
 
 /obj/structure/cult/tome/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -135,6 +129,9 @@
 	if(cooldowntime)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
+	cooldowntime = world.time + 2400
+	spawn(2400)
+	cooldowntime = 0
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shift")
 	switch(choice)
 		if("Supply Talisman")
@@ -147,9 +144,7 @@
 		if("Veil Shift")
 			var /obj/item/device/cult_shift/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
-	cooldowntime = world.time + 2400
-	spawn(cooldowntime)
-	cooldowntime = 0
+	
 	
 /obj/effect/gateway
 	name = "gateway"
