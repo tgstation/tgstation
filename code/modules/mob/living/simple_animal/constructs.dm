@@ -163,6 +163,7 @@
 	name = "dark energy"
 	gender = PLURAL
 	icon_state = "cult"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 5
 	damage_type = BURN
 	stamina = 15
