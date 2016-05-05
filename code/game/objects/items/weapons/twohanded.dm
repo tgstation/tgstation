@@ -415,12 +415,24 @@
 
 /obj/item/weapon/twohanded/rock
 	name = "rock"
-	desc = "If there were two miners were on the mining station and one of them killed the other with a rock, would that be fucked up or what?"
+	desc = "If there were two miners on the mining station and one of them killed the other with a rock, would that be fucked up or what?"
 	force_unwielded = 6
 	force_wielded = 12
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "slag"
+	icon = 'icons/obj/flora/rocks.dmi'
+	icon_state = "smallrock1"
 	force = 6
 	w_class = 2
 	throwforce = 10
 	attack_verb = list("beat", "tnwomped", "stoned", "fucked up")
+
+/obj/item/weapon/twohanded/rock/New()
+	..()
+	icon_state = "smallrock[rand(1,10)]"
+	var/tempForce = rand(4,8)
+	force = tempForce
+	force_unwielded = tempForce
+	if(prob(10))
+		flags = IS_SHARP
+	force_wielded = rand(8,15)
+	throwforce = rand(8,12)
+	w_class = rand(1,4)
