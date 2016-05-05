@@ -28,28 +28,21 @@
 	return zone
 
 
-/proc/ran_zone(zone, probability = 80)
-
+/proc/ran_zone(zone, probability = 80, list/exceptions)
 	zone = check_zone(zone)
 
-	if(prob(probability))
+	if(!islist(exceptions))
+		exceptions = list()
+
+	if(prob(probability) && !locate(zone) in exceptions)
 		return zone
 
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return "head"
-		if(2)
-			return "chest"
-		if(3 to 6)
-			return "l_arm"
-		if(7 to 10)
-			return "r_arm"
-		if(11 to 14)
-			return "l_leg"
-		if(15 to 18)
-			return "r_leg"
+	var/list/choices = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+	choices = difflist(choices, exceptions) //Strip away zones to ignore
+	if(!choices.len)
+		return 0
 
+	zone = pick(choices) //Pick a random zone
 	return zone
 
 /proc/above_neck(zone)
@@ -416,7 +409,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						A.overlays += alert_overlay
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
@@ -425,15 +418,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		dam = 0
 
-	if(affecting.status == ORGAN_ROBOTIC)
-		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+	if(affecting && affecting.status == ORGAN_ROBOTIC)
+		if((brute > 0 && affecting.brute_dam > 0) || (burn > 0 && affecting.burn_dam > 0))
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return
 		else
-			user << "<span class='warning'>[H]'s [affecting.getDisplayName()] is already in good condition!</span>"
+			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
 			return
 	else
 		return

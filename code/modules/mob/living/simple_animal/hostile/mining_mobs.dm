@@ -214,7 +214,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/internal/hivelord_core)
+	loot = list(/obj/item/organ/hivelord_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
@@ -233,7 +233,7 @@
 	mouse_opacity = 1
 	..(gibbed)
 
-/obj/item/organ/internal/hivelord_core
+/obj/item/organ/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon_state = "roro core 2"
@@ -243,7 +243,7 @@
 	var/inert = 0
 	var/preserved = 0
 
-/obj/item/organ/internal/hivelord_core/New()
+/obj/item/organ/hivelord_core/New()
 	..()
 	spawn(2400)
 		if(!owner && !preserved)
@@ -254,7 +254,7 @@
 			preserved = 1
 			feedback_add_details("hivelord_core", "[src.type]|implanted")
 
-/obj/item/organ/internal/hivelord_core/on_life()
+/obj/item/organ/hivelord_core/on_life()
 	..()
 	if(owner)
 		owner.adjustBruteLoss(-1)
@@ -267,7 +267,7 @@
 		if(B && blood_volume < 560 && blood_volume)
 			B.volume += 2 // Fast blood regen
 
-/obj/item/organ/internal/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
@@ -287,7 +287,7 @@
 			qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/prepare_eat()
+/obj/item/organ/hivelord_core/prepare_eat()
 	return null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -677,7 +677,7 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
-	loot = list(/obj/item/organ/internal/hivelord_core/legion)
+	loot = list(/obj/item/organ/hivelord_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = 1
@@ -732,7 +732,7 @@
 				qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/legion
+/obj/item/organ/hivelord_core/legion
 	name = "legion's heart"
 	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'

@@ -118,7 +118,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
 	materials = list(MAT_METAL = 200, MAT_GLASS = 400)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/shield
+	build_path = /obj/item/organ/cyberimp/eyes/shield
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_breather
@@ -129,7 +129,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 35
 	materials = list(MAT_METAL = 200, MAT_GLASS = 250)
-	build_path = /obj/item/organ/internal/cyberimp/mouth/breathing_tube
+	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_medical_hud
@@ -140,7 +140,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 500)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+	build_path = /obj/item/organ/cyberimp/eyes/hud/medical
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_security_hud
@@ -151,7 +151,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 750, MAT_GOLD = 750)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
+	build_path = /obj/item/organ/cyberimp/eyes/hud/security
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_xray
@@ -162,7 +162,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/xray
+	build_path = /obj/item/organ/cyberimp/eyes/xray
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_thermals
@@ -173,7 +173,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/thermals
+	build_path = /obj/item/organ/cyberimp/eyes/thermals
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antidrop
@@ -184,7 +184,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
-	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
+	build_path = /obj/item/organ/cyberimp/brain/anti_drop
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antistun
@@ -195,7 +195,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
-	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	build_path = /obj/item/organ/cyberimp/brain/anti_stun
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment
@@ -206,7 +206,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
-	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
+	build_path = /obj/item/organ/cyberimp/chest/nutriment
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
@@ -217,7 +217,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
-	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
+	build_path = /obj/item/organ/cyberimp/chest/nutriment/plus
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_reviver
@@ -228,7 +228,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
+	build_path = /obj/item/organ/cyberimp/chest/reviver
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_thrusters
@@ -239,7 +239,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 80
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
+	build_path = /obj/item/organ/cyberimp/chest/thrusters
 	category = list("Misc", "Medical Designs")
 
 

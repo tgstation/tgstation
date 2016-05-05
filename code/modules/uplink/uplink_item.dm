@@ -995,7 +995,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(findtext(item, /obj/item/organ/internal/cyberimp))
+		if(findtext(item, /obj/item/organ/cyberimp))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1003,26 +1003,26 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision. They must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/eyes/thermals
+	item = /obj/item/organ/cyberimp/eyes/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. They must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/eyes/xray
+	item = /obj/item/organ/cyberimp/eyes/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. \
 			It must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	item = /obj/item/organ/cyberimp/brain/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. It must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/chest/reviver
+	item = /obj/item/organ/cyberimp/chest/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle

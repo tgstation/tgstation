@@ -688,7 +688,7 @@ var/next_mob_id = 0
 	if(buckled)
 		lying = 90*buckle_lying
 	else
-		if((ko || resting) && !lying)
+		if((ko || resting || !get_num_legs()) && !lying)
 			fall(ko)
 	canmove = !(ko || resting || stunned || buckled)
 	density = !lying
