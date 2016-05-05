@@ -5,6 +5,7 @@
  *		Double-Bladed Energy Swords
  *		Spears
  *		CHAINSAWS
+ *		Rocks
  */
 
 /*##################################################################
@@ -143,7 +144,6 @@
 	..()
 
 
-/obj/item/weapon/twohanded/
 
 /*
  * Fireaxe
@@ -412,3 +412,15 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
+
+/obj/item/weapon/twohanded/rock
+	name = "rock"
+	desc = "If there were two miners were on the mining station and one of them killed the other with a rock, would that be fucked up or what?"
+	force_unwielded = 6
+	force_wielded = 12
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "slag"
+	force = 6
+	w_class = 2
+	throwforce = 10
+	attack_verb = list("beat", "tnwomped", "stoned", "fucked up")
