@@ -41,7 +41,7 @@
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	speed = 0
+	speed = 1
 	unique_name = 1
 
 	var/essence = 75 //The resource, and health, of revenants.
@@ -268,9 +268,13 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed/wall))
+	if(istype(T, /turf/closed))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
+	for(var/obj/O in T)
+		if(O.density && !O.CanPass(src, T, 5))
+			src << "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>"
+			return 0
 	if(src.inhibited)
 		src << "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0
