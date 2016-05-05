@@ -1,2 +1,0 @@
-## This file is no longer in use.
-# Please refer to code/datums/ruins/space.dm

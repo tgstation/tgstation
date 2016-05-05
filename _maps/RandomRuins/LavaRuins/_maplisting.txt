@@ -1,2 +1,0 @@
-## This file is no longer in use.
-# Refer to code/datums/ruins/lavaland.dm
