@@ -33,7 +33,12 @@
 	layer = MOB_LAYER - 0.1
 	var/removingairlock = 0
 
-
+/mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN
+	desc = "This guy seems to have gotten lost on his way to the space leather club."
+	
+/mob/living/simple_animal/hostile/zombie/darkholme/New()
+	..()
+	name = pick("Leatherman","Leatherhead")
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	..()
