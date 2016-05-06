@@ -173,10 +173,8 @@
 	item_state = "miner"
 	item_color = "miner"
 
-
 /obj/item/clothing/under/rank/miner/lavaland
-	desc = "A black jumpsuit for operating in hazardous environments."
-	name = "shaft miner's jumpsuit"
-	icon_state = "syndicate"
-	item_state = "bl_suit"
-	item_color = "syndicate"
+	desc = "A snappy dark purple jumpsuit with a sturdy set of overalls. It smells faintly of smoke."
+	icon_state = "mineralt"
+	item_state = "mineralt"
+	item_color = "mineralt"
