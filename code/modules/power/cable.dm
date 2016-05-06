@@ -47,7 +47,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/oldnewavail = 0
 	var/oldload = 0
 
-	holomap = TRUE
+	holomap      = TRUE
+	auto_holomap = TRUE
 
 /obj/structure/cable/yellow
 	_color = "yellow"
