@@ -31,6 +31,8 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
 	gold_core_spawnable = 0
+	death_sound = 'sound/voice/hiss6.ogg'
+	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -139,11 +141,6 @@
 	name = "neurotoxin"
 	damage = 30
 	icon_state = "toxin"
-
-/mob/living/simple_animal/hostile/alien/death(gibbed)
-	..(gibbed)
-	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
-	playsound(src, 'sound/voice/hiss6.ogg', 100, 1)
 
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)

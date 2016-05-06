@@ -14,7 +14,7 @@
 	if(..())
 		. = 1
 
-		for(var/obj/item/organ/internal/O in internal_organs)
+		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
 	//grab processing
@@ -218,7 +218,7 @@
 			hud_used.lingchemdisplay.invisibility = 0
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
 		else
-			hud_used.lingchemdisplay.invisibility = 101
+			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 
 /mob/living/carbon/handle_mutations_and_radiation()

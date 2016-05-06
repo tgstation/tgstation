@@ -111,7 +111,7 @@
 		if(prob(25))
 			malfunction()
 
-/obj/machinery/vending/blob_act()
+/obj/machinery/vending/blob_act(obj/effect/blob/B)
 	malfunction()
 	..()
 

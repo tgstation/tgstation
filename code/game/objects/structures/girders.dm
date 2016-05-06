@@ -261,7 +261,7 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
-/obj/structure/girder/blob_act()
+/obj/structure/girder/blob_act(obj/effect/blob/B)
 	if(prob(40))
 		qdel(src)
 

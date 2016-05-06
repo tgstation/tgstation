@@ -537,7 +537,7 @@
 			if(3)
 				take_damage(rand(10,20), BRUTE, 0)
 
-/obj/machinery/power/solar_control/blob_act()
+/obj/machinery/power/solar_control/blob_act(obj/effect/blob/B)
 	if (prob(75))
 		set_broken()
 		src.density = 0

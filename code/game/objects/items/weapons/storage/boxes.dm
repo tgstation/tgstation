@@ -61,31 +61,32 @@
 
 /obj/item/weapon/storage/box/survival/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
 /obj/item/weapon/storage/box/engineer
 
 /obj/item/weapon/storage/box/engineer/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
+
+/obj/item/weapon/storage/box/syndie
+
+/obj/item/weapon/storage/box/syndie/New()
+	..()
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/security
 
 /obj/item/weapon/storage/box/security/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
@@ -311,7 +312,7 @@
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
 	for(var/i = 1; i <= 5; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
 
 
 /obj/item/weapon/storage/box/permits

@@ -206,7 +206,7 @@
 		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
 		qdel(src)
 
-/obj/structure/closet/blob_act()
+/obj/structure/closet/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 
@@ -251,7 +251,7 @@
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
-		if(!toggle(user))
+		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
 	else
@@ -266,13 +266,19 @@
 		return
 	if(user == O) //try to climb onto it
 		return ..()
-	if(!opened || istype(O, /obj/structure/closet))
+	if(!opened)
+		return
+	if(!isturf(O.loc))
 		return
 
+	var/actuallyismob = 0
+	if(isliving(O))
+		actuallyismob = 1
+	else if(!istype(O, /obj/item))
+		return
+	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
-	var/mob/living/L = O
-	var/actuallyismob = istype(L)
 	user.visible_message("<span class='warning'>[user] [actuallyismob ? "tries to ":""]stuff [O] into [src].</span>", \
 				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
 				 	 	"<span class='italics'>You hear clanging.</span>")
@@ -281,12 +287,13 @@
 			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
 							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
+			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Weaken(2)
-			O.forceMove(get_turf(src))
+			O.forceMove(T)
 			close()
 	else
-		O.forceMove(get_turf(src))
+		O.forceMove(T)
 	return 1
 
 /obj/structure/closet/relaymove(mob/user)

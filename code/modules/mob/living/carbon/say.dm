@@ -1,6 +1,6 @@
 /mob/living/carbon/treat_message(message)
 	message = ..(message)
-	var/obj/item/organ/internal/tongue/T = getorganslot("tongue")
+	var/obj/item/organ/tongue/T = getorganslot("tongue")
 	if(!T) //hoooooouaah!
 		var/regex/tongueless_lower = new("\[gdntke]+", "g")
 		var/regex/tongueless_upper = new("\[GDNTKE]+", "g")

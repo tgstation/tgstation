@@ -198,7 +198,7 @@
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/atom/proc/blob_act()
+/atom/proc/blob_act(obj/effect/blob/B)
 	return
 
 /atom/proc/fire_act()
@@ -402,3 +402,4 @@ var/list/blood_splatter_icons = list()
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.id,R.volume)
+

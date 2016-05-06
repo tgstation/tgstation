@@ -138,7 +138,7 @@ field_generator power level display
 	return 0
 
 
-/obj/machinery/field/generator/blob_act()
+/obj/machinery/field/generator/blob_act(obj/effect/blob/B)
 	if(active)
 		return 0
 	else

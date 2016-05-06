@@ -5,7 +5,7 @@
 // this allows the gas flushed to be tracked
 
 /obj/structure/disposalholder
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -233,7 +233,7 @@
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
 /obj/structure/disposalpipe/hide(var/intact)
-	invisibility = intact ? 101: 0	// hide if floor is intact
+	invisibility = intact ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
 	updateicon()
 
 // update actual icon_state depending on visibility
@@ -300,7 +300,7 @@
 				var/obj/structure/disposalpipe/broken/P = new(src.loc)
 				P.dir = D
 
-	src.invisibility = 101	// make invisible (since we won't delete the pipe immediately)
+	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		// holder was present

@@ -56,7 +56,7 @@
 "bd" = (/turf/closed/mineral/diamond,/area/mine/unexplored)
 "be" = (/mob/living/simple_animal/hostile/asteroid/basilisk,/turf/open/floor/plating/asteroid/airless,/area/mine/explored)
 "bf" = (/obj/structure/alien/weeds,/turf/open/floor/plating/asteroid/airless,/area/mine/explored)
-"bg" = (/obj/effect/spawner/lootdrop{loot = list(/obj/item/organ/internal/body_egg/alien_embryo = 5, /obj/structure/alien/egg = 1); name = "xeno egg spawner2"},/turf/open/floor/plating/asteroid/airless,/area/mine/explored)
+"bg" = (/obj/effect/spawner/lootdrop{loot = list(/obj/item/organ/body_egg/alien_embryo = 5, /obj/structure/alien/egg = 1); name = "xeno egg spawner2"},/turf/open/floor/plating/asteroid/airless,/area/mine/explored)
 "bh" = (/mob/living/simple_animal/hostile/asteroid/fugu,/turf/open/floor/plating/asteroid/airless,/area/mine/explored)
 "bi" = (/turf/closed/mineral/random/high_chance,/area/mine/explored)
 "bj" = (/turf/closed/mineral/clown,/area/mine/explored)

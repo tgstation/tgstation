@@ -11,10 +11,10 @@
 
 	return ..()
 
-/mob/living/carbon/brain/gib(animation = 0)
+/mob/living/carbon/brain/gib()
 	if(container)
 		qdel(container)//Gets rid of the MMI if there is one
 	if(loc)
-		if(istype(loc,/obj/item/organ/internal/brain))
+		if(istype(loc,/obj/item/organ/brain))
 			qdel(loc)//Gets rid of the brain item
 	..()
