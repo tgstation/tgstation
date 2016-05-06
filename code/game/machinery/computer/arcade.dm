@@ -50,6 +50,9 @@
 		qdel(src)
 
 /obj/machinery/computer/arcade/proc/prizevend()
+	if(prob(prob(prob(1))) //1 in a million
+		new /obj/item/weapon/gun/energy/pulse(contents)
+
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
 		new prizeselect(src.loc)
