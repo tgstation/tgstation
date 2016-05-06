@@ -538,8 +538,3 @@
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
 				emote("me", 1, "growls!")
-
-/mob/living/simple_animal/pet/dog/corgi/wash_cream()
-	var/image/creamoverlay = image('icons/effects/creampie.dmi')
-	creamoverlay.icon_state = "creampie_corgi"
-	overlays -= creamoverlay
