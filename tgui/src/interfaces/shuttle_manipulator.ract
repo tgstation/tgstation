@@ -1,0 +1,11 @@
+<ui-tabs tabs='{{tabs}}'>
+	{{#each data.shuttles}}
+	<tab name='{{name}}'>
+		{{#each shuttle_templates}}
+			<ui-section label='{{name}}' candystripe right>
+			</ui-section>
+		{{/each}}
+
+	</tab>
+	{{/each}}
+</ui-tabs>
