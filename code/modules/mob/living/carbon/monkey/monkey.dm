@@ -312,8 +312,3 @@
 
 /mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
 	return 1
-
-/mob/living/carbon/monkey/wash_cream()
-	var/image/creamoverlay = image('icons/effects/creampie.dmi')
-	creamoverlay.icon_state = "creampie_monkey"
-	overlays -= creamoverlay

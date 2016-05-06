@@ -25,46 +25,23 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
 		var/turf/T = get_turf(hit_atom)
+		var/mob/living/H = hit_atom
 		new/obj/effect/decal/cleanable/pie_smudge(T)
 		reagents.reaction(hit_atom, TOUCH)
 
-		if(!ismob(hit_atom)) //if the creampie misses
+		if(!ishuman(H)) //if the creampie misses
 			qdel(src)
 			return
 
-		else //if the creampie hits
-			var/mob/living/H = hit_atom
+		else
 			var/image/creamoverlay = image('icons/effects/creampie.dmi')
 
-			if(istype(H, /mob/living/carbon/human))
-				var/mob/living/carbon/human/S = hit_atom
-				if(S.dna && S.dna.species && ("tail_lizard" in S.dna.species.mutant_bodyparts))
-					creamoverlay.icon_state = "creampie_lizard"
-				else creamoverlay.icon_state = "creampie_human"
-			else if(istype(H, /mob/living/carbon/monkey))
-				creamoverlay.icon_state = "creampie_monkey"
-			else if(istype(H, /mob/living/carbon/alien))
-				if(istype(H, /mob/living/carbon/alien/humanoid/royal)) //lets not mess with queens yet
-					qdel(src)
-					return
-				else if(H.stat == DEAD)
-					creamoverlay.icon_state = "creampie_xeno_dead"
-				else if(H.paralysis || H.stunned || H.weakened)
-					creamoverlay.icon_state = "creampie_xeno_crit" //somehow it keep using sleep overlay
-				else if(H.lying || H.resting || H.sleeping)
-					creamoverlay.icon_state = "creampie_xeno_sleep"
-				else creamoverlay.icon_state = "creampie_xenomorph"
-			else if(istype(H, /mob/living/silicon/ai))
-				creamoverlay.icon_state = "creampie_ai"
-			else if(istype(H, /mob/living/simple_animal/drone))
-				creamoverlay.icon_state = "creampie_drone"
-			else if(istype(H, /mob/living/simple_animal/pet/dog/corgi))
-				creamoverlay.icon_state = "creampie_corgi"
-			else return //if the target mob isn't compatible
+			if(H.dna && H.dna.species && ("tail_lizard" in H.dna.species.mutant_bodyparts))
+				creamoverlay.icon_state = "creampie_lizard"
+			else creamoverlay.icon_state = "creampie_human"
 
-			if(istype(H, /mob/living/carbon/human))
-				H.Weaken(1) //splat!
-				H.adjust_blurriness(1)
+			H.Weaken(1) //splat!
+			H.adjust_blurriness(1)
 			visible_message("<span class='userdanger'>[H] was creamed by the [src]!!</span>")
 			H.overlays += creamoverlay
 
