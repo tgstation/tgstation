@@ -14,6 +14,8 @@
 
 	qdel(src)
 
+/mob/proc/gibs_type()
+	gibs(loc, viruses, dna)
 
 //This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
 //Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
