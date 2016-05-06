@@ -324,13 +324,6 @@
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-/atom/proc/recursiveContents()
-	. = list()
-	for(var/atom/other in src)
-		if(other.contents.len != 0)
-			. += other.recursiveContents()
-		. += other
-
 /obj/docking_port/mobile/proc/jumpToNullSpace()
 	// Destroys the docking port and the shuttle contents.
 	// Not in a fancy way, it just ceases.
@@ -358,7 +351,9 @@
 		if(!T0)
 			continue
 
-		for(var/atom/AM in T0.recursiveContents())
+		for(var/atom/AM in T0.GetAllContents())
+			if(istype(AM, /mob/dead))
+				continue
 			qdel(AM)
 
 		T0.ChangeTurf(turf_type)

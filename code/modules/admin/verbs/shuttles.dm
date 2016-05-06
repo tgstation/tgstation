@@ -99,7 +99,9 @@
 		usr << "<span class='warning'>The loaded template didn't have a mobile docking port! The template has been deleted.</span>"
 		for(var/S in template.get_affected_turfs(T,centered = TRUE))
 			var/turf/T0 = S
-			for(var/atom/AM in T0.recursiveContents())
+			for(var/atom/AM in T0.GetAllContents())
+				if(istype(AM, /mob/dead))
+					continue
 				qdel(AM)
 			qdel(S)
 		return
