@@ -535,6 +535,7 @@
 				ctf_enabled = !CTF.ctf_enabled
 				CTF.ctf_enabled = !CTF.ctf_enabled
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!")
 
 	if(E)
 		E.processing = 0
