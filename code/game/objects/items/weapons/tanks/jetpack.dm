@@ -164,9 +164,12 @@
 	return
 
 /mob/living/carbon/get_jetpack()
-	var/obj/item/weapon/tank/jetpack/J = back
-	if(istype(J))
-		return J
+    var/obj/item/weapon/tank/jetpack/J = back
+    if(istype(J))
+        return J
+    J = src.get_item_by_slot(slot_s_store)
+    if(istype(J))
+        return J
 
 /mob/living/carbon/human/get_jetpack()
 	var/obj/item/weapon/tank/jetpack/J = ..()
