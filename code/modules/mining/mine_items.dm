@@ -24,7 +24,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/clothing/gloves/color/black(src)
 
 
 /obj/structure/closet/secure_closet/miner
