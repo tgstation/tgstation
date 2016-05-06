@@ -15,8 +15,10 @@
 	return 0
 
 /proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))	return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
+	if(!istype(mind))
+		return 0
+	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))
+		return 0
 	if(isloyal(mind.current))
 		return 0
 	if (ticker.mode.name == "cult")		//redundant?
@@ -41,6 +43,7 @@
 	var/acolytes_survived = 0
 
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
+	var/list/cultists_to_cult = list() //the cultists we'll convert
 
 
 /datum/game_mode/cult/announce()
@@ -67,12 +70,12 @@
 			break
 		var/datum/mind/cultist = pick(antag_candidates)
 		antag_candidates -= cultist
-		cult += cultist
+		cultists_to_cult += cultist
 		cultist.special_role = "Cultist"
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
-	return (cult.len>=required_enemies)
+	return (cultists_to_cult.len>=required_enemies)
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
@@ -92,13 +95,13 @@
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
 /datum/game_mode/cult/post_setup()
-	modePlayer += cult
+	modePlayer += cultists_to_cult
 	if("sacrifice" in cult_objectives)
 		var/list/possible_targets = get_unconvertables()
 		if(!possible_targets.len)
 			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 			for(var/mob/living/carbon/human/player in player_list)
-				if(player.mind && !(player.mind in cult))
+				if(player.mind && !(player.mind in cultists_to_cult))
 					possible_targets += player.mind
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
@@ -106,7 +109,7 @@
 				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
-	for(var/datum/mind/cult_mind in cult)
+	for(var/datum/mind/cult_mind in cultists_to_cult)
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
