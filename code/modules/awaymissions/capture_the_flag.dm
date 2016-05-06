@@ -105,11 +105,13 @@
 	var/control_points_to_win = 180
 	var/list/team_members = list()
 	var/ctf_enabled = FALSE
-	var/ctf_gear = /datum/outfit/ctf
+	var/normal_gear = /datum/outfit/ctf
+	var/current_gear
 	var/instagib_gear = /datum/outfit/ctf/instagib
 
 /obj/machinery/capture_the_flag/New()
 	..()
+	current_gear = normal_gear
 	poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -120,14 +122,14 @@
 	name = "Red CTF Controller"
 	icon_state = "syndbeacon"
 	team = RED_TEAM
-	ctf_gear = /datum/outfit/ctf/red
+	normal_gear = /datum/outfit/ctf/red
 	instagib_gear = /datum/outfit/ctf/red/instagib
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
-	ctf_gear = /datum/outfit/ctf/blue
+	normal_gear = /datum/outfit/ctf/blue
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
@@ -170,7 +172,17 @@
 	new_team_member.prefs.copy_to(M)
 	M.key = new_team_member.key
 	M.faction += team
-	M.equipOutfit(ctf_gear)
+	M.equipOutfit(current_gear)
+
+/obj/machinery/capture_the_flag/proc/TellGhost()
+	if(ctf_enabled)
+		notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, attack_not_jump = 0)
+
+/obj/machinery/capture_the_flag/Topic(href, href_list)
+	if(href_list["join"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
@@ -211,8 +223,14 @@
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(CTF.ctf_enabled == TRUE)
-			CTF.ctf_gear = CTF.instagib_gear
+			CTF.current_gear = CTF.instagib_gear
 			CTF.respawn_cooldown = INSTAGIB_RESPAWN
+
+/obj/machinery/capture_the_flag/proc/normal_mode()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(CTF.ctf_enabled == TRUE)
+			CTF.current_gear = CTF.normal_gear
+			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
 	desc = "This looks like it could really hurt in melee."
