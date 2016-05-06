@@ -744,3 +744,9 @@
 	if(reagents.has_reagent("methylin"))
 		return 1
 	return 0
+
+/mob/living/carbon/monkey/reset_layer()
+	if(lying)
+		layer = MOB_LAYER - 0.1 //so we move under bedsheets
+	else
+		layer = MOB_LAYER
