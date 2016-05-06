@@ -63983,7 +63983,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cAy" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cAz" = (
@@ -64011,7 +64011,8 @@
 /area/maintenance/aft)
 "cAC" = (
 /obj/structure/sink/kitchen{
-	dir = 8
+	dir = 8;
+	pixel_x = 11
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -64028,6 +64029,9 @@
 	},
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
 	step_x = 2
+	},
+/obj/item/weapon/reagent_containers/food/snacks/mint{
+	pixel_y = 9
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
