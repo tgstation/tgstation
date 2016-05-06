@@ -71,7 +71,7 @@
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
-	var/safe_toxins_max = 0.05
+	var/safe_toxins_max = 0.005
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 
@@ -789,17 +789,13 @@
 		if(!has_gravity(H))
 			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
+			var/obj/item/weapon/tank/jetpack/S = H.get_item_by_slot(slot_s_store)
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-			if(!istype(J) && istype(C))
+			if((!istype(J) && !istype(S)) && istype(C))
 				J = C.jetpack
 
-			if(istype(J) && J.allow_thrust(0.01, H))
+			if((istype(J) && J.allow_thrust(0.01, H)) || (istype(S) && S.allow_thrust(0.01, H)))
 				. -= 2
-			else
-				var/obj/item/organ/internal/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
-				if(istype(T) && T.allow_thrust(0.01, H))
-					. -= 2
-
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
@@ -958,10 +954,14 @@
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
-	H.send_item_attack_message(I, user, hit_area)
-
-	if(!I.force)
-		return 0 //item force is zero
+	if(I.attack_verb && I.attack_verb.len)
+		H.visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>", \
+						"<span class='userdanger'>[user] has [pick(I.attack_verb)] [H] in the [hit_area] with [I]!</span>")
+	else if(I.force)
+		H.visible_message("<span class='danger'>[user] has attacked [H] in the [hit_area] with [I]!</span>", \
+						"<span class='userdanger'>[user] has attacked [H] in the [hit_area] with [I]!</span>")
+	else
+		return 0
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
