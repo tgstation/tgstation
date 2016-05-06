@@ -16,18 +16,16 @@
 /obj/structure/closet/wardrobe/miner/New()
 	..()
 	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
-	new /obj/item/weapon/storage/backpack/industrial(src)
-	new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack(src)
+	new /obj/item/weapon/storage/backpack/satchel(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/miner/lavaland(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/sneakers/black(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/gloves/black(src)
+
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
