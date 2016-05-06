@@ -89,6 +89,7 @@
 
 	update_icon_dropped()
 	src.loc = T
+	H.update_health_hud() //update the healthdoll
 	H.update_body()
 	H.update_hair()
 
