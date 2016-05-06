@@ -24,7 +24,11 @@
 
 	if(!S) return
 
-	chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
+	if(istype(S, /obj/item/weapon/reagent_containers/syringe/piercing))
+		chambered.BB = new /obj/item/projectile/bullet/dart/syringe/piercing(src)
+	else
+		chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
+
 	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
 	chambered.BB.name = S.name
 	syringes.Remove(S)

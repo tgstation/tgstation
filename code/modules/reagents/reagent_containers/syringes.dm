@@ -181,7 +181,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = Clamp(round(reagents.total_volume,5), 0, 15)
+	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -266,3 +266,8 @@
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	volume = 20
 	flags = NOREACT
+
+/obj/item/weapon/reagent_containers/syringe/piercing
+	name = "Piercing Syringe"
+	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	volume = 10
