@@ -162,6 +162,7 @@
 #include "code\datums\outfit.dm"
 #include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
+#include "code\datums\shuttles.dm"
 #include "code\datums\votablemap.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"

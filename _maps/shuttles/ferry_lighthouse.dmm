@@ -26,7 +26,7 @@
 "az" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/transport)
 "aA" = (/turf/closed/wall/shuttle{icon_state = "swall_s10";dir = 2},/area/shuttle/transport)
 "aB" = (/obj/structure/grille{density = 0;icon_state = "brokengrille"},/obj/structure/window/fulltile,/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)
-"aC" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 4},/obj/item/device/immortality_talisman,/turf/open/floor/wood,/area/shuttle/transport)
+"aC" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 4},/turf/open/floor/wood,/area/shuttle/transport)
 "aD" = (/turf/open/floor/carpet,/area/shuttle/transport)
 "aE" = (/turf/open/floor/bluespace,/area/shuttle/transport)
 "aF" = (/obj/machinery/vending/sovietsoda,/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)

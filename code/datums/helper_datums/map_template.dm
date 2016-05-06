@@ -83,6 +83,7 @@
 		map_templates[T.name] = T
 
 	preloadRuinTemplates()
+	preloadShuttleTemplates()
 
 /proc/preloadRuinTemplates()
 	var/list/potentialSpaceRuins = generateMapList(filename = "_maps/RandomRuins/SpaceRuins/_maplisting.txt", blacklist = "config/spaceRuinBlacklist.txt")
@@ -96,3 +97,14 @@
 		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
 		lava_ruins_templates[T.name] = T
 		map_templates[T.name] = T
+
+/proc/preloadShuttleTemplates()
+	for(var/item in subtypesof(/datum/map_template/shuttle))
+		var/datum/map_template/shuttle/shuttle_type = item
+		if(!initial(shuttle_type.suffix))
+			continue
+
+		var/datum/map_template/shuttle/S = new shuttle_type()
+
+		shuttle_templates[S.name] = S
+		map_templates[S.name] = S
