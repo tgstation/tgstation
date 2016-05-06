@@ -175,7 +175,7 @@
 	boom(user)
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(user.incapacitated() || !Adjacent(user) || !ishuman(user))
 		return
 	attack_hand(user)
 
