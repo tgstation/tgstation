@@ -13,11 +13,18 @@ var/list/existing_vaults = list()
 
 /datum/vault/proc/initialize(list/objects)
 	existing_vaults.Add(src)
-
+	
 	for(var/turf/new_turf in objects)
-		if(!src.location) location = new_turf
-
+		if(!location) location = new_turf
 		new_turf.flags |= NO_MINIMAP //Makes the spawned turfs invisible on minimaps
+	
+	if(location.z <= accessable_z_levels.len)
+		var/datum/zLevel/zLevel = accessable_z_levels[location.z]
+		if(!ispath(zLevel.base_turf, /turf/space))
+			for(var/turf/space/new_turf in objects)
+				new_turf.ChangeTurf(zLevel.base_turf)
+				new_turf.flags |= NO_MINIMAP
+			
 
 //How to create a new vault:
 //1) create a map in maps/randomVaults/
