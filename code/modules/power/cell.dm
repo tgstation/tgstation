@@ -37,7 +37,6 @@
 			SSobj.processing |= src
 		else
 			SSobj.processing -= src
-	..()
 
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)
