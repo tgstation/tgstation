@@ -94,6 +94,10 @@
 	emote_hear = list("screams")
 	emote_see = list("screams")
 	friendly = "bites"
+	canRegenerate = 1
+	minRegenTime = 30 //It's just a crab, might as well give it quick regen
+	maxRegenTime = 120
+
 
 /mob/living/simple_animal/crab/snowy
 	name = "Snowy"

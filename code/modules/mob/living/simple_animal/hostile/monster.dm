@@ -18,6 +18,9 @@
 	speed = 4
 	size = SIZE_BIG
 	move_to_delay = 4
+	canRegenerate = 1
+	minRegenTime = 300
+	maxRegenTime = 1200
 
 	min_oxy = 0
 	max_oxy = 0

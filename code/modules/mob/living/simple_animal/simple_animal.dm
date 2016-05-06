@@ -82,6 +82,12 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	var/supernatural = 0
 	var/purge = 0
 
+	//For those that we want to just pop back up a little while after they're killed
+	var/canRegenerate = 0 //If 1, it qualifies for regeneration
+	var/isRegenerating = 0 //To stop life calling the proc multiple times
+	var/minRegenTime = 0
+	var/maxRegenTime = 0
+
 	universal_speak = 1
 	universal_understand = 1
 
@@ -142,6 +148,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 			stat = CONSCIOUS
 			density = 1
 			update_canmove()
+		if(canRegenerate && !isRegenerating)
+			src.delayedRegen()
 		return 0
 
 
@@ -162,6 +170,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 	if(purge)
 		purge -= 1
+
+	isRegenerating = 0
 
 	//Movement
 	if((!client||deny_client_move) && !stop_automated_movement && wander && !anchored && (ckey == null) && !(flags & INVULNERABLE))
@@ -701,5 +711,13 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		if("pacid")
 			if(!supernatural)
 				adjustBruteLoss(volume * 0.5)
+
+/mob/living/simple_animal/proc/delayedRegen()
+	set waitfor = 0
+	isRegenerating = 1
+	sleep(rand(minRegenTime, maxRegenTime)) //Don't want it being predictable
+	src.resurrect()
+	src.revive()
+	visible_message("<span class='warning'>[src] appears to wake from the dead, having healed all wounds.</span>")
 
 /datum/locking_category/simple_animal

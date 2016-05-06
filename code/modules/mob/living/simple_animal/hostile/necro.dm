@@ -56,6 +56,10 @@
 	move_to_delay = 6
 	maxHealth = 100
 	health = 100
+	canRegenerate = 1
+	minRegenTime = 300
+	maxRegenTime = 1800
+
 
 	harm_intent_damage = 15
 	melee_damage_lower = 10
