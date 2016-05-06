@@ -88,9 +88,9 @@
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
 	id = "bluespacesyringe"
-	req_tech = list("bluespace" = 1, "materials" = 2)
+	req_tech = list("bluespace" = 2, "materials" = 2, "combat" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_PLASMA = 1000, MAT_DIAMOND = 500)
+	materials = list(MAT_GLASS = 4000, MAT_PLASMA = 4000, MAT_DIAMOND = 2500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/syringe/bluespace
 	category = list("Medical Designs", "Bluespace Designs")
@@ -99,9 +99,9 @@
 	name = "Cryo Syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	id = "noreactsyringe"
-	req_tech = list("materials" = 2)
+	req_tech = list("materials" = 2, "combat" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GOLD = 200)
+	materials = list(MAT_GLASS = 4000, MAT_GOLD = 1000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
 	category = list("Medical Designs")
@@ -110,9 +110,9 @@
 	name = "Piercing Syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
-	req_tech = list("materials" = 3)
+	req_tech = list("materials" = 3, "combat" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_DIAMOND = 200)
+	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
 	category = list("Medical Designs")

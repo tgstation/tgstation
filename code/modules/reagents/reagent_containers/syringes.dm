@@ -256,18 +256,18 @@
 	list_reagents = list("gluttonytoxin" = 1)
 
 /obj/item/weapon/reagent_containers/syringe/bluespace
-	name = "Bluespace Syringe"
+	name = "bluespace syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
 	amount_per_transfer_from_this = 20
 	volume = 60
 
 /obj/item/weapon/reagent_containers/syringe/noreact
-	name = "Cryo Syringe"
+	name = "cryo syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	volume = 20
 	flags = NOREACT
 
 /obj/item/weapon/reagent_containers/syringe/piercing
-	name = "Piercing Syringe"
+	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
