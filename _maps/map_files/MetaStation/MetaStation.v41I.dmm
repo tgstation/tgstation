@@ -90520,7 +90520,7 @@
 /obj/item/weapon/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/device/soulstone/anybody,
 /obj/effect/landmark{
 	name = "revenantspawn"

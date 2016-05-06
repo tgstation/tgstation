@@ -416,7 +416,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						A.overlays += alert_overlay
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
@@ -425,15 +425,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		dam = 0
 
-	if(affecting.status == ORGAN_ROBOTIC)
-		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+	if(affecting && affecting.status == ORGAN_ROBOTIC)
+		if((brute > 0 && affecting.brute_dam > 0) || (burn > 0 && affecting.burn_dam > 0))
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return
 		else
-			user << "<span class='warning'>[H]'s [affecting.getDisplayName()] is already in good condition!</span>"
+			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
 			return
 	else
 		return

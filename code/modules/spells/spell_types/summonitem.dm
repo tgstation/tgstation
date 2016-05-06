@@ -55,7 +55,7 @@
 
 			if(!item_to_retrive.loc)
 				if(isorgan(item_to_retrive)) // Organs are usually stored in nullspace
-					var/obj/item/organ/internal/organ = item_to_retrive
+					var/obj/item/organ/organ = item_to_retrive
 					if(organ.owner)
 						// If this code ever runs I will be happy
 						add_logs(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")

@@ -275,7 +275,7 @@
 	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_hand(mob/living/user)
-	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -343,7 +343,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			return
 
 		Burst(0)

@@ -118,7 +118,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
-		for(var/obj/item/organ/limb/affecting in H.organs)
+		for(var/obj/item/bodypart/affecting in H.bodyparts)
 			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
 				if(affecting.heal_damage(heal_amt, heal_amt, 0))
 					H.update_damage_overlays(0)
@@ -155,7 +155,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/message_halt = 0
-				for(var/obj/item/organ/limb/affecting in H.organs)
+				for(var/obj/item/bodypart/affecting in H.bodyparts)
 					if(affecting.status == ORGAN_ORGANIC)
 						if(message_halt == 0)
 							M.visible_message("<span class='notice'>[user] heals [M] with the power of [src.deity_name]!</span>")
