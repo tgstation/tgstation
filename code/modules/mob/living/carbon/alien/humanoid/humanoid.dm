@@ -173,3 +173,14 @@ proc/alien_type_present(var/alienpath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
 	..()
+
+/mob/living/carbon/alien/humanoid/wash_cream()
+	var/image/creamoverlay = image('icons/effects/creampie.dmi')
+	if(stat == DEAD)
+		creamoverlay.icon_state = "creampie_xeno_dead"
+	else if(paralysis || stunned || weakened)
+		creamoverlay.icon_state = "creampie_xeno_crit"
+	else if(lying || resting || sleeping)
+		creamoverlay.icon_state = "creampie_xeno_sleep"
+	else creamoverlay.icon_state = "creampie_xenomorph"
+	overlays -= creamoverlay
