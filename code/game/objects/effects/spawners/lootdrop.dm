@@ -134,7 +134,7 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
-				"" = 1
+				"" = 4
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner
