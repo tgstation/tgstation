@@ -5942,6 +5942,10 @@
 /obj/item/weapon/book/manual/random,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
+"rW" = (
+/obj/machinery/shuttle_manipulator,
+/turf/open/floor/plasteel/black,
+/area/centcom/ferry)
 
 (1,1,1) = {"
 aa
@@ -38716,7 +38720,7 @@ ab
 ab
 ab
 eJ
-eO
+eP
 eO
 eO
 eO
@@ -38973,7 +38977,7 @@ ab
 ab
 ab
 eJ
-eP
+rW
 eO
 eO
 eW
