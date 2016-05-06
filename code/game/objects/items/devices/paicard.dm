@@ -107,6 +107,9 @@
 	src.pai = personality
 	src.overlays += "pai-null"
 
+	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
+	audible_message("\The [src] plays a cheerful startup noise!")
+
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
 	src.overlays.Cut()

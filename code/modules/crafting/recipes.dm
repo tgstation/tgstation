@@ -78,7 +78,7 @@
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/weapon/tailclub
-	reqs = list(/obj/item/organ/severedtail = 1,
+	reqs = list(/obj/item/severedtail = 1,
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPON
@@ -86,7 +86,7 @@
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/weapon/melee/chainofcommand/tailwhip
-	reqs = list(/obj/item/organ/severedtail = 1,
+	reqs = list(/obj/item/severedtail = 1,
 	            /obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPON
@@ -277,7 +277,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
-	reqs = list(/obj/item/organ/severedtail = 1)
+	reqs = list(/obj/item/severedtail = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/lizardhat_alternate
