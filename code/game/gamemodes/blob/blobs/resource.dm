@@ -23,7 +23,7 @@
 /obj/effect/blob/resource/Destroy()
 	blob_resources -= src
 	if(!manual_remove && overmind)
-		to_chat(overmind,"<span class='warning'>You lost a resource blob.</span>")
+		to_chat(overmind,"<span class='warning'>You lost a resource blob.</span> <b><a href='?src=\ref[overmind];blobjump=\ref[loc]'>(JUMP)</a></b>")
 	..()
 
 /obj/effect/blob/resource/update_health()

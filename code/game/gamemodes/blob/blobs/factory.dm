@@ -51,7 +51,7 @@
 		for(var/mob/living/simple_animal/hostile/blobspore/S in spores)
 			S.Die()
 	if(!manual_remove && overmind)
-		to_chat(overmind,"<span class='warning'>A factory blob that you had created has been destroyed.</span>")
+		to_chat(overmind,"<span class='warning'>A factory blob that you had created has been destroyed.</span> <b><a href='?src=\ref[overmind];blobjump=\ref[loc]'>(JUMP)</a></b>")
 	..()
 
 /obj/effect/blob/factory/update_icon(var/spawnend = 0)

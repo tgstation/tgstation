@@ -21,9 +21,6 @@
 	var/blob_warning = 0
 
 /mob/camera/blob/New()
-	var/new_name = "[initial(name)] ([rand(1, 999)])"
-	name = new_name
-	real_name = new_name
 	blob_overminds += src
 	..()
 	spawn(10)
@@ -51,9 +48,48 @@
 	to_chat(src, "<b>Shortcuts:</b> CTRL Click = Expand Blob, Middle Mouse Click = Rally Spores, Alt Click = Create Shield, Double Click: Teleport to Blob")
 	update_health()
 
+/mob/camera/blob/Topic(href, href_list)
+	if(usr != src)
+		return
+	..()
+	if (href_list["blobjump"])//We only let blobs jump to where there are blobs.
+		var/turf/dest = locate(href_list["blobjump"])
+		if(dest)
+			var/turf/closest_turf = null
+			for(var/turf/T in spiral_block(dest,7))
+				var/obj/effect/blob/B = locate() in T
+				if(B)
+					closest_turf = T
+					break
+			if(closest_turf)
+				if(closest_turf != dest)
+					to_chat(src, "<span class='notice'>Jumping to closest blob from the target.</span>")
+				loc = closest_turf
+			else
+				to_chat(src, "<span class='warning'>Unable to make the jump. Looks like all the blobs in a large radius around the target have been destroyed.</span>")
+
+
 /mob/camera/blob/proc/update_health()
 	if(blob_core)
 		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#e36600'>[blob_core.health]</font></div>"
+		var/severity = 0
+		switch(round(blob_core.health))
+			if(167 to 199)
+				severity = 1
+			if(134 to 166)
+				severity = 2
+			if(100 to 133)
+				severity = 3
+			if(67 to 99)
+				severity = 4
+			if(34 to 66)
+				severity = 5
+			if(-INFINITY to 33)
+				severity = 6
+		if(severity > 0)
+			overlay_fullscreen("damage", /obj/screen/fullscreen/brute, severity)
+		else
+			clear_fullscreen("damage")
 
 /mob/camera/blob/proc/add_points(var/points)
 	if(points != 0)

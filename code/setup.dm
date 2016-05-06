@@ -663,22 +663,34 @@ var/list/liftable_structures = list(\
 
 #define SEE_INVISIBLE_MINIMUM 5
 
-#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
+#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15	//Used by Ghosts when they click "Toggle Darkness".
 
-#define INVISIBILITY_LIGHTING 20
+#define INVISIBILITY_LIGHTING 20	//Used by the lighting_overlay. Any value bellow that one will let you see in the dark.
 
-#define SEE_INVISIBLE_LIVING 25
+#define SEE_INVISIBLE_LIVING 25		//This what players have by default.
 
-#define SEE_INVISIBLE_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
-#define INVISIBILITY_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
+#define SEE_INVISIBLE_LEVEL_ONE 35	//Used by mobs under certain conditions.
+#define INVISIBILITY_LEVEL_ONE 35	//Unused.
 
-#define SEE_INVISIBLE_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
-#define INVISIBILITY_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
+#define SEE_INVISIBLE_LEVEL_TWO 45	//Used by mobs under certain conditions.
+#define INVISIBILITY_LEVEL_TWO 45	//Used by turrets inside their covers.
 
-#define INVISIBILITY_OBSERVER 60
-#define SEE_INVISIBLE_OBSERVER 60
+#define INVISIBILITY_OBSERVER 60	//Used by Ghosts.
+#define SEE_INVISIBLE_OBSERVER 60	//Used by Ghosts.
 
 #define INVISIBILITY_MAXIMUM 100
+
+/*
+FOR IN-GAME TESTING PURPOSES (var/sight bitflags)
+
+BLIND		1
+SEE_MOBS	4
+SEE_OBJS	8
+SEE_TURFS	16
+SEE_SELF	32
+SEE_INFRA	64
+SEE_PIXELS	256
+*/
 
 // Object specific defines.
 #define CANDLE_LUM 2 //For how bright candles are.

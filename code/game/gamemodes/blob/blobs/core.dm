@@ -40,9 +40,9 @@
 
 	for(var/mob/camera/blob/O in blob_overminds)
 		if(overmind && (O != overmind))
-			to_chat(O,"<span class='danger'>A blob core has been destroyed! [overmind] lost his life!</span>")
+			to_chat(O,"<span class='danger'>A blob core has been destroyed! [overmind] lost his life!</span> <b><a href='?src=\ref[O];blobjump=\ref[loc]'>(JUMP)</a></b>")
 		else
-			to_chat(O,"<span class='warning'>A blob core has been destroyed. It had no overmind in control.</span>")
+			to_chat(O,"<span class='warning'>A blob core has been destroyed. It had no overmind in control.</span> <b><a href='?src=\ref[O];blobjump=\ref[loc]'>(JUMP)</a></b>")
 
 	if(overmind)
 		for(var/obj/effect/blob/resource/R in blob_resources)
@@ -62,7 +62,7 @@
 		overmind.update_health()
 		if((health < previous_health) && (core_warning_delay <= world.time))
 			resource_delay = world.time + (3 SECONDS)
-			to_chat(overmind,"<span class='danger'>YOUR CORE IS UNDER ATTACK!</span>")
+			to_chat(overmind,"<span class='danger'>YOUR CORE IS UNDER ATTACK!</span> <b><a href='?src=\ref[overmind];blobjump=\ref[loc]'>(JUMP)</a></b>")
 
 	previous_health = health
 
@@ -141,6 +141,13 @@
 		B.blob_core = src
 		src.overmind = B
 		if(!B.blob_core.creator)//If this core is the first of its lineage (created by game mode/event/admins, instead of another overmind) it gets to choose its looks.
+			var/new_name = "Blob Overmind ([rand(1, 999)])"
+			B.name = new_name
+			B.real_name = new_name
+			for(var/mob/camera/blob/O in blob_overminds)
+				if(O != B)
+					to_chat(O,"<span class='notice'>[B] has appeared and just started a new blob! <a href='?src=\ref[O];blobjump=\ref[loc]'>(JUMP)</a></span>")
+
 			B.verbs += /mob/camera/blob/proc/create_core
 			spawn()
 				var/chosen = input(B,"Select a blob looks", "Blob Looks", blob_looks[1]) as null|anything in blob_looks
@@ -148,6 +155,13 @@
 					for(var/obj/effect/blob/nearby_blob in range(src,5))
 						nearby_blob.looks = chosen
 						nearby_blob.update_looks(1)
+		else
+			var/new_name = "Blob Cerebrate ([rand(1, 999)])"
+			B.name = new_name
+			B.real_name = new_name
+			for(var/mob/camera/blob/O in blob_overminds)
+				if(O != B)
+					to_chat(O,"<span class='notice'>A new blob cerebrate has started thinking inside a blob core! [B] joins the blob! <a href='?src=\ref[O];blobjump=\ref[loc]'>(JUMP)</a></span>")
 
 		if(istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/mode = ticker.mode

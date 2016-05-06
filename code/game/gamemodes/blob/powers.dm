@@ -221,6 +221,30 @@
 	B.Delete()
 	return
 
+/mob/camera/blob/verb/callblobs()
+	set category = "Blob"
+	set name = "Call Overminds"
+	set desc = "Prompts your fellow overminds to come at your location."
+
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+
+	to_chat(src,"<span class='notice'>You sent a call to the other overminds...</span>")
+
+	var/they_exist = 0
+	for(var/mob/camera/blob/O in blob_overminds)
+		if(O != src)
+			they_exist++
+			to_chat(O,"<span class='notice'>[src] is calling for your attention!</span> <b><a href='?src=\ref[O];blobjump=\ref[loc]'>(JUMP)</a></b>")
+
+	if(they_exist)
+		to_chat(src,"<span class='notice'>...[they_exist] overmind\s heard your call!</span>")
+	else
+		to_chat(src,"<span class='notice'>...but no one heard you!</span>")
+
+	return
+
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"

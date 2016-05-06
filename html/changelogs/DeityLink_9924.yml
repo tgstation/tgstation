@@ -1,0 +1,9 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Ghosts now appear above the blob layer.
+  - rscadd: Blob Overminds now get notified when a new overmind appears in a blob core.
+  - rscadd: Blob Overminds now have a "damage overlay" that updates as their core takes damage. Similar to the one humans have when they take damage (screen borders become dark/reddish).
+  - rscadd: Most of the Blob Overmind notifications added in the last update now have a (JUMP) button, so for example you can immediately find which of your blob nodes just got destroyed.
+  - rscadd: Blob Overminds have a new verb called "Call Overminds", which sends a notification to all the other overminds, along with a button allowing them to jump to you.
+  - rscadd: Blob Overminds that spawn in a blob core created by an Overmind are now called Blob Cerebrate. So they can easily tell which one of them was the original one (and the only one who can place new cores)
