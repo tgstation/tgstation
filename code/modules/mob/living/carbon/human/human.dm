@@ -1797,9 +1797,3 @@
 		return 1
 	else
 		to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
-
-/mob/living/carbon/human/reset_layer()
-	if(lying)
-		layer = MOB_LAYER - 0.1 //so we move under bedsheets
-	else
-		layer = MOB_LAYER

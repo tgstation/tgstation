@@ -305,7 +305,3 @@
 		return 1
 	return ..()
 */
-
-/mob/living/carbon/alien/larva/reset_layer()
-	if(stat == DEAD)
-		layer = MOB_LAYER //unhide

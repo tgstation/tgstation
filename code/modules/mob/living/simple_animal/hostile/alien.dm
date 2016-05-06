@@ -7,7 +7,7 @@ var/list/nest_locations = list()
 	icon_state = "alienh_running"
 	icon_living = "alienh_running"
 	icon_dead = "alienh_dead"
-	icon_gib = "gibbed-a"
+	icon_gib = "syndicate_gib"
 	response_help = "pokes the"
 	response_disarm = "shoves the"
 	response_harm = "hits the"
@@ -351,8 +351,18 @@ var/list/nest_locations = list()
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
 	playsound(src, 'sound/voice/hiss6.ogg', 100, 1)
 
-/mob/living/simple_animal/hostile/alien/gibs_type()
+/mob/living/simple_animal/hostile/alien/gib()
+	death(1)
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-a", sleeptime = 15)
 	xgibs(loc, viruses)
+	dead_mob_list -= src
+
+	qdel(src)
 
 /mob/living/simple_animal/hostile/alien/adjustBruteLoss(amount,var/damage_type) // Weak to Fire
 	if(damage_type == BURN)

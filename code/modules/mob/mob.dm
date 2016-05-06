@@ -1488,11 +1488,14 @@ var/list/slot_equipment_priority = list( \
 		lying = 0
 		canmove = has_limbs
 
-	reset_layer() //Handles layer setting in hiding
 	if(lying)
+		if(iscarbon(src))
+			layer = 3.9//so we move under bedsheets
 		density = 0
 		drop_hands()
 	else
+		if(iscarbon(src))
+			layer = 4
 		density = 1
 
 	//Temporarily moved here from the various life() procs
@@ -1506,8 +1509,6 @@ var/list/slot_equipment_priority = list( \
 
 	return canmove
 
-/mob/proc/reset_layer()
-	return
 
 /mob/verb/eastface()
 	set hidden = 1

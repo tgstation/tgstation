@@ -34,12 +34,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.incapacitated())
-		return
-
-	on = !on
-	icon_state = "echair[on]"
+	if(on)
+		on = 0
+		icon_state = "echair0"
+	else
+		on = 1
+		icon_state = "echair1"
 	to_chat(usr, "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>")
+	return
 
 /obj/structure/bed/chair/e_chair/rotate()
 	..()

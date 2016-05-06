@@ -33,7 +33,7 @@
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
-		if(istype(over_object, /obj/structure/table) && M.Adjacent(over_object) && Adjacent(M))
+		if(istype(over_object, /obj/structure/table) && M.Adjacent(over_object))
 			var/mob/living/L = usr
 			if(istype(L) && !(L.incapacitated() || L.lying))
 				empty_contents_to(over_object)
