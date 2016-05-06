@@ -283,6 +283,7 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_WATER	1
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
+#define TURF_WET_PERMAFROST 4
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -316,6 +317,7 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_ARTIFICIAL 2
 #define SENTIENCE_OTHER 3
 #define SENTIENCE_MINEBOT 4
+#define SENTIENCE_BOSS 5
 
 //Fire stuff, for burn_state
 #define LAVA_PROOF -2

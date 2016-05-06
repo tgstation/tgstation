@@ -78,6 +78,7 @@
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
+		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
 		switch(M.damtype)
@@ -100,8 +101,6 @@
 		step_away(src,M)
 		add_logs(M.occupant, src, "pushed", M)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
-
-		return
 
 
 //Mobs on Fire

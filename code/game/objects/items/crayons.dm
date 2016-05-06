@@ -195,15 +195,22 @@
 				if(C.client)
 					C.blur_eyes(3)
 					C.blind_eyes(1)
-					if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
-						C.confused = max(C.confused, 3)
-						C.Weaken(3)
+				if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
+					C.confused = max(C.confused, 3)
+					C.Weaken(3)
 				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					H.lip_style = "spray_face"
 					H.lip_color = paint_color
 					H.update_body()
+				// Caution, spray cans contain inflammable substances
+				if(C.reagents)
+					C.reagents.add_reagent("welding_fuel", 5)
+					C.reagents.add_reagent("ethanol", 5)
+					C.reagents.reaction(C, VAPOR, 10)
+
 				uses = max(0,uses-10)
+
 		if(istype(target, /obj/structure/window))
 			if(uses)
 				target.color = paint_color
@@ -233,3 +240,26 @@
 	if(G)
 		paint_color = G.color_hex
 		update_icon()
+
+/obj/item/toy/crayon/spraycan/borg
+	desc = "A metallic container containing shiny paint."
+	// Use depletion of uses to determine what the energy cost is
+	uses = 100
+
+/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
+	..()
+	if(!isrobot(user))
+		return FALSE
+	var/mob/living/silicon/robot/borgy = user
+
+	var/starting_uses = initial(uses)
+	var/diff = starting_uses - uses
+	if(diff)
+		uses = starting_uses
+		// 25 is our cost per unit of paint, making it cost 25 energy per
+		// normal tag, 50 per window, and 250 per attack
+		var/cost = diff * 25
+		// Cyborgs shouldn't be able to use modules without a cell. But if they do
+		// it's free.
+		if(borgy.cell)
+			borgy.cell.use(cost)

@@ -117,9 +117,9 @@
 
 /obj/effect/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
-		A.blob_act()
+		A.blob_act(src)
 	if(istype(loc, /turf/closed/wall))
-		loc.blob_act() //don't ask how a wall got on top of the core, just eat it
+		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
@@ -155,11 +155,11 @@
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T, 5)) //is the target turf impassable
 		make_blob = FALSE
-		T.blob_act() //hit the turf if it is
+		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
 		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
 			make_blob = FALSE
-		A.blob_act() //also hit everything in the turf
+		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
 		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
@@ -177,7 +177,7 @@
 			return B
 		else
 			blob_attack_animation(T, controller)
-			T.blob_act() //if we can't move in hit the turf again
+			T.blob_act(src) //if we can't move in hit the turf again
 			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return null
 	else
@@ -225,15 +225,23 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user << "<b>The analyzer beeps once, then reports:</b><br>"
 		user << 'sound/machines/ping.ogg'
-		if(overmind)
-			user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
-			user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
-			user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
-		user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
-		user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
-		user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
+		chemeffectreport(user)
+		typereport(user)
 	else
 		return ..()
+
+/obj/effect/blob/proc/chemeffectreport(mob/user)
+	if(overmind)
+		user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
+		user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
+		user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
+	else
+		user << "<b>No Material Detected!</b><br>"
+
+/obj/effect/blob/proc/typereport(mob/user)
+	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
+	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
+	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
 
 /obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -294,8 +302,13 @@
 
 /obj/effect/blob/examine(mob/user)
 	..()
-	user << "It seems to be made of [get_chem_name()]."
-	return
+	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
+	if(user.research_scanner || (user in hud_to_check.hudusers))
+		user << "<b>Your HUD displays an extensive report...</b><br>"
+		chemeffectreport(user)
+		typereport(user)
+	else
+		user << "It seems to be made of [get_chem_name()]."
 
 /obj/effect/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."

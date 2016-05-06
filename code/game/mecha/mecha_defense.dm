@@ -1,7 +1,7 @@
 /obj/mecha/proc/get_armour_facing(srcdir,adir)
 	var/facing_hit = armour_facings["[srcdir]"]["[adir]"]
 	var/damage_modifier = facing_modifiers[facing_hit]
-	return damage_modifier
+	return damage_modifier || 1 //always return non-0
 
 /obj/mecha/proc/take_damage(amount, type="brute", adir = 0, booster_deflection_modifier = 1, booster_damage_modifier = 1)
 	var/facing_modifier = 1
@@ -143,7 +143,7 @@
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
 
-/obj/mecha/blob_act()
+/obj/mecha/blob_act(obj/effect/blob/B)
 	take_damage(30, "brute")
 	return
 

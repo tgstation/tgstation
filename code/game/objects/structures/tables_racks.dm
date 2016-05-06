@@ -53,7 +53,7 @@
 		if(3)
 			take_damage(rand(40,80), BRUTE, 0)
 
-/obj/structure/table/blob_act()
+/obj/structure/table/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 
@@ -264,23 +264,27 @@
 	canSmoothWith = null
 	health = 50
 
-/obj/structure/table/glass/tablepush(obj/item/I, mob/user)
-	if(..())
-		visible_message("<span class='warning'>[src] breaks!</span>")
-		playsound(src.loc, "shatter", 50, 1)
-		new frame(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		qdel(src)
+/obj/structure/table/glass/Crossed(atom/movable/AM)
+	. = ..()
+	if(flags & NODECONSTRUCT)
+		return
+	// Don't break if they're just flying past
+	if(AM.throwing)
+		return
 
+	if(istype(AM, /mob/living))
+		var/mob/living/M = AM
+		if(has_gravity(M) && M.mob_size > MOB_SIZE_SMALL)
+			table_shatter(M)
 
-/obj/structure/table/glass/climb_structure(mob/user)
-	if(..())
-		visible_message("<span class='warning'>[src] breaks!</span>")
-		playsound(src.loc, "shatter", 50, 1)
-		new frame(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		qdel(src)
-		user.Weaken(5)
+/obj/structure/table/glass/proc/table_shatter(mob/M)
+	visible_message("<span class='warning'>[src] breaks!</span>")
+	playsound(src.loc, "shatter", 50, 1)
+	new frame(src.loc)
+	var/obj/item/weapon/shard/S = new(src.loc)
+	S.throw_impact(M)
+	M.Weaken(5)
+	qdel(src)
 
 /*
  * Wooden tables
@@ -408,7 +412,7 @@
 		if(3)
 			take_damage(rand(5,25), BRUTE, 0)
 
-/obj/structure/rack/blob_act()
+/obj/structure/rack/blob_act(obj/effect/blob/B)
 	if(prob(75))
 		qdel(src)
 	else
@@ -416,8 +420,8 @@
 
 
 /obj/structure/rack/mech_melee_attack(obj/mecha/M)
-	visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-	rack_destroy()
+	if(..())
+		take_damage(M.force*2)
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
