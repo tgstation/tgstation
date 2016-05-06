@@ -22,4 +22,3 @@
 	H.dna.blood_type = random_blood_type()
 	H.update_body()
 	H.update_hair()
-	H.update_body_parts()

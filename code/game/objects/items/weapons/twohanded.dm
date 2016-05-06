@@ -62,9 +62,6 @@
 	if(user.get_inactive_hand())
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
-	if(user.get_num_arms() < 2)
-		user << "<span class='warning'>You don't have enough hands.</span>"
-		return
 	wielded = 1
 	if(force_wielded)
 		force = force_wielded
@@ -388,9 +385,6 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
-/obj/item/weapon/twohanded/required/chainsaw/can_dismember()
-	return wielded
 
 
 //GREY TIDE

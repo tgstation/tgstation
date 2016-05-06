@@ -78,7 +78,7 @@
 /datum/table_recipe/braincake
 	name = "Brain cake"
 	reqs = list(
-		/obj/item/organ/brain = 1,
+		/obj/item/organ/internal/brain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain

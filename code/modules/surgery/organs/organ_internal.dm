@@ -1,9 +1,4 @@
-
-/obj/item/organ
-	name = "organ"
-	icon = 'icons/obj/surgery.dmi'
-	var/mob/living/carbon/owner = null
-	var/status = ORGAN_ORGANIC
+/obj/item/organ/internal
 	origin_tech = "biotech=2"
 	force = 1
 	w_class = 2
@@ -14,11 +9,11 @@
 	var/vital = 0
 
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/proc/Insert(mob/living/carbon/M, special = 0)
 	if(!iscarbon(M) || owner == M)
 		return
 
-	var/obj/item/organ/replaced = M.getorganslot(slot)
+	var/obj/item/organ/internal/replaced = M.getorganslot(slot)
 	if(replaced)
 		replaced.Remove(M, special = 1)
 
@@ -31,7 +26,7 @@
 		A.Grant(M)
 
 
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -44,19 +39,19 @@
 		A.Remove(M)
 
 
-/obj/item/organ/proc/on_find(mob/living/finder)
+/obj/item/organ/internal/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/proc/on_life()
+/obj/item/organ/internal/proc/on_life()
 	return
 
-/obj/item/organ/examine(mob/user)
+/obj/item/organ/internal/examine(mob/user)
 	..()
 	if(status == ORGAN_ROBOTIC && crit_fail)
 		user << "<span class='warning'>[src] seems to be broken!</span>"
 
 
-/obj/item/organ/proc/prepare_eat()
+/obj/item/organ/internal/proc/prepare_eat()
 	var/obj/item/weapon/reagent_containers/food/snacks/organ/S = new
 	S.name = name
 	S.desc = desc
@@ -74,12 +69,12 @@
 	list_reagents = list("nutriment" = 5)
 
 
-/obj/item/organ/Destroy()
+/obj/item/organ/internal/Destroy()
 	if(owner)
 		Remove(owner, 1)
 	return ..()
 
-/obj/item/organ/attack(mob/living/carbon/M, mob/user)
+/obj/item/organ/internal/attack(mob/living/carbon/M, mob/user)
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(status == ORGAN_ORGANIC)
@@ -92,7 +87,7 @@
 	else
 		..()
 
-/obj/item/organ/item_action_slot_check(slot,mob/user)
+/obj/item/organ/internal/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 //Looking for brains?
@@ -100,7 +95,7 @@
 
 
 
-/obj/item/organ/heart
+/obj/item/organ/internal/heart
 	name = "heart"
 	icon_state = "heart-on"
 	zone = "chest"
@@ -110,13 +105,13 @@
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 
-/obj/item/organ/heart/update_icon()
+/obj/item/organ/internal/heart/update_icon()
 	if(beating)
 		icon_state = "[icon_base]-on"
 	else
 		icon_state = "[icon_base]-off"
 
-/obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -130,7 +125,7 @@
 		if(!owner)
 			Stop()
 
-/obj/item/organ/heart/attack_self(mob/user)
+/obj/item/organ/internal/heart/attack_self(mob/user)
 	..()
 	if(!beating)
 		Restart()
@@ -139,7 +134,7 @@
 				Stop()
 
 
-/obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(ishuman(M) && beating)
 		var/mob/living/carbon/human/H = M
@@ -147,23 +142,23 @@
 			H.heart_attack = 0
 			return
 
-/obj/item/organ/heart/proc/Stop()
+/obj/item/organ/internal/heart/proc/Stop()
 	beating = 0
 	update_icon()
 	return 1
 
-/obj/item/organ/heart/proc/Restart()
+/obj/item/organ/internal/heart/proc/Restart()
 	beating = 1
 	update_icon()
 	return 1
 
-/obj/item/organ/heart/prepare_eat()
+/obj/item/organ/internal/heart/prepare_eat()
 	var/obj/S = ..()
 	S.icon_state = "heart-off"
 	return S
 
 
-/obj/item/organ/heart/cursed
+/obj/item/organ/internal/heart/cursed
 	name = "cursed heart"
 	desc = "it needs to be pumped..."
 	icon_state = "cursedheart-off"
@@ -181,7 +176,7 @@
 	var/heal_oxy = 0
 
 
-/obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+/obj/item/organ/internal/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
 	if(H == user && istype(H))
 		playsound(user,'sound/effects/singlebeat.ogg',40,1)
 		user.drop_item()
@@ -189,7 +184,7 @@
 	else
 		return ..()
 
-/obj/item/organ/heart/cursed/on_life()
+/obj/item/organ/internal/heart/cursed/on_life()
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
@@ -201,7 +196,7 @@
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(owner)
 		owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
@@ -212,8 +207,8 @@
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/Trigger()
 	. = ..()
-	if(. && istype(target,/obj/item/organ/heart/cursed))
-		var/obj/item/organ/heart/cursed/cursed_heart = target
+	if(. && istype(target,/obj/item/organ/internal/heart/cursed))
+		var/obj/item/organ/internal/heart/cursed/cursed_heart = target
 
 		if(world.time < (cursed_heart.last_pump + (cursed_heart.pump_delay-10))) //no spam
 			owner << "<span class='userdanger'>Too soon!</span>"
@@ -239,7 +234,7 @@
 
 
 
-/obj/item/organ/lungs
+/obj/item/organ/internal/lungs
 	name = "lungs"
 	icon_state = "lungs"
 	zone = "chest"
@@ -247,12 +242,12 @@
 	gender = PLURAL
 	w_class = 3
 
-/obj/item/organ/lungs/prepare_eat()
+/obj/item/organ/internal/lungs/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("salbutamol", 5)
 	return S
 
-/obj/item/organ/tongue
+/obj/item/organ/internal/tongue
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "tonguenormal"
@@ -261,26 +256,26 @@
 	var/say_mod = null
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
 
-/obj/item/organ/tongue/proc/TongueSpeech(var/message)
+/obj/item/organ/internal/tongue/proc/TongueSpeech(var/message)
 	return message
 
-/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
 
-/obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 
-/obj/item/organ/tongue/lizard
+/obj/item/organ/internal/tongue/lizard
 	name = "forked tongue"
 	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."
 	icon_state = "tonguelizard"
 	say_mod = "hisses"
 
-/obj/item/organ/tongue/lizard/TongueSpeech(var/message)
+/obj/item/organ/internal/tongue/lizard/TongueSpeech(var/message)
 	var/regex/lizard_hiss = new("s+", "g")
 	var/regex/lizard_hiSS = new("S+", "g")
 	if(copytext(message, 1, 2) != "*")
@@ -288,13 +283,13 @@
 		message = lizard_hiSS.Replace(message, "SSS")
 	return message
 
-/obj/item/organ/tongue/fly
+/obj/item/organ/internal/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."
 	icon_state = "tonguefly"
 	say_mod = "buzzes"
 
-/obj/item/organ/tongue/fly/TongueSpeech(var/message)
+/obj/item/organ/internal/tongue/fly/TongueSpeech(var/message)
 	var/regex/fly_buzz = new("z+", "g")
 	var/regex/fly_buZZ = new("Z+", "g")
 	if(copytext(message, 1, 2) != "*")
@@ -302,18 +297,18 @@
 		message = fly_buZZ.Replace(message, "ZZZ")
 	return message
 
-/obj/item/organ/tongue/abductor
+/obj/item/organ/internal/tongue/abductor
 	name = "superlingual matrix"
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
 
-/obj/item/organ/tongue/abductor/TongueSpeech(var/message)
+/obj/item/organ/internal/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
+		var/obj/item/organ/internal/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
 		else if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
@@ -326,13 +321,13 @@
 		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
 	return ""
 
-/obj/item/organ/tongue/zombie
+/obj/item/organ/internal/tongue/zombie
 	name = "rotting tongue"
 	desc = "Between the decay and the fact that it's just lying there you doubt a tongue has ever seemed less sexy."
 	icon_state = "tonguezombie"
 	say_mod = "moans"
 
-/obj/item/organ/tongue/zombie/TongueSpeech(var/message)
+/obj/item/organ/internal/tongue/zombie/TongueSpeech(var/message)
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
@@ -348,24 +343,24 @@
 
 	return jointext(message_list, " ")
 
-/obj/item/organ/tongue/alien
+/obj/item/organ/internal/tongue/alien
 	name = "alien tongue"
 	desc = "According to leading xenobiologists the evolutionary benefit of having a second mouth in your mouth is \"that it looks badass\"."
 	icon_state = "tonguexeno"
 	say_mod = "hiss"
 
-/obj/item/organ/tongue/alien/TongueSpeech(var/message)
+/obj/item/organ/internal/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
 	return message
 
-/obj/item/organ/appendix
+/obj/item/organ/internal/appendix
 	name = "appendix"
 	icon_state = "appendix"
 	zone = "groin"
 	slot = "appendix"
 	var/inflamed = 0
 
-/obj/item/organ/appendix/update_icon()
+/obj/item/organ/internal/appendix/update_icon()
 	if(inflamed)
 		icon_state = "appendixinflamed"
 		name = "inflamed appendix"
@@ -373,25 +368,25 @@
 		icon_state = "appendix"
 		name = "appendix"
 
-/obj/item/organ/appendix/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/appendix/Remove(mob/living/carbon/M, special = 0)
 	for(var/datum/disease/appendicitis/A in M.viruses)
 		A.cure()
 		inflamed = 1
 	update_icon()
 	..()
 
-/obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/appendix/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(inflamed)
 		M.AddDisease(new /datum/disease/appendicitis)
 
-/obj/item/organ/appendix/prepare_eat()
+/obj/item/organ/internal/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
 
-/obj/item/organ/shadowtumor
+/obj/item/organ/internal/shadowtumor
 	name = "black tumor"
 	desc = "A tiny black mass with red tendrils trailing from it. It seems to shrivel in the light."
 	icon_state = "blacktumor"
@@ -401,15 +396,15 @@
 	slot = "brain_tumor"
 	var/health = 3
 
-/obj/item/organ/shadowtumor/New()
+/obj/item/organ/internal/shadowtumor/New()
 	..()
 	SSobj.processing |= src
 
-/obj/item/organ/shadowtumor/Destroy()
+/obj/item/organ/internal/shadowtumor/Destroy()
 	SSobj.processing.Remove(src)
 	..()
 
-/obj/item/organ/shadowtumor/process()
+/obj/item/organ/internal/shadowtumor/process()
 	if(isturf(loc))
 		var/turf/T = loc
 		var/light_count = T.get_lumcount()

@@ -566,10 +566,10 @@ var/list/airlock_overlays = list()
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
-				var/obj/item/bodypart/affecting = H.get_bodypart("head")
+				var/obj/item/organ/limb/affecting = H.get_organ("head")
 				H.Stun(5)
 				H.Weaken(5)
-				if(affecting && affecting.take_damage(10, 0))
+				if(affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")

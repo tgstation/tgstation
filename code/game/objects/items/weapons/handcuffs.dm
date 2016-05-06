@@ -30,24 +30,21 @@
 		return
 
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
-			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+		C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+							"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
-			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
-				apply_cuffs(C,user)
-				user << "<span class='notice'>You handcuff [C].</span>"
-				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
-					feedback_add_details("handcuffs","C")
-				else
-					feedback_add_details("handcuffs","H")
-
-				add_logs(user, C, "handcuffed")
+		playsound(loc, cuffsound, 30, 1, -2)
+		if(do_mob(user, C, 30))
+			apply_cuffs(C,user)
+			user << "<span class='notice'>You handcuff [C].</span>"
+			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+				feedback_add_details("handcuffs","C")
 			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+				feedback_add_details("handcuffs","H")
+
+			add_logs(user, C, "handcuffed")
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
@@ -265,7 +262,7 @@
 				snap = 1
 				if(!C.lying)
 					def_zone = pick("l_leg", "r_leg")
-					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
 						C.legcuffed = src
 						src.loc = C
 						C.update_inv_legcuffed()
@@ -317,7 +314,7 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed && C.get_num_legs() >= 2)
+	if(!C.legcuffed)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		src.loc = C

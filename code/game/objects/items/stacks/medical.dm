@@ -29,13 +29,8 @@
 		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
 		return 1
 
-	var/obj/item/bodypart/affecting
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		affecting = H.get_bodypart(check_zone(user.zone_selected))
-		if(!affecting) //Missing limb?
-			user << "<span class='warning'>[H] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
-			return
 		if(stop_bleeding)
 			if(H.bleedsuppress)
 				user << "<span class='warning'>[H]'s bleeding is already bandaged!</span>"
@@ -43,7 +38,6 @@
 			else if(!H.blood_max)
 				user << "<span class='warning'>[H] isn't bleeding!</span>"
 				return
-
 
 	if(isliving(M))
 		if(!M.can_inject(user, 1))
@@ -77,10 +71,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		affecting = H.get_bodypart(check_zone(user.zone_selected))
-		if(!affecting) //Missing limb?
-			user << "<span class='warning'>[H] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
-			return
+		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
 		if(stop_bleeding)
 			if(!H.bleedsuppress) //so you can't stack bleed suppression
 				H.suppress_bloodloss(stop_bleeding)
