@@ -162,7 +162,6 @@
 	item_state = "cardborg"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
-	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
@@ -258,7 +257,6 @@
 	allowed = list(,)
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/ian_hood
-	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/head/ian_hood
 	name = "corgi hood"
@@ -490,10 +488,3 @@
 
 /obj/item/clothing/head/winterhood/miner
 	icon_state = "winterhood_miner"
-
-/obj/item/clothing/suit/spookyghost
-	name = "spooky ghost"
-	desc = "this is obviously just a bedsheet, but maybe try it on?"
-	icon_state = "bedsheet"
-	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
-	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
