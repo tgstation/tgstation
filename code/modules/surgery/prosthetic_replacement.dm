@@ -15,7 +15,7 @@
 
 
 /datum/surgery_step/add_prosthetic
-	name = "add prothetic"
+	name = "add prosthetic"
 	implements = list(/obj/item/robot_parts = 100, /obj/item/bodypart = 100)
 	time = 32
 

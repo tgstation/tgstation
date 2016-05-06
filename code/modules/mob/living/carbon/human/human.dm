@@ -110,10 +110,12 @@
 /mob/living/carbon/human/ex_act(severity, ex_target)
 	var/b_loss = null
 	var/f_loss = null
+	var/bomb_armor = getarmor(null, "bomb")
+
 	switch (severity)
 		if (1)
 			b_loss += 500
-			if (prob(getarmor(null, "bomb")))
+			if (prob(bomb_armor))
 				shred_clothing(1,150)
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
@@ -125,7 +127,7 @@
 			b_loss += 60
 
 			f_loss += 60
-			if (prob(getarmor(null, "bomb")))
+			if (prob(bomb_armor))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 				shred_clothing(1,25)
@@ -139,7 +141,7 @@
 
 		if(3)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if (prob(bomb_armor))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
@@ -148,10 +150,15 @@
 
 	take_overall_damage(b_loss,f_loss)
 	//attempt to dismember bodyparts
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(prob(50/severity) && BP.body_zone != "head" && BP.body_zone != "chest")
-			BP.dismember()
+	if(severity >= 2 || !bomb_armor)
+		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.dismember()
+				max_limb_loss--
+				if(!max_limb_loss)
+					break
 	..()
 
 /mob/living/carbon/human/blob_act(obj/effect/blob/B)
@@ -172,6 +179,11 @@
 			playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 			return 0
 	..()
+
+/mob/living/carbon/human/attack_ui(slot)
+	if(!get_bodypart(hand ? "l_arm" : "r_arm"))
+		return 0
+	return ..()
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)

@@ -8,7 +8,7 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart("chest")
 	affecting.take_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
-	H.visible_message("<span class='danger'><B>[H]'s [src] has been violently dismembered!</B></span>")
+	H.visible_message("<span class='danger'><B>[H]'s [src.name] has been violently dismembered!</B></span>")
 	H.emote("scream")
 	drop_limb()
 
@@ -83,7 +83,8 @@
 
 		for(var/X in H.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
-			if(O.zone != body_zone)
+			var/org_zone = check_zone(O.zone)
+			if(org_zone != body_zone)
 				continue
 			O.transfer_to_limb(src, H)
 
@@ -92,6 +93,7 @@
 	H.update_health_hud() //update the healthdoll
 	H.update_body()
 	H.update_hair()
+	H.update_canmove()
 
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
@@ -241,6 +243,7 @@
 	H.update_body()
 	H.update_hair()
 	H.update_damage_overlays()
+	H.update_canmove()
 
 
 /obj/item/bodypart/r_arm/attach_limb(mob/living/carbon/human/H, special)
@@ -256,14 +259,6 @@
 		var/obj/screen/inventory/L = H.hud_used.inv_slots[slot_l_hand]
 		if(L)
 			L.update_icon()
-
-/obj/item/bodypart/l_leg/attach_limb(mob/living/carbon/human/H, special)
-	..()
-	H.update_canmove()
-
-/obj/item/bodypart/r_leg/attach_limb(mob/living/carbon/human/H, special)
-	..()
-	H.update_canmove()
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/human/H, special)
 	//Transfer some head appearance vars over

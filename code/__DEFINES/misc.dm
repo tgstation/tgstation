@@ -25,10 +25,10 @@
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			27		//mutations. Tk headglows, cold resistance glow, etc
 #define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_BEHIND_LAYER		25
+#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_LAYER				23		//underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_ADJ_LAYER			22		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
 #define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19

@@ -2,6 +2,8 @@
 /obj/item/bodypart
 	name = "limb"
 	desc = "why is it detached..."
+	force = 3
+	throwforce = 3
 	var/mob/living/carbon/human/owner = null
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
@@ -33,7 +35,7 @@
 	if(brute_dam > 0)
 		user << "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>"
 	if(burn_dam > 0)
-		user << "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] bruising.</span>"
+		user << "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
 
 /obj/item/bodypart/Destroy()

@@ -869,8 +869,11 @@
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			if(H.get_num_legs() < 2)
-				. += 2
+			var/leg_amount = H.get_num_legs()
+			. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+			if(!leg_amount)
+				. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
+
 
 			. += speedmod
 
