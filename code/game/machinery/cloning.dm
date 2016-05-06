@@ -82,7 +82,7 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/internal/brain))
+		if (ishuman(M) && !M.getorgan(/obj/item/organ/brain))
 			continue
 
 		if (M.ckey == find_key)
