@@ -183,7 +183,7 @@
 	if(icon_update)
 		update_body()
 		update_hair()
-		update_mutcolor()
+		update_body_parts()
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
@@ -220,7 +220,7 @@
 	if(mrace || newfeatures || ui)
 		update_body()
 		update_hair()
-		update_mutcolor()
+		update_body_parts()
 		update_mutations_overlay()
 
 
@@ -249,7 +249,7 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 		update_body()
 		update_hair()
 		if(mutcolor_update)
-			update_mutcolor()
+			update_body_parts()
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 

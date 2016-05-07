@@ -111,12 +111,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		//Bleeding out
 		blood_max = 0
-		for(var/obj/item/organ/limb/org in organs)
-			var/brutedamage = org.brute_dam
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			var/brutedamage = BP.brute_dam
 
 			//We want an accurate reading of .len
-			listclearnulls(org.embedded_objects)
-			blood_max += 0.5*org.embedded_objects.len
+			listclearnulls(BP.embedded_objects)
+			blood_max += 0.5*BP.embedded_objects.len
 
 			if(brutedamage > 30)
 				blood_max += 0.5
