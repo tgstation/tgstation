@@ -87,6 +87,8 @@
 	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
+	for(var/A in R.parts)
+		world << "[A] = [R.parts]"
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
 	if(check_contents(R, contents))
@@ -98,7 +100,7 @@
 				if(!check_tools(user, R, contents))
 					return ", missing tool."
 				var/list/parts = del_reqs(R, user)
-				var/atom/movable/I = new R.result (user.loc)
+				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
 					feedback_add_details("object_crafted","[I.type]")
@@ -204,6 +206,7 @@
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
 	for(var/A in R.parts)
+		world << "[A]"
 		if(istype(A, /datum/reagent))
 			var/datum/reagent/RG = locate(A) in Deletion
 			if(RG.volume > partlist[A])

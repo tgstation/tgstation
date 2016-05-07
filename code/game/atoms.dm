@@ -66,15 +66,19 @@
 		hulk.do_attack_animation(src)
 	return
 
-/atom/proc/CheckParts(list/content)
-	for(var/A in content)
-		if(istype(A, /atom/movable))
+/atom/proc/CheckParts(list/parts)
+	for(var/A in parts)
+		if(istype(A, /datum/reagent))
+			if(!reagents)
+				reagents = new()
+			reagents.reagent_list.Add(A)
+			reagents.conditional_update()
+		else if(istype(A, /atom/movable))
 			var/atom/movable/M = A
 			if(istype(M.loc, /mob/living))
 				var/mob/living/L = M.loc
 				L.unEquip(M)
 			M.loc = src
-		contents += A
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
