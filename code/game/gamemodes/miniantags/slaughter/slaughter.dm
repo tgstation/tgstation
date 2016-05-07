@@ -41,7 +41,7 @@
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
-				/obj/item/organ/internal/heart/demon)
+				/obj/item/organ/heart/demon)
 	del_on_death = 1
 	deathmessage = "<span class='danger'>The generic slaughter demon screams in anger because this is the default death message!</span>"
 
@@ -73,17 +73,17 @@
 
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
-/obj/item/organ/internal/heart/demon
+/obj/item/organ/heart/demon
 	name = "demon heart"
 	desc = "Still it beats furiously, emanating an aura of utter hate."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
 	origin_tech = "combat=5;biotech=8"
 
-/obj/item/organ/internal/heart/demon/update_icon()
+/obj/item/organ/heart/demon/update_icon()
 	return //always beating visually
 
-/obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
+/obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
@@ -99,17 +99,17 @@
 	user.drop_item()
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
-/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(M.mind)
 		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
 
-/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(M.mind)
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
 
-/obj/item/organ/internal/heart/demon/Stop()
+/obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.
 
 /mob/living/simple_animal/slaughter/laughter

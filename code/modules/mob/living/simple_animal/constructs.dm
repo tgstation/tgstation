@@ -166,14 +166,20 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 5
 	damage_type = BURN
-	stamina = 15
-	paralyze = 1
+	paralyze = 2
+	weaken = 6
 
 /obj/item/projectile/cult/Bump(atom/A, yes)
 	if(iscultist(A) || isconstruct(A) || istype(A, /mob/living/simple_animal/shade))
 		loc = A.loc
 		return 0
 	return ..()
+
+/obj/item/projectile/cult/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(.)
+		var/mob/M = target //if we've successfully hit a thing(we know it's a mob, because on_hit only returns 1 if the hit thing is a mob), make it slur
+		M.cultslurring += 15
 
 /mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
@@ -190,7 +196,7 @@
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
 	projectiletype = /obj/item/projectile/cult
-	ranged_cooldown_time = 75
+	ranged_cooldown_time = 10
 	projectilesound = 'sound/weapons/blaster.ogg'
 	ranged = 1
 	attacktext = "rams"
@@ -246,10 +252,6 @@
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
-
-
-
-
 
 
 /////////////////////////////Non-cult Artificer/////////////////////////

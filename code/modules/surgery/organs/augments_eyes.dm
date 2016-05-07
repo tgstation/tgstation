@@ -1,4 +1,4 @@
-/obj/item/organ/internal/cyberimp/eyes
+/obj/item/organ/cyberimp/eyes
 	name = "cybernetic eyes"
 	desc = "artificial photoreceptors with specialized functionality"
 	icon_state = "eye_implant"
@@ -16,7 +16,7 @@
 	var/aug_message = "Your vision is augmented!"
 
 
-/obj/item/organ/internal/cyberimp/eyes/Insert(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/cyberimp/eyes/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
 	if(istype(owner, /mob/living/carbon/human) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
@@ -28,7 +28,7 @@
 
 	owner.update_sight()
 
-/obj/item/organ/internal/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags
 	if(istype(M,/mob/living/carbon/human) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
@@ -36,7 +36,7 @@
 		HMN.regenerate_icons()
 	..()
 
-/obj/item/organ/internal/cyberimp/eyes/emp_act(severity)
+/obj/item/organ/cyberimp/eyes/emp_act(severity)
 	if(!owner)
 		return
 	if(severity > 1)
@@ -45,7 +45,7 @@
 	owner << "<span class='warning'>Static obfuscates your vision!</span>"
 	owner.flash_eyes(visual = 1)
 
-/obj/item/organ/internal/cyberimp/eyes/xray
+/obj/item/organ/cyberimp/eyes/xray
 	name = "X-ray implant"
 	desc = "These cybernetic eye implants will give you X-ray vision. Blinking is futile."
 	eye_color = "000"
@@ -54,7 +54,7 @@
 	dark_view = 8
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
-/obj/item/organ/internal/cyberimp/eyes/thermals
+/obj/item/organ/cyberimp/eyes/thermals
 	name = "Thermals implant"
 	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
@@ -68,27 +68,27 @@
 
 
 // HUD implants
-/obj/item/organ/internal/cyberimp/eyes/hud
+/obj/item/organ/cyberimp/eyes/hud
 	name = "HUD implant"
 	desc = "These cybernetic eyes will display a HUD over everything you see. Maybe."
 	slot = "eye_hud"
 	var/HUD_type = 0
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
 	if(HUD_type)
 		var/datum/atom_hud/H = huds[HUD_type]
 		H.add_hud_to(M)
 		M.permanent_huds |= H
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
 	if(HUD_type)
 		var/datum/atom_hud/H = huds[HUD_type]
 		M.permanent_huds ^= H
 		H.remove_hud_from(M)
 	..()
 
-/obj/item/organ/internal/cyberimp/eyes/hud/medical
+/obj/item/organ/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
 	eye_color = "0ff"
@@ -97,7 +97,7 @@
 	aug_message = "You suddenly see health bars floating above people's heads..."
 	HUD_type = DATA_HUD_MEDICAL_ADVANCED
 
-/obj/item/organ/internal/cyberimp/eyes/hud/security
+/obj/item/organ/cyberimp/eyes/hud/security
 	name = "Security HUD implant"
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	eye_color = "d00"
@@ -108,7 +108,7 @@
 
 
 // Welding shield implant
-/obj/item/organ/internal/cyberimp/eyes/shield
+/obj/item/organ/cyberimp/eyes/shield
 	name = "welding shield implant"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	slot = "eye_shield"
@@ -118,5 +118,5 @@
 	aug_message = null
 	eye_color = null
 
-/obj/item/organ/internal/cyberimp/eyes/shield/emp_act(severity)
+/obj/item/organ/cyberimp/eyes/shield/emp_act(severity)
 	return
