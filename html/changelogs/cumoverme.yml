@@ -1,4 +1,0 @@
-author: cumoverme
-delete-after: True
-changes:
-- tweak: "Fixed Ministation giving you stealing objectives for items which weren't in the station."
