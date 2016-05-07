@@ -26,7 +26,7 @@
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
 	pellets = 5
-	variance = 0.8
+	variance = 25
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
@@ -161,7 +161,7 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/net
 	select_name = "netting"
 	pellets = 6
-	variance = 1
+	variance = 40
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
