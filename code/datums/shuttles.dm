@@ -44,7 +44,7 @@
 	admin_notes = "Bardrone should be controlled by a player, either admin \
 		or ghost, has modified drone laws, can speak human and see normally."
 
-/datum/map_template/shuttle/emergency/bar
+/datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
 	name = "emergency shuttle (Birdboat)"
 
