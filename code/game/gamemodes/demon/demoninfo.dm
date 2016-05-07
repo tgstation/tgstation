@@ -229,21 +229,35 @@ var/global/list/lawlorify = list (
 	var/mob/living/carbon/true_devil/D = owner.current
 	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
+	if(!D)
+		return
 	D.visible_message("<span class='warning'>[D]'s skin begins to erupt with spikes.</span>", \
 		"<span class='warning'>Your flesh begins creating a shield around yourself.</span>")
 	sleep(100)
+	if(!D)
+		return
 	D.visible_message("<span class='warning'>The horns on [D]'s head slowly grow and elongate.</span>", \
 		"<span class='warning'>Your body continues to mutate. Your telepathic abilities grow.</span>")
 	sleep(90)
+	if(!D)
+		return
 	D.visible_message("<span class='warning'>[D]'s body begins to violently stretch and contort.</span>", \
 		"<span class='warning'>You begin to rend apart the final barriers to ultimate power.</span>")
 	sleep(40)
+	if(!D)
+		return
 	D << "<i><b>Yes!</b></i>"
 	sleep(10)
+	if(!D)
+		return
 	D << "<i><b><span class='big'>YES!!</span></b></i>"
 	sleep(10)
+	if(!D)
+		return
 	D << "<i><b><span class='reallybig'>YE--</span></b></i>"
 	sleep(1)
+	if(!D)
+		return
 	world << "<font size=5><span class='danger'><b>\"SLOTH, WRATH, GLUTTONY, ACEDIA, ENVY, GREED, PRIDE! FIRES OF HELL AWAKEN!!\"</font></span>"
 	world << 'sound/hallucinations/veryfar_noise.ogg'
 	give_arch_spells()
