@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Medical huds will now show parasites in dead creatures."
