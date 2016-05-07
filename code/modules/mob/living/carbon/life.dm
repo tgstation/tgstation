@@ -190,6 +190,14 @@
 				emote(pick("giggle","laugh"))
 	breath.garbage_collect()
 
+	//BZ (Facepunch port of their Agent B)
+	if(breath_gases["bz"])
+		var/bz_partialpressure = (breath_gases["bz"][MOLES]/breath.total_moles())*breath_pressure
+		if(bz_partialpressure > 1)
+			hallucination += 20
+		else if(bz_partialpressure > 0.01)
+			hallucination += 5//Removed at 2 per tick so this will slowly build up
+
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
