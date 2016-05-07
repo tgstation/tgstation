@@ -133,16 +133,6 @@
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
-/obj/item/clothing/suit/space/cult/pickup(mob/living/user)
-	..()
-	if(!iscultist(user))
-		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
-		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
-		user.unEquip(src, 1)
-		user.Dizzy(30)
-		user.Weaken(5)
-		
-
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
