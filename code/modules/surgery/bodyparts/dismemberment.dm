@@ -1,7 +1,7 @@
 
 
 //Dismember a limb
-/obj/item/bodypart/proc/dismember()
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H) || !H.dna.species.has_dismemberment) // species don't allow dismemberment
 		return 0
@@ -12,6 +12,9 @@
 	H.emote("scream")
 	drop_limb()
 
+	if(dam_type == BURN)
+		burn()
+		return 1
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
