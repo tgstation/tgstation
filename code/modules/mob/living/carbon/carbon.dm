@@ -639,7 +639,7 @@
 
 	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
 		overlay_fullscreen("crit1", /obj/screen/fullscreen/crit1)
-		overlay_fullscreen("crit2", /obj/screen/fullscreen/crit1)
+		overlay_fullscreen("crit2", /obj/screen/fullscreen/crit2)
 	else
 		clear_fullscreen("crit1")
 		clear_fullscreen("crit2")

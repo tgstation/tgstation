@@ -8,9 +8,10 @@
 /obj/machinery/blood_donation_stand/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.vessel.total_volume > 50)
+		if(H.vessel.total_volume > 400)
 			H << "You donate 50u of your blood. The machine spits out a cookie and an injector."
 		else
+			H << "You have too little blood to donate."
 			return
 		var/obj/item/weapon/reagent_containers/hypospray/medipen/blood/M = new /obj/item/weapon/reagent_containers/hypospray/medipen/blood(src.loc)
 		var/blood_string = H.dna.blood_type
