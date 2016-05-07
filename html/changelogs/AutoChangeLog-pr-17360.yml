@@ -1,4 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Examining the blob with an active research scanner or medical hud will display effects, akin to hitting it with an analyzer."
