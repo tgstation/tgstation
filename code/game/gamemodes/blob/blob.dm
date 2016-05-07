@@ -23,7 +23,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/burst = 0
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 20
+	var/players_per_core = 25
 	var/blob_point_rate = 3
 
 	var/blobwincount = 350
