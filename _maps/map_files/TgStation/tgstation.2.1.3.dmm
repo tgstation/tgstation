@@ -30169,7 +30169,7 @@
 "bly" = (
 /obj/structure/table,
 /obj/item/stack/sheet/plasteel{
-	amount = 10
+	amount = 15
 	},
 /obj/item/stack/cable_coil,
 /obj/item/device/assembly/flash/handheld,
@@ -42124,6 +42124,9 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "cautioncorner"
@@ -42939,8 +42942,8 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bJu" = (
-/obj/machinery/light_construct{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/construction)
@@ -43497,6 +43500,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/construction)
 "bKy" = (
@@ -43513,7 +43519,13 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKA" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Construction Area";
+	req_access_txt = "32"
+	},
 /turf/open/floor/plating,
 /area/construction)
 "bKB" = (
@@ -43556,6 +43568,10 @@
 "bKF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel,
 /area/construction)
@@ -43694,10 +43710,11 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/construction)
 "bKQ" = (
 /obj/structure/rack{
@@ -43740,14 +43757,13 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKU" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Construction Area";
-	req_access_txt = "32"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/glass{
+	name = "Autolathe Storage"
+	},
+/turf/open/floor/plasteel,
 /area/construction)
 "bKV" = (
 /obj/structure/cable{
@@ -44078,12 +44094,13 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bLC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/disposalpipe/junction{
+	tag = "icon-pipe-y (WEST)";
+	icon_state = "pipe-y";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -44116,9 +44133,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/table,
+/obj/item/stack/cable_coil{
+	amount = 5
 	},
+/obj/item/device/flashlight,
 /turf/open/floor/plasteel,
 /area/construction)
 "bLH" = (
@@ -45066,6 +45086,14 @@
 /turf/open/floor/plating,
 /area/construction)
 "bNK" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel,
 /area/construction)
 "bNL" = (
@@ -46666,6 +46694,10 @@
 "bRl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -62481,11 +62513,13 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "cwM" = (
-/obj/structure/chair{
-	dir = 4
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel,
+/area/construction)
 "cwN" = (
 /obj/machinery/computer/security,
 /turf/open/floor/plasteel/shuttle{
@@ -62648,13 +62682,10 @@
 	},
 /area/shuttle/escape)
 "cxk" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
-/area/shuttle/escape)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/construction)
 "cxl" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall7";
@@ -62766,11 +62797,11 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "cxA" = (
-/obj/structure/chair{
+/obj/machinery/light_construct{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/transport)
+/turf/open/floor/plating,
+/area/construction)
 "cxB" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/shuttle,
@@ -63979,8 +64010,16 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cAy" = (
-/turf/open/floor/plating,
-/area/maintenance/electrical)
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/construction)
 "cAz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -63994,39 +64033,52 @@
 	},
 /area/chapel/office)
 "cAA" = (
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-"cAB" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
+/turf/open/floor/plasteel,
+/area/construction)
+"cAB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/area/crew_quarters/kitchen)
-"cAC" = (
-/turf/open/floor/plasteel{
-	icon_state = "cafeteria"
-	},
-/area/crew_quarters/kitchen)
-"cAD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
+/turf/open/floor/plating,
+/area/construction)
+"cAC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/construction)
+"cAD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/rack{
 	dir = 1
 	},
-/area/maintenance/disposal)
+/obj/item/clothing/suit/hazardvest,
+/turf/open/floor/plasteel,
+/area/construction)
 "cAE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
+/obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Construction Area";
+	dir = 1
 	},
-/area/medical/morgue)
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/turf/open/floor/plasteel,
+/area/construction)
 "cAF" = (
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -64049,10 +64101,9 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/medical/morgue)
+/obj/structure/closet/toolcloset,
+/turf/open/floor/plating,
+/area/construction)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64066,8 +64117,16 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "cautioncorner"
+	},
+/area/hallway/primary/aft)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -91360,7 +91419,7 @@ bLz
 bCs
 bNH
 bNJ
-bRl
+cAB
 bLF
 bNJ
 bNI
@@ -91619,7 +91678,7 @@ bNJ
 bNJ
 bKx
 bLF
-bNJ
+cAH
 bNI
 bUA
 bVJ
@@ -91872,9 +91931,9 @@ bFa
 bFa
 bFa
 bCs
-bNL
 bNJ
-bRl
+cxA
+cAB
 bLF
 bNJ
 bNI
@@ -92129,11 +92188,11 @@ bJk
 bFa
 bLA
 bCs
-bNK
-bQc
+bNI
+bNI
 bKA
-bLF
-bSv
+bON
+bNI
 bNI
 bUB
 bVJ
@@ -92387,11 +92446,11 @@ bFa
 bHO
 bCs
 bNK
-bNK
+cAy
 bKP
-bLF
-bSy
+cAD
 bNI
+bHE
 bEP
 bVJ
 bVJ
@@ -92643,12 +92702,12 @@ bJl
 bHh
 bHN
 bCs
-bNM
-bNK
+cwM
+cAA
 bKF
-bLF
-bSx
+cAE
 bNI
+bHE
 bEP
 bVL
 bVJ
@@ -92902,10 +92961,10 @@ bHQ
 bCs
 bNM
 bJu
-bKF
+cAC
 bLG
-bSz
 bNI
+bHE
 bUD
 bVM
 bVM
@@ -93157,12 +93216,12 @@ bCs
 bLD
 bCs
 bCs
-bNI
-bNI
+cxk
+cxk
 bKU
 bON
 bNI
-bNI
+bCq
 bCq
 bCq
 bCq
@@ -93415,12 +93474,12 @@ bHk
 bHR
 bIe
 bFd
-bJz
+bFd
 bRp
 cav
 bSA
 bTJ
-bSA
+cAK
 bSA
 bWL
 bSA
