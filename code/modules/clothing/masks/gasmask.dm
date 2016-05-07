@@ -13,14 +13,18 @@
 	species_fit = list("Vox")
 	body_parts_covered = FACE
 	pressure_resistance = ONE_ATMOSPHERE
+	var/canstage = 1
 	var/stage = 0
 
 
 /obj/item/clothing/mask/gas/attackby(obj/item/W,mob/user)
 	..()
+	if(!canstage)
+		to_chat(user, "<span class = 'warning'>\The [W] won't fit on \the [src].</span>")
+		return
 	if(istype(W,/obj/item/clothing/suit/spaceblanket) && !stage)
 		stage = 1
-		to_chat(user,"<span class='notice'>You add \the [W] to \the [src]</span>")
+		to_chat(user,"<span class='notice'>You add \the [W] to \the [src].</span>")
 		qdel(W)
 		icon_state = "gas_mask1"
 	if(istype(W,/obj/item/stack/cable_coil) && stage == 1)
@@ -28,14 +32,22 @@
 		if(C.amount <= 4)
 			return
 		icon_state = "gas_mask2"
-		to_chat(user,"<span class='notice'>You tie up \the [src] with \the [W]</span>")
+		to_chat(user,"<span class='notice'>You tie up \the [src] with \the [W].</span>")
 		stage = 2
 	if(istype(W,/obj/item/clothing/head/hardhat/red) && stage == 2)
-		to_chat(user,"<span class='notice'>You finish the ghetto helmet</span>")
+		to_chat(user,"<span class='notice'>You finish the ghetto helmet.</span>")
 		var/obj/ghetto = new /obj/item/clothing/head/helmet/space/rig/ghettorig (src.loc)
 		qdel(src)
 		qdel(W)
 		user.put_in_hands(ghetto)
+
+/obj/item/clothing/mask/gas/togglemask()
+	..()
+	if(is_flipped == 1)
+		if(stage == 1)
+			icon_state = "gas_mask1"
+		else
+			icon_state = "gas_mask2"
 
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
@@ -47,6 +59,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/swat
 	name = "\improper SWAT mask"
@@ -55,6 +68,7 @@
 	siemens_coefficient = 0.7
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -63,6 +77,7 @@
 	siemens_coefficient = 0.7
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -70,6 +85,7 @@
 	var/mode = 0// 0==Scouter | 1==Night Vision | 2==Thermal | 3==Meson
 	var/voice = "Unknown"
 	var/vchange = 1//This didn't do anything before. It now checks if the mask has special functions/N
+	canstage = 0
 	origin_tech = "syndicate=4"
 	action_button_name = "Toggle Mask"
 	species_fit = list("Vox")
@@ -129,6 +145,7 @@
 	item_state = "clown_hat"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/clown_hat/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -143,6 +160,7 @@
 	icon_state = "wizzclown"
 	item_state = "wizzclown"
 	can_flip = 0
+	canstage = 0
 	//TODO species_fit = list("Vox")
 
 /obj/item/clothing/mask/gas/virusclown_hat //why isn't this just a subtype of clown_hat???????
@@ -152,6 +170,7 @@
 	item_state = "clown_hat"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
@@ -160,6 +179,7 @@
 	item_state = "sexyclown"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -168,6 +188,7 @@
 	item_state = "mime"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 	var/muted = 0
 
 /obj/item/clothing/mask/gas/mime/treat_mask_speech(var/datum/speech/speech)
@@ -181,6 +202,7 @@
 	item_state = "monkeymask"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -189,6 +211,7 @@
 	item_state = "sexymime"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -197,6 +220,7 @@
 	siemens_coefficient = 0.2
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
@@ -204,6 +228,7 @@
 	icon_state = "death"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -211,3 +236,4 @@
 	icon_state = "owl"
 	species_fit = list("Vox")
 	can_flip = 0
+	canstage = 0
