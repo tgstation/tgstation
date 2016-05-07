@@ -281,8 +281,8 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
-	name = "Gwyn's Premium Absinthe"
-	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
+	name = "Premium Absinthe"
+	desc = "A potent alcoholic beverage, contains 99.9999% alcohol"
 	icon_state = "absinthepremium"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
