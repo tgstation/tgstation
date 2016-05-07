@@ -873,12 +873,9 @@
 
 
 /mob/living/carbon/human/wash_cream()
-	var/image/creamoverlay = image('icons/effects/creampie.dmi')
-	var/mob/living/carbon/human/H = src
-	if(H.dna.species.id == "lizard")
-		creamoverlay.icon_state = "creampie_lizard"
-	else creamoverlay.icon_state = "creampie_human"
-	overlays -= creamoverlay
+	//clean both to prevent a rare bug
+	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
+	overlays -=image('icons/effects/creampie.dmi', "creampie_human")
 
 
 //Turns a mob black, flashes a skeleton overlay
