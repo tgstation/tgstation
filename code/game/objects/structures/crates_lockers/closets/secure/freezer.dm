@@ -12,6 +12,20 @@
 	new /obj/item/weapon/reagent_containers/food/condiment/rice(src)
 	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
 
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance
+	name = "maintenance refrigerator"
+	desc = "This refrigerator looks quite dusty, is there anything edible still inside?"
+	req_access = list()
+
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance/New()
+	..()
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/weapon/reagent_containers/food/condiment/milk(src)
+	for(var/i = 0, i < 5, i++)
+		new /obj/item/weapon/reagent_containers/food/condiment/soymilk(src)
+	for(var/i = 0, i < 2, i++)
+		new /obj/item/weapon/storage/fancy/egg_box(src)
+
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
 	req_access = list()
 

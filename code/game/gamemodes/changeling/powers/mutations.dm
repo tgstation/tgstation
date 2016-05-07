@@ -38,10 +38,18 @@
 			user.update_inv_l_hand()
 		return 1
 
-/obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
+/obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
 		user << "<span class='warning'>The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
 		return
+	var/limb_regen = 0
+	if(user.hand) //we regen the arm before changing it into the weapon
+		limb_regen = user.regenerate_limb("l_arm", 1)
+	else
+		limb_regen = user.regenerate_limb("r_arm", 1)
+	if(limb_regen)
+		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		user.emote("scream")
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_hands(W)
 	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)

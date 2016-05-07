@@ -353,7 +353,7 @@
 	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
-	if (!subject.getorgan(/obj/item/organ/internal/brain))
+	if (!subject.getorgan(/obj/item/organ/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return
 	if (subject.suiciding == 1)

@@ -6,6 +6,9 @@
 	dna_cost = 2
 	req_stat = UNCONSCIOUS
 	var/recent_uses = 1 //The factor of which the healing should be divided by
+	var/healing_ticks = 10
+	 // The ideal total healing amount, divided by healing_ticks to get heal/tick
+	var/total_healing = 100
 
 /obj/effect/proc_holder/changeling/fleshmend/New()
 	..()
@@ -17,7 +20,7 @@
 
 /obj/effect/proc_holder/changeling/fleshmend/process()
 	if(recent_uses > 1)
-		recent_uses--
+		recent_uses = max(1, recent_uses - (1 / healing_ticks))
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
@@ -30,12 +33,20 @@
 			var/mob/living/carbon/human/H = user
 			H.restore_blood()
 			H.remove_all_embedded_objects()
+			if(H.get_missing_limbs())
+				playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+				H.visible_message("<span class='warning'>[user]'s missing limbs reform, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your limbs regrow, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+				H.emote("scream")
+				H.regenerate_limbs(1)
 
-		for(var/i = 0, i < 10, i++) //The healing itself - doesn't heal toxin damage (that's anatomic panacea) and effectiveness decreases with each use in a short timespan
+		// The healing itself - doesn't heal toxin damage (that's anatomic panacea) and
+		// effectiveness decreases with each use in a short timespan
+		for(var/i in 1 to healing_ticks)
 			if(user)
-				user.adjustBruteLoss(-10 / recent_uses, 0)
-				user.adjustOxyLoss(-10 / recent_uses, 0)
-				user.adjustFireLoss(-10 / recent_uses, 0)
+				var/healpertick = -(total_healing / healing_ticks)
+				user.adjustBruteLoss(healpertick / recent_uses, 0)
+				user.adjustOxyLoss(healpertick / recent_uses, 0)
+				user.adjustFireLoss(healpertick / recent_uses, 0)
 				user.updatehealth()
 			sleep(10)
 

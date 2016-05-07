@@ -59,7 +59,7 @@
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
-	var/obj/item/organ/limb/affecting = user.zone_selected //Find what the player is aiming at
+	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
@@ -236,15 +236,57 @@
 	list_reagents = list("wine" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
-	name = "T&T Extra-Strong Absinthe"
-	desc = "An strong alcoholic drink brewed and distributed by Terb & Tonte Inc."
+	name = "Extra-Strong Absinthe"
+	desc = "An strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
+	..()
+	redact()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
+	// There was a large fight in the coderbus about a player reference
+	// in absinthe. Ergo, this is why the name generation is now so
+	// complicated. Judge us kindly.
+	var/shortname = pickweight(
+		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
+	var/fullname
+	switch(shortname)
+		if("T&T")
+			fullname = "Teal and Tealer"
+		if("A&A")
+			fullname = "Ash and Asher"
+		if("Generic")
+			fullname = "Nanotrasen Cheap Imitations"
+	var/removals = list("\[REDACTED\]", "\[EXPLETIVE DELETED\]",
+		"\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]",
+		"\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]")
+	var/chance = 50
+
+	if(prob(chance))
+		shortname = pick_n_take(removals)
+
+	var/list/final_fullname = list()
+	for(var/word in splittext(fullname, " "))
+		if(prob(chance))
+			word = pick_n_take(removals)
+		final_fullname += word
+
+	fullname = jointext(final_fullname, " ")
+
+	// Actually finally setting the new name and desc
+	name = "[shortname] [name]"
+	desc = "[desc] [fullname] Inc."
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
 	name = "Gwyn's Premium Absinthe"
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
+	return
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 

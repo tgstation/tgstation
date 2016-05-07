@@ -98,6 +98,6 @@
 	if(confirm !="Yes")
 		return
 
-	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(usr)] manually reloaded admins")

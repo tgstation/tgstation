@@ -20,7 +20,7 @@
 	minbodytemp = 200
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
-	species = /mob/living/simple_animal/pet/cat
+	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"

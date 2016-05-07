@@ -1,13 +1,13 @@
 #define STUN_SET_AMOUNT	2
 
-/obj/item/organ/internal/cyberimp
+/obj/item/organ/cyberimp
 	name = "cybernetic implant"
 	desc = "a state-of-the-art implant that improves a baseline's functionality"
 	status = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
-/obj/item/organ/internal/cyberimp/New(var/mob/M = null)
+/obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
 		src.Insert(M)
 	if(implant_overlay)
@@ -20,7 +20,7 @@
 
 //[[[[BRAIN]]]]
 
-/obj/item/organ/internal/cyberimp/brain
+/obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"
 	desc = "injectors of extra sub-routines for the brain"
 	icon_state = "brain_implant"
@@ -28,7 +28,7 @@
 	zone = "head"
 	w_class = 1
 
-/obj/item/organ/internal/cyberimp/brain/emp_act(severity)
+/obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
 		return
 	var/stun_amount = 5 + (severity-1 ? 0 : 5)
@@ -37,7 +37,7 @@
 	return stun_amount
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop
+/obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	var/active = 0
@@ -50,7 +50,7 @@
 	origin_tech = "materials=5;programming=4;biotech=4"
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/ui_action_click()
+/obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
 		l_hand_obj = owner.l_hand
@@ -89,7 +89,7 @@
 		l_hand_obj = null
 		r_hand_obj = null
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
 	if(!owner)
 		return
 	var/range = severity ? 10 : 5
@@ -108,26 +108,26 @@
 		R_item.throw_at(A, range, 2)
 		owner << "<span class='warning'>Your right arm spasms and throws the [R_item.name]!</span>"
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/proc/release_items()
+/obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	if(!l_hand_ignore && l_hand_obj in owner.contents)
 		l_hand_obj.flags ^= NODROP
 	if(!r_hand_ignore && r_hand_obj in owner.contents)
 		r_hand_obj.flags ^= NODROP
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
 	if(active)
 		ui_action_click()
 	..()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun
+/obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = "brain_antistun"
 	origin_tech = "materials=6;programming=4;biotech=5"
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/on_life()
+/obj/item/organ/cyberimp/brain/anti_stun/on_life()
 	..()
 	if(crit_fail)
 		return
@@ -137,7 +137,7 @@
 	if(owner.weakened > STUN_SET_AMOUNT)
 		owner.weakened = STUN_SET_AMOUNT
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail)
 		return
 	crit_fail = 1
@@ -146,10 +146,10 @@
 
 
 //[[[[MOUTH]]]]
-/obj/item/organ/internal/cyberimp/mouth
+/obj/item/organ/cyberimp/mouth
 	zone = "mouth"
 
-/obj/item/organ/internal/cyberimp/mouth/breathing_tube
+/obj/item/organ/cyberimp/mouth/breathing_tube
 	name = "breathing tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
@@ -157,7 +157,7 @@
 	w_class = 1
 	origin_tech = "materials=2;biotech=3"
 
-/obj/item/organ/internal/cyberimp/mouth/breathing_tube/emp_act(severity)
+/obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	if(prob(60/severity))
 		owner << "<span class='warning'>Your breathing tube suddenly closes!</span>"
 		owner.losebreath += 2
@@ -179,8 +179,8 @@
 
 /obj/item/weapon/storage/box/cyber_implants/bundle
 	name = "boxed cybernetic implants"
-	var/list/boxed = list(/obj/item/organ/internal/cyberimp/eyes/xray,/obj/item/organ/internal/cyberimp/eyes/thermals,
-						/obj/item/organ/internal/cyberimp/brain/anti_stun, /obj/item/organ/internal/cyberimp/chest/reviver)
+	var/list/boxed = list(/obj/item/organ/cyberimp/eyes/xray,/obj/item/organ/cyberimp/eyes/thermals,
+						/obj/item/organ/cyberimp/brain/anti_stun, /obj/item/organ/cyberimp/chest/reviver)
 	var/amount = 5
 
 /obj/item/weapon/storage/box/cyber_implants/bundle/New()

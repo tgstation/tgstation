@@ -1,4 +1,4 @@
-/obj/item/organ/internal/cyberimp/arm
+/obj/item/organ/cyberimp/arm
 	name = "arm-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = "r_arm"
@@ -14,7 +14,7 @@
 	var/obj/item/holder = null
 	// You can use this var for item path, it would be converted into an item on New()
 
-/obj/item/organ/internal/cyberimp/arm/New()
+/obj/item/organ/cyberimp/arm/New()
 	..()
 	if(ispath(holder))
 		holder = new holder(src)
@@ -23,17 +23,17 @@
 	slot = zone + "_device"
 	items_list = contents.Copy()
 
-/obj/item/organ/internal/cyberimp/arm/update_icon()
+/obj/item/organ/cyberimp/arm/update_icon()
 	if(zone == "r_arm")
 		transform = null
 	else // Mirroring the icon
 		transform = matrix(-1, 0, 0, 0, 1, 0)
 
-/obj/item/organ/internal/cyberimp/arm/examine(mob/user)
+/obj/item/organ/cyberimp/arm/examine(mob/user)
 	..()
 	user << "<span class='info'>[src] is assembled in the [zone == "r_arm" ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>"
 
-/obj/item/organ/internal/cyberimp/arm/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/organ/cyberimp/arm/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(zone == "r_arm")
@@ -46,21 +46,21 @@
 	else if(istype(W, /obj/item/weapon/card/emag))
 		emag_act()
 
-/obj/item/organ/internal/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
 	..()
 
-/obj/item/organ/internal/cyberimp/arm/emag_act()
+/obj/item/organ/cyberimp/arm/emag_act()
 	return 0
 
-/obj/item/organ/internal/cyberimp/arm/gun/emp_act(severity)
+/obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(15/severity))
 		owner << "<span class='warning'>[src] is hit by EMP!</span>"
 		// give the owner an idea about why his implant is glitching
 		Retract()
 	..()
 
-/obj/item/organ/internal/cyberimp/arm/proc/Retract()
+/obj/item/organ/cyberimp/arm/proc/Retract()
 	if(!holder || (holder in src))
 		return
 
@@ -73,7 +73,7 @@
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
-/obj/item/organ/internal/cyberimp/arm/proc/Extend(var/obj/item/item)
+/obj/item/organ/cyberimp/arm/proc/Extend(var/obj/item/item)
 	if(!(item in src))
 		return
 
@@ -108,7 +108,7 @@
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
-/obj/item/organ/internal/cyberimp/arm/ui_action_click()
+/obj/item/organ/cyberimp/arm/ui_action_click()
 	if(crit_fail || (!holder && !contents.len))
 		owner << "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>"
 		return
@@ -131,7 +131,7 @@
 		Retract()
 
 
-/obj/item/organ/internal/cyberimp/arm/gun/emp_act(severity)
+/obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(30/severity) && owner && !crit_fail)
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == "r_arm" ? "right" : "left"] arm!</span>")
@@ -145,36 +145,36 @@
 		..()
 
 
-/obj/item/organ/internal/cyberimp/arm/gun/laser
+/obj/item/organ/cyberimp/arm/gun/laser
 	name = "arm-mounted laser implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4;syndicate=5"//this is kinda nutty and i might lower it
 	holder = /obj/item/weapon/gun/energy/laser/mounted
 
-/obj/item/organ/internal/cyberimp/arm/gun/laser/l/zone = "l_arm"
+/obj/item/organ/cyberimp/arm/gun/laser/l/zone = "l_arm"
 
 
-/obj/item/organ/internal/cyberimp/arm/gun/taser
+/obj/item/organ/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4"
 	holder = /obj/item/weapon/gun/energy/gun/advtaser/mounted
 
-/obj/item/organ/internal/cyberimp/arm/gun/taser/l/zone = "l_arm"
+/obj/item/organ/cyberimp/arm/gun/taser/l/zone = "l_arm"
 
 
-/obj/item/organ/internal/cyberimp/arm/toolset
+/obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all neccessary tools."
 	origin_tech = "materials=5;engineering=5;biotech=4;powerstorage=3"
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
 
-/obj/item/organ/internal/cyberimp/arm/toolset/l/zone = "l_arm"
+/obj/item/organ/cyberimp/arm/toolset/l/zone = "l_arm"
 
-/obj/item/organ/internal/cyberimp/arm/toolset/emag_act()
+/obj/item/organ/cyberimp/arm/toolset/emag_act()
 	if(!(locate(/obj/item/weapon/kitchen/knife/combat/cyborg) in items_list))
 		usr << "<span class='notice'>You unlock [src]'s integrated knife!</span>"
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)

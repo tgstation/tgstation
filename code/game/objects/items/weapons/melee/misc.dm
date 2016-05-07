@@ -93,7 +93,7 @@
 
 /obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/internal/brain/B = H.getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 
 	user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to clear their mind.</span>")
 	if(!on)
