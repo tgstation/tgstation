@@ -55,8 +55,8 @@
 #define FACEHAIR		4
 #define EYECOLOR		8
 #define LIPS			16
-#define COLDRES			32
-#define HEATRES			64
+#define RESISTCOLD		32
+#define RESISTHEAT		64
 #define RADIMMUNE		128
 #define NOBREATH		256
 #define NOGUNS			512

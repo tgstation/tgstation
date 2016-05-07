@@ -416,7 +416,7 @@
 		if(isliving(cause))
 			B.visible_message("<span class='warning'><b>The blob retaliates, lashing out!</b></span>")
 		for(var/atom/A in range(1, B))
-			A.blob_act()
+			A.blob_act(B)
 	return ..()
 
 //does low burn damage and stamina damage and cools targets down

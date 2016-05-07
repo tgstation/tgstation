@@ -25,10 +25,10 @@
 	if(health <= config.health_threshold_dead)
 		if(stat != DEAD)
 			death()
-		var/obj/item/organ/internal/brain/BR
+		var/obj/item/organ/brain/BR
 		if(container && container.brain)
 			BR = container.brain
-		else if(istype(loc, /obj/item/organ/internal/brain))
+		else if(istype(loc, /obj/item/organ/brain))
 			BR = loc
 		if(BR)
 			BR.damaged_brain = 1 //beaten to a pulp
@@ -52,33 +52,6 @@
 	return
 
 /mob/living/carbon/brain/handle_disabilities()
-	return
-
-/mob/living/carbon/brain/setEarDamage() // no ears to damage or heal
-	return
-
-/mob/living/carbon/brain/adjustEarDamage()
-	return
-
-/mob/living/carbon/brain/blind_eyes() // no eyes to damage or heal
-	return
-
-/mob/living/carbon/brain/blur_eyes()
-	return
-
-/mob/living/carbon/brain/adjust_blindness()
-	return
-
-/mob/living/carbon/brain/adjust_blurriness()
-	return
-
-/mob/living/carbon/brain/set_blindness()
-	return
-
-/mob/living/carbon/brain/set_blurriness()
-	return
-
-/mob/living/carbon/brain/become_blind()
 	return
 
 /mob/living/carbon/brain/handle_changeling()

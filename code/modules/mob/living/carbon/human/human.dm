@@ -17,6 +17,13 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
+	//initialize limbs first
+	bodyparts = newlist(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
+					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		O.owner = src
+
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	randomize_human(src)
@@ -26,18 +33,14 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
-					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
-	for(var/obj/item/organ/limb/O in organs)
-		O.owner = src
-	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/lungs
-	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/internal/brain
+	internal_organs += new /obj/item/organ/appendix
+	internal_organs += new /obj/item/organ/lungs
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
 
 	//Note: Additional organs are generated/replaced on the dna.species level
 
-	for(var/obj/item/organ/internal/I in internal_organs)
+	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
 	make_blood()
@@ -55,12 +58,6 @@
 	sec_hud_set_security_status()
 	//...and display them.
 	add_to_all_human_data_huds()
-
-/mob/living/carbon/human/Destroy()
-	for(var/atom/movable/organelle in organs)
-		qdel(organelle)
-	organs = list()
-	return ..()
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -113,10 +110,12 @@
 /mob/living/carbon/human/ex_act(severity, ex_target)
 	var/b_loss = null
 	var/f_loss = null
+	var/bomb_armor = getarmor(null, "bomb")
+
 	switch (severity)
 		if (1)
 			b_loss += 500
-			if (prob(getarmor(null, "bomb")))
+			if (prob(bomb_armor))
 				shred_clothing(1,150)
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
@@ -128,7 +127,7 @@
 			b_loss += 60
 
 			f_loss += 60
-			if (prob(getarmor(null, "bomb")))
+			if (prob(bomb_armor))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 				shred_clothing(1,25)
@@ -142,7 +141,7 @@
 
 		if(3)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if (prob(bomb_armor))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
@@ -150,15 +149,24 @@
 				Paralyse(10)
 
 	take_overall_damage(b_loss,f_loss)
-
+	//attempt to dismember bodyparts
+	if(severity >= 2 || !bomb_armor)
+		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.dismember()
+				max_limb_loss--
+				if(!max_limb_loss)
+					break
 	..()
 
-/mob/living/carbon/human/blob_act()
+/mob/living/carbon/human/blob_act(obj/effect/blob/B)
 	if(stat == DEAD)
 		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
@@ -171,6 +179,11 @@
 			playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 			return 0
 	..()
+
+/mob/living/carbon/human/attack_ui(slot)
+	if(!get_bodypart(hand ? "l_arm" : "r_arm"))
+		return 0
+	return ..()
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
@@ -304,11 +317,11 @@
 
 		if(href_list["embedded_object"])
 			var/obj/item/I = locate(href_list["embedded_object"])
-			var/obj/item/organ/limb/L = locate(href_list["embedded_limb"])
+			var/obj/item/bodypart/L = locate(href_list["embedded_limb"])
 			if(!I || !L || I.loc != src || !(I in L.embedded_objects)) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.getDisplayName()].</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()]... (It will take [time_taken/10] seconds.)</span>")
+			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
@@ -317,7 +330,7 @@
 				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of their [L.getDisplayName()]!","<span class='notice'>You successfully remove [I] from your [L.getDisplayName()].</span>")
+				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 			return
@@ -415,8 +428,9 @@
 							var/status = ""
 							if(getBruteLoss())
 								usr << "<b>Physical trauma analysis:</b>"
-								for(var/obj/item/organ/limb/org in organs)
-									var/brutedamage = org.brute_dam
+								for(var/X in bodyparts)
+									var/obj/item/bodypart/BP = X
+									var/brutedamage = BP.brute_dam
 									if(brutedamage > 0)
 										status = "received minor physical injuries."
 										span = "notice"
@@ -427,11 +441,12 @@
 										status = "sustained major trauma!"
 										span = "userdanger"
 									if(brutedamage)
-										usr << "<span class='[span]'>The [org.getDisplayName()] appears to have [status]</span>"
+										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
 							if(getFireLoss())
 								usr << "<b>Analysis of skin burns:</b>"
-								for(var/obj/item/organ/limb/org in organs)
-									var/burndamage = org.burn_dam
+								for(var/X in bodyparts)
+									var/obj/item/bodypart/BP = X
+									var/burndamage = BP.burn_dam
 									if(burndamage > 0)
 										status = "signs of minor burns."
 										span = "notice"
@@ -442,7 +457,7 @@
 										status = "major burns!"
 										span = "userdanger"
 									if(burndamage)
-										usr << "<span class='[span]'>The [org.getDisplayName()] appears to have [status]</span>"
+										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
 							if(getOxyLoss())
 								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
 							if(getToxLoss() > 20)
@@ -576,7 +591,7 @@
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(dna && PIERCEIMMUNE in dna.species.specflags)
+	if(dna && (PIERCEIMMUNE in dna.species.specflags))
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
@@ -736,10 +751,13 @@
 				"[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
-			for(var/obj/item/organ/limb/org in organs)
+			var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+			for(var/X in bodyparts)
+				var/obj/item/bodypart/LB = X
+				missing -= LB.body_zone
 				var/status = ""
-				var/brutedamage = org.brute_dam
-				var/burndamage = org.burn_dam
+				var/brutedamage = LB.brute_dam
+				var/burndamage = LB.burn_dam
 				if(hallucination)
 					if(prob(30))
 						brutedamage += rand(30,40)
@@ -763,10 +781,13 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [org.getDisplayName()] is [status]."
+				src << "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status]."
 
-				for(var/obj/item/I in org.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
+				for(var/obj/item/I in LB.embedded_objects)
+					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>"
+
+			for(var/t in missing)
+				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
 			if(blood_max)
 				src << "<span class='danger'>You are bleeding!</span>"
@@ -857,16 +878,9 @@
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
 	if(dna && dna.species)
-		dna.species.handle_mutant_bodyparts(src,"black")
-		dna.species.handle_hair(src,"black")
-		dna.species.update_color(src,"black")
 		overlays += "electrocuted_base"
 		spawn(anim_duration)
 			if(src)
-				if(dna && dna.species)
-					dna.species.handle_mutant_bodyparts(src)
-					dna.species.handle_hair(src)
-					dna.species.update_color(src)
 				overlays -= "electrocuted_base"
 
 	else //or just do a generic animation
@@ -936,9 +950,10 @@
 			hud_used.healthdoll.overlays.Cut()
 			if(stat != DEAD)
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/obj/item/organ/limb/L in organs)
-					var/damage = L.burn_dam + L.brute_dam
-					var/comparison = (L.max_damage/5)
+				for(var/X in bodyparts)
+					var/obj/item/bodypart/BP = X
+					var/damage = BP.burn_dam + BP.brute_dam
+					var/comparison = (BP.max_damage/5)
 					var/icon_num = 0
 					if(damage)
 						icon_num = 1
@@ -953,16 +968,20 @@
 					if(hal_screwyhud == 5)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
+						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+				for(var/t in get_missing_limbs()) //Missing limbs
+					hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[t]6")
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
+	if(admin_revive)
+		regenerate_limbs()
 	if(!getorganslot("lungs"))
-		var/obj/item/organ/internal/lungs/L = new()
+		var/obj/item/organ/lungs/L = new()
 		L.Insert(src)
 	if(!getorganslot("tongue"))
-		var/obj/item/organ/internal/tongue/T = new()
+		var/obj/item/organ/tongue/T = new()
 		T.Insert(src)
 	restore_blood()
 	remove_all_embedded_objects()

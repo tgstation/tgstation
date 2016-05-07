@@ -52,6 +52,7 @@
 	melee_damage_upper = 15
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	languages = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
@@ -84,6 +85,17 @@
 /mob/living/simple_animal/hostile/swarmer/New()
 	..()
 	verbs -= /mob/living/verb/pulled
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+
+
+/mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/hostile/swarmer/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	holder.icon_state = "hudstat"
 
 /mob/living/simple_animal/hostile/swarmer/Stat()
 	..()
@@ -396,7 +408,7 @@
 /obj/effect/swarmer/destructible/ex_act()
 	qdel(src)
 
-/obj/effect/swarmer/destructible/blob_act()
+/obj/effect/swarmer/destructible/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/effect/swarmer/destructible/emp_act()

@@ -33,28 +33,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
-	icon_state = "chocolatebarunwrapped"
-	wrapped = 0
+	icon_state = "chocolatebar"
 	list_reagents = list("nutriment" = 2, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/attack_self(mob/user)
-	if(wrapped)
-		Unwrap(user)
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/proc/Unwrap(mob/user)
-		icon_state = "chocolatebarunwrapped"
-		desc = "It won't make you all sticky."
-		user << "<span class='notice'>You remove the foil.</span>"
-		wrapped = 0
-
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped
-	desc = "It's wrapped in some foil."
-	icon_state = "chocolatebar"
-	wrapped = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -328,3 +309,10 @@
 	bonus_reagents = list("nutriment" = 2, "honey" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
+
+/obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
+	name = "stuffed legion"
+	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
+	icon_state = "stuffed_legion"
+	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
+	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)

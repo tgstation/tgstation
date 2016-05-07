@@ -61,7 +61,7 @@
 		if(3)
 			take_damage(rand(25,75), BRUTE, 0)
 
-/obj/structure/window/blob_act()
+/obj/structure/window/blob_act(obj/effect/blob/B)
 	shatter()
 
 /obj/structure/window/narsie_act()
@@ -185,7 +185,7 @@
 			else if(!reinf)
 				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 30/I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
 					//If state was unfastened, fasten it, else do the reverse
 					state = (state == 1 ? 2 : 1)
