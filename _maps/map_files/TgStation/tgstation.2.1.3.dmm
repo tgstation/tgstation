@@ -13807,14 +13807,13 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
+/obj/item/weapon/bikehorn/rubberducky,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/obj/structure/reagent_dispensers/vat/bathtub,
-/obj/item/weapon/bikehorn/rubberducky,
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -27737,7 +27736,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/structure/reagent_dispensers/vat,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -28509,11 +28507,6 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/box/syringes,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -29952,12 +29945,18 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "blf" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/clothing/glasses/science{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/science,
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
-/obj/structure/reagent_dispensers/vat/noreact,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -30714,12 +30713,14 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bmF" = (
+/obj/structure/table/glass,
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
-/obj/structure/reagent_dispensers/vat/noreact,
+/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil/random,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -31193,7 +31194,12 @@
 "bnD" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/reagent_dispensers/vat,
+/obj/structure/table,
+/obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/weapon/book/manual/wiki/chemistry{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -31460,7 +31466,6 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/item/stack/cable_coil/random,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -31484,7 +31489,6 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/device/radio/headset/headset_med,
-/obj/item/weapon/book/manual/wiki/chemistry,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -37846,13 +37850,13 @@
 	},
 /area/medical/sleeper)
 "bzV" = (
-/obj/structure/reagent_dispensers/vat/noreact/blood_aplus,
+/obj/structure/closet/wardrobe/white/medical,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bzW" = (
-/obj/structure/reagent_dispensers/vat/noreact/blood_aminus,
+/obj/structure/closet/l3closet,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -38568,7 +38572,6 @@
 	dir = 4;
 	on = 1
 	},
-/obj/structure/closet/wardrobe/white/medical,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -38799,7 +38802,6 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -39320,21 +39322,21 @@
 	},
 /area/medical/sleeper)
 "bCL" = (
+/obj/structure/closet/secure_closet/medical3,
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
 	dir = 2;
 	network = list("SS13")
 	},
-/obj/structure/reagent_dispensers/vat/noreact/blood_bplus,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bCM" = (
+/obj/structure/closet/secure_closet/medical3,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/obj/structure/reagent_dispensers/vat/noreact/blood_bminus,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -39392,10 +39394,23 @@
 	},
 /area/medical/sleeper)
 "bCT" = (
+/obj/structure/table,
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/clothing/tie/stethoscope,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/vat/noreact/blood_oplus,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -41451,15 +41466,6 @@
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/gun/syringe,
-/obj/item/clothing/tie/stethoscope,
-/obj/item/weapon/storage/belt/medical{
-	pixel_x = 0;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_x = 0;
-	pixel_y = 2
-	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -63998,29 +64004,29 @@
 	},
 /area/crew_quarters/kitchen)
 "cAC" = (
-/obj/machinery/blood_donation_stand,
 /turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "whiteblue"
+	icon_state = "cafeteria"
 	},
-/area/medical/medbay)
+/area/crew_quarters/kitchen)
 "cAD" = (
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
+/turf/open/floor/plating{
+	icon_state = "warnplate";
+	dir = 1
 	},
-/area/medical/medbay)
+/area/maintenance/disposal)
 "cAE" = (
-/obj/structure/closet/secure_closet/medical3,
-/turf/open/floor/plasteel{
-	icon_state = "white"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/medical/medbay)
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/medical/morgue)
 "cAF" = (
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -64043,11 +64049,10 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/obj/structure/reagent_dispensers/vat/noreact/blood_ominus,
 /turf/open/floor/plasteel{
-	icon_state = "white"
+	icon_state = "dark"
 	},
-/area/medical/sleeper)
+/area/medical/morgue)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64061,14 +64066,8 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/closet/l3closet,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/medical/medbay)
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -101616,7 +101615,7 @@ bet
 bfH
 bhh
 bhh
-cAC
+bhg
 bln
 bmM
 boj
@@ -102144,7 +102143,7 @@ bxV
 bzj
 bAv
 bvj
-cAH
+bCO
 bDR
 bDR
 bDR
@@ -102403,7 +102402,7 @@ bAu
 bvj
 bCN
 bEa
-bCO
+bFA
 bGS
 bIm
 bJD
@@ -103168,7 +103167,7 @@ bsx
 bst
 bfJ
 bhh
-cAD
+bhh
 bwK
 bhh
 bhh
@@ -103428,9 +103427,9 @@ bua
 bua
 bua
 bua
-cAE
 bhh
-cAK
+bhh
+btV
 bof
 bGU
 bqQ

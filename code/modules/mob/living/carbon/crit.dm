@@ -6,21 +6,21 @@
 	//// goal: make crit a medical emergency ////
 	//// instead of game over black screen time /
 	/////////////////////////////////////////////
-	if(getBrainLoss() >= 100 && health < 0)
+	if(getBrainLoss() >= 100 && (health - cloneloss) < 0)
 		Weaken(30)
 		losebreath += 10
 
-	if(getBrainLoss() >= 120 || (health + (getOxyLoss() / 2)) <= -500)
+	if(getBrainLoss() >= 120 || ((health - cloneloss) + (getOxyLoss() / 2)) <= -500)
 		death()
 		return
 
-	if (health <= -100)
+	if ((health - cloneloss) <= -100)
 		var/deathchance = min(99, ((getBrainLoss() * -5) + (health + (getOxyLoss() / 2))) * -0.01)
 		if (prob(deathchance))
 			death()
 			return
 
-	if (health < 0 && stat != 2)
+	if ((health - cloneloss) < 0 && stat != 2)
 		if(lasthealth > 0)
 			Paralyse(5)
 		if (prob(5))

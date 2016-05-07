@@ -9,16 +9,25 @@
 /obj/structure/reagent_dispensers/vat/update_icon()
 	..()
 	overlays.Cut()
-	if(reagents.reagent_list.len)
+	if(reagents)
 		var/colors = mix_color_from_reagents(reagents.reagent_list)
 		var/image/the_overlay_shit = image('icons/obj/chemical.dmi',"[icon_state]_chem")
 		the_overlay_shit.color = colors
 		overlays += the_overlay_shit
 
+/obj/structure/reagent_dispensers/vat/New()
+	..()
+	update_icon()
+
+/obj/structure/reagent_dispensers/vat/attackby()
+	..()
+	update_icon()
+
 /obj/structure/reagent_dispensers/vat/noreact
 	name = "Chemical Storage Vat"
 	desc = "A large vat for chemical storage. Doesn't allow reactions."
 	storage_amount = 2000
+	starting_amount = 500
 	flags = NOREACT
 
 /obj/structure/reagent_dispensers/vat/noreact/blood_aplus

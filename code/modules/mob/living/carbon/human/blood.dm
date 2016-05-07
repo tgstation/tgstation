@@ -16,7 +16,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 0
 	if(vessel)
 		return
 
-	vessel = new/datum/reagents(600)
+	vessel = new/datum/reagents(500)
 	vessel.my_atom = src
 
 	if(NOBLOOD in dna.species.specflags)

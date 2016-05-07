@@ -289,6 +289,9 @@
 			var/mob/living/carbon/C = M
 			if(C.has_medical_effect(/datum/medical_effect/shock))
 				C.remove_medical_effect(/datum/medical_effect/shock)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vessel.add_reagent("blood", 1, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=H.dna.blood_type,"resistances"=null,"trace_chem"=null))
 	..()
 
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)

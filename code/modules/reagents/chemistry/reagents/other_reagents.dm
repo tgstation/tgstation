@@ -614,6 +614,12 @@
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/iron/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vessel.add_reagent("blood", 0.4, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=H.dna.blood_type,"resistances"=null,"trace_chem"=null))
+	..()
+
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"

@@ -69,11 +69,12 @@
 /datum/medical_effect/shock/process(var/mob/living/carbon/M)
 	..()
 	if(M.health >= 25)
-		var/datum/reagent/blood/B = M.get_blood()
-		if(B && B.volume >= BLOOD_VOLUME_NORMAL)
-			M << "<span class = 'notice'>You feel better.</span>"
-			M.remove_medical_effect(/datum/medical_effect/shock)
-			return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.vessel.total_volume >= 500)
+				M << "<span class = 'notice'>You feel better.</span>"
+				M.remove_medical_effect(/datum/medical_effect/shock)
+				return
 	switch(stage)
 		if(1)
 			if(prob(1) && prob(10))

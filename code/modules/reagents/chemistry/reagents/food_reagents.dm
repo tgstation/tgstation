@@ -29,6 +29,9 @@
 	if(prob(50))
 		M.heal_organ_damage(1,0, 0)
 		. = 1
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vessel.add_reagent("blood", 0.4, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=H.dna.blood_type,"resistances"=null,"trace_chem"=null))
 	..()
 
 /datum/reagent/consumable/vitamin
@@ -118,8 +121,8 @@
 	..()
 
 /datum/reagent/consumable/capsaicin/ghostchilijuice
-	name = "Capsaicin Oil"
-	id = "capsaicin"
+	name = "Ghost Chili Juice"
+	id = "ghostchilijuice"
 	description = "This is what makes chilis hot."
 	color = "#B31008" // rgb: 179, 16, 8
 	fire_multiplier = 3
