@@ -206,7 +206,7 @@
 	if(!user.dna)
 		return -1
 	user.dna.add_mutation(HULK)
-	var/obj/item/organ/internal/hivelord_core/organ = new /obj/item/organ/internal/hivelord_core
+	var/obj/item/organ/hivelord_core/organ = new /obj/item/organ/hivelord_core
 	organ.Insert(user)
 	return ..()
 

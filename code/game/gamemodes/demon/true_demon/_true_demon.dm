@@ -23,12 +23,12 @@
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
 
 /mob/living/carbon/true_devil/New()
-	internal_organs += new /obj/item/organ/internal/brain/
-	internal_organs += new /obj/item/organ/internal/tongue
-	for(var/obj/item/organ/internal/I in internal_organs)
+	internal_organs += new /obj/item/organ/brain/
+	internal_organs += new /obj/item/organ/tongue
+	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 	..()
-	
+
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.

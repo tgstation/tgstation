@@ -8651,7 +8651,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -52506,7 +52506,9 @@
 /area/solar/port)
 "ccY" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes,
+/obj/item/weapon/kitchen/rollingpin,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/weapon/reagent_containers/food/condiment/sugar,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ccZ" = (
@@ -53385,9 +53387,11 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "ceV" = (
-/obj/item/clothing/under/rank/vice,
 /obj/structure/closet,
-/obj/item/clothing/shoes/jackboots,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ceW" = (
@@ -63980,8 +63984,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cAy" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
 /turf/open/floor/plating,
-/area/maintenance/electrical)
+/area/maintenance/aft)
 "cAz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -63995,39 +64000,42 @@
 	},
 /area/chapel/office)
 "cAA" = (
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-"cAB" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/crew_quarters/kitchen)
-"cAC" = (
-/turf/open/floor/plasteel{
-	icon_state = "cafeteria"
-	},
-/area/crew_quarters/kitchen)
-"cAD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
+/obj/machinery/light/small{
 	dir = 1
 	},
-/area/maintenance/disposal)
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cAB" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cAC" = (
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cAD" = (
+/obj/structure/table,
+/obj/item/weapon/kitchen/knife,
+/obj/item/weapon/storage/box/donkpockets,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "cAE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 2
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 2
 	},
-/area/medical/morgue)
+/obj/item/weapon/reagent_containers/food/snacks/mint{
+	pixel_y = 9
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "cAF" = (
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -64050,10 +64058,9 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads)
 "cAH" = (
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/medical/morgue)
+/obj/machinery/processor,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
@@ -64067,15 +64074,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/obj/structure/table/wood,
-/obj/structure/disposalpipe/segment,
-/obj/item/toy/cards/deck/cas,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = -6
-	},
-/turf/open/floor/wood,
-/area/library)
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -64086,16 +64087,14 @@
 /area/janitor)
 "cAM" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
+/obj/structure/disposalpipe/segment,
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -2;
+	pixel_y = 6
 	},
-/area/chapel/office)
+/turf/open/floor/wood,
+/area/library)
 "cAN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
@@ -83672,10 +83671,10 @@ apQ
 aaf
 bCq
 bCq
-bLv
-bLv
 bCq
-aaf
+bCq
+bCq
+bCq
 cfx
 cfx
 chO
@@ -83928,11 +83927,11 @@ bXv
 bLv
 aaf
 bCq
-bHE
-ccd
+cAy
+cAB
 ccY
-bLv
-aaf
+cAD
+cAH
 cfw
 cgA
 chP
@@ -84185,11 +84184,11 @@ bHE
 bLv
 aaf
 bCq
+cAA
 bHE
 bHE
 ccZ
-bCq
-bCq
+cAK
 cfw
 cgC
 chR
@@ -84443,9 +84442,9 @@ bLv
 bLv
 bCq
 bHE
-bCq
-bCq
-bCq
+cAC
+ccZ
+cAE
 ceV
 cfw
 cgB
@@ -84699,9 +84698,9 @@ bHE
 bYu
 bZk
 bCq
-bHE
+bTz
 bCq
-bSq
+bCq
 bCq
 bCq
 cfw
@@ -84958,7 +84957,7 @@ bZj
 bCq
 bHE
 bCq
-bHE
+bSq
 cdW
 ceW
 bCq
@@ -108288,7 +108287,7 @@ aFu
 aHc
 aIw
 aJS
-cAK
+cAM
 aMJ
 aNP
 aOS
@@ -110088,7 +110087,7 @@ aHf
 aIz
 aJM
 aLa
-cAM
+aMX
 aFw
 aPh
 aQs

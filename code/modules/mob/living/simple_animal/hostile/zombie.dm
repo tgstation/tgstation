@@ -55,11 +55,13 @@
 
 	if(istype(target, /obj/machinery/door/airlock))
 		if(!removingairlock)
-			src << "<span class='notice'>You start tearing apart the airlock...</span>"
-			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			var/obj/machinery/door/airlock/A = target
 			removingairlock = 1
-			if(do_after(src, 200, 0, A, 1))
+			src << "<span class='notice'>You start tearing apart the airlock...</span>"
+			playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			spawn(20)
+				playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+			if(do_after(src, 160, 0, A, 1))
 				playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
 				door.density = 0

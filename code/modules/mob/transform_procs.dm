@@ -12,7 +12,7 @@
 			implants += W
 
 	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in internal_organs)
+		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
@@ -82,10 +82,10 @@
 
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in O.internal_organs)
+		for(var/obj/item/organ/I in O.internal_organs)
 			qdel(I)
 
-		for(var/obj/item/organ/internal/I in int_organs)
+		for(var/obj/item/organ/I in int_organs)
 			I.Insert(O, 1)
 
 	//transfer mind and delete old mob
@@ -121,7 +121,7 @@
 			implants += W
 
 	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in internal_organs)
+		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
@@ -202,10 +202,10 @@
 		O.sec_hud_set_implants()
 
 	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in O.internal_organs)
+		for(var/obj/item/organ/I in O.internal_organs)
 			qdel(I)
 
-		for(var/obj/item/organ/internal/I in int_organs)
+		for(var/obj/item/organ/I in int_organs)
 			I.Insert(O, 1)
 
 	if(mind)
@@ -234,7 +234,7 @@
 /mob/living/carbon/human/AIize()
 	if (notransform)
 		return
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	return ..()
@@ -319,7 +319,7 @@
 	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
@@ -370,7 +370,7 @@
 	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
@@ -400,7 +400,7 @@
 	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/living/simple_animal/slime/new_slime
@@ -459,7 +459,7 @@
 	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	for(var/t in organs)	//this really should not be necessary
+	for(var/t in bodyparts)	//this really should not be necessary
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
@@ -490,7 +490,7 @@
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)
