@@ -670,6 +670,7 @@
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 	var/offset_step = 0
+	var/health = 20
 
 /obj/structure/rack/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.destroy)
@@ -689,6 +690,16 @@
 			if(prob(25))
 				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
+
+/obj/structure/rack/proc/checkhealth()
+	if(health <= 0)
+		new /obj/item/weapon/rack_parts(loc)
+		qdel(src)
+
+/obj/structure/rack/kick_act()
+	health -= 5
+	checkhealth()
+	..()
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
