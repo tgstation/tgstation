@@ -1034,6 +1034,7 @@
 #include "code\modules\events\spacevine.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
+#include "code\modules\events\turbulence.dm"
 #include "code\modules\events\vent_clog.dm"
 #include "code\modules\events\wormholes.dm"
 #include "code\modules\events\holiday\halloween.dm"
