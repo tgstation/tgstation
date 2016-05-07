@@ -1031,7 +1031,7 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(affecting.get_damage() >= affecting.max_damage)
+	if(affecting.get_damage() >= (affecting.max_damage - I.armour_penetration/2))
 		if(I.can_dismember() && prob(I.force*(I.w_class-1)))
 			if(affecting.dismember())
 				I.add_blood(H)
