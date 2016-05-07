@@ -27736,6 +27736,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/reagent_dispensers/vat,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -37452,6 +37453,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/vat/noreact/blood_oplus,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -62770,11 +62772,12 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "cxA" = (
-/obj/structure/chair{
-	dir = 4
+/obj/machinery/blood_donation_stand,
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "whiteblue"
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/transport)
+/area/medical/medbay)
 "cxB" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/shuttle,
@@ -101623,7 +101626,7 @@ bet
 bfH
 bhh
 bhh
-bhg
+cxA
 bln
 bmM
 boj
