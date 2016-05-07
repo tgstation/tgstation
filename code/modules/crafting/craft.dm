@@ -88,7 +88,6 @@
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	for(var/A in R.parts)
-		world << "[A] = [R.parts]"
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
 	if(check_contents(R, contents))
@@ -206,7 +205,6 @@
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
 	for(var/A in R.parts)
-		world << "[A]"
 		if(istype(A, /datum/reagent))
 			var/datum/reagent/RG = locate(A) in Deletion
 			if(RG.volume > partlist[A])
@@ -233,7 +231,7 @@
 		qdel(DL)
 
 /datum/personal_crafting/proc/craft(mob/user)
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated() || user.lying || istype(user.loc, /obj/mecha))
 		return
 	var/list/surroundings = get_surroundings(user)
 	var/dat = "<h3>Crafting menu</h3>"
