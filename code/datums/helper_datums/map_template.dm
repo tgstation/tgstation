@@ -9,6 +9,7 @@
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
 		mappath = path
+	if(mappath)
 		preload_size(mappath)
 	if(map)
 		mapfile = map

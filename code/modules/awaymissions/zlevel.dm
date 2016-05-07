@@ -96,7 +96,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			R.Load(ruins,ruin)
 			budget -= ruin.cost
 			if(!ruin.allow_duplicates)
-				ruins -= ruin
+				ruins -= ruin.name
 
 	if(!overall_sanity)
 		world.log << "Ruin loader gave up with [budget] left to spend."
