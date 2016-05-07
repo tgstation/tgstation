@@ -31,3 +31,4 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_animal_hospital.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_gym.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_survivalpod.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_wwiioutpost.dmm
