@@ -82,7 +82,7 @@
 		if(0)				//blank
 			remove_display()
 		if(1)				//emergency shuttle timer
-			if(SSshuttle.emergency.timer)
+			if(SSshuttle.emergency && SSshuttle.emergency.timer)
 				var/line1 = "-[SSshuttle.emergency.getModeStr()]-"
 				var/line2 = SSshuttle.emergency.getTimerStr()
 
