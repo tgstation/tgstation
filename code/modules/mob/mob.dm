@@ -233,7 +233,7 @@ var/next_mob_id = 0
 
 	return 0
 
-//This is a SAFE proc. Use this instead of equip_to_slot()!
+//This is a SAFE proc. Use this instead of equip_to_splot()!
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
@@ -676,23 +676,21 @@ var/next_mob_id = 0
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
-	var/has_legs = get_num_legs()
-	var/has_arms = get_num_arms()
 	if(ko || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
-	else if(has_legs)
+	else
 		lying = 0
-
+		canmove = 1
 	if(buckled)
 		lying = 90*buckle_lying
 	else
-		if((ko || resting || !has_legs) && !lying)
+		if((ko || resting) && !lying)
 			fall(ko)
-	canmove = !(ko || resting || stunned || buckled || (!has_legs && !has_arms))
+	canmove = !(ko || resting || stunned || buckled)
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

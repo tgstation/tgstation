@@ -10,7 +10,7 @@
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
 	user << "<span class='notice'>We begin cleansing impurities from our form.</span>"
 
-	var/obj/item/organ/body_egg/egg = user.getorgan(/obj/item/organ/body_egg)
+	var/obj/item/organ/internal/body_egg/egg = user.getorgan(/obj/item/organ/internal/body_egg)
 	if(egg)
 		egg.Remove(user)
 		if(iscarbon(user))

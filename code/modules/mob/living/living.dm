@@ -435,7 +435,7 @@ Sorry Giacom. Please don't be mad :(
 	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/def_zone = ran_zone(t)
+	var/obj/item/organ/limb/def_zone = ran_zone(t)
 	return def_zone
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
@@ -452,14 +452,14 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_health)
 		updatehealth()
 
-// heal MANY bodyparts, in random order
+// heal MANY external organs, in random order
 /mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(-brute, updating_health)
 	adjustFireLoss(-burn, updating_health)
 	if(updating_health)
 		updatehealth()
 
-// damage MANY bodyparts, in random order
+// damage MANY external organs, in random order
 /mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute, updating_health)
 	adjustFireLoss(burn, updating_health)

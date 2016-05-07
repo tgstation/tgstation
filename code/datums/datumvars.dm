@@ -276,7 +276,6 @@
 		if(ishuman(D))
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
-			body += "<option value='?_src_=vars;removebodypart=\ref[D]'>Remove Body Part</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
@@ -894,25 +893,6 @@ body
 				H.set_species(newtype)
 				H.dna.species.admin_set_species(H,old_species)
 
-		else if(href_list["removebodypart"])
-			if(!check_rights(R_SPAWN))
-				return
-
-			var/mob/living/carbon/human/H = locate(href_list["removebodypart"])
-			if(!istype(H))
-				usr << "This can only be done to instances of type /mob/living/carbon/human"
-				return
-
-			var/result = input(usr, "Please choose which body part to remove","Remove Body Part") as null|anything in list("head", "l_arm", "r_arm", "l_leg", "r_leg")
-
-			if(!H)
-				usr << "Mob doesn't exist anymore"
-				return
-
-			if(result)
-				var/obj/item/bodypart/BP = H.get_bodypart(result)
-				if(BP)
-					BP.drop_limb()
 
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))

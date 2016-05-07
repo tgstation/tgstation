@@ -298,7 +298,7 @@ var/global/list/multiverse = list()
 		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()
 	M.update_hair()
-	M.update_body_parts()
+	M.update_mutcolor()
 	M.dna.update_dna_identity()
 	equip_copy(M)
 
@@ -355,9 +355,21 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 		if("cyborg")
-			for(var/X in M.bodyparts)
-				var/obj/item/bodypart/affecting = X
-				affecting.change_bodypart_status(ORGAN_ROBOTIC)
+			var/obj/item/organ/limb/chest/C = locate(/obj/item/organ/limb/chest) in M.organs
+			qdel(C)
+			M.organs += new /obj/item/organ/limb/robot/chest
+			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in M.organs
+			qdel(R)
+			M.organs += new /obj/item/organ/limb/robot/r_arm
+			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in M.organs
+			qdel(L)
+			M.organs += new /obj/item/organ/limb/robot/l_arm
+			var/obj/item/organ/limb/l_leg/LL = locate(/obj/item/organ/limb/l_leg) in M.organs
+			qdel(LL)
+			M.organs += new /obj/item/organ/limb/robot/l_leg
+			var/obj/item/organ/limb/r_leg/RL = locate(/obj/item/organ/limb/r_leg) in M.organs
+			qdel(RL)
+			M.organs += new /obj/item/organ/limb/robot/r_leg
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
@@ -461,7 +473,7 @@ var/global/list/multiverse = list()
 			return
 
 	M.update_icons()
-	M.update_body_parts()
+	M.update_augments()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
@@ -590,7 +602,7 @@ var/global/list/multiverse = list()
 
 
 //Provides a decent heal, need to pump every 6 seconds
-/obj/item/organ/heart/cursed/wizard
+/obj/item/organ/internal/heart/cursed/wizard
 	pump_delay = 60
 	heal_brute = 25
 	heal_burn = 25

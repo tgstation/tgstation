@@ -270,7 +270,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/organ_action/IsAvailable()
-	var/obj/item/organ/I = target
+	var/obj/item/organ/internal/I = target
 	if(!I.owner)
 		return 0
 	return ..()

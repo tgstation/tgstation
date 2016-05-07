@@ -56,7 +56,8 @@
 			if(H.head)
 				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
-			else if(H.equip_to_slot_if_possible(hood,slot_head,0,0,1))
+			else
+				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
@@ -171,8 +172,9 @@
 			if(H.head)
 				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
-			else if(H.equip_to_slot_if_possible(helmet,slot_head,0,0,1))
+			else
 				H << "<span class='notice'>You engage the helmet on the hardsuit.</span>"
+				H.equip_to_slot_if_possible(helmet,slot_head,0,0,1)
 				suittoggled = 1
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)

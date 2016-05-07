@@ -224,7 +224,7 @@
 							if(M == user)
 								continue
 							L.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
-							M.electrocute_act(shock_damage, L, safety=1)
+							M.electrocute_act(shock_damage, "[L.name]", safety=1)
 							var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
 							z.set_up(4, 0, M)
 							z.start()
