@@ -1,5 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-- tweak: "You may now only turn gas masks into ghetto space helmets, not every kind of mask that covers your face."
-- bugfix: "Flipping a gas mask that's in the process of being turned into a ghetto space helmet no longer changes the icon incorrectly."
