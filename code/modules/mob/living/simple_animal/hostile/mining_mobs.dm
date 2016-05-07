@@ -211,7 +211,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/internal/hivelord_core)
+	loot = list(/obj/item/organ/hivelord_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
@@ -230,7 +230,7 @@
 	mouse_opacity = 1
 	..(gibbed)
 
-/obj/item/organ/internal/hivelord_core
+/obj/item/organ/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon_state = "roro core 2"
@@ -242,7 +242,7 @@
 	var/preserved = 0
 	var/list/spawned_brood = list()
 
-/obj/item/organ/internal/hivelord_core/New()
+/obj/item/organ/hivelord_core/New()
 	..()
 	spawn(2400)
 		if(!owner && !preserved)
@@ -251,7 +251,7 @@
 		else
 			preserved = 1
 
-/obj/item/organ/internal/hivelord_core/ui_action_click()
+/obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
 	if(!inert)
 		spawn_amount++
@@ -268,7 +268,7 @@
 		spawned_brood |= B
 
 
-/obj/item/organ/internal/hivelord_core/on_life()
+/obj/item/organ/hivelord_core/on_life()
 	..()
 	if(owner)
 		owner.adjustBruteLoss(-1)
@@ -281,7 +281,7 @@
 		if(B && blood_volume < 560 && blood_volume)
 			B.volume += 2 // Fast blood regen
 
-/obj/item/organ/internal/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
@@ -299,7 +299,7 @@
 			qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/prepare_eat()
+/obj/item/organ/hivelord_core/prepare_eat()
 	return null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -772,7 +772,7 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
-	loot = list(/obj/item/organ/internal/hivelord_core/legion)
+	loot = list(/obj/item/organ/hivelord_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = 1
@@ -826,7 +826,7 @@
 				qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/legion
+/obj/item/organ/hivelord_core/legion
 	name = "legion's heart"
 	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
@@ -866,17 +866,17 @@
 	stat_attack = 1
 	gender = NEUTER
 	stop_automated_movement = FALSE
+	stop_automated_movement_when_pulled = TRUE
 	stat_exclusive = TRUE
 	robust_searching = TRUE
 	search_objects = TRUE
 	del_on_death = TRUE
+	loot = list(/obj/effect/decal/cleanable/blood/gibs)
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
-	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/female = 55)
+	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	loot = list(/obj/effect/decal/cleanable/blood/gibs)
-	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/,
-						  /obj/effect/decal/cleanable/blood/gibs/, /obj/effect/decal/cleanable/blood/drip/,/obj/effect/decal/cleanable/trail_holder)
+	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
 
@@ -895,7 +895,6 @@
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
 		overlays += "gl_full"
 	..()
-
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -928,10 +927,11 @@
 
 
 //Male gutlunch. They're smaller and more colorful!
-/mob/living/simple_animal/hostile/asteroid/gutlunch/male
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck
+	name = "gubbuck"
 	gender = MALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/male/New()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
 	..()
 	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
 	resize = 0.85
@@ -939,16 +939,16 @@
 
 
 //Lady gutlunch. They make the babby.
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen
 	name = "guthen"
 	gender = FEMALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female/Life()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
 	..()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female/make_babies()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
 	if(..())
 		udder.reagents.clear_reagents()
 		regenerate_icons()

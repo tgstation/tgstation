@@ -49,7 +49,7 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
 	var/playable_spider = FALSE
-    
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
@@ -57,18 +57,20 @@
 			humanize_spider(ghost)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
-	humanize_spider(user)
+	if(!humanize_spider(user))
+		return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
-		return
+		return 0
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || qdeleted(src))
-		return
+		return 1
 	if(key)
 		user << "<span class='notice'>Someone else already took this spider.</span>"
-		return
+		return 1
 	key = user.key
+	return 1
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse

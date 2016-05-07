@@ -1,8 +1,6 @@
 /mob/living/carbon/death(gibbed)
 	silent = 0
 	losebreath = 0
-	med_hud_set_health()
-	med_hud_set_status()
 	for(var/datum/medical_effect/E in medical_effects)
 		remove_medical_effect(E)
 	..()
@@ -16,8 +14,8 @@
 	..()
 
 /mob/living/carbon/spill_organs(no_brain)
-	for(var/obj/item/organ/internal/I in internal_organs)
-		if(no_brain && istype(I, /obj/item/organ/internal/brain))
+	for(var/obj/item/organ/I in internal_organs)
+		if(no_brain && istype(I, /obj/item/organ/brain))
 			continue
 		if(I)
 			I.Remove(src)

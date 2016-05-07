@@ -14,7 +14,7 @@
 	if(..())
 		. = 1
 
-		for(var/obj/item/organ/internal/O in internal_organs)
+		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
 	//grab processing

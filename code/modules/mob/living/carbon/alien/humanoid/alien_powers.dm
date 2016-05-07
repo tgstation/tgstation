@@ -87,7 +87,16 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
-		user << {"<span class='noticealien'>You said: "[msg]" to [M]</span>"}
+		user << "<span class='noticealien'>You said: \"[msg]\" to [M]</span>"
+		for(var/ded in dead_mob_list)
+			if(!isobserver(ded))
+				continue
+			ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
+				<span class='name'>[user]</span> \
+				<span class='alertalien'>Alien Whisper --> </span> \
+				<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
+				<span class='name'>[M]</span> \
+				<span class='noticealien'>[msg]</span>"
 	else
 		return 0
 	return 1
@@ -101,7 +110,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
 	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
@@ -113,7 +122,7 @@ Doesn't work on other aliens/AI.*/
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
+			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return
@@ -285,13 +294,13 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
