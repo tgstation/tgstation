@@ -76,7 +76,7 @@
 		inside this ship. They frequently leave to mine more minerals, \
 		which they somehow turn into more of them. Seem very intent on \
 		research and individual liberty, and also geology based naming?"
-	cost = 25
+	cost = 20
 	suffix = "lavaland_surface_golem_ship.dmm"
 	allow_duplicates = FALSE
 
@@ -122,6 +122,7 @@
 	id = "sloth"
 	description = "..."
 	suffix = "lavaland_surface_sloth.dmm"
+	// Generates nothing but atmos runtimes and salt
 	cost = 0
 	allow_duplicates = FALSE
 
@@ -138,7 +139,7 @@
 	description = "Turns out that keeping your abductees unconcious is really \
 		important. Who knew?"
 	suffix = "lavaland_surface_ufo_crash.dmm"
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/ww_vault
 	name = "Wishgranter Vault"
@@ -147,7 +148,7 @@
 		warning: 'meat grinder requires sacri...'. You're not so sure about \
 		this anymore."
 	suffix = "lavaland_surface_ww_vault.dmm"
-	cost = 35
+	cost = 20
 
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
