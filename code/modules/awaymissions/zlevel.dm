@@ -63,40 +63,37 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 
 /proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
-	var/overall_sanity = 1000
+	var/overall_sanity = 100
 
 	var/ruins = potentialRuins.Copy()
 
 	while(budget > 0 && overall_sanity > 0)
-		overall_sanity--
 		// Pick a ruin
 		var/datum/map_template/ruin/ruin = ruins[pick(ruins)]
 		// Can we afford it
 		if(ruin.cost > budget)
+			overall_sanity--
 			continue
 		// If so, try to place it
-		var/valid = FALSE
 		var/sanity = 100
 		// And if we can't fit it anywhere, give up, try again
-		while(!valid && sanity > 0)
-			valid = TRUE
+		while(sanity > 0)
 			sanity--
 			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
 				if(!(istype(new_area, whitelist)))
-					valid = FALSE
 					continue
 
 			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
-			// No clue why we have this as some magical self deleting
-			// object when a proc would do perfectly well
+
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
 			budget -= ruin.cost
 			if(!ruin.allow_duplicates)
 				ruins -= ruin.name
+			break
 
 	if(!overall_sanity)
 		world.log << "Ruin loader gave up with [budget] left to spend."
