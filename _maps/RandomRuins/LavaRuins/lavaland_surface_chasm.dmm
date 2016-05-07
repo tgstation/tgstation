@@ -1,0 +1,26 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/turf/open/chasm/straight_down/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+abbaaabbbaaaaaabbaaa
+abbbbbbbbaabbbbbbaaa
+aabbccbbbbbbccbbbaaa
+aabbcccccbccccccbbaa
+abbbcccccbccccccbbaa
+aabccccccbbccccccbaa
+aabcccccccbccccccbaa
+abbcccccccbccccccbaa
+aabbccccccbccccccbba
+aabbcccccbbcccccbbaa
+abbbcccccbccccccbbaa
+abbccccccbcccccccbba
+aabccccccbcccccccbaa
+abbccccccbcccccccbaa
+abbbcccccbccccccbbba
+abbbbcccbbbbcccbbbba
+aabbbbbbbbabbbbbbbaa
+aaaabaabbaaaaabbbaaa
+aaaaaaaaaaaaaaaaaaaa
+"}

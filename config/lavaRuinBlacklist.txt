@@ -33,3 +33,6 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_survivalpod.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_wwiioutpost.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_tomb.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_ravine.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_ravine_h.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_chasm.dmm
