@@ -32,11 +32,11 @@
 			new /obj/item/clothing/suit/cultrobes(src)
 			new /obj/item/weapon/bedsheet/cult(src)
 		if(9)
-			new /obj/item/organ/internal/brain/alien(src)
+			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/internal/heart/cursed(src)
+			new /obj/item/organ/heart/cursed(src)
 		if(11)
-			new /obj/vehicle/lavaboat/dragon(src)
+			new /obj/item/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
@@ -383,6 +383,19 @@
 	category = CAT_PRIMAL
 
 //Dragon Boat
+
+
+/obj/item/ship_in_a_bottle
+	name = "ship in a bottle"
+	desc = "A tiny ship inside a bottle."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "ship_bottle"
+
+/obj/item/ship_in_a_bottle/attack_self(mob/user)
+	user << "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	new /obj/vehicle/lavaboat/dragon(get_turf(src))
+	qdel(src)
 
 /obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"
