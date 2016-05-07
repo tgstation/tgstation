@@ -15,6 +15,7 @@
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
 		user.Weaken(5)
+		user.unEquip(src, 1)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
@@ -137,8 +138,10 @@
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
+		
 
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
@@ -175,8 +178,10 @@
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
+		
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges > 0)
@@ -224,6 +229,7 @@
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
    	    	
@@ -240,6 +246,7 @@
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
 
@@ -260,6 +267,7 @@
 	
 /obj/item/device/shuttle_curse/attack_self(mob/user)
 	if(!iscultist(user))
+		user.unEquip(src, 1)
 		user.Weaken(5)
 		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
 		return
@@ -303,6 +311,7 @@
 
 /obj/item/device/cult_shift/attack_self(mob/user)
 	if(!iscultist(user))
+		user.unEquip(src, 1)
 		user.Weaken(5)
 		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
 		return
