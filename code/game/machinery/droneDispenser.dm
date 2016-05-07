@@ -14,8 +14,8 @@
 	var/icon_recharging = "recharge"
 	var/icon_creating = "make"
 
-	var/metal = 0
-	var/glass = 0
+	var/datum/material_container/materials
+	var/list/using_materials
 	var/metal_cost = 1000
 	var/glass_cost = 1000
 	var/power_used = 1000
@@ -39,24 +39,30 @@
 /obj/machinery/droneDispenser/New()
 	..()
 	health = max_health
+	materials = new(src, list(MAT_METAL=1, MAT_GLASS=1), MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
+	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
 	SSmachine.processing |= src
 
 /obj/machinery/droneDispenser/Destroy()
 	SSmachine.processing -= src
+	qdel(materials)
+	materials = null
 	return ..()
 
-/obj/machinery/droneDispenser/preloaded
-	metal = 5000
-	glass = 5000
+/obj/machinery/droneDispenser/preloaded/New()
+	..()
+	materials.insert_amount(5000)
 
 /obj/machinery/droneDispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting."
-	metal = 25000
-	glass = 25000
 	dispense_type = /obj/item/drone_shell/syndrone
 	cooldownTime = 100 //If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	end_create_message = "dispenses a suspicious drone shell."
+
+/obj/machinery/droneDispenser/syndrone/New()
+	..()
+	materials.insert_amount(25000)
 
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
@@ -74,9 +80,9 @@
 	glass_cost = 2000
 	power_used = 2000
 
-/obj/machinery/droneDispenser/snowflake/preloaded
-	metal = 10000
-	glass = 10000
+/obj/machinery/droneDispenser/snowflake/preloaded/New()
+	..()
+	materials.insert_amount(10000)
 
 /obj/machinery/droneDispenser/hivebot //An example of a custom drone dispenser. This one requires no materials and creates basic hivebots
 	name = "hivebot fabricator"
@@ -125,9 +131,9 @@
 	if(stat & BROKEN)
 		user << "<span class='warning'>[src] is smoking and steadily buzzing. It seems to be broken.</span>"
 	if(metal_cost)
-		user << "<span class='notice'>It has [metal] units of metal stored.</span>"
+		user << "<span class='notice'>It has [materials.amount(MAT_METAL)] units of metal stored.</span>"
 	if(glass_cost)
-		user << "<span class='notice'>It has [glass] units of glass stored.</span>"
+		user << "<span class='notice'>It has [materials.amount(MAT_GLASS)] units of glass stored.</span>"
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -144,7 +150,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
-	if((metal_cost && glass_cost) && (metal < metal_cost || glass < glass_cost))
+	if((metal_cost && glass_cost) && materials.can_use_amount(mats=using_materials))
 		return
 	if(droneMadeRecently)
 		icon_state = icon_recharging
@@ -157,12 +163,7 @@
 	icon_state = icon_creating
 	sleep(30)
 	icon_state = icon_on
-	metal -= metal_cost
-	glass -= glass_cost
-	if(metal < 0)
-		metal = 0
-	if(glass < 0)
-		glass = 0
+	materials.use_amount(using_materials)
 	if(power_used)
 		use_power(power_used)
 	new dispense_type(loc)
@@ -197,19 +198,16 @@
 			return
 		if(!user.canUseTopic(src))
 			return
-		stack = Clamp(stack, 0, sheets.max_amount)
-		sheets.use(stack)
-		if(!stack)
-			if(!user.unEquip(O))
-				user << "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>"
-				return
-			user.drop_item()
-			O.loc = src
-		metal += O.materials[MAT_METAL] * stack
-		glass += O.materials[MAT_GLASS] * stack
-		user << "<span class='notice'>You insert [stack] sheet[stack > 1 ? "s" : ""] to [src].</span>"
-		if((O && O.loc == src) || !stack)
-			qdel(O)
+		if(!user.canUnEquip(sheets))
+			user << "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>"
+			return
+		stack = Clamp(stack, 1, sheets.max_amount)
+		stack = materials.insert_stack(sheets, stack)
+		if(stack)
+			user << "<span class='notice'>You insert [stack] sheet[stack > 1 ? "s" : ""] into [src].</span>"
+		else
+			user << "<span class='warning'>The [src] can't use [sheets].</span>"
+
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		if(stat & BROKEN)
 			var/obj/item/weapon/weldingtool/WT = O
