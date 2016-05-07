@@ -6,7 +6,7 @@
 	var/health = 100
 	var/maxhealth = 100
 
-/obj/structure/cult/proc/getETA() //dunc and oranges are life-savers
+/obj/structure/cult/proc/getETA()
     var/time = round((0-(world.time-cooldowntime))/600, 1)
     var/eta = "[time] minutes."
     if(time == 1)
@@ -85,7 +85,7 @@
 /obj/structure/cult/pylon/New()
 	SSobj.processing |= src
 	corruption += get_turf(src)
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 5)
 		for(var/t in corruption)
 			var/turf/T = t
 			corruption |= T.GetAtmosAdjacentTurfs()	
@@ -98,7 +98,7 @@
 /obj/structure/cult/pylon/process()
 	if((last_shot + heal_delay) <= world.time)
 		last_shot = world.time
-		for(var/mob/living/L in range(4, src))
+		for(var/mob/living/L in range(5, src))
 			if(iscultist(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H))
