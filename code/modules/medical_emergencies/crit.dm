@@ -71,7 +71,7 @@
 	if(M.health >= 25)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.vessel.total_volume >= 500)
+			if(H.vessel.total_volume >= 400)
 				M << "<span class = 'notice'>You feel better.</span>"
 				M.remove_medical_effect(/datum/medical_effect/shock)
 				return
