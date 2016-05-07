@@ -25,12 +25,10 @@
 	if(!iscultist(user))
 		user << "<span class='warning'>You don't even begin to understand what these words mean...</span>"
 		return
-	if(cooldowntime)
+	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
 	cooldowntime = world.time + 2400
-	spawn(2400)
-	cooldowntime = 0
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
 	switch(choice)
 		if("Eldritch Whetstone")
@@ -54,12 +52,10 @@
 	if(!iscultist(user))
 		user << "<span class='warning'>You don't even begin to understand what these words mean...</span>"
 		return
-	if(cooldowntime)
+	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
 	cooldowntime = world.time + 2400
-	spawn(2400)
-	cooldowntime = 0
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
 	switch(choice)
 		if("Shielded Robe")
@@ -126,12 +122,10 @@
 	if(!iscultist(user))
 		user << "<span class='warning'>You don't even begin to understand what these words mean...</span>"
 		return
-	if(cooldowntime)
+	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
 		return
 	cooldowntime = world.time + 2400
-	spawn(2400)
-	cooldowntime = 0
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shift")
 	switch(choice)
 		if("Supply Talisman")
@@ -144,7 +138,6 @@
 		if("Veil Shift")
 			var /obj/item/device/cult_shift/N = new(get_turf(src))
 			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
-	
 	
 /obj/effect/gateway
 	name = "gateway"
