@@ -854,7 +854,7 @@
 /mob/living/carbon/human/wash_cream()
 	var/image/creamoverlay = image('icons/effects/creampie.dmi')
 	var/mob/living/carbon/human/H = src
-	if(H.dna && H.dna.species && ("tail_lizard" in H.dna.species.mutant_bodyparts))
+	if(H.dna.species.id == "lizard")
 		creamoverlay.icon_state = "creampie_lizard"
 	else creamoverlay.icon_state = "creampie_human"
 	overlays -= creamoverlay
