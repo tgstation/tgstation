@@ -1,4 +1,5 @@
 /datum/map_template/shuttle
+	name = "Base Shuttle Template"
 	var/prefix = "_maps/shuttles/"
 	var/suffix
 	var/port_id
@@ -7,17 +8,20 @@
 	var/admin_notes
 
 /datum/map_template/shuttle/New()
-	mappath = "[prefix][port_id]_[suffix]"
+	mappath = "[prefix][port_id]_[suffix].dmm"
 	. = ..()
 
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
+	name = "Base Shuttle Template (Emergency)"
 
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
+	name = "Base Shuttle Template (Cargo)"
 
 /datum/map_template/shuttle/ferry
 	port_id = "ferry"
+	name = "Base Shuttle Template (Ferry)"
 
 /datum/map_template/shuttle/whiteship
 	port_id = "whiteship"

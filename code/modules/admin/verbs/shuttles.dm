@@ -67,17 +67,18 @@
 		return
 
 	var/datum/map_template/template
-	// TODO would be helpful if it only highlighted actual shuttles rather
-	// than ALL OF THEM
-	var/map = input(usr, "Choose a Shuttle Template to import","Import Shuttle Template") as null|anything in map_templates
+	var/map = input(usr, "Choose a Shuttle Template to import","Import Shuttle Template") as null|anything in shuttle_templates
 	if(!map)
 		return
-	template = map_templates[map]
+	template = shuttle_templates[map]
 
 	if(alert(usr,"Confirm importing of [map]","Shuttle Import Confirm","Yes","No") != "Yes")
 		return
 
 	var/turf/T = get_turf(locate("landmark*Shuttle Import"))
+	if(!T)
+		usr << "<span class='warning'>Shuttle import landmark not found. \
+			Aborting.</span>"
 	template.load(T, centered = TRUE)
 
 	var/obj/docking_port/mobile/M
