@@ -25,7 +25,7 @@
 		M = AM
 		names += M.name
 
-	var/selected = input("Select shuttle to DESTROY", "Shuttles") in names
+	var/selected = input("Select shuttle to DESTROY", "Shuttles") as null|anything in names
 
 	var/decide_against_msg = "You decide against destroying a shuttle."
 
