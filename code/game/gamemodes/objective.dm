@@ -536,6 +536,9 @@ var/list/potential_theft_objectives=list(
 		var/pickedObjective = pick(possibleObjectives)
 		var/datum/theft_objective/objective = new pickedObjective
 
+		if(objective.typepath in map.unavailable_items)
+			continue
+
 		if(owner && owner.assigned_role in objective.protected_jobs)
 			continue
 

@@ -17,6 +17,14 @@
 			},
 		/datum/zLevel/mining,
 		)
+	unavailable_items = list(
+		/obj/item/clothing/shoes/magboots/elite,
+		/obj/item/clothing/suit/space/nasavoid,
+		/obj/item/clothing/under/rank/research_director,
+		/obj/item/clothing/under/rank/chief_engineer,
+		/obj/item/clothing/under/rank/chief_medical_officer,
+		/obj/item/clothing/under/rank/head_of_security
+		)
 
 ////////////////////////////////////////////////////////////////
 
