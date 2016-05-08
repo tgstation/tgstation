@@ -47,19 +47,22 @@
 
 /obj/machinery/autolathe/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/autolathe(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)
+	B.apply_default_parts(src)
 
 	wires = new /datum/wires/autolathe(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
+
+/obj/item/weapon/circuitboard/machine/autolathe
+	name = "circuit board (Autolathe)"
+	build_path = /obj/machinery/autolathe
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 3,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/autolathe/Destroy()
 	qdel(wires)

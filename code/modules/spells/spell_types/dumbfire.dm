@@ -38,9 +38,11 @@
 			if(istext(proj_type))
 				var/projectile_type = text2path(proj_type)
 				projectile = new projectile_type(user)
-			if(istype(proj_type,/obj/effect/proc_holder/spell))
+			else if(istype(proj_type,/obj/effect/proc_holder/spell))
 				projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
 				projectile:linked_spells += proj_type
+			else
+				projectile = new proj_type(user)
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
 			projectile.dir = get_dir(projectile, target)

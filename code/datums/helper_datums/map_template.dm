@@ -89,17 +89,28 @@
 	preloadShuttleTemplates()
 
 /proc/preloadRuinTemplates()
-	var/list/potentialSpaceRuins = generateMapList(filename = "_maps/RandomRuins/SpaceRuins/_maplisting.txt", blacklist = "config/spaceRuinBlacklist.txt")
-	for(var/ruin in potentialSpaceRuins)
-		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
-		space_ruins_templates[T.name] = T
-		map_templates[T.name] = T
+	// Still supporting bans by filename
+	var/list/banned = generateMapList("config/lavaRuinBlacklist.txt")
+	banned += generateMapList("config/spaceRuinBlacklist.txt")
 
-	var/list/potentialLavaRuins = generateMapList(filename = "_maps/RandomRuins/LavaRuins/_maplisting.txt", blacklist = "config/lavaRuinBlacklist.txt")
-	for(var/ruin in potentialLavaRuins)
-		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
-		lava_ruins_templates[T.name] = T
-		map_templates[T.name] = T
+	for(var/item in subtypesof(/datum/map_template/ruin))
+		var/datum/map_template/ruin/ruin_type = item
+		// screen out the abstract subtypes
+		if(!initial(ruin_type.id))
+			continue
+		var/datum/map_template/ruin/R = new ruin_type()
+
+		if(banned.Find(R.mappath))
+			continue
+
+		map_templates[R.name] = R
+		ruins_templates[R.name] = R
+
+		if(istype(R, /datum/map_template/ruin/lavaland))
+			lava_ruins_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/space))
+			space_ruins_templates[R.name] = R
+
 
 /proc/preloadShuttleTemplates()
 	for(var/item in subtypesof(/datum/map_template/shuttle))
