@@ -53,17 +53,14 @@
 	layer = 6
 	dir = SOUTH
 	pixel_z = 500
-	anchored = 1
 
 /obj/effect/overlay/temp/target
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
 	layer = MOB_LAYER - 0.1
-	anchored = 1
 	luminosity = 2
 
 /obj/effect/temp/dragon_swoop
-	mouse_opacity = 0
 	name = "certain death"
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
@@ -73,6 +70,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	color = "#FF0000"
+
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
@@ -331,15 +329,11 @@
 
 /obj/structure/closet/crate/necropolis/dragon/New()
 	..()
-	var/loot = rand(1,4)
+	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
-			for(var/i in 1 to 10)
-				new /obj/item/weapon/ore/diamond(src)
-				new /obj/item/weapon/ore/gold(src)
-		if(2)
 			new /obj/item/weapon/melee/ghost_sword(src)
-		if(3)
+		if(2)
 			new /obj/item/weapon/dragons_blood(src)
-		if(4)
+		if(3)
 			new /obj/item/weapon/lava_staff(src)
