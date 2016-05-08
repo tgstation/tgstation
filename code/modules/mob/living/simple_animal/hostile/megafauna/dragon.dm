@@ -1,8 +1,8 @@
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
-	health = 2500
-	maxHealth = 2500
+	health = 2000
+	maxHealth = 2000
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "dragon"
@@ -62,6 +62,17 @@
 	anchored = 1
 	luminosity = 2
 
+/obj/effect/temp/dragon_swoop
+	mouse_opacity = 0
+	name = "certain death"
+	desc = "Don't just stand there, move!"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "rune_large"
+	layer = MOB_LAYER - 0.1
+	anchored = 1
+	pixel_x = -32
+	pixel_y = -32
+	color = "#FF0000"
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
@@ -110,21 +121,21 @@
 		attack_dirs = list(NORTH,WEST,SOUTH,EAST)
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
-	spawn(0)
-		for(var/d in attack_dirs)
+	for(var/d in attack_dirs)
+		spawn(0)
 			var/turf/E = get_edge_target_turf(src, d)
 			var/range = 10
 			for(var/turf/open/J in getline(src,E))
 				if(!range)
 					break
 				range--
-
 				PoolOrNew(/obj/effect/hotspot,J)
 				J.hotspot_expose(700,50,1)
 				for(var/mob/living/L in J)
 					if(L != src)
 						L.adjustFireLoss(20)
 						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
+				sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0)
 	if(stat)
@@ -150,9 +161,11 @@
 	else
 		tturf = get_turf(src)
 	src.loc = tturf
+	var/obj/effect/temp/dragon_swoop/D = new(tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
+	qdel(D)
+	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
 		if(L == src)
 			continue
