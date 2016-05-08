@@ -745,7 +745,10 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_BOLTS))
 						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
 					else if(src.bolt_dropping_timer_id)
-						cancel_bolting()
+						if(src.hasPower())
+							cancel_bolting()
+						else
+							usr << text("Cannot cancel door bolting due to power failure.<br>\n")
 					else if(!src.locked)
 						usr << text("The door bolts are already up.<br>\n")
 					else

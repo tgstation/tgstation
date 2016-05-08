@@ -51,7 +51,10 @@
 					A.close()
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(A.bolt_dropping_timer_id)
-				A.cancel_bolting()
+				if(A.hasPower())
+					A.cancel_bolting()
+				else
+					return
 			else if(!A.locked)
 				A.bolt()
 			else
