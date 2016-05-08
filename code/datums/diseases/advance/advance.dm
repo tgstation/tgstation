@@ -453,12 +453,4 @@ var/list/advance_cures = 	list(
 		total_transmittable += S.transmittable
 	return total_transmittable
 
-/datum/disease/advance/proc/removeStimulant()
-	if(symptoms.len > 1)
-		var/remove_stimulant = (/datum/symptom/stimulant)
-		if(remove_stimulant)
-			RemoveSymptom(remove_stimulant)
-			Refresh(1)
-	return
-
 #undef RANDOM_STARTING_LEVEL

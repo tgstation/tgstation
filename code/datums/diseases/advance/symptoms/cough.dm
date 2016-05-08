@@ -11,6 +11,7 @@ Coughing
 
 BONUS
 	Will force the affected mob to drop small items!
+	Mutes you when coughing.
 
 //////////////////////////////////////
 */
@@ -37,4 +38,5 @@ BONUS
 				var/obj/item/I = M.get_active_hand()
 				if(I && I.w_class == 1)
 					M.drop_item()
+				M.reagents.add_reagent("mutetoxin",rand(1,3))
 	return
