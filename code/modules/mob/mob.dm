@@ -26,7 +26,9 @@ var/next_mob_id = 0
 
 /atom/proc/prepare_huds()
 	for(var/hud in hud_possible)
-		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
+		var/image/I = image('icons/mob/hud.dmi', src, "")
+		I.appearance_flags = RESET_COLOR
+		hud_list[hud] = I
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -583,10 +585,10 @@ var/next_mob_id = 0
 		if (nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-
-		var/ETA = SSshuttle.emergency.getModeStr()
-		if(ETA)
-			stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+		if(SSshuttle.emergency)
+			var/ETA = SSshuttle.emergency.getModeStr()
+			if(ETA)
+				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
 
 	if(client && client.holder)
@@ -761,11 +763,7 @@ var/next_mob_id = 0
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in dead_mob_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter)
 
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()

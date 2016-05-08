@@ -321,16 +321,28 @@
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
 
-/obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/metal/target, mob/user, proximity_flag, click_parameters)
+/obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
-	if(proximity_flag && istype(target) && iscultist(user))
-		var/turf/T = get_turf(target)
-		if(target.use(25))
-			new /obj/structure/constructshell(T)
-			user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+	if(proximity_flag && iscultist(user))
+		if(istype(target, /obj/item/stack/sheet/metal))
+			var/turf/T = get_turf(target)
+			if(target.use(25))
+				new /obj/structure/constructshell(T)
+				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+				user << sound('sound/effects/magic.ogg',0,1,25)
+				PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
+				qdel(src)
+		if(istype(target, /obj/item/stack/sheet/plasteel))
+			var/quantity = target.amount
+			var/turf/T = get_turf(target)
+			new /obj/item/stack/sheet/runed_metal(T,quantity)
+			target.use(quantity)
+			user << "<span class='warning'>The talisman clings to the plasteel and runes of power appear on the surface!</span>"
+			user << sound('sound/effects/magic.ogg',0,1,25)
+			PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
 			qdel(src)
 		else
-			user << "<span class='warning'>The talisman requires at least 25 sheets of metal!</span>"
+			user << "<span class='warning'>The talisman requires metal or plasteel!</span>"
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
@@ -390,6 +402,6 @@
 	origin_tech = "materials=2;magnets=5"
 
 /obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user]'s [src] shatter in a discharge of dark magic!</span>", \
+	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
 							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
 	qdel(src)

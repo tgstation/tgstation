@@ -17,14 +17,37 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/New()
 	..()
 	initialize_directions = dir
-	component_parts = list()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/thermomachine
+	name = "circuit board (Thermomachine)"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	origin_tech = "programming=3;plasmatech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
+	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
+	var/obj/item/weapon/circuitboard/machine/heater = /obj/item/weapon/circuitboard/machine/thermomachine/heater
+	var/obj/item/weapon/circuitboard/machine/newtype
+
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/new_setting = "Heater"
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if(build_path == initial(heater.build_path))
+			newtype = freezer
+			new_setting = "Freezer"
+		else
+			newtype = heater
+		name = initial(newtype.name)
+		build_path = initial(newtype.build_path)
+		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
+	else
+		return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/construction()
 	..(dir,dir)
@@ -169,7 +192,12 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/New()
 	..()
-	component_parts += new /obj/item/weapon/circuitboard/thermomachine/freezer(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/freezer(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/thermomachine/freezer
+	name = "circuit board (Freezer)"
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
@@ -189,7 +217,12 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/New()
 	..()
-	component_parts += new /obj/item/weapon/circuitboard/thermomachine/heater(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/heater(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/thermomachine/heater
+	name = "circuit board (Heater)"
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()

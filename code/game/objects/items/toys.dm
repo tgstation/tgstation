@@ -9,6 +9,7 @@
  *		Snap pops
  *		Mech prizes
  *		AI core prizes
+ *		Toy codex gigas
  * 		Skeleton toys
  *		Cards
  *		Toy nuke
@@ -692,6 +693,29 @@
 		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
 		cooldown = 1
 		spawn(30) cooldown = 0
+		return
+	..()
+
+/obj/item/toy/codex_gigas
+	name = "Toy Codex Gigas"
+	desc = "A tool to help you write fictional devils!"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "demonomicon"
+	w_class = 2
+	var/cooldown = 0
+
+/obj/item/toy/codex_gigas/attack_self(mob/user)
+	if(!cooldown)
+		var/datum/devilinfo/devil = randomDevilInfo()
+		user << "<span class='notice'>You press the button on [src].</span>"
+		cooldown = 1
+		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [devil.truename]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.bane]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.obligation]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.ban]]</span>")
+		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.banish]]</span>")
+		spawn(60) cooldown = 0
 		return
 	..()
 
