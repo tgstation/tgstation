@@ -55,18 +55,17 @@
 #define FACEHAIR		4
 #define EYECOLOR		8
 #define LIPS			16
-#define RESISTCOLD		32
-#define RESISTHEAT		64
-#define RADIMMUNE		128
-#define NOBREATH		256
-#define NOGUNS			512
-#define NOBLOOD			1024
-#define NOFIRE			2048
-#define VIRUSIMMUNE		4096
-#define PIERCEIMMUNE	8192
-#define NOTRANSSTING	16384
-
-#define MUTCOLORS_PARTSONLY 	32768	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define RESISTTEMP		32
+#define RADIMMUNE		64
+#define NOBREATH		128
+#define NOGUNS			256
+#define NOBLOOD			512
+#define NOFIRE			1024
+#define VIRUSIMMUNE		2048
+#define PIERCEIMMUNE	4096
+#define NOTRANSSTING	8192
+#define MUTCOLORS_PARTSONLY	16384	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NODISMEMBER		32768
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
