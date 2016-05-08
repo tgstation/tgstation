@@ -23,6 +23,7 @@
 #define AIRLOCK_OPENING	4
 #define AIRLOCK_DENY	5
 #define AIRLOCK_EMAG	6
+#define AIRLOCK_BOLTING 7
 var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock
@@ -42,6 +43,8 @@ var/list/airlock_overlays = list()
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
+	var/bolt_dropping_timer_id = 0
+	var/std_bolt_drop_time = 20
 	var/doortype = /obj/structure/door_assembly/door_assembly_0
 	var/justzap = 0
 	normalspeed = 1
@@ -85,11 +88,26 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/lock()
 	bolt()
 
-/obj/machinery/door/airlock/proc/bolt()
+/obj/machinery/door/airlock/proc/bolt(time = std_bolt_drop_time)
+	if(locked || bolt_dropping_timer_id)
+		return
+	do_animate("warn_bolts")
+	bolt_dropping_timer_id = addtimer(src, "bolt_instant", max(time, 1), TRUE, 0)
+
+/obj/machinery/door/airlock/proc/bolt_instant(deltimer = 1)
 	if(locked)
 		return
+	cancel_bolting(deltimer)
 	locked = 1
 	playsound(src,boltDown,30,0,3)
+	update_icon()
+
+/obj/machinery/door/airlock/proc/cancel_bolting(deltimer = 1)
+	if(!bolt_dropping_timer_id)
+		return
+	if(deltimer)
+		deltimer(bolt_dropping_timer_id)
+	bolt_dropping_timer_id = 0
 	update_icon()
 
 /obj/machinery/door/airlock/unlock()
@@ -97,6 +115,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
+		cancel_bolting()
 		return
 	locked = 0
 	playsound(src,boltUp,30,0,3)
@@ -271,6 +290,8 @@ var/list/airlock_overlays = list()
 			if(lights && hasPower())
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
+				else if(bolt_dropping_timer_id)
+					lights_overlay = get_airlock_overlay("lights_bolts_dropping", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 
@@ -330,6 +351,20 @@ var/list/airlock_overlays = list()
 				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+		if(AIRLOCK_BOLTING)
+			if(!hasPower())
+				return
+			frame_overlay = get_airlock_overlay("closed", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(panel_open)
+				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(lights && hasPower())
+				lights_overlay = get_airlock_overlay("lights_bolts_dropping", overlays_file)
 
 	//doesn't use overlays.Cut() for performance reasons
 	if(frame_overlay != old_frame_overlay)
@@ -376,6 +411,8 @@ var/list/airlock_overlays = list()
 				playsound(src,doorDeni,50,0,3)
 				sleep(6)
 				update_icon(AIRLOCK_CLOSED)
+		if("warn_bolts")
+			update_icon(AIRLOCK_BOLTING)
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
@@ -707,6 +744,8 @@ var/list/airlock_overlays = list()
 					//raise door bolts
 					if(wires.is_cut(WIRE_BOLTS))
 						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
+					else if(src.bolt_dropping_timer_id)
+						cancel_bolting()
 					else if(!src.locked)
 						usr << text("The door bolts are already up.<br>\n")
 					else

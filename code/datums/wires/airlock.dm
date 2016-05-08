@@ -50,9 +50,10 @@
 				else
 					A.close()
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
-			if(!A.locked)
+			if(A.bolt_dropping_timer_id)
+				A.cancel_bolting()
+			else if(!A.locked)
 				A.bolt()
-				A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 			else
 				if(A.hasPower())
 					A.unbolt()
@@ -116,7 +117,7 @@
 				A.shock(usr, 50)
 		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
 			if(!mend)
-				A.bolt()
+				A.bolt_instant()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
 			if(mend)
 				if(A.aiControlDisabled == 1) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
