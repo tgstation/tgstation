@@ -505,7 +505,7 @@ Sorry Giacom. Please don't be mad :(
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
-	heal_overall_damage(1000, 1000)
+	heal_overall_damage(100000, 100000)
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()
@@ -610,7 +610,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/movement_delay()
 	. = ..()
-	if(istype(loc, /turf/open))
+	if(isturf(loc, /turf/open))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -995,3 +995,29 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/proc/update_sight()
 	return
+
+/mob/living/proc/owns_soul()
+	if(mind)
+		return mind.soulOwner == mind
+	return 1
+
+/mob/living/proc/return_soul()
+	if(mind)
+		mind.soulOwner = mind
+
+/mob/living/proc/has_bane(banetype)
+	if(mind)
+		if(mind.devilinfo)
+			return mind.devilinfo.bane == banetype
+	return 0
+
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	if(mind && mind.devilinfo)
+		return check_devil_bane_multiplier(weapon, attacker)
+	return 1
+
+/mob/living/proc/check_acedia()
+	if(src.mind && src.mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
+			return 1
+	return 0

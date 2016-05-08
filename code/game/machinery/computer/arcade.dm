@@ -6,6 +6,7 @@
 	icon_screen = "invaders"
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops					= 2,
 							/obj/item/toy/AI										= 2,
+							/obj/item/toy/codex_gigas								= 2,
 							/obj/item/clothing/under/syndicate/tacticool			= 2,
 							/obj/item/toy/sword										= 2,
 							/obj/item/toy/gun										= 2,

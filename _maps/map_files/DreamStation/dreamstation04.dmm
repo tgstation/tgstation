@@ -23727,7 +23727,7 @@
 	pixel_x = -30;
 	pixel_y = 0
 	},
-/obj/structure/filingcabinet,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aVu" = (
@@ -45512,6 +45512,7 @@
 "bIQ" = (
 /obj/structure/cult/tome,
 /obj/item/clothing/under/suit_jacket/red,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel/cult,
 /area/library)
 "bIR" = (
@@ -62399,6 +62400,13 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
