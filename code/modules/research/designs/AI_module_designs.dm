@@ -2,6 +2,16 @@
 //////////AI Module Disks//////////
 ///////////////////////////////////
 
+/datum/design/aicore
+	name = "AI Design (AI Core)"
+	desc = "Allows for the construction of circuit boards used to build new AI cores."
+	id = "aicore"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/aicore
+	category = list("AI Modules")
+
 
 /datum/design/safeguard_module
 	name = "Module Design (Safeguard)"

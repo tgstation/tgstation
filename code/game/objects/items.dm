@@ -580,5 +580,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	return FALSE
 
 /obj/item/proc/can_dismember()
+
 	return sharpness && w_class >= 3
+
+	if((sharpness || damtype == BURN) && w_class >= 3)
+		return 1
+	return 0
 

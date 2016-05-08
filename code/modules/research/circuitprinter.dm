@@ -32,14 +32,18 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
+	B.apply_default_parts(src)
 	reagents.my_atom = src
+
+/obj/item/weapon/circuitboard/machine/circuit_imprinter
+	name = "circuit board (Circuit Imprinter)"
+	build_path = /obj/machinery/r_n_d/circuit_imprinter
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	var/T = 0

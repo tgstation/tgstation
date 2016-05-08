@@ -817,7 +817,7 @@
 
 /obj/item/weapon/storage/box/rndboards/New()
 	..()
-	new /obj/item/weapon/circuitboard/protolathe(src)
-	new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-	new /obj/item/weapon/circuitboard/rdconsole(src)
+	new /obj/item/weapon/circuitboard/machine/protolathe(src)
+	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
+	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/weapon/circuitboard/computer/rdconsole(src)

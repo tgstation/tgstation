@@ -45,10 +45,15 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 
 /obj/machinery/hologram/holopad/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/holopad(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/holopad
+	name = "circuit board (AI Holopad)"
+	build_path = /obj/machinery/hologram/holopad
+	origin_tech = "programming=1"
+	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+
 
 /obj/machinery/hologram/holopad/RefreshParts()
 	var/holograph_range = 4

@@ -54,6 +54,8 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
 		if(target.revive(full_heal = 1))
 			if(!target.ckey)
