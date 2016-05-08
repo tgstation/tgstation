@@ -9,7 +9,7 @@
 	idle_power_usage = 20
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/bottle = null
-	var/mode = 0
+	var/mode = 1
 	var/condi = 0
 	var/useramount = 30 // Last used amount
 
@@ -119,32 +119,13 @@
 
 	usr.set_machine(src)
 
-	if(href_list["ejectp"])
-		if(bottle)
-			bottle.loc = src.loc
-			bottle = null
 
-	else if(href_list["close"])
+	if(href_list["close"])
 		usr << browse(null, "window=chem_master")
 		usr.unset_machine()
 		return
 
-	else if(href_list["toggle"])
-		mode = !mode
 
-	else if(href_list["createbottle"])
-		var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-		if(!name)
-			return
-		var/obj/item/weapon/reagent_containers/P
-		if(condi)
-			P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
-		else
-			P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-		P.name = trim("[name] bottle")
-		reagents.trans_to(P, P.volume)
 
 	if(beaker)
 
@@ -183,104 +164,13 @@
 			attack_hand(usr)
 			return
 
-		else if(href_list["add"])
-			if(href_list["amount"])
-				var/id = href_list["add"]
-				var/amount = text2num(href_list["amount"])
-				if (amount > 0)
-					beaker.reagents.trans_id_to(src, id, amount)
-
-		else if(href_list["addcustom"])
-			var/id = href_list["addcustom"]
-			var/amt_temp = isgoodnumber(input(usr, "Select the amount to transfer.", "Transfer how much?", useramount) as num|null)
-			if(!amt_temp)
-				return
-			useramount = amt_temp
-			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
-
-		else if(href_list["remove"])
-			if(href_list["amount"])
-				var/id = href_list["remove"]
-				var/amount = text2num(href_list["amount"])
-				if (amount > 0)
-					if(mode)
-						reagents.trans_id_to(beaker, id, amount)
-					else
-						reagents.remove_reagent(id, amount)
-
-		else if(href_list["removecustom"])
-			var/id = href_list["removecustom"]
-			var/amt_temp = isgoodnumber(input(usr, "Select the amount to transfer.", "Transfer how much?", useramount) as num|null)
-			if(!amt_temp)
-				return
-			useramount = amt_temp
-			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
-
-		else if(href_list["eject"])
-			if(beaker)
-				beaker.loc = src.loc
-				beaker = null
-				reagents.clear_reagents()
-				icon_state = "mixer0"
-
-		else if(href_list["createpill"]) //Also used for condiment packs.
-			if(reagents.total_volume == 0) return
-			if(!condi)
-				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 50)
-				if(text2num(href_list["many"]))
-					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0), 10)
-					if(!amount)
-						return
-					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
-					return
-				var/obj/item/weapon/reagent_containers/pill/P
-
-				for(var/i = 0; i < amount; i++)
-					if(bottle && bottle.contents.len < bottle.storage_slots)
-						P = new/obj/item/weapon/reagent_containers/pill(bottle)
-					else
-						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-					P.name = trim("[name] pill")
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
-					reagents.trans_to(P,vol_each)
-			else
-				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
-					return
-				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
-
-				P.originalname = name
-				P.name = trim("[name] pack")
-				P.desc = "A small condiment pack. The label says it contains [name]."
-				reagents.trans_to(P,10)
-
-		else if(href_list["createpatch"])
-			if(reagents.total_volume == 0) return
-			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
-			if(text2num(href_list["many"]))
-				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
-				if(!amount)
-					return
-				vol_each = min(reagents.total_volume / amount, 50)
-			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume)
-				return
-			var/obj/item/weapon/reagent_containers/pill/P
-
-			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
-				P.name = trim("[name] patch")
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
-				reagents.trans_to(P,vol_each)
-
 	src.updateUsrDialog()
 	return
+
+
+
+
+
 
 /obj/machinery/chem_master/attack_hand(mob/user)
 	if(stat & BROKEN)
@@ -355,7 +245,194 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open(1)
-	return
+	return ..()
+
+
+
+
+/obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "chem_master", name, 470, 500, master_ui, state)
+		ui.open()
+
+
+/obj/machinery/chem_master/ui_data(mob/user)
+	var/list/data = list()
+	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isPillBottleLoaded"] = bottle ? 1 : 0
+	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
+	data["beakerMaxVolume"] = beaker ? beaker.volume : null
+	data["mode"] = mode
+	var beakerContents[0]
+	if(beaker)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+		data["beakerContents"] = beakerContents
+
+	var bufferContents[0]
+	if(reagents.total_volume)
+		for(var/datum/reagent/N in reagents.reagent_list)
+			bufferContents.Add(list(list("name" =N.name, "id" = N.id, "volume" = N.volume))) // ^
+		data["bufferContents"] = bufferContents
+
+	return data
+
+/obj/machinery/chem_master/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("eject")
+			if(beaker)
+				beaker.loc = src.loc
+				beaker = null
+				reagents.clear_reagents()
+				icon_state = "mixer0"
+				. = TRUE
+
+		if("ejectp")
+			if(bottle)
+				bottle.loc = src.loc
+				bottle = null
+				. = TRUE
+
+		if("transferToBuffer")
+			if(beaker)
+				var/id = params["id"]
+				var/amount = text2num(params["amount"])
+				if (amount > 0)
+					beaker.reagents.trans_id_to(src, id, amount)
+					. = TRUE
+				else if (amount == -1) // -1 means custom amount
+					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
+					beaker.reagents.trans_id_to(src, id, useramount)
+					. = TRUE
+
+		if("transferFromBuffer")
+			var/id = params["id"]
+			var/amount = text2num(params["amount"])
+			if (amount > 0)
+				if(mode)
+					reagents.trans_id_to(beaker, id, amount)
+					. = TRUE
+				else
+					reagents.remove_reagent(id, amount)
+					. = TRUE
+
+		if("toggleMode")
+			mode = !mode
+			. = TRUE
+
+
+		if("createPill")
+			var/many = params["many"]
+			if(reagents.total_volume == 0) return
+			if(!condi)
+				var/amount = 1
+				var/vol_each = min(reagents.total_volume, 50)
+				if(text2num(many))
+					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0), 10)
+					if(!amount)
+						return
+					vol_each = min(reagents.total_volume / amount, 50)
+				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+				if(!name || !reagents.total_volume)
+					return
+				var/obj/item/weapon/reagent_containers/pill/P
+
+				for(var/i = 0; i < amount; i++)
+					if(bottle && bottle.contents.len < bottle.storage_slots)
+						P = new/obj/item/weapon/reagent_containers/pill(bottle)
+					else
+						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+					P.name = trim("[name] pill")
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
+					reagents.trans_to(P,vol_each)
+			else
+				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
+				if(!name || !reagents.total_volume)
+					return
+				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
+
+				P.originalname = name
+				P.name = trim("[name] pack")
+				P.desc = "A small condiment pack. The label says it contains [name]."
+				reagents.trans_to(P,10)
+			. = TRUE
+
+		if("createPatch")
+			var/many = params["many"]
+			if(reagents.total_volume == 0) return
+			var/amount = 1
+			var/vol_each = min(reagents.total_volume, 50)
+			if(text2num(many))
+				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
+				if(!amount)
+					return
+				vol_each = min(reagents.total_volume / amount, 50)
+			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+			if(!name || !reagents.total_volume)
+				return
+			var/obj/item/weapon/reagent_containers/pill/P
+
+			for(var/i = 0; i < amount; i++)
+				P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
+				P.name = trim("[name] patch")
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
+				reagents.trans_to(P,vol_each)
+			. = TRUE
+
+		if("createBottle")
+			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+			if(!name)
+				return
+			var/obj/item/weapon/reagent_containers/P
+			if(condi)
+				P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+			else
+				P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+
+			P.pixel_x = rand(-7, 7) //random position
+			P.pixel_y = rand(-7, 7)
+			P.name = trim("[name] bottle")
+			reagents.trans_to(P, P.volume)
+			. = TRUE
+
+		if("analyze")
+			var/datum/reagent/R = chemical_reagents_list[params["id"]]
+			if(R)
+				var/dat = ""
+				dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
+				dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
+				dat += "<B>State:</B> "
+				if(initial(R.reagent_state) == 1)
+					dat += "Solid"
+				else if(initial(R.reagent_state) == 2)
+					dat += "Liquid"
+				else if(initial(R.reagent_state) == 3)
+					dat += "Gas"
+				else
+					dat += "Unknown"
+				dat += "<BR>"
+				dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
+				dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
+				var/const/P = 3 //The number of seconds between life ticks
+				var/T = initial(R.metabolization_rate) * (60 / P)
+				dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
+				dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
+				dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
+				dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
+				var/datum/browser/popup = new(usr, "chem_master", name)
+				popup.set_content(dat)
+				popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+				popup.open(1)
+				return
+
+
+
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))

@@ -1,0 +1,59 @@
+<ui-display title='Beaker' button>
+	<ui-button icon='{{data.isBeakerLoaded ? "Eject" : "close"}}'
+		style='{{data.isBeakerLoaded ? "selected" : null}}'
+		state='{{data.isBeakerLoaded ? null : "disabled"}}'
+		action='eject'>{{data.isBeakerLoaded ? "Eject and Clear Buffer" : "No beaker"}}</ui-button>
+		
+	<ui-section>
+		{{#if data.isBeakerLoaded}}
+			{{#each data.beakerContents}}
+				<span class='highlight'>{{Math.fixed(volume, 2)}} units of {{name}}</span>
+				<ui-button action='analyze' params='{"id": "{{id}}"}'>1</ui-button>
+				<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 1}'>1</ui-button>
+				<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 5}'>5</ui-button>
+				<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 10}'>10</ui-button>
+				<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": 1000}'>All</ui-button>
+				<ui-button action='transferToBuffer' params='{"id": "{{id}}", "amount": -1}'>Custom</ui-button>
+				<br/>
+		{{else}}
+			<span class='bad'>Beaker Empty</span>
+			{{/each}}
+		{{else}}
+			<span class='average'>No Beaker</span>
+		{{/if}}
+	</ui-section>
+</ui-display>
+
+<ui-display title='Buffer'>
+	<ui-button action='toggleMode'>Transfer to {{!data.mode ? "disposal" : "beaker"}}</ui-button>
+	<ui-section>
+		{{#each data.bufferContents}}
+			<span class='highlight'>{{Math.fixed(volume, 2)}} units of {{name}}</span>
+			<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 1}'>1</ui-button>
+			<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 5}'>5</ui-button>
+			<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 10}'>10</ui-button>
+			<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": 1000}'>All</ui-button>
+			<ui-button action='transferFromBuffer' params='{"id": "{{id}}", "amount": -1}'>Custom</ui-button>
+			<br/>
+		{{/each}}
+	</ui-section>
+</ui-display>
+
+
+<ui-display title='Pills, Bottles and Patches'>
+	<ui-button action='ejectp' state='{{data.isPillBottleLoaded ? null : "disabled"}}'>{{data.isPillBottleLoaded ? "Eject" : "No Pill bottle loaded"}}</ui-button>
+	<br/>
+	<br/>
+	<ui-button action='createPill' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Pill (max 50µ)</ui-button>
+	<br/>
+	<ui-button action='createPill' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple Pills</ui-button>
+	<br/>
+	<br/>
+	<ui-button action='createPatch' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Patch (max 50µ)</ui-button>
+	<br/>
+	<ui-button action='createPatch' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple Patches</ui-button>
+	<br/>
+	<br/>
+	<ui-button action='createBottle' state='{{data.bufferContents ? null : "disabled"}}' >Create Bottle</ui-button>
+	
+</ui-display>
