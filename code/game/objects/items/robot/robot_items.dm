@@ -178,6 +178,10 @@
 	if(safety == 1)
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+						continue
 				M.confused += 6
 				M.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
 				"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
@@ -195,7 +199,11 @@
 	if(safety == 0)
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
-				M.confused += 15
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+						continue
+ 				M.confused += 15
 				M.Weaken(2)
 				M.stuttering += 30
 				M.adjustEarDamage(0, 20)
