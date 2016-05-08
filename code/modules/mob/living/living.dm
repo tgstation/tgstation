@@ -1005,7 +1005,7 @@ Sorry Giacom. Please don't be mad :(
 	if(mind)
 		mind.soulOwner = mind
 
-/mob/living/proc/has_bane(var/banetype)
+/mob/living/proc/has_bane(banetype)
 	if(mind)
 		if(mind.devilinfo)
 			return mind.devilinfo.bane == banetype

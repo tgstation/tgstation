@@ -25,7 +25,8 @@
 /mob/living/carbon/true_devil/New()
 	internal_organs += new /obj/item/organ/brain/
 	internal_organs += new /obj/item/organ/tongue
-	for(var/obj/item/organ/I in internal_organs)
+	for(var/X in internal_organs)
+		var/obj/item/organ/I = X
 		I.Insert(src)
 	..()
 

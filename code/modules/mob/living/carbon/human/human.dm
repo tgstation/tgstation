@@ -991,7 +991,7 @@
 			dna.remove_mutation(HM.name)
 	..()
 
-/mob/living/carbon/human/proc/influenceSin() // TODO:  Finish this.
+/mob/living/carbon/human/proc/influenceSin()
 	var/datum/objective/sintouched/O
 	switch(rand(1,7))//traditional seven deadly sins... except lust.
 		if(1) // acedia
@@ -1020,7 +1020,7 @@
 	var/obj_count = 1
 	src << "<span class='notice'>Your current objectives:</span>"
 	for(O in src.mind.objectives)
-		var/datum/objective/objective
+		var/datum/objective/objective = O
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 

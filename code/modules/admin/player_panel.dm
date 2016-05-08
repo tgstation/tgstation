@@ -594,7 +594,8 @@
 
 		if(ticker.mode.devils.len)
 			dat += "<br><table cellspacing=5><tr><td><B>devils</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/devil in ticker.mode.devils)
+			for(var/X in ticker.mode.devils)
+				var/datum/mind/devil = X
 				var/mob/M = devil.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [devil.devilinfo.truename]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -608,7 +609,8 @@
 
 		if(ticker.mode.sintouched.len)
 			dat += "<br><table cellspacing=5><tr><td><B>sintouched</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/sintouched in ticker.mode.sintouched)
+			for(var/X in ticker.mode.sintouched)
+				var/datum/mind/sintouched = X
 				var/mob/M = sintouched.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"

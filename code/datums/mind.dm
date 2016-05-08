@@ -1672,7 +1672,8 @@
 		S.action.Grant(new_character)
 
 /datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
-	for(var/obj/effect/proc_holder/spell/S in spell_list)
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
 		for(var/type in exceptions)
 			if(istype(S, type))
 				continue
