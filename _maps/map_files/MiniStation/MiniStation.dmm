@@ -3510,6 +3510,7 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/hand_labeler,
 /obj/item/clothing/glasses/sunglasses,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/carpet,
 /area/security/brig)
 "hn" = (
@@ -10216,7 +10217,7 @@
 /area/crew_quarters/bar)
 "uW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads{
 	name = "\improper Job Assignment"
@@ -16130,6 +16131,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"IL" = (
+/obj/structure/table,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aa
@@ -46085,7 +46096,7 @@ nC
 jo
 bx
 bN
-bN
+IL
 bx
 ps
 rE

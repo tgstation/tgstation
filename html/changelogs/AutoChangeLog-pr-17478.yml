@@ -1,0 +1,4 @@
+author: coiax
+delete-after: True
+changes: 
+  - tweak: "Lavaland ruins spawning chances have been modified. Expect to see more smaller and less round affecting ruins, and no duplicates of major ruins, like ash walkers or golems."

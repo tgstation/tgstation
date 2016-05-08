@@ -615,7 +615,16 @@
 	id = "iron"
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
+
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
+		if(holder && holder.chem_temp < 100) // COLD iron.
+			M.reagents.add_reagent("toxin", reac_volume)
+	..()
 
 /datum/reagent/gold
 	name = "Gold"
@@ -630,6 +639,13 @@
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
+
+/datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(M.has_bane(BANE_SILVER))
+		M.reagents.add_reagent("toxin", reac_volume)
+	..()
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -735,7 +751,9 @@
 				if(H.shoes)
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes()
+				H.wash_cream()
 			M.clean_blood()
+
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"

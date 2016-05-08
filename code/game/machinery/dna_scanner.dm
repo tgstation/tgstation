@@ -111,7 +111,7 @@
 			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-			if(!occupant.suiciding && !(occupant.disabilities & NOCLONE))
+			if(!occupant.suiciding && !(occupant.disabilities & NOCLONE) && !occupant.hellbound)
 				occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 		var/obj/machinery/computer/scan_consolenew/console

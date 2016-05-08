@@ -356,7 +356,7 @@
 	if (!subject.getorgan(/obj/item/organ/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return
-	if (subject.suiciding == 1)
+	if (subject.suiciding == 1 || subject.hellbound)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
 	if ((subject.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
