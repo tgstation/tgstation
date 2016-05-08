@@ -2,13 +2,13 @@
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
-/obj/item/organ/internal/body_egg/alien_embryo
+/obj/item/organ/body_egg/alien_embryo
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	var/stage = 0
 
-/obj/item/organ/internal/body_egg/alien_embryo/on_find(mob/living/finder)
+/obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 4)
 		finder << "It's small and weak, barely the size of a foetus."
@@ -17,12 +17,12 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(prob(10))
 			AttemptGrow(0)
 
-/obj/item/organ/internal/body_egg/alien_embryo/prepare_eat()
+/obj/item/organ/body_egg/alien_embryo/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("sacid", 10)
 	return S
 
-/obj/item/organ/internal/body_egg/alien_embryo/on_life()
+/obj/item/organ/body_egg/alien_embryo/on_life()
 	switch(stage)
 		if(2, 3)
 			if(prob(2))
@@ -50,7 +50,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			owner << "<span class='danger'>You feel something tearing its way out of your stomach...</span>"
 			owner.adjustToxLoss(10)
 
-/obj/item/organ/internal/body_egg/alien_embryo/egg_process()
+/obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage < 5 && prob(3))
 		stage++
 		spawn(0)
@@ -65,7 +65,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 
 
-/obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
+/obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
 	if(!owner) return
 	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET, "alien candidate")
 	var/client/C = null
@@ -110,7 +110,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
-/obj/item/organ/internal/body_egg/alien_embryo/AddInfectionImages()
+/obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
 			var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
@@ -120,7 +120,7 @@ Des: Adds the infection image to all aliens for this embryo
 Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
-/obj/item/organ/internal/body_egg/alien_embryo/RemoveInfectionImages()
+/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)

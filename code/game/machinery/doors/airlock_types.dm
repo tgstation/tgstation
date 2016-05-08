@@ -318,6 +318,22 @@
 	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_cult
+	hackProof = 1
+	aiControlDisabled = 1
+
+/obj/machinery/door/airlock/cult/allowed(mob/M)
+	if(!iscultist(M))
+		PoolOrNew(/obj/effect/overlay/temp/cult/sac, src.loc)
+		var/atom/throwtarget
+		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
+		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		M.Weaken(2)
+		M.throw_at_fast(throwtarget, 5, 1,src)
+		return 0
+	else
+		PoolOrNew(/obj/effect/overlay/temp/cult/door, src.loc)
+		return 1
+
 
 /obj/machinery/door/airlock/cult/narsie_act()
 	return

@@ -109,7 +109,7 @@
 	metal_cost = 0
 	glass_cost = 0
 	cooldownTime = 300 //30 seconds
-	dispense_type = /obj/item/unactivated_swarmer
+	dispense_type = /obj/item/device/unactivated_swarmer
 	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
 	end_create_message = "materializes a strange shell, which drops to the ground."
 	recharging_text = "Its lights are slowly increasing in brightness."

@@ -25,7 +25,7 @@
 	..()
 
 /datum/disease/revblight/stage_act()
-	if(!finalstage && affected_mob.lying && prob(stage*2))
+	if(!finalstage && affected_mob.lying && prob(stage*5))
 		cure()
 		return
 	if(!finalstage && prob(stage*3))

@@ -247,8 +247,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)
 				H.updatehealth()
 				return
@@ -427,7 +427,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
+	var/obj/item/bodypart/affecting = M.get_bodypart("head")
 	if(ishuman(M))
+		if(!affecting) //no head!
+			return
 		is_human_victim = 1
 		var/mob/living/carbon/human/H = M
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
@@ -467,7 +470,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
 			U.update_damage_overlays(0)
 
@@ -572,3 +574,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/proc/is_sharp()
 	return sharpness
+
+/obj/item/proc/can_dismember()
+	return sharpness && w_class >= 3

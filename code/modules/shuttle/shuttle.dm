@@ -18,9 +18,18 @@
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
 
+	var/i_know_what_im_doing = 0
+
 	//these objects are indestructable
 /obj/docking_port/Destroy()
-	return QDEL_HINT_LETMELIVE
+	// unless you assert that you know what you're doing. Horrible things
+	// may result.
+	if(!i_know_what_im_doing)
+		return QDEL_HINT_LETMELIVE
+	else
+		// If not removed immediately, it can interfere with the docking
+		// detection code, which is annoying and inconvinient.
+		return QDEL_HINT_HARDDEL_NOW
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
@@ -143,7 +152,7 @@
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
-	return locate(/obj/docking_port/mobile) in loc
+	. = locate(/obj/docking_port/mobile) in loc
 	/*
 	for(var/turf/T in return_ordered_turfs())
 		. = locate(/obj/docking_port/mobile) in loc
@@ -181,6 +190,11 @@
 /obj/docking_port/mobile/New()
 	..()
 	SSshuttle.mobile += src
+
+/obj/docking_port/mobile/Destroy()
+	if(i_know_what_im_doing)
+		SSshuttle.mobile -= src
+	. = ..()
 
 /obj/docking_port/mobile/initialize()
 	var/area/A = get_area(src)
@@ -221,16 +235,32 @@
 	if(height-dheight > S.height-S.dheight)
 		return 5
 	//check the dock isn't occupied
-	if(S.get_docked())
-		return 6
+	var/currently_docked = S.get_docked()
+	if(currently_docked)
+		// by someone other than us
+		if(currently_docked != src)
+			return 6
+		else
+		// This isn't an error, per se, but we can't let the shuttle code
+		// attempt to move us where we currently are, it will get weird.
+			return SHUTTLE_ALREADY_DOCKED
 	return 0	//0 means we can dock
 
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
-	if(canDock(S))
-		. = 1
-		throw EXCEPTION("request(): shuttle cannot dock")
-		return 1	//we can't dock at S
+	var/status = canDock(S)
+	if(status == SHUTTLE_ALREADY_DOCKED)
+		// We're already docked there, don't need to do anything.
+		// Triggering shuttle movement code in place is weird
+		return
+	else if(status)
+		. = status
+		spawn(0)
+			var/msg = "request(): shuttle [src] cannot dock at [S], \
+				error: [status]"
+			message_admins(msg)
+			throw EXCEPTION(msg)
+		return status	//we can't dock at S
 
 	switch(mode)
 		if(SHUTTLE_CALL)
@@ -294,16 +324,66 @@
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
+/obj/docking_port/mobile/proc/jumpToNullSpace()
+	// Destroys the docking port and the shuttle contents.
+	// Not in a fancy way, it just ceases.
+	var/obj/docking_port/stationary/S0 = get_docked()
+	var/turf_type = /turf/open/space
+	var/area_type = /area/space
+	if(S0)
+		if(S0.turf_type)
+			turf_type = S0.turf_type
+		if(S0.area_type)
+			area_type = S0.area_type
+
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+
+	//remove area surrounding docking port
+	if(areaInstance.contents.len)
+		var/area/A0 = locate("[area_type]")
+		if(!A0)
+			A0 = new area_type(null)
+		for(var/turf/T0 in L0)
+			A0.contents += T0
+
+	for(var/i=1, i<=L0.len, ++i)
+		var/turf/T0 = L0[i]
+		if(!T0)
+			continue
+
+		for(var/atom/AM in T0.GetAllContents())
+			if(istype(AM, /mob/dead))
+				continue
+			qdel(AM)
+
+		T0.ChangeTurf(turf_type)
+
+		T0.redraw_lighting()
+		SSair.remove_from_active(T0)
+		T0.CalculateAdjacentTurfs()
+		SSair.add_to_active(T0,1)
+
+	src.i_know_what_im_doing = TRUE
+	qdel(src)
+
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
-/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
-	. = canDock(S1)
-	if(.)
-		throw EXCEPTION("dock(): shuttle cannot dock")
-		return .
+/obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
+	// Crashing this ship with NO SURVIVORS
+	if(!force)
+		var/status = canDock(S1)
+		if(status == 7)
+			return SHUTTLE_ALREADY_DOCKED
+		else if(status)
+			spawn(0)
+				var/msg = "dock(): shuttle [src] cannot dock at [S1], \
+					error: [status]"
+				message_admins(msg)
+				throw EXCEPTION(msg)
+			return status
 
-	if(canMove())
-		return -1
+		if(canMove())
+			return -1
 
 	closePortDoors()
 
@@ -432,6 +512,24 @@
 	var/obj/docking_port/stationary/transit/T = SSshuttle.getDock("[id]_transit")
 	if(T && !canDock(T))
 		return T
+
+/obj/docking_port/mobile/proc/findRoundstartDock()
+	var/obj/docking_port/stationary/D
+	D = SSshuttle.getDock(roundstart_move)
+
+	if(D)
+		return D
+
+/obj/docking_port/mobile/proc/dockRoundstart()
+	// Instead of spending a lot of time trying to work out where to place
+	// our shuttle, just create it somewhere empty and send it to where
+	// it should go
+	var/obj/docking_port/stationary/D = findRoundstartDock()
+	return dock(D)
+
+/obj/effect/landmark/shuttle_import
+	name = "Shuttle Import"
+
 /*	commented out due to issues with rotation
 	for(var/obj/docking_port/stationary/transit/S in SSshuttle.transit)
 		if(S.id)
