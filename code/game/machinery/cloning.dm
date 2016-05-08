@@ -25,16 +25,8 @@
 
 /obj/machinery/clonepod/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonepod(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
+	B.apply_default_parts(src)
 
 /obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
@@ -46,6 +38,16 @@
 	heal_level = (efficiency * 15) + 10
 	if(heal_level > 100)
 		heal_level = 100
+
+/obj/item/weapon/circuitboard/machine/clonepod
+	name = "circuit board (Clone Pod)"
+	build_path = /obj/machinery/clonepod
+	origin_tech = "programming=3;biotech=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.

@@ -4,7 +4,7 @@
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/weapon/circuitboard/cloning
+	circuit = /obj/item/weapon/circuitboard/computer/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.

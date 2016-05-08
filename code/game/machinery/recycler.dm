@@ -17,15 +17,19 @@ var/const/SAFETY_COOLDOWN = 100
 	var/datum/material_container/materials
 
 /obj/machinery/recycler/New()
-	// On us
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_PLASMA=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_URANIUM=1, MAT_BANANIUM=1))
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recycler(null)
+	B.apply_default_parts(src)
 	update_icon()
+
+/obj/item/weapon/circuitboard/machine/recycler
+	name = "circuit board (Recycler)"
+	build_path = /obj/machinery/recycler
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0

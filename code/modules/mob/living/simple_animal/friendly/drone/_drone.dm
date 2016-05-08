@@ -65,8 +65,8 @@
 
 /mob/living/simple_animal/drone/New()
 	..()
-
-	name = name + " ([rand(100,999)])"
+	if(name != initial(name))
+		name = name + " ([rand(100,999)])"
 	real_name = name
 
 	access_card = new /obj/item/weapon/card/id(src)
