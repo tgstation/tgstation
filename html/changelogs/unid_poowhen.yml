@@ -1,0 +1,8 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- tweak: Vomiting now removes some chemicals from your body.
+- rscadd: "You can now vomit into a toilet by standing over it. It's also possible to vomit into a reagent container (like a bucket or a beaker) by either standing over it, or holding it while vomiting. Vomiting into a container partially fills it."
+- rscadd: Pools of vomit now dry over time. You can use a dropper or a syringe on a fresh pool of vomit to extract some of the substance.

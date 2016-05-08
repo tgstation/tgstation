@@ -1514,6 +1514,25 @@
 
 	M.adjustToxLoss(1)
 
+/datum/reagent/vomit
+	name = "Vomit"
+	id = "vomit"
+	description = "Stomach acid mixed with partially digested chunks of food."
+	reagent_state = LIQUID
+	color = "#EACF9D" //rgb: 234, 207, 157. Pale yellow
+
+/datum/reagent/vomit/on_mob_life(var/mob/living/M)
+	if(..()) return 1
+
+	M.adjustToxLoss(0.1)
+
+/datum/reagent/vomit/reaction_turf(turf/simulated/T, volume)
+	if(..()) return 1
+
+	if(volume >= 3)
+		if(!(locate(/obj/effect/decal/cleanable/vomit) in T))
+			getFromPool(/obj/effect/decal/cleanable/vomit, T)
+
 /datum/reagent/space_cleaner
 	name = "Space cleaner"
 	id = "cleaner"

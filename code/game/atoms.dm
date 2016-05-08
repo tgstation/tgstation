@@ -690,13 +690,20 @@ its easier to just keep the beam vertical.
 		return 1 //we applied blood to the item
 	return
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0, active = 0, steal_reagents_from_mob = 1)
 	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
+		var/obj/effect/decal/cleanable/vomit/this
+		if(active)
+			this = new /obj/effect/decal/cleanable/vomit/active(src)
+		else
+			this = new /obj/effect/decal/cleanable/vomit(src)
 
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
+
+		if(active && steal_reagents_from_mob && M && M.reagents)
+			M.reagents.trans_to(this, M.reagents.total_volume * 0.1)
 
 
 /atom/proc/clean_blood()

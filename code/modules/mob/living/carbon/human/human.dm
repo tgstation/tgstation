@@ -997,31 +997,68 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/proc/vomit(hairball = 0)
+/mob/living/carbon/human/proc/vomit(hairball = 0, instant = 0)
 	if(!lastpuke)
 		lastpuke = 1
 		to_chat(src, "<spawn class='warning'>You feel nauseous...</span>")
-		spawn(150)	//15 seconds until second warning
+
+		spawn((instant ? 0 : 150))	//15 seconds until second warning
 			to_chat(src, "<spawn class='danger'>You feel like you are about to throw up!</span>")
-			spawn(100)	//And you have 10 more seconds to move it to the bathrooms
-				Stun(5)
 
-				if(hairball)
-					src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='danger'>You hack up a hairball!</span>")
-				else
+			sleep((instant ? 0 : 100))	//And you have 10 more seconds to move it to the bathrooms
+
+			Stun(5)
+
+			var/turf/location = loc
+			var/spawn_vomit_on_floor = 0
+
+			if(hairball)
+				src.visible_message("<span class='warning'>[src] hacks up a hairball!</span>","<span class='danger'>You hack up a hairball!</span>")
+
+			else
+				var/skip_message = 0
+
+				var/obj/structure/toilet/T = locate(/obj/structure/toilet) in location //Look for a toilet
+				if(T && T.open)
+					src.visible_message("<span class='warning'>[src] throws up into \the [T]!</span>", "<span class='danger'>You throw up into \the [T]!</span>")
+					skip_message = 1
+				else //Look for a bucket
+
+					for(var/obj/item/weapon/reagent_containers/glass/G in (location.contents + src.get_active_hand() + src.get_inactive_hand()))
+						if(!G.reagents) continue
+						if(!G.is_open_container()) continue
+
+						src.visible_message("<span class='warning'>[src] throws up into \the [G]!</span>", "<span class='danger'>You throw up into \the [G]!</span>")
+
+						if(G.reagents.total_volume <= G.reagents.maximum_volume-7) //Container can fit 7 more units of chemicals - vomit into it
+							G.reagents.add_reagent("vomit", rand(3,10))
+							if(src.reagents) reagents.trans_to(G, 1 + reagents.total_volume * 0.1)
+						else //Container is nearly full - fill it to the brim with vomit and spawn some more on the floor
+							G.reagents.add_reagent("vomit", 10)
+							spawn_vomit_on_floor = 1
+							to_chat(src, "<span class='warning'>\The [G] overflows!</span>")
+
+						skip_message = 1
+
+						break
+
+				if(!skip_message)
 					src.visible_message("<span class='warning'>[src] throws up!</span>","<span class='danger'>You throw up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+					spawn_vomit_on_floor = 1
 
-				var/turf/location = loc
+			playsound(get_turf(loc), 'sound/effects/splat.ogg', 50, 1)
+
+			if(spawn_vomit_on_floor)
 				if(istype(location, /turf/simulated))
-					location.add_vomit_floor(src, 1)
+					location.add_vomit_floor(src, 1, (hairball ? 0 : 1), 1)
 
-				if(!hairball)
-					nutrition = max(nutrition-40,0)
-					adjustToxLoss(-3)
+			if(!hairball)
+				nutrition = max(nutrition-40,0)
+				adjustToxLoss(-3)
 
-				spawn(350)	//Wait 35 seconds before next volley
-					lastpuke = 0
+			sleep((instant ? 0 : 350))	//Wait 35 seconds before next volley
+
+			lastpuke = 0
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
