@@ -568,9 +568,76 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
 	id = "grog"
-	description = "Watered down rum, Nanotrasen approves!"
-	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 1 //Basically nothing
+	description = "A highly caustic and nigh-undrinkable substance often associated with piracy."
+	color = rgb(0,255,0)
+	boozepwr = 50 //STRONG STUFF
+
+/datum/reagent/consumable/ethanol/grog/on_mob_life(mob/living/M)
+	if(prob(15))
+		M.adjustToxLoss(1)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/grog/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(method == TOUCH || method == VAPOR)
+		if(prob(75))
+			M.adjustBruteLoss(25)
+			M.emote("scream")
+			M << "span class = 'userdanger'>Your face has become disfigured!</span>"
+			M.real_name = "Unknown"
+		else
+			M.adjustBruteLoss(5)
+	if(!dd_hasprefix(M.real_name, "Captain"))
+		var/temp = "Captain [M.real_name]"
+		M.fully_replace_character_name(M.real_name, temp)
+	return ..()
+
+/datum/reagent/consumable/ethanol/dbreath
+	name = "Dragon's Breath"
+	id = "dbreath"
+	description = "Possessing this stuff probably breaks the Geneva convention."
+	color = rgb(220,0,0)
+	boozepwr = 50
+
+/datum/reagent/consumable/ethanol/dbreath/on_mob_life(mob/living/M)
+	if(M.reagents.has_reagent("milk"))
+		M << "<span class = 'notice'>The milk stops the burning. Ahhh.</span>"
+		M.reagents.del_reagent("milk")
+		M.reagents.del_reagent("dbreath")
+	if(prob(8))
+		M << "<span class = 'userdanger'><b>Oh god! Oh GODD!!</b></span>"
+	if(prob(50))
+		M << "<span class = 'userdanger'>Your throat burns terribly!</span>"
+		M.emote(pick("scream","cry","choke","gasp"))
+		M.Stun(1)
+	if(prob(8))
+		M << "<span class = 'userdanger'>Why!? WHY!?</span>"
+	if(prob(8))
+		M << "<span class = 'userdanger'>ARGHHHH!</span>"
+	if(prob(2 * volume))
+		M << "<span class = 'userdanger'><b>OH GOD OH GOD PLEASE NO!!</b></span>"
+		M.adjust_fire_stacks(99)
+		M.IgniteMob()
+		if(prob(50))
+			spawn(20)
+				//Roast up the player
+				if (M)
+					M << "<span class = 'userdanger'><b>IT BURNS!!!!</b></span>"
+					sleep(2)
+					M.visible_message("<span class = 'danger'>[M] is consumed in flames!</span>")
+					M.dust()
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/dbreath/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(method == INGEST && prob(20))
+		M.adjust_fire_stacks(6)
+		M.IgniteMob()
+	return ..()
 
 /datum/reagent/consumable/ethanol/aloe
 	name = "Aloe"

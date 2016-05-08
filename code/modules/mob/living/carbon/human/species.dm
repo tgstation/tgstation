@@ -848,7 +848,8 @@
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
 				. += (health_deficiency / 25)
-
+			if(H.health < 0)
+				. += (health_deficiency / 25)
 			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 			if(hungry >= 70)
 				. += hungry / 50
@@ -1166,17 +1167,12 @@
 	var/lungs = H.getorganslot("lungs")
 
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(H.reagents.has_reagent("epinephrine") && lungs)
-			return
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)
 				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			if(!lungs)
 				H.adjustOxyLoss(1)
-			H.failed_last_breath = 1
-		else
-			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			H.failed_last_breath = 1
 
 		H.throw_alert("oxy", /obj/screen/alert/oxy)
@@ -1314,7 +1310,7 @@
 	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
 		return 0
 
-	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
+	if(!(NOBREATH in specflags))
 		if(prob(20))
 			H.emote("gasp")
 		if(breath_pp > 0)

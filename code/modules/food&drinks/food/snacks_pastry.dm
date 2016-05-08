@@ -147,6 +147,12 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 
+/obj/item/weapon/reagent_containers/food/snacks/cookie/blood
+	name = "blood cookie"
+	desc = "A cookie given out for blood donations."
+	bonus_reagents = list("nutriment" = 3, "iron" = 3, "salglu_solution" = 3)
+	list_reagents = list("nutriment" = 3, "iron" = 3, "salglu_solution" = 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."

@@ -99,9 +99,10 @@
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
-			H.heart_attack = 1
+			if(!H.has_medical_effect(/datum/medical_effect/flatline))
+				H.add_medical_effect(/datum/medical_effect/flatline, 1)
 			spawn(600 / severity)
-				H.heart_attack = 0
+				H.remove_medical_effect(/datum/medical_effect/flatline)
 				if(H.stat == CONSCIOUS)
 					H << "<span class='notice'>You feel your heart beating again!</span>"
 

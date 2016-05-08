@@ -1,6 +1,8 @@
 /mob/living/carbon/death(gibbed)
 	silent = 0
 	losebreath = 0
+	for(var/datum/medical_effect/E in medical_effects)
+		remove_medical_effect(E)
 	..()
 
 /mob/living/carbon/gib(no_brain, no_organs)

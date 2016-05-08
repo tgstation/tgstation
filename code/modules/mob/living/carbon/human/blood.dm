@@ -2,11 +2,11 @@
 				BLOOD SYSTEM
 ****************************************************/
 //Blood levels
-var/const/BLOOD_VOLUME_NORMAL = 560
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+var/const/BLOOD_VOLUME_NORMAL = 500
+var/const/BLOOD_VOLUME_SAFE = 400
+var/const/BLOOD_VOLUME_OKAY = 250
+var/const/BLOOD_VOLUME_BAD = 150
+var/const/BLOOD_VOLUME_SURVIVE = 0
 
 /mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
 /mob/living/carbon/human/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
@@ -16,7 +16,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(vessel)
 		return
 
-	vessel = new/datum/reagents(600)
+	vessel = new/datum/reagents(500)
 	vessel.my_atom = src
 
 	if(NOBLOOD in dna.species.specflags)
@@ -70,13 +70,15 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							B = D
 							break
 
-				B.volume += 0.1 // regenerate blood VERY slowly
 				if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
 					reagents.remove_reagent("nutriment", 0.1)
 				if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
+				if(reagents.has_reagent("salglu_solution"))	//Hematogen candy anyone?
+					B.volume += 1
+					reagents.remove_reagent("salglu_solution", 0.1)
 
 		//Effects of bloodloss
 		switch(blood_volume)
@@ -88,26 +90,46 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale)
 					pale = 1
 					update_body()
-					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel [word].</span>"
-				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 100)
+				if(prob(15))
+					add_medical_effect(/datum/medical_effect/shock)
+				if(prob(25))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(3)
+					else
+						Paralyse(3)
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 50)
-				if(prob(5))
-					blur_eyes(6)
-					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel very [word].</span>"
+				if(prob(25))
+					add_medical_effect(/datum/medical_effect/shock)
+				if(prob(40))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(4)
+					else
+						Paralyse(4)
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				oxyloss += 5
-				if(prob(15))
-					Paralyse(rand(1,3))
-					var/word = pick("dizzy","woozy","faint")
-					src << "<span class='warning'>You feel extremely [word].</span>"
+				if(prob(50))
+					add_medical_effect(/datum/medical_effect/shock)
+				if(prob(50))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(5)
+					else
+						Paralyse(5)
 			if(0 to BLOOD_VOLUME_SURVIVE)
-				death()
+				if(prob(75))
+					add_medical_effect(/datum/medical_effect/shock)
+				adjustOxyLoss(5)
+				adjustBrainLoss(1)
+				if(prob(65))
+					var/effect = pick(1,0)
+					if(effect)
+						Weaken(6)
+					else
+						Paralyse(6)
 
 		//Bleeding out
 		blood_max = 0
@@ -117,18 +139,18 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
-			blood_max += 0.5*BP.embedded_objects.len
+			blood_max += BP.embedded_objects.len
 
 			if(brutedamage > 30)
-				blood_max += 0.5
-			if(brutedamage > 50)
 				blood_max += 1
-			if(brutedamage > 70)
+			if(brutedamage > 50)
 				blood_max += 2
+			if(brutedamage > 70)
+				blood_max += 4
 		if(bleedsuppress)
 			blood_max = 0
 		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
-			blood_max += 3
+			blood_max += 6
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob

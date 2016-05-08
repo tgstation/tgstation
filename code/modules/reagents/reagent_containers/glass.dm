@@ -51,19 +51,32 @@
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	if((!proximity) || !check_allowed_items(target,target_self=1)) return
 
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser.
+		var/obj/structure/reagent_dispensers/D = target
+		switch(D.usage_mode)
+			if(1) // Export
+				if(D.reagents && !D.reagents.total_volume)
+					user << "<span class='warning'>[target] is empty.</span>"
+					return
 
-		if(target.reagents && !target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty and can't be refilled!</span>"
-			return
+				if(reagents.total_volume >= reagents.maximum_volume)
+					user << "<span class='notice'>[src] is full.</span>"
+					return
 
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>[src] is full.</span>"
-			return
+				var/trans = D.reagents.trans_to(src, amount_per_transfer_from_this)
+				user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [D].</span>"
+			if(0) // Import
+				if(!reagents.total_volume)
+					user << "<span class='warning'>[src] is empty!</span>"
+					return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
+				if(target.reagents.total_volume >= target.reagents.maximum_volume)
+					user << "<span class='notice'>[target] is full.</span>"
+					return
 
+
+				var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+				user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			user << "<span class='warning'>[src] is empty!</span>"

@@ -10,6 +10,8 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
+	var/blood_transfer = 0
+	var/silent = 1
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
@@ -24,23 +26,51 @@
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with [src].</span>"
+		if(!blood_transfer)
+			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+			reagents.reaction(M, INJECT, fraction)
+			if(M.reagents)
+				var/list/injected = list()
+				for(var/datum/reagent/R in reagents.reagent_list)
+					injected += R.name
 
-		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, INJECT, fraction)
-		if(M.reagents)
-			var/list/injected = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				injected += R.name
+				var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
+				if(silent)
+					user << "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>"
+				else
+					user.visible_message("<span class = 'notice'><B>[user] injects [M] with [min(amount_per_transfer_from_this, reagents.total_volume)] units of [reagents.get_master_reagent_name()].</B></span>",\
+					"<span class = 'notice'>You inject [min(amount_per_transfer_from_this, reagents.total_volume)] units of [reagents.get_master_reagent_name()]. [src] now contains [max(0,(reagents.total_volume-amount_per_transfer_from_this))] units.</span>")
+					playsound(M.loc, 'goon/sound/items/hypo.ogg', 80, 0)
 
-			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>"
+				var/contained = english_list(injected)
 
-			var/contained = english_list(injected)
-
-			add_logs(user, M, "injected", src, "([contained])")
+				add_logs(user, M, "injected", src, "([contained])")
+		else
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.inject_blood(src, amount_per_transfer_from_this)
+				user << "<span class='notice'>[amount_per_transfer_from_this]u of blood injected.</span>"
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
+
+
+/obj/item/weapon/reagent_containers/hypospray/medical
+	name = "medical hypospray"
+	desc = "A hypospray variant incapable of holding contents other than medicine. Comes pre-equipped with a medical mix to treat critical patients on the field."
+	icon_state = "hypo_medical"
+	amount_per_transfer_from_this = 10
+	volume = 30
+	list_reagents = list("salglu_solution" = 15, "epinephrine" = 7.5, "sal_acid" = 7.5)
+	silent = 0
+
+/obj/item/weapon/reagent_containers/hypospray/medical/New()
+	..()
+	reagents.check_type = /datum/reagent/medicine
+
+/obj/item/weapon/reagent_containers/hypospray/medical/emag_act(mob/user)
+	user << "You disable the reagent check. It can now accept any reagent."
+	reagents.check_type = null
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -49,7 +79,7 @@
 	icon_state = "combat_hypo"
 	volume = 90
 	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
+	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "teporone" = 15, "atropine" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
@@ -63,11 +93,11 @@
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
-	amount_per_transfer_from_this = 10
-	volume = 10
+	amount_per_transfer_from_this = 5
+	volume = 5
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	list_reagents = list("epinephrine" = 10)
+	list_reagents = list("epinephrine" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
@@ -120,3 +150,14 @@
 	volume = 60
 	amount_per_transfer_from_this = 30
 	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/blood
+	name = "blood injector"
+	desc = "A way to rapidly replenish blood in patients."
+	icon_state = "blood"
+	item_state = "medipen"
+	amount_per_transfer_from_this = 50
+	volume = 50
+	ignore_flags = 1 //so you can medipen through hardsuit
+	blood_transfer = 1
+	list_reagents = list()

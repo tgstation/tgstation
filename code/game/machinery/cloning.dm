@@ -3,9 +3,6 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
-#define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
-
-
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -15,6 +12,7 @@
 	icon_state = "pod_0"
 	req_access = list(access_genetics) //For premature unlocking.
 	var/heal_level = 90 //The clone is released once its health reaches this level.
+	var/previous_heal = 0
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
@@ -22,11 +20,22 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/speed_coeff
 	var/efficiency
+	var/obj/item/device/radio/Radio
+	var/radio_key = /obj/item/device/encryptionkey/headset_med
 
 /obj/machinery/clonepod/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
 	B.apply_default_parts(src)
+
+	create_reagents(100)
+
+	Radio = new/obj/item/device/radio(src)
+	if(radio_key)
+		Radio.keyslot = new radio_key
+	Radio.subspace_transmission = 1
+	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
+	Radio.recalculateChannels()
 
 /obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
@@ -175,8 +184,10 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
+	H.adjustBruteLoss(90)
+	H.adjustToxLoss(50)
+	H.adjustOxyLoss(40)
+	H.adjustBrainLoss(90)
 	H.Paralyse(4)
 
 	clonemind.transfer_to(H)
@@ -191,6 +202,7 @@
 
 		H.suiciding = 0
 	src.attempting = 0
+	previous_heal = H.health
 	return 1
 
 //Grow clones to maturity then kick them out.  FREELOADERS
@@ -201,7 +213,8 @@
 			src.locked = 0
 			src.go_out()
 		return
-
+	if(!src.occupant)
+		return
 	if((src.occupant) && (src.occupant.loc == src))
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
@@ -209,24 +222,35 @@
 			src.connected_message("Clone Rejected: Deceased.")
 			return
 
-		else if(src.occupant.cloneloss > (100 - src.heal_level))
+		else if(src.occupant.health < src.heal_level)
 			src.occupant.Paralyse(4)
 
-			 //Slowly get that clone healed and finished.
-			src.occupant.adjustCloneLoss(-((speed_coeff/2)))
+			src.occupant.adjustBruteLoss(-1 * speed_coeff)
 
-			//Premature clones may have brain damage.
-			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
+			src.occupant.adjustFireLoss(-1 * speed_coeff)
+
+			src.occupant.adjustToxLoss(-0.5 * speed_coeff)
+
+			src.occupant.adjustBrainLoss(-2 * speed_coeff)
 
 			//So clones don't die of oxyloss in a running pod.
-			if (src.occupant.reagents.get_reagent_amount("salbutamol") < 30)
-				src.occupant.reagents.add_reagent("salbutamol", 60)
+			if (src.occupant.reagents.get_reagent_amount("perfluorodecalin") < 6)
+				src.occupant.reagents.add_reagent("perfluorodecalin", 2)
+
+			if (src.occupant.reagents.get_reagent_amount("epinephrine") < 8)
+				src.occupant.reagents.add_reagent("epinephrine", 4)
+
+			if (src.occupant.reagents.get_reagent_amount("salglu_solution") < 10)
+				src.occupant.reagents.add_reagent("salglu_solution", 4)
+
+			if (src.occupant.reagents.get_reagent_amount("synthflesh") < 50)
+				src.occupant.reagents.add_reagent("synthflesh", 10)
 
 			use_power(7500) //This might need tweaking.
 			return
-
-		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait))
+		else if(src.occupant.health >= heal_level)
 			src.connected_message("Cloning Process Complete.")
+			Radio.talk_into(src, "Finished cloning <b>[src.occupant]</b>.", "Medical")
 			src.locked = 0
 			src.go_out()
 			return
@@ -392,5 +416,3 @@
 		if(istype(A, /obj/machinery/clonepod))
 			A:malfunction()
 */
-
-#undef CLONE_INITIAL_DAMAGE

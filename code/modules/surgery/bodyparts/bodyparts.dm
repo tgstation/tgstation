@@ -269,7 +269,7 @@
 	name = "chest"
 	desc = "It's impolite to stare at a person's chest."
 	icon_state = "chest"
-	max_damage = 200
+	max_damage = INFINITY
 	body_zone = "chest"
 	body_part = CHEST
 	px_x = 0

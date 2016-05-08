@@ -91,7 +91,14 @@ Please contact me on #coderbus IRC. ~Carnie x
 	update_body_parts()
 
 /mob/living/carbon/human/update_fire()
-	..("Standing")
+	switch(fire_stacks)
+		if(1 to 9)
+			..("Generic_mob_burning")
+		if(10 to 14)
+			..("Standing")
+		if(15 to 20)
+			..("human_fire")
+	..("Generic_mob_burning")
 
 /mob/living/carbon/human/proc/update_body_parts()
 	if(!dna.species.has_dismemberment) //Species don't have no dismemberment going for 'em!

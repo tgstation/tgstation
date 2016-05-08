@@ -617,6 +617,12 @@
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/iron/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vessel.add_reagent("blood", 0.4, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=H.dna.blood_type,"resistances"=null,"trace_chem"=null))
+	..()
+
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"
@@ -1200,3 +1206,19 @@ datum/reagent/shadowling_blindness_smoke
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
+
+/datum/reagent/booster_enzyme
+	name = "Booster Enzyme"
+	id = "booster_enzyme"
+	description = "This booster enzyme helps the body to replicate beneficial chemicals."
+	color = rgb(127,160,192)
+
+/datum/reagent/booster_enzyme/on_mob_life(mob/living/M)
+	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
+		if(R.volume < 18)
+			M.reagents.add_reagent(R.id,2)
+	for(var/datum/reagent/medicine/RE in M.reagents.reagent_list)
+		if(RE.volume < 18)
+			M.reagents.add_reagent(RE.id,2)
+	..()
+

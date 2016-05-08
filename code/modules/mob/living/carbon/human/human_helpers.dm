@@ -113,7 +113,7 @@
 	return 1//Humans can use guns and such
 
 /mob/living/carbon/human/InCritical()
-	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
+	return (health <= config.health_threshold_crit)
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)

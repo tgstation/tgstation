@@ -80,9 +80,18 @@
 	icon_state = "oxydamageoverlay"
 	layer = DAMAGE_LAYER
 
-/obj/screen/fullscreen/crit
-	icon_state = "passage"
+/obj/screen/fullscreen/crit1
+	icon = 'goon/icons/effects/overlays/meatysmall.dmi'
+	icon_state = "meatysmall"
 	layer = CRIT_LAYER
+	color = "#eeeeee"
+	blend_mode = 3
+
+/obj/screen/fullscreen/crit2
+	icon = 'goon/icons/effects/overlays/knockout2.dmi'
+	icon_state = "knockout2"
+	layer = CRIT_LAYER
+	blend_mode = 3
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
@@ -110,6 +119,30 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
+
+/obj/screen/fullscreen/triplemeth1
+	icon = 'goon/icons/effects/overlays/meatysmall.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "meatysmall"
+	color = "#ff0000"
+	blend_mode = 2
+	alpha = 75
+
+/obj/screen/fullscreen/triplemeth2
+	icon = 'goon/icons/effects/overlays/cloudy.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "cloudy"
+	color = "#00ff00"
+	blend_mode = 2
+	alpha = 75
+
+/obj/screen/fullscreen/triplemeth3
+	icon = 'goon/icons/effects/overlays/beamout.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "beamout"
+	color = "#0000ff"
+	blend_mode = 2
+	alpha = 75
 
 #undef FULLSCREEN_LAYER
 #undef BLIND_LAYER

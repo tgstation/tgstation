@@ -375,12 +375,33 @@
 	required_reagents = list("beer" = 5, "ice" = 1)
 	result_amount = 6
 
-/datum/chemical_reaction/grog
-	name = "Grog"
-	id = "grog"
-	result = "grog"
-	required_reagents = list("rum" = 1, "water" = 1)
-	result_amount = 2
+/datum/chemical_reaction/grog // we're getting DANGEROUSLY LOW on GROG
+	name = "Grog" // well, do you have any special skills?
+	id = "grog" // i can hold my breath for 10 minutes
+	result = "grog" // well, alright, but you must DRINK GROG WITH US
+	// what exactly is in that grog stuff, anyways?
+	// grog is a secret mixture which contains 1 or more of the following
+	required_reagents = list("welding_fuel" = 1, // kerosene
+							 "cleaner" = 1, // propylene glycol
+							 "sugar" = 1, // artifical sweeteners
+							 "sacid" = 1, // sulfuric acid
+							 "rum" = 1, // rum
+							 "acetone" = 1, // acetone
+							 "tomatojuice" = 1, // red dye no 2
+							 "radium" = 1, // scumm
+							 "lube" = 1, // axle grease
+							 "facid" = 1, // battery acid
+							 "liquidgibs" = 1) // and/or pepperoni
+	result_amount = 10 // as you can probably imagine, it's one of the most caustic, volatile substances known to man
+	mix_message = "The substance mixes together, emitting a rank piratey odor and seemingly dissolving some of the container..." // the stuff eats right through these mugs, and the cook is losinng a fortune replacing them!
+
+/datum/chemical_reaction/dbreath
+	name = "Dragon's Breath"
+	id = "dbreath"
+	result = "dbreath"
+	required_reagents = list("vodka" = 1, "napalm" = 1, "pyrosium" = 1, "welding_fuel" = 1, "ghostchilijuice"= 1) // STRONG STUFF.
+	result_amount = 1
+	mix_message = "A tiny mushroom cloud erupts from the container. That's not worrying at all!"
 
 /datum/chemical_reaction/soy_latte
 	name = "Soy Latte"

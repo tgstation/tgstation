@@ -676,6 +676,11 @@ var/next_mob_id = 0
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
+	var/crit = 0
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.health < 0)
+			crit = 1
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
@@ -687,7 +692,10 @@ var/next_mob_id = 0
 		if(pulling)
 			stop_pulling()
 	else if(has_legs)
-		lying = 0
+		if(!crit)
+			lying = 0
+		else
+			lying = 90
 
 	if(buckled)
 		lying = 90*buckle_lying

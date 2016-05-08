@@ -28,6 +28,12 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		//Medical Effects
+		handle_medical_effects()
+
+		//Critical condition
+		handle_crit()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -49,7 +55,7 @@
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
-
+	lasthealth = health
 
 /mob/living/proc/handle_breathing()
 	return
@@ -81,14 +87,30 @@
 /mob/living/proc/handle_stomach()
 	return
 
+/mob/living/proc/handle_crit()
+	return
+
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(paralysis)
 		AdjustParalysis(-1)
+		if(!paralysis)
+			src << sound('goon/sound/misc/molly_revived.ogg', volume=25)
 	if(stunned)
+		if(!stun_overlay)
+			stun_overlay = image('goon/icons/mob/stun.dmi',"stun")
+			stun_overlay.pixel_y = 10
+			stun_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA
+			overlays += stun_overlay
 		AdjustStunned(-1, 1, 1)
+		if(!stunned && stun_overlay)
+			overlays -= stun_overlay
+			stun_overlay = null
 	if(weakened)
 		AdjustWeakened(-1, 1, 1)
+	if(!stunned && stun_overlay)
+		overlays -= stun_overlay
+		stun_overlay = null
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
@@ -116,4 +138,5 @@
 /mob/living/proc/update_damage_hud()
 	return
 
-
+/mob/living/proc/handle_medical_effects()
+ 	return

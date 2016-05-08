@@ -79,8 +79,19 @@
 	return
 
 // Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-/datum/reagent/proc/overdose_process(mob/living/M)
-	return
+/datum/reagent/proc/check_overdose(mob/living/M)
+	if (volume >= overdose_threshold * 2)
+		return 2
+	else if (volume >= overdose_threshold)
+		return 1
+	return 0
+
+// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
+/datum/reagent/proc/overdose_process(mob/living/M, severity = 1)
+	var/effect = rand(1, 100) - severity
+	if (effect <= 8)
+		M.adjustToxLoss(severity)
+	return effect
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
