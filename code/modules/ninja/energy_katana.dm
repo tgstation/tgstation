@@ -1,4 +1,3 @@
-
 /obj/item/weapon/katana/energy
 	name = "energy katana"
 	desc = "A katana infused with strong energy."

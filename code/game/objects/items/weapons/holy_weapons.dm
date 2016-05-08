@@ -156,7 +156,7 @@
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
-	armour_penetration = 100
+	armour_penetration = 50
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
