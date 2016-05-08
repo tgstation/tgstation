@@ -18,7 +18,7 @@
 	name = "replace limb"
 	implements = list(/obj/item/robot_parts = 100)
 	time = 32
-	var/obj/item/organ/limb/L = null // L because "limb"
+	var/obj/item/bodypart/L = null // L because "limb"
 
 
 
@@ -47,30 +47,22 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-			L.loc = get_turf(target)
-			H.organs -= L
-			switch(target_zone)
-				if("r_leg")
-					H.organs += new /obj/item/organ/limb/robot/r_leg(src)
-				if("l_leg")
-					H.organs += new /obj/item/organ/limb/robot/l_leg(src)
-				if("r_arm")
-					H.organs += new /obj/item/organ/limb/robot/r_arm(src)
-				if("l_arm")
-					H.organs += new /obj/item/organ/limb/robot/l_arm(src)
-				if("head")
-					H.organs += new /obj/item/organ/limb/robot/head(src)
-				if("chest")
-					H.organs += new /obj/item/organ/limb/robot/chest(src)
+			L.change_bodypart_status(ORGAN_ROBOTIC, 1)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)
-			H.update_augments() //Gives them the Cyber limb overlay
 			H.updatehealth()
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
 	return 1
+
+
+
+
+
+
+
 
 
 /datum/surgery/chainsaw
@@ -129,7 +121,6 @@
 /datum/surgery_step/chainsaw_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/list/hands = get_both_hands(target)
 	for(var/obj/item/weapon/mounted_chainsaw/V in hands)
-		qdel(V)
-		new /obj/item/weapon/twohanded/required/chainsaw(get_turf(target))
+		target.unEquip(V, 1)
 		user.visible_message("[user] carefully saws [target]'s arm free of the chainsaw.", "<span class='notice'>You remove the chainsaw.</span>")
 		return 1

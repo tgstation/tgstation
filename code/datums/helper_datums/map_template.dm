@@ -9,6 +9,7 @@
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
 		mappath = path
+	if(mappath)
 		preload_size(mappath)
 	if(map)
 		mapfile = map
@@ -62,10 +63,12 @@
 
 /datum/map_template/proc/get_file()
 	if(mapfile)
-		return mapfile
-	if(mappath)
-		mapfile = file(mappath)
-		return mapfile
+		. = mapfile
+	else if(mappath)
+		. = file(mappath)
+
+	if(!.)
+		world.log << "The file of [src] appears to be empty/non-existent."
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
@@ -83,6 +86,7 @@
 		map_templates[T.name] = T
 
 	preloadRuinTemplates()
+	preloadShuttleTemplates()
 
 /proc/preloadRuinTemplates()
 	var/list/potentialSpaceRuins = generateMapList(filename = "_maps/RandomRuins/SpaceRuins/_maplisting.txt", blacklist = "config/spaceRuinBlacklist.txt")
@@ -96,3 +100,14 @@
 		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
 		lava_ruins_templates[T.name] = T
 		map_templates[T.name] = T
+
+/proc/preloadShuttleTemplates()
+	for(var/item in subtypesof(/datum/map_template/shuttle))
+		var/datum/map_template/shuttle/shuttle_type = item
+		if(!(initial(shuttle_type.suffix)))
+			continue
+
+		var/datum/map_template/shuttle/S = new shuttle_type()
+
+		shuttle_templates[S.name] = S
+		map_templates[S.name] = S

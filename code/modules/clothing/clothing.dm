@@ -19,6 +19,38 @@
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
+	//Var modification - PLEASE be careful with this I know who you are and where you live
+	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
+	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
+
+
+/obj/item/clothing/Destroy()
+	dropped()
+	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
+	return ..()
+
+
+/obj/item/clothing/dropped(mob/user)
+	..()
+	if(user_vars_remembered && user_vars_remembered.len)
+		for(var/variable in user_vars_remembered)
+			if(variable in user.vars)
+				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
+					user.vars[variable] = user_vars_remembered[variable]
+		user_vars_remembered = list()
+
+
+/obj/item/clothing/equipped(mob/user, slot)
+	..()
+
+	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+		for(var/variable in user_vars_to_edit)
+			if(variable in user.vars)
+				user_vars_remembered[variable] = user.vars[variable]
+				user.vars[variable] = user_vars_to_edit[variable]
+
+
+
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"

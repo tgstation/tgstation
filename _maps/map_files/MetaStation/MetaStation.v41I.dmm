@@ -49939,10 +49939,7 @@
 /area/crew_quarters/bar)
 "bCu" = (
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/weapon/gun/projectile/revolver/russian = 5, /obj/item/weapon/storage/box/syndie_kit/throwing_weapons, /obj/item/toy/cards/deck/syndicate = 2);
-	name = "gambling valuables spawner"
-	},
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bCv" = (
@@ -60283,9 +60280,7 @@
 	pixel_y = 0
 	},
 /obj/item/weapon/folder/blue,
-/obj/item/clothing/head/collectable/HoS{
-	desc = "It's your turn to demand excessive paperwork, signatures, stamps, and hire more clowns! Papers, please!";
-	icon_state = "hopcap";
+/obj/item/clothing/head/collectable/HoP{
 	name = "novelty HoP hat"
 	},
 /obj/machinery/light/small{
@@ -90522,7 +90517,7 @@
 /obj/item/weapon/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/device/soulstone/anybody,
 /obj/effect/landmark{
 	name = "revenantspawn"

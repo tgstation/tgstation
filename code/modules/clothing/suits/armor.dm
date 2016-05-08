@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat,/obj/item/weapon/tank/internals/emergency_oxygen)
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -22,7 +22,7 @@
 	desc = "An armored vest that protects against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
-	
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."

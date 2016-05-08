@@ -33,7 +33,7 @@
 	name = "Lizard tail kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/organ/severedtail = 1
+		/obj/item/severedtail = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/tail
 	category = CAT_FOOD

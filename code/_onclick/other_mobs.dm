@@ -5,11 +5,15 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
+
+	if(!has_active_hand()) //can't attack without a hand.
+		src << "<span class='notice'>You look at your arm and sigh.</span>"
+		return
 
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
+	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
@@ -89,9 +93,10 @@
 		return
 	var/mob/living/carbon/ML = A
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = null
-	if(ishuman(ML)) // why the hell is this not more general
-		affecting = ML:get_organ(ran_zone(dam_zone))
+	var/obj/item/bodypart/affecting = null
+	if(ishuman(ML))
+		var/mob/living/carbon/human/H = ML
+		affecting = H.get_bodypart(ran_zone(dam_zone))
 	var/armor = ML.run_armor_check(affecting, "melee")
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)

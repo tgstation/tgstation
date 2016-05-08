@@ -1,0 +1,39 @@
+"a" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"b" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
+"c" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"; req_access_txt = "2"},/turf/open/floor/plating,/area/shuttle/escape)
+"d" = (/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
+"e" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
+"f" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
+"g" = (/obj/structure/window/reinforced,/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/book/manual/random,/obj/structure/extinguisher_cabinet{pixel_x = -30},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
+"h" = (/obj/machinery/door/window/southleft,/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
+"i" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced,/obj/item/device/gps{gpstag = "STV5"},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
+"j" = (/obj/machinery/status_display,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"k" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dwidth = 3; height = 5; name = "Secure Transport Vessel 5"; width = 14},/turf/open/floor/plating,/area/shuttle/escape)
+"l" = (/turf/open/floor/plating,/area/shuttle/escape)
+"m" = (/obj/structure/closet/emcloset,/turf/open/floor/plating,/area/shuttle/escape)
+"n" = (/obj/structure/chair{dir = 4},/turf/open/floor/plating,/area/shuttle/escape)
+"o" = (/obj/structure/closet/crate,/obj/effect/spawner/lootdrop/maintenance{lootcount = 8; name = "8maintenance loot spawner"},/turf/open/floor/plasteel/bot,/area/shuttle/escape)
+"p" = (/obj/structure/closet/crate/secure/loot,/turf/open/floor/plasteel/bot,/area/shuttle/escape)
+"q" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
+"r" = (/obj/structure/closet/crate/secure/weapon,/obj/effect/spawner/lootdrop/armory_contraband,/turf/open/floor/plasteel/bot,/area/shuttle/escape)
+"s" = (/obj/structure/chair{dir = 4},/obj/structure/extinguisher_cabinet{pixel_x = -30},/turf/open/floor/plating,/area/shuttle/escape)
+"t" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"u" = (/turf/open/space,/area/space)
+"v" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+
+(1,1,1) = {"
+abbba
+cdefa
+aghij
+kllma
+anloa
+bnlob
+bnlob
+bnlpb
+anlpa
+qllra
+aslra
+qllma
+attta
+uvvvu
+"}

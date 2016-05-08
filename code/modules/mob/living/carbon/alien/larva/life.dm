@@ -17,7 +17,7 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= -maxHealth || !getorgan(/obj/item/organ/internal/brain))
+		if(health<= -maxHealth || !getorgan(/obj/item/organ/brain))
 			death()
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)

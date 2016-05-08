@@ -1,84 +1,9 @@
 /*
 
-This file contains the arcane tome files as well as innate cultist emergency communications.
+This file contains the arcane tome files.
 
 */
 
-/mob/proc/cult_add_comm() //why the fuck does this have its own proc? not removing it because it might be used somewhere but...
-	verbs += /mob/living/proc/cult_help
-	verbs += /mob/living/proc/cult_innate_comm
-
-
-/mob/living/proc/cult_help()
-	set category = "Cultist"
-	set name = "How to Play Cult"
-	var/text = ""
-	text += "<center><font color='red' size=3><b><i>Tenets of the Dark One</i></b></font></center><br><br><br>"
-
-	text += "<font color='red'><b>I. SECRECY</b></font><br>Your cult is a SECRET organization. Your success DEPENDS on keeping your cult's members and locations SECRET for as long as possible. This means that your tome should be hidden \
-	in your bag and never brought out in public. You should never create runes where other crew might find them, and you should avoid using talismans or other cult magic with witnesses around.<br><br>"
-
-	text += "<font color='red'><b>II. TOME</b></font><br>You start with a unique talisman in your bag. This supply talisman can be used 3 times, and creates starter equipment for your cult. The most critical of the talisman's functions is \
-	the power to create a tome. This tome is your most important item and summoning one (in secret) is your FIRST PRIORITY. It lets you talk to fellow cultists and create runes, which in turn is essential to growing the cult's power.<br><br>"
-
-	text += "<font color='red'><b>III. RUNES</b></font><br>Runes are powerful sources of cult magic. Your tome will allow you to draw runes with your blood. Those runes, when hit with an empty hand, will attempt to \
-	trigger the rune's magic. Runes are essential for the cult to convert new members, create powerful minions, or call upon incredibly powerful magic. Some runes require more than one cultist to use.<br><br>"
-
-	text += "<font color='red'><b>IV. TALISMANS</b></font><br>Talismans are a mobile source of cult magic that are NECESSARY to achieve success as a cult. Your starting talisman can produce certain talismans, but you will need \
-	to use the -create talisman- rune (with ordinary paper on top) to get more talismans. Talismans are EXTREMELY powerful, therefore creating more talismans in a HIDDEN location should be one of your TOP PRIORITIES.<br><br>"
-
-	text += "<font color='red'><b>V. GROW THE CULT</b></font><br>There are certain basic strategies that all cultists should master. STUN talismans are the foundation of a successful cult. If you intend to convert the stunned person \
-	you should use cuffs or a talisman of shackling on them and remove their headset before they recover (it takes about 10 seconds to recover). If you intend to sacrifice the victim, striking them quickly and repeatedly with your tome \
-	will knock them out before they can recover. Sacrificed victims will their soul behind in a shard, these shards can be used on construct shells to make powerful servants for the cult. Remember you need TWO cultists standing near a \
-	conversion rune to convert someone. Your construct minions cannot trigger most runes, but they will count as cultists in helping you trigger more powerful runes like conversion or blood boil.<br><br>"
-
-	text += "<font color='red'><b>VI. VICTORY</b></font><br>You have two ultimate goals as a cultist, sacrifice your target, and summon Nar-Sie. Sacrificing the target involves killing that individual and then placing \
-	their corpse on a sacrifice rune and triggering that rune with THREE cultists. Do NOT lose the target's corpse! Only once the target is sacrificed can Nar-Sie be summoned. Summoning Nar-Sie will take nearly one minute \
-	just to draw the massive rune needed. Do not create the rune until your cult is ready, the crew will receive the NAME and LOCATION of anyone who attempts to create the Nar-Sie rune. Once the Nar-Sie rune is drawn \
-	you must gathered 9 cultists (or constructs) over the rune and then click it to bring the Dark One into this world!<br><br>"
-
-	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
-	popup.set_content(text)
-	popup.open()
-	return 1
-
-/mob/living/proc/cult_innate_comm()
-	set category = "Cultist"
-	set name = "Emergency Communion"
-
-	if(!iscultist(usr) || usr.incapacitated())
-		return
-	if(!istype(usr, /mob/living/simple_animal))
-		var/confirm_desperation = alert(usr, "This is a LAST RESORT; you should use a tome to communicate if possible. This ritual will inflict serious injury on you!", "Is this what you want?", "Yes", "No")
-		if(confirm_desperation == "No")
-			usr << "On second thought, maybe I should summon a tome."
-			return
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
-	if(!input)
-		return
-
-	if(!iscultist(usr) || usr.incapacitated())
-		return	//we do this again because input() sleeps
-
-	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
-		usr.visible_message("<span class='warning'>[usr] starts clawing at \his arms with \his fingernails!</span>", "<span class='cultitalic'>You begin slicing open your arms with your fingernails!</span>")
-		apply_damage(10,BRUTE, "l_arm")
-		apply_damage(10,BRUTE, "r_arm")
-		sleep(50)
-		if(usr.incapacitated())
-			return	//Hard to drawn intrinsic symbols when you're bleeding out in your cell.
-		var/turf/location = loc
-		if(istype(location, /turf))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
-			location.add_blood(usr)				// TO-DO change this to a badly drawn rune
-		apply_damage(10,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
-		apply_damage(10,BRUTE, "r_arm")
-		if(usr.incapacitated())
-			return
-		usr.visible_message("<span class='warning'>[usr] paints strange symbols with their own blood.</span>", "<span class='cultitalic'>You paint a messy rune with your own blood.</span>")
-		sleep(20)
-
-	cultist_commune(usr, 0, 1, input)
-	return
 
 /obj/item/weapon/tome
 	name = "arcane tome"
@@ -123,17 +48,14 @@ This file contains the arcane tome files as well as innate cultist emergency com
 	open_tome(user)
 
 /obj/item/weapon/tome/proc/open_tome(mob/user)
-	var/choice = alert(user,"You open the tome...",,"Commune","Scribe Rune","More Information")
+	var/choice = alert(user,"You open the tome...",,"Scribe Rune","More Information","Cancel")
 	switch(choice)
 		if("More Information")
 			read_tome(user)
 		if("Scribe Rune")
 			scribe_rune(user)
-		if("Commune")
-			var/input = stripped_input(usr, "Please enter a message to tell to the other acolytes.", "Voice of Blood", "")
-			if(!input)
-				return
-			cultist_commune(user, 1, 0, input)
+		if("Cancel")
+			return
 
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
