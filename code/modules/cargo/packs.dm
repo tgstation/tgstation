@@ -1198,7 +1198,9 @@
 					/obj/item/weapon/folder/red,
 					/obj/item/weapon/folder/yellow,
 					/obj/item/weapon/clipboard,
-					/obj/item/weapon/clipboard)
+					/obj/item/weapon/clipboard,
+					/obj/item/weapon/stamp,
+					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
 
 /datum/supply_pack/misc/toner
