@@ -50973,7 +50973,15 @@
 	pixel_x = 24
 	},
 /obj/structure/table/wood,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream,
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bEj" = (
