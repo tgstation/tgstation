@@ -33,8 +33,12 @@
 	if(W == src)
 		return // HOLY FUCKING SHIT WHY STORAGE CODE, WHY - pomf
 	var/obj/item/weapon/storage/backpack/holding/H = locate(/obj/item/weapon/storage/backpack/holding) in W
-	if(H || istype(W, /obj/item/weapon/storage/backpack/holding))
+	if(H)
 		singulocreate(H, user)
+		return
+	if(istype(W, /obj/item/weapon/storage/backpack/holding))
+		singulocreate(W, user)
+		return
 	. = ..()
 
 //BoH+BoH=Singularity, WAS commented out
