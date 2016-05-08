@@ -51,7 +51,6 @@
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 	if(O && istype(O))
 		O.unwield()
-	return
 
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -80,7 +79,6 @@
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on the [name]"
 	user.put_in_inactive_hand(O)
-	return
 
 /obj/item/weapon/twohanded/mob_can_equip(mob/M, slot)
 	//Cannot equip wielded items.
@@ -418,3 +416,35 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
+
+
+//HF blade
+
+/obj/item/weapon/twohanded/vibro_weapon
+	icon_state = "hfrequency0"
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	force_unwielded = 20
+	force_wielded = 40
+	armour_penetration = 100
+	block_chance = 40
+	throwforce = 20
+	throw_speed = 4
+	sharpness = IS_SHARP
+	attack_verb = list("cut", "sliced", "diced")
+	w_class = 4
+	slot_flags = SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || attack_type != PROJECTILE_ATTACK)
+		if(prob(final_block_chance))
+			if(attack_type == PROJECTILE_ATTACK)
+				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+			else
+				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				return 1
+	return 0
