@@ -41,7 +41,8 @@
 
 	//Blob HUD stuff
 	var/list/specialblobs[24]
-	var/obj/screen/specialblob/blob_bgs = null
+	var/obj/screen/specialblob/blob_bgLEFT = null
+	var/obj/screen/specialblob/blob_bgRIGHT = null
 	var/obj/screen/specialblob/blob_coverLEFT = null
 	var/obj/screen/specialblob/blob_coverRIGHT = null
 	var/obj/screen/specialblob/blob_powerbar = null

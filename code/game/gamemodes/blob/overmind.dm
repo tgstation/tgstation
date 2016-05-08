@@ -39,6 +39,9 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
+	hud_used.blob_hud()
+	update_specialblobs()
+
 	to_chat(src, "<span class='blob'>You are the overmind!</span>")
 	to_chat(src, "You are the overmind and can control the blob! You can expand, which will attack people, and place special blob types.")
 	to_chat(src, "The location of your thoughts (eye), nodes, and core can power your buildings and expand the blob much further, use them well!")
@@ -77,7 +80,7 @@
 		M.Scale(1,blob_core.health/blob_core.maxhealth)
 		var/total_offset = 60 + (100*(blob_core.health/blob_core.maxhealth))
 		hud_used.mymob.gui_icons.blob_healthbar.transform = M
-		hud_used.mymob.gui_icons.blob_healthbar.screen_loc = "15:14,[round(total_offset/32)]:[total_offset%32]"
+		hud_used.mymob.gui_icons.blob_healthbar.screen_loc = "EAST:14,CENTER-[8-round(total_offset/32)]:[total_offset%32]"
 		hud_used.mymob.gui_icons.blob_coverRIGHT.maptext = "[blob_core.health]"
 
 		var/severity = 0
@@ -115,7 +118,7 @@
 		M.Scale(1,blob_points/max_blob_points)
 		var/total_offset = 60 + (100*(blob_points/max_blob_points))
 		hud_used.mymob.gui_icons.blob_powerbar.transform = M
-		hud_used.mymob.gui_icons.blob_powerbar.screen_loc = "1:0,[round(total_offset/32)]:[total_offset%32]"
+		hud_used.mymob.gui_icons.blob_powerbar.screen_loc = "WEST:0,CENTER-[8-round(total_offset/32)]:[total_offset%32]"
 		hud_used.mymob.gui_icons.blob_coverLEFT.maptext = "[blob_points]"
 		hud_used.mymob.gui_icons.blob_coverLEFT.maptext_x = 4
 		if(blob_points >= 100)
