@@ -5,6 +5,7 @@
 	throw_speed = 3
 	var/signed = 0
 	var/datum/mind/target
+	flags = NOBLUDGEON
 
 /obj/item/weapon/paper/contract/proc/update_text()
 	return
@@ -41,7 +42,6 @@
 		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
 		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>"
 		M.return_soul()
-		return
 	else
 		if(ishuman(M))
 			var/mob/living/carbon/human/N = M
@@ -50,6 +50,7 @@
 				N << "<span class='danger'>You feel dumber.</span>"
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
+	return ..()
 
 
 /obj/item/weapon/paper/contract/infernal
@@ -137,6 +138,8 @@
 		user << "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>"
 	else if(P.is_hot())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
+	else
+		return ..()
 
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
 	add_fingerprint(user)
@@ -145,6 +148,8 @@
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
 			H.vessel.remove_reagent("blood",10)
+	else
+		return ..()
 
 /obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user)
 	if(user.IsAdvancedToolUser())

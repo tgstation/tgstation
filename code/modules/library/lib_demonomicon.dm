@@ -23,7 +23,7 @@
 		user << "<span class='notice'>Someone else is reading it.</span>"
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
-		if(U.acedia)
+		if(U.check_acedia())
 			user << "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>"
 			return
 		inUse = 1

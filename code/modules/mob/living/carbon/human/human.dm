@@ -4,7 +4,6 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
-	var/acedia = 0
 
 
 
@@ -1030,3 +1029,9 @@
 	if(mind && mind.devilinfo)
 		return check_devil_bane_multiplier(weapon, attacker)
 	return 1
+
+/mob/living/proc/check_acedia()
+	if(src.mind && src.mind.objectives)
+		for(datum/objective/sintouched/acedia/A in src.mind.objectives)
+			return 1
+	return 0
