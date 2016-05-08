@@ -122,6 +122,14 @@
 		Aw, come on. Why not? \
 		No, I can't. Anyway, how is your sex life?"
 
+/datum/map_template/shuttle/emergency/goon
+	suffix = "goon"
+	name = "NES Port"
+	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
+	is a shuttle used at other less known nanotrasen facilities \
+	and has a more open inside for larger crowds."
+
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"

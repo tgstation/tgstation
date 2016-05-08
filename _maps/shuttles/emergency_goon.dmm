@@ -1,0 +1,41 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/open/floor/plating,/area/shuttle/escape)
+"c" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/turf/open/floor/plating,/area/shuttle/escape)
+"d" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"e" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"f" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 11; dir = 2; dwidth = 10; width = 19},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"g" = (/obj/machinery/vending/wallmed,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"h" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"i" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"j" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/obj/structure/window/reinforced{dir = 4; pixel_x = 0},/turf/open/floor/plating,/area/shuttle/escape)
+"k" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"l" = (/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"m" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"n" = (/obj/structure/table,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"o" = (/obj/machinery/door/airlock/glass{name = "Emergency Shuttle Infirmary"},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"p" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"q" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/toolbox/emergency,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"r" = (/obj/structure/table/reinforced,/obj/item/device/radio,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"s" = (/obj/structure/table/reinforced,/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"t" = (/obj/structure/chair/comfy/brown{dir = 4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"u" = (/obj/machinery/door/airlock/glass{name = "Emergency Shuttle Cockpit"; req_access_txt = "19"},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"v" = (/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"w" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"x" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"y" = (/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"z" = (/obj/machinery/door/airlock/glass{name = "Emergency Shuttle Brig"; req_access_txt = "2"},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"A" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+
+(1,1,1) = {"
+abcddaadefdaaaaaaaa
+dddgddhdiidhhddaaaa
+bjkldmmmiimmmddddda
+bjnloiiiiimmmmpqrsa
+bjkldmmdiiimmmdttsp
+dddddmmhiiiiiiuvtwp
+bjxxdmmdiiimmmdttsp
+bjxyziiiiimmmmpAAsa
+bjxxdmmmiimmmddddda
+ddddddhdiidhhddaaaa
+abcddaadeedaaaaaaaa
+"}
