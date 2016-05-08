@@ -54,4 +54,3 @@
 	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")
 	ghostize()
 	qdel(src)
-	return
