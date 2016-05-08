@@ -104,14 +104,11 @@
 				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))
 					M.inertia_dir = 0
 			if(TURF_WET_LUBE)
-<<<<<<< HEAD
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
 				M.confused += 8
 			if(TURF_WET_ICE)
-=======
-				M.slip(0, 7, null, (SLIDE|GALOSHES_DONT_HELP))
+				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
 			if(TURF_WET_ICE || TURF_WET_PERMAFROST)
->>>>>>> 878d76a4b7d7728e56e8a10d4f04679cf04e8788
 				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
 
 /turf/proc/is_plasteel_floor()
