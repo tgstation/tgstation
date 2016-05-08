@@ -1,0 +1,7 @@
+author: KorPhaeron
+delete-after: True
+changes: 
+  - rscadd: "Burn weapons can now dismember, and they reduce the limb to ash in the process"
+  - rscadd: "Weapons with high AP values will now dismember limbs much easier. These values are subject to change depending on how things play out over the next week or two."
+  - rscadd: "Various weapons with high AP values had them lowered (chaplain scythe, energy sword, dualsaber) to prevent them taking limbs off in a single hit."
+  - rscadd: "The chaplain has two new weapons (they are mechanically identical to previous weapons, before anyone gets upset about balance). One is dismemberment themed, the other is related to a new antagonist."
