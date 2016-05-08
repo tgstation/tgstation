@@ -177,11 +177,11 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges)
-		owner.visible_message("<span class='danger'>\The [attack_text] is deflected by a burst of blood-red sparks!</span>")
+		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
 		PoolOrNew(/obj/effect/overlay/temp/cult/sparks, get_turf(owner))
 		if(!current_charges)
-			owner.visible_message("<span class='danger'>The glowing sparks around [owner] suddenly disappear!</span>")
+			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
 		return 1
 	return 0
@@ -189,7 +189,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
     . = list()
     if(!isinhands && current_charges)
-        . += image(icon = 'icons/effects/effects.dmi', icon_state = "bloodsparkles_shield")
+        . += image(layer = MOB_LAYER+0.05, icon = 'icons/effects/effects.dmi', icon_state = "shield-cult")
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
