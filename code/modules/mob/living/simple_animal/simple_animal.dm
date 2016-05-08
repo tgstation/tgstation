@@ -480,7 +480,7 @@
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+		else if(istype(M, /mob/living))
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
