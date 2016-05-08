@@ -1317,6 +1317,7 @@
 					/obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/collectable/hardhat,
 					/obj/item/clothing/head/collectable/HoS,
+					/obj/item/clothing/head/collectable/HoP,
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
 					/obj/item/clothing/head/collectable/slime,
@@ -1418,3 +1419,18 @@
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
+
+/datum/supply_pack/misc/artsupply
+	name = "Art Supplies"
+	cost = 800
+	contains = list(/obj/structure/easel,
+					/obj/structure/easel,
+					/obj/item/weapon/canvas/nineteenXnineteen,
+					/obj/item/weapon/canvas/nineteenXnineteen,
+					/obj/item/weapon/canvas/twentythreeXnineteen,
+					/obj/item/weapon/canvas/twentythreeXnineteen,
+					/obj/item/weapon/canvas/twentythreeXtwentythree,
+					/obj/item/weapon/canvas/twentythreeXtwentythree,
+					/obj/item/toy/crayon/rainbow,
+					/obj/item/toy/crayon/rainbow)
+	crate_name= "art supply crate"

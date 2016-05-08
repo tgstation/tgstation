@@ -6,9 +6,20 @@
 	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
+	var/turf/T = get_turf(holder.my_atom)
+	var/inside_msg
+	if(ismob(holder.my_atom))
+		var/mob/M = holder.my_atom
+		inside_msg = " inside [key_name_admin(M)]"
+	var/lastkey = holder.my_atom.fingerprintslast
+	var/touch_msg = "N/A"
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)"
+	message_admins("Reagent explosion reaction occured at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occured at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), location, 0, 0)
+	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
 	e.start()
 	holder.clear_reagents()
 
@@ -66,9 +77,8 @@
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
-		..()
-	else
-		..()
+	..()
+
 
 /datum/chemical_reaction/blackpowder
 	name = "Black Powder"
@@ -372,7 +382,7 @@
 	name = "Napalm"
 	id = "napalm"
 	result = "napalm"
-	required_reagents = list("sugar" = 1, "welding_fuel" = 1, "ethanol" = 1 )
+	required_reagents = list("oil" = 1, "welding_fuel" = 1, "ethanol" = 1 )
 	result_amount = 3
 
 

@@ -34,6 +34,7 @@ To draw a rune, use an arcane tome.
 	var/scribe_damage = 0.1 //how much damage you take doing it
 
 	var/allow_excess_invokers = 0 //if we allow excess invokers when being invoked
+	var/construct_invoke = 1 //if constructs can invoke it
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
@@ -73,6 +74,13 @@ To draw a rune, use an arcane tome.
 		invoke(invokers)
 	else
 		fail_invoke(user)
+
+/obj/effect/rune/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
+		if(construct_invoke || !iscultist(M)) //if you're not a cult construct we want the normal fail message
+			attack_hand(M)
+		else
+			M << "<span class='warning'>You are unable to invoke the rune!</span>"
 
 /obj/effect/rune/proc/talismanhide() //for talisman of revealing/hiding
 	visible_message("<span class='danger'>[src] fades away.</span>")
@@ -323,7 +331,7 @@ var/list/teleport_runes = list()
 	..()
 	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
 					  			"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
-	ticker.mode.add_cultist(new_cultist.mind)
+	ticker.mode.add_cultist(new_cultist.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))
 	new_cultist.mind.special_role = "Cultist"
 	new_cultist << "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
@@ -631,6 +639,7 @@ var/list/teleport_runes = list()
 	icon_state = "6"
 	color = rgb(126, 23, 23)
 	rune_in_use = 0 //One at a time, please!
+	construct_invoke = 0
 	var/mob/living/affecting = null
 
 /obj/effect/rune/astral/examine(mob/user)
@@ -770,6 +779,7 @@ var/list/teleport_runes = list()
 	icon_state = "4"
 	color = rgb(200, 0, 0)
 	req_cultists = 3
+	construct_invoke = 0
 
 /obj/effect/rune/blood_boil/invoke(var/list/invokers)
 	..()
@@ -797,6 +807,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
+	construct_invoke = 0
 	color = rgb(200, 0, 0)
 
 /obj/effect/rune/manifest/New(loc)
@@ -840,7 +851,7 @@ var/list/teleport_runes = list()
 	N.health = 20
 	N.mouse_opacity = 0
 	new_human.key = ghost_to_spawn.key
-	ticker.mode.add_cultist(new_human.mind)
+	ticker.mode.add_cultist(new_human.mind, 0)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
 
 	while(user in get_turf(src))

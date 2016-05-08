@@ -41,8 +41,9 @@
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	speed = 0
+	speed = 1
 	unique_name = 1
+	hud_possible = list(ANTAG_HUD)
 
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -132,6 +133,12 @@
 		else if(essence == 0)
 			essencecolor = "#1D2953" //oh jeez you're dying
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>"
+
+/mob/living/simple_animal/revenant/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/simple_animal/revenant/med_hud_set_status()
+	return //we use no hud
 
 /mob/living/simple_animal/revenant/say(message)
 	if(!message)
@@ -268,9 +275,13 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed/wall))
+	if(istype(T, /turf/closed))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
+	for(var/obj/O in T)
+		if(O.density && !O.CanPass(src, T, 5))
+			src << "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>"
+			return 0
 	if(src.inhibited)
 		src << "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0

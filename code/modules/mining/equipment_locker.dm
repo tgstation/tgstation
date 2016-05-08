@@ -1188,9 +1188,9 @@
 	w_class = 1
 	origin_tech = "biotech=1"
 
-/obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/internal/M, mob/user)
-	var/obj/item/organ/internal/hivelord_core/C = M
-	if(!istype(C, /obj/item/organ/internal/hivelord_core))
+/obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
+	var/obj/item/organ/hivelord_core/C = M
+	if(!istype(C, /obj/item/organ/hivelord_core))
 		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
 	C.preserved = 1

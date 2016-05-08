@@ -80,7 +80,7 @@
 #define TR_KEEPSRC		128
 #define TR_KEEPORGANS	256
 
-//Organ stuff, It's here because "Genetics" is the most relevant file for organs
+//Organ stuff, It's here because "Genetics" is the most relevant file for organs and bodyparts
 #define ORGAN_ORGANIC   1
 #define ORGAN_ROBOTIC   2
 

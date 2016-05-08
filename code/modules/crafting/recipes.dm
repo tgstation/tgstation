@@ -79,7 +79,7 @@
 /datum/table_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/weapon/tailclub
-	reqs = list(/obj/item/organ/severedtail = 1,
+	reqs = list(/obj/item/severedtail = 1,
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPON
@@ -87,7 +87,7 @@
 /datum/table_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/weapon/melee/chainofcommand/tailwhip
-	reqs = list(/obj/item/organ/severedtail = 1,
+	reqs = list(/obj/item/severedtail = 1,
 	            /obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPON
@@ -278,7 +278,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
-	reqs = list(/obj/item/organ/severedtail = 1)
+	reqs = list(/obj/item/severedtail = 1)
 	category = CAT_MISC
 
 /datum/table_recipe/lizardhat_alternate
@@ -363,4 +363,13 @@
 	result = /obj/item/clothing/head/helmet/skull
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4)
+	category = CAT_PRIMAL
+
+/datum/table_recipe/drakecloak
+	name = "Ash Drake Cloak"
+	result = /obj/item/clothing/suit/hooded/cloak/drake
+	time = 60
+	reqs = list(/obj/item/stack/sheet/bone = 10,
+				/obj/item/stack/sheet/sinew = 2,
+				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
