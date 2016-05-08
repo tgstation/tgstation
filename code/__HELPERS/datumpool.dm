@@ -130,3 +130,21 @@
 			return 1
 
 	return 0
+
+/client/proc/debug_pooling()
+	set name = "Debug Pooling Type"
+	set category = "Debug"
+
+	var/type = input("What is the typepath for the pooled object variables you wish to view?", "Pooled Variables") in pooledvariables|null
+
+	if(!type)
+		return
+
+	var/list/L = list()
+	L += "<b>Stored Variables for Pooling for this type</b><br>"
+	for(var/key in pooledvariables[type])
+		if(pooledvariables[type][key])
+			L += "<br>[key] = [pooledvariables[type][key]]"
+		else
+			L += "<br>[key] = null"
+	usr << browse(jointext(L,""),"window=poolingvariablelogs")

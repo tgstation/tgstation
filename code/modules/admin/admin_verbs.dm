@@ -151,6 +151,7 @@ var/list/admin_verbs_server = list(
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/gc_dump_hdl,
+	/client/proc/debug_pooling,
 	/client/proc/getSchedulerContext,
 	/client/proc/cmd_admin_list_open_jobs,
 	/proc/getbrokeninhands,
@@ -280,7 +281,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/mob_list,
 	/proc/possess,
 	/proc/release,
-	/client/proc/gc_dump_hdl
+	/client/proc/gc_dump_hdl,
+	/client/proc/debug_pooling
 	)
 var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
