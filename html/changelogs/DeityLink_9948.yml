@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: (BLOB HUD) Blob Overminds now have their own amazing custom HUD. Points gauge on the left, Health gauge on the right. The health gauge start flashing when it gets low.
+  - rscadd: (BLOB HUD) Buttons that require more points than you currently have appear grayscale.
+  - rscadd: (BLOB HUD) You can always jump back to your core using the small button to the top left. The first 24 special blobs that you've created (not counting the ones that got destroyed) also appear at the top, and you can quickly teleport from one to another by clicking them.

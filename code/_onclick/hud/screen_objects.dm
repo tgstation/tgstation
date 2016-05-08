@@ -28,6 +28,11 @@
 	maptext_height = 480
 	maptext_width = 480
 
+/obj/screen/adminbus
+
+/obj/screen/specialblob
+	var/obj/effect/blob/linked_blob = null
+
 /obj/screen/schematics
 	var/datum/rcd_schematic/ourschematic
 
@@ -666,8 +671,12 @@
 						M.wearglasses(null)
 					else if (istype(M.get_active_hand(), /obj/item/clothing/glasses))
 						M.wearglasses(M.get_active_hand())
+		else
+			return 0
+	return 1
 
-////////////ADMINBUS HUD ICONS////////////
+/obj/screen/adminbus/Click()
+	switch(name)
 		if("Delete Bus")
 			if(usr.locked_to && istype(usr.locked_to, /obj/structure/bed/chair/vehicle/adminbus))
 				var/obj/structure/bed/chair/vehicle/adminbus/A = usr.locked_to
@@ -804,8 +813,51 @@
 			if(usr.locked_to && istype(usr.locked_to, /obj/structure/bed/chair/vehicle/adminbus))
 				var/obj/structure/bed/chair/vehicle/adminbus/A = usr.locked_to
 				A.toggle_lights(usr,2)
-		else
-			return 0
+
+/obj/screen/specialblob/Click()
+	switch(name)
+		if("Spawn Blob")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.expand_blob_power()
+		if("Spawn Strong Blob")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.create_shield_power()
+		if("Spawn Resource Blob")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.create_resource()
+		if("Spawn Factory Blob")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.create_factory()
+		if("Spawn Node Blob")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.create_node()
+		if("Spawn Blob Core")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.create_core()
+		if("Call Overminds")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.callblobs()
+		if("Rally Spores")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				overmind.rally_spores_power()
+		if("Psionic Message")
+			if(isovermind(usr))
+				var/mob/camera/blob/overmind = usr
+				var/message = input(overmind,"Send a message to the crew.","Psionic Message") as null|text
+				if(message)
+					overmind.telepathy(message)
+		if("Jump to Blob")
+			if(isovermind(usr) && linked_blob)
+				var/mob/camera/blob/overmind = usr
+				overmind.loc = linked_blob.loc
 	return 1
 
 /obj/screen/inventory/Click()

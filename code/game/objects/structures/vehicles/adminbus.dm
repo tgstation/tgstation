@@ -387,7 +387,7 @@
 		for(var/i=1;i<=MAX_CAPACITY;i++)
 			var/mob/living/M = occupant
 			M.client.screen -= M.gui_icons.rearviews[i]
-			var/obj/screen/S = M.gui_icons.rearviews[i]
+			var/obj/screen/adminbus/S = M.gui_icons.rearviews[i]
 			var/icon/passenger_img = null
 			var/atom/A = null
 			if(i<=passengers.len)

@@ -261,6 +261,8 @@ var/list/blob_looks
 			icon = 'icons/mob/blob_64x64.dmi'
 		if("classic")
 			icon = 'icons/mob/blob.dmi'
+		if("adminbus")
+			icon = adminblob_icon
 		//<----------------------------------------------------------------------------DEAR SPRITERS, THIS IS WHERE YOU ADD YOUR NEW BLOB DMIs
 		/*EXAMPLES
 		if("fleshy")
@@ -275,6 +277,7 @@ var/list/blob_looks
 var/list/blob_looks = list(
 	"new" = 64,
 	"classic" = 32,
+	"adminbus" = adminblob_size,
 	)
 	//<---------------------------------------ALSO ADD THE NAME OF YOUR BLOB LOOKS HERE, AS WELL AS THE RESOLUTION OF THE DMIS (64 or 32)
 

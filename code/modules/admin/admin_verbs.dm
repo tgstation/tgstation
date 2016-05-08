@@ -1042,12 +1042,32 @@ var/list/admin_verbs_mod = list(
 	set name = "Set Blob Looks"
 	set category = "Fun"
 
-	var/chosen = input("This will change the looks of every blob currently in the world.", "Blob Looks", blob_looks[1]) as null|anything in blob_looks
+	var/to_choose_from = list("ADMINBUS (custom DMI upload)")
+	to_choose_from += blob_looks - "adminbus"
+	var/chosen = input("This will change the looks of every blob currently in the world.", "Blob Looks", blob_looks[1]) as null|anything in to_choose_from
 
-	if(chosen)
-		for(var/obj/effect/blob/B in blobs)
-			B.looks = chosen
-			B.update_looks(1)
+	if(!chosen)
+		return
+
+	if(chosen == "ADMINBUS (custom DMI upload)")
+		adminblob_icon = input("Pick Icon:","Icon") as icon
+		if(!adminblob_icon)
+			return
+		adminblob_size = text2num(alert("Which size are those icons?","","64","32"))
+
+		if((adminblob_size == 64) && (alert("Do you want to use a custom Pulse soundfile?","","Yes","No") == "Yes"))
+			adminblob_beat = input("Pick Soundfile (DO NOT USE AN OVERLY LONG SOUNDFILE UNLESS YOU ARE READY TO FACE THE CONSEQUENCES):","(DO NOT USE AN OVERLY LONG SOUNDFILE UNLESS YOU ARE READY TO FACE THE CONSEQUENCES)") as file
+		else
+			adminblob_beat = 'sound/effects/blob_pulse.ogg'
+
+		blob_looks["adminbus"] = adminblob_size
+		chosen = "adminbus"
+	else
+		adminblob_icon = null
+
+	for(var/obj/effect/blob/B in blobs)
+		B.looks = chosen
+		B.update_looks(1)
 
 	log_admin("[key_name(src)] set all blobs to use the \"[chosen]\" look.")
 	message_admins("<span class='notice'>[key_name_admin(src)] set all blobs to use the \"[chosen]\" look.</span>")

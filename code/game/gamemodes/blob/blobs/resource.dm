@@ -24,6 +24,8 @@
 	blob_resources -= src
 	if(!manual_remove && overmind)
 		to_chat(overmind,"<span class='warning'>You lost a resource blob.</span> <b><a href='?src=\ref[overmind];blobjump=\ref[loc]'>(JUMP)</a></b>")
+		overmind.special_blobs -= src
+		overmind.update_specialblobs()
 	..()
 
 /obj/effect/blob/resource/update_health()
@@ -40,6 +42,8 @@
 		if(B)
 			to_chat(B,"<span class='notice'>You take control of the resource blob.</span>")
 			overmind = B
+			B.special_blobs += src
+			B.update_specialblobs()
 			update_icon()
 	..()
 

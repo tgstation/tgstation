@@ -194,3 +194,17 @@
 #define ui_adminbus_tdarena "2:4,13:26"
 #define ui_adminbus_tdgreen "3:6,13:26"
 #define ui_adminbus_tdobs "2:4,14:28"
+
+//Blob HUD
+#define ui_blob_bg "1:0,1:0"
+#define ui_blob_powerbar "1:0,5:0"
+#define ui_blob_healthbar "15:14,5:0"
+#define ui_blob_spawnblob "1:18,5:5"
+#define ui_blob_spawnstrong "1:18,6:9"
+#define ui_blob_spawnresource "1:18,7:13"
+#define ui_blob_spawnfactory "1:18,8:17"
+#define ui_blob_spawnnode "1:18,9:21"
+#define ui_blob_spawncore "1:18,10:25"
+#define ui_blob_ping "14:24,11:21"
+#define ui_blob_rally "14:24,12:25"
+#define ui_blob_taunt "14:24,13:29"

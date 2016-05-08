@@ -404,3 +404,11 @@ var/global/hardcore_mode = 0
 //Global list of all unsimulated mineral turfs for xenoarch
 var/global/list/mineral_turfs = list()
 var/global/list/static_list = list('sound/effects/static/static1.ogg','sound/effects/static/static2.ogg','sound/effects/static/static3.ogg','sound/effects/static/static4.ogg','sound/effects/static/static5.ogg',)
+
+//Used to set an atom's color var to "grayscale". The magic of color matrixes.
+var/list/grayscale = list(0.3,0.3,0.3,0,0.59,0.59,0.59,0,0.11,0.11,0.11,0,0,0,0,1,0,0,0,0)
+
+//For adminbus blob looks
+var/adminblob_icon = null
+var/adminblob_size = 64
+var/adminblob_beat = 'sound/effects/blob_pulse.ogg'

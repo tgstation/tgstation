@@ -29,7 +29,8 @@
 
 /obj/effect/blob/shield/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
-	mover.Bump(src) //Only automatic for dense objects
+	if(mover)
+		mover.Bump(src) //Only automatic for dense objects
 	return 0
 
 /obj/effect/blob/shield/run_action()

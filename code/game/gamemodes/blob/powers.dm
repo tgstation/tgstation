@@ -94,6 +94,8 @@
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
 		R.overmind = src
+		special_blobs += R
+		update_specialblobs()
 	return
 
 /mob/camera/blob/proc/create_core()
@@ -162,6 +164,8 @@
 	var/obj/effect/blob/node/N = locate() in T
 	if(N)
 		N.overmind = src
+		special_blobs += N
+		update_specialblobs()
 	return
 
 
@@ -196,6 +200,8 @@
 	var/obj/effect/blob/factory/F = locate() in T
 	if(F)
 		F.overmind = src
+		special_blobs += F
+		update_specialblobs()
 	return
 
 

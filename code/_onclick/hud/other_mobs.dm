@@ -64,25 +64,6 @@
 
 /datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
 
-/datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
-
-
-	blobpwrdisplay = getFromPool(/obj/screen)
-	blobpwrdisplay.name = "blob power"
-	blobpwrdisplay.icon_state = "block"
-	blobpwrdisplay.screen_loc = ui_health
-	blobpwrdisplay.layer = 20
-
-	blobhealthdisplay = getFromPool(/obj/screen)
-	blobhealthdisplay.name = "blob health"
-	blobhealthdisplay.icon_state = "block"
-	blobhealthdisplay.screen_loc = ui_internal
-	blobhealthdisplay.layer = 20
-
-	mymob.client.reset_screen()
-
-	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
-
 /datum/hud/proc/shade_hud()
 
 
