@@ -161,6 +161,13 @@
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
+/obj/item/weapon/nullrod/scythe/vibro
+	icon_state = "hfrequency0"
+	item_state = "hfrequency1"
+	name = "high frequency blade"
+	desc = "Bad references are the DNA of the soul."
+	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
+
 /obj/item/weapon/nullrod/hammmer
 	icon_state = "hammeron"
 	item_state = "hammeron"
@@ -276,6 +283,14 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/nullrod/pitchfork
+	icon_state = "pitchfork0"
+	name = "unholy pitchfork"
+	w_class = 3
+	desc = "Holding this makes you look absolutely devilish."
+	attack_verb = list("poked", "impaled", "pierced", "jabbed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
