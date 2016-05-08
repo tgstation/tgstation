@@ -1025,6 +1025,6 @@
 		obj_count++
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
-	. = ..(weapon, attacker)
+	. = ..()
 	if (dna && dna.species)
 		. += dna.species.check_weakness(weapon, attacker)
