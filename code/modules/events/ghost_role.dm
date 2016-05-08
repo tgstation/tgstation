@@ -1,5 +1,5 @@
 /datum/round_event/ghost_role
-	// We expect 0 or more /clients in this list
+	// We expect 0 or more /clients (or things with .key) in this list
 	var/list/priority_candidates = list()
 	var/minimum_required = 1
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
@@ -47,7 +47,13 @@
 	// Returns a list of candidates in priority order, with candidates from
 	// `priority_candidates` first, and ghost roles randomly shuffled and
 	// appended after
-	var/list/mob/dead/observer/regular_candidates = pollCandidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, gametypecheck, be_special)
+	var/list/mob/dead/observer/regular_candidates
+	// don't get their hopes up
+	if(priority_candidates.len < minimum_required)
+		regular_candidates = pollCandidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, gametypecheck, be_special)
+	else
+		regular_candidates = list()
+
 	shuffle(regular_candidates)
 
 	var/list/candidates = priority_candidates + regular_candidates
