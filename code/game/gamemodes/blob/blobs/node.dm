@@ -13,12 +13,12 @@
 	icon_new = "node"
 	icon_classic = "blob_node"
 
-/obj/effect/blob/node/New(loc,newlook = "new")
+/obj/effect/blob/node/New(loc,newlook = "new",no_morph = 0)
 	blob_nodes += src
 	processing_objects.Add(src)
 	..(loc, newlook)
 
-	if(blob_looks[looks] == 64)
+	if((blob_looks[looks] == 64) && !no_morph)
 		flick("morph_node",src)
 
 /obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)

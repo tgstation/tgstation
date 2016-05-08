@@ -345,7 +345,9 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/blob_act()
 	if(flags & INVULNERABLE)
 		return
-	if (stat != 2)
+	if (stat != DEAD)
+		..()
+		playsound(loc, 'sound/effects/blobattack.ogg',50,1)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1

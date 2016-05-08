@@ -78,9 +78,9 @@
 /turf/simulated/wall/mech_drill_act(severity)
 	return dismantle_wall()
 
-/turf/simulated/wall/blob_act()
+/turf/simulated/wall/blob_act(var/destroy = 0)
 	..()
-	if(prob(50) || rotting)
+	if(prob(50) || rotting || destroy)
 		dismantle_wall()
 
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)

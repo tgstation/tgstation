@@ -409,6 +409,7 @@ emp_act
 	if(flags & INVULNERABLE)
 		return
 	if(cloneloss < 120)
+		playsound(loc, 'sound/effects/blobattack.ogg',50,1)
 		if(stat == DEAD)
 			..()
 			adjustCloneLoss(rand(5,25))

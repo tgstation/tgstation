@@ -176,7 +176,7 @@
 	explosion(get_turf(src), 2, 4, 6, 8, 0, 1, 0) //Medium meteor, medium boom
 	qdel(src)
 
-/obj/item/projectile/meteor/process()
+/obj/item/projectile/meteor/process_step()
 	if(z != starting.z)
 		qdel(src)
 		return
@@ -345,3 +345,130 @@
 
 	new /obj/effect/gibspawner/human(src.loc)
 	qdel(src)
+
+
+/obj/item/projectile/meteor/blob
+	name = "Blob"
+	icon = 'icons/obj/meteor_64x64.dmi'
+	icon_state = "meteorblob"
+	pixel_x = -16
+	pixel_y = -16
+
+/obj/item/projectile/meteor/blob/Bump(atom/A)
+	if(!loc)
+		return
+
+	if(ismob(A))
+		src.loc = A.loc
+		A.blob_act()
+		return
+
+	playsound(loc, get_sfx("explosion"), 50)
+
+	for (var/mob/M in player_list)
+		if(M && M.client)
+			var/turf/M_turf = get_turf(M)
+			if(M_turf && (M_turf.z == loc.z))
+				var/dist = get_dist(M_turf, loc)
+				if(dist <= round(world.view + 10, 1))
+					shake_camera(M, 3, 2)
+				M.playsound_local(loc, 'sound/effects/explosionfar.ogg')
+
+	var/turf/T = get_turf(A)
+
+	for(var/atom/AT in T)
+		AT.blob_act(destroy = 1)
+
+	T.blob_act(destroy = 1)
+
+	var/obj/effect/blob/is_there_a_blob = (locate(/obj/effect/blob) in T)
+
+	if(is_there_a_blob)
+		do_blob_stuff(loc)
+	else
+		do_blob_stuff(T)
+
+	qdel(src)
+
+/obj/item/projectile/meteor/blob/proc/do_blob_stuff(var/turf/T)
+	new/obj/effect/blob/normal(T, no_morph = 1)
+
+/obj/item/projectile/meteor/blob/node
+	name = "Blob Node"
+	icon = 'icons/obj/meteor_64x64.dmi'
+	icon_state = "meteornode"
+
+/obj/item/projectile/meteor/blob/node/do_blob_stuff(var/turf/T)
+	new/obj/effect/blob/node(T, no_morph = 1)
+
+var/list/blob_candidates = list()
+
+/obj/item/projectile/meteor/blob/core
+	name = "Blob Core"
+	icon = 'icons/obj/meteor_64x64.dmi'
+	icon_state = "meteorcore"
+	var/client/blob_candidate = null
+
+/obj/item/projectile/meteor/blob/core/New()
+	..()
+	var/list/candidates = list()
+
+	candidates = get_candidates(ROLE_BLOB)
+
+	for(var/client/C in candidates)
+		if(istype(C.eye,/obj/item/projectile/meteor/blob/core))
+			candidates -= C
+
+	if(candidates.len)
+		blob_candidate = pick(candidates)
+		blob_candidates += blob_candidate
+
+	if(blob_candidate)
+		blob_candidate.perspective = EYE_PERSPECTIVE
+		blob_candidate.eye = src
+		blob_candidate.mob.see_invisible = SEE_INVISIBLE_MINIMUM
+
+/obj/item/projectile/meteor/blob/core/Destroy()
+	if(blob_candidate)
+		blob_candidate.perspective = MOB_PERSPECTIVE
+		blob_candidate.eye = blob_candidate.mob
+		blob_candidates -= blob_candidate
+		blob_candidate = null
+	..()
+
+/obj/item/projectile/meteor/blob/core/do_blob_stuff(var/turf/T)
+	if(blob_candidate && istype(blob_candidate.mob, /mob/dead/observer))
+		new/obj/effect/blob/core(T, new_overmind = blob_candidate, no_morph = 1)
+	else
+		new/obj/effect/blob/core(T, no_morph = 1)
+
+//It's a tool to debug and test stuff, ok? Pls don't hand them out to players unless you just want to set the world on fire.
+/obj/item/weapon/meteor_gun
+	name = "Meteor Gun"
+	desc = "Jesus fucking christ."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "meteorgun"
+	item_state = "gun"
+	flags = FPRINT
+	siemens_coefficient = 1
+	slot_flags = SLOT_BELT
+	w_class = 3.0
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 5
+	force = 5.0
+	var/projectile_type = /obj/item/projectile/meteor
+
+/obj/item/weapon/meteor_gun/afterattack(atom/A, mob/living/user, flag, params, struggle = 0)
+	if(flag)	return //we're placing gun on a table or in backpack
+
+	user.visible_message(
+		"<span class='warning'>[user] fires the [src]!</span>",
+		"<span class='warning'>You fire the [src]!</span>")
+
+	playsound(user, 'sound/weapons/rocket.ogg', 100)
+
+	new projectile_type(get_turf(src), get_turf(A))
+
+/obj/item/weapon/meteor_gun/attack_self(mob/user as mob)
+	projectile_type = input(user, "Pick a meteor type.", "Projectile Choice") in typesof(/obj/item/projectile/meteor)

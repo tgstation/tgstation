@@ -59,7 +59,8 @@ var/list/event_last_fired = list()
 	if(minutes_passed >= 30 && active_with_role["Engineer"] > 1) // Give engineers time to not set up the engine
 		possibleEvents[/datum/event/meteor_wave] = 15
 		possibleEvents[/datum/event/meteor_shower] = 40
-		possibleEvents[/datum/event/blob] = 10
+		possibleEvents[/datum/event/thing_storm/blob_shower] = 25
+		possibleEvents[/datum/event/thing_storm/blob_storm] = 10
 		possibleEvents[/datum/event/immovable_rod] = 15
 
 	possibleEvents[/datum/event/radiation_storm] = 50

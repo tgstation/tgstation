@@ -74,6 +74,41 @@ var/global/list/thing_storm_types = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sausage,
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 	),
+	"blob shower" = list(
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob/node,
+	),
+	"blob storm" = list(
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/node,
+		/obj/item/projectile/meteor/blob/core,
+	),
 )
 
 /datum/event/thing_storm
@@ -114,3 +149,33 @@ var/global/list/thing_storm_types = list(
 
 /datum/event/thing_storm/meaty_gore/end()
 	command_alert("The station has cleared the organic debris field.", "Organic Debris Field")
+
+/datum/event/thing_storm/blob_shower
+
+/datum/event/thing_storm/blob_shower/setup()
+	endWhen = rand(45, 60) + 10
+	storm_name="blob shower"
+
+/datum/event/thing_storm/blob_shower/tick()
+	meteor_wave(rand(12, 24), types = thing_storm_types[storm_name])
+
+/datum/event/thing_storm/blob_shower/announce()
+	command_alert("The station is about to pass through a Blob cluster. No overmind brainwaves detected.", "Blob Cluster")
+
+/datum/event/thing_storm/blob_shower/end()
+	command_alert("The station has cleared the Blob cluster. Eradicate the blob from hit areas.", "Blob Cluster")
+
+/datum/event/thing_storm/blob_storm
+
+/datum/event/thing_storm/blob_storm/setup()
+	endWhen = rand(60, 90) + 10
+	storm_name="blob storm"
+
+/datum/event/thing_storm/blob_storm/tick()
+	meteor_wave(rand(20, 40), types = thing_storm_types[storm_name])
+
+/datum/event/thing_storm/blob_storm/announce()
+	command_alert("The station is about to pass through a Blob conglomerate. Overmind brainwaves possibly detected.", "Blob Conglomerate")
+
+/datum/event/thing_storm/blob_storm/end()
+	command_alert("The station has cleared the Blob conglomerate. Investigate the hit areas at once and clear the blob. Beware for possible Overmind presence.", "Blob Conglomerate")

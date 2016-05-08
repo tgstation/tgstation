@@ -19,12 +19,12 @@
 	icon_classic = "blob_core"
 
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, var/mob/camera/blob/C = null,newlook = "new")
+/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, var/mob/camera/blob/C = null,newlook = "new",no_morph = 0)
 	looks = newlook
 	blob_cores += src
 	processing_objects.Add(src)
 	creator = C
-	if(blob_looks[looks] == 64)
+	if((blob_looks[looks] == 64) && !no_morph)
 		if(new_overmind)
 			flick("core_spawn",src)
 		else
@@ -130,6 +130,11 @@
 
 	if(!new_overmind)
 		candidates = get_candidates(ROLE_BLOB)
+
+		for(var/client/candidate in candidates)
+			if(istype(candidate.eye,/obj/item/projectile/meteor/blob/core))
+				candidates -= candidate
+
 		if(candidates.len)
 			C = pick(candidates)
 	else

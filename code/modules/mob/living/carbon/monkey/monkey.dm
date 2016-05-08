@@ -680,6 +680,7 @@
 	if(flags & INVULNERABLE)
 		return
 	..()
+	playsound(loc, 'sound/effects/blobattack.ogg',50,1)
 	if (stat != DEAD)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()

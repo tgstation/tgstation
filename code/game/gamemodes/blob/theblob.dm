@@ -75,7 +75,7 @@ var/list/blob_looks
 	return
 
 
-/obj/effect/blob/New(turf/loc,newlook = "new")
+/obj/effect/blob/New(turf/loc,newlook = "new",no_morph = 0)
 	looks = newlook
 	update_looks()
 	blobs += src
@@ -88,14 +88,17 @@ var/list/blob_looks
 	time_since_last_pulse = world.time
 
 	if(blob_looks[looks] == 64)
-		if(spawning)
+		if(spawning && !no_morph)
 			icon_state = initial(icon_state) + "_spawn"
 			spawn(10)
 				spawning = 0//for sprites
 				icon_state = initial(icon_state)
 				src.update_icon(1)
 		else
+			spawning = 0
 			update_icon()
+			for(var/obj/effect/blob/B in orange(src,1))
+				B.update_icon()
 
 	..(loc)
 	for(var/atom/A in loc)

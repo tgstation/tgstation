@@ -262,11 +262,13 @@
 
 
 /mob/living/carbon/slime/blob_act()
-	..()
 	if(flags & INVULNERABLE)
 		return
-	if (stat == 2)
+	if (stat == DEAD)
 		return
+	..()
+
+	playsound(loc, 'sound/effects/blobattack.ogg',50,1)
 	var/shielded = 0
 
 	var/damage = null

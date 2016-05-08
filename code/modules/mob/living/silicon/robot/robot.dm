@@ -521,7 +521,9 @@
 /mob/living/silicon/robot/blob_act()
 	if(flags & INVULNERABLE)
 		return
-	if (stat != 2)
+	..()
+	playsound(loc, 'sound/effects/blobattack.ogg',50,1)
+	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
