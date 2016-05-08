@@ -820,6 +820,23 @@
 		. = 1
 	..()
 
+/datum/reagent/medicine/virostimulant
+	name = "Stimulants"
+	id = "virostimulant"
+	description = "Increases stun resistance and movement speed."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/virostimulant/on_mob_life(mob/living/M)
+	M.status_flags |= GOTTAGOFAST
+	M.AdjustParalysis(-1, 0)
+	M.AdjustStunned(-1, 0)
+	M.AdjustWeakened(-1, 0)
+	M.adjustStaminaLoss(-1*REM, 0)
+	..()
+	. = 1
+
 /datum/reagent/medicine/stimulants/longterm
 	name = "Stimulants"
 	id = "stimulants_longterm"

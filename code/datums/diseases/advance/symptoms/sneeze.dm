@@ -35,5 +35,6 @@ Bonus
 				M.emote("sniff")
 			else
 				M.emote("sneeze")
+				A.removeStimulant(M, A)
 				A.spread(A.holder, 5)
 	return
