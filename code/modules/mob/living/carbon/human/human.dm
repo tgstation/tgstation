@@ -872,6 +872,11 @@
 	update_icons()	//apply the now updated overlays to the mob
 
 
+/mob/living/carbon/human/wash_cream()
+	//clean both to prevent a rare bug
+	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
+	overlays -=image('icons/effects/creampie.dmi', "creampie_human")
+
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
