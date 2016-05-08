@@ -244,6 +244,13 @@
 	item_state = "white_suit"
 	item_color = "white_suit"
 
+/obj/item/clothing/under/burial
+	name = "burial garments"
+	desc = "Traditional burial garments from the early 22nd century."
+	icon_state = "burial"
+	item_state = "burial"
+	item_color = "burial"
+
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"

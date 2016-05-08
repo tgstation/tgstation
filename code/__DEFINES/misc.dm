@@ -420,3 +420,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXX 4
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
+
+// Shuttle return values
+#define SHUTTLE_ALREADY_DOCKED 7

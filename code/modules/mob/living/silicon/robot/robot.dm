@@ -956,6 +956,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
+							cleaned_human.wash_cream()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 

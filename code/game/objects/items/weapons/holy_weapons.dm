@@ -145,7 +145,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
-	force = 2
+	force = 4.13
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -156,10 +156,17 @@
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
-	armour_penetration = 100
+	armour_penetration = 35
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+/obj/item/weapon/nullrod/scythe/vibro
+	icon_state = "hfrequency0"
+	item_state = "hfrequency1"
+	name = "high frequency blade"
+	desc = "Bad references are the DNA of the soul."
+	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 
 /obj/item/weapon/nullrod/hammmer
 	icon_state = "hammeron"
@@ -186,7 +193,7 @@
 	icon_state = "honkrender"
 	item_state = "render"
 	name = "clown dagger"
-	desc = "Used for absolutely hilarious sacrafices."
+	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -276,6 +283,14 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/nullrod/pitchfork
+	icon_state = "pitchfork0"
+	name = "unholy pitchfork"
+	w_class = 3
+	desc = "Holding this makes you look absolutely devilish."
+	attack_verb = list("poked", "impaled", "pierced", "jabbed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()

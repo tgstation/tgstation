@@ -347,7 +347,7 @@ Class Procs:
 	if(.)
 		deconstruction()
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
+		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
 		transfer_fingerprints_to(M)
 		M.state = 2
 		M.icon_state = "box_1"
@@ -396,7 +396,7 @@ Class Procs:
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
 		if(panel_open || W.works_from_distance)
-			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+			var/obj/item/weapon/circuitboard/machine/CB = locate(/obj/item/weapon/circuitboard/machine) in component_parts
 			var/P
 			if(W.works_from_distance)
 				display_parts(user)
