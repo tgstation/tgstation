@@ -1024,13 +1024,7 @@
 		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
-/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(mind && mind.devilinfo)
-		return check_devil_bane_multiplier(weapon, attacker)
-	return 1
-
-/mob/living/proc/check_acedia()
-	if(src.mind && src.mind.objectives)
-		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
-			return 1
-	return 0
+/mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
+	. = ..(weapon, attacker)
+	if (dna && dna.species)
+		. += dna.species.check_weakness(weapon, attacker)

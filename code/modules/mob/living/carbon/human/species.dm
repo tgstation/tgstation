@@ -679,6 +679,9 @@
 /datum/species/proc/get_spans()
 	return list()
 
+/datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	return 0
+
 ////////
 	//LIFE//
 	////////
