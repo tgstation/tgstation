@@ -997,7 +997,6 @@
 		if(1) // acedia
 			log_game("[src] was influenced by the sin of Acedia.")
 			O = new /datum/objective/sintouched/acedia
-			acedia = 1
 		if(2) // Gluttony
 			log_game("[src] was influenced by the sin of gluttony.")
 			O = new /datum/objective/sintouched/gluttony
@@ -1032,6 +1031,6 @@
 
 /mob/living/proc/check_acedia()
 	if(src.mind && src.mind.objectives)
-		for(datum/objective/sintouched/acedia/A in src.mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
 			return 1
 	return 0
