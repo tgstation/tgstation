@@ -12,12 +12,11 @@
 	..()
 
 /turf/closed/wall/cult/break_wall()
-	new/obj/item/stack/sheet/metal/(get_turf(src), 1)
+	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
 	return (new /obj/structure/girder/cult(src))
 
 /turf/closed/wall/cult/devastate_wall()
-	new /obj/effect/decal/cleanable/blood(src)
-	new /obj/effect/decal/remains/human(src)
+	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
 
 /turf/closed/wall/cult/narsie_act()
 	return

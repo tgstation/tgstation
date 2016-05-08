@@ -328,7 +328,7 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/tome) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
 		user.visible_message("<span class='warning'>[user] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>")
-		var/obj/item/stack/sheet/metal/R = new(get_turf(src))
+		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
 		R.amount = 1
 		qdel(src)
 
@@ -342,7 +342,7 @@
 					return
 				user << "<span class='notice'>You slice apart the girder.</span>"
 				var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
-				R.amount = 2
+				R.amount = 1
 				transfer_fingerprints_to(R)
 				qdel(src)
 
@@ -352,7 +352,7 @@
 		if(do_after(user, 30, target = src))
 			user << "<span class='notice'>You slice apart the girder.</span>"
 			var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
-			R.amount = 2
+			R.amount = 1
 			transfer_fingerprints_to(R)
 			qdel(src)
 
@@ -367,15 +367,16 @@
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))
 		var/obj/item/stack/sheet/runed_metal/R = W
-		if(R.amount < 2)
-			user << "<span class='warning'>You need at least two sheets of runed metal to construct a runed wall!</span>"
+		if(R.amount < 1)
+			user << "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
 		if(!do_after(user, 50, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
-		R.use(2)
-		new/turf/closed/wall/cult(get_turf(src))
+		R.use(1)
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall/cult)
 		qdel(src)
 
 	else
@@ -390,9 +391,9 @@
 			qdel(src)
 		if(2)
 			if(prob(30))
-				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
+				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
 				qdel(src)
 		if(3)
 			if(prob(5))
-				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
+				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
 				qdel(src)
