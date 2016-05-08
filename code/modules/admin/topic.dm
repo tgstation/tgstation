@@ -1970,6 +1970,7 @@
 			BSACooldown = 0
 
 		to_chat(M, "You've been hit by bluespace artillery!")
+
 		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
 		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
 
@@ -1984,6 +1985,8 @@
 		if(istype(T))
 			if(prob(80))	T.break_tile_to_plating()
 			else			T.break_tile()
+
+		playsound(T, 'sound/effects/yamato_fire.ogg', 75, 1, gas_modified = 0)
 
 		if(M.health == 1)
 			M.gib()
