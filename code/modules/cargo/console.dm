@@ -80,7 +80,7 @@
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
-			"reason" = SO.reason,
+			"reason" = "error", // Ugly fix for requests console breaking on russian letters.
 			"id" = SO.id
 		))
 

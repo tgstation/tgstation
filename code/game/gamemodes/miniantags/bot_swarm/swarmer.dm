@@ -516,7 +516,7 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
-	var/rendered = "<B>Swarm communication - </b> [src] states: [message]"
+	var/rendered = "<B>Swarm communication - </b> [src] states: [sanitize_russian(message)]"
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M))

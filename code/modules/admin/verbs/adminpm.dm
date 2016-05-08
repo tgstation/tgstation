@@ -78,7 +78,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+		msg = sanitize_russian(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null)
 
 		if(!msg)
 			return
@@ -94,7 +94,7 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+		msg = sanitize_russian(msg)
 		if(!msg)
 			return
 
@@ -144,7 +144,7 @@
 			src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 			return
 
-	log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
+	sanitize_russian(log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]"))
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

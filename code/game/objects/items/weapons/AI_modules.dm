@@ -134,7 +134,7 @@ AI MODULES
 	lawpos = 4
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
+	var/targName = sanitize_russian(stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN))
 	if(!targName)
 		return
 	targetName = targName
@@ -161,7 +161,7 @@ AI MODULES
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
+	var/targName = sanitize_russian(stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN))
 	if(!targName)
 		return
 	targetName = targName
@@ -225,7 +225,7 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
+	var/targName = sanitize_russian(stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -413,7 +413,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = sanitize_russian(stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1]))
 	if(!targName)
 		return
 	laws[1] = targName
@@ -433,7 +433,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
+	var/targName = sanitize_russian(stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN))
 	if(!targName)
 		return
 	laws[1] = targName

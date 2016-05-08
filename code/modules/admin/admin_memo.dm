@@ -6,7 +6,7 @@
 	if(!dbcon.IsConnected())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
-	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
+	var/memotask = sanitize_russian(input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove"))
 	if(!memotask)
 		return
 	admin_memo_output(memotask)

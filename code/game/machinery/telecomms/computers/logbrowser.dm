@@ -136,7 +136,7 @@
 
 
 
-	user << browse(dat, "window=comm_monitor;size=575x400")
+	user << browse(sanitize_russian(dat, 1), "window=comm_monitor;size=575x400")
 	onclose(user, "server_control")
 
 	temp = ""

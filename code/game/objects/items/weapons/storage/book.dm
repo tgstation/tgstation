@@ -64,7 +64,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 		dat += "</table></body></html>"
 
-		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
+		H << browse(sanitize_russian(dat, 1), "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
 /obj/item/weapon/storage/book/bible/proc/setupbiblespecifics(obj/item/weapon/storage/book/bible/B, mob/living/carbon/human/H)
 	switch(B.icon_state)

@@ -119,9 +119,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, obj/item/weapon/photo/photo, adminMessage = 0, allow_comments = 1)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
-	newMsg.body = msg
+	newMsg.body = sanitize_russian(msg,1)
 	newMsg.time_stamp = "[worldtime2text()]"
-	newMsg.is_admin_message = adminMessage
+	newMsg.is_admin_message = sanitize_russian(adminMessage,1)
 	newMsg.locked = !allow_comments
 	if(photo)
 		newMsg.img = photo.img
@@ -515,7 +515,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
-			channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
+			src.channel_name = sanitize_russian(stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN), 1)
 			while (findtext(channel_name," ") == 1)
 				channel_name = copytext(channel_name,2,lentext(channel_name)+1)
 			updateUsrDialog()
@@ -552,7 +552,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
-			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg))
+			var/temp_message = trim(sanitize_russian(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg), 1))
 			if(temp_message)
 				msg = temp_message
 				updateUsrDialog()
@@ -603,7 +603,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			channel_name = trim(stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler"))
 			updateUsrDialog()
 		else if(href_list["set_wanted_desc"])
-			msg = trim(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler"))
+			src.msg = trim(sanitize_russian(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler"), 1))
 			updateUsrDialog()
 		else if(href_list["submit_wanted"])
 			var/input_param = text2num(href_list["submit_wanted"])
@@ -692,7 +692,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			updateUsrDialog()
 		else if(href_list["new_comment"])
 			var/datum/newscaster/feed_message/FM = locate(href_list["new_comment"])
-			var/cominput = copytext(stripped_input(usr, "Write your message:", "New comment", null),1,141)
+			var/cominput = copytext(sanitize_russian(stripped_input(usr, "Write your message:", "New comment", null), 1),1,141)
 			if(cominput)
 				scan_user(usr)
 				var/datum/newscaster/feed_comment/FC = new/datum/newscaster/feed_comment
@@ -869,7 +869,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
-		say("Breaking news from [channel]!")
+		say("Breaking news from [russian_html2text(channel)]!")
 		alert ++
 		update_icon()
 		spawn(alert_delay)
@@ -919,7 +919,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
 				if(isemptylist(news_content))
 					if(wantedAuthor)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR></ul>"
@@ -987,7 +987,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
 		dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
-		human_user << browse(dat, "window=newspaper_main;size=300x400")
+		human_user << browse(sanitize_russian(dat, 1), "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
 		user << "The paper is full of intelligible symbols!"
@@ -1039,7 +1039,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		if(scribble_page == curr_page)
 			user << "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>"
 		else
-			var/s = stripped_input(user, "Write something", "Newspaper")
+			var/s = sanitize_russian(stripped_input(user, "Write something", "Newspaper"), 1)
 			if (!s)
 				return
 			if (!in_range(src, usr) && loc != usr)

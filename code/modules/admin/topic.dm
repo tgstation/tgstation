@@ -482,13 +482,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
+				reason = sanitize_russian(input(usr,"Reason?","reason",reason2), 1)
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
+				reason = sanitize_russian(input(usr,"Reason?","reason",reason2), 1)
 				if(!reason)
 					return
 
@@ -531,7 +531,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason","Reason") as message
+				var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
 				if(!reason)
 					return
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
@@ -963,7 +963,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = input(usr,"Please State Reason","Reason") as message
+					var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
 					if(!reason)
 						return
 
@@ -988,7 +988,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason") as message
+					var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1097,7 +1097,7 @@
 			return
 		if(query_noteedits.NextRow())
 			var/edit_log = query_noteedits.item[1]
-			usr << browse(edit_log,"window=noteedits")
+			usr << browse(sanitize_russian(edit_log,1),"window=noteedits")
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))
@@ -2175,7 +2175,8 @@
 			return
 		if(query_memoedits.NextRow())
 			var/edit_log = query_memoedits.item[1]
-			usr << browse(edit_log,"window=memoeditlist")
+			usr << browse(sanitize_russian(edit_log,1),"window=memoeditlist")
+
 
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))

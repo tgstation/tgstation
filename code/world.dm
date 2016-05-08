@@ -23,9 +23,9 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
-	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
+//	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+//	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
@@ -110,7 +110,7 @@ var/last_irc_status = 0
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
-		s["active_players"] = get_active_player_count()
+		s["active_players"] = get_active_player_count(Import())
 		s["players"] = clients.len
 		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
@@ -173,8 +173,8 @@ var/last_irc_status = 0
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
 	sleep(delay)
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
+//	if(blackbox)
+//		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
@@ -254,12 +254,12 @@ var/inerror = 0
 		s += "<b>[config.server_name]</b> &#8212; "
 
 	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
+//	s += " ("
+//	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
 //	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+//	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+//	s += "</a>"
+//	s += ")"
 
 	var/list/features = list()
 

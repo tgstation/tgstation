@@ -17,7 +17,7 @@
 	if(check_watchlist(target_sql_ckey))
 		usr << "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>"
 		return
-	var/reason = input(usr,"Please State Reason","Reason") as message
+	var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
 	if(!reason)
 		return
 	reason = sanitizeSQL(reason)
@@ -57,7 +57,7 @@
 		return
 	if(query_watchreason.NextRow())
 		var/watch_reason = query_watchreason.item[1]
-		var/new_reason = input("Input new reason", "New Reason", "[watch_reason]") as message
+		var/new_reason = sanitize_russian(input("Input new reason", "New Reason", "[watch_reason]") as message)
 		new_reason = sanitizeSQL(new_reason)
 		if(!new_reason)
 			return
@@ -101,7 +101,7 @@
 		output += "<b>[ckey]</b> | Added by <b>[adminckey]</b> on <b>[timestamp]</b> <a href='?_src_=holder;watchremovebrowse=[ckey]'>\[Remove\]</a> <a href='?_src_=holder;watcheditbrowse=[ckey]'>\[Edit Reason\]</a>"
 		if(last_editor)
 			output += " <font size='2'>Last edit by [last_editor] <a href='?_src_=holder;watcheditlog=[ckey]'>(Click here to see edit log)</a></font>"
-		output += "<br>[reason]<hr style='background:#000000; border:0; height:1px'>"
+		output += "<br>[russian_text2html(sanitize_russian(reason,1))]<hr style='background:#000000; border:0; height:1px'>"
 	usr << browse(output, "window=watchwin;size=900x500")
 
 /client/proc/check_watchlist(target_ckey)

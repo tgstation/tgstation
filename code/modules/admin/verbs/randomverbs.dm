@@ -30,7 +30,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
+	var/msg = sanitize_russian(input("Message:", text("Subtle PM to [M.key]")) as text)
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
@@ -52,7 +52,7 @@
 		src << "Only administrators may use this command."
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
+	var/msg = sanitize_russian(input("Message:", text("Enter the text you wish to appear to everyone:")) as text)
 
 	if (!msg)
 		return
@@ -75,7 +75,7 @@
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = sanitize_russian(input("Message:", text("Enter the text you wish to appear to your target:")) as text)
 
 	if( !msg )
 		return
@@ -97,7 +97,7 @@
 	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	var/msg = sanitize_russian(input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text)
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
@@ -429,7 +429,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+	var/input = sanitize_russian(input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null)
 	if(!input)
 		return
 
@@ -466,7 +466,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = sanitize_russian(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, 1)
 	if(!input)
 		return
 

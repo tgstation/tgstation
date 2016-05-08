@@ -131,7 +131,7 @@ var/datum/subsystem/pai/SSpai
 	dat += "<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]'>Save Personality</a><br>"
 	dat += "<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"
 
-	M << browse(dat, "window=paiRecruit")
+	M << browse(sanitize_russian(dat, 1), "window=paiRecruit")
 
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	requestRecruits()
@@ -177,7 +177,7 @@ var/datum/subsystem/pai/SSpai
 
 	dat += "</table>"
 
-	user << browse(dat, "window=findPai")
+	user << browse(sanitize_russian(dat, 1), "window=findPai")
 
 /datum/subsystem/pai/proc/requestRecruits()
 	for(var/mob/dead/observer/O in player_list)

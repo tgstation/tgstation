@@ -175,8 +175,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 /datum/asset/simple/tgui
 	assets = list(
-		"tgui.css"	= 'tgui/assets/tgui.css',
-		"tgui.js"	= 'tgui/assets/tgui.js'
+		"tgui.css"			= 'tgui/assets/tgui.css',
+		"tgui.js"			= 'tgui/assets/tgui.js',
+		"crewmonitor.js" 	= 'code/game/machinery/computer/crew.js',
+		"crewmonitor.css" 	= 'code/game/machinery/computer/crew.css'
 	)
 
 /datum/asset/simple/pda

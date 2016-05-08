@@ -287,7 +287,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(!input)
 		return
 
-	var/preliminary_message = "<span class='holoparasitebold'>[input]</span>" //apply basic color/bolding
+	var/preliminary_message = "<span class='holoparasitebold'>[sanitize_russian(input)]</span>" //apply basic color/bolding
 	var/my_message = "<span class='holoparasitebold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
 	src << my_message

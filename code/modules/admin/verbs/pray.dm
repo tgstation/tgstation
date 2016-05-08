@@ -9,7 +9,7 @@
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-	log_prayer("[src.key]/([src.name]): [msg]")
+	sanitize_russian(log_prayer("[src.key]/([src.name]): [msg]"))
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			usr << "<span class='danger'>You cannot pray (muted).</span>"
