@@ -118,7 +118,6 @@
 	description = "How was work today? \
 		Oh, pretty good. We got a new client and the bank will make a lot of money. \
 		What client? \
-		of unknown storage ...  static ... seeing ERT officers onboard, but \
 		I cannot tell you; it's confidential. \
 		Aw, come on. Why not? \
 		No, I can't. Anyway, how is your sex life?"
