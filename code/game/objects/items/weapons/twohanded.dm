@@ -51,7 +51,6 @@
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 	if(O && istype(O))
 		O.unwield()
-	return
 
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
@@ -80,7 +79,6 @@
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on the [name]"
 	user.put_in_inactive_hand(O)
-	return
 
 /obj/item/weapon/twohanded/mob_can_equip(mob/M, slot)
 	//Cannot equip wielded items.
@@ -436,6 +434,7 @@
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = 4
 	slot_flags = SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(wielded)
