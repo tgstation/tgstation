@@ -79,7 +79,7 @@
 	build_type = IMPRINTER
 	reliability = 79
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/pacman
+	build_path = /obj/item/weapon/circuitboard/machine/pacman
 	category = list("Engineering Machinery")
 
 /datum/design/superpacman
@@ -90,7 +90,7 @@
 	build_type = IMPRINTER
 	reliability = 76
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/pacman/super
+	build_path = /obj/item/weapon/circuitboard/machine/pacman/super
 	category = list("Engineering Machinery")
 
 /datum/design/mrspacman
@@ -101,5 +101,5 @@
 	build_type = IMPRINTER
 	reliability = 74
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/pacman/mrs
+	build_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
 	category = list("Engineering Machinery")

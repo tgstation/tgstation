@@ -44,7 +44,7 @@
 /obj/machinery/power/smes/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smes(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/smes(null)
 	for(var/i in 1 to 5)
 		component_parts += new /obj/item/weapon/stock_parts/cell/high/empty(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 5)

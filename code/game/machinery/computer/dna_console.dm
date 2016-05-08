@@ -22,7 +22,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = 1
-	circuit = /obj/item/weapon/circuitboard/scan_consolenew
+	circuit = /obj/item/weapon/circuitboard/computer/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
 

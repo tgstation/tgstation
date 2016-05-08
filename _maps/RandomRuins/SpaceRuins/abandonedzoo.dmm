@@ -13,7 +13,7 @@
 "am" = (/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/poison/bees,/turf/open/floor/grass,/area/ruin/unpowered)
 "an" = (/mob/living/simple_animal/hostile/poison/bees,/turf/open/floor/grass,/area/ruin/unpowered)
 "ao" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/open/floor/grass,/area/ruin/unpowered)
-"ap" = (/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"ap" = (/mob/living/simple_animal/hostile/asteroid/goldgrub{will_burrow = 0},/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
 "aq" = (/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/grass,/area/ruin/unpowered)
 "ar" = (/obj/structure/flora/rock/pile,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
 "as" = (/mob/living/simple_animal/hostile/asteroid/basilisk,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)

@@ -679,6 +679,9 @@
 /datum/species/proc/get_spans()
 	return list()
 
+/datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	return 0
+
 ////////
 	//LIFE//
 	////////
@@ -1023,7 +1026,8 @@
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
-	apply_damage(I.force, I.damtype, def_zone, armor_block, H)
+	var/weakness = H.check_weakness(I, user)
+	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
 
 	H.send_item_attack_message(I, user, hit_area)
 
