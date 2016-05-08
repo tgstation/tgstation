@@ -851,6 +851,7 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
+	faction = list("mining", "ashwalker")
 	density = 0
 	speak_chance = 1
 	turns_per_move = 8
