@@ -575,10 +575,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/is_sharp()
 	return sharpness
 
-<<<<<<< HEAD
+
 /obj/item/proc/chasm_react(mob/user)
 	return FALSE
-=======
+
 /obj/item/proc/can_dismember()
 	return sharpness && w_class >= 3
->>>>>>> 0c99cd4f78179478ad6e35b87e49d1d0500f8d50
+
