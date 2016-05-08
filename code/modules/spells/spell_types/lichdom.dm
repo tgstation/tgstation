@@ -87,7 +87,7 @@
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
 						C.unEquip(W)
-					for(var/obj/item/organ/internal/I in C.internal_organs)
+					for(var/obj/item/organ/I in C.internal_organs)
 						I.Remove(C)
 						I.forceMove(body_turf)
 				var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))

@@ -1,0 +1,5 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Cultist constructs, and shades, can now invoke runes by clicking them."
+  - rscdel: "This does not include Manifest Ghost, Blood Boil, or Astral Journey runes."

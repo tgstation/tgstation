@@ -137,7 +137,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
-	var/obj/item/organ/internal/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
@@ -166,7 +166,7 @@
 			obj_count++
 		ticker.mode.update_abductor_icons_added(H.mind)
 
-		for(var/obj/item/organ/internal/gland/G in H.internal_organs)
+		for(var/obj/item/organ/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)

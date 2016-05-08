@@ -94,7 +94,7 @@ display round(lastgen) and plasmatank amount
 	var/max_sheets = 100
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/board_path = /obj/item/weapon/circuitboard/machine/pacman
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 260
 	var/current_heat = 0
@@ -106,16 +106,31 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/stack/cable_coil(src, 1)
-	component_parts += new /obj/item/stack/cable_coil(src, 1)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new board_path(src)
+	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
+	B.apply_default_parts(src)
+
 	var/obj/sheet = new sheet_path(null)
 	sheet_name = sheet.name
-	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/pacman
+	name = "circuit board (PACMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman
+	origin_tech = "programming=3;powerstorage=3;plasmatech=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
+/obj/item/weapon/circuitboard/machine/pacman/super
+	name = "circuit board (SUPERPACMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman/super
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
+
+/obj/item/weapon/circuitboard/machine/pacman/mrs
+	name = "circuit board (MRSPACMAN-type Generator)"
+	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
+	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
@@ -316,7 +331,7 @@ display round(lastgen) and plasmatank amount
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)
 
@@ -326,6 +341,6 @@ display round(lastgen) and plasmatank amount
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)

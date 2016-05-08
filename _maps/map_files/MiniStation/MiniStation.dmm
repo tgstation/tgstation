@@ -13107,7 +13107,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
-/obj/item/weapon/circuitboard/solar_control,
+/obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
 /obj/item/weapon/paper/solar,
 /turf/open/floor/plating{
@@ -13528,7 +13528,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Cw" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
@@ -15520,7 +15520,7 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "Hd" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/item/weapon/paper{
 	info = "<h3>Teleporter Instruction</h3><hr><ol><li>Install circuit board, glass and wiring to complete Teleporter Control Console</li><li>Use a screwdriver, wirecutter and screwdriver again on the Teleporter Station to connect it</li><li>Set destination with Teleporter Control Computer</li><li>Activate Teleporter Hub with Teleporter Station</li></ol>";
 	name = "Teleporter Instructions"

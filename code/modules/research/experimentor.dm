@@ -81,17 +81,21 @@
 
 /obj/machinery/r_n_d/experimentor/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/experimentor(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/experimentor(null)
+	B.apply_default_parts(src)
+
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in mob_list
 	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in mob_list
 	SetTypeReactions()
-	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/experimentor
+	name = "circuit board (E.X.P.E.R.I-MENTOR)"
+	build_path = /obj/machinery/r_n_d/experimentor
+	origin_tech = "magnets=1;engineering=1;programming=1;biotech=1;bluespace=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 2)
 
 /obj/machinery/r_n_d/experimentor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)

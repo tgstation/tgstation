@@ -37,5 +37,5 @@
 	user.visible_message("[user] shines light onto the tumor in [target]'s head!", "<span class='notice'>You cleanse the contamination from [target]'s brain!</span>")
 	ticker.mode.remove_thrall(target.mind, 0)
 	target.visible_message("<span class='warning'>A strange black mass falls from [target]'s head!</span>")
-	new /obj/item/organ/internal/shadowtumor(get_turf(target))
+	new /obj/item/organ/shadowtumor(get_turf(target))
 	return 1
