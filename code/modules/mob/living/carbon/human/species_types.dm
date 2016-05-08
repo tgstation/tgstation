@@ -742,40 +742,12 @@ SYNDICATE BLACK OPS
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
-	flying = 0
+	no_equip = list(slot_back)
 	blacklisted = 1
+	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 	var/datum/action/innate/flight/fly
-
-/*
-/datum/species/human/qualifies_for_rank(rank, list/features)
-	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
-		return 1	//Pure humans are always allowed in all roles.
-
-	//Mutants are not allowed in most roles.
-	if(rank in security_positions) //This list does not include lawyers.
-		return 0
-	if(rank in science_positions)
-		return 0
-	if(rank in medical_positions)
-		return 0
-	if(rank in engineering_positions)
-		return 0
-	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
-		return 0
-	return ..()
-
-
-/datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "mutationtoxin")
-		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.set_species(/datum/species/jelly/slime)
-		H.reagents.del_reagent(chem.type)
-		H.faction |= "slime"
-		return 1
-
-*/
 
 /datum/species/angel/on_species_gain(mob/living/carbon/human/H)
 	..()
@@ -790,7 +762,8 @@ SYNDICATE BLACK OPS
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
 		fly.Remove(H)
-	flying = 0
+	if(FLYING in specflags)
+		specflags -= FLYING
 	ToggleFlight(H,0)
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "None"
@@ -801,7 +774,7 @@ SYNDICATE BLACK OPS
 	HandleFlight(H)
 
 /datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
-	if(flying)
+	if(FLYING in specflags)
 		if(!CanFly(H))
 			ToggleFlight(H,0)
 			H.float(0)
@@ -812,22 +785,26 @@ SYNDICATE BLACK OPS
 		H.float(0)
 		return 0
 
-
-
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
+	if(H.stat || H.stunned || H.weakened)
+		return 0
+	if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
+		H << "Your suit blocks your wings from extending!"
+		return 0
 	var/turf/T = get_turf(H)
 	if(!T)
 		return 0
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
+		H << "<span class='warning'>The atmosphere is too thin for you to fly!</span>"
 		return 0
 	else
 		return 1
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED
 	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
 
@@ -835,14 +812,17 @@ SYNDICATE BLACK OPS
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
-		A.flying = !A.flying
-		if(A.flying)
-			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
-			A.ToggleFlight(H,A.flying)
-		else
+		if(FLYING in A.specflags)
 			H << "<span class='notice'>You settle gently back onto the ground...</span>"
-			A.ToggleFlight(H,A.flying)
-
+			A.specflags -= FLYING
+			A.ToggleFlight(H,0)
+			H.update_canmove()
+		else
+			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			A.specflags += FLYING
+			H.resting = 0
+			A.ToggleFlight(H,1)
+			H.update_canmove()
 
 /datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj
@@ -871,27 +851,30 @@ SYNDICATE BLACK OPS
 
 
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
-	if(flying)
+	if(FLYING in specflags)
 		flyslip(H)
-		ToggleFlight(H,0)
-	..()
+	. = ..()
 
 /datum/species/angel/negates_gravity()
-	return flying
+	if(FLYING in specflags)
+		return 1
 
 /datum/species/angel/space_move()
-	return flying
+	if(FLYING in specflags)
+		return 1
 
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
-	if(flight)
-		flying = 1
+	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -1
+		specflags += FLYING
+		override_float = 1
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
-		flying = 0
 		stunmod = 1
 		speedmod = 0
+		specflags -= FLYING
+		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

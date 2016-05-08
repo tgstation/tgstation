@@ -51,6 +51,13 @@
 /mob/proc/get_num_legs()
 	return 2
 
+/mob/proc/get_leg_ignore()
+	return 0
+
+/mob/living/carbon/human/get_leg_ignore()
+	if(FLYING in dna.species.specflags)
+		return 1
+
 /mob/living/carbon/human/get_num_arms()
 	. = 0
 	for(var/X in bodyparts)

@@ -21,6 +21,7 @@
 
 /datum/species
 	var/id = null		// if the game needs to manually check your race to do something not included in a proc here, it will use this
+	var/limbs_id = null	//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
 	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
@@ -86,11 +87,19 @@
 
 	var/has_dismemberment = 1 //Whether or not this species uses dismemberment for its limbs
 
+	//Flight and floating
+	var/override_float = 0
+
 	///////////
 	// PROCS //
 	///////////
 
-	var/flying = 0
+
+/datum/species/New()
+	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
+		limbs_id = id
+	..()
+
 
 //Called when admins use the Set Species verb, let's species
 //do some init stuff on the mob that got SS'd if necessary
@@ -452,7 +461,6 @@
 			else
 				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
 
-			world.log << icon_string
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
 			if(!(H.disabilities & HUSK))
@@ -848,6 +856,9 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
+			if(specflags & FLYING)
+				. += speedmod
+				return
 			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
@@ -886,10 +897,11 @@
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			var/leg_amount = H.get_num_legs()
-			. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-			if(!leg_amount)
-				. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
+			if(!(specflags & FLYING))
+				var/leg_amount = H.get_num_legs()
+				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+				if(!leg_amount)
+					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
 
 			. += speedmod
@@ -1471,7 +1483,6 @@
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	. = stunmod * amount
 
-
 //////////////
 //Space Move//
 //////////////
@@ -1481,22 +1492,6 @@
 
 /datum/species/proc/negates_gravity()
 	return 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #undef HUMAN_MAX_OXYLOSS

@@ -68,6 +68,8 @@
 
 #define MUTCOLORS_PARTSONLY 	32768	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 
+#define FLYING	65536
+
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
 	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.

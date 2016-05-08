@@ -583,7 +583,7 @@ var/global/list/limb_icon_cache = list()
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
-	. = "[dna.species.id]"
+	. = "[dna.species.limbs_id]"
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"

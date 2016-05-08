@@ -990,3 +990,7 @@
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	..()
+
+/mob/living/carbon/human/update_gravity(has_gravity,override = 0)
+	override = dna.species.override_float
+	..()
