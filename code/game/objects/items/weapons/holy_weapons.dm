@@ -145,7 +145,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
-	force = 2
+	force = 4.13
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -193,7 +193,7 @@
 	icon_state = "honkrender"
 	item_state = "render"
 	name = "clown dagger"
-	desc = "Used for absolutely hilarious sacrafices."
+	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
