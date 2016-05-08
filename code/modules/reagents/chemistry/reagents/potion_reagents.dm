@@ -50,7 +50,7 @@
 		if(method in list(TOUCH, VAPOR, PATCH))
 			if(show_message)
 				M << "<span class='userdanger'>A horrible pain washes over you, it feels like something is eating away at your skin!</span>"
-				M.adjustBruteLoss(25)
+				M.adjustBruteLoss(-3.5 * reac_volume)
 		else
 			if(show_message)
 				M << "<span class='userdanger'>You cry out in pain as you feel your insides twist and turn. Oh god, make it stop!</span>"
@@ -127,3 +127,27 @@
 	M.AdjustSleeping(-2, 0)
 	..()
 	. = 1
+
+
+//kinetic potion
+/datum/reagent/consumable/potion/kinetic
+	id = "kineticpotion"
+	description = "A strange mixture of various components. The mixture froths and bubbles violently, as if it's full of energy waiting to be released."
+	color = "#FFF804" // rgb: 225, 248, 4
+
+/datum/reagent/consumable/potion/kinetic/reaction_mob(mob/living/M, method=INGEST, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method in list(TOUCH, VAPOR, PATCH))
+			if(show_message)
+				M << "<span class='userdanger'>The mixture violently reacts, unleashing a huge kinetic blast!</span>"
+				M.reagents.add_reagent("sorium", (3 * reac_volume))
+		else
+			if(show_message) //don't drink out of unlabeled flasks, kids
+				if(reac_volume > 10)
+					M << "<span class='userdanger'>You cry out in pain as you feel your insides become outsides!</span>"
+					M.visible_message("<span class='danger'><b>[M]</b> rapidly expands before exploding into blood confetti!")
+					M.gib()
+				else
+					M << "<span class='notice'>You burp, releasing some of the energy from the mixture.</span>"
+					M.emote("burp")
+		..()

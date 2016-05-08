@@ -397,7 +397,6 @@
 	desc = "My potions are too strong for you, traveler."
 	icon_state = "potionflask"
 	item_state = "carton"
-	list_reagents = list("genericpotion" = 15)
 	volume = 15
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/potion/health
@@ -411,3 +410,12 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/potion/speed
 	list_reagents = list("speedpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/kinetic
+	list_reagents = list("kineticpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/random/New()
+	..()
+	reagents.add_reagent(pick("healingpotion" , "poisonpotion", "combustionpotion", "speedpotion" , "kineticpotion"), 15)
+
+
