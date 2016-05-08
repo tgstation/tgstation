@@ -80,11 +80,16 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		while(sanity > 0)
 			sanity--
 			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
+			var/valid = TRUE
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
 				if(!(istype(new_area, whitelist)))
-					continue
+					valid = FALSE
+					break
+
+			if(!valid)
+				continue
 
 			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
 
