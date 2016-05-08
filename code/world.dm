@@ -264,7 +264,23 @@ var/savefile/panicfile
 	paperwork_stop()
 
 	spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg', 'sound/misc/apcdestroyed.ogg', 'sound/misc/bangindonk.ogg', 'sound/misc/slugmissioncomplete.ogg')) // random end sounds!! - LastyBatsy
+		world << sound(pick(
+			'sound/AI/newroundsexy.ogg',
+			'sound/misc/apcdestroyed.ogg',
+			'sound/misc/bangindonk.ogg',
+			'sound/misc/slugmissioncomplete.ogg',
+			'sound/misc/bayojingle.ogg',
+			'sound/misc/gameoveryeah.ogg',
+			'sound/misc/rayman.ogg',
+			'sound/misc/marioworld.ogg',
+			'sound/misc/soniclevelcomplete.ogg',
+			'sound/misc/calamitytrigger.ogg',
+			'sound/misc/duckgame.ogg',
+			'sound/misc/FTLvictory.ogg',
+			'sound/misc/tfvictory.ogg',
+			'sound/misc/megamanX.ogg',
+			'sound/misc/castlevania.ogg',
+			)) // random end sounds!! - LastyBatsy
 
 
 	for(var/client/C in clients)
