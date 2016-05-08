@@ -25,7 +25,7 @@
 
 
 /obj/item/clothing/Destroy()
-	if(ismob(loc))
+	if(isliving(loc))
 		dropped(loc)
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	return ..()
