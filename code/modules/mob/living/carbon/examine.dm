@@ -53,7 +53,7 @@
 	if(digitalcamo)
 		msg += "It is moving its body in an unnatural and blatantly unsimian manner.\n"
 
-	if(!getorgan(/obj/item/organ/internal/brain))
+	if(!getorgan(/obj/item/organ/brain))
 		msg += "<span class='deadsay'>It appears that it's brain is missing...</span>\n"
 
 	msg += "*---------*</span>"

@@ -76,7 +76,16 @@
 
 /obj/docking_port/mobile/emergency/New()
 	..()
+	// The last created emergency shuttle will always be the one
+	// that we use.
 	SSshuttle.emergency = src
+
+/obj/docking_port/mobile/emergency/Destroy()
+	if(src.i_know_what_im_doing)
+		// This'll make the shuttle subsystem use the backup shuttle.
+		SSshuttle.emergencyDeregister()
+
+	. = ..()
 
 /obj/docking_port/mobile/emergency/timeLeft(divisor)
 	if(divisor <= 0)
@@ -319,6 +328,24 @@
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return
 
+/obj/docking_port/mobile/emergency/backup
+	name = "backup shuttle"
+	id = "backup"
+	dwidth = 2
+	width = 8
+	height = 8
+	dir = 4
+
+	roundstart_move = "backup_away"
+
+/obj/docking_port/mobile/emergency/backup/New()
+	// We want to be a valid emergency shuttle
+	// but not be the main one, keep whatever's set
+	// valid.
+	var/current_emergency = SSshuttle.emergency
+	..()
+	SSshuttle.emergency = current_emergency
+	SSshuttle.backup_shuttle = src
 
 
 #undef UNLAUNCHED
