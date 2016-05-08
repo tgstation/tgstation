@@ -3,7 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	circuit = /obj/item/weapon/circuitboard/security
+	circuit = /obj/item/weapon/circuitboard/computer/security
 	var/last_pic = 1
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
@@ -177,4 +177,4 @@
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"
 	network = list("MINE")
-	circuit = "/obj/item/weapon/circuitboard/mining"
+	circuit = /obj/item/weapon/circuitboard/computer/mining

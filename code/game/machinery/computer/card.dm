@@ -10,7 +10,7 @@ var/time_last_changed_position = 0
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_one_access = list(access_heads, access_change_ids)
-	circuit = /obj/item/weapon/circuitboard/card
+	circuit = /obj/item/weapon/circuitboard/computer/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0
@@ -483,18 +483,18 @@ var/time_last_changed_position = 0
 
 /obj/machinery/computer/card/centcom
 	name = "\improper Centcom identification console"
-	circuit = /obj/item/weapon/circuitboard/card/centcom
+	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
 	req_access = list(access_cent_captain)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"
 	desc = "You can use this to change ID's for specific departments."
 	icon_screen = "idminor"
-	circuit = /obj/item/weapon/circuitboard/card/minor
+	circuit = /obj/item/weapon/circuitboard/computer/card/minor
 
 /obj/machinery/computer/card/minor/New()
 	..()
-	var/obj/item/weapon/circuitboard/card/minor/typed_circuit = circuit
+	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
 		typed_circuit.target_dept = target_dept
 	else
