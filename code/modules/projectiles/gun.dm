@@ -72,7 +72,9 @@
 	..()
 	if(pin)
 		pin = new pin(src)
-
+	if(F)
+		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
 
 
@@ -288,7 +290,7 @@ obj/item/weapon/gun/proc/newshot()
 					A.Grant(user)
 
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(F)
+		if(F && can_flashlight)
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
 				F = null
