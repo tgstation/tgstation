@@ -1,0 +1,4 @@
+author: Razharas
+delete-after: True
+changes: 
+  - tweak: "crafting can now be done everywhere, little button near the intents with hammer on it(its not T) opens the crafting menu, if you are in a locker or mech only things in your hands will be considered for crafting"
