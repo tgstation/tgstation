@@ -78066,6 +78066,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	dir = 5;
 	icon_state = "warning"
@@ -80505,6 +80506,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -100478,16 +100480,13 @@
 	},
 /area/crew_quarters/kitchen)
 "dfs" = (
-/obj/structure/chair/stool,
-/turf/open/floor/wood,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plasteel,
+/area/atmos)
 "dft" = (
-/turf/open/floor/wood,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel,
+/area/atmos)
 "dfu" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -100506,10 +100505,9 @@
 	},
 /area/medical/morgue)
 "dfw" = (
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/medical/morgue)
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/atmos)
 "dfx" = (
 /obj/machinery/plantgenes,
 /turf/open/floor/plasteel{
@@ -140587,8 +140585,8 @@ bFT
 bHN
 bJw
 bKQ
-bzf
-bOj
+dfs
+atw
 atn
 bRw
 bTc
@@ -140844,8 +140842,8 @@ bEn
 bHO
 bJx
 bKR
-bzf
-bOk
+dft
+atw
 apk
 bRx
 apk
@@ -141101,8 +141099,8 @@ bFU
 bHP
 bJy
 bKS
-bzf
-cXn
+dfw
+atw
 apk
 bRy
 apk
@@ -141358,8 +141356,8 @@ bEn
 bHQ
 bJz
 bKT
-bzf
-bOl
+dfw
+atw
 bQa
 bRz
 bTd

@@ -278,6 +278,7 @@ MASS SPECTROMETER
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/bz_concentration = env_gases["bz"][MOLES]/total_moles
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -299,6 +300,12 @@ MASS SPECTROMETER
 			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+
+		if(bz_concentration > 0.005)
+			user << "<span class='alert'>Hallucinogen: [round(plasma_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>Hallucinogen: [round(plasma_concentration*100, 0.01)] %</span>"
+
 
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)

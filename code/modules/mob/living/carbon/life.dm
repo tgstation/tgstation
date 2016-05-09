@@ -123,7 +123,7 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases("o2","plasma","co2","n2o")
+	breath.assert_gases("o2","plasma","co2","n2o", "bz")
 
 	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure

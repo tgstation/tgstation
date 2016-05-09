@@ -40861,6 +40861,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -41603,6 +41604,7 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -45105,6 +45107,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
@@ -64066,8 +64069,12 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/atmos)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /mob/living/simple_animal/hostile/lizard{
@@ -94956,7 +94963,7 @@ bJs
 bKy
 bLM
 bLM
-bNQ
+cAK
 bOV
 bQk
 bRt
