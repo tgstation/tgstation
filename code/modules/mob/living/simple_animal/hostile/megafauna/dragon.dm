@@ -1,8 +1,8 @@
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
-	health = 2000
-	maxHealth = 2000
+	health = 2500
+	maxHealth = 2500
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "dragon"
@@ -28,6 +28,7 @@
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 	var/swooping = 0
+	var/swoop_cooldown = 0
 	deathmessage = "collapes into a pile of bones, it's flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -41,6 +42,13 @@
 		return
 	else
 		..()
+		if(isliving(target))
+			var/mob/living/L = target
+			if(L.stat)
+				L.gib()
+				visible_message("<span class='danger'>[src] devours [L]!</span>")
+				src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
+				L.adjustBruteLoss(-L.maxHealth)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -90,8 +98,8 @@
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	if(prob(15 + anger_modifier))
-		if(health < maxHealth/2 && !client)
+	if(prob(15 + anger_modifier) && !client)
+		if(health < maxHealth/2)
 			swoop_attack(1)
 		else
 			fire_rain()
@@ -111,7 +119,6 @@
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
 			new /obj/effect/overlay/temp/target(turf)
-
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
@@ -135,10 +142,14 @@
 						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
 				sleep(1)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat)
 		return
-	var/mob/living/swoop_target = target
+	var/swoop_target
+	if(manual_target)
+		swoop_target = manual_target
+	else
+		swoop_target = target
 	stop_automated_movement = TRUE
 	swooping = 1
 	icon_state = "swoop"
@@ -181,6 +192,19 @@
 	stop_automated_movement = FALSE
 	swooping = 0
 	density = 1
+	swoop_cooldown = world.time + 200
+
+
+
+
+/mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
+	if(!istype(A))
+		return
+	if(swoop_cooldown >= world.time)
+		src << "You need to wait 20 seconds between swoop attacks!"
+		return
+	swoop_attack(1, A)
+
 
 /obj/item/device/gps/internal/dragon
 	icon_state = null
@@ -239,8 +263,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
-	maxHealth = 500
-	health = 500
+	maxHealth = 750
+	health = 750
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -259,21 +283,15 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,5)
+	var/random = rand(1,3)
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>The blood sears your insides! What the hell were you thinking?</span>"
-			user.reagents.add_reagent("hellwater", 50)
-		if(2)
 			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
-		if(3)
+		if(2)
 			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
 			H.set_species(/datum/species/skeleton)
-		if(4)
-			user << "<span class='danger'>The blood mixes with your own, filling your veins with a pulsing fire.</span>"
-			H.dna.species.coldmod = 0
-		if(5)
+		if(3)
 			user << "<span class='danger'>You don't feel so good...</span>"
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
