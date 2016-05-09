@@ -62716,6 +62716,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/structure/chair{
+	dir = 4
+	},
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
 	},
@@ -115747,11 +115750,11 @@ cxd
 cxe
 cwU
 cwL
-cxa
-cxa
-cxa
-cxa
-cxa
+cxk
+cxk
+cxk
+cxk
+cxk
 cwL
 cwU
 cxQ
@@ -117029,7 +117032,7 @@ cwL
 cwX
 cwL
 cwL
-cxa
+cxk
 cxj
 cwL
 cxq
@@ -117281,8 +117284,8 @@ aaa
 aaa
 crx
 cwG
-cwL
-cwL
+cwM
+cwM
 cwW
 cxa
 cwL
