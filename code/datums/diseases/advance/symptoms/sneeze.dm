@@ -38,7 +38,7 @@ Bonus
 				M.emote("sneeze")
 				Spreadzone(M, A)
 				var/obj/item/I = M.get_active_hand()
-				if(I && I.w_class > 0)
+				if(I)
 					M.drop_item()
 	return
 
