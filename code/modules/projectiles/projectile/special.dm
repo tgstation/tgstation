@@ -179,40 +179,21 @@
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
-	var/throwpower = 1
-	var/rangecooldown = 3
-
-/obj/item/projectile/gravipulse/Range()
-	T = get_turf(src)
-	if(src.range > min(throwpower, 3) && rangecooldown < 1)
-		for(var/atom/movable/A in orange(T,throwpower))
-			if(A.anchored)
-				continue
-			step_away(A,T)
-		rangecooldown = 3
-	rangecooldown--
 
 /obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
-		throwpower = min(C.gun.throwpower, 15)
 
 /obj/item/ammo_casing/energy/gravipulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
 	gun = G
 
 /obj/item/projectile/gravipulse/on_hit()
 	T = get_turf(src)
-	for(var/atom/movable/A in orange(T,power))
-		if(A == src)
+	for(var/atom/movable/A in range(T, power))
+		if(A == src || (firer && A == src.firer) || A.anchored)
 			continue
-		if(A.anchored)
-			continue
-		if(A in range(T,throwpower))
-			var/turf/target = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
-			A.throw_at(target,range+1,1)
-		for(var/iter=0 to power)
-			step_away(A,T)
-			sleep(1)
+		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
+		A.throw_at_fast(throwtarget,power+1,1)
 	for(var/turf/F in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		F.overlays += gravfield
@@ -222,29 +203,12 @@
 /obj/item/projectile/gravipulse/alt
 	color = "#FF6600"
 
-/obj/item/projectile/gravipulse/alt/Range()
-	T = get_turf(src)
-	if(src.range > 3 && rangecooldown < 1)
-		for(var/atom/movable/A in orange(T,throwpower))
-			if(A.anchored)
-				continue
-			step_towards(A,T)
-		rangecooldown = 3
-	rangecooldown--
-
 /obj/item/projectile/gravipulse/alt/on_hit()
 	T = get_turf(src)
-	for(var/atom/movable/A in orange(T,power))
-		if(A == src)
+	for(var/atom/movable/A in range(T, power))
+		if(A == src || (firer && A == src.firer) || A.anchored)
 			continue
-		if(A.anchored)
-			continue
-		if(A in range(T,throwpower))
-			A.throw_at(T,throwpower+1,1)
-			continue
-		for(var/iter=0 to power)
-			step_towards(A,T)
-			sleep(1)
+		A.throw_at_fast(T,power+1,1)
 	for(var/turf/F in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		F.overlays += gravfield
