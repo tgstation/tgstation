@@ -15,7 +15,7 @@
 		return 0
 	if(!the_gateway)
 		return 0
-	new /obj/item/unactivated_swarmer(get_turf(the_gateway))
+	new /obj/item/device/unactivated_swarmer(get_turf(the_gateway))
 	if(prob(25)) //25% chance to announce it to the crew
 		var/swarmer_report = "<font size=3><b>[command_name()] High-Priority Update</b></span>"
 		swarmer_report += "<br><br>Our long-range sensors have detected an odd signal emanating from your station's gateway. We recommend immediate investigation of your gateway, as something may have come \

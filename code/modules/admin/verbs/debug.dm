@@ -362,7 +362,7 @@ var/list/TYPES_SHORTCUTS = list(
 	/obj/machinery/portable_atmospherics = "PORT_ATMOS",
 	/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack = "MECHA_MISSILE_RACK",
 	/obj/item/mecha_parts/mecha_equipment = "MECHA_EQUIP",
-	/obj/item/organ/internal = "ORGAN_INT",
+	/obj/item/organ = "ORGAN",
 )
 
 var/global/list/g_fancy_list_of_types = null

@@ -12,13 +12,15 @@
 /client/MouseUp(object, location, control, params)
 	selected_target = null
 
-/client/MouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if(selected_target)
+/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	if(selected_target && over_object.IsAutoclickable())
 		selected_target = over_object
 
 /mob/proc/CanMobAutoclick(object, location, params)
 
-/mob/living/CanMobAutoclick(object, location, params)
+/mob/living/carbon/CanMobAutoclick(atom/object, location, params)
+	if(!object.IsAutoclickable())
+		return
 	var/obj/item/h = get_active_hand()
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
@@ -30,3 +32,12 @@
 
 /obj/item/weapon/gun/CanItemAutoclick(object, location, params)
 	. = automatic
+
+/atom/proc/IsAutoclickable()
+	. = 1
+
+/obj/screen/IsAutoclickable()
+	. = 0
+
+/obj/screen/click_catcher/IsAutoclickable()
+	. = 1

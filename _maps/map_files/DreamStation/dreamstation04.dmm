@@ -1434,7 +1434,7 @@
 	},
 /area/shuttle/syndicate)
 "acC" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
@@ -2533,7 +2533,7 @@
 	},
 /area/shuttle/abandoned)
 "aeG" = (
-/obj/structure/computerframe{
+/obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/plasteel/shuttle{
@@ -2838,7 +2838,7 @@
 	},
 /area/shuttle/abandoned)
 "afo" = (
-/obj/item/weapon/circuitboard/operating,
+/obj/item/weapon/circuitboard/computer/operating,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
 	},
@@ -5745,8 +5745,8 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "alK" = (
-/obj/structure/computerframe,
-/obj/item/weapon/circuitboard/operating,
+/obj/structure/frame/computer,
+/obj/item/weapon/circuitboard/computer/operating,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "alL" = (
@@ -5889,7 +5889,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "amj" = (
-/obj/item/weapon/circuitboard/sleeper,
+/obj/item/weapon/circuitboard/machine/sleeper,
 /obj/structure/mirror{
 	pixel_x = 28
 	},
@@ -6259,7 +6259,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "amV" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "amW" = (
@@ -6807,32 +6807,32 @@
 "aop" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/circuitboard/microwave,
+/obj/item/weapon/circuitboard/machine/microwave,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/asmaint)
 "aoq" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "aor" = (
-/obj/structure/computerframe{
+/obj/structure/frame/computer{
 	anchored = 1
 	},
-/obj/item/weapon/circuitboard/arcade/orion_trail,
+/obj/item/weapon/circuitboard/computer/arcade/orion_trail,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "aos" = (
-/obj/structure/computerframe{
+/obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "aot" = (
 /obj/structure/table,
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "aou" = (
@@ -10768,7 +10768,7 @@
 /obj/structure/rack,
 /obj/item/weapon/light/tube,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/weapon/circuitboard/protolathe,
+/obj/item/weapon/circuitboard/machine/protolathe,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "awc" = (
@@ -17763,7 +17763,7 @@
 /area/maintenance/atmos_control)
 "aJM" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/circuit_imprinter,
+/obj/item/weapon/circuitboard/machine/circuit_imprinter,
 /obj/item/trash/chips,
 /turf/open/floor/plating,
 /area/maintenance/atmos_control)
@@ -23619,11 +23619,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/robotics{
+/obj/item/weapon/circuitboard/computer/robotics{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/mecha_control{
+/obj/item/weapon/circuitboard/computer/mecha_control{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -23651,11 +23651,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/borgupload{
+/obj/item/weapon/circuitboard/computer/borgupload{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/aiupload{
+/obj/item/weapon/circuitboard/computer/aiupload{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -23675,15 +23675,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/crew{
+/obj/item/weapon/circuitboard/computer/crew{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/card{
+/obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/communications{
+/obj/item/weapon/circuitboard/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -23847,7 +23847,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aVH" = (
-/obj/structure/computerframe{
+/obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/plating{
@@ -23862,7 +23862,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "aVJ" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -27242,16 +27242,16 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/cloning{
+/obj/item/weapon/circuitboard/computer/cloning{
 	pixel_x = 0
 	},
-/obj/item/weapon/circuitboard/med_data{
+/obj/item/weapon/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/clonescanner,
-/obj/item/weapon/circuitboard/clonepod,
-/obj/item/weapon/circuitboard/scan_consolenew,
+/obj/item/weapon/circuitboard/machine/clonescanner,
+/obj/item/weapon/circuitboard/machine/clonepod,
+/obj/item/weapon/circuitboard/computer/scan_consolenew,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -27262,11 +27262,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/secure_data{
+/obj/item/weapon/circuitboard/computer/secure_data{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/security{
+/obj/item/weapon/circuitboard/computer/security{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -27281,12 +27281,12 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/mining,
-/obj/item/weapon/circuitboard/autolathe{
+/obj/item/weapon/circuitboard/computer/mining,
+/obj/item/weapon/circuitboard/machine/autolathe{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/arcade/battle,
+/obj/item/weapon/circuitboard/computer/arcade/battle,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -27402,7 +27402,7 @@
 "bcx" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/weapon/circuitboard/rdconsole,
+/obj/item/weapon/circuitboard/computer/rdconsole,
 /obj/item/weapon/stock_parts/console_screen,
 /turf/open/floor/plating{
 	broken = 1;
@@ -28690,21 +28690,21 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/pandemic{
+/obj/item/weapon/circuitboard/computer/pandemic{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/circuitboard/rdconsole,
-/obj/item/weapon/circuitboard/rdserver{
+/obj/item/weapon/circuitboard/computer/rdconsole,
+/obj/item/weapon/circuitboard/machine/rdserver{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/destructive_analyzer,
-/obj/item/weapon/circuitboard/protolathe,
-/obj/item/weapon/circuitboard/aifixer,
-/obj/item/weapon/circuitboard/teleporter,
-/obj/item/weapon/circuitboard/circuit_imprinter,
-/obj/item/weapon/circuitboard/mechfab,
+/obj/item/weapon/circuitboard/machine/destructive_analyzer,
+/obj/item/weapon/circuitboard/machine/protolathe,
+/obj/item/weapon/circuitboard/computer/aifixer,
+/obj/item/weapon/circuitboard/computer/teleporter,
+/obj/item/weapon/circuitboard/machine/circuit_imprinter,
+/obj/item/weapon/circuitboard/machine/mechfab,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
@@ -28716,15 +28716,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/powermonitor{
+/obj/item/weapon/circuitboard/computer/powermonitor{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/stationalert{
+/obj/item/weapon/circuitboard/computer/stationalert{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/weapon/circuitboard/atmos_alert{
+/obj/item/weapon/circuitboard/computer/atmos_alert{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -28736,12 +28736,12 @@
 /area/storage/tech)
 "bfd" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/telecomms/processor,
-/obj/item/weapon/circuitboard/telecomms/receiver,
-/obj/item/weapon/circuitboard/telecomms/server,
-/obj/item/weapon/circuitboard/telecomms/bus,
-/obj/item/weapon/circuitboard/telecomms/broadcaster,
-/obj/item/weapon/circuitboard/message_monitor{
+/obj/item/weapon/circuitboard/machine/telecomms/processor,
+/obj/item/weapon/circuitboard/machine/telecomms/receiver,
+/obj/item/weapon/circuitboard/machine/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
+/obj/item/weapon/circuitboard/computer/message_monitor{
 	pixel_y = -5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -37083,7 +37083,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "buF" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "buG" = (
@@ -38399,7 +38399,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bwK" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /obj/machinery/power/apc{
 	aidisabled = 0;
 	auto_name = 1;
@@ -47438,7 +47438,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bMn" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bMo" = (
@@ -61853,7 +61853,7 @@
 	},
 /area/toxins/lab)
 "cog" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -62568,18 +62568,18 @@
 	},
 /area/maintenance/electrical)
 "cpA" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/construction)
 "cpB" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/construction)
 "cpC" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -62600,7 +62600,7 @@
 	},
 /area/construction)
 "cpE" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -65375,7 +65375,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/weapon/circuitboard/teleporter,
+/obj/item/weapon/circuitboard/computer/teleporter,
 /obj/item/device/aicard,
 /obj/structure/cable/pink{
 	tag = "icon-2-8";
@@ -72100,7 +72100,7 @@
 "cHe" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/reagent_containers/food/snacks/mint,
-/obj/item/weapon/circuitboard/destructive_analyzer,
+/obj/item/weapon/circuitboard/machine/destructive_analyzer,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cHf" = (
@@ -74722,8 +74722,8 @@
 	},
 /area/maintenance/asmaint2)
 "cLX" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/chem_master,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/chem_master,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cLY" = (

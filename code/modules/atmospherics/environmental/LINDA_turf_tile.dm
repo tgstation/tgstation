@@ -192,6 +192,7 @@
 		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
 				remove = 0
+	HandleWet() // if the tile is wet, and cold, make ice. Or if it's wet, and warm, dry it off.
 
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)

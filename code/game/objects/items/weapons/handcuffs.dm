@@ -30,21 +30,24 @@
 		return
 
 	if(!C.handcuffed)
-		C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-							"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+		if(C.get_num_arms() >= 2)
+			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
-		playsound(loc, cuffsound, 30, 1, -2)
-		if(do_mob(user, C, 30))
-			apply_cuffs(C,user)
-			user << "<span class='notice'>You handcuff [C].</span>"
-			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
-				feedback_add_details("handcuffs","C")
+			playsound(loc, cuffsound, 30, 1, -2)
+			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+				apply_cuffs(C,user)
+				user << "<span class='notice'>You handcuff [C].</span>"
+				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+					feedback_add_details("handcuffs","C")
+				else
+					feedback_add_details("handcuffs","H")
+
+				add_logs(user, C, "handcuffed")
 			else
-				feedback_add_details("handcuffs","H")
-
-			add_logs(user, C, "handcuffed")
+				user << "<span class='warning'>You fail to handcuff [C]!</span>"
 		else
-			user << "<span class='warning'>You fail to handcuff [C]!</span>"
+			user << "<span class='warning'>[C] doesn't have two hands...</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
@@ -262,7 +265,7 @@
 				snap = 1
 				if(!C.lying)
 					def_zone = pick("l_leg", "r_leg")
-					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
+					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						src.loc = C
 						C.update_inv_legcuffed()
@@ -314,7 +317,7 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed)
+	if(!C.legcuffed && C.get_num_legs() >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		src.loc = C
@@ -328,11 +331,4 @@
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	breakouttime = 70
-	weaken = 1
-
-/obj/item/weapon/restraints/legcuffs/bola/cult //cult variant, comes with armament talisman
-	name = "nar'sian bola"
-	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
-	icon_state = "bola_cult"
-	breakouttime = 45
 	weaken = 1

@@ -42,6 +42,7 @@
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -64,8 +65,8 @@
 
 /mob/living/simple_animal/drone/New()
 	..()
-
-	name = name + " ([rand(100,999)])"
+	if(name != initial(name))
+		name = name + " ([rand(100,999)])"
 	real_name = name
 
 	access_card = new /obj/item/weapon/card/id(src)
@@ -85,6 +86,22 @@
 
 	var/datum/action/generic/drone/select_filter/SF = new(src)
 	SF.Grant(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+
+
+/mob/living/simple_animal/drone/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/drone/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	if(stat == DEAD)
+		holder.icon_state = "huddead2"
+	else if(incapacitated())
+		holder.icon_state = "hudoffline"
+	else
+		holder.icon_state = "hudstat"
 
 
 /mob/living/simple_animal/drone/Destroy()

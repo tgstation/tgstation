@@ -83,7 +83,7 @@
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/limb/affecting = H.get_organ("chest")
+		var/obj/item/bodypart/affecting = H.get_bodypart("chest")
 		affecting.take_damage(drill_damage)
 		H.update_damage_overlays(0)
 	else if(target.stat == DEAD && target.butcher_results)
@@ -112,7 +112,7 @@
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
 	origin_tech = "materials=3;engineering=2"
-	equip_cooldown = 30
+	selectable = 0
 	var/scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()

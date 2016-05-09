@@ -57,8 +57,8 @@
 		if(H.gloves)
 			return 0
 		var/organ = ((H.hand ? "l_":"r_") + "arm")
-		var/obj/item/organ/limb/affecting = H.get_organ(organ)
-		if(affecting.take_damage(0, force))
+		var/obj/item/bodypart/affecting = H.get_bodypart(organ)
+		if(affecting && affecting.take_damage(0, force))
 			H.update_damage_overlays(0)
 	else
 		C.take_organ_damage(0,force)

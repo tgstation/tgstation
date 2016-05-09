@@ -188,7 +188,7 @@
 			M.confused = 1
 		M.confused += 3
 		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
-			ticker.mode.remove_cultist(M.mind)
+			ticker.mode.remove_cultist(M.mind, 1, 1)
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
@@ -211,14 +211,17 @@
 	description = "Something that shouldn't exist on this plane of existance."
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(3)
 	if(iscultist(M))
-		M.status_flags |= GOTTAGOFAST
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-2, 0)
+		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-2, 0)
 		M.AdjustWeakened(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustBruteLoss(-2, 0)
+		M.adjustFireLoss(-2, 0)
 	else
+		M.adjustBrainLoss(3)
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
@@ -254,7 +257,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(2)
+		T.MakeSlippery(TURF_WET_LUBE)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"

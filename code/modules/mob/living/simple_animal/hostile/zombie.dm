@@ -33,7 +33,19 @@
 	layer = MOB_LAYER - 0.1
 	var/removingairlock = 0
 
-
+/mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN
+	desc = "This guy seems to have gotten lost on his way to the leather club."
+	
+/mob/living/simple_animal/hostile/zombie/darkholme/New()
+	..()
+	name = pick("Leatherman","Leatherhead")
+	
+mob/living/simple_animal/hostile/zombie/gymboss
+	name = "boss of this gym"
+	desc = "There seems to be something shiny embedded in his waist."
+	butcher_results = list(/obj/item/weapon/storage/belt/champion/wrestling = 1)
+	attacktext = "spanks"
+	
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	..()
@@ -55,11 +67,13 @@
 
 	if(istype(target, /obj/machinery/door/airlock))
 		if(!removingairlock)
-			src << "<span class='notice'>You start tearing apart the airlock...</span>"
-			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			var/obj/machinery/door/airlock/A = target
 			removingairlock = 1
-			if(do_after(src, 200, 0, A, 1))
+			src << "<span class='notice'>You start tearing apart the airlock...</span>"
+			playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			spawn(20)
+				playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+			if(do_after(src, 160, 0, A, 1))
 				playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
 				door.density = 0

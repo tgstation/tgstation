@@ -56,7 +56,7 @@
 	//Hot simple_animal baby making vars
 	var/list/childtype = null
 	var/scan_ready = 1
-	var/species //Sorry, no spider+corgi buttbabies.
+	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
@@ -111,6 +111,7 @@
 			death()
 		else
 			stat = CONSCIOUS
+	med_hud_set_status()
 
 
 /mob/living/simple_animal/handle_status_effects()
@@ -461,8 +462,8 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !species || ticker.current_state != GAME_STATE_PLAYING)
-		return
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+		return 0
 	scan_ready = 0
 	spawn(400)
 		scan_ready = 1
@@ -474,7 +475,7 @@
 			continue
 		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
-		else if(istype(M, species))
+		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
@@ -485,6 +486,8 @@
 	if(alone && partner && children < 3)
 		var/childspawn = pickweight(childtype)
 		new childspawn(loc)
+		return 1
+	return 0
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)

@@ -55,13 +55,13 @@
 	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
-	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Allows you to summon an arcane tome.<BR>"
+	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Summons an arcane tome, used to scribe runes and communicate with other cultists.<BR>"
 	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
-	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
-	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with captured souls. It is too large to carry on your person.<BR>"
 	dat += "<A href='?src=\ref[src];rune=veiling'>Kla'atu barada nikt'o!</A> - Two use talisman, first use makes all nearby runes invisible, second use reveals nearby hidden runes.<BR>"
+	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
+	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with soulstone-captured souls. It is too large to carry on your person.<BR>"
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -176,16 +176,12 @@
 		invocation = "Nikt'o barada kla'atu!"
 		revealing = TRUE
 		for(var/obj/effect/rune/R in range(3,user))
-			R.visible_message("<span class='danger'>[R] fades away.</span>")
-			R.invisibility = INVISIBILITY_OBSERVER
-			R.alpha = 100 //To help ghosts distinguish hidden runes
+			R.talismanhide()
 	else
 		user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
 			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
 		for(var/obj/effect/rune/R in range(3,user))
-			R.invisibility = 0
-			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
-			R.alpha = initial(R.alpha)
+			R.talismanreveal()
 
 //Rite of False Truths: Same as rune
 /obj/item/weapon/paper/talisman/make_runes_fake
@@ -201,6 +197,7 @@
 	for(var/obj/effect/rune/R in orange(6,user))
 		R.desc = "A rune drawn in crayon."
 
+
 //Rite of Disruption: Weaker than rune
 /obj/item/weapon/paper/talisman/emp
 	cultist_name = "Talisman of Electromagnetic Pulse"
@@ -214,6 +211,7 @@
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
+
 
 //Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
 /obj/item/weapon/paper/talisman/stun
@@ -259,6 +257,7 @@
 		return
 	..()
 
+
 //Rite of Arming: Equips cultist armor on the user, where available
 /obj/item/weapon/paper/talisman/armor
 	cultist_name = "Talisman of Arming"
@@ -286,6 +285,7 @@
 		return
 	..()
 
+
 //Talisman of Horrors: Breaks the mind of the victim with nightmarish hallucinations
 /obj/item/weapon/paper/talisman/horror
 	cultist_name = "Talisman of Horrors"
@@ -295,11 +295,12 @@
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
-		user.visible_message("<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+		user << "<span class='cultitalic'>You disturb [target] with visons of the end!</span>"
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
 		qdel(src)
+
 
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
 /obj/item/weapon/paper/talisman/construction
@@ -319,34 +320,30 @@
 	if(iscultist(user))
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
-		
-/obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/metal/target, mob/user, proximity_flag, click_parameters)
+
+/obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
-	if(proximity_flag && istype(target) && iscultist(user))
-		var/turf/T = get_turf(target)
-		if(target.use(25))
-			new /obj/structure/constructshell(T)
-			user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+	if(proximity_flag && iscultist(user))
+		if(istype(target, /obj/item/stack/sheet/metal))
+			var/turf/T = get_turf(target)
+			if(target.use(25))
+				new /obj/structure/constructshell(T)
+				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
+				user << sound('sound/effects/magic.ogg',0,1,25)
+				PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
+				qdel(src)
+		if(istype(target, /obj/item/stack/sheet/plasteel))
+			var/quantity = target.amount
+			var/turf/T = get_turf(target)
+			new /obj/item/stack/sheet/runed_metal(T,quantity)
+			target.use(quantity)
+			user << "<span class='warning'>The talisman clings to the plasteel and runes of power appear on the surface!</span>"
+			user << sound('sound/effects/magic.ogg',0,1,25)
+			PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
 			qdel(src)
 		else
-			user << "<span class='warning'>The talisman requires at least 25 sheets of metal!</span>"
-			
-/obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
-	name = "cult shackles"
-	desc = "shackles that bind the wrists with sinister magic."
-	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
-	origin_tech = "materials=2;magnets=5"
+			user << "<span class='warning'>The talisman requires metal or plasteel!</span>"
 
-/obj/item/weapon/restraints/handcuffs/energy/cult/used
-	desc = "magical remnants"
-
-/obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>Your [src] shatter in a discharge of dark magic!</span>", \
-							"<span class='userdanger'>[user]'s [src] shatters in a discharge of dark magic!</span>")
-	var/datum/effect_system/spark_spread/S = new
-	S.set_up(4,0,user.loc)
-	S.start()
-	qdel(src)
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
 /obj/item/weapon/paper/talisman/shackle
@@ -365,26 +362,21 @@
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 	return 0
 
-/obj/item/weapon/paper/talisman/shackle/attack(mob/living/target, mob/living/user)
-	if(iscultist(user))
-		if(isrobot(target))
-			..()
-			return
-		if(!isliving(target))
+/obj/item/weapon/paper/talisman/shackle/attack(mob/living/carbon/target, mob/living/user)
+	if(iscultist(user) && istype(target))
+		if(target.stat == DEAD)
 			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
 			return
-		var/mob/living/L = target
-		if(ishuman(L))
-			CuffAttack(L,user)
-
-/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/L,mob/living/user)
-	if(!iscarbon(L))
+		CuffAttack(target, user)
 		return
-	var/mob/living/carbon/C = L
+	..()
+
+/obj/item/weapon/paper/talisman/shackle/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
+		invoke(user, 1)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		C.visible_message("<span class='danger'>[user] begins restraining [C] with dark magic!</span>", \
-								"<span class='userdanger'>[user] begins shaping an dark magic around your wrists!</span>")
+								"<span class='userdanger'>[user] begins shaping a dark magic around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
@@ -392,9 +384,24 @@
 				user << "<span class='notice'>You shackle [C].</span>"
 				add_logs(user, C, "handcuffed")
 				uses--
+			else
+				user << "<span class='warning'>[C] is already bound.</span>"
 		else
 			user << "<span class='warning'>You fail to shackle [C].</span>"
+	else
+		user << "<span class='warning'>[C] is already bound.</span>"
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)
 	return
+
+/obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
+	name = "cult shackles"
+	desc = "Shackles that bind the wrists with sinister magic."
+	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
+	origin_tech = "materials=2;magnets=5"
+
+/obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
+							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
+	qdel(src)

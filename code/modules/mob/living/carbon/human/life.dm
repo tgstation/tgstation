@@ -214,7 +214,7 @@
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
-	if(dna && COLDRES in dna.species.specflags)
+	if(dna && (RESISTCOLD in dna.species.specflags))
 		return 1
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
@@ -289,17 +289,18 @@
 		. = 1
 	return .
 /mob/living/carbon/human/proc/handle_embedded_objects()
-	for(var/obj/item/organ/limb/L in organs)
-		for(var/obj/item/I in L.embedded_objects)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
-				L.take_damage(I.w_class*I.embedded_pain_multiplier)
-				src << "<span class='userdanger'>\the [I] embedded in your [L.getDisplayName()] hurts!</span>"
+				BP.take_damage(I.w_class*I.embedded_pain_multiplier)
+				src << "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>"
 
 			if(prob(I.embedded_fall_chance))
-				L.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
-				L.embedded_objects -= I
+				BP.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
+				BP.embedded_objects -= I
 				I.loc = get_turf(src)
-				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
+				visible_message("<span class='danger'>\the [I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>\the [I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 

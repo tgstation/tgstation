@@ -62,6 +62,9 @@
 	if(user.get_inactive_hand())
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
+	if(user.get_num_arms() < 2)
+		user << "<span class='warning'>You don't have enough hands.</span>"
+		return
 	wielded = 1
 	if(force_wielded)
 		force = force_wielded
@@ -318,14 +321,13 @@
 		explosive.prime()
 		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO
+ //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
 	if(!.) //not caught
 		if(explosive)
 			explosive.prime()
 			qdel(src)
-
 
 /obj/item/weapon/twohanded/spear/AltClick()
 	..()
@@ -337,16 +339,6 @@
 		if(input)
 			src.war_cry = input
 
-//Placeholder C4 "grenade" for use on this spear
-/obj/item/weapon/grenade/C4
-	name = "C-4"
-	desc = "A brick of C-4."
-
-/obj/item/weapon/grenade/C4/prime()
-	update_mob()
-	explosion(src.loc,-1,1,3)
-	qdel(src)
-
 /obj/item/weapon/twohanded/spear/CheckParts()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)
@@ -357,12 +349,6 @@
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
 		return
-	var/obj/item/weapon/c4/C4 = locate() in contents
-	if(C4)
-		var /obj/item/weapon/grenade/C4/C42 = new /obj/item/weapon/grenade/C4(src)
-		qdel(C4)
-		explosive = C42
-		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
 	update_icon()
 
 // CHAINSAW
@@ -402,6 +388,9 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/weapon/twohanded/required/chainsaw/can_dismember()
+	return wielded
 
 
 //GREY TIDE
