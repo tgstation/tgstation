@@ -41,12 +41,12 @@
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
-			if(temp_vent_parent.other_atmosmch.len > 20)	//Stops Aliens getting stuck in small networks. See: Security, Virology
+			//Stops Aliens getting stuck in small networks.
+			//See: Security, Virology
+			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 
 	if(!vents.len)
-		// TODO do we throw an exception or just return a special
-		// value to indicate non-player number related failure
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
