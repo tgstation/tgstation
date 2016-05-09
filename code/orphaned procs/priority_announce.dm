@@ -27,7 +27,7 @@
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			M << announcement
-			"if(!(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+			if(!(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 				continue
 			M << sound(sound)
 
