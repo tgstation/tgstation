@@ -298,7 +298,6 @@
 		user << "<span class='cult'>It seems drained.</span>"
 
 /obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
-	. = null
 	var/mob/living/carbon/C = user
 	if(C.pulling)
 		var/atom/movable/pulled = C.pulling
