@@ -242,8 +242,12 @@
 
 
 /datum/admins/proc/makeAliens()
-	new /datum/round_event/ghost_role/alien_infestation{spawncount=3}()
-	return 1
+	var/datum/round_event/ghost_role/alien_infestation/E = new(FALSE)
+	E.spawncount = 3
+	// TODO The fact we have to do this rather than just have events start
+	// when we ask them to, is bad.
+	E.processing = TRUE
+	return TRUE
 
 /datum/admins/proc/makeSpaceNinja()
 	new /datum/round_event/ghost_role/ninja()
