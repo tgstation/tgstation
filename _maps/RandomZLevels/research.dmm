@@ -19,7 +19,7 @@
 "as" = (/mob/living/simple_animal/hostile/syndicate/ranged,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/awaymission/research/interior/engineering)
 "at" = (/obj/machinery/suit_storage_unit/engine,/turf/open/floor/plating,/area/awaymission/research/interior/engineering)
 "au" = (/turf/open/floor/plating,/area/awaymission/research/interior/engineering)
-"av" = (/obj/item/weapon/shard{icon_state = "small"},/obj/machinery/constructable_frame/machine_frame,/obj/item/weapon/circuitboard/smes,/obj/item/weapon/stock_parts/cell/high,/obj/item/weapon/stock_parts/cell/high/empty,/turf/open/floor/plating,/area/awaymission/research/interior/engineering)
+"av" = (/obj/item/weapon/shard{icon_state = "small"},/obj/structure/frame/machine,/obj/item/weapon/circuitboard/machine/smes,/obj/item/weapon/stock_parts/cell/high,/obj/item/weapon/stock_parts/cell/high/empty,/turf/open/floor/plating,/area/awaymission/research/interior/engineering)
 "aw" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plasteel/whiteyellow/side,/area/awaymission/research/interior/engineering)
 "ax" = (/obj/structure/flora/kirbyplants{icon_state = "plant-20"; layer = 4.1; pixel_y = 3},/turf/open/floor/plasteel/whiteyellow/corner{tag = "icon-whiteyellowcorner (WEST)"; icon_state = "whiteyellowcorner"; dir = 8},/area/awaymission/research/interior/engineering)
 "ay" = (/obj/structure/chair{dir = 8},/mob/living/simple_animal/hostile/syndicate,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/awaymission/research/interior/engineering)

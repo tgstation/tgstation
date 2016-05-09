@@ -437,7 +437,7 @@
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
+					dat += "<td><A href='?_src_=holder;=\ref[M]'>FLW</a></td>"
 					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[wizard]'>[wizard.name]([wizard.key])</a><i>Wizard body destroyed!</i></td></tr>"
@@ -590,6 +590,35 @@
 					else
 						dat += "<tr><td><a href='?_src_=vars;Vars=\ref[abductee]'>[abductee.name]([abductee.key])</a><i>Abductee body destroyed!</i></td>"
 						dat += "<td><A href='?priv_msg=[abductee.key]'>PM</A></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.devils.len)
+			dat += "<br><table cellspacing=5><tr><td><B>devils</B></td><td></td><td></td></tr>"
+			for(var/X in ticker.mode.devils)
+				var/datum/mind/devil = X
+				var/mob/M = devil.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [devil.devilinfo.truename]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+					dat += "<td><A HREF='?_src_=holder;admincheckdevilinfo=\ref[M]'>Show all devil info</A></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[devil]'>[devil.name] :  [devil.devilinfo.truename] ([devil.key])</a><i>devil body destroyed!</i></td></tr>"
+					dat += "<td><A href='?priv_msg=[devil.key]'>PM</A></td>"
+			dat += "</table>"
+
+		if(ticker.mode.sintouched.len)
+			dat += "<br><table cellspacing=5><tr><td><B>sintouched</B></td><td></td><td></td></tr>"
+			for(var/X in ticker.mode.sintouched)
+				var/datum/mind/sintouched = X
+				var/mob/M = sintouched.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[sintouched]'>[sintouched.name]([sintouched.key])</a><i>sintouched body destroyed!</i></td></tr>"
+					dat += "<td><A href='?priv_msg=[sintouched.key]'>PM</A></td>"
 			dat += "</table>"
 
 		var/list/blob_minds = list()

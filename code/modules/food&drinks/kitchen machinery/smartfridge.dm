@@ -19,10 +19,33 @@
 
 /obj/machinery/smartfridge/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/smartfridge
+	name = "circuit board (Smartfridge)"
+	build_path = /obj/machinery/smartfridge
+	origin_tech = "programming=1"
+	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
+	if(new_type)
+		build_path = new_type
+
+/obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/list/fridges = list(/obj/machinery/smartfridge = "default",
+								/obj/machinery/smartfridge/drinks = "drinks",
+								/obj/machinery/smartfridge/extract = "slimes",
+								/obj/machinery/smartfridge/chemistry = "chems",
+								/obj/machinery/smartfridge/chemistry/virology = "viruses")
+
+		var/position = fridges.Find(build_path, fridges)
+		position = (position == fridges.len) ? 1 : (position + 1)
+		build_path = fridges[position]
+		user << "<span class='notice'>You set the board to [fridges[build_path]].</span>"
+	else
+		return ..()
 
 /obj/machinery/smartfridge/construction()
 	for(var/datum/A in contents)

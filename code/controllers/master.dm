@@ -85,7 +85,8 @@ var/global/datum/controller/master/Master = new()
 
 	var/mining_type = MINETYPE
 	if(mining_type == "lavaland")
-		seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
+		seedRuins(5, config.lavaland_budget, \
+			/area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
 	else
 		make_mining_asteroid_secrets()
