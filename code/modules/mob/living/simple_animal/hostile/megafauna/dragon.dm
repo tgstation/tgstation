@@ -74,7 +74,6 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "rune_large"
 	layer = MOB_LAYER - 0.1
-	anchored = 1
 	pixel_x = -32
 	pixel_y = -32
 	color = "#FF0000"
