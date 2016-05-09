@@ -101,15 +101,16 @@
 		last_shot = world.time
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L))
-				var/mob/living/carbon/human/H = L
-				if(istype(H))
-					L.adjustBruteLoss(-1, 0)
-					L.adjustFireLoss(-1, 0)
-					L.updatehealth()
-				if(istype(L, /mob/living/simple_animal/hostile/construct))
-					var/mob/living/simple_animal/M = L
-					if(M.health < M.maxHealth)
-						M.adjustHealth(-2)
+				if(L.health != L.maxHealth)
+					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(L), "#960000"))
+					if(ishuman(L))
+						L.adjustBruteLoss(-1, 0)
+						L.adjustFireLoss(-1, 0)
+						L.updatehealth()
+					if(istype(L, /mob/living/simple_animal/hostile/construct))
+						var/mob/living/simple_animal/M = L
+						if(M.health < M.maxHealth)
+							M.adjustHealth(-2)
 		if(corruption.len)
 			var/turf/T = pick_n_take(corruption)
 			corruption -= T
