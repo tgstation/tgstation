@@ -8,6 +8,7 @@
 	custom_process=1
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
+	var/last_resource_collection
 	var/point_rate = 2
 	var/mob/camera/blob/creator = null
 	layer = 7
@@ -33,6 +34,7 @@
 	if(!overmind)
 		create_overmind(new_overmind)
 	point_rate = new_rate
+	last_resource_collection = world.time
 	..(loc, newlook)
 
 /obj/effect/blob/core/Destroy()
@@ -79,9 +81,9 @@
 	if(!overmind)
 		create_overmind()
 	else
-		if(resource_delay <= world.time)
-			resource_delay = world.time + 10 // 1 second
-			overmind.add_points(point_rate)
+		var/points_to_collect = Clamp(point_rate*round((world.time-last_resource_collection)/10), 0, 10)
+		overmind.add_points(points_to_collect)
+		last_resource_collection = world.time
 
 	if(health < maxhealth)
 		health = min(maxhealth, health + 1)
