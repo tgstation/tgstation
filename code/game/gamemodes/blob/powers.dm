@@ -314,3 +314,4 @@
 	to_chat(world, "<span class='warning'>Your vision becomes cloudy, and your mind becomes clear.</span>")
 	spawn(5)
 	to_chat(world, "<span class='blob'>[message]</span>")
+	log_blobtelepathy("[key_name(usr)]: [message]")

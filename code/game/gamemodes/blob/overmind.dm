@@ -173,12 +173,14 @@
 	if (!message)
 		return
 
-	var/message_a = say_quote("\"[html_encode(message)]\"")
+	var/message_a = say_quote("\"[message]\"")
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
 	for (var/mob/camera/blob/S in mob_list)
 		if(istype(S))
 			S.show_message(rendered, 2)
+
+	log_blobspeak("[key_name(usr)]: [rendered]")
 
 	for (var/mob/M in dead_mob_list)
 		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping
