@@ -323,7 +323,7 @@ Class Procs:
 	add_fingerprint(user)
 	return 0
 
-/obj/machinery/CheckParts(list/content)
+/obj/machinery/CheckParts(list/parts_list)
 	..()
 	RefreshParts()
 

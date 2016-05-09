@@ -18,7 +18,7 @@
 	desc = "A bloody burger."
 	bonus_reagents = list("vitamin" = 4)
 
-/obj/item/weapon/reagent_containers/food/snacks/burger/human/CheckParts(list/content)
+/obj/item/weapon/reagent_containers/food/snacks/burger/human/CheckParts(list/parts_list)
 	..()
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/M = locate(/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human) in contents
 	if(M)

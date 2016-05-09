@@ -117,7 +117,7 @@
 	var/see_ghosts = 0 //for the spoop of it
 
 
-/obj/item/device/camera/CheckParts(list/content)
+/obj/item/device/camera/CheckParts(list/parts_list)
 	..()
 	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
 	if(C)

@@ -339,7 +339,7 @@
 		if(input)
 			src.war_cry = input
 
-/obj/item/weapon/twohanded/spear/CheckParts(list/content)
+/obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
 	..()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)

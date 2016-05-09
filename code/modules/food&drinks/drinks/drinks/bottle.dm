@@ -333,7 +333,7 @@
 							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
 	var/active = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/content)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
 	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/bottle/B = locate() in contents
 	if(B)

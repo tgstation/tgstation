@@ -66,8 +66,8 @@
 		hulk.do_attack_animation(src)
 	return
 
-/atom/proc/CheckParts(list/parts)
-	for(var/A in parts)
+/atom/proc/CheckParts(list/parts_list)
+	for(var/A in parts_list)
 		if(istype(A, /datum/reagent))
 			if(!reagents)
 				reagents = new()
