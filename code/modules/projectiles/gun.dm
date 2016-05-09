@@ -91,6 +91,10 @@
 		user << "It has [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
+	if(unique_reskin && !reskinned)
+		user << "<span class='notice'>Alt-click it to reskin it.</span>"
+	if(unique_rename)
+		user << "<span class='notice'>Use a pen on it to rename it.</span>"
 
 
 /obj/item/weapon/gun/proc/process_chamber()
