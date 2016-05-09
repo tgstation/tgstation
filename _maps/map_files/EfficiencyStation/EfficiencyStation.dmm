@@ -39741,6 +39741,7 @@
 /area/storage/art)
 "buT" = (
 /obj/structure/cult/tome,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel{
 	icon_state = "cult"
 	},
@@ -48367,8 +48368,7 @@
 	name = "Chapel Maintenance"
 	})
 "bKq" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/decal/cleanable/cobweb,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "bKr" = (
@@ -57033,9 +57033,13 @@
 	})
 "cay" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/robot_debris{
-	icon_state = "gib6"
-	},
+/obj/structure/table,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plating,
 /area/maintenance/port{
 	name = "Chapel Maintenance"

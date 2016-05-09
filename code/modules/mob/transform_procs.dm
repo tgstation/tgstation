@@ -53,6 +53,8 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
+	if(hellbound)
+		O.hellbound = hellbound
 	O.loc = loc
 	O.a_intent = "harm"
 
@@ -170,6 +172,8 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
+	if(hellbound)
+		O.hellbound = hellbound
 
 	O.loc = loc
 

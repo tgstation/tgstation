@@ -4,41 +4,40 @@
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
-	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops					= 2,
-							/obj/item/toy/talking/AI								= 2,
-							/obj/item/clothing/under/syndicate/tacticool			= 2,
-							/obj/item/toy/sword										= 2,
-							/obj/item/toy/gun										= 2,
-							/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
-							/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
-							/obj/item/weapon/storage/crayons						= 2,
-							/obj/item/toy/spinningtoy								= 2,
-							/obj/item/toy/prize/ripley								= 1,
-							/obj/item/toy/prize/fireripley							= 1,
-							/obj/item/toy/prize/deathripley							= 1,
-							/obj/item/toy/prize/gygax								= 1,
-							/obj/item/toy/prize/durand								= 1,
-							/obj/item/toy/prize/honk								= 1,
-							/obj/item/toy/prize/marauder							= 1,
-							/obj/item/toy/prize/seraph								= 1,
-							/obj/item/toy/prize/mauler								= 1,
-							/obj/item/toy/prize/odysseus							= 1,
-							/obj/item/toy/prize/phazon								= 1,
-							/obj/item/toy/prize/reticence							= 1,
-							/obj/item/toy/cards/deck								= 2,
-							/obj/item/toy/nuke										= 2,
-							/obj/item/toy/minimeteor								= 2,
-							/obj/item/toy/carpplushie								= 2,
-							/obj/item/toy/foamblade									= 2,
-							/obj/item/toy/redbutton									= 2,
-							/obj/item/toy/talking/owl								= 2,
-							/obj/item/toy/talking/griffin							= 2,
-							/obj/item/toy/talking/skeleton							= 2,
-							/obj/item/weapon/coin/antagtoken						= 2,
-							/obj/item/stack/tile/fakespace/loaded					= 2,
-							/obj/item/toy/toy_xeno									= 2,
-							/obj/item/weapon/restraints/handcuffs/fake              = 2
-							)
+	var/list/prizes = list(
+		/obj/item/weapon/storage/box/snappops					= 2,
+		/obj/item/toy/talking/AI								= 2,
+		/obj/item/toy/talking/codex_gigas						= 2,
+		/obj/item/clothing/under/syndicate/tacticool			= 2,
+		/obj/item/toy/sword										= 2,
+		/obj/item/toy/gun										= 2,
+		/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
+		/obj/item/weapon/storage/crayons						= 2,
+		/obj/item/toy/spinningtoy								= 2,
+		/obj/item/toy/prize/ripley								= 1,
+		/obj/item/toy/prize/fireripley							= 1,
+		/obj/item/toy/prize/deathripley							= 1,
+		/obj/item/toy/prize/gygax								= 1,
+		/obj/item/toy/prize/durand								= 1,
+		/obj/item/toy/prize/honk								= 1,
+		/obj/item/toy/prize/marauder							= 1,
+		/obj/item/toy/prize/seraph								= 1,
+		/obj/item/toy/prize/mauler								= 1,
+		/obj/item/toy/prize/odysseus							= 1,
+		/obj/item/toy/prize/phazon								= 1,
+		/obj/item/toy/prize/reticence							= 1,
+		/obj/item/toy/cards/deck								= 2,
+		/obj/item/toy/nuke										= 2,
+		/obj/item/toy/minimeteor								= 2,
+		/obj/item/toy/redbutton									= 2,
+		/obj/item/toy/talking/owl								= 2,
+		/obj/item/toy/talking/griffin							= 2,
+		/obj/item/toy/talking/skeleton							= 2,
+		/obj/item/weapon/coin/antagtoken						= 2,
+		/obj/item/stack/tile/fakespace/loaded					= 2,
+		/obj/item/toy/toy_xeno									= 2,
+		/obj/item/weapon/restraints/handcuffs/fake              = 2)
 
 /obj/machinery/computer/arcade/New()
 	..()
@@ -51,22 +50,16 @@
 		qdel(src)
 
 /obj/machinery/computer/arcade/proc/prizevend()
+	var/atom/moveable/prize
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/weapon/gun/energy/pulse(src)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
-		new prizeselect(src.loc)
-
-		if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
-			new /obj/item/toy/ammo/gun(src.loc)
-
-		else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
-			new	/obj/item/clothing/head/syndicatefake(src.loc)
-
+		prize = new prizeselect(src.loc)
 	else
-		var/atom/movable/prize = pick(contents)
-		prize.loc = src.loc
+		prize = pick(contents)
+	prize.loc = src.loc
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	..(severity)

@@ -24449,12 +24449,12 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNP" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNQ" = (
@@ -59349,6 +59349,7 @@
 	pixel_y = 0
 	},
 /obj/item/clothing/under/suit_jacket/red,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel{
 	icon_state = "cult";
 	dir = 2
@@ -100508,12 +100509,18 @@
 	},
 /area/medical/morgue)
 "dfx" = (
-/obj/machinery/plantgenes,
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "warning"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/hydroponics)
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plating,
+/area/chapel/main)
 "dfy" = (
 /turf/open/floor/engine/vacuum,
 /area/atmos)
@@ -100615,6 +100622,13 @@
 	},
 /turf/open/space,
 /area/space)
+"dfI" = (
+/obj/machinery/plantgenes,
+/turf/open/floor/plasteel{
+	dir = 9;
+	icon_state = "warning"
+	},
+/area/hydroponics)
 
 (1,1,1) = {"
 aaa
@@ -120851,7 +120865,7 @@ cOU
 cRS
 cRS
 cSP
-cRS
+dfx
 cOU
 cUb
 cOU
@@ -136228,7 +136242,7 @@ bZc
 caw
 bZc
 ccX
-dfx
+dfI
 bVf
 cuS
 ciC
