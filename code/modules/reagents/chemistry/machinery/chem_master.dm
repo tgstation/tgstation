@@ -11,6 +11,8 @@
 	var/obj/item/weapon/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = 0
+	var/screen = "home"
+	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 
 /obj/machinery/chem_master/New()
@@ -113,142 +115,6 @@
 	else
 		return ..()
 
-/obj/machinery/chem_master/Topic(href, href_list)
-	if(..())
-		return
-
-	usr.set_machine(src)
-
-
-	if(href_list["close"])
-		usr << browse(null, "window=chem_master")
-		usr.unset_machine()
-		return
-
-
-
-	if(beaker)
-
-		if(href_list["analyze"])
-			if(locate(href_list["reagent"]))
-				var/datum/reagent/R = locate(href_list["reagent"])
-				if(R)
-					var/dat = ""
-					dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
-					dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
-					dat += "<B>State:</B> "
-					if(initial(R.reagent_state) == 1)
-						dat += "Solid"
-					else if(initial(R.reagent_state) == 2)
-						dat += "Liquid"
-					else if(initial(R.reagent_state) == 3)
-						dat += "Gas"
-					else
-						dat += "Unknown"
-					dat += "<BR>"
-					dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
-					dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
-					var/const/P = 3 //The number of seconds between life ticks
-					var/T = initial(R.metabolization_rate) * (60 / P)
-					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
-					dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
-					dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
-					dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
-					var/datum/browser/popup = new(usr, "chem_master", name)
-					popup.set_content(dat)
-					popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
-					popup.open(1)
-					return
-
-		else if(href_list["main"]) // Used to exit the analyze screen.
-			attack_hand(usr)
-			return
-
-	src.updateUsrDialog()
-	return
-
-
-
-
-
-
-/obj/machinery/chem_master/attack_hand(mob/user)
-	if(stat & BROKEN)
-		return
-
-	user.set_machine(src)
-	var/dat = ""
-	if(beaker)
-		dat += "Beaker \[[beaker.reagents.total_volume]/[beaker.volume]\] <A href='?src=\ref[src];eject=1'>Eject and Clear Buffer</A><BR>"
-	else
-		dat = "Please insert beaker.<BR>"
-
-	dat += "<HR><B>Add to buffer:</B><UL>"
-	if(beaker)
-		if(beaker.reagents.total_volume)
-			for(var/datum/reagent/G in beaker.reagents.reagent_list)
-				dat += "<LI>[G.name], [G.volume] Units - "
-				dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[G]'>Analyze</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>1</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>5</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>10</A> "
-				dat += "<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>All</A> "
-				dat += "<A href='?src=\ref[src];addcustom=[G.id]'>Custom</A>"
-		else
-			dat += "<LI>Beaker is empty."
-	else
-		dat += "<LI>No beaker."
-
-	dat += "</UL><HR><B>Transfer to <A href='?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]</A>:</B><UL>"
-	if(reagents.total_volume)
-		for(var/datum/reagent/N in reagents.reagent_list)
-			dat += "<LI>[N.name], [N.volume] Units - "
-			dat += "<A href='?src=\ref[src];analyze=1;reagent=\ref[N]'>Analyze</A> "
-			dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>1</A> "
-			dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>5</A> "
-			dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>10</A> "
-			dat += "<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>All</A> "
-			dat += "<A href='?src=\ref[src];removecustom=[N.id]'>Custom</A>"
-	else
-		dat += "<LI>Buffer is empty."
-	dat += "</UL><HR>"
-
-	if(!condi)
-		if(bottle)
-			dat += "Pill Bottle \[[bottle.contents.len]/[bottle.storage_slots]\] <A href='?src=\ref[src];ejectp=1'>Eject</A>"
-		else
-			dat += "No pill bottle inserted."
-	else
-		dat += "<BR>"
-
-	dat += "<UL>"
-	if(!condi)
-		if(beaker && reagents.total_volume)
-			dat += "<LI><A href='?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
-			dat += "<LI><A href='?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=0'>Create patch</A> (50 units max)"
-			dat += "<LI><A href='?src=\ref[src];createpatch=1;many=1'>Create multiple patches</A><BR>"
-		else
-			dat += "<LI><span class='linkOff'>Create pill</span> (50 units max)"
-			dat += "<LI><span class='linkOff'>Create multiple pills</span><BR>"
-			dat += "<LI><span class='linkOff'>Create patch</span> (50 units max)"
-			dat += "<LI><span class='linkOff'>Create multiple patches</span><BR>"
-	else
-		if(beaker && reagents.total_volume)
-			dat += "<LI><A href='?src=\ref[src];createpill=1'>Create pack</A> (10 units max)<BR>"
-		else
-			dat += "<LI><span class='linkOff'>Create pack</span> (10 units max)<BR>"
-	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
-	dat += "</UL>"
-	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
-	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open(1)
-	return ..()
-
-
-
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -265,6 +131,10 @@
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["mode"] = mode
+	data["condi"] = condi
+	data["screen"] = screen
+	data["analyzeVars"] = analyzeVars
+
 	var beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
@@ -274,8 +144,9 @@
 	var bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" =N.name, "id" = N.id, "volume" = N.volume))) // ^
+			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
+
 
 	return data
 
@@ -323,7 +194,6 @@
 		if("toggleMode")
 			mode = !mode
 			. = TRUE
-
 
 		if("createPill")
 			var/many = params["many"]
@@ -404,32 +274,22 @@
 		if("analyze")
 			var/datum/reagent/R = chemical_reagents_list[params["id"]]
 			if(R)
-				var/dat = ""
-				dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
-				dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
-				dat += "<B>State:</B> "
+				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)
-					dat += "Solid"
+					state = "Solid"
 				else if(initial(R.reagent_state) == 2)
-					dat += "Liquid"
+					state = "Liquid"
 				else if(initial(R.reagent_state) == 3)
-					dat += "Gas"
-				else
-					dat += "Unknown"
-				dat += "<BR>"
-				dat += "<B>Color:</B> <span style='color:[initial(R.color)];background-color:[initial(R.color)];font:Lucida Console'>[initial(R.color)]</span><BR><BR>"
-				dat += "<B>Description:</B> [initial(R.description)]<BR><BR>"
+					state = "Gas"
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
-				dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
-				dat += "<B>Overdose Threshold:</B> [initial(R.overdose_threshold) ? "[initial(R.overdose_threshold)]u" : "none"]<BR>"
-				dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
-				dat += "<BR><A href='?src=\ref[src];main=1'>Back</A>"
-				var/datum/browser/popup = new(usr, "chem_master", name)
-				popup.set_content(dat)
-				popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
-				popup.open(1)
+				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				screen = "analyze"
 				return
+
+		if("goScreen")
+			screen = params["screen"]
+			. = TRUE
 
 
 
