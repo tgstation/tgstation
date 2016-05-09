@@ -155,7 +155,7 @@ var/list/diseases = subtypesof(/datum/disease)
 		if(disease_flags & CAN_RESIST)
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
-				remove_virus()
+		remove_virus()
 	qdel(src)
 
 
@@ -164,7 +164,7 @@ var/list/diseases = subtypesof(/datum/disease)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob
 			for(var/obj/item/organ/O in required_organs)
-				if(!locate(O) in H.organs)
+				if(!locate(O) in H.bodyparts)
 					if(!locate(O) in H.internal_organs)
 						cure()
 						return

@@ -290,21 +290,13 @@ var/inerror = 0
 	else if (n > 0)
 		features += "~[n] player"
 
-	/*
-	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
-		features += "hosted by <b>[host]</b>"
-	*/
-
 	if (!host && config && config.hostedby)
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"
 
-	/* does this help? I do not know */
-	if (src.status != s)
-		src.status = s
+	status = s
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0

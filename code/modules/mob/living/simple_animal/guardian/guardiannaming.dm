@@ -17,6 +17,30 @@
 /datum/guardianname/carp/New()
 	prefixname = pick(carp_names)
 
+/datum/guardianname/carp/sand
+	suffixcolour = "Sand"
+	colour = "#C2B280"
+
+/datum/guardianname/carp/seashell
+	suffixcolour = "Seashell"
+	colour = "#FFF5EE"
+
+/datum/guardianname/carp/coral
+	suffixcolour = "Coral"
+	colour = "#FF7F50"
+
+/datum/guardianname/carp/salmon
+	suffixcolour = "Salmon"
+	colour = "#FA8072"
+
+/datum/guardianname/carp/sunset
+	suffixcolour = "Sunset"
+	colour = "#FAD6A5"
+
+/datum/guardianname/carp/riptide
+	suffixcolour = "Riptide"
+	colour = "#89D9C8"
+
 /datum/guardianname/carp/seagreen
 	suffixcolour = "Sea Green"
 	colour = "#2E8B57"

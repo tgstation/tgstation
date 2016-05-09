@@ -104,7 +104,7 @@
 "bZ" = (/obj/machinery/vending/hydroseeds{slogan_delay = 700},/turf/open/floor/plasteel,/area/ruin/unpowered)
 "ca" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/floorgrime,/area/ruin/unpowered)
 "cb" = (/obj/structure/chair/office/dark,/turf/open/floor/plasteel/floorgrime,/area/ruin/unpowered)
-"cc" = (/obj/structure/computerframe,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"cc" = (/obj/structure/frame/computer,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "cd" = (/obj/structure/table/reinforced,/obj/machinery/computer/security/telescreen{dir = 1; name = "Bunker Entrance"; network = list("Bunker1"); pixel_x = 0; pixel_y = 2},/turf/open/floor/plasteel,/area/ruin/unpowered)
 "ce" = (/obj/structure/table/reinforced,/obj/machinery/button/door{id = "bunker1"; name = "Inner Doors"; pixel_y = 6},/obj/machinery/button/door{id = "bunker2"; name = "Outer Doors"; pixel_y = -4},/turf/open/floor/plasteel/floorgrime,/area/ruin/unpowered)
 "cf" = (/obj/machinery/door/poddoor{id = "bunker1"; name = "Bunker Door"; tag = "inner"},/turf/open/floor/plating,/area/ruin/unpowered)

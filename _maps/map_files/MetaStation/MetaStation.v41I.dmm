@@ -20887,7 +20887,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
-/obj/item/weapon/circuitboard/solar_control,
+/obj/item/weapon/circuitboard/computer/solar_control,
 /obj/item/weapon/electronics/tracker,
 /obj/item/weapon/paper/solar,
 /turf/open/floor/plasteel{
@@ -24449,12 +24449,12 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNP" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNQ" = (
@@ -31654,15 +31654,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/powermonitor{
+/obj/item/weapon/circuitboard/computer/powermonitor{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/stationalert{
+/obj/item/weapon/circuitboard/computer/stationalert{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/weapon/circuitboard/atmos_alert{
+/obj/item/weapon/circuitboard/computer/atmos_alert{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -31675,11 +31675,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/secure_data{
+/obj/item/weapon/circuitboard/computer/secure_data{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/security{
+/obj/item/weapon/circuitboard/computer/security{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -31696,16 +31696,16 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/cloning{
+/obj/item/weapon/circuitboard/computer/cloning{
 	pixel_x = 0
 	},
-/obj/item/weapon/circuitboard/med_data{
+/obj/item/weapon/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/clonescanner,
-/obj/item/weapon/circuitboard/clonepod,
-/obj/item/weapon/circuitboard/scan_consolenew,
+/obj/item/weapon/circuitboard/machine/clonescanner,
+/obj/item/weapon/circuitboard/machine/clonepod,
+/obj/item/weapon/circuitboard/computer/scan_consolenew,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -33760,11 +33760,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/borgupload{
+/obj/item/weapon/circuitboard/computer/borgupload{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/aiupload{
+/obj/item/weapon/circuitboard/computer/aiupload{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -33804,14 +33804,14 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/message_monitor{
+/obj/item/weapon/circuitboard/computer/message_monitor{
 	pixel_y = -5
 	},
-/obj/item/weapon/circuitboard/arcade/battle{
+/obj/item/weapon/circuitboard/computer/arcade/battle{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/arcade/orion_trail{
+/obj/item/weapon/circuitboard/computer/arcade/orion_trail{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel{
@@ -33823,8 +33823,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/mining,
-/obj/item/weapon/circuitboard/autolathe{
+/obj/item/weapon/circuitboard/computer/mining,
+/obj/item/weapon/circuitboard/machine/autolathe{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -33837,17 +33837,17 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/pandemic{
+/obj/item/weapon/circuitboard/computer/pandemic{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/circuitboard/rdconsole,
-/obj/item/weapon/circuitboard/rdserver{
+/obj/item/weapon/circuitboard/computer/rdconsole,
+/obj/item/weapon/circuitboard/machine/rdserver{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/destructive_analyzer,
-/obj/item/weapon/circuitboard/protolathe,
+/obj/item/weapon/circuitboard/machine/destructive_analyzer,
+/obj/item/weapon/circuitboard/machine/protolathe,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -34518,15 +34518,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/crew{
+/obj/item/weapon/circuitboard/computer/crew{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/card{
+/obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/communications{
+/obj/item/weapon/circuitboard/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -35451,11 +35451,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/robotics{
+/obj/item/weapon/circuitboard/computer/robotics{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/mecha_control{
+/obj/item/weapon/circuitboard/computer/mecha_control{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -49939,10 +49939,7 @@
 /area/crew_quarters/bar)
 "bCu" = (
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/weapon/gun/projectile/revolver/russian = 5, /obj/item/weapon/storage/box/syndie_kit/throwing_weapons, /obj/item/toy/cards/deck/syndicate = 2);
-	name = "gambling valuables spawner"
-	},
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bCv" = (
@@ -56966,14 +56963,14 @@
 /area/bridge)
 "bOg" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/telecomms/processor,
-/obj/item/weapon/circuitboard/telecomms/processor,
-/obj/item/weapon/circuitboard/telecomms/receiver,
-/obj/item/weapon/circuitboard/telecomms/server,
-/obj/item/weapon/circuitboard/telecomms/server,
-/obj/item/weapon/circuitboard/telecomms/bus,
-/obj/item/weapon/circuitboard/telecomms/bus,
-/obj/item/weapon/circuitboard/telecomms/broadcaster,
+/obj/item/weapon/circuitboard/machine/telecomms/processor,
+/obj/item/weapon/circuitboard/machine/telecomms/processor,
+/obj/item/weapon/circuitboard/machine/telecomms/receiver,
+/obj/item/weapon/circuitboard/machine/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
@@ -59352,6 +59349,7 @@
 	pixel_y = 0
 	},
 /obj/item/clothing/under/suit_jacket/red,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel{
 	icon_state = "cult";
 	dir = 2
@@ -60283,9 +60281,7 @@
 	pixel_y = 0
 	},
 /obj/item/weapon/folder/blue,
-/obj/item/clothing/head/collectable/HoS{
-	desc = "It's your turn to demand excessive paperwork, signatures, stamps, and hire more clowns! Papers, please!";
-	icon_state = "hopcap";
+/obj/item/clothing/head/collectable/HoP{
 	name = "novelty HoP hat"
 	},
 /obj/machinery/light/small{
@@ -79102,7 +79098,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/weapon/circuitboard/teleporter,
+/obj/item/weapon/circuitboard/computer/teleporter,
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria";
 	dir = 5
@@ -90522,7 +90518,7 @@
 /obj/item/weapon/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/device/soulstone/anybody,
 /obj/effect/landmark{
 	name = "revenantspawn"
@@ -96291,7 +96287,7 @@
 	},
 /area/shuttle/syndicate)
 "cXz" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
@@ -97780,8 +97776,8 @@
 	},
 /area/shuttle/abandoned)
 "daw" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/cyborgrecharger,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/cyborgrecharger,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -97949,7 +97945,7 @@
 	},
 /area/shuttle/abandoned)
 "daO" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -98045,7 +98041,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 1;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98062,7 +98058,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 1;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98357,7 +98353,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 2;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98374,7 +98370,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
+/obj/structure/frame/machine{
 	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
 	dir = 2;
 	icon = 'icons/obj/Cryogenic2.dmi';
@@ -98470,7 +98466,7 @@
 	},
 /area/shuttle/abandoned)
 "dbC" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -98648,7 +98644,7 @@
 	},
 /area/shuttle/abandoned)
 "dbS" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -98659,8 +98655,8 @@
 	},
 /area/shuttle/abandoned)
 "dbT" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/autolathe,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/autolathe,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -98792,8 +98788,8 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "dcd" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/chem_dispenser,
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/chem_dispenser,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -98803,7 +98799,7 @@
 	},
 /area/shuttle/abandoned)
 "dce" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -100513,12 +100509,18 @@
 	},
 /area/medical/morgue)
 "dfx" = (
-/obj/machinery/plantgenes,
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "warning"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/hydroponics)
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plating,
+/area/chapel/main)
 "dfy" = (
 /turf/open/floor/engine/vacuum,
 /area/atmos)
@@ -100620,6 +100622,13 @@
 	},
 /turf/open/space,
 /area/space)
+"dfI" = (
+/obj/machinery/plantgenes,
+/turf/open/floor/plasteel{
+	dir = 9;
+	icon_state = "warning"
+	},
+/area/hydroponics)
 
 (1,1,1) = {"
 aaa
@@ -120856,7 +120865,7 @@ cOU
 cRS
 cRS
 cSP
-cRS
+dfx
 cOU
 cUb
 cOU
@@ -136233,7 +136242,7 @@ bZc
 caw
 bZc
 ccX
-dfx
+dfI
 bVf
 cuS
 ciC

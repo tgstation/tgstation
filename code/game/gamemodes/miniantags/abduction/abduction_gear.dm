@@ -482,18 +482,20 @@ Congratulations! You are now trained for xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
-								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-		if(do_mob(user, C, 30))
-			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
-				C.update_handcuffed()
-				user << "<span class='notice'>You handcuff [C].</span>"
-				add_logs(user, C, "handcuffed")
+		if(C.get_num_arms() >= 2)
+			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
+									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
+			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+				if(!C.handcuffed)
+					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
+					C.update_handcuffed()
+					user << "<span class='notice'>You handcuff [C].</span>"
+					add_logs(user, C, "handcuffed")
+			else
+				user << "<span class='warning'>You fail to handcuff [C].</span>"
 		else
-			user << "<span class='warning'>You fail to handcuff [C].</span>"
-	return
+			user << "<span class='warning'>[C] doesn't have two hands...</span>"
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
@@ -507,7 +509,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
-		var/obj/item/organ/internal/gland/temp = locate() in H.internal_organs
+		var/obj/item/organ/gland/temp = locate() in H.internal_organs
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else

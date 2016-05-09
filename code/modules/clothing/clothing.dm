@@ -343,7 +343,6 @@ BLIND     // can't see anything
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
 
-
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()
 

@@ -14,6 +14,7 @@
 	speed = 0
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	hud_possible = list(ANTAG_HUD)
 
 	response_help   = "pokes"
 	response_disarm = "flails at"
@@ -30,6 +31,12 @@
 	environment_smash = 3
 
 	faction = list("faithless")
+
+/mob/living/simple_animal/ascendant_shadowling/med_hud_set_health()
+	return //we're invincible!
+
+/mob/living/simple_animal/ascendant_shadowling/med_hud_set_status()
+	return //we're invincible!
 
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code
