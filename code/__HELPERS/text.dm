@@ -72,6 +72,8 @@ proc/russian_text2html(msg)
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
+	t = replacetext(t, "\proper", "")
+	t = replacetext(t, "\improper", "")
 	return rhtml_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
@@ -107,7 +109,8 @@ proc/russian_text2html(msg)
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as message|null
-	return html_encode(trim(name, max_length))
+	name = trim(name, max_length)
+	return rhtml_encode(name, 1)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)

@@ -245,12 +245,7 @@
 	if(!isnull(data))
 		json_data["data"] = data
 
-	// Generate the JSON.
-	var/json = json_encode(json_data)
-	// Strip #255/improper.
-	json = replacetext(json, "\proper", "")
-	json = replacetext(json, "\improper", "")
-	return json
+	return json_encode(json_data)
 
  /**
   * private
