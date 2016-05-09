@@ -174,6 +174,11 @@
 /obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
 	boom(user)
 
+/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
+	if(!user.canUseTopic(src))
+		return
+	attack_hand(user)
+
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if(istype(W, /obj/item/weapon/card/emag))
