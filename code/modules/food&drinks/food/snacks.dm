@@ -152,7 +152,7 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/content, datum/crafting_recipe/R)
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/R)
 	..()
 	reagents.reagent_list.Cut()
 	for(var/obj/item/weapon/reagent_containers/RC in contents)
