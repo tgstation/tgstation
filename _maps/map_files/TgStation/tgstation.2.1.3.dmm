@@ -2587,17 +2587,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "aeY" = (
@@ -2633,17 +2622,6 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
@@ -4379,6 +4357,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -10722,14 +10701,19 @@
 	},
 /area/crew_quarters/fitness)
 "avB" = (
-/obj/structure/chair{
-	dir = 4
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
+	icon_state = "showroomfloor"
 	},
-/area/crew_quarters/fitness)
+/area/security/warden)
 "avC" = (
 /obj/structure/chair{
 	dir = 8
@@ -11281,10 +11265,23 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "awN" = (
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/security/prison)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "showroomfloor"
+	},
+/area/security/warden)
 "awO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -16488,14 +16485,20 @@
 	},
 /area/chapel/main)
 "aHp" = (
-/obj/structure/chair{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "chapel"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/area/chapel/main)
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/plasteel{
+	icon_state = "showroomfloor"
+	},
+/area/security/warden)
 "aHq" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -17125,14 +17128,11 @@
 	},
 /area/chapel/main)
 "aIF" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
-	},
-/area/chapel/main)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/warden)
 "aIG" = (
 /obj/structure/chair{
 	dir = 1
@@ -94204,7 +94204,7 @@ agt
 agt
 ahz
 aie
-aiL
+aiN
 ajc
 ajI
 akp
@@ -94460,8 +94460,8 @@ agq
 cml
 agV
 cxk
-aih
-aiN
+aig
+aiM
 ajc
 ajI
 akp
@@ -94714,11 +94714,11 @@ bkA
 acF
 aes
 aaZ
+avB
 agt
-agt
-ahB
-aig
-aiM
+awN
+aHp
+aIF
 ajc
 ajI
 akp
