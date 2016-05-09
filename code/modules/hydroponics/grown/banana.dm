@@ -114,5 +114,7 @@
 	desc = "A synthetic banana peel."
 
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
-	if(..())
-		qdel(src)
+	if(iscarbon(AM))
+		var/mob/living/carbon/carbon = AM
+		if(carbon.slip(2, 2, src, FALSE))
+			qdel(src)

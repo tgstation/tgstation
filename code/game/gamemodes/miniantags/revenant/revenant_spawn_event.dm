@@ -1,11 +1,11 @@
-#define REVENANT_SPAWN_THRESHOLD 10
+#define REVENANT_SPAWN_THRESHOLD 20
 
 /datum/round_event_control/revenant
 	name = "Spawn Revenant" // Did you mean 'griefghost'?
 	typepath = /datum/round_event/ghost_role/revenant
 	weight = 7
 	max_occurrences = 1
-	earliest_start = 6000 //Meant to mix things up early-game.
+	earliest_start = 12000 //Meant to mix things up early-game.
 	min_players = 5
 
 

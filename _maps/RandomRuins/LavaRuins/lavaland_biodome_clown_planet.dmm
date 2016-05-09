@@ -1,68 +1,140 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/wall/r_wall,/area/ruin/powered)
-"c" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"e" = (/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"f" = (/obj/item/weapon/reagent_containers/food/snacks/grown/banana,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"g" = (/turf/closed/mineral,/area/ruin/powered)
-"h" = (/obj/item/weapon/bikehorn,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"i" = (/obj/item/weapon/grown/bananapeel,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"j" = (/turf/closed/mineral/clown,/area/ruin/powered)
-"k" = (/obj/structure/ore_box,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"l" = (/turf/open/floor/plating/asteroid,/area/ruin/powered)
-"m" = (/obj/item/weapon/grown/bananapeel,/turf/open/floor/plating/asteroid,/area/ruin/powered)
-"n" = (/turf/closed/mineral/gibtonite,/area/ruin/powered)
-"o" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"p" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
-"q" = (/obj/machinery/door/airlock/clown,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"r" = (/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"s" = (/obj/item/weapon/grown/bananapeel,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"t" = (/turf/closed/wall/mineral/wood,/area/ruin/powered)
-"u" = (/obj/structure/table/wood,/obj/item/weapon/banhammer,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"v" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/sexyclown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"w" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"x" = (/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"y" = (/obj/machinery/door/airlock/clown,/obj/item/weapon/grown/bananapeel,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"z" = (/obj/item/weapon/grown/bananapeel,/mob/living/simple_animal/hostile/retaliate/clown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"A" = (/obj/structure/table/wood,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"B" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pie/cream,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"C" = (/obj/structure/table/wood,/obj/item/weapon/sord,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"D" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn/rubberducky,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"E" = (/obj/item/weapon/grenade/clusterbuster/soap,/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/open/floor/mineral/bananium,/area/ruin/powered)
-"F" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"G" = (/obj/structure/table/wood,/obj/item/weapon/restraints/handcuffs/fake,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"H" = (/obj/structure/table/wood,/obj/item/weapon/bikehorn/airhorn,/turf/open/floor/grass{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"I" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"ac" = (/turf/open/floor/noslip{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ad" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"ae" = (/obj/machinery/light,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"af" = (/obj/item/clothing/head/cone,/turf/open/floor/noslip{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ag" = (/obj/item/weapon/paper/crumpled/bloody{info = "Abandon hope, all ye who enter here."},/obj/effect/decal/cleanable/blood/old,/turf/open/floor/noslip{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ah" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ai" = (/obj/machinery/disposal/deliveryChute{desc = "The following is engraved upon the chute: A FATE WORSE THAN DEATH LIES WITHIN"; dir = 1; name = "THE TRIAL OF HONKITUDE"},/obj/structure/disposalpipe/trunk,/turf/open/floor/noslip{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aj" = (/obj/structure/disposalpipe/trunk,/obj/structure/disposaloutlet{dir = 1},/turf/open/floor/noslip{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ak" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/powered)
+"al" = (/obj/structure/disposalpipe/segment,/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"am" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"an" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ao" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ap" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aq" = (/obj/structure/disposalpipe/trunk,/obj/structure/disposaloutlet{dir = 1},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ar" = (/obj/structure/disposalpipe/segment,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"as" = (/obj/structure/disposalpipe/segment,/obj/effect/mob_spawn/human/corpse/damaged,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"at" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"au" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"av" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aw" = (/obj/structure/disposalpipe/sortjunction{dir = 1; icon_state = "pipe-j2s"; sortType = 3},/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ax" = (/obj/structure/disposalpipe/segment,/obj/structure/window/reinforced,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ay" = (/obj/structure/disposalpipe/segment,/obj/effect/decal/cleanable/pie_smudge,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"az" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aA" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aB" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aC" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aD" = (/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aE" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aF" = (/obj/effect/decal/cleanable/cobweb{icon_state = "cobweb2"},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aG" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aH" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aI" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aJ" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/item/weapon/bikehorn,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aK" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aL" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/effect/decal/cleanable/pie_smudge,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aM" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aN" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aO" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plating,/area/ruin/powered)
+"aP" = (/obj/item/weapon/bikehorn,/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aQ" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aR" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aS" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/open/floor/plating,/area/ruin/powered)
+"aT" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aU" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aV" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aW" = (/obj/structure/disposalpipe/segment,/obj/item/weapon/bikehorn,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aX" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"aY" = (/obj/structure/disposalpipe/segment,/obj/item/weapon/bikehorn,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"aZ" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/darkred{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"ba" = (/obj/effect/decal/cleanable/pie_smudge,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bb" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bc" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bd" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/table,/obj/item/weapon/paper/crumpled/bloody{info = "If you dare not continue down this path of madness, escape can be found through the chute in this room. "},/obj/item/weapon/pen/fourcolor,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"be" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/table,/obj/item/device/flashlight/lamp/bananalamp,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bf" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/effect/decal/cleanable/pie_smudge,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bg" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/item/weapon/pickaxe,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bh" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bi" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bj" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/light{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bk" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bl" = (/turf/open/floor/light{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bm" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bn" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bo" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"bp" = (/turf/closed/mineral/clown,/area/ruin/powered)
+"bq" = (/obj/item/weapon/pickaxe,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"br" = (/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bs" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkred{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bt" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bu" = (/obj/item/weapon/bikehorn,/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bv" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/darkred{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bw" = (/obj/machinery/light{dir = 8},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"bx" = (/turf/open/chasm/straight_down/lava_land_surface,/area/ruin/powered)
+"by" = (/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plasteel/darkred{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bz" = (/obj/machinery/disposal/deliveryChute{dir = 1},/obj/structure/disposalpipe/trunk,/turf/open/floor/plasteel/white{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"bA" = (/turf/open/floor/plasteel/darkred{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bB" = (/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bC" = (/obj/structure/disposalpipe/junction{icon_state = "pipe-y"; dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bD" = (/obj/structure/mecha_wreckage/honker,/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bE" = (/obj/effect/decal/cleanable/oil,/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bF" = (/obj/effect/decal/cleanable/cobweb{icon_state = "cobweb2"},/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bG" = (/obj/item/weapon/grown/bananapeel{color = "#2F3000"; name = "stealth banana peel"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
+"bH" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bI" = (/obj/effect/mob_spawn/human/corpse/damaged,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/darkyellow{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bJ" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/open/floor/plasteel/darkred{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bK" = (/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup,/obj/structure/table/glass,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bL" = (/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bM" = (/obj/machinery/disposal/deliveryChute,/obj/structure/disposalpipe/trunk{dir = 1},/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bN" = (/obj/effect/decal/cleanable/cobweb,/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bO" = (/obj/structure/statue/bananium/clown,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bP" = (/obj/structure/table/glass,/obj/item/weapon/grown/bananapeel/bluespace,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bQ" = (/obj/structure/table/glass,/obj/item/clothing/shoes/clown_shoes/banana_shoes,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bR" = (/obj/item/weapon/coin/clown,/obj/item/weapon/coin/clown,/obj/item/weapon/coin/clown,/obj/item/weapon/coin/clown,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bS" = (/obj/item/slime_extract/rainbow,/obj/structure/table/glass,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bT" = (/obj/item/weapon/bikehorn/airhorn,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bU" = (/obj/structure/table/glass,/obj/item/weapon/gun/magic/staff/honk,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"bV" = (/obj/item/weapon/bikehorn,/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bW" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/ruin/powered)
+"bX" = (/obj/effect/mob_spawn/human/corpse/damaged,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bY" = (/obj/machinery/door/airlock/clown,/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"bZ" = (/obj/item/weapon/bikehorn,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/bananium{baseturf = /turf/open/floor/plating/lava/smooth; wet = 2},/area/ruin/powered)
+"ca" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bccccccccccccccccccccccccccccb
-bcddddddddddddddddddddddddddcb
-bcdefeeeeeeegggggggggggggggdcb
-bcdeeheieefeeggggggggggjgjgdcb
-bcdeeeeeheeeeekkggggjllllmgdcb
-bcdeeeeeieeeeeeeggggglllllgdcb
-bcdeeheeeeheeieeeeggglnjgggdcb
-bcdeheeoeeeeeeeeoellllgggjgdcb
-bcdeeeeeheeieheeeelmllgggggdcb
-bcdeeheeeeeeeeeeeggggggggggdcb
-bcdeeeeeeeheeeeheggggggggggdcb
-bcdeeeeeeeeefeeeegggggeegggdcb
-bcdeeeeheeeeeeheegggggefeeedcb
-pcqrrrsrrreeeeeeeeeeeeeeeeidcb
-bcdeeeeeereeeheeeeeefeeheehdcb
-bcdeeheeerefeeeoeeeeeeeeeeedcb
-bcdeeeeeereeeeehettttteeoeedcb
-bcdefeheereheeeeetuvwteeeeedcb
-bcdeeeeeireeeeeeetrrxteiehedcb
-bcdeheeeerrrrrsrryrrxteeeeedcb
-bcdeeeoeheeeeeeeetxzxteheeedcb
-bcdeieeeeABCDBefetxxEteeefedcb
-bcdeeeheeBAFGHheetttttieeeedcb
-bcdefeeeeeeheeeeeeeeeeeheeedcb
-bcdeeeeeeeeeeeeoeeeeheeeeehdcb
-bcddddddddddddddddddddddddddcb
-bccccccccccccccccccccccccccccb
-bbbbbIbbbbbbbbbbbbbbbbbbbbbbbb
+aaaaaaaaaaaaaaaaaaaaaaaaababacacacababaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaadaeadadafacagacacadadaeadaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaahahahahahahahahaiacajahahahahahahahahahaaaaaaaaaaaa
+aaaaaaaaahahahakakakakakakahalahalahakakakakakakakahahaaaaaaaaaa
+aaaaaaahahakakakamanaoapahakalakalakakahahaqahahakakahahaaaaaaaa
+aaaaahahakakamaparasalatauanavaoawahahahahaxahahahahakahahaaaaaa
+aaaaahakakahayatatatatatararatatazaAaAaBaBaCaDaEaFahakakahaaaaaa
+aaahahakamaGaCaHaIaHaIaJaCaralaKaBaAaAaBaLaMaBaBaBaNahakahahaaaa
+aaahakakaOauaAaAaBaMaAaAaNatatauaBaAaPaBaMaQaBaMaBaCaRakakahaaaa
+aaahakaSaTatamaMaBaAaAanayataraHaMaBaBaAaAaAaPaBaBaNahaUakahaaaa
+aaahakaKaVaWataXaMaMaMaCataYalauaBaBaBaBaMaMaZaMaNatbaaUakahaaaa
+aaahakaoaIataKaMbbbbbbaMaCatayarbcaBaMaMbdbebbaMaCataDaUakahaaaa
+aaahakaKbfaHaMbbbbbbbgbbaMaIatatataDahbhbbbbbibhaMaTaRahakahaaaa
+aaahahakaKaMaMbbbbbjbjbbaMaBaIavaHaNahbkblblbmbnahahahakahahaaaa
+aaboahahakakahbpbqblblbrbsaVaEbtbuaHbvbnblblbrbpahakakahahbwaaaa
+ababbxahahahbyahbpbrbpahalazaBaNatbaahahbpbzbpahbAahahahbxababaa
+abbxbxbxahbBbAbAahbAahahaKaAaNaHbCaMbDbEahalahbAbAbFahbxbxabbxaa
+ababbGbxahbHbBbAahbAbAbAahahaHaVaEbIahaKbvbJbAbAbBbBahbxbGababaa
+ababbxbxahbBbHbBbAbAbAbBahahahalahahbBbBbAahbAbBbBbBahbxbxababaa
+abbxbxahahahbHahbBbBbBbBahbKbLbMbLbKahbBbBbBbBbBbBahahahbxbxabaa
+aaboahahbNbBbBahbBahbBahbObLbPbLbQbLbOahbBbBbBbBbHbBbBahahbwaaaa
+aaahahakbBbHbHbHbHbBahahbRbLbSbTbUbLbRahahbHbHbBbVbBbBakahahaaaa
+aaahakakbWbXbBahbBbBbBbBahbLbLbLbLbLahbXbBbHbHbBbBahbBakakahaaaa
+aaahakbWakbBbBbBbBbHbBbBbBahahbYahahbBbBbHbHbBahbBbBakaRakahaaaa
+aaahakaRakbWbBbBbZbHbBahbBbBahbBbBbBbBbBbBbBbBbBbBbBakbWakahaaaa
+aaahahakakakahbBbHbBbBbBbHbHbHbHbBbBbHbHbBbVahbBahakakakahahaaaa
+aaaaahakakbWakbWbBbBbHbHbZbHbBbBbBbBbHbBbBbBahakakaRakakahaaaaaa
+aaaaahahakakaRakahakakakbBbBbBahbBbBbBakakahakaRbWakakahahaaaaaa
+aaaaaaahahakakakakbWbWaRakakakakakakakbWbWbWaRakakakahahaaaaaaaa
+aaaaaaaaahahahakakakakbWbWbWbWbWbWbWbWaRakakakakahahahaaaaaaaaaa
+aaaaaaaaaacaahahahahakakakakakakakakakakakahahahahcaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaahahahahahahahahahahahahahaaaaaaaaaaaaaaaaaaaa
 "}

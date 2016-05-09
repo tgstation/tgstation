@@ -116,7 +116,7 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new (src)
-		mmi.brain = new /obj/item/organ/internal/brain(mmi)
+		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
@@ -956,6 +956,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
+							cleaned_human.wash_cream()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 

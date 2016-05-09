@@ -31,6 +31,7 @@
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
+	hud_possible = list(ANTAG_HUD)
 
 	see_in_dark = 13
 	vision_range = 12
@@ -63,6 +64,12 @@
 	// Set creator
 	if(creator)
 		src.creator = creator
+
+/mob/living/simple_animal/hostile/statue/med_hud_set_health()
+	return //we're a statue we're invincible
+
+/mob/living/simple_animal/hostile/statue/med_hud_set_status()
+	return //we're a statue we're invincible
 
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))

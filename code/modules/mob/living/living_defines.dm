@@ -3,6 +3,7 @@
 	languages = HUMAN
 	sight = 0
 	see_in_dark = 2
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
@@ -58,3 +59,5 @@
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 
 	var/list/butcher_results = null
+	var/hellbound = 0 //People who've signed infernal contracts are unrevivable.
+

@@ -58,14 +58,8 @@
 	..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
-		component_parts = list()
-		var/obj/item/weapon/circuitboard/vendor/V = new(null)
-		V.set_type(type)
-		component_parts += V
-		component_parts += new refill_canister
-		component_parts += new refill_canister
-		component_parts += new refill_canister
-		RefreshParts()
+		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
+		B.apply_default_parts(src)
 	else
 		build_inventory(products)
 		build_inventory(contraband, 1)
@@ -77,6 +71,44 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
+
+/obj/item/weapon/circuitboard/machine/vendor
+	name = "circuit board (Booze-O-Mat Vendor)"
+	build_path = /obj/machinery/vending/boozeomat
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/vending_refill/boozeomat = 3)
+
+	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
+							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
+							/obj/machinery/vending/cola = "Robust Softdrinks",
+							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
+							/obj/machinery/vending/autodrobe = "AutoDrobe")
+
+/obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/position = names_paths.Find(build_path)
+		position = (position == names_paths.len) ? 1 : (position + 1)
+		var/typepath = names_paths[position]
+
+		user << "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>"
+		set_type(typepath)
+	else
+		return ..()
+
+/obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
+	build_path = typepath
+	name = "circuit board ([names_paths[build_path]] Vendor)"
+	req_components = list(initial(typepath.refill_canister) = 3)
+
+/obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+	for(var/typepath in names_paths)
+		if(istype(M, typepath))
+			set_type(typepath)
+			break
+	..()
+
 
 /obj/machinery/vending/Destroy()
 	qdel(wires)

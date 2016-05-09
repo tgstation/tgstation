@@ -312,6 +312,8 @@ var/list/blood_splatter_icons = list()
 		blood_DNA = null
 		return 1
 
+/atom/proc/wash_cream()
+	return 1
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
@@ -402,3 +404,4 @@ var/list/blood_splatter_icons = list()
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.id,R.volume)
+
