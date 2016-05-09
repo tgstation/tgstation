@@ -200,6 +200,9 @@ ALLOW_AI
 ## Uncomment to prevent the secborg module from being chosen
 #DISABLE_SECBORG
 
+### Standardborg ###
+## Uncomment to prevent the standardborg module from being chosen
+#DISABLE_STANDARDBORG
 
 ### AWAY MISSIONS ###
 
