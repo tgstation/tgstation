@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////CAKE////////////////////////////////////////////////
 
-/datum/table_recipe/carrotcake
+/datum/crafting_recipe/food/carrotcake
 	name = "Carrot cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -12,7 +12,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/carrot
 	category = CAT_FOOD
 
-/datum/table_recipe/cheesecake
+/datum/crafting_recipe/food/cheesecake
 	name = "Cheese cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -21,7 +21,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/cheese
 	category = CAT_FOOD
 
-/datum/table_recipe/applecake
+/datum/crafting_recipe/food/applecake
 	name = "Apple cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -30,7 +30,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/apple
 	category = CAT_FOOD
 
-/datum/table_recipe/orangecake
+/datum/crafting_recipe/food/orangecake
 	name = "Orange cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -39,7 +39,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/orange
 	category = CAT_FOOD
 
-/datum/table_recipe/limecake
+/datum/crafting_recipe/food/limecake
 	name = "Lime cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -48,7 +48,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/lime
 	category = CAT_FOOD
 
-/datum/table_recipe/lemoncake
+/datum/crafting_recipe/food/lemoncake
 	name = "Lemon cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -57,7 +57,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/lemon
 	category = CAT_FOOD
 
-/datum/table_recipe/chocolatecake
+/datum/crafting_recipe/food/chocolatecake
 	name = "Chocolate cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -66,7 +66,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/chocolate
 	category = CAT_FOOD
 
-/datum/table_recipe/birthdaycake
+/datum/crafting_recipe/food/birthdaycake
 	name = "Birthday cake"
 	reqs = list(
 		/obj/item/clothing/head/hardhat/cakehat = 1,
@@ -75,7 +75,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday
 	category = CAT_FOOD
 
-/datum/table_recipe/braincake
+/datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(
 		/obj/item/organ/brain = 1,
@@ -84,7 +84,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain
 	category = CAT_FOOD
 
-/datum/table_recipe/slimecake
+/datum/crafting_recipe/food/slimecake
 	name = "Slime cake"
 	reqs = list(
 		/obj/item/slime_extract = 1,
@@ -93,7 +93,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/slimecake
 	category = CAT_FOOD
 
-/datum/table_recipe/pumpkinspicecake
+/datum/crafting_recipe/food/pumpkinspicecake
 	name = "Pumpkin spice cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,

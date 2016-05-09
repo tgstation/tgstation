@@ -101,6 +101,9 @@
 					visible_message("<span class='warning'>[src] crumbles to dust.</span>")
 				qdel(src)
 
+/obj/item/weapon/paper/talisman/supply/weak
+	uses = 2
+
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport
 	cultist_name = "Talisman of Teleportation"
@@ -330,19 +333,17 @@
 				new /obj/structure/constructshell(T)
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
-				PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
 				qdel(src)
 		if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/quantity = target.amount
 			var/turf/T = get_turf(target)
 			new /obj/item/stack/sheet/runed_metal(T,quantity)
 			target.use(quantity)
-			user << "<span class='warning'>The talisman clings to the plasteel and runes of power appear on the surface!</span>"
+			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
 			user << sound('sound/effects/magic.ogg',0,1,25)
-			PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, T)
 			qdel(src)
 		else
-			user << "<span class='warning'>The talisman requires metal or plasteel!</span>"
+			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman

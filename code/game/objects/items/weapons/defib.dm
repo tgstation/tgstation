@@ -65,7 +65,8 @@
 			ratio = Ceiling(ratio*4) * 25
 			overlays += "[initial(icon_state)]-charge[ratio]"
 
-/obj/item/weapon/defibrillator/CheckParts()
+/obj/item/weapon/defibrillator/CheckParts(list/parts_list)
+	..()
 	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
 	update_icon()
 
