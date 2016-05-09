@@ -116,7 +116,7 @@ var/global/list/cards_against_space
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!usr.canUseTopic(src,1))
 		return
 	if(!flipped)
 		name = "CAS card"
@@ -126,7 +126,7 @@ var/global/list/cards_against_space
 	update_icon()
 
 obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(!user.canUseTopic(src,1))
 		return
 	Flip()
 
