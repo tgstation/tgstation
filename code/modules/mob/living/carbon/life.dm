@@ -212,7 +212,7 @@
 			return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used)
+	if(mind && hud_used && hud_used.lingchemdisplay)
 		if(mind.changeling)
 			mind.changeling.regenerate(src)
 			hud_used.lingchemdisplay.invisibility = 0

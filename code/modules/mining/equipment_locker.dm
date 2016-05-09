@@ -24,14 +24,19 @@
 
 /obj/machinery/mineral/ore_redemption/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/device/assembly/igniter(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ore_redemption(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/ore_redemption
+	name = "circuit board (Ore Redemption)"
+	build_path = /obj/machinery/mineral/ore_redemption
+	origin_tech = "programming=1;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/device/assembly/igniter = 1)
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
@@ -322,13 +327,16 @@
 
 /obj/machinery/mineral/equipment_vendor/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/mining_equipment_vendor
+	name = "circuit board (Mining Equipment Vendor)"
+	build_path = /obj/machinery/mineral/equipment_vendor
+	origin_tech = "programming=1;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 3)
 
 /obj/machinery/mineral/equipment_vendor/power_change()
 	..()
@@ -1151,10 +1159,9 @@
 
 /obj/machinery/mineral/equipment_vendor/golem/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor/golem(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
+	name = "circuit board (Golem Ship Equipment Vendor)"
+	build_path = /obj/machinery/mineral/equipment_vendor/golem

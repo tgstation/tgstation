@@ -16,15 +16,20 @@
 	var/max_items = 40
 
 /obj/machinery/biogenerator/New()
-		..()
-		create_reagents(1000)
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/biogenerator(null)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-		component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-		component_parts += new /obj/item/stack/cable_coil(null, 1)
-		RefreshParts()
+	..()
+	create_reagents(1000)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/biogenerator(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/biogenerator
+	name = "circuit board (Biogenerator)"
+	build_path = /obj/machinery/biogenerator
+	origin_tech = "programming=3;biotech=2;materials=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0
