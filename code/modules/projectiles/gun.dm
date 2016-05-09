@@ -78,7 +78,8 @@
 	build_zooming()
 
 
-/obj/item/weapon/gun/CheckParts()
+/obj/item/weapon/gun/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
 	if(G)
 		G.loc = loc
