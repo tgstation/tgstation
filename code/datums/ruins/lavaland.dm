@@ -190,6 +190,7 @@
 		the structure. Some of these uniforms look awfully strange.."
 	suffix = "lavaland_surface_wwiioutpost.dmm"
 	cost = 20
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/tomb
 	name = "Strange Outpost"
@@ -205,6 +206,7 @@
 	description = "A really big hole in the ground. Falling in is ill-advised."
 	suffix = "lavaland_surface_chasm.dmm"
 	cost = 0
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/chasm/ravine
 	name = "A Long Vertical Hole"
