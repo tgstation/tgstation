@@ -102,7 +102,7 @@
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L))
 				if(L.health != L.maxHealth)
-					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(L), "#960000"))
+					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(src), "#960000"))
 					if(ishuman(L))
 						L.adjustBruteLoss(-1, 0)
 						L.adjustFireLoss(-1, 0)
