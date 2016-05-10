@@ -12,6 +12,10 @@
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
+/obj/structure/grille/examine(mob/user)
+	..()
+	user << "You're certain these don't exist."
+
 /obj/structure/grille/New()
 	stored = new/obj/item/stack/rods(src)
 	stored.amount = 2
