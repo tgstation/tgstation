@@ -3,11 +3,11 @@
 					// VIROLOGY REAGENTS
 //////////////////////////////////////////////////////////////////////////////////////
 
-// where all the reagents related to medicine go.
+// where reagents produced by viruses go
 
 /datum/reagent/virology/
-	name = "Medicine"
-	id = "medicine"
+	name = "virology"
+	id = "virology"
 
 /datum/reagent/virology/on_mob_life(mob/living/M)
 	current_cycle++
@@ -16,7 +16,7 @@
 /datum/reagent/virology/dexalin
 	name = "Dexalin"
 	id = "virorespiration"
-	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
+	description = "Massively reduces oxygen deprivation and prevents loss of breath."
 	reagent_state = LIQUID
 	color = "#4169E1"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -122,7 +122,7 @@
 /datum/reagent/virology/morphine
 	name = "Opiates"
 	id = "viromorphine"
-	description = "A nerf blocker that causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
+	description = "A nerve blocker that causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -196,7 +196,7 @@
 	id = "viroethanol"
 	description = "A natural alcohol produced by the body."
 	color = "#404030" // rgb: 64, 64, 48
-	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
+	var/boozepwr = 65
 
 /datum/reagent/virology/ethanol/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
@@ -215,7 +215,7 @@
 	return ..() || .
 
 /datum/reagent/virology/hallucigen
-	name = "N,N-Dimethyltryptamine"
+	name = "Dimethyltryptamine (DMT)"
 	id = "virohallucigen"
 	description = "A potent natural hallucigen."
 	color = "#B31008" // rgb: 139, 166, 233
@@ -224,18 +224,18 @@
 	M.hallucination += 10
 	return ..()
 
-//datum/reagent/impedrezene
-//	name = "Superoxide"
-//	id = "impedrezene"
-//	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
-//	color = "#C8A5DC" // rgb: 200, 165, 220
+/datum/reagent/virology/impedrezene
+	name = "Superoxide"
+	id = "viroimpedrezene"
+	description = "Superoxide is a naturally occuring toxin that impedes one's ability by slowing down the higher brain cell functions."
+	color = "#C8A5DC" // rgb: 200, 165, 220
 
-//datum/reagent/impedrezene/on_mob_life(mob/living/M)
-//	M.jitteriness = max(M.jitteriness-5,0)
-//	if(prob(80))
-//		M.adjustBrainLoss(1*REM)
-//	if(prob(50))
-//		M.drowsyness = max(M.drowsyness, 3)
-//	if(prob(10))
-//		M.emote("drool")
-//	..()
+/datum/reagent/virology/impedrezene/on_mob_life(mob/living/M)
+	M.jitteriness = max(M.jitteriness-5,0)
+	if(prob(80))
+		M.adjustBrainLoss(1*REM)
+	if(prob(50))
+		M.drowsyness = max(M.drowsyness, 3)
+	if(prob(10))
+		M.emote("drool")
+	..()

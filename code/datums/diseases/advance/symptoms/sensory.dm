@@ -95,7 +95,7 @@ Bonus
 				if(prob(20))
 					M.reagents.add_reagent("viromorphine",rand(5,7))
 			if(5)
-				M.reagents.add_reagent_list(list("impedrezene",rand(5,15),"viroethanol",rand(7,20),"virohallucigen",rand(5,15)))
+				M.reagents.add_reagent_list(list("viroimpedrezene",rand(5,15),"viroethanol",rand(7,20),"virohallucigen",rand(5,15)))
 				if(prob(25))
 					M.reagents.add_reagent("viromorphine",rand(5,7))
 	return
