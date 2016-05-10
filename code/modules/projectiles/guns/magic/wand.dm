@@ -87,6 +87,9 @@
 
 /obj/item/weapon/gun/magic/wand/resurrection/zap_self(mob/living/user)
 	user.revive(full_heal = 1)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.regenerate_limbs()
 	user << "<span class='notice'>You feel great!</span>"
 	charges--
 	..()
