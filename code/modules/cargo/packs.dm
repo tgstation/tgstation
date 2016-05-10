@@ -530,7 +530,7 @@
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
-					/obj/item/weapon/circuitboard/solar_control,
+					/obj/item/weapon/circuitboard/computer/solar_control,
 					/obj/item/weapon/electronics/tracker,
 					/obj/item/weapon/paper/solar)
 	crate_name = "solar panel crate"

@@ -173,6 +173,8 @@
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
+	var/lavaland_budget = 60
+
 	var/aggressive_changelog = 0
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
@@ -584,6 +586,8 @@
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
+				if("lavaland_budget")
+					config.lavaland_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")

@@ -25,7 +25,8 @@
 
 
 /obj/item/clothing/Destroy()
-	dropped()
+	if(isliving(loc))
+		dropped(loc)
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	return ..()
 
@@ -342,7 +343,6 @@ BLIND     // can't see anything
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
-
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()

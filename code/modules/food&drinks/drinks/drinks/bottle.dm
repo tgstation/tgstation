@@ -59,7 +59,7 @@
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
-	var/obj/item/organ/limb/affecting = user.zone_selected //Find what the player is aiming at
+	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
@@ -333,7 +333,8 @@
 							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
 	var/active = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/bottle/B = locate() in contents
 	if(B)
 		icon_state = B.icon_state

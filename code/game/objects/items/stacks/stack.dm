@@ -64,6 +64,7 @@
 		return
 	if (!src || get_amount() <= 0)
 		user << browse(null, "window=stack")
+		return
 	user.set_machine(src) //for correct work of onclose
 	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
 	for(var/i=1;i<=recipes.len,i++)

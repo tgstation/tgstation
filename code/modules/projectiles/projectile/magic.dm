@@ -54,6 +54,8 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
 		if(target.revive(full_heal = 1))
 			if(!target.ckey)
@@ -265,7 +267,7 @@
 						H.real_name = H.dna.species.random_name(H.gender,1)
 					H.update_body()
 					H.update_hair()
-					H.update_mutcolor()
+					H.update_body_parts()
 					H.dna.update_dna_identity()
 				else
 					return

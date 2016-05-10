@@ -66,8 +66,19 @@
 		hulk.do_attack_animation(src)
 	return
 
-/atom/proc/CheckParts()
-	return
+/atom/proc/CheckParts(list/parts_list)
+	for(var/A in parts_list)
+		if(istype(A, /datum/reagent))
+			if(!reagents)
+				reagents = new()
+			reagents.reagent_list.Add(A)
+			reagents.conditional_update()
+		else if(istype(A, /atom/movable))
+			var/atom/movable/M = A
+			if(istype(M.loc, /mob/living))
+				var/mob/living/L = M.loc
+				L.unEquip(M)
+			M.loc = src
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -312,6 +323,8 @@ var/list/blood_splatter_icons = list()
 		blood_DNA = null
 		return 1
 
+/atom/proc/wash_cream()
+	return 1
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
@@ -402,3 +415,4 @@ var/list/blood_splatter_icons = list()
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.id,R.volume)
+

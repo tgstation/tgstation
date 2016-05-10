@@ -1,4 +1,4 @@
-/obj/item/organ/internal/brain
+/obj/item/organ/brain
 	name = "brain"
 	desc = "A piece of juicy meat found in a person's head."
 	icon_state = "brain"
@@ -13,7 +13,7 @@
 	var/mob/living/carbon/brain/brainmob = null
 	var/damaged_brain = 0 //whether the brain organ is damaged.
 
-/obj/item/organ/internal/brain/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/brain/Insert(mob/living/carbon/M, special = 0)
 	..()
 	name = "brain"
 	if(brainmob)
@@ -32,7 +32,7 @@
 		var/mob/living/carbon/human/H = M
 		H.update_hair(0)
 
-/obj/item/organ/internal/brain/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/brain/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(!special)
 		transfer_identity(M)
@@ -40,10 +40,10 @@
 		var/mob/living/carbon/human/H = M
 		H.update_hair(0)
 
-/obj/item/organ/internal/brain/prepare_eat()
+/obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.
 
-/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
+/obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
 	brainmob = new(src)
 	brainmob.name = L.real_name
@@ -58,12 +58,12 @@
 		L.mind.transfer_to(brainmob)
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
 
-/obj/item/organ/internal/brain/attackby(obj/item/O, mob/user, params)
+/obj/item/organ/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 
-/obj/item/organ/internal/brain/examine(mob/user)
+/obj/item/organ/brain/examine(mob/user)
 	..()
 
 	if(brainmob)
@@ -77,7 +77,7 @@
 	else
 		user << "This one is completely devoid of life."
 
-/obj/item/organ/internal/brain/attack(mob/living/carbon/M, mob/user)
+/obj/item/organ/brain/attack(mob/living/carbon/M, mob/user)
 	if(!istype(M))
 		return ..()
 
@@ -87,21 +87,22 @@
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+	if(istype(H) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		user << "<span class='warning'>You're going to need to remove their head cover first!</span>"
 		return
 
 //since these people will be dead M != usr
 
-	if(!M.getorgan(/obj/item/organ/internal/brain))
+	if(!M.getorgan(/obj/item/organ/brain))
+		if(istype(H) && !H.get_bodypart("head"))
+			return
 		user.drop_item()
-		for(var/mob/O in viewers(M, null))
-			if(O == (user || M))
-				continue
-			if(M == user)
-				O << "[user] inserts [src] into \his head!"
-			else
-				O << "[M] has [src] inserted into \his head by [user]."
+		var/msg = "[M] has [src] inserted into \his head by [user]."
+		if(M == user)
+			msg = "[user] inserts [src] into \his head!"
+
+		M.visible_message("<span class='danger'>[msg]</span>",
+						"<span class='userdanger'>[msg]</span>")
 
 		if(M != user)
 			M << "<span class='notice'>[user] inserts [src] into your head.</span>"
@@ -113,13 +114,13 @@
 	else
 		..()
 
-/obj/item/organ/internal/brain/Destroy() //copypasted from MMIs.
+/obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
 	return ..()
 
-/obj/item/organ/internal/brain/alien
+/obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
