@@ -248,10 +248,15 @@
 	..()
 	spawn(2400)
 		if(!owner && !preserved)
-			inert = 1
-			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+			go_inert()
 		else
-			preserved = 1
+			preserved = TRUE
+			feedback_add_details("hivelord_core", "[src.type]|implanted")
+
+/obj/item/organ/hivelord_core/proc/go_inert()
+	inert = TRUE
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	feedback_add_details("hivelord_core", "[src.type]|inert")
 
 /obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
@@ -295,8 +300,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
@@ -832,7 +839,13 @@
 	name = "legion's heart"
 	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "demon_heart"
+	icon_state = "demon_heart-on"
+
+/obj/item/organ/hivelord_core/legion/go_inert()
+	. = ..()
+	desc = "[src] has become inert, it beats no more and is useless for \
+		healing injures."
+	icon_state = "demon_heart-off"
 
 /obj/item/weapon/legion_skull
 	name = "legion's head"
