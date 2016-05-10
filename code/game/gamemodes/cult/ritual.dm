@@ -154,8 +154,8 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Juggernaut</b></font><br>The Juggernaut is a slow, but durable, melee attacker which can produce temporary forcewalls. It will also reflect most lethal energy weapons.<br><br>"
 
-	text += "<font color='red'><b>Artificer</b></font><br>The Artificer is a weak and fragile construct, able to heal other constructs, produce more <font color='red'><b>soulstones</b></font> and <font color='red'><b>construct shells</b></font>, \
-	construct fortifying cult walls and flooring, and finally, it can release a few indiscriminate stunning missiles.<br><br>"
+	text += "<font color='red'><b>Artificer</b></font><br>The Artificer is a weak and fragile construct, able to heal other constructs or shades, produce more <font color='red'><b>soulstones</b></font> and <font color='red'><b>construct shells</b></font>, \
+	construct fortifying cult walls and flooring, and finally, it can fire a disabling bolt that ignores cultists and constructs.<br><br>"
 
 	text += "<font color='red'><b>Harvester</b></font><br>If you see one, know that you have done all you can and your life is void.<br><br>"
 
