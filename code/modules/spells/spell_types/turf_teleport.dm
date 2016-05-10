@@ -12,6 +12,10 @@
 	var/sound2 = "sound/weapons/ZapBang.ogg"
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets,mob/user = usr)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.stunned || H.weakened || H.sleeping || H.stat)
+			return // nno
 	playsound(get_turf(user), sound1, 50,1)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
