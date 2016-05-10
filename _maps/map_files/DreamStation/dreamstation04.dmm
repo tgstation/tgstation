@@ -33852,7 +33852,14 @@
 /area/crew_quarters/theatre)
 "boC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lipstick/random,
+/obj/item/weapon/lipstick/random{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/lipstick/random{
+	pixel_x = -2;
+	pixel_y = -2
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "boD" = (
@@ -78083,6 +78090,10 @@
 /area/hallway/primary/aft{
 	name = "Aft Port Hallway"
 	})
+"cSm" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 
 (1,1,1) = {"
 aaa
@@ -108287,7 +108298,7 @@ biH
 bjZ
 bkT
 bmM
-boC
+cSm
 bqO
 bte
 bmM

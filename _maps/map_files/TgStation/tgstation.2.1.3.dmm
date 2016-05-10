@@ -14661,7 +14661,14 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/obj/item/weapon/lipstick/random,
+/obj/item/weapon/lipstick/random{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/lipstick/random{
+	pixel_x = -2;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel{
 	icon_state = "whitehall";
 	dir = 4
@@ -15958,10 +15965,10 @@
 /turf/closed/wall,
 /area/crew_quarters/theatre)
 "aGw" = (
-/obj/structure/closet,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -16064,7 +16071,9 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/obj/item/weapon/lipstick/random,
+/obj/item/device/flashlight/lamp/bananalamp{
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -16672,7 +16681,7 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "aHK" = (
-/obj/structure/closet,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -16824,7 +16833,14 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
-/obj/item/weapon/storage/crayons,
+/obj/item/weapon/storage/crayons{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
