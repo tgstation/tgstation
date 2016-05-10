@@ -111,6 +111,8 @@
 
 /obj/item/weapon/kitchen/knife/combat/survival
 	name = "survival knife"
+	icon_state = "survivalknife"
+	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
 
