@@ -113,7 +113,7 @@
 		if(corruption.len)
 			var/turf/T = pick_n_take(corruption)
 			corruption -= T
-			if(istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
+			if(istype(T, /turf/closed) || istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
 				return
 			T.ChangeTurf(/turf/open/floor/engine/cult)
 
