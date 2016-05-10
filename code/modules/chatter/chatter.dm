@@ -1,4 +1,5 @@
-/proc/chatter(message, phomeme, mob/user)
+/proc/chatter(message, phomeme, atom/A)
+	world << "chatter: [message],[phomeme],[A]"
 	// We want to transform any message into a list of numbers
 	// and punctuation marks
 	// For example:
@@ -33,20 +34,24 @@
 				if (length == 0)
 					// "verbalise" long spaces
 					sleep(1)
-				chatter_speak_word(user, phomeme, length)
+				chatter_speak_word(A.loc, phomeme, length)
 
-/proc/chatter_speak_word(mob/user, phomeme, length)
+/proc/chatter_speak_word(loc, phomeme, length)
 	var/path = "sound/chatter/[phomeme]_[length].ogg"
+	world << "speak_word: [path]"
 
-	playsound(user.loc, path,
+	playsound(loc, path,
 		vol = 40, vary = 0, extrarange = 3, falloff = 1, surround = 1)
 
 	sleep((length + 1) * chatter_get_sleep_multiplier(phomeme))
 
 /proc/chatter_get_sleep_multiplier(phomeme)
+	// These values are tenths of seconds, so 0.5 == 0.05seconds
 	. = 1
 	switch(phomeme)
 		if("papyrus")
+			. = 0.5
+		if("griffin")
 			. = 0.5
 		if("sans")
 			. = 0.7

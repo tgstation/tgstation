@@ -780,6 +780,7 @@
 		of age."
 	icon_state = "skeletonprize"
 	attack_verb = list("boned", "dunked on", "worked down to the bone")
+	chattering = TRUE
 
 	var/list/papyrus_messages = list(
 		"That's the disposal bin. Feel free to visit it at any time.",
@@ -837,7 +838,7 @@
 	if(regular_messages.Find(message))
 		phomeme = pick("sans", "papyrus")
 
-	span = "warning [phomeme]"
+	span = "danger [phomeme]"
 	..()
 
 /*
