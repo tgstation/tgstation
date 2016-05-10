@@ -3,7 +3,9 @@
 		<ui-button icon='{{data.isBeakerLoaded ? "Eject" : "close"}}'
 			style='{{data.isBeakerLoaded ? "selected" : null}}'
 			state='{{data.isBeakerLoaded ? null : "disabled"}}'
-			action='eject'>{{data.isBeakerLoaded ? "Eject and Clear Buffer" : "No beaker"}}</ui-button>
+			action='eject'
+			>{{data.isBeakerLoaded ? "Eject and Clear Buffer" : "No beaker"}}
+		</ui-button>
 			
 		<ui-section>
 			{{#if data.isBeakerLoaded}}
@@ -28,7 +30,8 @@
 	</ui-display>
 
 	<ui-display title='Buffer'>
-		<ui-button action='toggleMode'>Transfer to {{!data.mode ? "disposal" : "beaker"}}</ui-button>
+		<ui-button action='toggleMode' state='{{data.mode ? null : "selected"}}'>Destroy</ui-button>
+		<ui-button action='toggleMode' state='{{data.mode ? "selected" : null}}'>Transfer to Beaker</ui-button>
 		<ui-section>
 			{{#each data.bufferContents}}
 				<ui-section label='{{Math.fixed(volume, 2)}} units of {{name}}' nowrap>
@@ -47,7 +50,13 @@
 
 	{{#if !data.condi}}
 		<ui-display title='Pills, Bottles and Patches' >
-			<ui-button action='ejectp' state='{{data.isPillBottleLoaded ? null : "disabled"}}'>{{data.isPillBottleLoaded ? "Eject" : "No Pill bottle loaded"}}</ui-button>
+			{{#if data.isPillBottleLoaded}}
+				<ui-button action='ejectp' state='{{data.isPillBottleLoaded ? null : "disabled"}}'>{{data.isPillBottleLoaded ? "Eject" : "No Pill bottle loaded"}}</ui-button>
+				<span class='content'>{{data.pillBotContent}}/{{data.pillBotMaxContent}}</span>
+			{{else}}
+				<span class='average'>No Pillbottle</span>
+			{{/if}}
+			
 			<br/>
 			<br/>
 			<ui-button action='createPill' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Pill (max 50µ)</ui-button>
@@ -80,18 +89,19 @@
 		<span style='color: {{data.analyzeVars.color}}; background-color: {{data.analyzeVars.color}}'>{{data.analyzeVars.color}}</span>
 		<br/>
 		<span class='highlight'>State: </span>
-		<span class='content' style='float:center'>{{data.analyzeVars.state}}</span>
+		<span class='content'>{{data.analyzeVars.state}}</span>
 		<br/>
 		<span class='highlight'>Metabolization Rate: </span>
-		<span class='content' style='float:center'>{{data.analyzeVars.metaRate}}µ/minute</span>
+		<span class='content'>{{data.analyzeVars.metaRate}}µ/minute</span>
 		<br/>
 		<span class='highlight'>Overdose Threshold: </span>
-		<span class='content' style='float:center'>{{data.analyzeVars.overD}}</span>
+		<span class='content'>{{data.analyzeVars.overD}}</span>
 		<br/>
 		<span class='highlight'>Addiction Threshold: </span>
-		<span class='content' style='float:center'>{{data.analyzeVars.addicD}}</span>
+		<span class='content'>{{data.analyzeVars.addicD}}</span>
 		<br/>
 		<br/>
 		<ui-button action='goScreen' params='{"screen": "home"}'>Back</ui-button>
 	</ui-display>
 {{/if}}
+
