@@ -446,7 +446,10 @@ var/list/impact_master = list()
 		var/AY = (override_starting_Y - src.y)*32
 		var/BX = (override_target_X - src.x)*32
 		var/BY = (override_target_Y - src.y)*32
-		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
+		var/XXcheck = ((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY))
+		if(!XXcheck)
+			return
+		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/XXcheck
 
 		PixelX = round(BX+((BX-AX)*XX))
 		PixelY = round(BY+((BY-AY)*XX))
