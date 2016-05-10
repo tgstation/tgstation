@@ -181,7 +181,7 @@
 	var/power = 4
 
 /obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
-	..()ss
+	..()
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
