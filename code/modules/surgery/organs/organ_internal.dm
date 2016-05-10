@@ -261,6 +261,9 @@
 	var/say_mod = null
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
 
+/obj/item/organ/tongue/get_spans()
+	return list()
+
 /obj/item/organ/tongue/proc/TongueSpeech(var/message)
 	return message
 
@@ -357,6 +360,43 @@
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
 	return message
+
+/obj/item/organ/tongue/bone
+	name = "bone \"tongue\""
+	desc = "Apparently skeletons alter the sounds they produce \
+		through oscillation of their teeth, hence their characteristic \
+		rattling."
+	icon_state = "tonguebone"
+	say_mod = "rattles"
+	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
+
+	var/chatter = FALSE
+	var/phomeme_type = "sans"
+	var/list/phomeme_types = list("sans", "papyrus")
+
+/obj/item/organ/tongue/bone/New()
+	. = ..()
+	phomeme_type = pick(phomeme_types)
+
+/obj/item/organ/tongue/bone/TongueSpeech(var/message)
+	. = message
+
+	if(chatter)
+		//Annoy everyone nearby with your chattering.
+		return
+
+/obj/item/organ/tongue/bone/get_spans()
+	. = ..()
+	// Feature, if the tongue talks directly, it will speak with its span
+	switch(phomeme_type)
+		if("sans")
+			. |= SPAN_SANS
+		if("papyrus")
+			. |= SPAN_PAPYRUS
+
+/obj/item/organ/tongue/bone/chatter
+	name = "chattering bone \"tongue\""
+	chatter = TRUE
 
 /obj/item/organ/appendix
 	name = "appendix"

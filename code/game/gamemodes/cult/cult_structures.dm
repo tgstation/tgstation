@@ -6,42 +6,46 @@
 	var/health = 100
 	var/maxhealth = 100
 
+/obj/structure/cult/examine(mob/user)
+	..()
+	if(iscultist(user) && cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+
 /obj/structure/cult/proc/getETA()
-    var/time = round((0-(world.time-cooldowntime))/600, 1)
-    var/eta = "[time] minutes."
-    if(time == 1)
-        eta = "about one minute."
-    else if(time == 0)
-        eta = "less than thirty seconds."
-    return eta
-         
+	var/time = (cooldowntime - world.time)/600
+	var/eta = "[round(time, 1)] minutes"
+	if(time <= 1)
+		time = (cooldowntime - world.time)*0.1
+		eta = "[round(time, 1)] seconds"
+	return eta
+
 /obj/structure/cult/talisman
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
 
-	
 /obj/structure/cult/talisman/attack_hand(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>You don't even begin to understand what these words mean...</span>"
+		user << "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>"
 		return
 	if(cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
-	cooldowntime = world.time + 2400
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
+	var/pickedtype
 	switch(choice)
 		if("Eldritch Whetstone")
-			var/obj/item/weapon/sharpener/cult/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N.name]!</span>"
+			pickedtype = /obj/item/weapon/sharpener/cult
 		if("Zealot's Blindfold")
-			var/obj/item/clothing/glasses/night/cultblind/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with a [N.name]!</span>"
+			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
-			var/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with a [N.name]!</span>"
-	
-	
+			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N]!</span>"
+
+
 /obj/structure/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
@@ -50,24 +54,25 @@
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>You don't even begin to understand what these words mean...</span>"
+		user << "<span class='warning'>The heat radiating from [src] pushes you back.</span>"
 		return
 	if(cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
-	cooldowntime = world.time + 2400
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
+	var/pickedtype
 	switch(choice)
 		if("Shielded Robe")
-			var/obj/item/clothing/suit/hooded/cultrobes/cult_shield/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-			var/obj/item/clothing/suit/hooded/cultrobes/berserker/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Nar-Sien Hardsuit")
-			new /obj/item/clothing/head/helmet/space/cult(get_turf(src))
-			var /obj/item/clothing/suit/space/cult/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
+			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
+	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
+
 
 /obj/structure/cult/pylon
 	name = "pylon"
@@ -84,13 +89,13 @@
 	for(var/i in 1 to 5)
 		for(var/t in corruption)
 			var/turf/T = t
-			corruption |= T.GetAtmosAdjacentTurfs()	
+			corruption |= T.GetAtmosAdjacentTurfs()
 	..()
 
 /obj/structure/cult/pylon/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
-	
+
 /obj/structure/cult/pylon/process()
 	if((last_shot + heal_delay) <= world.time)
 		last_shot = world.time
@@ -108,9 +113,10 @@
 		if(corruption.len)
 			var/turf/T = pick_n_take(corruption)
 			corruption -= T
-			if (istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
+			if(istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
 				return
 			T.ChangeTurf(/turf/open/floor/engine/cult)
+
 
 /obj/structure/cult/tome
 	name = "archives"
@@ -120,25 +126,25 @@
 
 /obj/structure/cult/tome/attack_hand(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>You don't even begin to understand what these words mean...</span>"
+		user << "<span class='warning'>All of these books seem to be gibberish.</span>"
 		return
 	if(cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic here is weak, it will be ready to use again in [getETA()]. </span>"
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
-	cooldowntime = world.time + 2400
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shift")
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shifter")
+	var/pickedtype
 	switch(choice)
 		if("Supply Talisman")
-			var/obj/item/weapon/paper/talisman/supply/N = new(get_turf(src))
-			N.uses = 2
-			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+			pickedtype = /obj/item/weapon/paper/talisman/supply/weak
 		if("Shuttle Curse")
-			var/obj/item/device/shuttle_curse/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
-		if("Veil Shift")
-			var /obj/item/device/cult_shift/N = new(get_turf(src))
-			user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
-	
+			pickedtype = /obj/item/device/shuttle_curse
+		if("Veil Shifter")
+			pickedtype = /obj/item/device/cult_shift
+	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+
 /obj/effect/gateway
 	name = "gateway"
 	desc = "You're pretty sure that abyss is staring back."

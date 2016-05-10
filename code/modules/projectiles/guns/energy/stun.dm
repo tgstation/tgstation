@@ -7,40 +7,14 @@
 	ammo_x_offset = 3
 
 /obj/item/weapon/gun/energy/shock_revolver
-	name = "tesla revolver"
-	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	icon_state = "stunrevolver"
-	item_state = "gun"
+	name = "tesla gun"
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
+	icon_state = "tesla"
+	item_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
 	can_flashlight = 0
 	pin = null
-	ammo_x_offset = 1
-
-
-/obj/item/ammo_casing/energy/shock_revolver
-	fire_sound = 'sound/weapons/gunshot.ogg'
-	e_cost = 200
-	select_name = "stun"
-	projectile_type = /obj/item/projectile/energy/shock_revolver
-
-
-/obj/item/projectile/energy/shock_revolver
-	name = "shock bolt"
-	icon_state = "purple_laser"
-	var/chain
-
-/obj/item/ammo_casing/energy/shock_revolver/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
-	..()
-	var/obj/item/projectile/hook/P = BB
-	spawn(1)
-		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
-
-/obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
-	. = ..()
-	if(isliving(target))
-		tesla_zap(src, 3, 10000)
-	qdel(chain)
-
+	shaded_charge = 1
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"
