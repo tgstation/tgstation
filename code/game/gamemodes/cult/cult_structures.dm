@@ -100,14 +100,14 @@
 	if((last_shot + heal_delay) <= world.time)
 		last_shot = world.time
 		for(var/mob/living/L in range(5, src))
-			if(iscultist(L))
+			if(iscultist(L) || istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
 				if(L.health != L.maxHealth)
 					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(src), "#960000"))
 					if(ishuman(L))
 						L.adjustBruteLoss(-1, 0)
 						L.adjustFireLoss(-1, 0)
 						L.updatehealth()
-					if(istype(L, /mob/living/simple_animal/hostile/construct))
+					if(istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
 							M.adjustHealth(-2)
