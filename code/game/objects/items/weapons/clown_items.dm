@@ -148,7 +148,7 @@
 		for(M in ohearers(7, user))
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue
 			M.emote("flip")
 	return ..()
@@ -161,7 +161,7 @@
 		for(M in ohearers(7, user))
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue
 			M.emote("flip")
 		spawn(cooldowntime)
