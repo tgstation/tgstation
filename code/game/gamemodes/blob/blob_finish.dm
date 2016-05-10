@@ -4,16 +4,14 @@
 	if(blobwincount <= blobs_legit.len)//Blob took over
 		return 1
 	if(!overminds.len && !blob_cores.len) //blob is dead
-		if(config.continuous["blob"])
-			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
-			SSshuttle.emergencyNoEscape = 0
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			return ..()
+		continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
+		SSshuttle.emergencyNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		return 1
-	return ..()
+	
 
 
 /datum/game_mode/blob/declare_completion()
