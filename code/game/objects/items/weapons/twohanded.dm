@@ -433,9 +433,9 @@
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
 			
-/obj/item/weapon/twohanded/required/ram
+/obj/item/weapon/twohanded/ram
 	name = "kinetic battering ram"
-	desc = "internal gyroscopes give this ram excellent balance and the necessary force to break doors... or ribs."
+	desc = "Internal gyroscopes give this ram excellent balance and the necessary force to break doors... or ribs."
 	icon_state = "ram0"
 	force = 10
 	force_wielded = 24
@@ -455,11 +455,15 @@
 	return
 
 /obj/item/weapon/twohanded/ram/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings [src] into their face! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] swings [src] into their face! It looks like they're trying to commit suicide..</span>")
 	playsound(src,'sound/effects/bang.ogg',50,1)
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/ram/afterattack(atom/T as mob|obj|turf|area, mob/user, proximity)
+/obj/item/weapon/twohanded/ram/afterattack(atom/T, mob/user, proximity)
+	if(!proximity) 
+		return
+	if(!wielded)
+		src << "<span class='warning'>You need both hands to break down a door!</span>"
 	if(istype(T, /obj/machinery/door/airlock))
 		if(!removingairlock)
 			var/obj/machinery/door/airlock/A = T
@@ -469,16 +473,21 @@
 			spawn(20)
 				for(var/i in 1 to 3)
 					if(i == 1)
+						if(!proximity)
+							return
 						playsound(A.loc, 'sound/effects/bang.ogg', 50, 1)
-						playsound(A.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
-						sleep(30)
+						sleep(20)
 					if(i == 2) 
+						if(!proximity)
+							return
 						playsound(A.loc, 'sound/effects/bang.ogg', 75, 1)
-						sleep(30)
-					if(i == 3) 
-						playsound(A.loc, 'sound/effects/bang.ogg', 50, 1)
 						playsound(A.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
-			if(do_after(src, 80, 0, A, 1))
+						sleep(40)
+					if(i == 3) 
+						if(!proximity)
+							return
+						playsound(A.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
+			if(do_after(user, 80, 0, target = A))
 				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
 				door.density = 0
 				door.anchored = 1
@@ -488,4 +497,3 @@
 			removingairlock = 0
 		else
 			src << "<span class='notice'>You are already battering an airlock!</span>"
-	
