@@ -536,7 +536,7 @@ var/list/teleport_runes = list()
 		return
 	for(var/mob/living/M in orange(1,T))
 		if(M.stat == DEAD)
-			potential_sacrifice_mobs.Add(M)
+			potential_sacrifice_mobs |= M
 	if(!potential_sacrifice_mobs.len)
 		user << "<span class='cultitalic'>There are no eligible sacrifices nearby!</span>"
 		log_game("Raise Dead rune failed - no catalyst corpses")
@@ -544,7 +544,7 @@ var/list/teleport_runes = list()
 		return
 	for(var/mob/living/M in T.contents)
 		if(M.stat == DEAD)
-			potential_revive_mobs.Add(M)
+			potential_revive_mobs |= M
 	if(!potential_revive_mobs.len)
 		user << "<span class='cultitalic'>There is no eligible revival target on the rune!</span>"
 		log_game("Raise Dead rune failed - no corpses to revive")
@@ -573,6 +573,7 @@ var/list/teleport_runes = list()
 	if(!mob_to_revive || mob_to_revive.stat != DEAD)
 		visible_message("<span class='warning'>The glowing tendril snaps against the rune with a shocking crack.</span>")
 		rune_in_use = 0
+		fail_invoke()
 		return
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones.</span>")
 	mob_to_sacrifice.dust()
