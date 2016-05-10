@@ -634,6 +634,9 @@ var/const/INJECT = 5 //injection
 
 	return trans_data
 
+/datum/reagents/proc/get_reagent(type)
+	. = locate(type) in reagent_list
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

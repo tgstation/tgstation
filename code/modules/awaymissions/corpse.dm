@@ -382,11 +382,26 @@
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
 	roundstart = FALSE
-	mob_name = "Space Bartender"
-	name = "sleeper"
+	random = TRUE
+	name = "bartender sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
+
+/obj/effect/mob_spawn/human/beach
+	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform = /obj/item/clothing/under/shorts/red
+	pocket1 = /obj/item/weapon/storage/wallet/random
+
+/obj/effect/mob_spawn/human/beach/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	mob_name = "Beach Bum"
+	name = "beach bum sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a beach bum!"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 

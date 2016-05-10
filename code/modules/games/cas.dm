@@ -13,7 +13,7 @@ var/global/list/cards_against_space
 	icon_state = "deck_caswhite_full"
 	deckstyle = "caswhite"
 	var/card_face = "cas_white"
-	var/blanks = 10
+	var/blanks = 25
 	var/decksize = 150
 	var/card_text_file = "strings/cas_white.txt"
 	var/list/allcards = list()
@@ -53,6 +53,7 @@ var/global/list/cards_against_space
 		P.name = "Blank Card"
 		P.card_icon = "cas_white"
 		cards += P
+	shuffle(cards) // distribute blank cards throughout deck
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
@@ -73,6 +74,21 @@ var/global/list/cards_against_space
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	update_icon()
+
+/obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/toy/cards/singlecard/cas))
+		var/obj/item/toy/cards/singlecard/cas/SC = I
+		if(!user.unEquip(SC))
+			user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
+			return
+		var/datum/playingcard/RC // replace null datum for the re-added card
+		RC = new()
+		RC.name = "[SC.name]"
+		RC.card_icon = SC.card_face
+		cards += RC
+		user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
+		qdel(SC)
 	update_icon()
 
 /obj/item/toy/cards/deck/cas/update_icon()
@@ -100,7 +116,7 @@ var/global/list/cards_against_space
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!usr.canUseTopic(src,1))
 		return
 	if(!flipped)
 		name = "CAS card"
@@ -108,6 +124,11 @@ var/global/list/cards_against_space
 		name = buffertext
 	flipped = !flipped
 	update_icon()
+
+obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+	if(!user.canUseTopic(src,1))
+		return
+	Flip()
 
 /obj/item/toy/cards/singlecard/cas/update_icon()
 	if(flipped)

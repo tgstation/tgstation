@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////SPAGHETTI////////////////////////////////////////////////
 
-/datum/table_recipe/tomatopasta
+/datum/crafting_recipe/food/tomatopasta
 	name = "Tomato pasta"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
@@ -12,7 +12,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	category = CAT_FOOD
 
-/datum/table_recipe/copypasta
+/datum/crafting_recipe/food/copypasta
 	name = "Copypasta"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastatomato = 2
@@ -20,7 +20,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/copypasta
 	category = CAT_FOOD
 
-/datum/table_recipe/spaghettimeatball
+/datum/crafting_recipe/food/spaghettimeatball
 	name = "Spaghetti meatball"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
@@ -29,7 +29,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 	category = CAT_FOOD
 
-/datum/table_recipe/spesslaw
+/datum/crafting_recipe/food/spesslaw
 	name = "Spesslaw"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
@@ -38,7 +38,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	category = CAT_FOOD
 
-/datum/table_recipe/beefnoodle
+/datum/crafting_recipe/food/beefnoodle
 	name = "Beef noodle"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -49,7 +49,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/beefnoodle
 	category = CAT_FOOD
 
-/datum/table_recipe/chowmein
+/datum/crafting_recipe/food/chowmein
 	name = "Chowmein"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,

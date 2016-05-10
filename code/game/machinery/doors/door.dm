@@ -10,6 +10,7 @@
 	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
+	var/shockedby = list()
 	var/visible = 1
 	var/operating = 0
 	var/glass = 0
@@ -191,6 +192,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
+			shockedby += "\[[time_stamp()]\]EM Pulse"
 			spawn(300)
 				secondsElectrified = 0
 	..()

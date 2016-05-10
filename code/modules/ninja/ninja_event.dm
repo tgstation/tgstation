@@ -1,43 +1,41 @@
 //Note to future generations: I didn't write this god-awful code I just ported it to the event system and tried to make it less moon-speaky.
 //Don't judge me D; ~Carn //Maximum judging occuring - Remie.
-
+// Tut tut Remie, let's keep our comments constructive. - coiax
 
 /*
 
 Contents:
 - The Ninja "Random" Event
 - Ninja creation code
-
 */
 
 /datum/round_event_control/ninja
 	name = "Space Ninja"
-	typepath = /datum/round_event/ninja
+	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 30000 // 1 hour
 
 
-/datum/round_event/ninja
+/datum/round_event/ghost_role/ninja
 	var/success_spawn = 0
+	role_name = "space ninja"
+	minimum_required = 1
 
 	var/helping_station
-	var/key
 	var/spawn_loc
+	var/give_objectives = TRUE
 
-	var/mob/living/carbon/human/Ninja
-
-
-/datum/round_event/ninja/setup()
+/datum/round_event/ghost_role/ninja/setup()
 	helping_station = rand(0,1)
 
 
-/datum/round_event/ninja/kill()
+/datum/round_event/ghost_role/ninja/kill()
 	if(!success_spawn && control)
 		control.occurrences--
 	return ..()
 
 
-/datum/round_event/ninja/start()
+/datum/round_event/ghost_role/ninja/spawn_role()
 	//selecting a spawn_loc
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
@@ -50,17 +48,15 @@ Contents:
 			return kill()
 		spawn_loc = pick(spawn_locs)
 	if(!spawn_loc)
-		return kill()
+		return MAP_ERROR
 
 	//selecting a candidate player
-	if(!key)
-		var/list/candidates = get_candidates(ROLE_NINJA)
-		if(!candidates.len)
-			return kill()
-		var/client/C = pick(candidates)
-		key = C.key
-	if(!key)
-		return kill()
+	var/list/candidates = get_candidates("ninja", null, ROLE_NINJA)
+	if(!candidates.len)
+		return NOT_ENOUGH_PLAYERS
+
+	var/mob/dead/selected_candidate = popleft(candidates)
+	var/key = selected_candidate.key
 
 	//Prepare ninja player mind
 	var/datum/mind/Mind = create_ninja_mind(key)
@@ -77,7 +73,7 @@ Contents:
 					possible_targets[M] = 1						//good-guy
 
 	var/list/objectives = list(1,2,3,4)
-	while(Mind.objectives.len < 6)	//still not enough objectives!
+	while(give_objectives && Mind.objectives.len < 6)
 		switch(pick_n_take(objectives))
 			if(1)	//research
 				var/datum/objective/download/O = new /datum/objective/download()
@@ -92,10 +88,10 @@ Contents:
 
 			if(3)	//protect/kill
 				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[selected]
+				var/index = rand(1,possible_targets.len)
+				var/datum/mind/M = possible_targets[index]
 				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(selected,selected+1)
+				possible_targets.Cut(index,index+1)
 
 				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
 					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
@@ -131,9 +127,10 @@ Contents:
 				break
 
 	//Add a survival objective since it's usually broad enough for any round type.
-	var/datum/objective/O = new /datum/objective/survive()
-	O.owner = Mind
-	Mind.objectives += O
+	if(give_objectives)
+		var/datum/objective/O = new /datum/objective/survive()
+		O.owner = Mind
+		Mind.objectives += O
 
 	//add some RP-fluff
 	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
@@ -141,7 +138,7 @@ Contents:
 	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
 	//spawn the ninja and assign the candidate
-	Ninja = create_space_ninja(spawn_loc)
+	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
 
 	//initialise equipment
@@ -159,7 +156,11 @@ Contents:
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 	ticker.mode.update_ninja_icons_added(Mind)
-	success_spawn = 1
+	spawned_mobs += Ninja
+	message_admins("[key] has been made into a ninja by an event.")
+	log_game("[key] was spawned as a ninja by an event.")
+
+	return SUCCESSFUL_SPAWN
 
 
 //=======//NINJA CREATION PROCS//=======//

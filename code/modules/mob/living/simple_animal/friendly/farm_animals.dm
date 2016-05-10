@@ -21,6 +21,7 @@
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 40
+	maxHealth = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = 0
@@ -98,6 +99,7 @@
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 50
+	maxHealth = 50
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
 
@@ -157,7 +159,8 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
-	health = 1
+	health = 3
+	maxHealth = 3
 	ventcrawler = 2
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -206,7 +209,8 @@ var/global/chicken_count = 0
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
-	health = 10
+	health = 15
+	maxHealth = 15
 	ventcrawler = 2
 	var/eggsleft = 0
 	var/eggsFertile = TRUE

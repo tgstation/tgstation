@@ -6,7 +6,7 @@
 
 ////////////////////////////////////////////////SANDWICHES////////////////////////////////////////////////
 
-/datum/table_recipe/sandwich
+/datum/crafting_recipe/food/sandwich
 	name = "Sandwich"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
@@ -16,7 +16,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	category = CAT_FOOD
 
-/datum/table_recipe/grilledcheesesandwich
+/datum/crafting_recipe/food/grilledcheesesandwich
 	name = "Grilled cheese sandwich"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,
@@ -25,7 +25,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
 	category = CAT_FOOD
 
-/datum/table_recipe/slimesandwich
+/datum/crafting_recipe/food/slimesandwich
 	name = "Jelly sandwich"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
@@ -34,7 +34,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 	category = CAT_FOOD
 
-/datum/table_recipe/cherrysandwich
+/datum/crafting_recipe/food/cherrysandwich
 	name = "Jelly sandwich"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
@@ -43,7 +43,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
 	category = CAT_FOOD
 
-/datum/table_recipe/icecreamsandwich
+/datum/crafting_recipe/food/icecreamsandwich
 	name = "Icecream sandwich"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
@@ -53,7 +53,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	category = CAT_FOOD
 
-/datum/table_recipe/notasandwich
+/datum/crafting_recipe/food/notasandwich
 	name = "Not a sandwich"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2,

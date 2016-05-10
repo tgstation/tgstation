@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////EGG RECIPE's////////////////////////////////////////////////
 
-/datum/table_recipe/friedegg
+/datum/crafting_recipe/food/friedegg
 	name = "Fried egg"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -13,7 +13,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	category = CAT_FOOD
 
-/datum/table_recipe/omelette
+/datum/crafting_recipe/food/omelette
 	name = "omelette"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 2,
@@ -22,7 +22,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/omelette
 	category = CAT_FOOD
 
-/datum/table_recipe/chocolateegg
+/datum/crafting_recipe/food/chocolateegg
 	name = "Chocolate egg"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
@@ -31,7 +31,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
 	category = CAT_FOOD
 
-/datum/table_recipe/eggsbenedict
+/datum/crafting_recipe/food/eggsbenedict
 	name = "Eggs benedict"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/friedegg = 1,

@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat,/obj/item/weapon/tank/internals/emergency_oxygen)
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -12,11 +12,16 @@
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
-	icon_state = "armor"
-	item_state = "armor"
+	icon_state = "armoralt"
+	item_state = "armoralt"
 	blood_overlay_type = "armor"
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/clothing/suit/armor/vest/alt
+	desc = "An armored vest that protects against most types of damage."
+	icon_state = "armor"
+	item_state = "armor"
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -40,8 +45,8 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
-	desc = "A red jacket with silver rank pips and body armor strapped on top."
-	icon_state = "warden_jacket"
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	icon_state = "warden_alt"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
@@ -52,8 +57,8 @@
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
-	icon_state = "warden_alt"
+	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	icon_state = "warden_jacket"
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
