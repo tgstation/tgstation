@@ -1095,10 +1095,6 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "acv" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
 /obj/structure/closet/secure_closet{
 	anchored = 1;
 	name = "Contraband Locker";
@@ -2220,9 +2216,6 @@
 	},
 /area/ai_monitored/security/armory)
 "aet" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
 /turf/open/floor/plasteel{
 	icon_state = "warningcorner";
 	dir = 1
@@ -2601,9 +2594,6 @@
 	req_access_txt = "3"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -3279,9 +3269,6 @@
 	name = "Armory";
 	req_access_txt = "3"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3297,6 +3284,12 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	dir = 2;
 	icon_state = "warning"
@@ -4716,6 +4709,14 @@
 /obj/machinery/door/window/southleft{
 	name = "Reception Desk";
 	req_access_txt = "63"
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
@@ -8715,11 +8716,11 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "arc" = (
-/obj/structure/chair{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1
 	},
-/turf/open/floor/wood,
-/area/lawoffice)
+/turf/open/floor/plasteel,
+/area/ai_monitored/security/armory)
 "ard" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
@@ -10701,19 +10702,18 @@
 	},
 /area/crew_quarters/fitness)
 "avB" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
 	},
-/obj/item/weapon/pen{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/warden)
+/turf/open/floor/plating,
+/area/ai_monitored/security/armory)
 "avC" = (
 /obj/structure/chair{
 	dir = 8
@@ -30407,6 +30407,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "blU" = (
@@ -62851,7 +62852,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "cxA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "warning"
@@ -94454,7 +94454,7 @@ aaZ
 abQ
 ack
 adj
-acF
+arc
 blT
 agq
 cml
@@ -94713,8 +94713,8 @@ ack
 bkA
 acF
 aes
-aaZ
 avB
+amN
 agt
 awN
 aHp
@@ -94972,7 +94972,7 @@ adg
 aeu
 alt
 agu
-amN
+agX
 ahB
 aij
 agn
