@@ -772,6 +772,8 @@
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
+	chattering = TRUE
+	phomeme = "griffin"
 
 /obj/item/toy/talking/skeleton
 	name = "skeleton action figure"
