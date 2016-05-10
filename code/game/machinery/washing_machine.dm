@@ -244,7 +244,3 @@
 	density = 1 //because machinery/open_machine() sets it to 0
 	color_source = null
 	has_corgi = 0
-
-//phil235 machine functions without power?
-
-//phil235 make under/rank dyable? and jumpsuit can be dyed into under/rank color?
