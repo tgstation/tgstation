@@ -1232,8 +1232,6 @@
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				H.emote(pick("giggle", "laugh"))
-		handle_breath_temperature(breath, H)
-		breath.garbage_collect()
 
 	// BZ
 
@@ -1244,6 +1242,8 @@
 				H.adjustBrainLoss(3)
 		else if(bz_pp > 0.01)
 			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
+		handle_breath_temperature(breath, H)
+		breath.garbage_collect()
 
 	return 1
 
