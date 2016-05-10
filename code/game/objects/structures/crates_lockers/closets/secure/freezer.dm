@@ -69,5 +69,4 @@
 
 /obj/structure/closet/secure_closet/freezer/pie/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
