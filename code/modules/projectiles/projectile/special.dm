@@ -181,6 +181,7 @@
 	var/power = 4
 
 /obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
+	..()s
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
@@ -188,6 +189,7 @@
 	gun = G
 
 /obj/item/projectile/gravipulse/on_hit()
+	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
 		if(A == src || (firer && A == src.firer) || A.anchored)
@@ -204,6 +206,7 @@
 	color = "#FF6600"
 
 /obj/item/projectile/gravipulse/alt/on_hit()
+	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
 		if(A == src || (firer && A == src.firer) || A.anchored)
