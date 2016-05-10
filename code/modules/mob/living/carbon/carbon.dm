@@ -768,6 +768,8 @@
 
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
+			
+	regenerate_limbs()
 	..()
 
 /mob/living/carbon/can_be_revived()
