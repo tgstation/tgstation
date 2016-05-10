@@ -281,7 +281,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
-	name = "Gwyn's Premium Absinthe"
+	name = "Lavaland Brand Premium Absinthe"
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
 
