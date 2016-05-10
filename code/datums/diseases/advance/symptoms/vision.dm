@@ -79,8 +79,8 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
-				if (M.reagents.get_reagent_amount("oculine") < 20)
-					M.reagents.add_reagent("oculine", 20)
+				if (M.reagents.get_reagent_amount("viroocular") < 20)
+					M.reagents.add_reagent("viroocular", 20)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>"
