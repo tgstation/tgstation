@@ -57,6 +57,9 @@
 	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
+	var/dimension_x = 32
+	var/dimension_y = 32
+	var/center = FALSE	//Should we center the sprite?
 
 //////////////////////
 // Hair Definitions //
@@ -1304,15 +1307,27 @@
 	name = "None"
 	icon_state = "none"
 
+/datum/sprite_accessory/wings_open
+	icon = 'icons/mob/wings.dmi'
+
 /datum/sprite_accessory/wings_open/angel
 	name = "Angel"
 	icon_state = "angel"
 	color_src = 0
+	dimension_x = 46
+	center = TRUE
+	dimension_y = 34
+
+/datum/sprite_accessory/wings
+	icon = 'icons/mob/wings.dmi'
 
 /datum/sprite_accessory/wings/angel
 	name = "Angel"
 	icon_state = "angel"
 	color_src = 0
+	dimension_x = 46
+	center = TRUE
+	dimension_y = 34
 	locked = TRUE
 
 /datum/sprite_accessory/frills
