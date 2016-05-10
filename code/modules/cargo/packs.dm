@@ -118,6 +118,17 @@
 	crate_name = "special ops crate"
 	crate_type = /obj/structure/closet/crate
 
+/datum/supply_pack/emergency/wiztrackers
+	name = "Wizard Trackers"
+	cost = 10000
+	contains = list(/obj/item/weapon/pinpointer/wizard,
+					/obj/item/weapon/pinpointer/wizard,
+					/obj/item/weapon/pinpointer/wizard,
+					/obj/item/weapon/pinpointer/wizard,
+					/obj/item/weapon/pinpointer/wizard)
+	crate_name = "wizard tracking crate"
+	crate_type = /obj/structure/closet/crate/radiation	
+
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
