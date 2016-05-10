@@ -432,3 +432,60 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
+			
+/obj/item/weapon/twohanded/required/ram
+	name = "kinetic battering ram"
+	desc = "internal gyroscopes give this ram excellent balance and the necessary force to break doors... or ribs."
+	icon_state = "ram0"
+	force = 10
+	force_wielded = 24
+	w_class = 4
+	throwforce = 15
+	throw_speed = 2
+	throw_range = 3
+	slot_flags = SLOT_BACK
+	materials = list(MAT_METAL=13000)
+	origin_tech = "materials=2;engineering=2;combat=2"
+	attack_verb = list("crushed", "bashed", "bludgeoned", "smashed", "pulverized")
+	hitsound = "swing_hit"
+	var/removingairlock = 0
+
+/obj/item/weapon/twohanded/ram/update_icon()  
+	icon_state = "ram[wielded]"
+	return
+
+/obj/item/weapon/twohanded/ram/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] swings [src] into their face! It looks like \he's trying to commit suicide..</span>")
+	playsound(src,'sound/effects/bang.ogg',50,1)
+	return (BRUTELOSS)
+
+/obj/item/weapon/twohanded/ram/afterattack(atom/T as mob|obj|turf|area, mob/user, proximity)
+	if(istype(T, /obj/machinery/door/airlock))
+		if(!removingairlock)
+			var/obj/machinery/door/airlock/A = T
+			removingairlock = 1
+			src << "<span class='notice'>You begin to break the door down...</span>"
+			playsound(T.loc, 'sound/effects/bang.ogg', 75, 1)
+			spawn(20)
+				for(var/i in 1 to 3)
+					if(i == 1)
+						playsound(A.loc, 'sound/effects/bang.ogg', 50, 1)
+						playsound(A.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+						sleep(30)
+					if(i == 2) 
+						playsound(A.loc, 'sound/effects/bang.ogg', 75, 1)
+						sleep(30)
+					if(i == 3) 
+						playsound(A.loc, 'sound/effects/bang.ogg', 50, 1)
+						playsound(A.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			if(do_after(src, 80, 0, A, 1))
+				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
+				door.density = 0
+				door.anchored = 1
+				door.name = "smashed airlock"
+				door.desc = "An airlock that has been smashed open. Looks like it won't be keeping much out now."
+				qdel(A)
+			removingairlock = 0
+		else
+			src << "<span class='notice'>You are already battering an airlock!</span>"
+	
