@@ -393,7 +393,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/turf/T = get_turf(scan)
 	if(T)
 		for(var/C in T.contents)
-			if(istype(/mob/living/simple_animal/bot,C) && (C != src) && (C.bot_type == bot_type)	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+			if(istype(src.type,C) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
 				return 0
 	var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
 	if(scan_result)
