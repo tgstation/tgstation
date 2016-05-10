@@ -62,10 +62,11 @@
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/datum/personal_crafting/handcrafting
+	var/has_number = TRUE
 
 /mob/living/simple_animal/drone/New()
 	..()
-	if(name != initial(name))
+	if(has_number)
 		name = name + " ([rand(100,999)])"
 	real_name = name
 
