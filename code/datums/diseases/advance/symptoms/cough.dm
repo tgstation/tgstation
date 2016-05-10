@@ -38,5 +38,5 @@ BONUS
 				var/obj/item/I = M.get_active_hand()
 				if(I && I.w_class == 1)
 					M.drop_item()
-				M.reagents.add_reagent("mutetoxin",rand(1,3))
+				M.reagents.add_reagent("mutetoxin", 0.8)
 	return
