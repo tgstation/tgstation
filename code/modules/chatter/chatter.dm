@@ -1,5 +1,4 @@
 /proc/chatter(message, phomeme, atom/A)
-	world << "chatter: [message],[phomeme],[A]"
 	// We want to transform any message into a list of numbers
 	// and punctuation marks
 	// For example:
@@ -38,7 +37,6 @@
 
 /proc/chatter_speak_word(loc, phomeme, length)
 	var/path = "sound/chatter/[phomeme]_[length].ogg"
-	world << "speak_word: [path]"
 
 	playsound(loc, path,
 		vol = 40, vary = 0, extrarange = 3, falloff = 1, surround = 1)
