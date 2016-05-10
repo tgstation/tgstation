@@ -13,7 +13,7 @@ var/global/list/cards_against_space
 	icon_state = "deck_caswhite_full"
 	deckstyle = "caswhite"
 	var/card_face = "cas_white"
-	var/blanks = 10
+	var/blanks = 25
 	var/decksize = 150
 	var/card_text_file = "strings/cas_white.txt"
 	var/list/allcards = list()
@@ -116,7 +116,7 @@ var/global/list/cards_against_space
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!usr.canUseTopic(src,1))
 		return
 	if(!flipped)
 		name = "CAS card"
@@ -124,6 +124,11 @@ var/global/list/cards_against_space
 		name = buffertext
 	flipped = !flipped
 	update_icon()
+
+obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+	if(!user.canUseTopic(src,1))
+		return
+	Flip()
 
 /obj/item/toy/cards/singlecard/cas/update_icon()
 	if(flipped)

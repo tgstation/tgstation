@@ -46,15 +46,19 @@
 
 /obj/machinery/mecha_part_fabricator/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
+	B.apply_default_parts(src)
 	files = new /datum/research(src) //Setup the research data holder.
+
+/obj/item/weapon/circuitboard/machine/mechfab
+	name = "circuit board (Exosuit Fabricator)"
+	build_path = /obj/machinery/mecha_part_fabricator
+	origin_tech = "programming=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0

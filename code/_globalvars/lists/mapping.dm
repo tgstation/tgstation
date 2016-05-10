@@ -56,6 +56,8 @@ var/list/sortedAreas = list()
 
 //List of preloaded templates
 var/list/datum/map_template/map_templates = list()
+
+var/list/datum/map_template/ruins_templates = list()
 var/list/datum/map_template/space_ruins_templates = list()
 var/list/datum/map_template/lava_ruins_templates = list()
 

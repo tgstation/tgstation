@@ -51,7 +51,7 @@
 		src << "<span class='warning'>Something went wrong, the selected shuttle doesn't exist anymore."
 		return
 
-	log_admin("[key_name_admin(usr)] - ShuttleDestroy: [M]")
+	log_admin("[key_name(usr)] - ShuttleDestroy: [M]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleDestroy on [selected]</b><BR></span>")
 	feedback_add_details("admin_verb","SHTDEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -109,10 +109,8 @@
 
 	var/status = M.dockRoundstart()
 	if(status)
-		log_admin("The imported shuttle [map]/[M] failed to travel to its roundstart \
-			location (error code [status]). Please fix or delete the imported shuttle \
-			before continuing any more shuttle import hijinks.")
+		message_admins("<span class='adminnotice'>The imported shuttle [map]/[M] failed to travel to its roundstart location (error code [status]). Please fix or delete the imported shuttle before continuing any more shuttle import hijinks.</span>")
 
-	log_admin("[key_name_admin(usr)] - ShuttleImport: [map] - [M]")
+	log_admin("[key_name(usr)] - ShuttleImport: [map] - [M]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used <b>ShuttleImport: [map] - [M]</b><BR></span>")
 	feedback_add_details("admin_verb","SHTIMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

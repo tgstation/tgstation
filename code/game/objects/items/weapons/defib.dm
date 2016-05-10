@@ -65,7 +65,8 @@
 			ratio = Ceiling(ratio*4) * 25
 			overlays += "[initial(icon_state)]-charge[ratio]"
 
-/obj/item/weapon/defibrillator/CheckParts()
+/obj/item/weapon/defibrillator/CheckParts(list/parts_list)
+	..()
 	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
 	update_icon()
 
@@ -463,7 +464,7 @@
 				busy = 0
 				update_icon()
 				return
-			if(!H.suiciding && !(H.disabilities & NOCLONE))
+			if(!H.suiciding && !(H.disabilities & NOCLONE)&& !H.hellbound)
 				H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
@@ -497,6 +498,8 @@
 
 						if (H.suiciding || (H.disabilities & NOCLONE))
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
+						else if (H.hellbound)
+							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existance.  Further attempts futile.</span>"
 						else if (tplus > tlimit)
 							failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 						else if (!H.getorgan(/obj/item/organ/heart))
