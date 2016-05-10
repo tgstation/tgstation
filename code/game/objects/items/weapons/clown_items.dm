@@ -135,3 +135,35 @@
 	icon_state = "air_horn"
 	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
+
+/obj/item/weapon/bikehorn/golden
+	name = "golden bike horn"
+	desc = "Flippin' awesome!"
+	icon_state = "gold_horn"
+	item_state = "gold_horn"
+
+/obj/item/weapon/bikehorn/golden/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!spam_flag)
+		playsound(loc, honksound, 50, 1, -1)
+		for(M in ohearers(7, user))
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+					continue
+			M.emote("flip")
+	return ..()
+
+/obj/item/weapon/bikehorn/golden/attack_self(mob/living/carbon/M, mob/user)
+	if(!spam_flag)
+		spam_flag = 1
+		playsound(src.loc, honksound, 50, 1)
+		src.add_fingerprint(user)
+		for(M in ohearers(7, user))
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+					continue
+			M.emote("flip")
+		spawn(cooldowntime)
+			spam_flag = 0
+	return
