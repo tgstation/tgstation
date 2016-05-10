@@ -696,12 +696,12 @@
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
 		var/list/messages = generate_messages()
-		activation_message()
+		activation_message(user)
 		playsound(loc, 'sound/machines/click.ogg', 20, 1)
 
 		spawn(0)
 			for(var/message in messages)
-				toy_talk(user.loc, message)
+				toy_talk(user, message)
 				sleep(10)
 
 		cooldown = TRUE
@@ -719,10 +719,10 @@
 /obj/item/toy/talking/proc/generate_messages()
 	return list(pick(messages))
 
-/obj/item/toy/talking/proc/toy_talk(loc, message)
-	loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+/obj/item/toy/talking/proc/toy_talk(mob/user, message)
+	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
 	if(chattering)
-		chatter(message, phomeme, loc)
+		chatter(message, phomeme, user)
 
 /*
  * AI core prizes
@@ -732,8 +732,8 @@
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
 
-/obj/item/toy/talking/AI/generate_message()
-	return generate_ion_law()
+/obj/item/toy/talking/AI/generate_messages()
+	return list(generate_ion_law())
 
 /obj/item/toy/talking/codex_gigas
 	name = "Toy Codex Gigas"
@@ -743,7 +743,7 @@
 	w_class = 2
 	recharge_time = 60
 
-/obj/item/toy/talking/codex_gigas/activation_message()
+/obj/item/toy/talking/codex_gigas/activation_message(mob/user)
 	user.visible_message(
 		"<span class='notice'>[user] presses the button on \the [src].</span>",
 		"<span class='notice'>You press the button on \the [src].</span>",
@@ -764,6 +764,8 @@
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon_state = "owlprize"
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+	chattering = TRUE
+	phomeme = "owl"
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -779,7 +781,6 @@
 	icon_state = "skeletonprize"
 	attack_verb = list("boned", "dunked on", "worked down to the bone")
 
-
 	var/list/papyrus_messages = list(
 		"That's the disposal bin. Feel free to visit it at any time.",
 		"I can't just let anyone ERP with me, I'm a skeleton with standards!",
@@ -787,8 +788,26 @@
 		"You can't spell 'robust' without several letters from my name!!!")
 	var/list/sans_messages = list(
 		"You feel your redtext crawling on your back.",
-		"On days like these, references like this should be BURNING IN HELL.")
-	var/list/regular_messages = list()
+		"On days like these, references like this should be BURNING IN HELL.",
+		"I've gotten a ton of work done today. A skele-ton.")
+	var/list/regular_messages = list(
+		"Why was the skeleton such a bad liar? \
+			Because you can see right through him!",
+		"When does a skeleton laugh? When something tickles his funny bone!",
+		"Why couldn't the skeleton win the beauty contest? \
+			 Because he had no body!",
+		"What do you call a skeleton in the winter? A numbskull!",
+		"What did the skeleton say before eating? Bone appetit!",
+		"What type of art do skeletons like? Skulltures!",
+		"What instrument do skeletons play? The trom-bone!",
+		"Why are skeletons always so calm? \
+			Because nothing gets under their skin!",
+		"How did the skeleton know it was going to rain? \
+			He could feel it in his bones.",
+		"Why did the skeleton go to the hospital? \
+			To get his ghoul stones removed.",
+		"Why can't skeletons play music in churches? \
+			Because they have no organs.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to commit \
@@ -805,10 +824,10 @@
 	sleep(20)
 	return OXYLOSS
 
-/obj/item/toy/talking/skeleton/generate_message()
-	return pick(papyrus_messages + sans_messages + regular_messages)
+/obj/item/toy/talking/skeleton/generate_messages()
+	return list(pick(papyrus_messages + sans_messages + regular_messages))
 
-/obj/item/toy/talking/skeleton/toy_talk(loc, message)
+/obj/item/toy/talking/skeleton/toy_talk(user, message)
 	// change spans dynamically depending on the message
 	// If message isn't in the defined lists, just use whatever was set last
 	if(sans_messages.Find(message))
@@ -819,7 +838,7 @@
 		phomeme = pick("sans", "papyrus")
 
 	span = "warning [phomeme]"
-	..(loc, message)
+	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||

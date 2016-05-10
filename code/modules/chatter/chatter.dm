@@ -44,9 +44,11 @@
 	sleep((length + 1) * chatter_get_sleep_multiplier(phomeme))
 
 /proc/chatter_get_sleep_multiplier(phomeme)
-	if(phomeme == "papyrus")
-		. = 0.5
-	else if(phomeme == "sans")
-		. = 0.7
-	else
-		. = 1
+	. = 1
+	switch(phomeme)
+		if("papyrus")
+			. = 0.5
+		if("sans")
+			. = 0.7
+		if("owl")
+			. = 0.7

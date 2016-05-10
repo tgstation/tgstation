@@ -50,15 +50,18 @@
 		qdel(src)
 
 /obj/machinery/computer/arcade/proc/prizevend()
-	var/atom/moveable/prize
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/weapon/gun/energy/pulse(src)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
-		prize = new prizeselect(src.loc)
-	else
-		prize = pick(contents)
+		new prizeselect(src)
+
+	var/atom/movable/prize = pick(contents)
+	visible_message(
+		"<span class='notice'>[src] dispenses a [prize]!</span>",
+		"<span class='notice'>You hear a chime and a clunk.</span>")
+
 	prize.loc = src.loc
 
 /obj/machinery/computer/arcade/emp_act(severity)
