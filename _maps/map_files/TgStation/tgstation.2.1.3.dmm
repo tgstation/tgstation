@@ -2792,6 +2792,15 @@
 	possible_destinations = "pod_asteroid3";
 	shuttleId = "pod3"
 	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 3;
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
 "afr" = (
@@ -2801,6 +2810,9 @@
 /obj/item/weapon/storage/pod{
 	pixel_x = 6;
 	pixel_y = -32
+	},
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
@@ -62813,6 +62825,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/structure/chair{
+	dir = 4
+	},
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
 	},
@@ -63706,6 +63721,15 @@
 	possible_destinations = "pod_asteroid4";
 	shuttleId = "pod4"
 	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 3;
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_4)
 "czM" = (
@@ -63715,6 +63739,9 @@
 /obj/item/weapon/storage/pod{
 	pixel_x = 6;
 	pixel_y = -32
+	},
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_4)
@@ -115844,11 +115871,11 @@ cxd
 cxe
 cwU
 cwL
-cxa
-cxa
-cxa
-cxa
-cxa
+cxk
+cxk
+cxk
+cxk
+cxk
 cwL
 cwU
 cxQ
@@ -117126,7 +117153,7 @@ cwL
 cwX
 cwL
 cwL
-cxa
+cxk
 cxj
 cwL
 cxq
@@ -117378,8 +117405,8 @@ aaa
 aaa
 crx
 cwG
-cwL
-cwL
+cwM
+cwM
 cwW
 cxa
 cwL
