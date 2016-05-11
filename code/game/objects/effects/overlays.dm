@@ -43,10 +43,12 @@
 	icon_state = "heal"
 	duration = 15
 
-/obj/effect/overlay/temp/heal/New()
+/obj/effect/overlay/temp/heal/New(loc, colour)
 	..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
+	if(colour)
+		color = colour
 
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
