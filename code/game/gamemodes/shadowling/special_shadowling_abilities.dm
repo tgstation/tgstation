@@ -163,19 +163,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					var/mob/dead/observer/theghost = null
 					var/time_passed = world.time
 
-					for(var/mob/dead/observer/G in player_list)
-						if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-							if(temp.age_check(G.client))
-								spawn(0)
-									switch(alert(G, "Do you wish to be considered for the special position of the Space Wizard researcher?","Please answer in 10 seconds!","Yes","No"))
-										if("Yes")
-											if((world.time-time_passed)>100)//If more than 10 game seconds passed.
-												return
-											candidates += G
-										if("No")
-											return
-										else
-											return
+					pollCandidates("Do you wish to be considered for the special position of the Space Wizard researcher?", "wizard", null, FALSE, 100)
 
 					sleep(100)
 
