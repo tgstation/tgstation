@@ -107,7 +107,7 @@
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
 		captured_ascendants = 0
-		user << "<span class='boldannounce'>You merge the two ascendants' souls and drive them into bluespace. You hear blood curdling screams unmistakeable and the hole to bluespace opens wider. Uh oh.</span>"//Blood dimension = bluespace because EMERGENT LORE EXPANSION is sorely needed
+		user << "<span class='boldannounce'>You merge the two ascendants' souls and drive them into bluespace. You hear blood curdling screams emitting from the souls and the hole to bluespace opens wider. Uh oh.</span>"//Blood dimension = bluespace because EMERGENT LORE EXPANSION is sorely needed
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 		world << "span class='shadowling'>NAR`SIE  WGHA'N SHU-AIIIIEEEEEEEEEEE!!!!</span>"//Those ascendants are healthy snacks to make sure your interdinmensional horror grows up big and strong!
 	else
