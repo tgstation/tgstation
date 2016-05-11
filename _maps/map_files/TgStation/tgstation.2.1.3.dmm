@@ -7060,11 +7060,12 @@
 	},
 /area/maintenance/fpmaint2)
 "anq" = (
-/obj/structure/chair{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/atmos)
 "anr" = (
 /obj/structure/chair{
 	dir = 8
@@ -40909,6 +40910,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -41651,6 +41653,7 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -45153,6 +45156,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
@@ -95062,7 +95066,7 @@ bJs
 bKy
 bLM
 bLM
-bNQ
+anq
 bOV
 bQk
 bRt
