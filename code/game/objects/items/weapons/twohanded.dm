@@ -432,7 +432,7 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
-			
+
 /obj/item/weapon/twohanded/ram
 	name = "kinetic battering ram"
 	desc = "Internal gyroscopes give this ram excellent balance and the necessary force to break doors... or ribs."
@@ -450,7 +450,7 @@
 	hitsound = "swing_hit"
 	var/removingairlock = 0
 
-/obj/item/weapon/twohanded/ram/update_icon()  
+/obj/item/weapon/twohanded/ram/update_icon()
 	icon_state = "ram[wielded]"
 	return
 
@@ -460,7 +460,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/ram/afterattack(atom/T, mob/user, proximity)
-	if(!proximity) 
+	if(!proximity)
 		return
 	if(!wielded)
 		src << "<span class='warning'>You need both hands to break down a door!</span>"
@@ -469,23 +469,30 @@
 			var/obj/machinery/door/airlock/A = T
 			removingairlock = 1
 			src << "<span class='notice'>You begin to break the door down...</span>"
-			playsound(T.loc, 'sound/effects/bang.ogg', 75, 1)
+			playsound(A.loc, 'sound/effects/bang.ogg', 75, 1)
+			user.do_attack_animation(A)
 			spawn(20)
 				for(var/i in 1 to 3)
 					if(i == 1)
 						if(!proximity)
 							return
 						playsound(A.loc, 'sound/effects/bang.ogg', 50, 1)
+						user.do_attack_animation(A)
 						sleep(20)
-					if(i == 2) 
+					if(i == 2)
 						if(!proximity)
 							return
 						playsound(A.loc, 'sound/effects/bang.ogg', 75, 1)
 						playsound(A.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+						var/datum/effect_system/spark_spread/sparks = new
+						sparks.set_up(3, 1, A.loc) //no idea what the 0 is
+						sparks.start()
+						user.do_attack_animation(A)
 						sleep(40)
-					if(i == 3) 
+					if(i == 3)
 						if(!proximity)
 							return
+						user.do_attack_animation(A)
 						playsound(A.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
 			if(do_after(user, 80, 0, target = A))
 				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
