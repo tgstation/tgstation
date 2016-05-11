@@ -107,9 +107,9 @@
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
 		captured_ascendants = 0
-		user << "<span class='boldannounce'>You combine the awesome power of the three ascendants bend the bridge of reality, beckoning forth the blood geometer.</span>"
+		user << "<span class='boldannounce'>You merge the two ascendants' souls and drive them into bluespace. You hear blood curdling screams unmistakeable and the hole to bluespace opens wider. Uh oh.</span>"//Blood dimension = bluespace because EMERGENT LORE EXPANSION is sorely needed
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
-		world << "span class='shadowling'>NAR`SIE  WGHA'N SHUGG-YAR!</span>"
+		world << "span class='shadowling'>NAR`SIE  WGHA'N SHU-AIIIIEEEEEEEEEEE!!!!</span>"//Those ascendants are healthy snacks to make sure your interdinmensional horror grows up big and strong!
 	else
 		user << "<span class='danger'>The blade lies quiet.</span>"
 
@@ -127,7 +127,7 @@
 		return
 	add_logs(user, M, "captured [M.name]'s god soul", src)
 	captured_ascendants++
-	M << "<span class='danger'>No. No, no! No! </span><span class='shadowling'>NO NONOONOOONOoOoO!!!</span>"
+	M << "<span class='danger'>no no no no no no no no no no no no nonNONNnNNO</span><span class='shadowling'>NO NONOONOOONOoOoO!!!</span>"
 	M.visible_message("<span class='boldannounce'>[user.name] sucks the godlike power right from [M.name]'s horrible body, leaving behind a pile of dust!</span>")
 	M.dust()
 
