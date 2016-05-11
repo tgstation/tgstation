@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////BREAD////////////////////////////////////////////////
 
-/datum/table_recipe/meatbread
+/datum/crafting_recipe/food/meatbread
 	name = "Meat bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -13,7 +13,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/meat
 	category = CAT_FOOD
 
-/datum/table_recipe/xenomeatbread
+/datum/crafting_recipe/food/xenomeatbread
 	name = "Xenomeat bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -23,7 +23,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/xenomeat
 	category = CAT_FOOD
 
-/datum/table_recipe/spidermeatbread
+/datum/crafting_recipe/food/spidermeatbread
 	name = "Spidermeat bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -33,7 +33,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/spidermeat
 	category = CAT_FOOD
 
-/datum/table_recipe/banananutbread
+/datum/crafting_recipe/food/banananutbread
 	name = "Banana nut bread"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -44,7 +44,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/banana
 	category = CAT_FOOD
 
-/datum/table_recipe/tofubread
+/datum/crafting_recipe/food/tofubread
 	name = "Tofu bread"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -54,7 +54,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/tofu
 	category = CAT_FOOD
 
-/datum/table_recipe/creamcheesebread
+/datum/crafting_recipe/food/creamcheesebread
 	name = "Cream cheese bread"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -64,7 +64,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/creamcheese
 	category = CAT_FOOD
 
-/datum/table_recipe/mimanabread
+/datum/crafting_recipe/food/mimanabread
 	name = "Mimana bread"
 	reqs = list(
 		/datum/reagent/consumable/soymilk = 5,

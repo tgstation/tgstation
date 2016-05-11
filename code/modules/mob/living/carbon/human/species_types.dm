@@ -412,16 +412,8 @@
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
+	mutant_organs = list(/obj/item/organ/tongue/bone)
 	specflags = list(NOBREATH,RESISTHEAT,RESISTCOLD,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	var/list/myspan = null
-
-/datum/species/skeleton/New()
-	..()
-	myspan = list(pick(SPAN_SANS,SPAN_PAPYRUS)) //pick a span and stick with it for the round
-
-/datum/species/skeleton/get_spans()
-	return myspan
-
 
 /*
  ZOMBIES
@@ -451,7 +443,7 @@
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
+	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
 	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0

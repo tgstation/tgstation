@@ -61,3 +61,12 @@
 		new /obj/item/stack/spacecash/c500(src)
 	for(var/i = 0, i < 6, i++)
 		new /obj/item/stack/spacecash/c200(src)
+
+/obj/structure/closet/secure_closet/freezer/cream_pie
+	name = "cream pie closet"
+	desc = "Contains pies filled with cream and/or custard, you sickos."
+	req_access = list(access_theatre)
+
+/obj/structure/closet/secure_closet/freezer/pie/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)

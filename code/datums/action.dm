@@ -365,8 +365,6 @@
 /datum/action/innate/proc/Deactivate()
 	return
 
-
-
 //Preset for action that call specific procs (consider innate).
 /datum/action/generic
 	check_flags = 0

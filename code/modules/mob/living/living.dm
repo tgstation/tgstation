@@ -49,6 +49,9 @@ Sorry Giacom. Please don't be mad :(
 	return QDEL_HINT_HARDDEL_NOW
 
 
+/mob/living/proc/OpenCraftingMenu()
+	return
+
 /mob/living/proc/generateStaticOverlay()
 	staticOverlays.Add(list("static", "blank", "letter", "animal"))
 	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)

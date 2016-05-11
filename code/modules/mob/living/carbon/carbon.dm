@@ -212,7 +212,8 @@
 
 	var/atom/movable/item = src.get_active_hand()
 
-	if(!item || (item.flags & NODROP)) return
+	if(!item || (item.flags & (NODROP|ABSTRACT)))
+		return
 
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item

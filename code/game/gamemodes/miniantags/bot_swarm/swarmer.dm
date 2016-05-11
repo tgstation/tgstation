@@ -90,6 +90,7 @@
 	faction = list("swarmer")
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_TINY
 	ventcrawler = 2
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam/disabler
@@ -551,4 +552,3 @@
 				M << rendered
 			if(M in dead_mob_list)
 				M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
-

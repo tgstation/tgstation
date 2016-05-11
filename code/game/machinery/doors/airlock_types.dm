@@ -320,38 +320,62 @@
 	doortype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = 1
 	aiControlDisabled = 1
+	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
+	var/friendly = FALSE
 
 /obj/machinery/door/airlock/cult/allowed(mob/M)
-	if(!iscultist(M))
+	if(!density)
+		return 1
+	if(friendly || \
+			iscultist(M) || \
+			istype(M, /mob/living/simple_animal/shade) || \
+			istype(M, /mob/living/simple_animal/hostile/construct))
+		PoolOrNew(openingoverlaytype, src.loc)
+		return 1
+	else
 		PoolOrNew(/obj/effect/overlay/temp/cult/sac, src.loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		if(M.client)
+			var/old_color = M.client.color
+			M.client.color = "#960000"
+			spawn(0)//animate is a delay, avoid delay, etc
+				animate(M.client,color = old_color, time = 20)
 		M.Weaken(2)
 		M.throw_at_fast(throwtarget, 5, 1,src)
 		return 0
-	else
-		PoolOrNew(/obj/effect/overlay/temp/cult/door, src.loc)
-		return 1
-
 
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
+
+/obj/machinery/door/airlock/cult/friendly
+	friendly = TRUE
 
 /obj/machinery/door/airlock/cult/glass
 	doortype = /obj/structure/door_assembly/door_assembly_cult/glass
 	glass = 1
 	opacity = 0
 
+/obj/machinery/door/airlock/cult/glass/friendly
+	friendly = TRUE
+
 /obj/machinery/door/airlock/cult/unruned
 	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned
+	openingoverlaytype = /obj/effect/overlay/temp/cult/door/unruned
+
+/obj/machinery/door/airlock/cult/unruned/friendly
+	friendly = TRUE
 
 /obj/machinery/door/airlock/cult/unruned/glass
 	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned/glass
 	glass = 1
 	opacity = 0
+
+/obj/machinery/door/airlock/cult/unruned/glass/friendly
+	friendly = TRUE
 
 //////////////////////////////////
 /*
