@@ -139,7 +139,7 @@
 
 /obj/item/device/chameleon/orbillusion
 	name = "orb of illusion"
-	desc = "Its... magical!"
+	desc = "This artifact seems to distort light."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "orbillusion"
 	item_state = "orbillusion"
