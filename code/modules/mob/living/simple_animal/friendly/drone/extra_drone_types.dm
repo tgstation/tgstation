@@ -57,14 +57,13 @@
 /mob/living/simple_animal/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, an indestructible robot built to tend bars."
-	has_number = FALSE
 	seeStatic = FALSE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
 	languages = ALL
 	status_flags = GODMODE // Please don't punch the barkeeper
-	unique_name = TRUE
+	unique_name = FALSE // disables the (123) number suffix
 
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
