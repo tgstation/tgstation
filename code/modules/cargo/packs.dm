@@ -120,10 +120,8 @@
 
 /datum/supply_pack/emergency/wiztrackers
 	name = "Wizard Trackers"
-	cost = 10000
+	cost = 12000
 	contains = list(/obj/item/weapon/pinpointer/wizard,
-					/obj/item/weapon/pinpointer/wizard,
-					/obj/item/weapon/pinpointer/wizard,
 					/obj/item/weapon/pinpointer/wizard,
 					/obj/item/weapon/pinpointer/wizard)
 	crate_name = "wizard tracking crate"
