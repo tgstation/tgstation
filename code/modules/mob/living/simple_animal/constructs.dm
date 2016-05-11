@@ -24,6 +24,8 @@
 	pressure_resistance = 200
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
+	loot = list(/obj/item/weapon/ectoplasm)
+	del_on_death = 1
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 
@@ -34,12 +36,8 @@
 		AddSpell(new spell(null))
 
 /mob/living/simple_animal/hostile/construct/death()
-	..(1)
-	new /obj/item/weapon/ectoplasm (src.loc)
-	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
-	ghostize()
-	qdel(src)
-	return
+	deathmessage = "<span class='danger'>[src] collapses in a shattered heap.</span>"
+	..()
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
@@ -183,12 +181,12 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
-						use magic missile, repair allied constructs (by clicking on them), \
+						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
-	if(istype(A, /mob/living/simple_animal/hostile/construct)) //is it a construct?
+	if(isconstruct(A)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/C = A
 		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
 			return 1
@@ -207,7 +205,7 @@
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(istype(L, /mob/living/simple_animal/hostile/construct) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
+		if(isconstruct(L) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
 			LoseTarget()
 			return 0
 		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
@@ -216,7 +214,7 @@
 
 /mob/living/simple_animal/hostile/construct/builder/Aggro()
 	..()
-	if(istype(target, /mob/living/simple_animal/hostile/construct)) //oh the target is a construct no need to flee
+	if(isconstruct(target)) //oh the target is a construct no need to flee
 		retreat_distance = null
 		minimum_distance = 1
 
@@ -228,11 +226,6 @@
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
-
-
-
-
-
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

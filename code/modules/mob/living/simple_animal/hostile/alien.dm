@@ -12,8 +12,8 @@
 	speed = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	maxHealth = 100
-	health = 100
+	maxHealth = 125
+	health = 125
 	harm_intent_damage = 5
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -31,13 +31,14 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
 	gold_core_spawnable = 0
+	death_sound = 'sound/voice/hiss6.ogg'
+	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
 	icon_state = "aliend_s"
 	icon_living = "aliend_s"
 	icon_dead = "aliend_dead"
-	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	var/plant_cooldown = 30
@@ -57,7 +58,8 @@
 	icon_state = "aliens_s"
 	icon_living = "aliens_s"
 	icon_dead = "aliens_dead"
-	health = 120
+	health = 150
+	maxHealth = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	ranged = 1
@@ -139,11 +141,6 @@
 	name = "neurotoxin"
 	damage = 30
 	icon_state = "toxin"
-
-/mob/living/simple_animal/hostile/alien/death(gibbed)
-	..(gibbed)
-	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
-	playsound(src, 'sound/voice/hiss6.ogg', 100, 1)
 
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)

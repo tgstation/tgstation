@@ -58,14 +58,8 @@
 	..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
-		component_parts = list()
-		var/obj/item/weapon/circuitboard/vendor/V = new(null)
-		V.set_type(type)
-		component_parts += V
-		component_parts += new refill_canister
-		component_parts += new refill_canister
-		component_parts += new refill_canister
-		RefreshParts()
+		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
+		B.apply_default_parts(src)
 	else
 		build_inventory(products)
 		build_inventory(contraband, 1)
@@ -77,6 +71,44 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
+
+/obj/item/weapon/circuitboard/machine/vendor
+	name = "circuit board (Booze-O-Mat Vendor)"
+	build_path = /obj/machinery/vending/boozeomat
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/vending_refill/boozeomat = 3)
+
+	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
+							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
+							/obj/machinery/vending/cola = "Robust Softdrinks",
+							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
+							/obj/machinery/vending/autodrobe = "AutoDrobe")
+
+/obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/position = names_paths.Find(build_path)
+		position = (position == names_paths.len) ? 1 : (position + 1)
+		var/typepath = names_paths[position]
+
+		user << "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>"
+		set_type(typepath)
+	else
+		return ..()
+
+/obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
+	build_path = typepath
+	name = "circuit board ([names_paths[build_path]] Vendor)"
+	req_components = list(initial(typepath.refill_canister) = 3)
+
+/obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+	for(var/typepath in names_paths)
+		if(istype(M, typepath))
+			set_type(typepath)
+			break
+	..()
+
 
 /obj/machinery/vending/Destroy()
 	qdel(wires)
@@ -111,7 +143,7 @@
 		if(prob(25))
 			malfunction()
 
-/obj/machinery/vending/blob_act()
+/obj/machinery/vending/blob_act(obj/effect/blob/B)
 	malfunction()
 	..()
 
@@ -179,9 +211,8 @@
 				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
 		else
 			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
-		return
 
-	if(istype(W, /obj/item/weapon/storage/bag/tray))
+	else if(istype(W, /obj/item/weapon/storage/bag/tray))
 		if(!compartment_access_check(user))
 			return
 		var/obj/item/weapon/storage/T = W
@@ -203,7 +234,8 @@
 		updateUsrDialog()
 		return
 
-	..()
+	else
+		return ..()
 
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
@@ -237,16 +269,20 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(component_parts && istype(W, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(W)
+	if(component_parts)
+		if(default_deconstruction_crowbar(W))
+			return
 
-	if(istype(W, /obj/item/weapon/screwdriver) && anchored)
-		panel_open = !panel_open
-		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
-		overlays.Cut()
-		if(panel_open)
-			overlays += image(icon, "[initial(icon_state)]-panel")
-		updateUsrDialog()
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(anchored)
+			panel_open = !panel_open
+			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
+			overlays.Cut()
+			if(panel_open)
+				overlays += image(icon, "[initial(icon_state)]-panel")
+			updateUsrDialog()
+		else
+			user << "<span class='warning'>You must first secure [src].</span>"
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
@@ -273,14 +309,14 @@
 					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
 				else
 					user << "<span class='notice'>The [name] is fully stocked.</span>"
-			return;
+			return
 		else
 			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
 	else
-		..()
+		return ..()
 
 
-/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
+/obj/machinery/vending/deconstruction()
 	var/product_list = list(product_records, hidden_records, coin_records)
 	for(var/i=1, i<=3, i++)
 		for(var/datum/data/vending_product/machine_content in product_list[i])

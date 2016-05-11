@@ -1,6 +1,6 @@
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
-	desc = "Used to bottle chemicals to create pills."
+	desc = "Used to seperate chemicals and distribute them in a variety of forms."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -16,12 +16,43 @@
 /obj/machinery/chem_master/New()
 	create_reagents(100)
 	overlays += "waitlight"
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/chem_master
+	name = "circuit board (ChemMaster 3000)"
+	build_path = /obj/machinery/chem_master
+	origin_tech = "materials=2;programming=2;biotech=1"
+	req_components = list(
+							/obj/item/weapon/reagent_containers/glass/beaker = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/new_name = "ChemMaster"
+		var/new_path = /obj/machinery/chem_master
+
+		if(build_path == /obj/machinery/chem_master)
+			new_name = "CondiMaster"
+			new_path = /obj/machinery/chem_master/condimaster
+
+		build_path = new_path
+		name = "circuit board ([new_name] 3000)"
+		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
+	else
+		return ..()
+
+/obj/machinery/chem_master/RefreshParts()
+	reagents.maximum_volume = 0
+	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in component_parts)
+		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_master/blob_act()
+/obj/machinery/chem_master/blob_act(obj/effect/blob/B)
 	if (prob(50))
 		qdel(src)
 
@@ -33,14 +64,31 @@
 			stat |= NOPOWER
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
+		if(beaker)
+			beaker.loc = src.loc
+			beaker = null
+			reagents.clear_reagents()
+		if(bottle)
+			bottle.loc = src.loc
+			bottle = null
+		return
+
+	else if(exchange_parts(user, I))
+		return
+	else if(default_deconstruction_crowbar(I))
+		return
+
 	if(default_unfasten_wrench(user, I))
 		return
 
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
-		if(isrobot(user))
+		. = 1 // no afterattack
+		if(panel_open)
+			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"
 			return
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
+			user << "<span class='warning'>A container is already loaded in the machine!</span>"
 			return
 		if(!user.drop_item())
 			return
@@ -62,8 +110,8 @@
 		bottle.loc = src
 		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
 		src.updateUsrDialog()
-
-	return
+	else
+		return ..()
 
 /obj/machinery/chem_master/Topic(href, href_list)
 	if(..())
@@ -327,65 +375,6 @@
 	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
 
-/obj/machinery/chem_master/constructable
-	name = "ChemMaster 2999"
-	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-
-/obj/machinery/chem_master/constructable/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_master(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
-
-/obj/machinery/chem_master/constructable/attackby(obj/item/B, mob/user, params)
-
-	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", B))
-		if(beaker)
-			beaker.loc = src.loc
-			beaker = null
-			reagents.clear_reagents()
-		if(bottle)
-			bottle.loc = src.loc
-			bottle = null
-		return
-
-	if(exchange_parts(user, B))
-		return
-
-	if(panel_open)
-		if(istype(B, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(B)
-			return 1
-		else
-			user << "<span class='warning'>You can't use the [src.name] while it's panel is opened!</span>"
-			return 1
-
-	if(istype(B, /obj/item/weapon/reagent_containers) && (B.flags & OPENCONTAINER))
-		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
-			return
-		if(!user.drop_item())
-			return
-
-		beaker = B
-		beaker.loc = src
-		user << "<span class='notice'>You add the beaker to the machine.</span>"
-		src.updateUsrDialog()
-		icon_state = "mixer1"
-
-	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
-		if(bottle)
-			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
-			return
-		if(!user.drop_item())
-			return
-
-		src.bottle = B
-		B.loc = src
-		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
-		src.updateUsrDialog()
-
-	return
+/obj/item/weapon/circuitboard/machine/chem_master/condi
+	name = "circuit board (CondiMaster 3000)"
+	build_path = /obj/machinery/chem_master/condimaster

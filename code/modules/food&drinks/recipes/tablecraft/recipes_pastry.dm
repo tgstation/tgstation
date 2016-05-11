@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////DONUTS////////////////////////////////////////////////
 
-/datum/table_recipe/chaosdonut
+/datum/crafting_recipe/food/chaosdonut
 	name = "Chaos donut"
 	reqs = list(
 		/datum/reagent/consumable/frostoil = 5,
@@ -13,7 +13,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	category = CAT_FOOD
 
-/datum/table_recipe/donut
+/datum/crafting_recipe/food/donut
 	time = 15
 	name = "Donut"
 	reqs = list(
@@ -23,7 +23,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut
 	category = CAT_FOOD
 
-/datum/table_recipe/jellydonut
+/datum/crafting_recipe/food/jellydonut
 	name = "Jelly donut"
 	reqs = list(
 		/datum/reagent/consumable/berryjuice = 5,
@@ -32,7 +32,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 	category = CAT_FOOD
 
-/datum/table_recipe/cherryjellydonut
+/datum/crafting_recipe/food/cherryjellydonut
 	name = "Cherry jelly donut"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
@@ -41,7 +41,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly
 	category = CAT_FOOD
 
-/datum/table_recipe/slimejellydonut
+/datum/crafting_recipe/food/slimejellydonut
 	name = "Slime jelly donut"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
@@ -52,7 +52,7 @@
 
 ////////////////////////////////////////////////WAFFLES////////////////////////////////////////////////
 
-/datum/table_recipe/waffles
+/datum/crafting_recipe/food/waffles
 	time = 15
 	name = "Waffles"
 	reqs = list(
@@ -62,7 +62,7 @@
 	category = CAT_FOOD
 
 
-/datum/table_recipe/soylenviridians
+/datum/crafting_recipe/food/soylenviridians
 	name = "Soylent viridians"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2,
@@ -71,7 +71,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	category = CAT_FOOD
 
-/datum/table_recipe/soylentgreen
+/datum/crafting_recipe/food/soylentgreen
 	name = "Soylent green"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2,
@@ -81,7 +81,7 @@
 	category = CAT_FOOD
 
 
-/datum/table_recipe/rofflewaffles
+/datum/crafting_recipe/food/rofflewaffles
 	name = "Roffle waffles"
 	reqs = list(
 		/datum/reagent/mushroomhallucinogen = 5,
@@ -92,7 +92,7 @@
 
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
-/datum/table_recipe/donkpocket
+/datum/crafting_recipe/food/donkpocket
 	time = 15
 	name = "Donkpocket"
 	reqs = list(
@@ -105,7 +105,7 @@
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
-/datum/table_recipe/muffin
+/datum/crafting_recipe/food/muffin
 	time = 15
 	name = "Muffin"
 	reqs = list(
@@ -115,7 +115,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin
 	category = CAT_FOOD
 
-/datum/table_recipe/berrymuffin
+/datum/crafting_recipe/food/berrymuffin
 	name = "Berry muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -125,7 +125,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/berry
 	category = CAT_FOOD
 
-/datum/table_recipe/booberrymuffin
+/datum/crafting_recipe/food/booberrymuffin
 	name = "Booberry muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -136,7 +136,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 	category = CAT_FOOD
 
-/datum/table_recipe/chawanmushi
+/datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
 	reqs = list(
 		/datum/reagent/water = 5,
@@ -149,7 +149,7 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/datum/table_recipe/hotdog
+/datum/crafting_recipe/food/hotdog
 	name = "Hot dog"
 	reqs = list(
 		/datum/reagent/consumable/ketchup = 5,
@@ -159,7 +159,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	category = CAT_FOOD
 
-/datum/table_recipe/meatbun
+/datum/crafting_recipe/food/meatbun
 	name = "Meat bun"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
@@ -170,7 +170,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	category = CAT_FOOD
 
-/datum/table_recipe/sugarcookie
+/datum/crafting_recipe/food/sugarcookie
 	time = 15
 	name = "Sugar cookie"
 	reqs = list(
@@ -180,7 +180,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
 	category = CAT_FOOD
 
-/datum/table_recipe/fortunecookie
+/datum/crafting_recipe/food/fortunecookie
 	time = 15
 	name = "Fortune cookie"
 	reqs = list(
@@ -193,7 +193,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	category = CAT_FOOD
 
-/datum/table_recipe/poppypretzel
+/datum/crafting_recipe/food/poppypretzel
 	time = 15
 	name = "Poppy pretzel"
 	reqs = list(
@@ -203,7 +203,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	category = CAT_FOOD
 
-/datum/table_recipe/plumphelmetbiscuit
+/datum/crafting_recipe/food/plumphelmetbiscuit
 	time = 15
 	name = "Plumphelmet biscuit"
 	reqs = list(
@@ -213,7 +213,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 	category = CAT_FOOD
 
-/datum/table_recipe/cracker
+/datum/crafting_recipe/food/cracker
 	time = 15
 	name = "Cracker"
 	reqs = list(
@@ -223,7 +223,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/cracker
 	category = CAT_FOOD
 
-/datum/table_recipe/chococornet
+/datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -233,7 +233,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococornet
 	category = CAT_FOOD
 
-/datum/table_recipe/oatmealcookie
+/datum/crafting_recipe/food/oatmealcookie
 	name = "Oatmeal cookie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
@@ -241,7 +241,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
 
-/datum/table_recipe/raisincookie
+/datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
@@ -251,7 +251,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/raisincookie
 	category = CAT_FOOD
 
-/datum/table_recipe/cherrycupcake
+/datum/crafting_recipe/food/cherrycupcake
 	name = "Cherry cupcake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
@@ -260,7 +260,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
 	category = CAT_FOOD
 
-/datum/table_recipe/bluecherrycupcake
+/datum/crafting_recipe/food/bluecherrycupcake
 	name = "Blue cherry cupcake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
@@ -269,7 +269,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake
 	category = CAT_FOOD
 
-/datum/table_recipe/honeybun
+/datum/crafting_recipe/food/honeybun
 	name = "Honey bun"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,

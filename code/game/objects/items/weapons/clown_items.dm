@@ -16,6 +16,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
 	w_class = 1
+	flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -79,6 +80,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.clean_blood()
+			target.wash_cream()
 	return
 
 

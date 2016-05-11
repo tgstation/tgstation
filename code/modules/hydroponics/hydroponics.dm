@@ -34,13 +34,17 @@
 
 /obj/machinery/hydroponics/constructable/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/hydroponics(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/hydroponics(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/hydroponics
+	name = "circuit board (Hydroponics Tray)"
+	build_path = /obj/machinery/hydroponics/constructable
+	origin_tech = "programming=1;biotech=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0
@@ -75,9 +79,10 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(anchored==2)
 			user << "Unscrew the hoses first!"
+		else if(default_deconstruction_crowbar(I, 1))
 			return
-		default_deconstruction_crowbar(I, 1)
-	..()
+	else
+		return ..()
 
 /obj/machinery/hydroponics/proc/FindConnected()
 	var/list/connected = list()
@@ -801,8 +806,8 @@
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				h.update_icon()
-
-	return
+	else
+		return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
@@ -879,7 +884,8 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "<span class='notice'>You clear up [src]!</span>"
 		qdel(src)
+	else
+		return ..()

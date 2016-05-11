@@ -256,39 +256,12 @@
 	equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_selected = "chest"
 	//arms
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-		var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
-		qdel(R)
-		organs += new /obj/item/organ/limb/robot/r_arm
-	else
-		var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
-		qdel(L)
-		organs += new /obj/item/organ/limb/robot/l_arm
-	//legs
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-		var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
-		qdel(R)
-		organs += new /obj/item/organ/limb/robot/r_leg
-	else
-		var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
-		qdel(L)
-		organs += new /obj/item/organ/limb/robot/l_leg
-	//chest and head
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-		var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
-		qdel(R)
-		organs += new /obj/item/organ/limb/robot/chest
-	else
-		var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
-		qdel(L)
-		organs += new /obj/item/organ/limb/robot/head
-	for(var/LIMB in organs)
-		if(LIMB) // prevents a runtime
-			var/obj/item/organ/limb/L = LIMB
-			L.owner = src
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
+			BP.change_bodypart_status(ORGAN_ROBOTIC)
 	update_icons()
 	update_damage_overlays(0)
-	update_augments()
 
 	hand = 0
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
@@ -577,7 +550,7 @@
 							if(istype(D,/obj/machinery/door/airlock))
 								var/obj/machinery/door/airlock/AL = D
 								if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
-									AL.p_open = 1
+									AL.panel_open = 1
 									AL.update_icon()
 									AL.shock(src,(100 - smartness)/2)
 									sleep(5)
@@ -589,7 +562,7 @@
 									if(!AL.wires.is_cut(WIRE_POWER2))
 										AL.wires.cut(WIRE_POWER2)
 									sleep(5)
-									AL.p_open = 0
+									AL.panel_open = 0
 									AL.update_icon()
 							D.open()
 

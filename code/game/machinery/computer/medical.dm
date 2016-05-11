@@ -6,7 +6,7 @@
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(access_medical, access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/med_data
+	circuit = /obj/item/weapon/circuitboard/computer/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -28,7 +28,7 @@
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())

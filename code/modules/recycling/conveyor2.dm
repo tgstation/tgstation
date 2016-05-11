@@ -122,22 +122,19 @@
 			transfer_fingerprints_to(C)
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
-		return
-	if(istype(I, /obj/item/weapon/wrench))
+
+	else if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
-			return
-	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
-	if(!user.drop_item())
-		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
-		return
-	if(I && I.loc)
-		I.loc = src.loc
-	return
+
+	else if(user.a_intent != "harm")
+		if(user.drop_item())
+			I.loc = src.loc
+	else
+		return ..()
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)

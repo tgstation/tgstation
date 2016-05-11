@@ -371,7 +371,7 @@
 /datum/spellbook_entry/item/cursed_heart
 	name = "Cursed Heart"
 	desc = "A heart that has been revived by dark magicks, the user must concentrate to ensure the heart beats, but every beat heals them. It must beat every 6 seconds."
-	item_path = /obj/item/organ/internal/heart/cursed/wizard
+	item_path = /obj/item/organ/heart/cursed/wizard
 	log_name = "CH"
 	cost = 1
 	category = "Defensive"
@@ -514,7 +514,7 @@
 				if(!isnull(CT.limit))
 					CT.limit++
 			qdel(O)
-	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
+	else if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
 		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
 		uses++
 		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)

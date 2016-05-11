@@ -192,7 +192,7 @@ def write_grid_coord_small(filename, grid):
             output.write("({},{},1) = {{\"\n".format(x, 1, 1))
             for y in range(1, maxy):
                 output.write("{}\n".format(grid[x,y]))
-            output.write("{}\n\"}}\n".format(grid[x,maxy-1]))
+            output.write("{}\n\"}}\n".format(grid[x,maxy]))
 
 def search_key(dictionary, data):
     for key, value in dictionary.items():

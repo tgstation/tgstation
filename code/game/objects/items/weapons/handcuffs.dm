@@ -30,21 +30,24 @@
 		return
 
 	if(!C.handcuffed)
-		C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-							"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+		if(C.get_num_arms() >= 2)
+			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
-		playsound(loc, cuffsound, 30, 1, -2)
-		if(do_mob(user, C, 30))
-			apply_cuffs(C,user)
-			user << "<span class='notice'>You handcuff [C].</span>"
-			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
-				feedback_add_details("handcuffs","C")
+			playsound(loc, cuffsound, 30, 1, -2)
+			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+				apply_cuffs(C,user)
+				user << "<span class='notice'>You handcuff [C].</span>"
+				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+					feedback_add_details("handcuffs","C")
+				else
+					feedback_add_details("handcuffs","H")
+
+				add_logs(user, C, "handcuffed")
 			else
-				feedback_add_details("handcuffs","H")
-
-			add_logs(user, C, "handcuffed")
+				user << "<span class='warning'>You fail to handcuff [C]!</span>"
 		else
-			user << "<span class='warning'>You fail to handcuff [C]!</span>"
+			user << "<span class='warning'>[C] doesn't have two hands...</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
@@ -66,6 +69,15 @@
 	if(trashtype && !dispense)
 		qdel(src)
 	return
+
+/obj/item/weapon/restraints/handcuffs/sinew
+	name = "sinew restraints"
+	desc = "A pair of restraints fashioned from long strands of flesh."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "sinewcuff"
+	item_state = "sinewcuff"
+	breakouttime = 300 //Deciseconds = 30s
+	cuffsound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/weapon/restraints/handcuffs/cable
 	name = "cable restraints"
@@ -96,9 +108,11 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/red
 	icon_state = "cuff_red"
+	item_state = "coil_red"
 
 /obj/item/weapon/restraints/handcuffs/cable/yellow
 	icon_state = "cuff_yellow"
+	item_state = "coil_yellow"
 
 /obj/item/weapon/restraints/handcuffs/cable/blue
 	icon_state = "cuff_blue"
@@ -106,18 +120,23 @@
 
 /obj/item/weapon/restraints/handcuffs/cable/green
 	icon_state = "cuff_green"
+	item_state = "coil_green"
 
 /obj/item/weapon/restraints/handcuffs/cable/pink
 	icon_state = "cuff_pink"
+	item_state = "coil_pink"
 
 /obj/item/weapon/restraints/handcuffs/cable/orange
 	icon_state = "cuff_orange"
+	item_state = "coil_orange"
 
 /obj/item/weapon/restraints/handcuffs/cable/cyan
 	icon_state = "cuff_cyan"
+	item_state = "coil_cyan"
 
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
+	item_state = "coil_white"
 
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
@@ -160,6 +179,8 @@
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
 			qdel(src)
+	else
+		return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(isrobot(user))
@@ -180,6 +201,7 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
+	item_state = "coil_white"
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
@@ -243,7 +265,7 @@
 				snap = 1
 				if(!C.lying)
 					def_zone = pick("l_leg", "r_leg")
-					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
+					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						src.loc = C
 						C.update_inv_legcuffed()
@@ -295,7 +317,7 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed)
+	if(!C.legcuffed && C.get_num_legs() >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		src.loc = C

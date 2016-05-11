@@ -4,7 +4,6 @@
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(access_brig)
-	circuit = "/obj/item/weapon/circuitboard/prisoner"
 	var/id = 0
 	var/temp = null
 	var/status = 0
@@ -12,7 +11,7 @@
 	var/stop = 0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	var/obj/item/weapon/card/id/prisoner/inserted_id
-	circuit = /obj/item/weapon/circuitboard/prisoner
+	circuit = /obj/item/weapon/circuitboard/computer/prisoner
 
 /obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
@@ -23,7 +22,7 @@
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 	else if(screen == 1)
 		dat += "<H3>Prisoner ID Management</H3>"
-		if(istype(inserted_id))
+		if(inserted_id)
 			dat += text("<A href='?src=\ref[src];id=eject'>[inserted_id]</A><br>")
 			dat += text("Collected Points: [inserted_id.points]. <A href='?src=\ref[src];id=reset'>Reset.</A><br>")
 			dat += text("Card goal: [inserted_id.goal].  <A href='?src=\ref[src];id=setgoal'>Set </A><br>")
@@ -77,7 +76,8 @@
 /obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
-	..()
+	else
+		return ..()
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
@@ -92,7 +92,7 @@
 		usr.set_machine(src)
 
 		if(href_list["id"])
-			if(href_list["id"] =="insert" && !istype(inserted_id))
+			if(href_list["id"] =="insert" && !inserted_id)
 				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
 				if(istype(I))
 					if(!usr.drop_item())
@@ -100,7 +100,7 @@
 					I.loc = src
 					inserted_id = I
 				else usr << "<span class='danger'>No valid ID.</span>"
-			else if(istype(inserted_id))
+			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
 						inserted_id.loc = get_turf(src)

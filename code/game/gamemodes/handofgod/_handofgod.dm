@@ -358,7 +358,7 @@ var/global/list/global_handofgod_structuretypes = list()
 			text += "<BR><B>Red follower count: </B> [red_deity_followers.len]"
 			text += "<BR><B>Red followers:</B> "
 			for(var/datum/mind/player in red_deity_followers)
-				text += "[player.name] ([player.key])"
+				text += "[player.name] ([player.key]), "
 
 			var/objectives = ""
 			if(red_god.objectives.len)

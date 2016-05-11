@@ -114,24 +114,17 @@
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
 /obj/machinery/power/attackby(obj/item/weapon/W, mob/user, params)
-
 	if(istype(W, /obj/item/stack/cable_coil))
-
 		var/obj/item/stack/cable_coil/coil = W
-
 		var/turf/T = user.loc
-
 		if(T.intact || !istype(T, /turf/open/floor))
 			return
-
 		if(get_dist(src, user) > 1)
 			return
-
 		coil.place_turf(T, user)
-		return
 	else
-		..()
-	return
+		return ..()
+
 
 ///////////////////////////////////////////
 // Powernet handling helpers
@@ -334,6 +327,8 @@
 		power_source = cell
 		shock_damage = cell_damage
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
+	add_logs(source, M, "electrocuted")
+
 	var/drained_energy = drained_hp*20
 
 	if (source_area)

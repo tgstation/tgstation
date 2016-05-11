@@ -10,6 +10,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
+	flags = NOBLUDGEON
 	w_class = 1
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"
@@ -728,7 +729,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
-	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
 		if(!user.unEquip(C))
@@ -777,7 +777,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
 		user << "<span class='notice'>You scan \the [C].</span>"
-	return
+	else
+		return ..()
 
 /obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user)
 	if(istype(C))
@@ -821,23 +822,26 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/weapon/tank/T = A
 				atmosanalyzer_scan(T.air_contents, user, T)
 			else if (istype(A, /obj/machinery/portable_atmospherics))
-				var/obj/machinery/portable_atmospherics/T = A
-				atmosanalyzer_scan(T.air_contents, user, T)
+				var/obj/machinery/portable_atmospherics/PA = A
+				atmosanalyzer_scan(PA.air_contents, user, PA)
 			else if (istype(A, /obj/machinery/atmospherics/pipe))
-				var/obj/machinery/atmospherics/pipe/T = A
-				atmosanalyzer_scan(T.parent.air, user, T)
+				var/obj/machinery/atmospherics/pipe/P = A
+				atmosanalyzer_scan(P.parent.air, user, P)
 			else if (istype(A, /obj/machinery/power/rad_collector))
-				var/obj/machinery/power/rad_collector/T = A
-				if(T.P) atmosanalyzer_scan(T.P.air_contents, user, T)
+				var/obj/machinery/power/rad_collector/RC = A
+				if(RC.loaded_tank)
+					atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
 			else if (istype(A, /obj/item/weapon/flamethrower))
-				var/obj/item/weapon/flamethrower/T = A
-				if(T.ptank) atmosanalyzer_scan(T.ptank.air_contents, user, T)
+				var/obj/item/weapon/flamethrower/F = A
+				if(F.ptank)
+					atmosanalyzer_scan(F.ptank.air_contents, user, F)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		if (!A:info)
+		var/obj/item/weapon/paper/PP = A
+		if (!PP.info)
 			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
 			return
-		notehtml = A:info
+		notehtml = PP.info
 		note = replacetext(notehtml, "<BR>", "\[br\]")
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")

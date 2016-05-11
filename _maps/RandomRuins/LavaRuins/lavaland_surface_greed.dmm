@@ -12,7 +12,7 @@
 "l" = (/obj/item/weapon/coin/gold,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "m" = (/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "n" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c1000,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"o" = (/obj/item/weapon/moneybag,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"o" = (/obj/item/weapon/storage/bag/money,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "p" = (/obj/structure/table/wood/poker,/obj/item/weapon/ore/gold,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "q" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c50,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "r" = (/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)

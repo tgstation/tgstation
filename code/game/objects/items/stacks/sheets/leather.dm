@@ -135,6 +135,14 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon_state = "sinew"
 	origin_tech = "biotech=4"
 
+
+var/global/list/datum/stack_recipe/sinew_recipes = list ( \
+	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/sinew/New(var/loc, var/amount=null)
+	recipes = sinew_recipes
+	return ..()
 		/*
  * Plates
  		*/
@@ -145,6 +153,16 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	singular_name = "hide plate"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
+
+/obj/item/stack/sheet/animalhide/ashdrake
+	name = "ash drake hide"
+	desc = "The strong, scaled hide of an ash drake."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "dragon_hide"
+	singular_name = "drake plate"
 	flags = NOBLUDGEON
 	w_class = 3
 	layer = 4
@@ -169,7 +187,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 			HS.amount = 1
 			use(1)
 	else
-		..()
+		return ..()
 
 
 //Step two - washing..... it's actually in washing machine code.

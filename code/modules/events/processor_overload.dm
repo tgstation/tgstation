@@ -2,16 +2,17 @@
 	name = "Processor Overload"
 	typepath = /datum/round_event/processor_overload
 	weight = 15
+	min_players = 20
 
 /datum/round_event/processor_overload
 	announceWhen	= 1
 
 /datum/round_event/processor_overload/announce()
 	var/alert = pick(	"Exospheric bubble inbound. Processor overload is likely. Please contact you*%xp25)`6cq-BZZT", \
-						"Exospheric bubble inbound. Processor overload is likel*1eta;c5;'1v¬-BZZZT", \
+						"Exospheric bubble inbound. Processor overload is likel*1eta;c5;'1vÂ¬-BZZZT", \
 						"Exospheric bubble inbound. Processor ov#MCi46:5.;@63-BZZZZT", \
 						"Exospheric bubble inbo'Fz\\k55_@-BZZZZZT", \
-						"Exospheri:%£ QCbyj^j</.3-BZZZZZZT", \
+						"Exospheri:%Â£ QCbyj^j</.3-BZZZZZZT", \
 						"!!hy%;f3l7e,<$^-BZZZZZZZT")
 
 	for(var/mob/living/silicon/ai/A in ai_list)

@@ -17,7 +17,7 @@
 /obj/item/weapon/wrench
 	name = "wrench"
 	desc = "A wrench with common uses. Can be found in your hand."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -84,7 +84,7 @@
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -135,7 +135,7 @@
 /obj/item/weapon/wirecutters
 	name = "wirecutters"
 	desc = "This cuts wires."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = null
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -187,7 +187,7 @@
 /obj/item/weapon/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by NanoTrasen."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
 	item_state = "welder"
 	flags = CONDUCT
@@ -248,21 +248,22 @@
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		flamethrower_screwdriver(I, user)
-	if(istype(I, /obj/item/stack/rods))
+	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	..()
+	else
+		return ..()
 
 
 /obj/item/weapon/weldingtool/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
 		return ..()
 
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
+	if(affecting && affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
 		if(src.remove_fuel(1))
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.getDisplayName()].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.getDisplayName()].</span>")
+			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
 			item_heal_robotic(H, user, 5, 0)
@@ -289,14 +290,9 @@
 				remove_fuel(1)
 			update_icon()
 
+
 	//This is to start fires. process() is only called if the welder is on.
-	var/turf/location = loc
-	if(ismob(location))
-		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
-			location = get_turf(M)
-	if(isturf(location))
-		location.hotspot_expose(700, 5)
+	open_flame()
 
 
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)
@@ -505,7 +501,7 @@
 /obj/item/weapon/crowbar
 	name = "pocket crowbar"
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

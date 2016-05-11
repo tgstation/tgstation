@@ -174,7 +174,7 @@
 /mob/living/simple_animal/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = 1
 	icon_state = "cleanbot-c"
-	visible_message("<span class='notice'>[src] begins to clean up [target]</span>")
+	visible_message("<span class='notice'>[src] begins to clean up [target].</span>")
 	mode = BOT_CLEANING
 	spawn(50)
 		if(mode == BOT_CLEANING)

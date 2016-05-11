@@ -113,7 +113,7 @@
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
 			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.blocked)
+				if(!D.welded)
 					if(D.operating)
 						D.nextstate = CLOSED
 					else if(!D.density)
@@ -139,7 +139,7 @@
 			RA.mouse_opacity = 0
 			RA.updateicon()
 			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.blocked)
+				if(!D.welded)
 					if(D.operating)
 						D.nextstate = OPEN
 					else if(D.density)
@@ -214,7 +214,7 @@
 		src.mouse_opacity = 0
 		src.updateicon()
 		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
+			if(!D.welded)
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)

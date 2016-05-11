@@ -16,7 +16,6 @@
 	idle_power_usage = 30
 	machinetype = 8
 	//heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/relay"
 	netspeed = 5
 	long_range_link = 1
 	var/broadcasting = 1
@@ -48,16 +47,17 @@
 
 /obj/machinery/telecomms/relay/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/relay(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 2)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/relay(null)
+	B.apply_default_parts(src)
 
-
+/obj/item/weapon/circuitboard/machine/telecomms/relay
+	name = "circuit board (Relay Mainframe)"
+	build_path = /obj/machinery/telecomms/relay
+	origin_tech = "programming=2;engineering=2;bluespace=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/filter = 2)
 
 
 

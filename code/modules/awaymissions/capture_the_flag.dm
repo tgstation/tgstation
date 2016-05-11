@@ -17,7 +17,7 @@
 	throw_speed = 0
 	throw_range = 1
 	force = 200
-	armour_penetration = 100
+	armour_penetration = 1000
 	anchored = TRUE
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
@@ -284,6 +284,7 @@
 	health = INFINITY
 	maxhealth = INFINITY
 	var/team = WHITE_TEAM
+	constructable = FALSE
 	time_between_triggers = 1
 	alpha = 255
 

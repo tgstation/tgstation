@@ -62,6 +62,9 @@
 	if(user.get_inactive_hand())
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
+	if(user.get_num_arms() < 2)
+		user << "<span class='warning'>You don't have enough hands.</span>"
+		return
 	wielded = 1
 	if(force_wielded)
 		force = force_wielded
@@ -175,12 +178,10 @@
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-			W.spawnfragments() // this will qdel and spawn shards
+			W.shatter()
 		else if(istype(A,/obj/structure/grille))
 			var/obj/structure/grille/G = A
-			G.health = -6
-			G.destroyed += prob(25) // If this is set, healthcheck will completely remove the grille
-			G.healthcheck()
+			G.take_damage(16)
 
 
 /*
@@ -200,7 +201,7 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 75
+	armour_penetration = 35
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -271,7 +272,6 @@
 	item_color = "red"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
@@ -280,7 +280,8 @@
 			update_icon()
 		else
 			user << "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>"
-
+	else
+		return ..()
 
 //spears
 /obj/item/weapon/twohanded/spear
@@ -312,9 +313,7 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(AM, /turf/open/floor)) //So you can actually melee with it
-		return
-	if(istype(AM, /turf/open/space)) //So you can actually melee with it
+	if(istype(AM, /turf/open)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
@@ -322,13 +321,13 @@
 		explosive.prime()
 		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO
+ //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
-	if(explosive)
-		explosive.prime()
-		qdel(src)
-
+	if(!.) //not caught
+		if(explosive)
+			explosive.prime()
+			qdel(src)
 
 /obj/item/weapon/twohanded/spear/AltClick()
 	..()
@@ -340,17 +339,8 @@
 		if(input)
 			src.war_cry = input
 
-//Placeholder C4 "grenade" for use on this spear
-/obj/item/weapon/grenade/C4
-	name = "C-4"
-	desc = "A brick of C-4."
-
-/obj/item/weapon/grenade/C4/prime()
-	update_mob()
-	explosion(src.loc,-1,1,3)
-	qdel(src)
-
-/obj/item/weapon/twohanded/spear/CheckParts()
+/obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
+	..()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)
 		explosive = null
@@ -360,12 +350,6 @@
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
 		return
-	var/obj/item/weapon/c4/C4 = locate() in contents
-	if(C4)
-		var /obj/item/weapon/grenade/C4/C42 = new /obj/item/weapon/grenade/C4(src)
-		qdel(C4)
-		explosive = C42
-		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
 	update_icon()
 
 // CHAINSAW
@@ -406,6 +390,9 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/weapon/twohanded/required/chainsaw/can_dismember()
+	return wielded
+
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
@@ -432,3 +419,96 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
+
+/obj/item/weapon/twohanded/pitchfork
+	icon_state = "pitchfork0"
+	name = "pitchfork"
+	desc = "A simple tool used for moving hay."
+	force = 7
+	throwforce = 15
+	w_class = 4
+	force_unwielded = 7
+	force_wielded = 15
+	attack_verb = list("attacked", "impaled", "pierced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/pitchfork/demonic
+	name = "demonic pitchfork"
+	desc = "A red pitchfork, it looks like the work of the devil."
+	force = 19
+	throwforce = 24
+	force_unwielded = 19
+	force_wielded = 25
+
+/obj/item/weapon/twohanded/pitchfork/demonic/greater
+	force = 24
+	throwforce = 50
+	force_unwielded = 24
+	force_wielded = 34
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended
+	force = 100
+	throwforce = 100
+	force_unwielded = 100
+	force_wielded = 500000 // Kills you DEAD.
+
+/obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "pitchfork[wielded]"
+
+/obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] impales \himself in \his abdomen with [src]! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
+/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
+	if(istype(user, /mob/living))
+		var/mob/living/U = user
+		if(!U.mind.devilinfo)
+			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
+				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
+			if(ishuman(U))
+				var/mob/living/carbon/human/H = U
+				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+			else
+				U.adjustFireLoss(rand(force/2,force))
+
+/obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
+	if(!user.mind.devilinfo)
+		user << "<span class ='warning'>The [src] burns in your hands.</span>"
+		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+	..()
+
+//HF blade
+
+/obj/item/weapon/twohanded/vibro_weapon
+	icon_state = "hfrequency0"
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	force_unwielded = 20
+	force_wielded = 40
+	armour_penetration = 100
+	block_chance = 40
+	throwforce = 20
+	throw_speed = 4
+	sharpness = IS_SHARP
+	attack_verb = list("cut", "sliced", "diced")
+	w_class = 4
+	slot_flags = SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || attack_type != PROJECTILE_ATTACK)
+		if(prob(final_block_chance))
+			if(attack_type == PROJECTILE_ATTACK)
+				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+				return 1
+			else
+				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				return 1
+	return 0
+
+/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+	icon_state = "hfrequency[wielded]"

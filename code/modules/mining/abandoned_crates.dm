@@ -106,11 +106,11 @@
 		if(87) //1% chance
 			new /obj/item/weed_extract(src)
 		if(88)
-			new /obj/item/organ/internal/brain(src)
+			new /obj/item/organ/brain(src)
 		if(89)
-			new /obj/item/organ/internal/brain/alien(src)
+			new /obj/item/organ/brain/alien(src)
 		if(90)
-			new /obj/item/organ/internal/heart(src)
+			new /obj/item/organ/heart(src)
 		if(91)
 			new /obj/item/device/soulstone/anybody(src)
 		if(92)
@@ -174,11 +174,17 @@
 /obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
 	boom(user)
 
+/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
+	if(!user.canUseTopic(src))
+		return
+	attack_hand(user)
+
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if(istype(W, /obj/item/weapon/card/emag))
 			boom(user)
-		if(istype(W, /obj/item/device/multitool))
+			return
+		else if(istype(W, /obj/item/device/multitool))
 			user << "<span class='notice'>DECA-CODE LOCK REPORT:</span>"
 			if(attempts == 1)
 				user << "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>"
@@ -199,8 +205,8 @@
 					else if(a)
 						++cows
 				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
-		else ..()
-	else ..()
+			return
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)

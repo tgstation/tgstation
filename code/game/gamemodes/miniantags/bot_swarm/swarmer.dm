@@ -1,23 +1,44 @@
 ////Deactivated swarmer shell////
-/obj/item/unactivated_swarmer
+/obj/item/device/unactivated_swarmer
 	name = "unactivated swarmer"
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
+	origin_tech = "bluespace=4;materials=4;programming=6"
+	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
-/obj/item/unactivated_swarmer/New()
-	notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
+
+/obj/item/device/unactivated_swarmer/New()
+	if(!crit_fail)
+		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
 	..()
 
-/obj/item/unactivated_swarmer/Topic(href, href_list)
+/obj/item/device/unactivated_swarmer/Topic(href, href_list)
 	if(href_list["ghostjoin"])
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost))
 			attack_ghost(ghost)
 
-/obj/item/unactivated_swarmer/attack_ghost(mob/user)
+/obj/item/device/unactivated_swarmer/attackby(obj/item/weapon/W, mob/user, params)
+	..()
+	if(istype(W, /obj/item/weapon/screwdriver) && !crit_fail)
+		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
+			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
+			"<span class='italics'>You hear clicking.</span>")
+		name = "deactivated swarmer"
+		desc = "A shell of swarmer that was completely powered down. It no longer can activate itself."
+		crit_fail = 1
+
+/obj/item/device/unactivated_swarmer/attack_ghost(mob/user)
+	if(crit_fail)
+		user << "This swarmer shell is completely depowered. You cannot activate it."
+		return
+
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
+		return
+	if(crit_fail)
+		user << "Swarmer has been depowered."
 		return
 	if(qdeleted(src))
 		user << "Swarmer has been occupied by someone else."
@@ -25,6 +46,13 @@
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))
 	S.key = user.key
 	qdel(src)
+
+
+/obj/item/device/unactivated_swarmer/deactivated
+	name = "deactivated swarmer"
+	desc = "A shell of swarmer that was completely powered down. It no longer can activate itself."
+	crit_fail = 1
+
 
 ////The Mob itself////
 
@@ -52,6 +80,7 @@
 	melee_damage_upper = 15
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	languages = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
@@ -61,6 +90,7 @@
 	faction = list("swarmer")
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_TINY
 	ventcrawler = 2
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam/disabler
@@ -84,6 +114,17 @@
 /mob/living/simple_animal/hostile/swarmer/New()
 	..()
 	verbs -= /mob/living/verb/pulled
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+
+
+/mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/hostile/swarmer/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	holder.icon_state = "hudstat"
 
 /mob/living/simple_animal/hostile/swarmer/Stat()
 	..()
@@ -371,44 +412,47 @@
 	mouse_opacity = 1
 	var/health = 30
 
-/obj/effect/swarmer/destructible/proc/TakeDamage(damage)
+/obj/effect/swarmer/destructible/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
 	health -= damage
 	if(health <= 0)
 		qdel(src)
 
-/obj/effect/swarmer/destructible/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			TakeDamage(Proj.damage)
-	..()
+/obj/effect/swarmer/destructible/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
 
-/obj/effect/swarmer/destructible/attackby(obj/item/weapon/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon))
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		TakeDamage(I.force)
-	return
+/obj/effect/swarmer/destructible/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
 
 /obj/effect/swarmer/destructible/ex_act()
 	qdel(src)
-	return
 
-/obj/effect/swarmer/destructible/blob_act()
+/obj/effect/swarmer/destructible/blob_act(obj/effect/blob/B)
 	qdel(src)
-	return
 
 /obj/effect/swarmer/destructible/emp_act()
 	qdel(src)
-	return
 
-/obj/effect/swarmer/destructible/attack_animal(mob/living/user)
-	if(isanimal(user))
-		var/mob/living/simple_animal/S = user
-		S.do_attack_animation(src)
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(S.melee_damage_type == BRUTE || S.melee_damage_type == BURN)
-			TakeDamage(rand(S.melee_damage_lower, S.melee_damage_upper))
-	return
+/obj/effect/swarmer/destructible/attack_alien(mob/living/user)
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	take_damage(rand(20,30))
+
+/obj/effect/swarmer/destructible/attack_animal(mob/living/simple_animal/S)
+	S.do_attack_animation(src)
+	S.changeNext_move(CLICK_CD_MELEE)
+	if(S.melee_damage_upper)
+		take_damage(rand(S.melee_damage_lower, S.melee_damage_upper), S.melee_damage_type)
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"
@@ -479,7 +523,7 @@
 		src << "<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>"
 		return
 	if(do_mob(src, src, 100))
-		if(Fabricate(/obj/item/unactivated_swarmer, 50))
+		if(Fabricate(/obj/item/device/unactivated_swarmer, 50))
 			playsound(loc,'sound/items/poster_being_created.ogg',50, 1, -1)
 
 /mob/living/simple_animal/hostile/swarmer/proc/RepairSelf()
@@ -508,4 +552,3 @@
 				M << rendered
 			if(M in dead_mob_list)
 				M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
-

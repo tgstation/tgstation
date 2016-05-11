@@ -61,31 +61,32 @@
 
 /obj/item/weapon/storage/box/survival/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
 /obj/item/weapon/storage/box/engineer
 
 /obj/item/weapon/storage/box/engineer/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
+
+/obj/item/weapon/storage/box/syndie
+
+/obj/item/weapon/storage/box/syndie/New()
+	..()
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/security
 
 /obj/item/weapon/storage/box/security/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
@@ -311,7 +312,7 @@
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
 	for(var/i = 1; i <= 5; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
 
 
 /obj/item/weapon/storage/box/permits
@@ -380,6 +381,17 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
+
+/obj/item/weapon/storage/box/lasertagpins
+	name = "box of laser tag firing pins"
+	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
+	icon_state = "id"
+
+/obj/item/weapon/storage/box/lasertagpins/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/device/firing_pin/tag/red(src)
+		new /obj/item/device/firing_pin/tag/blue(src)
 
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -792,7 +804,7 @@
 
 /obj/item/weapon/storage/box/rndboards/New()
 	..()
-	new /obj/item/weapon/circuitboard/protolathe(src)
-	new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-	new /obj/item/weapon/circuitboard/rdconsole(src)
+	new /obj/item/weapon/circuitboard/machine/protolathe(src)
+	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
+	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/weapon/circuitboard/computer/rdconsole(src)

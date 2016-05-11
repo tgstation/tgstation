@@ -127,9 +127,10 @@
 
 
 /obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
-	return 0
+		check_stability()
 
 
 /obj/machinery/power/am_control_unit/power_change()
@@ -158,15 +159,14 @@
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
-				"Y<span class='notice'>You remove the anchor bolts.</span>", \
+				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 0
 			disconnect_from_network()
 		else
 			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
-		return
 
-	if(istype(W, /obj/item/weapon/am_containment))
+	else if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
 			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
@@ -179,20 +179,29 @@
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
 				"<span class='italics'>You hear a thunk.</span>")
-		return
+	else
+		return ..()
 
-	if(W.force >= 20)
-		stability -= W.force/2
+/obj/machinery/power/am_control_unit/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	if(damage >= 20)
+		stability -= damage/2
 		check_stability()
-	..()
-
-
 
 /obj/machinery/power/am_control_unit/attack_hand(mob/user)
 	if(anchored)
 		interact(user)
-	return
-
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))

@@ -152,7 +152,7 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
+		if(D.z != ZLEVEL_STATION)
 			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
@@ -163,6 +163,7 @@
 					AL.close()
 					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
+					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
@@ -182,6 +183,8 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
+		if(D.z != ZLEVEL_STATION)
+			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D

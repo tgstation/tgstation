@@ -56,7 +56,7 @@
 	//Hot simple_animal baby making vars
 	var/list/childtype = null
 	var/scan_ready = 1
-	var/species //Sorry, no spider+corgi buttbabies.
+	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
@@ -72,6 +72,7 @@
 	var/list/loot = list() //list of things spawned at mob's loc when it dies
 	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
 	var/deathmessage = ""
+	var/death_sound = null //The sound played on death
 
 	var/allow_movement_on_non_turfs = FALSE
 
@@ -110,33 +111,8 @@
 			death()
 		else
 			stat = CONSCIOUS
+	med_hud_set_status()
 
-/mob/living/simple_animal/blind_eyes()
-	return
-
-/mob/living/simple_animal/blur_eyes()
-	return
-
-/mob/living/simple_animal/adjust_blindness()
-	return
-
-/mob/living/simple_animal/adjust_blurriness()
-	return
-
-/mob/living/simple_animal/set_blindness()
-	return
-
-/mob/living/simple_animal/set_blurriness()
-	return
-
-/mob/living/simple_animal/become_blind()
-	return
-
-/mob/living/simple_animal/setEarDamage()
-	return
-
-/mob/living/simple_animal/adjustEarDamage()
-	return
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -251,17 +227,18 @@
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(3)
 
-/mob/living/simple_animal/gib(animation = 0)
-	if(icon_gib)
-		flick(icon_gib, src)
+/mob/living/simple_animal/gib()
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
 				new path(src.loc)
 	..()
 
+/mob/living/simple_animal/gib_animation()
+	if(icon_gib)
+		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/blob_act()
+/mob/living/simple_animal/blob_act(obj/effect/blob/B)
 	adjustBruteLoss(20)
 	return
 
@@ -397,13 +374,6 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
-
-/mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
-	if(O.flags & NOBLUDGEON)
-		return
-
-	..()
-
 /mob/living/simple_animal/movement_delay()
 	. = ..()
 
@@ -424,10 +394,13 @@
 	if(loot.len)
 		for(var/i in loot)
 			new i(loc)
-	if(deathmessage && !gibbed)
-		visible_message("<span class='danger'>[deathmessage]</span>")
-	else if(!del_on_death)
-		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+	if(!gibbed)
+		if(death_sound)
+			playsound(get_turf(src),death_sound, 200, 1)
+		if(deathmessage)
+			visible_message("<span class='danger'>[deathmessage]</span>")
+		else if(!del_on_death)
+			visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -489,8 +462,8 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !species || ticker.current_state != GAME_STATE_PLAYING)
-		return
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+		return 0
 	scan_ready = 0
 	spawn(400)
 		scan_ready = 1
@@ -498,21 +471,24 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children FIRST.
+		else if(istype(M, childtype)) //Check for children SECOND.
 			children++
-		else if(istype(M, species))
+		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+
+		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
 		var/childspawn = pickweight(childtype)
 		new childspawn(loc)
+		return 1
+	return 0
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)

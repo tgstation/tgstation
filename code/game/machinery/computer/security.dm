@@ -6,7 +6,7 @@
 	icon_screen = "security"
 	icon_keyboard = "security_key"
 	req_one_access = list(access_security, access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/secure_data
+	circuit = /obj/item/weapon/circuitboard/computer/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -25,14 +25,17 @@
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		if(!user.drop_item())
-			return
-		O.loc = src
-		scan = O
-		user << "<span class='notice'>You insert [O].</span>"
+	if(istype(O, /obj/item/weapon/card/id))
+		if(!scan)
+			if(!user.drop_item())
+				return
+			O.loc = src
+			scan = O
+			user << "<span class='notice'>You insert [O].</span>"
+		else
+			user << "<span class='warning'>There's already an ID card in the console.</span>"
 	else
-		..()
+		return ..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user)

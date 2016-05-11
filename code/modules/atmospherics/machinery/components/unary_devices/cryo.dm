@@ -22,14 +22,17 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/cryo_tube
+	name = "circuit board (Cryotube)"
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	origin_tech = "programming=4;biotech=3;engineering=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 4)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir, dir)
@@ -164,17 +167,17 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(isrobot(user))
+		. = 1 //no afterattack
+		if(!user.drop_item())
 			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
-			return
-		if(!user.drop_item())
 			return
 		beaker = I
 		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
+		return
 	if(!on && !occupant && !state_open)
 		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
 			return
@@ -186,6 +189,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)

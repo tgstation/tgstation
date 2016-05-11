@@ -16,13 +16,17 @@
 
 /obj/machinery/r_n_d/server/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
-	initialize(); //Agouri
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
+	initialize() //Agouri
+
+/obj/item/weapon/circuitboard/machine/rdserver
+	name = "circuit board (R&D Server)"
+	build_path = /obj/machinery/r_n_d/server
+	origin_tech = "programming=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -86,7 +90,7 @@
 	..()
 
 
-/obj/machinery/r_n_d/server/blob_act()
+/obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
 	griefProtection()
 	..()
 
@@ -124,20 +128,10 @@
 				env.merge(removed)
 				air_update_turf()
 
-/obj/machinery/r_n_d/server/attackby(obj/item/O, mob/user, params)
-	if (disabled)
-		return
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
-		return
-	if(exchange_parts(user, O))
-		return
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			griefProtection()
-			default_deconstruction_crowbar(O)
-			return 1
+//called when the server is deconstructed.
+/obj/machinery/r_n_d/server/deconstruction()
+	griefProtection()
+	..()
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)
@@ -187,7 +181,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	circuit = /obj/item/weapon/circuitboard/rdservercontrol
+	circuit = /obj/item/weapon/circuitboard/computer/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -323,9 +317,8 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
-	..()
+	. = ..()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)
