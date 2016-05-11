@@ -800,8 +800,9 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/blood_boil/invoke(var/list/invokers)
 	..()
+	var/turf/T = get_turf(src)
 	visible_message("<span class='warning'>[src] briefly bubbles before exploding!</span>")
-	for(var/mob/living/carbon/C in viewers(src))
+	for(var/mob/living/carbon/C in viewers(T))
 		if(!iscultist(C))
 			var/obj/item/weapon/nullrod/N = C.null_rod_check()
 			if(N)
@@ -814,8 +815,8 @@ var/list/teleport_runes = list()
 		var/mob/living/L = M
 		L.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
 		L << "<span class='cultitalic'>[src] saps your strength!</span>"
-	explosion(get_turf(src), -1, 0, 1, 5)
 	qdel(src)
+	explosion(T, -1, 0, 1, 5)
 
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
