@@ -576,8 +576,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	return sharpness
 
 
-/obj/item/proc/chasm_react(mob/user)
-	return FALSE
+
 
 /obj/item/proc/can_dismember()
 

@@ -299,12 +299,11 @@
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600),
-		new /datum/data/mining_equipment("Wormhole Lifebelt",   /obj/item/device/wormhole_lifebelt,										750),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
-		new /datum/data/mining_equipment("Advanced Wormhole Lifebelt",   /obj/item/device/wormhole_lifebelt/advanced,					2000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            2000),
@@ -444,8 +443,6 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Advanced Scanner")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
-		if("Wormhole Lifebelt")
-			new /obj/item/device/wormhole_lifebelt(src.loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -493,20 +490,11 @@
 
 /**********************Jaunter**********************/
 
-/obj/item/device/wormhole_lifebelt
-	name = "wormhole lifebelt"
-	desc = "A single use safety device harnessing outdated wormhole \
-		technology. It bares the hallmarks of the work of the Free Golems, as \
-		Nanotrasen has turned its eyes to bluespace for more accurate \
-		teleportation.\n\
-		The belt has slots for modular sensors allowing it to activate \
-		automatically. \
-		The wormholes it creates are unpleasant to travel through though, for \
-		those who aren't carved out of living stone."
-	var/desc_sensors = "\nThis lifebelt will activate automatically in the \
-		event of sudden acceleration, generally indicating that the user has \
-		fallen into a chasm."
+/**********************Jaunter**********************/
 
+/obj/item/device/wormhole_jaunter
+	name = "wormhole jaunter"
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -517,108 +505,38 @@
 	origin_tech = "bluespace=2"
 	slot_flags = SLOT_BELT
 
-	var/obj/item/device/radio/belt_radio
-	var/radio_key = /obj/item/device/encryptionkey/headset_cargo
-	var/radio_channel = "Supply"
-
-	var/medical_sensors = FALSE
-	var/ticks_in_crit = 0
-	var/threshold = 2
-
-/obj/item/device/wormhole_lifebelt/New()
-	. = ..()
-	desc += desc_sensors
-	SSobj.processing += src
-
-	belt_radio = new /obj/item/device/radio(src)
-	belt_radio.keyslot = new radio_key
-	belt_radio.subspace_transmission = 1
-	belt_radio.canhear_range = 0
-	belt_radio.recalculateChannels()
-
-
-/obj/item/device/wormhole_lifebelt/Destroy()
-	SSobj.processing -= src
-	qdel(belt_radio)
-	. = ..()
-
-/obj/item/device/wormhole_lifebelt/process()
-	if(!medical_sensors)
-		return
-
-	var/mob/living/carbon/human/user
-	if(istype(loc, /mob/living/carbon/human))
-		user = loc
-	else
-		return
-
-	if(user.get_item_by_slot(slot_belt) != src)
-		return
-
-	if(user.InCritical())
-		if(ticks_in_crit == 0)
-			user << "<span class='notice'>You feel [src] growing warm and vibrating.</span>"
-		ticks_in_crit += 1
-		if(ticks_in_crit >= threshold)
-			feedback_add_details("jaunter", "M") // medical activation
-			belt_radio.talk_into(src, "Medical activation for [user] but yeah, go do whatever.", radio_channel)
-			activate(user)
-	else
-		ticks_in_crit = 0
-
-/obj/item/device/wormhole_lifebelt/attack_self(mob/user)
+/obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
 	feedback_add_details("jaunter", "U") // user activated
 	activate(user)
 
-/obj/item/device/wormhole_lifebelt/proc/turf_check(mob/user)
+/obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
 		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
 		return FALSE
 	return TRUE
 
-/obj/item/device/wormhole_lifebelt/proc/get_beacons(mob/user)
-	// The shoes send you home, to where you belong
-	var/golem_mode = isgolem(user)
-	var/list/L = list()
-
-	for(var/obj/item/device/radio/beacon/B in world)
-		var/turf/T = get_turf(B)
-		if(golem_mode)
-			if(istype(T.loc, /area/ruin/powered/golem_ship))
-				L += B
-		else if(T.z == ZLEVEL_STATION)
-			L += B
-
-	// If no beacons found for golems, home in on dat gold statue.
-	if(!L.len && golem_mode)
-		for(var/obj/structure/statue/gold/rd/S in world)
-			var/turf/T = get_turf(S)
-			if(istype(T.loc, /area/ruin/powered/golem_ship))
-				L += S
-
-	return L
-
-/obj/item/device/wormhole_lifebelt/proc/activate(mob/user)
+/obj/item/device/wormhole_jaunter/proc/activate(mob/user)
 	if(!turf_check(user))
 		return
 
-	var/list/beacons = get_beacons(user)
-
-	if(!beacons.len)
+	var/list/L = list()
+	for(var/obj/item/device/radio/beacon/B in world)
+		var/turf/T = get_turf(B)
+		if(T.z == ZLEVEL_STATION)
+			L += B
+	if(!L.len)
 		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
 		return
-	var/chosen_beacon = pick(beacons)
-	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new(get_turf(src), chosen_beacon, lifespan=100)
+	var/chosen_beacon = pick(L)
+	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
 	J.target = chosen_beacon
 	try_move_adjacent(J)
-	visible_message("<span class='warning'>A [J] appears!</span>", "<span class='notice'>You hear sparks.</span>")
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
-	return TRUE
 
-/obj/item/device/wormhole_lifebelt/emp_act(power)
+/obj/item/device/wormhole_jaunter/emp_act(power)
 	var/triggered = FALSE
 
 	if(usr.get_item_by_slot(slot_belt) == src)
@@ -628,30 +546,24 @@
 			triggered = TRUE
 
 	if(triggered)
-		usr.visible_message("<span class='warning'>[src] overloads and activates!</span>")
+		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
 		feedback_add_details("jaunter","E") // EMP accidental activation
 		activate(usr)
 
-/obj/item/device/wormhole_lifebelt/chasm_react(mob/user)
+/obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
+		user << "Your [src] activates, saving you from the chasm!</span>"
 		feedback_add_details("jaunter","C") // chasm automatic activation
-		. = activate(user)
-		if(.)
-			user << "[src] activates, saving you from the chasm!</span>"
+		activate(user)
 	else
-		user << "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
-		. = FALSE
+		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
 	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
-
-	desc = "A stable hole in the universe made by a wormhole lifebelt. \
-		Turbulent doesn't even begin to describe how rough passage through \
-		one of these is, but at least it will always get you somewhere near a \
-		beacon."
+	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))
@@ -659,38 +571,15 @@
 	if(istype(M, /atom/movable))
 		if(do_teleport(M, target, 6))
 			// KERPLUNK
-			M.visible_message("<span class='warning'>[M] appears from nowhere!</span>", null, "<span class='warning'>There is a loud ker-plunk noise!</span>")
 			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
-
 			if(iscarbon(M))
 				var/mob/living/carbon/L = M
-				// Golems are extremely resistant to the stress of
-				//  wormhole travel.
-				if(isgolem(L))
-					L.Weaken(1)
-					return
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					// aproximately x3 telearmor rads
-					L.rad_act(50)
 					spawn(20)
 						if(L)
 							L.vomit(20)
-
-/proc/isgolem(mob/M)
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		if(H.dna && istype(H.dna.species, /datum/species/golem))
-			return TRUE
-	return FALSE
-
-/obj/item/device/wormhole_lifebelt/advanced
-	name = "advanced wormhole lifebelt"
-	medical_sensors = TRUE
-	desc_sensors = "\nIn addition to the standard chasm detection suite, this \
-		belt has sophisticated medical sensors, activating if the user drops \
-		into a critical condition."
 
 /**********************Resonator**********************/
 
