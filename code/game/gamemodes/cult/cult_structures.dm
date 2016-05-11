@@ -79,26 +79,22 @@
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	luminosity = 5
-	var/heal_delay = 50
-	var/last_shot = 0
-	var/list/corruption = list()
+	var/heal_delay = 25
+	var/last_heal = 0
+	var/corrupt_delay = 50
+	var/last_corrupt = 0
 
 /obj/structure/cult/pylon/New()
-	SSobj.processing |= src
-	corruption += get_turf(src)
-	for(var/i in 1 to 5)
-		for(var/t in corruption)
-			var/turf/T = t
-			corruption |= T.GetAtmosAdjacentTurfs()
+	SSfastprocess.processing |= src
 	..()
 
 /obj/structure/cult/pylon/Destroy()
-	SSobj.processing.Remove(src)
+	SSfastprocess.processing.Remove(src)
 	return ..()
 
 /obj/structure/cult/pylon/process()
-	if((last_shot + heal_delay) <= world.time)
-		last_shot = world.time
+	if(last_heal <= world.time)
+		last_heal = world.time + heal_delay
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L) || istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
 				if(L.health != L.maxHealth)
@@ -110,14 +106,20 @@
 					if(istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
-							M.adjustHealth(-2)
-		if(corruption.len)
-			var/turf/T = pick_n_take(corruption)
-			corruption -= T
+							M.adjustHealth(-1)
+			CHECK_TICK
+	if(last_corrupt <= world.time)
+		var/list/validturfs = list()
+		for(var/T in circleviewturfs(src, 5))
 			if(istype(T, /turf/closed) || istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
-				return
+				continue
+			validturfs |= T
+		var/turf/T = safepick(validturfs)
+		if(T)
 			T.ChangeTurf(/turf/open/floor/engine/cult)
-
+			last_corrupt = world.time + corrupt_delay
+		else
+			last_corrupt = world.time + corrupt_delay*0.2
 
 /obj/structure/cult/tome
 	name = "archives"
