@@ -140,3 +140,8 @@
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)
+
+/obj/item/projectile/Destroy()
+	if(ammo_casing)
+		qdel(ammo_casing)
+	return ..()

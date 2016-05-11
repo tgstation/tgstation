@@ -53,6 +53,11 @@
 	newdart.BB.damage_type = damage_type
 	newdart.update_icon()
 
+/obj/item/projectile/bullet/reusable/foam_dart/Destroy()
+	if(pen)
+		qdel(pen)
+	return ..()
+
 /obj/item/projectile/bullet/reusable/foam_dart/riot
 	name = "riot foam dart"
 	icon_state = "foamdart_riot"
