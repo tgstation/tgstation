@@ -398,7 +398,7 @@
 	name = "Blindness Smoke"
 	desc = "Spews a cloud of smoke which will blind enemies."
 	panel = "Shadowling Abilities"
-	charge_max = 40//No reason to take a minute to recharge
+	charge_max = 300//No reason to take a minute to recharge
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "black_smoke"
@@ -467,7 +467,7 @@
 	desc = "Damages nearby humans, draining their life and healing your own wounds."
 	panel = "Shadowling Abilities"
 	range = 5
-	charge_max = 100
+	charge_max = 600
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "drain_life"
@@ -784,7 +784,9 @@
 		if(iswizard(boom))
 			user << "<span class='shadowling'>Their mind is too shattered and twisted, our mental energy is deflected!</span>"
 			boom << "<span class='warning'>You feel a lesser force try to overcome you, repelled by your reality bending knowledge!</span>"
-			boom.adjustBrainLoss(10)
+			boom.adjustBrainLoss(10)//Still, wizzy shouldn't get away scott free
+			revert_cast()
+			return//IT DOESN'T DO ANYTHING!!
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
 		boom.gib()
 
@@ -819,6 +821,10 @@
 			return
 		if(!ishuman(target))
 			user << "<span class='warning'>You can only enthrall humans.</span>"
+			revert_cast()
+			return
+		if(iswizard(target))
+			user <<"<span class='warning'>Your tendrils discover truths in this man's mind that are forbidden even to you! Your mind recoils in horror at knowledge beyond your form before you can enslave [target].</span>"
 			revert_cast()
 			return
 
@@ -870,7 +876,7 @@
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
-			if(is_shadow_or_thrall(target))
+			if(is_shadow_or_thrall(target)||iswizard(target))
 				continue
 			target << "<span class='userdanger'>You are struck by a bolt of lightning!</span>"
 			playsound(target, 'sound/magic/LightningShock.ogg', 50, 1)

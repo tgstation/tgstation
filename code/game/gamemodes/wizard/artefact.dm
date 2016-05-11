@@ -121,7 +121,7 @@
 		return ..()
 	if(!istype(M, /mob/living/simple_animal/ascendant_shadowling))
 		return ..()
-	if(captured_ascendants<=2)
+	if(captured_ascendants>=2)
 		M << "<span class='danger>You feel your soul being ripped from your form, only to return to your flesh! Foolish wizard!</span>"
 		user << "<span class='danger'>Your blade is full, you cannot capture any more lesser gods!</span>"
 		return

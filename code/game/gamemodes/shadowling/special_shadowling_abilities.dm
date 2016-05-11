@@ -167,7 +167,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 						if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
 							if(temp.age_check(G.client))
 								spawn(0)
-									switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+									switch(alert(G, "Do you wish to be considered for the special position of the Space Wizard researcher?","Please answer in 10 seconds!","Yes","No"))
 										if("Yes")
 											if((world.time-time_passed)>100)//If more than 10 game seconds passed.
 												return
