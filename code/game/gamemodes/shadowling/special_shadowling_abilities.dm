@@ -155,7 +155,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
 				world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
 				world << 'sound/hallucinations/veryfar_noise.ogg'
-				if(prob(50))
+				if(!ticker.mode.wizards)
 					message_admins("A space wizard has spawned to try and combat the Ascendant.")
 					priority_announce("ERROR \[0x0441c\]: MEMORY HIJACK EXECUTED. UNAUTHORIZED ANNOUNCEMENT DETECTED.", null, 'sound/misc/wizard_announce.ogg')
 					var/datum/game_mode/wizard/temp = new
