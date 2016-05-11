@@ -90,8 +90,8 @@
 	//clean the input msg
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
+//	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+//	if(!msg)	return
 	var/original_msg = msg
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
@@ -99,6 +99,8 @@
 	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, FALSE) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg)	return
 
 	if(!mob)
 		return						//this doesn't happen
