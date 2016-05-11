@@ -301,6 +301,14 @@
 			user.dna.add_mutation(XRAY)
 	return 1
 
+/datum/spellbook_entry/item/orb_illusion
+	name = "Orb of Illusions"
+	desc = "This ancient artifact distort the light around you, allowing you to scan and disguise as any inanimate object left around."
+	item_path = /obj/item/device/chameleon/orbillusion
+	log_name = "OI"
+	cost = 2
+	category = "Assistance"
+
 /datum/spellbook_entry/item/soulstones
 	name = "Six Soul Stone Shards and the spell Artificer"
 	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
