@@ -129,9 +129,6 @@
 		if (temp_tech.len == 0)
 			user << "<span class='warning'>You cannot experiment on this item!</span>"
 			return
-		if(O.reliability < 90 && O.crit_fail == 0)
-			usr << "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>"
-			return
 		if(!user.drop_item())
 			return
 		loaded_item = O
@@ -552,7 +549,6 @@
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
-				linked_console.files.UpdateDesigns(process,temp_tech)
 	src.updateUsrDialog()
 	return
 

@@ -358,20 +358,9 @@ MASS SPECTROMETER
 			dat += "<br>None"
 		else
 			for(var/R in blood_traces)
-				if(prob(reliability))
-					dat += "<br>[chemical_reagents_list[R]]"
-
-					if(details)
-						dat += " ([blood_traces[R]] units)"
-
-					recent_fail = 0
-				else
-					if(recent_fail)
-						crit_fail = 1
-						reagents.clear_reagents()
-						return
-					else
-						recent_fail = 1
+				dat += "<br>[chemical_reagents_list[R]]"
+				if(details)
+					dat += " ([blood_traces[R]] units)"
 		dat += "</i>"
 		user << dat
 		reagents.clear_reagents()
