@@ -301,6 +301,6 @@
 	desc = "Tracks wizards with extreme precision; down the exact locker they are hiding in."
 		
 /obj/item/weapon/pinpointer/attack_self()
-	for(var/datum/mind/wizard in ticker.mode.wizards)
-		the_disk = wizard
-	return ..()
+	if(wizard.current)
+		the_disk = wizard.current
+		break
