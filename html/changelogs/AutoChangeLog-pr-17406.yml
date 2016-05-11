@@ -1,4 +1,0 @@
-author: KorPhaeron
-delete-after: True
-changes: 
-  - rscadd: "The AI no longer has a tracking delay because artificial lag is the most miserable thing in the world."
