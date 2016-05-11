@@ -17,6 +17,7 @@ This file contains the arcane tome files.
 	..()
 	if(iscultist(user) || user.stat == DEAD)
 		user << "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>"
+		user << "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>"
 		user << "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>"
 		user << "<span class='cult'>Striking a noncultist, however, will sear their flesh.</span>"
 
