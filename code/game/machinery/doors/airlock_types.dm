@@ -321,11 +321,15 @@
 	hackProof = 1
 	aiControlDisabled = 1
 	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
+	var/friendly = FALSE
 
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
 		return 1
-	if(iscultist(M) || istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
+	if(friendly || \
+			iscultist(M) || \
+			istype(M, /mob/living/simple_animal/shade) || \
+			istype(M, /mob/living/simple_animal/hostile/construct))
 		PoolOrNew(openingoverlaytype, src.loc)
 		return 1
 	else
@@ -345,10 +349,16 @@
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
 
+/obj/machinery/door/airlock/cult/friendly
+	friendly = TRUE
+
 /obj/machinery/door/airlock/cult/glass
 	doortype = /obj/structure/door_assembly/door_assembly_cult/glass
 	glass = 1
 	opacity = 0
+
+/obj/machinery/door/airlock/cult/glass/friendly
+	friendly = TRUE
 
 /obj/machinery/door/airlock/cult/unruned
 	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
@@ -356,10 +366,16 @@
 	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned
 	openingoverlaytype = /obj/effect/overlay/temp/cult/door/unruned
 
+/obj/machinery/door/airlock/cult/unruned/friendly
+	friendly = TRUE
+
 /obj/machinery/door/airlock/cult/unruned/glass
 	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned/glass
 	glass = 1
 	opacity = 0
+
+/obj/machinery/door/airlock/cult/unruned/glass/friendly
+	friendly = TRUE
 
 //////////////////////////////////
 /*

@@ -1,22 +1,23 @@
 #define CANDLE_LUMINOSITY	2
 /obj/item/candle
 	name = "red candle"
-	desc = "a candle"
+	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
+		humankind. The jewelry he kept for himself."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
 	w_class = 1
 	var/wax = 200
-	var/lit = 0
-	var/infinite = 0
-	var/start_lit = 0
+	var/lit = FALSE
+	var/infinite = FALSE
+	var/start_lit = FALSE
 	heat = 1000
 
 /obj/item/candle/New()
 	..()
 	if(start_lit)
 		// No visible message
-		light(null)
+		light(show_message = FALSE)
 
 /obj/item/candle/update_icon()
 	var/i
@@ -56,12 +57,13 @@
 		light() //honk
 	return
 
-/obj/item/candle/proc/light(flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
+/obj/item/candle/proc/light(show_message)
 	if(!src.lit)
-		src.lit = 1
+		src.lit = TRUE
 		//src.damtype = "fire"
-		if(flavor_text)
-			usr.visible_message(flavor_text)
+		if(show_message)
+			usr.visible_message(
+				"<span class='danger'>[usr] lights the [name].</span>")
 		SetLuminosity(CANDLE_LUMINOSITY)
 		SSobj.processing |= src
 		update_icon()
@@ -79,14 +81,13 @@
 			M.unEquip(src, 1) //src is being deleted anyway
 		qdel(src)
 	update_icon()
-	if(istype(loc, /turf)) //start a fire if possible
-		var/turf/T = loc
-		T.hotspot_expose(700, 5)
-
+	open_flame()
 
 /obj/item/candle/attack_self(mob/user)
 	if(lit)
-		lit = 0
+		user.visible_message(
+			"<span class='notice'>[user] snuffs [src].</span>")
+		lit = FALSE
 		update_icon()
 		SetLuminosity(0)
 		user.AddLuminosity(-CANDLE_LUMINOSITY)
@@ -110,7 +111,7 @@
 
 
 /obj/item/candle/infinite
-	infinite = 1
-	start_lit = 1
+	infinite = TRUE
+	start_lit = TRUE
 
 #undef CANDLE_LUMINOSITY
