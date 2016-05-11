@@ -484,16 +484,11 @@
 				investigate_log("Experimentor has spawned a new corgi.", "experimentor")
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
-			visible_message("<span class='warning'>[src] improves [exp_on], drawing the life essence of those nearby!</span>")
+			visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
 			for(var/mob/living/m in view(4,src))
 				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
 				m.apply_damage(50,"brute","chest")
 				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
-			var/list/reqs = ConvertReqString2List(exp_on.origin_tech)
-			for(var/T in reqs)
-				reqs[T] = reqs[T] + 1
-			exp_on.origin_tech = list2params(reqs)
-			investigate_log("Experimentor has set the origin tech of [exp_on] to [exp_on.origin_tech]", "experimentor")
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")
 			throwSmoke(src.loc)

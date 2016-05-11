@@ -365,7 +365,7 @@ proc/CallMaterialName(ID)
 
 
 
-				if (g2g) //If input is incorrect, nothing happens
+				if (g2g && !linked_lathe.busy) //If input is incorrect, nothing happens
 					var/enough_materials = 1
 					linked_lathe.busy = 1
 					flick("protolathe_n",linked_lathe)
@@ -373,7 +373,7 @@ proc/CallMaterialName(ID)
 
 					var/list/efficient_mats = list()
 					for(var/MAT in being_built.materials)
-						efficient_mats[MAT] = being_built.materials[MAT]
+						efficient_mats[MAT] = being_built.materials[MAT]*coeff
 
 					if(!linked_lathe.materials.has_materials(efficient_mats, amount))
 						src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
@@ -381,7 +381,7 @@ proc/CallMaterialName(ID)
 						g2g = 0
 					else
 						for(var/R in being_built.reagents)
-							if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]))
+							if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R])*coeff)
 								src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough reagents to complete prototype.\"</span>")
 								enough_materials = 0
 								g2g = 0
@@ -389,22 +389,18 @@ proc/CallMaterialName(ID)
 					if(enough_materials)
 						linked_lathe.materials.use_amount(efficient_mats, amount)
 						for(var/R in being_built.reagents)
-							linked_lathe.reagents.remove_reagent(R, being_built.reagents[R])
+							linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]*coeff)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
-					var/R = being_built.reliability
-					spawn(32*amount/coeff)
+					spawn(32*coeff*amount**0.8)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
 							var/already_logged = 0
 							for(var/i = 0, i<amount, i++)
 								var/obj/item/new_item = new P(src)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
-								new_item.reliability = R
 								if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
 									new_item.materials = efficient_mats.Copy()
-								if(linked_lathe.hacked)
-									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
 								if(!already_logged)
 									feedback_add_details("item_printed","[new_item.type]|[amount]")
@@ -414,6 +410,7 @@ proc/CallMaterialName(ID)
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
+		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
 			var/datum/design/being_built = files.known_designs[href_list["imprint"]]
@@ -442,11 +439,11 @@ proc/CallMaterialName(ID)
 							break
 						switch(M)
 							if(MAT_GLASS)
-								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
+								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M])*coeff)
 							if(MAT_GOLD)
-								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
+								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M])*coeff)
 							if(MAT_DIAMOND)
-								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
+								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M])*coeff)
 							else
 								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
 
@@ -812,6 +809,7 @@ proc/CallMaterialName(ID)
 			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
+			var/coeff = linked_lathe.efficiency_coeff
 			for(var/v in files.known_designs)
 				var/datum/design/D = files.known_designs[v]
 				if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
@@ -823,18 +821,18 @@ proc/CallMaterialName(ID)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_material += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				for(var/R in D.reagents)
 					t = linked_lathe.check_mat(D, R)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.reagents[R]] [CallMaterialName(R)]</span>"
+						temp_material += "<span class='bad'>[D.reagents[R]*coeff] [CallMaterialName(R)]</span>"
 					else
-						temp_material += " [D.reagents[R]] [CallMaterialName(R)]"
+						temp_material += " [D.reagents[R]*coeff] [CallMaterialName(R)]"
 					c = min(c,t)
 
 				if (c >= 1)
@@ -856,6 +854,7 @@ proc/CallMaterialName(ID)
 			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
+			var/coeff = linked_lathe.efficiency_coeff
 			for(var/datum/design/D in matching_designs)
 				var/temp_material
 				var/c = 50
@@ -864,9 +863,9 @@ proc/CallMaterialName(ID)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_material += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				if (c >= 1)
@@ -981,6 +980,7 @@ proc/CallMaterialName(ID)
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
+			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/v in files.known_designs)
 				var/datum/design/D = files.known_designs[v]
 				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
@@ -991,9 +991,9 @@ proc/CallMaterialName(ID)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_materials += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
@@ -1007,6 +1007,7 @@ proc/CallMaterialName(ID)
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
+			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
@@ -1014,9 +1015,9 @@ proc/CallMaterialName(ID)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_materials += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
