@@ -1,0 +1,1 @@
+To make round end sounds work open up code/world.dm and add "'sound/misc/RoundEndSounds/<your_sound>.ogg'," to the pick list at the bottom of the Reboot proc.
