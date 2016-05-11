@@ -155,6 +155,48 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
 				world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
 				world << 'sound/hallucinations/veryfar_noise.ogg'
+				if(prob(50))
+					message_admins("A space wizard has spawned to try and combat the Ascendant.")
+					priority_announce("ERROR \[0x0441c\]: MEMORY HIJACK EXECUTED. UNAUTHORIZED ANNOUNCEMENT DETECTED.", null, 'sound/misc/wizard_announce.ogg')
+					var/datum/game_mode/wizard/temp = new
+					var/list/mob/dead/observer/candidates = list()
+					var/mob/dead/observer/theghost = null
+					var/time_passed = world.time
+
+					for(var/mob/dead/observer/G in player_list)
+						if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+							if(temp.age_check(G.client))
+								spawn(0)
+									switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+										if("Yes")
+											if((world.time-time_passed)>100)//If more than 10 game seconds passed.
+												return
+											candidates += G
+										if("No")
+											return
+										else
+											return
+
+					sleep(100)
+
+
+
+					if(candidates.len)
+						shuffle(candidates)
+						for(var/mob/i in candidates)
+							if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+
+							theghost = i
+							break
+
+					if(theghost)
+						var/mob/living/carbon/human/new_character=makeBody(theghost)
+						new_character.mind.make_Wizard()
+						new_character.equip_to_slot_or_del(/obj/item/weapon/veilrender/uncharged, slot_l_hand)
+						return 1
+
+
+
 				for(var/obj/machinery/power/apc/A in apcs_list)
 					A.overload_lighting()
 				var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(H.loc)

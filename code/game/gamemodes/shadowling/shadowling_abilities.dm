@@ -61,7 +61,7 @@
 	clothes_req = 0
 	range = 5
 	action_icon_state = "veil"
-	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
+	var/blacklisted_lights = list(/obj/item/device/flashlight/slime)//Slightly buffed, requiring slimes instead of slimes and flares
 	var/admin_override = 0 //Requested by Shadowlight213. Allows anyone to cast the spell, not just shadowlings.
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(obj/item/I) //Does not darken items held by mobs due to mobs having separate luminosity, use extinguishMob() or write your own proc.
@@ -138,7 +138,7 @@
 	user.stop_pulling()
 	if(user.buckled_mobs.len)
 		user.unbuckle_all_mobs(force=1)
-	sleep(40) //4 seconds
+	sleep(80) //8 seconds (buffed from 4)
 	if(!qdeleted(user))
 		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The rift's pressure forces you back to corporeality.</span>")
 		user.incorporeal_move = 0
@@ -149,8 +149,8 @@
 	name = "Icy Veins"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
 	panel = "Shadowling Abilities"
-	range = 5
-	charge_max = 250
+	range = 6
+	charge_max = 100
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "icy_veins"
@@ -170,12 +170,11 @@
 					M << "<span class='danger'>You feel a blast of paralyzingly cold air wrap around you and flow past, but you are unaffected!</span>"
 					continue
 			M << "<span class='userdanger'>A wave of shockingly cold air engulfs you!</span>"
-			M.Stun(2)
-			M.apply_damage(10, BURN)
+			M.Weaken(2)
 			if(M.bodytemperature)
 				M.bodytemperature -= 200 //Extreme amount of initial cold
 			if(M.reagents)
-				M.reagents.add_reagent("frostoil", 15) //Half of a cryosting
+				M.reagents.add_reagent("frostoil", 10) //one third of cryo sting
 
 
 /obj/effect/proc_holder/spell/targeted/enthrall //Turns a target into the shadowling's slave. This overrides all previous loyalties
@@ -399,7 +398,7 @@
 	name = "Blindness Smoke"
 	desc = "Spews a cloud of smoke which will blind enemies."
 	panel = "Shadowling Abilities"
-	charge_max = 600
+	charge_max = 40//No reason to take a minute to recharge
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "black_smoke"
@@ -467,7 +466,7 @@
 	name = "Drain Life"
 	desc = "Damages nearby humans, draining their life and healing your own wounds."
 	panel = "Shadowling Abilities"
-	range = 3
+	range = 5
 	charge_max = 100
 	human_req = 1
 	clothes_req = 0
@@ -782,6 +781,10 @@
 		sleep(4)
 		if(iscarbon(boom))
 			playsound(boom, 'sound/magic/Disintegrate.ogg', 100, 1)
+		if(iswizard(boom))
+			user << "<span class='shadowling'>Their mind is too shattered and twisted, our mental energy is deflected!</span>"
+			boom << "<span class='warning'>You feel a lesser force try to overcome you, repelled by your reality bending knowledge!</span>"
+			boom.adjustBrainLoss(10)
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
 		boom.gib()
 
