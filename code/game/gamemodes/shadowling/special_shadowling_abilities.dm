@@ -158,10 +158,10 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				if(!ticker.mode.wizards)
 					message_admins("A space wizard has spawned to try and combat the Ascendant.")
 					priority_announce("ERROR \[0x0441c\]: MEMORY HIJACK EXECUTED. UNAUTHORIZED ANNOUNCEMENT DETECTED.", null, 'sound/misc/wizard_announce.ogg')
-					var/datum/game_mode/wizard/temp = new
+
 					var/list/mob/dead/observer/candidates = list()
 					var/mob/dead/observer/theghost = null
-					var/time_passed = world.time
+
 
 					pollCandidates("Do you wish to be considered for the special position of the Space Wizard researcher?", "wizard", null, FALSE, 100)
 
