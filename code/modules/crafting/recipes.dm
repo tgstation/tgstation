@@ -31,21 +31,12 @@
 	category = CAT_WEAPON
 
 /datum/table_recipe/lance
-	name = "explosive lance (grenade)"
+	name = "explosive lance"
 	result = /obj/item/weapon/twohanded/spear
 	reqs = list(/obj/item/weapon/twohanded/spear = 1,
 				/obj/item/weapon/grenade = 1)
 	parts = list(/obj/item/weapon/grenade = 1)
 	time = 15
-	category = CAT_WEAPON
-
-/datum/table_recipe/lance2
-	name = "explosive lance (C4)"
-	result = /obj/item/weapon/twohanded/spear
-	reqs = list(/obj/item/weapon/twohanded/spear = 1,
-				/obj/item/weapon/c4 = 1)
-	parts = list(/obj/item/weapon/c4 = 1)
-	time = 40
 	category = CAT_WEAPON
 
 
@@ -321,11 +312,11 @@
 	category = CAT_MISC
 
 /datum/table_recipe/chemical_payload
-	name = "chemical payload (C4)"
+	name = "Chemical Payload (C4)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin/super = 1,
-		/obj/item/weapon/c4 = 1,
+		/obj/item/weapon/stock_parts/matter_bin = 1,
+		/obj/item/weapon/grenade/plastic/c4 = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
@@ -333,7 +324,7 @@
 	category = CAT_WEAPON
 
 /datum/table_recipe/chemical_payload2
-	name = "chemical payload (gibtonite)"
+	name = "Chemical Payload (gibtonite)"
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,

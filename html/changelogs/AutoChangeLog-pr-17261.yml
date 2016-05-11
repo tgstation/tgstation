@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Blob spores spawn from factories 2 seconds faster, but the factory goes on cooldown when any of its spores die."
