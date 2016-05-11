@@ -93,6 +93,8 @@
 	return ..()
 
 /obj/structure/cult/pylon/process()
+	if(!anchored)
+		return
 	if(last_heal <= world.time)
 		last_heal = world.time + heal_delay
 		for(var/mob/living/L in range(5, src))
