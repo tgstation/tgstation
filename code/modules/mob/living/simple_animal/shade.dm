@@ -35,7 +35,7 @@
 	..()
 
 /mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
