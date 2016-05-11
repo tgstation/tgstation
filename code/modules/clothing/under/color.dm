@@ -8,7 +8,6 @@
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
 	item_color = initial(C.item_color)
-	suit_color = initial(C.item_color)
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
