@@ -9,22 +9,24 @@ var/list/existing_vaults = list()
 
 	var/only_spawn_once = 1 //If 0, this vault can spawn multiple times on a single map
 
-	var/turf/location //A turf from this vault
+	var/turf/location //The first turf from this vault
+	var/base_turf_type = /turf/space //The "default" turf type that surrounds this vault. If it differs from the z-level's base turf type (for example if this vault is loaded on a snow map), all turfs of this type will be replaced with turfs of the z-level's base turf type
 
 /datum/vault/proc/initialize(list/objects)
 	existing_vaults.Add(src)
-	
+
+	location = locate(/turf) in objects
+	if(!location) return
+
+	var/zlevel_base_turf_type = get_base_turf(location.z)
+	if(!zlevel_base_turf_type) zlevel_base_turf_type = /turf/space
+
 	for(var/turf/new_turf in objects)
-		if(!location) location = new_turf
+		if(new_turf.type == base_turf_type) //New turf is vault's base turf
+			if(new_turf.type != zlevel_base_turf_type) //And vault's base turf differs from zlevel's base turf
+				new_turf.ChangeTurf(zlevel_base_turf_type)
+
 		new_turf.flags |= NO_MINIMAP //Makes the spawned turfs invisible on minimaps
-	
-	if(location.z <= accessable_z_levels.len)
-		var/datum/zLevel/zLevel = accessable_z_levels[location.z]
-		if(!ispath(zLevel.base_turf, /turf/space))
-			for(var/turf/space/new_turf in objects)
-				new_turf.ChangeTurf(zLevel.base_turf)
-				new_turf.flags |= NO_MINIMAP
-			
 
 //How to create a new vault:
 //1) create a map in maps/randomVaults/
