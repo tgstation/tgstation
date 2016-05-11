@@ -318,3 +318,10 @@ Proc for attack log creation, because really why not
 					break mainloop
 	if(progbar)
 		qdel(progbar)
+
+/proc/isabductor(A)
+	. = FALSE
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
+		if(H.dna && istype(H.dna.species, /datum/species/abductor))
+			. = TRUE
