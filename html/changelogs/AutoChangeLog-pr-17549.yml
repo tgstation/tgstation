@@ -1,5 +1,0 @@
-author: Joan
-delete-after: True
-changes: 
-  - rscadd: "Shades can move in space."
-  - rscadd: "Artificers can now heal shades."
