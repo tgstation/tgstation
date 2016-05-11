@@ -25,7 +25,7 @@
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
 		return
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 	user.set_machine(src)
 	var/box_css = {"
