@@ -1,5 +1,5 @@
 var/list/admin_ranks = list()								//list of all admin_rank datums
-
+/*
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = 0
@@ -150,7 +150,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			msg += "\t\t[rights]\n"
 	testing(msg)
 	#endif
-
+*/
 
 /proc/load_admins(target = null)
 	//clear the datums references
@@ -160,11 +160,11 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			C.remove_admin_verbs()
 			C.holder = null
 		admins.Cut()
-		load_admin_ranks()
+		//load_admin_ranks()
 
-	var/list/rank_names = list()
-	for(var/datum/admin_rank/R in admin_ranks)
-		rank_names[R.name] = R
+//	var/list/rank_names = list()
+//	for(var/datum/admin_rank/R in admin_ranks)
+//		rank_names[R.name] = R
 
 	if(config.admin_legacy_system)
 		//load text from file
@@ -182,11 +182,11 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				continue
 
 			var/ckey = ckey(entry[1])
-			var/rank = ckeyEx(entry[2])
+			var/rank = entry[2]
 			if(!ckey || !rank || (target && ckey != target))
 				continue
 
-			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
+			var/datum/admins/D = new /datum/admins(rank, 65535, ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
@@ -199,23 +199,23 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, flags FROM [format_table_name("admin")]")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = ckey(query.item[1])
-			var/rank = ckeyEx(query.item[2])
+			var/rank = query.item[2]
 			if(target && ckey != target)
 				continue
 
-			if(rank_names[rank] == null)
-				WARNING("Admin rank ([rank]) does not exist.")
-				continue
+			if(rank == "Removed")	continue
+			var/rights = query.item[3]
+			if(istext(rights))	rights = text2num(rights)
 
-			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
-			if(!D)
-				continue									//will occur if an invalid rank is provided
+			var/datum/admins/D = new /datum/admins(rank, rights, ckey)				//create the admin datum and store it for later use
+
+									//will occur if an invalid rank is provided
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
-
+/*
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in admin_datums)
@@ -293,7 +293,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			for(R in admin_ranks)
 				rank_names[R.name] = R
 
-			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
+			var/new_rank = input("Please select a rank", "New rank", "Pedal")
 
 			switch(new_rank)
 				if(null)
@@ -369,4 +369,4 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
-	query_update.Execute()
+	query_update.Execute()*/

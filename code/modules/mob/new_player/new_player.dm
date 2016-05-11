@@ -193,7 +193,7 @@
 	else if(!href_list["late_join"])
 		new_player_panel()
 
-	if(href_list["showpoll"])
+/*	if(href_list["showpoll"])
 		handle_player_polling()
 		return
 
@@ -264,7 +264,7 @@
 								usr << "<span class='danger'>Maximum replies reached.</span>"
 								break
 				usr << "<span class='notice'>Vote successful.</span>"
-
+*/
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)

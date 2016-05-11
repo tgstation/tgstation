@@ -1,8 +1,7 @@
 var/list/forbidden_varedit_object_types = list(
 										/datum/admins,						//Admins editing their own admin-power object? Yup, sounds like a good idea.
 										/obj/machinery/blackbox_recorder,	//Prevents people messing with feedback gathering
-										/datum/feedback_variable,			//Prevents people messing with feedback gathering
-										/datum/admin_rank					//editing my own rank? it's more likely than you think
+										/datum/feedback_variable			//Prevents people messing with feedback gathering
 									)
 
 var/list/VVlocked = list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "step_x", "step_y", "force_ending")

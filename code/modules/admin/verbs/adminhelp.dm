@@ -83,6 +83,10 @@
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
+	if(ahmuted(ckey))
+		src << "<span class='danger'><big><b>No way for you, dick.</b></big></span>"
+		return
+
 	//clean the input msg
 	if(!msg)
 		return

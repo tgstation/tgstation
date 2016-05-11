@@ -39,7 +39,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	appearance_loadbanfile()
 	LoadBans()
 	investigate_reset()
-
+	load_mute()
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		config.server_name += " #[(world.port % 1000) / 100]"
 
@@ -112,8 +112,8 @@ var/last_irc_status = 0
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count(Import())
 		s["players"] = clients.len
-		s["revision"] = revdata.commit
-		s["revision_date"] = revdata.date
+//		s["revision"] = revdata.commit
+//		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
 		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho

@@ -12,6 +12,10 @@
 		src << "Guests may not use OOC."
 		return
 
+	if(oocmuted(ckey))
+		src << "<span class='danger'><big><b>No way for you, dick.</b></big></span>"
+		return
+
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
@@ -53,9 +57,9 @@
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
-	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+//	if(prefs.unlock_content)
+//		if(prefs.toggles & MEMBER_PUBLIC)
+//			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -99,8 +103,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+//		if(!is_content_unlocked())
+		return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
@@ -115,8 +119,8 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+//		if(!is_content_unlocked())
+		return
 
 		prefs.ooccolor = initial(prefs.ooccolor)
 		prefs.save_preferences()

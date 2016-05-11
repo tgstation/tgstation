@@ -13,7 +13,7 @@
 	codebase for the entire /TG/station commuity a TONNE easier :3 Thanks for your help!
 */
 
-
+/*
 //This proc allows Game Masters to grant a client access to the .getruntimelog verb
 //Permissions expire at the end of each round.
 //Runtimes can be used to meta or spot game-crashing exploits so it's advised to only grant coders that
@@ -55,7 +55,7 @@
 	src << ftp( file(path) )
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
-
+*/
 
 //This proc allows download of past server logs saved within the data/logs/ folder.
 //It works similarly to show-server-log.
@@ -92,7 +92,7 @@
 		return
 	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
-
+/*
 //Shows today's attack log
 /datum/admins/proc/view_atk_log()
 	set category = "Admin"
@@ -105,4 +105,4 @@
 		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
 		return
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
+	return*/
