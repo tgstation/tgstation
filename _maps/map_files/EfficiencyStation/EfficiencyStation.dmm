@@ -33996,8 +33996,8 @@
 	},
 /area/crew_quarters/kitchen)
 "bjL" = (
-/obj/structure/closet,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -34014,8 +34014,15 @@
 	},
 /area/crew_quarters/theatre)
 "bjN" = (
-/obj/item/weapon/storage/crayons,
 /obj/structure/table/wood,
+/obj/item/weapon/storage/crayons{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -61714,6 +61721,25 @@
 	},
 /turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
+"ckh" = (
+/obj/structure/table/wood,
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/obj/item/weapon/storage/crayons{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel{
+	icon_state = "redbluefull"
+	},
+/area/space)
 "cki" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -61722,17 +61748,6 @@
 /turf/closed/wall/shuttle{
 	dir = 1;
 	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"ckh" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	tag = "icon-diagonalWall3 (WEST)";
-	icon_state = "diagonalWall3";
-	dir = 8
 	},
 /area/shuttle/syndicate)
 
@@ -95288,7 +95303,7 @@ bkQ
 bfv
 bvd
 bfv
-bfv
+ckh
 bqH
 bsy
 btK

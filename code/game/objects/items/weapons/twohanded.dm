@@ -509,3 +509,6 @@
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return 1
 	return 0
+
+/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+	icon_state = "hfrequency[wielded]"
