@@ -37,7 +37,6 @@
 	origin_tech = "programming=2;biotech=3"
 	energy_drain = 20
 	range = MELEE
-	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
@@ -523,8 +522,6 @@
 		log_message("Reagent processing stopped.")
 		SSobj.processing -= src
 		return
-	if(anyprob(reliability))
-		critfail()
 	var/amount = synth_speed / processed_reagents.len
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)

@@ -67,51 +67,9 @@
 	icon_state = "nucgun"
 	item_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
-	var/fail_tick = 0
 	charge_delay = 5
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
-
-/obj/item/weapon/gun/energy/gun/nuclear/process()
-	if(fail_tick > 0)
-		fail_tick--
-	..()
-
-/obj/item/weapon/gun/energy/gun/nuclear/shoot_live_shot()
-	failcheck()
-	update_icon()
-	..()
-
-/obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
-	if(!prob(reliability) && istype(loc, /mob/living))
-		var/mob/living/M = loc
-		switch(fail_tick)
-			if(0 to 200)
-				fail_tick += (2*(100-reliability))
-				M.rad_act(40)
-				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
-			if(201 to INFINITY)
-				SSobj.processing.Remove(src)
-				M.rad_act(80)
-				crit_fail = 1
-				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"
-
-/obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
-	..()
-	reliability = max(reliability - round(15/severity), 0) //Do not allow it to go negative!
-
-/obj/item/weapon/gun/energy/gun/nuclear/update_icon()
-	..()
-	if(crit_fail)
-		overlays += "[icon_state]_fail_3"
-	else
-		switch(fail_tick)
-			if(0)
-				overlays += "[icon_state]_fail_0"
-			if(1 to 150)
-				overlays += "[icon_state]_fail_1"
-			if(151 to INFINITY)
-				overlays += "[icon_state]_fail_2"

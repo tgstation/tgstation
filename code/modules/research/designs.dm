@@ -1,6 +1,6 @@
 /***************************************************************
 **						Design Datums						  **
-**	All the data for building stuff and tracking reliability. **
+**	All the data for building stuff.						  **
 ***************************************************************/
 /*
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
@@ -20,9 +20,6 @@ The currently supporting non-reagent materials. All material amounts are set as 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
 Design Guidlines
-- The reliability formula for all R&D built items is reliability (a fixed number) + total tech levels required to make it +
-reliability_mod (starts at 0, gets improved through experimentation). Example: PACMAN generator. 79 base reliablity + 6 tech
-(3 plasmatech, 3 powerstorage) + 0 (since it's completely new) = 85% reliability. Reliability is the chance it works CORRECTLY.
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
 - A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
@@ -33,8 +30,7 @@ other types of metals and chemistry for reagents).
 	var/name = "Name"					//Name of the created object.
 	var/desc = "Desc"					//Description of the created object.
 	var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
-	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.			//Reliability modifier of the device at it's starting point.
-	var/reliability = 100				//Reliability of the device.
+	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
@@ -42,18 +38,6 @@ other types of metals and chemistry for reagents).
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
 	var/maxstack = 1
-
-
-//A proc to calculate the reliability of a design based on tech levels and innate modifiers.
-//Input: A list of /datum/tech; Output: The new reliabilty.
-/datum/design/proc/CalcReliability(list/temp_techs)
-	var/new_reliability
-	for(var/datum/tech/T in temp_techs)
-		if(T.id in req_tech)
-			new_reliability += T.level
-	new_reliability = Clamp(new_reliability, reliability, 100)
-	reliability = new_reliability
-	return
 
 
 ////////////////////////////////////////
@@ -141,7 +125,6 @@ other types of metals and chemistry for reagents).
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
-	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
 	category = list("Mining Designs")
 
@@ -152,7 +135,6 @@ other types of metals and chemistry for reagents).
 	req_tech = list("materials" = 2, "plasmatech" = 2, "engineering" = 2, "combat" = 1, "magnets" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_PLASMA = 400)
-	reliability = 79
 	build_path = /obj/item/weapon/gun/energy/plasmacutter
 	category = list("Mining Designs")
 
@@ -163,7 +145,6 @@ other types of metals and chemistry for reagents).
 	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3, "combat" = 3, "magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_PLASMA = 2000, MAT_GOLD = 500)
-	reliability = 79
 	build_path = /obj/item/weapon/gun/energy/plasmacutter/adv
 	category = list("Mining Designs")
 
@@ -228,7 +209,6 @@ other types of metals and chemistry for reagents).
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
-	reliability = 80
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
@@ -239,7 +219,6 @@ other types of metals and chemistry for reagents).
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
-	reliability = 100
 	build_path = /obj/item/weapon/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
 
@@ -260,7 +239,6 @@ other types of metals and chemistry for reagents).
 	req_tech = list("bluespace" = 3, "materials" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500) //quite cheap, for more convenience
-	reliability = 100
 	build_path = /obj/item/weapon/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 

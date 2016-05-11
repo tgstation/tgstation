@@ -30,7 +30,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
 	build_path = /obj/item/weapon/gun/energy/shock_revolver
-
 	category = list("Weapons")
 
 /datum/design/nuclear_gun
@@ -40,7 +39,6 @@
 	req_tech = list("combat" = 4, "materials" = 5, "powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_URANIUM = 2000)
-	reliability = 76
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
 	category = list("Weapons")
 
@@ -94,7 +92,6 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
 	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
-	reliability = 76
 
 /datum/design/temp_gun
 	name = "Temperature Gun"
@@ -124,7 +121,6 @@
 	req_tech = list("combat" = 3, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
-	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 	category = list("Weapons")
 
@@ -135,7 +131,6 @@
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_PLASMA = 500)
-	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/pyro
 	category = list("Weapons")
 
@@ -148,7 +143,6 @@
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
-	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/cryo
 	category = list("Weapons")
 */
@@ -160,7 +154,6 @@
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 500)
-	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/adv_release
 	category = list("Weapons")
 

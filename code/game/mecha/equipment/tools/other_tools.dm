@@ -364,7 +364,6 @@
 	var/fuel_per_cycle_idle = 25
 	var/fuel_per_cycle_active = 200
 	var/power_per_cycle = 20
-	reliability = 1000
 
 /obj/item/mecha_parts/mecha_equipment/generator/New()
 	..()
@@ -452,11 +451,6 @@
 		SSobj.processing.Remove(src)
 		log_message("Deactivated - no fuel.")
 		set_ready_state(1)
-		return
-	if(anyprob(reliability))
-		set_ready_state(1) //inactive
-		critfail()
-		SSobj.processing.Remove(src)
 		return
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))

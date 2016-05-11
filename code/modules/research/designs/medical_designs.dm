@@ -10,7 +10,6 @@
 	req_tech = list("biotech" = 2, "magnets" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
-	reliability = 76
 	build_path = /obj/item/device/mass_spectrometer
 	category = list("Medical Designs")
 
@@ -21,7 +20,6 @@
 	req_tech = list("biotech" = 2, "magnets" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
-	reliability = 74
 	build_path = /obj/item/device/mass_spectrometer/adv
 	category = list("Medical Designs")
 
@@ -33,7 +31,6 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
 	construction_time = 75
-	reliability = 76
 	build_path = /obj/item/device/mmi
 	category = list("Misc","Medical Designs")
 
@@ -44,7 +41,6 @@
 	req_tech = list("programming" = 5, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1700, MAT_GLASS = 1350, MAT_GOLD = 500) //Gold, because SWAG.
-	reliability = 74
 	construction_time = 75
 	build_path = /obj/item/device/mmi/posibrain
 	category = list("Misc", "Medical Designs")
@@ -58,7 +54,6 @@
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
 	construction_time = 100
-	reliability = 76
 	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")
 
@@ -69,7 +64,6 @@
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
-	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = list("Misc","Medical Designs")
 
@@ -80,7 +74,6 @@
 	req_tech = list("materials" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
-	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Medical Designs")
 
@@ -91,7 +84,6 @@
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500)
-	reliability = 76
 	build_path = /obj/item/bodybag/bluespace
 	category = list("Medical Designs")
 
@@ -102,7 +94,6 @@
 	req_tech = list("materials" = 2, "combat" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_PLASMA = 1000)
-	reliability = 76
 	build_path = /obj/item/device/extinguisher_refill
 	category = list("Medical Designs")
 

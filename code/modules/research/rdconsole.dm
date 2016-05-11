@@ -258,15 +258,12 @@ proc/CallMaterialName(ID)
 								usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
 								screen = 1.0
 								return
-							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
-								var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
-								for(var/T in temp_tech)
-									if(prob(linked_destroy.loaded_item.reliability))               //If deconstructed item is not reliable enough its just being wasted, else it is pocessed
-										files.UpdateTech(T, temp_tech[T])                          //Check if deconstructed item has research levels higher/same/one less than current ones
-								files.UpdateDesigns(linked_destroy.loaded_item, temp_tech, src)    //If if such reseach type found all the known designs are checked for having this research type in them
-								screen = 1.0                                                       //If design have it it gains some reliability
-							else                                                                   //Same design always gain quality
-								screen = 2.3                                                       //Crit fail gives the same design a lot of reliability, like really a lot
+
+							var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
+							for(var/T in temp_tech)
+								files.UpdateTech(T, temp_tech[T])
+							screen = 1.0
+
 							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 								for(var/material in linked_destroy.loaded_item.materials)
 									linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
@@ -448,11 +445,9 @@ proc/CallMaterialName(ID)
 								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
-					var/R = being_built.reliability
 					spawn(16)
 						if(g2g)
 							var/obj/item/new_item = new P(src)
-							new_item.reliability = R
 							new_item.loc = linked_imprinter.loc
 							feedback_add_details("circuit_printed","[new_item.type]")
 						linked_imprinter.busy = 0
@@ -685,7 +680,6 @@ proc/CallMaterialName(ID)
 				dat += "<A href='?src=\ref[src];menu=1.5'>Load Design to Disk</A>"
 			else
 				dat += "Name: [d_disk.blueprint.name]<BR>"
-				dat += "Level: [d_disk.blueprint.reliability]<BR>"
 				var/b_type = d_disk.blueprint.build_type
 				if(b_type)
 					dat += "Lathe Types:<BR>"
@@ -760,7 +754,6 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Deconstruction Menu</h3><BR>"
 			dat += "Name: [linked_destroy.loaded_item.name]<BR>"
-			dat += "Reliability: [linked_destroy.loaded_item.reliability]<BR>"
 			dat += "Origin Tech:<BR>"
 			var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 			for(var/T in temp_tech)

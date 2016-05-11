@@ -85,7 +85,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	if(istype(O,/obj/item/stack/sheet))
 		. = 1
-		if(!is_insertion_ready(user))
+		if(!is_insertion_ready(user) || busy)
 			return
 		if(!materials.has_space( materials.get_item_material_amount(O) ))
 			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"

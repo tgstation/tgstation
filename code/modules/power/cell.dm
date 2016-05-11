@@ -77,19 +77,11 @@
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
-	if(crit_fail)
-		return 0
-	if(!prob(reliability))
-		minor_fault++
-		if(prob(minor_fault))
-			crit_fail = 1
-			return 0
-	charge += power_used
 	return power_used
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
-	if(crit_fail || rigged)
+	if(rigged)
 		user << "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
 		user << "The charge meter reads [round(src.percent() )]%."
