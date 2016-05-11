@@ -121,7 +121,7 @@
 			T.ChangeTurf(/turf/open/floor/engine/cult)
 			last_corrupt = world.time + corrupt_delay
 		else
-			last_corrupt = world.time + corrupt_delay*0.2
+			last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/cult/tome
 	name = "archives"
