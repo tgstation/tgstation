@@ -535,7 +535,7 @@ var/list/teleport_runes = list()
 	if(rune_in_use)
 		return
 	for(var/mob/living/M in orange(1,T))
-		if(M.stat == DEAD)
+		if(M.stat == DEAD && !iscultist(M))
 			potential_sacrifice_mobs |= M
 	if(!potential_sacrifice_mobs.len)
 		user << "<span class='cultitalic'>There are no eligible sacrifices nearby!</span>"
