@@ -38,7 +38,7 @@
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
-
+/*
 	if(!IsGuestKey(src.key))
 		establish_db_connection()
 
@@ -57,7 +57,7 @@
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 			else
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-
+*/
 	output += "</center>"
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
