@@ -2,7 +2,8 @@
 
 /turf/closed/mineral //wall piece
 	name = "rock"
-	icon = 'icons/turf/smoothrocks.dmi'
+	icon = 'icons/turf/mining.dmi'
+	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	icon_state = "rock"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
@@ -25,6 +26,7 @@
 /turf/closed/mineral/New()
 	pixel_y = -4
 	pixel_x = -4
+	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -700,7 +702,8 @@
 	pixel_y = -4
 	pixel_x = -4
 	name = "rock"
-	icon = 'icons/turf/walls/rock_wall.dmi'
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 	icon_state = "rock"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
@@ -712,15 +715,23 @@
 /turf/open/floor/plating/ash
 	pixel_y = -4
 	pixel_x = -4
+	icon = 'icons/turf/mining.dmi'
 	name = "ash"
 	icon_state = "ash"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/open/floor/plating/ash, /turf/closed)
-	icon = 'icons/turf/floors/ash.dmi'
+	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	desc = "The ground is covered in volcanic ash."
 	baseturf = /turf/open/floor/plating/ash //I assume this will be a chasm eventually, once this becomes an actual surface
 	slowdown = 1
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+
+/turf/open/floor/plating/ash/New()
+	pixel_y = -4
+	pixel_x = -4
+	icon = smooth_icon
+	..()
 
 /turf/open/floor/plating/ash/break_tile()
 	return
@@ -731,7 +742,8 @@
 /turf/open/floor/plating/ash/rocky
 	name = "rocky ground"
 	icon_state = "rockyash"
-	icon = 'icons/turf/floors/rocky_ash.dmi'
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
 	slowdown = 0
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/open/floor/plating/ash/rocky, /turf/closed)
