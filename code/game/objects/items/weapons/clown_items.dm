@@ -144,7 +144,6 @@
 
 /obj/item/weapon/bikehorn/golden/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!spam_flag)
-		playsound(loc, honksound, 50, 1, -1)
 		for(M in ohearers(7, user))
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
