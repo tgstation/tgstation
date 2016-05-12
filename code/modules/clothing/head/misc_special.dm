@@ -44,7 +44,7 @@
  */
 /obj/item/clothing/head/hardhat/cakehat
 	name = "cakehat"
-	desc = "You put the cake on your head. Brilliant. It keeps getting stronger somehow..."
+	desc = "You put the cake on your head. Brilliant."
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
