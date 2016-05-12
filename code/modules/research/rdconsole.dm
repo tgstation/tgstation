@@ -436,13 +436,13 @@ proc/CallMaterialName(ID)
 							break
 						switch(M)
 							if(MAT_GLASS)
-								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M])*coeff)
+								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
 							if(MAT_GOLD)
-								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M])*coeff)
+								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
 							if(MAT_DIAMOND)
-								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M])*coeff)
+								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
 							else
-								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
+								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M]/coeff)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					spawn(16)
@@ -973,7 +973,6 @@ proc/CallMaterialName(ID)
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
-			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/v in files.known_designs)
 				var/datum/design/D = files.known_designs[v]
 				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
@@ -984,9 +983,9 @@ proc/CallMaterialName(ID)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]*coeff] [CallMaterialName(M)]"
+						temp_materials += " [D.materials[M]] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
@@ -1000,7 +999,6 @@ proc/CallMaterialName(ID)
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
-			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
@@ -1008,9 +1006,9 @@ proc/CallMaterialName(ID)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]*coeff] [CallMaterialName(M)]"
+						temp_materials += " [D.materials[M]] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
