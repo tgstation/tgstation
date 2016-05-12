@@ -1,5 +1,15 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
+#define PARTICLE_ENERGY 20
+#define WEAK_PARTICLE_ENERGY (PARTICLE_ENERGY / 2)
+#define STRONG_PARTICLE_ENERGY (PARTICLE_ENERGY * 1.5)
+#define POWERFUL_PARTICLE_ENERGY (PARTICLE_ENERGY * 5)
+
+#define PARTICLE_RANGE 10
+#define WEAK_PARTICLE_RANGE 8
+#define STRONG_PARTICLE_RANGE 15
+#define POWERFUL_PARTICLE_RANGE 20
+
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
@@ -7,8 +17,8 @@
 	icon_state = "particle1"//Need a new icon for this
 	anchored = 1
 	density = 1
-	var/movement_range = 10
-	var/energy = 10		//energy in eV
+	var/movement_range = PARTICLE_RANGE
+	var/energy = PARTICLE_ENERGY		//energy in eV
 	var/mega_energy = 0	//energy in MeV
 	var/frequency = 1
 	var/ionizing = 0
@@ -20,39 +30,46 @@
 
 /obj/effect/accelerated_particle/resetVariables()
 	..("movement_range", "target", "ionizing", "particle_type", "source", "movetotarget", args)
-	movement_range = 10
+	movement_range = PARTICLE_RANGE
 	target = null
 	ionizing = 0
 	particle_type = null
 	source = null
 	movetotarget = 1
 
+
 /obj/effect/accelerated_particle/weak
-	movement_range = 8
-	energy = 5
+	movement_range = WEAK_PARTICLE_RANGE
+	energy = WEAK_PARTICLE_ENERGY
 	icon_state="particle0"
-	resetVariables()
-		..("energy", "movement_range")
-		movement_range = 8
-		energy = 5
+
+/obj/effect/accelerated_particle/weak/resetVariables()
+	..("energy", "movement_range")
+	movement_range = WEAK_PARTICLE_RANGE
+	energy = WEAK_PARTICLE_ENERGY
+
 
 /obj/effect/accelerated_particle/strong
-	movement_range = 15
-	energy = 15
+	movement_range = STRONG_PARTICLE_RANGE
+	energy = STRONG_PARTICLE_ENERGY
 	icon_state="particle2"
-	resetVariables()
-		..("energy", "movement_range")
-		energy = 15
-		movement_range = 15
+
+/obj/effect/accelerated_particle/strong/resetVariables()
+	..("energy", "movement_range")
+	energy = STRONG_PARTICLE_ENERGY
+	movement_range = STRONG_PARTICLE_RANGE
+
 
 /obj/effect/accelerated_particle/powerful
-	movement_range = 20
-	energy = 50
+	movement_range = POWERFUL_PARTICLE_RANGE
+	energy = POWERFUL_PARTICLE_ENERGY
 	icon_state="particle3"
-	resetVariables()
-		..("energy", "movement_range")
-		energy = 50
-		movement_range = 20
+	
+/obj/effect/accelerated_particle/powerful/resetVariables()
+	..("energy", "movement_range")
+	energy = POWERFUL_PARTICLE_ENERGY
+	movement_range = POWERFUL_PARTICLE_RANGE
+
 
 /obj/effect/accelerated_particle/New(loc, dir = 2, move = 0)
 	. = ..()
@@ -99,7 +116,7 @@
 	return
 
 /obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
-	var/radiation = (energy*2)
+	var/radiation = (energy)
 /*			if(istype(M,/mob/living/carbon/human))
 		if(M:wear_suit) //TODO: check for radiation protection
 			radiation = round(radiation/2,1)
@@ -134,3 +151,12 @@
 	else
 		sleep(lag)
 		move(lag)
+
+#undef PARTICLE_ENERGY
+#undef WEAK_PARTICLE_ENERGY
+#undef STRONG_PARTICLE_ENERGY
+#undef POWERFUL_PARTICLE_ENERGY
+#undef PARTICLE_RANGE
+#undef WEAK_PARTICLE_RANGE
+#undef STRONG_PARTICLE_RANGE
+#undef POWERFUL_PARTICLE_RANGE
