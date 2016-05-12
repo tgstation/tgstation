@@ -586,7 +586,7 @@
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
-			cell.updateicon()
+			cell.update_icon()
 
 			src.cell = null
 			user.visible_message("[user.name] removes the power cell from [src.name]!",\
@@ -614,7 +614,7 @@
 	else if(opened == 1)
 		if(cell)
 			cell.loc = user.loc
-			cell.updateicon()
+			cell.update_icon()
 			cell = null
 			visible_message("<span class='danger'>The [src.name]'s power cell flies off!</span>")
 			charging = 0

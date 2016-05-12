@@ -59,6 +59,13 @@
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
 
+/obj/item/ammo_casing/energy/electrode/shotgun
+	projectile_type = /obj/item/projectile/energy/electrode/shotgun
+	select_name = "taser"
+	e_cost = 1000
+	pellets = 3 //muh balance..
+	variance = 25
+
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
