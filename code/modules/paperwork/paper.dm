@@ -60,11 +60,11 @@
 			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 			return
 	if(in_range(user, src) || isobserver(user))
-		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		if(user.is_literate())
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
 		user << "<span class='notice'>It is too far away.</span>"
@@ -75,17 +75,15 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat || !usr.canmove || usr.restrained()|| !usr.is_literate())
 		return
-
-	if(!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.disabilities & CLUMSY && prob(25))
-		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
-		H.damageoverlaytemp = 9001
-		H.update_damage_hud()
-		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.disabilities & CLUMSY && prob(25))
+			H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+			H.damageoverlaytemp = 9001
+			H.update_damage_hud()
+			return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
@@ -293,7 +291,7 @@
 		return
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		if(user.IsAdvancedToolUser())
+		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			return
 		else
