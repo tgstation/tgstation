@@ -17,8 +17,8 @@
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/obj/singularity/narsie/large = 1)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 10,\
+	boss_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 2)
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
 						/mob/living/simple_animal/hostile/construct/wraith/hostile = 10)
 
 /datum/round_event/portal_storm
