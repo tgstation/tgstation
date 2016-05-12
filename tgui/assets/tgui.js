@@ -22379,7 +22379,7 @@ module.exports = Ractive.extend(component.exports);
 },{"ractive":205}],248:[function(require,module,exports){
 var Ractive = require('ractive');
 var component = { exports: {} };
-component.exports.template = {"v":3,"t":[" ",{"p":[3,1,63],"t":7,"e":"status"}," ",{"p":[4,1,81],"t":7,"e":"ui-tabs","a":{"tabs":[{"t":2,"r":"data.tabs","p":[4,16,96]}]},"f":[{"t":4,"f":[{"p":[6,2,138],"t":7,"e":"tab","a":{"name":[{"t":2,"r":"name","p":[6,13,149]}]},"f":[{"t":4,"f":[{"p":[8,4,193],"t":7,"e":"ui-section","a":{"label":[{"t":2,"r":"name","p":[8,23,212]}],"candystripe":0,"right":0},"f":[]}],"n":52,"r":"shuttle_templates","p":[7,3,162]}]}],"n":52,"r":"data.shuttles","p":[5,2,113]}]}]};
+component.exports.template = {"v":3,"t":[" ",{"p":[3,1,63],"t":7,"e":"status"}," ",{"p":[4,1,81],"t":7,"e":"ui-tabs","a":{"tabs":[{"t":2,"r":"data.tabs","p":[4,16,96]}]},"f":[{"t":4,"f":[{"p":[6,3,139],"t":7,"e":"tab","a":{"name":[{"t":2,"r":"port_id","p":[6,14,150]}]},"f":[{"t":4,"f":[{"p":[8,5,191],"t":7,"e":"ui-display","a":{"title":[{"t":2,"r":"name","p":[8,24,210]}]},"f":[{"t":4,"f":[{"p":[10,7,252],"t":7,"e":"ui-section","a":{"label":"Description"},"f":[{"t":2,"r":"description","p":[10,39,284]}]}],"n":50,"r":"description","p":[9,6,226]}," ",{"t":4,"f":[{"p":[13,7,357],"t":7,"e":"ui-section","a":{"label":"Admin Notes"},"f":[{"t":2,"r":"admin_notes","p":[13,39,389]}]}],"n":50,"r":"admin_notes","p":[12,6,331]}]}],"n":52,"r":"templates","p":[7,4,167]}]}],"n":52,"r":"data.shuttles","p":[5,2,113]}]}]};
 component.exports.components = component.exports.components || {};
 var components = {
   "status": require("./shuttle_manipulator/status.ract")

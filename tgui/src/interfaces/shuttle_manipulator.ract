@@ -3,11 +3,17 @@
 <status></status>
 <ui-tabs tabs='{{data.tabs}}'>
 	{{#each data.shuttles}}
-	<tab name='{{name}}'>
-		{{#each shuttle_templates}}
-			<ui-section label='{{name}}' candystripe right>
-			</ui-section>
-		{{/each}}
-	</tab>
+		<tab name='{{port_id}}'>
+			{{#each templates}}
+				<ui-display title='{{name}}'>
+					{{#if description}}
+						<ui-section label='Description'>{{description}}</ui-section>
+					{{/if}}
+					{{#if admin_notes}}
+						<ui-section label='Admin Notes'>{{admin_notes}}</ui-section>
+					{{/if}}
+				</ui-display>
+			{{/each}}
+		</tab>
 	{{/each}}
 </ui-tabs>

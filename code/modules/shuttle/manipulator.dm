@@ -12,10 +12,14 @@
 /obj/machinery/shuttle_manipulator/process()
 	return
 
-/obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = admin_state)
+/obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", \
+	datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, \
+	datum/ui_state/state = admin_state)
+
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "shuttle_manipulator", name, 300, 300, master_ui, state)
+		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, \
+			master_ui, state)
 		ui.open()
 
 /obj/machinery/shuttle_manipulator/ui_data(mob/user)
@@ -26,13 +30,24 @@
 
 	for(var/name in shuttle_templates)
 		var/datum/map_template/shuttle/S = shuttle_templates[name]
+
+		if(!shuttles[S.port_id])
+			data["tabs"] += S.port_id
+			shuttles[S.port_id] = list(
+				"port_id" = S.port_id,
+				"templates" = list())
 		
-		shuttles += list(list("name" = S.name, "id" = S.port_id))
-		data["tabs"] |= S.port_id
+		var/list/L = list()
+		L["name"] = S.name
+		L["id"] = S.port_id
+		L["description"] = S.description
+		L["admin_notes"] = S.admin_notes
+
+		shuttles[S.port_id]["templates"] += list(L)
 
 	data["tabs"] = sortList(data["tabs"])
 
-	world.log << json_encode(data)
+	//world.log << json_encode(data)
 	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
