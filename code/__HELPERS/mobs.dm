@@ -319,9 +319,27 @@ Proc for attack log creation, because really why not
 	if(progbar)
 		qdel(progbar)
 
-/proc/isabductor(A)
+/proc/is_species(A, species_datum)
 	. = FALSE
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.dna && istype(H.dna.species, /datum/species/abductor))
+		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
+
+/proc/isabductor(A)
+	. = is_species(A, /datum/species/abductor)
+
+/proc/isgolem(A)
+	. = is_species(A, /datum/species/golem)
+
+/proc/islizard(A)
+	. = is_species(A, /datum/species/lizard)
+
+/proc/isplasmaman(A)
+	. = is_species(A, /datum/species/plasmaman)
+
+/proc/ispodperson(A)
+	. = is_species(A, /datum/species/pod)
+
+/proc/isflyperson(A)
+	. = is_species(A, /datum/species/fly)

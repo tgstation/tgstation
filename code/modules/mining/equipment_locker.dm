@@ -515,15 +515,31 @@
 		return FALSE
 	return TRUE
 
+/obj/item/device/wormhole_jaunter/proc/get_destinations(mob/user)
+	var/list/destinations = list()
+
+	if(isgolem(user))
+		for(var/obj/item/device/radio/beacon/B in world)
+			var/turf/T = get_turf(B)
+			if(istype(T.loc, /area/ruin/powered/golem_ship))
+				destinations += B
+
+	// In the event golem beacon is destroyed, send to station instead
+	if(destinations.len)
+		return destinations
+
+	for(var/obj/item/device/radio/beacon/B in world)
+		var/turf/T = get_turf(B)
+		if(T.z == ZLEVEL_STATION)
+			destinations += B
+
+	return destinations
+
 /obj/item/device/wormhole_jaunter/proc/activate(mob/user)
 	if(!turf_check(user))
 		return
 
-	var/list/L = list()
-	for(var/obj/item/device/radio/beacon/B in world)
-		var/turf/T = get_turf(B)
-		if(T.z == ZLEVEL_STATION)
-			L += B
+	var/list/L = get_destinations(user)
 	if(!L.len)
 		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
 		return
