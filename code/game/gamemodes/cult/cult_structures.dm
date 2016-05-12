@@ -8,20 +8,20 @@
 
 /obj/structure/cult/examine(mob/user)
 	..()
-	user << "<span class='notice'>The [src] is [anchored ? "":"not "]secured to the floor.</span>"
+	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(iscultist(user) && cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 
 /obj/structure/cult/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "":"un"]secure the [src] [anchored ? "to":"from"] the floor.</span>"
+		user << "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>"
 		if(!anchored)
 			icon_state = "[initial(icon_state)]_off"
 		else
 			icon_state = initial(icon_state)
-		return
-	return ..()
+	else
+		return ..()
 
 /obj/structure/cult/proc/getETA()
 	var/time = (cooldowntime - world.time)/600
@@ -55,7 +55,7 @@
 			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
 			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
-	if(anchored && pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N]!</span>"
@@ -86,7 +86,7 @@
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Nar-Sien Hardsuit")
 			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
-	if(anchored && pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
@@ -162,7 +162,7 @@
 			pickedtype = /obj/item/device/shuttle_curse
 		if("Veil Shifter")
 			pickedtype = /obj/item/device/cult_shift
-	if(anchored && pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
