@@ -579,3 +579,12 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if((sharpness || damtype == BURN) && w_class >= 3)
 		return 1
 	return 0
+
+/obj/item/proc/open_flame()
+	var/turf/location = loc
+	if(ismob(location))
+		var/mob/M = location
+		if(M.l_hand == src || M.r_hand == src)
+			location = get_turf(M)
+	if(isturf(location))
+		location.hotspot_expose(700, 5)

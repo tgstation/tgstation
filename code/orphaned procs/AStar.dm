@@ -92,7 +92,6 @@ Actual Adjacent procs :
 
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
-	{
 		//get the lower f node on the open list
 		cur = open.Pop() //get the lower f turf in the open list
 		closed.Add(cur.source) //and tell we've processed it
@@ -133,8 +132,8 @@ Actual Adjacent procs :
 					T.PNode.calc_f()
 					T.PNode.nt = cur.nt + 1
 					open.ReSort(T.PNode)//reorder the changed element in the list
+		CHECK_TICK
 
-	}
 
 	//cleaning after us
 	for(var/PathNode/PN in open.L)

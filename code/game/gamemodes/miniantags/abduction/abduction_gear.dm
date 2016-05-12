@@ -112,19 +112,11 @@
 	if(combat_cooldown==initial(combat_cooldown))
 		SSobj.processing.Remove(src)
 
-/obj/item/device/abductor/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
-			return 0
-		return 1
-	return 0
-
 /obj/item/device/abductor/proc/AbductorCheck(user)
-	if(IsAbductor(user))
-		return 1
+	if(isabductor(user))
+		return TRUE
 	user << "<span class='warning'>You can't figure how this works!</span>"
-	return 0
+	return FALSE
 
 /obj/item/device/abductor/proc/ScientistCheck(user)
 	var/mob/living/carbon/human/H = user
@@ -194,7 +186,7 @@
 		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
 	if(istype(target,/mob/living/carbon/human))
-		if(IsAbductor(target))
+		if(isabductor(target))
 			marked = target
 			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
 		else
@@ -304,27 +296,26 @@
 			break
 	return console
 
-
-/obj/item/device/firing_pin/alien
+/obj/item/device/firing_pin/abductor
 	name = "alien firing pin"
-	desc = "An odd device that resembles a firing pin."
-	fail_message = "<span class='alienwarning'>UNAUTHORIZED -- UNAUTHORIZED</span>"
+	icon_state = "firing_pin_ayy"
+	desc = "This firing pin is slimy and warm; you can swear you feel it \
+		constantly trying to mentally probe you."
+	fail_message = "<span class='abductor'>\
+		Firing error, please contact Command.</span>"
 
-/obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
-			return 0
-	return 1
+/obj/item/device/firing_pin/abductor/pin_auth(mob/living/user)
+	. = isabductor(user)
 
 /obj/item/weapon/gun/energy/alien
 	name = "alien pistol"
 	desc = "A complicated gun that fires bursts of high-intensity radiation."
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
-	pin = /obj/item/device/firing_pin/alien
+	pin = /obj/item/device/firing_pin/abductor
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 	origin_tech = "combat=5;materials=4;powerstorage=3;abductor=3"
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
@@ -402,16 +393,8 @@ Congratulations! You are now trained for xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return 0
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id != "abductor")
-		return 0
-	return 1
-
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 
 	if(isrobot(target))

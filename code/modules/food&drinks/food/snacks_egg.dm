@@ -27,7 +27,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype( W, /obj/item/toy/crayon ))
 		var/obj/item/toy/crayon/C = W
-		var/clr = C.colourName
+		var/clr = C.item_color
 
 		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
 			usr << "<span class='notice'>[src] refuses to take on this colour!</span>"
