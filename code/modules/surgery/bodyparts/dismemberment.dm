@@ -17,10 +17,10 @@
 	if(dam_type == BURN)
 		burn()
 		return 1
-	add_blood(owner)
-	var/turf/location = owner.loc
+	add_blood(H)
+	var/turf/location = H.loc
 	if(istype(location))
-		location.add_blood(owner)
+		location.add_blood(H)
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
