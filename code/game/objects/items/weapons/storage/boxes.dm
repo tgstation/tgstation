@@ -61,31 +61,32 @@
 
 /obj/item/weapon/storage/box/survival/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
 /obj/item/weapon/storage/box/engineer
 
 /obj/item/weapon/storage/box/engineer/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
+
+/obj/item/weapon/storage/box/syndie
+
+/obj/item/weapon/storage/box/syndie/New()
+	..()
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/security
 
 /obj/item/weapon/storage/box/security/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
@@ -225,6 +226,19 @@
 /obj/item/weapon/storage/box/trackimp/New()
 	..()
 	for(var/i in 1 to 4)
+		new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implanter(src)
+	new /obj/item/weapon/implantpad(src)
+	new /obj/item/weapon/locator(src)
+
+/obj/item/weapon/storage/box/minertracker
+	name = "boxed tracking implant kit"
+	desc = "For finding those who have died on the accursed lavaworld."
+	icon_state = "implant"
+
+/obj/item/weapon/storage/box/minertracker/New()
+	..()
+	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/tracking(src)
 	new /obj/item/weapon/implanter(src)
 	new /obj/item/weapon/implantpad(src)
@@ -803,7 +817,7 @@
 
 /obj/item/weapon/storage/box/rndboards/New()
 	..()
-	new /obj/item/weapon/circuitboard/protolathe(src)
-	new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-	new /obj/item/weapon/circuitboard/rdconsole(src)
+	new /obj/item/weapon/circuitboard/machine/protolathe(src)
+	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
+	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/weapon/circuitboard/computer/rdconsole(src)

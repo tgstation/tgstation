@@ -7,7 +7,7 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
-	var/obj/item/weapon/circuitboard/circuit = null // if circuit==null, computer can't disassembly
+	var/obj/item/weapon/circuitboard/computer/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
 	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
@@ -18,9 +18,8 @@
 	..(location)
 	if(C && istype(C))
 		circuit = C
-	else
-		if(circuit)
-			circuit = new circuit(null)
+	else if(circuit)
+		circuit = new circuit(null)
 	power_change()
 	update_icon()
 
@@ -85,7 +84,7 @@
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
 			deconstruction()
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null

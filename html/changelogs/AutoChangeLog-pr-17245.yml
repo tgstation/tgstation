@@ -1,7 +1,0 @@
-author: nullbear
-delete-after: True
-changes: 
-  - rscadd: "Added X4, a breaching charge more destructive than C4, it can be purchased from uplinks."
-  - rscadd: "C4 can be used with assemblies."
-  - bugfix: "Fixes chembomb recipe to use any matter bin. Again."
-  - bugfix: "ARG's disappear once finished reacting."

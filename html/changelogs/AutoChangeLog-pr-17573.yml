@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Cultists can now unanchor and reanchor cult structures by hitting them with a tome. Unanchored cult structures don't do anything."

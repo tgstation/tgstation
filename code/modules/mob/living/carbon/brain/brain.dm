@@ -12,7 +12,7 @@
 /mob/living/carbon/brain/New(loc)
 	..()
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
-		var/obj/item/organ/internal/brain/OB = new(loc) //we create a new brain organ for it.
+		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		src.loc = OB
 		OB.brainmob = src
 

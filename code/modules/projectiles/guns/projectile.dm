@@ -14,7 +14,6 @@
 		magazine = new mag_type(src)
 	chamber_round()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/update_icon()
 	..()

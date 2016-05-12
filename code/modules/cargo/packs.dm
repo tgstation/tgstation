@@ -530,7 +530,7 @@
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
-					/obj/item/weapon/circuitboard/solar_control,
+					/obj/item/weapon/circuitboard/computer/solar_control,
 					/obj/item/weapon/electronics/tracker,
 					/obj/item/weapon/paper/solar)
 	crate_name = "solar panel crate"
@@ -828,6 +828,14 @@
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
 	crate_name = "pizza crate"
+
+/datum/supply_pack/organic/cream_piee
+	name = "High-yield Clown-grade Cream Pie Crate"
+	cost = 6000
+	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
+	crate_name = "party equipment crate"
+	contraband = TRUE
+	access = access_theatre
 
 /datum/supply_pack/organic/monkey
 	name = "Monkey Crate"
@@ -1198,7 +1206,9 @@
 					/obj/item/weapon/folder/red,
 					/obj/item/weapon/folder/yellow,
 					/obj/item/weapon/clipboard,
-					/obj/item/weapon/clipboard)
+					/obj/item/weapon/clipboard,
+					/obj/item/weapon/stamp,
+					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
 
 /datum/supply_pack/misc/toner
@@ -1317,6 +1327,7 @@
 					/obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/collectable/hardhat,
 					/obj/item/clothing/head/collectable/HoS,
+					/obj/item/clothing/head/collectable/HoP,
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
 					/obj/item/clothing/head/collectable/slime,
@@ -1418,3 +1429,18 @@
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
+
+/datum/supply_pack/misc/artsupply
+	name = "Art Supplies"
+	cost = 800
+	contains = list(/obj/structure/easel,
+					/obj/structure/easel,
+					/obj/item/weapon/canvas/nineteenXnineteen,
+					/obj/item/weapon/canvas/nineteenXnineteen,
+					/obj/item/weapon/canvas/twentythreeXnineteen,
+					/obj/item/weapon/canvas/twentythreeXnineteen,
+					/obj/item/weapon/canvas/twentythreeXtwentythree,
+					/obj/item/weapon/canvas/twentythreeXtwentythree,
+					/obj/item/toy/crayon/rainbow,
+					/obj/item/toy/crayon/rainbow)
+	crate_name= "art supply crate"

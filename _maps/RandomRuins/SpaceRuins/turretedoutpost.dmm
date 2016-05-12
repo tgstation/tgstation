@@ -3,7 +3,7 @@
 "c" = (/obj/structure/grille,/turf/open/floor/plating,/area/ruin/unpowered)
 "d" = (/turf/closed/wall/r_wall,/area/ruin/unpowered)
 "e" = (/obj/structure/table/reinforced,/obj/item/weapon/stock_parts/cell/hyper,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"f" = (/obj/structure/computerframe,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"f" = (/obj/structure/frame/computer,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "g" = (/turf/open/floor/plasteel,/area/ruin/unpowered)
 "h" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/ruin/unpowered)
 "i" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/unpowered)

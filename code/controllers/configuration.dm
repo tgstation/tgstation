@@ -173,6 +173,8 @@
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
+	var/lavaland_budget = 60
+
 	var/aggressive_changelog = 0
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
@@ -202,6 +204,7 @@
 	var/client_error_version = 0
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
+	var/cross_name = "Other server"
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -359,6 +362,12 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("cross_server_address")
+					global.cross_address = value
+					if(value != "byond:\\address:port")
+						global.cross_allowed = 1
+				if("cross_comms_name")
+					cross_name = value
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
@@ -577,6 +586,8 @@
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
+				if("lavaland_budget")
+					config.lavaland_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")

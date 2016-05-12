@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////PIES////////////////////////////////////////////////
 
-/datum/table_recipe/bananacreampie
+/datum/crafting_recipe/food/bananacreampie
 	name = "Banana cream pie"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -13,7 +13,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/cream
 	category = CAT_FOOD
 
-/datum/table_recipe/meatpie
+/datum/crafting_recipe/food/meatpie
 	name = "Meat pie"
 	reqs = list(
 		/datum/reagent/consumable/blackpepper = 1,
@@ -24,7 +24,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/meatpie
 	category = CAT_FOOD
 
-/datum/table_recipe/tofupie
+/datum/crafting_recipe/food/tofupie
 	name = "Tofu pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -33,7 +33,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/tofupie
 	category = CAT_FOOD
 
-/datum/table_recipe/xenopie
+/datum/crafting_recipe/food/xenopie
 	name = "Xeno pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -42,7 +42,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/xemeatpie
 	category = CAT_FOOD
 
-/datum/table_recipe/cherrypie
+/datum/crafting_recipe/food/cherrypie
 	name = "Cherry pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -51,7 +51,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/cherrypie
 	category = CAT_FOOD
 
-/datum/table_recipe/berryclafoutis
+/datum/crafting_recipe/food/berryclafoutis
 	name = "Berry clafoutis"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -60,7 +60,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis
 	category = CAT_FOOD
 
-/datum/table_recipe/bearypie
+/datum/crafting_recipe/food/bearypie
 	name = "Beary Pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -70,7 +70,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/bearypie
 	category = CAT_FOOD
 
-/datum/table_recipe/amanitapie
+/datum/crafting_recipe/food/amanitapie
 	name = "Amanita pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -79,7 +79,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/amanita_pie
 	category = CAT_FOOD
 
-/datum/table_recipe/plumppie
+/datum/crafting_recipe/food/plumppie
 	name = "Plump pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -88,7 +88,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie
 	category = CAT_FOOD
 
-/datum/table_recipe/applepie
+/datum/crafting_recipe/food/applepie
 	name = "Apple pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
@@ -97,7 +97,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/applepie
 	category = CAT_FOOD
 
-/datum/table_recipe/pumpkinpie
+/datum/crafting_recipe/food/pumpkinpie
 	name = "Pumpkin pie"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -108,7 +108,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/pumpkinpie
 	category = CAT_FOOD
 
-/datum/table_recipe/goldenappletart
+/datum/crafting_recipe/food/goldenappletart
 	name = "Golden apple tart"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -119,7 +119,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
 	category = CAT_FOOD
 
-/datum/table_recipe/grapetart
+/datum/crafting_recipe/food/grapetart
 	name = "Grape tart"
 	reqs = list(
             /datum/reagent/consumable/milk = 5,
@@ -130,7 +130,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/grapetart
 	category = CAT_FOOD
 
-/datum/table_recipe/blumpkinpie
+/datum/crafting_recipe/food/blumpkinpie
 	name = "Blumpkin pie"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -141,7 +141,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/blumpkinpie
 	category = CAT_FOOD
 
-/datum/table_recipe/dulcedebatata
+/datum/crafting_recipe/food/dulcedebatata
 	name = "Dulce de batata"
 	reqs = list(
 		/datum/reagent/consumable/vanilla = 5,
@@ -151,7 +151,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
 	category = CAT_FOOD
 
-/datum/table_recipe/frostypie
+/datum/crafting_recipe/food/frostypie
 	name = "Frosty pie"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,

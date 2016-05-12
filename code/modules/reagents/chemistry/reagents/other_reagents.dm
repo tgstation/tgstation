@@ -188,7 +188,7 @@
 			M.confused = 1
 		M.confused += 3
 		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
-			ticker.mode.remove_cultist(M.mind)
+			ticker.mode.remove_cultist(M.mind, 1, 1)
 			ticker.mode.remove_hog_follower(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
@@ -211,14 +211,17 @@
 	description = "Something that shouldn't exist on this plane of existance."
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(3)
 	if(iscultist(M))
-		M.status_flags |= GOTTAGOFAST
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-2, 0)
+		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-2, 0)
 		M.AdjustWeakened(-2, 0)
+		M.adjustToxLoss(-2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustBruteLoss(-2, 0)
+		M.adjustFireLoss(-2, 0)
 	else
+		M.adjustBrainLoss(3)
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
@@ -612,7 +615,16 @@
 	id = "iron"
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
+
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
+		if(holder && holder.chem_temp < 100) // COLD iron.
+			M.reagents.add_reagent("toxin", reac_volume)
+	..()
 
 /datum/reagent/gold
 	name = "Gold"
@@ -627,6 +639,13 @@
 	description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
+
+/datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M, /mob/living))
+		return
+	if(M.has_bane(BANE_SILVER))
+		M.reagents.add_reagent("toxin", reac_volume)
+	..()
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -732,7 +751,9 @@
 				if(H.shoes)
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes()
+				H.wash_cream()
 			M.clean_blood()
+
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"

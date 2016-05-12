@@ -48,6 +48,19 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 	..()
 
+/mob/living/simple_animal/hostile/guardian/med_hud_set_health()
+	if(summoner)
+		var/image/holder = hud_list[HEALTH_HUD]
+		holder.icon_state = "hud[RoundHealth(summoner)]"
+
+/mob/living/simple_animal/hostile/guardian/med_hud_set_status()
+	if(summoner)
+		var/image/holder = hud_list[STATUS_HUD]
+		if(summoner.stat == DEAD)
+			holder.icon_state = "huddead"
+		else
+			holder.icon_state = "hudhealthy"
+
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	parasites -= src
 	return ..()
@@ -103,8 +116,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
-	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
-
+	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
+	med_hud_set_health()
+	med_hud_set_status()
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"

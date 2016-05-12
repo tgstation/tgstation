@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////PIZZA!!!////////////////////////////////////////////////
 
-/datum/table_recipe/margheritapizza
+/datum/crafting_recipe/food/margheritapizza
 	name = "Margherita pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
@@ -13,7 +13,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
 	category = CAT_FOOD
 
-/datum/table_recipe/meatpizza
+/datum/crafting_recipe/food/meatpizza
 	name = "Meat pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
@@ -24,7 +24,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/meat
 	category = CAT_FOOD
 
-/datum/table_recipe/mushroompizza
+/datum/crafting_recipe/food/mushroompizza
 	name = "Mushroom pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
@@ -33,7 +33,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroom
 	category = CAT_FOOD
 
-/datum/table_recipe/vegetablepizza
+/datum/crafting_recipe/food/vegetablepizza
 	name = "Vegetable pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
@@ -45,7 +45,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetable
 	category = CAT_FOOD
 
-/datum/table_recipe/donpocketpizza
+/datum/crafting_recipe/food/donpocketpizza
 	name = "Donkpocket pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
@@ -56,7 +56,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/donkpocket
 	category = CAT_FOOD
 
-/datum/table_recipe/dankpizza
+/datum/crafting_recipe/food/dankpizza
 	name = "Dank pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,
@@ -67,7 +67,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/dank
 	category = CAT_FOOD
 
-/datum/table_recipe/sassysagepizza
+/datum/crafting_recipe/food/sassysagepizza
 	name = "Sassysage pizza"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/pizzabread = 1,

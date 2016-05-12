@@ -17,7 +17,6 @@
 	idle_power_usage = 30
 	machinetype = 1
 	//heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
 
@@ -54,16 +53,18 @@
 
 /obj/machinery/telecomms/receiver/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/receiver(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/receiver(null)
+	B.apply_default_parts(src)
 
-
+/obj/item/weapon/circuitboard/machine/telecomms/receiver
+	name = "circuit board (Subspace Receiver)"
+	build_path = /obj/machinery/telecomms/receiver
+	origin_tech = "programming=2;engineering=2;bluespace=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/subspace/ansible = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 
 

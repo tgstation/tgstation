@@ -29,6 +29,14 @@
 				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
 
+/obj/effect/spawner/lootdrop/gambling
+	name = "gambling valuables spawner"
+	loot = list(
+				/obj/item/weapon/gun/projectile/revolver/russian = 5,
+				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+				/obj/item/toy/cards/deck/syndicate = 2
+				)
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 
@@ -76,7 +84,8 @@
 				/obj/item/device/flashlight/pen = 1,
 				/obj/item/device/multitool = 2,
 				/obj/item/device/radio/off = 2,
-				/obj/item/device/t_scanner = 6,
+				/obj/item/device/t_scanner = 5,
+				/obj/item/weapon/airlock_painter = 1,
 				/obj/item/stack/cable_coil = 4,
 				/obj/item/stack/cable_coil{amount = 5} = 6,
 				/obj/item/stack/medical/bruise_pack = 1,
@@ -130,15 +139,9 @@
 				/obj/item/device/assembly/signaler = 2,
 				/obj/item/device/assembly/mousetrap = 2,
 				/obj/item/weapon/reagent_containers/syringe = 2,
-				/obj/item/clothing/gloves/color/orange = 1,
-				/obj/item/clothing/gloves/color/red = 1,
-				/obj/item/clothing/gloves/color/blue = 1,
-				/obj/item/clothing/gloves/color/purple = 1,
-				/obj/item/clothing/gloves/color/green = 1,
-				/obj/item/clothing/gloves/color/grey = 1,
-				/obj/item/clothing/gloves/color/light_brown = 1,
-				/obj/item/clothing/gloves/color/brown = 1,
+				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
+				/obj/item/weapon/storage/secure/briefcase = 3,
 				"" = 4
 				)
 

@@ -4,7 +4,7 @@
 	icon_state = "autoimplanter"
 	item_state = "walkietalkie"//left as this so as to intentionally not have inhands
 	w_class = 2
-	var/obj/item/organ/internal/cyberimp/storedorgan
+	var/obj/item/organ/cyberimp/storedorgan
 
 /obj/item/device/autoimplanter/attack_self(mob/user)//when the object it used...
 	if(!storedorgan)
@@ -16,7 +16,7 @@
 	storedorgan = null
 
 /obj/item/device/autoimplanter/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/organ/internal/cyberimp))
+	if(istype(I, /obj/item/organ/cyberimp))
 		if(storedorgan)
 			user << "<span class='notice'>[src] already has an implant stored.</span>"
 			return

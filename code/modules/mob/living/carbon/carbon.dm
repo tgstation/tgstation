@@ -2,24 +2,14 @@
 	create_reagents(1000)
 	..()
 
-/mob/living/carbon/prepare_huds()
-	..()
-	prepare_data_huds()
-
-/mob/living/carbon/proc/prepare_data_huds()
-	..()
-	med_hud_set_health()
-	med_hud_set_status()
-
-/mob/living/carbon/updatehealth()
-	..()
-	med_hud_set_health()
-
 /mob/living/carbon/Destroy()
 	for(var/atom/movable/guts in internal_organs)
 		qdel(guts)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
+	for(var/BP in bodyparts)
+		qdel(BP)
+	bodyparts = list()
 	remove_from_all_data_huds()
 	if(dna)
 		qdel(dna)
@@ -37,9 +27,9 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.get_organ("chest")
-					if (istype(organ, /obj/item/organ/limb))
-						var/obj/item/organ/limb/temp = organ
+					var/organ = H.get_bodypart("chest")
+					if (istype(organ, /obj/item/bodypart))
+						var/obj/item/bodypart/temp = organ
 						if(temp.take_damage(d, 0))
 							H.update_damage_overlays(0)
 					H.updatehealth()
@@ -146,6 +136,7 @@
 
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	. = ..()
+
 	var/damage = intensity - check_eye_prot()
 	if(.) // we've been flashed
 		if(visual)
@@ -179,10 +170,15 @@
 						src << "<span class='warning'>You can't see anything!</span>"
 			else
 				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+		if(has_bane(BANE_LIGHT))
+			mind.disrupt_spells(-500)
 		return 1
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
+		if(has_bane(BANE_LIGHT))
+			mind.disrupt_spells(0)
+
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -216,7 +212,8 @@
 
 	var/atom/movable/item = src.get_active_hand()
 
-	if(!item || (item.flags & NODROP)) return
+	if(!item || (item.flags & (NODROP|ABSTRACT)))
+		return
 
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
@@ -511,13 +508,13 @@
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
 
 /mob/living/carbon/emp_act(severity)
-	for(var/obj/item/organ/internal/O in internal_organs)
+	for(var/obj/item/organ/O in internal_organs)
 		O.emp_act(severity)
 	..()
 
 /mob/living/carbon/check_eye_prot()
 	var/number = ..()
-	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
+	for(var/obj/item/organ/cyberimp/eyes/EFP in internal_organs)
 		number += EFP.flash_protect
 	return number
 
@@ -541,7 +538,7 @@
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
-		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
 		if(locate(/obj/item/device/assembly/health) in src)
@@ -610,7 +607,7 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	for(var/obj/item/organ/internal/cyberimp/eyes/E in internal_organs)
+	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
 		sight |= E.sight_flags
 		if(E.dark_view)
 			see_in_dark = max(see_in_dark,E.dark_view)
@@ -725,7 +722,7 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
@@ -759,7 +756,7 @@
 /mob/living/carbon/fully_heal(admin_revive = 0)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/internal/brain/B = getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
 	if(admin_revive)
@@ -776,14 +773,14 @@
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/internal/brain))
+	if(!getorgan(/obj/item/organ/brain))
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(qdeleted(src))
 		return
 	var/organs_amt = 0
-	for(var/obj/item/organ/internal/O in internal_organs)
+	for(var/obj/item/organ/O in internal_organs)
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)
