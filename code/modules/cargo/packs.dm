@@ -1108,6 +1108,13 @@
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
 
+/datum/supply_pack/misc/exporter
+	name = "X-Porter Cannon"
+	cost = 20000
+	contains = list(/obj/item/weapon/gun/energy/xporter)
+	crate_name = "religious supplies crate" // money is my god, capitalism is my religion
+	contraband = TRUE
+
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"
 	cost = 2000

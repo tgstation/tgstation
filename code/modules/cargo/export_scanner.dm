@@ -11,7 +11,7 @@
 /obj/item/device/export_scanner/examine(user)
 	..()
 	if(!cargo_console)
-		user << "<span class='notice'>The [src] is currently not linked to a cargo console.</span>"
+		user << "<span class='notice'>\The [name] is currently not linked to a cargo console.</span>"
 
 /obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
 	if(!istype(O) || !proximity)
@@ -30,6 +30,9 @@
 			user << "<span class='warning'>Falied to connect to exports database!</span>"
 			return
 
+		if(O.anchored) // Can't sell it if it's bolted down to the floor
+			return
+
 		user << "<span class='notice'>Scanned [O].</span>"
 
 		// Before you fix it: yes, checking manifests is a part of intended functionality.
@@ -45,3 +48,4 @@
 				break
 		if(!exported)
 			user << "<span class='notice'>The object is unexportable.</span>"
+		return 1

@@ -27,7 +27,6 @@
 	var/list/storage_objects = list(
 		/obj/structure/closet,
 		/obj/item/weapon/storage,
-		/obj/item/weapon/storage/bag/money,
 		/obj/item/weapon/folder, // Selling a folder of stamped manifests? Sure, why not!
 		/obj/structure/filingcabinet,
 		/obj/structure/ore_box,
@@ -66,7 +65,7 @@
 	if(..()) // Fly/enter transit.
 		return
 	if(getDockedId() == "supply_away") // Sell when we get home
-		sell()
+		SSshuttle.points += sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
 	if(!SSshuttle.shoppinglist.len)
@@ -101,18 +100,21 @@
 
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", "cargo")
 
+/obj/docking_port/mobile/supply/proc/generate_exports()
+	exports_floor.Cut()
+	var/datum/export/E
+	for(var/subtype in subtypesof(/datum/export))
+		E = new subtype
+		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
+			exports += E
+			if(E.shuttle_floor)
+				exports_floor += E
+
 /obj/docking_port/mobile/supply/proc/sell()
-	var/presale_points = SSshuttle.points
+	var/points_change = 0
 
 	if(!exports.len) // No exports list? Generate it!
-		exports_floor.Cut()
-		var/datum/export/E
-		for(var/subtype in subtypesof(/datum/export))
-			E = new subtype
-			if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-				exports += E
-				if(E.shuttle_floor)
-					exports_floor += E
+		generate_exports()
 
 	var/msg = ""
 	var/sold_atoms = ""
@@ -120,7 +122,7 @@
 	for(var/atom/movable/AM in areaInstance)
 		if(AM.anchored)
 			continue
-		sold_atoms += recursive_sell(AM)
+		sold_atoms += recursive_sell(AM, 0, 1, contraband, emagged)
 
 	if(sold_atoms)
 		sold_atoms += "."
@@ -132,27 +134,33 @@
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		points_change += E.total_cost
 		E.export_end()
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	investigate_log("Shuttle contents sold for [points_change] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	return points_change
 
-/obj/docking_port/mobile/supply/proc/recursive_sell(var/obj/O, var/level=0)
-	var/sold_atoms = " [O.name]"
+/obj/docking_port/mobile/supply/proc/recursive_sell(var/obj/O, var/level=0, var/delete_all=1, var/contraband=0, var/emagged=0)
+	var/sold_atoms = ""
 	var/list/xports = exports
 	if(level == 0)
 		xports = exports_floor // If on the floor level, sell floor exports only
 	level++
 
+	if(level < 10 && is_type_in_list(O, storage_objects))
+		for(var/obj/thing in O)
+			sold_atoms += recursive_sell(thing, level, delete_all, contraband, emagged)
+
 	for(var/a in xports)
 		var/datum/export/E = a
 		if(E.applies_to(O, contraband, emagged))
 			E.sell_object(O, contraband, emagged)
+			sold_atoms += " [O.name]"
+			qdel(O)
 			break
 
-	if(level < 10 && is_type_in_list(O, storage_objects))
-		for(var/obj/thing in O)
-			sold_atoms += recursive_sell(thing, level)
-	qdel(O)
+	if(delete_all && !qdeleted(O))
+		qdel(O)
+		sold_atoms += " [O.name]"
 	return sold_atoms

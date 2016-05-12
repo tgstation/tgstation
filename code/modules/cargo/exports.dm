@@ -54,6 +54,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Checks if the item is fit for export datum.
 /datum/export/proc/applies_to(obj/O, contr = 0, emag = 0)
+	if(qdeleted(O))
+		return FALSE
 	if(contraband && !contr)
 		return FALSE
 	if(emagged && !emag)

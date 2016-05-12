@@ -44,3 +44,15 @@
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	e_cost = 20
+
+
+/obj/item/ammo_casing/energy/export
+	projectile_type = /obj/item/projectile/beam/sell
+	select_name = "sell"
+	e_cost = 200
+
+/obj/item/ammo_casing/energy/export/newshot()
+	..()
+	if(istype(BB, /obj/item/projectile/beam/sell) && istype(loc, /obj/item/weapon/gun/energy/xporter))
+		var/obj/item/projectile/beam/sell/S = BB
+		S.gun = loc

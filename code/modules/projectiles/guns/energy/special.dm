@@ -358,3 +358,22 @@
 
 /obj/item/weapon/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
+
+
+/obj/item/weapon/gun/energy/xporter
+	name = "x-porter cannon"
+	desc = "An industrial-grade teleporter connected to export scanner. Weapon of a true capitalist."
+	icon_state = "export_cannon"
+	ammo_type = list(/obj/item/ammo_casing/energy/export)
+	selfcharge = 1
+	charge_delay = 1
+	var/emagged = 0
+
+/obj/item/weapon/gun/energy/xporter/can_shoot()
+	return power_supply.charge >= power_supply.maxcharge
+
+/obj/item/weapon/gun/energy/xporter/update_icon()
+	if(can_shoot())
+		icon_state = "export_cannon"
+	else
+		icon_state = "export_cannon_empty"

@@ -241,3 +241,99 @@
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
 	range = 8
+
+
+/obj/item/projectile/beam/sell
+	name = "export beam"
+	icon_state = "e_netting"
+	damage = 1 // Damage is used to detremine if we are performing an execution
+	nodamage = 1
+	eyeblur = 2
+	var/obj/item/weapon/gun/energy/xporter/gun
+	var/obj/docking_port/mobile/supply/supply
+	var/selling = 0
+	var/sell_log = ""
+
+/obj/item/projectile/beam/sell/on_hit(atom/target, blocked = 0)
+	. = ..()
+
+	if(iscarbon(target) && blocked != 100)
+		var/mob/living/carbon/C = target
+		if(damage >= 5) // Execution? Sell victim's organs!
+			for(var/o in C.internal_organs)
+				var/obj/item/organ/O = o
+				if(can_sell(O))
+					O.Remove(C)
+					sell(O)
+
+			if(sell_log) // We actually sold something
+				C << "<span class='userdanger'>\The [src] reaches deep inside your body, selling your insides!</span>"
+
+		else if(!istype(gun) || gun.emagged) // Not execution, and overloaded? Sell victim's gear.
+			world << "exporter gear sell"
+		else
+			target << "<span class='notice'>\The [src] dissipates harmlessly through your body.</span>"
+
+
+	else if(isobj(target))
+		var/obj/O = target
+		if(!O.anchored)
+			sell(target)
+
+	stop_sell()
+
+
+/obj/item/projectile/beam/sell/proc/start_sell()
+	if(!supply)
+		supply = SSshuttle.supply
+
+	if(!supply.exports.len)
+		supply.generate_exports()
+
+	selling = 1
+
+/obj/item/projectile/beam/sell/proc/sell(atom/movable/AM)
+	if(!selling)
+		start_sell()
+	var/sold_atoms = supply.recursive_sell(AM, 1, 0, 1, (!istype(gun) || gun.emagged))
+	if(sold_atoms)
+		sell_log += sold_atoms
+
+/obj/item/projectile/beam/sell/proc/can_sell(atom/movable/AM)
+	if(!selling)
+		start_sell()
+	for(var/a in supply.exports)
+		var/datum/export/E = a
+		if(E.applies_to(AM, 1, (!istype(gun) || gun.emagged)))
+			return TRUE
+
+	return FALSE
+
+
+/obj/item/projectile/beam/sell/proc/stop_sell()
+	if(!selling)
+		return 0
+
+	var/points_change = 0
+	var/msg = ""
+
+	for(var/a in supply.exports)
+		var/datum/export/E = a
+		var/export_text = E.total_printout()
+		if(!export_text)
+			continue
+
+		msg += export_text + "\n"
+		points_change += E.total_cost
+		E.export_end()
+
+	if(msg && ismob(firer))
+		msg += "Total: [points_change>=0 ? "+" : ""][points_change] credits."
+		firer << "<span class='notice'>[msg]</span>"
+
+	world << sell_log
+	SSshuttle.points += points_change
+	if(istype(gun) && gun.power_supply && points_change-200 > 0)
+		gun.power_supply.use(min(points_change-200, gun.power_supply.charge))
+
+	selling = 0
