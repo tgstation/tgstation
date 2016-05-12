@@ -3,7 +3,7 @@
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = "/obj/item/weapon/circuitboard/teleporter"
+	circuit = /obj/item/weapon/circuitboard/computer/teleporter
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -256,7 +256,7 @@
 	..()
 	link_power_station()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/teleporter_hub(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
@@ -364,7 +364,7 @@
 /obj/machinery/teleport/station/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)

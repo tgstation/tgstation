@@ -50,11 +50,16 @@
 
 /obj/machinery/seed_extractor/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/seed_extractor(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/seed_extractor
+	name = "circuit board (Seed Extractor)"
+	build_path = /obj/machinery/seed_extractor
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)

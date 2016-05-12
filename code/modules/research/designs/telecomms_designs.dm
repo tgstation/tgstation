@@ -9,7 +9,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/receiver
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/receiver
 	category = list("Subspace Telecomms")
 
 /datum/design/telecomms_bus
@@ -19,7 +19,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/bus
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/bus
 	category = list("Subspace Telecomms")
 
 /datum/design/telecomms_hub
@@ -29,7 +29,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/hub
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/hub
 	category = list("Subspace Telecomms")
 
 /datum/design/telecomms_relay
@@ -39,7 +39,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/relay
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/relay
 	category = list("Subspace Telecomms")
 
 /datum/design/telecomms_processor
@@ -49,7 +49,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/processor
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/processor
 	category = list("Subspace Telecomms")
 
 /datum/design/telecomms_server
@@ -59,7 +59,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/server
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/server
 	category = list("Subspace Telecomms")
 
 /datum/design/subspace_broadcaster
@@ -69,5 +69,5 @@
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telecomms/broadcaster
+	build_path = /obj/item/weapon/circuitboard/machine/telecomms/broadcaster
 	category = list("Subspace Telecomms")

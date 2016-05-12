@@ -113,6 +113,7 @@
 	icon_state = "mecha_analyzer"
 	origin_tech = "materials=3;engineering=2"
 	selectable = 0
+	equip_cooldown = 30
 	var/scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()

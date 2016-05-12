@@ -136,6 +136,11 @@
 		. = L[L.len]
 		L.len--
 
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
+
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)

@@ -284,7 +284,7 @@
 /obj/item/bodypart/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
-	max_damage = 75
+	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
 	px_x = -6
@@ -293,7 +293,7 @@
 /obj/item/bodypart/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
-	max_damage = 75
+	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
 	px_x = 6
@@ -302,7 +302,7 @@
 /obj/item/bodypart/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
-	max_damage = 75
+	max_damage = 50
 	body_zone = "l_leg"
 	body_part = LEG_LEFT
 	px_x = -2
@@ -311,7 +311,7 @@
 /obj/item/bodypart/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
-	max_damage = 75
+	max_damage = 50
 	body_zone = "r_leg"
 	body_part = LEG_RIGHT
 	px_x = 2

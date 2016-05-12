@@ -43,6 +43,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
+	unique_name = TRUE
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -61,13 +62,10 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
-
+	var/datum/personal_crafting/handcrafting
 
 /mob/living/simple_animal/drone/New()
-	..()
-	if(name != initial(name))
-		name = name + " ([rand(100,999)])"
-	real_name = name
+	. = ..()
 
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
@@ -86,6 +84,8 @@
 
 	var/datum/action/generic/drone/select_filter/SF = new(src)
 	SF.Grant(src)
+
+	handcrafting = new()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
@@ -103,6 +103,8 @@
 	else
 		holder.icon_state = "hudstat"
 
+/mob/living/simple_animal/drone/OpenCraftingMenu()
+	handcrafting.craft(src)
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!

@@ -75,11 +75,14 @@
 	..()
 	if(pin)
 		pin = new pin(src)
-
+	if(F)
+		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
 
 
-/obj/item/weapon/gun/CheckParts()
+/obj/item/weapon/gun/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
 	if(G)
 		G.loc = loc
@@ -94,6 +97,10 @@
 		user << "It has [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
+	if(unique_reskin && !reskinned)
+		user << "<span class='notice'>Alt-click it to reskin it.</span>"
+	if(unique_rename)
+		user << "<span class='notice'>Use a pen on it to rename it.</span>"
 
 
 /obj/item/weapon/gun/proc/process_chamber()
@@ -296,7 +303,7 @@ obj/item/weapon/gun/proc/newshot()
 					A.Grant(user)
 
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(F)
+		if(F && can_flashlight)
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
 				F = null
