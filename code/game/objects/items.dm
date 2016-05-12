@@ -576,9 +576,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	return sharpness
 
 /obj/item/proc/can_dismember()
-
-	return sharpness && w_class >= 3
-
 	if((sharpness || damtype == BURN) && w_class >= 3)
 		return 1
 	return 0
@@ -591,4 +588,3 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			location = get_turf(M)
 	if(isturf(location))
 		location.hotspot_expose(700, 5)
-
