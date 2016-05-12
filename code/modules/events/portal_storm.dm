@@ -11,7 +11,7 @@
 						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2)
 
 /datum/round_event_control/portal_storm_narsie
-	name = "Portal Storm: Nar-sie"
+	name = "Portal Storm: Constructs"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
