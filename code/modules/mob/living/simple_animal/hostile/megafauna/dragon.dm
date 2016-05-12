@@ -173,6 +173,7 @@
 	else
 		tturf = get_turf(src)
 	src.loc = tturf
+	new/obj/effect/overlay/temp/dragon_swoop(tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
