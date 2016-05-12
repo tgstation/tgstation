@@ -12,6 +12,7 @@
 	icon = 'icons/mob/lavaland/dragon.dmi'
 	faction = list("mining")
 	speak_emote = list("roars")
+	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
@@ -44,11 +45,11 @@
 		..()
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.stat)
+			if(L.stat == DEAD)
 				L.gib()
 				visible_message("<span class='danger'>[src] devours [L]!</span>")
 				src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
-				L.adjustBruteLoss(-L.maxHealth)
+				adjustBruteLoss(-L.maxHealth)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -59,7 +60,8 @@
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = 6
-	dir = SOUTH
+	randomdir = 0
+	duration = 10
 	pixel_z = 500
 
 /obj/effect/overlay/temp/target
@@ -67,8 +69,9 @@
 	icon_state = "sniper_zoom"
 	layer = MOB_LAYER - 0.1
 	luminosity = 2
+	duration = 10
 
-/obj/effect/temp/dragon_swoop
+/obj/effect/overlay/temp/dragon_swoop
 	name = "certain death"
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
@@ -77,6 +80,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	color = "#FF0000"
+	duration = 10
 
 /obj/effect/overlay/temp/target/ex_act()
 	return
@@ -169,10 +173,9 @@
 	else
 		tturf = get_turf(src)
 	src.loc = tturf
-	var/obj/effect/temp/dragon_swoop/D = new(tturf)
+	var/obj/effect/overlay/temp/dragon_swoop/D = new(tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
-	qdel(D)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
 		if(L == src)
