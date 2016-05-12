@@ -64,6 +64,7 @@
 		if(M.ckey in damned_ckeys && M.stat == DEAD)
 			var/mob/living/simple_animal/hellbound/H = new(get_turf(src))
 			H.ckey = M.ckey
+			H.damned_key = M.ckey
 			H << "Shouldn't have sold your soul."
 
 
