@@ -62791,6 +62791,14 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 9;
+	height = 11;
+	id = "emergency_home";
+	name = "emergency evac bay";
+	width = 22
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cxo" = (
