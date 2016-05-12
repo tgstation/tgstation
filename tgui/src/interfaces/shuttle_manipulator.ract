@@ -1,11 +1,13 @@
-<ui-tabs tabs='{{tabs}}'>
+<link rel='ractive' href='./shuttle_manipulator/status.ract'>
+
+<status></status>
+<ui-tabs tabs='{{data.tabs}}'>
 	{{#each data.shuttles}}
 	<tab name='{{name}}'>
 		{{#each shuttle_templates}}
 			<ui-section label='{{name}}' candystripe right>
 			</ui-section>
 		{{/each}}
-
 	</tab>
 	{{/each}}
 </ui-tabs>

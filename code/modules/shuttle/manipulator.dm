@@ -22,19 +22,17 @@
 	var/list/data = list()
 	data["shuttles"] = list()
 	var/list/shuttles = data["shuttles"]
+	data["tabs"] = list()
 
-	for(var/datum/map_template/shuttle/S in shuttle_templates)
-		if(!shuttles[S.port_id])
-			shuttles[S.port_id] = list()
+	for(var/name in shuttle_templates)
+		var/datum/map_template/shuttle/S = shuttle_templates[name]
+		
+		shuttles += list(list("name" = S.name, "id" = S.port_id))
+		data["tabs"] |= S.port_id
 
-			shuttles[S.port_id]["name"] = S.port_id
-			shuttles[S.port_id]["shuttle_templates"] = list()
+	data["tabs"] = sortList(data["tabs"])
 
-		var/item = list("name" = S.name)
-
-		shuttles[S.port_id]["shuttle_templates"] += item
-
-
+	world.log << json_encode(data)
 	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
