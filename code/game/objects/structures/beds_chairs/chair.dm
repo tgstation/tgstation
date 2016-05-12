@@ -16,7 +16,8 @@
 	handle_layer()
 
 /obj/structure/chair/deconstruct()
-	if(buildstacktype)
+	// If we have materials, and don't have the NOCONSTRUCT flag
+	if(buildstacktype && (!(flags & NODECONSTRUCT)))
 		new buildstacktype(loc,buildstackamount)
 	..()
 

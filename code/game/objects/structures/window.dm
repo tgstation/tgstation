@@ -14,7 +14,6 @@
 	var/reinf = 0
 	var/wtype = "glass"
 	var/fulltile = 0
-	var/list/storeditems = list()
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 	var/image/crack_overlay
@@ -31,17 +30,6 @@
 		reinf = re
 	if(reinf)
 		state = 2*anchored
-
-	spawn(5) // The NODECONSTRUCT flag gets added immediately by the holodeck (but not immediately enough)
-		if(!(flags & NODECONSTRUCT))
-			storeditems.Add(new/obj/item/weapon/shard(src))
-			if(fulltile)
-				storeditems.Add(new/obj/item/weapon/shard(src))
-			if(reinf)
-				var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
-				storeditems.Add(R)
-				if(fulltile)
-					R.add(1)
 
 	ini_dir = dir
 	air_update_turf(1)
@@ -276,7 +264,26 @@
 		return
 	playsound(src, "shatter", 70, 1)
 	var/turf/T = loc
-	for(var/obj/item/I in storeditems)
+	var/produced_items = list()
+
+	if(!(flags & NODECONSTRUCT))
+		var/shards = 1
+		if(fulltile)
+			shards++
+		var/rods = 0
+		if(reinf)
+			rods++
+			if(fulltile)
+				rods++
+
+		for(var/i in 1 to shards)
+			produced_items += new /obj/item/weapon/shard(src)
+		if(rods)
+			produced_items += new /obj/item/stack/rods(src, rods)
+
+	for(var/i in produced_items)
+		var/obj/item/I = i
+
 		I.loc = T
 		transfer_fingerprints_to(I)
 	qdel(src)
