@@ -99,7 +99,7 @@
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			return .
 
-	if (config.ipintel_email)
+	if (config.ipintel_email && SSipintel.enabled)
 		var/datum/ipintel/res = get_ip_intel(address)
 		if (res.intel > config.ipintel_rating_max)
 			if (admin)

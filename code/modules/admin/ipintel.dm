@@ -4,39 +4,61 @@
 	var/cache = FALSE
 	var/cacheminutesago = 0
 	var/cachedate = ""
+	var/cacherealtime = 0
+
 /datum/ipintel/New()
 	cachedate = SQLtime()
+	cacherealtime = world.realtime
+
+/datum/ipintel/proc/is_valid()
+	. = FALSE
+	if (intel < 0)
+		return
+	if (intel <= config.ipintel_rating_max)
+		if (world.realtime < cacherealtime+(config.ipintel_save_good*60*60*10))
+			return TRUE
+	else
+		if (world.realtime < cacherealtime+(config.ipintel_save_bad*60*60*10))
+			return TRUE
+
 
 /proc/get_ip_intel(ip, bypasscache = FALSE, updatecache = TRUE)
 	var/datum/ipintel/res = new()
 	res.ip = ip
 	. = res
-	if (!ip || !config.ipintel_email)
+	if (!ip || !config.ipintel_email || !SSipintel.enabled)
 		return
-	if (!bypasscache && establish_db_connection())
-		var/DBQuery/query = dbcon.NewQuery("SELECT date,intel,TIMESTAMPDIFF(MINUTE,date,NOW()) FROM [format_table_name("ipintel")] WHERE ip = INET_ATON('[ip]') AND ((intel <= [config.ipintel_rating_max] AND date + INTERVAL [config.ipintel_save_good] HOUR > NOW()) OR (intel > [config.ipintel_rating_max] AND date + INTERVAL [config.ipintel_save_bad] HOUR > NOW()))")
-		query.Execute()
-		if (query.NextRow())
-			res.cache = TRUE
-			res.cachedate = query.item[1]
-			res.intel = query.item[2]
-			res.cacheminutesago = query.item[3]
-			return
+	if (!bypasscache)
+		var/datum/ipintel/cachedintel = SSipintel.cache[ip]
+		if (cachedintel && cachedintel.is_valid())
+			cachedintel.cache = TRUE
+			return cachedintel
+
+		if (establish_db_connection())
+			var/DBQuery/query = dbcon.NewQuery("SELECT date, intel, TIMESTAMPDIFF(MINUTE,date,NOW()), UNIX_TIMESTAMP(date) FROM [format_table_name("ipintel")] WHERE ip = INET_ATON('[ip]') AND ((intel <= [config.ipintel_rating_max] AND date + INTERVAL [config.ipintel_save_good] HOUR > NOW()) OR (intel > [config.ipintel_rating_max] AND date + INTERVAL [config.ipintel_save_bad] HOUR > NOW()))")
+			query.Execute()
+			if (query.NextRow())
+				res.cache = TRUE
+				res.cachedate = query.item[1]
+				res.intel = query.item[2]
+				res.cacheminutesago = query.item[3]
+				res.cacherealtime = query.item[4]*10
+				SSipintel.cache[ip] = res
+				return
 	res.intel = ip_intel_query(ip)
 	if (updatecache && res.intel >= 0 && establish_db_connection())
-		//if you're wondering, we don't add or update the date as its a TIMESTAMP field, and as such, automatically updates at any insert or update
-		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel)")
+		SSipintel.cache[ip] = res
+		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NULL")
 		query.Execute()
 	return
 
 
-var/ip_intel_throttle = 0
-var/ip_intel_errors = 0
+
 /proc/ip_intel_query(ip, var/retry=0)
 	. = -1 //default
 	if (!ip)
 		return
-	if (ip_intel_throttle > world.timeofday)
+	if (SSipintel.throttle > world.timeofday)
 		return
 
 	var/http[] = world.Export("http://check.getipintel.net/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json")
@@ -72,9 +94,9 @@ var/ip_intel_errors = 0
 
 /proc/ipintel_handle_error(error, ip, retry)
 	if (retry)
-		ip_intel_errors++
-		error += " Could not check [ip]. Disabling IPINTEL for [ip_intel_errors] minute[( ip_intel_errors == 1 ? "" : "s" )]"
-		ip_intel_throttle = world.timeofday + (10 * 60 * ip_intel_errors)
+		SSipintel.errors++
+		error += " Could not check [ip]. Disabling IPINTEL for [SSipintel.errors] minute[( SSipintel.errors == 1 ? "" : "s" )]"
+		SSipintel.throttle = world.timeofday + (10 * 60 * SSipintel.errors)
 	else
 		error += " Attempting retry on [ip]."
 	log_ipintel(error)
