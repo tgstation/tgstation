@@ -199,25 +199,3 @@
 		lived here before. You swear you hear rattling coming from the inside."
 	suffix = "lavaland_surface_tomb.dmm"
 	cost = 10
-
-/datum/map_template/ruin/lavaland/chasm
-	name = "A Big Hole"
-	id = "hole"
-	description = "A really big hole in the ground. Falling in is ill-advised."
-	suffix = "lavaland_surface_chasm.dmm"
-	cost = 0
-	allow_duplicates = FALSE
-
-/datum/map_template/ruin/lavaland/chasm/ravine
-	name = "A Long Vertical Hole"
-	id = "longhole"
-	description = "A long hole across a section of land. Some call it a ravine, \
-		but I think it could also just be a really big crevice."
-	suffix = "lavaland_surface_ravine.dmm"
-
-/datum/map_template/ruin/lavaland/chasm/ravine/horizontal
-	name = "A Long Horizontal Hole"
-	id = "longholehorizontal"
-	description = "A long hole across a section of land. Some call it a ravine, \
-		but I think it could also just be a really big crevice. Now in horizontal flavor."
-	suffix = "lavaland_surface_ravine_h.dmm"
