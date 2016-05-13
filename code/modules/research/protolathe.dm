@@ -81,6 +81,11 @@ Note: Must be placed west/left of and R&D console to function.
 	materials.retrieve_all()
 	..()
 
+
+/obj/machinery/r_n_d/protolathe/disconnect_console()
+	linked_console.linked_lathe = null
+	..()
+
 /obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)
 
 	if(istype(O,/obj/item/stack/sheet))
