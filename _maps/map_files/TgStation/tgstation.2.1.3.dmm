@@ -55367,7 +55367,6 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/port)
 "ciQ" = (
@@ -55763,7 +55762,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/port)
 "cjI" = (
@@ -57399,7 +57397,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/port)
 "cnm" = (
@@ -79619,9 +79616,9 @@ aaa
 chI
 aaa
 aaa
-aaf
 aaa
-aaf
+aaa
+aaa
 aaa
 aaa
 aaS
@@ -79875,12 +79872,12 @@ cca
 aaa
 chK
 aaa
-cca
-cca
-cca
-cca
-cca
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaa
@@ -80131,12 +80128,12 @@ ccX
 ccX
 cgz
 chL
-ciP
-cjH
-cjH
-cjH
-cjH
-cnl
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaS
 aaa
@@ -80389,12 +80386,12 @@ ccb
 aaa
 chL
 aaa
-ccb
-ccb
-ccb
-ccb
-ccb
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaa
@@ -80648,7 +80645,7 @@ chL
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -80903,12 +80900,12 @@ cca
 aaa
 chL
 aaa
-cca
-cca
-cca
-cca
-cca
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaa
@@ -81159,12 +81156,12 @@ ccX
 ccX
 cgz
 chL
-ciP
-cjH
-cjH
-cjH
-cjH
-cnl
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaS
 aaa
@@ -81417,12 +81414,12 @@ ccb
 aaa
 chL
 aaa
-ccb
-ccb
-ccb
-ccb
-ccb
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaa
@@ -81676,7 +81673,7 @@ chL
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -81931,12 +81928,12 @@ cca
 aaa
 chL
 aaa
-cca
-cca
-cca
-cca
-cca
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaa
@@ -82187,12 +82184,12 @@ ccX
 ccX
 cgz
 chL
-ciP
-cjH
-cjH
-cjH
-cjH
-cnl
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaS
 aaa
@@ -82445,12 +82442,12 @@ ccb
 aaa
 chL
 aaa
-ccb
-ccb
-ccb
-ccb
-ccb
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaS
 aaa
 aaa
@@ -82703,9 +82700,9 @@ aaa
 chL
 aaa
 aaa
-aaf
 aaa
-aaf
+aaa
+aaa
 aaa
 aaa
 aaS

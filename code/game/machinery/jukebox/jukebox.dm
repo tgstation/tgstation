@@ -146,6 +146,8 @@
 			var/area/crew_quarters/kitchen/K
 			inRange+=(get_area(M) in K.related)
 			inRange+=(get_area(M) in T.related)
+		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			continue
 		if(!M.music)
 			create_sound(M)
 			continue
@@ -157,8 +159,7 @@
 			M.music.status = SOUND_UPDATE
 			M.music.volume = 0
 			M << M.music
-		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
-			continue
+
 
 
 
