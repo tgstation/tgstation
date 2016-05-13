@@ -1,4 +1,5 @@
 #RUN THIS IN THE tgui/ folder
+#!/bin/bash
 set -e
 export NODE_VERSION=4
 
