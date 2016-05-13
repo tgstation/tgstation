@@ -3,7 +3,7 @@
 
 // MISC
 
-/datum/table_recipe/candiedapple
+/datum/crafting_recipe/food/candiedapple
 	name = "Candied apple"
 	reqs = list(/datum/reagent/water = 5,
 		/datum/reagent/consumable/sugar = 5,
@@ -12,7 +12,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	category = CAT_FOOD
 
-/datum/table_recipe/chococoin
+/datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
 	reqs = list(
 		/obj/item/weapon/coin = 1,
@@ -21,7 +21,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
 	category = CAT_FOOD
 
-/datum/table_recipe/fudgedice
+/datum/crafting_recipe/food/fudgedice
 	name = "Fudge dice"
 	reqs = list(
 		/obj/item/weapon/dice = 1,
@@ -30,7 +30,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/fudgedice
 	category = CAT_FOOD
 
-/datum/table_recipe/chocoorange
+/datum/crafting_recipe/food/chocoorange
 	name = "Choco orange"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1,
@@ -39,7 +39,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocoorange
 	category = CAT_FOOD
 
-/datum/table_recipe/loadedbakedpotato
+/datum/crafting_recipe/food/loadedbakedpotato
 	name = "Loaded baked potato"
 	time = 40
 	reqs = list(
@@ -49,7 +49,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	category = CAT_FOOD
 
-/datum/table_recipe/cheesyfries
+/datum/crafting_recipe/food/cheesyfries
 	name = "Cheesy fries"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/fries = 1,
@@ -58,7 +58,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
 	category = CAT_FOOD
 
-/datum/table_recipe/wrap
+/datum/crafting_recipe/food/wrap
 	name = "Wrap"
 	reqs = list(/datum/reagent/consumable/soysauce = 10,
 		/obj/item/weapon/reagent_containers/food/snacks/friedegg = 1,
@@ -67,7 +67,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/eggwrap
 	category = CAT_FOOD
 
-/datum/table_recipe/beans
+/datum/crafting_recipe/food/beans
 	name = "Beans"
 	time = 40
 	reqs = list(/datum/reagent/consumable/ketchup = 5,
@@ -76,7 +76,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/beans
 	category = CAT_FOOD
 
-/datum/table_recipe/eggplantparm
+/datum/crafting_recipe/food/eggplantparm
 	name ="Eggplant parmigiana"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2,
@@ -85,7 +85,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	category = CAT_FOOD
 
-/datum/table_recipe/baguette
+/datum/crafting_recipe/food/baguette
 	name = "Baguette"
 	time = 40
 	reqs = list(/datum/reagent/consumable/sodiumchloride = 1,
@@ -97,7 +97,7 @@
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
-/datum/table_recipe/slimetoast
+/datum/crafting_recipe/food/slimetoast
 	name = "Slime toast"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
@@ -106,7 +106,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
 	category = CAT_FOOD
 
-/datum/table_recipe/jelliedyoast
+/datum/crafting_recipe/food/jelliedyoast
 	name = "Jellied toast"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
@@ -115,7 +115,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
 	category = CAT_FOOD
 
-/datum/table_recipe/twobread
+/datum/crafting_recipe/food/twobread
 	name = "Two bread"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/wine = 5,
@@ -124,7 +124,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
 	category = CAT_FOOD
 
-/datum/table_recipe/burrito
+/datum/crafting_recipe/food/burrito
 	name ="Burrito"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
@@ -133,7 +133,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/burrito
 	category = CAT_FOOD
 
-/datum/table_recipe/cheesyburrito
+/datum/crafting_recipe/food/cheesyburrito
 	name ="Cheesy burrito"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
@@ -143,7 +143,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyburrito
 	category = CAT_FOOD
 
-/datum/table_recipe/carneburrito
+/datum/crafting_recipe/food/carneburrito
 	name ="Carne de asada burrito"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
@@ -153,7 +153,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/carneburrito
 	category = CAT_FOOD
 
-/datum/table_recipe/fuegoburrito
+/datum/crafting_recipe/food/fuegoburrito
 	name ="Fuego plasma burrito"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1,
@@ -163,7 +163,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
 	category = CAT_FOOD
 
-/datum/table_recipe/melonfruitbowl
+/datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = 1,
@@ -176,7 +176,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl
 	category = CAT_FOOD
 
-/datum/table_recipe/spacefreezy
+/datum/crafting_recipe/food/spacefreezy
 	name ="Space freezy"
 	reqs = list(
 		/datum/reagent/consumable/bluecherryjelly = 5,
@@ -186,7 +186,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
 	category = CAT_FOOD
 
-/datum/table_recipe/sundae
+/datum/crafting_recipe/food/sundae
 	name ="Sundae"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
@@ -197,7 +197,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/sundae
 	category = CAT_FOOD
 
-/datum/table_recipe/honkdae
+/datum/crafting_recipe/food/honkdae
 	name ="Honkdae"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
@@ -209,7 +209,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/honkdae
 	category = CAT_FOOD
 
-/datum/table_recipe/nachos
+/datum/crafting_recipe/food/nachos
 	name ="Nachos"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -218,7 +218,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/nachos
 	category = CAT_FOOD
 
-/datum/table_recipe/cheesynachos
+/datum/crafting_recipe/food/cheesynachos
 	name ="Cheesy nachos"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -228,7 +228,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesynachos
 	category = CAT_FOOD
 
-/datum/table_recipe/cubannachos
+/datum/crafting_recipe/food/cubannachos
 	name ="Cuban nachos"
 	reqs = list(
 		/datum/reagent/consumable/ketchup = 5,
@@ -238,7 +238,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/cubannachos
 	category = CAT_FOOD
 
-/datum/table_recipe/melonkeg
+/datum/crafting_recipe/food/melonkeg
 	name ="Melon keg"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 25,
@@ -249,7 +249,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/melonkeg
 	category = CAT_FOOD
 
-/datum/table_recipe/honeybar
+/datum/crafting_recipe/food/honeybar
 	name = "Honey nut bar"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/oat = 1,
@@ -259,7 +259,7 @@
 	category = CAT_FOOD
 
 
-/datum/table_recipe/stuffedlegion
+/datum/crafting_recipe/stuffedlegion
 	name = "Stuffed legion"
 	time = 40
 	reqs = list(

@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////SOUP////////////////////////////////////////////////
 
-/datum/table_recipe/meatballsoup
+/datum/crafting_recipe/food/meatballsoup
 	name = "Meatball soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -15,7 +15,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/meatball
 	category = CAT_FOOD
 
-/datum/table_recipe/vegetablesoup
+/datum/crafting_recipe/food/vegetablesoup
 	name = "Vegetable soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -28,7 +28,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
 	category = CAT_FOOD
 
-/datum/table_recipe/nettlesoup
+/datum/crafting_recipe/food/nettlesoup
 	name = "Nettle soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -40,7 +40,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/nettle
 	category = CAT_FOOD
 
-/datum/table_recipe/wingfangchu
+/datum/crafting_recipe/food/wingfangchu
 	name = "Wingfangchu"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -50,7 +50,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
 	category = CAT_FOOD
 
-/datum/table_recipe/wishsoup
+/datum/crafting_recipe/food/wishsoup
 	name = "Wish soup"
 	reqs = list(
 		/datum/reagent/water = 20,
@@ -59,7 +59,7 @@
 	result= /obj/item/weapon/reagent_containers/food/snacks/soup/wish
 	category = CAT_FOOD
 
-/datum/table_recipe/hotchili
+/datum/crafting_recipe/food/hotchili
 	name = "Hot chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -70,7 +70,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/hotchili
 	category = CAT_FOOD
 
-/datum/table_recipe/coldchili
+/datum/crafting_recipe/food/coldchili
 	name = "Cold chili"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -81,7 +81,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/coldchili
 	category = CAT_FOOD
 
-/datum/table_recipe/tomatosoup
+/datum/crafting_recipe/food/tomatosoup
 	name = "Tomato soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -91,7 +91,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/tomato
 	category = CAT_FOOD
 
-/datum/table_recipe/milosoup
+/datum/crafting_recipe/food/milosoup
 	name = "Milo soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -102,7 +102,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/milo
 	category = CAT_FOOD
 
-/datum/table_recipe/bloodsoup
+/datum/crafting_recipe/food/bloodsoup
 	name = "Blood soup"
 	reqs = list(
 		/datum/reagent/blood = 10,
@@ -112,7 +112,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/blood
 	category = CAT_FOOD
 
-/datum/table_recipe/slimesoup
+/datum/crafting_recipe/food/slimesoup
 	name = "Slime soup"
 	reqs = list(
 			/datum/reagent/water = 10,
@@ -122,7 +122,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/slime
 	category = CAT_FOOD
 
-/datum/table_recipe/clownstears
+/datum/crafting_recipe/food/clownstears
 	name = "Clowns tears"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -133,7 +133,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	category = CAT_FOOD
 
-/datum/table_recipe/mysterysoup
+/datum/crafting_recipe/food/mysterysoup
 	name = "Mystery soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -146,7 +146,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mystery
 	category = CAT_FOOD
 
-/datum/table_recipe/mushroomsoup
+/datum/crafting_recipe/food/mushroomsoup
 	name = "Mushroom soup"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -157,7 +157,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mushroom
 	category = CAT_FOOD
 
-/datum/table_recipe/beetsoup
+/datum/crafting_recipe/food/beetsoup
 	name = "Beet soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -168,7 +168,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet
 	category = CAT_FOOD
 
-/datum/table_recipe/stew
+/datum/crafting_recipe/food/stew
 	name = "Stew"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -183,7 +183,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/stew
 	category = CAT_FOOD
 
-/datum/table_recipe/spacylibertyduff
+/datum/crafting_recipe/food/spacylibertyduff
 	name = "Spacy liberty duff"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
@@ -193,7 +193,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/spacylibertyduff
 	category = CAT_FOOD
 
-/datum/table_recipe/amanitajelly
+/datum/crafting_recipe/food/amanitajelly
 	name = "Amanita jelly"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
@@ -203,7 +203,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/amanitajelly
 	category = CAT_FOOD
 
-/datum/table_recipe/sweetpotatosoup
+/datum/crafting_recipe/food/sweetpotatosoup
 	name = "Sweet potato soup"
 	reqs = list(
 		/datum/reagent/water = 10,
@@ -214,7 +214,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 	category = CAT_FOOD
 
-/datum/table_recipe/redbeetsoup
+/datum/crafting_recipe/food/redbeetsoup
 	name = "Red beet soup"
 	reqs = list(
 		/datum/reagent/water = 10,

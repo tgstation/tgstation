@@ -183,6 +183,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
 	gangster_mind.special_role = "[G.name] Gangster"
+	gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		replace_jobbaned_player(gangster_mind.current, ROLE_GANG, ROLE_GANG)
@@ -224,6 +225,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				gangster_mind.current.Paralyse(5)
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
 			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>"
+			gangster_mind.memory = ""
 
 	gang.remove_gang_hud(gangster_mind)
 	return 1
@@ -261,8 +263,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(gangs.len)
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
+			feedback_set_details("round_end_result","win - gang domination complete")
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
+			feedback_set_details("round_end_result","loss - gangs failed takeover")
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"

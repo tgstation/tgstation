@@ -14,7 +14,7 @@
 	if(..())
 		. = 1
 
-		for(var/obj/item/organ/internal/O in internal_organs)
+		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
 	//grab processing
@@ -212,7 +212,7 @@
 			return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used)
+	if(mind && hud_used && hud_used.lingchemdisplay)
 		if(mind.changeling)
 			mind.changeling.regenerate(src)
 			hud_used.lingchemdisplay.invisibility = 0

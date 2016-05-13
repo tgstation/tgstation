@@ -43,6 +43,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 1
 	unique_name = 1
+	hud_possible = list(ANTAG_HUD)
 
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -132,6 +133,12 @@
 		else if(essence == 0)
 			essencecolor = "#1D2953" //oh jeez you're dying
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>"
+
+/mob/living/simple_animal/revenant/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/simple_animal/revenant/med_hud_set_status()
+	return //we use no hud
 
 /mob/living/simple_animal/revenant/say(message)
 	if(!message)

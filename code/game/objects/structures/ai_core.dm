@@ -246,3 +246,8 @@ atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		user << "There is no AI loaded on this terminal!"
+
+
+/obj/item/weapon/circuitboard/aicore
+	name = "circuit board (AI core)"
+	origin_tech = "programming=4;biotech=2"

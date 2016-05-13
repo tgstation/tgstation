@@ -7,7 +7,7 @@
 	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/New()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()

@@ -17,7 +17,7 @@
 	throw_speed = 0
 	throw_range = 1
 	force = 200
-	armour_penetration = 100
+	armour_penetration = 1000
 	anchored = TRUE
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
@@ -172,6 +172,16 @@
 	M.faction += team
 	M.equipOutfit(ctf_gear)
 
+/obj/machinery/capture_the_flag/proc/TellGhost()
+	if(ctf_enabled)
+		notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, attack_not_jump = 0)
+
+/obj/machinery/capture_the_flag/Topic(href, href_list)
+	if(href_list["join"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
+
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
 		var/obj/item/weapon/twohanded/required/ctf/flag = I
@@ -213,6 +223,12 @@
 		if(CTF.ctf_enabled == TRUE)
 			CTF.ctf_gear = CTF.instagib_gear
 			CTF.respawn_cooldown = INSTAGIB_RESPAWN
+
+/obj/machinery/capture_the_flag/proc/normal_mode()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(CTF.ctf_enabled == TRUE)
+			CTF.ctf_gear = initial(ctf_gear)
+			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
 	desc = "This looks like it could really hurt in melee."

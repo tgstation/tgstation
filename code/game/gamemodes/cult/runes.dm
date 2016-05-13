@@ -34,6 +34,7 @@ To draw a rune, use an arcane tome.
 	var/scribe_damage = 0.1 //how much damage you take doing it
 
 	var/allow_excess_invokers = 0 //if we allow excess invokers when being invoked
+	var/construct_invoke = 1 //if constructs can invoke it
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
@@ -73,6 +74,13 @@ To draw a rune, use an arcane tome.
 		invoke(invokers)
 	else
 		fail_invoke(user)
+
+/obj/effect/rune/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
+		if(construct_invoke || !iscultist(M)) //if you're not a cult construct we want the normal fail message
+			attack_hand(M)
+		else
+			M << "<span class='warning'>You are unable to invoke the rune!</span>"
 
 /obj/effect/rune/proc/talismanhide() //for talisman of revealing/hiding
 	visible_message("<span class='danger'>[src] fades away.</span>")
@@ -195,7 +203,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Talisman Creation rune failed - already in use")
 		return
 	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
-	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
+	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak)
 		var/obj/item/weapon/paper/talisman/J = I
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
@@ -526,40 +534,29 @@ var/list/teleport_runes = list()
 	var/mob/living/user = invokers[1]
 	if(rune_in_use)
 		return
-	for(var/mob/living/M in orange(1,src))
+	for(var/mob/living/M in orange(1,T))
 		if(M.stat == DEAD)
-			potential_sacrifice_mobs.Add(M)
+			potential_sacrifice_mobs |= M
 	if(!potential_sacrifice_mobs.len)
 		user << "<span class='cultitalic'>There are no eligible sacrifices nearby!</span>"
-		log_game("Raise Dead rune failed - no catalyst corpse")
-		return
-	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !mob_to_revive || !mob_to_sacrifice || rune_in_use)
+		log_game("Raise Dead rune failed - no catalyst corpses")
+		fail_invoke()
 		return
 	for(var/mob/living/M in T.contents)
 		if(M.stat == DEAD)
-			potential_revive_mobs.Add(M)
+			potential_revive_mobs |= M
 	if(!potential_revive_mobs.len)
 		user << "<span class='cultitalic'>There is no eligible revival target on the rune!</span>"
-		log_game("Raise Dead rune failed - no corpse to revived")
+		log_game("Raise Dead rune failed - no corpses to revive")
+		fail_invoke()
+		return
+	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
+	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
 		return
 	mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || rune_in_use)
+	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
 		return
-	if(!in_range(mob_to_sacrifice,src))
-		user << "<span class='cultitalic'>The sacrificial target has been moved!</span>"
-		fail_invoke()
-		log_game("Raise Dead rune failed - catalyst corpse moved")
-		return
-	if(!(mob_to_revive in T.contents))
-		user << "<span class='cultitalic'>The corpse to revive has been moved!</span>"
-		fail_invoke()
-		log_game("Raise Dead rune failed - revival target moved")
-		return
-	if(mob_to_sacrifice.stat != DEAD)
-		user << "<span class='cultitalic'>The sacrificial target must be dead!</span>"
-		fail_invoke()
-		log_game("Raise Dead rune failed - catalyst corpse is not dead")
+	if(!validness_checks(mob_to_revive, user, 0))
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
@@ -571,19 +568,47 @@ var/list/teleport_runes = list()
 	mob_to_revive.Beam(mob_to_sacrifice,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=20)
 	sleep(20)
 	if(!mob_to_sacrifice || !in_range(mob_to_sacrifice, src))
-		mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones</span>")
+		rune_in_use = 0
 		return
-	mob_to_sacrifice.dust()
 	if(!mob_to_revive || mob_to_revive.stat != DEAD)
 		visible_message("<span class='warning'>The glowing tendril snaps against the rune with a shocking crack.</span>")
 		rune_in_use = 0
+		fail_invoke()
 		return
-	mob_to_revive.revive() //This does remove disabilities and such, but the rune might actually see some use because of it!
+	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones.</span>")
+	mob_to_sacrifice.dust()
+	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
 	rune_in_use = 0
 
+/obj/effect/rune/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user, saccing)
+	var/turf/T = get_turf(src)
+	if(!user)
+		return 0
+	if(!Adjacent(user) || user.incapacitated())
+		return 0
+	if(!target_mob)
+		fail_invoke()
+		return 0
+	if(saccing)
+		if(!in_range(target_mob, src))
+			user << "<span class='cultitalic'>The sacrificial target has been moved!</span>"
+			fail_invoke()
+			log_game("Raise Dead rune failed - catalyst corpse moved")
+			return 0
+		if(target_mob.stat != DEAD)
+			user << "<span class='cultitalic'>The sacrificial target must be dead!</span>"
+			fail_invoke()
+			log_game("Raise Dead rune failed - catalyst corpse is not dead")
+			return 0
+	else if(!(target_mob in T.contents))
+		user << "<span class='cultitalic'>The corpse to revive has been moved!</span>"
+		fail_invoke()
+		log_game("Raise Dead rune failed - revival target moved")
+		return 0
+	return 1
 
 /obj/effect/rune/raise_dead/fail_invoke()
 	..()
@@ -631,6 +656,7 @@ var/list/teleport_runes = list()
 	icon_state = "6"
 	color = rgb(126, 23, 23)
 	rune_in_use = 0 //One at a time, please!
+	construct_invoke = 0
 	var/mob/living/affecting = null
 
 /obj/effect/rune/astral/examine(mob/user)
@@ -770,6 +796,7 @@ var/list/teleport_runes = list()
 	icon_state = "4"
 	color = rgb(200, 0, 0)
 	req_cultists = 3
+	construct_invoke = 0
 
 /obj/effect/rune/blood_boil/invoke(var/list/invokers)
 	..()
@@ -797,6 +824,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
+	construct_invoke = 0
 	color = rgb(200, 0, 0)
 
 /obj/effect/rune/manifest/New(loc)

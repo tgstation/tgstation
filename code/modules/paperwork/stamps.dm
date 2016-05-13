@@ -72,25 +72,35 @@
 
 // Syndicate stamp to forge documents.
 
+/obj/item/weapon/stamp/chameleon
+	actions_types = list(/datum/action/item_action/toggle)
+
 /obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 
 	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
-	var/list/stamps = list()
 
+	var/list/stamp_names = list()
 	// Generate them into a list
-	for(var/stamp_type in stamp_types)
-		var/obj/item/weapon/stamp/S = new stamp_type
-		stamps[capitalize(S.name)] = S
+	for(var/i in stamp_types)
+		var/obj/item/weapon/stamp/stamp_type = i
+		stamp_names += initial(stamp_type.name)
 
-	var/list/show_stamps = list("EXIT" = null) + sortList(stamps) // the list that will be shown to the user to pick from
+	stamp_names = sortList(stamp_names)
+	// the list that will be shown to the user to pick from
+	world << jointext(stamp_names, ",")
 
-	var/input_stamp = input(user, "Choose a stamp to disguise as.", "Choose a stamp.") in show_stamps
+	var/input_stamp = input(user, "Choose a stamp to disguise as.",
+		"Choose a stamp.") as null|anything in stamp_names
+	world << input_stamp
 
-	if(user && src in user.contents)
+	if(user && (src in user.contents) && input_stamp)
+		var/obj/item/weapon/stamp/stamp_type
+		for(var/i in stamp_types)
+			stamp_type = i
+			if(initial(stamp_type.name) == input_stamp)
+				break
+		world << stamp_type
 
-		var/obj/item/weapon/stamp/chosen_stamp = stamps[capitalize(input_stamp)]
-
-		if(chosen_stamp)
-			name = chosen_stamp.name
-			icon_state = chosen_stamp.icon_state
-			item_color = chosen_stamp.item_color
+		name = initial(stamp_type.name)
+		icon_state = initial(stamp_type.icon_state)
+		item_color = initial(stamp_type.item_color)

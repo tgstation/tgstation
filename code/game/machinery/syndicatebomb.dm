@@ -413,7 +413,8 @@
 			return
 	..()
 
-/obj/item/weapon/bombcore/chemical/CheckParts()
+/obj/item/weapon/bombcore/chemical/CheckParts(list/parts_list)
+	..()
 	// Using different grenade casings, causes the payload to have different properties.
 	var/obj/item/weapon/stock_parts/matter_bin/MB = locate(/obj/item/weapon/stock_parts/matter_bin) in src
 	if(MB)
