@@ -22,7 +22,7 @@
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
 		log_admin("ASAY: [text]")
-		
+
 /proc/log_dsay(text)
 	if (config.log_adminchat)
 		log_admin("DSAY: [text]")
@@ -65,7 +65,7 @@
 
 /proc/log_attack(text)
 	if (config.log_attack)
-		diaryofmeanpeople << "\[[time_stamp()]]ATTACK: [text]"
+		diary << "\[[time_stamp()]]ATTACK: [text]"
 
 /proc/log_pda(text)
 	if (config.log_pda)
