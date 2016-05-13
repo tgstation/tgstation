@@ -377,9 +377,9 @@
 	var/turf/T = get_turf(A)
 
 	for(var/atom/AT in T)
-		AT.blob_act(destroy = 1)
+		AT.blob_act(1)
 
-	T.blob_act(destroy = 1)
+	T.blob_act(1)
 
 	var/obj/effect/blob/is_there_a_blob = (locate(/obj/effect/blob) in T)
 

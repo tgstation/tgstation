@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Blob Conglomerates can now only happen if there are 25 or more living players on the station. Including at least a sec officer and an engineer.
+  - rscadd: Bomberman Bombs now affect blobs.
