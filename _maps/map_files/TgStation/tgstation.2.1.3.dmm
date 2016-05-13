@@ -18825,6 +18825,9 @@
 /area/crew_quarters/theatre)
 "aMw" = (
 /obj/machinery/computer/slot_machine,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -25158,7 +25161,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "baX" = (
-/obj/machinery/conveyor_switch/oneway{
+/obj/machinery/conveyor_switch{
 	id = "packageSort2"
 	},
 /turf/open/floor/plasteel{
@@ -25983,7 +25986,7 @@
 	},
 /area/quartermaster/storage)
 "bcT" = (
-/obj/machinery/conveyor_switch/oneway{
+/obj/machinery/conveyor_switch{
 	id = "packageSort1"
 	},
 /turf/open/floor/plasteel{
@@ -34067,6 +34070,11 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/bodybags,
 /obj/item/weapon/pen,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/tank/internals/anesthetic{
+	pixel_x = -3;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "whitehall";
 	dir = 4
@@ -35012,8 +35020,7 @@
 	},
 /area/shuttle/syndicate)
 "buB" = (
-/obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
@@ -58733,13 +58740,9 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cpA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/obj/machinery/party/musicwriter,
+/turf/closed/wall,
+/area/crew_quarters/bar)
 "cpB" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -59287,11 +59290,11 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqG" = (
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 4
+/obj/machinery/party/turntable,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
 	},
-/area/engine/engineering)
+/area/crew_quarters/bar)
 "cqH" = (
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plating,
@@ -64105,10 +64108,8 @@
 /turf/open/floor/plating,
 /area/construction)
 "cAI" = (
-/obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
-	id = "garbage";
-	name = "disposal coveyor"
+/obj/machinery/conveyor_switch{
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -100886,8 +100887,8 @@ aIc
 aJC
 aKO
 aMw
-aNI
-aOK
+aQc
+cqG
 aQd
 aRx
 aQd
@@ -101143,7 +101144,7 @@ aIe
 aJC
 aJC
 aJC
-aJC
+cpA
 aJC
 aQg
 aPY
