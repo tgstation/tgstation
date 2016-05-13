@@ -8,6 +8,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/const/TILE_SIZE = 8
 
 	var/list/z_levels = list(ZLEVEL_STATION)
+	var/list/z_level_minimaps = list()
 
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
@@ -28,30 +29,47 @@ var/datum/subsystem/minimap/SSminimap
 			mapfiles += i
 	world.log << "[mapfiles.len] mapfiles found"
 	for(var/mf in mapfiles)
-		world.log << pathflatten(mf) //XXX
-	// Generate hashes for each of them, look up stored hashes
-	// For each hash difference, generate a new minimap
-	// Save the new minimap, save the new hash
-	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
-	if(hash == trim(file2text(hash_path())))
-		return ..()
+		var/internal_name = pathflatten(mf)
+		var/map_hash_filename = hash_path(internal_name)
+		// Generate hashes for the map itself
+		var/map_hash = md5(file2text(mf))
+		// Lookup the stored hash on file
+		var/stored_hash = trim(file2text(map_hash_filename))
+		if(map_hash == stored_hash)
+			continue
 
-	for(var/z in z_levels)
-		var/icon/minimap = generate(z)
-		fcopy(minimap, map_path(z))
-		register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
-	fdel(hash_path())
-	text2file(hash, hash_path())
+		// For each hash difference, generate a new minimap
+		var/datum/map_template/mt = new(path = mf)
+		world << "<span class='notice'>Generating minimap for [mf]</span>"
+		// Pick the topleft corner of z9, which is empty space
+		world.log << "Loading [mf] in z9 for minimap generation"
+		var/turf/T = locate(1,1,9)
+		mt.load(T, centered = FALSE)
+		world.log << "Generating minimap for [mf]"
+		var/icon/minimap = generate(9, 1,1, mt.width,mt.height)
+		world.log << "Unloading [mf] using del()"
+		// Unload the template
+		var/list/affected_turfs = mt.get_affected_turfs(T, centered = FALSE)
+		for(var/turf/T0 in affected_turfs)
+			for(var/AM in T0.GetAllContents())
+				del(AM) // forgive me
+			T0.ChangeTurf(/turf/open/space)
+
+		// Save the new minimap
+		fcopy(minimap, map_path(internal_name))
+		// Save the new hash
+		text2file(map_hash, map_hash_filename)
+
 	..()
-/datum/subsystem/minimap/proc/hash_path()
-	return "data/minimaps/[MAP_NAME].md5"
+/datum/subsystem/minimap/proc/hash_path(name)
+	return "data/minimaps/[name].md5"
 
-/datum/subsystem/minimap/proc/map_path(z)
-	return "data/minimaps/[MAP_NAME]_[z].png"
+/datum/subsystem/minimap/proc/map_path(name)
+	return "data/minimaps/[name].png"
 
 /datum/subsystem/minimap/proc/send(client/client)
-	for(var/z in z_levels)
-		send_asset(client, "minimap_[z].png")
+	for(var/z in z_level_minimaps)
+		send_asset(client, z)
 
 /datum/subsystem/minimap/proc/generate(z = 1, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
 	// Load the background.
