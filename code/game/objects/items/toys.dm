@@ -457,50 +457,6 @@
 	icon_state = "reticenceprize"
 	quiet = 1
 
-/*
- * AI core prizes
- */
-/obj/item/toy/AI
-	name = "toy AI"
-	desc = "A little toy model AI core with real law announcing action!"
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "AI"
-	w_class = 2
-	var/cooldown = 0
-
-/obj/item/toy/AI/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
-		var/message = generate_ion_law()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
-		cooldown = 1
-		spawn(30) cooldown = 0
-		return
-	..()
-
-/obj/item/toy/codex_gigas
-	name = "Toy Codex Gigas"
-	desc = "A tool to help you write fictional devils!"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "demonomicon"
-	w_class = 2
-	var/cooldown = 0
-
-/obj/item/toy/codex_gigas/attack_self(mob/user)
-	if(!cooldown)
-		var/datum/devilinfo/devil = randomDevilInfo()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		cooldown = 1
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [devil.truename]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.bane]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.obligation]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.ban]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.banish]]</span>")
-		spawn(60) cooldown = 0
-		return
-	..()
 
 /obj/item/toy/talking
 	name = "talking action figure"
@@ -508,37 +464,192 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
 	w_class = 2
-	var/cooldown = 0
+	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
 	var/recharge_time = 30
 
+	var/chattering = FALSE
+	var/phomeme
+
+// Talking toys are language universal, and thus all species can use them
+/obj/item/toy/talking/attack_alien(mob/user)
+	. = attack_hand(user)
+
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
-		var/message = pick(messages)
-		user << "<span class='notice'>You pull the string on the [src].</span>"
-		toy_talk(user, message)
-		cooldown = 1
-		spawn(recharge_time) cooldown = 0
+		var/list/messages = generate_messages()
+		activation_message(user)
+		playsound(loc, 'sound/machines/click.ogg', 20, 1)
+
+		spawn(0)
+			for(var/message in messages)
+				toy_talk(user, message)
+				sleep(10)
+
+		cooldown = TRUE
+		spawn(recharge_time)
+			cooldown = FALSE
 		return
 	..()
 
-/obj/item/toy/talking/proc/toy_talk(user, message)
-	playsound(user, 'sound/machines/click.ogg', 20, 1)
-	src.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+/obj/item/toy/talking/proc/activation_message(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] pulls the string on \the [src].</span>",
+		"<span class='notice'>You pull the string on \the [src].</span>",
+		"<span class='notice'>You hear a string being pulled.</span>")
+
+/obj/item/toy/talking/proc/generate_messages()
+	return list(pick(messages))
+
+/obj/item/toy/talking/proc/toy_talk(mob/user, message)
+	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+	if(chattering)
+		chatter(message, phomeme, user)
+
+/*
+ * AI core prizes
+ */
+/obj/item/toy/talking/AI
+	name = "toy AI"
+	desc = "A little toy model AI core with real law announcing action!"
+	icon_state = "AI"
+
+/obj/item/toy/talking/AI/generate_messages()
+	return list(generate_ion_law())
+
+/obj/item/toy/talking/codex_gigas
+	name = "Toy Codex Gigas"
+	desc = "A tool to help you write fictional devils!"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "demonomicon"
+	w_class = 2
+	recharge_time = 60
+
+/obj/item/toy/talking/codex_gigas/activation_message(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] presses the button on \the [src].</span>",
+		"<span class='notice'>You press the button on \the [src].</span>",
+		"<span class='notice'>You hear a soft click.</span>")
+
+/obj/item/toy/talking/codex_gigas/generate_messages()
+	var/datum/devilinfo/devil = randomDevilInfo()
+	var/list/messages = list()
+	messages += "Some fun facts about: [devil.truename]"
+	messages += "[lawlorify[LORE][devil.bane]]"
+	messages += "[lawlorify[LORE][devil.obligation]]"
+	messages += "[lawlorify[LORE][devil.ban]]"
+	messages += "[lawlorify[LORE][devil.banish]]"
+	return messages
 
 /obj/item/toy/talking/owl
 	name = "owl action figure"
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon_state = "owlprize"
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+	chattering = TRUE
+	phomeme = "owl"
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
+	chattering = TRUE
+	phomeme = "griffin"
 
+/obj/item/toy/talking/skeleton
+	name = "skeleton action figure"
+	desc = "An action figure modeled after 'Oh-cee', the original content \
+		skeleton.\nNot suitable for infants or assistants under 36 months \
+		of age."
+	icon_state = "skeletonprize"
+	attack_verb = list("boned", "dunked on", "worked down to the bone")
+	chattering = TRUE
+
+	var/list/papyrus_messages = list(
+		"That's the disposal bin. Feel free to visit it at any time.",
+		"I can't just let anyone ERP with me, I'm a skeleton with standards!",
+		"Sorry. Can't talk. I'm busy being popular on a video game.",
+		"You can't spell 'robust' without several letters from my name!!!")
+	var/list/sans_messages = list(
+		"You feel your redtext crawling on your back.",
+		"On days like these, references like this should be BURNING IN HELL.",
+		"I've gotten a ton of work done today. A skele-ton.")
+	var/list/regular_messages = list(
+		"Why was the skeleton such a bad liar? \
+			Because you can see right through him!",
+		"When does a skeleton laugh? When something tickles his funny bone!",
+		"Why couldn't the skeleton win the beauty contest? \
+			 Because he had no body!",
+		"What do you call a skeleton in the winter? A numbskull!",
+		"What did the skeleton say before eating? Bone appetit!",
+		"What type of art do skeletons like? Skulltures!",
+		"What instrument do skeletons play? The trom-bone!",
+		"Why are skeletons always so calm? \
+			Because nothing gets under their skin!",
+		"How did the skeleton know it was going to rain? \
+			He could feel it in his bones.",
+		"Why did the skeleton go to the hospital? \
+			To get his ghoul stones removed.",
+		"Why can't skeletons play music in churches? \
+			Because they have no organs.",
+		"There's a skeleton inside everyone! Except slime people I guess...",
+		"The birds are too busy to notice me acting in the shadows!",
+		"Giraffes have the same number of bones in their necks as humans. \
+			You should never trust a giraffe.",
+		"When I meet a dog in the street, I always offer it a bone!",
+		"In corsetry, a bone is one of the rigid parts of a corset that \
+			forms its frame and gives it rigidity.",
+		"A person who plays the trombone is called a trombonist or \
+			trombone player.",
+		"Remember, compromise is for those without backbones!",
+		"If you go up to the captain and say the word 'bone' repeatedly, \
+			eventually he'll brig you.",
+		"Yo ho ho, shiver me bones!",
+		"So what you're saying is, you only love me for my legs?",
+		"You will never again find socks that match!",
+		"BONES! BONES! BONES!",
+		"Bones absorb x-rays, which is why radiation gives you superpowers.",
+		"Oh-cee! The ORIGINAL CONTENT SKELETON. Suitable for ages 36 months \
+			and up.",
+		"I just don't have the heart to judge you.",
+		"I don't have the stomach for this.",
+		"I'm a fighter, not a liver.",
+		"How can I see without eyeballs?",
+		"Ask your parents about 'boning', before you get pregnant.",
+		"Remember, a dog is for life, not just for christmas.")
+
+/obj/item/toy/talking/skeleton/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to commit \
+		suicide with \the [src].</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.set_species(/datum/species/skeleton)
+
+	phomeme = "sans"
+	toy_talk(user, "You feel like you're going to have a bad time.")
+
+	user.Stun(5)
+	sleep(20)
+	return OXYLOSS
+
+/obj/item/toy/talking/skeleton/generate_messages()
+	return list(pick(papyrus_messages + sans_messages + regular_messages))
+
+/obj/item/toy/talking/skeleton/toy_talk(user, message)
+	// change spans dynamically depending on the message
+	// If message isn't in the defined lists, just use whatever was set last
+	if(sans_messages.Find(message))
+		phomeme = "sans"
+	if(papyrus_messages.Find(message))
+		phomeme = "papyrus"
+	if(regular_messages.Find(message))
+		phomeme = pick("sans", "papyrus")
+
+	span = "danger [phomeme]"
+	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||

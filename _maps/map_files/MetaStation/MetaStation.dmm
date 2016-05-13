@@ -60470,7 +60470,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table/wood,
-/obj/item/toy/AI{
+/obj/item/toy/talking/AI{
 	name = "NanoTrasen-brand toy AI";
 	pixel_y = 6
 	},
