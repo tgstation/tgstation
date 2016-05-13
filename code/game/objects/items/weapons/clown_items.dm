@@ -142,17 +142,18 @@
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
 
-/obj/item/weapon/bikehorn/golden/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/bikehorn/golden/attack()
 	flip_mobs()
 	return ..()
 
-/obj/item/weapon/bikehorn/golden/attack_self(mob/living/carbon/M, mob/user)
+/obj/item/weapon/bikehorn/golden/attack_self()
 	flip_mobs()
 	return ..()
 
 /obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	if (!spam_flag)
-		for(M in ohearers(7, user))
+		var/turf/T = get_turf(src)
+		for(M in ohearers(7, T))
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
