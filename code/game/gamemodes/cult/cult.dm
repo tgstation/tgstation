@@ -27,9 +27,8 @@
 		var/mob/living/simple_animal/hostile/guardian/G = mind.current
 		if(!iscultist(G.summoner))
 			return 0 //can't convert it unless the owner is converted
-	if(ticker.mode.name == "cult")
-		if(is_sacrifice_target(mind))
-			return 0
+	if(is_sacrifice_target(mind))
+		return 0
 	return 1
 
 /datum/game_mode/cult
