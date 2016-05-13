@@ -119,11 +119,11 @@
 	if(health >= 0)
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
-							"<span class='notice'>You shake [src] trying to get \him up!</span>")
+			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
+							"<span class='notice'>You shake [src] trying to get them up!</span>")
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
-						"<span class='notice'>You hug [src] to make \him feel better!</span>")
+			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
+						"<span class='notice'>You hug [src] to make them feel better!</span>")
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
