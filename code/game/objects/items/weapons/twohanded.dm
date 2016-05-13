@@ -5,6 +5,8 @@
  *		Double-Bladed Energy Swords
  *		Spears
  *		CHAINSAWS
+ *		Bone Axe
+ *		Bone Spear
  */
 
 /*##################################################################
@@ -512,3 +514,60 @@
 
 /obj/item/weapon/twohanded/vibro_weapon/update_icon()
 	icon_state = "hfrequency[wielded]"
+
+/*
+ * Bone Axe
+ */
+/obj/item/weapon/twohanded/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
+	icon_state = "bone_axe0"
+	name = "bone axe"
+	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
+
+/obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "bone_axe[wielded]"
+	return
+
+/obj/item/weapon/twohanded/fireaxe/boneaxe/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] axes \himself from head to toe! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
+/obj/item/weapon/twohanded/fireaxe/boneaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity) return
+	if(wielded) //Because why the hell not give it to the bone axe, too? LITERALLY A RESKINNED FIREAXE. I was told to make it this.
+		if(istype(A,/obj/structure/window))
+			var/obj/structure/window/W = A
+			W.shatter()
+		else if(istype(A,/obj/structure/grille))
+			var/obj/structure/grille/G = A
+			G.take_damage(16)
+
+
+/*
+ * Bone Spear
+ */
+/obj/item/weapon/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+	icon_state = "bone_spear0"
+	name = "bone spear"
+	desc = "A large sharpened bone on the end of a long stick. A standard of ancient tribal warfare."
+	force = 10
+	w_class = 4
+	slot_flags = SLOT_BACK
+	force_unwielded = 13
+	force_wielded = 22					//I have no idea how to balance
+	throwforce = 22
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 3
+	armour_penetration = 15				//Enhanced armor piercing
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	sharpness = IS_SHARP
+	var/war_cry = "AAAAARGH!!!"
+
+/obj/item/weapon/twohanded/bonespear/update_icon()
+		icon_state = "bone_spear[wielded]"
+
+/obj/item/weapon/twohanded/bonespear/afterattack(atom/movable/AM, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(AM, /turf/open))
+		return
