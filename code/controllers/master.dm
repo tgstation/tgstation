@@ -68,6 +68,7 @@ var/global/datum/controller/master/Master = new()
 			CHECK_TICK
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
+	SSminimap.Initialize(world.timeofday, zlevel) //XXX
 
 	var/tally = 0
 	var/obj/effect/spawner/lootdrop/maintenance/L = new()
@@ -108,6 +109,7 @@ var/global/datum/controller/master/Master = new()
 		CHECK_TICK
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
+	world.log << "Initializations complete."
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)

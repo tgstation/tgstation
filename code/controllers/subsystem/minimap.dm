@@ -16,19 +16,33 @@ var/datum/subsystem/minimap/SSminimap
 	if(zlevel)
 		return ..()
 	if(!config.generate_minimaps)
-		world << "Minimap generation disabled... Skipping"
-		return
+		//world << "Minimap generation disabled... Skipping"
+		//return
+		world.log << "Minimap generation disabled... \
+			but who cares about the config's feelings? Continuing."
+
+	// Get list of all mapfiles in _maps
+	var/list/mapfiles = list()
+	for(var/i in pathwalk("_maps/"))
+		if(dd_hassuffix(i, ".dmm"))
+			mapfiles += i
+	world.log << "[mapfiles.len] mapfiles found"
+	for(var/mf in mapfiles)
+		world.log << pathflatten(mf) //XXX
+	// Generate hashes for each of them, look up stored hashes
+	// For each hash difference, generate a new minimap
+	// Save the new minimap, save the new hash
 	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
 	if(hash == trim(file2text(hash_path())))
 		return ..()
 
 	for(var/z in z_levels)
-		generate(z)
+		var/icon/minimap = generate(z)
+		fcopy(minimap, map_path(z))
 		register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
 	fdel(hash_path())
 	text2file(hash, hash_path())
 	..()
-
 /datum/subsystem/minimap/proc/hash_path()
 	return "data/minimaps/[MAP_NAME].md5"
 
@@ -66,7 +80,7 @@ var/datum/subsystem/minimap/SSminimap
 	// Create a new icon and insert the generated minimap, so that BYOND doesn't generate different directions.
 	var/icon/final = new /icon()
 	final.Insert(minimap, "", SOUTH, 1, 0)
-	fcopy(final, map_path(z))
+	return final
 
 /datum/subsystem/minimap/proc/generate_tile(turf/tile, icon/minimap)
 	var/icon/tile_icon
