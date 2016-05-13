@@ -21,7 +21,7 @@
 "u" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/wood,/area/shuttle/escape)
 "v" = (/obj/structure/chair/office/dark,/turf/open/floor/wood,/area/shuttle/escape)
 "w" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/mob_spawn/human/corpse,/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/obj/machinery/light/small{dir = 8},/obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday,/turf/open/floor/carpet,/area/shuttle/escape)
-"x" = (/obj/structure/bed,/obj/item/weapon/bedsheet/red,/obj/item/weapon/paper{info = "i love mark<br>mark is my best friend<br><br>you are tearing me apart lisa"},/turf/open/floor/carpet,/area/shuttle/escape)
+"x" = (/obj/structure/bed,/obj/item/weapon/bedsheet/red,/obj/item/weapon/paper{info = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"},/turf/open/floor/carpet,/area/shuttle/escape)
 "y" = (/obj/structure/flora/kirbyplants,/turf/open/floor/wood,/area/shuttle/escape)
 "z" = (/obj/structure/table/wood,/obj/item/weapon/papercutter,/turf/open/floor/wood,/area/shuttle/escape)
 "A" = (/obj/structure/table/wood,/obj/machinery/computer/libraryconsole/bookmanagement,/turf/open/floor/wood,/area/shuttle/escape)
