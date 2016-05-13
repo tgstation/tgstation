@@ -1,0 +1,12 @@
+author: coiax, Nienhaus
+delete-after: True
+changes: 
+  - rscdel: "Unfortunately, the Belowyarn toys have been withdrawn from distribution
+due to Assistants choking on the batteries. Centcom has sent their
+condolences to the battery manufacturing plant."
+  - rscadd: "We are introducing Oh-cee the original content skeleton figurines.
+Pull its string, and hear it say a variety of phrases. Not suitable for
+infants or assistants under 36 months."
+  - tweak: "Note that pulling the string of all talking toys is now visible
+to others."
+  - rscadd: "Talking toys produce a lot more chatter than they did before. So do some skeleton \"tongues\"."
