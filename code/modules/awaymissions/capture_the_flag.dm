@@ -88,7 +88,6 @@
 	team = BLUE_TEAM
 
 
-
 /obj/machinery/capture_the_flag
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."

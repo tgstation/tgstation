@@ -165,3 +165,7 @@
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	return 1
+
+/mob/living/proc/damnation()
+	for(var/obj/machinery/hellbound_controller/H in machines)
+		H.damned_ckeys += ckey
