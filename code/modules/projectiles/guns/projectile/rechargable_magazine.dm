@@ -66,7 +66,7 @@
 	var/obj/item/weapon/gun/projectile/minigun/gun = null
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 	var/overheat = 0
-	var/overheat_max = 75
+	var/overheat_max = 40
 	var/heat_diffusion = 1
 
 /obj/item/weapon/minigunpack/New()
@@ -184,7 +184,7 @@
 			. = ..()
 			ammo_pack.overheat++
 		else
-			user << "The gun's heat sensor locked the trigger to prevent lense damage."
+			user << "The gun's heat sensor locked the trigger to prevent lens damage."
 
 /obj/item/weapon/gun/projectile/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
