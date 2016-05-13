@@ -132,13 +132,13 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if (istype(target))
 		target.orbiting_balls += src
 		poi_list -= src
-		target.dissipate_strength = orbiting_balls.len
+		target.dissipate_strength = target.orbiting_balls.len
 
 	. = ..()
 
 	if (istype(target))
 		target.orbiting_balls -= src
-		target.dissipate_strength = orbiting_balls.len
+		target.dissipate_strength = target.orbiting_balls.len
 	if (!loc)
 		qdel(src)
 
