@@ -1,0 +1,7 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "Fixed foam darts with the safety cap removed being reset when fired."
+  - rscadd: "Added the ability to remove pens from foam darts."
+  - bugfix: "Foam darts with pens inside them are no longer destroyed when fired."
+  - bugfix: "Foam darts no longer drop two darts when fired at a person on a janicart."

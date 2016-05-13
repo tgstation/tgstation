@@ -371,18 +371,37 @@ The proc would return a human next to the bot to be set to the patient var.
 Pass the desired type path itself, declaring a temporary var beforehand is not required.
 */
 /mob/living/simple_animal/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
-	var/final_result
-	for (var/scan in shuffle(view(scan_range, src))) //Search for something in range!
-		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
-			continue //If not, keep searching!
-		if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
-			continue
-		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
-		if(scan_result)
-			final_result = scan_result
-		else
-			continue //The current element failed assessment, move on to the next.
-		return final_result
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
+	for(var/scan in adjacent)//Let's see if there's something right next to us first!
+		var/final_result = checkscan(scan,scan_type,old_target)
+		if(final_result)
+			return final_result
+
+	for (var/scan in shuffle(view(scan_range, src))-adjacent) //Search for something in range!
+		var/final_result = checkscan(scan,scan_type,old_target)
+		if(final_result)
+			return final_result
+
+/mob/living/simple_animal/bot/proc/checkscan(scan, scan_type, old_target)
+	if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
+		return 0 //If not, keep searching!
+	if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+		return 0
+	var/turf/T = get_turf(scan)
+	if(T)
+		for(var/C in T.contents)
+			if(istype(C,src.type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+				return 0
+	var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
+	if(scan_result)
+		return scan_result
+	else
+		return 0 //The current element failed assessment, move on to the next.
+	return
+
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)

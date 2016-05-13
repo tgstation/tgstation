@@ -314,7 +314,7 @@
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
 	var/mob/living/carbon/human/user = usr
-	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
