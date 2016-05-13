@@ -1,25 +1,21 @@
 /obj/item/projectile/bullet/reusable
 	name = "reusable bullet"
 	desc = "How do you even reuse a bullet?"
-	var/obj/item/ammo_casing/caseless/ammo_type = /obj/item/ammo_casing/caseless/
+	var/ammo_type = /obj/item/ammo_casing/caseless/
+	var/dropped = 0
 
 /obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if (src.contents.len)
-		var/obj/content
-		for(content in src.contents)
-			content.loc = src.loc
-	else
-		new ammo_type(src.loc)
+	handle_drop()
 
 /obj/item/projectile/bullet/reusable/on_range()
-	if (src.contents.len)
-		var/obj/content
-		for(content in src.contents)
-			content.loc = src.loc
-	else
-		new ammo_type(src.loc)
+	handle_drop()
 	..()
+
+/obj/item/projectile/bullet/reusable/proc/handle_drop()
+	if(!dropped)
+		new ammo_type(src.loc)
+		dropped = 1
 
 /obj/item/projectile/bullet/reusable/magspear
 	name = "magnetic spear"
@@ -38,6 +34,29 @@
 	icon_state = "foamdart"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
+	var/obj/item/weapon/pen/pen = null
+
+/obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
+	if(dropped)
+		return
+	dropped = 1
+	var/obj/item/ammo_casing/caseless/foam_dart/newdart = new ammo_type(src.loc)
+	var/obj/item/ammo_casing/caseless/foam_dart/old_dart = ammo_casing
+	newdart.modified = old_dart.modified
+	if(pen)
+		var/obj/item/projectile/bullet/reusable/foam_dart/newdart_FD = newdart.BB
+		newdart_FD.pen = pen
+		pen.loc = newdart_FD
+		pen = null
+	newdart.BB.damage = damage
+	newdart.BB.nodamage = nodamage
+	newdart.BB.damage_type = damage_type
+	newdart.update_icon()
+
+/obj/item/projectile/bullet/reusable/foam_dart/Destroy()
+	if(pen)
+		qdel(pen)
+	return ..()
 
 /obj/item/projectile/bullet/reusable/foam_dart/riot
 	name = "riot foam dart"
