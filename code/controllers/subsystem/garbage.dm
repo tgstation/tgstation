@@ -17,7 +17,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/gcedlasttick = 0		// number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
-	
+
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
@@ -150,7 +150,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
-/proc/qdel(datum/D)
+/proc/qdel(datum/D, force=FALSE)
 	if(!D)
 		return
 #ifdef TESTING
@@ -166,9 +166,15 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
-				return
+				if(force)
+					SSgarbage.QueueForQueuing(D)
+				else
+					return
 			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
-				return
+				if(force)
+					SSgarbage.QueueForQueuing(D)
+				else
+					return
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.

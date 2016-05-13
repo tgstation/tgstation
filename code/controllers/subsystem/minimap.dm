@@ -16,15 +16,14 @@ var/datum/subsystem/minimap/SSminimap
 /datum/subsystem/minimap/Initialize(timeofday, zlevel)
 	if(zlevel)
 		return ..()
-	if(!config.generate_minimaps)
+	//if(!config.generate_minimaps)
 		//world << "Minimap generation disabled... Skipping"
 		//return
-		world.log << "Minimap generation disabled... \
-			but who cares about the config's feelings? Continuing."
+	world.log << "Generating minimaps for shuttles."
 
 	// Get list of all mapfiles in _maps
 	var/list/mapfiles = list()
-	for(var/i in pathwalk("_maps/"))
+	for(var/i in pathwalk("_maps/shuttles/"))
 		if(dd_hassuffix(i, ".dmm"))
 			mapfiles += i
 	world.log << "[mapfiles.len] mapfiles found"
@@ -52,7 +51,7 @@ var/datum/subsystem/minimap/SSminimap
 		var/list/affected_turfs = mt.get_affected_turfs(T, centered = FALSE)
 		for(var/turf/T0 in affected_turfs)
 			for(var/AM in T0.GetAllContents())
-				del(AM) // forgive me
+				qdel(AM, force=TRUE)
 			T0.ChangeTurf(/turf/open/space)
 
 		// Save the new minimap
@@ -75,7 +74,7 @@ var/datum/subsystem/minimap/SSminimap
 	// Load the background.
 	var/icon/minimap = new /icon('icons/minimap.dmi')
 	// Scale it up to our target size.
-	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
+	minimap.Scale(x2 * TILE_SIZE, y2 * TILE_SIZE)
 
 	var/counter = 512
 	// Loop over turfs and generate icons.
