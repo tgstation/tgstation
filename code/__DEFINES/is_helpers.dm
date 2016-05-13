@@ -8,6 +8,14 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+// Human sub-species
+#define isabductor(A) (is_species(A, /datum/species/abductor))
+#define isgolem(A) (is_species(A, /datum/species/golem))
+#define islizard(A) (is_species(A, /datum/species/lizard))
+#define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
+#define ispodperson(A) (is_species(A, /datum/species/podperson))
+#define isflyperson(A) (is_species(A, /datum/species/fly))
+
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
 #define isbrain(A) (istype(A, /mob/living/carbon/brain))
