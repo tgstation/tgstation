@@ -155,6 +155,7 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/borg/cyborghug(src)
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
@@ -229,6 +230,8 @@
 	modules += new /obj/item/device/harmalarm(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
 	modules += new /obj/item/weapon/holosign_creator/cyborg(src)
+	modules += new /obj/item/borg/cyborghug(src)
+	modules += new /obj/item/weapon/extinguisher(src)
 
 	emag = new /obj/item/borg/stun(src)
 

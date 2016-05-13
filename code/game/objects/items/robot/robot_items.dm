@@ -20,6 +20,28 @@
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
+/obj/item/borg/cyborghug
+	name = "Hugging Module"
+	icon_state = "hugmodule"
+	desc = "For when a someone really needs a hug."
+
+/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
+	if(M.health >= 0)
+		if(ishuman(M))
+			if(M.lying)
+				M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+								"<span class='notice'>You shake [M] trying to get \him up!</span>")
+			else
+				M.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
+						"<span class='notice'>You hug [M] to make \him feel better!</span>")
+			if(M.resting)
+				M.resting = 0
+				M.update_canmove()
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			return
+		M.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+				"<span class='notice'>You pet [M]!</span>")
+
 
 
 /obj/item/borg/charger

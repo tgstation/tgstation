@@ -720,10 +720,14 @@
 	id = "dizzysolution"
 	description = "Makes the target off balance and dizzy"
 	toxpwr = 0
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
 	M.confused += 2
 	M.Dizzy(2)
+	if(prob(20))
+		M << "You feel confused and disorientated."
+	..()
 
 /datum/reagent/toxin/peaceborg/tire
 	name = "Tiring Solution"
@@ -737,3 +741,4 @@
 	if(prob(30))
 		M.adjustStaminaLoss(20)
 		M << "You should sit down and take a rest..."
+	..()
