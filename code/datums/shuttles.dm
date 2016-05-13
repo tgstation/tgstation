@@ -120,7 +120,7 @@
 		What space station? \
 		I cannot tell you; it's space confidential. \
 		Aw, come space on. Why not? \
-		No, I can't. Anyway, how is your space sex life?"
+		No, I can't. Anyway, how is your space roleplay life?"
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
