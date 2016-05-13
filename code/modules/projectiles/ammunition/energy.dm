@@ -136,6 +136,18 @@
 	delay = 10
 	e_cost = 10
 
+/obj/item/ammo_casing/energy/gravipulse
+	projectile_type = /obj/item/projectile/gravipulse
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "repulse"
+	delay = 120
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+/obj/item/ammo_casing/energy/gravipulse/alt
+	projectile_type = /obj/item/projectile/gravipulse/alt
+	select_name = "attract"
+
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0

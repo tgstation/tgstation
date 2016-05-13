@@ -207,6 +207,16 @@
 	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
+/obj/item/weapon/gun/energy/gravity_gun
+	name = "Zero-Point Energy Field Manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
+	fire_delay = 70
+	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
+	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=5"
+	item_state = null
+	icon_state = "gravity_gun"
+	var/power = 4
+
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
