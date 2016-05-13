@@ -316,8 +316,8 @@ var/list/teleport_runes = list()
 		if(M.stat != DEAD && !iscultist(M) && is_convertable_to_cult(M.mind))
 			convertees |= M
 		else if(is_sacrifice_target(M.mind))
-			for(var/M in invokers)
-				M << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
+			for(var/C in invokers)
+				C << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 	if(!convertees.len)
 		fail_invoke()
 		log_game("Convert rune failed - no eligible convertees")
