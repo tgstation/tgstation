@@ -63,12 +63,12 @@
 
 	var/current_time = time_stamp()
 	if(!fingerprintshidden[M.key])
-		fingerprintshidden[M.key] = "Real name: [M.real_name]. First: \[[current_time]\][hasgloves]."
+		fingerprintshidden[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]."
 	else
 		var/laststamppos = findtext(fingerprintshidden[M.key], " Last: ")
 		if(laststamppos)
 			fingerprintshidden[M.key] = copytext(fingerprintshidden[M.key], 1, laststamppos)
-		fingerprintshidden[M.key] += " Last: \[[current_time]\][hasgloves]."
+		fingerprintshidden[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]."
 
 	fingerprintslast = M.ckey
 
