@@ -93,6 +93,7 @@
 			if(signs.len)
 				for(var/H in signs)
 					qdel(H)
+			shock = 0
 			return
 		else if(R.emagged&&!shock)
 			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
@@ -101,6 +102,7 @@
 			if(signs.len)
 				for(var/H in signs)
 					qdel(H)
+			shock = 1
 			return
 		else
 			if(signs.len)

@@ -24,25 +24,92 @@
 	name = "Hugging Module"
 	icon_state = "hugmodule"
 	desc = "For when a someone really needs a hug."
+	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
+
+/obj/item/borg/cyborghug/attack_self(mob/living/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/P = user
+		if(P.emagged)
+			if(mode < 3)
+				mode++
+			else
+				mode = 0
+		else if(mode < 1)
+			mode++
+		else
+			mode = 0
+	switch(mode)
+		if(0)
+			user << "Power reset. Hugs!"
+		if(1)
+			user << "Power increased!"
+		if(2)
+			user << "BZZT. Electrifying arms..."
+		if(3)
+			user << "ERROR: ARM ACTUATORS OVERLOADED."
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
-	if(M.health >= 0)
-		if(ishuman(M))
-			if(M.lying)
-				M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
-								"<span class='notice'>You shake [M] trying to get \him up!</span>")
-			else
-				M.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
-						"<span class='notice'>You hug [M] to make \him feel better!</span>")
-			if(M.resting)
-				M.resting = 0
-				M.update_canmove()
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			return
-		M.visible_message("<span class='notice'>[user] pets [M]!</span>", \
-				"<span class='notice'>You pet [M]!</span>")
-
-
+	switch(mode)
+		if(0)
+			if(M.health >= 0)
+				if(ishuman(M))
+					if(M.lying)
+						M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+					else
+						M.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
+								"<span class='notice'>You hug [M] to make \him feel better!</span>")
+					if(M.resting)
+						M.resting = 0
+						M.update_canmove()
+				else
+					M.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+							"<span class='notice'>You pet [M]!</span>")
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		if(1)
+			if(M.health >= 0)
+				if(ishuman(M))
+					if(M.lying)
+						M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+					else
+						M.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
+								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
+					if(M.resting)
+						M.resting = 0
+						M.update_canmove()
+				else
+					M.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
+							"<span class='warning'>You bop [M] on the head!</span>")
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+		if(2)
+			if(M.health >= 0)
+				if(ishuman(M))
+					M.electrocute_act(5, "[user]", safety = 1)
+					M.visible_message("<span class='userdanger'>[user] electrocutes [M] with their touch!</span>", \
+						"<span class='danger'>You electrocute [M] with your touch!</span>")
+					M.update_canmove()
+				else
+					if(!isrobot(M))
+						M.adjustFireLoss(10)
+						M.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
+							"<span class='danger'>You shock [M]!</span>")
+					else
+						M.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
+							"<span class='danger'>You shock [M] to no effect.</span>")
+				playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
+				user.cell.charge -= 400
+		if(3)
+			if(M.health >= 0)
+				if(ishuman(M))
+					M.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
+						"<span class='danger'>You crush [M] in your grip!</span>")
+				else
+					M.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
+							"<span class='danger'>You crush [M]!</span>")
+				playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
+				M.adjustBruteLoss(10)
+				user.cell.charge -= 300
 
 /obj/item/borg/charger
 	name = "power connector"

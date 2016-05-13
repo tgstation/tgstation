@@ -170,7 +170,7 @@ RSF
 	user << "Fabricating Cookie.."
 	var/obj/item/weapon/reagent_containers/food/snacks/cookie/S = new /obj/item/weapon/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
-		S.list_reagents = list("chloralhydrate2" = 15, "nutriment" = 5, "vitamin" = 5)
+		S.reagents.add_reagent("chloralhydrate2", 10)
 	if (isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

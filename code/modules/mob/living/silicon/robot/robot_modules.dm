@@ -233,7 +233,7 @@
 	modules += new /obj/item/borg/cyborghug(src)
 	modules += new /obj/item/weapon/extinguisher(src)
 
-	emag = new /obj/item/borg/stun(src)
+	emag = new /obj/item/weapon/reagent_containers/borghypo/peace/hacked(src)
 
 /obj/item/weapon/robot_module/peacekeeper/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
