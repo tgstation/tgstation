@@ -194,8 +194,9 @@
 /obj/effect/proc_holder/spell/targeted/sintouch/cast(list/targets, mob/living/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
 		if(!H.mind)
-			for(var/datum/objective/sintouched/A in H.mind.objectives)
-				continue
+			continue
+		for(var/datum/objective/sintouched/A in H.mind.objectives)
+			continue
 		H.influenceSin()
 		H.Weaken(2)
 		H.Stun(2)
