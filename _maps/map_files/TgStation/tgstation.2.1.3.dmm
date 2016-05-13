@@ -47293,9 +47293,14 @@
 /turf/open/floor/plating,
 /area/construction)
 "bSz" = (
-/obj/structure/table,
-/turf/open/floor/plating,
-/area/construction)
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/turf/open/space,
+/area/solar/port)
 "bSA" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
@@ -55363,11 +55368,17 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ciP" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
 	},
-/turf/open/space,
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plasteel/airless{
+	icon_state = "solarpanel"
+	},
 /area/solar/port)
 "ciQ" = (
 /obj/machinery/power/solar_control{
@@ -55747,10 +55758,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/starboardsolar)
 "cjH" = (
+/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -55759,8 +55771,8 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/space,
 /area/solar/port)
@@ -56896,13 +56908,18 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cml" = (
-/obj/structure/chair{
-	dir = 4
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/area/shuttle/syndicate)
+/turf/open/floor/plasteel/airless{
+	icon_state = "solarpanel"
+	},
+/area/solar/port)
 "cmm" = (
 /obj/structure/chair{
 	dir = 8
@@ -57387,15 +57404,21 @@
 /turf/open/floor/plating,
 /area/maintenance/starboardsolar)
 "cnl" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/space,
 /area/solar/port)
@@ -58387,18 +58410,19 @@
 	},
 /area/shuttle/syndicate)
 "coS" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_nw";
-	name = "south maintenance airlock";
-	turf_type = /turf/open/space;
-	width = 18
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/space,
-/area/space)
+/area/solar/port)
 "coT" = (
 /obj/item/pipe{
 	dir = 4;
@@ -79872,11 +79896,11 @@ cca
 aaa
 chK
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ciP
+ciP
+ciP
+ciP
+ciP
 aaa
 aaS
 aaa
@@ -80128,12 +80152,12 @@ ccX
 ccX
 cgz
 chL
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bSz
+cjH
+cjH
+cjH
+cjH
+cjH
 aaa
 aaS
 aaa
@@ -80386,11 +80410,11 @@ ccb
 aaa
 chL
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cml
+cml
+cml
+cml
+cml
 aaa
 aaS
 aaa
@@ -80900,11 +80924,11 @@ cca
 aaa
 chL
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ciP
+ciP
+ciP
+ciP
+ciP
 aaa
 aaS
 aaa
@@ -81156,12 +81180,12 @@ ccX
 ccX
 cgz
 chL
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bSz
+cnl
+cnl
+cnl
+cnl
+coS
 aaa
 aaS
 aaa
@@ -81414,11 +81438,11 @@ ccb
 aaa
 chL
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cml
+cml
+cml
+cml
+cml
 aaa
 aaS
 aaa
@@ -81928,11 +81952,11 @@ cca
 aaa
 chL
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ciP
+ciP
+ciP
+ciP
+ciP
 aaa
 aaS
 aaa
@@ -82184,12 +82208,12 @@ ccX
 ccX
 cgz
 chL
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bSz
+cnl
+cnl
+cnl
+cnl
+coS
 aaa
 aaS
 aaa
@@ -82442,11 +82466,11 @@ ccb
 aaa
 chL
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cml
+cml
+cml
+cml
+cml
 aaa
 aaS
 aaa
