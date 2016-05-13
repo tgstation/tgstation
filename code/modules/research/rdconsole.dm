@@ -249,6 +249,7 @@ proc/CallMaterialName(ID)
 			for(var/T in temp_tech)
 				if(files.IsTechHigher(T, temp_tech[T]))
 					cancontinue = TRUE
+					break
 			if(!cancontinue)
 				var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
 				if(choice == "Cancel" || !linked_destroy) return
@@ -395,20 +396,24 @@ proc/CallMaterialName(ID)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					spawn(32*coeff*amount**0.8)
-						if(g2g) //And if we only fail the material requirements, we still spend time and power
-							var/already_logged = 0
-							for(var/i = 0, i<amount, i++)
-								var/obj/item/new_item = new P(src)
-								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-									new_item.investigate_log("built by [key]","singulo")
-								if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
-									new_item.materials = efficient_mats.Copy()
-								new_item.loc = linked_lathe.loc
-								if(!already_logged)
-									feedback_add_details("item_printed","[new_item.type]|[amount]")
-									already_logged = 1
-						linked_lathe.busy = 0
-						screen = old_screen
+						if(linked_lathe)
+							if(g2g) //And if we only fail the material requirements, we still spend time and power
+								var/already_logged = 0
+								for(var/i = 0, i<amount, i++)
+									var/obj/item/new_item = new P(src)
+									if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+										new_item.investigate_log("built by [key]","singulo")
+									if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
+										new_item.materials = efficient_mats.Copy()
+									new_item.loc = linked_lathe.loc
+									if(!already_logged)
+										feedback_add_details("item_printed","[new_item.type]|[amount]")
+										already_logged = 1
+							screen = old_screen
+							linked_lathe.busy = 0
+						else
+							src.visible_message("<span class='notice'>The [src.name] beeps, \"Something went wrong, production halted!\"</span>")
+							screen = 1.0
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.

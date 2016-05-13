@@ -389,7 +389,7 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
-	if(flags & NODECONSTRUCT)
+	if(flags & NODECONSTRUCT & !W.works_from_distance)
 		return
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
