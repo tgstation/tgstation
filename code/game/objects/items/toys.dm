@@ -593,7 +593,32 @@
 		"Why did the skeleton go to the hospital? \
 			To get his ghoul stones removed.",
 		"Why can't skeletons play music in churches? \
-			Because they have no organs.")
+			Because they have no organs.",
+		"There's a skeleton inside everyone! Except slime people I guess...",
+		"The birds are too busy to notice me acting in the shadows!",
+		"Giraffes have the same number of bones in their necks as humans. \
+			You should never trust a giraffe.",
+		"When I meet a dog in the street, I always offer it a bone!",
+		"In corsetry, a bone is one of the rigid parts of a corset that \
+			forms its frame and gives it rigidity.",
+		"A person who plays the trombone is called a trombonist or \
+			trombone player.",
+		"Remember, compromise is for those without backbones!",
+		"If you go up to the captain and say the word 'bone' repeatedly, \
+			eventually he'll brig you.",
+		"Yo ho ho, shiver me bones!",
+		"So what you're saying is, you only love me for my legs?",
+		"You will never again find socks that match!",
+		"BONES! BONES! BONES!",
+		"Bones absorb x-rays, which is why radiation gives you superpowers.",
+		"Oh-cee! The ORIGINAL CONTENT SKELETON. Suitable for ages 36 months \
+			and up.",
+		"I just don't have the heart to judge you.",
+		"I don't have the stomach for this.",
+		"I'm a fighter, not a liver.",
+		"How can I see without eyeballs?",
+		"Ask your parents about 'boning', before you get pregnant.",
+		"Remember, a dog is for life, not just for christmas.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to commit \
