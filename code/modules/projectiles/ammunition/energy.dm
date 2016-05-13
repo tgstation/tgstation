@@ -26,7 +26,7 @@
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
 	pellets = 5
-	variance = 0.8
+	variance = 25
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
@@ -58,6 +58,13 @@
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/electrode/shotgun
+	projectile_type = /obj/item/projectile/energy/electrode/shotgun
+	select_name = "taser"
+	e_cost = 1000
+	pellets = 3 //muh balance..
+	variance = 25
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
@@ -161,7 +168,7 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/net
 	select_name = "netting"
 	pellets = 6
-	variance = 1
+	variance = 40
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap

@@ -38,6 +38,9 @@
 	sparks.start()
 	..()
 
+/obj/item/projectile/energy/electrode/shotgun
+	icon_state = "minispark"
+
 /obj/item/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"

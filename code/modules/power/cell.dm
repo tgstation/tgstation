@@ -18,6 +18,7 @@
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
+	var/can_charge = 1
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
@@ -25,7 +26,7 @@
 	charge = maxcharge
 	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
 	desc = desc + ratingdesc
-	updateicon()
+	update_icon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
 	SSobj.processing.Remove(src)
@@ -45,7 +46,7 @@
 	else
 		return PROCESS_KILL
 
-/obj/item/weapon/stock_parts/cell/proc/updateicon()
+/obj/item/weapon/stock_parts/cell/update_icon()
 	overlays.Cut()
 	if(charge < 0.01)
 		return
@@ -311,3 +312,29 @@
 
 /obj/item/weapon/stock_parts/cell/emproof/corrupt()
 	return
+
+/obj/item/weapon/stock_parts/cell/stuncartridge
+	name = "taser cartridge"
+	desc = "A disposable compressed energy cell for tasers."
+	icon_state = "taser"
+	force = 0
+	throwforce = 0
+	w_class = 1
+	can_charge = 0
+
+
+
+/obj/item/weapon/stock_parts/cell/stuncartridge/update_icon()
+	overlays.Cut()
+	if(charge >= maxcharge)
+		name = "taser cartridge"
+		overlays += "[icon_state]-l"
+	else
+		name = "spent taser cartridge"
+		overlays += "[icon_state]-e"
+
+/obj/item/weapon/stock_parts/cell/stuncartridge/corrupt() //corrupting leads to weird situations with these
+	return
+
+/obj/item/weapon/stock_parts/cell/stuncartridge/emp_act(severity) //all emps instantly fry these cartridges
+	charge -= 1000

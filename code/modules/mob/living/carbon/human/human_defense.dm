@@ -53,6 +53,7 @@
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
+					P.Angle = null
 
 				return -1 // complete projectile permutation
 

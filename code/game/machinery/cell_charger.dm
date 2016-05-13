@@ -34,6 +34,7 @@
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = W
 		if(stat & BROKEN)
 			user << "<span class='warning'>[src] is broken!</span>"
 			return
@@ -42,6 +43,9 @@
 			return
 		if(charging)
 			user << "<span class='warning'>There is already a cell in the charger!</span>"
+			return
+		if(!C.can_charge)
+			user << "<span class='warning'>This type of cell does not fit in the charger!</span>"
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
@@ -71,7 +75,7 @@
 
 
 /obj/machinery/cell_charger/proc/removecell()
-	charging.updateicon()
+	charging.update_icon()
 	charging = null
 	chargelevel = -1
 	updateicon()

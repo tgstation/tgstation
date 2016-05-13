@@ -5,6 +5,7 @@
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
+	hitsound_wall = "ricochet"
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
@@ -124,7 +125,7 @@
 	damage = 10
 	weaken = 4
 	stun = 4
-	
+
 /obj/item/projectile/bullet/honker
 	damage = 0
 	weaken = 5
@@ -135,7 +136,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
-	
+
 /obj/item/projectile/bullet/honker/New()
 	..()
 	SpinAnimation()
