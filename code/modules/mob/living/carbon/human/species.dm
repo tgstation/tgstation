@@ -1035,20 +1035,10 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(affecting.get_damage() >= (affecting.max_damage - I.armour_penetration/2))
-		if(I.can_dismember() && prob(I.force*(I.w_class-1)))
-			if(affecting.dismember(I.damtype))
-				I.add_blood(H)
-				switch(I.damtype)
-					if(BURN)
-						playsound(get_turf(H), 'sound/weapons/sear.ogg', 80, 1)
-					else
-						playsound(get_turf(H), pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg'), 80, 1)
-						affecting.add_blood(H)
-						var/turf/location = H.loc
-						if(istype(location))
-							location.add_blood(H)
-							return
+	if(prob(I.get_dismemberment_chance(affecting)))
+		if(affecting.dismember(I.damtype))
+			I.add_blood(H)
+			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
