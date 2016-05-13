@@ -138,31 +138,23 @@
 
 /obj/item/weapon/bikehorn/golden
 	name = "golden bike horn"
-	desc = "Flippin' awesome!"
+	desc = "Golden? Clearly, its made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
 
 /obj/item/weapon/bikehorn/golden/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!spam_flag)
-		for(M in ohearers(7, user))
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
-					continue
-			M.emote("flip")
+	flip_mobs()
 	return ..()
 
 /obj/item/weapon/bikehorn/golden/attack_self(mob/living/carbon/M, mob/user)
-	if(!spam_flag)
-		spam_flag = 1
-		playsound(src.loc, honksound, 50, 1)
-		src.add_fingerprint(user)
+	flip_mobs()
+	return ..()
+
+/obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
+	if (!spam_flag)
 		for(M in ohearers(7, user))
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue
 			M.emote("flip")
-		spawn(cooldowntime)
-			spam_flag = 0
-	return
