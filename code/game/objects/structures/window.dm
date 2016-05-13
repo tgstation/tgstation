@@ -17,6 +17,7 @@
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 	var/image/crack_overlay
+	var/list/debris = list()
 	can_be_unanchored = 1
 
 /obj/structure/window/examine(mob/user)
@@ -34,7 +35,22 @@
 	ini_dir = dir
 	air_update_turf(1)
 
-	return
+	// Precreate our own debris
+
+	var/shards = 1
+	if(fulltile)
+		shards++
+	var/rods = 0
+	if(reinf)
+		rods++
+		if(fulltile)
+			rods++
+
+	for(var/i in 1 to shards)
+		debris += new /obj/item/weapon/shard(src)
+	if(rods)
+		debris += new /obj/item/stack/rods(src, rods)
+
 
 /obj/structure/window/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -53,7 +69,10 @@
 	shatter()
 
 /obj/structure/window/narsie_act()
-	color = "#7D1919"
+	var/evil_color = "#7D1919"
+	color = evil_color
+	for(var/obj/item/weapon/shard/shard in debris)
+		shard.color = evil_color
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -264,28 +283,13 @@
 		return
 	playsound(src, "shatter", 70, 1)
 	var/turf/T = loc
-	var/produced_items = list()
 
 	if(!(flags & NODECONSTRUCT))
-		var/shards = 1
-		if(fulltile)
-			shards++
-		var/rods = 0
-		if(reinf)
-			rods++
-			if(fulltile)
-				rods++
+		for(var/i in debris)
+			var/obj/item/I = i
 
-		for(var/i in 1 to shards)
-			produced_items += new /obj/item/weapon/shard(src)
-		if(rods)
-			produced_items += new /obj/item/stack/rods(src, rods)
-
-	for(var/i in produced_items)
-		var/obj/item/I = i
-
-		I.loc = T
-		transfer_fingerprints_to(I)
+			I.loc = T
+			transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 
