@@ -561,7 +561,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
-	var/war_cry = "AAAAARGH!!!"
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
 		icon_state = "bone_spear[wielded]"
