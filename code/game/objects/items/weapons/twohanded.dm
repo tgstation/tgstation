@@ -523,24 +523,8 @@
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 
-/obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()
 	icon_state = "bone_axe[wielded]"
-	return
-
-/obj/item/weapon/twohanded/fireaxe/boneaxe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] axes \himself from head to toe! It looks like \he's trying to commit suicide..</span>")
-	return (BRUTELOSS)
-
-/obj/item/weapon/twohanded/fireaxe/boneaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	if(!proximity) return
-	if(wielded) //Because why the hell not give it to the bone axe, too? LITERALLY A RESKINNED FIREAXE. I was told to make it this.
-		if(istype(A,/obj/structure/window))
-			var/obj/structure/window/W = A
-			W.shatter()
-		else if(istype(A,/obj/structure/grille))
-			var/obj/structure/grille/G = A
-			G.take_damage(16)
-
 
 /*
  * Bone Spear
