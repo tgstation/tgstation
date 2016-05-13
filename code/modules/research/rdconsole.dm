@@ -243,51 +243,56 @@ proc/CallMaterialName(ID)
 		if(linked_destroy)
 			if(linked_destroy.busy)
 				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
-			else
-				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
+				return
+			var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
+			var/cancontinue = FALSE
+			for(var/T in temp_tech)
+				if(files.IsTechHigher(T, temp_tech[T]))
+					cancontinue = TRUE
+			if(!cancontinue)
+				var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
 				if(choice == "Cancel" || !linked_destroy) return
-				linked_destroy.busy = 1
-				screen = 0.1
-				updateUsrDialog()
-				flick("d_analyzer_process", linked_destroy)
-				spawn(24)
-					if(linked_destroy)
-						linked_destroy.busy = 0
-						if(!linked_destroy.hacked)
-							if(!linked_destroy.loaded_item)
-								usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
-								screen = 1.0
-								return
-
-							var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
-							for(var/T in temp_tech)
-								files.UpdateTech(T, temp_tech[T])
+			linked_destroy.busy = 1
+			screen = 0.1
+			updateUsrDialog()
+			flick("d_analyzer_process", linked_destroy)
+			spawn(24)
+				if(linked_destroy)
+					linked_destroy.busy = 0
+					if(!linked_destroy.hacked)
+						if(!linked_destroy.loaded_item)
+							usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
 							screen = 1.0
+							return
 
-							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-								for(var/material in linked_destroy.loaded_item.materials)
-									linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
-							linked_destroy.loaded_item = null
-						else
-							screen = 1.0
-						for(var/obj/I in linked_destroy.contents)
-							for(var/mob/M in I.contents)
-								M.death()
-							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
-								var/obj/item/stack/sheet/S = I
-								if(S.amount > 1)
-									S.amount--
-									linked_destroy.loaded_item = S
-								else
-									qdel(S)
-									linked_destroy.icon_state = "d_analyzer"
+						for(var/T in temp_tech)
+							files.UpdateTech(T, temp_tech[T])
+						screen = 1.0
+
+						if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+							for(var/material in linked_destroy.loaded_item.materials)
+								linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+							feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
+						linked_destroy.loaded_item = null
+					else
+						screen = 1.0
+					for(var/obj/I in linked_destroy.contents)
+						for(var/mob/M in I.contents)
+							M.death()
+						if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+							var/obj/item/stack/sheet/S = I
+							if(S.amount > 1)
+								S.amount--
+								linked_destroy.loaded_item = S
 							else
-								if(!(I in linked_destroy.component_parts))
-									qdel(I)
-									linked_destroy.icon_state = "d_analyzer"
-						use_power(250)
-						updateUsrDialog()
+								qdel(S)
+								linked_destroy.icon_state = "d_analyzer"
+						else
+							if(!(I in linked_destroy.component_parts))
+								qdel(I)
+								linked_destroy.icon_state = "d_analyzer"
+					use_power(250)
+					updateUsrDialog()
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 		if(src.allowed(usr))
