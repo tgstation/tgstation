@@ -36,7 +36,7 @@
 	if(kill)
 		died_ckeys |= ckey
 
-/mob/proc/isbenched()
+/mob/proc/is_ineligible_for_ghost_roles()
 	. = FALSE
 	for(var/x in soulbenchers_list)
 		var/obj/machinery/soulbencher/sb = x

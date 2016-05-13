@@ -30,6 +30,9 @@
 		crit_fail = 1
 
 /obj/item/device/unactivated_swarmer/attack_ghost(mob/user)
+	if(user.is_ineligible_for_ghost_roles())
+		return
+
 	if(crit_fail)
 		user << "This swarmer shell is completely depowered. You cannot activate it."
 		return

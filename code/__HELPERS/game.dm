@@ -293,7 +293,7 @@
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
-			if(G.isbenched())
+			if(G.is_ineligible_for_ghost_roles())
 				continue
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
@@ -403,7 +403,7 @@
 	for(var/mob/dead/observer/G in player_list)
 		if(!G.key || !G.client)
 			continue
-		if(G.isbenched())
+		if(G.is_ineligible_for_ghost_roles())
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs.be_special & be_special_flag))
