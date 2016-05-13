@@ -1,5 +1,0 @@
-author: KorPhaeron
-delete-after: True
-changes: 
-  - rscadd: "Drake attacks are now much easier to avoid."
-  - rscadd: "Player controlled drakes can now consume bodies to heal, and alt+click targets to divebomb them."
