@@ -53,7 +53,7 @@
 /obj/machinery/computer/shuttle/mining
 	name = "Mining Shuttle Console"
 	desc = "Used to call and send the mining shuttle."
-	circuit = /obj/item/weapon/circuitboard/mining_shuttle
+	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1

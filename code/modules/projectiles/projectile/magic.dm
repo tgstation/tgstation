@@ -54,7 +54,12 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
 			if(!target.ckey)
 				for(var/mob/dead/observer/ghost in player_list)

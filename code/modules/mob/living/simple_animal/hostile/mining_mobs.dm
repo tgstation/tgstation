@@ -132,6 +132,7 @@
 						  /obj/item/weapon/ore/uranium)
 
 	var/chase_time = 100
+	var/will_burrow = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/New()
 	..()
@@ -151,8 +152,9 @@
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
-			spawn(chase_time)
-				Burrow()
+			if(will_burrow)
+				spawn(chase_time)
+					Burrow()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -851,6 +853,7 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
+	faction = list("mining", "ashwalker")
 	density = 0
 	speak_chance = 1
 	turns_per_move = 8

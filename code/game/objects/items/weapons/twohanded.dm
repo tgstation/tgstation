@@ -201,7 +201,7 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 75
+	armour_penetration = 35
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -339,7 +339,8 @@
 		if(input)
 			src.war_cry = input
 
-/obj/item/weapon/twohanded/spear/CheckParts()
+/obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
+	..()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)
 		explosive = null
@@ -418,3 +419,96 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
+
+/obj/item/weapon/twohanded/pitchfork
+	icon_state = "pitchfork0"
+	name = "pitchfork"
+	desc = "A simple tool used for moving hay."
+	force = 7
+	throwforce = 15
+	w_class = 4
+	force_unwielded = 7
+	force_wielded = 15
+	attack_verb = list("attacked", "impaled", "pierced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/pitchfork/demonic
+	name = "demonic pitchfork"
+	desc = "A red pitchfork, it looks like the work of the devil."
+	force = 19
+	throwforce = 24
+	force_unwielded = 19
+	force_wielded = 25
+
+/obj/item/weapon/twohanded/pitchfork/demonic/greater
+	force = 24
+	throwforce = 50
+	force_unwielded = 24
+	force_wielded = 34
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended
+	force = 100
+	throwforce = 100
+	force_unwielded = 100
+	force_wielded = 500000 // Kills you DEAD.
+
+/obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "pitchfork[wielded]"
+
+/obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] impales \himself in \his abdomen with [src]! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
+/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
+	if(istype(user, /mob/living))
+		var/mob/living/U = user
+		if(!U.mind.devilinfo)
+			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
+				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
+			if(ishuman(U))
+				var/mob/living/carbon/human/H = U
+				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+			else
+				U.adjustFireLoss(rand(force/2,force))
+
+/obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
+	if(!user.mind.devilinfo)
+		user << "<span class ='warning'>The [src] burns in your hands.</span>"
+		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+	..()
+
+//HF blade
+
+/obj/item/weapon/twohanded/vibro_weapon
+	icon_state = "hfrequency0"
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	force_unwielded = 20
+	force_wielded = 40
+	armour_penetration = 100
+	block_chance = 40
+	throwforce = 20
+	throw_speed = 4
+	sharpness = IS_SHARP
+	attack_verb = list("cut", "sliced", "diced")
+	w_class = 4
+	slot_flags = SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || attack_type != PROJECTILE_ATTACK)
+		if(prob(final_block_chance))
+			if(attack_type == PROJECTILE_ATTACK)
+				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+				return 1
+			else
+				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				return 1
+	return 0
+
+/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+	icon_state = "hfrequency[wielded]"

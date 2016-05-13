@@ -231,6 +231,19 @@
 	new /obj/item/weapon/implantpad(src)
 	new /obj/item/weapon/locator(src)
 
+/obj/item/weapon/storage/box/minertracker
+	name = "boxed tracking implant kit"
+	desc = "For finding those who have died on the accursed lavaworld."
+	icon_state = "implant"
+
+/obj/item/weapon/storage/box/minertracker/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implanter(src)
+	new /obj/item/weapon/implantpad(src)
+	new /obj/item/weapon/locator(src)
+
 /obj/item/weapon/storage/box/chemimp
 	name = "boxed chemical implant kit"
 	desc = "Box of stuff used to implant chemicals."
@@ -804,7 +817,7 @@
 
 /obj/item/weapon/storage/box/rndboards/New()
 	..()
-	new /obj/item/weapon/circuitboard/protolathe(src)
-	new /obj/item/weapon/circuitboard/destructive_analyzer(src)
-	new /obj/item/weapon/circuitboard/circuit_imprinter(src)
-	new /obj/item/weapon/circuitboard/rdconsole(src)
+	new /obj/item/weapon/circuitboard/machine/protolathe(src)
+	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
+	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/weapon/circuitboard/computer/rdconsole(src)

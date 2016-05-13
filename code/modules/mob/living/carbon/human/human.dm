@@ -47,7 +47,12 @@
 
 	martial_art = default_martial_art
 
+	handcrafting = new()
+
 	..()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.craft(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -150,7 +155,7 @@
 
 	take_overall_damage(b_loss,f_loss)
 	//attempt to dismember bodyparts
-	if(severity >= 2 || !bomb_armor)
+	if(severity <= 2 || !bomb_armor)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
@@ -872,6 +877,11 @@
 	update_icons()	//apply the now updated overlays to the mob
 
 
+/mob/living/carbon/human/wash_cream()
+	//clean both to prevent a rare bug
+	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
+	overlays -=image('icons/effects/creampie.dmi', "creampie_human")
+
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
@@ -990,3 +1000,41 @@
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	..()
+
+/mob/living/carbon/human/proc/influenceSin()
+	var/datum/objective/sintouched/O
+	switch(rand(1,7))//traditional seven deadly sins... except lust.
+		if(1) // acedia
+			log_game("[src] was influenced by the sin of Acedia.")
+			O = new /datum/objective/sintouched/acedia
+		if(2) // Gluttony
+			log_game("[src] was influenced by the sin of gluttony.")
+			O = new /datum/objective/sintouched/gluttony
+		if(3) // Greed
+			log_game("[src] was influenced by the sin of greed.")
+			O = new /datum/objective/sintouched/greed
+		if(4) // sloth
+			log_game("[src] was influenced by the sin of sloth.")
+			O = new /datum/objective/sintouched/sloth
+		if(5) // Wrath
+			log_game("[src] was influenced by the sin of wrath.")
+			O = new /datum/objective/sintouched/wrath
+		if(6) // Envy
+			log_game("[src] was influenced by the sin of envy.")
+			O = new /datum/objective/sintouched/envy
+		if(7) // Pride
+			log_game("[src] was influenced by the sin of pride.")
+			O = new /datum/objective/sintouched/pride
+	ticker.mode.sintouched += src.mind
+	src.mind.objectives += O
+	var/obj_count = 1
+	src << "<span class='notice'>Your current objectives:</span>"
+	for(O in src.mind.objectives)
+		var/datum/objective/objective = O
+		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		obj_count++
+
+/mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
+	. = ..()
+	if (dna && dna.species)
+		. += dna.species.check_weakness(weapon, attacker)

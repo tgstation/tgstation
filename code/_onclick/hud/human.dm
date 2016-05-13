@@ -41,9 +41,6 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
-
-
-
 /mob/living/carbon/human/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
@@ -54,6 +51,10 @@
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
+
+	using = new /obj/screen/inventory/craft
+	using.icon = ui_style
+	static_inventory += using
 
 	using = new /obj/screen/act_intent()
 	using.icon_state = mymob.a_intent

@@ -1,9 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - rscadd: "DISMEMBERMENT! Humans can now lose their bodyparts. Explosions and being attacked with a heavy sharp item on a specific bodypart can cause dismemberment."
-  - rscadd: "You can't be handcuffed or legcuffed if you're missing an arm or leg. You can't use items when you have no legs, your arms are too busy helping you crawl, unless your are buckled to a chair. You're slower when missing a leg."
-  - rscadd: "You lose organs and items if the bodypart they are inside gets cut off. You can always retrieve them by cutting the dropped bodypart with a sharp object."
-  - rscadd: "Medbay can replace your missing limbs with robotic parts via surgery, or amputate you."
-  - rscadd: "Changelings do not die when decapitated! They can regrow all their limbs with Fleshmend, or just one arm with Arm Blade or Organic Shield."
-  - rscadd: "Your chest cannot be dropped, but it will spill its organs onto the ground when dismembered."

@@ -13,11 +13,16 @@
 
 /obj/machinery/chem_heater/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_heater(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/chem_heater
+	name = "circuit board (Chemical Heater)"
+	build_path = /obj/machinery/chem_heater
+	origin_tech = "materials=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/chem_heater/RefreshParts()
 	heater_coefficient = 0.10

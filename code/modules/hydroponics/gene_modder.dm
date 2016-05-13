@@ -23,13 +23,18 @@
 
 /obj/machinery/plantgenes/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/plantgenes(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/plantgenes
+	name = "circuit board (Plant DNA Manipulator)"
+	build_path = /obj/machinery/plantgenes
+	origin_tech = "programming=2;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/plantgenes/RefreshParts()
 	rating = 0
@@ -353,7 +358,7 @@
 /obj/machinery/plantgenes/seedvault/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/plantgenes(src)
+	component_parts += new /obj/item/weapon/circuitboard/machine/plantgenes(src)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser/quadultra(src)
