@@ -24,6 +24,8 @@
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
+	if(user.isbenched())
+		return
 	if(!uses)
 		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return

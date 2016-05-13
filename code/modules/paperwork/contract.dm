@@ -205,6 +205,7 @@
 	user.mind.damnation_type = contractType
 	owner.devilinfo.add_soul(user.mind)
 	update_text(user.real_name)
+	user.damnation()
 	return 1
 
 /obj/item/weapon/paper/contract/infernal/power/FulfillContract(mob/living/carbon/human/user = target.current)

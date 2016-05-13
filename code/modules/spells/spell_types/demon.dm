@@ -165,3 +165,8 @@
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	return 1
+
+/mob/living/proc/damnation()
+	for(var/M in soulbenchers_list)
+		var/obj/machinery/soulbencher/sb = M
+		sb.bench(src.ckey)
