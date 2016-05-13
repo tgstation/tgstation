@@ -375,14 +375,14 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bonedagger
-	name = "Bone Bracers"
+	name = "Bone Dagger"
 	result = /obj/item/weapon/kitchen/knife/combat/bone
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/bonespear
-	name = "Bone Bracers"
+	name = "Bone Spear"
 	result = /obj/item/weapon/twohanded/bonespear
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4,
@@ -390,7 +390,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/boneaxe
-	name = "Bone Bracers"
+	name = "Bone Axe"
 	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
 	time = 50
 	reqs = list(/obj/item/stack/sheet/bone = 8,
