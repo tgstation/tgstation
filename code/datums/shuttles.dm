@@ -114,13 +114,13 @@
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
-	name = "Oh, Hi Mark"
-	description = "How was work today? \
-		Oh, pretty good. We got a new client and the bank will make a lot of money. \
-		What client? \
-		I cannot tell you; it's confidential. \
-		Aw, come on. Why not? \
-		No, I can't. Anyway, how is your sex life?"
+	name = "Oh, Hi Daniel"
+	description = "How was space work today? \
+		Oh, pretty good. We got a new space station and the company will make a lot of money. \
+		What space station? \
+		I cannot tell you; it's space confidential. \
+		Aw, come space on. Why not? \
+		No, I can't. Anyway, how is your space sex life?"
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
