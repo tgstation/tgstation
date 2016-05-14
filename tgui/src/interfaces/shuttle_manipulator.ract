@@ -1,19 +1,15 @@
 <link rel='ractive' href='./shuttle_manipulator/status.ract'>
+<link rel='ractive' href='./shuttle_manipulator/templates.ract'>
+<link rel='ractive' href='./shuttle_manipulator/modification.ract'>
 
-<status></status>
 <ui-tabs tabs='{{data.tabs}}'>
-	{{#each data.shuttles}}
-		<tab name='{{port_id}}'>
-			{{#each templates}}
-				<ui-display title='{{name}}'>
-					{{#if description}}
-						<ui-section label='Description'>{{description}}</ui-section>
-					{{/if}}
-					{{#if admin_notes}}
-						<ui-section label='Admin Notes'>{{admin_notes}}</ui-section>
-					{{/if}}
-				</ui-display>
-			{{/each}}
-		</tab>
-	{{/each}}
+	<tab name='Status'>
+		<status></status>
+	</tab>
+	<tab name='Templates'>
+		<templates></templates>
+	</tab>
+	<tab name='Modification'>
+		<modification></modification>
+	</tab>
 </ui-tabs>

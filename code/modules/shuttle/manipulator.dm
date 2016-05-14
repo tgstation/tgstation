@@ -22,18 +22,51 @@
 			master_ui, state)
 		ui.open()
 
+/proc/shuttlemode2str(mode)
+	switch(mode)
+		if(SHUTTLE_IDLE)
+			. = "idle"
+		if(SHUTTLE_RECALL)
+			. = "recalled"
+		if(SHUTTLE_CALL)
+			. = "called"
+		if(SHUTTLE_DOCKED)
+			. = "docked"
+		if(SHUTTLE_STRANDED)
+			. = "stranded"
+		if(SHUTTLE_ENDGAME)
+			. = "endgame"
+	if(!.)
+		throw EXCEPTION("shuttlemode2str(): invalid mode [mode]")
+
 /obj/machinery/shuttle_manipulator/ui_data(mob/user)
 	var/list/data = list()
+	data["tabs"] = list("Status", "Templates", "Modification")
+
+	// Status panel
 	data["shuttles"] = list()
-	var/list/shuttles = data["shuttles"]
-	data["tabs"] = list()
+	for(var/i in SSshuttle.mobile)
+		var/obj/docking_port/mobile/M = i
+		var/list/L = list()
+		L["name"] = M.name
+		L["id"] = M.id
+		L["timer"] = M.timer
+		L["timeleft"] = M.getTimerStr()
+		L["mode"] = capitalize(shuttlemode2str(M.mode))
+		L["status"] = M.getStatusText()
+		data["shuttles"] += list(L)
+
+	// Templates panel
+	data["templates"] = list()
+	var/list/templates = data["templates"]
+	data["templates_tabs"] = list()
 
 	for(var/name in shuttle_templates)
 		var/datum/map_template/shuttle/S = shuttle_templates[name]
 
-		if(!shuttles[S.port_id])
-			data["tabs"] += S.port_id
-			shuttles[S.port_id] = list(
+		if(!templates[S.port_id])
+			data["templates_tabs"] += S.port_id
+			templates[S.port_id] = list(
 				"port_id" = S.port_id,
 				"templates" = list())
 		
@@ -43,9 +76,22 @@
 		L["description"] = S.description
 		L["admin_notes"] = S.admin_notes
 
-		shuttles[S.port_id]["templates"] += list(L)
+		templates[S.port_id]["templates"] += list(L)
 
-	data["tabs"] = sortList(data["tabs"])
+	data["templates_tabs"] = sortList(data["templates_tabs"])
+
+	// Modification panel
+	// should be disabled unless we are doing something?
+	data["modification"] = FALSE
+	// Show current proposal
+	// PREVIEW button to load
+	// CANCEL button to (unload if loaded) and return back
+	// LOAD button
+
+	// Multiple stage notifications
+	// - loaded
+	// - removed old shuttle
+	// - moved new shuttle to old location
 
 	//world.log << json_encode(data)
 	return data

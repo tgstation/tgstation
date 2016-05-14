@@ -1,0 +1,6 @@
+{{#if data.modification}}
+STUFF IS HAPPENING
+{{/if}}
+{{#if !data.modification}}
+No modification in progress.
+{{/if}}

@@ -1,3 +1,8 @@
-<ui-display title='Shuttles Status'>
-SOME SHUTTLES ARE GOOD I GUESS?
-</ui-display>
+	{{#each data.shuttles}}
+		<ui-section label='{{name}} ({{id}})'>
+			{{status}}
+			{{#if timer}}
+				({{timeleft}})
+			{{/if}}
+		</ui-section>
+	{{/each}}
