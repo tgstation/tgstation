@@ -136,3 +136,11 @@
 /obj/effect/dummy/chameleon/Destroy()
 	master.disrupt(0)
 	return ..()
+
+/obj/item/device/chameleon/orbillusion
+	name = "orb of illusion"
+	desc = "This artifact seems to distort light."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "orbillusion"
+	item_state = "orbillusion"
+	origin_tech = null
