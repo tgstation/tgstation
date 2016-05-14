@@ -303,6 +303,56 @@ var/global/list/whitelisted_species = list("Human")
 
 	return ..(speech, H)
 
+/datum/species/skellington/skelevox // Science never goes too far, it's the public that's too conservative
+	name = "Skeletal Vox"
+	icobase = 'icons/mob/human_races/vox/r_voxboney.dmi'
+	deform = 'icons/mob/human_races/vox/r_voxboney.dmi' //Do bones deform noticeably?
+	language = "Vox-pidgin"
+
+	survival_gear = /obj/item/weapon/storage/box/survival/vox
+
+	primitive = /mob/living/carbon/monkey/vox //for now
+
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
+	eyes = "vox_eyes_s"
+
+	default_mutations = list(M_BEAK, M_TALONS)
+
+	footprint_type = /obj/effect/decal/cleanable/blood/tracks/footprints/vox
+
+	uniform_icons = 'icons/mob/species/vox/uniform.dmi'
+//	fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
+	gloves_icons    = 'icons/mob/species/vox/gloves.dmi'
+	glasses_icons   = 'icons/mob/species/vox/eyes.dmi'
+//	ears_icons      = 'icons/mob/ears.dmi'
+	shoes_icons 	= 'icons/mob/species/vox/shoes.dmi'
+	head_icons      = 'icons/mob/species/vox/head.dmi'
+//	belt_icons      = 'icons/mob/belt.dmi'
+	wear_suit_icons = 'icons/mob/species/vox/suit.dmi'
+	wear_mask_icons = 'icons/mob/species/vox/masks.dmi'
+//	back_icons      = 'icons/mob/back.dmi'
+
+	has_organ = list(
+		"brain" =    /datum/organ/internal/brain,
+		"eyes" =     /datum/organ/internal/eyes/vox
+	)
+
+/datum/species/skellington/skelevox/makeName(var/gender,var/mob/living/carbon/human/H=null)
+	var/sounds = rand(2,8)
+	var/i = 0
+	var/newname = ""
+
+	while(i<=sounds)
+		i++
+		newname += pick(vox_name_syllables)
+	return capitalize(newname)
+
 /datum/species/tajaran
 	name = "Tajaran"
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'

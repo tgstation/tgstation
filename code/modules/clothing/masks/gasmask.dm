@@ -10,7 +10,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	body_parts_covered = FACE
 	pressure_resistance = ONE_ATMOSPHERE
 	var/canstage = 1
@@ -58,7 +58,7 @@
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -67,7 +67,7 @@
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 	siemens_coefficient = 0.7
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -76,7 +76,7 @@
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 	siemens_coefficient = 0.7
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -89,7 +89,7 @@
 	canstage = 0
 	origin_tech = "syndicate=4"
 	action_button_name = "Toggle Mask"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	var/list/clothing_choices = list()
 
 /obj/item/clothing/mask/gas/voice/New()
@@ -144,7 +144,7 @@
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -169,7 +169,7 @@
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -178,7 +178,7 @@
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -187,7 +187,7 @@
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
 	item_state = "mime"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 	var/muted = 0
@@ -201,7 +201,7 @@
 	desc = "A mask used when acting as a monkey."
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -210,7 +210,7 @@
 	desc = "A traditional female mime's mask."
 	icon_state = "sexymime"
 	item_state = "sexymime"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -219,7 +219,7 @@
 	icon_state = "death"
 	item_state = "death"
 	siemens_coefficient = 0.2
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -227,7 +227,7 @@
 	name = "cyborg visor"
 	desc = "Beep boop"
 	icon_state = "death"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0
 
@@ -235,6 +235,6 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	can_flip = 0
 	canstage = 0

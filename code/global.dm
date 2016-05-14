@@ -1,5 +1,7 @@
 #define DNA_SE_LENGTH 55
 
+#define VOX_SHAPED "Vox","Skeletal Vox"
+
 //Content of the Round End Information window
 var/round_end_info = ""
 

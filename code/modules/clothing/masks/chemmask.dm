@@ -55,7 +55,7 @@
 		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold,
 		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
 		)
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/chempack.dmi', "right_hand" = 'icons/mob/in-hand/right/chempack.dmi')
 	origin_tech = "biotech=5;materials=5;engineering=5;syndicate=5;combat=5"
 

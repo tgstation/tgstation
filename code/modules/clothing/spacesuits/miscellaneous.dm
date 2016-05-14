@@ -6,14 +6,14 @@
 	desc = "A paramedic space helmet. Used in the recovery of bodies from space."
 	icon_state = "paramedic-eva-helmet"
 	item_state = "paramedic-eva-helmet"
-	species_restricted = list("exclude","Vox")
+	species_restricted = list("exclude",VOX_SHAPED)
 
 /obj/item/clothing/suit/space/paramedic
 	name = "Paramedic EVA suit"
 	icon_state = "paramedic-eva"
 	item_state = "paramedic-eva"
 	desc = "A paramedic space suit. Used in the recovery of bodies from space."
-	species_restricted = list("exclude","Vox")
+	species_restricted = list("exclude",VOX_SHAPED)
 	slowdown = 1
 
 //Space santa outfit suit
@@ -76,14 +76,14 @@
 	desc = "The large grinning clown face on the front of the helmet is equal parts funny and creepy."
 	icon_state = "clown-eva-helmet"
 	item_state = "clown-eva-helmet"
-	species_restricted = list("exclude","Vox")
+	species_restricted = list("exclude",VOX_SHAPED)
 
 /obj/item/clothing/suit/space/clown
 	name = "clown spacesuit"
 	desc = "Many clowns tragically drowned in space before the duck floaty was added to the suit's design."
 	icon_state = "clown-eva"
 	item_state = "clown-eva"
-	species_restricted = list("exclude","Vox")
+	species_restricted = list("exclude",VOX_SHAPED)
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/grown/banana, /obj/item/weapon/bananapeel, /obj/item/weapon/soap, /obj/item/weapon/reagent_containers/spray, /obj/item/weapon/tank)
 	slowdown = 1
 

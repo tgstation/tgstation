@@ -8,7 +8,7 @@
 	permeability_coefficient = 0.01
 	pressure_resistance = 200 * ONE_ATMOSPHERE
 	armor = list(melee = 65, bullet = 50, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 50)
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 //Captain's space suit This is not the proper path but I don't currently know enough about how this all works to mess with it.
 /obj/item/clothing/suit/armor/captain
@@ -16,7 +16,7 @@
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	w_class = 4
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

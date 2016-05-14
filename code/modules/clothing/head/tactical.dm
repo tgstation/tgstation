@@ -108,7 +108,7 @@ obj/item/clothing/head/helmet/tactical/attack_self(mob/user)
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	heat_conductivity = INS_HELMET_HEAT_CONDUCTIVITY
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	pressure_resistance = 200 * ONE_ATMOSPHERE
 	siemens_coefficient = 0.5
 	eyeprot = 1

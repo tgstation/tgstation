@@ -89,7 +89,7 @@
 	armor = list(melee = 25, bullet = 0, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
 	item_state = "aviator_helmet"
 	icon_state = "aviator_helmet"
-	species_restricted = list("exclude","Vox")
+	species_restricted = list("exclude",VOX_SHAPED)
 
 /obj/item/clothing/head/helmet/piratelord
 	name = "pirate lord's helmet"

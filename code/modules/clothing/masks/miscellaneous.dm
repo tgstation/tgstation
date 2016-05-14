@@ -6,7 +6,7 @@
 	flags = FPRINT
 	w_class = 2
 	gas_transfer_coefficient = 0.90
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	origin_tech = "biotech=2"
 	body_parts_covered = MOUTH
 
@@ -29,7 +29,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
@@ -75,7 +75,7 @@
 	flags = FPRINT
 	body_parts_covered = FACE
 	w_class = 2
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"

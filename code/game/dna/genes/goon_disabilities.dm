@@ -411,9 +411,17 @@
 	for(var/mob/M in targets)
 		if (istype(M,/mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = M
-			if(H.species && H.species.name == "Skellington")
+			if(isskellington(H))
 				to_chat(H, "<span class='warning'>You have no flesh left to melt!</span>")
 				return 0
+			if(isvox(H))
+				H.set_species("Skeletal Vox")
+				H.regenerate_icons()
+				H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")
+				H.drop_all()
+				gibs(H.loc, H.viruses, H.dna)
+				return
+
 			if(H.set_species("Skellington"))
 				H.regenerate_icons()
 				H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")

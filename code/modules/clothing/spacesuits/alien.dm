@@ -37,11 +37,11 @@
 	slowdown = 2
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
@@ -93,7 +93,7 @@
 
 /obj/item/clothing/under/vox
 	has_sensor = 0
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
@@ -117,7 +117,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	_color="gloves-vox"
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 /obj/item/clothing/shoes/magboots/vox
 
@@ -125,7 +125,7 @@
 	name = "vox boots"
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 	stomp_attack_power = 0
 
@@ -367,14 +367,14 @@
 	item_state = "vox-pressure-normal"
 	allowed = list(/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/emergency_nitrogen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 10)
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 /obj/item/clothing/head/helmet/space/vox/civ/old
 	name = "vox civilian pressure helmet"
 	icon_state = "vox-pressure-normal"
 	item_state = "vox-pressure-normal"
 	desc = "A very alien-looking helmet for Nanotrasen-hired Vox."
-	species_restricted = list("Vox")
+	species_restricted = list(VOX_SHAPED)
 
 /obj/item/clothing/suit/space/vox/civ/old/engineer
 	name = "vox engineering pressure suit"

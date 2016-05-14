@@ -26,7 +26,7 @@
 	body_parts_covered = FACE
 	action_button_name = "Toggle Welding Helmet"
 	siemens_coefficient = 0.9
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()

@@ -175,7 +175,7 @@
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	_color = "red_suit"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -206,7 +206,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	_color = "pirate"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"
@@ -384,7 +384,7 @@
 	icon_state = "spants"
 	_color = "simonpants"
 	item_state = "spants"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	gender = PLURAL
 
 /obj/item/clothing/under/batmansuit
@@ -441,7 +441,7 @@
 	icon_state = "aviator_uniform"
 	item_state = "aviator_uniform"
 	_color = "aviator_uniform"
-	species_restricted = list("exclude","Vox")
+	species_restricted = list("exclude",VOX_SHAPED)
 
 /obj/item/clothing/under/libertyshirt
 	name = "liberty shirt"

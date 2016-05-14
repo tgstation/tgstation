@@ -3,14 +3,14 @@
 	icon_state = "black"
 	_color = "black"
 	desc = "A pair of black shoes."
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
 	_color = "brown"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/shoes/brown/captain
 	_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
@@ -65,7 +65,7 @@
 	icon_state = "white"
 	permeability_coefficient = 0.01
 	_color = "white"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/shoes/leather
 	name = "leather shoes"
@@ -83,7 +83,7 @@
 	name = "orange shoes"
 	icon_state = "orange"
 	_color = "orange"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	if (src.chained)

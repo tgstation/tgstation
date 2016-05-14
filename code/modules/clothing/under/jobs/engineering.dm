@@ -7,7 +7,7 @@
 	_color = "chief"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians."
@@ -16,7 +16,7 @@
 	item_state = "atmos_suit"
 	_color = "atmos"
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/engineer
 	desc = "It's an orange high visibility jumpsuit worn by engineers. It has minor radiation shielding."
@@ -26,7 +26,7 @@
 	_color = "engine"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/maintenance_tech
 	desc = "It's a blue high visibility jumpsuit worn by maintenance technicians. It has minor radiation shielding."
@@ -62,7 +62,7 @@
 	item_state = "robotics"
 	_color = "robotics"
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/mechatronic
 	desc = "It's a lilac-blue jumpsuit with a pink duffel jacket, all the rage for mechatronic engineers."

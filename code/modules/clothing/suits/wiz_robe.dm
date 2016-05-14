@@ -143,7 +143,7 @@
 	desc = "A magical stage outfit, perfect attire for sawwing assistants in half."
 	icon_state = "magiciansuit"
 	item_state = "magiciansuit"
-	species_restricted = list("exclude","Vox") //this outfit won't work very well for Vox
+	species_restricted = list("exclude",VOX_SHAPED) //this outfit won't work very well for Vox
 
 
 /obj/item/clothing/suit/wizrobe/magician/fake

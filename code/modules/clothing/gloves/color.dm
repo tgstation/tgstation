@@ -6,7 +6,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	_color = "yellow"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/yellow/power //fuck you don't relative path this
 	var/next_shock = 0
@@ -69,7 +69,7 @@
 	item_state = "yellow"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	_color = "yellow"
 
 /obj/item/clothing/gloves/fyellow/New()
@@ -82,7 +82,7 @@
 	icon_state = "black"
 	item_state = "black"
 	_color = "black"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 	heat_conductivity = INS_GLOVES_HEAT_CONDUCTIVITY
 
@@ -108,7 +108,7 @@
 	icon_state = "orange"
 	item_state = "orange"
 	_color = "orange"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/red
 	name = "red gloves"
@@ -116,7 +116,7 @@
 	icon_state = "red"
 	item_state = "red"
 	_color = "red"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/red/redcoat
 	_color = "redcoat"		//Exists for washing machines. Is not different from red gloves in any way.
@@ -127,7 +127,7 @@
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	_color = "rainbow"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/rainbow/clown
 	_color = "clown"
@@ -138,7 +138,7 @@
 	icon_state = "blue"
 	item_state = "blue"
 	_color = "blue"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
@@ -146,7 +146,7 @@
 	icon_state = "purple"
 	item_state = "purple"
 	_color = "purple"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
@@ -154,7 +154,7 @@
 	icon_state = "green"
 	item_state = "green"
 	_color = "green"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/white
 	name = "white gloves"
@@ -162,7 +162,7 @@
 	icon_state = "white"
 	item_state = "white"
 	_color = "mime"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/white/stunglove // For Clown Planet's mimes. - N3X
 	New()
@@ -175,7 +175,7 @@
 	icon_state = "gray"
 	item_state = "gray"
 	_color = "grey"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/light_brown
 	name = "light brown gloves"
@@ -183,7 +183,7 @@
 	icon_state = "lightbrown"
 	item_state = "lightbrown"
 	_color = "light brown"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/brown
 	name = "brown gloves"
@@ -191,7 +191,7 @@
 	icon_state = "brown"
 	item_state = "brown"
 	_color="brown"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/gloves/brown/cargo
 	_color = "cargo" 		//Exists for washing machines. Is not different from brown gloves in any way.

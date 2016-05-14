@@ -39,7 +39,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	flags = FPRINT
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/hgpirate
@@ -47,7 +47,7 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	flags = FPRINT
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 
@@ -324,7 +324,7 @@
 	name = "Simon's Jacket"
 	desc = "Now you too can pierce the heavens"
 	icon_state = "simonjacket"
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|IGNORE_INV
 
 /obj/item/clothing/suit/kaminacape

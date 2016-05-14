@@ -9,7 +9,7 @@
 	_color = "director"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/scientist
 	desc = "It's made of a special fiber that provides minor protection against bombs. It has markings that denote the wearer as a scientist."
@@ -20,7 +20,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
@@ -31,7 +31,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/pharma
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a pharmacist rank stripe on it."
@@ -95,7 +95,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
@@ -106,7 +106,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
@@ -117,7 +117,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -128,7 +128,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/nurse
 	desc = "A dress commonly worn by the nursing staff in the medical department."
@@ -139,7 +139,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/orderly
 	desc = "A white suit to be worn by orderly people who love orderly things."
@@ -150,7 +150,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/medical
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
@@ -161,7 +161,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/medical/blue
 	name = "medical scrubs"
@@ -169,7 +169,7 @@
 	icon_state = "scrubsblue"
 	_color = "scrubsblue"
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/medical/green
 	name = "medical scrubs"
@@ -177,7 +177,7 @@
 	icon_state = "scrubsgreen"
 	_color = "scrubsgreen"
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/under/rank/medical/purple
 	name = "medical scrubs"
@@ -185,7 +185,7 @@
 	icon_state = "scrubspurple"
 	_color = "scrubspurple"
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 //paramedic
 /obj/item/clothing/under/rank/medical/paramedic
@@ -197,7 +197,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 10)
 	flags = FPRINT  | ONESIZEFITSALL
-	species_fit = list("Vox")
+	species_fit = list(VOX_SHAPED)
 
 
 
