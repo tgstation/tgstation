@@ -4078,3 +4078,25 @@
 
 
 	//------------------------------------------------------------------Shuttle stuff end---------------------------------
+
+	if(href_list["wages_enabled"])
+		if(check_rights(R_ADMIN))
+			if(ticker.current_state == 1)
+				to_chat(usr, "Round hasn't started yet!")
+				return
+			if(href_list["wages_enabled"] == "enable")
+				if(wages_enabled)
+					to_chat(usr, "Wages are already enabled!")
+				else
+					wages_enabled = 1
+					message_admins("<span class='notice'>[key_name_admin(usr)] has enabled wages!")
+			else if(href_list["wages_enabled"] == "false")
+				if(!wages_enabled)
+					to_chat(usr, "Wages are already disabled!")
+				else
+					wages_enabled = 0
+					message_admins("<span class='notice'>[key_name_admin(usr)] has disabled wages!")
+		return
+	if(href_list["econ_panel"])
+		var/choice = href_list["econ_panel"]
+		EconomyPanel(choice, href_list)

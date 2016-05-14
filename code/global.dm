@@ -409,3 +409,9 @@ var/list/grayscale = list(0.3,0.3,0.3,0,0.59,0.59,0.59,0,0.11,0.11,0.11,0,0,0,0,
 var/adminblob_icon = null
 var/adminblob_size = 64
 var/adminblob_beat = 'sound/effects/blob_pulse.ogg'
+
+// ECONOMY
+// Account default values
+#define DEPARTMENT_START_FUNDS 5000
+#define DEPARTMENT_START_WAGE 500
+#define PLAYER_START_WAGE 50

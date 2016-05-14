@@ -538,6 +538,8 @@
 					shut_up_automatic_diagnostic_and_announcement_system = 1
 				if("enable_roundstart_away_missions")
 					enable_roundstart_away_missions = 1
+				if("enable_wages")
+					roundstart_enable_wages = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

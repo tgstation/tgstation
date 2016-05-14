@@ -370,7 +370,7 @@ var/global/datum/controller/occupations/job_master
 		var/balance_bank = rand(100,250)
 		balance_wallet = rand(100,250)
 		if(centcomm_account_db)
-			var/datum/money_account/M = create_account(H.real_name, balance_bank , null)
+			var/datum/money_account/M = create_account(H.real_name, balance_bank, null, wage_payout = PLAYER_START_WAGE)
 			if(H.mind)
 				var/remembered_info = ""
 				remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"

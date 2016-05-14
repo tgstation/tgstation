@@ -265,6 +265,13 @@
 	score["crewscore"] -= plaguepoints
 	score["arenafights"] = arena_rounds
 
+	var/transfer_total = 0
+	for(var/datum/money_account/A in all_money_accounts)
+		for(var/datum/transaction/T in A.transaction_log)
+			if(T.amount <= 0) // This way we don't track payouts or starting funds, only money transferred to terminals or between players
+				transfer_total += abs(T.amount)
+	score["totaltransfer"] = transfer_total
+
 	arena_top_score = 0
 	for(var/x in arena_leaderboard)
 		if(arena_leaderboard[x] > arena_top_score)
@@ -422,7 +429,8 @@
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR>
 	<B>Number of Explosions This Shift:</B> [score["explosions"]]<BR>
-	<B>Number of Arena Rounds:</B> [score["arenafights"]]<BR>"}
+	<B>Number of Arena Rounds:</B> [score["arenafights"]]<BR>
+	<B>Total money trasferred:</B> [score["totaltransfer"]]<BR>"}
 
 	if(arena_top_score)
 		dat += "<B>Best Arena Fighter (won [arena_top_score] rounds!):</B> [score["arenabest"]]<BR>"

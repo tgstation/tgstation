@@ -1,0 +1,6 @@
+author: Sood
+delete-afer: true
+changes:
+  - rscadd: Admins may now toggle wages for all personal and departmental accounts in the game panel. This starts off disabled and must be added to config.txt to be auto-enabled.
+  - rscadd: Admins can now modify the balance and wage payout of individual accounts, also via game panel.
+  - tweak: Accounts database machine can now see what an account would earn per paycheck.
