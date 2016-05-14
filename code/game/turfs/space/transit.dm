@@ -20,6 +20,10 @@
 			dira="ew"
 			i=1+(((y^2)+x)%15) // Vary widely across Y, but just increment across X
 
+		if(EAST) // West to east
+			dira="ew"
+			i=1+(((y^2)-x)%15) // Vary widely across Y, but just increment across X
+
 
 		/*
 		if(NORTH) // South to north (SPRITES DO NOT EXIST!)
@@ -66,4 +70,10 @@
 
 	pushdirection = WEST
 	icon_state="debug-east"
+
+/turf/space/transit/west // moving to the west
+
+	pushdirection = EAST
+	icon_state="debug-west"
+
 

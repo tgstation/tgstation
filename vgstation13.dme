@@ -848,6 +848,7 @@
 #include "code\game\shuttles\salvage.dm"
 #include "code\game\shuttles\syndicate.dm"
 #include "code\game\shuttles\taxi.dm"
+#include "code\game\shuttles\trade.dm"
 #include "code\game\shuttles\vox.dm"
 #include "code\game\shuttles\voxresearch_shuttle.dm"
 #include "code\game\turfs\simulated.dm"

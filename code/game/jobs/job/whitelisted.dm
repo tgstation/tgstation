@@ -7,8 +7,8 @@
 	spawn_positions = 3
 	supervisors = "nobody"
 	selection_color = "#dddddd"
-	access = list()
-	minimal_access = list()
+	access = list(access_trade)
+	minimal_access = list(access_trade)
 	alt_titles = list("Merchant","Traveler","Vagabond")
 
 	species_whitelist = list("Vox")
@@ -49,7 +49,7 @@
 	spawn(10)
 		to_chat(H, "<span class='notice'>Oh no! I can't seem to find my ID.</span>")
 		var/current_time = world.time
-		var/choice = alert(H, "Would you like to start with a traveler's ID? Traveling in human-controlled territories without one is illegal. If you choose \"No\", it's up to you to think of a reason why you're traveling without an ID.", "Scenario Picker (30 seconds to choose)", "Yes", "No")
+		var/choice = alert(H, "Would you like to start with a traveler's ID? Traveling in human-controlled territories without one is illegal.  You won't be able to pilot the trade ship without an ID  either. If you choose \"No\", it's up to you to think of a reason why you're traveling without an ID.", "Scenario Picker (30 seconds to choose)", "Yes", "No")
 
 		if(choice == "Yes")
 			if(!job_master)

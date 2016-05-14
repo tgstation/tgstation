@@ -84,6 +84,9 @@
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
 
+	//Vox are Pox
+/var/const/access_trade = 140//Vox Trader Access
+
 	//MONEY
 /var/const/access_crate_cash = 200
 

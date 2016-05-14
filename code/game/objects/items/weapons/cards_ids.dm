@@ -597,3 +597,4 @@
 	registered_name = "traveler"
 	assignment = "visitor"
 	icon_state = "trader"
+	access = list(access_trade)
