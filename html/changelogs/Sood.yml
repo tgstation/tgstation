@@ -1,2 +1,5 @@
 author: Sood
-changes: []
+changes:
+ - tweak: Power cables will no longer shock you unless you click on a cable end or are using tools on them.
+ - tweak: This means that wirecutters on cables still might shock you but bruise packs will not.
+ - tweak: UNLESS IT IS A CABLE END.

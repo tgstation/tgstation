@@ -221,7 +221,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		shock(user, 5, 0.2)
 	else
-		if(W.is_conductor())
+		if(src.d1 && W.is_conductor()) // d1 determines if this is a cable end
 			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
