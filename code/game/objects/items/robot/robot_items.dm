@@ -56,32 +56,32 @@
 			if(M.health >= 0)
 				if(ishuman(M))
 					if(M.lying)
-						M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
 										"<span class='notice'>You shake [M] trying to get \him up!</span>")
 					else
-						M.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
+						user.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
 								"<span class='notice'>You hug [M] to make \him feel better!</span>")
 					if(M.resting)
 						M.resting = 0
 						M.update_canmove()
 				else
-					M.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 							"<span class='notice'>You pet [M]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
 					if(M.lying)
-						M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
 										"<span class='notice'>You shake [M] trying to get \him up!</span>")
 					else
-						M.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
+						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
 					if(M.resting)
 						M.resting = 0
 						M.update_canmove()
 				else
-					M.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
+					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 							"<span class='warning'>You bop [M] on the head!</span>")
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 		if(2)
@@ -89,30 +89,30 @@
 				if(M.health >= 0)
 					if(ishuman(M))
 						M.electrocute_act(5, "[user]", safety = 1)
-						M.visible_message("<span class='userdanger'>[user] electrocutes [M] with their touch!</span>", \
+						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with their touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_canmove()
 					else
 						if(!isrobot(M))
 							M.adjustFireLoss(10)
-							M.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
+							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
 								"<span class='danger'>You shock [M]!</span>")
 						else
-							M.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
+							user.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 400
 					scooldown = 1
-					spawn(30)
+					spawn(10)
 					scooldown = 0
 		if(3)
 			if(!ccooldown)
 				if(M.health >= 0)
 					if(ishuman(M))
-						M.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
+						user.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
 							"<span class='danger'>You crush [M] in your grip!</span>")
 					else
-						M.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
+						user.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
 								"<span class='danger'>You crush [M]!</span>")
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(10)

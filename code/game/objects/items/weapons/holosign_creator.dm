@@ -77,8 +77,8 @@
 /obj/item/weapon/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields"
-	creation_time = 10
-	max_signs = 6
+	creation_time = 5
+	max_signs = 9
 	holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
 	var/shock = 0
 
@@ -89,7 +89,7 @@
 		if(shock)
 			user <<"<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>"
 			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
-			creation_time = 10
+			creation_time = 5
 			if(signs.len)
 				for(var/H in signs)
 					qdel(H)
