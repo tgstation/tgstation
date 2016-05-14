@@ -10,7 +10,6 @@
 	pressure_resistance = INFINITY
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-	var/obj/item/ammo_casing/ammo_casing = null
 	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -140,8 +139,3 @@
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)
-
-/obj/item/projectile/Destroy()
-	if(ammo_casing)
-		qdel(ammo_casing)
-	return ..()
