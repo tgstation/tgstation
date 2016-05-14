@@ -86,8 +86,6 @@
 		stamp_names += initial(stamp_type.name)
 
 	stamp_names = sortList(stamp_names)
-	// the list that will be shown to the user to pick from
-	world << jointext(stamp_names, ",")
 
 	var/input_stamp = input(user, "Choose a stamp to disguise as.",
 		"Choose a stamp.") as null|anything in stamp_names
