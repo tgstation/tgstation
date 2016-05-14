@@ -170,7 +170,6 @@ obj/item/ammo_casing/energy/net
 
 /obj/item/ammo_casing/energy/trap/cyborg
 	projectile_type = /obj/item/projectile/energy/trap/cyborg
-	delay = 10
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/item/projectile/beam/instakill
