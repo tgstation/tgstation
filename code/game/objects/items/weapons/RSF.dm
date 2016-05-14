@@ -138,10 +138,13 @@ RSF
 		toxin = 0
 
 /obj/item/weapon/cookiesynth/attack_self(mob/user)
-	if(isrobot(user)&&!toxin)
+	var/mob/living/silicon/robot/P = null
+	if(isrobot(user))
+		P = user
+	if(emagged&&!toxin)
 		toxin = 1
 		user << "Cookie Synthesizer Hacked"
-	else if(emagged&&!toxin)
+	else if(P.emagged&&!toxin)
 		toxin = 1
 		user << "Cookie Synthesizer Hacked"
 	else

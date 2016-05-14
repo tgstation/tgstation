@@ -210,21 +210,10 @@ Borg Shaker
 
 /obj/item/weapon/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
-	volume = 20
-	recharge_time = 3
-	reagent_ids = list("dizzysolution","tiresolution")
 
-/obj/item/weapon/reagent_containers/borghypo/peace/attack_self(mob/user)
-	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
-	if(!chosen_reagent)
-		return
-	mode = chosen_reagent
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-	var/datum/reagent/S = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'>[src] is now dispensing '[S.name]'.</span>"
-	return
+	reagent_ids = list("dizzysolution","tiresolution")
 
 /obj/item/weapon/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list("dizzysolution","tiresolution","tirizine","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
+	reagent_ids = list("dizzysolution","tiresolution","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
