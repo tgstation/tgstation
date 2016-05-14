@@ -300,7 +300,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 
 
-//Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
+//Rite of Enlightenment: Converts a normal crewmember to the cult.
 /obj/effect/rune/convert
 	cultist_name = "Convert"
 	cultist_desc = "converts a normal crewmember on top of it to the cult. Does not work on loyalty-implanted crew."
@@ -312,21 +312,22 @@ var/list/teleport_runes = list()
 /obj/effect/rune/convert/invoke(var/list/invokers)
 	var/list/convertees = list()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/M in T.contents)
-		if(!iscultist(M) && !isloyal(M))
-			convertees.Add(M)
+	for(var/mob/living/M in T)
+		if(M.stat != DEAD && !iscultist(M) && is_convertable_to_cult(M.mind))
+			convertees |= M
+		else if(is_sacrifice_target(M.mind))
+			for(var/C in invokers)
+				C << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 	if(!convertees.len)
 		fail_invoke()
 		log_game("Convert rune failed - no eligible convertees")
 		return
 	var/mob/living/new_cultist = pick(convertees)
-	if(!is_convertable_to_cult(new_cultist.mind) || new_cultist.null_rod_check())
+	if(new_cultist.null_rod_check())
 		for(var/M in invokers)
 			M << "<span class='warning'>Something is shielding [new_cultist]'s mind!</span>"
-			if(is_sacrifice_target(new_cultist.mind))
-				M << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 		fail_invoke()
-		log_game("Convert rune failed - convertee could not be converted")
+		log_game("Convert rune failed - convertee had null rod")
 		return
 	..()
 	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
