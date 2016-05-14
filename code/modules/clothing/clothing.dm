@@ -216,7 +216,7 @@ BLIND     // can't see anything
 			to_chat(usr, "You push \the [src] back into place.")
 			src.is_flipped = 1
 		else
-			src.icon_state += "_up"
+			src.icon_state = "[initial(icon_state)]_up"
 			to_chat(usr, "You push \the [src] out of the way.")
 			gas_transfer_coefficient = null
 			permeability_coefficient = null

@@ -43,11 +43,12 @@
 
 /obj/item/clothing/mask/gas/togglemask()
 	..()
-	if(is_flipped == 1)
-		if(stage == 1)
-			icon_state = "gas_mask1"
-		else
-			icon_state = "gas_mask2"
+	if(is_flipped == 1 && stage > 0)
+		switch(stage)
+			if(1)
+				icon_state = "gas_mask1"
+			if(2)
+				icon_state = "gas_mask2"
 
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
