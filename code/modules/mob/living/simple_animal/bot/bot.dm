@@ -374,7 +374,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	var/list/adjacent = shuffle(T.GetAtmosAdjacentTurfs(1))
+	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
 	for(var/scan in adjacent)//Let's see if there's something right next to us first!
 		if(check_bot(scan))	//Is there another bot there? Then let's just skip it
 			continue
