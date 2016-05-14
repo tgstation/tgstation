@@ -413,8 +413,8 @@
 	spawn_positions = 2
 	supervisors = "Nanotrasen Law, CentComm Officals, and the station's captain."
 	selection_color = "#dddddd"
-	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels, access_cargo, access_medical,  access_bar, access_kitchen, access_hydroponics)
-	minimal_access = list(access_lawyer, access_court, access_sec_doors, access_cargo,  access_bar, access_kitchen)
+	access = list(access_lawyer, access_court, access_heads, access_RC_announce, access_sec_doors, access_maint_tunnels, access_cargo, access_medical,  access_bar, access_kitchen, access_hydroponics)
+	minimal_access = list(access_lawyer, access_court, access_heads, access_RC_announce, access_sec_doors, access_cargo,  access_bar, access_kitchen)
 	alt_titles = list("Lawyer")
 
 	pdaslot=slot_belt
