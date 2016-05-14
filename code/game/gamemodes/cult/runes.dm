@@ -760,7 +760,7 @@ var/list/teleport_runes = list()
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
 	for(var/datum/mind/M in ticker.mode.cult)
-		if(!(M.current in invokers))
+		if(!(M.current in invokers) && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
@@ -770,10 +770,15 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
 		return
+	if(cultist_to_summon.stat == DEAD)
+		user << "<span class='cultitalic'>[cultist_to_summon] has died!</span>"
+		fail_invoke()
+		log_game("Summon Cultist rune failed - target died")
+		return
 	if(!iscultist(cultist_to_summon))
 		user << "<span class='cultitalic'>[cultist_to_summon] is not a follower of the Geometer!</span>"
 		fail_invoke()
-		log_game("Summon Cultist rune failed - no target")
+		log_game("Summon Cultist rune failed - target was deconverted")
 		return
 	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
 		user << "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>"
