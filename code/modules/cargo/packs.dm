@@ -559,6 +559,12 @@
 	contains = list(/obj/machinery/the_singularitygen)
 	crate_name = "singularity generator crate"
 
+/datum/supply_pack/engineering/engine/tesla_gen
+	name = "Tesla Generator Crate"
+	cost = 5000
+	contains = list(/obj/machinery/the_singularitygen/tesla)
+	crate_name = "tesla generator crate"
+
 /datum/supply_pack/engineering/engine/collector
 	name = "Collector Crate"
 	cost = 2500
