@@ -537,7 +537,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 11
-	force_wielded = 21					//I have no idea how to balance
+	force_wielded = 20					//I have no idea how to balance
 	throwforce = 22
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3

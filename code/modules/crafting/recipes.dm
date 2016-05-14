@@ -401,6 +401,6 @@
 	name = "Bone Axe"
 	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
 	time = 50
-	reqs = list(/obj/item/stack/sheet/bone = 8,
+	reqs = list(/obj/item/stack/sheet/bone = 6,
 				 /obj/item/stack/sheet/sinew = 3)
 	category = CAT_PRIMAL
