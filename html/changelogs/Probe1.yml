@@ -1,6 +1,0 @@
-author: Probe1
-
-delete-after: True
-
-changes: 
-- rscadd: New Tradeship for Vox Traders on Box.  Requires a Vox Trader ID to access and use.  Make sure you accept that ID at round start if you want an easy way to trade.  Arrivals and Vox Outpost have been slightly modified to accomodate it, as well as a few minor bug fixes along the way to the general areas.
