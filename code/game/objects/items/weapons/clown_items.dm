@@ -145,12 +145,11 @@
 /obj/item/weapon/bikehorn/golden/attack()
 	..()
 	flip_mobs()
-	return
 
 /obj/item/weapon/bikehorn/golden/attack_self(mob/user)
 	..()
 	flip_mobs()
-	return
+
 
 /obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	if (!spam_flag)
