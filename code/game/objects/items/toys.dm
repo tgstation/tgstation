@@ -632,7 +632,8 @@
 		"I'm so powerful, I even impress myself!",
 		"Never mind what I said, just do what I said.",
 		"I'll turn you into a suitcase!",
-		"Everything I do is for the sake of evil.")
+		"Everything I do is for the sake of evil.",
+		"Myaaah.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to commit \
