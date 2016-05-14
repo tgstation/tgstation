@@ -140,7 +140,8 @@
 			return
 
 	if(target && loc == target.loc)
-		clean(target)
+		if(!check_bot(target))	//Target is not defined at the parent
+			clean(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 		path = list()
 		target = null
 
