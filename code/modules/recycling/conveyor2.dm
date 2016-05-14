@@ -103,14 +103,22 @@
 		copy_radio_from_neighbors()
 
 /obj/machinery/conveyor/proc/copy_radio_from_neighbors()
+	var/obj/machinery/conveyor_switch/lever = locate() in orange(src,1)
+	if(lever && lever.id_tag)
+		id_tag = lever.id_tag
+		frequency = lever.frequency
+		spawn(5) // Need to wait for the radio_controller to wake up.
+			updateConfig()
+		return
+	//We didn't find any levers close so let's just try to copy any conveyors nearby
 	for(var/direction in cardinal)
 		var/obj/machinery/conveyor/domino = locate() in get_step(src, direction)
 		if(domino && domino.id_tag)
 			id_tag = domino.id_tag
 			frequency = domino.frequency
-			spawn(5) // Need to wait for the radio_controller to wake up.
+			spawn(5) // Yeah I copied this twice so what
 				updateConfig()
-			break
+			return
 
 /proc/conveyor_directions(var/dir, var/reverse = 0)
 	var/list/dirs = list()
@@ -365,6 +373,9 @@
 
 /obj/machinery/conveyor_switch/New()
 	..()
+	if(!id_tag)
+		id_tag = "[rand(9999)]"
+		set_frequency(frequency) //I tried just assigning the ID tag during initialize(), but that didn't work somehow, probably because it makes TOO MUCH SENSE
 	update()
 	spawn(5)		// allow map load
 		updateConfig()
