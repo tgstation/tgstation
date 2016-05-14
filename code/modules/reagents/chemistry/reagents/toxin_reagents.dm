@@ -737,8 +737,8 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-	M.adjustStaminaLoss(3)
+	if(M.staminaloss < 50)
+		M.adjustStaminaLoss(10)
 	if(prob(30))
-		M.adjustStaminaLoss(15)
 		M << "You should sit down and take a rest..."
 	..()
