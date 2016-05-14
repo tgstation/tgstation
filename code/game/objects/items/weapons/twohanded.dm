@@ -548,9 +548,3 @@
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
 		icon_state = "bone_spear[wielded]"
-
-/obj/item/weapon/twohanded/bonespear/afterattack(atom/movable/AM, mob/user, proximity)
-	if(!proximity)
-		return
-	if(istype(AM, /turf/open))
-		return
