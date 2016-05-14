@@ -38,8 +38,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/trap/cyborg)
 
 /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/newshot()
-	robocharge()
 	..()
+	robocharge()
 
 /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/emp_act()
 	return
