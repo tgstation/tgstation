@@ -25,7 +25,8 @@
 	icon_state = "hugmodule"
 	desc = "For when a someone really needs a hug."
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
-	var/cooldown = 0
+	var/ccooldown = 0
+	var/scooldown = 0
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(isrobot(user))
@@ -50,41 +51,41 @@
 			user << "ERROR: ARM ACTUATORS OVERLOADED."
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
-	if(!cooldown)
-		switch(mode)
-			if(0)
-				if(M.health >= 0)
-					if(ishuman(M))
-						if(M.lying)
-							M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
-											"<span class='notice'>You shake [M] trying to get \him up!</span>")
-						else
-							M.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
-									"<span class='notice'>You hug [M] to make \him feel better!</span>")
-						if(M.resting)
-							M.resting = 0
-							M.update_canmove()
+	switch(mode)
+		if(0)
+			if(M.health >= 0)
+				if(ishuman(M))
+					if(M.lying)
+						M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+										"<span class='notice'>You shake [M] trying to get \him up!</span>")
 					else
-						M.visible_message("<span class='notice'>[user] pets [M]!</span>", \
-								"<span class='notice'>You pet [M]!</span>")
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			if(1)
-				if(M.health >= 0)
-					if(ishuman(M))
-						if(M.lying)
-							M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
-											"<span class='notice'>You shake [M] trying to get \him up!</span>")
-						else
-							M.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
-									"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
-						if(M.resting)
-							M.resting = 0
-							M.update_canmove()
+						M.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
+								"<span class='notice'>You hug [M] to make \him feel better!</span>")
+					if(M.resting)
+						M.resting = 0
+						M.update_canmove()
+				else
+					M.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+							"<span class='notice'>You pet [M]!</span>")
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		if(1)
+			if(M.health >= 0)
+				if(ishuman(M))
+					if(M.lying)
+						M.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+										"<span class='notice'>You shake [M] trying to get \him up!</span>")
 					else
-						M.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
-								"<span class='warning'>You bop [M] on the head!</span>")
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
-			if(2)
+						M.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
+								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
+					if(M.resting)
+						M.resting = 0
+						M.update_canmove()
+				else
+					M.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
+							"<span class='warning'>You bop [M] on the head!</span>")
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+		if(2)
+			if(!scooldown)
 				if(M.health >= 0)
 					if(ishuman(M))
 						M.electrocute_act(5, "[user]", safety = 1)
@@ -101,10 +102,11 @@
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 400
-					cooldown = 1
-					spawn(10)
-					cooldown = 0
-			if(3)
+					scooldown = 1
+					spawn(30)
+					scooldown = 0
+		if(3)
+			if(!ccooldown)
 				if(M.health >= 0)
 					if(ishuman(M))
 						M.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
@@ -115,9 +117,9 @@
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(10)
 					user.cell.charge -= 300
-					cooldown = 1
+					ccooldown = 1
 					spawn(10)
-					cooldown = 0
+					ccooldown = 0
 
 /obj/item/borg/charger
 	name = "power connector"
