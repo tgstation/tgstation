@@ -2129,6 +2129,24 @@ proc/process_adminbus_teleport_locs()
 	lighting_use_dynamic = 0
 	requires_power = 0
 
+/area/awaymission/leviathan
+	name = "Leviathan"
+		
+/area/awaymission/leviathan/research
+	name = "Leviathan"
+	icon_state = "anolab"
+
+/area/awaymission/leviathan/research/gateway
+	name = "Leviathan"
+	icon_state = "teleporter"
+
+/area/awaymission/leviathan/research/mining
+	name = "Leviathan"
+	icon_state = "mining_production"
+
+/area/awaymission/leviathan/mining
+	name = "Leviathan"
+	icon_state = "mining_production"
 
 /////////////////////////////////////////////////////////////////////
 /*
