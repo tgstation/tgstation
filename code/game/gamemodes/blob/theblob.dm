@@ -48,16 +48,16 @@
 /obj/effect/blob/Adjacent(var/atom/neighbour)
 	. = ..()
 	if(.)
-		var/list/result = list()
+		var/result = 0
 		var/direction = get_dir(src, neighbour)
-		var/list/dirs = list("9" = list(NORTH, WEST), "5" = list(NORTH, EAST), "6" = list(SOUTH, EAST), "10" = list(SOUTH, WEST))
+		var/list/dirs = list("[NORTHWEST]" = list(NORTH, WEST), "[NORTHEAST]" = list(NORTH, EAST), "[SOUTHEAST]" = list(SOUTH, EAST), "[SOUTHWEST]" = list(SOUTH, WEST))
 		for(var/A in dirs)
 			if(direction == text2num(A))
 				for(var/B in dirs[A])
 					var/C = locate(/obj/effect/blob) in get_step(src, B)
 					if(C)
-						result += C
-		. -= result.len - 1
+						result++
+		. -= result - 1
 
 /obj/effect/blob/CanAtmosPass(turf/T)
 	return !atmosblock
