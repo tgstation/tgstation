@@ -91,7 +91,6 @@
 
 	var/input_stamp = input(user, "Choose a stamp to disguise as.",
 		"Choose a stamp.") as null|anything in stamp_names
-	world << input_stamp
 
 	if(user && (src in user.contents) && input_stamp)
 		var/obj/item/weapon/stamp/stamp_type
@@ -99,7 +98,6 @@
 			stamp_type = i
 			if(initial(stamp_type.name) == input_stamp)
 				break
-		world << stamp_type
 
 		name = initial(stamp_type.name)
 		icon_state = initial(stamp_type.icon_state)
