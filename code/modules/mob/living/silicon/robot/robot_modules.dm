@@ -131,6 +131,7 @@
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/toy/crayon/spraycan/borg(src)
+	modules += new /obj/item/borg/cyborghug(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
 
