@@ -1,0 +1,10 @@
+author: Metacide
+delete-after: True
+changes: 
+  - rscadd: "A small update for MetaStation, changes include:"
+  - rscadd: "Added extra grounding rods to the engine area to stop camera destruction."
+  - rscadd: "Added canvases and extra crayons to art storage and some easels to maint."
+  - rscadd: "Added formal security uniform crate for parades to the warden's gear area."
+  - rscadd: "The armory securitron now starts active."
+  - rscadd: "The genetics APC now starts unlocked."
+  - rscadd: "Other minor changes and fixes as detailed on the wiki page."

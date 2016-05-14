@@ -1,0 +1,4 @@
+author: pudl
+delete-after: True
+changes: 
+  - rscadd: "Adds normal security headsets to security lockers"

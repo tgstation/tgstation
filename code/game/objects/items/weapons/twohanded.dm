@@ -390,9 +390,9 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/weapon/twohanded/required/chainsaw/can_dismember()
-	return wielded
-
+/obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
+	if(wielded)
+		. = ..()
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide

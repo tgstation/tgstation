@@ -6,7 +6,7 @@
 	supervisors = "the captain and the head of personnel"
 
 /datum/outfit/job/New()
-	box = /obj/item/weapon/storage/box/birdsurv
+	box = /obj/item/weapon/storage/box/survival/radio
 
 /datum/job/assistant // Here so assistant appears on the top of the select job list.
 
@@ -29,7 +29,7 @@
 	..()
 
 /datum/outfit/job/hos/New()
-	box = /obj/item/weapon/storage/box/birdsec
+	box = /obj/item/weapon/storage/box/security/radio
 
 /datum/job/officer/New()
 	..()
@@ -39,7 +39,7 @@
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
 
 /datum/outfit/job/officer/New()
-	box = /obj/item/weapon/storage/box/birdsec
+	box = /obj/item/weapon/storage/box/security/radio
 
 /datum/job/detective/New()
 	..()
@@ -47,7 +47,7 @@
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
 
 /datum/outfit/job/detective/New()
-	box = /obj/item/weapon/storage/box/birdsec
+	box = /obj/item/weapon/storage/box/security/radio
 
 //Medbay
 
@@ -69,7 +69,7 @@
 	minimal_access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
 
 /datum/outfit/job/engineer/New()
-	box = /obj/item/weapon/storage/box/birdeng
+	box = /obj/item/weapon/storage/box/engineer/radio
 
 //Science
 
@@ -93,7 +93,7 @@
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
 
 /datum/outfit/job/mining/New()
-	box = /obj/item/weapon/storage/box/birdeng
+	box = /obj/item/weapon/storage/box/engineer/radio
 
 //Service
 

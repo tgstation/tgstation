@@ -1,4 +1,6 @@
 
+/obj/item/bodypart/proc/can_dismember(obj/item/I)
+	. = (get_damage() >= (max_damage - I.armour_penetration/2))
 
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
@@ -15,6 +17,10 @@
 	if(dam_type == BURN)
 		burn()
 		return 1
+	add_blood(H)
+	var/turf/location = H.loc
+	if(istype(location))
+		location.add_blood(H)
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)

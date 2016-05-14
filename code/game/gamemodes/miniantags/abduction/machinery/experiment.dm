@@ -15,7 +15,7 @@
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
-	if(IsAbductor(target))
+	if(isabductor(target))
 		return
 	close_machine(target)
 
@@ -30,8 +30,8 @@
 		..()
 
 /obj/machinery/abductor/experiment/close_machine(mob/target)
-	for(var/mob/living/carbon/C in loc)
-		if(IsAbductor(C))
+	for(var/A in loc)
+		if(isabductor(A))
 			return
 	if(state_open && !panel_open)
 		..(target)
