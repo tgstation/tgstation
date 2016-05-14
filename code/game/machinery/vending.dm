@@ -1587,6 +1587,9 @@ var/global/num_vending_terminals = 1
 	contraband = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1,
 		)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
+	premium = list(
+		/obj/item/clothing/back/magiccape = 1,
+		)
 
 	pack = /obj/structure/vendomatpack/magivend	//Who's laughing now? wizarditis doesn't do shit anyway. - Deity Link
 

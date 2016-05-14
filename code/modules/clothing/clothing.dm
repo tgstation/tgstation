@@ -493,3 +493,11 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/New()
 	. = ..()
 	sensor_mode = pick(0, 1, 2, 3)
+
+
+//Capes?
+/obj/item/clothing/back
+	name = "cape"
+	w_class = 2.0
+	throwforce = 2
+	slot_flags = SLOT_BACK
