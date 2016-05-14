@@ -373,3 +373,11 @@
 				/obj/item/stack/sheet/sinew = 2,
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/gold_horn
+	name = "Golden bike horn"
+	result = /obj/item/weapon/bikehorn/golden
+	time = 20
+	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
+				/obj/item/weapon/bikehorn)
+	category = CAT_MISC
