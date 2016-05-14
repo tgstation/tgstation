@@ -1,12 +1,13 @@
 /obj/item/ashtray
 	icon = 'icons/ashtray.dmi'
-	var/
-		max_butts 	= 0
-		empty_desc 	= ""
-		icon_empty 	= ""
-		icon_half  	= ""
-		icon_full  	= ""
-		icon_broken	= ""
+	w_class = 1
+	
+	var/max_butts 	= 0
+	var/empty_desc 	= ""
+	var/icon_empty 	= ""
+	var/icon_half  	= ""
+	var/icon_full  	= ""
+	var/icon_broken	= ""
 
 /obj/item/ashtray/New()
 	..()

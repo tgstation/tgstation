@@ -5,6 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "chisel"
 
+	w_class = 2
 	starting_materials = list(MAT_IRON = 120)
 
 	flags = FPRINT
