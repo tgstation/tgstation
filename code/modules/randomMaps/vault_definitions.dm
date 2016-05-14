@@ -5,7 +5,7 @@ var/list/existing_vaults = list()
 	var/list/map_blacklist = list() //Don't spawn on these maps
 
 	var/map_directory = "maps/randomVaults/"
-	var/map_name = "" //Don't include the preffix or "maps/randomVaults/". If the vault is maps/randomVaults/hell.dmm, this should be "hell"
+	var/map_name = "" //Don't include the suffix or "maps/randomVaults/". If the vault is maps/randomVaults/hell.dmm, this should be "hell"
 
 	var/only_spawn_once = 1 //If 0, this vault can spawn multiple times on a single map
 

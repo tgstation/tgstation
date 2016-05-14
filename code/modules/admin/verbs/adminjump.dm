@@ -137,6 +137,33 @@
 	else
 		alert("Admin jumping disabled")
 
+/client/proc/jumptoaway()
+	set category = "Admin"
+	set name = "Jump to Away Mission"
+
+	if(!check_rights())
+		return
+
+	if(!config.allow_admin_jump)
+		alert("Admin jumping disabled")
+		return
+
+	var/list/awaymissions = list()
+	for(var/datum/away_mission/AM in existing_away_missions)
+		awaymissions["[AM.name] ([AM.file_path][AM.location ? ", Z:[AM.location.z]" : ""])"] = AM
+
+	var/selection = input("Select a vault to teleport to.", "Admin Jumping", null, null) as null|anything in sortList(awaymissions)
+	if(!selection)
+		return
+
+	var/datum/away_mission/AM = awaymissions[selection]
+	if(!AM.location)
+		to_chat(src, "[AM.name] doesn't have a location! Panic")
+		return
+
+	usr.forceMove(AM.location)
+	feedback_add_details("admin_verb","JV")
+
 /client/proc/Getmob(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Get Mob"

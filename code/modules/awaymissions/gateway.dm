@@ -1,3 +1,5 @@
+var/list/gateways = list() //List containing the gateways on away missions
+
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
@@ -6,7 +8,6 @@
 	density = 1
 	anchored = 1
 	var/active = 0
-
 
 /obj/machinery/gateway/initialize()
 	update_icon()
@@ -83,7 +84,7 @@ obj/machinery/gateway/centerstation/process()
 	if(!ready)			return
 	if(linked.len != 8)	return
 	if(!powered())		return
-	if(!awaygate)
+	if(!gateways.len)
 		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
@@ -119,18 +120,25 @@ obj/machinery/gateway/centerstation/process()
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
 	if(!ready)		return
 	if(!active)		return
-	if(!awaygate)	return
-	if(awaygate.calibrated)
-		M.loc = get_step(awaygate.loc, SOUTH)
+	if(!gateways.len) return
+
+	var/obj/machinery/gateway/centeraway/dest = pick(gateways) //Pick a random gateway from an away mission
+	if(dest.calibrated) //If it's calibrated, move to it
+		M.forceMove(get_step(dest.loc, SOUTH))
 		M.dir = SOUTH
 		return
-	else
-		var/obj/effect/landmark/dest = pick(awaydestinations)
-		if(dest)
-			M.loc = dest.loc
-			M.dir = SOUTH
-			use_power(5000)
-		return
+	else //Otherwise teleport to a landmark on the same z-level
+		var/list/good_landmarks = list()
+
+		for(var/obj/effect/landmark/L in awaydestinations)
+			if(L.z == dest.z)
+				good_landmarks.Add(L)
+
+		if(!good_landmarks.len) return
+		var/obj/effect/landmark/L_dest = pick(good_landmarks)
+		M.forceMove(get_turf(L_dest))
+		M.dir = SOUTH
+		use_power(5000)
 
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W as obj, mob/user as mob)
@@ -150,6 +158,15 @@ obj/machinery/gateway/centerstation/process()
 	var/ready = 0
 	var/obj/machinery/gateway/centeraway/stationgate = null
 
+/obj/machinery/gateway/centeraway/New()
+	..()
+
+	gateways.Add(src)
+
+/obj/machinery/gateway/centeraway/Destroy()
+	gateways.Remove(src)
+	
+	..()
 
 /obj/machinery/gateway/centeraway/initialize()
 	update_icon()
@@ -223,7 +240,7 @@ obj/machinery/gateway/centerstation/process()
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
 				to_chat(M, "\black The station gate has detected your exile implant and is blocking your entry.")
 				return
-	M.loc = get_step(stationgate.loc, SOUTH)
+	M.forceMove(get_step(stationgate.loc, SOUTH))
 	M.dir = SOUTH
 
 

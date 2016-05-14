@@ -171,6 +171,8 @@
 	var/skip_vault_generation = 0 //If 1, don't generate vaults
 	var/shut_up_automatic_diagnostic_and_announcement_system = 0 //If 1, don't play the vox sounds at the start of every shift.
 
+	var/enable_roundstart_away_missions = 0
+
 /datum/configuration/New()
 	. = ..()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -534,6 +536,8 @@
 					skip_vault_generation = 1
 				if("shut_up_automatic_diagnostic_and_announcement_system")
 					shut_up_automatic_diagnostic_and_announcement_system = 1
+				if("enable_roundstart_away_missions")
+					enable_roundstart_away_missions = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

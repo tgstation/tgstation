@@ -16,6 +16,12 @@
 	opacity = 0
 	canSmoothWith = null
 
+/turf/unsimulated/wall/rock
+	name = "unnaturally hard rock wall"
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "rock"
+	canSmoothWith = null
+
 /turf/unsimulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.delayNextAttack(8)
 	if (!user.dexterity_check())

@@ -76,7 +76,9 @@ datum/controller/game_controller/proc/setup()
 	socket_talk = new /datum/socket_talk()
 	socket_talk.send_raw("type=startup")
 
-	createRandomZlevel()
+	if(config.enable_roundstart_away_missions)
+		log_startup_progress("Attempting to generate an away mission...")
+		createRandomZlevel()
 /*
 	if(!air_master)
 		air_master = new /datum/controller/air_system()

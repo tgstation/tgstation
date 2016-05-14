@@ -965,6 +965,7 @@
 #include "code\modules\atmos_automation\implementation\sensors.dm"
 #include "code\modules\atmos_automation\implementation\supermatter.dm"
 #include "code\modules\atmos_automation\implementation\vent_pump.dm"
+#include "code\modules\awaymissions\_awaymission.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\gateway.dm"

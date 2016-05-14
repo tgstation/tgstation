@@ -1,0 +1,7 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- tweak: Refactored away missions.
+- rscadd: Admins can now spawn away missions during the round using a new button in the Admin tab.

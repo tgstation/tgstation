@@ -230,7 +230,8 @@ var/global/dmm_suite/preloader/_preloader = null
 
 	if(ispath(path, /turf)) //Turfs use ChangeTurf
 		var/turf/oldTurf = locate(x,y,z)
-		instance = oldTurf.ChangeTurf(path, allow = 1)
+		if(path != oldTurf.type)
+			instance = oldTurf.ChangeTurf(path, allow = 1)
 	else
 		instance = new path (locate(x,y,z))//first preloader pass
 

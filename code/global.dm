@@ -252,9 +252,6 @@ var/datum/nanomanager/nanomanager = new()
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-	//away missions
-var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
-
 	// MySQL configuration
 
 var/sqladdress = "localhost"
