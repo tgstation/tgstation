@@ -275,6 +275,9 @@
 			safety = 0
 
 	if(safety == 1)
+		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
+			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
+			"<span class='danger'>The siren pierces your hearing!</span>")
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
 				if(istype(M, /mob/living/carbon/human))
@@ -282,9 +285,6 @@
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
 				M.confused += 6
-				M.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
-				"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
-				"<span class='danger'>The siren pierces your hearing!</span>")
 			M << "<font color='red' size='7'>HUMAN HARM</font>"
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
@@ -296,6 +296,9 @@
 		return
 
 	if(safety == 0)
+		user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+			"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
+			"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
 				if(istype(M, /mob/living/carbon/human))
@@ -307,9 +310,6 @@
 				M.stuttering += 30
 				M.adjustEarDamage(0, 20)
 				M.Jitter(25)
-				M.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-				"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-				"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
 			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
