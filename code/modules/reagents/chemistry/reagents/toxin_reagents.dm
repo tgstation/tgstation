@@ -720,11 +720,11 @@
 	id = "dizzysolution"
 	description = "Makes the target off balance and dizzy"
 	toxpwr = 0
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
-	M.confused += 2
-	M.Dizzy(2)
+	M.confused += 1
+	M.Dizzy(1)
 	if(prob(20))
 		M << "You feel confused and disorientated."
 	..()
@@ -734,11 +734,11 @@
 	id = "tiresolution"
 	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
 	toxpwr = 0
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
 	M.adjustStaminaLoss(3)
 	if(prob(30))
-		M.adjustStaminaLoss(20)
+		M.adjustStaminaLoss(15)
 		M << "You should sit down and take a rest..."
 	..()
