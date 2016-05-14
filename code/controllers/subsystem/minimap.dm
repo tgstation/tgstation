@@ -8,7 +8,6 @@ var/datum/subsystem/minimap/SSminimap
 	var/const/TILE_SIZE = 8
 
 	var/list/z_levels = list(ZLEVEL_STATION)
-	var/list/z_level_minimaps = list()
 
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
@@ -16,65 +15,35 @@ var/datum/subsystem/minimap/SSminimap
 /datum/subsystem/minimap/Initialize(timeofday, zlevel)
 	if(zlevel)
 		return ..()
-	//if(!config.generate_minimaps)
-		//world << "Minimap generation disabled... Skipping"
-		//return
-	world.log << "Generating minimaps for shuttles."
+	if(!config.generate_minimaps)
+		world << "Minimap generation disabled... Skipping"
+		return
+	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
+	if(hash == trim(file2text(hash_path())))
+		return ..()
 
-	// Get list of all mapfiles in _maps
-	var/list/mapfiles = list()
-	for(var/i in pathwalk("_maps/shuttles/"))
-		if(dd_hassuffix(i, ".dmm"))
-			mapfiles += i
-	world.log << "[mapfiles.len] mapfiles found"
-	for(var/mf in mapfiles)
-		var/internal_name = pathflatten(mf)
-		var/map_hash_filename = hash_path(internal_name)
-		// Generate hashes for the map itself
-		var/map_hash = md5(file2text(mf))
-		// Lookup the stored hash on file
-		var/stored_hash = trim(file2text(map_hash_filename))
-		if(map_hash == stored_hash)
-			continue
-
-		// For each hash difference, generate a new minimap
-		var/datum/map_template/mt = new(path = mf)
-		world << "<span class='notice'>Generating minimap for [mf]</span>"
-		// Pick the topleft corner of z9, which is empty space
-		world.log << "Loading [mf] in z9 for minimap generation"
-		var/turf/T = locate(1,1,9)
-		mt.load(T, centered = FALSE)
-		world.log << "Generating minimap for [mf]"
-		var/icon/minimap = generate(9, 1,1, mt.width,mt.height)
-		world.log << "Unloading [mf] using del()"
-		// Unload the template
-		var/list/affected_turfs = mt.get_affected_turfs(T, centered = FALSE)
-		for(var/turf/T0 in affected_turfs)
-			for(var/AM in T0.GetAllContents())
-				qdel(AM, force=TRUE)
-			T0.ChangeTurf(/turf/open/space)
-
-		// Save the new minimap
-		fcopy(minimap, map_path(internal_name))
-		// Save the new hash
-		text2file(map_hash, map_hash_filename)
-
+	for(var/z in z_levels)
+		generate(z)
+		register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
+	fdel(hash_path())
+	text2file(hash, hash_path())
 	..()
-/datum/subsystem/minimap/proc/hash_path(name)
-	return "data/minimaps/[name].md5"
 
-/datum/subsystem/minimap/proc/map_path(name)
-	return "data/minimaps/[name].png"
+/datum/subsystem/minimap/proc/hash_path()
+	return "data/minimaps/[MAP_NAME].md5"
+
+/datum/subsystem/minimap/proc/map_path(z)
+	return "data/minimaps/[MAP_NAME]_[z].png"
 
 /datum/subsystem/minimap/proc/send(client/client)
-	for(var/z in z_level_minimaps)
-		send_asset(client, z)
+	for(var/z in z_levels)
+		send_asset(client, "minimap_[z].png")
 
 /datum/subsystem/minimap/proc/generate(z = 1, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
 	// Load the background.
 	var/icon/minimap = new /icon('icons/minimap.dmi')
 	// Scale it up to our target size.
-	minimap.Scale(x2 * TILE_SIZE, y2 * TILE_SIZE)
+	minimap.Scale(MINIMAP_SIZE, MINIMAP_SIZE)
 
 	var/counter = 512
 	// Loop over turfs and generate icons.
@@ -97,7 +66,7 @@ var/datum/subsystem/minimap/SSminimap
 	// Create a new icon and insert the generated minimap, so that BYOND doesn't generate different directions.
 	var/icon/final = new /icon()
 	final.Insert(minimap, "", SOUTH, 1, 0)
-	return final
+	fcopy(final, map_path(z))
 
 /datum/subsystem/minimap/proc/generate_tile(turf/tile, icon/minimap)
 	var/icon/tile_icon
