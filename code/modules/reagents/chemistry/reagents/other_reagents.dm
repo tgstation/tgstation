@@ -722,7 +722,7 @@
 			M.adjustToxLoss(rand(5,10))
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || VAPOR)
+	if(method == TOUCH || method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(istype(M,/mob/living/carbon/human))
