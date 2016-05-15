@@ -253,3 +253,9 @@ obj/machinery/gateway/centerstation/process()
 			to_chat(user, "<span class='notice'><b>Recalibration successful!</b>: </span>This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = 1
 			return
+
+/obj/machinery/gateway/centerstation/attack_ghost(mob/user as mob)
+	return src.Bumped(user)
+
+/obj/machinery/gateway/centeraway/attack_ghost(mob/user as mob)
+	return src.Bumped(user)
