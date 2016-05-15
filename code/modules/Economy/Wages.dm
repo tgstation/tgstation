@@ -11,7 +11,7 @@ var/global/roundstart_enable_wages = 0
 
 			var/datum/transaction/T = new()
 			T.purpose = "Nanotrasen employee payroll"
-			T.amount = [Acc.wage_gain]
+			T.amount = Acc.wage_gain
 			T.date = current_date_string
 			T.time = worldtime2text()
 			T.source_terminal = "Nanotrasen Payroll Server"
