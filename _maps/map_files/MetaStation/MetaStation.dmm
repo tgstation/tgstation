@@ -52,10 +52,7 @@
 /turf/open/floor/plating/airless,
 /area/solar/auxport)
 "aai" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/lattice,
 /turf/open/space,
 /area/space)
@@ -10160,10 +10157,7 @@
 /area/maintenance/auxsolarstarboard)
 "aqJ" = (
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "aqK" = (
@@ -78131,10 +78125,7 @@
 /turf/open/space,
 /area/space)
 "cvy" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "cvz" = (
