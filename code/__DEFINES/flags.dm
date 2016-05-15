@@ -67,6 +67,7 @@
 #define NOTRANSSTING	14
 #define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 #define NODISMEMBER		16
+#define NOHUNGER		17
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
