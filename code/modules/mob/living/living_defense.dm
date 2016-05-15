@@ -200,6 +200,7 @@
 			target << "<span class='userdanger'>You're forced out! You return to your own body.</span>"
 		target.mind.transfer_to(src)
 		target.mind_control_holder.mind.transfer_to(target)
+		qdel(mind_control_holder)
 		if(!silent)
 			target << "<span class='userdanger'>You take control of your own body again!</span>"
 		return 1

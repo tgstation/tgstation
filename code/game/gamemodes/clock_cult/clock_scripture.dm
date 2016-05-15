@@ -38,9 +38,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(scripture_effects() && (!ratvar_awakens && !slab.no_cost))
 				for(var/i in required_components)
 					if(tier <= SCRIPTURE_DRIVER || consumed_component_override)
-						slab.stored_components[i] -= consumed_components[i]
+						if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
+							clockwork_component_cache[i] -= consumed_components[i]
+						else
+							slab.stored_components[i] -= consumed_components[i]
 					else
-						slab.stored_components[i] -= required_components[i]
+						if(clockwork_component_cache[i] >= required_components[i])
+							clockwork_component_cache[i] -= required_components[i]
+						else
+							slab.stored_components[i] -= required_components[i]
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -54,7 +60,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	if(!ratvar_awakens && !slab.no_cost)
 		for(var/i in required_components)
-			if(slab.stored_components[i] < required_components[i])
+			if(slab.stored_components[i] < required_components[i] && clockwork_component_cache[i] < required_components[i])
 				invoker << "<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>"
 				return 0
 	if(multiple_invokers_used && !multiple_invokers_optional)

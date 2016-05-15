@@ -19,12 +19,14 @@
 
 /obj/structure/clockwork/massive/celestial_gateway/New()
 	..()
+	SSshuttle.emergencyNoEscape = TRUE
 	SSobj.processing += src
 	for(var/mob/M in mob_list)
 		if(is_servant_of_ratvar(M) || isobserver(M))
 			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [get_area(src)]!</b></span>"
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
+	SSshuttle.emergencyNoEscape = FALSE
 	SSobj.processing -= src
 	if(!purpose_fulfilled)
 		for(var/mob/M in mob_list)

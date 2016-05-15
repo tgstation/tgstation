@@ -36,7 +36,7 @@
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 
 /obj/item/clockwork/slab/starter
-	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1) //One of each
+	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 
 /obj/item/clockwork/slab/debug
 	no_cost = TRUE
@@ -694,9 +694,9 @@
 	if(production_progress >= production_interval)
 		production_progress = 0 //Start it over
 		if(specific_component)
-			cache.stored_components[specific_component]++
+			clockwork_component_cache[specific_component]++
 		else
-			cache.stored_components[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
+			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
 		cache.visible_message("<span class='warning'>Something clunks around inside of [cache].</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)
@@ -814,11 +814,10 @@
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
-	desc = "A large brass container with no visible methods of access."
-	clockwork_desc = "A brass container capable of storing a large amount of components."
+	desc = "A large brass spire with a flaming hole in its center."
+	clockwork_desc = "A brass container capable of storing a large amount of components. Shares components with all other caches."
 	icon_state = "tinkerers_cache"
 	construction_value = 10
-	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //Components in the cache
 
 /obj/structure/clockwork/cache/New()
 	..()
@@ -834,18 +833,18 @@
 		return 0
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
-		stored_components[C.component_id]++
+		clockwork_component_cache[C.component_id]++
 		user << "<span class='notice'>You add [C] to [src].</span>"
 		user.drop_item()
 		qdel(C)
 		return 1
 	if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		stored_components["belligerent_eye"] += S.stored_components["belligerent_eye"]
-		stored_components["vanguard_cogwheel"] += S.stored_components["vanguard_cogwheel"]
-		stored_components["guvax_capacitor"] += S.stored_components["guvax_capacitor"]
-		stored_components["replicant_alloy"] += S.stored_components["replicant_alloy"]
-		stored_components["hierophant_ansible"] += S.stored_components["hierophant_ansible"]
+		clockwork_component_cache["belligerent_eye"] += S.stored_components["belligerent_eye"]
+		clockwork_component_cache["vanguard_cogwheel"] += S.stored_components["vanguard_cogwheel"]
+		clockwork_component_cache["guvax_capacitor"] += S.stored_components["guvax_capacitor"]
+		clockwork_component_cache["replicant_alloy"] += S.stored_components["replicant_alloy"]
+		clockwork_component_cache["hierophant_ansible"] += S.stored_components["hierophant_ansible"]
 		S.stored_components["belligerent_eye"] = 0
 		S.stored_components["vanguard_cogwheel"] = 0
 		S.stored_components["guvax_capacitor"] = 0
@@ -884,15 +883,15 @@
 	if(!is_servant_of_ratvar(user))
 		return 0
 	var/list/possible_components = list()
-	if(stored_components["belligerent_eye"])
+	if(clockwork_component_cache["belligerent_eye"])
 		possible_components += "Belligerent Eye"
-	if(stored_components["vanguard_cogwheel"])
+	if(clockwork_component_cache["vanguard_cogwheel"])
 		possible_components += "Vanguard Cogwheel"
-	if(stored_components["guvax_capacitor"])
+	if(clockwork_component_cache["guvax_capacitor"])
 		possible_components += "Guvax Capacitor"
-	if(stored_components["replicant_alloy"])
+	if(clockwork_component_cache["replicant_alloy"])
 		possible_components += "Replicant Alloy"
-	if(stored_components["hierophant_ansible"])
+	if(clockwork_component_cache["hierophant_ansible"])
 		possible_components += "Hierophant Ansible"
 	if(!possible_components.len)
 		user << "<span class='warning'>[src] is empty!</span>"
@@ -904,19 +903,19 @@
 	switch(component_to_withdraw)
 		if("Belligerent Eye")
 			the_component = new/obj/item/clockwork/component/belligerent_eye(get_turf(src))
-			stored_components["belligerent_eye"]--
+			clockwork_component_cache["belligerent_eye"]--
 		if("Vanguard Cogwheel")
 			the_component = new/obj/item/clockwork/component/vanguard_cogwheel(get_turf(src))
-			stored_components["vanguard_cogwheel"]--
+			clockwork_component_cache["vanguard_cogwheel"]--
 		if("Guvax Capacitor")
 			the_component = new/obj/item/clockwork/component/guvax_capacitor(get_turf(src))
-			stored_components["guvax_capacitor"]--
+			clockwork_component_cache["guvax_capacitor"]--
 		if("Replicant Alloy")
 			the_component = new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
-			stored_components["replicant_alloy"]--
+			clockwork_component_cache["replicant_alloy"]--
 		if("Hierophant Ansible")
 			the_component = new/obj/item/clockwork/component/hierophant_ansible(get_turf(src))
-			stored_components["hierophant_ansible"]--
+			clockwork_component_cache["hierophant_ansible"]--
 	if(the_component)
 		user.visible_message("<span class='notice'>[user] withdraws [the_component] from [src].</span>", "<span class='notice'>You withdraw [the_component] from [src].</span>")
 		user.put_in_hands(the_component)
@@ -926,11 +925,11 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<b>Stored components:</b>"
-		user << "<i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]]"
-		user << "<i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]]"
-		user << "<i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]]"
-		user << "<i>Replicant Alloys:</i> [stored_components["replicant_alloy"]]"
-		user << "<i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]]"
+		user << "<i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]"
+		user << "<i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]"
+		user << "<i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]"
+		user << "<i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]"
+		user << "<i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]"
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 	name = "ocular warden"

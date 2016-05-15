@@ -151,6 +151,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 		modePlayer += servant
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
+		update_servant_icons_added(servant)
 		starter_servants--
 	return 1
 
