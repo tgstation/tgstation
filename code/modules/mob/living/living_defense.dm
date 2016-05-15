@@ -300,3 +300,17 @@
 		return 1
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
+
+/mob/living/Stun(amount)
+	if(stun_absorption && !stat)
+		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
+		stun_absorption_count += amount
+		return 0
+	..()
+
+/mob/living/Weaken(amount)
+	if(stun_absorption && !stat)
+		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
+		stun_absorption_count += amount
+		return 0
+	..()
