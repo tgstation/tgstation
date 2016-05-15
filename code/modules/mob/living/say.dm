@@ -60,10 +60,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type,)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	if(findtext(message, "lol") || findtext(message, "omg") || findtext(message, "lamo") findtext(message, "ikr") || findtext(message, "brb") || findtext(message, "rotfl"))
+	if(findtext(message, " lol ") || findtext(message, " omg ") || findtext(message, " lamo ") || findtext(message, " ikr ") || findtext(message, " brb ") || findtext(message, " rotfl "))
 		adjustBrainLoss(60) // TG is a meme free zone.
-		C << 'sound/effects/adminhelp.ogg'
-		src << "<span class='red' size='2'>TG is a meme free zone.</span>")
+		src << 'sound/effects/adminhelp.ogg'
+		src << "<span class='red' size='2'>TG is a meme free zone.</span>"
 
 	if(stat == DEAD)
 		say_dead(message)
