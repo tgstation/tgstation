@@ -84,7 +84,7 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attack_self_tk(mob/user)
-	if(istype(loc, /mob))
+	if(ismob(loc))
 		var/mob/M = loc
 		M.unEquip(src)
 		for(var/X in contents)
