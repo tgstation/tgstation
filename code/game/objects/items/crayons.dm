@@ -427,7 +427,7 @@
 				if(C.reagents)
 					C.reagents.add_reagent("welding_fuel", 5)
 					C.reagents.add_reagent("ethanol", 5)
-					C.reagents.reaction(C, VAPOR, 10)
+					C.reagents.reaction(C, VAPOR)
 
 				uses = max(0,uses-10)
 
