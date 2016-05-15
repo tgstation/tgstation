@@ -268,8 +268,9 @@
 	var/transfer_total = 0
 	for(var/datum/money_account/A in all_money_accounts)
 		for(var/datum/transaction/T in A.transaction_log)
-			if(T.amount <= 0) // This way we don't track payouts or starting funds, only money transferred to terminals or between players
-				transfer_total += abs(T.amount)
+			var/amt = text2num(T.amount)
+			if(amt <= 0) // This way we don't track payouts or starting funds, only money transferred to terminals or between players
+				transfer_total += abs(amt)
 	score["totaltransfer"] = transfer_total
 
 	arena_top_score = 0
