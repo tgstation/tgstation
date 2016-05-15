@@ -133,6 +133,9 @@
 		busy = 0
 		return 1
 
+	if(O.flags & HOLOGRAM)
+		return 1
+
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"

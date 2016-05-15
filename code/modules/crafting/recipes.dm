@@ -373,3 +373,34 @@
 				/obj/item/stack/sheet/sinew = 2,
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/gold_horn
+	name = "Golden bike horn"
+	result = /obj/item/weapon/bikehorn/golden
+	time = 20
+	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
+				/obj/item/weapon/bikehorn)
+	category = CAT_MISC
+
+/datum/crafting_recipe/bonedagger
+	name = "Bone Dagger"
+	result = /obj/item/weapon/kitchen/knife/combat/bone
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 2)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/bonespear
+	name = "Bone Spear"
+	result = /obj/item/weapon/twohanded/bonespear
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 4,
+				 /obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/boneaxe
+	name = "Bone Axe"
+	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
+	time = 50
+	reqs = list(/obj/item/stack/sheet/bone = 6,
+				 /obj/item/stack/sheet/sinew = 3)
+	category = CAT_PRIMAL
