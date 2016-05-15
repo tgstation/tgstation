@@ -98,6 +98,84 @@
 			src.gib()
 
 /*
+ *Mecha Hitler
+ */
+
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/roboheil //hitler's head in a jar with a spider walker sort of thing
+	name = "Cyborg Hitler"
+	icon_state = "roboheil"
+	icon_living = "roboheil"
+	desc = "A horrifying mixture of scientific advancement and fasicst ideals. Freedom at its very core is in danger as long as this mechanical menace lives."
+	maxHealth = 500
+	health = 500
+	faction = list("german")
+	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	deathmessage = "Mecha Hitler's body activates its self-destruct function!"
+	loot = list(/obj/effect/gibspawner/robot, /mob/living/simple_animal/hostile/wwii/brain)
+	wanted_objects = list()
+	search_objects = 0
+	spawn_mecha_type = /obj/mecha/combat/marauder/mauler/roboh
+
+/mob/living/simple_animal/hostile/wwii/brain
+	name = "Hitler's Head in a Jar"
+	icon_state = "robobrain"
+	icon_living = "robobrain"
+	desc = "Don't let it get away!"
+	loot = list(/obj/effect/gibspawner/robot)
+	maxHealth = 25
+	health = 25
+
+
+/*
+ *Mecha Hitler's Mech
+ */
+
+/obj/mecha/combat/marauder/mauler/roboh
+	name = "\improper Mecha-Hitler"
+	desc = "A heavily modified marauder mech with reinforced reflective plating."
+	icon_state = "mauler"
+	health = 4000
+	deflect_chance = 40
+	damage_absorption = list("brute"=0.6,"fire"=0.3,"bullet"=0.7,"laser"=0.4,"energy"=0.5,"bomb"=0.5)
+	force = 75
+	operation_req_access = list(access_syndicate)
+	wreckage = /obj/structure/mecha_wreckage/mauler
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/tier2
+	name = "\improper SRM-16 missile rack"
+	desc = "A modified version of the SMR-8, equipped with an additional 8 racks and a more powerful missile."
+	icon_state = "mecha_missilerack"
+	projectile = /obj/item/missile/tier2
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 16
+	projectile_energy_cost = 1000
+	equip_cooldown = 60
+
+/obj/item/missile/tier2
+	throwforce = 25
+
+/obj/item/missile/tier2/throw_impact(atom/hit_atom)
+	if(primed)
+		explosion(hit_atom, 0, 0, 4, 6, 3)
+		qdel(src)
+	else
+		..()
+
+
+/obj/mecha/combat/marauder/mauler/roboh/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/tier2
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	ME.attach(src)
+	return
+
+/*
 -YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-
 -PLEASE RESUME NORMAL, POLITICALLY CORRECT ACTIVITY-
 */

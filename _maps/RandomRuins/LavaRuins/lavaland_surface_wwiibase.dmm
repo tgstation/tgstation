@@ -1,0 +1,11705 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ac" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ad" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ae" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"af" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ag" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	faction = "german"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"ah" = (
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ai" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aj" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ak" = (
+/obj/structure/ore_box,
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"al" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"am" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"an" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ao" = (
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ap" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aq" = (
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ar" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"as" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"at" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"au" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Receptionist"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"av" = (
+/obj/structure/chair,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aw" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/chair,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ax" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ay" = (
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"az" = (
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aA" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/box/cups,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aB" = (
+/obj/structure/flora/kirbyplants{
+	tag = "icon-plant-21";
+	icon_state = "plant-21"
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aC" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Main Halls"
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aD" = (
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aE" = (
+/obj/structure/table/wood,
+/obj/structure/table/wood,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aF" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aG" = (
+/obj/structure/table/wood,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen/fourcolor,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aH" = (
+/obj/structure/table/wood,
+/obj/item/weapon/paper{
+	info = "Due to ze recent activities of nearby mining establishments, ze great Fuhrer has declared lockdown on his private domain until further notice. Please see ze receptionist about override buttons if ze wish to make an appointment with ze great Fuhrer.";
+	name = "lockdown notice"
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aI" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aJ" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aK" = (
+/obj/structure/flora/kirbyplants{
+	tag = "icon-plant-10";
+	icon_state = "plant-10"
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aL" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aM" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aN" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aO" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/modkit,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aP" = (
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aQ" = (
+/obj/machinery/light,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"aR" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aS" = (
+/obj/structure/closet/crate,
+/obj/item/modkit,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aT" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aU" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aV" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aW" = (
+/obj/machinery/button/door{
+	id = "nazi1";
+	name = "security override 1"
+	},
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "chloralhydrate";
+	name = "sleepy bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aX" = (
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "chloralhydrate";
+	name = "sleepy bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aY" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/dnainjector/chameleonmut,
+/obj/item/weapon/dnainjector/lasereyesmut,
+/obj/item/weapon/dnainjector/smilemut,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"aZ" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/dnainjector/antichav,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ba" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bb" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/dnainjector/dwarf,
+/obj/item/weapon/dnainjector/smilemut,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bc" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/dnainjector/timed/hulk,
+/obj/item/weapon/dnainjector/wackymut,
+/obj/item/weapon/dnainjector/telemut,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bd" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"be" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bf" = (
+/obj/structure/grille,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bg" = (
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/area/ruin/powered)
+"bh" = (
+/turf/closed/indestructible/riveted,
+/area/ruin/powered)
+"bi" = (
+/obj/machinery/door/poddoor{
+	id = "nazi1"
+	},
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bj" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bk" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "chloralhydrate";
+	name = "sleepy bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bm" = (
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bn" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bo" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bp" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bq" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/dnainjector/antiglasses,
+/obj/item/weapon/dnainjector/xraymut,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"br" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/dnainjector/antiglasses,
+/obj/item/weapon/dnainjector/timed/hulk,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bs" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bt" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bu" = (
+/obj/machinery/door/poddoor{
+	id = "nazi2"
+	},
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bv" = (
+/obj/machinery/door/poddoor{
+	id = "beestorage";
+	name = "emergency sedative bees"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bw" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Research Samples"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"bx" = (
+/obj/structure/frame/machine{
+	desc = "A sleeping device meant to keep occupents in stasis over long peroids of time.";
+	icon = 'icons/obj/Cryogenic2.dmi';
+	icon_state = "sleeper_s-open";
+	name = "cyrostatis sleeper"
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"by" = (
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bz" = (
+/obj/machinery/button/door{
+	id = "beestorage";
+	name = "emergency sedative bee activation";
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bA" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bB" = (
+/obj/machinery/door/airlock/glass_medical{
+	name = "Cyrostasis Pod"
+	},
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bC" = (
+/obj/machinery/door/airlock/glass_medical{
+	name = "Cyrostasis Pod"
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bD" = (
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bE" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bF" = (
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bG" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bH" = (
+/obj/machinery/computer/scan_consolenew,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bI" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bJ" = (
+/obj/machinery/computer/scan_consolenew,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bK" = (
+/obj/structure/closet{
+	name = "outfit closet"
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bL" = (
+/obj/structure/closet{
+	name = "outfit closet"
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bM" = (
+/obj/structure/closet{
+	name = "outfit closet"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bN" = (
+/obj/structure/closet{
+	name = "outfit closet"
+	},
+/obj/item/clothing/under/wwii,
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/shoes/combat,
+/obj/item/weapon/kitchen/knife/combat,
+/obj/item/clothing/head/helmet/stahlhelm,
+/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bO" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bP" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bQ" = (
+/mob/living/simple_animal/hostile/wwii/melee,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bR" = (
+/obj/machinery/dna_scannernew,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bS" = (
+/obj/machinery/dna_scannernew,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bT" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/blue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bU" = (
+/obj/machinery/door/airlock/glass_medical{
+	name = "Cyrostasis Chambers"
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bV" = (
+/mob/living/simple_animal/hostile/spawner/syndicate{
+	faction = list("german");
+	max_mobs = 2;
+	mob_type = /mob/living/simple_animal/hostile/wwii/bomber;
+	name = "merchandise warping facility"
+	},
+/turf/open/floor/pod/light{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bW" = (
+/turf/open/floor/pod/light{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bX" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bY" = (
+/obj/machinery/door/airlock/medical{
+	name = "Genetics Research"
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"bZ" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ca" = (
+/mob/living/simple_animal/hostile/wwii/melee,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"cb" = (
+/obj/structure/closet{
+	name = "outfit closet"
+	},
+/obj/item/clothing/under/wwii,
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/shoes/combat,
+/obj/item/weapon/kitchen/knife/combat,
+/obj/item/clothing/head/helmet/stahlhelm,
+/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cc" = (
+/obj/structure/closet{
+	name = "outfit closet"
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cd" = (
+/obj/structure/cult/forge{
+	desc = "A forge of dark origins, repurposed to generate power through the magma that flows throughout the land.";
+	name = "lava forge"
+	},
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/area/ruin/powered)
+"ce" = (
+/mob/living/simple_animal/hostile/wwii/melee,
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cf" = (
+/obj/structure/frame/machine{
+	tag = "icon-sleeper_s-open (NORTH)";
+	name = "cyrostatis sleeper";
+	desc = "A sleeping device meant to keep occupents in stasis over long peroids of time.";
+	icon = 'icons/obj/Cryogenic2.dmi';
+	icon_state = "sleeper_s-open";
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cg" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/brute,
+/obj/item/weapon/storage/firstaid/brute,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ch" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/fire,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ci" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/plasteel/darkblue{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cj" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Biceps Storage"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ck" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c (EAST)";
+	icon_state = "pipe-c";
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cl" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c";
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cm" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c (EAST)";
+	icon_state = "pipe-c";
+	dir = 4
+	},
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cn" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"co" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cp" = (
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (NORTH)";
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/obj/machinery/disposal/deliveryChute{
+	name = "delivery chute - fünf"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cq" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cr" = (
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (NORTH)";
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/obj/machinery/disposal/deliveryChute{
+	name = "delivery chute - acht"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cs" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ct" = (
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (NORTH)";
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/obj/machinery/disposal/deliveryChute{
+	name = "delivery chute - sieben"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cu" = (
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (NORTH)";
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/obj/machinery/disposal/deliveryChute{
+	name = "delivery chute - sechs"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cv" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cw" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cx" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cy" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cz" = (
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cA" = (
+/obj/structure/closet/wardrobe/robotics_black,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cB" = (
+/obj/machinery/mecha_part_fabricator,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cC" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cD" = (
+/obj/item/weapon/paper{
+	info = "Due to ze infestation in Subject Block 7, ze area haz been blocked off until extermination crew can remove ze pestz.";
+	name = "pen notice"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cE" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cF" = (
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cG" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/loadingarea{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cH" = (
+/turf/open/floor/plasteel/loadingarea{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cI" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/turf/open/floor/plasteel/loadingarea{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cJ" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cL" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cM" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cN" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cO" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c";
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cP" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/electrical,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cQ" = (
+/obj/structure/closet/crate,
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cR" = (
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cS" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 25
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cT" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c";
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cU" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/research{
+	name = "Subject Testing"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cV" = (
+/obj/machinery/door/airlock/science{
+	name = "Robotics Assembly"
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cW" = (
+/obj/structure/closet/crate,
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (NORTH)";
+	icon_state = "warnwhite";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cX" = (
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (NORTH)";
+	icon_state = "warnwhite";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cY" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/belt,
+/obj/item/clothing/head/welding,
+/obj/item/clothing/glasses/welding,
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (NORTH)";
+	icon_state = "warnwhite";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"cZ" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/deliveryChute{
+	dir = 1;
+	icon_state = "intake";
+	name = "delivery chute - eins";
+	tag = "icon-intake (NORTH)"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"da" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/deliveryChute{
+	dir = 1;
+	icon_state = "intake";
+	name = "delivery chute - drei";
+	tag = "icon-intake (NORTH)"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"db" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/deliveryChute{
+	dir = 1;
+	icon_state = "intake";
+	name = "delivery chute - vier";
+	tag = "icon-intake (NORTH)"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dc" = (
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (EAST)";
+	icon_state = "pipe-t";
+	dir = 4
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 1;
+	icon_state = "intake";
+	name = "delivery chute - zwei";
+	tag = "icon-intake (NORTH)"
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dd" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"de" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"df" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/belt,
+/obj/item/clothing/head/welding,
+/obj/item/clothing/glasses/welding,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/closed/wall,
+/area/ruin/powered)
+"dh" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c";
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/turf/closed/wall,
+/area/ruin/powered)
+"di" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered)
+"dj" = (
+/obj/structure/disposalpipe/segment,
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dk" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"dl" = (
+/turf/open/floor/plasteel/warnwhite/corner{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dm" = (
+/turf/open/floor/plasteel/warnwhite{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dn" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plasteel/warnwhite/corner{
+	tag = "icon-warnwhitecorner (NORTH)";
+	icon_state = "warnwhitecorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"do" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/plasteel/warnwhite/corner{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dp" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/abductor{
+	amount = 15
+	},
+/turf/open/floor/plasteel/warnwhite/corner{
+	tag = "icon-warnwhitecorner (NORTH)";
+	icon_state = "warnwhitecorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dq" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/stack/sheet/leather,
+/obj/item/stack/sheet/leather,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dr" = (
+/obj/structure/disposalpipe/segment,
+/obj/item/stack/sheet/animalhide/lizard,
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ds" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/gibber,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"du" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dv" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/kitchen/knife/butcher,
+/obj/item/weapon/kitchen/knife,
+/obj/item/stack/sheet/hairlesshide,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dw" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dx" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/warnwhite{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dy" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (EAST)";
+	icon_state = "warnwhite";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dz" = (
+/obj/structure/table,
+/obj/item/mecha_parts/part/gygax_armor,
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dA" = (
+/obj/machinery/conveyor{
+	id = "nazibelt1"
+	},
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dB" = (
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (WEST)";
+	icon_state = "warnwhite";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dC" = (
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (EAST)";
+	icon_state = "warnwhite";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dD" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dE" = (
+/obj/machinery/conveyor{
+	id = "nazibelt2"
+	},
+/obj/item/mecha_parts/part/durand_torso,
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dF" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "nazi4";
+	name = "security override 4"
+	},
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (WEST)";
+	icon_state = "warnwhite";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dG" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly,
+/obj/item/stack/sheet/hairlesshide,
+/obj/item/stack/sheet/animalhide/xeno,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dI" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dJ" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dK" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c";
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dL" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/freezer,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dN" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dO" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c";
+	icon_state = "pipe-c";
+	dir = 2
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dP" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dQ" = (
+/obj/mecha/combat/gygax,
+/turf/open/floor/mech_bay_recharge_floor{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dR" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dS" = (
+/obj/structure/table,
+/obj/item/mecha_parts/part/gygax_torso,
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dT" = (
+/obj/machinery/conveyor_switch{
+	id = "nazibelt1"
+	},
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (WEST)";
+	icon_state = "warnwhite";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dU" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (EAST)";
+	icon_state = "warnwhite";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dV" = (
+/obj/machinery/conveyor{
+	id = "nazibelt2"
+	},
+/obj/item/mecha_parts/part/durand_left_leg,
+/turf/open/floor/plasteel/neutral{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dW" = (
+/obj/machinery/conveyor_switch{
+	id = "nazibelt2"
+	},
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-warnwhite (WEST)";
+	icon_state = "warnwhite";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dX" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/research{
+	name = "Subject Rooms"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"dY" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"dZ" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ea" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	id = "nazibelt1"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eb" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	id = "nazibelt2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ec" = (
+/obj/structure/bed/abductor,
+/obj/effect/decal/cleanable/cobweb,
+/mob/living/simple_animal/hostile/alien/maid,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ed" = (
+/obj/item/weapon/soap/deluxe,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ee" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ef" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eg" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eh" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ei" = (
+/obj/machinery/door/poddoor{
+	id = "nazi3"
+	},
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ej" = (
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ek" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"el" = (
+/obj/machinery/vending/tool,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"em" = (
+/obj/machinery/vending/engivend,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"en" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eo" = (
+/obj/structure/closet/crate,
+/obj/item/mecha_parts/mecha_equipment/cable_layer,
+/obj/item/mecha_parts/mecha_equipment/cable_layer,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ep" = (
+/obj/machinery/conveyor{
+	id = "nazibelt1"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eq" = (
+/obj/machinery/mech_bay_recharge_port{
+	tag = "icon-recharge_port";
+	icon_state = "recharge_port";
+	dir = 2
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"er" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"es" = (
+/obj/machinery/conveyor{
+	id = "nazibelt2"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"et" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eu" = (
+/obj/structure/mopbucket,
+/obj/item/weapon/mop,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ev" = (
+/mob/living/simple_animal/pet/dog/corgi/puppy/void,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ew" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ex" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ey" = (
+/obj/mecha/working/ripley,
+/turf/open/floor/mech_bay_recharge_floor{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ez" = (
+/obj/machinery/suit_storage_unit/mining,
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eA" = (
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eB" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Subject 1"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eC" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Subject 2"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eD" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eE" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eF" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eG" = (
+/obj/machinery/conveyor_switch{
+	id = "nazibelt1"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eH" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eI" = (
+/obj/machinery/conveyor_switch{
+	id = "nazibelt2"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eJ" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eK" = (
+/obj/machinery/door/poddoor{
+	id = "nazi4"
+	},
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eL" = (
+/obj/structure/closet/wardrobe/engineering_yellow,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eM" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eN" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eO" = (
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"eQ" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (WEST)";
+	icon_state = "outlet";
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (EAST)";
+	icon_state = "pipe-t";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eR" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c (WEST)";
+	icon_state = "pipe-c";
+	dir = 8
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eT" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (EAST)";
+	icon_state = "outlet";
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eU" = (
+/obj/structure/closet/wardrobe/atmospherics_yellow,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eV" = (
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eW" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eX" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"eY" = (
+/mob/living/simple_animal/hostile/spawner/syndicate{
+	faction = list("german");
+	max_mobs = 2;
+	mob_type = /mob/living/simple_animal/hostile/wwii/bomber;
+	name = "merchandise warping facility"
+	},
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"eZ" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fa" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Power Supply"
+	},
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fb" = (
+/obj/machinery/door/airlock/mining{
+	name = "Mining Access"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fc" = (
+/obj/structure/closet{
+	name = "Equipment Locker"
+	},
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/human/ash_walker,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fe" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
+/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain,
+/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ff" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
+/obj/structure/alien/weeds,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fg" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fh" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fi" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fj" = (
+/obj/structure/bed/abductor,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fk" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fl" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fm" = (
+/obj/structure/closet{
+	name = "Equipment Locker"
+	},
+/obj/item/weapon/gun/energy/kinetic_accelerator/super,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fn" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fo" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fp" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fq" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fr" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fs" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/electrical,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ft" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fu" = (
+/obj/structure/table,
+/obj/machinery/light,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fv" = (
+/obj/structure/closet/toolcloset,
+/obj/item/modkit,
+/obj/item/modkit,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fw" = (
+/obj/structure/closet/crate,
+/obj/item/mecha_parts/mecha_equipment/generator/nuclear,
+/obj/item/mecha_parts/mecha_equipment/generator,
+/obj/item/mecha_parts/mecha_equipment/extinguisher,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fx" = (
+/obj/structure/closet/crate,
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fy" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkyellow{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fz" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fA" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Subject 3"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Subject 3"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fB" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Subject 4"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fC" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fD" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fE" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fF" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fG" = (
+/obj/structure/rack,
+/obj/item/weapon/pickaxe/drill/diamonddrill,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fH" = (
+/obj/structure/rack,
+/obj/item/weapon/pickaxe/drill,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/gun/energy/kinetic_accelerator,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fI" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fJ" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fK" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/queen/large,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fL" = (
+/turf/open/floor/mineral/diamond{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fM" = (
+/mob/living/simple_animal/hostile/wwii/melee,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fN" = (
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fO" = (
+/mob/living/simple_animal/hostile/wwii/ranged,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fP" = (
+/obj/structure/ore_box,
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fQ" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fR" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c (WEST)";
+	icon_state = "pipe-c";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fS" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (EAST)";
+	icon_state = "outlet";
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fT" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fU" = (
+/obj/structure/alien/weeds,
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fV" = (
+/obj/structure/alien/weeds,
+/obj/machinery/button/door{
+	id = "nazi2";
+	name = "security override 2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fW" = (
+/obj/structure/alien/weeds/node,
+/obj/structure/bed/nest,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"fX" = (
+/obj/structure/window{
+	tag = "icon-rwindow";
+	icon_state = "rwindow";
+	dir = 2
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"fY" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/pod{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"fZ" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"ga" = (
+/mob/living/simple_animal/hostile/creature,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gb" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/faithless,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gc" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gd" = (
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/roboheil,
+/turf/open/floor/mineral/silver{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ge" = (
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gf" = (
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gg" = (
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gh" = (
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/structure/window{
+	tag = "icon-rwindow";
+	icon_state = "rwindow";
+	dir = 2
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gi" = (
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/structure/window{
+	tag = "icon-rwindow";
+	icon_state = "rwindow";
+	dir = 2
+	},
+/turf/open/floor/pod{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"gj" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gk" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Subject 5"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gl" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Subject 6"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gm" = (
+/obj/structure/window{
+	tag = "icon-rwindow";
+	icon_state = "rwindow";
+	dir = 2
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gn" = (
+/obj/structure/window{
+	tag = "icon-rwindow";
+	icon_state = "rwindow";
+	dir = 2
+	},
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"go" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gp" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gq" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (WEST)";
+	icon_state = "outlet";
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gr" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (EAST)";
+	icon_state = "outlet";
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (EAST)";
+	icon_state = "pipe-t";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gs" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-s (EAST)";
+	icon_state = "pipe-s";
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gt" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c (WEST)";
+	icon_state = "pipe-c";
+	dir = 8
+	},
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gu" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gv" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gw" = (
+/obj/structure/bed/abductor,
+/obj/effect/mob_spawn/human/skeleton{
+	helmet = /obj/item/clothing/head/ushanka;
+	name = "russian remains";
+	uniform = /obj/item/clothing/under/soviet
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/powered)
+"gx" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/powered)
+"gy" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered)
+"gz" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/powered)
+"gA" = (
+/obj/item/weapon/reagent_containers/glass/bowl,
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gB" = (
+/obj/structure/disposalpipe/segment,
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gC" = (
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gD" = (
+/obj/structure/bed/abductor,
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gE" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gF" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gG" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/powered)
+"gH" = (
+/mob/living/simple_animal/hostile/spawner/lavaland,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered)
+"gI" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Subject 7"
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gJ" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gK" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Subject 8"
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gL" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gM" = (
+/mob/living/simple_animal/hostile/wwii,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gN" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (WEST)";
+	icon_state = "outlet";
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (EAST)";
+	icon_state = "pipe-t";
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/powered)
+"gO" = (
+/obj/structure/disposaloutlet{
+	tag = "icon-outlet (EAST)";
+	icon_state = "outlet";
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	tag = "icon-pipe-t (EAST)";
+	icon_state = "pipe-t";
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gP" = (
+/obj/structure/disposalpipe/segment{
+	tag = "icon-pipe-c (WEST)";
+	icon_state = "pipe-c";
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/poison/bees{
+	beegent = "clf3";
+	name = "fire bee"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"gQ" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/powered)
+"gR" = (
+/obj/structure/mineral_door/silver{
+	name = "sekret stash"
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gS" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gT" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "nazi3";
+	name = "security override 3"
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gU" = (
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/window{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/turf/open/floor/engine{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gV" = (
+/mob/living/simple_animal/hostile/wwii/bomber,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gW" = (
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"gX" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"gY" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"gZ" = (
+/obj/effect/mob_spawn/human/skeleton{
+	helmet = /obj/item/clothing/head/helmet/stahlhelm;
+	name = "german remains";
+	uniform = /obj/item/clothing/under/wwii
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ha" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hb" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/abductor{
+	amount = 15
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hc" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/spellbook/oneuse/random,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hd" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 25
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"he" = (
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hf" = (
+/obj/effect/mob_spawn/human/skeleton{
+	helmet = /obj/item/clothing/head/ushanka;
+	name = "russian remains";
+	uniform = /obj/item/clothing/under/soviet
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"hg" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/abductor{
+	amount = 15
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hh" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe/drill/jackhammer,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hi" = (
+/obj/structure/closet/crate/large,
+/mob/living/simple_animal/hostile/wwii/bomber,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hj" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hk" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hl" = (
+/obj/item/weapon/wrench/medical,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hm" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 25
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hn" = (
+/obj/item/weapon/crowbar/large,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ho" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/pickaxe/drill/jackhammer,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hp" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/obj/structure/closet/crate/large,
+/obj/item/weapon/gun/energy/gun/mini,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hq" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/minigunpack,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hr" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/gun/energy/pulse/pistol,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hs" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/gun/energy/gun/mini,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"ht" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hu" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/banhammer,
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 25
+	},
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hv" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/gun/energy/mindflayer,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hw" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hx" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/gun/projectile/sniper_rifle,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hy" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/katana/cursed,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+"hz" = (
+/obj/structure/closet/crate/large,
+/obj/item/weapon/greentext,
+/turf/open/floor/mineral/gold{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ck
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+co
+eS
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ai
+aJ
+aJ
+bK
+bT
+bT
+cb
+aJ
+aJ
+cl
+cp
+ap
+cJ
+ap
+cZ
+dg
+dq
+dG
+ai
+ec
+an
+am
+an
+an
+ai
+eh
+an
+am
+fo
+fo
+ai
+eh
+fo
+gj
+an
+go
+ai
+gw
+gx
+gG
+gy
+gy
+gQ
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ai
+bx
+bB
+bF
+bF
+bF
+bF
+bB
+cf
+cm
+cq
+cq
+cK
+ap
+ap
+dh
+dr
+dH
+ai
+an
+an
+an
+an
+an
+ai
+an
+fn
+fo
+an
+an
+ai
+an
+gb
+fo
+fo
+go
+ai
+gx
+gy
+gy
+gy
+gy
+gy
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ai
+aJ
+aJ
+bL
+bF
+bF
+bN
+aJ
+aJ
+cl
+cr
+ap
+cL
+ap
+da
+dg
+ds
+dI
+ai
+ed
+an
+an
+an
+an
+ai
+fd
+fo
+fo
+fJ
+an
+ai
+an
+fo
+fo
+fo
+gp
+ai
+gy
+gy
+gH
+gy
+gx
+gy
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ai
+bx
+bB
+bF
+bF
+bF
+bF
+bB
+cf
+aJ
+cs
+ap
+cM
+ap
+ap
+dh
+dt
+dJ
+ai
+an
+an
+an
+an
+an
+ai
+an
+fo
+fo
+fo
+an
+ai
+an
+fo
+fo
+fo
+go
+ai
+gy
+gy
+gy
+gy
+gx
+gQ
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ai
+aJ
+aJ
+bL
+bF
+bF
+cc
+aJ
+aJ
+cm
+ct
+cD
+cM
+ap
+db
+dg
+du
+dI
+ai
+ee
+eu
+an
+an
+eQ
+ai
+fe
+an
+an
+an
+eQ
+ai
+ee
+an
+an
+an
+gq
+ai
+gz
+gy
+gy
+gx
+gN
+ai
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ai
+bx
+bB
+bF
+bF
+bF
+bF
+bB
+cf
+cl
+cq
+cq
+cN
+cK
+ap
+di
+dv
+dK
+co
+co
+co
+eB
+co
+eR
+ai
+ai
+ai
+fA
+ai
+fQ
+ai
+ai
+ai
+gk
+ai
+ai
+ai
+ai
+ai
+gI
+ai
+fQ
+ai
+ac
+ad
+ad
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ai
+aJ
+aJ
+bM
+bF
+bF
+bL
+aJ
+aJ
+cm
+cu
+ap
+cM
+cM
+dc
+di
+dh
+dL
+co
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+fR
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+gJ
+ap
+cM
+ai
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ai
+bx
+bB
+bF
+bF
+bF
+bF
+bB
+cf
+cn
+ap
+ap
+cM
+cT
+dd
+dd
+dw
+cq
+dX
+cq
+cq
+dj
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+dj
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+cq
+dj
+cq
+cq
+fR
+ai
+ad
+gX
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ai
+aJ
+aJ
+bL
+bF
+bF
+bL
+aJ
+aJ
+cn
+cv
+ap
+cM
+ap
+cM
+cT
+cq
+cq
+co
+ef
+cq
+cq
+cq
+cq
+cq
+ef
+cq
+cq
+cq
+cK
+ap
+fk
+ap
+ap
+ap
+ap
+ap
+fk
+ap
+ap
+ap
+ap
+ai
+ad
+ad
+hf
+ad
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+bx
+bB
+bF
+bF
+bF
+bF
+bB
+cf
+cn
+cw
+ap
+cL
+ap
+cT
+dj
+cq
+cq
+co
+co
+co
+eC
+co
+eS
+ai
+ai
+ai
+fB
+ai
+fQ
+ai
+ai
+ai
+gl
+ai
+ai
+ai
+ai
+ai
+gK
+ai
+ai
+ai
+ad
+gY
+ad
+ad
+gX
+ab
+gY
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aJ
+aJ
+bN
+bF
+bF
+bN
+aJ
+aJ
+cn
+cw
+ap
+cM
+ap
+ap
+ap
+ap
+ap
+ai
+ee
+an
+an
+an
+eT
+ai
+ff
+fp
+fp
+fp
+fS
+ai
+fZ
+fo
+an
+an
+gr
+ai
+gA
+gC
+gC
+gC
+gO
+ai
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+bx
+bC
+bO
+by
+by
+bO
+bC
+cf
+cn
+ap
+ap
+cO
+cq
+cq
+cq
+cq
+cq
+co
+eg
+eg
+eg
+eg
+eg
+co
+fg
+fg
+fC
+fg
+fT
+co
+eg
+gc
+gc
+gc
+gs
+co
+gB
+gE
+gE
+gE
+gP
+ai
+ad
+gZ
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+aJ
+aJ
+aJ
+bU
+bU
+aJ
+aJ
+aJ
+cl
+cx
+cx
+cx
+cU
+cU
+cx
+cx
+dM
+ai
+an
+ev
+an
+an
+an
+ai
+fh
+fq
+fi
+fK
+fU
+ai
+an
+fo
+fo
+fo
+gp
+ai
+gC
+gF
+gF
+gF
+gF
+ai
+ac
+ac
+ab
+ad
+gY
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ai
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+dN
+ai
+an
+an
+an
+an
+an
+ai
+fi
+fr
+fD
+fi
+fV
+ai
+ga
+an
+fo
+fo
+go
+ai
+gC
+gF
+gF
+gF
+gF
+ai
+ac
+ac
+ab
+ad
+ad
+ab
+hf
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ai
+ay
+ay
+aD
+ay
+ay
+ay
+ay
+ay
+bs
+ay
+ay
+ay
+ay
+ay
+bs
+ay
+ay
+ay
+ay
+ay
+ay
+bs
+ay
+ay
+ay
+dN
+ai
+eh
+an
+bj
+an
+an
+ai
+fj
+fr
+fE
+fr
+fW
+ai
+eh
+an
+bj
+an
+go
+ai
+gD
+gC
+gL
+gF
+gC
+ai
+ac
+ac
+ac
+ac
+ab
+ab
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ae
+ae
+ae
+ac
+ac
+ai
+ay
+ay
+aI
+ay
+ay
+ay
+ay
+ay
+ay
+aI
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+aI
+ay
+ay
+ay
+ay
+ay
+aI
+ay
+dO
+co
+cx
+cx
+cx
+cx
+cx
+co
+co
+co
+co
+co
+co
+co
+cx
+cx
+cx
+cx
+gt
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+ai
+ai
+ac
+ac
+ac
+ab
+ab
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ae
+ag
+ae
+ac
+ac
+ai
+ay
+ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aU
+ai
+ai
+ai
+aJ
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(36,1,1) = {"
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ae
+ae
+ae
+ac
+ac
+ai
+ay
+ay
+aJ
+aO
+an
+am
+an
+an
+bt
+bf
+an
+an
+an
+an
+an
+an
+an
+an
+an
+bf
+aP
+an
+an
+an
+an
+an
+dY
+an
+aJ
+bg
+bg
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bg
+bg
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(37,1,1) = {"
+aa
+ac
+ac
+ac
+ac
+ab
+ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ai
+aC
+aC
+aJ
+aP
+an
+bd
+an
+an
+an
+an
+an
+an
+an
+bZ
+bf
+be
+an
+bd
+an
+an
+an
+an
+an
+an
+an
+an
+bf
+bZ
+aJ
+bg
+bh
+bh
+bm
+ap
+ap
+ap
+ap
+ap
+ao
+bm
+bD
+bm
+ao
+ap
+ap
+ap
+ap
+ap
+bm
+bh
+bh
+bg
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(38,1,1) = {"
+aa
+ac
+ac
+ac
+ab
+ab
+ab
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ai
+ai
+ay
+ay
+aJ
+aJ
+aT
+be
+an
+an
+an
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+bl
+bl
+aJ
+aJ
+aJ
+aJ
+aJ
+bl
+bl
+aJ
+aJ
+aJ
+aJ
+aJ
+bg
+bh
+bm
+eY
+fk
+ao
+ao
+ao
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+ao
+ao
+ao
+fk
+eY
+bm
+bh
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(39,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+aB
+ay
+ay
+aB
+aJ
+aJ
+bf
+bf
+an
+bd
+aJ
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bh
+ap
+eZ
+bh
+cs
+ao
+ao
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+ao
+ao
+eZ
+bh
+cs
+ap
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bg
+bg
+ai
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(40,1,1) = {"
+aa
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+av
+ay
+ay
+ay
+ay
+az
+aU
+an
+an
+an
+an
+aJ
+bg
+bh
+bh
+bh
+bg
+bg
+bg
+bg
+bh
+bh
+bh
+bg
+bg
+bg
+bg
+bh
+bh
+bh
+bg
+bg
+bh
+ap
+ao
+cJ
+ce
+ap
+ao
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+ao
+ap
+ce
+cJ
+ao
+ap
+bh
+bh
+ha
+bD
+hj
+bD
+gV
+bh
+bh
+bg
+ai
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(41,1,1) = {"
+aa
+ab
+ab
+ae
+ae
+ae
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+av
+ay
+ay
+ay
+ay
+aQ
+aJ
+aJ
+bl
+bl
+aJ
+aJ
+bg
+bh
+bV
+bh
+bg
+bg
+bg
+bg
+bh
+bV
+bh
+bg
+bg
+bg
+bg
+bh
+bV
+bh
+bg
+bg
+bh
+ap
+ao
+ao
+ap
+bm
+fk
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+fk
+bm
+ap
+ao
+ao
+ap
+bh
+bD
+bD
+hg
+bD
+bD
+bD
+bD
+bh
+bg
+ai
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(42,1,1) = {"
+ab
+ab
+ab
+ae
+ag
+ae
+ac
+ai
+ai
+aq
+ar
+as
+ar
+aq
+ai
+ai
+av
+ay
+aD
+ay
+aK
+az
+aJ
+bg
+bg
+bg
+bg
+bg
+bg
+bh
+bW
+bh
+bg
+cd
+cd
+bg
+bh
+bW
+bh
+bg
+cd
+cd
+bg
+bh
+bW
+bh
+bg
+bg
+bh
+ap
+ao
+ao
+ao
+eZ
+bh
+cs
+bm
+fL
+fM
+fL
+bm
+eZ
+bh
+cs
+ao
+ao
+ao
+ap
+bh
+gV
+bD
+bD
+gV
+bD
+ht
+bD
+bh
+bg
+ai
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(43,1,1) = {"
+ab
+ab
+ab
+ae
+ae
+ak
+ac
+ai
+ao
+ao
+ao
+ap
+ao
+ao
+ao
+ai
+aw
+ay
+ay
+aE
+aF
+az
+aJ
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bW
+bh
+bh
+bh
+bh
+bh
+bh
+bW
+bh
+bh
+bh
+bh
+bh
+bh
+bW
+bh
+bh
+bh
+bh
+ap
+ao
+ao
+ao
+ao
+cJ
+bm
+fL
+fL
+bD
+fL
+fL
+bm
+cJ
+ao
+ao
+ao
+ao
+ap
+bh
+bD
+bD
+bD
+hk
+bD
+bD
+gV
+bh
+bg
+ai
+ac
+ad
+ad
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(44,1,1) = {"
+ab
+ab
+ad
+ad
+ah
+al
+ac
+ai
+ao
+ao
+ao
+ap
+ao
+ao
+ao
+ai
+ax
+ay
+ay
+aF
+aL
+az
+aJ
+bh
+az
+bo
+bh
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+bh
+az
+az
+bh
+ao
+ap
+ap
+ap
+ap
+bm
+fL
+bD
+fL
+bD
+fL
+bD
+fL
+bm
+ap
+ap
+ap
+ap
+ao
+bh
+gV
+hb
+bD
+bD
+gV
+bD
+bD
+bh
+bg
+ai
+ac
+ad
+ad
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(45,1,1) = {"
+ab
+ab
+ad
+af
+ai
+ai
+ai
+ai
+ao
+ao
+ao
+ap
+ao
+ao
+ap
+au
+ay
+az
+ay
+aG
+az
+ay
+ay
+bi
+bm
+bm
+bu
+bm
+bm
+bm
+bX
+bm
+bm
+ce
+bm
+bm
+bm
+bX
+bm
+bm
+bm
+ce
+bm
+bm
+bm
+ei
+bm
+bm
+eK
+bm
+bm
+bm
+bm
+bm
+fL
+fL
+fL
+fL
+bD
+fL
+fL
+fL
+fL
+bm
+bm
+bm
+bm
+bm
+gR
+bD
+bD
+bD
+bD
+bD
+hu
+bD
+bh
+bg
+ai
+ac
+ad
+ad
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+aa
+"}
+(46,1,1) = {"
+ab
+ab
+ad
+ad
+aj
+am
+an
+aj
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ai
+az
+az
+az
+aH
+aM
+az
+az
+bh
+bn
+bp
+bh
+bn
+bD
+bp
+bh
+bn
+bD
+bD
+bD
+bD
+bp
+bh
+bn
+bD
+bD
+bD
+bD
+bD
+bp
+bh
+bn
+bp
+bh
+bn
+bD
+bD
+bD
+bD
+fM
+bD
+bD
+bD
+gd
+bD
+bD
+bD
+fM
+bD
+bD
+bD
+bD
+bp
+bh
+bn
+bD
+hh
+hl
+bD
+gV
+bp
+bh
+bg
+ai
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+aa
+"}
+(47,1,1) = {"
+ab
+ab
+ad
+af
+ai
+ai
+ai
+ai
+ao
+ao
+ao
+ap
+ao
+ao
+ap
+au
+ay
+az
+ay
+aF
+az
+ay
+ay
+bi
+bm
+bm
+bu
+bm
+bm
+bm
+bX
+bm
+bm
+ce
+bm
+bm
+bm
+bX
+bm
+bm
+bm
+ce
+bm
+bm
+bm
+ei
+bm
+bm
+eK
+bm
+bm
+bm
+bm
+bm
+fL
+fL
+fL
+fL
+bD
+fL
+fL
+fL
+fL
+bm
+bm
+bm
+bm
+bm
+gR
+gV
+bD
+bD
+bD
+gV
+bD
+bD
+bh
+bg
+ai
+ac
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+aa
+"}
+(48,1,1) = {"
+ab
+ab
+ad
+ad
+ad
+ac
+ac
+ai
+ao
+ao
+ao
+ap
+ao
+ao
+ao
+ai
+aA
+ay
+ay
+aF
+ay
+az
+aJ
+bh
+az
+bo
+bh
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+az
+bh
+az
+az
+bh
+ao
+ap
+ap
+ap
+ap
+bm
+fL
+bD
+fL
+bD
+fL
+bD
+fL
+bm
+ap
+ap
+ap
+ap
+ao
+bh
+bD
+hc
+bD
+hm
+bD
+bD
+bD
+bh
+bg
+ai
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+aa
+"}
+(49,1,1) = {"
+ab
+ab
+ad
+ae
+ae
+ae
+ac
+ai
+ao
+ao
+ao
+ap
+ao
+ao
+ao
+ai
+aw
+ay
+ay
+aE
+aF
+az
+aJ
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bW
+bh
+bh
+bh
+bh
+bh
+bh
+bW
+bh
+bh
+bh
+bh
+bh
+bh
+bW
+bh
+bh
+bh
+bh
+ap
+ao
+ao
+ao
+ao
+fk
+bm
+fL
+fL
+bD
+fL
+fL
+bm
+fk
+ao
+ao
+ao
+ao
+ap
+bh
+bD
+bD
+bD
+gV
+bD
+bD
+hi
+bh
+bg
+ai
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(50,1,1) = {"
+ab
+ab
+ab
+ae
+ag
+ae
+ac
+ai
+ai
+aq
+ar
+at
+ar
+aq
+ai
+ai
+av
+ay
+aD
+ay
+aK
+az
+aJ
+bg
+bg
+bg
+bg
+bg
+bg
+bh
+bW
+bh
+bg
+cd
+cd
+bg
+bh
+bW
+bh
+bg
+cd
+cd
+bg
+bh
+bW
+bh
+bg
+bg
+bh
+ap
+ao
+ao
+ao
+eZ
+bh
+cs
+bm
+fL
+fM
+fL
+bm
+eZ
+bh
+cs
+ao
+ao
+ao
+ap
+bh
+bD
+hd
+bD
+hn
+hq
+hv
+hy
+bh
+bg
+ai
+ah
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(51,1,1) = {"
+ab
+ab
+ab
+ae
+ae
+ae
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+av
+ay
+ay
+ay
+ay
+aQ
+aJ
+aJ
+bl
+bl
+aJ
+aJ
+bg
+bh
+bV
+bh
+bg
+bg
+bg
+bg
+bh
+bV
+bh
+bg
+bg
+bg
+bg
+bh
+bV
+bh
+bg
+bg
+bh
+ap
+ao
+ao
+ap
+bm
+cJ
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+cJ
+bm
+ap
+ao
+ao
+ap
+bh
+gW
+bD
+gV
+ho
+hr
+hw
+hz
+bh
+bg
+ai
+gX
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(52,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+av
+ay
+ay
+ay
+ay
+az
+aU
+an
+an
+an
+aR
+aJ
+bg
+bh
+bh
+bh
+bg
+bg
+bg
+bg
+bh
+bh
+bh
+bg
+bg
+bg
+bg
+bh
+bh
+bh
+bg
+bg
+bh
+ap
+ao
+fk
+ce
+ap
+ao
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+ao
+ap
+ce
+fk
+ao
+ap
+bh
+bh
+he
+hi
+hp
+hs
+hx
+bh
+bh
+bg
+ai
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(53,1,1) = {"
+aa
+ac
+ac
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+aB
+ay
+ay
+aB
+aJ
+aJ
+bf
+bf
+an
+an
+aJ
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bh
+ap
+eZ
+bh
+cs
+ao
+ao
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+ao
+ao
+eZ
+bh
+cs
+ap
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bg
+bg
+ai
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(54,1,1) = {"
+aa
+ac
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+ay
+ay
+aJ
+aJ
+aV
+aT
+an
+an
+an
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+bl
+bl
+aJ
+aJ
+aJ
+aJ
+aJ
+bl
+bl
+aJ
+aJ
+aJ
+aJ
+aJ
+bg
+bh
+bm
+eY
+cJ
+ao
+ao
+ao
+ao
+ap
+bm
+bD
+bm
+ap
+ao
+ao
+ao
+ao
+cJ
+eY
+bm
+bh
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+ai
+ai
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(55,1,1) = {"
+aa
+ac
+ac
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aC
+aC
+aJ
+aR
+an
+an
+an
+bd
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+bf
+bt
+an
+an
+an
+an
+an
+an
+an
+be
+aJ
+bg
+bh
+bh
+bm
+ap
+ap
+ap
+ap
+ap
+ao
+bm
+bD
+bm
+ao
+ap
+ap
+ap
+ap
+ap
+bm
+bh
+bh
+bg
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(56,1,1) = {"
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ay
+ay
+aJ
+aS
+an
+bj
+an
+an
+an
+an
+bt
+bf
+an
+an
+an
+an
+an
+an
+bd
+an
+an
+an
+an
+bf
+an
+an
+bj
+bd
+aJ
+bg
+bg
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bg
+bg
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(57,1,1) = {"
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ay
+ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aU
+aJ
+aJ
+aJ
+aJ
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(58,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ay
+ay
+aN
+ay
+ay
+ay
+ay
+ay
+ay
+aN
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+aN
+ay
+ay
+ay
+ay
+ay
+aN
+ay
+ay
+dZ
+ej
+en
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+bg
+bg
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+"}
+(59,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ay
+ay
+aD
+ay
+ay
+ay
+ay
+ay
+bs
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+bs
+ay
+ay
+ay
+ay
+ay
+bs
+ay
+ay
+ay
+dZ
+ej
+ej
+eD
+eL
+eU
+eL
+ej
+ej
+aJ
+fN
+fX
+bg
+bg
+ge
+fN
+fN
+fN
+fN
+fN
+fO
+fN
+fN
+fN
+gS
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(60,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+aJ
+ej
+ej
+ej
+ej
+ej
+ej
+ej
+fs
+aJ
+fN
+fX
+bg
+bg
+gf
+fN
+fN
+gu
+gu
+gu
+gu
+gu
+gu
+gu
+fN
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(61,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+bY
+bY
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+cV
+cV
+dk
+dk
+dk
+aJ
+ek
+ej
+ej
+eM
+ej
+ej
+ej
+ft
+aJ
+fO
+fN
+fY
+fY
+fN
+fN
+gm
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+gT
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(62,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aW
+aX
+aX
+aX
+aJ
+by
+bE
+by
+by
+by
+by
+bE
+by
+aJ
+cy
+cE
+cP
+cz
+cz
+cz
+dx
+dP
+aJ
+el
+ej
+ej
+ej
+ej
+ej
+ej
+fu
+aJ
+fN
+fX
+bg
+bg
+gg
+gm
+bg
+bg
+bg
+cd
+cd
+cd
+bg
+bg
+bg
+ai
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(63,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aX
+aX
+aX
+aX
+bv
+by
+bF
+bF
+bF
+bF
+bF
+bF
+cg
+aJ
+cz
+cz
+cz
+cz
+cz
+cz
+dm
+dQ
+aJ
+em
+ej
+ej
+ej
+ej
+ej
+ej
+fv
+aJ
+fN
+fX
+bg
+bg
+gh
+bg
+bg
+cd
+bg
+bg
+bg
+bg
+bg
+cd
+bg
+ai
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(64,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ae
+ae
+ae
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aX
+aX
+aX
+aX
+bv
+by
+bF
+bP
+bF
+bF
+bF
+bQ
+ch
+aJ
+cz
+cF
+cz
+cz
+cz
+cz
+dm
+dR
+aJ
+ej
+ej
+ej
+ej
+eV
+ej
+ej
+fv
+aJ
+fN
+fX
+bg
+bg
+gh
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+ai
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(65,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ae
+ag
+ae
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aX
+aX
+aX
+aX
+bv
+by
+bF
+bQ
+bF
+bF
+bF
+bF
+ci
+aJ
+cz
+cz
+cz
+aJ
+cV
+cV
+aJ
+aJ
+aJ
+en
+ew
+eE
+eE
+eJ
+ej
+ej
+fv
+aJ
+fN
+fX
+bg
+bg
+gi
+bg
+cd
+bg
+bg
+bg
+cd
+bg
+bg
+bg
+cd
+ai
+ac
+ac
+ad
+ae
+ae
+ae
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(66,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ae
+ae
+ae
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aX
+bk
+aX
+aX
+aJ
+bz
+bG
+bF
+bF
+bF
+bG
+bF
+by
+aJ
+cA
+cA
+cA
+aJ
+cz
+dl
+dy
+dC
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+fa
+fa
+aJ
+aJ
+fN
+fX
+bg
+bg
+gi
+bg
+cd
+bg
+bg
+bg
+cd
+bg
+bg
+bg
+cd
+ai
+ac
+ac
+ad
+ae
+ag
+ae
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+aa
+aa
+aa
+"}
+(67,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+aJ
+aJ
+aJ
+aJ
+aJ
+bA
+bH
+bR
+bF
+bT
+bH
+bR
+by
+aJ
+aJ
+aJ
+aJ
+aJ
+cz
+dm
+dz
+dS
+aJ
+eo
+ex
+eF
+eN
+eD
+ej
+ej
+fw
+aJ
+fN
+fX
+bg
+bg
+gi
+bg
+cd
+bg
+bg
+bg
+cd
+bg
+bg
+bg
+cd
+ai
+ac
+ac
+ad
+ae
+ae
+ae
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+aa
+aa
+aa
+"}
+(68,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ai
+aY
+am
+an
+bq
+aJ
+by
+bF
+bF
+bF
+bF
+bF
+bF
+by
+aJ
+cB
+cG
+cQ
+cW
+cz
+dm
+dA
+dA
+ea
+ep
+ep
+eG
+ej
+ej
+ej
+ej
+fx
+aJ
+fN
+fX
+bg
+bg
+gh
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+ai
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+aa
+aa
+aa
+"}
+(69,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ai
+aZ
+an
+an
+br
+aJ
+by
+bF
+bF
+bF
+bQ
+bF
+bF
+by
+aJ
+cC
+ao
+ao
+cX
+cF
+dn
+dB
+dT
+aJ
+eq
+ey
+eH
+ej
+ej
+ej
+ej
+ej
+fF
+fN
+fX
+bg
+bg
+gh
+bg
+bg
+cd
+bg
+bg
+bg
+bg
+bg
+cd
+bg
+ai
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+aa
+aa
+aa
+"}
+(70,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ai
+ba
+an
+an
+ba
+aJ
+by
+bF
+bF
+bF
+bF
+bF
+bP
+by
+aJ
+cB
+cH
+ao
+cX
+cz
+do
+dC
+dU
+aJ
+er
+ej
+ej
+ej
+eV
+ej
+ej
+fy
+aJ
+fN
+fX
+bg
+bg
+gg
+gn
+bg
+bg
+bg
+cd
+cd
+cd
+bg
+bg
+bg
+ai
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+aa
+aa
+aa
+"}
+(71,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ai
+bb
+an
+an
+an
+bw
+by
+bF
+bF
+bF
+bF
+bF
+bF
+by
+aJ
+cB
+cH
+cR
+cX
+de
+dm
+dD
+dD
+aJ
+eq
+ey
+eH
+ej
+ej
+eV
+ej
+ej
+fF
+fN
+fX
+fY
+fY
+fN
+fO
+gn
+bg
+bg
+bg
+bg
+bg
+bg
+bg
+gU
+ai
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+aa
+aa
+aa
+"}
+(72,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ai
+bc
+bj
+an
+an
+aJ
+by
+bI
+bF
+bF
+bF
+bI
+bF
+by
+aJ
+cC
+ao
+ao
+cX
+cz
+dm
+dE
+dV
+eb
+es
+es
+eI
+ej
+ej
+ej
+ej
+ej
+aJ
+fN
+fX
+bg
+bg
+gg
+fN
+fN
+gv
+gv
+gv
+gv
+gv
+gv
+gv
+fN
+ai
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+aa
+aa
+aa
+"}
+(73,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+bA
+bJ
+bS
+by
+bA
+bJ
+bS
+by
+aJ
+cB
+cI
+cS
+cY
+df
+dp
+dF
+dW
+aJ
+et
+et
+eJ
+et
+et
+ej
+et
+et
+aJ
+fN
+fX
+bg
+bg
+ge
+fN
+fN
+fN
+fN
+fN
+fN
+fN
+gM
+fN
+gS
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+"}
+(74,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+cj
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+fb
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+"}
+(75,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+an
+an
+an
+an
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+an
+eO
+eW
+an
+fl
+an
+fG
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(76,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ai
+ca
+ca
+an
+an
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ez
+an
+an
+an
+an
+an
+an
+fH
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(77,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ae
+ae
+ae
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ai
+ca
+ca
+an
+an
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+eA
+an
+an
+an
+an
+an
+an
+fI
+ai
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(78,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ae
+ag
+ae
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ai
+an
+bj
+an
+an
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+an
+eO
+an
+fc
+fm
+fz
+fI
+ai
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(79,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ae
+ae
+ae
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+ai
+aj
+ai
+ai
+ai
+ai
+ai
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(80,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+eX
+ai
+ad
+ad
+ad
+fP
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(81,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ai
+aj
+ai
+ad
+ad
+ah
+al
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(82,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+eP
+ad
+eP
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(83,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(84,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ae
+ae
+ae
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(85,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ae
+ag
+ae
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(86,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ae
+ae
+ae
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(87,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(88,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(89,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(90,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
