@@ -27,7 +27,9 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
-		new /obj/item/sign_backing(get_turf(user))
+		var/obj/item/sign_backing/SB = new (get_turf(user))
+		SB.icon_state = icon_state
+		SB.sign_path = type
 		qdel(src)
 	else if(istype(O, /obj/item/weapon/pen))
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
@@ -82,11 +84,12 @@
 
 /obj/item/sign_backing
 	name = "sign backing"
-	desc = "A blank sign with adhesive backing."
+	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = 3
 	burn_state = FLAMMABLE
+	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(isturf(target) && proximity)
@@ -94,7 +97,7 @@
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 							 "<span class='notice'>You attach a blank sign to [T].</span>")
 		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
-		new /obj/structure/sign/basic(T)
+		new sign_path(T)
 		user.drop_item()
 		qdel(src)
 	else

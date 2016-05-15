@@ -1469,7 +1469,7 @@
 "aCm" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/structure/disposaloutlet{dir = 4},/obj/structure/disposalpipe/trunk,/turf/open/floor/plating,/area/maintenance/disposal)
 "aCn" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/machinery/light,/turf/open/floor/plating,/area/maintenance/disposal)
 "aCo" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/machinery/door/poddoor{id = "crusherdoor"; layer = 3.1; name = "crusher safety blast door"},/turf/open/floor/plating,/area/maintenance/disposal)
-"aCp" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/machinery/recycler/birdstation{emagged = 1; name = "dangerous old crusher"},/turf/open/floor/plating,/area/maintenance/disposal)
+"aCp" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/machinery/recycler/deathtrap,/turf/open/floor/plating,/area/maintenance/disposal)
 "aCq" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/turf/open/floor/plating,/area/maintenance/disposal)
 "aCr" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/structure/disposalpipe/trunk{dir = 4},/obj/machinery/disposal/deliveryChute{dir = 8},/turf/open/floor/plating,/area/maintenance/disposal)
 "aCs" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/wall/r_wall,/area/maintenance/disposal)

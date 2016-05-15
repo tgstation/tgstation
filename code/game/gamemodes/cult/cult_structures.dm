@@ -8,8 +8,20 @@
 
 /obj/structure/cult/examine(mob/user)
 	..()
+	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(iscultist(user) && cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+
+/obj/structure/cult/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>"
+		if(!anchored)
+			icon_state = "[initial(icon_state)]_off"
+		else
+			icon_state = initial(icon_state)
+	else
+		return ..()
 
 /obj/structure/cult/proc/getETA()
 	var/time = (cooldowntime - world.time)/600
@@ -28,6 +40,9 @@
 	if(!iscultist(user))
 		user << "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>"
 		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
 	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
@@ -40,7 +55,7 @@
 			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
 			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
-	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N]!</span>"
@@ -56,6 +71,9 @@
 	if(!iscultist(user))
 		user << "<span class='warning'>The heat radiating from [src] pushes you back.</span>"
 		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
 	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
@@ -68,7 +86,7 @@
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Nar-Sien Hardsuit")
 			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
-	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
@@ -79,44 +97,49 @@
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	luminosity = 5
-	var/heal_delay = 50
-	var/last_shot = 0
-	var/list/corruption = list()
+	var/heal_delay = 25
+	var/last_heal = 0
+	var/corrupt_delay = 50
+	var/last_corrupt = 0
 
 /obj/structure/cult/pylon/New()
-	SSobj.processing |= src
-	corruption += get_turf(src)
-	for(var/i in 1 to 5)
-		for(var/t in corruption)
-			var/turf/T = t
-			corruption |= T.GetAtmosAdjacentTurfs()
+	SSfastprocess.processing |= src
 	..()
 
 /obj/structure/cult/pylon/Destroy()
-	SSobj.processing.Remove(src)
+	SSfastprocess.processing.Remove(src)
 	return ..()
 
 /obj/structure/cult/pylon/process()
-	if((last_shot + heal_delay) <= world.time)
-		last_shot = world.time
+	if(!anchored)
+		return
+	if(last_heal <= world.time)
+		last_heal = world.time + heal_delay
 		for(var/mob/living/L in range(5, src))
-			if(iscultist(L))
-				var/mob/living/carbon/human/H = L
-				if(istype(H))
-					L.adjustBruteLoss(-1, 0)
-					L.adjustFireLoss(-1, 0)
-					L.updatehealth()
-				if(istype(L, /mob/living/simple_animal/hostile/construct))
-					var/mob/living/simple_animal/M = L
-					if(M.health < M.maxHealth)
-						M.adjustHealth(-2)
-		if(corruption.len)
-			var/turf/T = pick_n_take(corruption)
-			corruption -= T
-			if(istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
-				return
+			if(iscultist(L) || istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
+				if(L.health != L.maxHealth)
+					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(src), "#960000"))
+					if(ishuman(L))
+						L.adjustBruteLoss(-1, 0)
+						L.adjustFireLoss(-1, 0)
+						L.updatehealth()
+					if(istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
+						var/mob/living/simple_animal/M = L
+						if(M.health < M.maxHealth)
+							M.adjustHealth(-1)
+			CHECK_TICK
+	if(last_corrupt <= world.time)
+		var/list/validturfs = list()
+		for(var/T in circleviewturfs(src, 5))
+			if(istype(T, /turf/closed) || istype(T, /turf/open/floor/engine/cult) || istype(T, /turf/open/space) || istype(T, /turf/open/floor/plating/lava))
+				continue
+			validturfs |= T
+		var/turf/T = safepick(validturfs)
+		if(T)
 			T.ChangeTurf(/turf/open/floor/engine/cult)
-
+			last_corrupt = world.time + corrupt_delay
+		else
+			last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/cult/tome
 	name = "archives"
@@ -127,6 +150,9 @@
 /obj/structure/cult/tome/attack_hand(mob/living/user)
 	if(!iscultist(user))
 		user << "<span class='warning'>All of these books seem to be gibberish.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
 		return
 	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
@@ -140,7 +166,7 @@
 			pickedtype = /obj/item/device/shuttle_curse
 		if("Veil Shifter")
 			pickedtype = /obj/item/device/cult_shift
-	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
 		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"

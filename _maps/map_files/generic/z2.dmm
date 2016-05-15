@@ -2716,7 +2716,7 @@
 /area/centcom/evac)
 "io" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/AI,
+/obj/item/toy/talking/AI,
 /obj/structure/window/reinforced{
 	dir = 4
 	},

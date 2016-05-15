@@ -263,8 +263,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(gangs.len)
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
+			feedback_set_details("round_end_result","win - gang domination complete")
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
+			feedback_set_details("round_end_result","loss - gangs failed takeover")
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"

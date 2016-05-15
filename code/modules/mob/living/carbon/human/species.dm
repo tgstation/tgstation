@@ -84,8 +84,6 @@
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
-	var/has_dismemberment = 1 //Whether or not this species uses dismemberment for its limbs
-
 	///////////
 	// PROCS //
 	///////////
@@ -128,7 +126,7 @@
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing)
 			C.unEquip(thing)
-	if(!has_dismemberment)
+	if(NODISMEMBER in specflags)
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
 	if(exotic_blood)
 		C.reagents.add_reagent(exotic_blood, 80)
@@ -153,7 +151,7 @@
 		return "[id]"
 
 /datum/species/proc/update_color(mob/living/carbon/human/H, forced_colour)
-	if(has_dismemberment) //only species without dismemberment still use base icon states.
+	if(!(NODISMEMBER in specflags)) //only species without dismemberment still use base icon states.
 		return
 	H.remove_overlay(SPECIES_LAYER)
 
@@ -277,7 +275,7 @@
 
 	var/list/standing	= list()
 
-	if(!has_dismemberment) //Legacy support
+	if(NODISMEMBER in specflags) //Legacy support
 		H.update_base_icon_state()
 		if(!(H.disabilities & HUSK))
 			update_color(H)
@@ -1036,20 +1034,10 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(affecting.get_damage() >= (affecting.max_damage - I.armour_penetration/2))
-		if(I.can_dismember() && prob(I.force*(I.w_class-1)))
-			if(affecting.dismember(I.damtype))
-				I.add_blood(H)
-				switch(I.damtype)
-					if(BURN)
-						playsound(get_turf(H), 'sound/weapons/sear.ogg', 80, 1)
-					else
-						playsound(get_turf(H), pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg'), 80, 1)
-						affecting.add_blood(H)
-						var/turf/location = H.loc
-						if(istype(location))
-							location.add_blood(H)
-							return
+	if(prob(I.get_dismemberment_chance(affecting)))
+		if(affecting.dismember(I.damtype))
+			I.add_blood(H)
+			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
@@ -1361,7 +1349,7 @@
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
-		if(!(RESISTHEAT in specflags)) // HEAT DAMAGE
+		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
@@ -1396,7 +1384,7 @@
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHEAT in specflags))
+	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTTEMP in specflags))
 		//Body temperature is too hot.
 		switch(H.bodytemperature)
 			if(360 to 400)
@@ -1435,7 +1423,7 @@
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!(RESISTHEAT in specflags))
+			if(!(RESISTTEMP in specflags))
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 			else
@@ -1447,7 +1435,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTCOLD in specflags))
+			if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
@@ -1458,11 +1446,11 @@
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H)
-	if((RESISTHEAT in specflags) || (NOFIRE in specflags))
+	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
 /datum/species/proc/IgniteMob(mob/living/carbon/human/H)
-	if((RESISTHEAT in specflags) || (NOFIRE in specflags))
+	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)

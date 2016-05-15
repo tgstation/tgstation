@@ -62,6 +62,7 @@
 	desc = "Can hold various medical equipment."
 	icon_state = "medicalbelt"
 	item_state = "medical"
+	max_w_class = 4
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/dnainjector,
@@ -80,7 +81,29 @@
 		/obj/item/device/rad_laser,
 		/obj/item/device/sensor_device,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves/,
+		/obj/item/weapon/lazarus_injector,
+		/obj/item/weapon/bikehorn/rubberducky,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/clothing/mask/breath,
+		/obj/item/clothing/mask/breath/medical,
+		/obj/item/weapon/surgical_drapes, //for true paramedics
+		/obj/item/weapon/scalpel,
+		/obj/item/weapon/circular_saw,
+		/obj/item/weapon/surgicaldrill,
+		/obj/item/weapon/retractor,
+		/obj/item/weapon/cautery,
+		/obj/item/weapon/hemostat,
+		/obj/item/device/geiger_counter,
+		/obj/item/clothing/tie/stethoscope,
+		/obj/item/weapon/stamp,
+		/obj/item/clothing/glasses,
+		/obj/item/weapon/wrench/medical,
+		/obj/item/clothing/mask/muzzle,
+		/obj/item/weapon/storage/bag/chemistry,
+		/obj/item/weapon/storage/bag/bio,
+		/obj/item/weapon/reagent_containers/blood,
+		/obj/item/weapon/tank/internals/emergency_oxygen
 		)
 
 
