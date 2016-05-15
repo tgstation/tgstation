@@ -359,6 +359,11 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
 
+/obj/effect/mob_spawn/human/miner/explorer
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	gloves = /obj/item/clothing/gloves/color/black
+	back = /obj/item/weapon/storage/backpack/security
+	shoes = /obj/item/clothing/shoes/jackboots
 
 /obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman
@@ -452,6 +457,17 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/wwii
+	name = "World War II Reenactor"
+	uniform = /obj/item/clothing/under/wwii
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas
+	helmet = /obj/item/clothing/head/helmet/stahlhelm
+	back = /obj/item/weapon/storage/backpack/security
+	has_id = 0
+
 
 /////////////////Spooky Undead//////////////////////
 

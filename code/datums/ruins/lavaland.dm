@@ -174,3 +174,28 @@
 		making sure people work on their cardio."
 	suffix = "lavaland_gym.dmm"
 	cost = 10
+
+/datum/map_template/ruin/lavaland/survivalcapsule
+	name = "Survival Capsule Ruins"
+	id = "survivalcapsule"
+	description = "What was once sanctuary to the common miner, \
+		is now their tomb."
+	suffix = "lavaland_surface_survivalpod.dmm"
+	cost = 5
+
+/datum/map_template/ruin/lavaland/wwiioutpost
+	name = "Strange Outpost"
+	id = "nazi"
+	description = "The ruins of an outpost, skeletons and empty shell casings litter the interior of \
+		the structure. Some of these uniforms look awfully strange.."
+	suffix = "lavaland_surface_wwiioutpost.dmm"
+	cost = 20
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/tomb
+	name = "Strange Outpost"
+	id = "tomb"
+	description = "A strange tomb, housing the dead of whatever strange civilization \
+		lived here before. You swear you hear rattling coming from the inside."
+	suffix = "lavaland_surface_tomb.dmm"
+	cost = 10

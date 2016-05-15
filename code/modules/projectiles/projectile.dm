@@ -142,6 +142,5 @@
 		Bump(AM, 1)
 
 /obj/item/projectile/Destroy()
-	if(ammo_casing)
-		qdel(ammo_casing)
+	ammo_casing = null
 	return ..()
