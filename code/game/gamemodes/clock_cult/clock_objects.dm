@@ -634,7 +634,6 @@
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
 	fluff_names = list("Servant")
-	lawset = /datum/ai_laws/ratvar
 	clockwork = TRUE
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()

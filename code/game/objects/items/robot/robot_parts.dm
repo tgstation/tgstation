@@ -214,10 +214,11 @@
 				aisync = 0
 				lawsync = 0
 				if(M.clockwork)
+					O.laws = new/datum/ai_laws/ratvar
 					spawn(1)
 						add_clockwork_cultist(O)
-
-			O.laws = new M.lawset
+				else
+					O.laws = new/datum/ai_laws/syndicate_override
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
