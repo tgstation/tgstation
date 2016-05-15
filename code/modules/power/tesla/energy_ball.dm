@@ -162,11 +162,11 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/obj/structure/closest_structure
 	var/obj/effect/blob/closest_blob
 
-	for(var/A in oview(source, zap_range))
+	for(var/A in oview(source, zap_range+2))
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
-			if((dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
 				closest_dist = dist
 
 				//we use both of these to save on istype and typecasting overhead later on
@@ -180,7 +180,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
 			var/dist = get_dist(source, A)-2
-			if(dist < closest_dist || !closest_grounding_rod)
+			if(dist <= zap_range && (dist < closest_dist || !closest_grounding_rod))
 				closest_grounding_rod = A
 				closest_atom = A
 				closest_dist = dist
@@ -191,7 +191,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /mob/living))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if((dist < closest_dist || !closest_mob) && L.stat != DEAD)
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD)
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
@@ -202,7 +202,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /obj/machinery))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
-			if((dist < closest_dist || !closest_machine) && !M.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
 				closest_machine = M
 				closest_atom = A
 				closest_dist = dist
@@ -213,7 +213,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /obj/effect/blob))
 			var/obj/effect/blob/B = A
 			var/dist = get_dist(source, A)
-			if((dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
 				closest_blob = B
 				closest_atom = A
 				closest_dist = dist
@@ -224,7 +224,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /obj/structure))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
-			if((dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
