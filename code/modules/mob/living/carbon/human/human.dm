@@ -33,9 +33,15 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/lungs
-	internal_organs += new /obj/item/organ/heart
+	if(!(NOHUNGER in dna.species.specflags))
+		internal_organs += new /obj/item/organ/appendix
+
+	if(!(NOBREATH in dna.species.specflags))
+		internal_organs += new /obj/item/organ/lungs
+
+	if(!(NOBLOOD in dna.species.specflags))
+		internal_organs += new /obj/item/organ/heart
+
 	internal_organs += new /obj/item/organ/brain
 
 	//Note: Additional organs are generated/replaced on the dna.species level
@@ -811,6 +817,8 @@
 
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
+	CHECK_DNA_AND_SPECIES(C)
+
 	if(C.stat == DEAD)
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
@@ -828,14 +836,26 @@
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
 
-		if(C.health <= config.health_threshold_crit)
+		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
+		var/they_lung = C.getorganslot("lungs")
+
+		if(C.health > config.health_threshold_crit)
+			return
+
+		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		if(they_breathe && they_lung)
 			C.cpr_time = world.time
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
 			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
-		add_logs(src, C, "CPRed")
+			add_logs(src, C, "CPRed")
+		else if(they_breathe && !they_lung)
+			C << "<span class='unconcious'>You feel a breath of fresh air... \
+				but it doesn't go anywhere...</span>"
+		else
+			C << "<span class='unconcious'>You feel a breath of fresh air... \
+				which is a sensation you don't recognise...</span>"
 
 /mob/living/carbon/human/generateStaticOverlay()
 	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
