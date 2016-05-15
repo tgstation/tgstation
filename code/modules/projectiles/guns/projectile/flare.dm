@@ -9,7 +9,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "flaregun"
 	max_shells = 1
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	starting_materials = list(MAT_IRON = 15000, MAT_GLASS = 7500)
 	w_type = RECYK_METAL
 	force = 4

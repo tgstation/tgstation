@@ -253,7 +253,7 @@ var/global/list/wizard_cards_normal = list(
 	name = "Wizard Card Pack"
 	storage_slots = 50
 	max_combined_w_class = 200
-	w_class = 1
+	w_class = W_CLASS_TINY
 	can_only_hold = list("/obj/item/toy/wizard_card","/obj/item/weapon/reagent_containers/food/snacks/chocofrog")
 
 /obj/item/weapon/storage/bag/wiz_cards/full/New()

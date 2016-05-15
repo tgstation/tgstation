@@ -5,7 +5,7 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 5

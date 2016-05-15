@@ -9,7 +9,7 @@
 	recoil = 1
 	slot_flags = SLOT_BELT
 	flags = FPRINT
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	fire_delay = 0
 	fire_sound = null
 	var/max_ammo = 10

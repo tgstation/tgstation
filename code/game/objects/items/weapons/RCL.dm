@@ -12,7 +12,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 10
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "engineering=2;materials=4"

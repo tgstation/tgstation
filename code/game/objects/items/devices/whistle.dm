@@ -4,7 +4,7 @@
 	icon_state = "voice0"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	origin_tech = "magnets=1;combat=1"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	siemens_coefficient = 1
 

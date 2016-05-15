@@ -829,7 +829,7 @@
 	desc = "Full of stuff."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "belongings"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 
 /obj/item/packobelongings/New()
 	..()

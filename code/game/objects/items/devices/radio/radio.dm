@@ -27,7 +27,7 @@
 	slot_flags = SLOT_BELT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 75, MAT_GLASS = 25)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC

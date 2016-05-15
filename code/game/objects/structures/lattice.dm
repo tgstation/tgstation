@@ -51,7 +51,7 @@
 		T.attackby(C, user) //Attacking to the lattice will attack to the space turf
 
 /obj/structure/lattice/wood/attackby(obj/item/C as obj, mob/user as mob)
-	if((C.is_sharp() >= 1.2) && (C.w_class >= 2)) // If C is able to cut down a tree
+	if((C.is_sharp() >= 1.2) && (C.w_class <= W_CLASS_SMALL)) // If C is able to cut down a tree
 		new/obj/item/stack/sheet/wood(loc)
 		to_chat(user, "<span class='notice'>You chop the [src] apart!</span>")
 		qdel(src)

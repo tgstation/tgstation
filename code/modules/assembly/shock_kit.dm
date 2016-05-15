@@ -4,7 +4,7 @@
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/radio/electropack/part2 = null
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	flags = FPRINT
 	siemens_coefficient = 1
 

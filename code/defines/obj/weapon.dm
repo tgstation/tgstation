@@ -9,7 +9,7 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	attack_verb = list("calls", "rings", "dials")
 	hitsound = 'sound/weapons/ring.ogg'
 
@@ -29,7 +29,7 @@
 	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
 	flags = FPRINT  | CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -46,7 +46,7 @@
 	anchored = 0.0
 	var/matter = 0
 	var/mode = 1
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 
 /obj/item/weapon/bananapeel
 	name = "banana peel"
@@ -54,7 +54,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -69,7 +69,7 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -80,7 +80,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -104,7 +104,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 
@@ -119,7 +119,7 @@
 	siemens_coefficient = 1
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 50)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_STEEL
@@ -153,7 +153,7 @@
 	var/data = ""
 	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
 	item_state = "sheet-metal"
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 */
 
 /obj/item/weapon/legcuffs
@@ -165,7 +165,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -179,7 +179,7 @@
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 2
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	w_type = RECYK_METAL
 	origin_tech = "materials=1"
 	attack_verb = list("lashes", "bludgeons", "whips")
@@ -356,7 +356,7 @@
 				update_icon()
 				return
 		if(I.w_class) //if it has a defined weight
-			if(I.w_class == 2.0 || I.w_class == 3.0) //just one is too specific, so don't change this
+			if(I.w_class == W_CLASS_SMALL || I.w_class == W_CLASS_MEDIUM) //just one is too specific, so don't change this
 				if(!weight1)
 					if(user.drop_item(I, src))
 						weight1 = I
@@ -374,10 +374,10 @@
 				else
 					user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 					return
-			else if (I.w_class < 2.0)
+			else if (I.w_class < W_CLASS_SMALL)
 				user.show_message("<span class='rose'>\The [I] is too small to be used as a weight.</span>")
-			else if (I.w_class > 3.0)
-				user.show_message("<span class='rose'>\The [I] is [I.w_class > 4.0 ? "far " : ""] too big to be used a weight.</span>")
+			else if (I.w_class > W_CLASS_MEDIUM)
+				user.show_message("<span class='rose'>\The [I] is [I.w_class > W_CLASS_LARGE ? "far " : ""] too big to be used a weight.</span>")
 			else
 				user.show_message("<span class='rose'>There are already two weights on this [src]!</span>")
 
@@ -497,7 +497,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
 	siemens_coefficient = 0
 	throwforce = 15
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	w_type = RECYK_METAL
 	origin_tech = "combat=5"
 	attack_verb = list("rams", "bludgeons")
@@ -514,7 +514,7 @@
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	attack_verb = list("warns", "cautions", "smashes")
 
@@ -620,7 +620,7 @@
 	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	starting_materials = list(MAT_IRON = 100)
@@ -637,7 +637,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	attack_verb = list("bludgeons", "whacks", "disciplines")
 
@@ -705,7 +705,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 
 /obj/item/weapon/table_parts
@@ -735,7 +735,7 @@
 	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT
 	siemens_coefficient = 1
-	
+
 /obj/item/weapon/table_parts/glass
 	name = "glass table parts"
 	desc = "Glass table parts for the spaceman with style."
@@ -780,7 +780,7 @@
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	//icon_state = "std_module"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	flags = FPRINT
 	siemens_coefficient = 1
@@ -819,7 +819,7 @@
 	icon_state = "meat"
 	flags = FPRINT
 	siemens_coefficient = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	origin_tech = "biotech=2"
 
 /*
@@ -829,7 +829,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
 	item_state = "cigarpacket"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigarcount = 6
 	flags = ONBELT  */

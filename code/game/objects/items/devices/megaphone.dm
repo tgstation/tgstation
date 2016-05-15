@@ -3,7 +3,7 @@
 	desc = "A device used to project your voice. Loudly."
 	icon_state = "megaphone"
 	item_state = "radio"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	siemens_coefficient = 1
 

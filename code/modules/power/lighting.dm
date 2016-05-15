@@ -592,7 +592,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	flags = FPRINT
 	force = 2
 	throwforce = 5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
@@ -624,7 +624,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	cost = 2
 
 /obj/item/weapon/light/tube/large
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 4

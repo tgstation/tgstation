@@ -19,7 +19,7 @@ effective or pretty fucking useless.
 	desc = "A strange device with twin antennas."
 	icon_state = "batterer"
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT

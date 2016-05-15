@@ -15,7 +15,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	origin_tech = "materials=1;programming=1"
 
 
@@ -27,7 +27,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -102,7 +102,7 @@
 	desc = "A polaroid camera."
 	icon_state = "polaroid"
 	item_state = "polaroid"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT

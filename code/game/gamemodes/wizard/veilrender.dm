@@ -7,7 +7,7 @@
 	flags = FPRINT | TABLEPASS
 	force = 15
 	throwforce = 10
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	var/charged = 1
 
 

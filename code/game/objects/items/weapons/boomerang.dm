@@ -3,7 +3,7 @@
 	desc = "A heavy, curved piece of wood used by Space Australians for hunting, sport, entertainment, cooking, religious rituals and warfare. When thrown, it will either deal a devastating blow to somebody's head, or return back to the thrower." //also used for shitposting
 	icon_state = "boomerang"
 
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 
 	throwforce = 16
 	throw_range = 7
@@ -25,7 +25,7 @@
 
 	icon_state = "boomerang_toy"
 
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	throwforce = 2
 	force = 1

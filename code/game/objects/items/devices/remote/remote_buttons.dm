@@ -11,7 +11,7 @@
 
 	var/image/button_icon
 
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	var/depression_time = 5 //0.5 seconds between clicks
 

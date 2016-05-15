@@ -11,7 +11,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	recoil = 1
 	flags = FPRINT
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	fire_delay = 2
 	fire_sound = 'sound/weapons/grenadelauncher.ogg'
 	var/list/loaded = list()
@@ -101,7 +101,7 @@
 	flags = FPRINT
 	force = 1
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/obj/item/weapon/gun/stickybomb/fired_from = null
 	var/live = 0
 	var/atom/stuck_to = null

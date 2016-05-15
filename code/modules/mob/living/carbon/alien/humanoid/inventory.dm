@@ -49,7 +49,7 @@
 			if(slot_l_store)
 				if(l_store)
 					return
-				if(W.w_class > 3)
+				if(W.w_class > W_CLASS_MEDIUM)
 					return
 				u_equip(W,0)
 				l_store = W
@@ -57,7 +57,7 @@
 			if(slot_r_store)
 				if(r_store)
 					return
-				if(W.w_class > 3)
+				if(W.w_class > W_CLASS_MEDIUM)
 					return
 				u_equip(W,0)
 				r_store = W

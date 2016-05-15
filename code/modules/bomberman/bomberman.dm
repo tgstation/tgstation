@@ -33,7 +33,7 @@ var/global/list/bombermangear = list()
 /obj/item/weapon/bomberman/
 	name = "Bomberman's Bomb Dispenser"
 	desc = "Now to not get yourself stuck in a corner."
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	icon = 'icons/obj/bomberman.dmi'
 	icon_state = "dispenser"
 	var/bomblimit = 1	//how many bombs are currently in the dispenser

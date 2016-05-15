@@ -4,7 +4,7 @@
 	icon_state = "breath"
 	item_state = "breath"
 	flags = FPRINT | MASKINTERNALS
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	species_fit = list(VOX_SHAPED)

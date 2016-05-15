@@ -13,7 +13,7 @@ REAGENT SCANNER
 	icon_state = "t-ray0"
 	flags = FPRINT
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	starting_materials = list(MAT_IRON = 150, MAT_GLASS = 50)
 	w_type = RECYK_ELECTRONIC
@@ -84,7 +84,7 @@ REAGENT SCANNER
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	starting_materials = list(MAT_IRON = 200)
 	w_type = RECYK_ELECTRONIC
@@ -271,7 +271,7 @@ Subject's pulse: ??? BPM"})
 	name = "atmospheric analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
@@ -347,7 +347,7 @@ Subject's pulse: ??? BPM"})
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | OPENCONTAINER
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
@@ -436,7 +436,7 @@ Subject's pulse: ??? BPM"})
 	desc = "A hand-held reagent scanner which identifies chemical agents."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT

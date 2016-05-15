@@ -9,7 +9,7 @@
 	recoil = 1
 	slot_flags = null
 	flags = FPRINT | TWOHANDABLE
-	w_class = 5.0//we be fuckin huge maaan
+	w_class = W_CLASS_HUGE//we be fuckin huge maaan
 	fire_delay = 0
 	fire_sound = 'sound/weapons/gatling_fire.ogg'
 	var/max_shells = 200
@@ -88,7 +88,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	w_type = RECYK_METAL
 
 /obj/item/ammo_casing_gatling/New()

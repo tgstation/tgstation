@@ -195,7 +195,7 @@ var/paperwork_library
 	flags = FPRINT
 	slot_flags = SLOT_BELT | slot_ears
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	starting_materials = list(MAT_IRON = 10)

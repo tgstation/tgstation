@@ -11,7 +11,7 @@
 	item_state = "c-4small"
 	name = "normal-sized package"
 	desc = "A small wrapped package."
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 
 	var/power = 1  /*Size of the explosion.*/
 	var/size = "small"  /*Used for the icon, this one will make c-4small_0 for the off state.*/
@@ -55,7 +55,7 @@
 	item_state = "c-4detonator"
 	name = "\improper Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
 	desc = "The zippo."
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	var/obj/item/weapon/syndie/c4explosive/bomb
 	var/pr_open = 0  /*Is the "What do you want to do?" prompt open?*/

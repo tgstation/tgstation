@@ -27,7 +27,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	var/smoketime = 10
 	var/brightness_on = 1 //Barely enough to see where you're standing, it's a shitty discount match
 	heat_production = 1000
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	origin_tech = "materials=1"
 	attack_verb = list("burns", "singes")
 	light_color = LIGHT_COLOR_FIRE
@@ -151,7 +151,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	desc = "A roll of tobacco and nicotine. Not the best thing to have on your face in the event of a plasma flood."
 	icon_state = "cig"
 	item_state = "cig"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	body_parts_covered = 0
 	attack_verb = list("burns", "singes")
 	heat_production = 1000
@@ -430,7 +430,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /obj/item/weapon/cigbutt/cigarbutt
@@ -502,7 +502,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	desc = "A manky old blunt butt."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "bluntbutt"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /////////////////
@@ -589,7 +589,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lighter-g"
 	item_state = "lighter-g"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 4
 	flags = null
 	siemens_coefficient = 1

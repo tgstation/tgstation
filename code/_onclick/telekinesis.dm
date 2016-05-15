@@ -71,7 +71,7 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON
 	//item_state = null
-	w_class = 10.0
+	w_class = W_CLASS_GIANT
 	layer = 20
 	abstract = 1
 

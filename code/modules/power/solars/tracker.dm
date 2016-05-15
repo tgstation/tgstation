@@ -39,4 +39,4 @@
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	origin_tech = "power=3;engineering=2"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL

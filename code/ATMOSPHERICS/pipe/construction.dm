@@ -59,7 +59,7 @@ var/global/list/unstackable_pipes = list(PIPE_LAYER_MANIFOLD)
 	icon_state = "simple"
 	item_state = "buildpipe"
 	flags = FPRINT
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	level = 2
 
 /obj/item/pipe_spawner/New()
@@ -88,7 +88,7 @@ var/global/list/unstackable_pipes = list(PIPE_LAYER_MANIFOLD)
 	icon_state = "simple"
 	item_state = "buildpipe"
 	flags = FPRINT
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	level = 2
 
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -530,7 +530,7 @@ var/list/heat_pipes = list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)
 	icon_state = "meter"
 	item_state = "buildpipe"
 	flags = FPRINT
-	w_class = 4
+	w_class = W_CLASS_LARGE
 
 	var/layer_to_make = PIPING_LAYER_DEFAULT
 
@@ -569,7 +569,7 @@ var/list/heat_pipes = list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)
 	icon_state = "gsensor0"
 	item_state = "buildpipe"
 	flags = FPRINT
-	w_class = 4
+	w_class = W_CLASS_LARGE
 
 /obj/item/pipe_gsensor/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()

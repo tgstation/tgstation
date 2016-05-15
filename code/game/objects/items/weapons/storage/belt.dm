@@ -22,7 +22,7 @@
 	desc = "It has a tag that rates it for compatibility with standard tools, device analyzers, flashlights, cables, engineering tape, small fire extinguishers, compressed matter cartridges, light replacers, and fuel cans."
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	storage_slots = 14
 	max_combined_w_class = 200 //This actually doesn't matter as long as it is arbitrarily high, bar will be set by storage slots
 	can_only_hold = list(
@@ -81,7 +81,7 @@
 	desc = "The ancestral belt of Many-APCs-Charging, the original chief engineer from Space Native America. It's made out of the skins of the ancient enemy of engineers, giant spiders."
 	icon_state = "utilitychief"
 	item_state = "utilitychief"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	storage_slots = 14
 	can_only_hold = list(
 		"/obj/item/weapon/crowbar",
@@ -233,7 +233,7 @@
 	desc = "Can hold various mining gear like pickaxes or drills."
 	icon_state = "miningbelt"
 	item_state = "mining"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	max_combined_w_class = 28
 	can_only_hold = list(
 		"/obj/item/weapon/storage/bag/ore",
@@ -266,7 +266,7 @@
 	desc = "For the pokemo- mining master, holds your lazarus capsules."
 	icon_state = "lazarusbelt_0"
 	item_state = "lazbelt"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	max_combined_w_class = 28
 	storage_slots = 6
 	can_only_hold = list(

@@ -5,7 +5,7 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	origin_tech = "biotech=3"
 
 	var/list/mommi_assembly_parts = list(

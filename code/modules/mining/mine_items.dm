@@ -185,7 +185,7 @@ proc/move_mining_shuttle()
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	sharpness = 0.6
 	starting_materials = list(MAT_IRON = 3750) //one sheet, but where can you make them?
 	w_type = RECYK_METAL
@@ -233,7 +233,7 @@ proc/move_mining_shuttle()
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "gun"
-	w_class = 3.0 //it is smaller than the pickaxe
+	w_class = W_CLASS_MEDIUM //it is smaller than the pickaxe
 	damtype = "fire"
 	heat_production = 3800
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
@@ -293,7 +293,7 @@ proc/move_mining_shuttle()
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	sharpness = 0.5
 	w_type = RECYK_MISC
 	origin_tech = "materials=1;engineering=1"
@@ -311,7 +311,7 @@ proc/move_mining_shuttle()
 	force = 5.0
 	sharpness = 0.8
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	digspeed = 60 //slower than the large shovel
 
@@ -336,7 +336,7 @@ proc/move_mining_shuttle()
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -421,7 +421,7 @@ proc/move_mining_shuttle()
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
@@ -654,7 +654,7 @@ proc/move_mining_shuttle()
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -809,7 +809,7 @@ proc/move_mining_shuttle()
 	name = "mining scanner"
 	icon_state = "mining"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = 0
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT

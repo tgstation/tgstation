@@ -70,7 +70,7 @@
 	name = "mini energy-crossbow"
 	desc = "A weapon favored by many of the syndicates stealth specialists."
 	icon_state = "crossbow"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "crossbow"
 	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_ELECTRONIC
@@ -108,7 +108,7 @@
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
 	desc = "A weapon favored by syndicate infiltration teams."
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	force = 10
 	starting_materials = list(MAT_IRON = 200000)
 	w_type = RECYK_ELECTRONIC

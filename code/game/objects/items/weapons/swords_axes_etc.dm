@@ -83,7 +83,7 @@
 	origin_tech = "combat=2"
 	flags = FPRINT
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = 3
 	var/on = 0
 
@@ -100,7 +100,7 @@
 
 		icon_state = "telebaton_1"
 		item_state = "telebaton_1"
-		w_class = 4
+		w_class = W_CLASS_LARGE
 		force = 15//quite robust
 		attack_verb = list("smacks", "strikes", "slaps")
 	else
@@ -199,7 +199,7 @@
 		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = 5
+		src.w_class = W_CLASS_HUGE
 		src.sharpness = 1.5
 	else
 		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")

@@ -10,7 +10,7 @@
 	gender = NEUTER
 	flags = FPRINT
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	starting_materials = null
 	w_type = RECYK_ELECTRONIC

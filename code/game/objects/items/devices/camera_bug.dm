@@ -3,7 +3,7 @@
 	desc = "A tiny spy camera that can stick to most surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant_evil"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	item_state = ""
 	throw_speed = 4
 	throw_range = 20
@@ -27,7 +27,7 @@
 		return 0
 	if(istype(A, /obj/item))
 		var/obj/item/I = A
-		if(I.w_class < 3)
+		if(I.w_class > W_CLASS_MEDIUM)
 			to_chat(user, "<span class='warning'>\The [I] is too small for \the [src]</span>")
 			return 0
 	if(user.drop_item(src, A))

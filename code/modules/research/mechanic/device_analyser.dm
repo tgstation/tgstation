@@ -14,7 +14,7 @@
 	var/loadone = 0 //whether or not it should load just one at a time. 0 is all at once, 1 is one at a time
 	flags = FPRINT
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	starting_materials = null
 	w_type = RECYK_ELECTRONIC

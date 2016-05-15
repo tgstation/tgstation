@@ -77,7 +77,7 @@ datum
 	icon_state = "solution_tray"
 	starting_materials = list(MAT_GLASS = 20)
 	w_type = RECYK_GLASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1, 2)
 	volume = 2

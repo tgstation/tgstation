@@ -5,7 +5,7 @@
 	icon_state = "scroll"
 	var/uses = 4.0
 	flags = FPRINT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20

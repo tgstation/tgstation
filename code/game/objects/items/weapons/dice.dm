@@ -3,7 +3,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/sides = 6
 	var/minsides = 1
 	var/result = null

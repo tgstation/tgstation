@@ -2,7 +2,7 @@
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/rating = 1
 	melt_temperature = MELTPOINT_STEEL
 

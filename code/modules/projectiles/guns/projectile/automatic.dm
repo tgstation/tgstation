@@ -4,7 +4,7 @@
 	icon_state = "saber"	//ugly
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	max_shells = 18
 	caliber = list("9mm" = 1)
 	origin_tech = "combat=4;materials=2"
@@ -55,7 +55,7 @@
 	icon_state = "mini-uzi"
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	max_shells = 10
 	burst_count = 3
 	caliber = list(".45" = 1)
@@ -72,7 +72,7 @@
 	icon_state = "c20r"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "c20r"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	max_shells = 20
 	burst_count = 4
 	caliber = list("12mm" = 1)
@@ -99,7 +99,7 @@
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	origin_tech = "combat=5;materials=2"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	max_shells = 20
 	burst_count = 4
 	caliber = list("12mm" = 1)
@@ -116,7 +116,7 @@
 	icon_state = "l6closed100"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns.dmi', "right_hand" = 'icons/mob/in-hand/right/guns.dmi')
 	item_state = "l6closedmag"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	slot_flags = 0
 	max_shells = 50
 	burst_count = 5

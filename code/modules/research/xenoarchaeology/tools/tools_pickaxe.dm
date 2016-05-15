@@ -12,7 +12,7 @@
 	excavation_amount = 0.5
 	drill_sound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "brushing"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/one_pick
 	name = "1/6 pick"
@@ -24,7 +24,7 @@
 	excavation_amount = 1
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/two_pick
 	name = "1/3 pick"
@@ -36,7 +36,7 @@
 	excavation_amount = 2
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/three_pick
 	name = "1/2 pick"
@@ -48,7 +48,7 @@
 	excavation_amount = 3
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/four_pick
 	name = "2/3 pick"
@@ -60,7 +60,7 @@
 	excavation_amount = 4
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/five_pick
 	name = "5/6 pick"
@@ -72,7 +72,7 @@
 	excavation_amount = 5
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/six_pick
 	name = "1/1 pick"
@@ -84,7 +84,7 @@
 	excavation_amount = 6
 	drill_sound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/pickaxe/hand
 	name = "hand pickaxe"
@@ -96,7 +96,7 @@
 	excavation_amount = 15
 	drill_sound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Pack for holding pickaxes
@@ -109,7 +109,7 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 7
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	can_only_hold = list("/obj/item/weapon/pickaxe/brush",\
 	"/obj/item/weapon/pickaxe/one_pick",\
 	"/obj/item/weapon/pickaxe/two_pick",\

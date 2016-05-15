@@ -11,7 +11,7 @@
 	icon_state = "pp_large"
 	gender = NEUTER
 	throwforce = 2
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	throw_range = 5
 	throw_speed = 1
 	layer = 3.9
@@ -93,6 +93,6 @@
 	gender = NEUTER
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_range = 4
 	throw_speed = 1

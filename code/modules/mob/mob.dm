@@ -794,7 +794,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+				if( w_class <= W_CLASS_SMALL || (slot_flags & SLOT_POCKET) )
 					return 1
 			if(slot_r_store)
 				if(H.r_store)
@@ -805,7 +805,7 @@ var/list/slot_equipment_priority = list( \
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
-				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+				if( w_class <= W_CLASS_SMALL || (slot_flags & SLOT_POCKET) )
 					return 1
 				return 0
 			if(slot_s_store)
@@ -817,7 +817,7 @@ var/list/slot_equipment_priority = list( \
 					if(!disable_warning)
 						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 					return 0
-				if(src.w_class > 3)
+				if(src.w_class > W_CLASS_MEDIUM)
 					if(!disable_warning)
 						to_chat(usr, "The [name] is too big to attach.")
 					return 0
@@ -1671,7 +1671,7 @@ var/list/slot_equipment_priority = list( \
 		self = 1 // Removing object from yourself.
 
 	for(var/obj/item/weapon/W in embedded)
-		if(W.w_class >= 2)
+		if(W.w_class <= W_CLASS_SMALL)
 			valid_objects += W
 
 	if(!valid_objects.len)

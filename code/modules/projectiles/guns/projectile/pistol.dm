@@ -4,7 +4,7 @@
 	icon_state = "silenced_pistol"
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	max_shells = 10
 	caliber = list(".45"  = 1)
 	silenced = 1
@@ -70,7 +70,7 @@
 	name = "\improper Stechtkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	max_shells = 8
 	caliber = list("9mm" = 1)
 	silenced = 0

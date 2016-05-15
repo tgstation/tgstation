@@ -5,7 +5,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "mainboard"
 	item_state = "electronic"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	var/created_name = null //If defined, result computer will have this name.
 
 /obj/computer2frame

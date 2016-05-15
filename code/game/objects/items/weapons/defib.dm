@@ -8,7 +8,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defib_full"
 	item_state = "defib"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	force = 5
 	throwforce = 5
 	origin_tech = "biotech=3"

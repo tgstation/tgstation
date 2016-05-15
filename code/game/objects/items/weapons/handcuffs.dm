@@ -11,7 +11,7 @@
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	starting_materials = list(MAT_IRON = 500)

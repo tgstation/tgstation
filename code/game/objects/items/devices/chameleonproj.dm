@@ -8,7 +8,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	origin_tech = "syndicate=4;magnets=4"
 	var/cham_proj_scan = 1 //Scanning function starts on
 	var/can_use = 1

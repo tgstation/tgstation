@@ -9,7 +9,7 @@
 	icon_state = ""
 	flags = FPRINT
 	siemens_coefficient = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_data_scanner/wdata = list()
 	var/list/datum/autopsy_data_scanner/chemtraces = list()

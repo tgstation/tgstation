@@ -4,7 +4,7 @@
 	icon = 'icons/obj/seeds.dmi'
 	icon_state = "seed"
 	flags = FPRINT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/seed_type
 	var/datum/seed/seed

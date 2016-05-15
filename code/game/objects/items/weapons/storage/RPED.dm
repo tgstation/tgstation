@@ -3,9 +3,9 @@
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	use_to_pickup = 1
-	fits_max_w_class = 3
+	fits_max_w_class = W_CLASS_MEDIUM
 	max_combined_w_class = 100
 	storage_slots = 50
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')

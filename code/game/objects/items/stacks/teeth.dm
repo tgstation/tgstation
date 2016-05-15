@@ -6,7 +6,7 @@
 	icon_state = "tooth"
 	amount = 1
 	max_amount = 50
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 

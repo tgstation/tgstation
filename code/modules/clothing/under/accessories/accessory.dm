@@ -13,7 +13,7 @@
 	_color = "bluetie"
 	flags = FPRINT
 	slot_flags = 0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/accessory_exclusion = DECORATION
 	var/obj/item/clothing/under/has_suit = null
 	var/image/inv_overlay

@@ -232,7 +232,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
 	item_state = "Gibtonite ore"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	throw_range = 0
 	anchored = 1 //Forces people to carry it by hand, no pulling!
 	flags = FPRINT | TWOHANDABLE | MUSTTWOHAND

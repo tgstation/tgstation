@@ -6,7 +6,7 @@
 	flags = FPRINT | PROXMOVE
 	siemens_coefficient = 1
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 10
 

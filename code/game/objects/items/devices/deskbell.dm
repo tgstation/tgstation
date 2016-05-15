@@ -6,7 +6,7 @@
 	icon_state = "deskbell_2"
 	force = 5
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT
@@ -242,7 +242,7 @@
 	desc = "An unfinished desk bell."
 	icon_state = "deskbell_0"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT

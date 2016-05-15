@@ -5,7 +5,7 @@ hi
 
 /obj/item/fluff // so that they don't spam up the object tree
 	icon = 'icons/obj/custom_items.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 //////////////////////////////////
 ////////// Fluff Items ///////////
@@ -178,7 +178,7 @@ hi
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "purplecomb"
 	item_state = "purplecomb"
@@ -271,7 +271,7 @@ hi
 	icon_state = "cigon"
 	throw_speed = 0.5
 	item_state = "ciglit"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	body_parts_covered = null
 	flags = FPRINT|TABLEPASS
 
@@ -632,7 +632,7 @@ hi
 	icon_state = "flagmask"
 	item_state = "flagmask"
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
 */
 
@@ -642,7 +642,7 @@ hi
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "mara_kilpatrick_1"
 	flags = FPRINT|TABLEPASS
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 ////// Small locket - Altair An-Nasaqan - Serithi
 
@@ -655,7 +655,7 @@ hi
 	color = "altair_locket"
 	slot_flags = 0
 	flags = FPRINT|TABLEPASS
-	w_class = 1
+	w_class = W_CLASS_TINY
 	slot_flags = SLOT_MASK
 
 //////  Medallion - Nasir Khayyam - Jamini
@@ -666,7 +666,7 @@ hi
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "nasir_khayyam_1"
 	flags = FPRINT|TABLEPASS
-	w_class = 1
+	w_class = W_CLASS_TINY
 	slot_flags = SLOT_MASK
 
 ////// Emerald necklace - Ty Foster - Nega
@@ -677,7 +677,7 @@ hi
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "ty_foster"
 	flags = FPRINT|TABLEPASS
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 //////////// Shoes ////////////
 

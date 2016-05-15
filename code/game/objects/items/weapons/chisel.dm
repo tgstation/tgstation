@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "chisel"
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 120)
 
 	flags = FPRINT
@@ -40,11 +40,11 @@
 		if(!W.engraving)
 			var/engraving_name = sanitize(input(usr, "Depicted on the wall is an image of ...", "Basic engraving", null) as null | text)
 			if(!engraving_name) return
-			
+
 			var/engraving = sanitize(input(usr, "Depicted on the wall is an image of [engraving_name]. ...","Details of the engraving", null) as null | text)
 			if(!engraving) return
 
-			var/list/engravings = list("Amyjon"="amyjon", "Face"="face", "Matt wuz here"="matt", "Vive la Revolution"="revolution", "Engi"="engie", "Killroy"="guy", "End is nigh"= "end", "Dorf"="dwarf", "Uboa"="uboa") 
+			var/list/engravings = list("Amyjon"="amyjon", "Face"="face", "Matt wuz here"="matt", "Vive la Revolution"="revolution", "Engi"="engie", "Killroy"="guy", "End is nigh"= "end", "Dorf"="dwarf", "Uboa"="uboa")
 
 			var/engravingdesign = input("Your engraving", null)as null|anything in engravings
 			if(!engravingdesign) return

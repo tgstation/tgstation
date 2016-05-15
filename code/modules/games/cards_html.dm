@@ -11,7 +11,7 @@
 	desc = "A simple deck of playing cards."
 	icon = 'playing_cards_html.dmi'
 	icon_state = "deck"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/list/cards = list()
 

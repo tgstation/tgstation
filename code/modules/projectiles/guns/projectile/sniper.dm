@@ -9,7 +9,7 @@
 	recoil = 2
 	slot_flags = SLOT_BACK
 	fire_delay = 30
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	fire_sound = 'sound/weapons/hecate_fire.ogg'
 	caliber = list(".50BMG" = 1)
 	ammo_type = "/obj/item/ammo_casing/BMG50"

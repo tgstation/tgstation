@@ -184,7 +184,7 @@
 	item_state = "butt"
 	flags = 0
 	force = 4.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 5

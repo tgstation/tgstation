@@ -252,7 +252,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "wheelchair-item"
 	item_state = "syringe_kit" //This is just a grayish square
-	w_class = 4
+	w_class = W_CLASS_LARGE
 
 /obj/item/syndicate_wheelchair_kit/attack_self(mob/user)
 	new /obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate(get_turf(user))

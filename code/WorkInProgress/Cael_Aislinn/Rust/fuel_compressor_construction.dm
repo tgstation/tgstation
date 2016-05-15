@@ -5,7 +5,7 @@
 	name = "Fuel Compressor frame"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "fuel_compressor0"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	mount_reqs = list("simfloor", "nospace")
 	flags = FPRINT
 	siemens_coefficient = 1

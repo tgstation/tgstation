@@ -17,7 +17,7 @@
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
 	species_fit = list(VOX_SHAPED)
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = FPRINT

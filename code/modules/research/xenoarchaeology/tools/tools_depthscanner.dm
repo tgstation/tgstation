@@ -9,7 +9,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "crap"
 	item_state = "analyzer"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	var/list/positive_locations = list()

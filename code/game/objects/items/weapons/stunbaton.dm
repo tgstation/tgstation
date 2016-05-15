@@ -8,7 +8,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	origin_tech = "combat=2"
 	attack_verb = list("beats")
 	var/stunforce = 10

@@ -7,7 +7,7 @@
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/obj/item/weapon/implant/imp = null
 	proc
 		update()

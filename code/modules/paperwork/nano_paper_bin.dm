@@ -5,7 +5,7 @@
 	icon_state = "np_dispenser"
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	throw_speed = 3
 	throw_range = 3
 	var/ressources = 30	// how much nano paper it contains

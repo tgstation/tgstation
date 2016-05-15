@@ -590,7 +590,7 @@
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& ( \
-					(W.force >= 5 && W.w_class >= 3.0) \
+					(W.force >= 5 && W.w_class >= W_CLASS_MEDIUM) \
 					|| istype(W,/obj/item/weapon/crowbar) \
 				) \
 				&& prob(20) )

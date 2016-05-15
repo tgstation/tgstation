@@ -3,7 +3,7 @@
 	desc = "HONK! brand Bananas. In a special applicator for rapid slipping of wide areas."
 	icon_state = "chemg"
 	item_state = "flashbang"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -58,7 +58,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20

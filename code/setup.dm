@@ -207,6 +207,14 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
+//WEIGHT CLASSES
+#define W_CLASS_TINY 1
+#define W_CLASS_SMALL 2
+#define W_CLASS_MEDIUM 3
+#define W_CLASS_LARGE 4
+#define W_CLASS_HUGE 5
+#define W_CLASS_GIANT 20
+
 
 //ITEM INVENTORY SLOT BITMASKS
 #define SLOT_OCLOTHING 1

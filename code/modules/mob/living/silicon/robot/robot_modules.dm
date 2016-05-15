@@ -2,7 +2,7 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	//icon_state = "std_module"
-	w_class = 100.0
+	w_class = W_CLASS_GIANT
 	item_state = "electronic"
 	flags = FPRINT
 	siemens_coefficient = 1

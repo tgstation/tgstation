@@ -4,7 +4,7 @@
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/trash.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	desc = "This is rubbish."
 	w_type=NOT_RECYCLABLE
 	autoignition_temperature = AUTOIGNITION_PAPER
@@ -20,7 +20,7 @@
 	icon_state = "busta_nut"
 	starting_materials = list(MAT_CARDBOARD = 370)
 	w_type=RECYK_MISC
-	
+
 /obj/item/trash/oldempirebar
 	name = "Old Empire Bar"
 	icon_state = "old_empire_bar"

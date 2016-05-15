@@ -13,7 +13,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	starting_materials = list(MAT_IRON = 1000, MAT_GLASS = 7500)
 	melt_temperature = MELTPOINT_GLASS
 	origin_tech = "materials=2"
@@ -40,7 +40,7 @@
 	name = "buckler"
 	desc = "A small wooden shield. Its surface area is small, but it's still somewhat effective."
 	icon_state = "buckler"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	slot_flags = 0
 	starting_materials = list()
 
@@ -93,7 +93,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 1
+	w_class = W_CLASS_TINY
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoves", "bashes")
 	var/active = 0
@@ -115,12 +115,12 @@
 	active = !active
 	if (active)
 		force = 10
-		w_class = 4
+		w_class = W_CLASS_LARGE
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
-		w_class = 1
+		w_class = W_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	icon_state = "eshield[active]"
@@ -142,7 +142,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 10
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	origin_tech = "magnets=3;syndicate=4"
 
 

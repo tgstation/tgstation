@@ -4,7 +4,7 @@
 	icon_state = "tempgun_4"
 	item_state = "tempgun_4"
 	slot_flags = SLOT_BACK
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	fire_sound = 'sound/weapons/pulse3.ogg'
 	desc = "A gun that changes the body temperature of its targets."
 	var/temperature = 300

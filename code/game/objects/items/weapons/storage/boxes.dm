@@ -36,7 +36,7 @@
 	desc = "You could build a fort with this."
 	icon_state = "largebox"
 	item_state = "largebox"
-	w_class = 42 // Big, bulky.
+	w_class = W_CLASS_GIANT // Big, bulky.
 	foldable = /obj/item/stack/sheet/cardboard
 	foldable_amount = 4 // Takes 4 to make. - N3X
 	starting_materials = list(MAT_CARDBOARD = 15000)
@@ -52,7 +52,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "Dpacket"
 	item_state = "Dpacket"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	foldable = null
 
 /obj/item/weapon/storage/box/surveillance/New()

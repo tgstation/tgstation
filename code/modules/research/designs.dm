@@ -151,7 +151,7 @@ proc/getScanDesign(var/obj/O)
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 	w_type = RECYK_ELECTRONIC
 	var/datum/design/blueprint

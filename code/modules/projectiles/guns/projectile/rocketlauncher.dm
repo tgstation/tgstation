@@ -5,7 +5,7 @@
 	icon_state = "rpg"
 	item_state = "rpg"
 	max_shells = 1
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	starting_materials = list(MAT_IRON = 5000)
 	w_type = RECYK_METAL
 	force = 10
@@ -64,7 +64,7 @@
 	recoil = 1
 	flags = FPRINT
 	slot_flags = SLOT_BACK
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	fire_delay = 2
 	caliber = list("nikita" = 1)
 	origin_tech = null

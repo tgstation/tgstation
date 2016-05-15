@@ -177,7 +177,7 @@
 	item_state = "syndie_hardsuit"
 	species_fit = list(VOX_SHAPED)
 	slowdown = 1
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/gun,/obj/item/ammo_storage,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	siemens_coefficient = 0.6
@@ -207,7 +207,7 @@
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
 	slowdown = 1
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	unacidable = 1
 	species_restricted = list("exclude",VOX_SHAPED)
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)

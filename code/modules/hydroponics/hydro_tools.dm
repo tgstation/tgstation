@@ -259,7 +259,7 @@
 	flags = FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 10
 	var/toxicity = 4
@@ -312,7 +312,7 @@
 	siemens_coefficient = 1
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	attack_verb = list("slashes", "slices", "cuts", "claws")
 
 
@@ -364,7 +364,7 @@
 	icon_state = "bottle16"
 	flags = FPRINT | OPENCONTAINER
 	possible_transfer_amounts = null
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/fertilizer //Reagent contained, if any.
 
@@ -405,7 +405,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	force = 12.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
@@ -434,7 +434,7 @@
 	throw_speed = 1
 	throw_range = 3
 	sharpness = 1.0
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
@@ -468,7 +468,7 @@
 	icon_state = "claypot-item"
 	item_state = "claypot"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 5.0
 	throwforce = 20.0
 	throw_speed = 1

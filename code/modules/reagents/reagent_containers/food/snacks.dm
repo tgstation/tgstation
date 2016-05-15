@@ -209,7 +209,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path || istype(W,/obj/item/weapon/reagent_containers/syringe)) //Let's also not slice with syringes.
 		return 0
 
-	if(W.w_class <= 2 && (W.w_class < w_class) && W.is_sharp() < 0.8 && !istype(W,/obj/item/device/analyzer/plant_analyzer)) //Make sure the item is valid to attempt slipping shit into it
+	if(W.w_class <= W_CLASS_SMALL && (W.w_class < w_class) && W.is_sharp() < 0.8 && !istype(W,/obj/item/device/analyzer/plant_analyzer)) //Make sure the item is valid to attempt slipping shit into it
 		if(!iscarbon(user))
 			return 0
 

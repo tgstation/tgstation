@@ -31,7 +31,7 @@
 	flags = OPENCONTAINER|FPRINT
 	slot_flags = SLOT_BACK
 	throwforce = 3
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	origin_tech = "bluespace=3;materials=3;engineering=5"
 	var/safety = 0
 	var/primed = 0

@@ -643,12 +643,12 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class < 2)
+			if(I.w_class < W_CLASS_SMALL)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
+			if((C.l_hand && C.l_hand.w_class <= W_CLASS_SMALL) || (C.r_hand && C.r_hand.w_class <= W_CLASS_SMALL))
 				return C
 	return null
 
@@ -672,12 +672,12 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class <= 2)
+			if(I.w_class <= W_CLASS_SMALL)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
+			if(C.l_hand && C.l_hand.w_class <= W_CLASS_SMALL || C.r_hand && C.r_hand.w_class <= W_CLASS_SMALL)
 				return C
 	return null
 
@@ -701,7 +701,7 @@
 		if(!Adjacent(I))
 			continue
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.w_class <= 2)
+		if(I.loc != src && I.w_class <= W_CLASS_SMALL)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -733,10 +733,10 @@
 		if(!Adjacent(C))
 			continue
 
-		if(C.l_hand && C.l_hand.w_class <= 2)
+		if(C.l_hand && C.l_hand.w_class <= W_CLASS_SMALL)
 			stolen_item = C.l_hand
 
-		if(C.r_hand && C.r_hand.w_class <= 2)
+		if(C.r_hand && C.r_hand.w_class <= W_CLASS_SMALL)
 			stolen_item = C.r_hand
 
 		if(stolen_item)

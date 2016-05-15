@@ -5,7 +5,7 @@
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()

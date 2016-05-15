@@ -4,7 +4,7 @@
 	storage_slots = 20
 	icon = 'icons/obj/wallet.dmi'
 	icon_state = "wallet"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	can_only_hold = list(
 		"/obj/item/weapon/spacecash",
 		"/obj/item/weapon/card",

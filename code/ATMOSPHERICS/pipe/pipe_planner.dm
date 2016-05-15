@@ -5,7 +5,7 @@
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "pipe-planner"
 
-	w_class = 4
+	w_class = W_CLASS_LARGE
 
 	var/datum/context_click/pipe_planner/planner
 

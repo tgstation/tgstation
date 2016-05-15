@@ -1,7 +1,7 @@
 /obj/item/weapon/ctf_flag
 	name = "Flag"
 	desc = "Its a flag"
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	icon = 'flags.dmi'
 	icon_state = "flag_neutral"
 	item_state = "paper"

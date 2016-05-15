@@ -5,7 +5,7 @@
 	icon_state = "cart"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0

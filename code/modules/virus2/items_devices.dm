@@ -4,7 +4,7 @@
 	name = "Antibody Scanner"
 	desc = "Used to scan living beings for antibodies in their blood."
 	icon_state = "antibody"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	flags = FPRINT
 	siemens_coefficient = 1

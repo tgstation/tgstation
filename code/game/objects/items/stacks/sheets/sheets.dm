@@ -1,7 +1,7 @@
 /obj/item/stack/sheet
 	name = "sheet"
 	flags = FPRINT
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 5
 	throwforce = 5
 	max_amount = 50

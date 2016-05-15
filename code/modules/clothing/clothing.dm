@@ -72,7 +72,7 @@
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	slot_flags = SLOT_EARS
 
@@ -110,7 +110,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	body_parts_covered = EYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
@@ -142,7 +142,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/gloves.dmi', "right_hand" = 'icons/mob/in-hand/right/gloves.dmi')
 	siemens_coefficient = 0.50
@@ -304,7 +304,7 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "space"
 	item_state = "s_suit"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = FPRINT
@@ -498,6 +498,6 @@ BLIND     // can't see anything
 //Capes?
 /obj/item/clothing/back
 	name = "cape"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 2
 	slot_flags = SLOT_BACK

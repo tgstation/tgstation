@@ -222,7 +222,7 @@ proc/cardinalrange(var/center)
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 5

@@ -8,7 +8,7 @@
 	icon_state = "large"
 	sharpness = 0.8
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 5.0
 	throwforce = 15.0

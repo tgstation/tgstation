@@ -3,7 +3,7 @@
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0

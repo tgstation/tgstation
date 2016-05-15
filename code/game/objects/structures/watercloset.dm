@@ -120,10 +120,10 @@
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 	if(cistern)
-		if(I.w_class > 3)
+		if(I.w_class > W_CLASS_MEDIUM)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
-		if(w_items + I.w_class > 5)
+		if(w_items + I.w_class > W_CLASS_HUGE)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
 		if(user.drop_item(I, src))

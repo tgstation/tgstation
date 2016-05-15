@@ -82,7 +82,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	_color = "black"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = FPRINT

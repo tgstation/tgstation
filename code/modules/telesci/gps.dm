@@ -6,7 +6,7 @@ var/list/SPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=2;magnets=2"

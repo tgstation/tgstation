@@ -466,7 +466,7 @@ datum/reagent/zed
 	icon_state = "zed_1"
 	flags = FPRINT | TABLEPASS/* | ONBELT*/
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60

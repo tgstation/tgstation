@@ -168,7 +168,7 @@
 	icon = 'icons/obj/vending_pack.dmi'
 	icon_state = "generic"
 	item_state = "syringe_kit"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 
 	var/foldable = /obj/item/stack/sheet/cardboard

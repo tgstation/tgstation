@@ -3,7 +3,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "cameracase"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	anchored = 0
 
 	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 300)

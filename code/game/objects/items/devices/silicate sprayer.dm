@@ -6,7 +6,7 @@
 #define SILICATE_PER_REINFORCE			0.1		// Silicate used to reinforce 1 unit of health on a window.
 #define MODE_REPAIR		0
 #define MODE_REINFORCE	1
-	
+
 /obj/item/device/silicate_sprayer
 	name = "\improper Silicate Sprayer"
 	desc = "Used to repair damaged windows with silicate."
@@ -14,7 +14,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "silicate sprayer"
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	origin_tech = "engineering=2"
 
@@ -86,15 +86,15 @@
 	if(!diff) // Not damaged.
 		to_chat(user, "<span class='notice'>\The [W] is already in perfect condition!</span>")
 		return 1
-		
+
 	diff = min(diff, get_amount() / SILICATE_PER_DAMAGE)
-		
+
 	W.health += diff
 	W.healthcheck(user, FALSE)
 
 	user.visible_message("<span class='notice'>[user] repairs \the [W] with their [name]!</span>", "<span class='notice'>You repair \the [W] with your [name].</span>")
 	playsound(get_turf(src), 'sound/effects/refill.ogg', 10, 1, -6)
-	
+
 	remove_silicate(diff * SILICATE_PER_DAMAGE)
 
 	return 1

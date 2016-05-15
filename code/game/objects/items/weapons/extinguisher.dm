@@ -9,7 +9,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	throwforce = 10
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
@@ -35,7 +35,7 @@
 	hitsound = null	//it is much lighter, after all.
 	flags = FPRINT
 	throwforce = 2
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 3.0
 	starting_materials = null
 	max_water = 30
@@ -100,7 +100,7 @@
 
 	if (istype(W, /obj/item) && !is_open_container() && !istype(src, /obj/item/weapon/extinguisher/foam) && !istype(W, /obj/item/weapon/evidencebag))
 		if(W.is_open_container()) return //We're probably trying to fill it
-		if(W.w_class>1)
+		if(W.w_class > W_CLASS_TINY)
 			to_chat(user, "\The [W] won't fit into the nozzle!")
 			return
 		if(locate(/obj) in src)

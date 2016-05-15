@@ -4,11 +4,11 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
-	fits_max_w_class = 3
+	fits_max_w_class = W_CLASS_MEDIUM
 	max_combined_w_class = 20
 	origin_tech = "materials=3;engineering=3"
 

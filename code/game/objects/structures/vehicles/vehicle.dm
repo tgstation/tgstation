@@ -3,7 +3,7 @@
 	desc = "A simple key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/obj/structure/bed/chair/vehicle/paired_to = null
 	var/vin = null
 

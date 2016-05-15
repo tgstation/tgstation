@@ -3,7 +3,7 @@
 	desc = "A device that is able to create sounds."
 	icon_state = "soundsynth"
 	item_state = "radio"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	siemens_coefficient = 1
 

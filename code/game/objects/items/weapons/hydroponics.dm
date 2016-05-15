@@ -22,7 +22,7 @@
 	var/capacity = 500; //the number of seeds it can carry.
 	flags = FPRINT
 	slot_flags = SLOT_BELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/list/item_quants = list()
 
 /obj/item/weapon/seedbag/attack_self(mob/user as mob)
@@ -141,7 +141,7 @@
 	flags = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("sears", "heats", "whacks", "steams")*/

@@ -51,7 +51,7 @@
 	icon_state = "flashbang"
 	var/state = null
 	var/det_time = 100.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20

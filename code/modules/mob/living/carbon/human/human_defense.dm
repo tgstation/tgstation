@@ -204,10 +204,10 @@ emp_act
 
 	//Knocking teeth out!
 	if(user.zone_sel.selecting == "mouth" && target_zone == "head") //You can't actually hit people in the mouth - this checks if the user IS targetting mouth, and if he didn't miss!
-		if((!armor) && (I.force >= 8 || I.w_class >= 2) && (I.is_sharp() < 1))//Minimum force=8, minimum w_class=2. Sharp items can't knock out teeth. Armor prevents this completely!
+		if((!armor) && (I.force >= 8 || I.w_class <= W_CLASS_SMALL) && (I.is_sharp() < 1))//Minimum force=8, minimum w_class = W_CLASS_SMALL. Sharp items can't knock out teeth. Armor prevents this completely!
 			var/datum/butchering_product/teeth/T = locate(/datum/butchering_product/teeth) in src.butchering_drops
 			if(T && T.amount > 0) //If the guy has some teeth
-				var/chance = min(I.force * I.w_class, 40) //an item with w_class=3 and force of 10 has a 30% chance of knocking a few teeth out. Chance is capped at 40%
+				var/chance = min(I.force * I.w_class, 40) //an item with w_class = W_CLASS_MEDIUM and force of 10 has a 30% chance of knocking a few teeth out. Chance is capped at 40%
 				if(prob(chance))
 					knock_out_teeth(user)
 

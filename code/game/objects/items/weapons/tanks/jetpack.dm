@@ -4,7 +4,7 @@
 	name = "Jetpack (Empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	item_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	var/datum/effect/effect/system/trail/ion_trail

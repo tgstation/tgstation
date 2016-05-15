@@ -4,7 +4,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	heat_production = 1000
 	light_color = LIGHT_COLOR_FIRE
 

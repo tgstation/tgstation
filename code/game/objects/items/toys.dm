@@ -94,7 +94,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 
 /*
  * Fake telebeacon
@@ -132,7 +132,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 10)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_PLASTIC
@@ -186,7 +186,7 @@
 	icon_state = "357-7"
 	flags = FPRINT
 	siemens_coefficient = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 10)
 	melt_temperature = MELTPOINT_PLASTIC
 	w_type = RECYK_MISC
@@ -213,7 +213,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	flags = FPRINT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	attack_verb = list("attacks", "strikes", "hits")
 	var/bullets = 5
 
@@ -312,7 +312,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
 	flags = FPRINT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 /obj/effect/foam_dart_dummy
 	name = ""
@@ -333,7 +333,7 @@
 	icon_state = "sword0"
 	item_state = "sword0"
 	var/active = 0.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	attack_verb = list("attacks", "strikes", "hits")
 
@@ -344,13 +344,13 @@
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			src.icon_state = "swordblue"
 			src.item_state = "swordblue"
-			src.w_class = 4
+			src.w_class = W_CLASS_LARGE
 		else
 			to_chat(user, "<span class = 'info'>You push the plastic blade back down into the handle.</span>")
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 			src.icon_state = "sword0"
 			src.item_state = "sword0"
-			src.w_class = 2
+			src.w_class = W_CLASS_SMALL
 		src.add_fingerprint(user)
 		return
 
@@ -365,7 +365,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	attack_verb = list("attacks", "slashes", "stabs", "slices")
 
 /*
@@ -404,7 +404,7 @@
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	attack_verb = list("attacks", "colours", "colors")//teehee
 	var/colour = "#A10808" //RGB
 	var/shadeColour = "#220000" //RGB
@@ -440,7 +440,7 @@
 	throwforce = 30.0
 	throw_speed = 10
 	throw_range = 30
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 
 /obj/item/toy/snappop/virus/throw_impact(atom/hit_atom)
@@ -467,7 +467,7 @@
 	desc = "Wow!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
 	..()
@@ -568,7 +568,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
 	var/cooldown = 0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user as mob)
@@ -649,7 +649,7 @@
 	desc = "The holy grail of all programmers. It seems a bit leaky."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "gooncode"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "<span class = 'danger'>[user] is using [src.name]! It looks like \he's  trying to re-add poo!</span>")
@@ -671,7 +671,7 @@
 	desc = "A device used to project your voice. Quietly."
 	icon_state = "megaphone"
 	item_state = "radio"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	siemens_coefficient = 1
 
@@ -710,7 +710,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "greyshirt"
 	var/cooldown = 0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/toy/gasha/greyshirt
 	name = "toy greyshirt"

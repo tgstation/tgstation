@@ -4,7 +4,7 @@
 	icon = 'icons/obj/weaponsmithing.dmi'
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
 	icon_state = "sword"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	hitsound = "sound/weapons/bloodyslice.ogg"
 	flags = FPRINT
 	siemens_coefficient = 1
@@ -247,7 +247,7 @@
 				desc = "A huge sword. It looks almost too heavy to lift."
 				icon_state = "executioners_sword"
 				hitsound = "sound/weapons/bloodyslice.ogg"
-				w_class = 4
+				w_class = W_CLASS_LARGE
 				force = 25
 				sharpness = 2.0
 				slot_flags = SLOT_BACK

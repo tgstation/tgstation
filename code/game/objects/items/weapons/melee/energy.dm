@@ -26,7 +26,7 @@
 	throwforce = 25.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "combat=3"
@@ -47,7 +47,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
@@ -84,14 +84,14 @@
 			active = !active
 	if (active)
 		force = 30
-		w_class = 4
+		w_class = W_CLASS_LARGE
 		sharpness = 1.5
 		hitsound = "sound/weapons/blade1.ogg"
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	else
 		force = 3
-		w_class = 2
+		w_class = W_CLASS_SMALL
 		sharpness = 0
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		hitsound = "sound/weapons/empty.ogg"
@@ -124,7 +124,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")

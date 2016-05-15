@@ -9,7 +9,7 @@
 	var/health = null
 	var/hitsound = null
 
-	var/w_class = 3.0
+	var/w_class = W_CLASS_MEDIUM
 	var/attack_delay = 10 //Delay between attacking with this item, in 1/10s of a second (default = 1 second)
 
 	flags = FPRINT
@@ -198,7 +198,7 @@
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
-		if(!A.has_fine_manipulation || w_class >= 4)
+		if(!A.has_fine_manipulation || w_class >= W_CLASS_LARGE)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
 				A.drop_from_inventory(src)
 			to_chat(user, "Your claws aren't capable of such fine manipulation.")
@@ -510,7 +510,7 @@
 						return 2
 					else
 						return 0
-				if( w_class < 2	)
+				if( w_class < W_CLASS_SMALL	)
 					return 1
 				return 1
 			if(slot_r_ear)
@@ -526,7 +526,7 @@
 						return 2
 					else
 						return 0
-				if( w_class < 2 )
+				if( w_class < W_CLASS_SMALL )
 					return 1
 				return 1
 			*/
@@ -568,9 +568,9 @@
 				if(automatic)
 					if(H.l_store)
 						return 0
-					else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					else if( w_class <= W_CLASS_SMALL || (slot_flags & SLOT_POCKET) )
 						return 1
-				else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+				else if( w_class <= W_CLASS_SMALL || (slot_flags & SLOT_POCKET) )
 					if(H.l_store)
 						return 2
 					else
@@ -585,9 +585,9 @@
 				if(automatic)
 					if(H.r_store)
 						return 0
-					else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					else if( w_class <= W_CLASS_SMALL || (slot_flags & SLOT_POCKET) )
 						return 1
-				else if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+				else if( w_class <= W_CLASS_SMALL || (slot_flags & SLOT_POCKET) )
 					if(H.r_store)
 						return 2
 					else
@@ -601,7 +601,7 @@
 					if(!disable_warning)
 						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 					return 0
-				if(src.w_class > 3 && !H.wear_suit.allowed.len)
+				if(src.w_class > W_CLASS_MEDIUM && !H.wear_suit.allowed.len)
 					if(!disable_warning)
 						to_chat(usr, "The [name] is too big to attach.")
 					return 0
@@ -945,7 +945,7 @@ var/global/list/image/blood_overlays = list()
 	return 0
 
 /obj/item/kick_act(mob/living/carbon/human/H) //Kick items around!
-	if(anchored || w_class > 3 + H.get_strength())
+	if(anchored || w_class > W_CLASS_MEDIUM + H.get_strength())
 		H.visible_message("<span class='danger'>[H] attempts to kick \the [src]!</span>", "<span class='danger'>You attempt to kick \the [src]!</span>")
 		if(prob(70))
 			to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")

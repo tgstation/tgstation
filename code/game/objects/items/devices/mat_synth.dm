@@ -13,7 +13,7 @@
 
 	flags = FPRINT
 	siemens_coefficient = 1
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	origin_tech = "engineering=4;materials=5;powerstorage=3"
 
 	var/mode = 1 //0 is material selection, 1 is material production

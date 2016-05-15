@@ -5,7 +5,7 @@
 	icon_state = "flashlight"
 	item_state = "flashlight"
 	origin_tech = "engineering=1"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
@@ -118,7 +118,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 5
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	siemens_coefficient = 1
 	starting_materials = null
@@ -149,7 +149,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	brightness_on = 4 // Pretty bright.
 	light_power = 2.5
 	icon_state = "flare"

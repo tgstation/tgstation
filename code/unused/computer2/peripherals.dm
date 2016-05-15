@@ -4,7 +4,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/machinery/computer2/host
 	var/id = null
 

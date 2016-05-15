@@ -59,7 +59,7 @@
 
 	if(istype(W, /obj/item/weapon))
 		if(W.is_sharp() >= 1.2) //As sharp as a knife
-			if(W.w_class >= 2) //Big enough to use to cut down trees
+			if(W.w_class <= W_CLASS_SMALL) //Big enough to use to cut down trees
 				health -= (user.get_strength() * W.force)
 			else
 				to_chat(user, "<span class='info'>\The [W] doesn't appear to be big enough to cut into \the [src]. Try something bigger.</span>")
@@ -200,7 +200,7 @@
 /obj/structure/flora/pottedplant/attackby(var/obj/item/I, var/mob/user)
 	if(!I)
 		return
-	if(I.w_class > 2)
+	if(I.w_class > W_CLASS_SMALL)
 		to_chat(user, "That item is too big.")
 		return
 	if(contents.len)

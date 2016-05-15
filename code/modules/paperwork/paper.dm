@@ -9,7 +9,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	w_type = RECYK_WOOD
 	throw_range = 1
 	throw_speed = 1
@@ -471,4 +471,4 @@ var/global/list/paper_folding_results = list ( \
 
 /obj/item/weapon/paper/voxresearch/voxresearchescape
 	name = "paper- 'Recent Attack'"
-	info = "We still do not know who were responsible for the recent attack and escape of several test subjects.  The initial investigation points to the Syndicate but we cannot say for sure at this time.  This has violated our contract with REDACTED and REDACTED.  We may have to close the facility. "	
+	info = "We still do not know who were responsible for the recent attack and escape of several test subjects.  The initial investigation points to the Syndicate but we cannot say for sure at this time.  This has violated our contract with REDACTED and REDACTED.  We may have to close the facility. "

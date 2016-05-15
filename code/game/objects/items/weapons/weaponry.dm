@@ -6,7 +6,7 @@
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("bans")
@@ -25,7 +25,7 @@
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
 
@@ -49,7 +49,7 @@
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	sharpness = 1.2
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
@@ -80,7 +80,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	sharpness = 1.2
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
 
@@ -104,7 +104,7 @@
 	hitsound = "sound/weapons/bladeslice.ogg"
 	force = 20
 	throwforce = 15
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	attack_verb = list("jabs","stabs","rips")
 
 obj/item/weapon/wirerod
@@ -116,7 +116,7 @@ obj/item/weapon/wirerod
 	siemens_coefficient = 1
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	starting_materials = list(MAT_IRON = 1875)
 	w_type = RECYK_METAL
 	attack_verb = list("hits", "bludgeons", "whacks", "bonks")

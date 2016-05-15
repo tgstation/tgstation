@@ -9,7 +9,7 @@
 	origin_tech = "bluespace=4"
 	item_state = "holdingpack"
 	icon_state = "holdingpack"
-	fits_max_w_class = 4
+	fits_max_w_class = W_CLASS_LARGE
 	max_combined_w_class = 28
 
 /obj/item/weapon/storage/backpack/holding/miniblackhole
@@ -17,7 +17,7 @@
 	desc = "A miniature black hole that opens into a localized pocket of Blue Space."
 	icon_state = "porthole"
 	slot_flags = 0 //doesn't fit on your back!
-	w_class = 2 //fits in pockets!
+	w_class = W_CLASS_SMALL //fits in pockets!
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
 	user.visible_message("<span class = 'danger'><b>[user] puts \the [src.name] on \his head and stretches the bag around \himself. With a sudden snapping sound, the bag shrinks to its original size, leaving no trace of [user].</b></span>")

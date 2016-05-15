@@ -5,7 +5,7 @@
 	icon_state = "stool"
 	force = 10
 	throwforce = 10
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	var/sheet_path = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/stool/hologram

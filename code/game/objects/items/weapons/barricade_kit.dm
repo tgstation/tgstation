@@ -5,7 +5,7 @@
 	icon = 'icons/obj/barricade.dmi'
 	icon_state = "barricade_kit"
 	flags = FPRINT
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	force = 3
 	throwforce = 3
 	throw_speed = 1

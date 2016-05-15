@@ -5,7 +5,7 @@
 	item_state = "luchag"
 	flags = FPRINT|MASKINTERNALS
 	body_parts_covered = HEAD|EARS|EYES
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	siemens_coefficient = 3.0
 	species_fit = list(VOX_SHAPED)
 

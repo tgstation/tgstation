@@ -5,7 +5,7 @@
 	item_state = "shard-soulstone"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shards.dmi', "right_hand" = 'icons/mob/in-hand/right/shards.dmi')
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"

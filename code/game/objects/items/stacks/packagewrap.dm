@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	singular_name = "paper sheet"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	amount = 24
 	max_amount = 24
 	//If it's null, it can't wrap that type.
@@ -165,7 +165,7 @@
 	desc = "A big wrapped package."
 	name = "large parcel"
 	density = 1
-	w_class = 200 //Someone was going to find a way to exploit this some day
+	w_class = W_CLASS_GIANT //Someone was going to find a way to exploit this some day
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

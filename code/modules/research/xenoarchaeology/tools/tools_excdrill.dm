@@ -10,7 +10,7 @@
 	drill_sound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
 	force = 15.0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	w_type = RECYK_ELECTRONIC
 	attack_verb = list("drills")
 	hitsound = 'sound/weapons/circsawhit.ogg'

@@ -1703,7 +1703,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	icon_state = "chemg_wired"
 	item_state = "chemg_wired"
 	desc = "A refurbished grenade-casing jury rigged to split simple chemicals."
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/list/beakers = new/list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/)

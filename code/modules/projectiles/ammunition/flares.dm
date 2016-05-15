@@ -9,7 +9,7 @@
 	projectile_type = "/obj/item/projectile/flare"
 	starting_materials = list(MAT_IRON = 1000)
 	w_type = RECYK_METAL
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/obj/item/device/flashlight/flare/stored_flare = null
 
 /obj/item/ammo_casing/shotgun/flare/New()

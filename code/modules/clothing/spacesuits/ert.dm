@@ -32,7 +32,7 @@
 	desc = "A suit worn by members of the Nanotrasen Emergency Response Team. Armoured, space ready and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "suit-command"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	flags = FPRINT  | PLASMAGUARD

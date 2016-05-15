@@ -157,7 +157,7 @@
 	foldable = /obj/item/stack/sheet/cardboard
 	starting_materials = list(MAT_CARDBOARD = 3750)
 	w_type=RECYK_MISC
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	storage_slots = 6
 	icon_type = "crayon"
 	can_only_hold = list(
@@ -209,7 +209,7 @@
 	plural_type = "es"
 	storage_slots = 21 //3 rows of 7 items
 	max_combined_w_class = 21
-	w_class = 1
+	w_class = W_CLASS_TINY
 	flags = 0
 	var/matchtype = /obj/item/weapon/match
 	can_only_hold = list("/obj/item/weapon/match") // Strict type check.
@@ -268,7 +268,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	flags = 0
 	slot_flags = SLOT_BELT

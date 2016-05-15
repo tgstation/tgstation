@@ -8,7 +8,7 @@
 	icon_state = "revolver"
 	caliber = list("357" = 1)
 	origin_tech = "combat=2;materials=2"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	starting_materials = list(MAT_IRON = 1000)
 	w_type = RECYK_METAL
 	recoil = 1
@@ -128,7 +128,7 @@
 		if(user.drop_item(A, src)) //put the silencer into the gun
 			to_chat(user, "<span class='notice'>You screw [A] onto [src].</span>")
 			silenced = A	//dodgy?
-			w_class = 3
+			w_class = W_CLASS_MEDIUM
 			update_icon()
 			return 1
 
@@ -196,7 +196,7 @@
 			to_chat(user, "<span class='notice'>You unscrew [silenced] from [src].</span>")
 			user.put_in_hands(silenced)
 			silenced = 0
-			w_class = 2
+			w_class = W_CLASS_SMALL
 			update_icon()
 			return
 	else

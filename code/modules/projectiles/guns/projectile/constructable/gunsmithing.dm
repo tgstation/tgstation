@@ -5,7 +5,7 @@
 	desc = "A soda can that has had the top and bottom cut out."
 	icon = 'icons/obj/weaponsmithing.dmi'
 	icon_state = "cutoutcan"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/weapon/aluminum_cylinder/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -64,7 +64,7 @@
 	desc = "A metal gun stock. Not terribly comfortable."
 	icon = 'icons/obj/weaponsmithing.dmi'
 	icon_state = "metal_stock"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/metal_gun_stock/attackby(obj/item/W, mob/user)
 	..()
@@ -106,14 +106,14 @@
 	desc = "A grenade casing with a hole poked through, allowing it to hold fuel."
 	icon = 'icons/obj/weaponsmithing.dmi'
 	icon_state = "reservoir"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/metal_blade
 	name = "metal blade"
 	desc = "A simple blade made of sturdy metal."
 	icon = 'icons/obj/weaponsmithing.dmi'
 	icon_state = "metal_blade"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/weapon/metal_blade/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, src))
@@ -132,7 +132,7 @@
 	desc = "A large blade comprised of two smaller ones. Doesn't appear to be held together very well."
 	icon = 'icons/obj/weaponsmithing.dmi'
 	icon_state = "large_metal_blade_assembly"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	var/complete = 0
 
 /obj/item/weapon/large_metal_blade/attack_self(mob/user as mob)
@@ -169,7 +169,7 @@
 				to_chat(user, "You weld the metal blades together.")
 				desc = "A large blade made of sturdy metal."
 				icon_state = "large_metal_blade"
-				w_class = 3
+				w_class = W_CLASS_MEDIUM
 				complete = 1
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
@@ -189,7 +189,7 @@
 	icon_state = "beaker"
 	starting_materials = list(MAT_GLASS = 500)
 	origin_tech = "materials=1"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/has_divider = 0
 	var/list/chambers = list(
 		null,
@@ -300,17 +300,17 @@
 			name = "gun stock"
 			desc = "It looks like it could be some type of gun. The barrel doesn't seem very well secured to the body."
 			icon_state = "stock_reservoir_barrel_assembly"
-			w_class = 4
+			w_class = W_CLASS_LARGE
 		if("stock_reservoir_barrel")
 			name = "gun assembly"
 			desc = "It looks like it could be some type of gun. It seems to be missing an ignition source."
 			icon_state = "stock_reservoir_barrel"
-			w_class = 4
+			w_class = W_CLASS_LARGE
 		if("blunderbuss_assembly")
 			name = "gun assembly"
 			desc = "It looks like it could be some type of gun. The firing mechanism doesn't seem to be securely tightened."
 			icon_state = "blunderbuss_assembly"
-			w_class = 4
+			w_class = W_CLASS_LARGE
 
 		if("stock_capacitorbank_assembly")
 			name = "gun stock"
@@ -324,17 +324,17 @@
 			name = "gun assembly"
 			desc = "It looks like it could be some type of gun. The barrel doesn't seem very well secured to the body."
 			icon_state = "stock_capacitorbank_barrel_assembly"
-			w_class = 4
+			w_class = W_CLASS_LARGE
 		if("stock_capacitorbank_barrel")
 			name = "gun assembly"
 			desc = "It looks like it could be some type of gun. It seems to be missing a triggering mechanism."
 			icon_state = "stock_capacitorbank_barrel"
-			w_class = 4
+			w_class = W_CLASS_LARGE
 		if("railgun_assembly")
 			name = "gun assembly"
 			desc = "It looks like it could be some type of gun. The triggering mechanism is unsecured."
 			icon_state = "railgun_assembly"
-			w_class = 4
+			w_class = W_CLASS_LARGE
 
 		if("spraybottle_assembly")
 			name = "spray bottle"
@@ -642,7 +642,7 @@
 	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 150)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL

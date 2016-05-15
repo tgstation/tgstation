@@ -292,7 +292,7 @@
 	item_state = "bucket"
 	starting_materials = list(MAT_IRON = 200)
 	w_type = RECYK_METAL
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
@@ -365,7 +365,7 @@
 	item_state = "canister"
 	m_amt = 300
 	g_amt = 0
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,60)

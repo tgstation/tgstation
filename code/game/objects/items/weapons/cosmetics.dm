@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
 	flags = FPRINT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/colour = "red"
 	var/open = 0
 

@@ -19,7 +19,7 @@
 	desc = "It looks extremely delicate."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "sliver1"	//0-4
-	w_class = 1
+	w_class = W_CLASS_TINY
 	//item_state = "electronic"
 	var/source_rock = "/turf/unsimulated/mineral/"
 	var/datum/geosample/geological_data

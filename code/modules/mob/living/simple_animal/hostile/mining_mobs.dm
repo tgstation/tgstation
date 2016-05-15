@@ -432,7 +432,7 @@
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "goliath_hide"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)

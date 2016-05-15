@@ -9,7 +9,7 @@
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is impaling \himself with \the [src]! It looks like \he's trying to commit suicide.</span>")

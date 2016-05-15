@@ -41,7 +41,7 @@
 	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 150)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
@@ -66,7 +66,7 @@
 	name = "socket wrench"
 	desc = "A wrench intended to be wrenchier than other wrenches. It's the wrenchiest."
 	icon_state = "socket_wrench"
-	w_class = 4.0 //big shit, to balance its power
+	w_class = W_CLASS_LARGE //big shit, to balance its power
 
 /*
  * Screwdriver
@@ -82,7 +82,7 @@
 	sharpness = 1
 	slot_flags = SLOT_BELT
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -172,7 +172,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 80)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
@@ -212,7 +212,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	sharpness = 0.8
 	heat_production = 3800
 
@@ -505,7 +505,7 @@
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
 	max_fuel = 80
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 120)
 	origin_tech = "engineering=3"
 
@@ -515,7 +515,7 @@
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"
 	max_fuel = 40
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 120)
 	origin_tech = "engineering=4;plasmatech=3"
 	icon_state = "ewelder"
@@ -546,7 +546,7 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 50)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
@@ -599,7 +599,7 @@
 	icon_state = "kit"
 	flags = FPRINT
 	siemens_coefficient = 1
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	w_type = RECYK_MISC
 	origin_tech = "combat=2"
 	var/open = 0
@@ -632,7 +632,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 30)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_STEEL

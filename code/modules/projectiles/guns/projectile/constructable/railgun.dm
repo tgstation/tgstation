@@ -10,7 +10,7 @@
 	icon_state = "railgun"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	item_state = null
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	force = 10
 	flags = FPRINT
 	siemens_coefficient = 1

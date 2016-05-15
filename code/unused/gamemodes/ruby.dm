@@ -261,7 +261,7 @@
 	desc = ""
 	name = "wepon"
 	icon_state = "wepon"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	throwforce = 60.0
 	throw_speed = 2
 	throw_range = 20

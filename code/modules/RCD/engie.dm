@@ -36,7 +36,7 @@
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	starting_materials = list(MAT_IRON = 30000, MAT_GLASS = 15000)
 	w_type = RECYK_ELECTRONIC
 

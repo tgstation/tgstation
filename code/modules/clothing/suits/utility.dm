@@ -15,7 +15,7 @@
 	icon_state = "fire"
 	item_state = "fire_suit"
 	origin_tech = "materials=2;engineering=1"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = ARMS|LEGS|FULL_TORSO|FEET|HANDS
@@ -52,7 +52,7 @@
 	desc = "A suit that protects against extreme fire and heat."
 	//icon_state = "thermal"
 	item_state = "ro_suit"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 	slowdown = 1.5
 
 /*
@@ -73,7 +73,7 @@
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
 	item_state = "bombsuit"
-	w_class = 4 //Bulky item
+	w_class = W_CLASS_LARGE //Bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT
@@ -110,7 +110,7 @@
 	desc = "A heavy suit designed for heavy protection."
 	icon_state = "advancedeod"
 	item_state = "advancedeod"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT
@@ -138,7 +138,7 @@
 	desc = "A suit that protects against radiation. Label: Made with lead, do not eat insulation."
 	icon_state = "rad"
 	item_state = "rad_suit"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY

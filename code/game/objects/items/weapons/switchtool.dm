@@ -6,7 +6,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	force = 3
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6

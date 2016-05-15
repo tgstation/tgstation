@@ -4,7 +4,7 @@
 /obj/item/device/remote
 	name = "remote control"
 	desc = "A remote that uses high-frequency radiation to communicate with connected devices. The label reads \"Do not hold up to face!\"."
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	icon = 'icons/obj/remote.dmi'
 	icon_state = ""

@@ -3,7 +3,7 @@
 	desc = "A slip of electropaper used for accessing special features of brand vending machines."
 	icon = 'icons/obj/vouchers.dmi'
 	icon_state = "voucher"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0
 

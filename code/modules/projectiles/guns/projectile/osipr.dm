@@ -13,7 +13,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	recoil = 1
 	fire_delay = 0
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	fire_sound = 'sound/weapons/osipr_fire.ogg'
 	var/obj/item/energy_magazine/osipr/magazine = null
 	var/energy_balls = 2
@@ -119,7 +119,7 @@
 	flags = FPRINT
 	force = 1
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	var/bullets = 10
 	var/max_bullets = 10
 	var/caliber = "osipr"	//base icon name
@@ -145,7 +145,7 @@
 	name = "pulse magazine"
 	desc = "Primary ammo for OSIPR. Can be replenished by a recharger."
 	icon_state = "osipr-magfull"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	bullets = 30
 	max_bullets = 30
 	caliber = "osipr"
@@ -162,7 +162,7 @@
 	flags = FPRINT
 	force = 1
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 
 /obj/item/osipr_core/New()
 	..()

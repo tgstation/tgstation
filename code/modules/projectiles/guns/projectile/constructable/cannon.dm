@@ -192,11 +192,11 @@
 
 	var/obj/item/object = loaded_item
 	var/speed
-	if(object.w_class > 1)
+	if(object.w_class > W_CLASS_TINY)
 		speed = (((fire_force*(4/object.w_class))/5)*2) //projectile speed.
 	else
 		speed = (((fire_force*2)/5)*2)
-		
+
 	speed = speed * damage_multiplier
 
 	var/distance = round(((20/object.w_class)*(fuel_level/10))*1.5)

@@ -68,7 +68,7 @@
 	desc = "You can hear small voices coming from within, they whisper through to you a soft but persistent message - 'use .y'"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "crystal1"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/machinery/communication/commdevice = null
 	var/number = null
 

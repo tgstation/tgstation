@@ -284,7 +284,7 @@
 	name = "golden cup"
 	icon_state = "golden_cup"
 	item_state = "" //nope :(
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
@@ -870,7 +870,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = 0.8 //same as glass shards
-	w_class = 1
+	w_class = W_CLASS_TINY
 	item_state = "beer"
 	attack_verb = list("stabs", "slashes", "attacks")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")

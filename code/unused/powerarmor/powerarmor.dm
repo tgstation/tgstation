@@ -3,7 +3,7 @@
 	desc = "Not for rookies."
 	icon_state = "swat"
 	item_state = "swat"
-	w_class = 4//bulky item
+	w_class = W_CLASS_LARGE//bulky item
 
 	protective_temperature = 1000
 	flags = FPRINT | TABLEPASS

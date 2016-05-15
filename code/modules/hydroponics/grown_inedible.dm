@@ -55,7 +55,7 @@
 	force = 5
 	flags = 0
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=1"
@@ -75,7 +75,7 @@
 	plantname = "tree"
 	desc = "A very heavy log, a main product of woodcutting. Much heavier than tower-cap logs."
 	force = 10
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	plantname = "sunflowers"
@@ -87,7 +87,7 @@
 	force = 0
 	flags = 0
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 
@@ -107,7 +107,7 @@
 	flags = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("sears", "heats", "whacks", "steams")
@@ -139,7 +139,7 @@
 	force = 15
 	flags = 0
 	throwforce = 1
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=1"
@@ -186,7 +186,7 @@
 	force = 30
 	flags = 0
 	throwforce = 1
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=3"
@@ -252,7 +252,7 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20

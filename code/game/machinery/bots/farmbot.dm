@@ -521,7 +521,7 @@
 	icon_state = "water_arm"
 	var/build_step = 0
 	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 
 	New()
 		..()

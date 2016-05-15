@@ -11,7 +11,7 @@
 	var/currTag = 0
 	var/list/destinations  = list()
 
-	w_class = 1
+	w_class = W_CLASS_TINY
 	item_state = "electronic"
 	flags = FPRINT
 	siemens_coefficient = 1

@@ -206,7 +206,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	icon_state ="tome"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT
 	var/notedat = ""
 	var/tomedat = ""
@@ -513,7 +513,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	return
 
 /obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/cultistsonly = 1
 	attack_self(mob/user as mob)
 		if(src.cultistsonly && !iscultist(usr))

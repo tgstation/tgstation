@@ -3,7 +3,7 @@
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 6.0
 	starting_materials = list(MAT_IRON = 937.5)
 	w_type = RECYK_METAL

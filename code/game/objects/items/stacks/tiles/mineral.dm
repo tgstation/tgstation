@@ -5,7 +5,7 @@
 	singular_name = "plasma floor tile"
 	desc = "A tile made out of highly flammable plasma. This can only end well."
 	icon_state = "tile_plasma"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -19,7 +19,7 @@
 	singular_name = "uranium floor tile"
 	desc = "A tile made out of uranium. You feel a bit woozy."
 	icon_state = "tile_uranium"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -59,7 +59,7 @@
 	singular_name = "gold floor tile"
 	desc = "A tile made out of gold, the swag seems strong here."
 	icon_state = "tile_gold"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -73,7 +73,7 @@
 	singular_name = "silver floor tile"
 	desc = "A tile made out of silver, the light shining from it is blinding."
 	icon_state = "tile_silver"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -87,7 +87,7 @@
 	singular_name = "diamond floor tile"
 	desc = "A tile made out of diamond. Wow, just, wow."
 	icon_state = "tile_diamond"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -101,7 +101,7 @@
 	singular_name = "bananium floor tile"
 	desc = "A tile made out of bananium, HOOOOOOOOONK!"
 	icon_state = "tile_clown"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -116,7 +116,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile made of tiny plastic blocks."
 	icon_state = "tile_plastic"
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 3
@@ -130,7 +130,7 @@
 	singular_name = "phazon floor tile"
 	desc = "A floor tile made out of phazon. It's very light and brittle."
 	icon_state = "tile_phazon"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 2

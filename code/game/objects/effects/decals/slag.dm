@@ -89,7 +89,7 @@
 	if(molten)
 		user.show_message("<span class=\"warning\">You need to wait for \the [src] to cool.</span>")
 		return
-	if(W.force >= 5 && W.w_class >= 3.0)
+	if(W.force >= 5 && W.w_class >= W_CLASS_MEDIUM)
 		user.visible_message("<span class=\"danger\">\The [src] is broken apart with the [W.name] by [user.name]!</span>", \
 			"<span class=\"danger\">You break apart \the [src] with your [W.name]!", \
 			"You hear the sound of rock crumbling.")

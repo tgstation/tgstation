@@ -135,7 +135,7 @@
 	name = "label roll"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "label_cart" //Placeholder image; recolored police tape
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/left = 250
 
 /obj/item/device/label_roll/examine(mob/user) //Shamelessly stolen from above.

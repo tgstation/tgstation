@@ -5,7 +5,7 @@
 	item_state = "happiest"
 	flags = FPRINT|MASKINTERNALS
 	body_parts_covered = FACE
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	siemens_coefficient = 3.0
 	gas_transfer_coefficient = 0.90
 	unacidable = 1

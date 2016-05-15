@@ -336,7 +336,7 @@ var/bomb_set
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/respawned = 0
 	var/watched_by = list()
 

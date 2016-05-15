@@ -15,7 +15,7 @@
 	item_state = "gift"
 	var/size = 3.0
 	var/obj/item/gift = null
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/gift/New(turf/loc, var/obj/item/target, var/W)
@@ -26,13 +26,13 @@
 
 /obj/item/weapon/gift/update_icon()
 	switch(w_class)
-		if(1,2)
+		if(W_CLASS_TINY,W_CLASS_SMALL)
 			icon_state = "gift-small"
 			item_state = "gift-small"
-		if(3)
+		if(W_CLASS_MEDIUM)
 			icon_state = "gift"
 			item_state = "gift"
-		if(4)
+		if(W_CLASS_LARGE)
 			icon_state = "gift-large"
 			item_state = "gift-large"
 
@@ -60,7 +60,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gift"
 	item_state = "gift"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	autoignition_temperature=AUTOIGNITION_PAPER
 
 /obj/item/weapon/winter_gift/New()

@@ -183,7 +183,7 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = W_CLASS_MEDIUM		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	flags = FPRINT
 	attack_verb = list("bashes", "whacks", "educates")
 
@@ -244,7 +244,7 @@
 /obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(carved)
 		if(!store)
-			if(W.w_class < 3)
+			if(W.w_class > W_CLASS_MEDIUM)
 				if(user.drop_item(W, src))
 					store = W
 					to_chat(user, "<span class='notice'>You put [W] in [title].</span>")
@@ -334,7 +334,7 @@
 	icon_state ="scanner"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT
 	var/obj/machinery/computer/library/checkout/computer // Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book	 //  Currently scanned book

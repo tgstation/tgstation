@@ -6,7 +6,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	item_state = ""
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag == 0) // not adjacent
@@ -22,7 +22,7 @@
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return
 
-	if(I.w_class > 3)
+	if(I.w_class > W_CLASS_MEDIUM)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
@@ -65,7 +65,7 @@
 		"You hear someone rustle around in a plastic bag, and remove something.")
 		overlays.len = 0	//remove the overlays
 		user.put_in_hands(I)
-		w_class = 1
+		w_class = W_CLASS_TINY
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 
@@ -104,7 +104,7 @@ obj/item/weapon/evidencebag/attackby(obj/item/weapon/W as obj, mob/living/user a
 	var/amount = 10.0
 	item_state = "paper"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
 

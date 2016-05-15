@@ -6,7 +6,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	fire_sound = 'sound/weapons/ion.ogg'
 	origin_tech = "combat=2;magnets=4"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
@@ -44,7 +44,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BACK
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"
 	origin_tech = null
@@ -120,7 +120,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
-	w_class = 1
+	w_class = W_CLASS_TINY
 	charge_cost = 1000
 	var/lifekiller = 0
 	var/power_notice = 0
@@ -307,7 +307,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
 	item_state = "c20r"
-	w_class = 4
+	w_class = W_CLASS_LARGE
 	projectile_type = "/obj/item/projectile/meteor"
 	charge_cost = 100
 	cell_type = "/obj/item/weapon/cell/potato"
@@ -341,7 +341,7 @@ var/available_staff_transforms=list("monkey","robot","slime","xeno","human","fur
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 
 /obj/item/weapon/gun/energy/mindflayer

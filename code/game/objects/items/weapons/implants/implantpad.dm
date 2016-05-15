@@ -8,7 +8,7 @@
 	item_state = "electronic"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/obj/item/weapon/implantcase/case = null
 	var/broadcasting = null
 	var/listening = 1.0

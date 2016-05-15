@@ -3,7 +3,7 @@
 	desc = "Place her into an apiary so she can get busy."
 	icon = 'icons/obj/seeds.dmi'
 	icon_state = "seed-bees"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/weapon/bee_net
 	name = "bee net"
@@ -11,7 +11,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "bee_net"
 	item_state = "bee_net"
-	w_class = 3
+	w_class = W_CLASS_MEDIUM
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/beekeeping.dmi', "right_hand" = 'icons/mob/in-hand/right/beekeeping.dmi')
 	var/caught_bees = 0
 
@@ -91,7 +91,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "apiary_item"
 	item_state = "giftbag"
-	w_class = 5
+	w_class = W_CLASS_HUGE
 
 /obj/item/beezeez
 	name = "bottle of BeezEez"

@@ -9,7 +9,7 @@
 	slot_flags = SLOT_BELT
 	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_METAL
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5

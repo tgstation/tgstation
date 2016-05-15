@@ -8,10 +8,10 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT
 	slot_flags = SLOT_BACK	//ERROOOOO
-	fits_max_w_class = 3
+	fits_max_w_class = W_CLASS_MEDIUM
 	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -28,9 +28,9 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	storage_slots = 7
-	fits_max_w_class = 4
+	fits_max_w_class = W_CLASS_LARGE
 	max_combined_w_class = 400 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/santabag/attack_hand(user)

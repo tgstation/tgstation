@@ -10,7 +10,7 @@
 ///////////OFFHAND///////////////
 //what the mob gets when wielding something
 /obj/item/offhand
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	name = "offhand"
@@ -62,7 +62,7 @@
 	hitsound = "sound/weapons/bloodyslice.ogg"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	sharpness = 1.2
 	force = 10
 	slot_flags = SLOT_BACK
@@ -109,7 +109,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
@@ -154,7 +154,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
@@ -209,7 +209,7 @@
 	throw_speed = 5
 	throw_range = 10
 	sharpness = 2
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	flags = FPRINT | TWOHANDABLE
 	origin_tech = "magnets=4;combat=5"
 
@@ -238,7 +238,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	slot_flags = SLOT_BACK
 	throwforce = 15
 	flags = TWOHANDABLE

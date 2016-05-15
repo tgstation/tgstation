@@ -1,7 +1,7 @@
 /obj/item/ashtray
 	icon = 'icons/ashtray.dmi'
-	w_class = 1
-	
+	w_class = W_CLASS_TINY
+
 	var/max_butts 	= 0
 	var/empty_desc 	= ""
 	var/icon_empty 	= ""

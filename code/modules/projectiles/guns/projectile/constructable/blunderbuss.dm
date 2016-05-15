@@ -5,7 +5,7 @@
 	icon_state = "blunderbuss"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	item_state = null
-	w_class = 4.0
+	w_class = W_CLASS_LARGE
 	force = 10
 	flags = FPRINT
 	siemens_coefficient = 1
@@ -232,7 +232,7 @@
 	var/fire_force = fuel_level + (fuel_level * (1/(fuel_level/10)))
 
 	var/speed
-	if(loaded_item.w_class > 1)
+	if(loaded_item.w_class > W_CLASS_TINY)
 		speed = ((fire_force*(4/loaded_item.w_class))/5) //projectile speed.
 	else
 		speed = ((fire_force*2)/5)

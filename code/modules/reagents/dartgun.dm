@@ -9,7 +9,7 @@
 	anchored = 0.0
 	origin_tech = "materials=2"
 	var/darts = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/weapon/dart_cartridge/update_icon()
 	if(!darts)

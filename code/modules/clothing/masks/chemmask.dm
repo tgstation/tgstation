@@ -28,7 +28,7 @@
 	name = "chemical mask"
 	icon_state = "chemmask0"
 	flags = FPRINT | MASKINTERNALS
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/power = 0
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01

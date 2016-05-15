@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_MEDIUM
 	flags = 0
 	var/created_name = "Cleanbot"
 

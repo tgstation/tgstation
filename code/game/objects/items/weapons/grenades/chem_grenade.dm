@@ -3,7 +3,7 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "A hand made chemical grenade."
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
