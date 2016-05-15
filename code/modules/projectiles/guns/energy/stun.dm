@@ -6,15 +6,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/stunrevolver
-	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	icon_state = "stunrevolver"
-	item_state = "gun"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
+/obj/item/weapon/gun/energy/shock_revolver
+	name = "tesla gun"
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
+	icon_state = "tesla"
+	item_state = "tesla"
+	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
 	can_flashlight = 0
 	pin = null
-	ammo_x_offset = 1
+	shaded_charge = 1
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"

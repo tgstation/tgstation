@@ -8,7 +8,7 @@
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	initial_gas_mix = "TEMP=2.7"
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
@@ -26,16 +26,17 @@
 
 /obj/machinery/mech_bay_recharge_port/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mech_recharger(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mech_recharger(null)
+	B.apply_default_parts(src)
 	recharging_turf = get_step(loc, dir)
+
+/obj/item/weapon/circuitboard/machine/mech_recharger
+	name = "circuit board (Mechbay Recharger)"
+	build_path = /obj/machinery/mech_bay_recharge_port
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 5)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
@@ -73,14 +74,16 @@
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Used to control mechbay power ports."
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
+	circuit = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
@@ -102,7 +105,10 @@
 			data += "<div class='statusDisplay'>No mech detected.</div>"
 		else
 			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			if(recharge_port.recharging_mech.cell.crit_fail)
+
+			if(!recharge_port.recharging_mech.cell)
+				data += "<span class='bad'>WARNING : the mech cell is missing!</span></div>"
+			else if(recharge_port.recharging_mech.cell.crit_fail)
 				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
 			else
 				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"

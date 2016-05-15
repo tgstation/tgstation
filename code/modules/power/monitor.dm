@@ -6,7 +6,7 @@
 	use_power = 2
 	idle_power_usage = 20
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/powermonitor
+	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
 
 	var/obj/structure/cable/attached
 

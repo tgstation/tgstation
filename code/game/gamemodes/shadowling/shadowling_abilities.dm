@@ -413,7 +413,7 @@
 	user << "<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>"
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B = new /obj/item/weapon/reagent_containers/glass/beaker/large(user.loc) //hacky
 	B.reagents.clear_reagents() //Just in case!
-	B.invisibility = INFINITY //This ought to do the trick
+	B.invisibility = INVISIBILITY_ABSTRACT //This ought to do the trick
 	B.reagents.add_reagent("blindness_smoke", 10)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(B)
@@ -460,7 +460,7 @@
 				sp.start()
 				S.Weaken(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.hit(rand(80, 100))
+			W.take_damage(rand(80, 100))
 
 
 /obj/effect/proc_holder/spell/aoe_turf/drain_life //Deals stamina and oxygen damage to nearby humans and heals the shadowling. On a short cooldown because of the small range and situational usefulness

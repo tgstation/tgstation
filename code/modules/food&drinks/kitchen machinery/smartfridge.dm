@@ -19,10 +19,33 @@
 
 /obj/machinery/smartfridge/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/smartfridge
+	name = "circuit board (Smartfridge)"
+	build_path = /obj/machinery/smartfridge
+	origin_tech = "programming=1"
+	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
+	if(new_type)
+		build_path = new_type
+
+/obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/list/fridges = list(/obj/machinery/smartfridge = "default",
+								/obj/machinery/smartfridge/drinks = "drinks",
+								/obj/machinery/smartfridge/extract = "slimes",
+								/obj/machinery/smartfridge/chemistry = "chems",
+								/obj/machinery/smartfridge/chemistry/virology = "viruses")
+
+		var/position = fridges.Find(build_path, fridges)
+		position = (position == fridges.len) ? 1 : (position + 1)
+		build_path = fridges[position]
+		user << "<span class='notice'>You set the board to [fridges[build_path]].</span>"
+	else
+		return ..()
 
 /obj/machinery/smartfridge/construction()
 	for(var/datum/A in contents)
@@ -66,7 +89,9 @@
 		power_change()
 		return
 
-	default_deconstruction_crowbar(O)
+	if(default_deconstruction_crowbar(O))
+		updateUsrDialog()
+		return
 
 	if(stat)
 		return 0
@@ -81,38 +106,36 @@
 		updateUsrDialog()
 		return 1
 
-	var/loaded = 0
-
 	if(istype(O, /obj/item/weapon/storage/bag))
 		var/obj/item/weapon/storage/P = O
+		var/loaded = 0
 		for(var/obj/G in P.contents)
 			if(contents.len >= max_n_of_items)
 				break
 			if(accept_check(G))
 				load(G)
 				loaded++
-	else
+		updateUsrDialog()
+
+		if(loaded)
+			if(contents.len >= max_n_of_items)
+				user.visible_message("[user] loads \the [src] with \the [O].", \
+								 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+			else
+				user.visible_message("[user] loads \the [src] with \the [O].", \
+									 "<span class='notice'>You load \the [src] with \the [O].</span>")
+			if(O.contents.len > 0)
+				user << "<span class='warning'>Some items are refused.</span>"
+		else
+			user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
+			return 0
+
+	else if(user.a_intent != "harm")
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
-
-	// this is a little backwards but it avoids duplication.
-	// this code follows storage items and trays only.
-	if(loaded)
-		if(contents.len >= max_n_of_items)
-			user.visible_message("[user] loads \the [src] with \the [O].", \
-							 "<span class='notice'>You fill \the [src] with \the [O].</span>")
-		else
-			user.visible_message("[user] loads \the [src] with \the [O].", \
-								 "<span class='notice'>You load \the [src] with \the [O].</span>")
-		if(O.contents.len > 0)
-			user << "<span class='warning'>Some items are refused.</span>"
 	else
-		user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
-		return 0
-
-	updateUsrDialog()
-	return 1
+		return ..()
 
 
 

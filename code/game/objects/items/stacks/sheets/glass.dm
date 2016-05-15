@@ -28,7 +28,6 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
-	..()
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
@@ -318,8 +317,8 @@
 		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
-			var/obj/item/organ/limb/affecting = H.get_organ(organ)
-			if(affecting.take_damage(force / 2))
+			var/obj/item/bodypart/affecting = H.get_bodypart(organ)
+			if(affecting && affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
@@ -340,7 +339,8 @@
 				G.attackby(NG, user)
 			user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
 			qdel(src)
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/shard/Crossed(mob/AM)
 	if(istype(AM) && has_gravity(loc))
@@ -348,9 +348,13 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(PIERCEIMMUNE in H.dna.species.specflags)
-				return 0
+				return
+			var/picked_def_zone = pick("l_leg", "r_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
+			if(!istype(O))
+				return
 			if(!H.shoes)
-				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
+				H.apply_damage(5, BRUTE, picked_def_zone)
 				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
 					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \

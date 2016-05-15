@@ -11,6 +11,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
+	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
 	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
@@ -20,16 +21,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
-	var/points = 5000						//number of trade-points we have
-	var/points_per_manifest = 200			//points gained per manifest returned
-	var/points_per_crate = 500			//points gained per crate returned
-	var/points_per_intel = 25000			//points gained per intel returned
-	var/points_per_plasma = 500			//points gained per plasma returned
-	var/points_per_design = 2500			//points gained per max reliability research design returned (only for initilally unreliable designs)
+	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
-	var/list/techLevels = list()
-	var/list/researchDesigns = list()
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -46,6 +40,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		return ..()
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+	if(!backup_shuttle)
+		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 
@@ -83,8 +79,11 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		throw EXCEPTION("requestEvac(): There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
-		return
+		WARNING("requestEvac(): There is no emergency shuttle, but the shuttle was called. Using the backup shuttle instead.")
+		if(!backup_shuttle)
+			throw EXCEPTION("requestEvac(): There is no emergency shuttle, or backup shuttle! The game will be unresolvable. This is likely due to a mapping error")
+			return
+		emergency = backup_shuttle
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
 		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
@@ -124,6 +123,13 @@ var/datum/subsystem/shuttle/SSshuttle
 	message_admins("[key_name_admin(user)] has called the shuttle.")
 
 	return
+
+// Called when an emergency shuttle mobile docking port is
+// destroyed, which will only happen with admin intervention
+/datum/subsystem/shuttle/proc/emergencyDeregister()
+	// When a new emergency shuttle is created, it will override the
+	// backup shuttle.
+	src.emergency = src.backup_shuttle
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())
@@ -189,13 +195,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
+	var/obj/docking_port/stationary/D = getDock(dockId)
+
 	if(!M)
 		return 1
 	if(timed)
-		if(M.request(getDock(dockId)))
+		if(M.request(D))
 			return 2
 	else
-		if(M.dock(getDock(dockId)))
+		if(M.dock(D))
 			return 2
 	return 0	//dock successful
 

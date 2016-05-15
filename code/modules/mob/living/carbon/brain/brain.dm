@@ -12,7 +12,7 @@
 /mob/living/carbon/brain/New(loc)
 	..()
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
-		var/obj/item/organ/internal/brain/OB = new(loc) //we create a new brain organ for it.
+		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		src.loc = OB
 		OB.brainmob = src
 
@@ -38,7 +38,7 @@
 /mob/living/carbon/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
 
-/mob/living/carbon/brain/blob_act()
+/mob/living/carbon/brain/blob_act(obj/effect/blob/B)
 	return
 
 /mob/living/carbon/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default

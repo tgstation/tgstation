@@ -30,7 +30,7 @@
 					new /obj/item/weapon/grown/log/tree(get_turf(src))
 
 	else
-		..()
+		return ..()
 
 
 

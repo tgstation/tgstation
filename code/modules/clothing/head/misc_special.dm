@@ -48,6 +48,7 @@
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
+	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
@@ -69,6 +70,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
+	hitsound = 'sound/items/Welder.ogg'
 	SSobj.processing |= src
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -76,6 +78,7 @@
 	force = 0
 	throwforce = 0
 	damtype = BRUTE
+	hitsound = 'sound/weapons/tap.ogg'
 	SSobj.processing -= src
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
@@ -92,6 +95,8 @@
 	var/earflaps = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
@@ -128,6 +133,8 @@
 	icon_state = "kitty"
 	color = "#999"
 
+	dog_fashion = /datum/dog_fashion/head/kitty
+
 /obj/item/clothing/head/kitty/equipped(mob/user, slot)
 	if(user && slot == slot_head)
 		update_icon(user)
@@ -148,6 +155,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 1 //luminosity when on
 
+	dog_fashion = /datum/dog_fashion/head/reindeer
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
@@ -156,6 +164,8 @@
 	item_state = "cardborg_h"
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+	dog_fashion = /datum/dog_fashion/head/cardborg
 
 /obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()

@@ -22,7 +22,6 @@
 				do_teleport(M, get_turf(M), 15)
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	..()
 	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
 		if(!bcell)
 			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
@@ -35,6 +34,8 @@
 			qdel(src)
 		else
 			user.visible_message("<span class='warning'>You can't install the crystal onto the stunprod while it has a powercell installed!</span>")
+	else
+		return ..()
 
 /obj/item/weapon/melee/baton/cattleprod/teleprod/attack_self(mob/user, obj/item/I)//handles removing the bluespace crystal + turning the prod on and off
 	if(bcell && bcell.charge > hitcost)

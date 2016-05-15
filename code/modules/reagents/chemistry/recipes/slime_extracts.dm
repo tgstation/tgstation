@@ -468,7 +468,6 @@
 	var/obj/item/slimepotion/docility/P = new /obj/item/slimepotion/docility
 	P.loc = get_turf(holder.my_atom)
 
-
 //Black
 /datum/chemical_reaction/slimemutate2
 	name = "Advanced Mutation Toxin"
@@ -495,6 +494,13 @@
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
+	var/lastkey = holder.my_atom.fingerprintslast
+	var/touch_msg = "N/A"
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A>(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)."
+	message_admins("Slime Explosion reaction started at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>. Last Fingerprint: [touch_msg]")
+	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	spawn(50)
 		if(holder && holder.my_atom)
@@ -681,3 +687,18 @@
 	S.colour = pick("grey","orange", "metal", "blue", "purple", "dark purple", "dark blue", "green", "silver", "yellow", "gold", "yellow", "red", "silver", "pink", "cerulean", "sepia", "bluespace", "pyrite", "light pink", "oil", "adamantine", "black")
 	S.loc = get_turf(holder.my_atom)
 	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
+
+/datum/chemical_reaction/slime_transfer
+	name = "Transfer Potion"
+	id = "slimetransfer"
+	result = null
+	required_reagents = list("blood" = 1)
+	result_amount = 1
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime_transfer/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/transference/P = new /obj/item/slimepotion/transference
+	P.loc = get_turf(holder.my_atom)
+

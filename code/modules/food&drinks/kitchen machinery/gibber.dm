@@ -48,11 +48,16 @@
 /obj/machinery/gibber/New()
 	..()
 	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/gibber(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/gibber
+	name = "circuit board (Gibber)"
+	build_path = /obj/machinery/gibber
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
@@ -94,7 +99,7 @@
 		src.startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
-	if (istype(P, /obj/item/weapon/grab))
+	if(istype(P, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = P
 		if(!iscarbon(G.affecting))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
@@ -117,19 +122,22 @@
 			qdel(G)
 			update_icon()
 
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
+	else if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
-	if(exchange_parts(user, P))
+	else if(exchange_parts(user, P))
 		return
 
-	if(default_pry_open(P))
+	else if(default_pry_open(P))
 		return
 
-	if(default_unfasten_wrench(user, P))
+	else if(default_unfasten_wrench(user, P))
 		return
 
-	default_deconstruction_crowbar(P)
+	else if(default_deconstruction_crowbar(P))
+		return
+	else
+		return ..()
 
 
 

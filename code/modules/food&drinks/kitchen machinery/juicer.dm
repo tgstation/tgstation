@@ -146,7 +146,7 @@
 			return allowed_items[i]
 
 /obj/machinery/juicer/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	if (!istype(O))
+	if (!istype(O) || !O.seed)
 		return 5
 	else if (O.seed.potency == -1)
 		return 5

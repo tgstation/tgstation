@@ -9,7 +9,6 @@
 	var/slice_path    // for sliceable food. path of the item resulting from the slicing
 	var/slices_num
 	var/eatverb
-	var/wrapped = 0
 	var/dried_type = null
 	var/dry = 0
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
@@ -20,6 +19,7 @@
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
+
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
 		return
@@ -45,6 +45,8 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+	if(user.a_intent == "harm")
+		return ..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
@@ -65,9 +67,6 @@
 				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
 				return 0
 
-			if(wrapped)
-				M << "<span class='warning'>You can't eat wrapped food!</span>"
-				return 0
 			else if(fullness <= 50)
 				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
@@ -81,8 +80,6 @@
 				return 0
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
-				if(wrapped)
-					return 0
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
@@ -157,7 +154,18 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts()
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/R)
+	..()
+	reagents.reagent_list.Cut()
+	for(var/obj/item/weapon/reagent_containers/RC in contents)
+		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
+	contents_loop:
+		for(var/A in contents)
+			for(var/B in initial(R.parts))
+				if(istype(A, B))
+					continue contents_loop
+			qdel(A)
+	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]

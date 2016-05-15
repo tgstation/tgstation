@@ -29,6 +29,14 @@
 				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
 
+/obj/effect/spawner/lootdrop/gambling
+	name = "gambling valuables spawner"
+	loot = list(
+				/obj/item/weapon/gun/projectile/revolver/russian = 5,
+				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+				/obj/item/toy/cards/deck/syndicate = 2
+				)
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 
@@ -61,7 +69,7 @@
 				/obj/item/bodybag = 1,
 				/obj/item/clothing/glasses/meson = 2,
 				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/color/yellow/fake = 1,
+				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
@@ -76,7 +84,8 @@
 				/obj/item/device/flashlight/pen = 1,
 				/obj/item/device/multitool = 2,
 				/obj/item/device/radio/off = 2,
-				/obj/item/device/t_scanner = 6,
+				/obj/item/device/t_scanner = 5,
+				/obj/item/weapon/airlock_painter = 1,
 				/obj/item/stack/cable_coil = 4,
 				/obj/item/stack/cable_coil{amount = 5} = 6,
 				/obj/item/stack/medical/bruise_pack = 1,
@@ -121,26 +130,18 @@
 				/obj/item/weapon/relic = 3,
 				/obj/item/weaponcrafting/reciever = 1,
 				/obj/item/clothing/head/cone = 2,
-				/obj/item/weapon/skub = 1,
 				/obj/item/weapon/grenade/smokebomb = 2,
 				/obj/item/device/geiger_counter = 3,
-				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1, //only for the best
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1,
 				/obj/item/device/radio/headset = 1,
 				/obj/item/device/assembly/infra = 1,
 				/obj/item/device/assembly/igniter = 2,
 				/obj/item/device/assembly/signaler = 2,
 				/obj/item/device/assembly/mousetrap = 2,
 				/obj/item/weapon/reagent_containers/syringe = 2,
-				/obj/item/clothing/gloves/color/orange = 1,
-				/obj/item/clothing/gloves/color/red = 1,
-				/obj/item/clothing/gloves/color/blue = 1,
-				/obj/item/clothing/gloves/color/purple = 1,
-				/obj/item/clothing/gloves/color/green = 1,
-				/obj/item/clothing/gloves/color/grey = 1,
-				/obj/item/clothing/gloves/color/light_brown = 1,
-				/obj/item/clothing/gloves/color/brown = 1,
-				/obj/item/clothing/shoes/laceup = 4,
-				/obj/item/weapon/reagent_containers/food/condiment/saltshaker = 10, //added for impartiality
+				/obj/item/clothing/gloves/color/random = 8,
+				/obj/item/clothing/shoes/laceup = 1,
+				/obj/item/weapon/storage/secure/briefcase = 3,
 				"" = 4
 				)
 

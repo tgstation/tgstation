@@ -6,6 +6,10 @@ var/global/BSACooldown = 0
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	admins << msg
 
+/proc/relay_msg_admins(msg)
+	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
+	admins << msg
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -694,6 +698,14 @@ var/global/BSACooldown = 0
 			S.laws.show_laws(usr)
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
+
+/datum/admins/proc/output_devil_info()
+	var/devil_number = 0
+	for(var/D in ticker.mode.devils)
+		devil_number++
+		usr << "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D)
+	if(!devil_number)
+		usr << "<b>No Devils located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())

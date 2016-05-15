@@ -20,6 +20,7 @@
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
@@ -54,6 +55,8 @@
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
+
+	dog_fashion = /datum/dog_fashion/head/nurse
 
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
@@ -99,6 +102,9 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 
+	dog_fashion = /datum/dog_fashion/head/rabbit
+
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
@@ -110,6 +116,8 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+
+	dog_fashion = /datum/dog_fashion/head/pirate
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
@@ -186,12 +194,15 @@
 	desc = "You can practically taste the fiesta."
 	flags_inv = HIDEHAIR
 
+	dog_fashion = /datum/dog_fashion/head/sombrero
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
 	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	dog_fashion = null
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -199,6 +210,7 @@
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	flags = NODROP
+	dog_fashion = null
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -221,6 +233,7 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	dog_fashion = /datum/dog_fashion/head/santa
 
 /obj/item/clothing/head/jester
 	name = "jester hat"
@@ -248,3 +261,36 @@
 	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
 	icon_state = "papersack_smile"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/*
+-!WARNING!-
+-POTENTIAL TRIGGER-INDUCING ITEMS AHEAD-
+-TREAD WITH CAUTION-
+*/
+
+/obj/item/clothing/head/helmet/stahlhelm
+	name = "stahlhelm"
+	desc = "A hard military helmet, seems dusty."
+	icon_state = "stalhelm"
+	item_state = "stalhelm"
+	armor = list(melee = 15, bullet = 10, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 30
+
+/obj/item/clothing/head/helmet/panzer
+	name = "Panzer Cap"
+	desc = "A fancy-looking military cap."
+	icon_state = "panzercap"
+	item_state = "panzercap"
+
+/obj/item/clothing/head/helmet/naziofficer
+	name = "Officer Cap"
+	desc = "A cap fit for a commanding officer."
+	icon_state = "officercap"
+	item_state = "officercap"
+	armor = list(melee = 20, bullet = 15, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 60
+
+/*
+-YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-
+-PLEASE RESUME NORMAL, POLITICALLY CORRECT ACTIVITY-
+*/

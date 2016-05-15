@@ -6,9 +6,20 @@
 	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
+	var/turf/T = get_turf(holder.my_atom)
+	var/inside_msg
+	if(ismob(holder.my_atom))
+		var/mob/M = holder.my_atom
+		inside_msg = " inside [key_name_admin(M)]"
+	var/lastkey = holder.my_atom.fingerprintslast
+	var/touch_msg = "N/A"
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)"
+	message_admins("Reagent explosion reaction occured at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occured at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), location, 0, 0)
+	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
 	e.start()
 	holder.clear_reagents()
 
@@ -66,9 +77,8 @@
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
-		..()
-	else
-		..()
+	..()
+
 
 /datum/chemical_reaction/blackpowder
 	name = "Black Powder"
@@ -133,6 +143,29 @@
 	for(var/turf/turf in range(1,T))
 		PoolOrNew(/obj/effect/hotspot, turf)
 	holder.chem_temp = 1000 // hot as shit
+
+
+/datum/chemical_reaction/reagent_explosion/methsplosion/
+	name = "Meth explosion"
+	id = "methboom1"
+	result = "methboom1"
+	result_amount = 1
+	required_temp = 380 //slightly above the meth mix time.
+	required_reagents = list("methamphetamine" = 1)
+	strengthdiv = 6
+	modifier = 1
+
+/datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(1,T))
+		PoolOrNew(/obj/effect/hotspot, turf)
+	holder.chem_temp = 1000 // hot as shit
+	..()
+
+/datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
+	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
+	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
+	result_amount = 4
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
@@ -349,7 +382,7 @@
 	name = "Napalm"
 	id = "napalm"
 	result = "napalm"
-	required_reagents = list("sugar" = 1, "welding_fuel" = 1, "ethanol" = 1 )
+	required_reagents = list("oil" = 1, "welding_fuel" = 1, "ethanol" = 1 )
 	result_amount = 3
 
 

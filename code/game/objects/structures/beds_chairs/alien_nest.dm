@@ -10,6 +10,7 @@
 	can_be_unanchored = 0
 	canSmoothWith = null
 	buildstacktype = null
+	flags = NODECONSTRUCT
 	var/image/nest_overlay
 
 /obj/structure/bed/nest/New()
@@ -21,7 +22,7 @@
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
-			if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+			if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 				unbuckle_mob(M)
 				add_fingerprint(user)
 				return
@@ -54,9 +55,9 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
 		return
 
-	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
-	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
 	if(buckled_mobs.len)
@@ -80,15 +81,22 @@
 		M.layer = initial(M.layer)
 		overlays -= nest_overlay
 
-/obj/structure/bed/nest/attackby(obj/item/weapon/W, mob/user, params)
-	var/aforce = W.force
-	health = max(0, health - aforce)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	visible_message("<span class='danger'>[user] hits [src] with [W]!</span>")
-	healthcheck()
+/obj/structure/bed/nest/attacked_by(obj/item/I, mob/user)
+	..()
+	take_damage(I.force, I.damtype)
 
-/obj/structure/bed/nest/proc/healthcheck()
+/obj/structure/bed/nest/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
 	if(health <=0)
 		density = 0
 		qdel(src)
-	return
+

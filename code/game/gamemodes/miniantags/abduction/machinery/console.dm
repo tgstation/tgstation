@@ -3,9 +3,6 @@
 /obj/machinery/abductor
 	var/team = 0
 
-/obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	return H.dna.species.id == "abductor"
-
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
 	if(H.dna.species.id == "abductor")
 		var/datum/species/abductor/S = H.dna.species
@@ -37,7 +34,7 @@
 /obj/machinery/abductor/console/attack_hand(mob/user)
 	if(..())
 		return
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
 		if(do_after(user,100, target = src))
 			TeleporterSend()
@@ -195,7 +192,7 @@
 		user << "<span class='notice'>You link the vest to the console.</span>"
 		vest = V
 	else
-		..()
+		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)

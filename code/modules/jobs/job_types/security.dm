@@ -99,7 +99,7 @@ Warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/warden
+	head = /obj/item/clothing/head/beret/sec/navywarden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
@@ -157,7 +157,8 @@ Detective
 	r_pocket = /obj/item/weapon/lighter
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
-		/obj/item/weapon/melee/classic_baton=1)
+		/obj/item/weapon/melee/classic_baton=1,\
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

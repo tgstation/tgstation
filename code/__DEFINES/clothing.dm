@@ -13,19 +13,7 @@
 #define SLOT_POCKET		2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
 #define SLOT_DENYPOCKET	4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
 
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1
-#define HIDESUITSTORAGE	2
-#define HIDEJUMPSUIT	4	//these first four are only used in exterior suits
-#define HIDESHOES		8
-#define HIDEMASK		16	//these last six are only used in masks and headgear.
-#define HIDEEARS		32	// (ears means headsets and such)
-#define HIDEEYES		64	// Whether eyes and glasses are hidden
-#define HIDEFACE		128	// Whether we appear as unknown.
-#define HIDEHAIR		256
-#define HIDEFACIALHAIR	512
-
-//slots
+//SLOTS
 #define slot_back			1
 #define slot_wear_mask		2
 #define slot_handcuffed		3
@@ -48,6 +36,49 @@
 #define slot_drone_storage	20
 
 #define slots_amt			20 // Keep this up to date!
+
+//I hate that this has to exist
+/proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
+	. = 0
+	switch(slotdefine)
+		if(slot_back)
+			. = SLOT_BACK
+		if(slot_wear_mask)
+			. = SLOT_MASK
+		if(slot_belt)
+			. = SLOT_BELT
+		if(slot_wear_id)
+			. = SLOT_ID
+		if(slot_ears)
+			. = SLOT_EARS
+		if(slot_glasses)
+			. = SLOT_EYES
+		if(slot_gloves)
+			. = SLOT_GLOVES
+		if(slot_head)
+			. = SLOT_HEAD
+		if(slot_shoes)
+			. = SLOT_FEET
+		if(slot_wear_suit)
+			. = SLOT_OCLOTHING
+		if(slot_w_uniform)
+			. = SLOT_ICLOTHING
+		if(slot_l_store, slot_r_store)
+			. = SLOT_POCKET
+
+
+//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+#define HIDEGLOVES		1
+#define HIDESUITSTORAGE	2
+#define HIDEJUMPSUIT	4	//these first four are only used in exterior suits
+#define HIDESHOES		8
+#define HIDEMASK		16	//these last six are only used in masks and headgear.
+#define HIDEEARS		32	// (ears means headsets and such)
+#define HIDEEYES		64	// Whether eyes and glasses are hidden
+#define HIDEFACE		128	// Whether we appear as unknown.
+#define HIDEHAIR		256
+#define HIDEFACIALHAIR	512
+
 
 //Cant seem to find a mob bitflags area other than the powers one
 

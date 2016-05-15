@@ -12,7 +12,7 @@
 			implants += W
 
 	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in internal_organs)
+		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
@@ -26,7 +26,7 @@
 	stunned = 1
 	icon = null
 	overlays.Cut()
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
@@ -53,6 +53,8 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
+	if(hellbound)
+		O.hellbound = hellbound
 	O.loc = loc
 	O.a_intent = "harm"
 
@@ -80,10 +82,10 @@
 
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in O.internal_organs)
+		for(var/obj/item/organ/I in O.internal_organs)
 			qdel(I)
 
-		for(var/obj/item/organ/internal/I in int_organs)
+		for(var/obj/item/organ/I in int_organs)
 			I.Insert(O, 1)
 
 	//transfer mind and delete old mob
@@ -119,7 +121,7 @@
 			implants += W
 
 	if (tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in internal_organs)
+		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
@@ -140,7 +142,7 @@
 	stunned = 1
 	icon = null
 	overlays.Cut()
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
@@ -170,6 +172,8 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
+	if(hellbound)
+		O.hellbound = hellbound
 
 	O.loc = loc
 
@@ -198,10 +202,10 @@
 		O.sec_hud_set_implants()
 
 	if(tr_flags & TR_KEEPORGANS)
-		for(var/obj/item/organ/internal/I in O.internal_organs)
+		for(var/obj/item/organ/I in O.internal_organs)
 			qdel(I)
 
-		for(var/obj/item/organ/internal/I in int_organs)
+		for(var/obj/item/organ/I in int_organs)
 			I.Insert(O, 1)
 
 	if(mind)
@@ -230,7 +234,7 @@
 /mob/living/carbon/human/AIize()
 	if (notransform)
 		return
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	return ..()
@@ -244,7 +248,7 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
 /mob/proc/AIize()
@@ -314,8 +318,8 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
-	for(var/t in organs)
+	invisibility = INVISIBILITY_MAXIMUM
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
@@ -365,8 +369,8 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
-	for(var/t in organs)
+	invisibility = INVISIBILITY_MAXIMUM
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
@@ -395,8 +399,8 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
-	for(var/t in organs)
+	invisibility = INVISIBILITY_MAXIMUM
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/living/simple_animal/slime/new_slime
@@ -454,8 +458,8 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
-	for(var/t in organs)	//this really should not be necessary
+	invisibility = INVISIBILITY_MAXIMUM
+	for(var/t in bodyparts)	//this really should not be necessary
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
@@ -484,9 +488,9 @@
 	notransform = 1
 	canmove = 0
 	icon = null
-	invisibility = 101
+	invisibility = INVISIBILITY_MAXIMUM
 
-	for(var/t in organs)
+	for(var/t in bodyparts)
 		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)

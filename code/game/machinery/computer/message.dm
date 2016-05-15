@@ -8,7 +8,7 @@
 	name = "message monitor console"
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
 	icon_screen = "comm_logs"
-	circuit = /obj/item/weapon/circuitboard/message_monitor
+	circuit = /obj/item/weapon/circuitboard/computer/message_monitor
 	//Server linked to.
 	var/obj/machinery/message_server/linkedServer = null
 	//Sparks effect - For emag
@@ -34,8 +34,8 @@
 	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		user << "<span class='warning'>It is too hot to mess with!</span>"
-		return
-	..()
+	else
+		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(!emagged)

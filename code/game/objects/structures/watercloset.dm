@@ -56,7 +56,23 @@
 			update_icon()
 			return
 
-	if(istype(I, /obj/item/weapon/reagent_containers))
+	else if(cistern)
+		if(user.a_intent != "harm")
+			if(I.w_class > 3)
+				user << "<span class='warning'>[I] does not fit!</span>"
+				return
+			if(w_items + I.w_class > 5)
+				user << "<span class='warning'>The cistern is full!</span>"
+				return
+			if(!user.drop_item())
+				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
+				return
+			I.loc = src
+			w_items += I.w_class
+			user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
+			return
+
+	else if(istype(I, /obj/item/weapon/reagent_containers))
 		if (!open)
 			return
 		var/obj/item/weapon/reagent_containers/RG = I
@@ -64,7 +80,7 @@
 		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
 		return
 
-	if(istype(I, /obj/item/weapon/grab))
+	else if(istype(I, /obj/item/weapon/grab))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/grab/G = I
 		if(!G.confirm())
@@ -95,20 +111,8 @@
 			else
 				user << "<span class='warning'>You need a tighter grip!</span>"
 
-	if(cistern)
-		if(I.w_class > 3)
-			user << "<span class='warning'>[I] does not fit!</span>"
-			return
-		if(w_items + I.w_class > 5)
-			user << "<span class='warning'>The cistern is full!</span>"
-			return
-		if(!user.drop_item())
-			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
-			return
-		I.loc = src
-		w_items += I.w_class
-		user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
-		return
+	else
+		return ..()
 
 
 
@@ -137,7 +141,8 @@
 				GM.adjustBruteLoss(8)
 			else
 				user << "<span class='warning'>You need a tighter grip!</span>"
-
+	else
+		return ..()
 
 /obj/machinery/shower
 	name = "shower"
@@ -254,6 +259,7 @@
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
+	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	if(iscarbon(L))
@@ -402,6 +408,7 @@
 			var/mob/living/carbon/human/H = user
 			H.lip_style = null //Washes off lipstick
 			H.lip_color = initial(H.lip_color)
+			H.wash_cream()
 			H.regenerate_icons()
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
@@ -418,7 +425,7 @@
 		if(RG.flags & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
-			return
+			return 1
 
 	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
@@ -440,21 +447,32 @@
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-	var/obj/item/I = O
-	if(!I || !istype(I))
-		return
-	if(I.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
+		user << "<span class='notice'>You place [src] under a stream of water...</span>"
+		user.drop_item()
+		M.loc = get_turf(src)
+		M.Expand()
 		return
 
-	user << "<span class='notice'>You start washing [I]...</span>"
-	busy = 1
-	if(!do_after(user, 40, target = src))
-		busy = 0
+	if(!istype(O))
 		return
-	busy = 0
-	O.clean_blood()
-	user.visible_message("<span class='notice'>[user] washes [I] using [src].</span>", \
-						"<span class='notice'>You wash [I] using [src].</span>")
+	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+		return
+
+	if(user.a_intent != "harm")
+		user << "<span class='notice'>You start washing [O]...</span>"
+		busy = 1
+		if(!do_after(user, 40, target = src))
+			busy = 0
+			return 1
+		busy = 0
+		O.clean_blood()
+		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
+							"<span class='notice'>You wash [O] using [src].</span>")
+		return 1
+	else
+		return ..()
 
 
 /obj/structure/sink/kitchen
@@ -473,5 +491,5 @@
 
 /obj/structure/sink/puddle/attackby(obj/item/O, mob/user, params)
 	icon_state = "puddle-splash"
-	..()
+	. = ..()
 	icon_state = "puddle"

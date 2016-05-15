@@ -177,6 +177,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
+/datum/design/modkit
+	name = "Modification Kit"
+	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
+	id = "modkit"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/modkit
+	category = list("Mining Designs")
+
 /datum/design/superaccelerator
 	name = "Super-Kinetic Accelerator"
 	desc = "An upgraded version of the proto-kinetic accelerator, with superior damage, speed and range."
@@ -445,6 +455,16 @@ datum/design/diagnostic_hud_night
 	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
+
+/datum/design/diskplantgene
+	name = "plant data disk"
+	desc = "A disk for storing plant genetic data."
+	id = "diskplantgene"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	build_path = /obj/item/weapon/disk/plantgene
+	category = list("Electronics")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

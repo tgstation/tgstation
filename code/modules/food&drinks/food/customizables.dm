@@ -300,6 +300,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	flags = OPENCONTAINER
+	materials = list(MAT_GLASS = 500)
 	w_class = 3
 
 /obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)

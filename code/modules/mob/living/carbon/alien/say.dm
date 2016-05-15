@@ -1,8 +1,3 @@
-/mob/living/carbon/alien/say(message)
-	. = ..()
-	if(.)
-		playsound(loc, "hiss", 25, 1, 1) //erp just isn't the same without sound feedback
-
 /mob/living/proc/alien_talk(message, shown_name = name)
 	log_say("[key_name(src)] : [message]")
 	message = trim(message)
@@ -21,6 +16,6 @@
 	..(message, shown_name)
 
 /mob/living/carbon/hivecheck()
-	var/obj/item/organ/internal/alien/hivenode/N = getorgan(/obj/item/organ/internal/alien/hivenode)
+	var/obj/item/organ/alien/hivenode/N = getorgan(/obj/item/organ/alien/hivenode)
 	if(N && !N.recent_queen_death) //Mob has alien hive node and is not under the dead queen special effect.
 		return N

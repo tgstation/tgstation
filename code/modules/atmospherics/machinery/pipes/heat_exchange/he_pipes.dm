@@ -7,6 +7,7 @@
 	color = "#404040"
 	buckle_lying = 1
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
+	burn_state = LAVA_PROOF
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/New()
 	..()
@@ -30,7 +31,9 @@
 
 	var/turf/T = loc
 	if(istype(T))
-		if(T.blocks_air)
+		if(istype(T, /turf/open/floor/plating/lava))
+			environment_temperature = 5000
+		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
 			var/datum/gas_mixture/environment = T.return_air()

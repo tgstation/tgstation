@@ -9,8 +9,8 @@
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 180
-	health = 180
+	maxHealth = 120
+	health = 120
 	speed = 2
 	harm_intent_damage = 8
 	melee_damage_lower = 20
@@ -33,7 +33,19 @@
 	layer = MOB_LAYER - 0.1
 	var/removingairlock = 0
 
-
+/mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN
+	desc = "This guy seems to have gotten lost on his way to the leather club."
+	
+/mob/living/simple_animal/hostile/zombie/darkholme/New()
+	..()
+	name = pick("Leatherman","Leatherhead")
+	
+mob/living/simple_animal/hostile/zombie/gymboss
+	name = "boss of this gym"
+	desc = "There seems to be something shiny embedded in his waist."
+	butcher_results = list(/obj/item/weapon/storage/belt/champion/wrestling = 1)
+	attacktext = "spanks"
+	
 
 /mob/living/simple_animal/hostile/zombie/AttackingTarget()
 	..()
@@ -55,11 +67,13 @@
 
 	if(istype(target, /obj/machinery/door/airlock))
 		if(!removingairlock)
-			src << "<span class='notice'>You start tearing apart the airlock...</span>"
-			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			var/obj/machinery/door/airlock/A = target
 			removingairlock = 1
-			if(do_after(src, 250, 0, A, 1))
+			src << "<span class='notice'>You start tearing apart the airlock...</span>"
+			playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			spawn(20)
+				playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+			if(do_after(src, 160, 0, A, 1))
 				playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 				var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
 				door.density = 0
@@ -83,8 +97,12 @@
 		qdel(src)
 		return
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
-	spawn(rand(600,900))
+	spawn(rand(300,400))
 		if(src)
+			for(var/mob/dead/observer/ghost in player_list)
+				if(src.real_name == ghost.real_name)
+					ghost.reenter_corpse()
+					break
 			visible_message("<span class='danger'>[src] staggers to their feet!</span>")
 			revive(full_heal = 1)
 
@@ -169,7 +187,7 @@
 	icon_living = "none"
 	icon_dead = "none"
 	desc = "You shouldn't be seeing this."
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	unsuitable_atmos_damage = 0
 	stat_attack = 2
 	gold_core_spawnable = 0

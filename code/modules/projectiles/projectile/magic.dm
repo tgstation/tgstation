@@ -54,7 +54,12 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
 			if(!target.ckey)
 				for(var/mob/dead/observer/ghost in player_list)
@@ -98,6 +103,7 @@
 		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
 		/obj/structure/mineral_door/transparent/diamond)
 
+
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
 	var/atom/T = target.loc
@@ -105,12 +111,20 @@
 		CreateDoor(target)
 	else if (isturf(T) && T.density)
 		CreateDoor(T)
+	else if(istype(target, /obj/machinery/door))
+		OpenDoor(target)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
-	new door_type(T)
+	var/obj/structure/mineral_door/D = new door_type(T)
 	T.ChangeTurf(/turf/open/floor/plating)
+	D.Open()
 
+/obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+	if(istype(D,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = D
+		A.locked = 0
+	D.open()
 
 /obj/item/projectile/magic/change
 	name = "bolt of change"
@@ -132,7 +146,7 @@
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()
-			M.invisibility = 101
+			M.invisibility = INVISIBILITY_ABSTRACT
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
@@ -183,17 +197,6 @@
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					new_mob.languages |= HUMAN
 
-					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
-					switch(alien_caste)
-						if("Hunter")
-							new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-						if("Sentinel")
-							new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-						if("Drone")
-							new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
-						else
-							new_mob = new /mob/living/carbon/alien/larva(M.loc)
-					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
@@ -267,7 +270,7 @@
 						H.real_name = H.dna.species.random_name(H.gender,1)
 					H.update_body()
 					H.update_hair()
-					H.update_mutcolor()
+					H.update_body_parts()
 					H.dna.update_dna_identity()
 				else
 					return

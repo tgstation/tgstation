@@ -174,6 +174,7 @@
 	name = "goliath meat"
 	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
 	list_reagents = list("nutriment" = 3, "toxin" = 5)
+	icon_state = "goliathmeat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
 	visible_message("\The [src] finishes cooking!")
@@ -213,7 +214,8 @@
 	name = "goliath steak"
 	desc = "A delicious, lava cooked steak."
 	burn_state = LAVA_PROOF
-
+	icon_state = "goliathsteak"
+	trash = null
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 

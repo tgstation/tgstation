@@ -40,7 +40,7 @@ EMOJIS
 ## These values get directly added to values and totals ingame.
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
-## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
+## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
 RUN_DELAY 1
 WALK_DELAY 4
 
@@ -186,7 +186,7 @@ ALLOW_RANDOM_EVENTS
 ## Set to 0 to make dangerous events avaliable from round start.
 EVENTS_MIN_TIME_MUL 1
 
-## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start. 
+## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
@@ -347,4 +347,9 @@ BOMBCAP 20
 #BOMBCAP 28
 
 
-
+## Lavaland "Budget"
+# Lavaland ruin spawning has an imaginary budget to spend on ruins, where
+# a less lootfilled or smaller or less round effecting ruin costs less to
+# spawn, while the converse is true. Alter this number to affect the amount
+# of ruins.
+LAVALAND_BUDGET 60

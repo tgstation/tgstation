@@ -401,36 +401,15 @@ var/list/gaslist_cache = null
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
-	//global so that we don't have to make them more than once
-	var/global/regex/R_gas_id
-	var/global/regex/R_gas_value
-	if(!R_gas_id)
-		R_gas_id = regex("(.+?)(?=\\=)") //matches all characters before equal sign
-	if(!R_gas_value)
-		R_gas_value = regex("(?<=\\=)(.*)") //matches all characters after equal sign
-
-	var/list/values = splittext(gas_string, ";")
-	var/list/gases = list()
-	//populate an associative list of gas -> moles by parsing the string
-	while(values.len)
-		var/value = values[1]
-		values.Cut(1,2)
-		R_gas_id.Find(value)
-		R_gas_value.Find(value)
-		gases[R_gas_id.group[1]] = text2num(R_gas_value.group[1])
-
-	//deal with the specific case of temperature
-	if("TEMP" in gases)
-		temperature = gases["TEMP"]
-		gases -= "TEMP"
-
-	var/list/cached_gases = src.gases
-	cached_gases &= gases
-	for(var/id in gases-cached_gases)
-		add_gas(id) //add_gases() causes a runtime due to the nature of arglist()
-	for(var/id in gases)
-		cached_gases[id][MOLES] = gases[id]
-
+	var/list/gases = src.gases
+	var/list/gas = params2list(gas_string)
+	if(gas["TEMP"])
+		temperature = text2num(gas["TEMP"])
+		gas -= "TEMP"
+	gases.Cut()
+	for(var/id in gas)
+		add_gas(id)
+		gases[id][MOLES] = text2num(gas[id])
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
@@ -512,7 +491,8 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
-	sharer_temperature = sharer_temperature || sharer.temperature_archived
+	if(sharer)
+		sharer_temperature = sharer.temperature_archived
 	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity_archived()
@@ -523,7 +503,7 @@ var/list/gaslist_cache = null
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
-			sharer_temperature = max(sharer.temperature + heat/sharer_heat_capacity, TCMB)
+			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
 			if(sharer)
 				sharer.temperature = sharer_temperature
 	return sharer_temperature

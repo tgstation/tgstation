@@ -15,7 +15,9 @@
 
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
-	var/initial_gas_mix = "o2=22;n2=82;TEMP=293.15" //approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
+	var/initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	//approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
+	// If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 
 /turf/open
 	//used for spacewind
@@ -190,6 +192,7 @@
 		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
 				remove = 0
+	HandleWet() // if the tile is wet, and cold, make ice. Or if it's wet, and warm, dry it off.
 
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
@@ -355,7 +358,7 @@
 				if(neighbor.archived_cycle < SSair.times_fired)
 					neighbor.archive()
 
-				neighbor.neighbor_conduct_with_src()
+				neighbor.neighbor_conduct_with_src(src)
 
 				neighbor.consider_superconductivity()
 

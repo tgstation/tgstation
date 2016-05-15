@@ -1,5 +1,7 @@
 /turf/closed/mineral/random/labormineral
-	mineralSpawnChanceList = list("Uranium" = 1, "Iron" = 100, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Plasma" = 1/*, "Adamantine" =5, "Cave" = 1 */) //Don't suffocate the prisoners with caves
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/iron = 100, /turf/closed/mineral/uranium = 1, /turf/closed/mineral/diamond = 1,
+		/turf/closed/mineral/gold = 1, /turf/closed/mineral/silver = 1, /turf/closed/mineral/plasma = 1)
 	icon_state = "rock_labor"
 
 /turf/closed/mineral/random/labormineral/New()

@@ -26,11 +26,12 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 40, one_per_turf = 1, on_floor = 1), \
+	null, \
+	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 25, one_per_turf = 1, on_floor = 1), \
@@ -42,6 +43,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("apc frame", /obj/item/wallframe/apc, 2), \
 	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/airalarm, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2), \
+	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2), \
 	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
@@ -79,6 +81,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
+	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
 )
 
 /obj/item/stack/sheet/plasteel
@@ -121,6 +124,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
+	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = 1, on_floor = 1),\
 	)
 
 /obj/item/stack/sheet/mineral/wood
@@ -143,13 +147,39 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 /*
  * Cloth
  */
+var/global/list/datum/stack_recipe/cloth_recipes = list ( \
+	new/datum/stack_recipe("grey jumpsuit", /obj/item/clothing/under/color/grey, 3), \
+	null, \
+	new/datum/stack_recipe("backpack", /obj/item/weapon/storage/backpack, 4), \
+	new/datum/stack_recipe("dufflebag", /obj/item/weapon/storage/backpack/dufflebag, 6), \
+	null, \
+	new/datum/stack_recipe("plant bag", /obj/item/weapon/storage/bag/plants, 4), \
+	new/datum/stack_recipe("book bag", /obj/item/weapon/storage/bag/books, 4), \
+	new/datum/stack_recipe("mining satchel", /obj/item/weapon/storage/bag/ore, 4), \
+	new/datum/stack_recipe("chemistry bag", /obj/item/weapon/storage/bag/chemistry, 4), \
+	new/datum/stack_recipe("bio bag", /obj/item/weapon/storage/bag/bio, 4), \
+	null, \
+	new/datum/stack_recipe("bandage", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
+	new/datum/stack_recipe("rag", /obj/item/weapon/reagent_containers/glass/rag, 1), \
+	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
+	new/datum/stack_recipe("bedsheet", /obj/item/weapon/bedsheet, 3), \
+	new/datum/stack_recipe("empty sandbag", /obj/item/weapon/emptysandbag, 4), \
+	)
+
 /obj/item/stack/sheet/cloth
 	name = "cloth"
-	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits."
+	desc = "Is it cotton? Linen? Denim? Burlap? Canvas? You can't tell."
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
 	burn_state = FLAMMABLE
+
+/obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
+	recipes = cloth_recipes
+	return ..()
+
+/obj/item/stack/sheet/cloth/ten
+	amount = 10
 
 /*
  * Cardboard
@@ -186,11 +216,12 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
  */
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
-	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 2, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 6, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 4, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 10, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 3, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 5, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 2, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 5, time = 40, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/runed_metal
@@ -200,6 +231,12 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon_state = "sheet-runed"
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
+
+/obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		return
+	return ..()
 
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
@@ -222,3 +259,19 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
 	origin_tech = "materials=8"
+
+	/*
+ * Bones
+ */
+/obj/item/stack/sheet/bone
+	name = "bones"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "bone"
+	singular_name = "bone"
+	desc = "Someone's been drinking their milk."
+	force = 7
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=2;bio=2"

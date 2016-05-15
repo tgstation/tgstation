@@ -78,18 +78,18 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user, params)
-	if(!istype(i))
+/obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/P = I
+		if(!user.unEquip(P))
+			return
+		P.loc = src
+		user << "<span class='notice'>You put [P] in [src].</span>"
+		papers.Add(P)
+		amount++
+		update_icon()
+	else
 		return ..()
-
-	if(!user.unEquip(i))
-		return
-	i.loc = src
-	user << "<span class='notice'>You put [i] in [src].</span>"
-	papers.Add(i)
-	amount++
-	update_icon()
-
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()

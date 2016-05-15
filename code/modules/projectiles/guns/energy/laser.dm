@@ -57,9 +57,11 @@
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
+///Laser Cannon
+
 /obj/item/weapon/gun/energy/lasercannon
-	name = "laser cannon"
-	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
+	name = "accelerator laser cannon"
+	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
 	item_state = "laser"
 	w_class = 4
@@ -67,9 +69,25 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=3;powerstorage=3"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3
+
+/obj/item/ammo_casing/energy/laser/accelerator
+	projectile_type = /obj/item/projectile/beam/laser/accelerator
+	select_name = "accelerator"
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+
+/obj/item/projectile/beam/laser/accelerator
+	name = "accelerator laser"
+	icon_state = "scatterlaser"
+	range = 255
+	damage = 6
+
+/obj/item/projectile/beam/laser/accelerator/Range()
+	..()
+	damage += 7
+	transform *= TransformUsingVariable(20 , 100, 1)
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"

@@ -25,7 +25,6 @@
 		///////////////
 	var/ambience_playing= null
 	var/played			= 0
-
 		////////////
 		//SECURITY//
 		////////////
@@ -50,4 +49,5 @@
 	//datum that controls the displaying and hiding of tooltips
 	var/datum/tooltip/tooltips
 
-
+	//Used for var edit flagging, also defined in datums (clients are not a child of datums for some reason)
+	var/var_edited = 0

@@ -64,6 +64,7 @@
 		return
 	if (!src || get_amount() <= 0)
 		user << browse(null, "window=stack")
+		return
 	user.set_machine(src) //for correct work of onclose
 	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
 	for(var/i=1;i<=recipes.len,i++)
@@ -243,7 +244,7 @@
 		merge(S)
 		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
 	else
-		..()
+		return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
 	src.blood_DNA = from.blood_DNA

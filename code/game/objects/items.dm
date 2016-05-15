@@ -80,18 +80,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
-	var/list/can_be_placed_into = list(
-		/obj/structure/table,
-		/obj/structure/rack,
-		/obj/structure/closet,
-		/obj/item/weapon/storage,
-		/obj/structure/safe,
-		/obj/machinery/disposal,
-		/obj/machinery/r_n_d/destructive_analyzer,
-		/obj/machinery/r_n_d/experimentor,
-		/obj/machinery/autolathe
-	)
-
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
@@ -119,8 +107,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			slot_drone_storage\
 		)
 
+	// Needs to be in /obj/item because corgis can wear a lot of
+	// non-clothing items
+	var/datum/dog_fashion/dog_fashion = null
+
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
-	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
 		return 0
 	else
 		return 1
@@ -141,7 +134,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		qdel(X)
 	return ..()
 
-/obj/item/blob_act()
+/obj/item/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/item/ex_act(severity, target)
@@ -254,8 +247,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)
 				H.updatehealth()
 				return
@@ -353,7 +346,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 
-	return
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -435,7 +427,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
+	var/obj/item/bodypart/affecting = M.get_bodypart("head")
 	if(ishuman(M))
+		if(!affecting) //no head!
+			return
 		is_human_victim = 1
 		var/mob/living/carbon/human/H = M
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
@@ -475,7 +470,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
 			U.update_damage_overlays(0)
 
@@ -580,3 +574,23 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/proc/is_sharp()
 	return sharpness
+
+/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
+	if(affecting.can_dismember(src))
+		if((sharpness || damtype == BURN) && w_class >= 3)
+			. = force*(w_class-1)
+
+/obj/item/proc/get_dismember_sound()
+	if(damtype == BURN)
+		. = 'sound/weapons/sear.ogg'
+	else
+		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+
+/obj/item/proc/open_flame()
+	var/turf/location = loc
+	if(ismob(location))
+		var/mob/M = location
+		if(M.l_hand == src || M.r_hand == src)
+			location = get_turf(M)
+	if(isturf(location))
+		location.hotspot_expose(700, 5)

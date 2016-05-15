@@ -136,6 +136,11 @@
 		. = L[L.len]
 		L.len--
 
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
+
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
@@ -344,3 +349,13 @@
 	while(L.Remove(null))
 		continue
 	return L
+
+//Copies a list, and all lists inside it recusively
+//Does not copy any other reference type
+/proc/deepCopyList(list/l)
+	if(!islist(l))
+		return l
+	. = l.Copy()
+	for(var/i = 1 to l.len)
+		if(islist(.[i]))
+			.[i] = .(.[i])

@@ -13,6 +13,7 @@
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/pass_flags = 0
+	glide_size = 8
 	appearance_flags = TILE_BOUND
 
 
@@ -78,7 +79,7 @@
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	if (pulledby)
 		if (pulledby.pulling == src)
 			pulledby.pulling = null

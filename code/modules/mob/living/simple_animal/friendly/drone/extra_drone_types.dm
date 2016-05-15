@@ -4,6 +4,7 @@
 //Drones with custom laws
 //Drones with custom shells
 //Drones with overriden procs
+//Drones with camogear for hat related memes
 
 
 //More types of drones
@@ -46,6 +47,24 @@
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
 	W.implant(src)
 
+/mob/living/simple_animal/drone/snowflake
+	default_hatmask = /obj/item/clothing/head/chameleon/drone
+
+/mob/living/simple_animal/drone/snowflake/New()
+	..()
+	desc += " This drone appears to have a complex holoprojector built on its 'head'."
+
+/mob/living/simple_animal/drone/snowflake/bardrone
+	name = "Bardrone"
+	desc = "A barkeeping drone, an indestructible robot built to tend bars."
+	seeStatic = FALSE
+	laws = "1. Serve drinks.\n\
+		2. Talk to patrons.\n\
+		3. Don't get messed up in their affairs."
+	languages = ALL
+	status_flags = GODMODE // Please don't punch the barkeeper
+	unique_name = FALSE // disables the (123) number suffix
+
 /obj/item/drone_shell/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
@@ -55,3 +74,9 @@
 /obj/item/drone_shell/syndrone/badass
 	name = "badass syndrone shell"
 	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+
+/obj/item/drone_shell/snowflake
+	name = "snowflake drone shell"
+	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
+	drone_type = /mob/living/simple_animal/drone/snowflake
+

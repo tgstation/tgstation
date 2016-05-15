@@ -56,6 +56,7 @@
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
+	mutant_organs = list(/obj/item/organ/tongue/lizard)
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -73,14 +74,6 @@
 		randname += " [lastname]"
 
 	return randname
-
-var/regex/lizard_hiss = new("s+", "g")
-var/regex/lizard_hiSS = new("S+", "g")
-/datum/species/lizard/handle_speech(message)
-	if(copytext(message, 1, 2) != "*")
-		message = lizard_hiss.Replace(message, "sss")
-		message = lizard_hiSS.Replace(message, "SSS")
-	return message
 
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
@@ -189,6 +182,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
+	has_dismemberment = 0
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
@@ -326,7 +320,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
+	specflags = list(NOBREATH,RESISTHEAT,RESISTCOLD,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
@@ -337,6 +331,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	nojumpsuit = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	has_dismemberment = 0
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -383,6 +378,7 @@ var/regex/lizard_hiSS = new("S+", "g")
 	name = "Human?"
 	id = "fly"
 	say_mod = "buzzes"
+	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -391,8 +387,6 @@ var/regex/lizard_hiSS = new("S+", "g")
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
-/datum/species/fly/handle_speech(message)
-	return replacetext(message, "z", stutter("zz"))
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable))
@@ -418,18 +412,8 @@ var/regex/lizard_hiSS = new("S+", "g")
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	var/list/myspan = null
-
-
-/datum/species/skeleton/New()
-	..()
-	myspan = list(pick(SPAN_SANS,SPAN_PAPYRUS)) //pick a span and stick with it for the round
-
-
-/datum/species/skeleton/get_spans()
-	return myspan
-
+	mutant_organs = list(/obj/item/organ/tongue/bone)
+	specflags = list(NOBREATH,RESISTHEAT,RESISTCOLD,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 
 /*
  ZOMBIES
@@ -443,23 +427,8 @@ var/regex/lizard_hiSS = new("S+", "g")
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
-
-/datum/species/zombie/handle_speech(message)
-	var/list/message_list = splittext(message, " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
-
-		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
-			message_list[insertpos] = inserttext + "..."
-
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
-
-	return jointext(message_list, " ")
+	specflags = list(NOBREATH,RESISTHEAT,RESISTCOLD,NOBLOOD,RADIMMUNE)
+	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/cosmetic_zombie
 	name = "Human"
@@ -474,26 +443,11 @@ var/regex/lizard_hiSS = new("S+", "g")
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
+	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
+	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
-
-/datum/species/abductor/handle_speech(message)
-	//Hacks
-	var/mob/living/carbon/human/user = usr
-	var/rendered = "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.dna.species.id != "abductor")
-			continue
-		else
-			var/datum/species/abductor/target_spec = H.dna.species
-			if(target_spec.team == team)
-				H << rendered
-	for(var/mob/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
-	return ""
-
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -513,20 +467,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
-	var/skin = 0
-
-/datum/species/plasmaman/skin
-	name = "Skinbone"
-	skin = 1
-	roundstart = 0
-
-/datum/species/plasmaman/update_base_icon_state(mob/living/carbon/human/H)
-	var/base = ..()
-	if(base == id && !skin)
-		base = "[base]_m"
-	else
-		base = "skinbone_m"
-	return base
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -550,6 +490,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	H.equipOutfit(O, visualsOnly)
+	H.internal = H.r_hand
+	H.update_internals_hud_icon(1)
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
@@ -584,7 +526,7 @@ var/global/list/synth_flesh_disguises = list()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/image/damaged_synth_flesh = null //an image to display when we're below disguise_fail_health
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
-
+	has_dismemberment = 0
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -620,6 +562,7 @@ var/global/list/synth_flesh_disguises = list()
 		miss_sound = S.miss_sound
 		meat = S.meat
 		mutant_bodyparts = S.mutant_bodyparts.Copy()
+		mutant_organs = S.mutant_organs.Copy()
 		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
@@ -702,7 +645,10 @@ var/global/list/synth_flesh_disguises = list()
 	H.updatehealth()
 	if(H.health > disguise_fail_health)
 		if(fake_species)
-			return fake_species.update_base_icon_state(H)
+			if(fake_species.has_dismemberment)
+				return fake_species.handle_body(H)
+			else
+				return fake_species.update_base_icon_state(H)
 		else
 			return ..()
 	else
@@ -711,7 +657,7 @@ var/global/list/synth_flesh_disguises = list()
 /datum/species/synth/update_color(mob/living/carbon/human/H, forced_colour)
 	H.updatehealth()
 	if(H.health > disguise_fail_health)
-		if(fake_species)
+		if(fake_species && fake_species.has_dismemberment)
 			fake_species.update_color(H, forced_colour)
 
 
@@ -778,4 +724,4 @@ SYNDICATE BLACK OPS
 	use_skintones = 0
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
 	sexes = 0
-
+	has_dismemberment = 0

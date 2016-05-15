@@ -23,9 +23,18 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-
+	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
+	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/Destroy()
 	..()
@@ -36,12 +45,15 @@ Sorry Giacom. Please don't be mad :(
 			D.client.images.Remove(I)
 			qdel(I)
 	staticOverlays.len = 0
-
+	remove_from_all_data_huds()
 	return QDEL_HINT_HARDDEL_NOW
 
 
+/mob/living/proc/OpenCraftingMenu()
+	return
+
 /mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter"))
+	staticOverlays.Add(list("static", "blank", "letter", "animal"))
 	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
 	staticOverlay.override = 1
 	staticOverlays["static"] = staticOverlay
@@ -53,6 +65,10 @@ Sorry Giacom. Please don't be mad :(
 	staticOverlay = getLetterImage(src)
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
+
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
 
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
@@ -206,7 +222,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
-
+	med_hud_set_health()
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -422,20 +438,8 @@ Sorry Giacom. Please don't be mad :(
 	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/obj/item/organ/limb/def_zone = ran_zone(t)
+	var/def_zone = ran_zone(t)
 	return def_zone
-
-//damage/heal the mob ears and adjust the deaf amount
-/mob/living/adjustEarDamage(damage, deaf)
-	ear_damage = max(0, ear_damage + damage)
-	ear_deaf = max(0, ear_deaf + deaf)
-
-//pass a negative argument to skip one of the variable
-/mob/living/setEarDamage(damage, deaf)
-	if(damage >= 0)
-		ear_damage = damage
-	if(deaf >= 0)
-		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
@@ -451,14 +455,14 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_health)
 		updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(-brute, updating_health)
 	adjustFireLoss(-burn, updating_health)
 	if(updating_health)
 		updatehealth()
 
-// damage MANY external organs, in random order
+// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute, updating_health)
 	adjustFireLoss(burn, updating_health)
@@ -495,14 +499,16 @@ Sorry Giacom. Please don't be mad :(
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
-	disabilities = 0
 	set_blindness(0)
 	set_blurriness(0)
 	set_eye_damage(0)
+	cure_nearsighted()
+	cure_blind()
+	disabilities = 0
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
-	heal_overall_damage(1000, 1000)
+	heal_overall_damage(100000, 100000)
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()
@@ -607,7 +613,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/movement_delay()
 	. = ..()
-	if(isturf(loc))
+	if(isturf(loc, /turf/open))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -673,12 +679,12 @@ Sorry Giacom. Please don't be mad :(
 				qdel(G)
 			else
 				if(G.state == GRAB_AGGRESSIVE)
-					if(prob(75))
+					if(prob(25))
 						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				else
 					if(G.state == GRAB_NECK)
-						if(prob(50))
+						if(prob(5))
 							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
 							qdel(G)
 		if(resisting)
@@ -993,173 +999,28 @@ Sorry Giacom. Please don't be mad :(
 /mob/proc/update_sight()
 	return
 
-/mob/proc/blind_eyes(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = max(eye_blind, amount)
-		if(!old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+/mob/living/proc/owns_soul()
+	if(mind)
+		return mind.soulOwner == mind
+	return 1
 
-/mob/proc/adjust_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind += amount
-		if(!old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
-			blind_minimum = 1
-		eye_blind = max(eye_blind+amount, blind_minimum)
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+/mob/living/proc/return_soul()
+	if(mind)
+		mind.soulOwner = mind
 
-/mob/proc/set_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = amount
-		if(client && !old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
-			blind_minimum = 1
-		eye_blind = blind_minimum
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+/mob/living/proc/has_bane(banetype)
+	if(mind)
+		if(mind.devilinfo)
+			return mind.devilinfo.bane == banetype
+	return 0
 
-/mob/proc/blur_eyes(amount)
-	if(amount>0)
-		var/old_eye_blurry = eye_blurry
-		eye_blurry = max(amount, eye_blurry)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	if(mind && mind.devilinfo)
+		return check_devil_bane_multiplier(weapon, attacker)
+	return 1
 
-/mob/proc/adjust_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(eye_blurry+amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
-
-/mob/proc/set_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
-
-
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/living/carbon/damage_eyes(amount)
-	if(amount>0)
-		eye_damage = amount
-		if(eye_damage > 20)
-			if(eye_damage > 30)
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-			else
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-
-
-/mob/proc/set_eye_damage(amount)
-	return
-
-/mob/living/carbon/set_eye_damage(amount)
-	eye_damage = max(amount,0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/living/carbon/adjust_eye_damage(amount)
-	eye_damage = max(eye_damage+amount, 0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-/mob/proc/adjust_drugginess(amount)
-	return
-
-/mob/living/carbon/adjust_drugginess(amount)
-	var/old_druggy = druggy
-	if(amount>0)
-		druggy += amount
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		druggy = max(eye_blurry+amount, 0)
-		if(!druggy)
-			clear_fullscreen("high")
-			clear_alert("high")
-
-/mob/proc/set_drugginess(amount)
-	return
-
-/mob/living/carbon/set_drugginess(amount)
-	var/old_druggy = druggy
-	druggy = amount
-	if(amount>0)
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		clear_fullscreen("high")
-		clear_alert("high")
-
-/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
-	return
-
-/mob/living/carbon/cure_blind()
-	if(disabilities & BLIND)
-		disabilities &= ~BLIND
-		adjust_blindness(-1)
-		return 1
-
-/mob/proc/cure_nearsighted()
-	return
-
-/mob/living/carbon/cure_nearsighted()
-	if(disabilities & NEARSIGHT)
-		disabilities &= ~NEARSIGHT
-		clear_fullscreen("nearsighted")
-		return 1
-
-/mob/proc/become_nearsighted()
-	return
-
-/mob/living/carbon/become_nearsighted()
-	if(!(disabilities & NEARSIGHT))
-		disabilities |= NEARSIGHT
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		return 1
-
-/mob/proc/become_blind()
-	return
-
-/mob/living/carbon/become_blind()
-	if(!(disabilities & BLIND))
-		disabilities |= BLIND
-		blind_eyes(1)
-		return 1
+/mob/living/proc/check_acedia()
+	if(src.mind && src.mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
+			return 1
+	return 0
