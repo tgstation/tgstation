@@ -35,14 +35,14 @@ This file's folder contains:
 // PROCS //
 ///////////
 
-/proc/is_clockwork_cultist(mob/M)
+/proc/is_servant_of_ratvar(mob/M)
 	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
 
 /proc/is_eligible_servant(mob/M)
 	return M && istype(M) && M.mind && !iscultist(M) && !isloyal(M) && (ishuman(M) || issilicon(M))
 
-/proc/add_clockwork_cultist(mob/M, silent = FALSE)
-	if(!M || !istype(M) || !M.mind || !ticker || !ticker.mode || is_clockwork_cultist(M))
+/proc/add_servant_of_ratvar(mob/M, silent = FALSE)
+	if(!M || !istype(M) || !M.mind || !ticker || !ticker.mode || is_servant_of_ratvar(M))
 		return 0
 	if(iscarbon(M))
 		M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar \
@@ -61,6 +61,7 @@ This file's folder contains:
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 		whim without hesitation.</span>")
 	ticker.mode.servants_of_ratvar += M.mind
+	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
 	all_clockwork_mobs += M
 	if(issilicon(M))
@@ -78,12 +79,13 @@ This file's folder contains:
 		C.present_tasks(M) //Memorize the objectives
 	return 1
 
-/proc/remove_clockwork_cultist(mob/M)
-	if(!is_clockwork_cultist(M)) //In this way, is_clockwork_cultist() checks the existence of ticker and minds
+/proc/remove_servant_of_ratvar(mob/M)
+	if(!is_servant_of_ratvar(M)) //In this way, is_servant_of_ratvar() checks the existence of ticker and minds
 		return 0
 	M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
 	"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
 	ticker.mode.servants_of_ratvar -= M.mind
+	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
@@ -93,10 +95,10 @@ This file's folder contains:
 		if(isrobot(S))
 			var/mob/living/silicon/robot/R = S
 			R.emagged = initial(R.emagged)
+			R << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 		S.laws = initial(S.laws)
 		S.update_icons()
 		S.show_laws()
-		S << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	return 1
 
 /proc/send_hierophant_message(mob/user, message)
@@ -104,7 +106,7 @@ This file's folder contains:
 		return 0
 	var/parsed_message = "<span class='heavy_brass'>Servant [user.name == user.real_name ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='brass'>\"[message]\"</span>"
 	for(var/mob/M in mob_list)
-		if(is_clockwork_cultist(M) || isobserver(M))
+		if(is_servant_of_ratvar(M) || isobserver(M))
 			M << parsed_message
 	return 1
 
@@ -124,9 +126,10 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 	name = "clockwork cult"
 	config_tag = "clockwork cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 1 //30
-	required_enemies = 1 //2
+	required_players = 30
+	required_enemies = 2
 	recommended_enemies = 4
+	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 
 /datum/game_mode/clockwork_cult/announce()
@@ -171,6 +174,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 	if(silicons_possible)
 		possible_objectives += "silicons"
 	clockwork_objective = pick(possible_objectives)
+	clockwork_objective = "gateway" //TEMPORARY, to be removed before merge
 	switch(clockwork_objective)
 		if("escape")
 			required_escapees = max(1, num_players() / 3) //33% of the player count must be cultists
@@ -190,7 +194,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 	M << greeting_text
 	return 1
 
-/datum/game_mode/clockwork_cult/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
+/datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
 	if(!L || !istype(L))
 		return 0
 	var/slot = "At your feet"
@@ -201,7 +205,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 			new/obj/item/clockwork/slab/starter(B)
 			slot = "In your [B.name]"
 	if(slot == "At your feet")
-		new/obj/item/clockwork/slab(get_turf(L))
+		new/obj/item/clockwork/slab/starter(get_turf(L))
 	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by reciting Hierophant in the Drivers section of the slab's \
 	Recital."
@@ -227,10 +231,10 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 			return 0
 		if("silicons")
 			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
-				if(!is_clockwork_cultist(S))
+				if(!is_servant_of_ratvar(S))
 					return 0
 			for(var/mob/living/silicon/ai/A in mob_list)
-				if(!is_clockwork_cultist(A))
+				if(!is_servant_of_ratvar(A))
 					return 0
 			return 1
 		if("gateway")
@@ -254,3 +258,13 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 	for(var/datum/mind/M in servants_of_ratvar)
 		text += printplayer(M)
 	world << text
+
+/datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
+	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_CLOCKWORK]
+	A.join_hud(M.current)
+	set_antag_hud(M.current, "clockwork")
+
+/datum/game_mode/proc/update_servant_icons_removed(datum/mind/M)
+	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_CLOCKWORK]
+	A.leave_hud(M.current)
+	set_antag_hud(M.current, null)

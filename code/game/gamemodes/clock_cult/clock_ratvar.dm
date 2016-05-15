@@ -21,14 +21,14 @@
 	..()
 	SSobj.processing += src
 	for(var/mob/M in mob_list)
-		if(is_clockwork_cultist(M) || isobserver(M))
+		if(is_servant_of_ratvar(M) || isobserver(M))
 			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [get_area(src)]!</b></span>"
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	SSobj.processing -= src
 	if(!purpose_fulfilled)
 		for(var/mob/M in mob_list)
-			if(is_clockwork_cultist(M) || isobserver(M))
+			if(is_servant_of_ratvar(M) || isobserver(M))
 				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [get_area(src)]!</b></span>"
 				world << sound(null, 0, channel = 8)
 	..()
@@ -65,7 +65,7 @@
 
 /obj/structure/clockwork/massive/celestial_gateway/examine(mob/user)
 	..()
-	if(is_clockwork_cultist(user))
+	if(is_servant_of_ratvar(user))
 		var/arrival_text = "IMMINENT"
 		if(300 - progress_in_seconds > 0)
 			arrival_text = "[max(300 - progress_in_seconds, 0)]s"
@@ -101,8 +101,10 @@
 	..()
 	SSobj.processing += src
 	flick("ratvar_spawn_anim", src)
-	world << "<span class='heavy_brass'><font size=7>\"FREE AT LAST!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=15>\"I AM FREE!\"</font></span>"
 	ratvar_awakens = TRUE
+	spawn(50)
+		SSshuttle.emergency.request(null, 0.3)
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
 	SSobj.processing -= src
@@ -119,14 +121,14 @@
 	if(!prey)
 		var/list/meals = list()
 		for(var/mob/living/L in living_mob_list)
-			if(L.z == z && !is_clockwork_cultist(L) && L.mind)
+			if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
 				meals += L
 		if(meals.len)
 			prey = pick(meals)
 			prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
 			<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
 	else
-		if(prob(10) || prey.stat == DEAD || is_clockwork_cultist(prey) || prey.z != z)
+		if(prob(10) || prey.stat == DEAD || is_servant_of_ratvar(prey) || prey.z != z)
 			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
 			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
 			prey = null
@@ -141,7 +143,7 @@
 		return 0
 	clashing = TRUE
 	world << "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>"
-	world << "<span class='cult'><font size=5>\"<b>Ratvar?! Sas'so forbica! Faras desdae!</b>\"</font></span>"
+	world << "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>"
 	for(var/obj/singularity/narsie/N in range(7, src))
 		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
 		N.clashing = TRUE
@@ -182,7 +184,7 @@
 			break
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "ROT FOR CENTURES AS I HAVE!")]\"</font></span>"
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>"
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'

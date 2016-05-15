@@ -19,7 +19,7 @@
 	return ..()
 
 /obj/item/clockwork/examine(mob/user)
-	if((is_clockwork_cultist(user) || isobserver(user)) && clockwork_desc)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
@@ -43,8 +43,8 @@
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
-	if(!is_clockwork_cultist(user))
-		add_clockwork_cultist(user)
+	if(!is_servant_of_ratvar(user))
+		add_servant_of_ratvar(user)
 
 /obj/item/clockwork/slab/New()
 	..()
@@ -73,7 +73,7 @@
 	return 1
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component) && is_clockwork_cultist(user))
+	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
@@ -94,7 +94,7 @@
 		user.apply_damage(5, BURN, "l_arm")
 		user.apply_damage(5, BURN, "r_arm")
 		return 0
-	if(!is_clockwork_cultist(user))
+	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
 		user.confused = max(0, user.confused + 3)
 		return 0
@@ -104,7 +104,7 @@
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
-	if(!is_clockwork_cultist(user))
+	if(!is_servant_of_ratvar(user))
 		return 0
 	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Repository")
 	if(!action || !user.canUseTopic(src))
@@ -125,15 +125,15 @@
 	var/servants = 0
 	var/unconverted_ai_exists = FALSE
 	for(var/mob/living/M in living_mob_list)
-		if(is_clockwork_cultist(M))
+		if(is_servant_of_ratvar(M))
 			servants++
 	for(var/mob/living/silicon/ai/ai in living_mob_list)
-		if(!is_clockwork_cultist(ai) && ai.client)
+		if(!is_servant_of_ratvar(ai) && ai.client)
 			unconverted_ai_exists = TRUE
 	var/list/tiers_of_scripture = list("Drivers")
 	tiers_of_scripture += "Scripts[ratvar_awakens || (servants >= 5 && clockwork_caches >= 1) || no_cost ? "" : " \[LOCKED\]"]"
 	tiers_of_scripture += "Applications[ratvar_awakens || (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Revenant[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100) || no_cost ? "" : "\[LOCKED\]"]"
+	tiers_of_scripture += "Revenant[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100) || no_cost ? "" : " \[LOCKED\]"]"
 	tiers_of_scripture += "Judgement[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100 && !unconverted_ai_exists) || no_cost ? "" : " \[LOCKED\]"]"
 	var/scripture_tier = input(user, "Choose a category of scripture to recite.", "[src]") as null|anything in tiers_of_scripture
 	if(!scripture_tier || !user.canUseTopic(src))
@@ -178,7 +178,7 @@
 /obj/item/clockwork/slab/proc/show_stats(mob/living/user) //A bit barebones, but there really isn't any more needed
 	var/servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_clockwork_cultist(L))
+		if(is_servant_of_ratvar(L))
 			servants++
 	user << "<b>State of the Enlightened</b>"
 	user << "<i>Total servants: </i>[servants]"
@@ -369,7 +369,7 @@
 		if(flame)
 			qdel(flame)
 		return 0
-	if(!is_clockwork_cultist(user))
+	if(!is_servant_of_ratvar(user))
 		return 0
 	update_status(TRUE)
 
@@ -380,7 +380,7 @@
 		return 1
 
 /obj/item/clothing/glasses/judicial_visor/AltClick(mob/living/user)
-	if(is_clockwork_cultist(user) && iscarbon(user) && active)
+	if(is_servant_of_ratvar(user) && iscarbon(user) && active)
 		if(recharging)
 			user << "<span class='warning'>[src] is still gathering power!</span>"
 			return 0
@@ -401,7 +401,7 @@
 	if(!isliving(loc))
 		return 0
 	var/mob/living/L = loc
-	if(!is_clockwork_cultist(L) || L.stat)
+	if(!is_servant_of_ratvar(L) || L.stat)
 		return 0
 	active = change_to
 	icon_state = "judicial_visor_[active]"
@@ -487,11 +487,11 @@
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
-	if((is_clockwork_cultist(user) || isobserver(user)) && uses_alloy)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && uses_alloy)
 		user << "It has [stored_alloy]/[max_alloy] units of liquified replicant alloy stored."
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_clockwork_cultist(user) && uses_alloy)
+	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
 		if(stored_alloy >= max_alloy)
 			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
 			return 0
@@ -645,7 +645,7 @@
 	return ..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
-	if(!is_clockwork_cultist(user))
+	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>You fiddle around with [src], to no avail.</span>"
 		return 0
 	..()
@@ -686,7 +686,7 @@
 		return 0
 	var/servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_clockwork_cultist(L))
+		if(is_servant_of_ratvar(L))
 			servants++
 	if(servants / 5 < clockwork_daemons)
 		return 0
@@ -712,14 +712,14 @@
 	clockwork_desc = null
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
-	var/list/clockwork_cultist_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
+	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
 
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
 	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
 		user << "<span class='heavy_brass'>[cultist_message]</span>"
-	if(is_clockwork_cultist(user) && prob(15))
-		user << "<span class='heavy_brass'>[pick(clockwork_cultist_messages)]</span>"
+	if(is_servant_of_ratvar(user) && prob(15))
+		user << "<span class='heavy_brass'>[pick(servant_of_ratvar_messages)]</span>"
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
@@ -727,7 +727,7 @@
 	icon_state = "belligerent_eye"
 	component_id = "belligerent_eye"
 	cultist_message = "The eye gives you an intensely hateful glare."
-	clockwork_cultist_messages = list("\"...\"", "For a moment, your mind is flooded with extremely violent thoughts.")
+	servant_of_ratvar_messages = list("\"...\"", "For a moment, your mind is flooded with extremely violent thoughts.")
 
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"
@@ -735,7 +735,7 @@
 	icon_state = "vanguard_cogwheel"
 	component_id = "vanguard_cogwheel"
 	cultist_message = "\"Pray to your god that we never meet.\""
-	clockwork_cultist_messages = list("\"Be safe, child.\"", "You feel unexplainably comforted.", "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"")
+	servant_of_ratvar_messages = list("\"Be safe, child.\"", "You feel unexplainably comforted.", "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"")
 
 /obj/item/clockwork/component/guvax_capacitor
 	name = "guvax capacitor"
@@ -743,7 +743,7 @@
 	icon_state = "guvax_capacitor"
 	component_id = "guvax_capacitor"
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
-	clockwork_cultist_messages = list("\"Disgusting.\"", "\"Well, aren't you an inquisitive fellow?\"", "A foul presence pervades your mind, then vanishes.", "\"The fact that Ratvar has to depend on simpletons like you is appalling.\"")
+	servant_of_ratvar_messages = list("\"Disgusting.\"", "\"Well, aren't you an inquisitive fellow?\"", "A foul presence pervades your mind, then vanishes.", "\"The fact that Ratvar has to depend on simpletons like you is appalling.\"")
 
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
@@ -751,7 +751,7 @@
 	icon_state = "replicant_alloy"
 	component_id = "replicant_alloy"
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
-	clockwork_cultist_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", "A detailed image of Ratvar appears in the alloy for a moment.")
+	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", "A detailed image of Ratvar appears in the alloy for a moment.")
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
@@ -759,7 +759,7 @@
 	clockwork_desc = "The sad remains of an anima fragment. Might still be serviceable as a substitute for replicant alloy."
 	icon_state = "smashed_anima_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
-	clockwork_cultist_messages = list("\"...still fight...\"", "\"...where am I...?\"", "\"...put me... slab...\"")
+	servant_of_ratvar_messages = list("\"...still fight...\"", "\"...where am I...?\"", "\"...put me... slab...\"")
 	w_class = 3
 
 /obj/item/clockwork/component/replicant_alloy/fallen_armor
@@ -768,7 +768,7 @@
 	clockwork_desc = "The armor from a former clockwork marauder. Might still be serviceable as a substitute for replicant alloy."
 	icon_state = "fallen_armor"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
-	clockwork_cultist_messages = list("A piece of armor hovers away from the others for a moment.", "Red flame appears in the cuirass before sputtering out.")
+	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment.", "Red flame appears in the cuirass before sputtering out.")
 	w_class = 3
 
 /obj/item/clockwork/component/hierophant_ansible
@@ -777,7 +777,7 @@
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb xvyy lbh.\""
-	clockwork_cultist_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"")
+	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"")
 
 //////////////////////////
 // CLOCKWORK STRUCTURES //
@@ -807,7 +807,7 @@
 	..()
 
 /obj/structure/clockwork/examine(mob/user)
-	if((is_clockwork_cultist(user) || isobserver(user)) && clockwork_desc)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
@@ -829,7 +829,7 @@
 	return ..()
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
-	if(!is_clockwork_cultist(user))
+	if(!is_servant_of_ratvar(user))
 		..()
 		return 0
 	if(istype(I, /obj/item/clockwork/component))
@@ -881,7 +881,7 @@
 	..()
 
 /obj/structure/clockwork/cache/attack_hand(mob/user)
-	if(!is_clockwork_cultist(user))
+	if(!is_servant_of_ratvar(user))
 		return 0
 	var/list/possible_components = list()
 	if(stored_components["belligerent_eye"])
@@ -904,14 +904,19 @@
 	switch(component_to_withdraw)
 		if("Belligerent Eye")
 			the_component = new/obj/item/clockwork/component/belligerent_eye(get_turf(src))
+			stored_components["belligerent_eye"]--
 		if("Vanguard Cogwheel")
 			the_component = new/obj/item/clockwork/component/vanguard_cogwheel(get_turf(src))
+			stored_components["vanguard_cogwheel"]--
 		if("Guvax Capacitor")
 			the_component = new/obj/item/clockwork/component/guvax_capacitor(get_turf(src))
+			stored_components["guvax_capacitor"]--
 		if("Replicant Alloy")
 			the_component = new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
+			stored_components["replicant_alloy"]--
 		if("Hierophant Ansible")
 			the_component = new/obj/item/clockwork/component/hierophant_ansible(get_turf(src))
+			stored_components["hierophant_ansible"]--
 	if(the_component)
 		user.visible_message("<span class='notice'>[user] withdraws [the_component] from [src].</span>", "<span class='notice'>You withdraw [the_component] from [src].</span>")
 		user.put_in_hands(the_component)
@@ -919,7 +924,7 @@
 
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
-	if(is_clockwork_cultist(user) || isobserver(user))
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<b>Stored components:</b>"
 		user << "<i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]]"
 		user << "<i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]]"
@@ -973,7 +978,7 @@
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_target()
 	var/list/possible_targets = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_clockwork_cultist(L) && !L.stat && L.mind)
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind)
 			possible_targets += L
 	if(!possible_targets.len)
 		return 0
@@ -1000,7 +1005,7 @@
 
 /obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
-		if(!is_clockwork_cultist(user))
+		if(!is_servant_of_ratvar(user))
 			..()
 			return 0
 		var/obj/item/device/mmi/posibrain/soul_vessel/S = I
@@ -1013,7 +1018,7 @@
 		user.visible_message("<span class='notice'>[user] clicks [S] into place on [src].</span>", "<span class='brass'>You insert [S] into [src]. It whirs and begins to rise.</span>")
 		var/mob/living/simple_animal/hostile/anima_fragment/A = new(get_turf(src))
 		S.brainmob.mind.transfer_to(A)
-		add_clockwork_cultist(A, TRUE)
+		add_servant_of_ratvar(A, TRUE)
 		A << A.playstyle_string
 		user.drop_item()
 		qdel(S)
@@ -1038,7 +1043,7 @@
 		disrupt(user)
 
 /obj/structure/clockwork/interdiction_lens/proc/disrupt(mob/living/user)
-	if(!user || !is_clockwork_cultist(user))
+	if(!user || !is_servant_of_ratvar(user))
 		return 0
 	if(recharging)
 		user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
@@ -1069,7 +1074,7 @@
 				A << 'sound/machines/warning-buzzer.ogg'
 		if("Disable Cyborgs")
 			for(var/mob/living/silicon/robot/R in living_mob_list) //Doesn't include AIs, for obvious reasons
-				if(is_clockwork_cultist(R) || R.stat) //Doesn't affect already-offline cyborgs
+				if(is_servant_of_ratvar(R) || R.stat) //Doesn't affect already-offline cyborgs
 					continue
 				R.visible_message("<span class='warning'>[R] shuts down with no warning!</span>", \
 				"<span class='userdanger'>Massive emergy surge detected. All systems offline. Initiating reboot sequence..</span>")
@@ -1116,7 +1121,7 @@
 
 /obj/structure/clockwork/mending_motor/examine(mob/user)
 	..()
-	if(is_clockwork_cultist(user) || isobserver(user))
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "It has [stored_alloy]/[max_alloy] units of replicant alloy."
 
 /obj/structure/clockwork/mending_motor/process()
@@ -1140,7 +1145,7 @@
 		if(uses_alloy)
 			stored_alloy = max(0, stored_alloy - 2)
 	for(var/mob/living/silicon/S in range(5, src))
-		if(S.health == S.maxHealth || S.stat == DEAD || !is_clockwork_cultist(S))
+		if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
 			continue
 		S.adjustBruteLoss(-25)
 		S.adjustFireLoss(-25)
@@ -1155,7 +1160,7 @@
 		toggle(user)
 
 /obj/structure/clockwork/mending_motor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_clockwork_cultist(user))
+	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
 		if(stored_alloy + 10 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
@@ -1170,7 +1175,7 @@
 
 /obj/structure/clockwork/mending_motor/proc/toggle(mob/living/user)
 	active = !active
-	if(user && is_clockwork_cultist(user))
+	if(user && is_servant_of_ratvar(user))
 		user.visible_message("<span class='notice'>[user] [active ? "en" : "dis"]ables [src].</span>", "<span class='brass'>You [active ? "en" : "dis"]able [src].</span>")
 	if(active)
 		icon_state = initial(icon_state)
@@ -1200,7 +1205,7 @@
 	return ..()
 
 /obj/effect/clockwork/examine(mob/user)
-	if(is_clockwork_cultist(user) && clockwork_desc)
+	if(is_servant_of_ratvar(user) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
@@ -1221,7 +1226,7 @@
 		flick("judicial_explosion", src)
 		spawn(15)
 			for(var/mob/living/L in range(1, src))
-				if(is_clockwork_cultist(L))
+				if(is_servant_of_ratvar(L))
 					continue
 				if(!iscultist(L))
 					L << "<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>"
@@ -1265,7 +1270,7 @@
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
-	if(is_clockwork_cultist(user) || isobserver(user))
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "This gateway can only [sender ? "send" : "receive"] objects."
 
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
@@ -1401,7 +1406,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.stat)
-			if(!is_clockwork_cultist(L) || (is_clockwork_cultist(L) && affects_servants))
+			if(!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants))
 				sigil_effects(L)
 			return 1
 	..()
@@ -1418,7 +1423,7 @@
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] appears in a burst of light!</span>")
 	for(var/mob/living/M in viewers(5, src))
-		if(!is_clockwork_cultist(M))
+		if(!is_servant_of_ratvar(M))
 			M.flash_eyes()
 	if(!iscultist(L))
 		L << "<span class='userdanger'>An unseen force holds you in place!</span>"
@@ -1445,7 +1450,7 @@
 		animate(src, color = initial(color), time = 30)
 		return 0
 	L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
-	add_clockwork_cultist(L)
+	add_servant_of_ratvar(L)
 	L.Weaken(30) //Completely defenseless for thirty seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(30)
 	if(iscarbon(L))
@@ -1465,7 +1470,7 @@
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	for(var/mob/M in mob_list)
-		if(is_clockwork_cultist(M) || isobserver(M))
+		if(is_servant_of_ratvar(M) || isobserver(M))
 			M << "<span class='heavy_brass'>Sigil of Transmission in [get_area(src)] crossed by [L.name].</span>"
 	return 0
 
@@ -1474,5 +1479,5 @@
 		return 0
 	var/parsed_message = "<span class='heavy_brass'>(Sigil of Tranmission in [get_area(src)]): </span><span class='brass'>[message]</span>"
 	for(var/mob/M in mob_list)
-		if(is_clockwork_cultist(M) || isobserver(M))
+		if(is_servant_of_ratvar(M) || isobserver(M))
 			M << parsed_message

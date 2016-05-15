@@ -73,7 +73,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_clockwork_cultist(L))
+				if(is_servant_of_ratvar(L))
 					for(var/invocation in invocations)
 						if(!whispered)
 							L.say(invocation)
@@ -139,6 +139,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	else if(creator_message)
 		invoker << creator_message
 	new object_path (get_turf(invoker))
+	return 1
 
 
 
@@ -160,7 +161,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(target.stat)
 				invoker << "<span class='warning'>[target] is dead or unconscious!</span>"
 				target = null
-			if(is_clockwork_cultist(target) && !affects_servants)
+			if(is_servant_of_ratvar(target) && !affects_servants)
 				invoker << "<span class='warning'>[target] is a servant, and [name] cannot target servants!</span>"
 				target = null
 	return 1
@@ -168,7 +169,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/targeted/proc/find_target()
 	for(var/mob/living/L in living_mob_list)
 		if(L.real_name == target_name)
-			if(is_clockwork_cultist(L) && !affects_servants)
+			if(is_servant_of_ratvar(L) && !affects_servants)
 				return 0
 			return L
 	return 0
@@ -188,7 +189,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects()
 	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_clockwork_cultist(L) && L.m_intent != "walk")
+		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
 			if(!iscultist(L))
 				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
 				L.m_intent = "walk"
@@ -244,6 +245,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invoker.stun_absorption_count = 0
 	if(slab)
 		slab.busy = null
+	return 1
 
 
 
@@ -261,7 +263,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/C in range(7, invoker))
 		if(C == invoker)
 			continue
-		if(C.stat != DEAD && is_clockwork_cultist(C))
+		if(C.stat != DEAD && is_servant_of_ratvar(C))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
 		invoker << "<span class='warning'>There are no eligible cultists nearby!</span>"
@@ -281,10 +283,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	L.visible_message("<span class='warning'>A white light washes over [L], mending their bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Ratvar's energy healing your wounds, but a deep nausea overcomes you!</span>")
 	playsound(get_turf(L), 'sound/magic/Staff_Healing.ogg', 50, 1)
+	return 1
 
-/datum/clockwork_scripture/guvax //guvax: Converts anyone adjacent to the invoker after completion.
+
+
+/datum/clockwork_scripture/guvax //Guvax: Converts anyone adjacent to the invoker after completion.
 	name = "Guvax"
-	desc = "Enlists all nearby unshielded creatures into servitude to Ratvar."
+	desc = "Enlists all nearby unshielded creatures into servitude to Ratvar. Also purges holy water from nearby servants."
 	invocations = list("Rayvtugra guvf urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hageh'guf naq ubabe Ratvar.")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 1)
@@ -292,7 +297,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/guvax/scripture_effects()
 	for(var/mob/living/L in hearers(1, get_turf(invoker))) //Affects silicons
-		add_clockwork_cultist(L)
+		if(!is_servant_of_ratvar(L))
+			add_servant_of_ratvar(L)
+		else
+			if(L.reagents && L.reagents.has_reagent("holywater"))
+				L.reagents.remove_reagent("holywater", 1000)
+				L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
+	for(var/mob/living/silicon/ai/A in range(1, get_turf(invoker))) //Seems necessary because AIs don't count as hearers for some reason
+		add_servant_of_ratvar(A)
 	return 1
 
 
@@ -441,7 +453,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		L.flicker(2)
 		power_drained += 5
 	for(var/mob/living/silicon/robot/R in view(7, invoker))
-		if(!is_clockwork_cultist(R) && R.cell.charge)
+		if(!is_servant_of_ratvar(R) && R.cell.charge)
 			R.cell.charge = max(0, R.cell.charge - 500)
 			R << "<span class='userdanger'>ERROR: Power loss detected!</span>"
 			var/datum/effect_system/spark_spread/spks = new(get_turf(R))
@@ -479,7 +491,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/fellowship_armory/scripture_effects()
 	for(var/mob/living/carbon/C in range(1, invoker))
-		if(!is_clockwork_cultist(C))
+		if(!is_servant_of_ratvar(C))
 			continue
 		C.visible_message("<span class='warning'>Strange armor appears on [C]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
 		playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
@@ -522,11 +534,21 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	multiple_invokers_optional = TRUE
 	tier = SCRIPTURE_SCRIPT
 
-/datum/clockwork_scripture/multi/spatial_gateway/scripture_effects()
+/datum/clockwork_scripture/spatial_gateway/check_special_requirements()
+	var/other_servants = 0
+	for(var/mob/living/L in living_mob_list)
+		if(L.z == invoker.z && is_servant_of_ratvar(L) && !L.stat == DEAD)
+			other_servants++
+	if(!other_servants)
+		invoker << "<span class='warning'>There are no other conscious servants on your z-level!</span>"
+		return 0
+	return 1
+
+/datum/clockwork_scripture/spatial_gateway/scripture_effects()
 	var/portal_uses = 0
 	var/duration = 0
 	for(var/mob/living/L in range(1, invoker))
-		if(!L.stat && is_clockwork_cultist(L))
+		if(!L.stat && is_servant_of_ratvar(L))
 			portal_uses++
 			duration += 20 //2 seconds
 	if(ratvar_awakens)
@@ -534,7 +556,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		duration = max(duration, 30)
 	var/list/possible_servants = list()
 	for(var/mob/living/L in living_mob_list)
-		if(!L.stat && is_clockwork_cultist(L) && !L.Adjacent(invoker) && L != invoker) //People right next to the invoker can't be portaled to, for obvious reasons
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker) //People right next to the invoker can't be portaled to, for obvious reasons
 			possible_servants += L
 	if(!possible_servants.len)
 		invoker << "<span class='warning'>There are no other eligible servants for teleportation!</span>"
@@ -647,7 +669,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	M.host = invoker
 	M << M.playstyle_string
 	M << "<b>Your true name is \"[M.true_name]\". You can change this <i>once</i> by using the Change True Name verb in your Marauder tab.</b>"
-	add_clockwork_cultist(M, TRUE)
+	add_servant_of_ratvar(M, TRUE)
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 	"<span class='heavy_brass'>The procedure was successful! [M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" ability in the \
 	Clockwork tab.</span>")
@@ -844,7 +866,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 50, 0)
 		animate(invoker, color = initial(invoker.color), time = 10)
 		for(var/mob/living/L in range(5, invoker))
-			if(is_clockwork_cultist(L))
+			if(is_servant_of_ratvar(L))
 				continue
 			invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 5)
 			L.electrocute_act(rand(30, 50), "Nzcrentr's power")
@@ -879,14 +901,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.say("Aww, let's break it DOWN!")
 	var/list/affected_servants = list()
 	for(var/mob/living/L in range(7, invoker))
-		if(!is_clockwork_cultist(L) || L.stat == DEAD)
+		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
 			continue
 		L << "<font color='#1E8CE1'><b><i>\"V yraq lbh zl nvq, punzcvba! Yrg tybel thvqr lbhe oybjf!\"</b></i></font>\n\
 		<span class='notice'>Inath-Neq's power flows through you!</span>"
 		L.maxHealth += 500
 		L.health += 500
 		L.color = "#1E8CE1"
-		animate(invoker, color = initial(invoker.color), time = 100)
+		spawn(0)
+			animate(invoker, color = initial(invoker.color), time = 100)
 		affected_servants += L
 	for(var/i in 1 to 10)
 		sleep(10)
@@ -915,6 +938,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(invoker.z != ZLEVEL_STATION)
 		invoker << "<span class='warning'>You must be on the station to activate the Ark!</span>"
+		return 0
+	if(ticker.mode.clockwork_objective != "gateway")
+		invoker << "<span class='warning'>As painful as it is, Ratvar's will is not to be freed!</span>"
 		return 0
 	return 1
 

@@ -216,7 +216,7 @@
 				if(M.clockwork)
 					O.laws = new/datum/ai_laws/ratvar
 					spawn(1)
-						add_clockwork_cultist(O)
+						add_servant_of_ratvar(O)
 				else
 					O.laws = new/datum/ai_laws/syndicate_override
 
