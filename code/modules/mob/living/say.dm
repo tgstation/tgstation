@@ -63,7 +63,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(findtext(message, "lol ") || findtext(message, "omg ") || findtext(message, "lamo ") || findtext(message, "ikr ") || findtext(message, "brb ") || findtext(message, "rotfl "))
 		adjustBrainLoss(10) // TG is a meme free zone.
 		src << 'sound/effects/adminhelp.ogg'
-		src << "<span class='red' size='2'>no net-speak in ic, TG is a meme free zone.</span>"
+		src << "<span class='red' size='2'>No net-speak in IC, TG is a meme free zone.</span>"
 
 	if(stat == DEAD)
 		say_dead(message)
