@@ -7,13 +7,17 @@
 
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
-	var/flashbang_turf = get_turf(src)
+	var/turf/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
-	for(var/mob/living/carbon/M in get_hearers_in_view(7, flashbang_turf))
-		if(isbrain(M) || !istype(M))
+	for(var/mob/living/M in living_mob_list) //A wise man said this would be faster than recursively checking everything in view(7) so it catches people in lockers/mechs/bodybags etc
+		if(isbrain(M) || isAI(M))
 			continue
-		bang(get_turf(M), M)
+		var/turf/mob_turf = get_turf(M)
+		if(!mob_turf || mob_turf.z != flashbang_turf.z) //because get_dist doesn't account for z levels
+			continue
+		if(get_dist(flashbang_turf, mob_turf) <= 7)
+			bang(flashbang_turf, M)
 
 	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
 		var/damage = round(15/(get_dist(B,get_turf(src))+1))
@@ -22,45 +26,45 @@
 		B.update_icon()
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
+/obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/M)
 	if (locate(/obj/item/weapon/cloaking_device, M))			// Called during the loop that bangs people in lockers/containers and when banging
 		for(var/obj/item/weapon/cloaking_device/S in M)			// people in normal view.  Could theroetically be called during other explosions.
 			S.active = 0										// -- Polymorph
 			S.icon_state = "shield0"
 
-	to_chat(M, "<span class='danger'>BANG</span>")
-	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
-
 //Checking for protections
-	var/eye_safety = 0
-	var/ear_safety = 0
-	if(iscarbon(M))
-		eye_safety = M.eyecheck()
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.earprot())
-				ear_safety += 2
-			if(M_HULK in M.mutations)
-				ear_safety += 1
-			if(istype(M:head, /obj/item/clothing/head/helmet))
-				ear_safety += 1
+	var/eye_safety = M.eyecheck()
+	var/ear_safety = M.earprot() * 2 //some arbitrary measurement of ear protection, I guess? doesn't even matter if it goes above 1
+
+	if(ishuman(M))
+		if(istype(M:head, /obj/item/clothing/head/helmet))
+			ear_safety += 1
+	if(M_HULK in M.mutations)
+		ear_safety += 1
+	if(istype(M.loc, /obj/mecha))
+		ear_safety += 1
 
 //Flashing everyone
 	if(eye_safety < 1)
-		M.flash_eyes(visual = 1)
-		M.Stun(2)
+		M.flash_eyes(visual = 1, affect_silicon = 1)
+		M.Stun(10)
 		M.Weaken(10)
 
-
-
 //Now applying sound
+	if(!ear_safety)
+		to_chat(M, "<span class='userdanger'>BANG</span>")
+		playsound(get_turf(src), 'sound/effects/bang.ogg', 60, 1)
+	else
+		to_chat(M, "<span class='danger'>BANG</span>")
+		playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
+
 	if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
 		if(ear_safety > 0)
 			M.Stun(2)
-			M.Weaken(1)
+			M.Weaken(2)
 		else
 			M.Stun(10)
-			M.Weaken(3)
+			M.Weaken(10)
 			if ((prob(14) || (M == src.loc && prob(70))))
 				M.ear_damage += rand(1, 10)
 			else
@@ -70,11 +74,13 @@
 	else if(get_dist(M, T) <= 5)
 		if(!ear_safety)
 			M.Stun(8)
+			M.Weaken(8)
 			M.ear_damage += rand(0, 3)
 			M.ear_deaf = max(M.ear_deaf,10)
 
 	else if(!ear_safety)
 		M.Stun(4)
+		M.Weaken(4)
 		M.ear_damage += rand(0, 1)
 		M.ear_deaf = max(M.ear_deaf,5)
 

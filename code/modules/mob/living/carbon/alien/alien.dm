@@ -65,6 +65,9 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
+/mob/living/carbon/alien/earprot()
+	return 1
+
 // MULEBOT SMASH
 /mob/living/carbon/alien/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM

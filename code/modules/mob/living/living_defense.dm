@@ -132,14 +132,28 @@
 			throwByName = M.name
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O] (speed: [speed])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a thrown [O], last touched by [throwByName] ([assailant.ckey]) (speed: [speed])</font>")
-		
+
 		if(!src.isDead() && src.ckey) //Message admins if the hit mob is alive and has a ckey
 			msg_admin_attack("[src.name] ([src.ckey]) was hit by a thrown [O], last touched by [throwByName] ([assailant.ckey]) (speed: [speed]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
-		
+
 		if(!iscarbon(M))
 			src.LAssailant = null
 		else
 			src.LAssailant = M
+
+/*
+	Ear and eye protection
+
+	Some mobs have built-in ear or eye protection, mobs that can wear equipment may account their eye/ear wear into this proc
+*/
+
+//earprot(): retuns 0 for no protection, 1 for full protection (no ears, earmuffs, etc)
+/mob/living/proc/earprot()
+	return 0
+
+//eyecheck(): retuns 0 for no protection, 1 for partial protection, 2 for full protection
+/mob/living/proc/eyecheck()
+	return 0
 
 
 //BITES

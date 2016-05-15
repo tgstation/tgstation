@@ -174,11 +174,8 @@
 	//var/randorgan = pick("head","chest","groin")
 	return randorgan
 
-/mob/living/carbon/human/proc/earprot()
-	var/detect = 0
-	if(is_on_ears(/obj/item/clothing/ears/earmuffs)||is_on_ears(/obj/item/device/radio/headset/headset_earmuffs))
-		detect = 1
-	return detect
+/mob/living/carbon/human/earprot()
+	return is_on_ears(/obj/item/clothing/ears/earmuffs) || is_on_ears(/obj/item/device/radio/headset/headset_earmuffs)
 
 /mob/living/carbon/human/proc/has_reagent_in_blood(var/reagent_name,var/amount = -1)
 	if(!reagents || !ticker)

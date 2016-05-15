@@ -254,10 +254,6 @@
 
 			share_contact_diseases(M)
 
-
-/mob/living/carbon/proc/eyecheck()
-	return 0
-
 // ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
 // Stop! ... Hammertime! ~Carn
 
