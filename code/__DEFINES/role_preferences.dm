@@ -24,7 +24,8 @@
 #define ROLE_REVENANT			"revenant"
 #define ROLE_HOG_GOD			"hand of god: god"
 #define ROLE_HOG_CULTIST		"hand of god: cultist"
-#define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
+#define ROLE_DEVIL				"devil"
+
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -48,5 +49,5 @@ var/global/list/special_roles = list(
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_HOG_GOD = /datum/game_mode/hand_of_god,
 	ROLE_HOG_CULTIST = /datum/game_mode/hand_of_god,
-	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
+	ROLE_DEVIL = /datum/game_mode/devil
 )
