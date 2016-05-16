@@ -114,8 +114,8 @@
 	. = ..()
 	if(!.)
 		return 0
-	if(ishuman(the_target))
-		var/mob/living/carbon/human/H = the_target
+	if(isliving(the_target))
+		var/mob/living/H = the_target
 		return !H.bee_friendly()
 
 
@@ -125,8 +125,8 @@
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
 			wanted_objects |= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
 			return 1
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
+	if(isliving(A))
+		var/mob/living/H = A
 		return !H.bee_friendly()
 	return 0
 
