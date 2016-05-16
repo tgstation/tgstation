@@ -594,7 +594,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/scripture_effects()
 	for(var/mob/living/carbon/human/H in range(1, invoker))
-		if(is_servant_of_ratvar(H) && !isloyal(H))
+		if(is_servant_of_ratvar(H) || !isloyal(H))
 			continue
 		H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
 		"<span class='userdanger'>The words invoke a horrible fear deep in your being. Your loyalty to Nanotrasen falls away as you see how weak they truly are.</span>")
