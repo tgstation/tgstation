@@ -804,7 +804,7 @@
 	name = "blind eye"
 	desc = "A heavy brass eye, its red iris fallen dark."
 	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for replicant alloy."
-	icon_state = "blind_ete"
+	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
 	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.")
 	w_class = 3
