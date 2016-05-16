@@ -105,7 +105,7 @@
 					M.inertia_dir = 0
 			if(TURF_WET_LUBE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
-				if(has_gravity(src))
+				if(M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))) 
 					M.confused = max(M.confused, 8)
 			if(TURF_WET_ICE)
 				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
