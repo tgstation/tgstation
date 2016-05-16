@@ -144,7 +144,7 @@
 
 /obj/item/weapon/bikehorn/golden/attack()
 	flip_mobs()
-	..()
+	return ..()
 
 /obj/item/weapon/bikehorn/golden/attack_self(mob/user)
 	flip_mobs()
