@@ -1022,10 +1022,10 @@
 		if(!getorganslot("tongue"))
 			var/obj/item/organ/tongue/T
 
-			for(var/obj/item/organ/tongue/tongue_type in \
-				dna.species.mutant_organs)
-				T = new tongue_type()
-				T.Insert(src)
+			for(var/tongue_type in dna.species.mutant_organs)
+				if(ispath(tongue_type, /obj/item/organ/tongue))
+					T = new tongue_type()
+					T.Insert(src)
 
 			// if they have no mutant tongues, give them a regular one
 			if(!T)
