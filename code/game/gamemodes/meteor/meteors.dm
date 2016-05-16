@@ -137,6 +137,7 @@
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src)
+			A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 			A.ex_act(hitpwr)
 
 	//then, ram the turf if it still exists
