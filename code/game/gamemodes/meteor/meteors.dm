@@ -187,9 +187,10 @@
 /obj/effect/meteor/dust
 	name = "space dust"
 	icon_state = "dust"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
+	meteorsound = 'sound/weapons/Gunshot_smg.ogg'
 	meteordrop = /obj/item/weapon/ore/glass
 
 //Medium-sized
