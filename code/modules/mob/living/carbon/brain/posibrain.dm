@@ -54,6 +54,8 @@ var/global/posibrain_notif_cooldown = 0
 /obj/item/device/mmi/posibrain/proc/activate(mob/user)
 	if(used || (brainmob && brainmob.key) || jobban_isbanned(user,"posibrain"))
 		return
+	if(user.is_ineligible_for_ghost_roles())
+		return
 
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || qdeleted(src))

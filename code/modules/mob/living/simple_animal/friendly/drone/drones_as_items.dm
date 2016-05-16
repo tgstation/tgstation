@@ -25,6 +25,8 @@
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
 		return
+	if(user.is_ineligible_for_ghost_roles())
+		return
 	if(config.use_age_restriction_for_jobs)
 		if(!isnum(user.client.player_age)) //apparently what happens when there's no DB connected. just don't let anybody be a drone without admin intervention
 			return

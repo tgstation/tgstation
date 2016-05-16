@@ -5946,6 +5946,110 @@
 /obj/machinery/shuttle_manipulator,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
+"sk" = (
+/obj/effect/landmark{
+	name = "prisonwarp"
+	},
+/obj/structure/bed,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"sj" = (
+/obj/effect/landmark{
+	name = "prisonwarp"
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"si" = (
+/obj/structure/table,
+/obj/item/weapon/storage/pill_bottle/dice,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"sh" = (
+/obj/effect/landmark{
+	name = "prisonwarp"
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/centcom/prison)
+"sg" = (
+/obj/machinery/soulbencher,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/centcom/prison)
+"sf" = (
+/obj/structure/bed,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"se" = (
+/mob/living/simple_animal/pet/cat{
+	name = "Jerry"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"sd" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 1
+	},
+/area/centcom/ferry)
+"sc" = (
+/obj/effect/landmark{
+	name = "prisonwarp"
+	},
+/obj/structure/bed,
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sb" = (
+/obj/machinery/vending/sustenance,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"sa" = (
+/obj/effect/landmark{
+	name = "prisonwarp"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"rZ" = (
+/obj/structure/toilet{
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"rY" = (
+/obj/effect/landmark{
+	name = "prisonwarp"
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
+"rX" = (
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/centcom/prison)
 
 (1,1,1) = {"
 aa
@@ -40268,9 +40372,9 @@ ab
 ab
 ab
 eJ
-eJ
-eJ
-eJ
+fB
+sd
+gj
 eJ
 eJ
 eJ
@@ -40525,9 +40629,9 @@ ab
 ab
 ab
 fh
-fh
-fh
-fh
+rX
+rX
+sg
 fh
 ab
 fh
@@ -40782,9 +40886,9 @@ ab
 ab
 ab
 fh
-fl
-fh
-fl
+rY
+rX
+sh
 fh
 ab
 fh
@@ -41039,9 +41143,9 @@ ab
 ab
 ab
 fh
-fh
-fh
-fh
+rZ
+se
+rX
 fh
 ab
 fh
@@ -41296,9 +41400,9 @@ ab
 ab
 ab
 fh
-fl
-fh
-fl
+sa
+rX
+sa
 fh
 ab
 fh
@@ -41553,9 +41657,9 @@ ab
 ab
 ab
 fh
-fh
-fh
-fh
+sb
+rX
+si
 fh
 ab
 fh
@@ -41811,8 +41915,8 @@ ab
 ab
 fh
 fl
-fh
-fl
+rX
+sj
 fh
 ab
 fh
@@ -42067,9 +42171,9 @@ ab
 ab
 ab
 fh
-fh
-fh
-fh
+rX
+rX
+rX
 fh
 ab
 fh
@@ -42324,9 +42428,9 @@ ab
 ab
 ab
 fh
-fl
-fh
-fl
+sc
+sf
+sk
 fh
 ab
 fh
