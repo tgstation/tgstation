@@ -68,6 +68,8 @@
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
+		if(clockwork)
+			add_servant_of_ratvar(brainmob, TRUE)
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 

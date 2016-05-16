@@ -2,7 +2,7 @@
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a single glowing yellow eye, pushed into the air by jets of blazing yellow fire."
 	icon = 'icons/mob/clockwork_mobs.dmi'
-	icon_state = "anima_fragment"
+	icon_state = "anime_fragment"
 	health = 75 //Glass cannon
 	maxHealth = 75
 	wander = FALSE
@@ -16,6 +16,13 @@
 	var/playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you are weak but possess powerful melee capabilities \
 	in addition to being immune to extreme temperatures and pressures. Your goal is to serve the Justiciar and his servants in any way you can. You yourself are one of these servants, and will \
 	be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
+
+/mob/living/simple_animal/hostile/anima_fragment/New()
+	..()
+	if(prob(1))
+		name = "anime fragment"
+		real_name = name
+		desc = "I-it's not like I want to show you the light of the Justiciar or anything, B-BAKA!"
 
 /mob/living/simple_animal/hostile/anima_fragment/death(gibbed)
 	..(TRUE)

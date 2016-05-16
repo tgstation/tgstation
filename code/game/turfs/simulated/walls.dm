@@ -256,9 +256,5 @@
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/cult)
 
-/turf/closed/wall/ratvar_act()
-	if(prob(20))
-		ChangeTurf(/turf/closed/wall/clockwork)
-
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0

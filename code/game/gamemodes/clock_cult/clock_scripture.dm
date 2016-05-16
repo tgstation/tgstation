@@ -335,6 +335,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invocations = list("Z`rgny, orpbzr terngre!")
 	channel_time = 0
 	required_components = list("replicant_alloy" = 1)
+	consumed_components = list("replicant_alloy" = 1) //People were spamming slabs to get infinite components. You chose this.
 	whispered = TRUE
 	tier = SCRIPTURE_DRIVER
 
@@ -357,25 +358,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	object_path = /obj/structure/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-
-
-
-/datum/clockwork_scripture/hierophant //Hierophant: Allows discreet communication between all other servants.
-	name = "Hierophant"
-	desc = "Sends a one-way message to all other servants."
-	invocations = list() //Spoken during the actual transmission
-	channel_time = 0
-	required_components = list("hierophant_ansible" = 1)
-	whispered = TRUE
-	tier = SCRIPTURE_DRIVER
-
-/datum/clockwork_scripture/hierophant/scripture_effects()
-	var/message = stripped_input(invoker, "Enter a message to send to your fellow servants.", "Hierophant")
-	if(!message || !invoker || !invoker.canUseTopic(slab))
-		return 0
-	invoker.whisper("Freinagf, urne zl jbeqf. [message]")
-	send_hierophant_message(invoker, message)
-	return 1
 
 
 
@@ -510,7 +492,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/function_call //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a Ratvarian spear that will deal significant damage to Nar-Sie's scum and silicon lifeforms. \
+	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear that will deal significant damage to Nar-Sie's scum and silicon lifeforms. \
 	It will vanish several minutes after being called."
 	invocations = list("Tenag zr...", "...gur zvtug-bs oenff!")
 	channel_time = 20
@@ -599,6 +581,27 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which immediately begins drawing in the damned.</span>"
 	tier = SCRIPTURE_SCRIPT
+
+
+
+/datum/clockwork_scripture/break_will //Break Will: Deals minor brain damage and destroys the loyalty implants of nearby humans
+	name = "Break Will"
+	desc = "Deals minor brain damage and disables loyalty implants of everyone adjacent to the invoker."
+	invocations = list("Lbh ner jrnx.", "Lbh ner nyernql qrnq.", "Gurl jba'g fnir lbh.")
+	channel_time = 90
+	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
+	tier = SCRIPTURE_SCRIPT
+
+/datum/clockwork_scripture/scripture_effects()
+	for(var/mob/living/carbon/human/H in range(1, invoker))
+		if(is_servant_of_ratvar(H) && !isloyal(H))
+			continue
+		H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
+		"<span class='userdanger'>The words invoke a horrible fear deep in your being. Your loyalty to Nanotrasen falls away as you see how weak they truly are.</span>")
+		H.adjustBrainLoss(5)
+		for(var/obj/item/weapon/implant/loyalty/L in H)
+			if(L.implanted)
+				qdel(L)
 
 //////////////////
 // APPLICATIONS //

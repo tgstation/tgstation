@@ -22,7 +22,7 @@
 	..()
 
 /turf/closed/wall/clockwork/process()
-	for(var/obj/structure/clockwork/cache/C in range(3, src))
+	for(var/obj/structure/clockwork/cache/C in range(1, src))
 		if(prob(5))
 			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
 
@@ -52,7 +52,7 @@
 	..()
 
 /turf/open/floor/clockwork/process()
-	for(var/mob/living/L in range(3, src))
+	for(var/mob/living/L in src)
 		if(L.stat == DEAD)
 			continue
 		L.adjustBruteLoss(-1)

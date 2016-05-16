@@ -55,7 +55,10 @@
 	..()
 
 /obj/item/clockwork/slab/process()
-	production_cycle++
+	if(isliving(loc))
+		for(var/obj/item/clockwork/slab/S in loc.GetAllContents())
+
+		production_cycle++
 	if(production_cycle < SLAB_PRODUCTION_THRESHOLD)
 		return 0
 	var/component_to_generate = pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible") //Possible todo: Generate based on the lowest amount?
@@ -106,7 +109,7 @@
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Repository")
+	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Repository", "Report")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
@@ -118,6 +121,9 @@
 			show_guide(user)
 		if("Repository")
 			show_components(user)
+			access_display(user)
+		if("Report")
+			show_hierophant(user)
 			access_display(user)
 	return 1
 
@@ -201,17 +207,34 @@
 	universe and Reebe (the Celestial Derelict) can be created and utilized. This is typically done via the creation of a slab akin to the one you are holding right now. The slabs tap into the \
 	tidal flow of energy and information keeping Reebe sealed and presents it as meaningless images to preserve sanity. This slab can utilize the power in many different ways.<br><br>\
 	\
-	The first of these is by recital. Pieces of scripture can be drawn from the link, and most pieces have a variety of effects (a complete sheet of known scripture is below). Almost all \
-	scripture requires the speaker to stand in place for an extended period of time, however, and the invocation is spoken over this period of time. No additional actions may be taken during \
-	the invocation process unless it is instant. However, these invocations are not free, and may require <b>components</b> (discussed later), but will typically not consume them unless \
-	specified. A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
+	This is done through <b>Components</b> - pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results \
+	in the fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so. The most basic of these links lies \
+	in the clockwork slab, which will slowly generate components over time - around one component of a random type is produced every minute, which is obviously inefficient. There are other ways \
+	to create these components through scripture and certain structures.<br><br>\
+	\
+	In addition to their ability to pull components, slabs also possess other functionalities...<br><br>\
+	\
+	The first functionality of the slab is Recital. This allows you to consume components either from your slab or from the global cache (more on that in the scripture list) to perform \
+	effects usually considered magical in nature. Effects vary considerably - you might drain the power of nearby APCs or break the will of those implanted by Nanotrasen. Nevertheless, scripture \
+	is extremely important to a successful takeover.<br><br>\
+	\
+	The second functionality of the clockwork slab is Records. The slab is not a one-way link and can also feed information into the stream that it draws from. Records will allow many \
+	important statistics to be displayed, such as the amount of people converted and total construction value. You should check it often.<br><br>\
+	\
+	The third functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
+	\
+	The fourth functionality is the Repository, which will display all components stored within the slab.<br><br>\
+	\
+	The fifth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
+	\
+	A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
 	specified.</i><br><br>"
 	var/text_to_add = ""
-	var/drivers = "<font color=#BE8700><b>Drivers</b></font>"
-	var/scripts = "<font color=#BE8700><b>Scripts</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i>"
-	var/applications = "<font color=#BE8700><b>Applications</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 50CV.</i>"
-	var/revenant = "<font color=#BE8700><b>Revenant</b></font><br><i>These scriptures require at least ten servants and 100CV.</i>"
-	var/judgement = "<font color=#BE8700><b>Judgement</b></font><br><i>These scriptures require at least ten servants and 100CV. In addition, there may not be an active non-servant AI.</i>"
+	var/drivers = "<font color=#BE8700 size=3><b>Drivers</b></font>"
+	var/scripts = "<font color=#BE8700 size=3><b>Scripts</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i>"
+	var/applications = "<font color=#BE8700 size=3><b>Applications</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 50CV.</i>"
+	var/revenant = "<font color=#BE8700 size=3><b>Revenant</b></font><br><i>These scriptures require at least ten servants and 100CV.</i>"
+	var/judgement = "<font color=#BE8700 size=3><b>Judgement</b></font><br><i>These scriptures require at least ten servants and 100CV. In addition, there may not be an active non-servant AI.</i>"
 	for(var/V in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/S = V
 		var/datum/clockwork_scripture/S2 = new V
@@ -264,20 +287,8 @@
 				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
 				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>"
 	text_to_add += "[drivers]<br>[scripts]<br>[applications]<br>[revenant]<br>[judgement]<br>"
+	text_to_add += "<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	text += text_to_add
-	text += "<br><b>Components</b> are pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results in the \
-	fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so. The most basic of these links lies in the \
-	clockwork slab, which will slowly generate components over time - around one component of a random type is produced every minute, which is obviously inefficient. There are \
-	other ways to create these components through scripture and certain structures.<br><br>\
-	\
-	The second functionality of the clockwork slab are records. The slab is not a one-way link and can also feed information into the stream that it draws from. Records will allow many \
-	important statistics to be displayed, such as the amount of people converted and total construction value.<br><br>\
-	\
-	The third functionality is recollection, which will display this guide.<br><br>\
-	\
-	The fourth and final functionality is the repository, which will display all components stored within the slab.<br><br>\
-	\
-	<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	if(ratvar_awakens)
 		text = "<font color=#BE8700 size=3><b>"
 		for(var/i in 1 to 100)
@@ -295,6 +306,14 @@
 	user << "<i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]]"
 	user << "<i>Replicant Alloys:</i> [stored_components["replicant_alloy"]]"
 	user << "<i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]]"
+	return 1
+
+/obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
+	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
+	if(!message || !user || !user.canUseTopic(src))
+		return 0
+	user.whisper("Freinagf, urne zl jbeqf. [message]")
+	send_hierophant_message(user, message)
 	return 1
 
 /obj/item/clothing/glasses/wraith_spectacles //Wraith spectacles: Grants night and x-ray vision at the slow cost of the wearer's sight. Nar-Sian cultists are instantly blinded.
@@ -396,6 +415,9 @@
 		return 1
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
+	if(recharging)
+		icon_state = "judicial_visor_0"
+		return 0
 	if(active == change_to)
 		return 0
 	if(!isliving(loc))
@@ -413,13 +435,13 @@
 			L << "<span class='notice'>As you take off [src]. its lens darkens once more.</span>"
 	return 1
 
-/obj/item/clothing/head/helmet/clockwork //Clockwork armor: No special effects, but decent protection
+/obj/item/clothing/head/helmet/clockwork //Clockwork armor: High melee protection but weak to lasers
 	name = "clockwork helmet"
 	desc = "A heavy helmet made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
-	armor = list(melee = 65, bullet = 50, laser = 20, energy = 5, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 65, bullet = 50, laser = -25, energy = 5, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/clockwork
 	name = "clockwork cuirass"
@@ -427,7 +449,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
 	w_class = 4
-	armor = list(melee = 80, bullet = 40, laser = 10, energy = 5, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 40, laser = -10, energy = 5, bomb = 0, bio = 0, rad = 0)
 	allowed = list(/obj/item/clockwork)
 
 /obj/item/clothing/shoes/clockwork
@@ -460,11 +482,21 @@
 		..()
 		return 0
 	visor.recharging = TRUE
+	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
+		if(V == visor)
+			continue
+		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 	user.say("Xarry, urn'guraf!")
 	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 	new/obj/effect/clockwork/judicial_marker(get_turf(target))
 	spawn(ratvar_awakens ? 30 : 300) //Cooldown is reduced by 10x if Ratvar is up
+		if(!visor || !user)
+			return 0
 		visor.recharging = FALSE
+		for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
+			if(V == visor)
+				continue
+			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 		if(visor.loc == user)
 			user << "<span class='brass'>Your [visor.name] hums. It is ready.</span>"
 	qdel(src)
@@ -569,7 +601,7 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
-	force = 7 //Most damage is called in afterattack()
+	force = 17 //Extra damage is dealt to silicons in afterattack()
 	attack_verb = list("stabbed", "poked", "slashed", "impaled")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
@@ -757,7 +789,7 @@
 	name = "smashed anima fragment"
 	desc = "Shattered chunks of metal. Damaged beyond repair and completely unusable."
 	clockwork_desc = "The sad remains of an anima fragment. Might still be serviceable as a substitute for replicant alloy."
-	icon_state = "smashed_anima_fragment"
+	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
 	servant_of_ratvar_messages = list("\"...still fight...\"", "\"...where am I...?\"", "\"...put me... slab...\"")
 	w_class = 3
@@ -769,6 +801,15 @@
 	icon_state = "fallen_armor"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment.", "Red flame appears in the cuirass before sputtering out.")
+	w_class = 3
+
+/obj/item/clockwork/component/replicant_alloy/blind_eye
+	name = "blind eye"
+	desc = "A heavy brass eye, its red iris fallen dark."
+	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for replicant alloy."
+	icon_state = "blind_ete"
+	cultist_message = "The eye flickers at you with intense hate before falling dark."
+	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.")
 	w_class = 3
 
 /obj/item/clockwork/component/hierophant_ansible
@@ -794,6 +835,10 @@
 	opacity = 0
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
+	var/takes_damage = TRUE //If the structure can be damaged
+	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
+	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
+	var/list/debris = list(/obj/item/clockwork/component/replicant_alloy) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 
 /obj/structure/clockwork/New()
@@ -806,11 +851,48 @@
 	all_clockwork_objects -= src
 	..()
 
+/obj/structure/clockwork/proc/destroyed()
+	if(!takes_damage)
+		return 0
+	for(var/obj/item/I in debris)
+		new I (get_turf(src))
+	visible_message(break_message)
+	playsound(src, break_sound, 50, 1)
+	qdel(src)
+	return 1
+
+/obj/structure/clockwork/ex_act(severity)
+	if(takes_damage)
+		switch(severity)
+			if(1)
+				health -= max_health * 0.7 //70% max health lost
+			if(2)
+				health -= max_health * 0.4 //40% max health lost
+			if(3)
+				if(prob(50))
+					health -= max_health * 0.1 //10% max health lost
+		if(health <= max_health * 0.1) //If there's less than 10% max health left, destroy it
+			destroyed()
+			qdel(src)
+
 /obj/structure/clockwork/examine(mob/user)
 	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
+
+/obj/structure/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force)
+		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
+		playsound(src, I.hitsound, 50, 1)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		health = max(0, health - I.force)
+		if(!health)
+			destroyed()
+			return 0
+	else
+		..()
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -818,6 +900,7 @@
 	clockwork_desc = "A brass container capable of storing a large amount of components. Shares components with all other caches."
 	icon_state = "tinkerers_cache"
 	construction_value = 10
+	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 
 /obj/structure/clockwork/cache/New()
 	..()
@@ -937,6 +1020,8 @@
 	clockwork_desc = "A stalwart turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
 	construction_value = 15
+	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
+	debris = list(/obj/item/clockwork/component/replicant_alloy/blind_eye)
 	var/damage_per_tick = 1
 	var/sight_range = 2
 	var/mob/living/target
@@ -997,10 +1082,11 @@
 	name = "anima fragment"
 	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
 	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
-	icon_state = "anima_fragment"
+	icon_state = "anime_fragment"
 	construction_value = 0
 	anchored = 0
 	density = 0
+	takes_damage = FALSE
 
 /obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
@@ -1031,6 +1117,8 @@
 	clockwork_desc = "A powerful obelisk that can devastate certain electronics. It needs to recharge between uses."
 	icon_state = "interdiction_lens"
 	construction_value = 25
+	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
+	break_sound = 'sound/effects/Glassbr3.ogg'
 	var/recharging = FALSE //If the lens is still recharging its energy
 
 /obj/structure/clockwork/interdiction_lens/examine(mob/user)
@@ -1101,6 +1189,7 @@
 	clockwork_desc = "A powerful prism that rapidly repairs nearby mechanical servants."
 	icon_state = "mending_motor"
 	construction_value = 20
+	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	var/stored_alloy = 0
 	var/max_alloy = 150
 	var/uses_alloy = TRUE

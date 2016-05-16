@@ -114,11 +114,6 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		updateallghostimages()
 	return ..()
 
-/mob/dead/observer/ratvar_act()
-	var/old_color = color
-	color = rgb(75, 53, 0) //A nice brassy yellow
-	animate(src, color = old_color, time = 10)
-
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
 

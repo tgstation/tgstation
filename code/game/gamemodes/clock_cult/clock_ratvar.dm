@@ -11,6 +11,8 @@
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -30
 	pixel_y = -30
+	health = 1000
+	max_health = 1000
 	var/progress_in_seconds = 0 //Once this reaches 300, it's game over
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
@@ -35,10 +37,26 @@
 				world << sound(null, 0, channel = 8)
 	..()
 
+/obj/structure/clockwork/massive/celestial_gateway/destroyed()
+	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
+	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
+	icon_state = "clockwork_gateway_disrupted"
+	takes_damage = FALSE
+	sleep(27)
+	animate(src, transform = matrix() * 2, time = 2)
+	explosion(src, 1, 3, 8, 8)
+	qdel(src)
+	return 1
+
+/obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
+	return 0 //Nice try, Toxins!
+
 /obj/structure/clockwork/massive/celestial_gateway/process()
 	if(prob(5))
 		for(var/mob/M in mob_list)
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
+	if(!health)
+		return 0
 	progress_in_seconds++
 	switch(progress_in_seconds)
 		if(-INFINITY to 100)
@@ -58,8 +76,9 @@
 			icon_state = "clockwork_gateway_closing"
 		if(300 to INFINITY)
 			if(!purpose_fulfilled)
+				takes_damage = FALSE
 				purpose_fulfilled = TRUE
-				animate(src, transform = matrix()*1.5, time = 136)
+				animate(src, transform = matrix() * 1.5, time = 136)
 				world << sound('sound/effects/ratvar_rises.ogg', 0, channel = 8) //End the sounds
 				sleep(136)
 				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
@@ -89,20 +108,20 @@
 				user << "<span class='warning'><b>Something is coming through!</b></span>"
 
 /obj/structure/clockwork/massive/ratvar
-	name = "Ratvar"
+	name = "Ratvar, the Clockwork Justiciar"
 	desc = "<span class='userdanger'>What is what is what are what real what is all a lie all a lie it's all a lie why how can what is</span>"
 	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
-	icon = 'icons/effects/400x400.dmi'
+	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
-	pixel_x = -175
-	pixel_y = -175
+	pixel_x = -248
+	pixel_y = -248
+	takes_damage = FALSE
 	var/mob/living/prey //Whoever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
 	SSobj.processing += src
-	flick("ratvar_spawn_anim", src)
 	world << "<span class='heavy_brass'><font size=15>\"I AM FREE!\"</font></span>"
 	ratvar_awakens = TRUE
 	spawn(50)
@@ -200,3 +219,24 @@
 			narsie.clashing = FALSE
 			qdel(src)
 			return 1
+
+/atom/proc/ratvar_act() //Called on everything near Ratvar
+	return
+
+/turf/closed/wall/ratvar_act() //Walls and floors are changed to their clockwork variants
+	if(prob(20))
+		ChangeTurf(/turf/closed/wall/clockwork)
+/turf/open/floor/ratvar_act()
+	if(prob(20))
+		ChangeTurf(/turf/open/floor/clockwork)
+
+/obj/structure/window/ratvar_act() //Windows turn yellow
+	color = rgb(75, 53, 0)
+
+/mob/living/ratvar_act()
+	add_servant_of_ratvar(src)
+
+/mob/dead/observer/ratvar_act() //Ghosts flash yellow for a second
+	var/old_color = color
+	color = rgb(75, 53, 0) //A nice brassy yellow
+	animate(src, color = old_color, time = 10)
