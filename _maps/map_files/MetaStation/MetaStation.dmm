@@ -590,9 +590,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/flora/kirbyplants{
-	icon_state = "plant-13"
-	},
+/obj/structure/easel,
+/obj/item/weapon/canvas/twentythreeXtwentythree,
+/obj/item/weapon/canvas/twentythreeXtwentythree,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -607,6 +607,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/weapon/pen,
+/obj/item/weapon/storage/crayons,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -1416,6 +1417,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
 	initialize_directions = 11
+	},
+/obj/structure/flora/kirbyplants{
+	icon_state = "plant-13"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -7925,7 +7929,7 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 9;
+	dir = 2;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -9530,12 +9534,22 @@
 	name = "Port Maintenance"
 	})
 "apF" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/obj/item/weapon/circuitboard/computer/secure_data{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/weapon/circuitboard/computer/security{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/storage/tech)
 "apG" = (
 /obj/machinery/light_construct/small{
 	dir = 4
@@ -9554,11 +9568,19 @@
 	name = "Port Maintenance"
 	})
 "apI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/sign/kiddieplaque{
+	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
+	name = "Library Rules Sign";
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/primary/port)
 "apJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -13475,19 +13497,15 @@
 	},
 /area/maintenance/starboard)
 "avT" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
-	pixel_y = -32
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1;
+	initialize_directions = 11
 	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 4
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
-/area/maintenance/starboard)
+/area/hallway/primary/port)
 "avU" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal{
@@ -14199,15 +14217,18 @@
 	},
 /area/engine/gravity_generator)
 "awY" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
-	pixel_x = 0;
-	pixel_y = 0
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard)
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/hallway/primary/port)
 "awZ" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -15643,13 +15664,12 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "azv" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE"
+/obj/structure/flora/kirbyplants{
+	icon_state = "plant-22"
 	},
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/wood,
+/area/library)
 "azw" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -16604,13 +16624,20 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "aAQ" = (
-/obj/machinery/camera/emp_proof{
-	c_tag = "Fore Arm - Far";
-	dir = 8;
-	network = list("Singulo")
+/obj/structure/table/wood,
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
 	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 30
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plasteel{
+	icon_state = "cult";
+	dir = 2
+	},
+/area/library)
 "aAR" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Mining Shuttle Airlock";
@@ -19977,15 +20004,19 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "aGc" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
+/obj/structure/table/wood,
+/obj/machinery/newscaster{
 	pixel_x = 0;
-	pixel_y = 0
+	pixel_y = 32
 	},
-/turf/closed/wall/r_wall,
-/area/space)
+/obj/item/weapon/folder,
+/obj/item/weapon/folder,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/plasteel{
+	icon_state = "cult";
+	dir = 2
+	},
+/area/library)
 "aGd" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -24782,8 +24813,12 @@
 	},
 /area/engine/engineering)
 "aOo" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard)
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/carpet,
+/area/library)
 "aOp" = (
 /turf/open/floor/plating{
 	icon_plating = "warnplate";
@@ -31729,7 +31764,12 @@
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/machine/telecomms/processor,
 /obj/item/weapon/circuitboard/machine/telecomms/receiver,
-/obj/machinery/computer/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/server,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
+/obj/item/weapon/circuitboard/computer/message_monitor{
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -32781,11 +32821,17 @@
 	},
 /area/security/checkpoint/engineering)
 "bbn" = (
-/obj/machinery/door/airlock/external{
-	name = "South Containment Arm Access"
+/obj/structure/closet/emcloset,
+/obj/machinery/status_display{
+	density = 0;
+	layer = 4;
+	pixel_x = -32;
+	pixel_y = 0
 	},
-/turf/open/floor/plating,
-/area/engine/engineering)
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/hallway/primary/central)
 "bbo" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/cobweb2,
@@ -33817,7 +33863,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "vault";
+	dir = 8
 	},
 /area/storage/tech)
 "bcM" = (
@@ -33825,6 +33872,16 @@
 	dir = 8;
 	layer = 2.9
 	},
+/obj/item/weapon/circuitboard/computer/cloning{
+	pixel_x = 0
+	},
+/obj/item/weapon/circuitboard/computer/med_data{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/weapon/circuitboard/machine/clonescanner,
+/obj/item/weapon/circuitboard/machine/clonepod,
+/obj/item/weapon/circuitboard/computer/scan_consolenew,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -33836,6 +33893,18 @@
 /obj/structure/rack{
 	dir = 8;
 	layer = 2.9
+	},
+/obj/item/weapon/circuitboard/computer/powermonitor{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/weapon/circuitboard/computer/stationalert{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/weapon/circuitboard/computer/atmos_alert{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
@@ -41321,10 +41390,15 @@
 /area/engine/break_room)
 "boU" = (
 /obj/structure/table/glass,
+/obj/item/device/lightreplacer{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "boV" = (
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko,
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko{
+	pixel_y = 4
+	},
 /obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -45160,10 +45234,6 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -46064,14 +46134,17 @@
 /turf/closed/wall,
 /area/library)
 "bwi" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/turf/open/floor/plating,
-/area/library)
+/obj/structure/closet/firecloset,
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/hallway/primary/central)
 "bwj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Library"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/centcom{
+	name = "Library";
+	opacity = 1
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -46080,8 +46153,9 @@
 	req_access_txt = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Library"
+/obj/machinery/door/airlock/centcom{
+	name = "Library";
+	opacity = 1
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -47217,13 +47291,14 @@
 	})
 "byd" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32;
 	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -49554,19 +49629,8 @@
 /area/library)
 "bBM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = -30
-	},
 /obj/machinery/light{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Central Primary Hallway - Port";
-	dir = 4;
-	network = list("SS13")
 	},
 /turf/open/floor/plasteel{
 	dir = 8;
@@ -50487,19 +50551,19 @@
 /turf/open/floor/wood,
 /area/library)
 "bDx" = (
-/obj/structure/chair/comfy/black,
+/obj/machinery/vending/coffee,
 /turf/open/floor/wood,
 /area/library)
 "bDy" = (
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
 /obj/machinery/newscaster{
 	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/library)
 "bDz" = (
@@ -50510,23 +50574,15 @@
 /turf/open/floor/wood,
 /area/library)
 "bDA" = (
-/obj/machinery/vending/coffee,
 /obj/machinery/newscaster{
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/bookbinder,
 /turf/open/floor/wood,
 /area/library)
 "bDB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
+/obj/effect/decal/cleanable/cobweb2,
 /turf/open/floor/wood,
 /area/library)
 "bDC" = (
@@ -50676,7 +50732,7 @@
 	dir = 4
 	},
 /turf/open/floor/goonplaque{
-	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of sentient postcards in a realm of darkness. The station model number is MS-160511"
+	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of sentient postcards in a realm of darkness. The station model number is MSv42A-160516"
 	},
 /area/hallway/primary/port)
 "bDM" = (
@@ -52316,8 +52372,9 @@
 /turf/open/floor/wood,
 /area/library)
 "bGD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	initialize_directions = 11
 	},
 /turf/open/floor/carpet,
 /area/library)
@@ -52337,21 +52394,17 @@
 /turf/open/floor/carpet,
 /area/library)
 "bGG" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
-	initialize_directions = 11
+/obj/machinery/camera/autoname{
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/carpet,
 /area/library)
 "bGH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+	dir = 10
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Library"
-	},
-/turf/open/floor/wood,
+/turf/open/floor/carpet,
 /area/library)
 "bGI" = (
 /obj/structure/cable/yellow{
@@ -53721,7 +53774,12 @@
 	},
 /area/library)
 "bIB" = (
-/obj/machinery/bookbinder,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
 /turf/open/floor/wood,
 /area/library)
 "bIC" = (
@@ -54551,15 +54609,11 @@
 	name = "\improper Auxiliary Restrooms"
 	})
 "bJY" = (
-/obj/structure/bookcase{
-	name = "bookcase (Non-Fiction)"
-	},
+/obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
 /area/library)
 "bJZ" = (
-/obj/structure/bookcase{
-	name = "bookcase (Fiction)"
-	},
+/obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood,
 /area/library)
 "bKa" = (
@@ -54571,14 +54625,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bKb" = (
-/obj/item/device/camera_film{
-	pixel_y = 9
-	},
-/obj/item/device/camera_film{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/structure/table/wood,
+/obj/machinery/hologram/holopad,
 /turf/open/floor/wood,
 /area/library)
 "bKc" = (
@@ -54586,16 +54633,11 @@
 /turf/open/floor/wood,
 /area/library)
 "bKd" = (
-/obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
 /obj/structure/table/wood,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /turf/open/floor/wood,
 /area/library)
 "bKe" = (
@@ -55504,6 +55546,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
 /area/library)
 "bLH" = (
@@ -55532,21 +55575,33 @@
 /turf/open/floor/wood,
 /area/library)
 "bLK" = (
-/obj/structure/table/wood,
-/obj/structure/noticeboard{
-	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
-	name = "requests board";
-	pixel_x = 32;
-	pixel_y = 0
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = -30
 	},
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/wood,
-/area/library)
-"bLL" = (
-/obj/structure/closet/firecloset,
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
+/area/hallway/primary/central)
+"bLL" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 27
+	},
+/obj/structure/table/wood,
+/obj/item/device/camera_film{
+	pixel_y = 9
+	},
+/obj/item/device/camera_film{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
 /area/library)
 "bLM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -56472,15 +56527,11 @@
 	name = "Port Maintenance"
 	})
 "bNr" = (
-/obj/structure/bookcase{
-	name = "bookcase (Religious)"
-	},
+/obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
 /area/library)
 "bNs" = (
-/obj/structure/bookcase{
-	name = "bookcase (Adult)"
-	},
+/obj/structure/bookcase/random/adult,
 /turf/open/floor/wood,
 /area/library)
 "bNt" = (
@@ -56493,9 +56544,7 @@
 /turf/open/floor/carpet,
 /area/library)
 "bNu" = (
-/obj/structure/bookcase{
-	name = "bookcase (Reference)"
-	},
+/obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
 /area/library)
 "bNv" = (
@@ -56516,16 +56565,16 @@
 /turf/open/floor/wood,
 /area/library)
 "bNx" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4;
-	pixel_x = -32;
+/obj/structure/table/wood,
+/obj/structure/noticeboard{
+	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
+	dir = 8;
+	name = "requests board";
+	pixel_x = 32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/wood,
 /area/library)
 "bNy" = (
 /obj/item/stack/sheet/rglass{
@@ -57442,6 +57491,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
 /area/library)
 "bOU" = (
@@ -57492,12 +57542,15 @@
 /area/library)
 "bOZ" = (
 /obj/machinery/light/small,
-/obj/machinery/hologram/holopad,
+/obj/machinery/photocopier{
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/library)
 "bPa" = (
-/obj/machinery/light_switch{
-	pixel_y = -28
+/obj/machinery/newscaster{
+	pixel_x = -1;
+	pixel_y = -29
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -57506,13 +57559,17 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/table/wood,
+/obj/item/weapon/clipboard,
+/obj/item/device/taperecorder,
+/obj/item/device/tape,
 /turf/open/floor/wood,
 /area/library)
 "bPc" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel{
-	icon_state = "vault"
-	},
+/obj/structure/easel,
+/obj/item/weapon/canvas/twentythreeXtwentythree,
+/obj/item/weapon/canvas/twentythreeXtwentythree,
+/turf/open/floor/wood,
 /area/library)
 "bPd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -59299,6 +59356,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/pen,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
 /area/library)
 "bSb" = (
@@ -59344,15 +59402,17 @@
 /obj/structure/table/wood,
 /obj/item/weapon/dice/d20,
 /obj/item/weapon/dice,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/open/floor/wood,
 /area/library)
 "bSh" = (
 /obj/structure/cult/tome,
 /obj/machinery/newscaster{
-	pixel_x = -32;
+	pixel_x = -30;
 	pixel_y = 0
 	},
 /obj/item/clothing/under/suit_jacket/red,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel{
 	icon_state = "cult";
 	dir = 2
@@ -59907,21 +59967,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bSU" = (
-/obj/structure/closet/crate{
-	desc = "It's a storage unit for kitchen clothes and equipment.";
-	name = "Kitchen Crate"
-	},
-/obj/item/clothing/head/chefhat,
-/obj/item/clothing/under/rank/chef,
-/obj/item/weapon/storage/box/mousetraps{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/clothing/under/waiter,
-/obj/item/clothing/under/waiter,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/structure/closet/chefcloset,
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -61124,8 +61170,8 @@
 /turf/open/floor/wood,
 /area/library)
 "bUM" = (
-/obj/item/toy/cards/deck,
 /obj/structure/table/wood,
+/obj/item/weapon/storage/crayons,
 /turf/open/floor/wood,
 /area/library)
 "bUN" = (
@@ -61691,10 +61737,17 @@
 "bVL" = (
 /obj/structure/table/wood,
 /obj/machinery/light,
-/obj/item/toy/cards/deck/cas,
 /obj/item/toy/cards/deck/cas/black{
 	pixel_x = -2;
 	pixel_y = 6
+	},
+/obj/item/toy/cards/deck{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/toy/cards/deck/cas{
+	pixel_x = -1;
+	pixel_y = 2
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -91042,31 +91095,27 @@
 "cPb" = (
 /obj/item/candle,
 /obj/machinery/light_switch{
-	pixel_x = 6;
+	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/cobweb2,
 /obj/structure/table/wood,
-/obj/machinery/button/door{
-	id = "chapel_shutters";
-	name = "chapel shutters control";
-	pixel_x = -6;
-	pixel_y = 25;
-	req_access_txt = "0"
-	},
 /turf/open/floor/plasteel{
 	icon_state = "vault"
 	},
 /area/chapel/main)
 "cPc" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chapel_shutters";
-	name = "chapel shutters"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/chapel/main)
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel{
+	icon_state = "neutral";
+	dir = 1
+	},
+/area/hallway/primary/central)
 "cPd" = (
 /obj/structure/table,
 /obj/item/candle,
@@ -120001,8 +120050,8 @@ bmc
 bdr
 bpS
 bsj
-buz
-bwi
+apI
+bwh
 bye
 bzZ
 bBI
@@ -120014,7 +120063,7 @@ bJY
 bLH
 bNs
 bOU
-bwi
+bwh
 bSb
 bTt
 bUK
@@ -120258,13 +120307,13 @@ bmd
 bnY
 bpS
 bsj
-buz
+avT
 bwj
-byf
-byf
-byf
-byf
-byf
+bFa
+bFa
+bFa
+bFa
+bFa
 bGD
 bFa
 bFa
@@ -120772,9 +120821,9 @@ bmf
 bbS
 bpS
 bsj
-buz
-bwi
-byh
+awY
+bwh
+azv
 byh
 bwh
 bDx
@@ -120785,7 +120834,7 @@ bJZ
 bBI
 bNu
 bBI
-bwi
+bwh
 bSe
 bSd
 bDw
@@ -121037,13 +121086,13 @@ bwh
 bDy
 byf
 bGF
-bBI
+bIA
 bJZ
 bBI
 bNu
 bOX
 bwh
-bSf
+bPc
 bTv
 bUN
 bSd
@@ -121288,13 +121337,13 @@ bqb
 bsj
 buJ
 bwh
-byi
+aAQ
 bAa
 bBK
 bBI
 byf
-bGF
-bBI
+bGH
+bIB
 bKa
 bLI
 bNv
@@ -121550,9 +121599,9 @@ bAb
 bwh
 bDz
 byf
-bGF
+byf
 bBI
-bKb
+bSf
 bBI
 bBI
 bOZ
@@ -121741,7 +121790,7 @@ aaa
 aaf
 aaa
 aaa
-aaQ
+aaa
 aax
 aax
 aax
@@ -121807,8 +121856,8 @@ bwh
 bwh
 bDA
 byf
-bGF
-bBI
+byf
+bKb
 bKc
 bLJ
 bBI
@@ -122063,13 +122112,13 @@ byi
 bAa
 bBL
 bDB
-bFa
+aOo
 bGG
-bIA
+bDC
 bKd
-bLK
-bNw
-bPb
+bBI
+bBI
+bBI
 bQy
 bSi
 bTy
@@ -122316,17 +122365,17 @@ bpS
 bsu
 buz
 bwh
-byj
+aGc
 bAb
 bwh
-bDC
-byf
-bGF
-bIB
 bwh
 bwh
 bwh
 bwh
+bLL
+bNx
+bNw
+bPb
 bwh
 bSj
 bTz
@@ -122577,13 +122626,13 @@ bwh
 bwh
 bwh
 bwi
-bwj
-bGH
-bwi
+bbn
+aXs
 bwh
-bLL
-bNx
-bPc
+bwh
+bwh
+bwh
+bwh
 bwh
 bwh
 bwh
@@ -122835,8 +122884,8 @@ bAc
 bBM
 bwm
 bFb
-buM
 bwm
+bLK
 bFb
 bwm
 bwm
@@ -125199,10 +125248,10 @@ cLJ
 cKP
 cNv
 bVE
-cPc
+cOU
 cPT
 cQB
-cPc
+cOU
 cOU
 cSd
 cSB
@@ -125462,7 +125511,7 @@ cQC
 cPd
 cOU
 cOU
-cPc
+cOU
 cOU
 cOU
 aaa
@@ -127471,7 +127520,7 @@ bQM
 bSu
 bTL
 bNI
-bWb
+cPc
 bXr
 bYE
 cad
@@ -138238,7 +138287,7 @@ avN
 aXR
 aZH
 baX
-bcM
+apF
 bee
 bfH
 aXR
