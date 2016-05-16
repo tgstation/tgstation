@@ -128,6 +128,21 @@
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
 	if(exotic_blood)
 		C.reagents.add_reagent(exotic_blood, 80)
+
+	var/obj/item/organ/heart/heart = C.getorganslot("heart")
+	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
+	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+
+	if(NOBLOOD in specflags && heart)
+		heart.Remove(C)
+		qdel(heart)
+	if(NOBREATH in specflags && lungs)
+		lungs.Remove(C)
+		qdel(lungs)
+	if(NOHUNGER in specflags && appendix)
+		appendix.Remove(C)
+		qdel(appendix)
+
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
@@ -471,7 +486,13 @@
 	H.apply_overlay(BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
-	return
+	if(NOBREATH in specflags)
+		H.setOxyLoss(0)
+		H.losebreath = 0
+
+		var/takes_crit_damage = (!(NOCRITDAMAGE in specflags))
+		if((H.health < config.health_threshold_crit) && takes_crit_damage)
+			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1184,11 +1205,10 @@
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			if(!lungs)
 				H.adjustOxyLoss(1)
-			H.failed_last_breath = 1
-		else
+		else if(!(NOCRITDAMAGE in specflags))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-			H.failed_last_breath = 1
 
+		H.failed_last_breath = 1
 		H.throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0

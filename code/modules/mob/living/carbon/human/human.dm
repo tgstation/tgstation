@@ -843,18 +843,19 @@
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		C.cpr_time = world.time
+		add_logs(src, C, "CPRed")
+
 		if(they_breathe && they_lung)
-			C.cpr_time = world.time
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
 			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
-			add_logs(src, C, "CPRed")
 		else if(they_breathe && !they_lung)
-			C << "<span class='unconcious'>You feel a breath of fresh air... \
-				but it doesn't go anywhere...</span>"
+			C << "<span class='unconscious'>You feel a breath of fresh air... \
+				but you don't feel any better...</span>"
 		else
-			C << "<span class='unconcious'>You feel a breath of fresh air... \
+			C << "<span class='unconscious'>You feel a breath of fresh air... \
 				which is a sensation you don't recognise...</span>"
 
 /mob/living/carbon/human/generateStaticOverlay()
@@ -1005,14 +1006,32 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
+	CHECK_DNA_AND_SPECIES(src)
+
 	if(admin_revive)
 		regenerate_limbs()
-	if(!getorganslot("lungs"))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
-	if(!getorganslot("tongue"))
-		var/obj/item/organ/tongue/T = new()
-		T.Insert(src)
+
+		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+			var/obj/item/organ/lungs/L = new()
+			L.Insert(src)
+
+		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
+			var/obj/item/organ/heart/H = new()
+			H.Insert(src)
+
+		if(!getorganslot("tongue"))
+			var/obj/item/organ/tongue/T
+
+			for(var/obj/item/organ/tongue/tongue_type in \
+				dna.species.mutant_organs)
+				T = new tongue_type()
+				T.Insert(src)
+
+			// if they have no mutant tongues, give them a regular one
+			if(!T)
+				T = new()
+				T.Insert(src)
+
 	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0
