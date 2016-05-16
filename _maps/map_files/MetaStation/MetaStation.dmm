@@ -33833,9 +33833,16 @@
 	dir = 8;
 	layer = 2.9
 	},
+/obj/item/weapon/circuitboard/computer/borgupload{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/weapon/circuitboard/computer/aiupload{
+	pixel_x = 2;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 4
+	icon_state = "dark"
 	},
 /area/storage/tech)
 "bcK" = (
@@ -33853,7 +33860,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "vault";
+	dir = 8
 	},
 /area/storage/tech)
 "bcL" = (
@@ -34590,9 +34598,20 @@
 	dir = 8;
 	layer = 2.9
 	},
+/obj/item/weapon/circuitboard/computer/crew{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/weapon/circuitboard/computer/card{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/weapon/circuitboard/computer/communications{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
+	icon_state = "dark"
 	},
 /area/storage/tech)
 "bea" = (
@@ -35511,9 +35530,16 @@
 	dir = 8;
 	layer = 2.9
 	},
+/obj/item/weapon/circuitboard/computer/robotics{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/weapon/circuitboard/computer/mecha_control{
+	pixel_x = 1;
+	pixel_y = -1
+	},
 /turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 1
+	icon_state = "dark"
 	},
 /area/storage/tech)
 "bfE" = (
@@ -35521,7 +35547,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "vault";
+	dir = 8
 	},
 /area/storage/tech)
 "bfF" = (
@@ -74712,6 +74739,10 @@
 /obj/item/weapon/folder/white,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	layer = 2.9;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
