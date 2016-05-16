@@ -92,6 +92,8 @@
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
+		feedback_add_details("cargo_imports",
+			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", "cargo")
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
