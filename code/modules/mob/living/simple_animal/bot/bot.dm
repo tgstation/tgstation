@@ -61,6 +61,7 @@
 	var/new_destination		// pending new destination (waiting for beacon response)
 	var/destination			// destination description tag
 	var/next_destination	// the next destination in the patrol route
+	var/shuffle = FALSE		// If we should shuffle our adjacency checking
 
 	var/blockcount = 0		//number of times retried a blocked path
 	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
@@ -375,6 +376,9 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	if(!T)
 		return
 	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
+	if(shuffle)	//If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
+		adjacent = shuffle(adjacent)
+		shuffle = FALSE
 	for(var/scan in adjacent)//Let's see if there's something right next to us first!
 		if(check_bot(scan))	//Is there another bot there? Then let's just skip it
 			continue
@@ -389,8 +393,6 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 				if(final_result)
 					return final_result
 	for (var/scan in shuffle(view(scan_range, src))-adjacent) //Search for something in range!
-		if(check_bot(scan))
-			continue
 		var/final_result = checkscan(scan,scan_type,old_target)
 		if(final_result)
 			return final_result
@@ -412,7 +414,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/turf/T = get_turf(targ)
 	if(T)
 		for(var/C in T.contents)
-			if(istype(C,src.type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+			if(istype(C,type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
 				return 1	//Let's abort if we find a bot so we dont have to keep rechecking
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.

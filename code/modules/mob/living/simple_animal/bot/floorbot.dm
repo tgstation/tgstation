@@ -224,8 +224,6 @@
 				bot_patrol()
 
 	if(target)
-		if(check_bot(target))	//Target is not defined at the parent.
-			return
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
@@ -245,9 +243,11 @@
 
 		if(loc == target || loc == target.loc)
 			if(check_bot(target))	//Target is not defined at the parent
-				target = null
-				path = list()
-				return
+				shuffle = TRUE
+				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
+					target = null
+					path = list()
+					return
 			if(istype(target, /turf/) && emagged < 2)
 				repair(target)
 			else if(emagged == 2 && istype(target,/turf/open/floor))
