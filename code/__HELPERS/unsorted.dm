@@ -438,6 +438,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //		mob_list.Add(M)
 	return moblist
 
+// Finds ALL mobs on turfs in line of sight. Similar to "in dview", but catches mobs that are not on a turf (e.g. inside a locker or such).
+/proc/get_all_mobs_in_dview(var/turf/T, var/range = world.view, var/list/ignore_types = list())
+	. = list()
+	var/list/can_see = dview(range, T)
+	for(var/mob/M in can_see)
+		if(is_type_in_list(M, ignore_types))
+			continue
+		. += M
+	for(var/mob/M in mob_list) //Got the ones in vision, now let's go for the ones not on a turf.
+		if(M.z == 0) //Mobs not on a turf will have XYZ = 0,0,0. They also won't show up in dview() so we're not checking anything twice.
+			if(is_type_in_list(M, ignore_types))
+				continue
+			if(get_turf(M) in can_see) //Checking the mob's turf now, since those are it's "true" coordinates (plus dview() did pick up on turfs, so we can check using that).
+				. += M
+
+// Finds ALL mobs in range, including those within something's contents (e.g. inside a locker or such)
+/proc/get_all_mobs_in_range(var/turf/T, var/range = world.view, var/list/ignore_types = list())
+	. = list()
+	for(var/mob/M in mob_list)
+		if(is_type_in_list(M, ignore_types))
+			continue
+		var/turf/mob_turf = get_turf(M)
+		if(!mob_turf || mob_turf.z != T.z) //because get_dist doesn't account for z levels
+			continue
+		if(get_dist(T, mob_turf) <= range) //here we are checking the distance on the mob's turf and not the mob itself, since mobs in a locker or such will have XYZ = 0,0,0
+			. += M
+
 //E = MC^2
 /proc/convert2energy(var/M)
 	var/E = M*(SPEED_OF_LIGHT_SQ)

@@ -10,14 +10,10 @@
 	var/turf/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
-	for(var/mob/living/M in living_mob_list) //A wise man said this would be faster than recursively checking everything in view(7) so it catches people in lockers/mechs/bodybags etc
-		if(isbrain(M) || isAI(M))
+	for(var/mob/living/M in get_all_mobs_in_dview(flashbang_turf, ignore_types = list(/mob/living/carbon/brain, /mob/living/silicon/ai)))
+		if(M.isVentCrawling()) //possibly more exceptions to be added in the future
 			continue
-		var/turf/mob_turf = get_turf(M)
-		if(!mob_turf || mob_turf.z != flashbang_turf.z) //because get_dist doesn't account for z levels
-			continue
-		if(get_dist(flashbang_turf, mob_turf) <= 7)
-			bang(flashbang_turf, M)
+		bang(flashbang_turf, M)
 
 	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
 		var/damage = round(15/(get_dist(B,get_turf(src))+1))
@@ -34,10 +30,11 @@
 
 //Checking for protections
 	var/eye_safety = M.eyecheck()
-	var/ear_safety = M.earprot() * 2 //some arbitrary measurement of ear protection, I guess? doesn't even matter if it goes above 1
+	var/ear_safety = M.earprot() //some arbitrary measurement of ear protection, I guess? doesn't even matter if it goes above 1
 
 	if(ishuman(M))
-		if(istype(M:head, /obj/item/clothing/head/helmet))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.head, /obj/item/clothing/head/helmet))
 			ear_safety += 1
 	if(M_HULK in M.mutations)
 		ear_safety += 1
