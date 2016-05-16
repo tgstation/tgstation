@@ -75,7 +75,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || !usr.canmove || usr.restrained()|| !usr.is_literate())
+	if(usr.incapacitated() || !usr.is_literate())
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
