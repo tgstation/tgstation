@@ -406,11 +406,10 @@
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
 	say_mod = "rattles"
-	need_nutrition = 0
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 
 /*
@@ -455,13 +454,12 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE)
+	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
-	need_nutrition = 0 //Hard to eat through a helmet
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
@@ -509,7 +507,7 @@ var/global/list/synth_flesh_disguises = list()
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER) //all of these + whatever we inherit from the real species
+	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
 	safe_oxygen_min = 0
 	safe_toxins_min = 0
 	safe_toxins_max = 0
@@ -518,9 +516,8 @@ var/global/list/synth_flesh_disguises = list()
 	SA_sleep_min = 0
 	dangerous_existence = 1
 	blacklisted = 1
-	need_nutrition = 0 //beep boop robots do not need sustinance
 	meat = null
-	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()
+	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/image/damaged_synth_flesh = null //an image to display when we're below disguise_fail_health
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
@@ -705,7 +702,6 @@ SYNDICATE BLACK OPS
 	name = "Corporate Agent"
 	id = "agent"
 	hair_alpha = 0
-	need_nutrition = 0//They don't need to eat
 	say_mod = "declares"
 	speedmod = -2//Fast
 	brutemod = 0.7//Tough against firearms
@@ -719,5 +715,5 @@ SYNDICATE BLACK OPS
 	attack_sound = "sound/weapons/resonator_blast.ogg"
 	blacklisted = 1
 	use_skintones = 0
-	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER)
+	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
