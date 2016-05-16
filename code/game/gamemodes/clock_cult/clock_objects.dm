@@ -55,10 +55,7 @@
 	..()
 
 /obj/item/clockwork/slab/process()
-	if(isliving(loc))
-		for(var/obj/item/clockwork/slab/S in loc.GetAllContents())
-
-		production_cycle++
+	production_cycle++
 	if(production_cycle < SLAB_PRODUCTION_THRESHOLD)
 		return 0
 	var/component_to_generate = pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible") //Possible todo: Generate based on the lowest amount?
