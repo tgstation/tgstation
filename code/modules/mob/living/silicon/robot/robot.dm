@@ -555,7 +555,10 @@
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
-		MOD.install(src, user) //Proc includes a success mesage so we don't need another one
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
