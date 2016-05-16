@@ -33,7 +33,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "R&D Console"
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/rdconsole
+	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
@@ -150,9 +150,22 @@ proc/CallMaterialName(ID)
 		D.loc = src
 		user << "<span class='notice'>You add the disk to the machine!</span>"
 	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
-		..()
-	src.updateUsrDialog()
-	return
+		. = ..()
+	updateUsrDialog()
+
+
+/obj/machinery/computer/rdconsole/deconstruction()
+	if(linked_destroy)
+		linked_destroy.linked_console = null
+		linked_destroy = null
+	if(linked_lathe)
+		linked_lathe.linked_console = null
+		linked_lathe = null
+	if(linked_imprinter)
+		linked_imprinter.linked_console = null
+		linked_imprinter = null
+	..()
+
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!emagged)

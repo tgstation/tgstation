@@ -66,7 +66,7 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
+			add_logs(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
@@ -170,7 +170,8 @@
 	update_icon()
 	return
 
-/obj/item/weapon/flamethrower/CheckParts()
+/obj/item/weapon/flamethrower/CheckParts(list/parts_list)
+	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
 	weldtool.status = 0

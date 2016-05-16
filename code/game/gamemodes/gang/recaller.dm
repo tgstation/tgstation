@@ -228,7 +228,7 @@
 					pointcost = 10
 			if("C4")
 				if(gang.points >= 10)
-					item_type = /obj/item/weapon/c4
+					item_type = /obj/item/weapon/grenade/plastic/c4
 					pointcost = 10
 			if("pen")
 				if((gang.points >= 50) || free_pen)

@@ -79,7 +79,7 @@
 			if(!A.secondsElectrified)
 				A.secondsElectrified = 30
 				A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-				add_logs(usr, A, "electrified", addition="at [A.x],[A.y],[A.z]")
+				add_logs(usr, A, "electrified")
 				spawn(10)
 					if(A)
 						while (A.secondsElectrified > 0)
@@ -136,7 +136,7 @@
 				if(A.secondsElectrified != -1)
 					A.secondsElectrified = -1
 					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-					add_logs(usr, A, "electrified", addition="at [A.x],[A.y],[A.z]")
+					add_logs(usr, A, "electrified")
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.

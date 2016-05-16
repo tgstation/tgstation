@@ -41,6 +41,12 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
+
 /mob/living/silicon/Destroy()
 	radio = null
 	aicamera = null

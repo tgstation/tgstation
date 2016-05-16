@@ -117,7 +117,8 @@
 	var/see_ghosts = 0 //for the spoop of it
 
 
-/obj/item/device/camera/CheckParts()
+/obj/item/device/camera/CheckParts(list/parts_list)
+	..()
 	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
 	if(C)
 		pictures_max = C.pictures_max

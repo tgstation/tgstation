@@ -23,7 +23,7 @@
 	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
 	aggressiveness = 3
-	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
 	visor_flags_inv = 0
 
 /obj/item/clothing/mask/gas/sechailer/cyborg

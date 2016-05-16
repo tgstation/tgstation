@@ -34,18 +34,20 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/protolathe(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	materials = new(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_PLASMA=1, MAT_URANIUM=1, MAT_BANANIUM=1))
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
+	B.apply_default_parts(src)
 
 	reagents.my_atom = src
+
+/obj/item/weapon/circuitboard/machine/protolathe
+	name = "circuit board (Protolathe)"
+	build_path = /obj/machinery/r_n_d/protolathe
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
 /obj/machinery/r_n_d/protolathe/Destroy()
 	qdel(materials)
@@ -77,6 +79,11 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()
+	..()
+
+
+/obj/machinery/r_n_d/protolathe/disconnect_console()
+	linked_console.linked_lathe = null
 	..()
 
 /obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)

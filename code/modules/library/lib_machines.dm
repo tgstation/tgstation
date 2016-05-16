@@ -19,7 +19,7 @@
 	icon_state = "oldcomp"
 	icon_screen = "library"
 	icon_keyboard = null
-	circuit = /obj/item/weapon/circuitboard/libraryconsole
+	circuit = /obj/item/weapon/circuitboard/computer/libraryconsole
 	var/screenstate = 0
 	var/title
 	var/category = "Any"

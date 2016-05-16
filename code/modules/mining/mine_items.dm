@@ -53,7 +53,7 @@
 /obj/machinery/computer/shuttle/mining
 	name = "Mining Shuttle Console"
 	desc = "Used to call and send the mining shuttle."
-	circuit = /obj/item/weapon/circuitboard/mining_shuttle
+	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1
@@ -428,6 +428,16 @@
 	density = 1
 	pixel_y = -32
 
+/obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
+						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20/W.toolspeed, target = src))
+			new /obj/item/device/gps(src.loc)
+			qdel(src)
+			return ..()
+
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
 
@@ -447,6 +457,13 @@
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This ones seen better days."
+
+/obj/machinery/smartfridge/survival_pod/empty/New()
+	return()
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
@@ -474,6 +491,22 @@
 	anchored = 1
 	density = 1
 	var/arbitraryatmosblockingvar = TRUE
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 5
+
+/obj/structure/fans/deconstruct()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	..()
+
+/obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
+						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20/W.toolspeed, target = src))
+			deconstruct()
+			return ..()
 
 /obj/structure/fans/tiny
 	name = "tiny fan"
@@ -481,6 +514,7 @@
 	layer = TURF_LAYER + 0.8
 	density = 0
 	icon_state = "fan_tiny"
+	buildstackamount = 2
 
 /obj/structure/fans/New(loc)
 	..()

@@ -13,7 +13,7 @@
 /obj/machinery/telepad/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
+	component_parts += new /obj/item/weapon/circuitboard/machine/telesci_pad(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)

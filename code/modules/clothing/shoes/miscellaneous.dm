@@ -115,6 +115,12 @@
 	put_on_delay = 40
 	can_hold_items = 1
 
+/obj/item/clothing/shoes/workboots/mining
+	name = "mining boots"
+	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
+	icon_state = "explorer"
+	burn_state = FIRE_PROOF
+
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."

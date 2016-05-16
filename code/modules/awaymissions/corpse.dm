@@ -365,6 +365,11 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
 
+/obj/effect/mob_spawn/human/miner/explorer
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	gloves = /obj/item/clothing/gloves/color/black
+	back = /obj/item/weapon/storage/backpack/security
+	shoes = /obj/item/clothing/shoes/jackboots
 
 /obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman
@@ -388,11 +393,26 @@
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
 	roundstart = FALSE
-	mob_name = "Space Bartender"
-	name = "sleeper"
+	random = TRUE
+	name = "bartender sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
+
+/obj/effect/mob_spawn/human/beach
+	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform = /obj/item/clothing/under/shorts/red
+	pocket1 = /obj/item/weapon/storage/wallet/random
+
+/obj/effect/mob_spawn/human/beach/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	mob_name = "Beach Bum"
+	name = "beach bum sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a beach bum!"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
@@ -443,6 +463,17 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/wwii
+	name = "World War II Reenactor"
+	uniform = /obj/item/clothing/under/wwii
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas
+	helmet = /obj/item/clothing/head/helmet/stahlhelm
+	back = /obj/item/weapon/storage/backpack/security
+	has_id = 0
+
 
 /////////////////Spooky Undead//////////////////////
 

@@ -73,16 +73,16 @@
 /obj/machinery/recycler/lumbermill
 	name = "lumbermill saw"
 	desc = "Faster then the cartoons!"
-	emagged = 2 //Always grinds people
+	emagged = 2 //Always gibs people
+	item_recycle_sound = 'sound/weapons/chainsawhit.ogg'
 
-/obj/machinery/recycler/lumbermill/recycle(obj/item/weapon/grown/log/L, sound = 1)
-	L.loc = src.loc
+/obj/machinery/recycler/lumbermill/recycle_item(obj/item/weapon/grown/log/L)
 	if(!istype(L))
 		return
-	if(sound)
-		playsound(src.loc, 'sound/weapons/chainsawhit.ogg', 100, 1)
-	new L.plank_type(src.loc, 1 + round(L.seed.potency / 25))
-	qdel(L)
+	else
+		var/potency = L.seed.potency
+		..()
+		new L.plank_type(src.loc, 1 + round(potency / 25))
 
 /mob/living/simple_animal/chicken/rabbit/normal
 	icon_state = "b_rabbit"

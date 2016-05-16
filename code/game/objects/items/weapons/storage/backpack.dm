@@ -351,6 +351,10 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/New()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie
 	name = "suspicious looking dufflebag"
@@ -484,8 +488,14 @@
 	..()
 	contents = list()
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/c4(src)
+		new /obj/item/weapon/grenade/plastic/c4(src)
 	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/x4/New()
+	..()
+	contents = list()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/grenade/plastic/x4(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
 	desc = "A large dufflebag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."

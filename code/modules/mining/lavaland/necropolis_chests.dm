@@ -15,8 +15,7 @@
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
 		if(2)
-			new /obj/item/clothing/suit/space/cult(src)
-			new /obj/item/clothing/head/helmet/space/cult(src)
+			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
 			new /obj/item/device/soulstone/anybody(src)
 		if(4)
@@ -32,11 +31,11 @@
 			new /obj/item/clothing/suit/cultrobes(src)
 			new /obj/item/weapon/bedsheet/cult(src)
 		if(9)
-			new /obj/item/organ/internal/brain/alien(src)
+			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/internal/heart/cursed(src)
+			new /obj/item/organ/heart/cursed(src)
 		if(11)
-			new /obj/vehicle/lavaboat/dragon(src)
+			new /obj/item/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
@@ -87,6 +86,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
+		feedback_add_details("wisp_lantern","F") // freed
 
 	else
 		if(wisp.orbiting)
@@ -100,6 +100,7 @@
 			wisp.loc = src
 			user << "You return the wisp to the latern."
 			icon_state = "lantern-blue"
+			feedback_add_details("wisp_lantern","R") // returned
 
 /obj/item/device/wisp_lantern/New()
 	..()
@@ -143,6 +144,7 @@
 
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 	user.forceMove(get_turf(linked))
+	feedback_add_details("warp_cube","[src.type]")
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 
 /obj/item/device/warp_cube/red
@@ -215,6 +217,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
+		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in their place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -364,14 +367,14 @@
 	w_class = 3
 	burn_state = LAVA_PROOF
 
-/datum/table_recipe/oar
+/datum/crafting_recipe/oar
 	name = "goliath bone oar"
 	result = /obj/item/weapon/oar
 	reqs = list(/obj/item/stack/sheet/bone = 2)
 	time = 15
 	category = CAT_PRIMAL
 
-/datum/table_recipe/boat
+/datum/crafting_recipe/boat
 	name = "goliath hide boat"
 	result = /obj/vehicle/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
@@ -379,6 +382,19 @@
 	category = CAT_PRIMAL
 
 //Dragon Boat
+
+
+/obj/item/ship_in_a_bottle
+	name = "ship in a bottle"
+	desc = "A tiny ship inside a bottle."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "ship_bottle"
+
+/obj/item/ship_in_a_bottle/attack_self(mob/user)
+	user << "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	new /obj/vehicle/lavaboat/dragon(get_turf(src))
+	qdel(src)
 
 /obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"

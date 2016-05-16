@@ -38,7 +38,8 @@
 	else
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		var/newgirder = break_wall()
-		transfer_fingerprints_to(newgirder)
+		if(newgirder) //maybe we don't /want/ a girder!
+			transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))

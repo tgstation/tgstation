@@ -54,7 +54,12 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
 			if(!target.ckey)
 				for(var/mob/dead/observer/ghost in player_list)
@@ -192,17 +197,6 @@
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					new_mob.languages |= HUMAN
 
-					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
-					switch(alien_caste)
-						if("Hunter")
-							new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-						if("Sentinel")
-							new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-						if("Drone")
-							new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
-						else
-							new_mob = new /mob/living/carbon/alien/larva(M.loc)
-					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
@@ -276,7 +270,7 @@
 						H.real_name = H.dna.species.random_name(H.gender,1)
 					H.update_body()
 					H.update_hair()
-					H.update_mutcolor()
+					H.update_body_parts()
 					H.dna.update_dna_identity()
 				else
 					return

@@ -61,7 +61,7 @@
 
 
 	if(ishuman(user))
-		if(stat == DEAD)
+		if(stat == DEAD || status_flags & GODMODE)
 			..()
 			return
 		if(user.get_active_hand())

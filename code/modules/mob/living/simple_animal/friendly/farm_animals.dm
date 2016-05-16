@@ -21,11 +21,12 @@
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 40
+	maxHealth = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = 0
 	stop_automated_movement_when_pulled = 1
-	var/obj/udder/udder = null
+	var/obj/item/udder/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
 	udder = new()
@@ -98,7 +99,8 @@
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 50
-	var/obj/udder/udder = null
+	maxHealth = 50
+	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/cow/New()
@@ -157,7 +159,8 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
-	health = 1
+	health = 3
+	maxHealth = 3
 	ventcrawler = 2
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -206,7 +209,8 @@ var/global/chicken_count = 0
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
-	health = 10
+	health = 15
+	maxHealth = 15
 	ventcrawler = 2
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
@@ -274,28 +278,30 @@ var/global/chicken_count = 0
 	else
 		SSobj.processing.Remove(src)
 
-/obj/udder
 
-/obj/udder/New()
+/obj/item/udder
+	name = "udder"
+
+/obj/item/udder/New()
 	reagents = new(50)
 	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)
 
-/obj/udder/proc/generateMilk()
+/obj/item/udder/proc/generateMilk()
 	if(prob(5))
 		reagents.add_reagent("milk", rand(5, 10))
 
-/obj/udder/proc/milkAnimal(obj/O, mob/user)
+/obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/weapon/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
 		user << "<span class='danger'>[O] is full.</span>"
 		return
-	var/transfered = reagents.trans_id_to(G, "milk", rand(5,10))
+	var/transfered = reagents.trans_to(O, rand(5,10))
 	if(transfered)
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"
 
-/obj/udder/Destroy()
+/obj/item/udder/Destroy()
 	qdel(reagents)
 	return ..()
