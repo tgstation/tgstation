@@ -18,7 +18,7 @@ public class DMIException extends Exception {
     @Override public String getMessage() {
         if(desc != null)
             return "\"" + desc[line] + "\" - " + super.getMessage();
-        
+
         return super.getMessage();
     }
 }

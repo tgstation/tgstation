@@ -1,44 +1,44 @@
 macro "macro"
-	elem 
+	elem
 		name = "North+REP"
 		command = ".north"
 		is-disabled = false
-	elem 
+	elem
 		name = "South+REP"
 		command = ".south"
 		is-disabled = false
-	elem 
+	elem
 		name = "East+REP"
 		command = ".east"
 		is-disabled = false
-	elem 
+	elem
 		name = "West+REP"
 		command = ".west"
 		is-disabled = false
-	elem 
+	elem
 		name = "Northeast+REP"
 		command = ".northeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "Northwest+REP"
 		command = ".northwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "Southeast+REP"
 		command = ".southeast"
 		is-disabled = false
-	elem 
+	elem
 		name = "Southwest+REP"
 		command = ".southwest"
 		is-disabled = false
-	elem 
+	elem
 		name = "Center+REP"
 		command = ".center"
 		is-disabled = false
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"

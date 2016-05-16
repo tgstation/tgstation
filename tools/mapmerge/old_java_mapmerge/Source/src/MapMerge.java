@@ -88,7 +88,7 @@ public class MapMerge {
 			String to_save = selected_map;
 			String[] passInto = { "-clean", backup_map, edited_map, to_save };
 			MapPatcher.main(passInto);
-			
+
 			// Will try to fix when I have time ~CorruptComputer
 			/*try{
 				Process process = new ProcessBuilder("dmm2tgm\\dmm2tgm.exe", selected_map).start();
@@ -102,7 +102,7 @@ public class MapMerge {
 				}
 			}
 			*/
-			
+
 		}
 	}
 }

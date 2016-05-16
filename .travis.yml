@@ -45,7 +45,7 @@ before_script:
 
 script:
   - (! grep 'step_[xy]' _maps/**/*.dmm)
-  - md5sum -c - <<< "49bc6b1b9ed56c83cceb6674bd97cb34 *html/changelogs/example.yml"
+  - md5sum -c - <<< "6f3497e2b6e71dfe0dcf1fe21ac09b0c *html/changelogs/example.yml"
   - tools/check_filedirs.sh tgstation.dme
   - cd tgui && gulp && cd ..
   - python tools/ss13_genchangelog.py html/changelog.html html/changelogs

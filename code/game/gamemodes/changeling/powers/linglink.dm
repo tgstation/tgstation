@@ -23,7 +23,7 @@
 		return
 	if(target.mind.changeling)
 		user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
-		return	
+		return
 	if(!istype(G))
 		user << "<span class='warning'>We must be tightly grabbing a creature in our active hand to link with them!</span>"
 		return

@@ -17,16 +17,16 @@ public class RGBA {
             s = "0" + s;
         return "#" + s;
     }
-    
+
     @Override public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof RGBA)) return false;
-        
+
         RGBA o = (RGBA) obj;
-        
+
         return r==o.r && g==o.g && b==o.b && a==o.a;
     }
-    
+
     public long toRGBA8888() {
         return (r<<24) | (g<<16) | (b<<8) | a;
     }

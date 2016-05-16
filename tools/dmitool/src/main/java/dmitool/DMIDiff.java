@@ -10,7 +10,7 @@ public class DMIDiff {
     Map<String, IconState> newIconStates;
     Map<String, IconStateDiff> modifiedIconStates = new HashMap<>();
     Set<String> removedIconStates;
-    
+
     DMIDiff() {
         newIconStates = new HashMap<>();
         removedIconStates = new HashSet<>();
@@ -18,30 +18,30 @@ public class DMIDiff {
 
     public DMIDiff(DMI base, DMI mod) {
         if(base.h != mod.h || base.w != mod.w) throw new IllegalArgumentException("Cannot compare non-identically-sized DMIs!");
-        
+
         HashMap<String, IconState> baseIS = new HashMap<>();
         for(IconState is: base.images) {
             baseIS.put(is.name, is);
         }
-        
+
         HashMap<String, IconState> modIS = new HashMap<>();
         for(IconState is: mod.images) {
             modIS.put(is.name, is);
         }
-        
+
         newIconStates = ((HashMap<String, IconState>)modIS.clone());
         for(String s: baseIS.keySet()) {
             newIconStates.remove(s);
         }
-        
+
         removedIconStates = new HashSet<>();
         removedIconStates.addAll(baseIS.keySet());
         removedIconStates.removeAll(modIS.keySet());
-        
+
         Set<String> retainedStates = new HashSet<>();
         retainedStates.addAll(baseIS.keySet());
         retainedStates.retainAll(modIS.keySet());
-        
+
         for(String s: retainedStates) {
             if(!baseIS.get(s).equals(modIS.get(s))) {
                 modifiedIconStates.put(s, new IconStateDiff(baseIS.get(s), modIS.get(s)));
@@ -62,7 +62,7 @@ public class DMIDiff {
             dmi.addIconState(null, newIconStates.get(s));
         }
     }
-    
+
     /**
      * @param other The diff to merge with
      * @param conflictDMI A DMI to add conflicted icon_states to
@@ -76,23 +76,23 @@ public class DMIDiff {
         myTouched.addAll(removedIconStates);
         myTouched.addAll(newIconStates.keySet());
         myTouched.addAll(modifiedIconStates.keySet());
-        
+
         HashSet<String> otherTouched = new HashSet<>();
         otherTouched.addAll(other.removedIconStates);
         otherTouched.addAll(other.newIconStates.keySet());
         otherTouched.addAll(other.modifiedIconStates.keySet());
-        
+
         HashSet<String> bothTouched = (HashSet<String>)myTouched.clone();
         bothTouched.retainAll(otherTouched); // this set now contains the list of icon_states that *both* diffs modified, which we'll put in conflictDMI for manual merge (unless they were deletions
-        
+
         if(Main.VERBOSITY > 0) {
             System.out.println("a: " + Arrays.toString(myTouched.toArray()));
             System.out.println("b: " + Arrays.toString(otherTouched.toArray()));
             System.out.println("both: " + Arrays.toString(bothTouched.toArray()));
         }
-        
+
         HashSet<String> whatHappened = new HashSet<>();
-        
+
         for(String s: bothTouched) {
             String here, there;
             if(removedIconStates.contains(s)) {
@@ -105,7 +105,7 @@ public class DMIDiff {
                 System.out.println("Unknown error; state="+s);
                 here = "???";
             }
-            
+
             if(other.removedIconStates.contains(s)) {
                 there = "removed";
             } else if(other.newIconStates.containsKey(s)) {
@@ -116,10 +116,10 @@ public class DMIDiff {
                 System.out.println("Unknown error; state="+s);
                 there = "???";
             }
-            
+
             whatHappened.add(s + ": " + here + "|" + there);
         }
-        
+
         // Removals
         for(String s: removedIconStates) {
             if(!bothTouched.contains(s)) {
@@ -131,7 +131,7 @@ public class DMIDiff {
                 merged.removedIconStates.add(s);
             }
         }
-        
+
         // Modifications
         for(String s: modifiedIconStates.keySet()) {
             if(!bothTouched.contains(s)) {
@@ -147,7 +147,7 @@ public class DMIDiff {
                 conflictDMI.addIconState(bName + "|" + s, other.modifiedIconStates.get(s).newState);
             }
         }
-        
+
         // Additions
         for(String s: newIconStates.keySet()) {
             if(!bothTouched.contains(s)) {
@@ -163,10 +163,10 @@ public class DMIDiff {
                 conflictDMI.addIconState(bName + s, other.newIconStates.get(s));
             }
         }
-        
+
         return whatHappened;
     }
-    
+
     @Override public String toString() {
         String s = "";
         String t = "\t";

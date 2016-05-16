@@ -59,7 +59,7 @@ public class Main {
             "\t  movement | move | mov | m : [state] should be marked as a movement state\n" +
             "\t  delays L | delay L | del L | d L : use the list L as a comma-separated list of delays (e.g. '1,1,2,2,1')\n" +
             "\t  hotspot H | hs H | h H : use H as the hotspot for this state\n" +
-            "\t  direction D | dir D : replaces D with the image from [in], instead of the entire state. D can be 0-7 or S, N, E, etc. If the state does not already exist, this is ignored\n" + 
+            "\t  direction D | dir D : replaces D with the image from [in], instead of the entire state. D can be 0-7 or S, N, E, etc. If the state does not already exist, this is ignored\n" +
             "";
 
     public static void main(String[] args) throws FileNotFoundException, IOException, DMIException {
@@ -375,7 +375,7 @@ public class Main {
 
                 //image insertion
                 if(replaceDir != null || replaceFrame != null) {
-                    
+
                     IconState targetIs = toImportTo.getIconState(stateName);
                     if(targetIs == null) {
                         System.out.println("'direction' or 'frame' specified and no icon state '" + stateName + "' found, aborting!");
@@ -385,9 +385,9 @@ public class Main {
                         System.out.println("'direction' or 'frame' specified and imported is empty, aborting!");
                         return;
                     }
-                    
+
                     if(!noDup) targetIs = targetIs.clone();
-                    
+
                     int dirToReplace, frameToReplace;
                     if(replaceDir != null && replaceFrame != null) {
                         frameToReplace = parseFrame(replaceFrame, targetIs);
@@ -402,7 +402,7 @@ public class Main {
                         frameToReplace = parseFrame(replaceFrame, targetIs);
                         targetIs.insertFrame(frameToReplace, is.images);
                     }
-                    
+
                     if(!noDup) toImportTo.addIconState(null, targetIs);
                 }
                 else {

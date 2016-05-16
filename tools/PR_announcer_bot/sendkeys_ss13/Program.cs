@@ -47,7 +47,7 @@ namespace sendkeys_ss13
         public static IrcClient irc = new IrcClient();
 
         public static int IRCReconnectAttempt = 0;
-        public static void Main(string[]args) 
+        public static void Main(string[]args)
         {
             ReadConf();
             irc.OnChannelMessage += new IrcEventHandler(OnChannelMessage);
@@ -105,9 +105,9 @@ namespace sendkeys_ss13
                         serverIP = line[2];
                         Console.WriteLine("Read IP: " + serverIP);
                     }
-                    else 
-                    { 
-                        Console.WriteLine("IP cannot be validated."); 
+                    else
+                    {
+                        Console.WriteLine("IP cannot be validated.");
                     }
                 }
                 line = ReadLine_exception(reader);
@@ -119,7 +119,7 @@ namespace sendkeys_ss13
                         serverPort = Convert.ToInt32(line[2]);
                         Console.WriteLine("Read port: " + serverPort);
                     }
-                    else 
+                    else
                     {
                         Console.WriteLine("Port cannot be validated.");
                     }
@@ -130,9 +130,9 @@ namespace sendkeys_ss13
                     commskey = line[2];
                     Console.WriteLine("Commskey read.");
                 }
-                else 
-                { 
-                    Console.WriteLine("No Commskey!"); 
+                else
+                {
+                    Console.WriteLine("No Commskey!");
                 }
                 line = ReadLine_exception(reader);
                 if (line[2] != null)
@@ -140,9 +140,9 @@ namespace sendkeys_ss13
                     Github_bot_name = line[2];
                     Console.WriteLine("Read Github bot name: " + Github_bot_name);
                 }
-                else 
-                { 
-                    Console.WriteLine("No botname found."); 
+                else
+                {
+                    Console.WriteLine("No botname found.");
                 }
                 line = ReadLine_exception(reader);
                 if (line[2] != null)
@@ -150,9 +150,9 @@ namespace sendkeys_ss13
                     IRC_bot_name = line[2];
                     Console.WriteLine("Read IRC bot name: " + IRC_bot_name);
                 }
-                else 
-                { 
-                    Console.WriteLine("No botname found."); 
+                else
+                {
+                    Console.WriteLine("No botname found.");
                 }
                 line = ReadLine_exception(reader);
                 if (line[2] != null)
@@ -175,9 +175,9 @@ namespace sendkeys_ss13
                     IRC_channel = line[2];
                     Console.WriteLine("Read channel: " + IRC_channel);
                 }
-                else 
-                { 
-                    Console.WriteLine("No channel found."); 
+                else
+                {
+                    Console.WriteLine("No channel found.");
                 }
                 line = ReadLine_exception(reader);
                 if (line[2] != null && line[2] != "_NONE_")
@@ -191,10 +191,10 @@ namespace sendkeys_ss13
                 }
                 reader.Close();
             }
-            else 
+            else
             {
-                Console.WriteLine("Config file doesn't exist, using defaults"); 
-                return; 
+                Console.WriteLine("Config file doesn't exist, using defaults");
+                return;
             }
         }
 
@@ -213,7 +213,7 @@ namespace sendkeys_ss13
             return readline;
         }
 
-        public static void OnChannelMessage(object sender, IrcEventArgs e) 
+        public static void OnChannelMessage(object sender, IrcEventArgs e)
         {
             if (e.Data.Nick == Github_bot_name)
             {
@@ -255,7 +255,7 @@ namespace sendkeys_ss13
                         if (mergedPR != null)
                         {
                             string currentPR = msg[5].Substring(0, msg[5].Length - 1);
-                            if (currentPR == mergedPR && currentPR != lastPR) //Check if the current closed message's PR number 
+                            if (currentPR == mergedPR && currentPR != lastPR) //Check if the current closed message's PR number
                             {
                                 mergeflag = true;
                                 msg[2] = "merged";
@@ -364,7 +364,7 @@ namespace sendkeys_ss13
                     return URL;
                 }
             }
-            
+
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             return Convert.ToString(new Uri(response.Headers[HttpResponseHeader.Location]));
         }
@@ -378,13 +378,13 @@ namespace sendkeys_ss13
             {
                 if(i == msg.Length - 2)
                     packet.Append(msg[i]);
-                else 
+                else
                     packet.Append(msg[i] + " ");
             }
             packet.Append("&key=");
             packet.Append(commskey);
             packet.Append((char)'\x00');
-            return Encoding.ASCII.GetBytes(packet.ToString()); 
-        } 
+            return Encoding.ASCII.GetBytes(packet.ToString());
+        }
     }
 }

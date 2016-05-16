@@ -9,7 +9,7 @@ public class PalettedImage extends Image {
         this.pixels = pixels;
         this.pal = palette;
     }
-    
+
     RGBA getPixel(int x, int y) {
         return pal[pixels[y][x]];
     }

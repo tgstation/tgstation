@@ -1608,7 +1608,7 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
-	
+
 	else if(href_list["admincheckdevilinfo"])
 		output_devil_info()
 

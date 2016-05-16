@@ -28,7 +28,7 @@
 /obj/item/weapon/storage/briefcase/lawyer/New()
 	new /obj/item/weapon/stamp/law(src)
 	..()
-	
+
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
 	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."

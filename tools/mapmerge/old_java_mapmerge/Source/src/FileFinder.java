@@ -13,7 +13,7 @@ public class FileFinder extends SimpleFileVisitor<Path> {
 	public FileFinder(String pattern) {
 		matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
 	}
-	
+
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		Path name = file.getFileName();

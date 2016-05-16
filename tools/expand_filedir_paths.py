@@ -20,7 +20,7 @@ source_pattern = re.compile(r"^.*?\.(dm|dmm)$")
 def read_filedirs(filename):
     result = []
     dme_file = file(filename, "rt")
-    
+
     # Read each line from the file and check for regex pattern match
     for row in dme_file:
         match = filedir_pattern.match(row)
@@ -63,7 +63,7 @@ def rewrite_sources(resources):
         else:
             replacement = name.group(1)
         return "'" + replacement + "'"
-    
+
     # Search recursively for all .dm and .dmm files
     for (dirpath, dirs, files) in os.walk("."):
         for name in files:

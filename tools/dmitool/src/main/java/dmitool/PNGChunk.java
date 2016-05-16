@@ -17,7 +17,7 @@ public class PNGChunk {
         in.read(b);
         crc = in.readInt();
     }
-    
+
     void write(DataOutputStream out) throws IOException {
         out.writeInt(len);
         out.writeInt(type);

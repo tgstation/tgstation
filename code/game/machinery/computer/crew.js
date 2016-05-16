@@ -4,7 +4,7 @@
  * Version 1.8 (14 Jul 2011)
  * Requires jQuery 1.4 or newer
  */
- 
+
 (function ($) {
     var converter = {
         vertical: { x: false, y: true },
@@ -13,14 +13,14 @@
         x: { x: true, y: false },
         y: { x: false, y: true }
     };
- 
+
     var settings = {
         duration: "fast",
         direction: "both"
     };
- 
+
     var rootrx = /^(?:html)$/i;
- 
+
     // gets border dimensions
     var borders = function (domElement, styles) {
         styles = styles || (document.defaultView && document.defaultView.getComputedStyle ? document.defaultView.getComputedStyle(domElement, null) : domElement.currentStyle);
@@ -40,7 +40,7 @@
             horizontal: b.left + b.right
         };
     };
- 
+
     var dimensions = function ($element) {
         var win = $(window);
         var isRoot = rootrx.test($element[0].nodeName);
@@ -65,7 +65,7 @@
             })()
         };
     };
- 
+
     $.fn.extend({
         scrollintoview: function (options) {
             /// <summary>Scrolls the first element in the set into view by scrolling its closest scrollable parent.</summary>
@@ -75,36 +75,36 @@
             ///        complete (default: none) - a function to call when scrolling completes (called in context of the DOM element being scrolled)
             /// </param>
             /// <return type="jQuery">Returns the same jQuery set that this function was run on.</return>
- 
+
             options = $.extend({}, settings, options);
             options.direction = converter[typeof (options.direction) === "string" && options.direction.toLowerCase()] || converter.both;
- 
+
             var dirStr = "";
             if (options.direction.x === true) dirStr = "horizontal";
             if (options.direction.y === true) dirStr = dirStr ? "both" : "vertical";
- 
+
             var el = this.eq(0);
             var scroller = el.closest(":scrollable(" + dirStr + ")");
- 
+
             // check if there's anything to scroll in the first place
             if (scroller.length > 0)
             {
                 scroller = scroller.eq(0);
- 
+
                 var dim = {
                     e: dimensions(el),
                     s: dimensions(scroller)
                 };
- 
+
                 var rel = {
                     top: dim.e.rect.top - (dim.s.rect.top + dim.s.border.top),
                     bottom: dim.s.rect.bottom - dim.s.border.bottom - dim.s.scrollbar.bottom - dim.e.rect.bottom,
                     left: dim.e.rect.left - (dim.s.rect.left + dim.s.border.left),
                     right: dim.s.rect.right - dim.s.border.right - dim.s.scrollbar.right - dim.e.rect.right
                 };
- 
+
                 var animOptions = {};
- 
+
                 // vertical scroll
                 if (options.direction.y === true)
                 {
@@ -117,7 +117,7 @@
                         animOptions.scrollTop = dim.s.scroll.top + Math.min(rel.top, -rel.bottom);
                     }
                 }
- 
+
                 // horizontal scroll
                 if (options.direction.x === true)
                 {
@@ -130,7 +130,7 @@
                         animOptions.scrollLeft = dim.s.scroll.left + Math.min(rel.left, -rel.right);
                     }
                 }
- 
+
                 // scroll if needed
                 if (!$.isEmptyObject(animOptions))
                 {
@@ -152,19 +152,19 @@
                     $.isFunction(options.complete) && options.complete.call(scroller[0]);
                 }
             }
- 
+
             // return set back
             return this;
         }
     });
- 
+
     var scrollValue = {
         auto: true,
         scroll: true,
         visible: false,
         hidden: false
     };
- 
+
     $.extend($.expr[":"], {
         scrollable: function (element, index, meta, stack) {
             var direction = converter[typeof (meta[3]) === "string" && meta[3].toLowerCase()] || converter.both;
@@ -174,13 +174,13 @@
                 y: scrollValue[styles.overflowY.toLowerCase()] || false,
                 isRoot: rootrx.test(element.nodeName)
             };
- 
+
             // check if completely unscrollable (exclude HTML element because it's special)
             if (!overflow.x && !overflow.y && !overflow.isRoot)
             {
                 return false;
             }
- 
+
             var size = {
                 height: {
                     scroll: element.scrollHeight,
@@ -243,7 +243,7 @@ $(window).on("onUpdateContent", function()
 		minimap_mousedown_scrollTop = this.scrollTop;
 		minimap_mousedown_clientX = e.clientX;
 		minimap_mousedown_clientY = e.clientY;
-		
+
 		var c = ++minimap_mousedown_counter;
 		setTimeout(function()
 		{
@@ -254,14 +254,14 @@ $(window).on("onUpdateContent", function()
 			}
 		}, 100);
 	});
-	
+
 	$(document).on("mousemove", function(e)
 	{
 		if (minimap_mousedown)
 		{
 			var offsetX = minimap_mousedown_clientX - e.clientX;
 			var offsetY = minimap_mousedown_clientY - e.clientY;
-			
+
 			var minimap = document.getElementById("minimap");
 			minimap.scrollLeft = minimap_mousedown_scrollLeft + offsetX;
 			minimap.scrollTop = minimap_mousedown_scrollTop + offsetY;
@@ -469,16 +469,16 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 	}
 
 	spanElem					= $("<span></span>").text(name);
-	
+
 	if (italics)
 	{
 		spanElem.css("font-style", "italic");
 	}
 
 	if (isHead(ijob))			{ spanElem.css("font-weight", "bold"); }
-	
+
 	var color					= getColor(ijob);
-	
+
 	if (color)					{ spanElem.css("color", color); }
 
 	tdElem.append(spanElem);

@@ -17,7 +17,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/gcedlasttick = 0		// number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
-	
+
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
