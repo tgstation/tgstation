@@ -7942,17 +7942,16 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "amW" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
 /obj/machinery/door/window/eastright{
 	base_state = "left";
 	dir = 4;
 	icon_state = "left";
 	name = "Danger: Conveyor Access";
 	req_access_txt = "12"
-	},
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "garbage";
-	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -8596,8 +8595,7 @@
 	req_access_txt = "12"
 	},
 /obj/machinery/conveyor{
-	dir = 10;
-	icon_state = "conveyor0";
+	dir = 2;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -49600,11 +49598,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	req_access_txt = 1
 	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
 /turf/open/floor/carpet,
 /area/library)
 "bBK" = (
@@ -50555,14 +50548,10 @@
 /turf/open/floor/wood,
 /area/library)
 "bDy" = (
+/obj/machinery/vending/coffee,
 /obj/machinery/newscaster{
 	pixel_x = 0;
 	pixel_y = 32
-	},
-/obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -50574,10 +50563,6 @@
 /turf/open/floor/wood,
 /area/library)
 "bDA" = (
-/obj/machinery/newscaster{
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /obj/machinery/bookbinder,
 /turf/open/floor/wood,
 /area/library)
@@ -52398,6 +52383,10 @@
 	dir = 8;
 	network = list("SS13")
 	},
+/obj/machinery/newscaster{
+	pixel_x = 29;
+	pixel_y = 1
+	},
 /turf/open/floor/carpet,
 /area/library)
 "bGH" = (
@@ -52417,9 +52406,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=11.1-Command-Starboard";
@@ -53783,24 +53769,22 @@
 /turf/open/floor/wood,
 /area/library)
 "bIC" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"bID" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+/obj/item/device/radio/intercom{
 	dir = 4;
-	initialize_directions = 11
+	name = "Station Intercom (General)";
+	pixel_x = 0
+	},
+/turf/closed/wall,
+/area/library)
+"bID" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway - Port";
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel{
-	dir = 4;
+	dir = 2;
 	icon_state = "neutralcorner"
 	},
 /area/hallway/primary/central)
@@ -120825,8 +120809,8 @@ awY
 bwh
 azv
 byh
-bwh
-bDx
+bIC
+bKa
 byf
 bGF
 bIz
@@ -123142,7 +123126,7 @@ bcf
 bcf
 bFc
 bGI
-bIC
+bcf
 bKe
 bcf
 bcf
@@ -123395,11 +123379,11 @@ bsy
 bwo
 bgR
 bmm
-bgR
+bID
 bgR
 bFd
 bGJ
-bID
+bKf
 bKf
 bLM
 bKf
