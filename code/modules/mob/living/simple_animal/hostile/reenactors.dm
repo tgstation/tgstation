@@ -5,8 +5,8 @@
 */
 
 /mob/living/simple_animal/hostile/wwii
-	name = "Vorestation Gestapo"
-	desc = "A soldier of the Vorestation Gestapo, a combined syndicate of old-Earth fascist ideals and questionable fetishes."
+	name = "New Wehrmacht Soldier"
+	desc = "A soldier of the New Wehrmacht, a combined syndicate of old-Earth fascist ideals."
 	icon_state = "nsoldier"
 	icon_living = "nsoldier"
 	speak_chance = 0
@@ -44,7 +44,7 @@
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/wwii/melee
-	name = "Hulking Vorestation Gestapo"
+	name = "Hulking New Wehrmacht Soldier"
 	icon_state = "nsoldierbuff"
 	icon_living = "nsoldierbuff"
 	stat_attack = 0
@@ -57,26 +57,19 @@
 	melee_damage_upper = 30
 	environment_smash = 2
 	attacktext = "slams"
-	deathmessage = "The Gestapo's body collapses in on itself from the strain!"
+	deathmessage = "The New Wehrmacht's body collapses in on itself from the strain!"
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/wwii/melee/AttackingTarget()
 	..()
 	if(iscarbon(target))
 		var/mob/living/C = target
-		if(C.stat == DEAD)
-			C.gib()
-			visible_message("<span class='danger'>[src] devours [C] whole!</span>")
-			src << "<span class='userdanger'>You devour [C] whole, restoring your health!</span>"
-			adjustBruteLoss(-C.maxHealth)
-		else
-			if(prob(40))
-				C.Weaken(3)
-				C.adjustBruteLoss(10)
-				C.visible_message("<span class='danger'>\The [src] smashes \the [C] into the ground!</span>", \
-						"<span class='userdanger'>\The [src] smashes you into the ground!</span>")
-				src.say(pick("RAAAAAGGHHHH!!!","AAAARRRGGHHHH!!!","RRRAAUUUGGHH!!!"))
-
+		if(prob(40))
+			C.Weaken(3)
+			C.adjustBruteLoss(10)
+			C.visible_message("<span class='danger'>\The [src] smashes \the [C] into the ground!</span>", \
+					"<span class='userdanger'>\The [src] smashes you into the ground!</span>")
+			src.say(pick("RAAAAAGGHHHH!!!","AAAARRRGGHHHH!!!","RRRAAUUUGGHH!!!"))
 
 /mob/living/simple_animal/hostile/wwii/bomber
 	name = "Porta-Bomb"
