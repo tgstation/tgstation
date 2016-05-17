@@ -38,7 +38,7 @@
 	var/mob/living/carbon/human/target = G.affecting
 	changeling.islinking = 1
 	for(var/i in 1 to 3)
-		switch(stage)
+		switch(i)
 			if(1)
 				user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
 			if(2)
@@ -55,7 +55,7 @@
 				target << "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>"
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
-		feedback_add_details("changeling_powers","A[stage]")
+		feedback_add_details("changeling_powers","A [i]")
 		if(!do_mob(user, target, 20))
 			user << "<span class='warning'>Our link with [target] has ended!</span>"
 			changeling.islinking = 0
