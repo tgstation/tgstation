@@ -183,7 +183,7 @@ var/global/list/lawlorify = list (
 		H.regenerate_icons()
 	give_base_spells()
 	if(istype(owner.current.loc, /obj/effect/dummy/slaughter/))
-			owner.current.forceMove(get_turf(owner.current))//Fixes dying while jaunted leaving you permajaunted.
+		owner.current.forceMove(get_turf(owner.current))//Fixes dying while jaunted leaving you permajaunted.
 	form = BASIC_DEVIL
 
 /datum/devilinfo/proc/regress_blood_lizard()
@@ -265,7 +265,7 @@ var/global/list/lawlorify = list (
 	give_arch_spells()
 	D.convert_to_archdevil()
 	if(istype(D.loc, /obj/effect/dummy/slaughter/))
-			D.forceMove(get_turf(D))//Fixes dying while jaunted leaving you permajaunted.
+		D.forceMove(get_turf(D))//Fixes dying while jaunted leaving you permajaunted.
 	var/area/A = get_area(owner.current)
 	if(A)
 		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, attack_not_jump = 1)
