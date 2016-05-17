@@ -243,7 +243,7 @@
 	item_state = "defibcompact"
 	w_class = 3
 	slot_flags = SLOT_BELT
-	origin_tech = "biotech=4"
+	origin_tech = "biotech=5"
 
 /obj/item/weapon/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())

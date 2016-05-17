@@ -364,7 +364,7 @@
 	throw_speed = 2
 	throw_range = 4
 	materials = list(MAT_METAL=13000)
-	origin_tech = "materials=2;engineering=2;combat=2"
+	origin_tech = "materials=3;engineering=4;combat=2"
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP

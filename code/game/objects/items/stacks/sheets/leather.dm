@@ -1,9 +1,13 @@
+/obj/item/stack/sheet/animalhide
+	name = "hide"
+	desc = "Something went wrong."
+	origin_tech = "biotech=3"
+
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
 	desc = "The by-product of human farming."
 	singular_name = "human skin piece"
 	icon_state = "sheet-hide"
-	origin_tech = null
 
 var/global/list/datum/stack_recipe/human_recipes = list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
@@ -18,14 +22,12 @@ var/global/list/datum/stack_recipe/human_recipes = list( \
 	desc = "A piece of generic skin."
 	singular_name = "generic skin piece"
 	icon_state = "sheet-hide"
-	origin_tech = null
 
 /obj/item/stack/sheet/animalhide/corgi
 	name = "corgi hide"
 	desc = "The by-product of corgi farming."
 	singular_name = "corgi hide piece"
 	icon_state = "sheet-corgi"
-	origin_tech = null
 
 var/global/list/datum/stack_recipe/corgi_recipes = list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
@@ -40,14 +42,12 @@ var/global/list/datum/stack_recipe/corgi_recipes = list ( \
 	desc = "The by-product of cat farming."
 	singular_name = "cat hide piece"
 	icon_state = "sheet-cat"
-	origin_tech = null
 
 /obj/item/stack/sheet/animalhide/monkey
 	name = "monkey hide"
 	desc = "The by-product of monkey farming."
 	singular_name = "monkey hide piece"
 	icon_state = "sheet-monkey"
-	origin_tech = null
 
 var/global/list/datum/stack_recipe/monkey_recipes = list ( \
 	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, on_floor = 1), \
@@ -63,14 +63,12 @@ var/global/list/datum/stack_recipe/monkey_recipes = list ( \
 	desc = "Sssssss..."
 	singular_name = "lizard skin piece"
 	icon_state = "sheet-lizard"
-	origin_tech = null
 
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
 	desc = "The skin of a terrible creature."
 	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
-	origin_tech = null
 
 var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1, on_floor = 1), \

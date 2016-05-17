@@ -66,7 +66,7 @@
 	name = "\"Gygax\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 	id = "gygax_targ"
-	req_tech = list("programming" = 4, "combat" = 2)
+	req_tech = list("programming" = 4, "combat" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/targeting
@@ -96,7 +96,7 @@
 	name = "\"Durand\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
 	id = "durand_targ"
-	req_tech = list("programming" = 4, "combat" = 2)
+	req_tech = list("programming" = 4, "combat" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/targeting
@@ -136,7 +136,7 @@
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
-	req_tech = list("programming" = 5, "materials" = 7, "powerstorage" = 6)
+	req_tech = list("programming" = 5, "materials" = 6, "powerstorage" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main

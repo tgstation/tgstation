@@ -73,7 +73,7 @@
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
@@ -84,7 +84,7 @@
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
-	origin_tech = "materials=3;engineering=2"
+	origin_tech = "materials=3;engineering=4"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
@@ -93,7 +93,7 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 14
-	origin_tech = "materials=4;engineering=3"
+	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
@@ -105,7 +105,7 @@
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
-	origin_tech = "materials=2;powerstorage=3;engineering=2"
+	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/weapon/pickaxe/drill/cyborg
@@ -150,7 +150,7 @@
 	item_state = "shovel"
 	w_class = 3
 	materials = list(MAT_METAL=50)
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 
@@ -204,6 +204,7 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1
+	origin_tech = "engineering=3;bluespace=3"
 	var/used = FALSE
 
 /obj/item/weapon/survivalcapsule/attack_self()
@@ -542,4 +543,3 @@
 	anchored = 1
 	layer = MOB_LAYER - 0.2
 	density = 0
-

@@ -6,7 +6,7 @@
 	name = "test-range firing pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
-	req_tech = list("combat" = 1, "materials" = 2)
+	req_tech = list("combat" = 2, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/device/firing_pin/test_range
@@ -107,7 +107,7 @@
 	name = "Floral Somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
 	id = "flora_gun"
-	req_tech = list("materials" = 2, "biotech" = 3, "powerstorage" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	reagents = list("radium" = 20)

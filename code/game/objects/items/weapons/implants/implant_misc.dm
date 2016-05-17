@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
-	origin_tech = "materials=2;magnets=2;programming=2;biotech=5;syndicate=5"
+	origin_tech = "materials=2;magnets=2;programming=2;biotech=6;syndicate=5"
 	activated = 0
 
 /obj/item/weapon/implant/weapons_auth/get_data()

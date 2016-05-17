@@ -3,7 +3,7 @@
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	origin_tech = "combat=2;magnets=4"
+	origin_tech = "combat=4;magnets=4"
 	can_flashlight = 1
 	w_class = 5
 	flags =  CONDUCT
@@ -20,7 +20,6 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	origin_tech = "combat=4;magnets=4;materials=4"
 	w_class = 3
 	slot_flags = SLOT_BELT
 	pin = null
@@ -32,7 +31,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
-	origin_tech = "combat=5;materials=4;powerstorage=3"
+	origin_tech = "combat=5;materials=4;biotech=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
 	ammo_x_offset = 1
@@ -49,7 +48,7 @@
 	icon_state = "flora"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
-	origin_tech = "materials=2;biotech=3;powerstorage=3"
+	origin_tech = "materials=2;biotech=4"
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
@@ -94,7 +93,7 @@
 	var/overheat_time = 16
 	unique_rename = 1
 	weapon_weight = WEAPON_HEAVY
-	origin_tech = "combat=2;powerstorage=1"
+	origin_tech = "combat=3;powerstorage=3;engineering=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/super
 	name = "super-kinetic accelerator"
@@ -102,7 +101,7 @@
 	icon_state = "kineticgun_u"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
 	overheat_time = 15
-	origin_tech = "combat=3;powerstorage=2"
+	origin_tech = "materials=4;powerstorage=4;engineering=4;magnets=4;combat=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
 	name = "hyper-kinetic accelerator"
@@ -110,7 +109,7 @@
 	icon_state = "kineticgun_h"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
 	overheat_time = 14
-	origin_tech = "combat=4;powerstorage=3"
+	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4;combat=4"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	..()
@@ -142,7 +141,7 @@
 	item_state = "crossbow"
 	w_class = 2
 	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=2;magnets=2;syndicate=5"
+	origin_tech = "combat=3;magnets=3;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
@@ -155,7 +154,7 @@
 	icon_state = "crossbowlarge"
 	w_class = 3
 	materials = list(MAT_METAL=4000)
-	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
+	origin_tech = "combat=4;magnets=4;syndicate=3" //can be further researched for more syndie tech
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
@@ -173,7 +172,7 @@
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	modifystate = -1
-	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
+	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
@@ -204,7 +203,7 @@
 /obj/item/weapon/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
-	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
+	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=4;engineering=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/wormhole_projector
@@ -287,7 +286,7 @@
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
-	origin_tech = null
+	origin_tech = "combat=7;magnets=6"
 
 /obj/item/weapon/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."

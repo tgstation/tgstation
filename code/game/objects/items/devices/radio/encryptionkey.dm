@@ -5,6 +5,7 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	w_class = 1
+	origin_tech = "engineering=2;bluespace=1"
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/syndie = 0

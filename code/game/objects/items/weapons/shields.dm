@@ -14,7 +14,7 @@
 	throw_range = 3
 	w_class = 4
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=2"
+	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
@@ -45,6 +45,7 @@
 	icon_state = "buckler"
 	item_state = "buckler"
 	materials = list()
+	origin_tech = "materials=1;combat=3;biotech=2"
 	burn_state = FLAMMABLE
 	block_chance = 30
 

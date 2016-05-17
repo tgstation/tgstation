@@ -5,7 +5,7 @@
 	item_state = "laser"
 	w_class = 3
 	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=3;magnets=2"
+	origin_tech = "combat=4;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
@@ -44,6 +44,7 @@
 /obj/item/weapon/gun/energy/laser/cyborg
 	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
+	origin_tech = null
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
 	..()
@@ -94,7 +95,7 @@
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
 	item_state = null
-	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
+	origin_tech = "combat=6;materials=4;magnets=4;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	pin = null
 	ammo_x_offset = 3
@@ -106,7 +107,7 @@
 	icon_state = "bluetag"
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	origin_tech = "combat=1;magnets=2"
+	origin_tech = "combat=2;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
 	pin = /obj/item/device/firing_pin/tag/blue
@@ -118,7 +119,7 @@
 	icon_state = "redtag"
 	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	origin_tech = "combat=1;magnets=2"
+	origin_tech = "combat=2;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
 	pin = /obj/item/device/firing_pin/tag/red

@@ -389,10 +389,12 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
-	if(flags & NODECONSTRUCT & !W.works_from_distance)
+	if(!istype(W)
+		return
+	if(flags & NODECONSTRUCT && !W.works_from_distance)
 		return
 	var/shouldplaysound = 0
-	if(istype(W) && component_parts)
+	if(component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/weapon/circuitboard/machine/CB = locate(/obj/item/weapon/circuitboard/machine) in component_parts
 			var/P

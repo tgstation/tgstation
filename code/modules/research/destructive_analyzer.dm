@@ -62,4 +62,3 @@ Note: Must be placed within 3 tiles of the R&D Console
 		flick("d_analyzer_la", src)
 		spawn(10)
 			busy = 0
-

@@ -260,23 +260,19 @@ proc/CallMaterialName(ID)
 			spawn(24)
 				if(linked_destroy)
 					linked_destroy.busy = 0
-					if(!linked_destroy.hacked)
-						if(!linked_destroy.loaded_item)
-							usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
-							screen = 1.0
-							return
-
-						for(var/T in temp_tech)
-							files.UpdateTech(T, temp_tech[T])
+					if(!linked_destroy.loaded_item)
+						usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
 						screen = 1.0
+						return
 
-						if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-							for(var/material in linked_destroy.loaded_item.materials)
-								linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-							feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
-						linked_destroy.loaded_item = null
-					else
-						screen = 1.0
+					for(var/T in temp_tech)
+						files.UpdateTech(T, temp_tech[T])
+
+					if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+						for(var/material in linked_destroy.loaded_item.materials)
+							linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+						feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
+					linked_destroy.loaded_item = null
 					for(var/obj/I in linked_destroy.contents)
 						for(var/mob/M in I.contents)
 							M.death()
@@ -292,8 +288,9 @@ proc/CallMaterialName(ID)
 							if(!(I in linked_destroy.component_parts))
 								qdel(I)
 								linked_destroy.icon_state = "d_analyzer"
-					use_power(250)
-					updateUsrDialog()
+				screen = 1.0
+				use_power(250)
+				updateUsrDialog()
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 		if(src.allowed(usr))
@@ -368,7 +365,7 @@ proc/CallMaterialName(ID)
 
 
 
-				if (g2g && !linked_lathe.busy) //If input is incorrect, nothing happens
+				if (g2g) //If input is incorrect, nothing happens
 					var/enough_materials = 1
 					linked_lathe.busy = 1
 					flick("protolathe_n",linked_lathe)
@@ -410,10 +407,10 @@ proc/CallMaterialName(ID)
 										feedback_add_details("item_printed","[new_item.type]|[amount]")
 										already_logged = 1
 							screen = old_screen
-							linked_lathe.busy = 0
 						else
 							src.visible_message("<span class='notice'>The [src.name] beeps, \"Something went wrong, production halted!\"</span>")
 							screen = 1.0
+						linked_lathe.busy = 0
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -456,12 +453,16 @@ proc/CallMaterialName(ID)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					spawn(16)
-						if(g2g)
-							var/obj/item/new_item = new P(src)
-							new_item.loc = linked_imprinter.loc
-							feedback_add_details("circuit_printed","[new_item.type]")
+						if(linked_imprinter)
+							if(g2g)
+								var/obj/item/new_item = new P(src)
+								new_item.loc = linked_imprinter.loc
+								feedback_add_details("circuit_printed","[new_item.type]")
+							screen = old_screen
+						else
+							src.visible_message("<span class='notice'>The [src.name] beeps, \"Something went wrong, production halted!\"</span>")
+							screen = 1.0
 						linked_imprinter.busy = 0
-						screen = old_screen
 						updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)

@@ -242,7 +242,7 @@
 	name = "Implanter"
 	desc = "A sterile automatic implant injector."
 	id = "implanter"
-	req_tech = list("materials" = 1, "programming" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600, MAT_GLASS = 200)
 	build_path = /obj/item/weapon/implanter
