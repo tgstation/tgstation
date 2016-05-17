@@ -64,6 +64,10 @@
 	zone_select.icon = ui_style
 	zone_select.update_icon(mymob)
 
+	using = new /obj/screen/inventory/craft
+	using.icon = ui_style
+	static_inventory += using
+
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src

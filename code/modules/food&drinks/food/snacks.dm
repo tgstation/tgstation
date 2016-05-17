@@ -19,6 +19,7 @@
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
+
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
 	if(!usr)
 		return
@@ -44,6 +45,8 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+	if(user.a_intent == "harm")
+		return ..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
@@ -151,7 +154,18 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts()
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/R)
+	..()
+	reagents.reagent_list.Cut()
+	for(var/obj/item/weapon/reagent_containers/RC in contents)
+		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
+	contents_loop:
+		for(var/A in contents)
+			for(var/B in initial(R.parts))
+				if(istype(A, B))
+					continue contents_loop
+			qdel(A)
+	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]

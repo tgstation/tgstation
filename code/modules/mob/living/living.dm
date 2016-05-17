@@ -49,6 +49,9 @@ Sorry Giacom. Please don't be mad :(
 	return QDEL_HINT_HARDDEL_NOW
 
 
+/mob/living/proc/OpenCraftingMenu()
+	return
+
 /mob/living/proc/generateStaticOverlay()
 	staticOverlays.Add(list("static", "blank", "letter", "animal"))
 	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
@@ -435,7 +438,7 @@ Sorry Giacom. Please don't be mad :(
 	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/obj/item/organ/limb/def_zone = ran_zone(t)
+	var/def_zone = ran_zone(t)
 	return def_zone
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
@@ -452,14 +455,14 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_health)
 		updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(-brute, updating_health)
 	adjustFireLoss(-burn, updating_health)
 	if(updating_health)
 		updatehealth()
 
-// damage MANY external organs, in random order
+// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute, updating_health)
 	adjustFireLoss(burn, updating_health)
@@ -505,7 +508,7 @@ Sorry Giacom. Please don't be mad :(
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
-	heal_overall_damage(1000, 1000)
+	heal_overall_damage(100000, 100000)
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()
@@ -610,7 +613,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/movement_delay()
 	. = ..()
-	if(istype(loc, /turf/open))
+	if(isturf(loc, /turf/open))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -995,3 +998,29 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/proc/update_sight()
 	return
+
+/mob/living/proc/owns_soul()
+	if(mind)
+		return mind.soulOwner == mind
+	return 1
+
+/mob/living/proc/return_soul()
+	if(mind)
+		mind.soulOwner = mind
+
+/mob/living/proc/has_bane(banetype)
+	if(mind)
+		if(mind.devilinfo)
+			return mind.devilinfo.bane == banetype
+	return 0
+
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	if(mind && mind.devilinfo)
+		return check_devil_bane_multiplier(weapon, attacker)
+	return 1
+
+/mob/living/proc/check_acedia()
+	if(src.mind && src.mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
+			return 1
+	return 0

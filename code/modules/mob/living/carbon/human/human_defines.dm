@@ -47,8 +47,6 @@ var/global/default_martial_art = new/datum/martial_art
 	var/blood_max = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
-	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc.
-
 	var/datum/martial_art/martial_art = null
 
 	var/name_override //For temporary visible name changes
@@ -56,3 +54,4 @@ var/global/default_martial_art = new/datum/martial_art
 	var/heart_attack = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/datum/personal_crafting/handcrafting

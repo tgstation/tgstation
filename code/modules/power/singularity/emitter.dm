@@ -29,11 +29,17 @@
 
 /obj/machinery/power/emitter/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
+	B.apply_default_parts(src)
 	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/emitter
+	name = "circuit board (Emitter)"
+	build_path = /obj/machinery/power/emitter
+	origin_tech = "programming=4;powerstorage=5;engineering=5"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120

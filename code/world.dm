@@ -178,6 +178,14 @@ var/last_irc_status = 0
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
+	if(mapchanging)
+		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
+		rebootingpendingmapchange = 1
+		spawn(1200)
+			if(mapchanging)
+				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
+				Reboot("Map change timed out", time = 10)
+		return
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
@@ -386,17 +394,19 @@ var/failed_db_connections = 0
 		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
 
 var/datum/votablemap/nextmap
-
+var/mapchanging = 0
+var/rebootingpendingmapchange = 0
 /proc/changemap(var/datum/votablemap/VM)
 	if (!SERVERTOOLS)
 		return
 	if (!istype(VM))
 		return
-
+	mapchanging = 1
 	log_game("Changing map to [VM.name]([VM.friendlyname])")
 	var/file = file("setnewmap.bat")
 	file << "\nset MAPROTATE=[VM.name]\n"
 	. = shell("..\\bin\\maprotate.bat")
+	mapchanging = 0
 	switch (.)
 		if (null)
 			message_admins("Failed to change map: Could not run map rotator")
@@ -426,3 +436,5 @@ var/datum/votablemap/nextmap
 		else
 			message_admins("Failed to change map: Unknown error: Error code #[.]")
 			log_game("Failed to change map: Unknown error: Error code #[.]")
+	if(rebootingpendingmapchange)
+		world.Reboot("Map change finished", time = 10)

@@ -6,7 +6,7 @@
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500
-	circuit = "/obj/item/weapon/circuitboard/crew"
+	circuit = /obj/item/weapon/circuitboard/computer/crew
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))

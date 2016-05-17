@@ -111,12 +111,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		//Bleeding out
 		blood_max = 0
-		for(var/obj/item/organ/limb/org in organs)
-			var/brutedamage = org.brute_dam
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			var/brutedamage = BP.brute_dam
 
 			//We want an accurate reading of .len
-			listclearnulls(org.embedded_objects)
-			blood_max += 0.5*org.embedded_objects.len
+			listclearnulls(BP.embedded_objects)
+			blood_max += 0.5*BP.embedded_objects.len
 
 			if(brutedamage > 30)
 				blood_max += 0.5
@@ -226,7 +227,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if (!injected || !our || !dna)
 		return
 
-	if(blood_incompatible(injected.data["blood_type"], dna.blood_type,injected.data["species"], dna.species.id) )
+	if (!(injected.data["blood_type"] in get_safe_blood(dna.blood_type)) || injected.data["species"] != dna.species.id)
 		reagents.add_reagent("toxin",amount * 0.5)
 		our.on_merge(injected.data) //still transfer viruses and such, even if incompatibles bloods
 		reagents.update_total()
@@ -245,28 +246,28 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-/proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
-	if(!donor || !receiver) return 0
-
-	if(donor_species && receiver_species)
-		if(donor_species != receiver_species)
-			return 1
-
-	var/donor_antigen = copytext(donor,1,lentext(donor))
-	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
-	var/donor_rh = (findtext(donor,"+")>0)
-	var/receiver_rh = (findtext(receiver,"+")>0)
-
-	if(donor_rh && !receiver_rh) return 1
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O") return 1
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O") return 1
-		if("O")
-			if(donor_antigen != "O") return 1
-		//AB is a universal receiver.
-	return 0
+// This is has more potential uses, and is probably faster than the old proc.
+/proc/get_safe_blood(bloodtype)
+	. = list()
+	if(!bloodtype)
+		return
+	switch(bloodtype)
+		if("A-")
+			return list("A-", "O-")
+		if("A+")
+			return list("A", "A+", "O-", "O+")
+		if("B-")
+			return list("B-", "O-")
+		if("B+")
+			return list("B-", "B+", "O-", "O+")
+		if("AB-")
+			return list("A-", "B-", "O-", "AB-")
+		if("AB+")
+			return list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+")
+		if("O-")
+			return list("O-")
+		if("O+")
+			return list("O-", "O+")
 
 /proc/blood_splatter(target,datum/reagent/blood/source,large)
 

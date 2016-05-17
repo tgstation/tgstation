@@ -17,6 +17,7 @@ This file contains the arcane tome files.
 	..()
 	if(iscultist(user) || user.stat == DEAD)
 		user << "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>"
+		user << "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>"
 		user << "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>"
 		user << "<span class='cult'>Striking a noncultist, however, will sear their flesh.</span>"
 
@@ -154,7 +155,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Juggernaut</b></font><br>The Juggernaut is a slow, but durable, melee attacker which can produce temporary forcewalls. It will also reflect most lethal energy weapons.<br><br>"
 
-	text += "<font color='red'><b>Artificer</b></font><br>The Artificer is a weak and fragile construct, able to heal other constructs, produce more <font color='red'><b>soulstones</b></font> and <font color='red'><b>construct shells</b></font>, \
+	text += "<font color='red'><b>Artificer</b></font><br>The Artificer is a weak and fragile construct, able to heal other constructs, shades, or itself, produce more <font color='red'><b>soulstones</b></font> and <font color='red'><b>construct shells</b></font>, \
 	construct fortifying cult walls and flooring, and finally, it can release a few indiscriminate stunning missiles.<br><br>"
 
 	text += "<font color='red'><b>Harvester</b></font><br>If you see one, know that you have done all you can and your life is void.<br><br>"

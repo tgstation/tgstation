@@ -23,11 +23,11 @@
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
-	implements = list(/obj/item/organ/internal = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
+	implements = list(/obj/item/organ = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
 	var/implements_extract = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
 	var/implements_mend = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	var/current_type
-	var/obj/item/organ/internal/I = null
+	var/obj/item/organ/I = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
@@ -71,7 +71,7 @@
 			user << "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 		else
-			for(var/obj/item/organ/internal/O in organs)
+			for(var/obj/item/organ/O in organs)
 				O.on_find(user)
 				organs -= O
 				organs[O.name] = O

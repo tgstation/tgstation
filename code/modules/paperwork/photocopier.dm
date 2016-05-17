@@ -64,21 +64,28 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
-					var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
-					if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
-						if(toner > 10)	//lots of toner, make it dark
-							c.info = "<font color = #101010>"
-						else			//no toner? shitty copies for you!
-							c.info = "<font color = #808080>"
-						var/copied = copy.info
-						copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
-						copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-						c.info += copied
-						c.info += "</font>"
-						c.name = copy.name
-						c.fields = copy.fields
-						c.updateinfolinks()
-						toner--
+					var/copy_as_paper = 1
+					if(istype(copy, /obj/item/weapon/paper/contract/employment))
+						var/obj/item/weapon/paper/contract/employment/E = copy
+						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
+						if(C)
+							copy_as_paper = 0
+					if(copy_as_paper)
+						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
+							if(toner > 10)	//lots of toner, make it dark
+								c.info = "<font color = #101010>"
+							else			//no toner? shitty copies for you!
+								c.info = "<font color = #808080>"
+							var/copied = copy.info
+							copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
+							copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+							c.info += copied
+							c.info += "</font>"
+							c.name = copy.name
+							c.fields = copy.fields
+							c.updateinfolinks()
+							toner--
 					busy = 1
 					sleep(15)
 					busy = 0
@@ -233,18 +240,22 @@
 		updateUsrDialog()
 
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
-		O.loc = src
-		user << "<span class='notice'>You insert [O] into [src].</span>"
-		flick("photocopier1", src)
-		updateUsrDialog()
+	O.loc = src
+	user << "<span class ='notice'>You insert [O] into [src].</span>"
+	flick("photocopier1", src)
+	updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			if(!user.drop_item())
-				return
-			copy = O
-			do_insertion(O)
+			if(istype(O,/obj/item/weapon/paper/contract/infernal))
+				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
+				burn_state = ON_FIRE
+			else
+				if(!user.drop_item())
+					return
+				copy = O
+				do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 

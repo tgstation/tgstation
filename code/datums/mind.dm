@@ -52,14 +52,19 @@
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
+	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
+	var/datum/devilinfo/devilinfo //Information about the devil, if any.
+	var/damnation_type = 0
+	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
 /datum/mind/New(var/key)
 	src.key = key
+	soulOwner = src
 
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
@@ -537,6 +542,24 @@
 			text += "|Disabled in Prefs"
 
 		sections["monkey"] = text
+
+	/** devil ***/
+	text = "devil"
+	if(ticker.mode.config_tag == "devil")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.devils)
+		text += "<b>DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+	else if(src in ticker.mode.sintouched)
+		text += "devil|<b>SINTOUCHED</b>|<a href='?src=\ref[src];devil=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
+
+	if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+	sections["devil"] = text
 
 
 	/** SILICON ***/
@@ -1162,6 +1185,45 @@
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 
+	else if(href_list["devil"])
+		switch(href_list["devil"])
+			if("clear")
+				if(src in ticker.mode.devils)
+					if(istype(current,/mob/living/carbon/true_devil/))
+						usr << "<span class='warning'>This cannot be used on true or arch-devils.</span>"
+					else
+						ticker.mode.devils -= src
+						special_role = null
+						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
+						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
+						RemoveSpell(/obj/effect/proc_holder/spell/dumbfire/fireball/hellish)
+						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
+						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
+						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
+						devilinfo = null
+						log_admin("[key_name(usr)] has de-devil'ed [current].")
+				else if(src in ticker.mode.sintouched)
+					ticker.mode.sintouched -= src
+					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
+					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
+			if("devil")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.devils += src
+				special_role = "devil"
+				ticker.mode.finalize_devil(src)
+				announceDevilLaws()
+			if("sintouched")
+				if(ishuman(current))
+					ticker.mode.sintouched += src
+					var/mob/living/carbon/human/H = current
+					H.influenceSin()
+					message_admins("[key_name_admin(usr)] has sintouch'ed [current].")
+				else
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+
 	else if(href_list["abductor"])
 		switch(href_list["abductor"])
 			if("clear")
@@ -1568,7 +1630,6 @@
 	ticker.mode.greet_hog_follower(src,colour)
 	ticker.mode.update_hog_icons_added(src, colour)
 
-
 /datum/mind/proc/make_Handofgod_god(colour)
 	switch(colour)
 		if("red")
@@ -1609,6 +1670,25 @@
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		S.action.Grant(new_character)
+
+/datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		for(var/type in exceptions)
+			if(istype(S, type))
+				continue
+		S.charge_counter = delay
+		spawn(0)
+			S.start_recharge()
+
+/datum/mind/proc/get_ghost(even_if_they_cant_reenter)
+	for(var/mob/dead/observer/G in dead_mob_list)
+		if(G.mind == src)
+			if(G.can_reenter_corpse || even_if_they_cant_reenter)
+				return G
+			break
+
+
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

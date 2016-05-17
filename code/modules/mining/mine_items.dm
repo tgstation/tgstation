@@ -53,7 +53,7 @@
 /obj/machinery/computer/shuttle/mining
 	name = "Mining Shuttle Console"
 	desc = "Used to call and send the mining shuttle."
-	circuit = /obj/item/weapon/circuitboard/mining_shuttle
+	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1
@@ -457,6 +457,13 @@
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This ones seen better days."
+
+/obj/machinery/smartfridge/survival_pod/empty/New()
+	return()
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))

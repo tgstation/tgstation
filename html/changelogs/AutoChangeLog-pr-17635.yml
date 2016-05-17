@@ -1,0 +1,6 @@
+author: MrStonedOne
+delete-after: True
+changes: 
+  - tweak: "Tesla has been rebalanced."
+  - tweak: "It should now lose balls slower, increase balls faster, and be a bit more aggressive about finding nearby grounding rods."
+  - tweak: "additional zaps from it's orbiting balls should be a bit more varied, but a touch less powerful."
