@@ -206,7 +206,7 @@
 		SSobj.processing.Remove(src)
 
 /turf/open/floor/plating/lava/GetHeatCapacity()
-	. = 1000
+	. = 700000
 
 /turf/open/floor/plating/lava/GetTemperature()
 	. = 5000
