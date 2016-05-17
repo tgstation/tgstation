@@ -373,11 +373,8 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "aba" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/lattice,
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "abb" = (
@@ -12504,10 +12501,7 @@
 	name = "\improper Garden"
 	})
 "azr" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "azs" = (
@@ -14040,10 +14034,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aCA" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -40715,14 +40706,11 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bFn" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bFo" = (
@@ -42076,10 +42064,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bHV" = (
@@ -46204,10 +46189,7 @@
 /area/maintenance/aft)
 "bPY" = (
 /obj/structure/girder,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bPZ" = (
@@ -47240,10 +47222,7 @@
 /turf/open/floor/wood,
 /area/maintenance/aft)
 "bSp" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bSq" = (
@@ -54016,10 +53995,7 @@
 /area/maintenance/asmaint)
 "cgf" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
