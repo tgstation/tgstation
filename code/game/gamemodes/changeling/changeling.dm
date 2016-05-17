@@ -68,6 +68,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		for(var/i = 0, i < num_changelings, i++)
 			if(!antag_candidates.len) break
 			var/datum/mind/changeling = pick(antag_candidates)
+			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
