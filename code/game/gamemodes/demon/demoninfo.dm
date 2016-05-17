@@ -262,6 +262,7 @@ var/global/list/lawlorify = list (
 	world << 'sound/hallucinations/veryfar_noise.ogg'
 	give_arch_spells()
 	D.convert_to_archdevil()
+	D.forcemove(get_turf(D))
 	var/area/A = get_area(owner.current)
 	if(A)
 		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, attack_not_jump = 1)
