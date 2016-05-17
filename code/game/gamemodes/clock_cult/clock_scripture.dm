@@ -525,7 +525,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(L.z == invoker.z && is_servant_of_ratvar(L) && !L.stat == DEAD)
+		if(L.z == invoker.z && is_servant_of_ratvar(L) && !L.stat != DEAD)
 			other_servants++
 	if(!other_servants)
 		invoker << "<span class='warning'>There are no other conscious servants on your z-level!</span>"
