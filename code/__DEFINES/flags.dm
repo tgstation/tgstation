@@ -18,6 +18,7 @@
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
+#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 
 #define HEADBANGPROTECT		4096
@@ -52,21 +53,21 @@
 
 #define MUTCOLORS		1
 #define HAIR			2
-#define FACEHAIR		4
-#define EYECOLOR		8
-#define LIPS			16
-#define RESISTCOLD		32
-#define RESISTHEAT		64
-#define RADIMMUNE		128
-#define NOBREATH		256
-#define NOGUNS			512
-#define NOBLOOD			1024
-#define NOFIRE			2048
-#define VIRUSIMMUNE		4096
-#define PIERCEIMMUNE	8192
-#define NOTRANSSTING	16384
-
-#define MUTCOLORS_PARTSONLY 	32768	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define FACEHAIR		3
+#define EYECOLOR		4
+#define LIPS			5
+#define RESISTTEMP		6
+#define RADIMMUNE		7
+#define NOBREATH		8
+#define NOGUNS			9
+#define NOBLOOD			10
+#define NOFIRE			11
+#define VIRUSIMMUNE		12
+#define PIERCEIMMUNE	13
+#define NOTRANSSTING	14
+#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NODISMEMBER		16
+#define NOHUNGER		17
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

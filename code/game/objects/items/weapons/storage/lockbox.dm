@@ -27,6 +27,7 @@
 			if(locked)
 				icon_state = icon_locked
 				user << "<span class='danger'>You lock the [src.name]!</span>"
+				close_all()
 				return
 			else
 				icon_state = icon_closed

@@ -23,7 +23,7 @@
 		qdel(src)
 		return -1
 	target = nOwner.mind
-	update_text(nOwner)
+	update_text()
 
 
 /obj/item/weapon/paper/contract/employment/update_text()

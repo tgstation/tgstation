@@ -31,7 +31,6 @@ A small map intended for lowpop(40 players and less).
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\BirdStation\telecomms.dm"
-				#include "map_files\BirdStation\misc.dm"
 				#include "map_files\BirdStation\job\job_changes.dm"
 		        #include "map_files\BirdStation\job\removed_jobs.dm"
 		#endif

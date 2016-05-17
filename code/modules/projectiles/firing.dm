@@ -39,6 +39,7 @@
 	var/turf/curloc = get_turf(user)
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
+	BB.ammo_casing = src
 	if(targloc == curloc)
 		if(target) //if the target is right on our location we go straight to bullet_act()
 			target.bullet_act(BB, BB.def_zone)

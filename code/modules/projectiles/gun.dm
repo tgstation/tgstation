@@ -1,11 +1,3 @@
- #define SAWN_INTACT  0
- #define SAWN_OFF     1
- #define SAWN_SAWING -1
-
- #define WEAPON_LIGHT 0
- #define WEAPON_MEDIUM 1
- #define WEAPON_HEAVY 2
-
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."

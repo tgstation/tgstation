@@ -119,11 +119,11 @@
 	if(health >= 0)
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
-							"<span class='notice'>You shake [src] trying to get \him up!</span>")
+			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
+							"<span class='notice'>You shake [src] trying to get them up!</span>")
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
-						"<span class='notice'>You hug [src] to make \him feel better!</span>")
+			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
+						"<span class='notice'>You hug [src] to make them feel better!</span>")
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
@@ -208,42 +208,37 @@
 	throw_mode_off()
 	if(!target || !isturf(loc))
 		return
-	if(istype(target, /obj/screen)) return
-
-	var/atom/movable/item = src.get_active_hand()
-
-	if(!item || (item.flags & (NODROP|ABSTRACT)))
+	if(istype(target, /obj/screen))
 		return
 
-	if(istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
-		item = G.get_mob_if_throwable() //throw the person instead of the grab
-		qdel(G)			//We delete the grab, as it needs to stay around until it's returned.
-		if(ismob(item))
+	var/atom/movable/thrown_thing
+	var/obj/item/I = src.get_active_hand()
+
+	if(!I || (I.flags & NODROP))
+		return
+
+	if(istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		var/mob/throwable_mob = G.get_mob_if_throwable() //throw the person instead of the grab
+		qdel(G)	//We delete the grab.
+		if(throwable_mob)
+			thrown_thing = throwable_mob
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
-				var/mob/M = item
 				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-				add_logs(src, M, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
+				add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
-	if(!item) return //Grab processing has a chance of returning null
+	else if(!(I.flags & ABSTRACT)) //can't throw abstract items
+		thrown_thing = I
+		unEquip(I)
 
-	if(!ismob(item)) //Honk mobs don't have a dropped() proc honk
-		unEquip(item)
-	if(src.client)
-		src.client.screen -= item
-
-	//actually throw it!
-	if(item)
-		item.layer = initial(item.layer)
-		src.visible_message("<span class='danger'>[src] has thrown [item].</span>")
-
+	if(thrown_thing)
+		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
 		newtonian_move(get_dir(target, src))
-
-		item.throw_at(target, item.throw_range, item.throw_speed, src)
+		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
 /mob/living/carbon/restrained()
 	if (handcuffed)

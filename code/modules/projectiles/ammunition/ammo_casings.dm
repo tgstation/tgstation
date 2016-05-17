@@ -289,23 +289,40 @@
 	if (modified)
 		icon_state = "foamdart_empty"
 		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
+		if(BB)
+			BB.icon_state = "foamdart_empty"
+	else
+		icon_state = "foamdart"
+		desc = "Its nerf or nothing! Ages 8 and up."
+		if(BB)
+			BB.icon_state = "foamdart_empty"
+
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	..()
+	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
 	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
 		modified = 1
-		BB.damage_type = BRUTE
-		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
-		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
-	else if ((istype(A, /obj/item/weapon/pen)) && modified && !BB.contents.len)
+		FD.damage_type = BRUTE
+		update_icon()
+	else if ((istype(A, /obj/item/weapon/pen)) && modified && !FD.pen)
 		if(!user.unEquip(A))
 			return
-		A.loc = BB
-		BB.damage = 5
-		BB.nodamage = 0
+		A.loc = FD
+		FD.pen = A
+		FD.damage = 5
+		FD.nodamage = 0
 		user << "<span class='notice'>You insert [A] into [src].</span>"
 	return
+
+/obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
+	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
+	if(FD.pen)
+		FD.damage = initial(FD.damage)
+		FD.nodamage = initial(FD.nodamage)
+		user.put_in_hands(FD.pen)
+		user << "<span class='notice'>You remove [FD.pen] from [src].</span>"
+		FD.pen = null
 
 /obj/item/ammo_casing/caseless/foam_dart/riot
 	name = "riot foam dart"
