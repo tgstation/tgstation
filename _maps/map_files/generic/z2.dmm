@@ -2954,10 +2954,8 @@
 	color = "#008000";
 	icon_state = "small"
 	},
-/obj/structure/grille{
-	color = "#008000";
-	density = 0;
-	icon_state = "brokengrille"
+/obj/structure/grille/broken{
+	color = "#008000"
 	},
 /turf/open/floor/plating/airless,
 /area/wizard_station)
@@ -4118,10 +4116,8 @@
 /turf/open/floor/plasteel/cult,
 /area/wizard_station)
 "mB" = (
-/obj/structure/grille{
-	color = "#008000";
-	density = 0;
-	icon_state = "brokengrille"
+/obj/structure/grille/broken{
+	color = "#008000"
 	},
 /turf/open/floor/plating,
 /area/wizard_station)
@@ -4216,10 +4212,8 @@
 	color = "#008000";
 	icon_state = "medium"
 	},
-/obj/structure/grille{
-	color = "#008000";
-	density = 0;
-	icon_state = "brokengrille"
+/obj/structure/grille/broken{
+	color = "#008000"
 	},
 /turf/open/floor/plating,
 /area/wizard_station)
