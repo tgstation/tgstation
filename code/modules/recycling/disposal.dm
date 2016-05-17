@@ -503,6 +503,14 @@
 	target.forceMove(src)
 	update_icon()
 
+/obj/machinery/disposal/cultify()
+	eject()
+	..()
+
+/obj/machinery/disposal/blob_act(destroy = 0)
+	eject()
+	..()
+
 // virtual disposal object
 // travels through pipes in lieu of actual items
 // contents will be items flushed by the disposal
