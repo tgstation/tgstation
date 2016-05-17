@@ -4090,7 +4090,7 @@
 				else
 					wages_enabled = 1
 					message_admins("<span class='notice'>[key_name_admin(usr)] has enabled wages!")
-			else if(href_list["wages_enabled"] == "false")
+			else if(href_list["wages_enabled"] == "disable")
 				if(!wages_enabled)
 					to_chat(usr, "Wages are already disabled!")
 				else
