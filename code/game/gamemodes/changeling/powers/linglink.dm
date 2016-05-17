@@ -37,7 +37,7 @@
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
 	changeling.islinking = 1
-	for(var/stage = 1, stage<=3, stage++)
+	for(var/i in 1 to 3)
 		switch(stage)
 			if(1)
 				user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
@@ -59,6 +59,7 @@
 		if(!do_mob(user, target, 20))
 			user << "<span class='warning'>Our link with [target] has ended!</span>"
 			changeling.islinking = 0
+			target.mind.linglink = 0
 			return
 
 	changeling.islinking = 0
