@@ -5,8 +5,8 @@
 */
 
 /mob/living/simple_animal/hostile/wwii
-	name = "World War II Reenactor"
-	desc = "A VERY enthusiastic WWII reenactor."
+	name = "Vorestation Gestapo"
+	desc = "A soldier of the Vorestation Gestapo, a combined syndicate of old-Earth fascist ideals and questionable fetishes."
 	icon_state = "nsoldier"
 	icon_living = "nsoldier"
 	speak_chance = 0
@@ -44,7 +44,7 @@
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/wwii/melee
-	name = "Hulking World War II Reenactor"
+	name = "Hulking Vorestation Gestapo"
 	icon_state = "nsoldierbuff"
 	icon_living = "nsoldierbuff"
 	stat_attack = 0
@@ -57,24 +57,30 @@
 	melee_damage_upper = 30
 	environment_smash = 2
 	attacktext = "slams"
-	deathmessage = "The Reenactor's body collapses in on itself from the strain!"
+	deathmessage = "The Gestapo's body collapses in on itself from the strain!"
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/wwii/melee/AttackingTarget()
 	..()
 	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(prob(40))
-			C.Weaken(3)
-			C.adjustBruteLoss(10)
-			C.visible_message("<span class='danger'>\The [src] smashes \the [C] into the ground!</span>", \
-					"<span class='userdanger'>\The [src] smashes you into the ground!</span>")
-			src.say(pick("RAAAAAGGHHHH!!!","AAAARRRGGHHHH!!!","RRRAAUUUGGHH!!!"))
+		var/mob/living/C = target
+		if(C.stat == DEAD)
+			C.gib()
+			visible_message("<span class='danger'>[src] devours [C] whole!</span>")
+			src << "<span class='userdanger'>You devour [C] whole, restoring your health!</span>"
+			adjustBruteLoss(-C.maxHealth)
+		else
+			if(prob(40))
+				C.Weaken(3)
+				C.adjustBruteLoss(10)
+				C.visible_message("<span class='danger'>\The [src] smashes \the [C] into the ground!</span>", \
+						"<span class='userdanger'>\The [src] smashes you into the ground!</span>")
+				src.say(pick("RAAAAAGGHHHH!!!","AAAARRRGGHHHH!!!","RRRAAUUUGGHH!!!"))
 
 
 /mob/living/simple_animal/hostile/wwii/bomber
-	name = "Mini-Führer"
-	desc = "A small, robotic recreation of the Führer himself; it seems like he wants to tell you something."
+	name = "Porta-Bomb"
+	desc = "A small robotic figure designed as a front-line bomber, meant to strike fear into opposing groups."
 	icon_state = "miniheil"
 	icon_living = "miniheil"
 	speed = 1
@@ -84,7 +90,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 7
 	attacktext = "heils"
-	deathmessage = "The Mini-Führer explodes!"
+	deathmessage = "The Porta-Bomb explodes!"
 	loot = list(/obj/effect/gibspawner/robot)
 
 /mob/living/simple_animal/hostile/wwii/bomber/AttackingTarget()
@@ -93,7 +99,7 @@
 		var/mob/living/carbon/C = target
 		if(prob(90))
 			C.Weaken(2)
-			src.say("HEIL HITLER!")
+			src.say("HEIL!")
 			explosion(src, 0, 0, 2, 3, 2)
 			src.gib()
 
