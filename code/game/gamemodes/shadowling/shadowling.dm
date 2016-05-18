@@ -254,10 +254,10 @@ Made by Xhuis
 	name = "Shadowling"
 	id = "shadowling"
 	say_mod = "chitters"
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,NODISMEMBER) //Can't use guns due to muzzle flash
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
-	has_dismemberment = 0
+
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes) H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs

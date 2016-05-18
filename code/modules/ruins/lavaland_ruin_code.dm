@@ -187,6 +187,7 @@
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "ash_walker_nest"
 	icon_living = "ash_walker_nest"
+	faction = list("ashwalker")
 	health = 200
 	maxHealth = 200
 	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)

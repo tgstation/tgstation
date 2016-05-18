@@ -53,8 +53,7 @@
 			return 1
 	if (default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), O))
 		if(linked_console)
-			linked_console.linked_lathe = null
-			linked_console = null
+			disconnect_console()
 		return
 	if(exchange_parts(user, O))
 		return
@@ -66,6 +65,10 @@
 		return 1
 	else
 		return ..()
+
+//to disconnect the machine from the r&d console it's linked to
+/obj/machinery/r_n_d/proc/disconnect_console()
+	linked_console = null
 
 //proc used to handle inserting items or reagents into r_n_d machines
 /obj/machinery/r_n_d/proc/Insert_Item(obj/item/I, mob/user)

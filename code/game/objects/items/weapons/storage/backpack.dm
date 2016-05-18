@@ -361,6 +361,10 @@ var/list/sec_backpack_list = list()
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/New()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie
 	name = "suspicious looking dufflebag"

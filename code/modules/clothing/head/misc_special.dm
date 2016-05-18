@@ -48,6 +48,7 @@
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
+	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
@@ -69,6 +70,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
+	hitsound = 'sound/items/Welder.ogg'
 	SSobj.processing |= src
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -76,6 +78,7 @@
 	force = 0
 	throwforce = 0
 	damtype = BRUTE
+	hitsound = 'sound/weapons/tap.ogg'
 	SSobj.processing -= src
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()

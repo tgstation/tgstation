@@ -1,9 +1,9 @@
 /datum/game_mode/blob/check_finished()
-	if(blob_overminds.len > cores_to_spawn && cores_to_spawn > blob_cores.len)//Some blobs have yet to burst
+	if(overminds.len)
 		return 0
 	if(blobwincount <= blobs_legit.len)//Blob took over
 		return 1
-	if(!overminds.len && !blob_cores.len) //blob is dead
+	if(!blob_cores.len) //blob is dead
 		if(config.continuous["blob"])
 			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
 			SSshuttle.emergencyNoEscape = 0

@@ -90,12 +90,10 @@
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
 
-
 /mob/living/carbon/true_devil/canUseTopic()
 	if(stat)
 		return
 	return 1
-
 
 /mob/living/carbon/true_devil/assess_threat()
 	return 666
@@ -193,3 +191,6 @@
 
 /mob/living/carbon/true_devil/handle_breathing()
 	// devils do not need to breathe
+
+/mob/living/carbon/true_devil/is_literate()
+	return 1

@@ -5,6 +5,7 @@
  *		Double-Bladed Energy Swords
  *		Spears
  *		CHAINSAWS
+ *		Bone Axe and Spear
  */
 
 /*##################################################################
@@ -390,9 +391,9 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/weapon/twohanded/required/chainsaw/can_dismember()
-	return wielded
-
+/obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
+	if(wielded)
+		. = ..()
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
@@ -509,3 +510,41 @@
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return 1
 	return 0
+
+/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+	icon_state = "hfrequency[wielded]"
+
+/*
+ * Bone Axe
+ */
+/obj/item/weapon/twohanded/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
+	icon_state = "bone_axe0"
+	name = "bone axe"
+	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
+	force_wielded = 23
+
+/obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()
+	icon_state = "bone_axe[wielded]"
+
+/*
+ * Bone Spear
+ */
+/obj/item/weapon/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+	icon_state = "bone_spear0"
+	name = "bone spear"
+	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
+	force = 11
+	w_class = 4
+	slot_flags = SLOT_BACK
+	force_unwielded = 11
+	force_wielded = 20					//I have no idea how to balance
+	throwforce = 22
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 3
+	armour_penetration = 15				//Enhanced armor piercing
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/bonespear/update_icon()
+		icon_state = "bone_spear[wielded]"

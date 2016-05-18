@@ -155,7 +155,7 @@
 
 	take_overall_damage(b_loss,f_loss)
 	//attempt to dismember bodyparts
-	if(severity >= 2 || !bomb_armor)
+	if(severity <= 2 || !bomb_armor)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
@@ -1038,3 +1038,6 @@
 	. = ..()
 	if (dna && dna.species)
 		. += dna.species.check_weakness(weapon, attacker)
+
+/mob/living/carbon/human/is_literate()
+	return 1

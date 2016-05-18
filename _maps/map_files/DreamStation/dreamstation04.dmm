@@ -15,10 +15,7 @@
 /area/space)
 "aad" = (
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "aae" = (
@@ -7678,10 +7675,7 @@
 	tag = "icon-2-5";
 	icon_state = "2-5"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "aql" = (
@@ -11496,10 +11490,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -12196,10 +12187,7 @@
 	tag = "icon-2-4";
 	icon_state = "2-4"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -12347,10 +12335,7 @@
 	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -13646,10 +13631,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "aBz" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -14374,10 +14356,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
@@ -15969,10 +15948,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
 "aGe" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -19423,10 +19399,7 @@
 	},
 /area/engine/engineering)
 "aNv" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -26679,10 +26652,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bbe" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/shard,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -28183,10 +28153,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bed" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/cable/green{
 	tag = "icon-4-8";
 	icon_state = "4-8"
@@ -28648,10 +28615,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/shard,
 /turf/open/floor/plating,
 /area/maintenance/atmos_control)
@@ -28661,10 +28625,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -28969,10 +28930,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bfB" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -33852,7 +33810,14 @@
 /area/crew_quarters/theatre)
 "boC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lipstick/random,
+/obj/item/weapon/lipstick/random{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/lipstick/random{
+	pixel_x = -2;
+	pixel_y = -2
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "boD" = (
@@ -36375,10 +36340,7 @@
 /area/engine/gravity_generator)
 "btm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "btn" = (
@@ -36913,10 +36875,7 @@
 	tag = "icon-1-6";
 	icon_state = "1-6"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "buj" = (
@@ -48250,10 +48209,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bOb" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
@@ -50370,10 +50326,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bSf" = (
@@ -57196,10 +57149,7 @@
 /turf/closed/wall/rust,
 /area/storage/emergency2)
 "cfk" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
@@ -57940,10 +57890,7 @@
 /turf/closed/wall,
 /area/maintenance/fsmaint)
 "cgP" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/meter,
 /obj/effect/spawner/lootdrop{
@@ -58568,10 +58515,7 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "chV" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -59537,10 +59481,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -60465,10 +60406,7 @@
 	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/device/assembly/mousetrap/armed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -62374,10 +62312,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2);
 	name = "random metal material damage spawner"
@@ -62630,10 +62565,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "cpH" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/device/assembly/mousetrap,
 /obj/item/trash/deadmouse,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -64079,10 +64011,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "csA" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -64132,17 +64061,11 @@
 /turf/open/floor/plating,
 /area/maintenance/portsolar)
 "csH" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "csI" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
@@ -64289,10 +64212,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
@@ -64927,10 +64847,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -64944,10 +64861,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/device/assembly/mousetrap/armed,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -70897,10 +70811,7 @@
 	},
 /area/maintenance/asmaint2)
 "cFf" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -71322,10 +71233,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -71835,10 +71743,7 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "cGI" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -73188,10 +73093,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cJa" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -73219,10 +73121,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cJc" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/shard,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -73767,10 +73666,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -73854,10 +73750,7 @@
 "cKl" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "cKm" = (
@@ -73906,10 +73799,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -73937,10 +73827,7 @@
 	},
 /area/maintenance/apmaint)
 "cKu" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "cKv" = (
@@ -74166,10 +74053,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
 	lootcount = 2;
@@ -75300,10 +75184,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cNe" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -75410,10 +75291,7 @@
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "cNn" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/spawner/lootdrop{
 	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2);
 	name = "random metal material damage spawner"
@@ -75421,10 +75299,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cNo" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/weapon/wrench,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
@@ -78083,6 +77958,10 @@
 /area/hallway/primary/aft{
 	name = "Aft Port Hallway"
 	})
+"cSm" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 
 (1,1,1) = {"
 aaa
@@ -108287,7 +108166,7 @@ biH
 bjZ
 bkT
 bmM
-boC
+cSm
 bqO
 bte
 bmM

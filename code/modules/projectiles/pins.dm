@@ -211,7 +211,6 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
-
 /obj/item/device/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null

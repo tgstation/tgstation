@@ -299,12 +299,12 @@ var/global/list/lawlorify = list (
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
-	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null)) TODO LORDPIDEY add this spell
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null))
 
 /datum/devilinfo/proc/give_arch_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended(null))
-	//owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null)) TODO LORDPIDEY
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null))
 
 /datum/devilinfo/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
