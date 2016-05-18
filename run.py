@@ -36,19 +36,23 @@ def stage3():
     p = subprocess.Popen(
         "DreamDaemon tgstation.dmb 25001 -trace -trusted",
         shell=True, stdout=PIPE, stderr=STDOUT)
-    while p.returncode is None:
-        try:
+    try:
+        while p.returncode is None:
             stdout = p.stdout.readline()
             t = "Initializations complete."
             if t in stdout:
                 play("sound/misc/server-ready.ogg")
             sys.stdout.write(stdout)
             sys.stdout.flush()
-        finally:
-            logfile.flush()
-            os.fsync(logfile.fileno())
+            logfile.write(stdout)
+    finally:
+        logfile.flush()
+        os.fsync(logfile.fileno())
+        logfile.close()
+        p.kill()
 
-if __name__=='__main__':
+
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s','---stage',default=1,type=int)
     args = parser.parse_args()
@@ -62,3 +66,9 @@ if __name__=='__main__':
         stage = 3
     if stage == 3:
         stage3()
+
+if __name__=='__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass

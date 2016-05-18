@@ -18,18 +18,16 @@
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
 
-	var/i_know_what_im_doing = 0
-
 	//these objects are indestructable
-/obj/docking_port/Destroy()
+/obj/docking_port/Destroy(force)
 	// unless you assert that you know what you're doing. Horrible things
 	// may result.
-	if(!i_know_what_im_doing)
-		return QDEL_HINT_LETMELIVE
+	if(force)
+		..()
+		. = QDEL_HINT_HARDDEL_NOW
 	else
-		// If not removed immediately, it can interfere with the docking
-		// detection code, which is annoying and inconvinient.
-		return QDEL_HINT_HARDDEL_NOW
+		return QDEL_HINT_LETMELIVE
+
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
@@ -191,8 +189,8 @@
 	..()
 	SSshuttle.mobile += src
 
-/obj/docking_port/mobile/Destroy()
-	if(i_know_what_im_doing)
+/obj/docking_port/mobile/Destroy(force)
+	if(force)
 		SSshuttle.mobile -= src
 	. = ..()
 
@@ -330,6 +328,8 @@
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
 	var/area_type = /area/space
+	// If the shuttle is docked to a stationary port, restore its normal
+	// "empty" area and turf
 	if(S0)
 		if(S0.turf_type)
 			turf_type = S0.turf_type
@@ -346,25 +346,13 @@
 		for(var/turf/T0 in L0)
 			A0.contents += T0
 
-	for(var/i=1, i<=L0.len, ++i)
-		var/turf/T0 = L0[i]
+	for(var/i in L0)
+		var/turf/T0 =i
 		if(!T0)
 			continue
+		T0.empty(turf_type)
 
-		for(var/atom/AM in T0.GetAllContents())
-			if(istype(AM, /mob/dead))
-				continue
-			qdel(AM)
-
-		T0.ChangeTurf(turf_type)
-
-		T0.redraw_lighting()
-		SSair.remove_from_active(T0)
-		T0.CalculateAdjacentTurfs()
-		SSair.add_to_active(T0,1)
-
-	src.i_know_what_im_doing = TRUE
-	qdel(src)
+	qdel(src, force=TRUE)
 
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc

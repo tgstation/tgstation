@@ -9,6 +9,13 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator-blue"
 
+	// UI state variables
+	var/datum/map_template/shuttle/selected
+	var/obj/docking_port/mobile/existing_shuttle
+
+	var/obj/docking_port/mobile/preview_shuttle
+	var/preview_shuttle_id
+
 /obj/machinery/shuttle_manipulator/process()
 	return
 
@@ -43,6 +50,37 @@
 	var/list/data = list()
 	data["tabs"] = list("Status", "Templates", "Modification")
 
+	// Templates panel
+	data["templates"] = list()
+	var/list/templates = data["templates"]
+	data["templates_tabs"] = list()
+	data["selected"] = list()
+
+	for(var/shuttle_id in shuttle_templates)
+		var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+
+		if(!templates[S.port_id])
+			data["templates_tabs"] += S.port_id
+			templates[S.port_id] = list(
+				"port_id" = S.port_id,
+				"templates" = list())
+
+		var/list/L = list()
+		L["name"] = S.name
+		L["shuttle_id"] = S.shuttle_id
+		L["port_id"] = S.port_id
+		L["description"] = S.description
+		L["admin_notes"] = S.admin_notes
+
+		if(selected && (selected.shuttle_id == S.shuttle_id))
+			data["selected"] = L
+
+		templates[S.port_id]["templates"] += list(L)
+
+	data["templates_tabs"] = sortList(data["templates_tabs"])
+
+	data["existing_shuttle"] = null
+
 	// Status panel
 	data["shuttles"] = list()
 	for(var/i in SSshuttle.mobile)
@@ -54,35 +92,13 @@
 		L["timeleft"] = M.getTimerStr()
 		L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getStatusText()
+		if(selected && selected.port_id == M.id)
+			existing_shuttle = M
+			data["existing_shuttle"] = L
 		data["shuttles"] += list(L)
-
-	// Templates panel
-	data["templates"] = list()
-	var/list/templates = data["templates"]
-	data["templates_tabs"] = list()
-
-	for(var/name in shuttle_templates)
-		var/datum/map_template/shuttle/S = shuttle_templates[name]
-
-		if(!templates[S.port_id])
-			data["templates_tabs"] += S.port_id
-			templates[S.port_id] = list(
-				"port_id" = S.port_id,
-				"templates" = list())
-		
-		var/list/L = list()
-		L["name"] = S.name
-		L["id"] = S.port_id
-		L["description"] = S.description
-		L["admin_notes"] = S.admin_notes
-
-		templates[S.port_id]["templates"] += list(L)
-
-	data["templates_tabs"] = sortList(data["templates_tabs"])
 
 	// Modification panel
 	// should be disabled unless we are doing something?
-	data["modification"] = FALSE
 	// Show current proposal
 	// PREVIEW button to load
 	// CANCEL button to (unload if loaded) and return back
@@ -96,16 +112,111 @@
 	//world.log << json_encode(data)
 	return data
 
-/obj/machinery/my_machine/ui_act(action, params)
+/obj/machinery/shuttle_manipulator/ui_act(action, params)
 	if(..())
 		return
-/*
+
+	var/mob/user = usr
+
 	switch(action)
-		if("change_color")
-			var/new_color = params["color"]
-			if(!(color in allowed_coors))
-				return
-			color = new_color
-			. = TRUE
-*/
+		if("select_template")
+			var/shuttle_id = params["shuttle_id"]
+
+			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+			if(S)
+				src.selected = S
+				. = TRUE
+		if("jump_to")
+			if(params["type"] == "mobile")
+				for(var/i in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = i
+					if(M.id == params["id"])
+						user.loc = get_turf(M)
+		if("preview")
+			var/shuttle_id = params["id"]
+			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+			if(S)
+				load_template(S)
+				if(preview_shuttle)
+					preview_shuttle_id = shuttle_id
+					user.loc = get_turf(preview_shuttle)
+		if("load")
+			var/shuttle_id = params["id"]
+			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+			if(S)
+				if(!preview_shuttle || (S.shuttle_id != preview_shuttle_id))
+					if(preview_shuttle)
+						preview_shuttle.jumpToNullSpace()
+					load_template(S)
+					preview_shuttle_id = shuttle_id
+				// get the existing shuttle information, if any
+				var/timer
+				var/mode = SHUTTLE_IDLE
+				var/obj/docking_port/stationary/D
+				if(existing_shuttle)
+					timer = existing_shuttle.timer
+					mode = existing_shuttle.mode
+					D = existing_shuttle.get_docked()
+
+				if(!D)
+					var/msg1 = "[existing_shuttle] is not currently at a \
+						valid dock, the import will not continue."
+					WARNING(msg1)
+					message_admins(msg1)
+					preview_shuttle.jumpToNullSpace()
+					selected = null
+					return
+
+				// Destroy the old shuttle
+				existing_shuttle.jumpToNullSpace()
+				// Unflub the ID
+				var/new_id = replacetext(preview_shuttle.id, "(preview)", "")
+				preview_shuttle.id = new_id
+
+				preview_shuttle.dock(D)
+				preview_shuttle.timer = timer
+				preview_shuttle.mode = mode
+				. = TRUE
+
+				preview_shuttle = null
+				preview_shuttle_id = null
+				existing_shuttle = null
+				selected = null
+
 	update_icon()
+
+
+/obj/machinery/shuttle_manipulator/proc/load_template(
+	datum/map_template/shuttle/S)
+	// load shuttle template, centred at shuttle import landmark,
+	var/turf/landmark_turf = get_turf(locate("landmark*Shuttle Import"))
+	S.load(landmark_turf, centered = TRUE)
+
+	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
+
+	var/found = 0
+	for(var/T in affected)
+		for(var/obj/docking_port/P in T)
+			if(istype(P, /obj/docking_port/mobile))
+				found++
+				if(found > 1)
+					qdel(P, force=TRUE)
+					world.log << "Map warning: Shuttle Template [S.mappath] \
+						has multiple mobile docking ports."
+				else
+					// Change the id so the shuttle system doesn't grab the
+					// loaded ship until we want it to
+					P.id = "(preview)[P.id]"
+					preview_shuttle = P
+			if(istype(P, /obj/docking_port/stationary))
+				world.log << "Map warning: Shuttle Template [S.mappath] has a \
+					stationary docking port."
+	if(!found)
+		var/msg = "load_template(): Shuttle Template [S.mappath] has no \
+			mobile docking port. Aborting import."
+		for(var/T in affected)
+			var/turf/T0 = T
+			T0.empty()
+
+		message_admins(msg)
+		throw EXCEPTION(msg)

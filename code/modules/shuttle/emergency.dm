@@ -80,8 +80,8 @@
 	// that we use.
 	SSshuttle.emergency = src
 
-/obj/docking_port/mobile/emergency/Destroy()
-	if(src.i_know_what_im_doing)
+/obj/docking_port/mobile/emergency/Destroy(force)
+	if(force)
 		// This'll make the shuttle subsystem use the backup shuttle.
 		SSshuttle.emergencyDeregister()
 

@@ -19,8 +19,11 @@
 	update_icon()
 	air = space_gas
 
-/turf/open/space/Destroy()
-	return QDEL_HINT_LETMELIVE
+/turf/open/space/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return

@@ -299,3 +299,22 @@
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 		add_blueprints(AM)
+
+/turf/proc/empty(turf_type=/turf/open/space)
+	// Remove all atoms except observers, landmarks, docking ports
+	var/turf/T0 = src
+	for(var/A in T0.GetAllContents())
+		if(istype(A, /mob/dead))
+			continue
+		if(istype(A, /obj/effect/landmark))
+			continue
+		if(istype(A, /obj/docking_port))
+			continue
+		qdel(A, force=TRUE)
+
+	T0.ChangeTurf(turf_type)
+
+	T0.redraw_lighting()
+	SSair.remove_from_active(T0)
+	T0.CalculateAdjacentTurfs()
+	SSair.add_to_active(T0,1)

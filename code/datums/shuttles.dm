@@ -3,12 +3,14 @@
 	var/prefix = "_maps/shuttles/"
 	var/suffix
 	var/port_id
+	var/shuttle_id
 
 	var/description
 	var/admin_notes
 
 /datum/map_template/shuttle/New()
-	mappath = "[prefix][port_id]_[suffix].dmm"
+	shuttle_id = "[port_id]_[suffix]"
+	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
 /datum/map_template/shuttle/emergency

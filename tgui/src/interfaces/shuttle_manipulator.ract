@@ -10,6 +10,11 @@
 		<templates></templates>
 	</tab>
 	<tab name='Modification'>
+		{{#if data.selected}}
 		<modification></modification>
+		{{/if}}
+		{{#if !data.selected}}
+		No shuttle selected.
+		{{/if}}
 	</tab>
 </ui-tabs>
