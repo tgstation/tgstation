@@ -37315,7 +37315,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /obj/item/weapon/nullrod,
-/obj/item/device/soulstone/anybody,
+/obj/item/device/soulstone/anybody/chaplain,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},

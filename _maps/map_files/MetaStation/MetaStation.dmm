@@ -90596,7 +90596,7 @@
 	pixel_x = 4
 	},
 /obj/item/organ/heart,
-/obj/item/device/soulstone/anybody,
+/obj/item/device/soulstone/anybody/chaplain,
 /obj/effect/landmark{
 	name = "revenantspawn"
 	},
