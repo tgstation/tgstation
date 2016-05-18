@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Escape attempts from alien nests no longer carry over when you get trapped again on that same nest.
+  - tweak: Aliens can no longer trap human players on nests if they are standing up. They need to at least tackle them first, or make them fall one way or another. Doesn't apply to braindeads.
