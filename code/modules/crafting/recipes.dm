@@ -407,7 +407,6 @@
 
 /datum/crafting_recipe/sinew_belt
 	name = "Sinew Belt"
-	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
+	result = /obj/item/weapon/storage/belt/mining/primitive
 	time = 50
-	reqs = list(/obj/item/stack/sheet/sinew = 8)
 	category = CAT_PRIMAL
