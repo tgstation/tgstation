@@ -31,7 +31,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
-	origin_tech = "combat=5;materials=4;biotech=4"
+	origin_tech = "combat=6;materials=4;biotech=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
 	ammo_x_offset = 1
@@ -141,7 +141,7 @@
 	item_state = "crossbow"
 	w_class = 2
 	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=3;magnets=3;syndicate=5"
+	origin_tech = "combat=4;magnets=4;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
@@ -154,7 +154,7 @@
 	icon_state = "crossbowlarge"
 	w_class = 3
 	materials = list(MAT_METAL=4000)
-	origin_tech = "combat=4;magnets=4;syndicate=3" //can be further researched for more syndie tech
+	origin_tech = "combat=4;magnets=4;syndicate=2"
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null

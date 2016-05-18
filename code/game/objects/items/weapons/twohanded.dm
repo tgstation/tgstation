@@ -202,7 +202,7 @@
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
 	armour_penetration = 35
-	origin_tech = "magnets=3;syndicate=4"
+	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75

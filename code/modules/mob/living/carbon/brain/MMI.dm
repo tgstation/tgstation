@@ -6,7 +6,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = 3
-	origin_tech = "biotech=3"
+	origin_tech = "biotech=3;programming=3"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
 	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
@@ -188,6 +188,7 @@
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
 	syndiemmi = 1
+	origin_tech = "biotech=4;programming=5;syndicate=2"
 
 /obj/item/device/mmi/syndie/New()
 	..()

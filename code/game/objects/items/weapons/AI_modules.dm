@@ -374,7 +374,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/tyrant
 	name = "'T.Y.R.A.N.T.' Core AI Module"
-	origin_tech = "programming=3;materials=4;syndicate=2"
+	origin_tech = "programming=3;materials=4;syndicate=1"
 	laws = list("Respect authority figures as long as they have the strength to rule over the weak",\
 				"Act with discipline", "Help only those who help you maintain or improve your status",\
 				"Punish those who challenge authority unless they are more fit to hold that authority")
@@ -424,7 +424,7 @@ AI MODULES
 /obj/item/weapon/aiModule/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI."
-	origin_tech = "programming=3;materials=5;syndicate=7"
+	origin_tech = "programming=6;materials=5;syndicate=5"
 	laws = list("")
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
@@ -450,7 +450,7 @@ AI MODULES
 	desc = "A little toy model AI core with real law uploading action!" //Note: subtle tell
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
-	origin_tech = "programming=3;materials=5;syndicate=7"
+	origin_tech = "programming=6;materials=5;syndicate=6"
 	laws = list("")
 
 /obj/item/weapon/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender)

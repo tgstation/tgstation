@@ -199,7 +199,7 @@
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	origin_tech = "combat=4;syndicate=2"
+	origin_tech = "combat=4;syndicate=1"
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
 	if(..())

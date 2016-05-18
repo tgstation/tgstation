@@ -59,7 +59,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1
-	origin_tech = "materials=4;magnets=3;syndicate=4"
+	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 

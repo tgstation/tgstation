@@ -55,7 +55,7 @@
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 35
-	origin_tech = "combat=3;magnets=3;syndicate=4"
+	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 	var/hacked = 0
 

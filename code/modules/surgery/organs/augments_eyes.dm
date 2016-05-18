@@ -59,7 +59,7 @@
 	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
 	implant_color = "#FFCC00"
-	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;syndicate=4"
+	origin_tech = "materials=4;programming=4;biotech=4;magnets=4;syndicate=2"
 	sight_flags = SEE_MOBS
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	flash_protect = -1

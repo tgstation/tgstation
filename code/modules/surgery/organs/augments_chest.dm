@@ -50,7 +50,7 @@
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
-	origin_tech = "materials=6;programming=3;biotech=6;syndicate=4"
+	origin_tech = "materials=6;programming=3;biotech=6"
 	slot = "heartdrive"
 	var/revive_cost = 0
 	var/reviving = 0
