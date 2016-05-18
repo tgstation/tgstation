@@ -31,7 +31,7 @@
 "aE" = (/obj/structure/chair/wood{dir = 4},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aF" = (/obj/structure/table/wood,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aG" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
-"aH" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "The Emergency Escape Bar"},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
+"aH" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "The Emergency Escape Bar"; timid = 1},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aI" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aJ" = (/obj/structure/chair,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
 "aK" = (/mob/living/simple_animal/drone/snowflake/bardrone,/turf/open/floor/plasteel/bar,/area/shuttle/escape)

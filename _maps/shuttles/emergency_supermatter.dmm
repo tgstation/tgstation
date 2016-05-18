@@ -21,7 +21,7 @@
 "u" = (/obj/machinery/power/supermatter_shard/hugbox{anchored = 1; base_icon_state = "darkmatter"; explosion_power = 20; gasefficency = 0.15; icon_state = "darkmatter"; name = "anchored supermatter crystal"},/turf/open/floor/plating,/area/shuttle/escape)
 "v" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/toxin,/obj/item/weapon/crowbar/red,/obj/item/weapon/storage/box/snappops{pixel_x = 4; pixel_y = -4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
 "w" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"x" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Hyperfractal Gigashuttle"},/turf/open/floor/plating,/area/shuttle/escape)
+"x" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Hyperfractal Gigashuttle"; timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
 "y" = (/obj/machinery/door/airlock/external{name = "Emergency Launch Catwalk"; req_access = null; req_access_txt = "10;13"},/turf/open/floor/plating,/area/shuttle/escape)
 "z" = (/turf/open/floor/plating/airless,/area/shuttle/escape)
 "A" = (/obj/structure/reflector/single{anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)

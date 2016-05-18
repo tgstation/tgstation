@@ -12,7 +12,7 @@
 "l" = (/turf/open/floor/plating,/area/shuttle/escape)
 "m" = (/obj/structure/chair{dir = 8},/obj/structure/window/reinforced{dir = 4; pixel_x = 0},/turf/open/floor/plating/airless,/area/shuttle/escape)
 "n" = (/obj/structure/chair{dir = 4},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"o" = (/obj/docking_port/mobile/emergency{name = "Shuttle Under Construction"},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"o" = (/obj/docking_port/mobile/emergency{name = "Shuttle Under Construction"; timid = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
 "p" = (/obj/structure/rack,/obj/effect/spawner/lootdrop/maintenance{lootcount = 4; name = "4maintenance loot spawner"},/turf/open/floor/plating/airless,/area/shuttle/escape)
 "q" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
 "r" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)

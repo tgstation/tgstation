@@ -150,10 +150,14 @@
 				if(!D)
 					var/msg1 = "[existing_shuttle] is not currently at a \
 						valid dock, the import will not continue."
-					WARNING(msg1)
-					message_admins(msg1)
-					preview_shuttle.jumpToNullSpace()
-					selected = null
+					abort_import(msg1)
+					return
+
+				if(preview_shuttle.canDock(D))
+					// truthy value means that it cannot dock for some reason
+					var/msg3 = "Unsuccessful dock of [preview_shuttle], \
+						removing."
+					abort_import(msg3)
 					return
 
 				// Destroy the old shuttle
@@ -162,16 +166,11 @@
 				var/new_id = replacetext(preview_shuttle.id, "(preview)", "")
 				preview_shuttle.id = new_id
 
-				var/status = preview_shuttle.dock(D)
-				if(status)
-					// unsuccessful dock
-					var/msg3 = "Unsuccessful dock of [preview_shuttle], \
-						removing."
-					message_admins(msg3)
-					WARNING(msg3)
-					return
+				preview_shuttle.dock(D)
 				preview_shuttle.timer = timer
 				preview_shuttle.mode = mode
+				// Register with the shuttle subsystem
+				preview_shuttle.register()
 				. = TRUE
 
 				preview_shuttle = null
@@ -216,3 +215,11 @@
 
 		message_admins(msg)
 		throw EXCEPTION(msg)
+
+/obj/machinery/shuttle_manipulator/proc/abort_import(msg)
+	message_admins(msg)
+	WARNING(msg)
+	if(preview_shuttle)
+		preview_shuttle.jumpToNullSpace()
+	preview_shuttle_id = null
+	selected = null

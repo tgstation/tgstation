@@ -28,7 +28,7 @@
 "B" = (/obj/effect/rune/true_sight,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/gibs/body,/obj/effect/decal/cleanable/blood/gibs/core,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "C" = (/mob/living/simple_animal/hostile/construct/armored,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "D" = (/obj/effect/rune/true_sight,/obj/effect/decal/remains/human,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
-"E" = (/obj/machinery/door/airlock/cult/friendly,/obj/docking_port/mobile/emergency{name = "shuttle 667"},/turf/open/floor/plating,/area/shuttle/escape)
+"E" = (/obj/machinery/door/airlock/cult/friendly,/obj/docking_port/mobile/emergency{name = "shuttle 667"; timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
 "F" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "G" = (/obj/structure/extinguisher_cabinet{has_extinguisher = null; icon_state = "extinguisher_empty"; opened = 1; pixel_x = 27; pixel_y = 0},/obj/item/weapon/extinguisher{safety = 0},/turf/open/floor/plasteel/cult,/area/shuttle/escape)
 "H" = (/mob/living/simple_animal/hostile/construct/wraith,/turf/open/floor/plasteel/cult,/area/shuttle/escape)

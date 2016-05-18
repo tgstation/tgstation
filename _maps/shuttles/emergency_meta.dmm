@@ -24,7 +24,7 @@
 "ax" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "ay" = (/obj/structure/reagent_dispensers/fueltank,/obj/structure/extinguisher_cabinet{pixel_x = -27; pixel_y = 0},/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
 "az" = (/obj/structure/closet/crate{name = "emergency supplies crate"},/obj/item/weapon/storage/toolbox/emergency,/obj/item/weapon/storage/toolbox/emergency,/obj/item/device/flashlight/flare{pixel_x = 3; pixel_y = 3},/obj/item/device/flashlight/flare{pixel_x = -6; pixel_y = -2},/obj/item/weapon/crowbar,/obj/item/weapon/wrench,/obj/item/device/radio,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
-"aA" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Cargo Bay Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 5; height = 14; width = 25},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aA" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Cargo Bay Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 5; height = 14; width = 25; timid = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aB" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; pixel_x = 0; pixel_y = 0; req_access_txt = "0"; use_power = 0},/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
 "aC" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
 "aD" = (/obj/machinery/space_heater,/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)

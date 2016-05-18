@@ -1,6 +1,6 @@
 "a" = (/turf/closed/wall/mineral/wood,/area/shuttle/escape)
 "b" = (/obj/machinery/light_switch,/turf/closed/wall/mineral/wood,/area/shuttle/escape)
-"c" = (/obj/machinery/door/unpowered/shuttle,/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 1; height = 10; name = "Oh Hi Mark"; width = 12},/turf/open/floor/wood,/area/shuttle/escape)
+"c" = (/obj/machinery/door/unpowered/shuttle,/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 1; height = 10; name = "Oh Hi Mark"; width = 12; timid = 1},/turf/open/floor/wood,/area/shuttle/escape)
 "d" = (/turf/open/floor/wood,/area/shuttle/escape)
 "e" = (/obj/machinery/light{dir = 1},/turf/open/floor/carpet,/area/shuttle/escape)
 "f" = (/obj/structure/chair/comfy/teal,/turf/open/floor/carpet,/area/shuttle/escape)

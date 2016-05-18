@@ -5,7 +5,7 @@
 "e" = (/turf/closed/wall/shuttle{tag = "icon-wall_space (NORTH)"; icon_state = "wall_space"; dir = 1},/area/shuttle/escape)
 "f" = (/turf/closed/wall/shuttle{tag = "icon-swall2"; icon_state = "swall2"},/area/shuttle/escape)
 "g" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"h" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dir = 2; dwidth = 9; name = "NES Port"; width = 19},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"h" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dir = 2; dwidth = 9; name = "NES Port"; width = 19; timid = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "i" = (/turf/closed/wall/shuttle{tag = "icon-wall_space (WEST)"; icon_state = "wall_space"; dir = 8},/area/shuttle/escape)
 "j" = (/turf/closed/wall/shuttle{tag = "icon-swall4"; icon_state = "swall4"},/area/shuttle/escape)
 "k" = (/turf/closed/wall/shuttle{tag = "icon-swall12"; icon_state = "swall12"},/area/shuttle/escape)

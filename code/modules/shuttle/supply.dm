@@ -39,8 +39,8 @@
 	var/contraband = FALSE
 	var/emagged = FALSE
 
-/obj/docking_port/mobile/supply/New()
-	..()
+/obj/docking_port/mobile/supply/register()
+	. = ..()
 	SSshuttle.supply = src
 
 /obj/docking_port/mobile/supply/canMove()

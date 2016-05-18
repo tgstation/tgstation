@@ -185,8 +185,16 @@
 
 	var/launch_status = NOLAUNCH
 
+	// A timid shuttle will not register itself with the shuttle subsystem
+	// All shuttle templates are timid
+	var/timid = FALSE
+
 /obj/docking_port/mobile/New()
 	..()
+	if(!timid)
+		register()
+
+/obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
 
 /obj/docking_port/mobile/Destroy(force)

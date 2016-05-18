@@ -54,13 +54,18 @@
 		return ..()
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
-	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
-		var/time = SSshuttle.emergency.timeLeft()
-		message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has emagged the emergency shuttle  [time] seconds before launch.",0,1)
-		log_game("[key_name(user)] has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
-		minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
-		SSshuttle.emergency.setTimer(100)
-		emagged = 1
+	var/mode = SSshuttle.emergency.mode
+	var/time = SSshuttle.emergency.timeLeft()
+	if(!emagged && mode == SHUTTLE_DOCKED)
+		if(time < 11)
+			message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has emagged the emergency shuttle  [time] seconds before launch.",0,1)
+			log_game("[key_name(user)] has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
+			minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
+			SSshuttle.emergency.setTimer(100)
+			emagged = 1
+		else
+			user << "<span class='warning'>The shuttle is already \
+				about to launch!</span>"
 
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
@@ -74,16 +79,16 @@
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
-/obj/docking_port/mobile/emergency/New()
-	..()
-	// The last created emergency shuttle will always be the one
-	// that we use.
+/obj/docking_port/mobile/emergency/register()
+	. = ..()
 	SSshuttle.emergency = src
 
 /obj/docking_port/mobile/emergency/Destroy(force)
 	if(force)
 		// This'll make the shuttle subsystem use the backup shuttle.
-		SSshuttle.emergencyDeregister()
+		if(src == SSshuttle.emergency)
+			// If we're the selected emergency shuttle
+			SSshuttle.emergencyDeregister()
 
 	. = ..()
 
@@ -342,11 +347,11 @@
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.
+	// backup shuttle ignores `timid` because THERE SHOULD BE NO TOUCHING IT
 	var/current_emergency = SSshuttle.emergency
 	..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
-
 
 #undef UNLAUNCHED
 #undef LAUNCHED
