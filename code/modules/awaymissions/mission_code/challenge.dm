@@ -43,5 +43,6 @@
 	icon_state_on = "wabbajack_statue_on"
 
 /obj/machinery/power/emitter/energycannon/magical/New()
+	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
