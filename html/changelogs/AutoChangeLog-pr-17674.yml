@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "unwrapping an item with telekinesis no longer teleports the item into your hand."
