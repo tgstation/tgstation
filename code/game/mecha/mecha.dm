@@ -108,6 +108,8 @@
 	..()
 	return
 
+/obj/mecha/is_airtight()
+	return !use_internal_tank
 ////////////////////////
 ////// Helpers /////////
 ////////////////////////

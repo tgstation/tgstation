@@ -995,6 +995,10 @@ var/list/slot_equipment_priority = list( \
 
 	if(istype(loc,/obj/mecha)) return
 
+	if(isVentCrawling())
+		to_chat(src, "<span class='danger'>Not while we're vent crawling!</span>")
+		return
+
 	if(hand)
 		var/obj/item/W = l_hand
 		if (W)

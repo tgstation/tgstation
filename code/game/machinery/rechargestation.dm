@@ -48,6 +48,8 @@
 	src.go_out()
 	..()
 
+/obj/machinery/recharge_station/is_airtight()
+	return occupant
 
 /obj/machinery/recharge_station/ex_act(severity)
 	switch(severity)

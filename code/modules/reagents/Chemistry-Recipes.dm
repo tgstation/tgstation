@@ -436,27 +436,28 @@
 	result_amount = null
 
 /datum/chemical_reaction/flash_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(2, 1, location)
-	s.start()
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		var/location = get_turf(holder.my_atom)
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(2, 1, location)
+		s.start()
 
-	playsound(get_turf(src), 'sound/effects/phasein.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/effects/phasein.ogg', 25, 1)
 
-	var/eye_safety = 0
+		var/eye_safety = 0
 
-	for(var/mob/living/carbon/M in viewers(get_turf(holder.my_atom), null))
-		if(iscarbon(M))
-			eye_safety = M.eyecheck()
+		for(var/mob/living/carbon/M in viewers(get_turf(holder.my_atom), null))
+			if(iscarbon(M))
+				eye_safety = M.eyecheck()
 
-		if(get_dist(M, location) <= 3)
-			if(eye_safety < 1)
-				M.flash_eyes(visual = 1)
-				M.Weaken(15)
-		else if(get_dist(M, location) <= 5)
-			if(eye_safety < 1)
-				M.flash_eyes(visual = 1)
-				M.Stun(5)
+			if(get_dist(M, location) <= 3)
+				if(eye_safety < 1)
+					M.flash_eyes(visual = 1)
+					M.Weaken(15)
+			else if(get_dist(M, location) <= 5)
+				if(eye_safety < 1)
+					M.flash_eyes(visual = 1)
+					M.Stun(5)
 
 /datum/chemical_reaction/napalm
 	name = "Napalm"
@@ -466,19 +467,19 @@
 	result_amount = 1
 
 /datum/chemical_reaction/napalm/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		var/turf/location = get_turf(holder.my_atom.loc)
 
-	var/turf/location = get_turf(holder.my_atom.loc)
-
-	for(var/turf/simulated/floor/target_tile in range(0,location))
-		var/datum/gas_mixture/napalm = new
-		var/datum/gas/volatile_fuel/fuel = new
-		fuel.moles = created_volume
-		napalm.trace_gases += fuel
-		napalm.temperature = 400+T0C
-		napalm.update_values()
-		target_tile.assume_air(napalm)
-		spawn(0)
-			target_tile.hotspot_expose(700, 400, surfaces = 1)
+		for(var/turf/simulated/floor/target_tile in range(0,location))
+			var/datum/gas_mixture/napalm = new
+			var/datum/gas/volatile_fuel/fuel = new
+			fuel.moles = created_volume
+			napalm.trace_gases += fuel
+			napalm.temperature = 400+T0C
+			napalm.update_values()
+			target_tile.assume_air(napalm)
+			spawn(0)
+				target_tile.hotspot_expose(700, 400, surfaces = 1)
 
 	holder.del_reagent("napalm")
 
@@ -491,15 +492,16 @@
 	secondary = 1
 
 /datum/chemical_reaction/chemsmoke/on_reaction(var/datum/reagents/holder, var/created_volume)
-	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
-	S.attach(location)
-	S.set_up(holder, 10, 0, location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		S.start()
-		sleep(10)
-		S.start()
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		var/location = get_turf(holder.my_atom)
+		var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+		S.attach(location)
+		S.set_up(holder, 10, 0, location)
+		playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+		spawn(0)
+			S.start()
+			sleep(10)
+			S.start()
 	holder.clear_reagents()
 
 /datum/chemical_reaction/chloralhydrate
@@ -639,19 +641,19 @@
 	result_amount = 2
 
 /datum/chemical_reaction/foam/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		var/location = get_turf(holder.my_atom)
+		for(var/mob/M in viewers(5, location))
+			to_chat(M, "<span class='warning'>The solution violently bubbles!</span>")
 
-	var/location = get_turf(holder.my_atom)
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='warning'>The solution violently bubbles!</span>")
+		location = get_turf(holder.my_atom)
 
-	location = get_turf(holder.my_atom)
+		for(var/mob/M in viewers(5, location))
+			to_chat(M, "<span class='warning'>The solution spews out foam!</span>")
 
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='warning'>The solution spews out foam!</span>")
-
-	var/datum/effect/effect/system/foam_spread/s = new()
-	s.set_up(created_volume, location, holder, 0)
-	s.start()
+		var/datum/effect/effect/system/foam_spread/s = new()
+		s.set_up(created_volume, location, holder, 0)
+		s.start()
 	holder.clear_reagents()
 
 /datum/chemical_reaction/metalfoam
@@ -662,15 +664,15 @@
 	result_amount = 5
 
 /datum/chemical_reaction/metalfoam/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		var/location = get_turf(holder.my_atom)
 
-	var/location = get_turf(holder.my_atom)
+		for(var/mob/M in viewers(5, location))
+			to_chat(M, "<span class='warning'>The solution spews out a metallic foam!</span>")
 
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='warning'>The solution spews out a metallic foam!</span>")
-
-	var/datum/effect/effect/system/foam_spread/s = new()
-	s.set_up(created_volume, location, holder, 1)
-	s.start()
+		var/datum/effect/effect/system/foam_spread/s = new()
+		s.set_up(created_volume, location, holder, 1)
+		s.start()
 
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
@@ -680,15 +682,15 @@
 	result_amount = 5
 
 /datum/chemical_reaction/ironfoam/on_reaction(var/datum/reagents/holder, var/created_volume)
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		var/location = get_turf(holder.my_atom)
 
-	var/location = get_turf(holder.my_atom)
+		for(var/mob/M in viewers(5, location))
+			to_chat(M, "<span class='warning'>The solution spews out a metallic foam!</span>")
 
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='warning'>The solution spews out a metallic foam!</span>")
-
-	var/datum/effect/effect/system/foam_spread/s = new()
-	s.set_up(created_volume, location, holder, 2)
-	s.start()
+		var/datum/effect/effect/system/foam_spread/s = new()
+		s.set_up(created_volume, location, holder, 2)
+		s.start()
 
 /datum/chemical_reaction/foaming_agent
 	name = "Foaming Agent"
@@ -757,21 +759,21 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimespawn/on_reaction(var/datum/reagents/holder)
+	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
+		if(istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+			send_admin_alert(holder, reaction_name = "grey slime in a grenade")
+		else
+			send_admin_alert(holder, reaction_name = "grey slime")
 
-	if(istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name = "grey slime in a grenade")
-	else
-		send_admin_alert(holder, reaction_name = "grey slime")
+		feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 
-	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
+		if(istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
+			holder.my_atom.visible_message("<span class='rose'>The grenade bursts open and a new baby slime emerges from it!</span>")
+		else
+			holder.my_atom.visible_message("<span class='rose'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 
-	if(istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
-		holder.my_atom.visible_message("<span class='rose'>The grenade bursts open and a new baby slime emerges from it!</span>")
-	else
-		holder.my_atom.visible_message("<span class='rose'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
-
-	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
-	S.loc = get_turf(holder.my_atom)
+		var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
+		S.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimemonkey
 	name = "Slime Monkey"

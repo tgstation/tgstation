@@ -200,6 +200,11 @@ var/global/list/ghdel_profiling = list()
 /atom/proc/is_open_container()
 	return flags & OPENCONTAINER
 
+// As a rule of thumb, should smoke be able to pop out from inside this object?
+// Currently only used for chemical reactions, see Chemistry-Recipes.dm
+/atom/proc/is_airtight()
+	return 0
+
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
 	proc/can_subract_container()

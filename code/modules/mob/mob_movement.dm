@@ -152,7 +152,7 @@
 
 
 
-/client/verb/attack_self()
+/client/verb/attack_self() //Called when pagedown or Z is pressed
 	set hidden = 1
 	if(mob)
 		mob.mode()

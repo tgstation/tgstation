@@ -1110,7 +1110,7 @@ proc/get_mob_with_client_list()
 	return null
 
 /proc/find_holder(atom/O) //aka get_just_before_turf
-	while(O)
+	while(O && !isturf(O))
 		if(isturf(O.loc))
 			return O
 		O = O.loc
@@ -1123,6 +1123,13 @@ proc/get_mob_with_client_list()
 			return location
 		location = location.loc
 	return 0
+
+/proc/is_in_airtight_object(var/atom/O) //Shitty version of find_holder
+	while(O && !isturf(O))
+		if(O.is_airtight())
+			return 1
+		O = O.loc
+	return null
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
