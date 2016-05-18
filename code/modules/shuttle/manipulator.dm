@@ -123,6 +123,8 @@
 			var/shuttle_id = params["id"]
 			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
 			if(S)
+				if(preview_shuttle)
+					preview_shuttle.jumpToNullSpace()
 				load_template(S)
 				if(preview_shuttle)
 					preview_shuttle_id = shuttle_id
@@ -160,7 +162,14 @@
 				var/new_id = replacetext(preview_shuttle.id, "(preview)", "")
 				preview_shuttle.id = new_id
 
-				preview_shuttle.dock(D)
+				var/status = preview_shuttle.dock(D)
+				if(status)
+					// unsuccessful dock
+					var/msg3 = "Unsuccessful dock of [preview_shuttle], \
+						removing."
+					message_admins(msg3)
+					WARNING(msg3)
+					return
 				preview_shuttle.timer = timer
 				preview_shuttle.mode = mode
 				. = TRUE
