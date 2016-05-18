@@ -179,3 +179,4 @@
 	status_flags = GODMODE
 	languages = ALL
 	unique_name = FALSE
+	AIStatus = AI_OFF
