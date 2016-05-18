@@ -204,10 +204,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag \
-			unnoticed. It will synthesize and fire bolts tipped with a paralyzing toxin that will \
-			briefly stun targets and cause them to slur as if inebriated. It can produce an infinite amount \
-			of bolts, but must be manually recharged with each shot."
+	desc = "A short bow mounted across a tiller in miniature. Small enough to \
+		fit into a pocket or slip into a bag unnoticed. It will synthesize \
+		and fire bolts tipped with a paralyzing toxin that will briefly stun \
+		targets and cause them to slur as if inebriated. It can produce an \
+		infinite amount of bolts, but takes time to automatically recharge \
+		after each shot."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
