@@ -2,6 +2,7 @@
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	environment_smash = 2
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -853,6 +854,7 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
+	weather_immunities = list("lava","ash")
 	faction = list("mining", "ashwalker")
 	density = 0
 	speak_chance = 1
@@ -966,6 +968,7 @@
 	icon_living = "tendril"
 	icon_dead = "tendril"
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
