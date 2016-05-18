@@ -207,7 +207,7 @@
 
 
 /obj/item/device/sbeacondrop/attack_self(mob/user)
-	if(user)
+	if(user && (loc == user.loc))
 		user << "<span class='notice'>Locked In.</span>"
 		new droptype( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
