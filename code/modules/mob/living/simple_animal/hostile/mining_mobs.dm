@@ -126,6 +126,7 @@
 	a_intent = "help"
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
+	deathmessage = "spits up the contents of its stomach before dying!"
 	status_flags = CANPUSH
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
@@ -136,7 +137,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/New()
 	..()
-	deathmessage = "[src] spits up the contents of its stomach before dying!"
 	var/i = rand(1,3)
 	while(i)
 		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
@@ -875,18 +875,13 @@
 	search_objects = TRUE
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+	deathmessage = "is pulped into bugmash."
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
-
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/New()
-	udder = new()
-	deathmessage = "[src] is pulped into bugmash."
-	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()
 	qdel(udder)

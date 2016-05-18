@@ -398,7 +398,7 @@
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
-			visible_message("<span class='danger'>[deathmessage]</span>")
+			visible_message("<span class='danger'>\the [src] [deathmessage]</span>")
 		else if(!del_on_death)
 			visible_message("<span class='danger'>\the [src] stops moving...</span>")
 	if(del_on_death)

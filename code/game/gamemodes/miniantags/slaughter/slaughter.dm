@@ -43,11 +43,10 @@
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
-	deathmessage = "<span class='danger'>The generic slaughter demon screams in anger because this is the default death message!</span>"
+	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
 /mob/living/simple_animal/slaughter/New()
 	..()
-	deathmessage = "<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>"
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -129,7 +128,7 @@
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"
-
+	deathmessage = "fades out, as all of its friends are released from its prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
 	// Keep the people we hug!
@@ -141,8 +140,6 @@
 
 /mob/living/simple_animal/slaughter/laughter/New()
 	..()
-
-	deathmessage = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
 
 /mob/living/simple_animal/slaughter/laughter/death()
 	if(!consumed_mobs)
