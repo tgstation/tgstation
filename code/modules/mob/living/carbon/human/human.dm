@@ -1038,3 +1038,6 @@
 	. = ..()
 	if (dna && dna.species)
 		. += dna.species.check_weakness(weapon, attacker)
+
+/mob/living/carbon/human/is_literate()
+	return 1
