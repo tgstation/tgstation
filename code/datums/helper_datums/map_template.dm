@@ -90,8 +90,8 @@
 
 /proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("config/lavaRuinBlacklist.txt")
-	banned += generateMapList("config/spaceRuinBlacklist.txt")
+	var/list/banned = generateMapList("code/textfiles/lavaRuinConfig.dm")
+	banned += generateMapList("code/textfiles/spaceRuinConfig.dm")
 
 	for(var/item in subtypesof(/datum/map_template/ruin))
 		var/datum/map_template/ruin/ruin_type = item
