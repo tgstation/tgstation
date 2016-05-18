@@ -6,7 +6,7 @@
 	var/quantity = 4
 
 /datum/objective/devil/soulquantity/New()
-	quantity = pick(4,5)
+	quantity = pick(6,8)
 	explanation_text = "Purchase, and retain control over at least [quantity] souls."
 
 /datum/objective/devil/soulquantity/check_completion()
