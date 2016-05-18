@@ -68,7 +68,6 @@ var/global/datum/controller/master/Master = new()
 			CHECK_TICK
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
-	SSminimap.Initialize(world.timeofday, zlevel) //XXX
 
 	var/tally = 0
 	var/obj/effect/spawner/lootdrop/maintenance/L = new()

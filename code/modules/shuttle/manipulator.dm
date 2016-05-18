@@ -97,19 +97,6 @@
 			data["existing_shuttle"] = L
 		data["shuttles"] += list(L)
 
-	// Modification panel
-	// should be disabled unless we are doing something?
-	// Show current proposal
-	// PREVIEW button to load
-	// CANCEL button to (unload if loaded) and return back
-	// LOAD button
-
-	// Multiple stage notifications
-	// - loaded
-	// - removed old shuttle
-	// - moved new shuttle to old location
-
-	//world.log << json_encode(data)
 	return data
 
 /obj/machinery/shuttle_manipulator/ui_act(action, params)
@@ -124,14 +111,14 @@
 
 			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
 			if(S)
-				src.selected = S
+				selected = S
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
 				for(var/i in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = i
 					if(M.id == params["id"])
-						user.loc = get_turf(M)
+						user.forceMove(get_turf(M))
 		if("preview")
 			var/shuttle_id = params["id"]
 			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
@@ -139,7 +126,7 @@
 				load_template(S)
 				if(preview_shuttle)
 					preview_shuttle_id = shuttle_id
-					user.loc = get_turf(preview_shuttle)
+					user.forceMove(get_turf(preview_shuttle))
 		if("load")
 			var/shuttle_id = params["id"]
 			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]

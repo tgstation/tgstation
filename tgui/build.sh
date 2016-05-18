@@ -1,5 +1,5 @@
-#RUN THIS IN THE tgui/ folder
 #!/bin/bash
+#RUN THIS IN THE tgui/ folder
 set -e
 export NODE_VERSION=4
 
@@ -8,4 +8,4 @@ if [ ! -d "/tmp/nvm" ]; then
 fi
 
 source /tmp/nvm/nvm.sh
-gulp
+gulp --min
