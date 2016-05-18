@@ -27,7 +27,7 @@
 "aA" = (/turf/open/floor/noslip,/area/shuttle/escape)
 "aB" = (/obj/structure/closet/emcloset,/obj/item/toy/sword,/turf/open/floor/noslip,/area/shuttle/escape)
 "aC" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/open/floor/noslip,/area/shuttle/escape)
-"aD" = (/obj/item/weapon/greentext{anchored = 1},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"aD" = (/obj/item/weapon/greentext/quiet{anchored = 1},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
 "aE" = (/obj/machinery/door/airlock/glass{name = "Emergency Shuttle Brig"; req_access_txt = "2"},/turf/open/floor/bluespace,/area/shuttle/escape)
 "aF" = (/obj/structure/chair,/turf/open/floor/noslip,/area/shuttle/escape)
 "aG" = (/obj/structure/chair{dir = 4},/turf/open/floor/noslip,/area/shuttle/escape)
