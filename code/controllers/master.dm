@@ -69,15 +69,6 @@ var/global/datum/controller/master/Master = new()
 		return
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
-	var/tally = 0
-	var/obj/effect/spawner/lootdrop/maintenance/L = new()
-	// Grab it before it gets deleted
-	var/list/loot = L.loot.Copy()
-	for(var/item in loot)
-		tally += loot[item]
-	world.log << "There are [tally] items in the \
-		maintenance loot table."
-
 	preloadTemplates()
 	// Pick a random away mission.
 	createRandomZlevel()
@@ -85,8 +76,7 @@ var/global/datum/controller/master/Master = new()
 
 	var/mining_type = MINETYPE
 	if(mining_type == "lavaland")
-		seedRuins(5, config.lavaland_budget, \
-			/area/lavaland/surface/outdoors, lava_ruins_templates)
+		seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
 	else
 		make_mining_asteroid_secrets()

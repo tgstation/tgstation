@@ -9,7 +9,6 @@
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
 		mappath = path
-	if(mappath)
 		preload_size(mappath)
 	if(map)
 		mapfile = map
@@ -63,12 +62,10 @@
 
 /datum/map_template/proc/get_file()
 	if(mapfile)
-		. = mapfile
-	else if(mappath)
-		. = file(mappath)
-
-	if(!.)
-		world.log << "The file of [src] appears to be empty/non-existent."
+		return mapfile
+	if(mappath)
+		mapfile = file(mappath)
+		return mapfile
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
@@ -86,39 +83,17 @@
 		map_templates[T.name] = T
 
 	preloadRuinTemplates()
-	preloadShuttleTemplates()
 
 /proc/preloadRuinTemplates()
-	// Still supporting bans by filename
-	var/list/banned = generateMapList("code/textfiles/lavaRuinConfig.dm")
-	banned += generateMapList("code/textfiles/spaceRuinConfig.dm")
-
-	for(var/item in subtypesof(/datum/map_template/ruin))
-		var/datum/map_template/ruin/ruin_type = item
-		// screen out the abstract subtypes
-		if(!initial(ruin_type.id))
-			continue
-		var/datum/map_template/ruin/R = new ruin_type()
-
-		if(banned.Find(R.mappath))
-			continue
-
-		map_templates[R.name] = R
-		ruins_templates[R.name] = R
-
-		if(istype(R, /datum/map_template/ruin/lavaland))
-			lava_ruins_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/space))
-			space_ruins_templates[R.name] = R
+	var/list/potentialSpaceRuins = generateMapList( SpaceRuins /*filename = "code/textfiles/spaceRuinConfig.txt"*/)
+	for(var/ruin in potentialSpaceRuins)
+		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
+		space_ruins_templates[T.name] = T
+		map_templates[T.name] = T
 
 
-/proc/preloadShuttleTemplates()
-	for(var/item in subtypesof(/datum/map_template/shuttle))
-		var/datum/map_template/shuttle/shuttle_type = item
-		if(!(initial(shuttle_type.suffix)))
-			continue
-
-		var/datum/map_template/shuttle/S = new shuttle_type()
-
-		shuttle_templates[S.name] = S
-		map_templates[S.name] = S
+	var/list/potentialLavaRuins = generateMapList( RuinMaps /*filename = "code/textfiles/lavaRuinConfig.txt"*/)
+	for(var/ruin in potentialLavaRuins)
+		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
+		lava_ruins_templates[T.name] = T
+		map_templates[T.name] = T
