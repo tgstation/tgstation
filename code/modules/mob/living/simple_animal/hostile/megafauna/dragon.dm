@@ -148,6 +148,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat)
 		return
+	swoop_cooldown = world.time + 200
 	var/swoop_target
 	if(manual_target)
 		swoop_target = manual_target
@@ -194,10 +195,6 @@
 	stop_automated_movement = FALSE
 	swooping = 0
 	density = 1
-	swoop_cooldown = world.time + 200
-
-
-
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))

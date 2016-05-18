@@ -102,7 +102,7 @@
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
-	desc = "Use pools of blood to phase out of existence."
+	desc = "Use hellfire to phase out of existence."
 	charge_max = 10
 	clothes_req = 0
 	selection_type = "range"
@@ -165,3 +165,38 @@
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	return 1
+
+/obj/effect/proc_holder/spell/targeted/sintouch
+	name = "Sin Touch"
+	desc = "Subtly encourage someone to sin."
+	charge_max = 1800
+	clothes_req = 0
+	selection_type = "range"
+	range = 2
+	cooldown_min = 0
+	overlay = null
+	include_user = 0
+	action_icon_state = "sintouch"
+	action_background_icon_state = "bg_demon"
+	phase_allowed = 0
+	random_target = 1
+	random_target_priority = TARGET_RANDOM
+	max_targets = 3
+	invocation = "TASTE SIN AND INDULGE!!"
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/targeted/sintouch/ascended
+	name = "Greater sin touch"
+	charge_max = 100
+	range = 7
+	max_targets = 10
+
+/obj/effect/proc_holder/spell/targeted/sintouch/cast(list/targets, mob/living/user = usr)
+	for(var/mob/living/carbon/human/H in targets)
+		if(!H.mind)
+			continue
+		for(var/datum/objective/sintouched/A in H.mind.objectives)
+			continue
+		H.influenceSin()
+		H.Weaken(2)
+		H.Stun(2)

@@ -301,7 +301,7 @@ MASS SPECTROMETER
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 
-		if(bz_concentration > 0.005)
+		if(bz_concentration > 0.01)
 			user << "<span class='alert'>Hallucinogen: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Hallucinogen: [round(plasma_concentration*100, 0.01)] %</span>"

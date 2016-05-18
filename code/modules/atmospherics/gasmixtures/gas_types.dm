@@ -28,6 +28,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	var/name = ""
 	var/gas_overlay = "" //icon_state in icons/effects/tile_effects.dmi
 	var/moles_visible = null
+	var/dangerous_concentration = 0 // levels at which Bad Shit(tm) starts to happen
 
 /datum/gas/oxygen
 	id = "o2"
@@ -43,6 +44,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
+	dangerous_concentration = 0.01
 
 /datum/gas/plasma
 	id = "plasma"
@@ -50,6 +52,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	name = "Plasma"
 	gas_overlay = "plasma"
 	moles_visible = MOLES_PLASMA_VISIBLE
+	dangerous_concentration = 0.005
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
@@ -72,6 +75,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	id = "bz"
 	specific_heat = 20
 	name = "BZ"
+	dangerous_concentration = 0.01
 
 /obj/effect/overlay/gas/
 	icon = 'icons/effects/tile_effects.dmi'
