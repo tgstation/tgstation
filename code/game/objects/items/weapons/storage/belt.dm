@@ -143,10 +143,10 @@
 
 
 /obj/item/weapon/storage/belt/mining
-	name = "explorer belt"
-	desc = "A versatile belt, cherised by miners and hunters alike."
-	icon_state = "ebelt" //I'm doing this because I love you, syndicate son.
-	item_state = "ebelt"
+	name = "explorer's webbing"
+	desc = "A versatile chest rig, cherished by miners and hunters alike."
+	icon_state = "explorer1"
+	item_state = "explorer1"
 	storage_slots = 5
 	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
@@ -186,6 +186,15 @@
 
 		)
 
+/obj/item/weapon/storage/belt/mining/alt
+	icon_state = "explorer2"
+	item_state = "explorer2"
+
+/obj/item/weapon/storage/belt/mining/primitive
+	name = "hunter's belt"
+	desc = "A versatile belt, woven from sinew."
+	icon_state = "ebelt"
+	item_state = "ebelt"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
