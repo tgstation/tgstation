@@ -300,10 +300,39 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	burn_state = FLAMMABLE
 	burntime = 20
-	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
+	canSmoothWith = list(/obj/structure/table/wood,
+		/obj/structure/table/wood/poker,
+		/obj/structure/table/wood/bar)
 
 /obj/structure/table/wood/narsie_act()
 	return
+
+/obj/structure/table/wood/bar
+	burn_state = LAVA_PROOF
+	flags = NODECONSTRUCT
+	var/boot_dir = 1
+
+/obj/structure/table/wood/bar/Crossed(atom/movable/AM)
+	if(isliving(AM) && !is_barstaff)
+		// No climbing on the bar please
+		var/mob/living/M = AM
+		var/throwtarget = get_edge_target_turf(src, boot_dir)
+		M.Weaken(2)
+		M.throw_at_fast(throwtarget, 5, 1,src)
+		M << "<span class='notice'>No climbing on the bar please.</span>"
+	else
+		. = ..()
+
+/obj/structure/table/wood/bar/proc/is_barstaff(mob/user)
+	. = FALSE
+	if(istype(user, /mob/living/simple_animal/drone/snowflake/bardrone))
+		. = TRUE
+	else if(istype(user, /mob/living/simple_animal/hostile/alien/maid/barmaid))
+		. = TRUE
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.mind && H.mind.assigned_role == "Bartender")
+			. = TRUE
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -311,7 +340,6 @@
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
 
 /obj/structure/table/wood/poker/narsie_act()
 	new /obj/structure/table/wood(src.loc)
