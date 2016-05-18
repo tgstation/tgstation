@@ -30,13 +30,13 @@
 		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
-		var/willpower = 80
+		var/willpower = 98
 		if(U.job in list("Librarian")) // the librarian is both faster, and more accurate than normal crew members at research
 			speed = 45
 			correctness = 100
-			willpower = 95
+			willpower = 100
 		if(U.job in list("Captain", "Security Officer", "Head of Security", "Detective", "Warden"))
-			willpower = 90
+			willpower = 99
 		if(U.job in list("Clown")) // WHO GAVE THE CLOWN A DEMONOMICON?  BAD THINGS WILL HAPPEN!
 			willpower = 25
 		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.

@@ -8556,10 +8556,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -35039,10 +35036,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
@@ -36486,10 +36480,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -37324,7 +37315,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /obj/item/weapon/nullrod,
-/obj/item/device/soulstone/anybody,
+/obj/item/device/soulstone/anybody/chaplain,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -38555,10 +38546,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bsw" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/decal/cleanable/oil{
 	icon_state = "floor6"
 	},
@@ -40620,10 +40608,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bwr" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
@@ -40702,10 +40687,7 @@
 	on = 1;
 	pressure_checks = 1
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bwB" = (
@@ -46061,10 +46043,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
