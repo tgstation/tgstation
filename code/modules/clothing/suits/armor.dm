@@ -12,16 +12,11 @@
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
-	icon_state = "armoralt"
-	item_state = "armoralt"
+	icon_state = "armor"
+	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	dog_fashion = /datum/dog_fashion/back
-
-/obj/item/clothing/suit/armor/vest/alt
-	desc = "An armored vest that protects against most types of damage."
-	icon_state = "armor"
-	item_state = "armor"
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -44,9 +39,9 @@
 	strip_delay = 80
 
 /obj/item/clothing/suit/armor/vest/warden
-	name = "warden's jacket"
-	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
-	icon_state = "warden_alt"
+	name = "warden's armored jacket"
+	desc = "A red jacket with silver rank pips and body armor strapped on top."
+	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS|HANDS
@@ -56,9 +51,9 @@
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/warden/alt
-	name = "warden's armored jacket"
-	desc = "A red jacket with silver rank pips and body armor strapped on top."
-	icon_state = "warden_jacket"
+	name = "warden's jacket"
+	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
+	icon_state = "warden_alt"
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
