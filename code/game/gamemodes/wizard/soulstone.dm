@@ -12,6 +12,9 @@
 /obj/item/device/soulstone/anybody
 	usability = 1
 
+/obj/item/device/soulstone/anybody/chaplain
+	name = "mysterious old shard"
+
 /obj/item/device/soulstone/pickup(mob/living/user)
 	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
