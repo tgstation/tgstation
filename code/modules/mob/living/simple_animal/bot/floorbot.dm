@@ -81,7 +81,7 @@
 		dat += "<A href='?src=\ref[src];operation=eject'>Loaded \[[specialtiles]/[maxtiles]\]</a><BR>"
 	else
 		dat += "None Loaded<BR>"
-	
+
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "Add tiles to new hull plating: <A href='?src=\ref[src];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
@@ -162,7 +162,7 @@
 				if("disable")
 					targetdirection = null
 	update_controls()
-	
+
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
 	var/turf/Tsec = get_turf(src)
 
@@ -204,7 +204,7 @@
 		if(!target && fixfloors) //Repairs damaged floors and tiles.
 			process_type = FIX_TILE
 			target = scan(/turf/open/floor)
-			
+
 		if(!target && replacetiles && specialtiles > 0) //Replace a floor tile with custom tile
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
 			target = scan(/turf/open/floor)
@@ -242,6 +242,12 @@
 			return
 
 		if(loc == target || loc == target.loc)
+			if(check_bot(target))	//Target is not defined at the parent
+				shuffle = TRUE
+				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
+					target = null
+					path = list()
+					return
 			if(istype(target, /turf/) && emagged < 2)
 				repair(target)
 			else if(emagged == 2 && istype(target,/turf/open/floor))
