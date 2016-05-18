@@ -1,0 +1,8 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "Kinetic accelerators only require one hand to be fired, as before"
+  - rscdel: "Kinetic accelerators recharge time is multiplied by the number of KAs that person is carrying."
+  - rscdel: "Kinetic accelerators lose their charge quickly if not equipped or being held"
+  - rscadd: "Kinetic accelerator modkits (made at R&D or your local Free Golem
+ship) overcome these flaws"
