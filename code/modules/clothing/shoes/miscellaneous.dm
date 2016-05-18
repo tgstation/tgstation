@@ -1,3 +1,5 @@
+var/list/jackboots_list = list()
+
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
 /obj/item/clothing/shoes/suicide_act(mob/user)
@@ -91,6 +93,15 @@
 	put_on_delay = 50
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
+
+/obj/item/clothing/shoes/jackboots/New()
+	..()
+	jackboots_list += src
+
+/obj/item/clothing/shoes/jackboots/Destroy()
+	jackboots_list -= src
+	..()
+
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
