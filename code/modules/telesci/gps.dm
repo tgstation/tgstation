@@ -34,6 +34,8 @@ var/list/GPS_list = list()
 /obj/item/device/gps/AltClick(mob/user)
 	if(!in_range(src, user))
 		return
+	if(!user.canUseTopic(user))
+		return
 	if(emped)
 		user << "It's busted!"
 	if(tracking)
