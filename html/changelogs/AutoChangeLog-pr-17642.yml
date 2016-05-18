@@ -1,0 +1,4 @@
+author: Shadowlight213
+delete-after: True
+changes: 
+  - bugfix: "Cleanbot and floorbot scanning has greatly improved. they should prioritize areas next to them, as well as resolve themselves stacking on the same tiles."
