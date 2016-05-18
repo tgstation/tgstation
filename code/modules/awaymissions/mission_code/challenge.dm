@@ -33,3 +33,15 @@
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()
 	return
+
+/obj/machinery/power/emitter/energycannon/magical
+	name = "wabbajack statue"
+	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
+	projectile_type = /obj/item/projectile/magic/change
+	icon = 'icons/obj/machines/magic_emitter.dmi'
+	icon_state = "wabbajack_statue"
+	icon_state_on = "wabbajack_statue_on"
+
+/obj/machinery/power/emitter/energycannon/magical/New()
+	if(prob(50))
+		desc = "Oh no, not again."
