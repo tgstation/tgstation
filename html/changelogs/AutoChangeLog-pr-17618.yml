@@ -1,4 +1,0 @@
-author: Robustin
-delete-after: True
-changes: 
-  - rscadd: "Lings have a new default ability, Hivemind Link. This lets you bring a neck-grabbed victim into hivemind communications after short period of time. You can talk to victims who are in crit/muted and perhaps persuade them to help you, give you intel, or even a PDA code. The link will stabilize crit victims to help ensure they do not die during the link."
