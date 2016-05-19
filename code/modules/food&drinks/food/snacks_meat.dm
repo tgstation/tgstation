@@ -137,7 +137,7 @@
     icon_state = "khinkali"
     list_reagents = list("nutriment" = 4, "vitamin" = 2)
     bitesize = 3
-    filling_color = "#f0f0f0"
+    filling_color = "#F0F0F0"
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
