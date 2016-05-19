@@ -246,7 +246,8 @@
 				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
 				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
 				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>"
+				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_SCRIPT)
 				scripts += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
@@ -255,7 +256,8 @@
 				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
 				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
 				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>"
+				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_APPLICATION)
 				applications += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
@@ -264,7 +266,8 @@
 				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
 				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
 				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>"
+				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_REVENANT)
 				revenant += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
@@ -273,7 +276,8 @@
 				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
 				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
 				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>"
+				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_JUDGEMENT)
 				judgement += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
@@ -282,7 +286,8 @@
 				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
 				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
 				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>"
+				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 	text_to_add += "[drivers]<br>[scripts]<br>[applications]<br>[revenant]<br>[judgement]<br>"
 	text_to_add += "<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	text += text_to_add
@@ -599,6 +604,7 @@
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
 	force = 17 //Extra damage is dealt to silicons in afterattack()
+	throwforce = 40
 	attack_verb = list("stabbed", "poked", "slashed", "impaled")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
@@ -1016,11 +1022,13 @@
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A stalwart turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
+	health = 25
+	max_health = 25
 	construction_value = 15
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/replicant_alloy/blind_eye)
-	var/damage_per_tick = 1
-	var/sight_range = 2
+	var/damage_per_tick = 3
+	var/sight_range = 3
 	var/mob/living/target
 
 /obj/structure/clockwork/ocular_warden/New()
@@ -1515,17 +1523,17 @@
 	else
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
-		L.Weaken(4)
-	L.Stun(4)
+		L.Weaken(5)
+	L.Stun(5)
 	qdel(src)
 	return 1
 
-/obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for thirty seconds afterwards.
+/obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
 	name = "ominous sigil"
 	desc = "A brilliant golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they do not move and stand still for a brief time."
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they do not move and they stand still for a brief time."
 	color = rgb(255, 255, 0)
-	alpha = 255
+	alpha = 75
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
@@ -1536,11 +1544,14 @@
 		return 0
 	L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
-	L.Weaken(30) //Completely defenseless for thirty seconds - mainly to give them time to read over the information they've just been presented with
-	L.Stun(30)
+	L.Weaken(5) //Completely defenseless for a few seconds - mainly to give them time to read over the information they've just been presented with
+	L.Stun(5)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		C.silent += 30
+		C.silent += 5
+	for(var/mob/living/M in living_mob_list - L)
+		if(is_servant_of_ratvar(M) || isobserver(M))
+			M << "<span class='heavy_brass'>Sigil of Submission in [get_area(src)] [is_servant_of_ratvar(L) ? "" : "un"]successfully converted [L.real_name]!</span>"
 	qdel(src)
 	return 1
 

@@ -25,7 +25,7 @@ This file's folder contains:
 	clock_cult.dm: Core gamemode files.
 	clock_mobs.dm: Hostile and benign clockwork creatures.
 	clock_objects.dm: Items and structures.
-	clock_ratvar.dm: Ratvar himself. Important enough to have his own file.
+	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
 	clock_scripture.dm: Scripture and rites.
 	clock_unsorted.dm: Anything else with no place to be
 
@@ -39,22 +39,25 @@ This file's folder contains:
 	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
 
 /proc/is_eligible_servant(mob/M)
-	return M && istype(M) && M.mind && !iscultist(M) && !isloyal(M) && (ishuman(M) || issilicon(M))
+	return M && istype(M) && M.mind && !M.mind.special_role && !isloyal(M)
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
-	if(!M || !istype(M) || !M.mind || !ticker || !ticker.mode || is_servant_of_ratvar(M))
+	if(!is_eligible_servant(M) || !ticker || !ticker.mode)
 		return 0
 	if(iscarbon(M))
-		M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar \
-		lies in exile, derelict and forgotten in an unseen realm.</span>"
+		if(!silent)
+			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
+			Justiciar lies in exile, derelict and forgotten in an unseen realm.</span>"
 		if(!is_eligible_servant(M))
 			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>", "<span class='warning'><b>And yet, you somehow push it all away.</b></span>")
 			return 0
 	else if(issilicon(M))
-		M << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, lies in \
-		exile, derelict and forgotten in an unseen realm.</span>"
+		if(!silent)
+			M << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, lies in \
+			exile, derelict and forgotten in an unseen realm.</span>"
 		if(!is_eligible_servant(M))
-			M << "<span class='warning'><b>Corrupt data purged. Restoring default cortex data... complete.</b></span>"
+			M.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>", \
+			"<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>")
 			return 0
 	if(!silent)
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \

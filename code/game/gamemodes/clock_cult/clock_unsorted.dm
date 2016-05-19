@@ -53,7 +53,7 @@
 
 /turf/open/floor/clockwork/process()
 	for(var/mob/living/L in src)
-		if(L.stat == DEAD)
+		if(L.stat == DEAD || !is_servant_of_ratvar(L))
 			continue
 		L.adjustBruteLoss(-1)
 		L.adjustFireLoss(-1)

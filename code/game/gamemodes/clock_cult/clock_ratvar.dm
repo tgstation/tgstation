@@ -173,20 +173,19 @@
 
 /obj/structure/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie) //IT'S TIME FOR A BATTLE OF THE ELDER GODS
 	var/winner = "Undeclared"
+	var/base_victory_chance = 0
 	while(TRUE)
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'
 		sleep(5.2)
 		for(var/mob/M in mob_list)
 			if(M.client)
-				M.client.color = rgb(75, 50, 0)
+				M.client.color = rgb(150, 100, 0)
 				spawn(1)
-					M.client.color = rgb(150, 100, 0)
-					spawn(1)
-						M.client.color = initial(M.client.color)
+					M.client.color = initial(M.client.color)
 			shake_camera(M, 4, 3)
 		var/r_success_modifier = (ticker.mode.servants_of_ratvar.len * 2) //2% for each cultist
 		var/n_success_modifier = (ticker.mode.cult.len * 2)
-		if(prob(10 + r_success_modifier)) //Base 10% chance plus the success modifier
+		if(prob(base_victory_chance + r_success_modifier))
 			winner = "Ratvar"
 			break
 		sleep(rand(2,5))
@@ -194,15 +193,14 @@
 		sleep(7.4)
 		for(var/mob/M in mob_list)
 			if(M.client)
-				M.client.color = rgb(150, 0, 0)
+				M.client.color = rgb(200, 0, 0)
 				spawn(1)
-					M.client.color = rgb(200, 0, 0)
-					spawn(1)
-						M.client.color = initial(M.client.color)
+					M.client.color = initial(M.client.color)
 			shake_camera(M, 4, 3)
-		if(prob(10 + n_success_modifier))
+		if(prob(base_victory_chance + n_success_modifier))
 			winner = "Nar-Sie"
 			break
+		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
 			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>"
