@@ -1,7 +1,7 @@
 "a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "b" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
 "c" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
-"d" = (/turf/closed/wall/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"d" = (/turf/closed/wall/mineral/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "e" = (/obj/structure/table/wood/poker,/obj/item/weapon/gun/projectile/revolver/russian/soul,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
 "f" = (/obj/structure/cursed_slot_machine,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
 "g" = (/obj/structure/table/wood/poker,/obj/item/weapon/coin/mythril,/turf/open/floor/carpet{baseturf = /turf/open/floor/plating/lava/smooth; icon_state = "carpetsymbol"},/area/ruin/powered)
