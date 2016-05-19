@@ -272,6 +272,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
+/proc/random_name()
+	var/list/forenames = prob(50) ? first_names_female : first_names_male
+	return "[capitalize(pick(forenames))] [capitalize(pick(last_names))]"
+
 
 /mob/proc/abiotic(full_body = 0)
 	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)

@@ -1753,6 +1753,7 @@
 #include "code\modules\tgui\states\deep_inventory.dm"
 #include "code\modules\tgui\states\default.dm"
 #include "code\modules\tgui\states\hands.dm"
+#include "code\modules\tgui\states\human_adjacent.dm"
 #include "code\modules\tgui\states\inventory.dm"
 #include "code\modules\tgui\states\notcontained.dm"
 #include "code\modules\tgui\states\physical.dm"
