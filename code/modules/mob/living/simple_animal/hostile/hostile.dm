@@ -63,8 +63,10 @@
 				AIStatus = AI_IDLE				// otherwise we go idle
 	return 1
 
-
-
+/mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
+	if(!target)
+		Goto(P.starting, move_to_delay, 3)
+	..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
