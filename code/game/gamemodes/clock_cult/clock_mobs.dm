@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health but high melee power. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
-	desc = "An ominous humanoid shell with a single glowing yellow eye, pushed into the air by jets of blazing yellow fire."
+	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	icon_state = "anime_fragment"
 	health = 75 //Glass cannon

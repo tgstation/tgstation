@@ -11,6 +11,7 @@
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -30
 	pixel_y = -30
+	alpha = 175
 	health = 1000
 	max_health = 1000
 	var/progress_in_seconds = 0 //Once this reaches 300, it's game over

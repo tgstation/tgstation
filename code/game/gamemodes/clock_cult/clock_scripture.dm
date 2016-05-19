@@ -667,6 +667,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
 
+/datum/clockwork_scripture/memory_allocation/check_special_requirements()
+	for(var/mob/living/simple_animal/hostile/clockwork_marauder/M in living_mob_list)
+		if(M.host == invoker)
+			invoker << "<span class='warning'>You can only house one marauder at a time!</span>"
+			return 0
+	return 1
+
 /datum/clockwork_scripture/memory_allocation/scripture_effects()
 	return create_marauder()
 

@@ -434,7 +434,7 @@
 			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
 			<span class='heavy_brass'>Judicial visor active. Alt-click visor to gain the ability to smite the unworthy.</span>"
 		if(FALSE)
-			L << "<span class='notice'>As you take off [src]. its lens darkens once more.</span>"
+			L << "<span class='notice'>As you take off [src], its lens darkens once more.</span>"
 	return 1
 
 /obj/item/clothing/head/helmet/clockwork //Clockwork armor: High melee protection but weak to lasers
@@ -584,7 +584,7 @@
 		return 0
 	if(stored_alloy - alloy_cost < 0) //Check again to prevent bypassing via spamclick
 		return 0
-	user.visible_message("<span class='warning'>[user]'s [src] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
+	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
 	"<span class='brass'>You proselytize [target].</span>")
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 	if(isturf(target))
@@ -1479,6 +1479,12 @@
 	icon_state = "inath-neq"
 	pixel_x = -91
 	pixel_y = -199
+
+/obj/effect/clockwork/gateway_overlay //Used in the Gateway to the Celestial Derelict to give it actual graphics
+	mouse_opacity = 2
+	alpha = 175
+	icon = 'icons/effects/celestial_gateway.dmi'
+	layer = 10
 
 /obj/effect/clockwork/sigil //Sigils: Rune-like markings on the ground with various effects.
 	name = "sigil"
