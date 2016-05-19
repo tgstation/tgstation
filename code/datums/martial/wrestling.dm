@@ -203,7 +203,7 @@
 			animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep (15)
 		if (D)
-			animate(transform = null, time = 1, loop = 0)
+			animate(D, transform = null, time = 1, loop = 0)
 
 	for (var/i = 0, i < 3, i++)
 		if (A && D)
