@@ -137,6 +137,8 @@
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src)
+			if(istype(A, /mob/living))
+				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 			A.ex_act(hitpwr)
 
 	//then, ram the turf if it still exists
@@ -190,7 +192,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
-	meteorsound = 'sound/weapons/throwtap.ogg'
+	meteorsound = 'sound/weapons/Gunshot_smg.ogg'
 	meteordrop = /obj/item/weapon/ore/glass
 
 //Medium-sized
