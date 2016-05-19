@@ -287,7 +287,8 @@ mob/living/carbon/proc/handle_hallucinations()
 					to_chat(src, "<span class='danger'>[pick("You feel lost.", "The walls suddenly start moving.", "Everything around you shifts and distorts.")]</span>")
 
 					spawn(duration)
-						C.dir = turn(C.dir, -angle)
+						if(C)
+							C.dir = turn(C.dir, -angle)
 
 	handling_hal = 0
 
