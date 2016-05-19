@@ -1625,8 +1625,10 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eP" = (
-/obj/structure/flora/kirbyplants,
-/turf/open/floor/plasteel/black,
+/obj/structure/flora/kirbyplants{
+	name = "potted plant that no one wants"
+	},
+/turf/open/floor/wood,
 /area/centcom/ferry)
 "eQ" = (
 /obj/structure/chair/office/dark,
@@ -1658,12 +1660,11 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eU" = (
-/obj/structure/sign/map/left,
-/turf/open/floor/light,
+/obj/machinery/shuttle_manipulator,
+/turf/open/floor/plasteel/circuit,
 /area/centcom/ferry)
 "eV" = (
-/obj/structure/sign/map/right,
-/turf/open/floor/light,
+/turf/open/floor/plasteel/circuit,
 /area/centcom/ferry)
 "eW" = (
 /obj/structure/extinguisher_cabinet{
@@ -5937,7 +5938,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "rW" = (
-/obj/machinery/shuttle_manipulator,
+/obj/structure/flora/kirbyplants,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 
@@ -38714,7 +38715,7 @@ ab
 ab
 ab
 eJ
-eP
+eO
 eO
 eO
 eO

@@ -6,8 +6,8 @@
 		I took the one less traveled by,\n\
 		And that has made all the difference."
 
-	icon = 'icons/obj/machines/dominator.dmi'
-	icon_state = "dominator-blue"
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
+	icon_state = "holograph_on"
 
 	// UI state variables
 	var/datum/map_template/shuttle/selected
@@ -16,6 +16,19 @@
 	var/obj/docking_port/mobile/preview_shuttle
 	var/preview_shuttle_id
 	var/old_id
+
+/obj/machinery/shuttle_manipulator/New()
+	. = ..()
+	update_icon()
+
+/obj/machinery/shuttle_manipulator/update_icon()
+	overlays.Cut()
+	var/image/hologram_projection = image(icon, "hologram_on")
+	hologram_projection.pixel_y = 22
+	var/image/hologram_ship = image(icon, "hologram_whiteship")
+	hologram_ship.pixel_y = 27
+	overlays += hologram_projection
+	overlays += hologram_ship
 
 /obj/machinery/shuttle_manipulator/process()
 	return
