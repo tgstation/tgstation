@@ -68,7 +68,11 @@
 		var/parent_species_name = initial(parent_species.name)
 
 		if(ishuman(parent))
-			parent_species_name = "[parent]'s" //Like "Dick Johnson's"
+			var/mob/living/carbon/human/H = parent
+			if(H.species)
+				parent_species_name = lowertext(H.species.name)
+			else
+				parent_species_name = "human"
 
 		name = "[parent_species_name] teeth"
 		singular_name = "[parent_species_name] tooth"
