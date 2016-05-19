@@ -27,6 +27,7 @@
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/door_remote/captain(src)
+	new /obj/item/device/megaphone/command(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
