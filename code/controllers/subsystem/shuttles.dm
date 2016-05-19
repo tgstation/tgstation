@@ -79,9 +79,16 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		WARNING("requestEvac(): There is no emergency shuttle, but the shuttle was called. Using the backup shuttle instead.")
+		WARNING("requestEvac(): There is no emergency shuttle, but the \
+			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, or backup shuttle! The game will be unresolvable. This is likely due to a mapping error")
+			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			or backup shuttle! The game will be unresolvable. This is \
+			possibly a mapping error, more likely a bug with the shuttle \
+			manipulation system, or badminry. It is possible to manually \
+			resolve this problem by loading an emergency shuttle template \
+			manually, and then calling register() on the mobile docking port. \
+			Good luck.")
 			return
 		emergency = backup_shuttle
 

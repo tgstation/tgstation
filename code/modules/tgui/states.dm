@@ -17,6 +17,8 @@
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
 	var/src_object = ui_host()
 	. = UI_CLOSE
+	if(!state)
+		return
 
 	if(istype(user, /mob/dead/observer))
 		// If they turn on ghost AI control, admins can always interact.

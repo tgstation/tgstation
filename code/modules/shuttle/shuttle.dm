@@ -245,7 +245,7 @@
 	if(currently_docked)
 		// by someone other than us
 		if(currently_docked != src)
-			return 6
+			return SHUTTLE_SOMEONE_ELSE_DOCKED
 		else
 		// This isn't an error, per se, but we can't let the shuttle code
 		// attempt to move us where we currently are, it will get weird.

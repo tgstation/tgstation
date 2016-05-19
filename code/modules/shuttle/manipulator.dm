@@ -15,6 +15,7 @@
 
 	var/obj/docking_port/mobile/preview_shuttle
 	var/preview_shuttle_id
+	var/old_id
 
 /obj/machinery/shuttle_manipulator/process()
 	return
@@ -147,18 +148,38 @@
 					mode = existing_shuttle.mode
 					D = existing_shuttle.get_docked()
 
-				if(!D)
+				if(existing_shuttle == SSshuttle.backup_shuttle)
+					var/msg4 = "Shuttle manipulator is touching the backup \
+						shuttle, which is BAD. Either there's a bug in the \
+						manipulator or someone's done something bad. Either \
+						way, continuing down this path is never good. \
+						Aborting."
+					abort_import(msg4)
+					return
+
+				if(!existing_shuttle)
+					// try seeing if a shuttle with the old ID exists
+					D = SSshuttle.getDock(old_id)
+					if(!D)
+						var/msg5 = "No shuttle exists of this type, \
+							attempts to find roundstart docking port failed. \
+							Import aborted."
+						abort_import(msg5)
+						return
+				if((!D) && existing_shuttle)
 					var/msg1 = "[existing_shuttle] is not currently at a \
 						valid dock, the import will not continue."
 					abort_import(msg1)
 					return
-
-				if(preview_shuttle.canDock(D))
+				var/result = preview_shuttle.canDock(D)
+				if(result && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
 					// truthy value means that it cannot dock for some reason
 					var/msg3 = "Unsuccessful dock of [preview_shuttle], \
-						removing."
+						removing. Import aborted."
 					abort_import(msg3)
 					return
+				// We can ignore the someone else docked error because we'll
+				// be moving into their place shortly
 
 				// Destroy the old shuttle
 				existing_shuttle.jumpToNullSpace()
@@ -201,6 +222,7 @@
 				else
 					// Change the id so the shuttle system doesn't grab the
 					// loaded ship until we want it to
+					old_id = P.id
 					P.id = "(preview)[P.id]"
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
