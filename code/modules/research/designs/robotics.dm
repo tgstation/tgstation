@@ -6,7 +6,7 @@
 	id = "posibrain"
 	req_tech = list("engineering" = 4, "materials" = 6, "bluespace" = 2, "programming" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_IRON = 2000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 500, MAT_PLASMA = 500, MAT_DIAMOND = 100)
+	materials = list(MAT_IRON = 2000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_PLASMA = 1000)
 	category = "Robotics"
 	build_path = /obj/item/device/mmi/posibrain
 
