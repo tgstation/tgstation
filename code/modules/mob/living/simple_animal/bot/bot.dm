@@ -145,6 +145,9 @@
 	qdel(bot_core)
 	return ..()
 
+/mob/living/simple_animal/bot/bee_friendly()
+	return 1
+
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
 	..()

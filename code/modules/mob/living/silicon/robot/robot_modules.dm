@@ -294,7 +294,7 @@
 	modules += new /obj/item/weapon/shovel(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
-	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
 	fix_modules()
 
 /obj/item/weapon/robot_module/syndicate
