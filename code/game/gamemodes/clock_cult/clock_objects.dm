@@ -1480,12 +1480,6 @@
 	pixel_x = -91
 	pixel_y = -199
 
-/obj/effect/clockwork/gateway_overlay //Used in the Gateway to the Celestial Derelict to give it actual graphics
-	mouse_opacity = 2
-	alpha = 175
-	icon = 'icons/effects/celestial_gateway.dmi'
-	layer = 10
-
 /obj/effect/clockwork/sigil //Sigils: Rune-like markings on the ground with various effects.
 	name = "sigil"
 	desc = "A strange set of markings drawn on the ground."
