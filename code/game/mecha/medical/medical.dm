@@ -1,9 +1,3 @@
-/obj/mecha/medical/New()
-	..()
-	tracking = new /obj/item/mecha_parts/mecha_tracking(src)
-	return
-
-
 /obj/mecha/medical/mechturn(direction)
 	dir = direction
 	playsound(src,'sound/mecha/mechmove01.ogg',40,1)

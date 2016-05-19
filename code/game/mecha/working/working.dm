@@ -1,11 +1,6 @@
 /obj/mecha/working
 	internal_damage_threshold = 60
 
-/obj/mecha/working/New()
-	..()
-	tracking = new /obj/item/mecha_parts/mecha_tracking(src)
-	return
-
 /*
 /obj/mecha/working/melee_action(atom/target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)

@@ -21,6 +21,7 @@
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 4
+	starts_with_tracking_beacon = FALSE
 
 /obj/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."

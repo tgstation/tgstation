@@ -46,6 +46,7 @@
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining ripley."
 	name = "APLU \"Miner\""
+	starts_with_tracking_beacon = FALSE //So it can't be easily found
 
 /obj/mecha/working/ripley/mining/New()
 	..()
@@ -61,12 +62,6 @@
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	HC.attach(src)
 	src.hydraulic_clamp = HC
-
-	//Deletes the beacon so it can't be found easily
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)
-		qdel (B)
-		B = null
-		src.tracking = null
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
