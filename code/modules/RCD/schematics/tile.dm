@@ -1,14 +1,14 @@
-#define PAINT_ALL			0
-#define PAINT_FLOOR 		1
-#define PAINT_PLATING 		2
-#define PAINT_REINFORCED	3
+#define PAINT_ALL        0
+#define PAINT_FLOOR      1
+#define PAINT_PLATING    2
+#define PAINT_REINFORCED 3
 
-#define DIR_ONE 	1	//For those tiles with only one direction.
-#define DIR_ORTHO 	2	//Orthogonal (south, west, north, east).
-#define DIR_ALL 	3	//All the directions.
+#define DIR_ONE   1   // For those tiles with only one direction.
+#define DIR_ORTHO 2   // Orthogonal (south, west, north, east).
+#define DIR_ALL   3   // All the directions.
 
-#define PAINT_ASK_DESC	=	1
-s
+#define PAINT_ASK_DESC   1
+
 /datum/rcd_schematic/tile
 	name				= "Decals"
 	category			= "Painting"
@@ -32,9 +32,12 @@ s
 	if(!our_list)
 		return
 
+	var/list/to_send = list()
 	for(var/datum/paint_info/P in our_list)
 		for(var/ndir in get_dir_list_by_dir_type(P.adirs))
-			send_asset(client, "[P.file_name][P.icon_state]_[ndir].png")
+			to_send += "[P.file_name][P.icon_state]_[ndir].png"
+
+	send_asset_list(client, to_send)
 
 /datum/rcd_schematic/tile/proc/get_dir_list_by_dir_type(var/adir)
 	switch(adir)
@@ -83,69 +86,77 @@ s
 		selected_dir = dir
 
 /datum/rcd_schematic/tile/attack(var/atom/A, var/mob/user)
-	if(!selection)
+	if (!selection)
 		return 1
 
-	if(!selection.validate(A))
+	if (!selection.validate(A))
 		return "maybe you're using it on the wrong floor type?"
 
-	var/nname = ""
+	var/nname = selection.name
 	var/thisdir = selected_dir
 
-	switch(selection.ftype)
-		if(PAINT_FLOOR)			nname = "floor"				//restoring the name of our new tile, usually if you place a floor tile on a plating it's still called "plating" for now
-		if(PAINT_REINFORCED)	nname = "reinforced floor"	//also getting rid of the plaque if it's there
-		if(PAINT_PLATING)   	nname = "plating"
+	var/ndesc = ""
+	if (selection.flags & PAINT_ASK_DESC)
+		ndesc = sanitize(input(user, "What do you want to be described on this [nname]?", "[capitalize(nname)] description"))
 
 	to_chat(user, "Painting floor...")
 	//playsound(get_turf(master), 'sound/AI/animes.ogg', 50, 1)
 	playsound(get_turf(master), 'sound/effects/spray3.ogg', 15, 1)
-	if(!do_after(user, A, 20))
+	if (!do_after(user, A, 20))
 		return 1
 
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 
-	selection.apply(A, nname, dir = thisdir)
+	selection.apply(A, nname, ndesc, thisdir)
 
 //Gets the list of paint info datums.
 /datum/rcd_schematic/tile/proc/get_our_list()
 	return paint_variants[name]
 
 /datum/paint_info
-	var/icon/icon	= 'icons/turf/floors.dmi'
-	var/icon_state	= "floor"
-	var/ftype		= PAINT_FLOOR		//The floor type required for this paint job.
-	var/adirs		= DIR_ONE			//Available dirs for this floor type.
-	var/file_name	= "tile_painter_"	//The file data gets added after this, used to seperate the decals and floor types.
-	var/flags		= 0
+	var/icon/icon  = 'icons/turf/floors.dmi'
+	var/icon_state = "floor"
+	var/ftype      = PAINT_FLOOR		//The floor type required for this paint job.
+	var/adirs      = DIR_ONE			//Available dirs for this floor type.
+	var/file_name  = "tile_painter_"	//The file data gets added after this, used to seperate the decals and floor types.
+	var/flags      = 0
+	var/name
 
-/datum/paint_info/New(var/padir, var/picon, var/ptype, var/nflags = 0)
-	if(ptype)
-		ftype		= ptype
+/datum/paint_info/New(var/padir, var/picon, var/ptype, var/nflags = 0, var/nname)
+	if (ptype)
+		ftype      = ptype
 
-	if(padir)
-		adirs		= padir
+	if (padir)
+		adirs      = padir
 
-	if(picon)
-		icon_state	= picon
+	if (picon)
+		icon_state = picon
 
 	flags = nflags
 
+	if (nname)
+		name = nname
+	else
+		switch (ftype)
+			if (PAINT_FLOOR)      name = "floor"
+			if (PAINT_REINFORCED) name = "reinforced floor"
+			if (PAINT_PLATING)    name = "plating"
+
 //This is used to give the user a hint that he's a massive retard for using a floor painter on the carpet
 /datum/paint_info/proc/validate(var/turf/simulated/floor/test)
-	switch(ftype)
-		if(PAINT_FLOOR) //why is it named plasteel anyway?
-			if(!(istype(test.floor_tile,/obj/item/stack/tile/plasteel)))
+	switch (ftype)
+		if (PAINT_FLOOR) //why is it named plasteel anyway?
+			if (!(istype(test.floor_tile,/obj/item/stack/tile/plasteel)))
 				return 0 //if it's carpet, wood or some other stuff, we aren't going to paint that
-			if(istype(test, /turf/simulated/floor/engine))
+			if (istype(test, /turf/simulated/floor/engine))
 				return 0 	//reinforced floor has plasteel in floor_tile too
 							//but that isn't a regular floor
-		if(PAINT_PLATING)
-			if(!istype(test,/turf/simulated/floor/plating))
+		if (PAINT_PLATING)
+			if (!istype(test,/turf/simulated/floor/plating))
 				return 0
 
-		if(PAINT_REINFORCED)
-			if(!istype(test,/turf/simulated/floor/engine))
+		if (PAINT_REINFORCED)
+			if (!istype(test,/turf/simulated/floor/engine))
 				return 0
 
 	return 1
@@ -534,7 +545,7 @@ var/global/list/paint_variants = list(
 		new /datum/paint_info(DIR_ONE,		"whitebot"),
 		new /datum/paint_info(DIR_ONE,		"enginedelivery",		PAINT_REINFORCED),
 		new /datum/paint_info(DIR_ONE,		"enginebot",			PAINT_REINFORCED),
-		new /datum/paint_info(DIR_ONE,		"plaque")
+		new /datum/paint_info(DIR_ONE,		"plaque",               PAINT_FLOOR, PAINT_ASK_DESC, "commemorative plaque")
 	),
 
 	"Loading area" = list(
@@ -620,3 +631,14 @@ var/global/list/paint_variants = list(
 		new /datum/paint_info(DIR_ONE,		"solarpanel")
 	)
 )
+
+#undef PAINT_ALL
+#undef PAINT_FLOOR
+#undef PAINT_PLATING
+#undef PAINT_REINFORCED
+
+#undef DIR_ONE
+#undef DIR_ORTHO
+#undef DIR_ALL
+
+#undef PAINT_ASK_DESC
