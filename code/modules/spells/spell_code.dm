@@ -135,6 +135,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	if(!user.spell_channeling && !force_remove)
 		if(!cast_check(skipcharge, user))
 			return 0
+		user.remove_spell_channeling() //In case we're swapping from an older spell to this new one
 		user.spell_channeling = user.on_uattack.Add(src, "channeled_spell")
 		connected_button.name = "(Ready) [name]"
 		currently_channeled = 1
@@ -153,13 +154,13 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	var/event/E = args["event"]
 	if(!currently_channeled)
 		E.handlers.Remove("\ref[src]:channeled_spell")
-		return
+		return 0
 
 	var/atom/A = args["atom"]
 
 	if(E.holder != holder)
 		E.handlers.Remove("\ref[src]:channeled_spell")
-		return
+		return 0
 	var/list/target = list(A)
 	var/mob/user = holder
 	user.attack_delayer.delayNext(0)
@@ -173,6 +174,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 		if(!.) //Returning 1 will prevent us from removing the channeling and taking charge
 			channel_spell(force_remove = 1)
 			take_charge(holder, 0)
+		return 1
+	return 0
 
 /spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
 	return
