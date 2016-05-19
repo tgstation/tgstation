@@ -320,7 +320,8 @@
 	name = "right leg"
 	desc = "You put your right leg in, your right leg out. In, out, in, out, \
 		shake it all about. And apparently then it detaches.\n\
-		The hokey cokey has certainly changed a lot since space colonisation."
+		The hokey pokey has certainly changed a lot since space colonisation."
+	// alternative spellings of 'pokey' are availible
 	icon_state = "r_leg"
 	max_damage = 50
 	body_zone = "r_leg"
