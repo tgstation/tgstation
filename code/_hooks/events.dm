@@ -6,7 +6,9 @@
  */
 
 // Buggy bullshit requires shitty workarounds
-#define INVOKE_EVENT(event,args) if(istype(event)) event.Invoke(args)
+/proc/INVOKE_EVENT(event/event,args)
+	if(istype(event))
+		. = event.Invoke(args)
 
 /**
  * Event dispatcher
@@ -42,4 +44,5 @@
 			handlers.Remove(handler)
 			continue
 		args["event"] = src
-		call(objRef,procName)(args, holder)
+		if(call(objRef,procName)(args, holder)) //An intercept value so whatever code section knows we mean business
+			. = 1
