@@ -229,8 +229,7 @@
 				if(isanimal(player)) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
-					continue/carbon/brain) //also technically dead
-						continue
+					continue
 				if(get_area(player) == A)
 					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
 						return 0
