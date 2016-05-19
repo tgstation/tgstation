@@ -29,6 +29,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	//IGNOREPREV to make each new target not overlap with the previous one
 	//CONSTRUCT_CHECK used by construct spells - checks for nullrods
 	//NO_BUTTON to prevent spell from showing up in the HUD
+	//WAIT_FOR_CLICK to make the spell cast on the next target you click
 
 	//For targeted spells:
 		//INCLUDEUSER to include user in the target selection
@@ -68,7 +69,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	var/hud_state = "" //name of the icon used in generating the spell hud object
 	var/override_base = ""
 
-	var/obj/screen/connected_button
+	var/obj/screen/spell/connected_button
+	var/currently_channeled = 0
 
 ///////////////////////
 ///SETUP AND PROCESS///
@@ -94,9 +96,19 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /spell/proc/choose_targets(mob/user = usr) //depends on subtype - see targeted.dm, aoe_turf.dm, dumbfire.dm, or code in general folder
 	return
 
+/spell/proc/is_valid_target(var/target)
+	if(!(spell_flags & INCLUDEUSER) && target == usr)
+		return 0
+	if(get_dist(usr, target) > range) //Shouldn't be necessary but a good check in case of overrides
+		return 0
+	return istype(target, /mob/living)
+
 /spell/proc/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
 	if(!holder)
 		holder = user //just in case
+	if(spell_flags & WAIT_FOR_CLICK)
+		channel_spell(user, skipcharge)
+		return
 	if(!cast_check(skipcharge, user))
 		return
 	if(cast_delay && !spell_do_after(user, cast_delay))
@@ -116,7 +128,51 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 			cast(targets, user)
 		after_cast(targets) //generates the sparks, smoke, target messages etc.
 
+//This is used with the wait_for_click spell flag to prepare spells to be cast on your next click
+/spell/proc/channel_spell(mob/user = usr, skipcharge = 0, force_remove = 0)
+	if(!holder)
+		holder = user //just in case
+	if(!user.spell_channeling && !force_remove)
+		if(!cast_check(skipcharge, user))
+			return 0
+		user.spell_channeling = user.on_uattack.Add(src, "channeled_spell")
+		connected_button.name = "(Ready) [name]"
+		currently_channeled = 1
+		connected_button.add_channeling()
+	else
+		var/event/E = user.on_uattack
+		E.handlers.Remove(user.spell_channeling)
+		user.spell_channeling = null
+		charge_counter = charge_max
+		currently_channeled = 0
+		connected_button.name = name
+		connected_button.remove_channeling()
+	return 1
 
+/spell/proc/channeled_spell(var/list/args)
+	var/event/E = args["event"]
+	if(!currently_channeled)
+		E.handlers.Remove("\ref[src]:channeled_spell")
+		return
+
+	var/atom/A = args["atom"]
+
+	if(E.holder != holder)
+		E.handlers.Remove("\ref[src]:channeled_spell")
+		return
+	var/list/target = list(A)
+	var/mob/user = holder
+	user.attack_delayer.delayNext(0)
+	if(cast_check(1, holder) && is_valid_target(A))
+		before_cast(target)
+		if(prob(critfailchance))
+			critfail(target, holder)
+		else
+			. = cast(target, holder)
+		after_cast(target)
+		if(!.) //Returning 1 will prevent us from removing the channeling and taking charge
+			channel_spell(force_remove = 1)
+			take_charge(holder, 0)
 
 /spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
 	return

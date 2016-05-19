@@ -1800,5 +1800,13 @@ mob/proc/on_foot()
 		jitteriness = 0
 		animate(src)
 
+//High order proc to remove a mobs spell channeling, removes channeling fully
+/mob/proc/remove_spell_channeling()
+	if(spell_channeling)
+		var/spell/thespell = on_uattack.handlers[spell_channeling][EVENT_OBJECT_INDEX]
+		thespell.channel_spell(force_remove = 1)
+		return 1
+	return 0
+
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING

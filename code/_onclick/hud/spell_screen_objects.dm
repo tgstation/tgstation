@@ -156,6 +156,7 @@
 	var/obj/screen/movable/spell_master/spellmaster
 
 	var/icon/last_charged_icon
+	var/channeling_image
 
 /obj/screen/spell/Destroy()
 	..()
@@ -165,6 +166,7 @@
 		spellmaster.spell_objects -= src
 		if(spellmaster.spell_holder && spellmaster.spell_holder.client)
 			spellmaster.spell_holder.client.screen -= src
+			remove_channeling()
 	if(spellmaster && !spellmaster.spell_objects.len)
 		returnToPool(spellmaster)
 	spellmaster = null
@@ -214,3 +216,13 @@
 
 	spell.perform(usr)
 	update_charge(1)
+
+//Helper proc, does not remove channeling
+/obj/screen/spell/proc/add_channeling()
+	var/image/channel = image(icon = icon, loc = src, icon_state = "channeled", layer = src.layer + 1)
+	channeling_image = channel
+	spellmaster.spell_holder.client.images += channeling_image
+
+/obj/screen/spell/proc/remove_channeling()
+	spellmaster.spell_holder.client.images -= channeling_image
+	channeling_image = null

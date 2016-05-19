@@ -21,7 +21,7 @@
 
 /event/proc/Add(var/objectRef,var/procName)
 	var/key="\ref[objectRef]:[procName]"
-	handlers[key]=list("o"=objectRef,"p"=procName)
+	handlers[key]=list(EVENT_OBJECT_INDEX=objectRef,EVENT_PROC_INDEX=procName)
 	return key
 
 /event/proc/Remove(var/key)
@@ -35,8 +35,8 @@
 		if(!handler)
 			continue
 
-		var/objRef = handler["o"]
-		var/procName = handler["p"]
+		var/objRef = handler[EVENT_OBJECT_INDEX]
+		var/procName = handler[EVENT_PROC_INDEX]
 
 		if(objRef == null)
 			handlers.Remove(handler)

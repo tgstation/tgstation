@@ -427,7 +427,7 @@ var/list/beam_master = list()
 			break
 	spawn(10)
 		for(var/atom/thing in ouroverlays)
-			if(!thing.timestopped && !thing.loc.timestopped)
+			if(!thing.timestopped && thing.loc && !thing.loc.timestopped)
 				ouroverlays -= thing
 				returnToPool(thing)
 	spawn

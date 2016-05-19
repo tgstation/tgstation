@@ -45,6 +45,9 @@
 
 
 /client/Northwest()
+	if(mob.remove_spell_channeling()) //Interrupt to remove spell channeling on dropping
+		to_chat(usr, "<span class='notice'>You cease waiting to use your power")
+		return
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
