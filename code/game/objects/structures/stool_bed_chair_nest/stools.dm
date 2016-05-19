@@ -8,6 +8,10 @@
 	w_class = W_CLASS_HUGE
 	var/sheet_path = /obj/item/stack/sheet/metal
 
+/obj/item/weapon/stool/bar
+	name = "bar stool"
+	icon_state = "bar-stool"
+
 /obj/item/weapon/stool/hologram
 	sheet_path = null
 
