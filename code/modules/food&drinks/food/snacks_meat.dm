@@ -127,6 +127,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
 	name = "raw khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
+	icon_state = "khinkali"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/khinkali
 
