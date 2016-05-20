@@ -8,6 +8,7 @@
 /*
  * Backpack
  */
+var/list/sec_backpack_list = list()
 
 /obj/item/weapon/storage/backpack
 	name = "backpack"
@@ -152,6 +153,15 @@
 	desc = "It's a very robust backpack."
 	icon_state = "securitypack"
 	item_state = "securitypack"
+
+/obj/item/weapon/storage/backpack/security/New()
+	..()
+	sec_backpack_list += src
+
+/obj/item/weapon/storage/backpack/security/Destroy()
+	sec_backpack_list -= src
+	..()
+
 
 /obj/item/weapon/storage/backpack/captain
 	name = "captain's backpack"

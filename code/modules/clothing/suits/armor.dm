@@ -1,3 +1,7 @@
+var/list/armor_list = list()
+var/list/warden_armor_list = list()
+var/list/hos_armor_list = list()
+
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/weapon/kitchen/knife/combat,/obj/item/weapon/tank/internals/emergency_oxygen)
 	body_parts_covered = CHEST
@@ -18,6 +22,14 @@
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	dog_fashion = /datum/dog_fashion/back
 
+/obj/item/clothing/suit/armor/vest/New()
+	..()
+	armor_list += src
+
+/obj/item/clothing/suit/armor/vest/Destroy()
+	armor_list -= src
+	..()
+
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "An armored vest that protects against most types of damage."
 	icon_state = "armor"
@@ -34,6 +46,14 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+
+/obj/item/clothing/suit/armor/hos/New()
+	..()
+	hos_armor_list += src
+
+/obj/item/clothing/suit/armor/hos/Destroy()
+	hos_armor_list -= src
+	..()
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
@@ -54,6 +74,14 @@
 	strip_delay = 70
 	burn_state = FLAMMABLE
 	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/warden/New()
+	..()
+	warden_armor_list += src
+
+/obj/item/clothing/suit/armor/vest/warden/Destroy()
+	warden_armor_list -= src
+	..()
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
