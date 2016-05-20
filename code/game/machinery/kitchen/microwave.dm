@@ -428,8 +428,8 @@
 	ffuu.reagents.add_reagent("toxin", amount/10)
 	return ffuu
 
-/obj/machinery/microwave/AltClick()
-    if(!usr.incapacitated() && Adjacent(usr) && usr.dexterity_check())
+/obj/machinery/microwave/AltClick(mob/user)
+    if(!user.incapacitated() && Adjacent(user) && user.dexterity_check())
         cook() //Cook checks for power, brokenness, and contents internally
         return
     return ..()
