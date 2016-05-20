@@ -422,5 +422,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXZ 6
 
 // Shuttle return values
-#define SHUTTLE_SOMEONE_ELSE_DOCKED 8
-#define SHUTTLE_ALREADY_DOCKED 7
+#define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
+#define SHUTTLE_DWIDTH_TOO_LARGE "docking_width_too_large"
+#define SHUTTLE_WIDTH_TOO_LARGE "width_too_large"
+#define SHUTTLE_DHEIGHT_TOO_LARGE "docking_height_too_large"
+#define SHUTTLE_HEIGHT_TOO_LARGE "height_too_large"
+#define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
+#define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"

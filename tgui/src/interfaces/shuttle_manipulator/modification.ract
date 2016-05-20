@@ -24,10 +24,12 @@
 <ui-display title='Existing Shuttle: None'></ui-display>
 {{/if}}
 
-<ui-button action='preview' params='{"id": "{{data.selected.shuttle_id}}"}'>
+<ui-button action='preview'
+params='{"shuttle_id": "{{data.selected.shuttle_id}}"}'>
 Preview
 </ui-button>
-<ui-button action='load' params='{"id": "{{data.selected.shuttle_id}}"}'
+<ui-button action='load'
+params='{"shuttle_id": "{{data.selected.shuttle_id}}"}'
 style='danger'>
 Load</ui-button>
 

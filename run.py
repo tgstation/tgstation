@@ -34,7 +34,7 @@ def stage3():
     play("sound/misc/compiler-stage2.ogg")
     logfile = open('server.log~','w')
     p = subprocess.Popen(
-        "DreamDaemon tgstation.dmb 25001 -trace -trusted",
+        "DreamDaemon tgstation.dmb 25001 -trusted",
         shell=True, stdout=PIPE, stderr=STDOUT)
     try:
         while p.returncode is None:

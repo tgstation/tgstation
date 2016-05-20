@@ -228,18 +228,23 @@
 //this is to check if this shuttle can physically dock at dock S
 /obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/S)
 	if(!istype(S))
-		return 1
+		return SHUTTLE_NOT_A_DOCKING_PORT
+
 	if(istype(S, /obj/docking_port/stationary/transit))
-		return 0
-	//check dock is big enough to contain us
+		return FALSE
+
 	if(dwidth > S.dwidth)
-		return 2
+		return SHUTTLE_DWIDTH_TOO_LARGE
+
 	if(width-dwidth > S.width-S.dwidth)
-		return 3
+		return SHUTTLE_WIDTH_TOO_LARGE
+
 	if(dheight > S.dheight)
-		return 4
+		return SHUTTLE_DHEIGHT_TOO_LARGE
+
 	if(height-dheight > S.height-S.dheight)
-		return 5
+		return SHUTTLE_HEIGHT_TOO_LARGE
+
 	//check the dock isn't occupied
 	var/currently_docked = S.get_docked()
 	if(currently_docked)
@@ -250,7 +255,8 @@
 		// This isn't an error, per se, but we can't let the shuttle code
 		// attempt to move us where we currently are, it will get weird.
 			return SHUTTLE_ALREADY_DOCKED
-	return 0	//0 means we can dock
+
+	return FALSE
 
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
@@ -260,13 +266,10 @@
 		// Triggering shuttle movement code in place is weird
 		return
 	else if(status)
-		. = status
-		spawn(0)
-			var/msg = "request(): shuttle [src] cannot dock at [S], \
-				error: [status]"
-			message_admins(msg)
-			throw EXCEPTION(msg)
-		return status	//we can't dock at S
+		var/msg = "request(): shuttle [src] cannot dock at [S], \
+			error: [status]"
+		message_admins(msg)
+		throw EXCEPTION(msg)
 
 	switch(mode)
 		if(SHUTTLE_CALL)
@@ -368,8 +371,8 @@
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
 		var/status = canDock(S1)
-		if(status == 7)
-			return SHUTTLE_ALREADY_DOCKED
+		if(status == SHUTTLE_ALREADY_DOCKED)
+			return status
 		else if(status)
 			spawn(0)
 				var/msg = "dock(): shuttle [src] cannot dock at [S1], \
@@ -548,15 +551,25 @@
 /obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
 	for(var/turf/T in L)
 		for(var/atom/movable/AM in T)
-			if(ismob(AM))
+			if(isliving(AM))
 				if(ishuman(AM))
 					var/mob/living/M = AM
+					M.visible_message("<span class='warning'>[M] is hit by \
+						a bluespace ripple and thrown clear!</span>",
+						"<span class='userdanger'>You feel an immense \
+						crushing pressure as the space around you ripples.\
+						</span>")
+
 					M.Paralyse(10)
 					M.apply_damage(60, BRUTE, "chest")
 					M.apply_damage(60, BRUTE, "head")
 					M.anchored = 0
 				else
 					var/mob/M = AM
+					M.visible_message("<span class='warning'>[M] is hit by \
+						a bluespace ripple and is torn into pieces!</span>",
+						"<span class='userdanger'>You are torn into pieces by \
+						bluespace churn.</span>")
 					M.gib()
 					continue
 

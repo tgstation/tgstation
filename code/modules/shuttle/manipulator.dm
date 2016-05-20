@@ -11,11 +11,11 @@
 
 	// UI state variables
 	var/datum/map_template/shuttle/selected
+
 	var/obj/docking_port/mobile/existing_shuttle
 
 	var/obj/docking_port/mobile/preview_shuttle
-	var/preview_shuttle_id
-	var/old_id
+	var/datum/map_template/shuttle/preview_template
 
 /obj/machinery/shuttle_manipulator/New()
 	. = ..()
@@ -86,7 +86,7 @@
 		L["description"] = S.description
 		L["admin_notes"] = S.admin_notes
 
-		if(selected && (selected.shuttle_id == S.shuttle_id))
+		if(selected == S)
 			data["selected"] = L
 
 		templates[S.port_id]["templates"] += list(L)
@@ -106,9 +106,9 @@
 		L["timeleft"] = M.getTimerStr()
 		L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getStatusText()
-		if(selected && selected.port_id == M.id)
-			existing_shuttle = M
+		if(M == existing_shuttle)
 			data["existing_shuttle"] = L
+
 		data["shuttles"] += list(L)
 
 	return data
@@ -119,101 +119,106 @@
 
 	var/mob/user = usr
 
+	// Preload some common parameters
+	var/shuttle_id = params["shuttle_id"]
+	var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+
 	switch(action)
 		if("select_template")
-			var/shuttle_id = params["shuttle_id"]
-
-			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
 			if(S)
+				existing_shuttle = SSshuttle.getShuttle(S.port_id)
 				selected = S
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
+				. = TRUE
 				for(var/i in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = i
 					if(M.id == params["id"])
 						user.forceMove(get_turf(M))
+						break
+
 		if("preview")
-			var/shuttle_id = params["id"]
-			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
 			if(S)
-				if(preview_shuttle)
-					preview_shuttle.jumpToNullSpace()
+				. = TRUE
+				unload_preview()
 				load_template(S)
 				if(preview_shuttle)
-					preview_shuttle_id = shuttle_id
+					preview_template = S
 					user.forceMove(get_turf(preview_shuttle))
 		if("load")
-			var/shuttle_id = params["id"]
-			var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
-			if(S)
-				if(!preview_shuttle || (S.shuttle_id != preview_shuttle_id))
-					if(preview_shuttle)
-						preview_shuttle.jumpToNullSpace()
-					load_template(S)
-					preview_shuttle_id = shuttle_id
-				// get the existing shuttle information, if any
-				var/timer
-				var/mode = SHUTTLE_IDLE
-				var/obj/docking_port/stationary/D
-				if(existing_shuttle)
-					timer = existing_shuttle.timer
-					mode = existing_shuttle.mode
-					D = existing_shuttle.get_docked()
-
-				if(existing_shuttle == SSshuttle.backup_shuttle)
-					var/msg4 = "Shuttle manipulator is touching the backup \
-						shuttle, which is BAD. Either there's a bug in the \
-						manipulator or someone's done something bad. Either \
-						way, continuing down this path is never good. \
-						Aborting."
-					abort_import(msg4)
-					return
-
-				if(!existing_shuttle)
-					// try seeing if a shuttle with the old ID exists
-					D = SSshuttle.getDock(old_id)
-					if(!D)
-						var/msg5 = "No shuttle exists of this type, \
-							attempts to find roundstart docking port failed. \
-							Import aborted."
-						abort_import(msg5)
-						return
-				if((!D) && existing_shuttle)
-					var/msg1 = "[existing_shuttle] is not currently at a \
-						valid dock, the import will not continue."
-					abort_import(msg1)
-					return
-				var/result = preview_shuttle.canDock(D)
-				if(result && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
-					// truthy value means that it cannot dock for some reason
-					var/msg3 = "Unsuccessful dock of [preview_shuttle], \
-						removing. Import aborted."
-					abort_import(msg3)
-					return
-				// We can ignore the someone else docked error because we'll
-				// be moving into their place shortly
-
-				// Destroy the old shuttle
-				existing_shuttle.jumpToNullSpace()
-				// Unflub the ID
-				var/new_id = replacetext(preview_shuttle.id, "(preview)", "")
-				preview_shuttle.id = new_id
-
-				preview_shuttle.dock(D)
-				preview_shuttle.timer = timer
-				preview_shuttle.mode = mode
-				// Register with the shuttle subsystem
-				preview_shuttle.register()
+			if(existing_shuttle == SSshuttle.backup_shuttle)
+				// TODO make the load button disabled
+				WARNING("The shuttle that the selected shuttle will replace \
+					is the backup shuttle. Backup shuttle is required to be \
+					intact for round sanity.")
+			else if(S)
 				. = TRUE
-
-				preview_shuttle = null
-				preview_shuttle_id = null
-				existing_shuttle = null
-				selected = null
+				// If successful, returns the mobile docking port
+				var/mdp = action_load(S)
+				if(mdp)
+					user.forceMove(get_turf(mdp))
 
 	update_icon()
 
+/obj/machinery/shuttle_manipulator/proc/action_load(
+	datum/map_template/shuttle/loading_template)
+	// Check for an existing preview
+	if(preview_shuttle && (loading_template != preview_template))
+		preview_shuttle.jumpToNullSpace()
+		preview_shuttle = null
+		preview_template = null
+
+	if(!preview_shuttle)
+		load_template(loading_template)
+		preview_template = loading_template
+
+	// get the existing shuttle information, if any
+	var/timer = 0
+	var/mode = SHUTTLE_IDLE
+	var/obj/docking_port/stationary/D
+
+	if(existing_shuttle)
+		timer = existing_shuttle.timer
+		mode = existing_shuttle.mode
+		D = existing_shuttle.get_docked()
+	else
+		D = preview_shuttle.findRoundstartDock()
+
+	if(!D)
+		var/m = "No dock found for preview shuttle, aborting."
+		WARNING(m)
+		throw EXCEPTION(m)
+
+	var/result = preview_shuttle.canDock(D)
+	// truthy value means that it cannot dock for some reason
+	// but we can ignore the someone else docked error because we'll
+	// be moving into their place shortly
+	if(result && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
+		var/m = "Unsuccessful dock of [preview_shuttle] ([result])."
+		WARNING(m)
+		return
+
+	existing_shuttle.jumpToNullSpace()
+
+	preview_shuttle.dock(D)
+	. = preview_shuttle
+
+	// Shuttle state involves a mode and a timer based on world.time, so
+	// plugging the existing shuttles old values in works fine.
+	preview_shuttle.timer = timer
+	preview_shuttle.mode = mode
+
+	preview_shuttle.register()
+
+	// TODO indicate to the user that success happened, rather than just
+	// blanking the modification tab
+	preview_shuttle = null
+	preview_template = null
+	existing_shuttle = null
+	selected = null
+
+	return preview_shuttle
 
 /obj/machinery/shuttle_manipulator/proc/load_template(
 	datum/map_template/shuttle/S)
@@ -224,19 +229,29 @@
 	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
 
 	var/found = 0
+	// Search the turfs for docking ports
+	// - We need to find the mobile docking port because that is the heart of
+	//   the shuttle.
+	// - We need to check that no additional ports have slipped in from the
+	//   template, because that causes unintended behaviour.
 	for(var/T in affected)
 		for(var/obj/docking_port/P in T)
 			if(istype(P, /obj/docking_port/mobile))
+				var/obj/docking_port/mobile/M = P
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
 					world.log << "Map warning: Shuttle Template [S.mappath] \
 						has multiple mobile docking ports."
+				else if(!M.timid)
+					// The shuttle template we loaded isn't "timid" which means
+					// it's already registered with the shuttles subsystem.
+					// This is a bad thing.
+					var/m = "Template [S] is non-timid! Unloading."
+					WARNING(m)
+					M.jumpToNullSpace()
+					return
 				else
-					// Change the id so the shuttle system doesn't grab the
-					// loaded ship until we want it to
-					old_id = P.id
-					P.id = "(preview)[P.id]"
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
 				world.log << "Map warning: Shuttle Template [S.mappath] has a \
@@ -249,12 +264,9 @@
 			T0.empty()
 
 		message_admins(msg)
-		throw EXCEPTION(msg)
+		WARNING(msg)
 
-/obj/machinery/shuttle_manipulator/proc/abort_import(msg)
-	message_admins(msg)
-	WARNING(msg)
+/obj/machinery/shuttle_manipulator/proc/unload_preview()
 	if(preview_shuttle)
 		preview_shuttle.jumpToNullSpace()
-	preview_shuttle_id = null
-	selected = null
+	preview_shuttle = null
