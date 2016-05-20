@@ -101,8 +101,8 @@
 			take_overall_damage(2,0)
 			traumatic_shock++
 
-	if(drowsyness)
-		drowsyness--
+	if(drowsyness > 0)
+		drowsyness = max(0, drowsyness - 1)
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
 			sleeping += 1

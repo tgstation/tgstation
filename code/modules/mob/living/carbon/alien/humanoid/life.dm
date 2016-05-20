@@ -276,8 +276,8 @@
 		if (nutrition > 0)
 			nutrition -= HUNGER_FACTOR
 
-		if (drowsyness)
-			drowsyness--
+		if (drowsyness > 0)
+			drowsyness = max(0, drowsyness - 1)
 			eye_blurry = max(2, eye_blurry)
 			if (prob(5))
 				sleeping += 1
