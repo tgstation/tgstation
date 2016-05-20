@@ -1,0 +1,27 @@
+"a" = (/turf/simulated/floor/wood,/area/space)
+"b" = (/mob/living/simple_animal/crab,/turf/simulated/floor/wood,/area/space)
+"c" = (/turf/simulated/floor/noslip,/area/space)
+"d" = (/mob/living/simple_animal/crab,/turf/simulated/floor/noslip,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aabaaaaaaaaaaaaaaaaa
+aaccccaccccaaccaacca
+aacaaaacaacacaacacac
+aacaaaaccccacaacacac
+aacaaaaccaaacaacacca
+aacaaaacacaaccccacac
+aacccdacaacadaacacca
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+acaaaccccacaacaccaaa
+acaaacaacaccacacacaa
+acaaacaacacaccacacaa
+acaaadcccacaacacacaa
+acaaacaacacaacacacaa
+acccacaacacaacaccaaa
+aaaaaaaaaaaaaabaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}
