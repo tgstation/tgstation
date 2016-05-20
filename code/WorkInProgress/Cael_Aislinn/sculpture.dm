@@ -71,11 +71,11 @@
 	var/in_darkness = 0
 	if(istype(T, /turf/simulated)) //Simulated turfs only
 		var/turf/simulated/sim = T
-		if(!sim.affecting_lights) //Best check I could figure out given VV, only full darkness counts
+		if(!sim.affecting_lights || !sim.affecting_lights.len) //Check if lights are affecting us (otherwise darkness, obviously)
 			in_darkness = 1
 
 	//Humans can observe SCP-173. If a single human observes him, he's observed for everyone
-	//Note that humans have a 180� field of vision for the purposes of this proc
+	//Note that humans have a 180 degrees field of vision for the purposes of this proc
 	for(var/mob/living/carbon/human/H in view(7, src))
 		if(H.stat)
 			continue
@@ -262,6 +262,7 @@
 
 	if(target && ishuman(target))
 		//To prevent movement cheese, SCP snaps necks the second it ends up on the same turf as someone
+		//Or in other terms, if SCP decides it had a clean shot for a neck snap at the moment this proc fired, you're good as dead
 		target.apply_damage(rand(120, 150), BRUTE, "head")
 		playsound(target.loc, pick(snap_sound), 100, 1, -1)
 
@@ -291,21 +292,3 @@
 
 //You cannot destroy SCP-173, fool!
 /mob/living/simple_animal/sculpture/ex_act(var/severity)
-
-// Commented this out because it LITERALLY PREVENTS ADMINS FROM REMOVING IT ENTIRELY
-//But seriously, you just can't
-// /mob/living/simple_animal/sculpture/Del()
-//
-// 	replace_SCP()
-// 	..()
-
-//Someone tried to use a cheese to kill SCP, warp him at any blob start (nuke disk method
-/mob/living/simple_animal/sculpture/proc/replace_SCP()
-	if(blobstart.len)
-		visible_message("<span class='sinister'>\The [src] appears as if it was destroyed, but as you sigh with relief, rumbling stone echoes through your mind.</span>")
-		var/picked_turf = get_turf(pick(blobstart))
-		var/picked_area = formatLocation(picked_turf)
-		var/log_message = "[type] has been 'destroyed'. Creating one at"
-		log_game("[log_message] [picked_area]")
-		message_admins("[log_message] [formatJumpTo(picked_turf, picked_area)]")
-		new /mob/living/simple_animal/sculpture(picked_turf)
