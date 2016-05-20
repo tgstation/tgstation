@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////SALADS////////////////////////////////////////////////
 
-/datum/table_recipe/herbsalad
+/datum/crafting_recipe/food/herbsalad
 	name = "Herb salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -13,7 +13,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad
 	category = CAT_FOOD
 
-/datum/table_recipe/aesirsalad
+/datum/crafting_recipe/food/aesirsalad
 	name = "Aesir salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -23,7 +23,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad
 	category = CAT_FOOD
 
-/datum/table_recipe/validsalad
+/datum/crafting_recipe/food/validsalad
 	name = "Valid salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -34,7 +34,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/validsalad
 	category = CAT_FOOD
 
-/datum/table_recipe/monkeysdelight
+/datum/crafting_recipe/food/monkeysdelight
 	name = "Monkeys delight"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
@@ -47,7 +47,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
 	category = CAT_FOOD
 
-/datum/table_recipe/oatmeal
+/datum/crafting_recipe/food/oatmeal
 	name = "Oatmeal"
 	reqs = list(
 		/datum/reagent/consumable/milk = 10,
@@ -57,7 +57,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/oatmeal
 	category = CAT_FOOD
 
-/datum/table_recipe/fruitsalad
+/datum/crafting_recipe/food/fruitsalad
 	name = "Fruit salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -70,7 +70,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/fruit
 	category = CAT_FOOD
 
-/datum/table_recipe/junglesalad
+/datum/crafting_recipe/food/junglesalad
 	name = "Jungle salad"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -83,7 +83,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/jungle
 	category = CAT_FOOD
 
-/datum/table_recipe/citrusdelight
+/datum/crafting_recipe/food/citrusdelight
 	name = "Citrus delight"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
@@ -95,7 +95,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/citrusdelight
 	category = CAT_FOOD
 
-/datum/table_recipe/ricepork
+/datum/crafting_recipe/food/ricepork
 	name = "Rice and pork"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice = 1,
@@ -104,7 +104,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/ricepork
 	category = CAT_FOOD
 
-/datum/table_recipe/eggbowl
+/datum/crafting_recipe/food/eggbowl
 	name = "Egg bowl"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice = 1,
@@ -115,7 +115,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/eggbowl
 	category = CAT_FOOD
 
-/datum/table_recipe/ricepudding
+/datum/crafting_recipe/food/ricepudding
 	name = "Rice pudding"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,

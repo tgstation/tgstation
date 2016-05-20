@@ -94,7 +94,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	..("Standing")
 
 /mob/living/carbon/human/proc/update_body_parts()
-	if(!dna.species.has_dismemberment) //Species don't have no dismemberment going for 'em!
+	if(NODISMEMBER in dna.species.specflags) //Species don't have no dismemberment going for 'em!
 		remove_overlay(BODYPARTS_LAYER)
 		return
 
@@ -175,16 +175,18 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/obj/item/clothing/under/U = w_uniform
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
-				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
+				U.screen_loc = ui_iclothing //...draw the item in the inventory screen
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
 			return
 
 
-		var/t_color = w_uniform.item_color
+		var/t_color = U.item_color
 		if(!t_color)
-			t_color = w_uniform.icon_state
+			t_color = U.icon_state
+		if(U.adjusted)
+			t_color = "[t_color]_d"
 
 		var/image/standing
 

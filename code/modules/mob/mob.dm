@@ -934,3 +934,6 @@ var/next_mob_id = 0
 		if("resize")
 			update_transform()
 	..()
+
+/mob/proc/is_literate()
+	return 0

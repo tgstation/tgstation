@@ -47,7 +47,12 @@
 
 	martial_art = default_martial_art
 
+	handcrafting = new()
+
 	..()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.craft(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -150,7 +155,7 @@
 
 	take_overall_damage(b_loss,f_loss)
 	//attempt to dismember bodyparts
-	if(severity >= 2 || !bomb_armor)
+	if(severity <= 2 || !bomb_armor)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
@@ -1033,6 +1038,9 @@
 	. = ..()
 	if (dna && dna.species)
 		. += dna.species.check_weakness(weapon, attacker)
+
+/mob/living/carbon/human/is_literate()
+	return 1
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float

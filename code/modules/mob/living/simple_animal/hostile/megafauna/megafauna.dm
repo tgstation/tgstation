@@ -3,6 +3,7 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
+	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 4
 	robust_searching = 1

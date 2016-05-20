@@ -458,6 +458,13 @@
 	max_n_of_items = 10
 	pixel_y = -4
 
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This ones seen better days."
+
+/obj/machinery/smartfridge/survival_pod/empty/New()
+	return()
+
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
 		return 1

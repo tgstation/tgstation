@@ -43,6 +43,15 @@
 				excited = 1
 				SSair.active_turfs |= src
 
+/turf/open/proc/GetHeatCapacity()
+	. = air.heat_capacity()
+
+/turf/open/proc/GetTemperature()
+	. = air.temperature
+
+/turf/open/proc/TakeTemperature(temp)
+	air.temperature += temp
+	air_update_turf()
 
 /turf/open/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)

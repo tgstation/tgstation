@@ -12,8 +12,8 @@
 	speed = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	maxHealth = 100
-	health = 100
+	maxHealth = 125
+	health = 125
 	harm_intent_damage = 5
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -39,7 +39,6 @@
 	icon_state = "aliend_s"
 	icon_living = "aliend_s"
 	icon_dead = "aliend_dead"
-	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	var/plant_cooldown = 30
@@ -59,7 +58,8 @@
 	icon_state = "aliens_s"
 	icon_living = "aliens_s"
 	icon_dead = "aliens_dead"
-	health = 120
+	health = 150
+	maxHealth = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	ranged = 1

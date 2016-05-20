@@ -60,7 +60,7 @@
 	return ..()
 
 /datum/reagent/blob/sporing_pods/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(prob(10))
+	if(prob(12))
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
 		BS.update_icons()
@@ -70,10 +70,10 @@
 /datum/reagent/blob/replicating_foam
 	name = "Replicating Foam"
 	id = "replicating_foam"
-	description = "will do medium brute damage and replicate when damaged, but takes increased brute damage."
+	description = "will do medium brute damage, take increased brute damage, and expand when burned."
 	shortdesc = "will do medium brute damage."
 	analyzerdescdamage = "Does medium brute damage."
-	analyzerdesceffect = "Expands when attacked, will occasionally expand again when expanding, and is fragile to brute damage."
+	analyzerdesceffect = "Expands when attacked with burn damage, will occasionally expand again when expanding, and is fragile to brute damage."
 	color = "#7B5A57"
 	complementary_color = "#57787B"
 
@@ -85,7 +85,7 @@
 	var/effectivedamage = damage
 	if(damage_type == BRUTE)
 		effectivedamage = damage * 2
-	if(effectivedamage > 0 && original_health - effectivedamage > 0 && prob(60))
+	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(75))
 		var/obj/effect/blob/newB = B.expand(null, null, 0)
 		if(newB)
 			newB.health = original_health - effectivedamage
@@ -94,7 +94,7 @@
 	return effectivedamage
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(prob(40))
+	if(prob(30))
 		newB.expand() //do it again!
 
 //does brute damage, shifts away when damaged
@@ -316,12 +316,12 @@
 /datum/reagent/blob/poisonous_strands/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(M.reagents)
-		M.reagents.add_reagent("poisonous_strands", 0.16*reac_volume)
+		M.reagents.add_reagent("poisonous_strands", 0.12*reac_volume)
 
 /datum/reagent/blob/poisonous_strands/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(1*REM)
-	M.adjustFireLoss(1*REM)
-	M.adjustToxLoss(1*REM)
+	M.adjustBruteLoss(1.5*REM)
+	M.adjustFireLoss(1.5*REM)
+	M.adjustToxLoss(1.5*REM)
 	..()
 
 //does oxygen damage, randomly pushes or pulls targets
@@ -525,7 +525,7 @@
 /datum/reagent/blob/penetrating_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
-	M.adjustBruteLoss(0.6*reac_volume)
+	M.adjustBruteLoss(0.7*reac_volume)
 
 /datum/reagent/blob/adaptive_nexuses
 	name = "Adaptive Nexuses"

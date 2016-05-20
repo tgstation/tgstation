@@ -36,9 +36,9 @@
 	var/trueName= randomDevilName()
 	var/datum/objective/devil/soulquantity/soulquant = new
 	soulquant.owner = devil_mind
-	var/datum/objective/devil/soulquality/soulqual = new
-	soulqual.owner = devil_mind
-	devil_mind.objectives += soulqual
+	var/datum/objective/devil/obj_2 = pick(new /datum/objective/devil/soulquality(null), new /datum/objective/devil/sintouch(null))
+	obj_2.owner = devil_mind
+	devil_mind.objectives += obj_2
 	devil_mind.objectives += soulquant
 	devil_mind.devilinfo = devilInfo(trueName, 1)
 	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")

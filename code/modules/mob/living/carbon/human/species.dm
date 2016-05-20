@@ -31,7 +31,6 @@
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
-	var/need_nutrition = 1  //Does it need to eat food on a regular basis?
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
@@ -76,6 +75,7 @@
 	var/safe_toxins_max = 0.05
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
+	var/BZ_trip_balls_min = 1 //BZ gas.
 
 	//Breath damage
 	var/oxy_breath_dam_min = 1
@@ -84,8 +84,6 @@
 	var/co2_breath_dam_max = 10
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
-
-	var/has_dismemberment = 1 //Whether or not this species uses dismemberment for its limbs
 
 	//Flight and floating
 	var/override_float = 0
@@ -137,7 +135,7 @@
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing)
 			C.unEquip(thing)
-	if(!has_dismemberment)
+	if(NODISMEMBER in specflags)
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
 	if(exotic_blood)
 		C.reagents.add_reagent(exotic_blood, 80)
@@ -162,7 +160,7 @@
 		return "[id]"
 
 /datum/species/proc/update_color(mob/living/carbon/human/H, forced_colour)
-	if(has_dismemberment) //only species without dismemberment still use base icon states.
+	if(!(NODISMEMBER in specflags)) //only species without dismemberment still use base icon states.
 		return
 	H.remove_overlay(SPECIES_LAYER)
 
@@ -286,7 +284,7 @@
 
 	var/list/standing	= list()
 
-	if(!has_dismemberment) //Legacy support
+	if(NODISMEMBER in specflags) //Legacy support
 		H.update_base_icon_state()
 		if(!(H.disabilities & HUSK))
 			update_color(H)
@@ -734,7 +732,9 @@
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && H.dna.species.need_nutrition)
+	if (H.nutrition > 0 && H.stat != DEAD && \
+		H.dna && H.dna.species && (!(NOHUNGER in H.dna.species.specflags)))
+		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		if(H.satiety > 0)
 			H.satiety--
@@ -1070,20 +1070,10 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(affecting.get_damage() >= (affecting.max_damage - I.armour_penetration/2))
-		if(I.can_dismember() && prob(I.force*(I.w_class-1)))
-			if(affecting.dismember(I.damtype))
-				I.add_blood(H)
-				switch(I.damtype)
-					if(BURN)
-						playsound(get_turf(H), 'sound/weapons/sear.ogg', 80, 1)
-					else
-						playsound(get_turf(H), pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg'), 80, 1)
-						affecting.add_blood(H)
-						var/turf/location = H.loc
-						if(istype(location))
-							location.add_blood(H)
-							return
+	if(prob(I.get_dismemberment_chance(affecting)))
+		if(affecting.dismember(I.damtype))
+			I.add_blood(H)
+			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
@@ -1230,7 +1220,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "plasma", "co2", "n2o")
+	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
@@ -1337,6 +1327,9 @@
 	//-- TRACES --//
 
 	if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
+
+	// N2O
+
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
@@ -1345,6 +1338,16 @@
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				H.emote(pick("giggle", "laugh"))
+
+	// BZ
+
+		var/bz_pp = breath.get_breath_partial_pressure(breath_gases["bz"][MOLES])
+		if(bz_pp > BZ_trip_balls_min)
+			H.hallucination += 20
+			if(prob(33))
+				H.adjustBrainLoss(3)
+		else if(bz_pp > 0.01)
+			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
 
@@ -1382,7 +1385,7 @@
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
-		if(!(RESISTHEAT in specflags)) // HEAT DAMAGE
+		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
@@ -1417,7 +1420,7 @@
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHEAT in specflags))
+	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTTEMP in specflags))
 		//Body temperature is too hot.
 		switch(H.bodytemperature)
 			if(360 to 400)
@@ -1456,7 +1459,7 @@
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!(RESISTHEAT in specflags))
+			if(!(RESISTTEMP in specflags))
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 			else
@@ -1468,7 +1471,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTCOLD in specflags))
+			if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
@@ -1479,11 +1482,11 @@
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H)
-	if((RESISTHEAT in specflags) || (NOFIRE in specflags))
+	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
 /datum/species/proc/IgniteMob(mob/living/carbon/human/H)
-	if((RESISTHEAT in specflags) || (NOFIRE in specflags))
+	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)

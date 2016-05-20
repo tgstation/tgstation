@@ -63,8 +63,10 @@
 				AIStatus = AI_IDLE				// otherwise we go idle
 	return 1
 
-
-
+/mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
+	if(!target)
+		Goto(P.starting, move_to_delay, 3)
+	..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
@@ -295,7 +297,7 @@
 		P.firer = src
 		P.yo = targeted_atom.y - startloc.y
 		P.xo = targeted_atom.x - startloc.x
-		if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
+		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, targets_from))
 		P.original = targeted_atom
 		P.fire()

@@ -120,14 +120,27 @@
 
 
 /datum/material_container/proc/use_amount_type(amt, material_type)
-	var/datum/material/M
-	M = materials[material_type]
+	var/datum/material/M = materials[material_type]
 	if(M)
 		if(M.amount >= amt)
 			M.amount -= amt
 			total_amount -= amt
 			return amt
 	return 0
+
+/datum/material_container/proc/can_use_amount(amt, material_type, list/mats)
+	if(amt && material_type)
+		var/datum/material/M = materials[material_type]
+		if(M && M.amount >= amt)
+			return TRUE
+	else if(istype(mats))
+		for(var/M in mats)
+			if(materials[M] && mats[M] <= materials[M])
+				continue
+			else
+				return FALSE
+		return TRUE
+	return FALSE
 
 //For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
