@@ -83,9 +83,12 @@
 			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
-	for(var/T in target_types)
-		if(istype(A, T))
-			return A
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		if(C.stat != DEAD && C.lying)
+			return C
+	else if(is_type_in_list(A, target_types))
+		return A
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	if(!..())
@@ -95,16 +98,26 @@
 		return
 
 	if(emagged == 2) //Emag functions
-		if(istype(loc,/turf/open))
+		if(istype(loc, /turf/open))
 
 			for(var/mob/living/carbon/victim in loc)
-				UnarmedAttack(victim) // Acid spray
+				if(victim != target)
+					UnarmedAttack(victim) // Acid spray
 
 			if(prob(15)) // Wets floors and spawns foam randomly
 				UnarmedAttack(src)
 
 	else if(prob(5))
 		audible_message("[src] makes an excited beeping booping sound!")
+
+	if(ismob(target))
+		if(!(target in view(DEFAULT_SCAN_RANGE, src)))
+			target = null
+		if(!process_scan(target))
+			target = null
+
+	if(!target && emagged == 2) // When emagged, target humans who slipped on the water and melt their faces off
+		target = scan(/mob/living/carbon)
 
 	if(!target && pests) //Search for pests to exterminate first.
 		target = scan(/mob/living/simple_animal)
