@@ -2,6 +2,7 @@
 	var/slowdown = 0 //negative for faster, positive for slower
 
 	var/wet = 0
+	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
 
 /turf/open/Initalize_Atmos(times_fired)
@@ -72,7 +73,6 @@
 				return 0
 			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
-
 		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
@@ -95,7 +95,10 @@
 					C.spin(1,1)
 		return 1
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min = 0, max = 0) // 1 = Water, 2 = Lube, 3 = Ice
+	wet_time += max
+	if(wet_time < min)
+		wet_time = min
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
@@ -112,32 +115,49 @@
 		else
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
 		overlays += wet_overlay
-
-	if(wet < TURF_WET_ICE)
-		addtimer(src, "MakeDry", rand(790, 820))
+	HandleWet()
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
-	if(!istype(src, /turf)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
-		return
 	if(wet > wet_setting || !wet)
 		return
-	if(wet == TURF_WET_PERMAFROST)
-		wet = TURF_WET_ICE
-	else
-		wet = TURF_DRY
-		if(wet_overlay)
-			overlays -= wet_overlay
+	spawn(rand(0,20))
+		if(wet == TURF_WET_PERMAFROST)
+			wet = TURF_WET_ICE
+		else
+			wet = TURF_DRY
+			if(wet_overlay)
+				overlays -= wet_overlay
 
 /turf/open/proc/HandleWet()
-	if(!istype(src, /turf))
-		return
-	if(!wet || wet > TURF_WET_ICE)
-		return
-	if(air.temperature < T0C && wet != TURF_WET_ICE)
+	if(!wet_time && wet < TURF_WET_ICE)
 		MakeDry(TURF_WET_ICE)
-		MakeSlippery(TURF_WET_ICE)
-	else if (wet == TURF_WET_ICE)
+	if(wet_time > MAXIMUM_WET_TIME)
+		wet_time = MAXIMUM_WET_TIME
+	if(wet == TURF_WET_ICE && air.temperature > T0C)
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
-	else if (air.temperature > T0C + 40) // Warm rooms will dry up rather quickly.
-		addtimer(src, "MakeDry", 100, 1, TURF_WET_ICE)
+	switch(air.temperature)
+		if(-INFINITY to T0C)
+			if(wet != TURF_WET_ICE && wet)
+				MakeDry(TURF_WET_ICE)
+				MakeSlippery(TURF_WET_ICE)
+		if(T0C to T20C)
+			wet_time = max(0, wet_time-1)
+		if(T20C to T0C + 40)
+			wet_time = max(0, wet_time-2)
+		if(T0C + 40 to T0C + 60)
+			wet_time = max(0, wet_time-3)
+		if(T0C + 60 to T0C + 80)
+			wet_time = max(0, wet_time-5)
+		if(T0C + 80 to T0C + 100)
+			wet_time = max(0, wet_time-10)
+		if(T0C + 100 to INFINITY)
+			wet_time = 0
+
+	if(wet && wet < TURF_WET_ICE && !wet_time)
+		MakeDry(TURF_WET_ICE)
+	if(!wet && wet_time)
+		wet_time = 0
+	if(wet)
+		addtimer(src, "HandleWet", 15, 1)
+

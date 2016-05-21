@@ -285,6 +285,9 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
 
+//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
+#define MAXIMUM_WET_TIME 300
+
 //Object/Item sharpness
 #define IS_BLUNT			0
 #define IS_SHARP			1
