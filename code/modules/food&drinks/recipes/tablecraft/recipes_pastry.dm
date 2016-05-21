@@ -173,9 +173,9 @@
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
+		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
-		/datum/reagent/consumable/eggyolk = 5
+		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/khachapuri
 	category = CAT_FOOD
