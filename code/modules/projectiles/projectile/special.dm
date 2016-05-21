@@ -218,7 +218,7 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3
+	range = 5
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
@@ -227,9 +227,9 @@
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
-		if(pressure < 30)
+		if(pressure < 60)
 			name = "full strength plasma blast"
-			damage *= 3
+			damage *= 4
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
@@ -237,12 +237,14 @@
 	if(istype(target, /turf/closed/mineral))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-		range = max(range - 1, 1)
-		return -1
+		Range()
+		if(range > 0)
+			return -1
 
 /obj/item/projectile/plasma/adv
-	range = 5
+	damage = 7
+	range = 7
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 6
+	range = 8
