@@ -393,17 +393,12 @@
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						H.dna.features["tail_human"] = "Cat"
 						H.dna.features["ears"] = "Cat"
-					var/obj/item/clothing/under/schoolgirl/I
-					var/random = rand(1,4)
-					switch(random)
-						if(1)
-							I = new /obj/item/clothing/under/schoolgirl
-						if(2)
-							I = new /obj/item/clothing/under/schoolgirl/red
-						if(3)
-							I = new /obj/item/clothing/under/schoolgirl/green
-						if(4)
-							I = new /obj/item/clothing/under/schoolgirl/orange
+					var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
+					var/obj/item/clothing/under/schoolgirl/I = new seifuku
+					var/list/honorifics = list(MALE = list("kun"), FEMALE = list("chan","tan"), NEUTER = list("san")) //John Robust -> Robust-kun
+					var/list/names = splittext(H.real_name," ")
+					var/newname = "[names[2]]-[pick(honorifics[H.gender])]"
+					H.fully_replace_character_name(H.real_name,newname)
 					H.unEquip(H.w_uniform)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
