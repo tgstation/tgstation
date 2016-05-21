@@ -248,10 +248,15 @@
 	..()
 	spawn(2400)
 		if(!owner && !preserved)
-			inert = 1
-			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+			go_inert()
 		else
-			preserved = 1
+			preserved = TRUE
+			feedback_add_details("hivelord_core", "[src.type]|implanted")
+
+/obj/item/organ/hivelord_core/proc/go_inert()
+	inert = TRUE
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	feedback_add_details("hivelord_core", "[src.type]|inert")
 
 /obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
@@ -278,7 +283,11 @@
 		owner.adjustOxyLoss(-2)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+		CHECK_DNA_AND_SPECIES(H)
+		if(NOBLOOD in H.dna.species.specflags)
+			return
+
+		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
 		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 		if(B && blood_volume < 560 && blood_volume)
 			B.volume += 2 // Fast blood regen
@@ -287,7 +296,7 @@
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
 			return
 		else
 			if(H.stat == DEAD)
@@ -295,8 +304,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
@@ -829,10 +840,27 @@
 	..()
 
 /obj/item/organ/hivelord_core/legion
-	name = "legion's heart"
-	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
+	name = "legion's soul"
+	desc = "A strange rock that still crackles with power... its \
+		healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "demon_heart"
+	icon_state = "legion_soul"
+
+/obj/item/organ/hivelord_core/legion/New()
+	..()
+	update_icon()
+
+/obj/item/organ/hivelord_core/update_icon()
+	icon_state = inert ? "legion_soul_inert" : "legion_soul"
+	overlays.Cut()
+	if(!inert)
+		overlays += image(icon, "legion_soul_crackle")
+
+/obj/item/organ/hivelord_core/legion/go_inert()
+	. = ..()
+	desc = "[src] has become inert, it crackles no more and is useless for \
+		healing injuries."
+	update_icon()
 
 /obj/item/weapon/legion_skull
 	name = "legion's head"
@@ -984,6 +1012,9 @@
 	..()
 	gps = new /obj/item/device/gps/internal(src)
 
+/mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
+	qdel(gps)
+	. = ..()
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
