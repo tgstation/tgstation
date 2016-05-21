@@ -50,13 +50,29 @@
 		desc = "Oh no, not again."
 	update_icon()
 
+/obj/machinery/power/emitter/energycannon/magical/update_icon()
+	if(active)
+		icon_state = icon_state_on
+	else
+		icon_state = initial(icon_state)
+
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
+	var/changed = FALSE
 	if(active_tables.len >= 2)
+		if(!active)
+			visible_message("<span class='revenboldnotice'>\
+				[src] opens its eyes.</span>")
+			changed = TRUE
 		active = TRUE
-		update_icon()
 	else
+		if(active)
+			visible_message("<span class='revenboldnotice'>\
+				[src] closes its eyes.</span>")
+			changed = TRUE
 		active = FALSE
+
+	if(changed)
 		update_icon()
 
 /obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
@@ -68,12 +84,17 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return
 
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
+	return
+
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
 	health = 1000
 	verb_say = "chants"
-	var/mob/living/sleeper
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
+	var/list/mob/living/sleepers = list()
+	var/never_spoken = TRUE
+	flags = NODECONSTRUCT
 
 /obj/structure/table/abductor/wabbajack/New()
 	. = ..()
@@ -81,32 +102,51 @@
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	SSobj.processing -= src
+	. = ..()
 
 /obj/structure/table/abductor/wabbajack/process()
+	var/area = orange(4, src)
 	if(!our_statue)
-		for(var/obj/machinery/power/emitter/energycannon/magical/M in orange(4,src))
+		for(var/obj/machinery/power/emitter/energycannon/magical/M in area)
 			our_statue = M
 			break
-	if(!our_statue)
-		say("It has left us.")
-	return
 
-	if(sleeper && (get_turf(sleeper) == get_turf(src)))
-		sleeper.SetSleeping(10)
-		sleeper.color = "#800080"
+	var/turf/T = get_turf(src)
+	var/list/found = list()
+	for(var/mob/living/L in T)
+		if(L.stat != DEAD)
+			found += L
+
+	// New sleepers
+	for(var/i in found - sleepers)
+		var/mob/living/L = i
+		L.color = "#800080"
+		L.visible_message("<span class='revennotice'>A strange purple glow \
+			wraps itself around [L] as they suddenly fall unconcious.</span>",
+			"<span class='revendanger'>[desc]</span>")
+
+
+	// Existing sleepers
+	for(var/i in found)
+		var/mob/living/L = i
+		L.SetSleeping(10)
+
+	// Missing sleepers
+	for(var/i in sleepers - found)
+		var/mob/living/L = i
+		L.color = initial(L.color)
+		L.visible_message("<span class='revennotice'>The glow from [L] fades \
+			away.</span>")
+
+	sleepers = found
+
+	if(sleepers.len)
 		our_statue.active_tables |= src
-		if(prob(5))
+		if(never_spoken || prob(5))
 			say(desc)
+			never_spoken = FALSE
 	else
-		sleeper.color = initial(sleeper.color)
 		our_statue.active_tables &= src
-		sleeper = null
-
-/obj/structure/table/abductor/wabbajack/Crossed(atom/AM)
-	. = ..()
-	if(isliving(AM))
-		sleeper = AM
-		say(desc)
 
 /obj/structure/table/abductor/wabbajack/left
 	desc = "You sleep so it may wake."

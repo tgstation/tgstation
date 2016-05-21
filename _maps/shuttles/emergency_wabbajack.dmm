@@ -27,7 +27,7 @@
 "aA" = (/obj/structure/table,/obj/item/weapon/coin/mythril,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "aB" = (/obj/machinery/door/airlock/glass{name = "Emergency Shuttle Brig"; req_access_txt = "2"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aC" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
-"aD" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"aD" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{timid = 1, name = "NT Lepton Violet"},/turf/open/floor/plating,/area/shuttle/escape)
 "aE" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aF" = (/obj/machinery/door/window/eastleft,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "aG" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/obj/structure/table/glass,/obj/item/weapon/storage/box/syringes{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/box/beakers,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
