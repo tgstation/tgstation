@@ -59,3 +59,7 @@
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 
 	var/list/butcher_results = null
+	var/hellbound = 0 //People who've signed infernal contracts are unrevivable.
+
+	var/list/weather_immunities = list()
+

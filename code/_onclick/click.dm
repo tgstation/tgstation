@@ -58,6 +58,9 @@
 			return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["middle"])
+		ShiftMiddleClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -262,6 +265,10 @@
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
 	A.CtrlShiftClick(src)
+	return
+
+/mob/proc/ShiftMiddleClickOn(atom/A)
+	src.pointed(A)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)

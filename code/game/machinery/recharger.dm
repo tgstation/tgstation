@@ -12,10 +12,14 @@
 
 /obj/machinery/recharger/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/recharger()
-	component_parts += new /obj/item/weapon/stock_parts/capacitor()
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recharger(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/recharger
+	name = "circuit board (Weapon Recharger)"
+	build_path = /obj/machinery/recharger
+	origin_tech = "powerstorage=3;engineering=3;materials=4"
+	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)

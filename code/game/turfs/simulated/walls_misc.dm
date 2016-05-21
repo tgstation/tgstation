@@ -1,5 +1,5 @@
-/turf/closed/wall/cult
-	name = "runed wall"
+/turf/closed/wall/mineral/cult
+	name = "runed metal wall"
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
@@ -7,20 +7,30 @@
 	builtin_sheet = null
 	canSmoothWith = null
 
-/turf/closed/wall/cult/New()
+/turf/closed/wall/mineral/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
-/turf/closed/wall/cult/break_wall()
-	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 2)
+/turf/closed/wall/mineral/cult/break_wall()
+	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
 	return (new /obj/structure/girder/cult(src))
 
-/turf/closed/wall/cult/devastate_wall()
-	new /obj/effect/decal/cleanable/blood(src)
-	new /obj/effect/decal/remains/human(src)
+/turf/closed/wall/mineral/cult/devastate_wall()
+	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
 
-/turf/closed/wall/cult/narsie_act()
+/turf/closed/wall/mineral/cult/narsie_act()
 	return
+
+/turf/closed/wall/mineral/cult/artificer
+	name = "runed stone wall"
+	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
+
+/turf/closed/wall/mineral/cult/artificer/break_wall()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf, get_turf(src))
+	return null //excuse me we want no runed metal here
+
+/turf/closed/wall/mineral/cult/artificer/devastate_wall()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf, get_turf(src))
 
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'

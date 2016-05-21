@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 1000
-	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
@@ -15,14 +14,18 @@
 
 /obj/machinery/recharge_station/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
+	B.apply_default_parts(src)
 	update_icon()
+
+/obj/item/weapon/circuitboard/machine/cyborgrecharger
+	name = "circuit board (Cyborg Recharger)"
+	build_path = /obj/machinery/recharge_station
+	origin_tech = "powerstorage=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/cell = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0

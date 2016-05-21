@@ -1,0 +1,132 @@
+"aa" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape)
+"ab" = (/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/escape)
+"ac" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
+"ad" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"ae" = (/turf/closed/wall/shuttle{icon_state = "swall14"; dir = 2},/area/shuttle/escape)
+"af" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Cargo Bay Airlock"},/turf/open/floor/plating{dir = 1; icon_state = "delivery"},/area/shuttle/escape)
+"ag" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f10"; dir = 2},/area/shuttle/escape)
+"ah" = (/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
+"ai" = (/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/weapon/tank/internals/emergency_oxygen/double{pixel_x = 3},/obj/item/weapon/tank/internals/emergency_oxygen/double{pixel_x = 3},/obj/item/weapon/tank/internals/emergency_oxygen/double{pixel_x = 3},/obj/item/weapon/tank/internals/emergency_oxygen/double{pixel_x = 3},/obj/item/weapon/tank/internals/emergency_oxygen/double{pixel_x = 3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/structure/closet/crate{name = "lifejackets"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aj" = (/obj/structure/tank_dispenser/oxygen{layer = 2.7; pixel_x = -1; pixel_y = 2},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"ak" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"al" = (/obj/machinery/status_display{pixel_y = 32},/obj/machinery/hologram/holopad,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"am" = (/obj/structure/table,/obj/item/stack/medical/gauze,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/ointment,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"an" = (/obj/structure/sign/nosmoking_2,/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
+"ao" = (/obj/machinery/recharge_station,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"ap" = (/turf/open/floor/plating{dir = 1; icon_state = "delivery"},/area/shuttle/escape)
+"aq" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/folder/yellow,/obj/item/weapon/pen,/obj/item/hand_labeler_refill,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"ar" = (/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"as" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 31},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"at" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"; req_access_txt = "2"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"au" = (/obj/item/weapon/cigbutt,/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"av" = (/obj/structure/closet/crate/medical{name = "medical crate"},/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/toxin{pixel_x = -4; pixel_y = 3},/obj/item/device/healthanalyzer{pixel_x = 3; pixel_y = 3},/obj/item/weapon/lazarus_injector,/mob/living/simple_animal/bot/medbot{name = "\improper emergency medibot"; pixel_x = -3; pixel_y = 2},/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"aw" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"ax" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"ay" = (/obj/structure/reagent_dispensers/fueltank,/obj/structure/extinguisher_cabinet{pixel_x = -27; pixel_y = 0},/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"az" = (/obj/structure/closet/crate{name = "emergency supplies crate"},/obj/item/weapon/storage/toolbox/emergency,/obj/item/weapon/storage/toolbox/emergency,/obj/item/device/flashlight/flare{pixel_x = 3; pixel_y = 3},/obj/item/device/flashlight/flare{pixel_x = -6; pixel_y = -2},/obj/item/weapon/crowbar,/obj/item/weapon/wrench,/obj/item/device/radio,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"aA" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Cargo Bay Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 5; height = 14; width = 25},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aB" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; pixel_x = 0; pixel_y = 0; req_access_txt = "0"; use_power = 0},/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
+"aC" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"aD" = (/obj/machinery/space_heater,/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/open/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"aE" = (/obj/structure/chair{dir = 4},/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = -31},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aF" = (/obj/structure/rack,/obj/item/weapon/crowbar,/obj/item/weapon/wrench,/obj/item/weapon/weldingtool,/obj/item/weapon/wirecutters,/obj/item/stack/cable_coil,/turf/open/floor/plating{dir = 1; icon_state = "warning"},/area/shuttle/escape)
+"aG" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/electrical{pixel_x = -3; pixel_y = 1},/obj/item/weapon/storage/toolbox/mechanical{pixel_x = 0; pixel_y = -1},/obj/item/weapon/storage/toolbox/emergency{pixel_x = 3; pixel_y = -5},/turf/open/floor/plating{dir = 1; icon_state = "warning"},/area/shuttle/escape)
+"aH" = (/turf/open/floor/plating{dir = 1; icon_state = "warning"},/area/shuttle/escape)
+"aI" = (/obj/structure/rack{dir = 1},/obj/item/weapon/tank/internals/oxygen/red,/obj/item/clothing/suit/fire/firefighter,/obj/item/clothing/mask/gas,/obj/item/clothing/head/hardhat/red,/turf/open/floor/plating{dir = 1; icon_state = "warning"},/area/shuttle/escape)
+"aJ" = (/obj/structure/extinguisher_cabinet,/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
+"aK" = (/obj/structure/chair{dir = 8},/obj/structure/sign/bluecross_2{pixel_x = 32},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aL" = (/turf/closed/wall/shuttle{icon_state = "swall7"; dir = 2},/area/shuttle/escape)
+"aM" = (/turf/closed/wall/shuttle{icon_state = "swall8"; dir = 2},/area/shuttle/escape)
+"aN" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Escape Shuttle Infirmary"; req_access_txt = "0"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aO" = (/obj/structure/sign/bluecross_2,/turf/closed/wall/shuttle{icon_state = "swall4"; dir = 2},/area/shuttle/escape)
+"aP" = (/turf/closed/wall/shuttle{icon_state = "swall11"; dir = 2},/area/shuttle/escape)
+"aQ" = (/obj/machinery/sleeper{dir = 2},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aR" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aS" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aT" = (/obj/machinery/shower{dir = 4; icon_state = "shower"; name = "emergency shower"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aU" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aV" = (/obj/structure/table,/obj/item/weapon/defibrillator/loaded,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aW" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{pixel_x = 6; pixel_y = 0},/obj/item/weapon/reagent_containers/glass/bottle/charcoal{pixel_x = -3},/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{pixel_x = -3; pixel_y = 8},/obj/item/weapon/reagent_containers/glass/bottle/charcoal{pixel_x = 6; pixel_y = 8},/obj/item/weapon/reagent_containers/syringe/epinephrine{pixel_x = 3; pixel_y = -2},/obj/item/weapon/reagent_containers/syringe/epinephrine{pixel_x = 4; pixel_y = 1},/obj/item/weapon/reagent_containers/syringe/epinephrine{pixel_x = -2; pixel_y = 5},/obj/item/weapon/reagent_containers/syringe/epinephrine{pixel_x = 2; pixel_y = 8},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aX" = (/obj/structure/table/optable,/obj/item/weapon/surgical_drapes,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aY" = (/obj/structure/table,/obj/item/weapon/scalpel{pixel_y = 12},/obj/item/weapon/circular_saw,/obj/item/weapon/retractor{pixel_x = 4},/obj/item/weapon/hemostat{pixel_x = -4},/obj/item/clothing/gloves/color/latex,/obj/item/clothing/mask/surgical,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = -27},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aZ" = (/obj/structure/chair{dir = 8},/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 31},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"ba" = (/obj/machinery/status_display,/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/escape)
+"bb" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bc" = (/obj/structure/chair,/obj/structure/reagent_dispensers/peppertank{pixel_x = 0; pixel_y = 29},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bd" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"be" = (/obj/structure/table,/obj/item/weapon/storage/box/handcuffs{pixel_x = 2; pixel_y = 2},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bf" = (/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bg" = (/obj/structure/table,/obj/machinery/recharger{active_power_usage = 0; idle_power_usage = 0; use_power = 0},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bh" = (/obj/machinery/door/airlock/glass_security{name = "Brig"; req_access_txt = "2"},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bi" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs{pixel_y = 3},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bj" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"bk" = (/obj/machinery/flasher{id = "emshuttlebridgeflash"; pixel_y = -24},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bl" = (/obj/structure/chair{dir = 1},/obj/machinery/button/flasher{id = "emshuttleflash"; name = "brig flasher button"; pixel_y = -23; req_access_txt = "0"; req_one_access_txt = "1;63;19"},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bm" = (/obj/structure/chair{dir = 1},/obj/machinery/flasher{id = "emshuttleflash"; pixel_y = -24},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bn" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bo" = (/obj/structure/table,/obj/item/weapon/folder/red{pixel_x = 3},/obj/item/weapon/folder/white{pixel_x = -4; pixel_y = 2},/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 31},/obj/item/weapon/book/manual/wiki/security_space_law{pixel_x = -4; pixel_y = 4},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"bp" = (/obj/machinery/door/airlock/glass_command{name = "Cockpit"; req_access_txt = "19"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bq" = (/turf/closed/wall/shuttle{icon_state = "swall15"; dir = 2},/area/shuttle/escape)
+"br" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bs" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs{pixel_y = 3},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bt" = (/obj/machinery/button/flasher{id = "emshuttlebridgeflash"; name = "cockpit flasher button"; pixel_y = 24; req_access_txt = "0"; req_one_access_txt = "1;63;19"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bu" = (/obj/machinery/door/airlock/command{name = "Emergency Recovery Airlock"; req_access = null; req_access_txt = "19"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bv" = (/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/escape)
+"bw" = (/obj/machinery/suit_storage_unit/standard_unit,/obj/machinery/status_display{pixel_y = 31},/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"bx" = (/obj/machinery/suit_storage_unit/standard_unit,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = 27},/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"by" = (/obj/machinery/computer/security,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bz" = (/obj/structure/chair/office/dark{dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bA" = (/obj/structure/chair/office/dark{dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bB" = (/obj/structure/table,/obj/item/weapon/folder/blue,/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bC" = (/obj/machinery/door/airlock/external{name = "Emergency Recovery Airlock"},/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"bD" = (/turf/closed/wall/shuttle{icon_state = "swallc4"; dir = 2},/area/shuttle/escape)
+"bE" = (/obj/machinery/computer/crew,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bF" = (/obj/structure/chair/office/dark,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bG" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -2; pixel_y = 8},/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 31},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bH" = (/obj/structure/table,/obj/item/weapon/phone{pixel_x = -3; pixel_y = 3},/obj/item/weapon/cigbutt/cigarbutt{pixel_x = 5; pixel_y = -1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bI" = (/obj/structure/table,/obj/item/weapon/storage/fancy/donut_box,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bJ" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bK" = (/obj/machinery/computer/communications,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bL" = (/obj/machinery/computer/station_alert,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bM" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/emergency{pixel_y = 3},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bN" = (/obj/structure/table,/obj/machinery/recharger{active_power_usage = 0; idle_power_usage = 0; pixel_y = 4; use_power = 0},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bO" = (/obj/structure/extinguisher_cabinet{pixel_x = -27; pixel_y = 0},/obj/structure/chair{dir = 1},/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"bP" = (/obj/structure/chair{dir = 1},/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"bQ" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
+"bR" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "diagonalWall3"},/turf/closed/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape)
+"bS" = (/turf/closed/wall/shuttle{icon_state = "swall13"; dir = 2},/area/shuttle/escape)
+"bT" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape)
+"bU" = (/turf/open/space,/area/space)
+"bV" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "diagonalWall3"},/area/shuttle/escape)
+"bW" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"bX" = (/turf/closed/wall/shuttle{icon_state = "wall3"},/area/shuttle/escape)
+"bY" = (/turf/open/space,/turf/closed/wall/shuttle{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/escape)
+"bZ" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaabacabadabadabaeabafafabag
+ahaiajaiakalakamanaoapapaqah
+ahakakakakakakakafapararasah
+atakakakakakakakafaparauavac
+acawakaxacawakaxahayararazac
+aAakakaxaBawakaxacaCauaraDah
+ahaEakaxacawakaxahaFaGaHaIah
+acawakaxaJawakaKaLaMacaNaOaP
+acawakaxacawakaxacaQaQakaRah
+acawakakakakakakaNakakakaSac
+anawakaxacawakaxacaTakakaUac
+adakakaxaJawakaxahaVaWaXaYah
+acawakaxacawakaZaLababbaabaP
+atakakaxaBawakaxahbbbcbdbeah
+ahawakaxacawakaxacbbbfbfbgac
+acakakakakakakakbhbfbfbfbiac
+ahbjakakakbkakbjahblbmbnboah
+aLabbaabbpabbaabbqabaeababaP
+acbrbsakakbtakakbubvahbwbxac
+acbybzakakakbAbBaLbCbDararbC
+acbEakbAbFbzakbGahararararbC
+acbHbIbJbKbLbMbNahbObPbPbQac
+bRabababababababbSababababbT
+bUbVbWbWbWbXbWbWbXbWbWbWbYbU
+bUbUbZbZbZbXbZbZbXbZbZbZbUbU
+"}

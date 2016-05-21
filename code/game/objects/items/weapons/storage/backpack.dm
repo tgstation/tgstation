@@ -129,6 +129,12 @@
 	icon_state = "clownpack"
 	item_state = "clownpack"
 
+/obj/item/weapon/storage/backpack/explorer
+	name = "explorer bag"
+	desc = "A robust backpack for stashing your loot."
+	icon_state = "explorerpack"
+	item_state = "explorerpack"
+
 /obj/item/weapon/storage/backpack/mime
 	name = "Parcel Parceaux"
 	desc = "A silent backpack made for those silent workers. Silence Co."
@@ -262,6 +268,12 @@
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/satchel_explorer
+	name = "explorer satchel"
+	desc = "A robust satchel for stashing your loot."
+	icon_state = "satchel-explorer"
+	item_state = "securitypack"
+
 /obj/item/weapon/storage/backpack/satchel_cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
@@ -351,6 +363,10 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/New()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie
 	name = "suspicious looking dufflebag"

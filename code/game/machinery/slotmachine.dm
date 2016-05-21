@@ -21,7 +21,7 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 50
-	circuit = /obj/item/weapon/circuitboard/slot_machine
+	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0

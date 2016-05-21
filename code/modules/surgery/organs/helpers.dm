@@ -20,7 +20,7 @@ mob/living/carbon/getorganszone(zone, var/subzones = 0)
 		if(zone == "chest")
 			returnorg = getorganszone("groin")
 
-	for(var/obj/item/organ/internal/O in internal_organs)
+	for(var/obj/item/organ/O in internal_organs)
 		if(zone == O.zone)
 			returnorg += O
 	return returnorg
@@ -28,11 +28,6 @@ mob/living/carbon/getorganszone(zone, var/subzones = 0)
 mob/living/carbon/getorganslot(slot)
 	return internal_organs_slot[slot]
 
-mob/proc/getlimb()
-	return
-
-mob/living/carbon/human/getlimb(typepath)
-	return (locate(typepath) in organs)
 
 proc/isorgan(atom/A)
-	return istype(A, /obj/item/organ/internal)
+	return istype(A, /obj/item/organ)

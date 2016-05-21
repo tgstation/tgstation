@@ -53,10 +53,16 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
+	if (!L.len)
+		return 0
+	if (!isnum(L[L[1]]))
+		generate_type_list_cache(L)
+	return L[A.type]
+
+/proc/generate_type_list_cache(L)
 	for(var/type in L)
-		if(istype(A, type))
-			return 1
-	return 0
+		for(var/T in typesof(type))
+			L[T] = 1
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -135,6 +141,11 @@
 	if(L.len)
 		. = L[L.len]
 		L.len--
+
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len

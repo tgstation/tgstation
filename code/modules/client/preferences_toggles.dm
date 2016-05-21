@@ -330,15 +330,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
 	prefs.toggles ^= SOUND_ANNOUNCEMENTS
-	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "no longer hear announcements" : "hear announcement sounds"]."
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/client/verb/set_admin_volume()
-	set name = "Set Admin Music Volume"
-	set category = "Preferences"
-	set desc = "Set the volume you hear admin music at."
-	var/musinput = input("Range of 0 to 100.","Admin Music Volume", prefs.adminmusicvolume) as num
-	prefs.adminmusicvolume = max(0,min(musinput,100))
-	prefs.save_preferences()

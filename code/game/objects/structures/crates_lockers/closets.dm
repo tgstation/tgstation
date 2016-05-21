@@ -395,7 +395,7 @@
 			add_fingerprint(user)
 			locked = !locked
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
-							"<span class='notice'>You [locked ? null : "un"]locks [src].</span>")
+							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
 		else
 			user << "<span class='notice'>Access Denied</span>"

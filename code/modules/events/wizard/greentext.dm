@@ -28,6 +28,7 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/greentext/New()
 	..()
@@ -67,6 +68,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
+		burn_state = ON_FIRE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
@@ -75,6 +77,8 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/weapon/greentext/Destroy()
+	if(burn_state != ON_FIRE)
+		return QDEL_HINT_LETMELIVE
 	poi_list.Remove(src)
 	for(var/mob/M in mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"

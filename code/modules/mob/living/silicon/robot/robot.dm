@@ -116,7 +116,7 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new (src)
-		mmi.brain = new /obj/item/organ/internal/brain(mmi)
+		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
@@ -555,7 +555,10 @@
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
-		MOD.install(src, user) //Proc includes a success mesage so we don't need another one
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
@@ -956,6 +959,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
+							cleaned_human.wash_cream()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 

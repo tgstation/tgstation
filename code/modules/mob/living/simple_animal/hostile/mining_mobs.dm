@@ -2,6 +2,7 @@
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	environment_smash = 2
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -132,6 +133,7 @@
 						  /obj/item/weapon/ore/uranium)
 
 	var/chase_time = 100
+	var/will_burrow = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/New()
 	..()
@@ -151,8 +153,9 @@
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
-			spawn(chase_time)
-				Burrow()
+			if(will_burrow)
+				spawn(chase_time)
+					Burrow()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -211,7 +214,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/internal/hivelord_core)
+	loot = list(/obj/item/organ/hivelord_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
@@ -230,7 +233,7 @@
 	mouse_opacity = 1
 	..(gibbed)
 
-/obj/item/organ/internal/hivelord_core
+/obj/item/organ/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon_state = "roro core 2"
@@ -242,16 +245,21 @@
 	var/preserved = 0
 	var/list/spawned_brood = list()
 
-/obj/item/organ/internal/hivelord_core/New()
+/obj/item/organ/hivelord_core/New()
 	..()
 	spawn(2400)
 		if(!owner && !preserved)
-			inert = 1
-			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+			go_inert()
 		else
-			preserved = 1
+			preserved = TRUE
+			feedback_add_details("hivelord_core", "[src.type]|implanted")
 
-/obj/item/organ/internal/hivelord_core/ui_action_click()
+/obj/item/organ/hivelord_core/proc/go_inert()
+	inert = TRUE
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	feedback_add_details("hivelord_core", "[src.type]|inert")
+
+/obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
 	if(!inert)
 		spawn_amount++
@@ -268,7 +276,7 @@
 		spawned_brood |= B
 
 
-/obj/item/organ/internal/hivelord_core/on_life()
+/obj/item/organ/hivelord_core/on_life()
 	..()
 	if(owner)
 		owner.adjustBruteLoss(-1)
@@ -276,16 +284,20 @@
 		owner.adjustOxyLoss(-2)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+		CHECK_DNA_AND_SPECIES(H)
+		if(NOBLOOD in H.dna.species.specflags)
+			return
+
+		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
 		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 		if(B && blood_volume < 560 && blood_volume)
 			B.volume += 2 // Fast blood regen
 
-/obj/item/organ/internal/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
 			return
 		else
 			if(H.stat == DEAD)
@@ -293,13 +305,15 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/prepare_eat()
+/obj/item/organ/hivelord_core/prepare_eat()
 	return null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -772,7 +786,7 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
-	loot = list(/obj/item/organ/internal/hivelord_core/legion)
+	loot = list(/obj/item/organ/hivelord_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = 1
@@ -826,11 +840,28 @@
 				qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/legion
-	name = "legion's heart"
-	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
+/obj/item/organ/hivelord_core/legion
+	name = "legion's soul"
+	desc = "A strange rock that still crackles with power... its \
+		healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "demon_heart"
+	icon_state = "legion_soul"
+
+/obj/item/organ/hivelord_core/legion/New()
+	..()
+	update_icon()
+
+/obj/item/organ/hivelord_core/update_icon()
+	icon_state = inert ? "legion_soul_inert" : "legion_soul"
+	overlays.Cut()
+	if(!inert)
+		overlays += image(icon, "legion_soul_crackle")
+
+/obj/item/organ/hivelord_core/legion/go_inert()
+	. = ..()
+	desc = "[src] has become inert, it crackles no more and is useless for \
+		healing injuries."
+	update_icon()
 
 /obj/item/weapon/legion_skull
 	name = "legion's head"
@@ -851,6 +882,8 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
+	weather_immunities = list("lava","ash")
+	faction = list("mining", "ashwalker")
 	density = 0
 	speak_chance = 1
 	turns_per_move = 8
@@ -963,6 +996,7 @@
 	icon_living = "tendril"
 	icon_dead = "tendril"
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
@@ -981,6 +1015,9 @@
 	..()
 	gps = new /obj/item/device/gps/internal(src)
 
+/mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
+	qdel(gps)
+	. = ..()
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"

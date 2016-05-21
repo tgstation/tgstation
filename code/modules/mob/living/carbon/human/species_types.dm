@@ -56,7 +56,7 @@
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
-	mutant_organs = list(/obj/item/organ/internal/tongue/lizard)
+	mutant_organs = list(/obj/item/organ/tongue/lizard)
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -79,6 +79,14 @@
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
+
+/*
+ Lizard subspecies: ASHWALKERS
+*/
+/datum/species/lizard/ashwalker
+	name = "Ash Walker"
+	id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 /*
  PODPEOPLE
 */
@@ -179,7 +187,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,NODISMEMBER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 
@@ -217,7 +225,7 @@
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE,NODISMEMBER)
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
@@ -319,7 +327,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
+	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
@@ -376,7 +384,7 @@
 	name = "Human?"
 	id = "fly"
 	say_mod = "buzzes"
-	mutant_organs = list(/obj/item/organ/internal/tongue/fly)
+	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -406,20 +414,11 @@
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
 	say_mod = "rattles"
-	need_nutrition = 0
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
-	var/list/myspan = null
-
-/datum/species/skeleton/New()
-	..()
-	myspan = list(pick(SPAN_SANS,SPAN_PAPYRUS)) //pick a span and stick with it for the round
-
-/datum/species/skeleton/get_spans()
-	return myspan
-
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER)
+	mutant_organs = list(/obj/item/organ/tongue/bone)
 
 /*
  ZOMBIES
@@ -433,8 +432,8 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
-	mutant_organs = list(/obj/item/organ/internal/tongue/zombie)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE)
+	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/cosmetic_zombie
 	name = "Human"
@@ -449,8 +448,8 @@
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
-	mutant_organs = list(/obj/item/organ/internal/tongue/abductor)
+	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
+	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
@@ -463,30 +462,15 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE)
+	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
-	need_nutrition = 0 //Hard to eat through a helmet
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
-	var/skin = 0
-
-/datum/species/plasmaman/skin
-	name = "Skinbone"
-	skin = 1
-	roundstart = 0
-
-/datum/species/plasmaman/update_base_icon_state(mob/living/carbon/human/H)
-	var/base = ..()
-	if(base == id && !skin)
-		base = "[base]_m"
-	else
-		base = "skinbone_m"
-	return base
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -531,7 +515,7 @@ var/global/list/synth_flesh_disguises = list()
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //all of these + whatever we inherit from the real species
+	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
 	safe_oxygen_min = 0
 	safe_toxins_min = 0
 	safe_toxins_max = 0
@@ -540,13 +524,11 @@ var/global/list/synth_flesh_disguises = list()
 	SA_sleep_min = 0
 	dangerous_existence = 1
 	blacklisted = 1
-	need_nutrition = 0 //beep boop robots do not need sustinance
 	meat = null
-	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE) //for getting these values back for assume_disguise()
+	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/image/damaged_synth_flesh = null //an image to display when we're below disguise_fail_health
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
-
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -665,7 +647,10 @@ var/global/list/synth_flesh_disguises = list()
 	H.updatehealth()
 	if(H.health > disguise_fail_health)
 		if(fake_species)
-			return fake_species.update_base_icon_state(H)
+			if(!(NODISMEMBER in fake_species.specflags))
+				return fake_species.handle_body(H)
+			else
+				return fake_species.update_base_icon_state(H)
 		else
 			return ..()
 	else
@@ -674,7 +659,7 @@ var/global/list/synth_flesh_disguises = list()
 /datum/species/synth/update_color(mob/living/carbon/human/H, forced_colour)
 	H.updatehealth()
 	if(H.health > disguise_fail_health)
-		if(fake_species)
+		if(fake_species && !(NODISMEMBER in fake_species.specflags))
 			fake_species.update_color(H, forced_colour)
 
 
@@ -725,7 +710,6 @@ SYNDICATE BLACK OPS
 	name = "Corporate Agent"
 	id = "agent"
 	hair_alpha = 0
-	need_nutrition = 0//They don't need to eat
 	say_mod = "declares"
 	speedmod = -2//Fast
 	brutemod = 0.7//Tough against firearms
@@ -739,6 +723,5 @@ SYNDICATE BLACK OPS
 	attack_sound = "sound/weapons/resonator_blast.ogg"
 	blacklisted = 1
 	use_skintones = 0
-	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR)
+	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
-

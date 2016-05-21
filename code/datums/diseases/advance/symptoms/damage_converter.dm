@@ -40,12 +40,12 @@ Bonus
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 
-		var/list/parts = H.get_damaged_organs(1,1) //1,1 because it needs inputs.
+		var/list/parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
 		if(!parts.len)
 			return
 
-		for(var/obj/item/organ/limb/L in parts)
+		for(var/obj/item/bodypart/L in parts)
 			L.heal_damage(get_damage, get_damage, 0)
 		M.adjustToxLoss(get_damage*parts.len)
 

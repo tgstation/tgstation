@@ -566,10 +566,10 @@ var/list/airlock_overlays = list()
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
-				var/obj/item/organ/limb/affecting = H.get_organ("head")
+				var/obj/item/bodypart/affecting = H.get_bodypart("head")
 				H.Stun(5)
 				H.Weaken(5)
-				if(affecting.take_damage(10, 0))
+				if(affecting && affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
@@ -724,8 +724,8 @@ var/list/airlock_overlays = list()
 					else if(src.secondsElectrified!=0)
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
-						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified", addition="at [x],[y],[z]")
+						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+						add_logs(usr, src, "electrified")
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -744,7 +744,7 @@ var/list/airlock_overlays = list()
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified", addition="at [x],[y],[z]")
+						add_logs(usr, src, "electrified")
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>

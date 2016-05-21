@@ -112,19 +112,11 @@
 	if(combat_cooldown==initial(combat_cooldown))
 		SSobj.processing.Remove(src)
 
-/obj/item/device/abductor/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
-			return 0
-		return 1
-	return 0
-
 /obj/item/device/abductor/proc/AbductorCheck(user)
-	if(IsAbductor(user))
-		return 1
+	if(isabductor(user))
+		return TRUE
 	user << "<span class='warning'>You can't figure how this works!</span>"
-	return 0
+	return FALSE
 
 /obj/item/device/abductor/proc/ScientistCheck(user)
 	var/mob/living/carbon/human/H = user
@@ -194,7 +186,7 @@
 		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
 	if(istype(target,/mob/living/carbon/human))
-		if(IsAbductor(target))
+		if(isabductor(target))
 			marked = target
 			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
 		else
@@ -304,27 +296,26 @@
 			break
 	return console
 
-
-/obj/item/device/firing_pin/alien
+/obj/item/device/firing_pin/abductor
 	name = "alien firing pin"
-	desc = "An odd device that resembles a firing pin."
-	fail_message = "<span class='alienwarning'>UNAUTHORIZED -- UNAUTHORIZED</span>"
+	icon_state = "firing_pin_ayy"
+	desc = "This firing pin is slimy and warm; you can swear you feel it \
+		constantly trying to mentally probe you."
+	fail_message = "<span class='abductor'>\
+		Firing error, please contact Command.</span>"
 
-/obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
-			return 0
-	return 1
+/obj/item/device/firing_pin/abductor/pin_auth(mob/living/user)
+	. = isabductor(user)
 
 /obj/item/weapon/gun/energy/alien
 	name = "alien pistol"
 	desc = "A complicated gun that fires bursts of high-intensity radiation."
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
-	pin = /obj/item/device/firing_pin/alien
+	pin = /obj/item/device/firing_pin/abductor
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 	origin_tech = "combat=5;materials=4;powerstorage=3;abductor=3"
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
@@ -402,16 +393,8 @@ Congratulations! You are now trained for xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return 0
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id != "abductor")
-		return 0
-	return 1
-
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 
 	if(isrobot(target))
@@ -482,18 +465,20 @@ Congratulations! You are now trained for xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
-								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-		if(do_mob(user, C, 30))
-			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
-				C.update_handcuffed()
-				user << "<span class='notice'>You handcuff [C].</span>"
-				add_logs(user, C, "handcuffed")
+		if(C.get_num_arms() >= 2)
+			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
+									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
+			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+				if(!C.handcuffed)
+					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
+					C.update_handcuffed()
+					user << "<span class='notice'>You handcuff [C].</span>"
+					add_logs(user, C, "handcuffed")
+			else
+				user << "<span class='warning'>You fail to handcuff [C].</span>"
 		else
-			user << "<span class='warning'>You fail to handcuff [C].</span>"
-	return
+			user << "<span class='warning'>[C] doesn't have two hands...</span>"
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
@@ -507,7 +492,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
-		var/obj/item/organ/internal/gland/temp = locate() in H.internal_organs
+		var/obj/item/organ/gland/temp = locate() in H.internal_organs
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
