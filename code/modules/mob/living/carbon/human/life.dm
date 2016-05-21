@@ -324,7 +324,6 @@
 			adjustBruteLoss(3)
 			if(src.reagents)
 				src.reagents.add_reagent("toxin", 2)
-				src.reagents.reaction(src, INJECT)
 
 /*
 Alcohol Poisoning Chart
