@@ -254,7 +254,7 @@
 
 /turf/closed/wall/narsie_act()
 	if(prob(20))
-		ChangeTurf(/turf/closed/wall/cult)
+		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
