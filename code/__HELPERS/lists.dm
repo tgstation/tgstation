@@ -55,7 +55,7 @@
 /proc/is_type_in_list(atom/A, list/L)
 	if (!L.len)
 		return 0
-	if (!isnum(L[L[1]]))
+	if (!L[L[1]])
 		generate_type_list_cache(L)
 	return L[A.type]
 
