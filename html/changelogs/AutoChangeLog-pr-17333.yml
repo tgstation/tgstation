@@ -1,0 +1,7 @@
+author: nullbear
+delete-after: True
+changes: 
+  - tweak: "Wetness updates less often."
+  - rscadd: "Wetness now stacks. Spraying lube over a tile that already has lube, will make the lube take longer to dry. Likewise, dumping 100 units of lube will take longer to dry than if only 10 units were dumped. (lube used to last just as long, regardless of whether it was 1u, or 100u) There is a limit, however, and you can't stack infinite lube."
+  - tweak: "Hotter temperatures cause water to evaporate more quickly. At 100C, water will boil away instantly."
+  - rscadd: "About 5 seconds of wetness are removed from a tile for each unit of drying agent. Absorbant Galoshes remain the most effective method of drying, and dry tiles instantly regardless of wetness."

@@ -300,6 +300,7 @@ MASS SPECTROMETER
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 
+
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)
 				continue

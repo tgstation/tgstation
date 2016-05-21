@@ -1,0 +1,7 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscdel: "NOBREATH species (golems, skeletons, abductors, ash walkers, zombies) no longer have or require lungs. They no longer take suffocation/oxyloss damage, cannot give CPR and cannot benefit from CPR. Instead of suffocation damage, during crit they take gradual brute damage."
+  - rscdel: "NOBLOOD (golems, skeletons, abductors, slimepeople, plasmamen) species no longer have or require hearts."
+  - tweak: "NOBREATH species that require hearts still take damage from heart attacks, as their tissues die and the lack of circulation causes toxins to build up."
+  - rscdel: "NOHUNGER (plasmamen, skeletons) species no longer have appendixes."

@@ -26520,6 +26520,7 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Monitoring"
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "cautioncorner";
 	dir = 1
@@ -61729,6 +61730,12 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate)
+"ckj" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/toxins/storage)
 
 (1,1,1) = {"
 aaa
@@ -89080,7 +89087,7 @@ aze
 aAw
 aBE
 aCO
-aFp
+ckj
 aFn
 aGo
 aCO

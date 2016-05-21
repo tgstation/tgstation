@@ -96,8 +96,12 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/attack_self(mob/user)
-	if(focus)
-		focus.attack_self_tk(user)
+	if(!focus)
+		return
+	if(qdeleted(focus))
+		qdel(src)
+		return
+	focus.attack_self_tk(user)
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	if(!target || !user)

@@ -1,0 +1,5 @@
+author: coiax, OPDingo
+delete-after: True
+changes: 
+  - tweak: "Renamed and reskinned legion's heart to legion's soul to avoid confusion; it is not a substitute heart, it is a supplemental chest organ."
+  - rscadd: "Legion's souls are now more obviously inert when becoming inert."

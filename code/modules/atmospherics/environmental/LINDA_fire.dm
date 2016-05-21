@@ -117,8 +117,6 @@
 
 	perform_exposure()
 
-	if(location.wet) location.wet = 0
-
 	if(bypassing)
 		icon_state = "3"
 		location.burn_tile()
