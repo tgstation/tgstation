@@ -44,6 +44,7 @@
 
 			<A href='?src=\ref[src];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
+			<A href='?src=\ref[src];secrets=anime'>Chinese Cartoons</A><BR>
 			<A href='?src=\ref[src];secrets=allspecies'>Change the species of all humans</A><BR>
 			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
@@ -378,6 +379,36 @@
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in machines)
 				L.broken()
+
+		if("anime")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","CC")
+			message_admins("[key_name_admin(usr)] made everything kawaii.")
+			for(var/mob/living/carbon/human/H in mob_list)
+				H << sound('sound/AI/animes.ogg')
+
+				if(H.dna.species.id == "human")
+					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
+						H.dna.features["tail_human"] = "Cat"
+						H.dna.features["ears"] = "Cat"
+					var/obj/item/clothing/under/schoolgirl/I
+					var/random = rand(1,4)
+					switch(random)
+						if(1)
+							I = new /obj/item/clothing/under/schoolgirl
+						if(2)
+							I = new /obj/item/clothing/under/schoolgirl/red
+						if(3)
+							I = new /obj/item/clothing/under/schoolgirl/green
+						if(4)
+							I = new /obj/item/clothing/under/schoolgirl/orange
+					H.unEquip(H.w_uniform)
+					H.equip_to_slot_or_del(I, slot_w_uniform)
+					I.flags |= NODROP
+				else
+					H << "You're not kawaii enough for this."
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
