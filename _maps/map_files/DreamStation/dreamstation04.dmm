@@ -2968,8 +2968,7 @@
 	},
 /area/shuttle/syndicate)
 "afH" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
+/obj/machinery/sleeper/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle{
