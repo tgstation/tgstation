@@ -283,7 +283,11 @@
 		owner.adjustOxyLoss(-2)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+		CHECK_DNA_AND_SPECIES(H)
+		if(NOBLOOD in H.dna.species.specflags)
+			return
+
+		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
 		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 		if(B && blood_volume < 560 && blood_volume)
 			B.volume += 2 // Fast blood regen
@@ -292,7 +296,7 @@
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
 			return
 		else
 			if(H.stat == DEAD)
@@ -836,16 +840,27 @@
 	..()
 
 /obj/item/organ/hivelord_core/legion
-	name = "legion's heart"
-	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
+	name = "legion's soul"
+	desc = "A strange rock that still crackles with power... its \
+		healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "demon_heart-on"
+	icon_state = "legion_soul"
+
+/obj/item/organ/hivelord_core/legion/New()
+	..()
+	update_icon()
+
+/obj/item/organ/hivelord_core/update_icon()
+	icon_state = inert ? "legion_soul_inert" : "legion_soul"
+	overlays.Cut()
+	if(!inert)
+		overlays += image(icon, "legion_soul_crackle")
 
 /obj/item/organ/hivelord_core/legion/go_inert()
 	. = ..()
-	desc = "[src] has become inert, it beats no more and is useless for \
-		healing injures."
-	icon_state = "demon_heart-off"
+	desc = "[src] has become inert, it crackles no more and is useless for \
+		healing injuries."
+	update_icon()
 
 /obj/item/weapon/legion_skull
 	name = "legion's head"
@@ -997,6 +1012,9 @@
 	..()
 	gps = new /obj/item/device/gps/internal(src)
 
+/mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
+	qdel(gps)
+	. = ..()
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
