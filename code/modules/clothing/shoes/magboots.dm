@@ -9,7 +9,7 @@
 	strip_delay = 70
 	put_on_delay = 70
 	burn_state = FIRE_PROOF
-	origin_tech = "magnets=4;engineering=3"
+	origin_tech = "materials=3;magnets=4;engineering=4"
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"

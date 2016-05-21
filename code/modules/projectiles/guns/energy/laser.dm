@@ -69,7 +69,7 @@
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
-	origin_tech = "combat=4;materials=3;powerstorage=3"
+	origin_tech = "combat=4;magnets=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3

@@ -193,7 +193,7 @@
 
 /obj/item/weapon/stock_parts/cell/high
 	name = "high-capacity power cell"
-	origin_tech = "powerstorage=3"
+	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
 	maxcharge = 10000
 	materials = list(MAT_GLASS=60)
@@ -213,10 +213,10 @@
 
 /obj/item/weapon/stock_parts/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=4"
+	origin_tech = "powerstorage=3;materials=3"
 	icon_state = "scell"
 	maxcharge = 20000
-	materials = list(MAT_GLASS=70)
+	materials = list(MAT_GLASS=300)
 	rating = 4
 	chargerate = 2000
 
@@ -226,10 +226,10 @@
 
 /obj/item/weapon/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
-	origin_tech = "powerstorage=5"
+	origin_tech = "powerstorage=4;engineering=4;materials=4"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=400)
 	rating = 5
 	chargerate = 3000
 
@@ -240,10 +240,10 @@
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
 	desc = "A rechargable transdimensional power cell."
-	origin_tech = "powerstorage=5;bluespace=5"
+	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
 	maxcharge = 40000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=600)
 	rating = 6
 	chargerate = 4000
 
@@ -256,7 +256,7 @@
 	icon_state = "icell"
 	origin_tech =  "powerstorage=7"
 	maxcharge = 30000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=1000)
 	rating = 6
 	chargerate = 30000
 
@@ -268,6 +268,7 @@
 	desc = "A rechargable starch based power cell."
 	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
+	origin_tech = "powerstorage=1;biotech=1"
 	charge = 100
 	maxcharge = 300
 	materials = list()

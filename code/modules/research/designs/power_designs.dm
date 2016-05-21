@@ -28,7 +28,7 @@
 	name = "Super-Capacity Power Cell"
 	desc = "A power cell that holds 20000 units of energy."
 	id = "super_cell"
-	req_tech = list("powerstorage" = 3, "materials" = 2)
+	req_tech = list("powerstorage" = 3, "materials" = 3)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
 	construction_time=100
@@ -39,9 +39,9 @@
 	name = "Hyper-Capacity Power Cell"
 	desc = "A power cell that holds 30000 units of energy."
 	id = "hyper_cell"
-	req_tech = list("powerstorage" = 5, "materials" = 4)
+	req_tech = list("powerstorage" = 5, "materials" = 5, "engineering" = 5)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 400, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
+	materials = list(MAT_METAL = 700, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = list("Misc","Power Designs")
@@ -50,7 +50,7 @@
 	name = "Bluespace Power Cell"
 	desc = "A power cell that holds 40000 units of energy."
 	id = "bluespace_cell"
-	req_tech = list("powerstorage" = 6, "materials" = 5)
+	req_tech = list("powerstorage" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 800, MAT_GOLD = 300, MAT_SILVER = 300, MAT_GLASS = 160, MAT_DIAMOND = 160)
 	construction_time=100
@@ -62,7 +62,7 @@
 	name = "Light Replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."
 	id = "light_replacer"
-	req_tech = list("magnets" = 3, "materials" = 4)
+	req_tech = list("magnets" = 3, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
 	build_path = /obj/item/device/lightreplacer

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = 3
-	origin_tech = "biotech=3;programming=3"
+	origin_tech = "biotech=2;programming=3;engineering=2"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
 	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI

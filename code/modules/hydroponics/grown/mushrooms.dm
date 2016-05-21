@@ -230,7 +230,7 @@
 	icon_state = "glowshroom"
 	filling_color = "#00FA9A"
 	var/effect_path = /obj/effect/glowshroom
-	origin_tech = "biotech=4;plasmatech=5"
+	origin_tech = "biotech=4;plasmatech=6"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/open/space))

@@ -475,7 +475,7 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1

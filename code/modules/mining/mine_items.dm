@@ -117,7 +117,7 @@
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	digspeed = 7
-	origin_tech = "materials=6;powerstorage=4;engineering=5"
+	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
@@ -130,7 +130,7 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	origin_tech = "materials=3;powerstorage=2;engineering=2"
+	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."

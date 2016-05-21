@@ -31,7 +31,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
-	origin_tech = "combat=6;materials=4;biotech=4"
+	origin_tech = "combat=4;materials=4;biotech=5;plasmatech=6"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
 	ammo_x_offset = 1
@@ -101,7 +101,7 @@
 	icon_state = "kineticgun_u"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
 	overheat_time = 15
-	origin_tech = "materials=4;powerstorage=4;engineering=4;magnets=4;combat=3"
+	origin_tech = "materials=5;powerstorage=3;engineering=4;magnets=3;combat=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
 	name = "hyper-kinetic accelerator"
@@ -109,7 +109,7 @@
 	icon_state = "kineticgun_h"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
 	overheat_time = 14
-	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4;combat=4"
+	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	..()
@@ -212,6 +212,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
 	icon_state = "wormhole_projector"
+	origin_tech = "combat=4;bluespace=6;plasmatech=4;engineering=4"
 	var/obj/effect/portal/blue
 	var/obj/effect/portal/orange
 
@@ -274,7 +275,7 @@
 	name = "temperature gun"
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures."
-	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
+	origin_tech = "combat=4;materials=4;powerstorage=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null

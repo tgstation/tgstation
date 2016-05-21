@@ -591,14 +591,14 @@
 	var/fieldsactive = 0
 	var/burst_time = 30
 	var/fieldlimit = 4
-	origin_tech = "magnets=2;combat=2"
+	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
 	desc = "An upgraded version of the resonator that can produce more fields at once."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
-	origin_tech = "magnets=3;combat=3"
+	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
 	fieldlimit = 6
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
@@ -1078,7 +1078,7 @@
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = 1
-	origin_tech = "biotech=1"
+	origin_tech = "biotech=3"
 
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/hivelord_core/C = M

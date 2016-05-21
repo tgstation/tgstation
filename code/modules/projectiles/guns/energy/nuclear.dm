@@ -67,7 +67,7 @@
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
 	item_state = "nucgun"
-	origin_tech = "combat=3;materials=5;powerstorage=3"
+	origin_tech = "combat=4;magnets=4;powerstorage=4"
 	charge_delay = 5
 	pin = null
 	can_charge = 0

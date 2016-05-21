@@ -41,6 +41,6 @@
 /obj/item/weapon/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
-	origin_tech = "bluespace=3"
+	origin_tech = "bluespace=3;plasmatech=4"
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 // nice try
