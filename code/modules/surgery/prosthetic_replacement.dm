@@ -27,6 +27,9 @@
 		tool_body_zone = RP.body_zone
 	else if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/L = tool
+		if(L.brute_dam + L.burn_dam >= L.max_damage/2)
+			user << "<span class='warning'>[tool] is too mangled to use as a replacement!</span>"
+			return
 		if(L.status != ORGAN_ROBOTIC)
 			organ_rejection_dam = 10
 			if(target.dna.species.id != L.species_id)
