@@ -132,6 +132,17 @@
 	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_toolset
+	name = "Toolset Arm implant"
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
+	id = "ci-toolset"
+	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4, "powerstorage" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/toolset
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
