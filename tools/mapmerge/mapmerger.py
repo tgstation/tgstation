@@ -2,6 +2,7 @@ import sys
 import os
 import pathlib
 import map_helpers
+import shutil
 
 #main("../../_maps/")
 def main(map_folder, tgm=0):
@@ -53,10 +54,12 @@ def main(map_folder, tgm=0):
     else:
         for i in valid_indices:
             path_str = str(list_of_files[i])
+            shutil.copyfile(path_str, path_str + ".before")
             path_str_pretty = path_str[len(map_folder):]
             try:
                 if map_helpers.merge_map(path_str, path_str + ".backup", tgm) != 1:
                     print("ERROR MERGING: {}".format(path_str_pretty))
+                    os.remove(path_str + ".before")
                     continue
                 print("MERGED: {}".format(path_str_pretty))
             except FileNotFoundError:
@@ -64,6 +67,7 @@ def main(map_folder, tgm=0):
                 print(path_str_pretty + " || " + path_str_pretty + ".backup")
 
     print("\nFinished merging.")
+    print("\nNOTICE: A version of the map files from before merging have been created for debug purposes.\nDo not delete these files until it is sure your map edits have no undesirable changes.")
 
 def string_to_num(s):
     try:
