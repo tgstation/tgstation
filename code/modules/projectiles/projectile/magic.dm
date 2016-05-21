@@ -220,7 +220,7 @@
 							if("spiderhunter")
 								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
 							if("blobbernaut")
-								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
+								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(M.loc)
 							if("magicarp")
 								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")

@@ -212,13 +212,17 @@
 	mob_size = MOB_SIZE_LARGE
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/New()
 	..()
-	verbs -= /mob/living/verb/pulled //no pulling people deep into the blob
+	if(!independent) //no pulling people deep into the blob
+		verbs -= /mob/living/verb/pulled
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		if(independent)
+			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
 		if(!(locate(/obj/effect/blob) in range(2, src)))
 			damagesources++
@@ -271,3 +275,7 @@
 		factory.naut = null //remove this naut from its factory
 		factory.maxhealth = initial(factory.maxhealth)
 	flick("blobbernaut_death", src)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/independent
+	independent = TRUE
+	gold_core_spawnable = 1
