@@ -16,7 +16,7 @@
 	var/health = 100
 	var/max_health = 100
 
-	//These variables allow for different icons when creating custom dispensers
+	// These allow for different icons when creating custom dispensers
 	var/icon_off = "off"
 	var/icon_on = "on"
 	var/icon_recharging = "recharge"
@@ -304,21 +304,22 @@
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/take_damage(dmg, dmg_type=BRUTE, hit_sound=TRUE)
+/obj/machinery/droneDispenser/take_damage(damage, damage_type = BRUTE,
+	sound_effect = TRUE)
 	// But why would you hurt the dispenser?
-	switch(dmg_type)
+	switch(damage_type)
 		if(BURN)
-			if(hit_sound)
+			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		if(BRUTE)
-			if(hit_sound)
-				if(dmg)
+			if(sound_effect)
+				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		else
 			return
-	health = max(health - dmg, 0)
+	health = max(health - damage, 0)
 	if(!health && !(stat & BROKEN))
 		if(break_message)
 			audible_message("<span class='warning'>[src] \
