@@ -223,7 +223,7 @@
 	name = "ash walker egg"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
-	mob_species = /datum/species/lizard
+	mob_species = /datum/species/lizard/ashwalker
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
@@ -237,8 +237,6 @@
 	new_spawn << "Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
-		H.dna.species.specflags |= NOBREATH
-		H.dna.species.specflags |= NOGUNS
 		H.underwear = "Nude"
 		H.update_body()
 

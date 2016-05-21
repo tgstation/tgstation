@@ -129,6 +129,32 @@
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
 	if(exotic_blood)
 		C.reagents.add_reagent(exotic_blood, 80)
+
+	var/obj/item/organ/heart/heart = C.getorganslot("heart")
+	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
+	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+
+	if((NOBLOOD in specflags) && heart)
+		heart.Remove(C)
+		qdel(heart)
+	else if((!(NOBLOOD in specflags)) && (!heart))
+		heart = new()
+		heart.Insert(C)
+
+	if((NOBREATH in specflags) && lungs)
+		lungs.Remove(C)
+		qdel(lungs)
+	else if((!(NOBREATH in specflags)) && (!lungs))
+		lungs = new()
+		lungs.Insert(C)
+
+	if((NOHUNGER in specflags) && appendix)
+		appendix.Remove(C)
+		qdel(appendix)
+	else if((!(NOHUNGER in specflags)) && (!appendix))
+		appendix = new()
+		appendix.Insert(C)
+
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
@@ -472,7 +498,13 @@
 	H.apply_overlay(BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
-	return
+	if(NOBREATH in specflags)
+		H.setOxyLoss(0)
+		H.losebreath = 0
+
+		var/takes_crit_damage = (!(NOCRITDAMAGE in specflags))
+		if((H.health < config.health_threshold_crit) && takes_crit_damage)
+			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -885,6 +917,10 @@
 //////////////////
 
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
+
+	CHECK_DNA_AND_SPECIES(M)
+	CHECK_DNA_AND_SPECIES(H)
+
 	if(!istype(M)) //sanity check for drones.
 		return
 	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
@@ -902,7 +938,17 @@
 					add_logs(M, H, "shaked")
 				return 1
 			else
-				M.do_cpr(H)
+				var/we_breathe = (!(NOBREATH in M.dna.species.specflags))
+				var/we_lung = M.getorganslot("lungs")
+
+				if(we_breathe && we_lung)
+					M.do_cpr(H)
+				else if(we_breathe && !we_lung)
+					M << "<span class='warning'>You have no lungs to breathe \
+						with, so cannot peform CPR.</span>"
+				else
+					M << "<span class='notice'>You do not breathe, so \
+						cannot perform CPR.</span>"
 
 		if("grab")
 			if(attacker_style && attacker_style.grab_act(M,H))
@@ -1155,7 +1201,8 @@
 /////////////
 
 /datum/species/proc/breathe(mob/living/carbon/human/H)
-	return
+	if(NOBREATH in specflags)
+		return TRUE
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
@@ -1167,16 +1214,13 @@
 		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
 		if(H.health >= config.health_threshold_crit)
-			if(NOBREATH in specflags)
-				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			if(!lungs)
 				H.adjustOxyLoss(1)
-			H.failed_last_breath = 1
-		else
+		else if(!(NOCRITDAMAGE in specflags))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-			H.failed_last_breath = 1
 
+		H.failed_last_breath = 1
 		H.throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0
