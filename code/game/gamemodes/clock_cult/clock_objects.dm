@@ -1247,7 +1247,7 @@
 	for(var/obj/structure/clockwork/C in range(5, src))
 		if(C.health == C.max_health)
 			continue
-		C.health = min(C.health += 10, C.max_health)
+		C.health = min(C.health + 10, C.max_health)
 		if(uses_alloy)
 			stored_alloy = max(0, stored_alloy - 1)
 
