@@ -5,8 +5,8 @@
 */
 
 /mob/living/simple_animal/hostile/wwii
-	name = "World War II Reenactor"
-	desc = "A VERY enthusiastic WWII reenactor."
+	name = "New Wehrmacht Soldier"
+	desc = "A soldier of the New Wehrmacht, a combined syndicate of old-Earth fascist ideals."
 	icon_state = "nsoldier"
 	icon_living = "nsoldier"
 	speak_chance = 0
@@ -44,7 +44,7 @@
 	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/wwii/melee
-	name = "Hulking World War II Reenactor"
+	name = "Hulking New Wehrmacht Soldier"
 	icon_state = "nsoldierbuff"
 	icon_living = "nsoldierbuff"
 	stat_attack = 0
@@ -57,13 +57,13 @@
 	melee_damage_upper = 30
 	environment_smash = 2
 	attacktext = "slams"
-	deathmessage = "The Reenactor's body collapses in on itself from the strain!"
+	deathmessage = "The New Wehrmacht's body collapses in on itself from the strain!"
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/wwii/melee/AttackingTarget()
 	..()
 	if(iscarbon(target))
-		var/mob/living/carbon/C = target
+		var/mob/living/C = target
 		if(prob(40))
 			C.Weaken(3)
 			C.adjustBruteLoss(10)
@@ -71,10 +71,9 @@
 					"<span class='userdanger'>\The [src] smashes you into the ground!</span>")
 			src.say(pick("RAAAAAGGHHHH!!!","AAAARRRGGHHHH!!!","RRRAAUUUGGHH!!!"))
 
-
 /mob/living/simple_animal/hostile/wwii/bomber
-	name = "Mini-Führer"
-	desc = "A small, robotic recreation of the Führer himself; it seems like he wants to tell you something."
+	name = "Porta-Bomb"
+	desc = "A small robotic figure designed as a front-line bomber, meant to strike fear into opposing groups."
 	icon_state = "miniheil"
 	icon_living = "miniheil"
 	speed = 1
@@ -84,7 +83,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 7
 	attacktext = "heils"
-	deathmessage = "The Mini-Führer explodes!"
+	deathmessage = "The Porta-Bomb explodes!"
 	loot = list(/obj/effect/gibspawner/robot)
 
 /mob/living/simple_animal/hostile/wwii/bomber/AttackingTarget()
@@ -93,9 +92,87 @@
 		var/mob/living/carbon/C = target
 		if(prob(90))
 			C.Weaken(2)
-			src.say("HEIL HITLER!")
+			src.say("HEIL!")
 			explosion(src, 0, 0, 2, 3, 2)
 			src.gib()
+
+/*
+ *Mecha Hitler
+ */
+
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/roboheil //hitler's head in a jar with a spider walker sort of thing
+	name = "Cyborg Hitler"
+	icon_state = "roboheil"
+	icon_living = "roboheil"
+	desc = "A horrifying mixture of scientific advancement and fasicst ideals. Freedom at its very core is in danger as long as this mechanical menace lives."
+	maxHealth = 500
+	health = 500
+	faction = list("german")
+	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	deathmessage = "Mecha Hitler's body activates its self-destruct function!"
+	loot = list(/obj/effect/gibspawner/robot, /mob/living/simple_animal/hostile/wwii/brain)
+	wanted_objects = list()
+	search_objects = 0
+	spawn_mecha_type = /obj/mecha/combat/marauder/mauler/roboh
+
+/mob/living/simple_animal/hostile/wwii/brain
+	name = "Hitler's Head in a Jar"
+	icon_state = "robobrain"
+	icon_living = "robobrain"
+	desc = "Don't let it get away!"
+	loot = list(/obj/effect/gibspawner/robot)
+	maxHealth = 25
+	health = 25
+
+
+/*
+ *Mecha Hitler's Mech
+ */
+
+/obj/mecha/combat/marauder/mauler/roboh
+	name = "\improper Mecha-Hitler"
+	desc = "A heavily modified marauder mech with reinforced reflective plating."
+	icon_state = "mauler"
+	health = 4000
+	deflect_chance = 40
+	damage_absorption = list("brute"=0.6,"fire"=0.3,"bullet"=0.7,"laser"=0.4,"energy"=0.5,"bomb"=0.5)
+	force = 75
+	operation_req_access = list(access_syndicate)
+	wreckage = /obj/structure/mecha_wreckage/mauler
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/tier2
+	name = "\improper SRM-16 missile rack"
+	desc = "A modified version of the SMR-8, equipped with an additional 8 racks and a more powerful missile."
+	icon_state = "mecha_missilerack"
+	projectile = /obj/item/missile/tier2
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 16
+	projectile_energy_cost = 1000
+	equip_cooldown = 60
+
+/obj/item/missile/tier2
+	throwforce = 25
+
+/obj/item/missile/tier2/throw_impact(atom/hit_atom)
+	if(primed)
+		explosion(hit_atom, 0, 0, 4, 6, 3)
+		qdel(src)
+	else
+		..()
+
+
+/obj/mecha/combat/marauder/mauler/roboh/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/tier2
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	ME.attach(src)
+	return
 
 /*
 -YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-

@@ -183,17 +183,17 @@
 	suffix = "lavaland_surface_survivalpod.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/wwiioutpost
-	name = "Strange Outpost"
+/datum/map_template/ruin/lavaland/wwiibase
+	name = "Strange Base"
 	id = "nazi"
-	description = "The ruins of an outpost, skeletons and empty shell casings litter the interior of \
-		the structure. Some of these uniforms look awfully strange.."
-	suffix = "lavaland_surface_wwiioutpost.dmm"
-	cost = 20
+	description = "A super-massive complex, heavily fortified and guarded by an organization of old-old-Earth \
+		fascists. You aren't sure whats exactly inside, but theres probably a reason they built it in the middle of a hellscape."
+	suffix = "lavaland_surface_wwiibase.dmm"
+	cost = 25
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/tomb
-	name = "Strange Outpost"
+	name = "Strange Tomb"
 	id = "tomb"
 	description = "A strange tomb, housing the dead of whatever strange civilization \
 		lived here before. You swear you hear rattling coming from the inside."
