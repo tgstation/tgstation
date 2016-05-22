@@ -204,7 +204,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
-		newmeat.name = sourcename + newmeat.name
+		newmeat.name = "[sourcename] [newmeat.name]"
 		newmeat.subjectname = sourcename
 		if(sourcejob)
 			newmeat.subjectjob = sourcejob
@@ -230,7 +230,7 @@
 			skin.throw_at_fast(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced*3)
 				var/turf/gibturf = pick(nearby_turfs)
-				if (!gibturf.density && src in viewers(gibturf))
+				if (!gibturf.density && src in view(gibturf))
 					new gibtype(gibturf,i)
 
 		pixel_x = initial(pixel_x) //return to its spot after shaking

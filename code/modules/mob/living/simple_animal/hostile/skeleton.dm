@@ -30,7 +30,7 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
 	layer = MOB_LAYER - 0.1
-	deathmessage = "The skeleton collaspes into a pile of bones!"
+	deathmessage = "collapses into a pile of bones!"
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)
 
@@ -46,7 +46,7 @@
 	gold_core_spawnable = 0
 	melee_damage_lower = 17
 	melee_damage_upper = 20
-	deathmessage = "The skeleton collaspes into a pile of bones, its gear falling to the floor!"
+	deathmessage = "collapses into a pile of bones, its gear falling to the floor!"
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/weapon/twohanded/spear,
 				/obj/item/clothing/shoes/winterboots,
@@ -69,7 +69,7 @@
 	force_threshold = 10 //trying to simulate actually having armor
 	melee_damage_lower = 25
 	melee_damage_upper = 30
-	deathmessage = "The templar knight collaspes into a pile of bones, its gear clanging as it hits the ground!"
+	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/clothing/suit/armor/riot/knight/templar,
 				/obj/item/clothing/head/helmet/knight/templar,

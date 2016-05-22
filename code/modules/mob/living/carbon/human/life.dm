@@ -305,13 +305,25 @@
 					clear_alert("embeddedobject")
 
 /mob/living/carbon/human/proc/handle_heart()
-	if(!heart_attack)
-		return
-	else
-		if(losebreath < 3)
-			losebreath += 2
-		adjustOxyLoss(5)
-		adjustBruteLoss(1)
+	CHECK_DNA_AND_SPECIES(src)
+	var/needs_heart = (!(NOBLOOD in dna.species.specflags))
+	var/we_breath = (!(NOBREATH in dna.species.specflags))
+
+	if(heart_attack)
+		if(!needs_heart)
+			heart_attack = FALSE
+		else if(we_breath)
+			if(losebreath < 3)
+				losebreath += 2
+			adjustOxyLoss(5)
+			adjustBruteLoss(1)
+		else
+			// even though we don't require oxygen, our blood still needs
+			// circulation, and without it, our tissues die and start
+			// gaining toxins
+			adjustBruteLoss(3)
+			if(src.reagents)
+				src.reagents.add_reagent("toxin", 2)
 
 /*
 Alcohol Poisoning Chart
