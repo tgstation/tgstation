@@ -1245,9 +1245,9 @@
 		if(uses_alloy)
 			stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
 	for(var/obj/structure/clockwork/C in range(5, src))
-		if(C.health == C.maxHealth)
+		if(C.health == C.max_health)
 			continue
-		C.health = min(C.health += 10, C.maxHealth)
+		C.health = min(C.health += 10, C.max_health)
 		if(uses_alloy)
 			stored_alloy = max(0, stored_alloy - 1)
 

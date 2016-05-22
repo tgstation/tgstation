@@ -36,7 +36,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		slab.busy = "Invocation ([name]) in progress"
 		if(recital() && check_special_requirements())
 			slab.busy = null
-			if(scripture_effects() && check_special_requirements && (!ratvar_awakens && !slab.no_cost))
+			if(scripture_effects() && check_special_requirements() && (!ratvar_awakens && !slab.no_cost))
 				for(var/i in required_components)
 					if(tier <= SCRIPTURE_DRIVER || consumed_component_override)
 						if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
