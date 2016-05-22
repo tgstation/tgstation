@@ -427,4 +427,9 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Shuttle return values
 #define SHUTTLE_ALREADY_DOCKED 7
 
+
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
+
+// Evil narsie colour
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
