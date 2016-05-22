@@ -461,7 +461,7 @@
 		return 0
 	battery.charge = max(0, battery.charge - 3)
 
-/obj/effect/landmark/spacepod/random
+/obj/effect/landmark/spacepod/random //One of these will be chosen from across all Z levels to receive a pod in gameticker.dm
 	name = "spacepod spawner"
 	invisibility = 101
 	icon = 'icons/mob/screen1.dmi'
@@ -470,6 +470,18 @@
 
 /obj/effect/landmark/spacepod/random/New()
 	..()
+
+/obj/effect/landmark/spacepod/guaranteed //We're not messing around: we want a guaranteed pod!
+	name = "guaranteed spacepod spawner"
+	invisibility = 101
+	anchored = 1
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x"
+
+/obj/effect/landmark/spacepod/guaranteed/New()
+	sleep(10)
+	new /obj/spacepod/random(get_turf(src))
+	qdel(src)
 
 #undef DAMAGE
 #undef FIRE
