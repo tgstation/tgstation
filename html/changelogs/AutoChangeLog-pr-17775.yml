@@ -1,0 +1,4 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "Glass tables now break when people are pushed onto them."
