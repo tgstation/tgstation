@@ -883,6 +883,10 @@
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
+/mob/living/simple_animal/hostile/asteroid/gutlunch/New()
+	udder = new()
+	..()
+
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()
 	qdel(udder)
 	udder = null
