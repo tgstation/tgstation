@@ -655,7 +655,7 @@ Thanks.
 		stop_pulling()
 		. = ..()
 
-	if ((s_active && ( find_holder(s_active) != src ) ))
+	if ((s_active && !is_holder_of(src, s_active)))
 		s_active.close(src)
 
 	if(update_slimes)

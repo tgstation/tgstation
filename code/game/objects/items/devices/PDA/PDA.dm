@@ -1888,7 +1888,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(src.loc && isliving(src.loc))
 		L = src.loc
 	else
-		L = get(src, /mob/living/silicon)
+		L = get_holder_of_type(src, /mob/living/silicon)
 
 	if(L)
 		to_chat(L, "[bicon(src)] <b>Money transfer from [creditor_name] ([arbitrary_sum]$) </b>[id ? "" : "Insert your ID in the PDA to receive the funds."]")
@@ -2020,7 +2020,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			L = P.loc
 		//Maybe they are a pAI!
 		else
-			L = get(P, /mob/living/silicon)
+			L = get_holder_of_type(P, /mob/living/silicon)
 
 		if(L)
 			L.show_message("[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)", 2)

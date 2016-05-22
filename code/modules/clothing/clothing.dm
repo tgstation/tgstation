@@ -472,7 +472,7 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/AltClick()
-	if(find_holder_of_type(src, /mob) == usr)
+	if(is_holder_of(usr, src))
 		set_sensors(usr)
 
 /obj/item/clothing/under/verb/removetie()

@@ -333,7 +333,7 @@ var/list/department_radio_keys = list(
 					var/turf/T = get_turf(src)
 					log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ancient chat: [html_encode(speech.message)]")
 					for(var/thestone in stones)
-						var/mob/M = find_holder_of_type(thestone,/mob)
+						var/mob/M = get_holder_of_type(thestone,/mob)
 						if(M)
 							handle_render(M,themessage,src)
 					for(var/M in dead_mob_list)
@@ -407,7 +407,7 @@ var/list/department_radio_keys = list(
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
-		var/image/speech_bubble = image('icons/mob/talk.dmi', find_holder(src), "h[bubble_type][say_test(message)]",MOB_LAYER+1)
+		var/image/speech_bubble = image('icons/mob/talk.dmi', get_holder_at_turf_level(src), "h[bubble_type][say_test(message)]",MOB_LAYER+1)
 		speech_bubble.appearance_flags = RESET_COLOR
 		flick_overlay(speech_bubble, speech_bubble_recipients, 30)
 

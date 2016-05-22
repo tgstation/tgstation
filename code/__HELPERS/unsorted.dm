@@ -523,14 +523,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/key_name_admin(var/whom, var/include_name = 1)
 	return key_name(whom, 1, include_name)
 
-// Returns the atom sitting on the turf.
-// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-/proc/get_atom_on_turf(var/atom/movable/M)
-	var/atom/loc = M
-	while(loc && loc.loc && !istype(loc.loc, /turf/))
-		loc = loc.loc
-	return loc
-
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
 // this will be called when the close-button of a window is pressed.
@@ -586,8 +578,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
-
-
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
 		return 0
@@ -611,8 +601,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // note range is non-pythagorean
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
-
-
 	var/x = A.x
 	var/y = A.y
 	if(direction & NORTH)
@@ -1095,36 +1083,56 @@ proc/get_mob_with_client_list()
 		else
 			return zone
 
+/*
+	get_turf(): Returns the turf that contains the atom.
+	Example: A fork inside a box inside a locker will return the turf the locker is standing on.
+	The weird for loop with an empty statement is apparently the fastest way possible to do this.
+*/
 /proc/get_turf(const/atom/O)
-	if (isnull(O) || isarea(O) || !istype(O))
+	if(!istype(O) || isarea(O))
 		return
 	var/atom/A
 	for(A=O, A && !isturf(A), A=A.loc);  // semicolon is for the empty statement
 	return A
 
-/proc/get(atom/loc, type)
-	while(loc)
-		if(istype(loc, type))
-			return loc
-		loc = loc.loc //<wwjnc> WE ARE THE KNIGHTS WHO SAY LOC
+/*
+	get_holder_at_turf_level(): Similar to get_turf(), will return the "highest up" holder of this atom, excluding the turf.
+	Example: A fork inside a box inside a locker will return the locker. Essentially, get_just_before_turf().
+*/
+/proc/get_holder_at_turf_level(const/atom/movable/O)
+	if(!istype(O)) //atom/movable does not include areas
+		return
+	var/atom/A
+	for(A=O, A && !isturf(A.loc), A=A.loc);  // semicolon is for the empty statement
+	return A
+
+/*
+	get_holder_of_type(): Returns the FIRST holder of type specified. NOT the "highest up".
+	Example: Call find_holder_of_type(A, /mob) to find the first mob holder of A.
+*/
+/proc/get_holder_of_type(const/atom/movable/O, type)
+	ASSERT(istype(O))
+	var/atom/A = O
+	while(A && !isturf(A))
+		if(istype(A, type))
+			return A
+		A = A.loc
 	return null
 
-/proc/find_holder(atom/O) //aka get_just_before_turf
+/*
+	is_holder_of(): Returns 1 if A is a holder of B, meaning, A is B.loc or B.loc.loc or B.loc.loc.loc etc.
+	This is essentially the same as calling (locate(B) in A), but a little clearer as to what you're doing, and locate() has been known to bug out or be extremely slow in the past.
+*/
+/proc/is_holder_of(const/atom/movable/A, const/atom/movable/B)
+	ASSERT(istype(A) && istype(B))
+	var/atom/O = B
 	while(O && !isturf(O))
-		if(isturf(O.loc))
-			return O
+		if(O == A)
+			return 1
 		O = O.loc
-	return null
-
-/proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
-	var/atom/location = reference.loc //ie /mob to find the first mob holding it
-	while(!istype(location,/turf) && !istype(location,null))
-		if(istype(location,typepath))
-			return location
-		location = location.loc
 	return 0
 
-/proc/is_in_airtight_object(var/atom/O) //Shitty version of find_holder
+/proc/is_in_airtight_object(var/atom/O) //Shitty version of get_holder
 	while(O && !isturf(O))
 		if(O.is_airtight())
 			return 1

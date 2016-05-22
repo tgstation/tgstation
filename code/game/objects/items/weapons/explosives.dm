@@ -110,7 +110,7 @@
 
 
 	if(!target)
-		target = get_atom_on_turf(src)
+		target = get_holder_at_turf_level(src)
 	if(!target)
 		target = src
 	if(location)

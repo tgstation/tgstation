@@ -26,7 +26,7 @@
 		var/area/my_area = get_area(T)
 
 		message += " in [formatJumpTo(T)]. (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
-		var/mob/M = get(A, /mob)
+		var/mob/M = get_holder_of_type(A, /mob)
 		if(M)
 			message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
 			log_game("[message_prefix] in [my_area.name] ([T.x],[T.y],[T.z]) - Carried by [M.real_name] ([M.key])")

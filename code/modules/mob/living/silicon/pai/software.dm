@@ -305,7 +305,7 @@
 						F = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(get_turf(src))
 					else
 						F = new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(get_turf(src))
-				var/mob/M = find_holder_of_type(src, /mob)
+				var/mob/M = get_holder_of_type(src, /mob)
 				if(M) M.put_in_hands(F)
 				playsound(get_turf(src.loc), 'sound/machines/foodsynth.ogg', 50, 1)
 		if("flashlight")

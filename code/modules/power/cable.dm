@@ -195,7 +195,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			message += {"in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>) (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"}
 
-			var/mob/M = get(A, /mob)
+			var/mob/M = get_holder_of_type(A, /mob) //Why is this here? The use already IS a mob...
 
 			if(M)
 				message += " - Cut By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"

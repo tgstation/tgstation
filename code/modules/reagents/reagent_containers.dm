@@ -60,7 +60,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 
 /obj/item/weapon/reagent_containers/AltClick()
-	if(find_holder_of_type(src, /mob) == usr && possible_transfer_amounts)
+	if(is_holder_of(usr, src) && possible_transfer_amounts)
 		set_APTFT()
 		return
 	return ..()

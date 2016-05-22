@@ -75,7 +75,7 @@
 		secure_radio_connections[channel_name] = add_radio(src, radiochannels[channel_name])
 
 /obj/item/device/radio/AltClick()
-	if(!usr.incapacitated() && find_holder_of_type(src, /mob/living) == usr)
+	if(!usr.incapacitated() && is_holder_of(usr, src))
 		attack_self(usr)
 
 /obj/item/device/radio/attack_self(mob/user as mob)

@@ -334,7 +334,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
-	var/mob/living/M = find_holder_of_type(src,/mob/living)
+	var/mob/living/M = get_holder_of_type(src,/mob/living)
 	if(isliving(loc))
 		M.IgniteMob()
 	smoketime--
