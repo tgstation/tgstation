@@ -14,7 +14,7 @@ var/list/blob_overminds = list()
 
 	required_players = 15
 	required_players_secret = 25
-	restricted_jobs = list("Cyborg", "AI", "Mobile MMI")
+	restricted_jobs = list("Cyborg", "AI", "Mobile MMI", "Trader")
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
