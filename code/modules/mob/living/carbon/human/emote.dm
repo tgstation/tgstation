@@ -132,7 +132,7 @@
 				if(((dna.features["wings"] != "None") && !("wings" in dna.species.mutant_bodyparts)))
 					OpenWings()
 					spawn(20)
-					CloseWings()
+						CloseWings()
 
 		if ("wings")
 			if (!src.restrained())
@@ -142,6 +142,8 @@
 				else if(dna && dna.species &&((dna.features["wings"] != "None") && ("wingsopen" in dna.species.mutant_bodyparts)))
 					message = "<B>[src]</B> closes \his wings."
 					CloseWings()
+				else
+					src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("gasp","gasps")
 			if (miming)
@@ -340,7 +342,7 @@
 				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wings, wag, yawn"
 
 		else
 			..(act)

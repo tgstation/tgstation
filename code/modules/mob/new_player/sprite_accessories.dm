@@ -1293,6 +1293,9 @@
 	name = "Angeler"
 	icon_state = "angler"
 
+/datum/sprite_accessory/ears
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/none
 	name = "None"
 	icon_state = "none"
