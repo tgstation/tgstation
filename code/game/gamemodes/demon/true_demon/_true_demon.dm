@@ -128,11 +128,6 @@
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/carbon/true_devil/ex_act(severity)
-	if(ascended)
-		return 0
-	return ..()
-
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
 		return 0
@@ -195,17 +190,16 @@
 	return 1
 
 /mob/living/carbon/true_devil/ex_act(severity, ex_target)
-	if(ascended)
-		return ..()
-	var/b_loss
-	switch (severity)
-		if (1)
-			b_loss = 500
-		if (2)
-			b_loss = 150
-		if(3)
-			b_loss = 30
-	if(has_bane(BANE_LIGHT))
-		b_loss *=2
-	adjustBruteLoss(b_loss)
+	if(!ascended)
+		var/b_loss
+		switch (severity)
+			if (1)
+				b_loss = 500
+			if (2)
+				b_loss = 150
+			if(3)
+				b_loss = 30
+		if(has_bane(BANE_LIGHT))
+			b_loss *=2
+		adjustBruteLoss(b_loss)
 	return ..()
