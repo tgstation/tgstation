@@ -6,6 +6,7 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 4
+	weather_immunities = list("lava","ash")
 	robust_searching = 1
 	stat_attack = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

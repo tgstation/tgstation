@@ -22,7 +22,9 @@
 
 
 /datum/weather/floor_is_lava/storm_act(mob/living/L)
-	..()
+	if(immunity_type in L.weather_immunities)
+		return
+
 	var/turf/F = get_turf(L)
 	for(var/obj/structure/O in F.contents)
 		if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
@@ -90,7 +92,9 @@
 	wind_down_message = "The ash fall starts to trail off."
 
 /datum/weather/ash_storm/storm_act(mob/living/L)
-	..()
+	if(immunity_type in L.weather_immunities)
+		return
+
 	if(istype(L.loc, /obj/mecha))
 		return
 	if(ishuman(L))
