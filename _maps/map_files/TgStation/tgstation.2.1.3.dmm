@@ -4384,19 +4384,8 @@
 	},
 /area/security/warden)
 "aih" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/warden)
+/turf/closed/wall/r_wall,
+/area/medical/morgue)
 "aii" = (
 /obj/structure/grille,
 /obj/structure/disposalpipe/segment{
@@ -4566,24 +4555,14 @@
 	},
 /area/security/main)
 "aiw" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Security Maintenance";
-	req_access_txt = "63"
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/medical/genetics)
 "aix" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4777,20 +4756,25 @@
 /turf/open/floor/plating,
 /area/security/warden)
 "aiO" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access = null;
-	req_access_txt = "63"
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/security/main)
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating,
+/area/medical/genetics)
 "aiP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -27292,7 +27276,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bfF" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/chemistry)
 "bfG" = (
 /obj/structure/grille,
@@ -27316,7 +27300,7 @@
 	},
 /area/medical/medbay)
 "bfK" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/security/checkpoint/medical)
 "bfL" = (
 /turf/closed/wall,
@@ -30951,7 +30935,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/morgue)
 "bmX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -30961,7 +30945,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/morgue)
 "bmZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -31554,12 +31538,12 @@
 /area/medical/chemistry)
 "boe" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/medical{
 	id_tag = "MedbayFoyer";
-	name = "Medbay";
+	name = "Medbay Reception";
 	req_access_txt = "5"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -31571,16 +31555,24 @@
 "bog" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
 /turf/open/floor/plating,
-/area/medical/medbay)
+/area/medical/genetics)
 "boh" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Reception";
 	req_access_txt = "5"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -32271,7 +32263,7 @@
 /area/medical/medbay)
 "bpw" = (
 /obj/machinery/status_display,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/medbay)
 "bpx" = (
 /obj/structure/cable{
@@ -32337,6 +32329,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -32344,6 +32341,10 @@
 "bpE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
 /turf/open/floor/plating,
 /area/medical/genetics)
 "bpF" = (
@@ -32421,6 +32422,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bpN" = (
@@ -32921,12 +32926,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bqM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/medical/medbay)
 "bqN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33629,12 +33632,10 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads)
 "brV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/medical/medbay)
 "brW" = (
 /obj/structure/cable{
@@ -34279,6 +34280,10 @@
 /area/medical/medbay)
 "btg" = (
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Recovery";
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -34889,6 +34894,12 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -34924,6 +34935,15 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/open/floor/plating,
 /area/medical/genetics)
@@ -35406,10 +35426,7 @@
 	name = "Research Division"
 	})
 "bvd" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/sleeper)
 "bve" = (
 /obj/structure/disposalpipe/segment{
@@ -35472,7 +35489,7 @@
 /area/medical/sleeper)
 "bvi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/sleeper)
 "bvj" = (
 /turf/closed/wall,
@@ -35492,9 +35509,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/closed/wall/r_wall,
 /area/medical/sleeper)
 "bvm" = (
 /obj/machinery/hologram/holopad,
@@ -36172,7 +36187,7 @@
 /area/medical/sleeper)
 "bwG" = (
 /obj/structure/sign/nosmoking_2,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/sleeper)
 "bwH" = (
 /obj/structure/table,
@@ -37475,10 +37490,9 @@
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "bzc" = (
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = null;
-	name = "Recovery Room";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Recovery";
+	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -38894,7 +38908,7 @@
 	},
 /area/shuttle/syndicate)
 "bBN" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/cmo)
 "bBO" = (
 /obj/machinery/computer/med_data,
@@ -39422,13 +39436,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/sleeper)
 "bCQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/medical/sleeper)
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Recovery";
+	req_access_txt = "5"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay)
 "bCR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -39992,13 +40011,12 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bDW" = (
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = null;
-	name = "Medbay Storage";
-	req_access_txt = "45"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Storage";
+	req_access_txt = "45"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -40075,13 +40093,12 @@
 	},
 /area/toxins/storage)
 "bEd" = (
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = null;
-	name = "Medbay Storage";
-	req_access_txt = "45"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Storage";
+	req_access_txt = "45"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -41609,7 +41626,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/medical/cmo)
 "bHb" = (
 /obj/structure/disposalpipe/segment{
@@ -43768,11 +43785,19 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/closed/wall,
-/area/medical/medbay)
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/plating,
+/area/medical/genetics)
 "bKS" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -98401,18 +98426,18 @@ bfF
 bfF
 bqM
 brV
-bof
+bJE
 bwv
-bvj
-bvj
-bvj
-bvj
-bvj
-bvj
+bvd
+bvd
+bvd
+bvd
+bvd
+bvd
 bCB
 bCP
-bvj
 bvd
+bJC
 bKH
 bLK
 bMS
@@ -98658,9 +98683,9 @@ bnB
 bfF
 bqR
 brX
-bof
+bJE
 bwx
-bvj
+bvd
 bwB
 bxa
 byZ
@@ -98669,7 +98694,7 @@ bAX
 bCF
 bDB
 bFB
-bvd
+bJC
 bKJ
 bLR
 bMV
@@ -98926,7 +98951,7 @@ bAW
 bCE
 bFv
 bFz
-bvd
+bJC
 bKH
 bLK
 bMU
@@ -99183,7 +99208,7 @@ bBb
 cpG
 bDC
 bId
-bvd
+bJC
 bKH
 bLK
 bMX
@@ -99431,7 +99456,7 @@ bqS
 brY
 bwz
 bwy
-bvj
+bvd
 bza
 bxb
 bvh
@@ -99440,7 +99465,7 @@ bAY
 bCH
 bDR
 bIc
-bvd
+bJC
 bKH
 bLK
 bMW
@@ -99688,7 +99713,7 @@ bqV
 bEe
 bBL
 bwA
-bvj
+bvd
 bAl
 bAl
 bvh
@@ -99697,7 +99722,7 @@ bBc
 bCJ
 buk
 bFC
-bvd
+bJC
 bKH
 bLK
 bMZ
@@ -99943,18 +99968,18 @@ bfF
 bfF
 bqU
 bsq
-bvj
-bvj
-bvj
-bvj
-bvj
-bvj
-bvj
 bvd
+bvd
+bvd
+bvd
+bvd
+bvd
+bvd
+bJC
 bFu
-bvj
-bvj
 bvd
+bvd
+bJC
 bKH
 bLK
 bMY
@@ -100195,23 +100220,23 @@ bhh
 bhh
 bhh
 bmJ
-bof
+bJE
 bpu
 bqP
 bsy
 bEe
-bvh
+bvd
 bwC
 bxN
 bze
 bAp
-bvh
+bvd
 bCG
 bBd
 bFw
 bDD
 bFJ
-bvd
+bJC
 bKH
 bzs
 bRK
@@ -100468,7 +100493,7 @@ bDZ
 bCK
 bFy
 bFF
-bvd
+bJC
 bKH
 bzs
 bNa
@@ -100719,13 +100744,13 @@ buk
 bvm
 bDT
 buk
-bvh
+bvd
 bzU
 bBe
 bCS
 bDE
 bFK
-bvd
+bJC
 bKH
 bzs
 bNa
@@ -100966,22 +100991,22 @@ bhh
 bjV
 blj
 bmK
-bog
-bog
+bJE
+bJE
 bhh
 bsx
 bsr
-bvh
+bvd
 bwD
 bDR
 bDR
 bAq
-bvj
-bCQ
+bvd
+bvd
 bDW
 bCP
-bvj
-bvj
+bvd
+bvd
 bJC
 bKH
 bzs
@@ -101228,12 +101253,12 @@ bpw
 bhh
 bsx
 btX
-bvj
+bvd
 bwG
 bxR
 bxR
 bvj
-bvj
+bvd
 bzW
 bDZ
 bCT
@@ -101485,12 +101510,12 @@ bpv
 bhh
 bsx
 btV
-bvh
+bvd
 bwF
 bxQ
 bxQ
 bAr
-bvj
+bvd
 bzV
 bDZ
 bzf
@@ -101742,12 +101767,12 @@ bof
 bhh
 bsx
 btV
-bvj
+bvd
 bwI
 bxT
 bxQ
 bAt
-bvj
+bvd
 bCM
 bDZ
 bDR
@@ -101995,16 +102020,16 @@ bhi
 bfK
 bfK
 bfK
-bof
+bJE
 bhh
 bsx
 btV
-bvh
+bvd
 bwH
 bxS
 bzh
 bAs
-bvj
+bvd
 bCL
 bxO
 bDR
@@ -102256,12 +102281,12 @@ bpy
 bwz
 brg
 btZ
-bvj
+bvd
 bwI
 bxV
 bzj
 bAv
-bvj
+bvd
 bCO
 bDR
 bDR
@@ -102513,12 +102538,12 @@ bpx
 bpP
 brf
 bhh
-bvh
+bvd
 bwJ
 bxU
 bzi
 bAu
-bvj
+bvd
 bCN
 bEa
 bFA
@@ -102770,20 +102795,20 @@ bnH
 bqQ
 bsx
 bhh
-bvj
-bvj
+bvd
+bvd
 bxR
 bxR
-bvj
-bvj
-bCQ
+bvd
+bvd
+bvd
 bEd
-bof
-bof
-bof
 bJE
-bof
-bof
+bJE
+bJE
+bJE
+bJE
+bJE
 bNd
 bIJ
 bPo
@@ -103027,7 +103052,7 @@ bnF
 bqQ
 bsx
 bhh
-bfJ
+bCQ
 bhh
 bhh
 bhh
@@ -103279,12 +103304,12 @@ biz
 biz
 biz
 bmR
-bfL
+aih
 bol
 bqQ
 bsx
 bst
-bfJ
+bCQ
 bhh
 bhh
 bwK
@@ -103793,7 +103818,7 @@ biz
 biz
 biz
 bkR
-bfL
+aih
 boo
 bqQ
 bhg
@@ -104311,7 +104336,7 @@ bmY
 boq
 boq
 brj
-bpE
+aiw
 btk
 bum
 bvq
@@ -104568,7 +104593,7 @@ bmX
 bpE
 bpE
 bpE
-bpE
+aiO
 bti
 bul
 bvp
@@ -104825,8 +104850,8 @@ bmZ
 bpH
 bra
 bsK
-bpE
-bpE
+bog
+bKR
 buq
 bvt
 bye
@@ -104838,7 +104863,7 @@ bEi
 bDU
 bFO
 bBN
-bKR
+bqM
 bMc
 bNd
 bNd
