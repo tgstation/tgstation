@@ -1191,7 +1191,7 @@
 /obj/structure/clockwork/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
 	name = "mending motor"
 	desc = "A dark onyx prism, held in midair by spiraling tendrils of stone."
-	clockwork_desc = "A powerful prism that rapidly repairs nearby mechanical servants."
+	clockwork_desc = "A powerful prism that rapidly repairs nearby mechanical servants and clockwork structures."
 	icon_state = "mending_motor"
 	construction_value = 20
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
@@ -1244,6 +1244,13 @@
 		S.adjustFireLoss(-25)
 		if(uses_alloy)
 			stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
+	for(var/obj/structure/clockwork/C in range(5, src))
+		if(C.health == C.maxHealth)
+			continue
+		C.health = min(C.health += 10, C.maxHealth)
+		if(uses_alloy)
+			stored_alloy = max(0, stored_alloy - 1)
+
 
 /obj/structure/clockwork/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src)) //Unnecessary?

@@ -29,12 +29,26 @@
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.isOn())
-			user << "<span class='warning'>Your [WT.name]'s flame has no effect on [src]!</span>"
-		return 0
+		if(!WT.isOn())
+			return 0
+		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
+		if(!do_after(user, 120 / WT.toolspeed, target = src))
+			return 0
+		if(!WT.remove_fuel(1, user))
+			return 0
+		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
+		break_wall()
+		return 1
 	..()
 
-//Clockwork floor: Slowly heals conventional damage on nearby servants`````
+/turf/closed/wall/clockwork/break_wall()
+	new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
+	return(new /obj/structure/girder(src))
+
+/turf/closed/wall/clockwork/devastate_wall()
+	return break_wall()
+
+//Clockwork floor: Slowly heals conventional damage on nearby servants
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
@@ -60,8 +74,12 @@
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='warning'>[src]'s tiles are too tightly pressed to pry up!</span>"
-		return 0
+		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		if(!do_after(user, 70 / I.toolspeed, target = src))
+			return 0
+		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it in doing so!</span>")
+		make_plating()
+		return 1
 	..()
 
 //Function Call verb: Calls forth a Ratvarian spear.

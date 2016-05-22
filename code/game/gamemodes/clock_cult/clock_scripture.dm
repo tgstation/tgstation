@@ -34,9 +34,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && check_special_requirements())
 		slab.busy = "Invocation ([name]) in progress"
-		if(recital())
+		if(recital() && check_special_requirements())
 			slab.busy = null
-			if(scripture_effects() && (!ratvar_awakens && !slab.no_cost))
+			if(scripture_effects() && check_special_requirements && (!ratvar_awakens && !slab.no_cost))
 				for(var/i in required_components)
 					if(tier <= SCRIPTURE_DRIVER || consumed_component_override)
 						if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
@@ -73,7 +73,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			return 0
 	return 1
 
-/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures
+/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked three times during invocation
 	return 1
 
 /datum/clockwork_scripture/proc/recital() //The process of speaking the words
@@ -766,9 +766,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/mending_motor //Mending Motor: Creates a prism that will quickly heal mechanical servants and consume replicant alloy.
+/datum/clockwork_scripture/create_object/mending_motor //Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume replicant alloy.
 	name = "Mending Motor"
-	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures and converted cyborgs. Requires replicant alloy to function."
+	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy to function."
 	invocations = list("Znl guvf boryvfx...", "...zraq bhe qragf naq fpengpurf!")
 	channel_time = 60
 	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 3)
@@ -820,9 +820,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return 1
 
 /datum/clockwork_scripture/invoke_nezbere/scripture_effects()
-	world << "<font color='#BE8700' size=5><b>\"V urrq lbhe pnyy, punz'cvbaf. Znl lbhe negvs-npgf oevat ehva hcba gur urnguraf gung bccbfr bhe znfgre!\"</b></font>\n\
-	<span class='userdanger'>The air around you crackles. Your hair stands on end. A great force has passed through this plane of existence.</span>"
-	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
+	var/obj/effect/clockwork/general_marker/nezbere/N = new(get_turf(invoker))
+	N.visible_message("<span class='heavy_brass'>\"V urrq lbhe pnyy, punz'cvbaf. Znl lbhe negvs-npgf oevat ehva hcba gur urnguraf gung bccbfr bhe znfgre!\"</span>")
 	clockwork_generals_invoked["nezbere"] = TRUE
 	for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
 		W.damage_per_tick *= 3
@@ -943,7 +942,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	new/obj/effect/clockwork/general_marker/inathneq(get_turf(invoker))
 	clockwork_generals_invoked["inath-neq"] = TRUE
 	if(invoker.real_name == "Lucio")
-		invoker.say("Aww, let's break it DOWN!")
+		invoker.say("Aww, let's break it DOWN!!")
 	var/list/affected_servants = list()
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
