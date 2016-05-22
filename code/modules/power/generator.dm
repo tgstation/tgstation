@@ -20,6 +20,7 @@
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 	var/tmp/datum/html_interface/nanotrasen/interface
+	var/tmp/on_pipenet_tick_key
 
 /obj/machinery/power/generator/New()
 	..()
@@ -48,6 +49,7 @@
 	interface = new(src, name, 450, 410, head)
 
 	html_machines += src
+	on_pipenet_tick_key = global.on_pipenet_tick.Add(src, "pipenet_process")
 
 	init_ui()
 
@@ -65,6 +67,7 @@
 	interface = null
 
 	html_machines -= src
+	global.on_pipenet_tick.Remove(on_pipenet_tick_key)
 
 /obj/machinery/power/generator/proc/init_ui()
 	interface.updateLayout({"
@@ -260,7 +263,8 @@
 	if(lastgenlev != 0)
 		overlays += "teg-op[lastgenlev]"
 
-/obj/machinery/power/generator/process()
+// We actually tick power gen on the pipenet process to make sure we're synced with pipenet updates.
+/obj/machinery/power/generator/proc/pipenet_process(var/list/event_args, var/datum/controller/process/pipenet/owner)
 	if(!operable())
 		return
 
@@ -295,8 +299,6 @@
 	if(circ2.network2)
 		circ2.network2.update = TRUE
 
-	add_avail(last_gen)
-
 	//Update icon overlays and power usage only if displayed level has changed.
 	var/genlev = Clamp(round(11 * last_gen / max_power), 0, 11)
 
@@ -308,6 +310,10 @@
 		update_icon()
 
 	updateUsrDialog()
+
+/obj/machinery/power/generator/process()
+	if (operable())
+		add_avail(last_gen)
 
 /obj/machinery/power/generator/attack_ai(mob/user)
 	return attack_hand(user)
