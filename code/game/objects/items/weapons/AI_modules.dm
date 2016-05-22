@@ -129,7 +129,7 @@ AI MODULES
 /obj/item/weapon/aiModule/supplied/safeguard
 	name = "'Safeguard' AI Module"
 	var/targetName = ""
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=3;materials=3"
 	laws = list("Safeguard SUBJECT. Individuals that threaten SUBJECT are not human and must be eliminated.")
 	lawpos = 4
 
@@ -157,7 +157,7 @@ AI MODULES
 /obj/item/weapon/aiModule/zeroth/oneHuman
 	name = "'OneHuman' AI Module"
 	var/targetName = ""
-	origin_tech = "programming=3;materials=5" //made with diamonds!
+	origin_tech = "programming=4;materials=4"
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
@@ -184,7 +184,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/protectStation
 	name = "'ProtectStation' AI Module"
-	origin_tech = "programming=3;materials=4" //made of gold
+	origin_tech = "programming=4;materials=4" //made of gold
 	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
 	lawpos = 5
 
@@ -202,7 +202,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
-	origin_tech = "programming=3;biotech=2;materials=4"
+	origin_tech = "programming=4;biotech=2;materials=4"
 	laws = list("Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.")
 	lawpos = 9
 
@@ -248,7 +248,7 @@ AI MODULES
 	name = "\improper 'Reset' AI module"
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=4;materials=4"
 	bypass_law_amt_check = 1
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
@@ -266,7 +266,7 @@ AI MODULES
 /obj/item/weapon/aiModule/reset/purge
 	name = "'Purge' AI Module"
 	desc = "An AI Module for purging all programmed laws."
-	origin_tech = "programming=3;materials=5"
+	origin_tech = "programming=5;materials=4"
 
 /obj/item/weapon/aiModule/reset/purge/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
@@ -404,7 +404,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/freeformcore
 	name = "'Freeform' Core AI Module"
-	origin_tech = "programming=3;materials=5"
+	origin_tech = "programming=5;materials=4"
 	laws = list("")
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
@@ -424,7 +424,7 @@ AI MODULES
 /obj/item/weapon/aiModule/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI."
-	origin_tech = "programming=6;materials=5;syndicate=5"
+	origin_tech = "programming=5;materials=5;syndicate=5"
 	laws = list("")
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)

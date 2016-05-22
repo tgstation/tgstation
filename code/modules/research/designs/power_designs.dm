@@ -72,7 +72,7 @@
 	name = "Machine Design (PACMAN-type Generator Board)"
 	desc = "The circuit board that for a PACMAN-type portable generator."
 	id = "pacman"
-	req_tech = list("programming" = 3, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
+	req_tech = list("programming" = 2, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/machine/pacman
@@ -92,7 +92,7 @@
 	name = "Machine Design (MRSPACMAN-type Generator Board)"
 	desc = "The circuit board that for a MRSPACMAN-type portable generator."
 	id = "mrspacman"
-	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5)
+	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5, "plasmatech" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/machine/pacman/mrs

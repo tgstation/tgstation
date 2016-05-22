@@ -30,7 +30,7 @@
 /obj/item/weapon/circuitboard/machine/ore_redemption
 	name = "circuit board (Ore Redemption)"
 	build_path = /obj/machinery/mineral/ore_redemption
-	origin_tech = "programming=1;engineering=2"
+	origin_tech = "programming=2;engineering=2;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
@@ -333,7 +333,7 @@
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
 	name = "circuit board (Mining Equipment Vendor)"
 	build_path = /obj/machinery/mineral/equipment_vendor
-	origin_tech = "programming=1;engineering=2"
+	origin_tech = "programming=1;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)

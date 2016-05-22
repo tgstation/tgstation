@@ -257,42 +257,42 @@
 	name = "hyperwave filter"
 	icon_state = "hyperwave_filter"
 	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
-	origin_tech = "programming=3;magnets=3"
+	origin_tech = "programming=2;magnets=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/amplifier
 	name = "subspace amplifier"
 	icon_state = "subspace_amplifier"
 	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
-	origin_tech = "programming=3;magnets=4;materials=3;bluespace=2"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/treatment
 	name = "subspace treatment disk"
 	icon_state = "treatment_disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
-	origin_tech = "programming=2;magnets=3;materials=2;bluespace=3"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/analyzer
 	name = "subspace wavelength analyzer"
 	icon_state = "wavelength_analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-	origin_tech = "programming=3;magnets=4;materials=2;bluespace=3"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/crystal
 	name = "ansible crystal"
 	icon_state = "ansible_crystal"
 	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
-	origin_tech = "magnets=2;materials=2;bluespace=3;plasmatech=3"
+	origin_tech = "magnets=2;materials=2;bluespace=2;plasmatech=2"
 	materials = list(MAT_GLASS=50)
 
 /obj/item/weapon/stock_parts/subspace/transmitter
 	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
-	origin_tech = "magnets=3;materials=4;bluespace=4"
+	origin_tech = "magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=50)
 
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
