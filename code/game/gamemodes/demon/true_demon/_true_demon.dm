@@ -201,10 +201,8 @@
 	switch (severity)
 		if (1)
 			b_loss = 500
-			flash_eyes()
 		if (2)
 			b_loss = 150
-			flash_eyes()
 		if(3)
 			b_loss = 30
 	if(has_bane(BANE_LIGHT))
