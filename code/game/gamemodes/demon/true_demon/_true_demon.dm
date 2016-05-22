@@ -99,10 +99,9 @@
 	return 666
 
 /mob/living/carbon/true_devil/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
-	if(mind && mind.devilinfo.bane == BANE_LIGHT)
-		if(has_bane(BANE_LIGHT))
-			mind.disrupt_spells(-500)
-			return ..() //flashes don't stop devils UNLESS it's their bane.
+	if(mind && has_bane(BANE_LIGHT))
+		mind.disrupt_spells(-500)
+		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 
 /mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
@@ -194,3 +193,21 @@
 
 /mob/living/carbon/true_devil/is_literate()
 	return 1
+
+/mob/living/carbon/true_devil/ex_act(severity, ex_target)
+	if(ascended)
+		return ..()
+	var/b_loss
+	switch (severity)
+		if (1)
+			b_loss = 500
+			flash_eyes()
+		if (2)
+			b_loss = 150
+			flash_eyes()
+		if(3)
+			b_loss = 30
+	if(has_bane(BANE_LIGHT))
+		b_loss *=2
+	adjustBruteLoss(b_loss)
+	return ..()
