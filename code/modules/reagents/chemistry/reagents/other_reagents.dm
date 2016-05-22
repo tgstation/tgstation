@@ -121,8 +121,9 @@
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
-	if(reac_volume >= 10)
-		T.MakeSlippery()
+
+	if(reac_volume >= 5)
+		T.MakeSlippery(min = 5, max = reac_volume*0.2)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -257,7 +258,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(TURF_WET_LUBE)
+		T.MakeSlippery(TURF_WET_LUBE, 5, reac_volume)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -1144,7 +1145,8 @@
 
 /datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T) && T.wet)
-		T.MakeDry(TURF_WET_WATER)
+		T.wet_time = max(0, T.wet_time-reac_volume*5) // removes 5 seconds of wetness for every unit.
+		T.HandleWet()
 
 /datum/reagent/drying_agent/reaction_obj(obj/O, reac_volume)
 	if(O.type == /obj/item/clothing/shoes/galoshes)

@@ -170,6 +170,16 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	category = CAT_FOOD
 
+/datum/crafting_recipe/food/khachapuri
+	name = "Khachapuri"
+	reqs = list(
+		/datum/reagent/consumable/eggyolk = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/khachapuri
+	category = CAT_FOOD
+
 /datum/crafting_recipe/food/sugarcookie
 	time = 15
 	name = "Sugar cookie"

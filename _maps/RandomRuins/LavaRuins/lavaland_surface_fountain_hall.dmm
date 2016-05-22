@@ -1,5 +1,5 @@
 "a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/wall/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"b" = (/turf/closed/wall/mineral/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "c" = (/obj/structure/divine/healingfountain/anyone,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "d" = (/obj/structure/divine/conduit,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "e" = (/obj/structure/divine/sacrificealtar,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)

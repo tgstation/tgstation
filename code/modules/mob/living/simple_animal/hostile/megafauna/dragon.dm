@@ -11,6 +11,7 @@
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/dragon.dmi'
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
 	luminosity = 3
 	armour_penetration = 40
@@ -30,13 +31,17 @@
 	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
-	deathmessage = "collapes into a pile of bones, it's flesh sloughing away."
+	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
+	qdel(internal)
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
 	if(swooping)
@@ -46,10 +51,12 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.stat == DEAD)
-				L.gib()
-				visible_message("<span class='danger'>[src] devours [L]!</span>")
-				src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
+				usr.visible_message(
+					"<span class='danger'>[src] devours [L]!</span>",
+					"<span class='userdanger'>You feast on [L], restoring \
+						your health!</span>")
 				adjustBruteLoss(-L.maxHealth)
+				L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -228,6 +235,14 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 	var/summon_cooldown = 0
 
+/obj/item/weapon/melee/ghost_sword/New()
+	..()
+	SSobj.processing += src
+
+/obj/item/weapon/melee/ghost_sword/Destroy()
+	SSobj.processing -= src
+	. = ..()
+
 /obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
 	if(summon_cooldown > world.time)
 		user << "You just recently called out for aid. You don't want to annoy the spirits."
@@ -236,6 +251,9 @@
 	notify_ghosts("[user] is raising their [src], calling for your help!", source = user)
 	summon_cooldown = world.time + 600
 
+/obj/item/weapon/melee/ghost_sword/process()
+	ghost_check()
+
 /obj/item/weapon/melee/ghost_sword/proc/ghost_check(mob/user)
 	var/ghost_counter = 0
 	for(var/mob/dead/observer/G in dead_mob_list)
@@ -243,7 +261,8 @@
 			ghost_counter++
 			G.invisibility = 0
 			spawn(30)
-				G.invisibility = initial(G.invisibility)
+				if(G.orbiting != user)
+					G.invisibility = initial(G.invisibility)
 	return ghost_counter
 
 /obj/item/weapon/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)

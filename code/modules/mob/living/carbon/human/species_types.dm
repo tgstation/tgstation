@@ -79,6 +79,14 @@
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
+
+/*
+ Lizard subspecies: ASHWALKERS
+*/
+/datum/species/lizard/ashwalker
+	name = "Ash Walker"
+	id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 /*
  PODPEOPLE
 */
@@ -217,7 +225,7 @@
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE,NODISMEMBER)
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"

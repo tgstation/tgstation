@@ -285,6 +285,9 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
 
+//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
+#define MAXIMUM_WET_TIME 300
+
 //Object/Item sharpness
 #define IS_BLUNT			0
 #define IS_SHARP			1
@@ -423,3 +426,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 // Shuttle return values
 #define SHUTTLE_ALREADY_DOCKED 7
+
+#define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return

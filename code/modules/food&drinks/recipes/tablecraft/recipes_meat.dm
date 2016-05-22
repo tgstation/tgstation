@@ -152,3 +152,11 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/nugget
 	category = CAT_FOOD
 
+/datum/crafting_recipe/food/rawkhinkali
+	name = "Raw Khinkali"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
+	)
+	result =  /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
+	category = CAT_FOOD
