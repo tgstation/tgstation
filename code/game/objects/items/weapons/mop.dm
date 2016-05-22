@@ -31,7 +31,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 		if(istype(A, /turf/closed))
 			var/turf/closed/C = A
 			C.thermite = 0
-	reagents.reaction(A, TOUCH, 1)	//1 used 1 applied.
+	reagents.reaction(A, TOUCH, 5)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 
 
