@@ -57,7 +57,7 @@
 	melee_damage_upper = 30
 	environment_smash = 2
 	attacktext = "slams"
-	deathmessage = "The Reenactor's body collapses in on itself from the strain!"
+	deathmessage = "body collapses in on itself from the strain!"
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/wwii/melee/AttackingTarget()
@@ -84,7 +84,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 7
 	attacktext = "heils"
-	deathmessage = "The Mini-Führer explodes!"
+	deathmessage = "explodes!"
 	loot = list(/obj/effect/gibspawner/robot)
 
 /mob/living/simple_animal/hostile/wwii/bomber/AttackingTarget()
