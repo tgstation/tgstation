@@ -183,15 +183,6 @@
 	suffix = "lavaland_surface_survivalpod.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/wwiioutpost
-	name = "Strange Outpost"
-	id = "nazi"
-	description = "The ruins of an outpost, skeletons and empty shell casings litter the interior of \
-		the structure. Some of these uniforms look awfully strange.."
-	suffix = "lavaland_surface_wwiioutpost.dmm"
-	cost = 20
-	allow_duplicates = FALSE
-
 /datum/map_template/ruin/lavaland/tomb
 	name = "Strange Outpost"
 	id = "tomb"
