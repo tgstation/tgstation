@@ -167,6 +167,10 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
 
+/obj/item/ammo_casing/energy/trap/cyborg
+	projectile_type = /obj/item/projectile/energy/trap/cyborg
+	e_cost = 50
+
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/item/projectile/beam/instakill
 	e_cost = 0
@@ -177,3 +181,9 @@ obj/item/ammo_casing/energy/net
 
 /obj/item/ammo_casing/energy/instakill/red
 	projectile_type = /obj/item/projectile/beam/instakill/red
+
+/obj/item/ammo_casing/energy/shock_revolver
+	fire_sound = 'sound/magic/lightningbolt.ogg'
+	e_cost = 200
+	select_name = "stun"
+	projectile_type = /obj/item/projectile/energy/shock_revolver

@@ -1,0 +1,6 @@
+author: coiax, OPDingo
+delete-after: True
+changes: 
+  - rscadd: "Crayons and spraycans are now easier to use."
+  - rscdel: "Centcom announce due to budget cuts their supplier of rainbow crayons has been
+forced to use more... exotic chemicals. Please do not ingest your standard issue crayon."

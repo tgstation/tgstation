@@ -1,5 +1,5 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
-//#define DOCKING_PORT_HIGHLIGHT
+// #define DOCKING_PORT_HIGHLIGHT
 
 //NORTH default dir
 /obj/docking_port

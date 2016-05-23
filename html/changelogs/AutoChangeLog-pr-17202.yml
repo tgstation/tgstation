@@ -1,5 +1,0 @@
-author: CoreOverload
-delete-after: True
-changes: 
-  - rscadd: "You can now de-power inactive swarmers with a screwdriver to prevent them from activating."
-  - rscadd: "Recycle depowered swarmers in autolathe or sell them in cargo!"

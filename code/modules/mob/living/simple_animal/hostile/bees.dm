@@ -12,7 +12,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees
 	name = "bee"
-	desc = "buzzy buzzy bee, stingy sti- Ouch!"
+	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
@@ -114,8 +114,8 @@
 	. = ..()
 	if(!.)
 		return 0
-	if(ishuman(the_target))
-		var/mob/living/carbon/human/H = the_target
+	if(isliving(the_target))
+		var/mob/living/H = the_target
 		return !H.bee_friendly()
 
 
@@ -125,8 +125,8 @@
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
 			wanted_objects |= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
 			return 1
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
+	if(isliving(A))
+		var/mob/living/H = A
 		return !H.bee_friendly()
 	return 0
 
@@ -208,7 +208,7 @@
 
  /mob/living/simple_animal/hostile/poison/bees/queen
  	name = "queen bee"
- 	desc = "she's the queen of bees, BZZ BZZ"
+ 	desc = "She's the queen of bees, BZZ BZZ!"
  	icon_base = "queen"
  	isqueen = TRUE
 
@@ -242,7 +242,7 @@
 
 /obj/item/queen_bee
 	name = "queen bee"
-	desc = "she's the queen of bees, BZZ BZZ"
+	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	item_state = ""
 	icon = 'icons/mob/bees.dmi'

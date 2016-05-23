@@ -57,36 +57,44 @@
 	return ..()
 
 
-/obj/item/weapon/storage/box/survival
-
+// Ordinary survival box
 /obj/item/weapon/storage/box/survival/New()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/engineer
+/obj/item/weapon/storage/box/survival/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
+// Engineer survival box
 /obj/item/weapon/storage/box/engineer/New()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/syndie
+/obj/item/weapon/storage/box/engineer/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
+// Syndie survival box
 /obj/item/weapon/storage/box/syndie/New()
 	..()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 
-/obj/item/weapon/storage/box/security
-
+// Security survival box
 /obj/item/weapon/storage/box/security/New()
 	..()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+/obj/item/weapon/storage/box/security/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
@@ -226,6 +234,19 @@
 /obj/item/weapon/storage/box/trackimp/New()
 	..()
 	for(var/i in 1 to 4)
+		new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implanter(src)
+	new /obj/item/weapon/implantpad(src)
+	new /obj/item/weapon/locator(src)
+
+/obj/item/weapon/storage/box/minertracker
+	name = "boxed tracking implant kit"
+	desc = "For finding those who have died on the accursed lavaworld."
+	icon_state = "implant"
+
+/obj/item/weapon/storage/box/minertracker/New()
+	..()
+	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/tracking(src)
 	new /obj/item/weapon/implanter(src)
 	new /obj/item/weapon/implantpad(src)

@@ -43,10 +43,12 @@
 	icon_state = "heal"
 	duration = 15
 
-/obj/effect/overlay/temp/heal/New()
+/obj/effect/overlay/temp/heal/New(loc, colour)
 	..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
+	if(colour)
+		color = colour
 
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
@@ -89,6 +91,24 @@
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
+
+/obj/effect/overlay/temp/cult/sparks
+	randomdir = 1
+	name = "blood sparks"
+	icon_state = "bloodsparkles"
+
+/obj/effect/overlay/temp/cult/phase
+	name = "phase glow"
+	duration = 7
+	icon_state = "cultin"
+
+/obj/effect/overlay/temp/cult/phase/New(loc, set_dir)
+	..()
+	if(set_dir)
+		dir = set_dir
+
+/obj/effect/overlay/temp/cult/phase/out
+	icon_state = "cultout"
 
 /obj/effect/overlay/temp/cult/sac
 	name = "maw of Nar-Sie"

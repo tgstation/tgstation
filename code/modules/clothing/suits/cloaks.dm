@@ -62,21 +62,22 @@
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 10)
 
 /obj/item/clothing/suit/hooded/cloak/drake
-	name = "ash drake hide cloak"
-	icon_state = "golclo"
-	desc = "A cloak fashioned from the hide of an ash drake, offers incredible defense while still remaining lightweight. "
+	name = "drake armour"
+	icon_state = "dragon"
+	desc = "A suit of armour fashioned from the remains of an ash drake. "
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear)
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	unacidable = 1
 
 /obj/item/clothing/head/cloakhood/drake
-	name = "ash drake hide hood"
-	icon_state = "golhood"
-	desc = "A stiff hood made of ash drake hide."
+	name = "drake helm"
+	icon_state = "dragon"
+	desc = "The skull of a dragon."
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT

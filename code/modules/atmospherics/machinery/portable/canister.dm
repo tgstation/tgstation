@@ -28,6 +28,7 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
@@ -56,6 +57,11 @@
 	name = "agent b canister"
 	desc = "Oxygen Agent B. You're not quite sure what it does."
 	gas_type = "agent_b"
+/obj/machinery/portable_atmospherics/canister/bz
+	name = "BZ canister"
+	desc = "BZ, a powerful hallucinogenic nerve agent."
+	icon_state = "purple"
+	gas_type = "bz"
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."

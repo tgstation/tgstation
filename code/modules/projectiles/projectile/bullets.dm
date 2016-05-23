@@ -124,7 +124,7 @@
 	damage = 10
 	weaken = 4
 	stun = 4
-	
+
 /obj/item/projectile/bullet/honker
 	damage = 0
 	weaken = 5
@@ -135,7 +135,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
-	
+
 /obj/item/projectile/bullet/honker/New()
 	..()
 	SpinAnimation()

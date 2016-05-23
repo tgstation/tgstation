@@ -204,6 +204,7 @@ Doesn't work on other aliens/AI.*/
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	A.fire()
+	user.newtonian_move(get_dir(U, T))
 
 	return 1
 

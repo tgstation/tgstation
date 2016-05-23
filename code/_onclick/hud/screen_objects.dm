@@ -46,6 +46,15 @@
 		M.swap_hand()
 	return 1
 
+/obj/screen/inventory/craft
+	name = "crafting menu"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "craft"
+	screen_loc = ui_crafting
+
+/obj/screen/inventory/craft/Click()
+	var/mob/living/M = usr
+	M.OpenCraftingMenu()
 
 /obj/screen/inventory
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.

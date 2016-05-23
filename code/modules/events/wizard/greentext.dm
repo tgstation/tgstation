@@ -68,6 +68,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
+		burn_state = ON_FIRE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped

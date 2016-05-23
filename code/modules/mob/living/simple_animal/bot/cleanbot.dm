@@ -104,8 +104,8 @@
 					victim.acid_act(5, 2, 100)
 
 			if(prob(10)) //Wets floors randomly
-				var/turf/open/T = loc
-				T.MakeSlippery()
+				var/turf/open/OT = get_turf(loc)
+				OT.MakeSlippery(min = 5, max = 1)
 
 			if(prob(5)) //Spawns foam!
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
@@ -140,7 +140,10 @@
 			return
 
 	if(target && loc == target.loc)
-		clean(target)
+		if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+			clean(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+		else
+			shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 		path = list()
 		target = null
 

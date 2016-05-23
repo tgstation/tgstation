@@ -38,7 +38,8 @@
 	else
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		var/newgirder = break_wall()
-		transfer_fingerprints_to(newgirder)
+		if(newgirder) //maybe we don't /want/ a girder!
+			transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
@@ -253,7 +254,7 @@
 
 /turf/closed/wall/narsie_act()
 	if(prob(20))
-		ChangeTurf(/turf/closed/wall/cult)
+		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0

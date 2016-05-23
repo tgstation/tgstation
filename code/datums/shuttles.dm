@@ -112,6 +112,24 @@
 		without protective goggles. Emitters spawn powered on, expect \
 		admin notices, they are harmless."
 
+/datum/map_template/shuttle/emergency/imfedupwiththisworld
+	suffix = "imfedupwiththisworld"
+	name = "Oh, Hi Daniel"
+	description = "How was space work today? \
+		Oh, pretty good. We got a new space station and the company will make a lot of money. \
+		What space station? \
+		I cannot tell you; it's space confidential. \
+		Aw, come space on. Why not? \
+		No, I can't. Anyway, how is your space roleplay life?"
+
+/datum/map_template/shuttle/emergency/goon
+	suffix = "goon"
+	name = "NES Port"
+	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
+	is a shuttle used at other less known nanotrasen facilities \
+	and has a more open inside for larger crowds."
+
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"

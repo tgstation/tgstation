@@ -142,10 +142,12 @@
 		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
 			toggle_cam(user, 1)
 			health = initial(health) //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+			return
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
 			setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
 			user << "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>"
+			return
 
 		else if(istype(W, /obj/item/weapon/weldingtool))
 			if(weld(W, user))
@@ -157,7 +159,7 @@
 				assembly.dir = src.dir
 				assembly = null
 				qdel(src)
-				return
+			return
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())

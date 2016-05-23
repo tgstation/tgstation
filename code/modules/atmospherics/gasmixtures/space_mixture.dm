@@ -2,7 +2,6 @@
 //it can be changed, but any changes will ultimately be undone before they can have any effect
 
 /datum/gas_mixture/space
-	var/static/datum/gas_mixture/dummy = new
 
 /datum/gas_mixture/space/New()
 	..()
@@ -18,6 +17,12 @@
 /datum/gas_mixture/space/merge()
 	return 0 //we're immutable.
 
+/datum/gas_mixture/space/heat_capacity()
+	. = 700000
+
+/datum/gas_mixture/space/heat_capacity_archived()
+	. = heat_capacity()
+
 /datum/gas_mixture/space/remove()
 	return copy() //we're immutable, so we can just return a copy.
 
@@ -25,8 +30,9 @@
 	return copy() //we're immutable, so we can just return a copy.
 
 /datum/gas_mixture/space/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	. = dummy.share(sharer, atmos_adjacent_turfs) //keep all the sharing calculations, but don't actually change anything about ourselves
-	dummy.copy_from(src)
+	. = ..(sharer, 0)
+	temperature = TCMB
+	gases.Cut()
 
 /datum/gas_mixture/space/after_share()
 	temperature = TCMB
@@ -50,6 +56,6 @@
 /datum/gas_mixture/space/parse_gas_string()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/space/temperature_share()
-	..()
+/datum/gas_mixture/space/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
+	. = ..(sharer, 1, sharer_temperature, sharer_heat_capacity)
 	temperature = TCMB

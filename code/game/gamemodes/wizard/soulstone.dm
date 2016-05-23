@@ -12,6 +12,9 @@
 /obj/item/device/soulstone/anybody
 	usability = 1
 
+/obj/item/device/soulstone/anybody/chaplain
+	name = "mysterious old shard"
+
 /obj/item/device/soulstone/pickup(mob/living/user)
 	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
@@ -66,7 +69,7 @@
 /obj/structure/constructshell
 	name = "empty shell"
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
+	icon_state = "construct-cult"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/examine(mob/user)

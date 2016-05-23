@@ -398,9 +398,9 @@
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
-			visible_message("<span class='danger'>[deathmessage]</span>")
+			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
 		else if(!del_on_death)
-			visible_message("<span class='danger'>\the [src] stops moving...</span>")
+			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -471,16 +471,17 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children FIRST.
+		else if(istype(M, childtype)) //Check for children SECOND.
 			children++
 		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+
+		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)

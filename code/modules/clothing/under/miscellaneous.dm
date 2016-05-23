@@ -573,4 +573,3 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
-

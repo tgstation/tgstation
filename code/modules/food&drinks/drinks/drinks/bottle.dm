@@ -203,7 +203,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
-	list_reagents = list("hellwater" = 100)
+	list_reagents = list("hell_water" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
@@ -333,7 +333,8 @@
 							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
 	var/active = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/bottle/B = locate() in contents
 	if(B)
 		icon_state = B.icon_state

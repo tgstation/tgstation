@@ -117,14 +117,16 @@
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
-/obj/item/clothing/head/helmet/space/cult
+/obj/item/clothing/head/helmet/space/hardsuit/cult
 	name = "nar-sien hardened helmet"
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	brightness_on = 0
+	actions_types = list()
 
-/obj/item/clothing/suit/space/cult
+/obj/item/clothing/suit/space/hardsuit/cult
 	name = "nar-sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
@@ -132,6 +134,7 @@
 	w_class = 2
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
@@ -151,10 +154,9 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
-	var/shield_state = "shield-red"
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/cult_hoodie
-	
+
 /obj/item/clothing/head/cult_hoodie
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
@@ -163,8 +165,8 @@
 	body_parts_covered = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/pickup(mob/living/user)
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/user, slot)
 	..()
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
@@ -172,26 +174,22 @@
 		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
-		
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
-	if(current_charges > 0)
-		var/datum/effect_system/spark_spread/s = new
-		s.set_up(2, 1, src)
-		s.start()
-		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
+	if(current_charges)
+		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
-		if(current_charges <= 0)
-			owner.visible_message("[owner]'s shield is destroyed!")
-			shield_state = "broken"
+		PoolOrNew(/obj/effect/overlay/temp/cult/sparks, get_turf(owner))
+		if(!current_charges)
+			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
 		return 1
 	return 0
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
     . = list()
-    if(!isinhands)
-        . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
+    if(!isinhands && current_charges)
+        . += image(layer = MOB_LAYER+0.05, icon = 'icons/effects/effects.dmi', icon_state = "shield-cult")
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"
@@ -205,7 +203,7 @@
 	slowdown = -1
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/berserkerhood
-	
+
 /obj/item/clothing/head/berserkerhood
 	name = "flagellant's robes"
 	desc = "Blood-soaked garb infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
@@ -214,8 +212,8 @@
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
-	
-/obj/item/clothing/suit/hooded/cultrobes/berserker/pickup(mob/living/user)
+
+/obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/user, slot)
 	..()
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
@@ -223,7 +221,7 @@
 		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
-   	    	
+
 /obj/item/clothing/glasses/night/cultblind
 	desc = "May nar-sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
@@ -231,15 +229,15 @@
 	item_state = "blindfold"
 	darkness_view = 8
 	flash_protect = 1
-	
-/obj/item/clothing/glasses/night/cultblind/pickup(mob/living/user)
+
+/obj/item/clothing/glasses/night/cultblind/equipped(mob/user, slot)
 	..()
 	if(!iscultist(user))
-		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
-		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+		user << "<span class='cultlarge'>\"You want to be blind, do you?\"</span>"
 		user.unEquip(src, 1)
 		user.Dizzy(30)
 		user.Weaken(5)
+		user.blind_eyes(30)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
@@ -255,7 +253,7 @@
 	icon_state ="bluespace"
 	color = "#ff0000"
 	var/global/curselimit = 0
-	
+
 /obj/item/device/shuttle_curse/attack_self(mob/user)
 	if(!iscultist(user))
 		user.unEquip(src, 1)
@@ -284,48 +282,57 @@
 		var/message = pick_n_take(curses)
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
-		
+
 /obj/item/device/cult_shift
 	name = "veil shifter"
-	desc = "The veil between worlds is weak, this relic teleports you forward a small distance. It may be used twice before its power is lost."
+	desc = "This relic teleports you forward a medium distance."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shifter"
 	var/uses = 2
-	
+
+/obj/item/device/cult_shift/examine(mob/user)
+	..()
+	if(uses)
+		user << "<span class='cult'>It has [uses] uses remaining.</span>"
+	else
+		user << "<span class='cult'>It seems drained.</span>"
+
 /obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
-	var/mob/living/carbon/human/H = user
-	if(H.pulling && (istype(H.pulling, /mob/living)))
-		var/mob/living/victim =	H.pulling
-		if(!victim.anchored)
-			victim.forceMove(locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z))
-	return
+	var/mob/living/carbon/C = user
+	if(C.pulling)
+		var/atom/movable/pulled = C.pulling
+		pulled.forceMove(T)
+		. = pulled
 
 /obj/item/device/cult_shift/attack_self(mob/user)
+	if(!uses || !iscarbon(user))
+		user << "<span class='warning'>\The [src] is dull and unmoving in your hands.</span>"
+		return
 	if(!iscultist(user))
 		user.unEquip(src, 1)
-		user.Weaken(5)
-		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
+		step(src, pick(alldirs))
+		user << "<span class='warning'>\The [src] flickers out of your hands, too eager to move!</span>"
 		return
-	uses--
-	if (uses<1)
-		qdel(src)
-	var/mob/living/carbon/human/H = user
-	var/turf/destination = get_teleport_loc(H.loc,H,9,1,3,1,0,1)
-	var/turf/mobloc = get_turf(H.loc)//Safety
 
-	if(destination&&istype(mobloc, /turf))//So we don't teleport out of containers
-		spawn(0)
-			playsound(H.loc, "sparks", 50, 1)
-			anim(mobloc,src,'icons/mob/mob.dmi',,"cultout",,H.dir)
+	var/mob/living/carbon/C = user
+	var/turf/mobloc = get_turf(C)
+	var/turf/destination = get_teleport_loc(mobloc,C,9,1,3,1,0,1)
 
-		handle_teleport_grab(destination, H)
-		H.loc = destination
+	if(destination)
+		uses--
+		if(uses <= 0)
+			icon_state ="shifter_drained"
+		playsound(mobloc, "sparks", 50, 1)
+		PoolOrNew(/obj/effect/overlay/temp/cult/phase/out, list(mobloc, C.dir))
 
-		spawn(0)
-			PoolOrNew(/obj/effect/particle_effect/sparks, H.loc)
-			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
-			playsound(H.loc, "sparks", 50, 1)
-			anim(H.loc,H,'icons/mob/mob.dmi',,"cultin",,H.dir)
-			
+		var/atom/movable/pulled = handle_teleport_grab(destination, C)
+		C.forceMove(destination)
+		if(pulled)
+			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
+
+		PoolOrNew(/obj/effect/overlay/temp/cult/phase, list(destination, C.dir))
+		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
+		playsound(destination, "sparks", 50, 1)
+
 	else
-		H << "<span class='danger'>The veil cannot be torn here!</span>"
+		C << "<span class='danger'>The veil cannot be torn here!</span>"

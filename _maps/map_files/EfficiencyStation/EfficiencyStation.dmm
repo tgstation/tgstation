@@ -2176,8 +2176,7 @@
 	name = "AI Satellite Service"
 	})
 "adT" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
+/obj/machinery/sleeper/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle{
@@ -8556,10 +8555,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -26523,6 +26519,7 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Monitoring"
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "cautioncorner";
 	dir = 1
@@ -33996,8 +33993,8 @@
 	},
 /area/crew_quarters/kitchen)
 "bjL" = (
-/obj/structure/closet,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -34014,8 +34011,15 @@
 	},
 /area/crew_quarters/theatre)
 "bjN" = (
-/obj/item/weapon/storage/crayons,
 /obj/structure/table/wood,
+/obj/item/weapon/storage/crayons{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel{
 	icon_state = "redbluefull"
 	},
@@ -35032,10 +35036,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
@@ -36479,10 +36480,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -37317,7 +37315,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /obj/item/weapon/nullrod,
-/obj/item/device/soulstone/anybody,
+/obj/item/device/soulstone/anybody/chaplain,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -38548,10 +38546,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bsw" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/decal/cleanable/oil{
 	icon_state = "floor6"
 	},
@@ -40613,10 +40608,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bwr" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
@@ -40695,10 +40687,7 @@
 	on = 1;
 	pressure_checks = 1
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bwB" = (
@@ -46054,10 +46043,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -61714,6 +61700,25 @@
 	},
 /turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
+"ckh" = (
+/obj/structure/table/wood,
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/obj/item/weapon/storage/crayons{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel{
+	icon_state = "redbluefull"
+	},
+/area/space)
 "cki" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -61724,17 +61729,12 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate)
-"ckh" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 4
+"ckj" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
 	},
-/turf/closed/wall/shuttle{
-	tag = "icon-diagonalWall3 (WEST)";
-	icon_state = "diagonalWall3";
-	dir = 8
-	},
-/area/shuttle/syndicate)
+/area/toxins/storage)
 
 (1,1,1) = {"
 aaa
@@ -89086,7 +89086,7 @@ aze
 aAw
 aBE
 aCO
-aFp
+ckj
 aFn
 aGo
 aCO
@@ -95288,7 +95288,7 @@ bkQ
 bfv
 bvd
 bfv
-bfv
+ckh
 bqH
 bsy
 btK

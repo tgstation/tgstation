@@ -33,9 +33,15 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/lungs
-	internal_organs += new /obj/item/organ/heart
+	if(!(NOHUNGER in dna.species.specflags))
+		internal_organs += new /obj/item/organ/appendix
+
+	if(!(NOBREATH in dna.species.specflags))
+		internal_organs += new /obj/item/organ/lungs
+
+	if(!(NOBLOOD in dna.species.specflags))
+		internal_organs += new /obj/item/organ/heart
+
 	internal_organs += new /obj/item/organ/brain
 
 	//Note: Additional organs are generated/replaced on the dna.species level
@@ -47,7 +53,12 @@
 
 	martial_art = default_martial_art
 
+	handcrafting = new()
+
 	..()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.craft(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -150,7 +161,7 @@
 
 	take_overall_damage(b_loss,f_loss)
 	//attempt to dismember bodyparts
-	if(severity >= 2 || !bomb_armor)
+	if(severity <= 2 || !bomb_armor)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
@@ -806,6 +817,8 @@
 
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
+	CHECK_DNA_AND_SPECIES(C)
+
 	if(C.stat == DEAD)
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
@@ -823,14 +836,27 @@
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
 
-		if(C.health <= config.health_threshold_crit)
-			C.cpr_time = world.time
+		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
+		var/they_lung = C.getorganslot("lungs")
+
+		if(C.health > config.health_threshold_crit)
+			return
+
+		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		C.cpr_time = world.time
+		add_logs(src, C, "CPRed")
+
+		if(they_breathe && they_lung)
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
 			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
-		add_logs(src, C, "CPRed")
+		else if(they_breathe && !they_lung)
+			C << "<span class='unconscious'>You feel a breath of fresh air... \
+				but you don't feel any better...</span>"
+		else
+			C << "<span class='unconscious'>You feel a breath of fresh air... \
+				which is a sensation you don't recognise...</span>"
 
 /mob/living/carbon/human/generateStaticOverlay()
 	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
@@ -980,14 +1006,32 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
+	CHECK_DNA_AND_SPECIES(src)
+
 	if(admin_revive)
 		regenerate_limbs()
-	if(!getorganslot("lungs"))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
-	if(!getorganslot("tongue"))
-		var/obj/item/organ/tongue/T = new()
-		T.Insert(src)
+
+		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+			var/obj/item/organ/lungs/L = new()
+			L.Insert(src)
+
+		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
+			var/obj/item/organ/heart/H = new()
+			H.Insert(src)
+
+		if(!getorganslot("tongue"))
+			var/obj/item/organ/tongue/T
+
+			for(var/tongue_type in dna.species.mutant_organs)
+				if(ispath(tongue_type, /obj/item/organ/tongue))
+					T = new tongue_type()
+					T.Insert(src)
+
+			// if they have no mutant tongues, give them a regular one
+			if(!T)
+				T = new()
+				T.Insert(src)
+
 	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0
@@ -1033,3 +1077,6 @@
 	. = ..()
 	if (dna && dna.species)
 		. += dna.species.check_weakness(weapon, attacker)
+
+/mob/living/carbon/human/is_literate()
+	return 1
