@@ -415,7 +415,8 @@
 				if(C.client)
 					C.blur_eyes(3)
 					C.blind_eyes(1)
-				if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
+				var/eye_protection = C.check_eye_prot()
+				if(eye_protection <= 0) // no eye protection? ARGH IT BURNS.
 					C.confused = max(C.confused, 3)
 					C.Weaken(3)
 				if(ishuman(C))
@@ -427,7 +428,9 @@
 				if(C.reagents)
 					C.reagents.add_reagent("welding_fuel", 5)
 					C.reagents.add_reagent("ethanol", 5)
-					C.reagents.reaction(C, VAPOR, 10)
+					// But sufficient protection will minimize the effect
+					var/divisor = max(1, eye_protection + 1) // between 1 - 3
+					C.reagents.reaction(C, VAPOR, 1 / divisor)
 
 				uses = max(0,uses-10)
 
