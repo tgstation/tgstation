@@ -590,6 +590,38 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='notice'>Data HUDs enabled.</span>"
 		data_huds_on = 1
 
+/mob/dead/observer/verb/restore_ghost_apperance()
+	set name = "Restore Ghost Character"
+	set desc = "Sets your ghost name and apperance to the name of your \
+		roundstart character."
+	set category = "Ghost"
+
+	set_ghost_appearance()
+
+/mob/dead/observer/proc/set_ghost_appearance()
+	if((!client) || (!client.prefs))
+		return
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_unique_name(gender)
+	if(client.prefs.be_random_body)
+		client.prefs.random_character(gender)
+
+	if(HAIR in client.prefs.pref_species.specflags)
+		hair_style = client.prefs.hair_style
+		hair_color = brighten_color(client.prefs.hair_color)
+	if(FACEHAIR in client.prefs.pref_species.specflags)
+		facial_hair_style = client.prefs.facial_hair_style
+		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
+
+	real_name = client.prefs.real_name
+	name = real_name
+
+	if(mind)
+		mind.name = name
+
+	update_icon()
+
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))
 		return 1
