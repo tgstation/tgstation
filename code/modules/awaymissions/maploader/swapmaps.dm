@@ -117,7 +117,7 @@
 		Builds a filled rectangle of item from one corner turf to the
 		 other, on multiple z-levels if necessary. The corners may be
 		 specified in any order.
-		item is a type path like /turf/wall or /obj/barrel{full=1}.
+		item is a type path like /turf/closed/wall or /obj/barrel{full=1}.
 	swapmap.BuildRectangle(turf/corner1,turf/corner2,item)
 		Builds an unfilled rectangle of item from one corner turf to
 		 the other, on multiple z-levels if necessary.
@@ -227,11 +227,11 @@ swapmap
 		S["areas"] << areas
 		for(n in 1 to areas.len) areas[areas[n]]=n
 		var/oldcd=S.cd
-		for(z=z1,z<=z2,++z)
+		for(z in z1 to z2)
 			S.cd="[z-z1+1]"
-			for(y=y1,y<=y2,++y)
+			for(y in y1 to y2)
 				S.cd="[y-y1+1]"
-				for(x=x1,x<=x2,++x)
+				for(x in x1 to x2)
 					S.cd="[x-x1+1]"
 					var/turf/T=locate(x,y,z)
 					S["type"] << T.type
@@ -270,11 +270,11 @@ swapmap
 		locked=1
 		AllocateSwapMap()	// adjust x1,y1,z1 - x2,y2,z2 coords
 		var/oldcd=S.cd
-		for(z=z1,z<=z2,++z)
+		for(z in z1 to z2)
 			S.cd="[z-z1+1]"
-			for(y=y1,y<=y2,++y)
+			for(y in y1 to y2)
 				S.cd="[y-y1+1]"
-				for(x=x1,x<=x2,++x)
+				for(x in x1 to x2)
 					S.cd="[x-x1+1]"
 					var/tp
 					S["type"]>>tp
@@ -420,7 +420,7 @@ swapmap
 		Build procs: Take 2 turfs as corners, plus an item type.
 		An item may be like:
 
-		/turf/wall
+		/turf/closed/wall
 		/obj/fence{icon_state="iron"}
 	 */
 	proc/BuildFilledRectangle(turf/T1,turf/T2,item)

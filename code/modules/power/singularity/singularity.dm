@@ -26,6 +26,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	burn_state = LAVA_PROOF
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -34,6 +35,7 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
+	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
@@ -42,6 +44,7 @@
 
 /obj/singularity/Destroy()
 	SSobj.processing.Remove(src)
+	poi_list.Remove(src)
 	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
@@ -60,7 +63,7 @@
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
 	return 0
 
-/obj/singularity/blob_act(severity)
+/obj/singularity/blob_act(obj/effect/blob/B)
 	return
 
 /obj/singularity/ex_act(severity, target)
@@ -112,8 +115,9 @@
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
-	var/count = locate(/obj/machinery/field/containment) in ultra_range(30, src, 1)
-	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
+	if(!count)
+		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
@@ -211,8 +215,6 @@
 		investigate_log("collapsed.","singulo")
 		qdel(src)
 		return 0
-	if(energy > 2999 && !consumedSupermatter)
-		energy = 2000
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
@@ -222,10 +224,11 @@
 			allowed_size = STAGE_THREE
 		if(1000 to 1999)
 			allowed_size = STAGE_FOUR
-		if(2000 to 2999)
-			allowed_size = STAGE_FIVE
-		if(3000 to INFINITY)
-			allowed_size = STAGE_SIX
+		if(2000 to INFINITY)
+			if(energy >= 3000 && consumedSupermatter)
+				allowed_size = STAGE_SIX
+			else
+				allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
 	return 1
@@ -233,19 +236,26 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	var/list/L = grav_pull > 8 ? ultra_range(grav_pull, src, 1) : orange(grav_pull, src)
-	for(var/atom/X in L)
-		var/dist = get_dist(X, src)
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T)
+			continue
+		if(get_dist(T, src) > consume_range)
+			T.singularity_pull(src, current_size)
+		else
+			consume(T)
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			if(get_dist(X, src) > consume_range)
+				X.singularity_pull(src, current_size)
+			else
+				consume(X)
+			CHECK_TICK
 	return
 
 
 /obj/singularity/proc/consume(atom/A)
-	var/gain = A.singularity_act(current_size)
+	var/gain = A.singularity_act(current_size, src)
 	src.energy += gain
 	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
 		desc = "[initial(desc)] It glows fiercely with inner fire."
@@ -369,7 +379,7 @@
 
 
 /obj/singularity/proc/combust_mobs()
-	for(var/mob/living/carbon/C in ultra_range(20, src, 1))
+	for(var/mob/living/carbon/C in urange(20, src, 1))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
 						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)

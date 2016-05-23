@@ -364,7 +364,7 @@
 	name = "Mead"
 	id = "mead"
 	result = "mead"
-	required_reagents = list("sugar" = 1, "water" = 1)
+	required_reagents = list("honey" = 2)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 2
 
@@ -578,3 +578,46 @@
 	required_reagents = list ("wine" = 10)
 	required_catalysts = list ("enzyme" = 5)
 	result_amount = 10
+
+/datum/chemical_reaction/whiskey_sour
+	name = "Whiskey Sour"
+	id = "whiskey_sour"
+	result = "whiskey_sour"
+	required_reagents = list("whiskey" = 1, "lemonjuice" = 1, "sugar" = 1)
+	result_amount = 3
+	mix_message = "The mixture darkens to a rich gold hue."
+	mix_sound = null
+
+/datum/chemical_reaction/fetching_fizz
+	name = "Fetching Fizz"
+	id = "fetching_fizz"
+	result = "fetching_fizz"
+	required_reagents = list("nuka_cola" = 1, "iron" = 1) //Manufacturable from only the mining station
+	result_amount = 3
+	mix_message = "The mixture slightly vibrates before settling."
+
+/datum/chemical_reaction/hearty_punch
+	name = "Hearty Punch"
+	id = "hearty_punch"
+	result = "hearty_punch"
+	required_reagents = list("bravebull" = 5, "syndicatebomb" = 5, "absinthe" = 5)
+	result_amount = 1 //Very little, for balance reasons
+	mix_message = "The mixture darkens to a healthy crimson."
+	mix_sound = null
+	required_temp = 315 //Piping hot!
+
+/datum/chemical_reaction/bacchus_blessing
+	name = "Bacchus' Blessing"
+	id = "bacchus_blessing"
+	result = "bacchus_blessing"
+	required_reagents = list("hooch" = 1, "absinthe" = 1, "manlydorf" = 1, "syndicatebomb" = 1)
+	result_amount = 4
+	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
+
+/datum/chemical_reaction/arnold_palmer
+	name = "Arnold Palmer"
+	id = "arnold_palmer"
+	result = "arnold_palmer"
+	required_reagents = list("tea" = 1, "lemonjuice" = 1)
+	result_amount = 2
+	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."

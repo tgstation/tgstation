@@ -1,17 +1,17 @@
 /obj/machinery/door/unpowered
-	var/locked = 0
-
 
 /obj/machinery/door/unpowered/Bumped(atom/AM)
-	if(src.locked)	return
+	if(src.locked)
+		return
 	..()
 	return
 
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user, params)
-	if(src.locked)	return
-	..()
-	return
+	if(locked)
+		return
+	else
+		return ..()
 
 /obj/machinery/door/unpowered/emag_act()
 	return

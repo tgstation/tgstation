@@ -29,7 +29,8 @@
 	else
 		range = pick(2,2,2,3,3,3,4)
 
-/obj/item/weapon/grenade/iedcasing/CheckParts()
+/obj/item/weapon/grenade/iedcasing/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
 		var/muh_layer = can.layer
@@ -59,7 +60,7 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	explosion(src.loc,-1,-1,-1, flame_range = range)	// no explosive damage, only a large fireball.
+	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
 	qdel(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)

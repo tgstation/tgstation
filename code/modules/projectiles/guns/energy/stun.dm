@@ -6,15 +6,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/stunrevolver
-	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	icon_state = "stunrevolver"
-	item_state = "gun"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
+/obj/item/weapon/gun/energy/shock_revolver
+	name = "tesla gun"
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
+	icon_state = "tesla"
+	item_state = "tesla"
+	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
 	can_flashlight = 0
 	pin = null
-	ammo_x_offset = 1
+	shaded_charge = 1
 
 /obj/item/weapon/gun/energy/gun/advtaser
 	name = "hybrid taser"
@@ -27,35 +27,12 @@
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg
 	name = "cyborg taser"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	var/charge_tick = 0
-	var/recharge_time = 10
 	can_flashlight = 0
 	can_charge = 0
 
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
+/obj/item/weapon/gun/energy/gun/advtaser/cyborg/newshot()
 	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//... to recharge the shot
-
-	update_icon()
-	return 1
+	robocharge()
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
@@ -68,31 +45,8 @@
 /obj/item/weapon/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	var/charge_tick = 0
-	var/recharge_time = 2.5
 	can_charge = 0
 
-/obj/item/weapon/gun/energy/disabler/cyborg/New()
+/obj/item/weapon/gun/energy/disabler/cyborg/newshot()
 	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
-
-/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//... to recharge the shot
-
-	update_icon()
-	return 1
+	robocharge()

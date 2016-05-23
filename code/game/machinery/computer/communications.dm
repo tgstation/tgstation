@@ -9,7 +9,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(access_heads)
-	circuit = /obj/item/weapon/circuitboard/communications
+	circuit = /obj/item/weapon/circuitboard/computer/communications
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/messagetitle = list()
@@ -57,7 +57,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	if(!href_list["operation"])
 		return
-	var/obj/item/weapon/circuitboard/communications/CM = circuit
+	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
 	switch(href_list["operation"])
 		// main interface
 		if("main")
@@ -202,7 +202,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
-				if(CM.cooldownLeft())
+				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
@@ -217,7 +217,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
-				if(CM.cooldownLeft())
+				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
@@ -235,7 +235,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if("nukerequest") //When there's no other way
 			if(src.authenticated==2)
-				if(CM.cooldownLeft())
+				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "Arrays recycling. Please stand by."
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
@@ -245,7 +245,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Request sent."
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
-
 				CM.lastTimeUsed = world.time
 
 
@@ -326,8 +325,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(istype(I, /obj/item/weapon/card/id))
 		attack_hand(user)
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
 	if(!emagged)
@@ -572,7 +570,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
-		minor_announce(input)
+		minor_announce(input,"[user.name] Announces:")
 		ai_message_cooldown = 1
 		spawn(600)//One minute cooldown
 			ai_message_cooldown = 0
@@ -588,7 +586,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 
@@ -612,3 +610,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	SSshuttle.autoEvac()
 	return ..()
 
+/obj/machinery/computer/communications/proc/overrideCooldown()
+	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
+	CM.lastTimeUsed = 0

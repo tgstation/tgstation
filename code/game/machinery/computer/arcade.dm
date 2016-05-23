@@ -4,64 +4,65 @@
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
-	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops					= 2,
-							/obj/item/toy/AI										= 2,
-							/obj/item/clothing/under/syndicate/tacticool			= 2,
-							/obj/item/toy/sword										= 2,
-							/obj/item/toy/gun										= 2,
-							/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
-							/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
-							/obj/item/weapon/storage/crayons						= 2,
-							/obj/item/toy/spinningtoy								= 2,
-							/obj/item/toy/prize/ripley								= 1,
-							/obj/item/toy/prize/fireripley							= 1,
-							/obj/item/toy/prize/deathripley							= 1,
-							/obj/item/toy/prize/gygax								= 1,
-							/obj/item/toy/prize/durand								= 1,
-							/obj/item/toy/prize/honk								= 1,
-							/obj/item/toy/prize/marauder							= 1,
-							/obj/item/toy/prize/seraph								= 1,
-							/obj/item/toy/prize/mauler								= 1,
-							/obj/item/toy/prize/odysseus							= 1,
-							/obj/item/toy/prize/phazon								= 1,
-							/obj/item/toy/prize/reticence							= 1,
-							/obj/item/toy/cards/deck								= 2,
-							/obj/item/toy/nuke										= 2,
-							/obj/item/toy/minimeteor								= 2,
-							/obj/item/toy/carpplushie								= 2,
-							/obj/item/toy/foamblade									= 2,
-							/obj/item/toy/redbutton									= 2,
-							/obj/item/toy/owl										= 2,
-							/obj/item/toy/griffin									= 2,
-							/obj/item/weapon/coin/antagtoken						= 2,
-							/obj/item/stack/tile/fakespace/loaded					= 2,
-							/obj/item/toy/toy_xeno									= 2,
-							)
+	var/list/prizes = list(
+		/obj/item/weapon/storage/box/snappops					= 2,
+		/obj/item/toy/talking/AI								= 2,
+		/obj/item/toy/talking/codex_gigas						= 2,
+		/obj/item/clothing/under/syndicate/tacticool			= 2,
+		/obj/item/toy/sword										= 2,
+		/obj/item/toy/gun										= 2,
+		/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
+		/obj/item/weapon/storage/crayons						= 2,
+		/obj/item/toy/spinningtoy								= 2,
+		/obj/item/toy/prize/ripley								= 1,
+		/obj/item/toy/prize/fireripley							= 1,
+		/obj/item/toy/prize/deathripley							= 1,
+		/obj/item/toy/prize/gygax								= 1,
+		/obj/item/toy/prize/durand								= 1,
+		/obj/item/toy/prize/honk								= 1,
+		/obj/item/toy/prize/marauder							= 1,
+		/obj/item/toy/prize/seraph								= 1,
+		/obj/item/toy/prize/mauler								= 1,
+		/obj/item/toy/prize/odysseus							= 1,
+		/obj/item/toy/prize/phazon								= 1,
+		/obj/item/toy/prize/reticence							= 1,
+		/obj/item/toy/cards/deck								= 2,
+		/obj/item/toy/nuke										= 2,
+		/obj/item/toy/minimeteor								= 2,
+		/obj/item/toy/redbutton									= 2,
+		/obj/item/toy/talking/owl								= 2,
+		/obj/item/toy/talking/griffin							= 2,
+		/obj/item/toy/talking/skeleton							= 2,
+		/obj/item/weapon/coin/antagtoken						= 2,
+		/obj/item/stack/tile/fakespace/loaded					= 2,
+		/obj/item/toy/toy_xeno									= 2,
+		/obj/item/weapon/restraints/handcuffs/fake              = 2)
 
 /obj/machinery/computer/arcade/New()
 	..()
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(typesof(/obj/item/weapon/circuitboard/arcade) - /obj/item/weapon/circuitboard/arcade)
+		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/computer/arcade))
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
 
 /obj/machinery/computer/arcade/proc/prizevend()
+	if(prob(0.0001)) //1 in a million
+		new /obj/item/weapon/gun/energy/pulse(src)
+
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
-		new prizeselect(src.loc)
+		new prizeselect(src)
 
-		if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
-			new /obj/item/toy/ammo/gun(src.loc)
+	var/atom/movable/prize = pick(contents)
+	visible_message(
+		"<span class='notice'>[src] dispenses a [prize]!</span>",
+		"<span class='notice'>You hear a chime and a clunk.</span>")
 
-		else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
-			new	/obj/item/clothing/head/syndicatefake(src.loc)
-
-	else
-		var/atom/movable/prize = pick(contents)
-		prize.loc = src.loc
+	prize.loc = src.loc
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	..(severity)
@@ -89,7 +90,7 @@
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/arcade/battle
+	circuit = /obj/item/weapon/circuitboard/computer/arcade/battle
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -323,7 +324,7 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/arcade/orion_trail
+	circuit = /obj/item/weapon/circuitboard/computer/arcade/orion_trail
 	var/busy = 0 //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0
@@ -518,7 +519,7 @@
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
 						if(prob(90))
 							playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
-							var/turf/simulated/floor/F
+							var/turf/open/floor/F
 							for(F in orange(1, src))
 								F.ChangeTurf(F.baseturf)
 							say("Something slams into the floor around [src], exposing it to space!")
@@ -526,9 +527,9 @@
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
 								playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-								var/turf/space/T
+								var/turf/open/space/T
 								for(T in orange(1, src))
-									T.ChangeTurf(/turf/simulated/floor/plating/)
+									T.ChangeTurf(/turf/open/floor/plating/)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
 							playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
@@ -1033,21 +1034,23 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	corpse = /obj/effect/landmark/mobcorpse/orionsecurity
+	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
+				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/shield/energy)
 
-/obj/effect/landmark/mobcorpse/orionsecurity
+/obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/combat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseid = 1
-	corpseidjob = "Officer"
-	corpseidaccess = "Syndicate"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	helmet = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/weapon/storage/backpack
+	has_id = 1
+	id_job = "Officer"
+	id_access = "Syndicate"
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
@@ -1086,7 +1089,7 @@
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
 	sleep(3.6)
 	src.visible_message("<span class='userdanger'>[src] explodes!</span>")
-	explosion(src.loc, 1,2,4, flame_range = 3)
+	explosion(src.loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
 

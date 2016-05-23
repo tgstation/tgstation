@@ -18,8 +18,9 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
+	dog_fashion = /datum/dog_fashion/head
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -34,13 +35,13 @@
 	..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	spawn(2)
-		update_icon()
-		updateinfolinks()
+	update_icon()
+	updateinfolinks()
 
 
 /obj/item/weapon/paper/update_icon()
-	if(burn_state == 1)
+
+	if(burn_state == ON_FIRE)
 		icon_state = "paper_onfire"
 		return
 	if(info)
@@ -51,16 +52,19 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	assets.send(user)
+
 	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
 		if(!iscultist(user) && !user.stat)
 			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 			return
 	if(in_range(user, src) || isobserver(user))
-		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		if(user.is_literate())
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
 		user << "<span class='notice'>It is too far away.</span>"
@@ -71,16 +75,15 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated() || !usr.is_literate())
 		return
-
-	if(!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.disabilities & CLUMSY && prob(25))
-		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
-		H.damageoverlaytemp = 9001
-		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.disabilities & CLUMSY && prob(25))
+			H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+			H.damageoverlaytemp = 9001
+			H.update_damage_hud()
+			return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
@@ -199,6 +202,7 @@
 
 		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
+		var/obj/item/toy/crayon/C = P
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
 		t = replacetext(t, "\[small\]", "")
@@ -206,7 +210,7 @@
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
 
-		t = "<font face=\"[CRAYON_FONT]\" color=[P.colour]><b>[t]</b></font>"
+		t = "<font face=\"[CRAYON_FONT]\" color=[C.paint_color]><b>[t]</b></font>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
@@ -280,14 +284,14 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
-	if(burn_state == 1)
+	if(burn_state == ON_FIRE)
 		return
 
 	if(is_blind(user))
 		return
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		if(user.IsAdvancedToolUser())
+		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			return
 		else
@@ -298,11 +302,11 @@
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
-		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
+
+		if(!in_range(src, user))
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"
-
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
@@ -331,7 +335,6 @@
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
-
 
 
 	add_fingerprint(user)
@@ -396,7 +399,6 @@
 
 /obj/item/weapon/paper/crumpled/update_icon()
 	return
-
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

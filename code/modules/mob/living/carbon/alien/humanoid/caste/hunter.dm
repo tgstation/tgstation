@@ -4,31 +4,11 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh_s"
+	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/New()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
-
-/mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(150 to INFINITY)
-					healths.icon_state = "health0"
-				if(120 to 150)
-					healths.icon_state = "health1"
-				if(90 to 120)
-					healths.icon_state = "health2"
-				if(60 to 90)
-					healths.icon_state = "health3"
-				if(30 to 60)
-					healths.icon_state = "health4"
-				if(0 to 30)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1		//hunters are sanic
@@ -36,7 +16,6 @@
 
 
 //Hunter verbs
-
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
@@ -63,14 +42,12 @@
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return
 
-	if(leaping) //Leap while you leap, so you can leap while you leap
+	if(leaping || stat || buckled || lying)
 		return
 
 	if(!has_gravity(src) || !has_gravity(A))
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
-		return
-	if(lying)
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
@@ -91,7 +68,7 @@
 			var/blocked = 0
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "the [name]", src, 1))
+				if(H.check_shields(90, "the [name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")

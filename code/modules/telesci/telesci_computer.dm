@@ -3,7 +3,7 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/telesci_console
+	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -48,14 +48,14 @@
 /obj/machinery/computer/telescience/initialize()
 	..()
 	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
+		crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/bluespace_crystal))
+	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
@@ -78,7 +78,7 @@
 			M.buffer = null
 			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
 	src.attack_hand(user)

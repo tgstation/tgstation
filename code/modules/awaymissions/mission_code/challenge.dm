@@ -5,7 +5,7 @@
 	icon_state = "away"
 
 /area/awaymission/challenge/main
-	name = "\improper Danger Room"
+	name = "Danger Room"
 	icon_state = "away1"
 	requires_power = 0
 
@@ -30,3 +30,11 @@
 	active = 1
 	locked = 1
 	state = 2
+
+/obj/machinery/power/emitter/energycannon/RefreshParts()
+	return
+
+/obj/machinery/power/emitter/energycannon/magical
+	name = "wabbajack statue"
+	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
+	projectile_type = /obj/item/projectile/magic/change

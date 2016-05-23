@@ -38,10 +38,18 @@
 			user.update_inv_l_hand()
 		return 1
 
-/obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
+/obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
 		user << "<span class='warning'>The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
 		return
+	var/limb_regen = 0
+	if(user.hand) //we regen the arm before changing it into the weapon
+		limb_regen = user.regenerate_limb("l_arm", 1)
+	else
+		limb_regen = user.regenerate_limb("r_arm", 1)
+	if(limb_regen)
+		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		user.emote("scream")
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_hands(W)
 	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
@@ -88,7 +96,7 @@
 		H.update_hair()
 
 		if(blood_on_castoff)
-			var/turf/simulated/T = get_turf(H)
+			var/turf/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
 				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
@@ -150,6 +158,7 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/arm_blade/New(location,silent)
 	..()
@@ -164,7 +173,7 @@
 		return
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
-		T.table_destroy(1)
+		T.table_destroy()
 
 	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target
@@ -226,6 +235,7 @@
 	flags = ABSTRACT | NODROP
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
+	block_chance = 50
 
 	var/remaining_uses //Set by the changeling ability.
 
@@ -237,7 +247,7 @@
 /obj/item/clothing/head/helmet/space/changeling/dropped()
 	qdel(src)
 
-/obj/item/weapon/shield/changeling/IsShield()
+/obj/item/weapon/shield/changeling/hit_reaction()
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -247,7 +257,7 @@
 		return 0
 	else
 		remaining_uses--
-		return 1
+		return ..()
 
 
 /***************************************\
@@ -296,7 +306,7 @@
 	name = "flesh mass"
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
+	flags = STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -346,10 +356,9 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
-	flags = BLOCKHAIR | NODROP
+	flags = NODROP
 	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
-	flags_inv = HIDEEARS
-	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE
 
 /obj/item/clothing/head/helmet/changeling/dropped()
 	qdel(src)

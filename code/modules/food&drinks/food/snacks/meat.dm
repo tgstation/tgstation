@@ -31,21 +31,23 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-	name = "-meat"
+	name = " meat"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/plain/human/slice, reagents_per_slice)
 	..()
+	slice.subjectname = subjectname
+	slice.subjectjob = subjectjob
 	if(subjectname)
-		slice.subjectname = subjectname
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
-		slice.subjectjob = subjectjob
 		slice.name = "raw [subjectjob] cutlet"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency)
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()
+	S.subjectname = subjectname
+	S.subjectjob = subjectjob
 	if(subjectname)
 		S.name = "[subjectname] meatsteak"
 	else if(subjectjob)
@@ -54,19 +56,19 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
-	desc = "Because jello wasn't offensive enough to vegans"
+	desc = "Because jello wasn't offensive enough to vegans."
 	list_reagents = list("nutriment" = 3, "slimejelly" = 3)
 	filling_color = "#00FFFF"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	icon_state = "golemmeat"
-	desc = "Edible rocks, welcome to the future"
+	desc = "Edible rocks, welcome to the future."
 	list_reagents = list("nutriment" = 3, "iron" = 3)
 	filling_color = "#A9A9A9"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
-	desc = "From the slime pen to the rune to the kitchen, science"
+	desc = "From the slime pen to the rune to the kitchen, science."
 	filling_color = "#66CDAA"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
@@ -76,7 +78,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	icon_state = "plantmeat"
-	desc = "All the joys of healthy eating with all the fun of cannibalism"
+	desc = "All the joys of healthy eating with all the fun of cannibalism."
 	filling_color = "#E9967A"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
@@ -86,18 +88,18 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	icon_state = "flymeat"
-	desc = "Nothing says tasty like maggot filled radioactive mutant flesh"
+	desc = "Nothing says tasty like maggot filled radioactive mutant flesh."
 	list_reagents = list("nutriment" = 3, "uranium" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	name = "-bone"
 	icon_state = "skeletonmeat"
-	desc = "There's a point where this needs to stop and clearly we have passed it"
+	desc = "There's a point where this needs to stop, and clearly we have passed it."
 	filling_color = "#F0F0F0"
 	slice_path = null  //can't slice a bone into cutlets
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	name = "-meat (rotten)"
+	name = " meat (rotten)"
 	icon_state = "lizardmeat" //Close enough.
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
@@ -168,7 +170,17 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/spider
 
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath
+	name = "goliath meat"
+	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
+	list_reagents = list("nutriment" = 3, "toxin" = 5)
+	icon_state = "goliathmeat"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
+	visible_message("\The [src] finishes cooking!")
+	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
+	SSobj.burning -= src
+	qdel(src)
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -198,7 +210,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/spider
 	name = "spider steak"
 
-
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
+	name = "goliath steak"
+	desc = "A delicious, lava cooked steak."
+	burn_state = LAVA_PROOF
+	icon_state = "goliathsteak"
+	trash = null
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 

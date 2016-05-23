@@ -17,8 +17,9 @@ LINEN BINS
 	throw_range = 2
 	w_class = 1
 	item_color = "white"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
+	dog_fashion = /datum/dog_fashion/head/ghost
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
@@ -34,11 +35,14 @@ LINEN BINS
 	return
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/weapon/shard))
-		new /obj/item/stack/medical/gauze/improvised(src.loc)
+	if(istype(I, /obj/item/weapon/wirecutters) || I.is_sharp())
+		var/obj/item/stack/sheet/cloth/C = new (loc, 3)
+		transfer_fingerprints_to(C)
+		C.add_fingerprint(user)
 		qdel(src)
 		user << "<span class='notice'>You tear [src] up.</span>"
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -140,6 +144,10 @@ LINEN BINS
 	icon_state = "sheetbrown"
 	item_color = "cargo"
 
+/obj/item/weapon/bedsheet/black
+	icon_state = "sheetblack"
+	item_color = "black"
+
 /obj/item/weapon/bedsheet/centcom
 	name = "\improper Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
@@ -168,6 +176,19 @@ LINEN BINS
 	icon_state = "sheetian"
 	item_color = "ian"
 
+/obj/item/weapon/bedsheet/random
+	icon_state = "sheetrainbow"
+	item_color = "rainbow"
+	name = "random bedsheet"
+	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+
+/obj/item/weapon/bedsheet/random/New()
+	var/obj/item/weapon/bedsheet/B = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
+	name = initial(B.name)
+	desc = initial(B.desc)
+	icon_state = initial(B.icon_state)
+	item_state = initial(B.item_state)
+	item_color = initial(B.item_color)
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
@@ -175,7 +196,7 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 	var/amount = 10
 	var/list/sheets = list()
@@ -194,9 +215,12 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/update_icon()
 	switch(amount)
-		if(0)		icon_state = "linenbin-empty"
-		if(1 to 5)	icon_state = "linenbin-half"
-		else		icon_state = "linenbin-full"
+		if(0)
+			icon_state = "linenbin-empty"
+		if(1 to 5)
+			icon_state = "linenbin-half"
+		else
+			icon_state = "linenbin-full"
 
 /obj/structure/bedsheetbin/fire_act()
 	if(!amount)

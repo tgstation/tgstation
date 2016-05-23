@@ -37,7 +37,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -71,13 +71,12 @@
 	item_state = "p_suit"
 	item_color = "psyche"
 
-/obj/item/clothing/under/sexyclown
+/obj/item/clothing/under/rank/clown/sexy
 	name = "sexy-clown suit"
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	item_color = "sexyclown"
-	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/vice
@@ -118,7 +117,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -135,7 +134,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -244,6 +243,13 @@
 	icon_state = "white_suit"
 	item_state = "white_suit"
 	item_color = "white_suit"
+
+/obj/item/clothing/under/burial
+	name = "burial garments"
+	desc = "Traditional burial garments from the early 22nd century."
+	icon_state = "burial"
+	item_state = "burial"
+	item_color = "burial"
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -360,7 +366,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
-	burn_state = -1 //Won't burn in fires
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -491,9 +497,79 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/plaid_skirt/green
+	name = "green plaid skirt"
+	desc = "A preppy green skirt with a white blouse."
+	icon_state = "plaid_green"
+	item_state = "plaid_green"
+	item_color = "plaid_green"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 1
+	alt_covers_chest = 1
+
 /obj/item/clothing/under/jester
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+
+/obj/item/clothing/under/plasmaman
+	name = "Plasma-man Jumpsuit"
+	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
+	icon_state = "plasmaman"
+	item_state = "plasmaman"
+	item_color = "plasmaman"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	can_adjust = 0
+	strip_delay = 80
+	var/next_extinguish = 0
+	var/extinguish_cooldown = 100
+	var/extinguishes_left = 5
+
+
+/obj/item/clothing/under/plasmaman/examine(mob/user)
+	..()
+	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+
+
+/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	if(H.on_fire)
+		if(extinguishes_left)
+			if(next_extinguish > world.time)
+				return
+			next_extinguish = world.time + extinguish_cooldown
+			extinguishes_left--
+			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.ExtinguishMob()
+			PoolOrNew(/obj/effect/particle_effect/water, get_turf(H))
+	return 0
+
+/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
+	if (istype(E, /obj/item/device/extinguisher_refill))
+		if (extinguishes_left == 5)
+			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			return
+		else
+			extinguishes_left = 5
+			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			qdel(E)
+			return
+		return
+	return
+
+/obj/item/device/extinguisher_refill
+	name = "Plasma-man jumpsuit refill pack"
+	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
+	icon_state = "plasmarefill"
+
+/obj/item/clothing/under/rank/security/navyblue/russian
+	name = "russian officer's uniform"
+	desc = "The latest in fashionable russian outfits."
+	icon_state = "hostanclothes"
+	item_state = "hostanclothes"
+	item_color = "hostanclothes"

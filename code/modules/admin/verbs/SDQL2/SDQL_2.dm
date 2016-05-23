@@ -75,6 +75,7 @@
 			if(char == "/" || char == "*")
 				for(var/from in from_objs)
 					objs += SDQL_get_all(type, from)
+					CHECK_TICK
 
 			else if(char == "'" || char == "\"")
 				objs += locate(copytext(type, 2, length(type)))
@@ -85,6 +86,7 @@
 			for(var/datum/d in objs_temp)
 				if(SDQL_expression(d, query_tree["where"]))
 					objs += d
+				CHECK_TICK
 
 		switch(query_tree[1])
 			if("call")
@@ -93,14 +95,13 @@
 
 				for(var/datum/d in objs)
 					for(var/v in call_list)
-						// To stop any procs which sleep from executing slowly.
-						if(d)
-							if(hascall(d, v))
-								spawn() call(d, v)(arglist(args_list)) // Spawn in case the function sleeps.
+						SDQL_callproc(d, v, args_list)
+						CHECK_TICK
 
 			if("delete")
 				for(var/datum/d in objs)
-					del d
+					qdel(d)
+					CHECK_TICK
 
 			if("select")
 				var/text = ""
@@ -143,10 +144,15 @@
 						else
 							for(var/v in vals)
 								d.vars[v] = vals[v]
+						CHECK_TICK
 
 
 
 
+/proc/SDQL_callproc(thing, procname, args_list)
+	set waitfor = 0
+	if(hascall(thing, procname))
+		call(thing, procname)(arglist(args_list))
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
@@ -245,31 +251,37 @@
 		for(var/mob/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /turf))
 		for(var/turf/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /obj))
 		for(var/obj/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /area))
 		for(var/area/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /atom))
 		for(var/atom/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else
 		for(var/datum/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	return out
 

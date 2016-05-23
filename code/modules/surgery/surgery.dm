@@ -10,7 +10,7 @@
 	var/list/possible_locs = list() 							//Multiple locations -- c0
 	var/ignore_clothes = 0										//This surgery ignores clothes
 	var/obj/item/organ/organ									//Operable body part
-
+	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
 
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
@@ -19,11 +19,12 @@
 
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
-	if(step_in_progress)	return
+	if(step_in_progress)
+		return
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
-		if(S.try_op(user, target, user.zone_sel.selecting, user.get_active_hand(), src))
+		if(S.try_op(user, target, user.zone_selected, user.get_active_hand(), src))
 			return 1
 	return 0
 
@@ -42,7 +43,7 @@
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
 //As of Feb 21 2013 they are in code/modules/mob/living/carbon/carbon.dm, lines 459 and 51 respectively.
 //Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
-// var/list/organs (/mob/living/carbon/human) is the LIMBS of a Mob.
+// var/list/bodyparts (/mob/living/carbon/human) is the LIMBS of a Mob.
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
 // /code/modules/surgery/multiple_location_example.dm contains steps to setup a multiple location operation.
 

@@ -2,6 +2,7 @@
 	name = "Electrical Storm"
 	typepath = /datum/round_event/electrical_storm
 	earliest_start = 6000
+	min_players = 5
 	weight = 40
 	alertadmins = 0
 
@@ -31,5 +32,5 @@
 		return
 
 	for(var/obj/effect/landmark/epicentre in epicentreList)
-		for(var/obj/machinery/power/apc/apc in ultra_range(lightsoutRange, epicentre))
+		for(var/obj/machinery/power/apc/apc in urange(lightsoutRange, epicentre))
 			apc.overload_lighting()

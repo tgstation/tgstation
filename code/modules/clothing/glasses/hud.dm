@@ -11,6 +11,7 @@
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+	..()
 	if(hud_type && istype(user) && user.glasses == src)
 		var/datum/atom_hud/H = huds[hud_type]
 		H.remove_hud_from(user)
@@ -39,6 +40,21 @@
 	item_state = "glasses"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+
+/obj/item/clothing/glasses/hud/diagnostic
+	name = "Diagnostic HUD"
+	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
+	icon_state = "diagnostichud"
+	hud_type = DATA_HUD_DIAGNOSTIC
+
+/obj/item/clothing/glasses/hud/diagnostic/night
+	name = "Night Vision Diagnostic HUD"
+	desc = "A robotics diagnostic HUD fitted with a light amplifier."
+	icon_state = "diagnostichudnight"
+	item_state = "glasses"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
+
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
@@ -98,7 +114,7 @@
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle Hud"
 	desc = "A hud with multiple functions."
-	action_button_name = "Switch HUD"
+	actions_types = list(/datum/action/item_action/switch_hud)
 
 /obj/item/clothing/glasses/hud/toggle/attack_self(mob/user)
 	if(!ishuman(user))
@@ -142,13 +158,5 @@
 	user.update_inv_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		if(M.glasses == src)
-			M << "<span class='danger'>The [src] overloads and blinds you!</span>"
-			M.eye_blind = 3
-			M.eye_blurry = 5
-			M.disabilities |= NEARSIGHT
-			spawn(100)
-				M.disabilities &= ~NEARSIGHT
+	thermal_overload()
 	..()

@@ -4,13 +4,16 @@
 		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
-		if(distro)
+		if(distro && targloc)
 			targloc = spread(targloc, curloc, distro)
 		if(!throw_proj(target, targloc, user, params))
 			return 0
 		if(i > 1)
 			newshot()
-	user.changeNext_move(CLICK_CD_RANGE)
+	if(click_cooldown_override)
+		user.changeNext_move(click_cooldown_override)
+	else
+		user.changeNext_move(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return 1
@@ -23,7 +26,7 @@
 	if (zone_override)
 		BB.def_zone = zone_override
 	else
-		BB.def_zone = user.zone_sel.selecting
+		BB.def_zone = user.zone_selected
 	BB.suppressed = quiet
 
 	if(reagents && BB.reagents)
@@ -34,6 +37,7 @@
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
+	BB.ammo_casing = src
 	if(targloc == curloc)
 		if(target) //if the target is right on our location we go straight to bullet_act()
 			target.bullet_act(BB, BB.def_zone)

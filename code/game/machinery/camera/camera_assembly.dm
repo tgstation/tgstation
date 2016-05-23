@@ -78,7 +78,7 @@
 					usr << "<span class='warning'>No input found, please hang up and try your call again!</span>"
 					return
 
-				var/list/tempnetwork = text2list(input, ",")
+				var/list/tempnetwork = splittext(input, ",")
 				if(tempnetwork.len < 1)
 					usr << "<span class='warning'>No network found, please hang up and try your call again!</span>"
 					return
@@ -120,7 +120,7 @@
 			upgrades -= U
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(busy)

@@ -26,4 +26,6 @@
 	return update_icons()
 
 /mob/living/carbon/alien/larva/update_inv_handcuffed()
-	return
+	update_icons() //larva icon_state changes if cuffed/uncuffed.
+
+

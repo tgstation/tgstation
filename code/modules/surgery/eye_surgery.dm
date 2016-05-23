@@ -16,14 +16,15 @@
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully fixes [target]'s eyes!", "<span class='notice'>You succeed in fixing [target]'s eyes.</span>")
-	target.disabilities &= ~BLIND
-	target.disabilities &= ~NEARSIGHT
-	target.eye_blurry = 35	//this will fix itself slowly.
-	target.eye_stat = 0
+	target.cure_blind()
+	target.set_blindness(0)
+	target.cure_nearsighted()
+	target.blur_eyes(35)	//this will fix itself slowly.
+	target.set_eye_damage(0)
 	return 1
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/internal/brain))
+	if(target.getorgan(/obj/item/organ/brain))
 		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>", "<span class='warning'>You accidentally stab [target] right in the brain!</span>")
 		target.adjustBrainLoss(100)
 	else

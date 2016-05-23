@@ -2,8 +2,7 @@
 	//SECURITY//
 	////////////
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
-#define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
-									//I would just like the code ready should it ever need to be used.
+
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -22,8 +21,13 @@
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
-
-	//Admin PM
+	// asset_cache
+	if(href_list["asset_cache_confirm_arrival"])
+		//src << "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED."
+		var/job = text2num(href_list["asset_cache_confirm_arrival"])
+		completed_asset_jobs += job
+		return
+	// Admin PM
 	if(href_list["priv_msg"])
 		if (href_list["ahelp_reply"])
 			cmd_ahelp_reply(href_list["priv_msg"])
@@ -36,10 +40,14 @@
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	switch(href_list["_src_"])
-		if("holder")	hsrc = holder
-		if("usr")		hsrc = mob
-		if("prefs")		return prefs.process_link(usr,href_list)
-		if("vars")		return view_var_Topic(href,href_list,hsrc)
+		if("holder")
+			hsrc = holder
+		if("usr")
+			hsrc = mob
+		if("prefs")
+			return prefs.process_link(usr,href_list)
+		if("vars")
+			return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
 
@@ -94,8 +102,6 @@ var/next_external_rsc = 0
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
-	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
-		return null
 
 #if (PRELOAD_RSC == 0)
 	if(external_rsc_urls && external_rsc_urls.len)
@@ -133,6 +139,24 @@ var/next_external_rsc = 0
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
+
+	if (byond_version < config.client_error_version)		//Out of date client.
+		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
+		src << config.client_error_message
+		src << "Your version: [byond_version]"
+		src << "Required version: [config.client_error_version] or later"
+		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
+		if (holder)
+			src << "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade"
+		else
+			del(src)
+			return 0
+	else if (byond_version < config.client_warn_version)	//We have words for this client.
+		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
+		src << config.client_warn_message
+		src << "Your version: [byond_version]"
+		src << "Required version to remove this message: [config.client_warn_version] or later"
+		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
 	if (connection == "web")
 		if (!config.allowwebclient)
@@ -176,35 +200,41 @@ var/next_external_rsc = 0
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
+	findJoinDate()
 
-	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
-		spawn (rand(10,150))
-			if (src)
-				sync_client_with_db()
-	else
-		sync_client_with_db()
+	sync_client_with_db()
 
 	send_resources()
 
 	if(!void)
 		void = new()
+		void = void.MakeGreed()
 
 	screen += void
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		src << "<span class='info'>You have unread updates in the changelog.</span>"
 		if(config.aggressive_changelog)
-			src.changes()
+			changelog()
 		else
-			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
+			winset(src, "infowindow.changelog", "font-style=bold")
 
-	if (ckey in clientmessages)
-		for (var/message in clientmessages[ckey])
+	if(ckey in clientmessages)
+		for(var/message in clientmessages[ckey])
 			src << message
 		clientmessages.Remove(ckey)
 
-	if (config && config.autoconvert_notes)
+	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
+
+	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
+		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
+
+
+	//This is down here because of the browse() calls in tooltip/New()
+	if(!tooltips)
+		tooltips = new /datum/tooltip(src)
+
 
 //////////////
 //DISCONNECT//
@@ -298,7 +328,8 @@ var/next_external_rsc = 0
 //checks if a client is afk
 //3000 frames = 5 minutes
 /client/proc/is_afk(duration=3000)
-	if(inactivity > duration)	return inactivity
+	if(inactivity > duration)
+		return inactivity
 	return 0
 
 // Byond seemingly calls stat, each tick.
@@ -307,68 +338,22 @@ var/next_external_rsc = 0
 // See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
 /client/Stat()
 	. = ..()
-	sleep(1)
+	if (holder)
+		sleep(1)
+	else
+		sleep(5)
+		stoplag()
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-
-	spawn
-		// Preload the HTML interface. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
-		var/datum/html_interface/hi
-		for (var/type in typesof(/datum/html_interface))
-			hi = new type(null)
-			hi.sendResources(src)
-
-	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
-	spawn
-		if (crewmonitor && crewmonitor.initialized)
-			crewmonitor.sendResources(src)
-
-	//Send nanoui files to client
-	SSnano.send_resources(src)
+	//get the common files
 	getFiles(
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',
 		'html/browser/scannernew.css',
 		'html/browser/playeroptions.css',
-		'icons/pda_icons/pda_atmos.png',
-		'icons/pda_icons/pda_back.png',
-		'icons/pda_icons/pda_bell.png',
-		'icons/pda_icons/pda_blank.png',
-		'icons/pda_icons/pda_boom.png',
-		'icons/pda_icons/pda_bucket.png',
-		'icons/pda_icons/pda_chatroom.png',
-		'icons/pda_icons/pda_medbot.png',
-		'icons/pda_icons/pda_floorbot.png',
-		'icons/pda_icons/pda_cleanbot.png',
-		'icons/pda_icons/pda_crate.png',
-		'icons/pda_icons/pda_cuffs.png',
-		'icons/pda_icons/pda_eject.png',
-		'icons/pda_icons/pda_exit.png',
-		'icons/pda_icons/pda_flashlight.png',
-		'icons/pda_icons/pda_honk.png',
-		'icons/pda_icons/pda_mail.png',
-		'icons/pda_icons/pda_medical.png',
-		'icons/pda_icons/pda_menu.png',
-		'icons/pda_icons/pda_mule.png',
-		'icons/pda_icons/pda_notes.png',
-		'icons/pda_icons/pda_power.png',
-		'icons/pda_icons/pda_rdoor.png',
-		'icons/pda_icons/pda_reagent.png',
-		'icons/pda_icons/pda_refresh.png',
-		'icons/pda_icons/pda_scanner.png',
-		'icons/pda_icons/pda_signaler.png',
-		'icons/pda_icons/pda_status.png',
-		'icons/stamp_icons/large_stamp-clown.png',
-		'icons/stamp_icons/large_stamp-deny.png',
-		'icons/stamp_icons/large_stamp-ok.png',
-		'icons/stamp_icons/large_stamp-hop.png',
-		'icons/stamp_icons/large_stamp-cmo.png',
-		'icons/stamp_icons/large_stamp-ce.png',
-		'icons/stamp_icons/large_stamp-hos.png',
-		'icons/stamp_icons/large_stamp-rd.png',
-		'icons/stamp_icons/large_stamp-cap.png',
-		'icons/stamp_icons/large_stamp-qm.png',
-		'icons/stamp_icons/large_stamp-law.png'
 		)
+	spawn (10) //removing this spawn causes all clients to not get verbs.
+		//Precache the client with all other assets slowly, so as to not block other browse() calls
+		getFilesSlow(src, SSasset.cache, register_asset = FALSE)

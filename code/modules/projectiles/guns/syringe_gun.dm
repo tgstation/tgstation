@@ -17,7 +17,7 @@
 	..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
-/obj/item/weapon/gun/syringe/proc/newshot()
+/obj/item/weapon/gun/syringe/newshot()
 	if(!syringes.len) return
 
 	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]

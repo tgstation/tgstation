@@ -12,22 +12,30 @@
 	return default
 
 /proc/sanitize_inlist(value, list/List, default)
-	if(value in List)	return value
-	if(default)			return default
-	if(List && List.len)return pick(List)
+	if(value in List)
+		return value
+	if(default)
+		return default
+	if(List && List.len)
+		return pick(List)
 
 
 
 //more specialised stuff
 /proc/sanitize_gender(gender,neuter=0,plural=0, default="male")
 	switch(gender)
-		if(MALE, FEMALE)return gender
+		if(MALE, FEMALE)
+			return gender
 		if(NEUTER)
-			if(neuter)	return gender
-			else		return default
+			if(neuter)
+				return gender
+			else
+				return default
 		if(PLURAL)
-			if(plural)	return gender
-			else		return default
+			if(plural)
+				return gender
+			else
+				return default
 	return default
 
 /proc/sanitize_hexcolor(color, desired_format=3, include_crunch=0, default)
@@ -43,14 +51,18 @@
 	for(var/i=start, i<=len, i+=step_size)
 		var/ascii = text2ascii(color,i)
 		switch(ascii)
-			if(48 to 57)	. += ascii2text(ascii)		//numbers 0 to 9
-			if(97 to 102)	. += ascii2text(ascii)		//letters a to f
-			if(65 to 70)	. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
+			if(48 to 57)
+				. += ascii2text(ascii)		//numbers 0 to 9
+			if(97 to 102)
+				. += ascii2text(ascii)		//letters a to f
+			if(65 to 70)
+				. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
 			else
 				break
 
 	if(length(.) != desired_format)
-		if(default)	return default
+		if(default)
+			return default
 		return crunch + repeat_string(desired_format, "0")
 
 	return crunch + .

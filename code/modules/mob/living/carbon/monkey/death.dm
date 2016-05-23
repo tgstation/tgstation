@@ -1,22 +1,17 @@
-/mob/living/carbon/monkey/gib_animation(animate)
-	..(animate, "gibbed-m")
+/mob/living/carbon/monkey/gib_animation()
+	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-m")
 
-/mob/living/carbon/monkey/dust_animation(animate)
-	..(animate, "dust-m")
-
-/mob/living/carbon/monkey/dust(var/animation = 1)
-	..()
+/mob/living/carbon/monkey/dust_animation()
+	new /obj/effect/overlay/temp/dust_animation(loc, "dust-m")
 
 /mob/living/carbon/monkey/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)			healths.icon_state = "health5"
+	if(stat == DEAD)
+		return
+
 	stat = DEAD
 
 	if(!gibbed)
 		visible_message("<b>[src]</b> lets out a faint chimper as it collapses and stops moving...")	//ded -- Urist
-
-	update_canmove()
-	if(blind)	blind.layer = 0
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

@@ -7,7 +7,7 @@
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	var/heal_brute = 0
 	var/heal_burn = 0
@@ -29,12 +29,13 @@
 		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
 		return 1
 
-	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return 1
-
+	var/obj/item/bodypart/affecting
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
+		affecting = H.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting) //Missing limb?
+			user << "<span class='warning'>[H] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
+			return
 		if(stop_bleeding)
 			if(H.bleedsuppress)
 				user << "<span class='warning'>[H]'s bleeding is already bandaged!</span>"
@@ -42,6 +43,7 @@
 			else if(!H.blood_max)
 				user << "<span class='warning'>[H] isn't bleeding!</span>"
 				return
+
 
 	if(isliving(M))
 		if(!M.can_inject(user, 1))
@@ -68,13 +70,17 @@
 			else if(user.gender == FEMALE)
 				t_himself = "herself"
 			user.visible_message("<span class='notice'>[user] starts to apply [src] on [t_himself]...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
-			if(!do_mob(user, M, self_delay))	return
+			if(!do_mob(user, M, self_delay))
+				return
 			user.visible_message("<span class='green'>[user] applies [src] on [t_himself].</span>", "<span class='green'>You apply [src] on yourself.</span>")
 
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+		affecting = H.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting) //Missing limb?
+			user << "<span class='warning'>[H] doesn't have \a [parse_zone(user.zone_selected)]!</span>"
+			return
 		if(stop_bleeding)
 			if(!H.bleedsuppress) //so you can't stack bleed suppression
 				H.suppress_bloodloss(stop_bleeding)
@@ -100,6 +106,7 @@
 	icon_state = "brutepack"
 	heal_brute = 40
 	origin_tech = "biotech=1"
+	self_delay = 20
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -108,7 +115,7 @@
 	singular_name = "medical gauze"
 	icon_state = "gauze"
 	stop_bleeding = 1800
-	self_delay = 80
+	self_delay = 20
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
@@ -129,3 +136,4 @@
 	icon_state = "ointment"
 	heal_burn = 40
 	origin_tech = "biotech=1"
+	self_delay = 20

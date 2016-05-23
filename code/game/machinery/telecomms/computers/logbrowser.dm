@@ -14,7 +14,7 @@
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
 	req_access = list(access_tcomsat)
-	circuit = "/obj/item/weapon/circuitboard/comm_server"
+	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())
@@ -92,7 +92,7 @@
 
 					else if(mobtype in silicons || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 						race = "Artificial Life"
-						language = race
+						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
 					else if(istype(mobtype, /obj))
 						race = "Machinery"
@@ -108,7 +108,7 @@
 
 					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
-					if(language == "Human" || universal_translate || C.parameters["uspeech"])
+					if(language == "Humanoid" || universal_translate || C.parameters["uspeech"])
 						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
 						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
 						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
@@ -173,7 +173,7 @@
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
-					for(var/obj/machinery/telecomms/server/T in ultra_range(25, src))
+					for(var/obj/machinery/telecomms/server/T in urange(25, src))
 						if(T.network == network)
 							servers.Add(T)
 
@@ -206,7 +206,7 @@
 
 		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
 
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
 			if(length(newnet) > 15)
 				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
@@ -221,12 +221,5 @@
 	return
 
 /obj/machinery/computer/telecomms/server/attackby()
-	..()
-	src.updateUsrDialog()
-	return
-
-/obj/machinery/computer/telecomms/server/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols.</span>"
+	. = ..()
+	updateUsrDialog()

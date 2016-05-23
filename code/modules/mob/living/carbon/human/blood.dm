@@ -2,6 +2,7 @@
 				BLOOD SYSTEM
 ****************************************************/
 //Blood levels
+var/const/BLOOD_VOLUME_NORMAL = 560
 var/const/BLOOD_VOLUME_SAFE = 501
 var/const/BLOOD_VOLUME_OKAY = 336
 var/const/BLOOD_VOLUME_BAD = 224
@@ -12,7 +13,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
-
 	if(vessel)
 		return
 
@@ -22,15 +22,23 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(NOBLOOD in dna.species.specflags)
 		return
 
-	vessel.add_reagent("blood",560)
-	spawn(1)
-		fixblood()
-
-//Resets blood data
-/mob/living/carbon/human/proc/fixblood()
+	vessel.add_reagent("blood", BLOOD_VOLUME_NORMAL)
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.blood_type,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"features"=null, "factions"=null)
+			B.data = list(
+			"donor" = src,
+			"viruses" = null,
+			"blood_DNA" = dna.unique_enzymes,
+			"blood_type" = dna.blood_type,
+			"resistances" = null,
+			"trace_chem" = null,
+			"mind" = null,
+			"ckey" = null,
+			"gender" = null,
+			"real_name" = null,
+			"cloneable" = null,
+			"features" = null,
+			"factions" = null)
 
 /mob/living/carbon/human/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
@@ -46,14 +54,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/handle_blood()
 
 	if(NOBLOOD in dna.species.specflags)
+		blood_max = 0
 		return
 
-	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
-
+	if(stat != DEAD && bodytemperature >= 225) // Dead or cryosleep people do not pump the blood.
 		var/blood_volume = round(vessel.get_reagent_amount("blood"))
 
 		//Blood regeneration if there is some space
-		if(blood_volume < 560 && blood_volume)
+		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 			if(B) // Make sure there's some blood at all
 				if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
@@ -63,10 +71,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							break
 
 				B.volume += 0.1 // regenerate blood VERY slowly
-				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+				if(reagents.has_reagent("nutriment"))	//Getting food speeds it up
 					B.volume += 0.4
 					reagents.remove_reagent("nutriment", 0.1)
-				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+				if(reagents.has_reagent("iron"))	//Hematogen candy anyone?
 					B.volume += 0.4
 					reagents.remove_reagent("iron", 0.1)
 
@@ -82,17 +90,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					update_body()
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel [word].</span>"
-				if(oxyloss < 20)
-					oxyloss += 3
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 100)
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = 1
 					update_body()
-				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
+				adjustOxyLoss((BLOOD_VOLUME_NORMAL - blood_volume) / 50)
 				if(prob(5))
-					eye_blurry += 6
+					blur_eyes(6)
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel very [word].</span>"
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
@@ -106,12 +111,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		//Bleeding out
 		blood_max = 0
-		for(var/obj/item/organ/limb/org in organs)
-			var/brutedamage = org.brute_dam
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			var/brutedamage = BP.brute_dam
 
 			//We want an accurate reading of .len
-			listclearnulls(org.embedded_objects)
-			blood_max += 0.5*org.embedded_objects.len
+			listclearnulls(BP.embedded_objects)
+			blood_max += 0.5*BP.embedded_objects.len
 
 			if(brutedamage > 30)
 				blood_max += 0.5
@@ -121,6 +127,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0
+		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
+			blood_max += 3
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -216,10 +224,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	var/datum/reagent/blood/our = get_blood(vessel)
 
-	if (!injected || !our)
+	if (!injected || !our || !dna)
 		return
 
-	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"],injected.data["species"],our.data["species"]) )
+	if (!(injected.data["blood_type"] in get_safe_blood(dna.blood_type)) || injected.data["species"] != dna.species.id)
 		reagents.add_reagent("toxin",amount * 0.5)
 		our.on_merge(injected.data) //still transfer viruses and such, even if incompatibles bloods
 		reagents.update_total()
@@ -238,28 +246,28 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-/proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
-	if(!donor || !receiver) return 0
-
-	if(donor_species && receiver_species)
-		if(donor_species != receiver_species)
-			return 1
-
-	var/donor_antigen = copytext(donor,1,lentext(donor))
-	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
-	var/donor_rh = (findtext(donor,"+")>0)
-	var/receiver_rh = (findtext(receiver,"+")>0)
-
-	if(donor_rh && !receiver_rh) return 1
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O") return 1
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O") return 1
-		if("O")
-			if(donor_antigen != "O") return 1
-		//AB is a universal receiver.
-	return 0
+// This is has more potential uses, and is probably faster than the old proc.
+/proc/get_safe_blood(bloodtype)
+	. = list()
+	if(!bloodtype)
+		return
+	switch(bloodtype)
+		if("A-")
+			return list("A-", "O-")
+		if("A+")
+			return list("A", "A+", "O-", "O+")
+		if("B-")
+			return list("B-", "O-")
+		if("B+")
+			return list("B-", "B+", "O-", "O+")
+		if("AB-")
+			return list("A-", "B-", "O-", "AB-")
+		if("AB+")
+			return list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+")
+		if("O-")
+			return list("O-")
+		if("O+")
+			return list("O-", "O+")
 
 /proc/blood_splatter(target,datum/reagent/blood/source,large)
 

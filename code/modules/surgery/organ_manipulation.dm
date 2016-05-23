@@ -7,13 +7,13 @@
 	requires_organic_bodypart = 0
 
 /datum/surgery/organ_manipulation/soft
-	possible_locs = list("groin", "eyes", "mouth")
+	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
 	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
-	possible_locs = list("chest", "head", "groin", "eyes", "mouth")
+	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs)
 
@@ -23,11 +23,11 @@
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
-	implements = list(/obj/item/organ/internal = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
+	implements = list(/obj/item/organ = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
 	var/implements_extract = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
 	var/implements_mend = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	var/current_type
-	var/obj/item/organ/internal/I = null
+	var/obj/item/organ/I = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
@@ -36,15 +36,18 @@
 /datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = tool
-		if(!WT.isOn())	return 0
+		if(!WT.isOn())
+			return 0
 
 	else if(istype(tool, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = tool
-		if(!L.lit)	return 0
+		if(!L.lit)
+			return 0
 
 	else if(istype(tool, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = tool
-		if(!M.lit)	return 0
+		if(!M.lit)
+			return 0
 
 	return 1
 
@@ -68,7 +71,7 @@
 			user << "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 		else
-			for(var/obj/item/organ/internal/O in organs)
+			for(var/obj/item/organ/O in organs)
 				O.on_find(user)
 				organs -= O
 				organs[O.name] = O

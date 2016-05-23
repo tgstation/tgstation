@@ -11,7 +11,10 @@
 	faction = list("alien")
 	ventcrawler = 2
 	languages = ALIEN
+	sight = SEE_MOBS
+	see_in_dark = 4
 	verb_say = "hisses"
+	bubble_icon = "alien"
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1
 
@@ -30,13 +33,18 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/internal/brain/alien
-	internal_organs += new /obj/item/organ/internal/alien/hivenode
-	for(var/obj/item/organ/internal/I in internal_organs)
+	internal_organs += new /obj/item/organ/brain/alien
+	internal_organs += new /obj/item/organ/alien/hivenode
+	internal_organs += new /obj/item/organ/tongue/alien
+
+	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
+
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return
@@ -128,19 +136,12 @@
 
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-
-/mob/living/carbon/alien/Stun(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-	else
-		// add some movement delay
-		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
-	return
 
 /mob/living/carbon/alien/getTrail()
-	return "xltrails"
-
+	if(getBruteLoss() < 200)
+		return pick (list("xltrails_1", "xltrails2"))
+	else
+		return pick (list("xttrails_1", "xttrails2"))
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
@@ -149,7 +150,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
+				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 					client.images += I
@@ -173,7 +174,49 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
+/mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
+	src << "<span class='noticealien'>You begin to evolve!</span>"
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	if(mind)
+		mind.transfer_to(new_xeno)
+	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
 #undef HEAT_DAMAGE_LEVEL_3
+
+
+/mob/living/carbon/alien/update_sight()
+	if(!client)
+		return
+	if(stat == DEAD)
+		sight |= SEE_TURFS
+		sight |= SEE_MOBS
+		sight |= SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		return
+
+	sight = SEE_MOBS
+	if(nightvision)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+	else
+		see_in_dark = 4
+		see_invisible = SEE_INVISIBLE_LIVING
+
+	if(client.eye != src)
+		var/atom/A = client.eye
+		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
+			return
+
+	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
+		sight |= E.sight_flags
+		if(E.dark_view)
+			see_in_dark = max(see_in_dark, E.dark_view)
+		if(E.see_invisible)
+			see_invisible = min(see_invisible, E.see_invisible)
+
+	if(see_override)
+		see_invisible = see_override
+

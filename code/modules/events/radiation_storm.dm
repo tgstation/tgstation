@@ -20,8 +20,10 @@
 /datum/round_event/radiation_storm/start()
 	for(var/mob/living/carbon/C in living_mob_list)
 		var/turf/T = get_turf(C)
-		if(!T)			continue
-		if(T.z != 1)	continue
+		if(!T)
+			continue
+		if(T.z != 1)
+			continue
 
 		var/skip = 0
 		for(var/a in protected_areas)
@@ -29,7 +31,8 @@
 				skip = 1
 				continue
 
-		if(skip)	continue
+		if(skip)
+			continue
 
 		if(locate(/obj/machinery/power/apc) in T)	//damn you maint APCs!!
 			continue

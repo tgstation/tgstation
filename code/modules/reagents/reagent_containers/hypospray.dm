@@ -26,7 +26,7 @@
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction)
+		reagents.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/list/injected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)
@@ -112,3 +112,19 @@
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list("morphine" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
+	name = "BVAK autoinjector"
+	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
+	icon_state = "stimpen"
+	volume = 60
+	amount_per_transfer_from_this = 30
+	list_reagents = list("atropine" = 10, "epinephrine" = 10, "salbutamol" = 20, "spaceacillin" = 20)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	name = "survival medipen"
+	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. "
+	icon_state = "stimpen"
+	volume = 80
+	amount_per_transfer_from_this = 80
+	list_reagents = list("salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "tricordrazine" = 15, "epinephrine" = 10, "omnizine" = 5)

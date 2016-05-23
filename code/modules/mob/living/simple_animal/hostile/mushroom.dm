@@ -27,6 +27,7 @@
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
+	deathmessage = "fainted."
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
@@ -60,12 +61,12 @@
 	health = maxHealth
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
@@ -84,14 +85,13 @@
 		qdel(src)
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/revive()
-	..()
-	icon_state = "mushroom_color"
-	UpdateMushroomCap()
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		icon_state = "mushroom_color"
+		UpdateMushroomCap()
+		. = 1
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	if(!gibbed)
-		visible_message("[src] fainted.")
 	..(gibbed)
 	UpdateMushroomCap()
 
@@ -105,7 +105,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("[src] slowly begins to recover.")
 	faint_ticker = 0
-	revive()
+	revive(full_heal = 1)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	spawn(300)

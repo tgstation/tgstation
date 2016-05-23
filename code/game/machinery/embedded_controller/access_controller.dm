@@ -161,7 +161,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.close())
-			if(stat & NOPOWER || lostPower || !A || A.gc_destroyed)
+			if(stat & NOPOWER || lostPower || !A || qdeleted(A))
 				goIdle(1)
 				return
 			A.bolt()
@@ -207,7 +207,7 @@
 	A.unbolt()
 	spawn()
 		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !A.gc_destroyed)
+			if(stat | (NOPOWER) && !lostPower && A && !qdeleted(A))
 				A.bolt()
 		goIdle(1)
 

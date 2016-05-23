@@ -23,13 +23,23 @@
 	var/state = 0
 	var/locked = 0
 
+	var/projectile_type = /obj/item/projectile/beam/emitter
+
+	var/projectile_sound = 'sound/weapons/emitter.ogg'
+
 /obj/machinery/power/emitter/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
+	B.apply_default_parts(src)
 	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/emitter
+	name = "circuit board (Emitter)"
+	build_path = /obj/machinery/power/emitter
+	origin_tech = "programming=4;powerstorage=5;engineering=5"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -62,7 +72,7 @@
 
 /obj/machinery/power/emitter/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -157,10 +167,10 @@
 			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			src.shot_number = 0
 
-		var/obj/item/projectile/beam/emitter/A = PoolOrNew(/obj/item/projectile/beam/emitter,src.loc)
+		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
 		A.dir = src.dir
-		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
+		playsound(src.loc, projectile_sound, 25, 1)
 
 		if(prob(35))
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -224,7 +234,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20, target = src))
+					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = 2
 						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
@@ -235,23 +245,22 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20, target = src))
+					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = 1
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 						disconnect_from_network()
 		return
 
-	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(emagged)
 			user << "<span class='warning'>The lock seems to be broken!</span>"
 			return
-		if(src.allowed(user))
+		if(allowed(user))
 			if(active)
-				src.locked = !src.locked
+				locked = !locked
 				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 			else
-				src.locked = 0 //just in case it somehow gets locked
 				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
@@ -266,10 +275,10 @@
 	if(default_pry_open(W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
 
-	..()
-	return
+	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
 	if(!emagged)

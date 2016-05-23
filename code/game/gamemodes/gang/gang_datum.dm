@@ -42,8 +42,6 @@
 
 	name = (gangname ? gangname : pick(gang_name_pool))
 	gang_name_pool -= name
-	if(name == "Sleeping Carp")
-		fighting_style = "martial"
 
 	ganghud = new()
 	log_game("The [name] Gang has been created. Their gang color is [color].")
@@ -102,7 +100,7 @@
 			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0)
 			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = src
-			user.put_in_any_hand_if_possible(outfit)
+			user.put_in_hands(outfit)
 			return 1
 
 	return 0
@@ -119,8 +117,7 @@
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
 				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
-				if(beep)
-					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			return
 
 
 //////////////////////////////////////////// INCOME

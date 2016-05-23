@@ -6,7 +6,6 @@
 	nodamage = 0
 	flag = "bullet"
 
-
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
 	stamina = 80
@@ -34,11 +33,30 @@
 	name = "pellet"
 	damage = 15
 
-/obj/item/projectile/bullet/pellet/weak
-	damage = 3
+/obj/item/projectile/bullet/pellet/weak/New()
+	damage = 6
+	range = rand(8)
 
-/obj/item/projectile/bullet/pellet/random/New()
-	damage = rand(10)
+/obj/item/projectile/bullet/pellet/weak/on_range()
+ 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+ 	sparks.set_up(1, 1, src)
+ 	sparks.start()
+ 	..()
+
+/obj/item/projectile/bullet/pellet/overload/New()
+	damage = 3
+	range = rand(10)
+
+/obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = 0)
+ 	..()
+ 	explosion(target, 0, 0, 2)
+
+/obj/item/projectile/bullet/pellet/overload/on_range()
+ 	explosion(src, 0, 0, 2)
+ 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+ 	sparks.set_up(3, 3, src)
+ 	sparks.start()
+ 	..()
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
@@ -73,7 +91,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
+		M.adjust_fire_stacks(4)
 		M.IgniteMob()
 
 
@@ -101,6 +119,26 @@
 	weaken = 8
 	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
+
+/obj/item/projectile/bullet/meteorshot/weak
+	damage = 10
+	weaken = 4
+	stun = 4
+
+/obj/item/projectile/bullet/honker
+	damage = 0
+	weaken = 5
+	stun = 5
+	forcedodge = 1
+	nodamage = 1
+	hitsound = 'sound/items/bikehorn.ogg'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana"
+	range = 200
+
+/obj/item/projectile/bullet/honker/New()
+	..()
+	SpinAnimation()
 
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -140,6 +178,7 @@
 		if(blocked != 100) // not completely blocked
 			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 				return 1
 			else
@@ -152,12 +191,11 @@
 	reagents.handle_reactions()
 	return 1
 
-/obj/item/projectile/bullet/dart/metalfoam
-	New()
-		..()
-		reagents.add_reagent("aluminium", 15)
-		reagents.add_reagent("foaming_agent", 5)
-		reagents.add_reagent("facid", 5)
+/obj/item/projectile/bullet/dart/metalfoam/New()
+	..()
+	reagents.add_reagent("aluminium", 15)
+	reagents.add_reagent("foaming_agent", 5)
+	reagents.add_reagent("facid", 5)
 
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe

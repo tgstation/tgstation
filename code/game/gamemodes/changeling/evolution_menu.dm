@@ -372,7 +372,7 @@ var/list/sting_paths
 
 	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
 	if(ishuman(C))
-		var/datum/changelingprofile/prof = mind.changeling.add_profile(C)
+		var/datum/changelingprofile/prof = mind.changeling.add_new_profile(C, src)
 		mind.changeling.first_prof = prof
 	return 1
 
@@ -398,7 +398,7 @@ var/list/sting_paths
 				p.on_refund(src)
 		if(hud_used)
 			hud_used.lingstingdisplay.icon_state = null
-			hud_used.lingstingdisplay.invisibility = 101
+			hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)

@@ -29,6 +29,10 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
+/obj/item/clothing/mask/facehugger/lamarr
+	name = "Lamarr"
+	sterile = 1
+
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
 	return
@@ -84,7 +88,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	return 0
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
-	if(CanHug(AM))
+	if(CanHug(AM) && Adjacent(AM))
 		return Attach(AM)
 	return 0
 
@@ -114,11 +118,9 @@ var/const/MAX_ACTIVE_TIME = 400
 		attached++
 		spawn(MAX_IMPREGNATION_TIME)
 			attached = 0
-	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
+	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return 0
-	if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
-		return 0
-	if(loc == M)
+	if(M.getorgan(/obj/item/organ/body_egg/alien_embryo))
 		return 0
 	if(stat != CONSCIOUS)
 		return 0
@@ -179,8 +181,9 @@ var/const/MAX_ACTIVE_TIME = 400
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 
-		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
-			new /obj/item/organ/internal/body_egg/alien_embryo(target)
+		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
+		if((!LC || LC.status != ORGAN_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+			new /obj/item/organ/body_egg/alien_embryo(target)
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target
@@ -223,14 +226,14 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 0
 	if(M.stat == DEAD)
 		return 0
-	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
+	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return 0
 
 	if(iscorgi(M) || ismonkey(M))
 		return 1
 
 	var/mob/living/carbon/C = M
-	if(ishuman(C))
+	if(ishuman(C) && !(slot_wear_mask in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
 			return 0

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
+	flags = NOBLUDGEON
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
 		"red"			= rgb(255,0,0),
@@ -19,10 +20,10 @@
 
 /obj/item/device/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
 	//Make sure we only paint adjacent items
-	if(proximity_flag!= 1)
+	if(!proximity_flag)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
+	if(!istype(A,/obj/machinery/atmospherics/pipe))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A

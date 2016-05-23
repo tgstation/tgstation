@@ -2,6 +2,7 @@
 	name = "Prison Break"
 	typepath = /datum/round_event/prison_break
 	max_occurrences = 2
+	min_players = 5
 
 /datum/round_event/prison_break
 	announceWhen = 50
@@ -49,4 +50,4 @@
 				temp.prison_open()
 			else if(istype(O,/obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O
-				temp.releasetime = 1
+				temp.timer_end(forced = TRUE)

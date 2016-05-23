@@ -25,7 +25,8 @@
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR><BR>
+			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
@@ -101,7 +102,8 @@
 					dat += "[line]<BR>"
 				dat+= "*******<BR><BR>"
 				for(var/datum/job/job in SSjob.occupations)
-					if(!job)	continue
+					if(!job)
+						continue
 					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 				usr << browse(dat, "window=jobdebug;size=600x500")
 
@@ -200,7 +202,7 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 			else if (ticker.mode)
 				alert("The game mode is [ticker.mode.name]")
@@ -303,7 +305,7 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!ticker)
+			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
@@ -345,11 +347,9 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
 
-			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be between 4 and 128)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
+			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
 			if (newBombCap < 4)
 				return
-			if (newBombCap > 128)
-				newBombCap = 128
 
 			MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
 			MAX_EX_HEAVY_RANGE = round(newBombCap/2)
@@ -389,62 +389,8 @@
 				L.fix()
 
 		if("floorlava")
-			if(!check_rights(R_FUN))
-				return
-			if(floorIsLava)
-				usr << "The floor is lava already."
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","LF")
-
-			//Options
-			var/length = input(usr, "How long will the lava last? (in seconds)", "Length", 180) as num
-			length = min(abs(length), 1200)
-
-			var/damage = input(usr, "How deadly will the lava be?", "Damage", 2) as num
-			damage = min(abs(damage), 100)
-
-			var/sure = alert(usr, "Are you sure you want to do this?", "Confirmation", "YES!", "Nah")
-			if(sure == "Nah")
-				return
-			floorIsLava = 1
-
-			message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.")
-
-			for(var/turf/simulated/floor/F in world)
-				if(F.z == ZLEVEL_STATION)
-					F.name = "lava"
-					F.desc = "The floor is LAVA!"
-					F.overlays += "lava"
-					F.lava = 1
-
-			spawn(0)
-				for(var/i = i, i < length, i++) // 180 = 3 minutes
-					if(damage)
-						for(var/mob/living/carbon/L in living_mob_list)
-							if(istype(L.loc, /turf/simulated/floor)) // Are they on LAVA?!
-								var/turf/simulated/floor/F = L.loc
-								if(F.lava)
-									var/safe = 0
-									for(var/obj/structure/O in F.contents)
-										if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
-											safe = 1
-											break
-									if(!safe)
-										L.adjustFireLoss(damage)
-
-
-					sleep(10)
-
-				for(var/turf/simulated/floor/F in world) // Reset everything.
-					if(F.z == ZLEVEL_STATION)
-						F.name = initial(F.name)
-						F.desc = initial(F.desc)
-						F.overlays.Cut()
-						F.lava = 0
-						F.update_icon()
-				floorIsLava = 0
-			return
+			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
+			storm.weather_start_up()
 
 		if("virus")
 			if(!check_rights(R_FUN))
@@ -553,7 +499,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OM")
-			usr.client.only_me()
+			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
@@ -580,6 +526,18 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+
+		if("ctfbutton")
+			if(!check_rights(R_ADMIN))
+				return
+			var/ctf_enabled = 0
+			for(var/obj/machinery/capture_the_flag/CTF in machines)
+				ctf_enabled = !CTF.ctf_enabled
+				CTF.ctf_enabled = !CTF.ctf_enabled
+				CTF.TellGhost()
+			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+
 	if(E)
 		E.processing = 0
 		if(E.announceWhen>0)

@@ -6,7 +6,7 @@
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(access_medical, access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/med_data
+	circuit = /obj/item/weapon/circuitboard/computer/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -28,7 +28,7 @@
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
@@ -170,8 +170,9 @@
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/obj/machinery/bot/medbot/M in machines)
-						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
+					for(var/mob/living/simple_animal/bot/medbot/M in living_mob_list)
+						if(M.z != src.z)
+							continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
@@ -205,7 +206,7 @@
 	if(!(active2 in data_core.medical))
 		src.active2 = null
 
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
@@ -247,6 +248,12 @@
 				src.active2 = null
 				src.authenticated = 1
 				src.rank = "AI"
+				src.screen = 1
+			else if(IsAdminGhost(usr))
+				src.active1 = null
+				src.active2 = null
+				src.authenticated = 1
+				src.rank = "Central Command"
 				src.screen = 1
 			else if(istype(src.scan, /obj/item/weapon/card/id))
 				src.active1 = null

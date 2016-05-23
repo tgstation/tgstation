@@ -23,7 +23,7 @@
 	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = 101
+	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind && mind.changeling && mind.changeling.chosen_sting)
@@ -38,7 +38,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user.loc, target.loc, null, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
+	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
 		return
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)
@@ -74,6 +74,9 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
+	if(NOTRANSSTING in selected_dna.dna.species.specflags)
+		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
+		return
 	..()
 
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
@@ -98,7 +101,7 @@
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
-			user.real_name = NewDNA.real_name
+			C.real_name = NewDNA.real_name
 			NewDNA.transfer_identity(C, transfer_SE=1)
 			C.updateappearance(mutcolor_update=1)
 			C.domutcheck()
@@ -172,7 +175,7 @@
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.add_profile(target, user)
+		user.mind.changeling.add_new_profile(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
@@ -198,12 +201,12 @@
 	chemical_cost = 25
 	dna_cost = 1
 
-/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "blind sting")
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
-	target.disabilities |= NEARSIGHT
-	target.eye_blind = 20
-	target.eye_blurry = 40
+	target.become_nearsighted()
+	target.blind_eyes(20)
+	target.blur_eyes(40)
 	feedback_add_details("changeling_powers","BS")
 	return 1
 

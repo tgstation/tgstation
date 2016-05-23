@@ -6,7 +6,7 @@
 	can_suppress = 1
 	burst_size = 3
 	fire_delay = 2
-	action_button_name = "Toggle Firemode"
+	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/weapon/gun/projectile/automatic/proto
 	name = "\improper NanoTrasen Saber SMG"
@@ -67,7 +67,9 @@
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
-	return
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/weapon/gun/projectile/automatic/can_shoot()
 	return get_ammo()
@@ -111,16 +113,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/wt550
 	name = "security auto rifle"
-	desc = "A outdated personal defence weapon. Uses 9mm rounds and is designated the WT-550 Automatic Rifle."
+	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
 	can_suppress = 0
 	burst_size = 0
-
-/obj/item/weapon/gun/projectile/automatic/wt550/ui_action_click()
-	return
+	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
 	..()
@@ -134,66 +134,6 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW"
-	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
-	icon_state = "l6closed100"
-	item_state = "l6closedmag"
-	w_class = 5
-	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	var/cover_open = 0
-	can_suppress = 0
-	burst_size = 5
-	fire_delay = 3
-	pin = /obj/item/device/firing_pin/implant/pindicate
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
-	pin = /obj/item/device/firing_pin
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	cover_open = !cover_open
-	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
-	update_icon()
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(cover_open)
-		user << "<span class='warning'>[src]'s cover is open! Close it before firing!</span>"
-	else
-		..()
-		update_icon()
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
-	if(loc != user)
-		..()
-		return	//let them pick it up
-	if(!cover_open || (cover_open && !magazine))
-		..()
-	else if(cover_open && magazine)
-		//drop the mag
-		magazine.update_icon()
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine = null
-		update_icon()
-		user << "<span class='notice'>You remove the magazine from [src].</span>"
-
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
-	if(!cover_open)
-		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
-		return
-	..()
 
 /obj/item/weapon/gun/projectile/automatic/m90
 	name = "\improper M-90gl Carbine"
@@ -295,3 +235,47 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
+
+
+
+// Bulldog shotgun //
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	name = "\improper 'Bulldog' Shotgun"
+	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	pin = /obj/item/device/firing_pin/implant/pindicate
+	actions_types = list()
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
+	..()
+	empty_alarm()
+	return

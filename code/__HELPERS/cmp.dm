@@ -31,3 +31,11 @@ var/cmp_field = "name"
 
 /proc/cmp_subsystem_priority(datum/subsystem/a, datum/subsystem/b)
 	return b.priority - a.priority
+
+/proc/cmp_subsystem_display(datum/subsystem/a, datum/subsystem/b)
+	if(a.display == b.display)
+		return sorttext(b.name, a.name)
+	return a.display - b.display
+
+/proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
+	return B.priority - A.priority

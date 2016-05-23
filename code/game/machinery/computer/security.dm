@@ -6,7 +6,7 @@
 	icon_screen = "security"
 	icon_keyboard = "security_key"
 	req_one_access = list(access_security, access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/secure_data
+	circuit = /obj/item/weapon/circuitboard/computer/secure_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -25,14 +25,17 @@
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		if(!user.drop_item())
-			return
-		O.loc = src
-		scan = O
-		user << "<span class='notice'>You insert [O].</span>"
+	if(istype(O, /obj/item/weapon/card/id))
+		if(!scan)
+			if(!user.drop_item())
+				return
+			O.loc = src
+			scan = O
+			user << "<span class='notice'>You insert [O].</span>"
+		else
+			user << "<span class='warning'>There's already an ID card in the console.</span>"
 	else
-		..()
+		return ..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user)
@@ -266,7 +269,7 @@ What a mess.*/
 		active1 = null
 	if(!( data_core.security.Find(active2) ))
 		active2 = null
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -318,6 +321,12 @@ What a mess.*/
 					active2 = null
 					authenticated = borg.name
 					rank = "AI"
+					screen = 1
+				else if(IsAdminGhost(usr))
+					active1 = null
+					active2 = null
+					authenticated = usr.client.holder.admin_signature
+					rank = "Central Command"
 					screen = 1
 				else if(istype(scan, /obj/item/weapon/card/id))
 					active1 = null
@@ -626,7 +635,7 @@ What a mess.*/
 							temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
 					if("rank")
-						var/list/L = list( "Head of Personnel", "Captain", "AI" )
+						var/list/L = list( "Head of Personnel", "Captain", "AI", "Central Command" )
 						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
 							temp = "<h5>Rank:</h5>"

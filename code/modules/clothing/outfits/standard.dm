@@ -8,17 +8,9 @@
 	back = /obj/item/weapon/tank/jetpack/oxygen
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/space/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/tank/jetpack/J = H.back
-	J.toggle()
-	J.Topic(null, list("stat" = 1))
-			
-
 /datum/outfit/tournament
-
-/datum/outfit/tournament/
 	name = "tournament standard red"
-	
+
 	uniform = /obj/item/clothing/under/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
@@ -27,14 +19,14 @@
 	l_hand = /obj/item/weapon/kitchen/knife
 	r_pocket = /obj/item/weapon/grenade/smokebomb
 
-
-/datum/outfit/tournament/red
+/datum/outfit/tournament/green
 	name = "tournament standard green"
-	
+
 	uniform = /obj/item/clothing/under/color/green
 
 /datum/outfit/tournament/gangster
 	name = "tournament gangster"
+
 	uniform = /obj/item/clothing/under/rank/det
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
@@ -56,7 +48,10 @@
 	l_pocket = /obj/item/weapon/grenade/chem_grenade/cleaner
 	backpack_contents = list(/obj/item/stack/tile/plasteel=6)
 
-/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H)
+/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/reagent_containers/glass/bucket/bucket = H.l_hand
 	bucket.reagents.add_reagent("water",70)
 
@@ -112,7 +107,10 @@
 	id = /obj/item/weapon/card/id
 	r_hand = /obj/item/weapon/twohanded/fireaxe
 
-/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H)
+/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Tunnel Clown!"
@@ -153,10 +151,13 @@
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/device/pda/heads
 
-/datum/outfit/assassin/post_equip(mob/living/carbon/human/H)
+/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attachTie(new /obj/item/clothing/tie/waistcoat(H))
-	
+
+	if(visualsOnly)
+		return
+
 	//Could use a type
 	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.l_hand
 	for(var/obj/item/briefcase_item in sec_briefcase)
@@ -166,13 +167,13 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/c4,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
 
 	var/obj/item/device/pda/heads/pda = H.belt
 	pda.owner = H.real_name
 	pda.ownjob = "Reaper"
 	pda.update_label()
-	
+
 	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Reaper"
@@ -196,7 +197,10 @@
 	back = /obj/item/weapon/storage/backpack/satchel
 	id = /obj/item/weapon/card/id
 
-/datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H)
+/datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
@@ -221,7 +225,10 @@
 	back = /obj/item/weapon/storage/backpack/satchel
 	id = /obj/item/weapon/card/id
 
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H)
+/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
@@ -276,7 +283,10 @@
 
 	id = /obj/item/weapon/card/id
 
-/datum/outfit/soviet/post_equip(mob/living/carbon/human/H)
+/datum/outfit/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
@@ -297,7 +307,10 @@
 	r_hand = /obj/item/weapon/gun/projectile/automatic/tommygun
 	id = /obj/item/weapon/card/id
 
-/datum/outfit/mobster/post_equip(mob/living/carbon/human/H)
+/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.assignment = "Assistant"
 	W.registered_name = H.real_name
@@ -306,9 +319,9 @@
 /datum/outfit/plasmaman
 	name = "Plasmaman"
 
-	head = /obj/item/clothing/head/helmet/space/hardsuit/plasmaman
-	suit = /obj/item/clothing/suit/space/eva/plasmaman
-	back = /obj/item/weapon/tank/internals/plasmaman/full
+	head = /obj/item/clothing/head/helmet/space/plasmaman
+	uniform = /obj/item/clothing/under/plasmaman
+	r_hand= /obj/item/weapon/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
 /datum/outfit/death_commando
@@ -334,13 +347,16 @@
 		/obj/item/weapon/storage/firstaid/regular=1,\
 		/obj/item/weapon/storage/box/flashbangs=1,\
 		/obj/item/device/flashlight=1,\
-		/obj/item/weapon/c4=1)
+		/obj/item/weapon/grenade/plastic/x4=1)
 
-/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H)
+/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
-	
+
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
@@ -359,7 +375,15 @@
 	name = "Death Commando Officer"
 	head = /obj/item/clothing/head/helmet/space/beret
 
+/datum/outfit/chrono_agent
+	name = "Timeline Eradication Agent"
+	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/space/chronos
+	back = /obj/item/weapon/chrono_eraser
+	head = /obj/item/clothing/head/helmet/space/chronos
+	mask = /obj/item/clothing/mask/breath
+	suit_store = /obj/item/weapon/tank/internals/oxygen
 
 
 
-			
+

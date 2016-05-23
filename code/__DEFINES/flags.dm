@@ -12,11 +12,13 @@
 #define NOBLUDGEON		4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8		// mask allows internals
 #define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define NOSHIELD		32		// weapon not affected by shield
+#define HANDSLOW        32		// If an item has this flag, it will slow you to carry it
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
+#define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
+#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 
 #define HEADBANGPROTECT		4096
@@ -31,8 +33,6 @@
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 
 #define	NOREACT		16384 		//Reagents dont' react inside this container.
-
-#define BLOCKHAIR	32768		// temporarily removes the user's hair icon
 
 //turf-only flags
 #define NOJAUNT		1
@@ -53,20 +53,22 @@
 
 #define MUTCOLORS		1
 #define HAIR			2
-#define FACEHAIR		4
-#define EYECOLOR		8
-#define LIPS			16
-#define COLDRES			32
-#define HEATRES			64
-#define RADIMMUNE		128
-#define NOBREATH		256
-#define NOGUNS			512
-#define NOBLOOD			1024
-#define NOFIRE			2048
-#define VIRUSIMMUNE		4096
-#define PIERCEIMMUNE	8192
-
-#define MUTCOLORS_PARTSONLY 	16384	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define FACEHAIR		3
+#define EYECOLOR		4
+#define LIPS			5
+#define RESISTTEMP		6
+#define RADIMMUNE		7
+#define NOBREATH		8
+#define NOGUNS			9
+#define NOBLOOD			10
+#define NOFIRE			11
+#define VIRUSIMMUNE		12
+#define PIERCEIMMUNE	13
+#define NOTRANSSTING	14
+#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NODISMEMBER		16
+#define NOHUNGER		17
+#define NOCRITDAMAGE	18
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

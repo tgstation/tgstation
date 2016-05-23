@@ -7,13 +7,13 @@ RCD
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build and deconstruct walls and floors."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
 	anchored = 0
-	flags = CONDUCT
-	force = 10
+	flags = CONDUCT | NOBLUDGEON
+	force = 0
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
@@ -34,8 +34,6 @@ RCD
 
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
-	var/last_configurator = null
-	var/locked = 1
 
 	/* Construction costs */
 
@@ -82,39 +80,32 @@ RCD
 	var/t1 = text("")
 
 
-	if (last_configurator)
-		t1 += "Operator: [last_configurator]<br>"
 
-	if (locked)
-		t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
+	if(use_one_access)
+		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
 	else
-		t1 += "<a href='?src=\ref[src];logout=1'>Lock Interface</a><hr>"
+		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
 
-		if(use_one_access)
-			t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
-		else
-			t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
+	t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
 
-		t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
-
-		var/accesses = ""
-		accesses += "<div align='center'><b>Access</b></div>"
-		accesses += "<table style='width:100%'>"
-		accesses += "<tr>"
-		for(var/i = 1; i <= 7; i++)
-			accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
-		accesses += "</tr><tr>"
-		for(var/i = 1; i <= 7; i++)
-			accesses += "<td style='width:14%' valign='top'>"
-			for(var/A in get_region_accesses(i))
-				if(A in conf_access)
-					accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
-				else
-					accesses += "<a href='?src=\ref[src];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
-				accesses += "<br>"
-			accesses += "</td>"
-		accesses += "</tr></table>"
-		t1 += "<tt>[accesses]</tt>"
+	var/accesses = ""
+	accesses += "<div align='center'><b>Access</b></div>"
+	accesses += "<table style='width:100%'>"
+	accesses += "<tr>"
+	for(var/i = 1; i <= 7; i++)
+		accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
+	accesses += "</tr><tr>"
+	for(var/i = 1; i <= 7; i++)
+		accesses += "<td style='width:14%' valign='top'>"
+		for(var/A in get_region_accesses(i))
+			if(A in conf_access)
+				accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+			else
+				accesses += "<a href='?src=\ref[src];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+			accesses += "<br>"
+		accesses += "</td>"
+	accesses += "</tr></table>"
+	t1 += "<tt>[accesses]</tt>"
 
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
@@ -131,17 +122,6 @@ RCD
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
 		return
-
-	if (href_list["login"])
-		if(allowed(usr))
-			src.locked = 0
-			src.last_configurator = usr.name
-
-	if (locked)
-		return
-
-	if (href_list["logout"])
-		locked = 1
 
 	if (href_list["access"])
 		toggle_access(href_list["access"])
@@ -245,7 +225,6 @@ RCD
 	return ..()
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(isrobot(user))	//Make sure cyborgs can't load their RCDs
 		return
 	var/loaded = 0
@@ -267,7 +246,8 @@ RCD
 	if(loaded)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-	return
+	else
+		return ..()
 
 /obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
     var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
@@ -316,36 +296,36 @@ RCD
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return 0
-	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
 	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
 		return 0
 
 	switch(mode)
 		if(1)
-			if(istype(A, /turf/space))
-				var/turf/space/S = A
+			if(istype(A, /turf/open/space))
+				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
 					user << "<span class='notice'>You start building floor...</span>"
 					activate()
-					S.ChangeTurf(/turf/simulated/floor/plating)
+					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
 
-			if(istype(A, /turf/simulated/floor))
-				var/turf/simulated/floor/F = A
+			if(istype(A, /turf/open/floor))
+				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
 						if(!useResource(wallcost, user)) return 0
 						activate()
-						F.ChangeTurf(/turf/simulated/wall)
+						F.ChangeTurf(/turf/closed/wall)
 						return 1
 				return 0
 
 		if(2)
-			if(istype(A, /turf/simulated/floor))
+			if(istype(A, /turf/open/floor))
 				if(checkResource(airlockcost, user))
 					var/door_check = 1
 					for(var/obj/machinery/door/D in A)
@@ -364,15 +344,13 @@ RCD
 							T.electronics = new/obj/item/weapon/electronics/airlock( src.loc )
 
 							if(conf_access)
-								T.electronics.conf_access = conf_access.Copy()
-							T.electronics.use_one_access = use_one_access
-							T.electronics.last_configurator = last_configurator
-							T.electronics.locked = locked
+								T.electronics.accesses = conf_access.Copy()
+							T.electronics.one_access = use_one_access
 
-							if(T.electronics.use_one_access)
-								T.req_one_access = T.electronics.conf_access
+							if(T.electronics.one_access)
+								T.req_one_access = T.electronics.accesses
 							else
-								T.req_access = T.electronics.conf_access
+								T.req_access = T.electronics.accesses
 
 							if(!T.checkForMultipleDoors())
 								qdel(T)
@@ -387,9 +365,9 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(A, /turf/simulated/wall))
-				var/turf/simulated/wall/W = A
-				if(istype(W, /turf/simulated/wall/r_wall) && !canRturf)
+			if(istype(A, /turf/closed/wall))
+				var/turf/closed/wall/W = A
+				if(istype(W, /turf/closed/wall/r_wall) && !canRturf)
 					return 0
 				if(checkResource(deconwallcost, user))
 					user << "<span class='notice'>You start deconstructing wall...</span>"
@@ -397,13 +375,13 @@ RCD
 					if(do_after(user, deconwalldelay, target = A))
 						if(!useResource(deconwallcost, user)) return 0
 						activate()
-						W.ChangeTurf(/turf/simulated/floor/plating)
+						W.ChangeTurf(/turf/open/floor/plating)
 						return 1
 				return 0
 
-			if(istype(A, /turf/simulated/floor))
-				var/turf/simulated/floor/F = A
-				if(istype(F, /turf/simulated/floor/engine) && !canRturf)
+			if(istype(A, /turf/open/floor))
+				var/turf/open/floor/F = A
+				if(istype(F, /turf/open/floor/engine) && !canRturf)
 					return 0
 				if(istype(F, F.baseturf))
 					user << "<span class='notice'>You can't dig any deeper!</span>"
@@ -452,7 +430,7 @@ RCD
 					return 0
 
 		if (4)
-			if(istype(A, /turf/simulated/floor))
+			if(istype(A, /turf/open/floor))
 				if(checkResource(grillecost, user))
 					for(var/obj/structure/grille/GRILLE in A)
 						user << "<span class='warning'>There is already a grille there!</span>"

@@ -33,17 +33,12 @@
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
 	if(istype(L))
-		if(isnum(index))
+		if(isnum(index) && IsInteger(index))
 			if(IsInRange(index,1,L.len))
 				return L[index]
 		else if(index in L)
 			return L[index]
 	return
-
-/proc/islist(list/L)
-	if(istype(L))
-		return 1
-	return 0
 
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
@@ -58,10 +53,16 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
+	if (!L.len)
+		return 0
+	if (!L[L[1]])
+		generate_type_list_cache(L)
+	return L[A.type]
+
+/proc/generate_type_list_cache(L)
 	for(var/type in L)
-		if(istype(A, type))
-			return 1
-	return 0
+		for(var/T in typesof(type))
+			L[T] = 1
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -140,6 +141,11 @@
 	if(L.len)
 		. = L[L.len]
 		L.len--
+
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
@@ -349,3 +355,13 @@
 	while(L.Remove(null))
 		continue
 	return L
+
+//Copies a list, and all lists inside it recusively
+//Does not copy any other reference type
+/proc/deepCopyList(list/l)
+	if(!islist(l))
+		return l
+	. = l.Copy()
+	for(var/i = 1 to l.len)
+		if(islist(.[i]))
+			.[i] = .(.[i])

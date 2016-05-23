@@ -35,11 +35,9 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
-	var/list/theareas = list()
-	for(var/area/AR in ultra_range(100, chassis, 1))
-		if(AR in theareas) continue
-		theareas += AR
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+		return
+	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
 		return
 	var/area/thearea = pick(theareas)
@@ -154,10 +152,7 @@
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/get_equip_info()
-	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
+	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react(mob/user as mob)
 	if(action_checks(user))
@@ -176,10 +171,7 @@
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/get_equip_info()
-	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
+	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/projectile_react()
 	if(action_checks(src))
@@ -200,6 +192,7 @@
 	var/health_boost = 1
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
+	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	SSobj.processing.Remove(src)
@@ -219,7 +212,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
@@ -283,6 +276,7 @@
 	range = 0
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
+	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
 	SSobj.processing.Remove(src)
@@ -325,7 +319,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
@@ -432,17 +426,18 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/critfail()
 	..()
-	var/turf/simulated/T = get_turf(src)
-	if(!T)
+	var/turf/open/T = get_turf(src)
+	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
+	GM.assert_gas("plasma")
 	if(prob(10))
-		GM.toxins += 100
+		GM.gases["plasma"][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.toxins += 5
+		GM.gases["plasma"][MOLES] += 5
 		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
 		T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
@@ -489,7 +484,6 @@
 	fuel_per_cycle_active = 30
 	power_per_cycle = 50
 	var/rad_per_cycle = 0.3
-	reliability = 1000
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src)

@@ -71,15 +71,17 @@
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(report=1)
+/datum/game_mode/proc/post_setup(report=0) //Gamemodes can override the intercept report. Passing a 1 as the argument will force a report.
+	if(!report)
+		report = config.intercept
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
-	if(revdata.revision)
-		feedback_set_details("revision","[revdata.revision]")
+	if(revdata.commit)
+		feedback_set_details("revision","[revdata.commit]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
@@ -170,7 +172,8 @@
 /datum/game_mode/proc/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+	if((SSshuttle.emergency && SSshuttle.emergency.mode >= SHUTTLE_ENDGAME) \
+		 || station_was_nuked)
 		return 1
 	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
@@ -292,20 +295,6 @@
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
 
-	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
-		if(BE_TRAITOR)		roletext="traitor"
-		if(BE_OPERATIVE)	roletext="operative"
-		if(BE_WIZARD)		roletext="wizard"
-		if(BE_REV)			roletext="revolutionary"
-		if(BE_GANG)			roletext="gangster"
-		if(BE_CULTIST)		roletext="cultist"
-		if(BE_MONKEY)		roletext="monkey"
-		if(BE_ABDUCTOR)		roletext="abductor"
-		if(BE_SHADOWLING)	roletext="shadowling"
-
-
 	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
@@ -317,8 +306,8 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(player.client.prefs.be_special & role)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+			if(role in player.client.prefs.be_special)
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -331,8 +320,8 @@
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
-				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
-					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
 	if(restricted_jobs)
@@ -398,22 +387,38 @@
 //Keeps track of all living heads//
 ///////////////////////////////////
 /datum/game_mode/proc/get_living_heads()
-	var/list/heads = list()
+	. = list()
 	for(var/mob/living/carbon/human/player in mob_list)
-		if(player.stat!=2 && player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
-	return heads
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
+			. |= player.mind
 
 
 ////////////////////////////
 //Keeps track of all heads//
 ////////////////////////////
 /datum/game_mode/proc/get_all_heads()
-	var/list/heads = list()
+	. = list()
 	for(var/mob/player in mob_list)
 		if(player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
-	return heads
+			. |= player.mind
+
+//////////////////////////////////////////////
+//Keeps track of all living security members//
+//////////////////////////////////////////////
+/datum/game_mode/proc/get_living_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in security_positions))
+			. |= player.mind
+
+////////////////////////////////////////
+//Keeps track of all  security members//
+////////////////////////////////////////
+/datum/game_mode/proc/get_all_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in mob_list)
+		if(player.mind && (player.mind.assigned_role in security_positions))
+			. |= player.mind
 
 //////////////////////////
 //Reports player logouts//
@@ -459,8 +464,7 @@
 						continue //Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>This shouldn't appear.</span>)\n"
-						continue //Lolwhat
+						continue //Adminghost, or cult/wizard ghost
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Ghosted</span>)\n"
 						continue //Ghosted while alive
@@ -515,3 +519,19 @@
 		return 0
 
 	return max(0, enemy_minimum_age - C.player_age)
+
+/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [role_type]?", "[role_type]", null, pref, 100)
+	var/mob/dead/observer/theghost = null
+	if(candidates.len)
+		theghost = pick(candidates)
+		M << "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"
+		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
+		M.ghostize(0)
+		M.key = theghost.key
+
+/datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
+	ticker.mode.remove_cultist(newborgie, 0, 0)
+	ticker.mode.remove_revolutionary(newborgie, 0)
+	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
+	ticker.mode.remove_hog_follower(newborgie, 0)

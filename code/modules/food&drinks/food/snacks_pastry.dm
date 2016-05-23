@@ -219,6 +219,14 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#8B0000"
 
+/obj/item/weapon/reagent_containers/food/snacks/khachapuri
+	name = "khachapuri"
+	desc = "Bread with egg and cheese?"
+	icon_state = "khachapuri"
+	list_reagents = list("nutriment" = 12, "vitamin" = 2)
+	filling_color = "#FFFF4D"
+
+
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
@@ -266,3 +274,11 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
+
+/obj/item/weapon/reagent_containers/food/snacks/honeybun
+	name = "honey bun"
+	desc = "A sticky pastry bun glazed with honey."
+	icon_state = "honeybun"
+	bonus_reagents = list("nutriment" = 1, "honey" = 1)
+	list_reagents = list("nutriment" = 5, "honey" = 5)
+	filling_color = "#F2CE91"

@@ -10,7 +10,7 @@
 	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	var/paintleft = 10
 
@@ -84,7 +84,7 @@
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
-	if(!istype(target) || istype(target, /turf/space))
+	if(!istype(target) || istype(target, /turf/open/space))
 		return
 	target.color = "#" + item_color
 	return

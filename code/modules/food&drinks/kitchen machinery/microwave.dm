@@ -24,13 +24,18 @@
 
 /obj/machinery/microwave/New()
 	create_reagents(100)
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 2)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/microwave
+	name = "circuit board (Microwave)"
+	build_path = /obj/machinery/microwave
+	origin_tech = "programming=1;magnets=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
@@ -66,7 +71,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20, target = src))
+			if (do_after(user,20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -77,7 +82,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20, target = src))
+			if (do_after(user,20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \

@@ -8,7 +8,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
-	action_button_name = "Toggle Light"
+	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -41,12 +41,15 @@
 		return 0
 	on = !on
 	update_brightness(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	return 1
 
 
 /obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && user.zone_selected == "eyes")
 
 		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -61,39 +64,37 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(!M.eye_blind)
-				flick("flash", M.flash)
+			if(M.flash_eyes(visual = 1))
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes.</span>")
-			return
-
-		user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-							 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-		M << "<span class='danger'>[user] directs [src] to your eyes.</span>"
-
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
-			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='warning'>[M] pupils don't react to the light!</span>"
-			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
-			else	//they're okay!
-				if(!M.eye_blind)
-					flick("flash", M.flash)	//flash the affected mob
-					user << "<span class='notice'>[M]'s pupils narrow.</span>"
+		else
+			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+			var/mob/living/carbon/C = M
+			if(istype(C))
+				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
+					user << "<span class='warning'>[C] pupils don't react to the light!</span>"
+				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
+				else //they're okay!
+					if(C.flash_eyes(visual = 1))
+						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
 
 
 /obj/item/device/flashlight/pickup(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
+	..()
 	if(on)
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
@@ -110,36 +111,28 @@
 
 /obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
-		if(holo_cooldown)
+		if(holo_cooldown > world.time)
 			user << "<span class='warning'>[src] is not ready yet!</span>"
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			CreateHolo(T, user)
+			PoolOrNew(/obj/effect/medical_holosign, list(T,user)) //produce a holographic glow
+			holo_cooldown = world.time + 100
 			return
 	..()
 
-/obj/item/device/flashlight/pen/proc/CreateHolo(tturf,creator)
-	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
-	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
-	holo_cooldown = 1
-	spawn(100)
-		holo_cooldown = 0
-	return
-
-/obj/effect/medical_holosign
+/obj/effect/overlay/temp/medical_holosign
 	name = "medical holosign"
-	desc = "A small holographic barrier that indicates a medic is coming to treat a patient."
-	icon = 'icons/effects/effects.dmi'
+	desc = "A small holographic glow that indicates a medic is coming to treat a patient."
 	icon_state = "medi_holo"
-	layer = 4.1
-	mouse_opacity = 0
+	duration = 30
 
-/obj/effect/medical_holosign/New()
-	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
-	spawn(30)
-		qdel(src)
-	return
+/obj/effect/medical_holosign/New(loc, creator)
+	..()
+	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
+	if(creator)
+		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
+
 
 /obj/item/device/flashlight/seclite
 	name = "seclite"
@@ -195,7 +188,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	action_button_name = null	//just pull it manually, neckbeard.
+	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -266,6 +259,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
+	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
@@ -306,19 +300,24 @@ obj/item/device/flashlight/lamp/bananalamp
 		return 1
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity) return
-	if (emp_cur_charges > 0)
+/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(emp_cur_charges > 0)
 		emp_cur_charges -= 1
-		A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
-											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
+
 		if(ismob(A))
 			var/mob/M = A
 			add_logs(user, M, "attacked", "EMP-light")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
+								"<span class='userdanger'>[user] blinks \the [src] at you.")
+		else
+			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
 		A.emp_act(1)
 	else

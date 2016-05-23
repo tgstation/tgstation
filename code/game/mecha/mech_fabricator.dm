@@ -10,9 +10,6 @@
 	active_power_usage = 5000
 	req_access = list(access_robotics)
 	var/time_coeff = 1
-	var/resource_coeff = 1
-	var/time_coeff_tech = 1
-	var/resource_coeff_tech = 1
 	var/list/resources = list(
 								MAT_METAL=0,
 								MAT_GLASS=0,
@@ -49,15 +46,19 @@
 
 /obj/machinery/mecha_part_fabricator/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
+	B.apply_default_parts(src)
 	files = new /datum/research(src) //Setup the research data holder.
+
+/obj/item/weapon/circuitboard/machine/mechfab
+	name = "circuit board (Exosuit Fabricator)"
+	build_path = /obj/machinery/mecha_part_fabricator
+	origin_tech = "programming=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -66,12 +67,6 @@
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	res_max_amount = (187000+(T * 37500))
-
-	//ressources adjustment coefficient (1 -> 0.88 -> 0.75)
-	T = -1
-	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
-		T += Ma.rating
-	resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
@@ -112,7 +107,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
-	for(var/datum/design/D in files.known_designs)
+	for(var/v in files.known_designs)
+		var/datum/design/D = files.known_designs[v]
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -185,7 +181,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -198,7 +195,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
@@ -241,29 +238,6 @@
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/update_tech()
-	if(!files)
-		return
-	var/output
-	for(var/datum/tech/T in files.known_tech)
-		if(T && T.level > 1)
-			var/diff
-			switch(T.id)
-				if("materials")
-					//one materials level is 1/32, so that max level is 0.75 coefficient
-					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level-1))/32,0.01)
-					if(resource_coeff_tech>diff)
-						resource_coeff_tech = diff
-						output+="Production efficiency increased.<br>"
-				if("programming")
-					//one materials level is 1/40, so that max level is 0.8 coefficient
-					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level-1))/40,0.1)
-					if(time_coeff_tech>diff)
-						time_coeff_tech = diff
-						output+="Production routines updated.<br>"
-	return output
-
-
 /obj/machinery/mecha_part_fabricator/proc/sync()
 	temp = "Updating local R&D database..."
 	updateUsrDialog()
@@ -272,14 +246,15 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
+		for(var/v in RDC.files.known_tech)
+			var/datum/tech/T = RDC.files.known_tech[v]
 			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
+		for(var/v in RDC.files.known_designs)
+			var/datum/design/D = RDC.files.known_designs[v]
 			files.AddDesign2Known(D)
 		files.RefreshResearch()
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
-		temp += update_tech()
 		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 		updateUsrDialog()
@@ -291,10 +266,10 @@
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
-	return round(D.materials[resource]*resource_coeff*resource_coeff_tech, roundto)
+	return round(D.materials[resource], roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
-	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
+	return round(initial(D.construction_time)*time_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
 	if(!(..()))
@@ -373,7 +348,8 @@
 				screen = "parts"
 	if(href_list["part"])
 		var/T = filter.getStr("part")
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -383,7 +359,8 @@
 					break
 	if(href_list["add_to_queue"])
 		var/T = filter.getStr("add_to_queue")
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -396,7 +373,7 @@
 		add_part_set_to_queue(filter.get("partset_to_queue"))
 		return update_queue_on_page()
 	if(href_list["process_queue"])
-		spawn(-1)
+		spawn(0)
 			if(processing_queue || being_built)
 				return 0
 			processing_queue = 1
@@ -409,7 +386,7 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = filter.getNum("index")
 		var/new_index = index + filter.getNum("queue_move")
-		if(isnum(index) && isnum(new_index))
+		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
 			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
@@ -420,7 +397,8 @@
 		sync()
 	if(href_list["part_desc"])
 		var/T = filter.getStr("part_desc")
-		for(var/datum/design/D in files.known_designs)
+		for(var/v in files.known_designs)
+			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path
@@ -485,6 +463,9 @@
 
 	return result
 
+/obj/machinery/mecha_part_fabricator/deconstruction()
+	for(var/material in resources)
+		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
@@ -493,17 +474,13 @@
 	if(exchange_parts(user, W))
 		return
 
-	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
-			default_deconstruction_crowbar(W)
-			return 1
-		else
-			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
-			return 1
+	if(default_deconstruction_crowbar(W))
+		return 1
 
 	if(istype(W, /obj/item/stack))
+		if(panel_open)
+			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
+			return 1
 		var/material
 		switch(W.type)
 			if(/obj/item/stack/sheet/mineral/gold)
@@ -545,7 +522,8 @@
 			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
 		else
 			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
-		return
+	else
+		return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)

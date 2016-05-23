@@ -1,4 +1,4 @@
-var/datum/subsystem/radio/radio_controller
+var/datum/subsystem/radio/SSradio
 
 /datum/subsystem/radio
 	name = "Radio"
@@ -7,7 +7,7 @@ var/datum/subsystem/radio/radio_controller
 	var/list/datum/radio_frequency/frequencies = list()
 
 /datum/subsystem/radio/New()
-	NEW_SS_GLOBAL(radio_controller)
+	NEW_SS_GLOBAL(SSradio)
 
 /datum/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)

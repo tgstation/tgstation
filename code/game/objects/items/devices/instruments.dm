@@ -1,7 +1,7 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/device/instrument
 	name = "generic instrument"
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 20
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"

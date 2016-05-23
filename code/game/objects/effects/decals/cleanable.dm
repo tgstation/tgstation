@@ -7,11 +7,21 @@
 	if (random_icon_states && length(src.random_icon_states) > 0)
 		src.icon_state = pick(src.random_icon_states)
 	create_reagents(300)
+	if(src.loc && isturf(src.loc))
+		for(var/obj/effect/decal/cleanable/C in src.loc)
+			if(C != src && C.type == src.type)
+				replace_decal(C)
 	..()
 
-/obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user,)
+
+
+/obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
+	qdel(C)
+
+/obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
+			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
 				user << "<span class='notice'>[src] isn't thick enough to scoop up!</span>"
 				return
@@ -24,7 +34,8 @@
 				qdel(src)
 				return
 	if(W.is_hot()) //todo: make heating a reagent holder proc
-		if(istype(W, /obj/item/clothing/mask/cigarette)) return
+		if(istype(W, /obj/item/clothing/mask/cigarette))
+			return
 		else
 			var/hotness = W.is_hot()
 			var/added_heat = (hotness / 100)
@@ -66,6 +77,7 @@
 
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
-	return bloodiness
-
-
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+		return bloodiness
+	else
+		return 0

@@ -4,21 +4,19 @@
 	name = "C-4"
 	desc = "Used to put holes in specific areas without too much extra hole."
 	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = 2
 	origin_tech = "syndicate=2"
-	var/datum/wires/explosive/c4/wires = null
 	var/timer = 10
-	var/atom/target = null
 	var/open_panel = 0
-	var/image_overlay = null
+	parent_type = /obj/item/weapon/grenade/plastic/c4
 
 /obj/item/weapon/c4/New()
-	wires = new(src)
-	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
+	wires = new /datum/wires/explosive/c4(src)
+	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()
@@ -49,16 +47,16 @@
 	message_admins("[key_name(user)] suicided with [src.name] at ([x],[y],[z])")
 	sleep(10)
 	explode(get_turf(user))
-	user.gib()
+	user.gib(1, 1)
 
 /obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
-	else if(wires.IsInteractionTool(I))
-		wires.Interact(user)
+	else if(is_wire_tool(I))
+		wires.interact(user)
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
@@ -67,20 +65,26 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/c4/afterattack(atom/movable/target, mob/user, flag)
+/obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(target) || istype(target, /obj/item/weapon/storage/))
+	if (ismob(AM))
 		return
-	if(loc == target)
+	if(loc == AM)
 		return
+	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+		return
+	if((istype(AM,/obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
+		var/obj/item/weapon/storage/secure/S = AM
+		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
+			return
 
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
 			return
-		src.target = target
+		src.target = AM
 		loc = null
 
 		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
@@ -89,16 +93,21 @@
 		target.overlays += image_overlay
 		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
 		spawn(timer*10)
-			if(target && !target.gc_destroyed)
-				explode(get_turf(target))
-			else
-				qdel(src)
+			explode()
 
-/obj/item/weapon/c4/proc/explode(turf/location)
-	location.ex_act(2, target)
-	explosion(location,0,0,3)
+/obj/item/weapon/c4/proc/explode()
+	if(qdeleted(src))
+		return
+	var/turf/location
 	if(target)
-		target.overlays -= image_overlay
+		if(!qdeleted(target))
+			location = get_turf(target)
+			target.overlays -= image_overlay
+	else
+		location = get_turf(src)
+	if(location)
+		location.ex_act(2, target)
+		explosion(location,0,0,3)
 	qdel(src)
 
 /obj/item/weapon/c4/attack(mob/M, mob/user, def_zone)

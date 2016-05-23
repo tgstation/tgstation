@@ -66,7 +66,7 @@
 			if(ismob(target))	//Blood!
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
+					if((NOBLOOD in H.dna.species.specflags) && !H.dna.species.exotic_blood)
 						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 				if(reagents.has_reagent("blood"))
@@ -152,7 +152,7 @@
 				var/mob/M = target
 				add_logs(user, M, "injected", src, addition="which had [contained]")
 				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-				reagents.reaction(target, INGEST, fraction)
+				reagents.reaction(target, INJECT, fraction)
 			if(ismob(target) && target == user)
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
 				var/list/rinject = list()
@@ -163,7 +163,7 @@
 				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>")
 				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-				reagents.reaction(target, INGEST, fraction)
+				reagents.reaction(target, INJECT, fraction)
 			spawn(5)
 				var/datum/reagent/blood/B
 				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
@@ -181,7 +181,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = min(max(round(reagents.total_volume,5),5),15)
+	var/rounded_vol = Clamp(round(reagents.total_volume,5), 0, 15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -240,3 +240,17 @@
 
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
+
+/obj/item/weapon/reagent_containers/syringe/mulligan
+	name = "Mulligan"
+	desc = "A syringe used to completely change the users identity."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("mulligan" = 1)
+
+/obj/item/weapon/reagent_containers/syringe/gluttony
+	name = "Gluttony's Blessing"
+	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("gluttonytoxin" = 1)

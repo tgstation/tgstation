@@ -16,15 +16,23 @@
 	if(..())
 		if(buckled)
 			handle_feeding()
-		handle_nutrition()
-		handle_targets()
-		if (!ckey)
-			handle_mood()
-			handle_speech()
+		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+			handle_nutrition()
+			handle_targets()
+			if (!ckey)
+				handle_mood()
+				handle_speech()
+
+// Unlike most of the simple animals, slimes support UNCONSCIOUS
+/mob/living/simple_animal/slime/update_stat()
+	if(stat == UNCONSCIOUS && health > 0)
+		return
+	..()
 
 /mob/living/simple_animal/slime/proc/AIprocess()  // the master AI process
 
-	if(AIproc || stat == DEAD || client) return
+	if(AIproc || stat || client)
+		return
 
 	var/hungry = 0
 	if (nutrition < get_starve_nutrition())
@@ -47,7 +55,7 @@
 			break
 
 		if(Target)
-			if(isslime(Target.buckled_mob))
+			if(locate(/mob/living/simple_animal/slime) in Target.buckled_mobs)
 				Target = null
 				AIproc = 0
 				break
@@ -83,18 +91,18 @@
 					if(!Atkcool && Target.Adjacent(src))
 						Feedon(Target)
 
+			else if(Target in view(7, src))
+				if(!Target.Adjacent(src))
+				// Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
+					step_to(src, Target)
 			else
-				if(Target in view(7, src))
-					if(!Target.Adjacent(src)) // Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
-						step_to(src, Target)
-
-				else
-					Target = null
-					AIproc = 0
-					break
+				Target = null
+				AIproc = 0
+				break
 
 		var/sleeptime = movement_delay()
-		if(sleeptime <= 0) sleeptime = 1
+		if(sleeptime <= 0)
+			sleeptime = 1
 
 		sleep(sleeptime + 2) // this is about as fast as a player slime can go
 
@@ -107,10 +115,7 @@
 	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
 
 	//Account for massive pressure differences
 
@@ -127,7 +132,27 @@
 	else
 		Tempstun = 0
 
+	if(stat != DEAD)
+		var/bz_percentage =0
+		if("bz" in environment.gases)
+			bz_percentage = environment.gases["bz"][MOLES] / environment.total_moles()
+		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
+
+		if(stat == CONSCIOUS && stasis)
+			src << "<span class='danger'>Nerve gas in the air has put you in stasis!</span>"
+			stat = UNCONSCIOUS
+			powerlevel = 0
+			rabid = 0
+			update_canmove()
+			regenerate_icons()
+		else if(stat == UNCONSCIOUS && !stasis)
+			src << "<span class='notice'>You wake up from the stasis.</span>"
+			stat = CONSCIOUS
+			update_canmove()
+			regenerate_icons()
+
 	updatehealth()
+
 
 	return //TODO: DEFERRED
 
@@ -148,15 +173,18 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/simple_animal/slime/handle_regular_status_updates()
-	if(..())
-		if(prob(30))
-			adjustBruteLoss(-1)
+/mob/living/simple_animal/slime/handle_status_effects()
+	..()
+	if(prob(30) && !stat)
+		adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_feeding()
 	if(!ismob(buckled))
 		return
 	var/mob/M = buckled
+
+	if(stat)
+		Feedstop(silent = 1)
 
 	if(M.stat == DEAD) // our victim died
 		if(!client)
@@ -193,14 +221,17 @@
 
 	else if(isanimal(M))
 		var/mob/living/simple_animal/SA = M
-		SA.adjustBruteLoss(is_adult ? rand(4, 7) : rand(3, 4))
+
+		var/totaldamage = 0 //total damage done to this unfortunate animal
+		totaldamage += SA.adjustCloneLoss(rand(2,4))
+		totaldamage += SA.adjustToxLoss(rand(1,2))
+
+		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
+			Feedstop(0, 0)
+			return
 
 	else
-		src << "<span class='warning'>[pick("This subject is incompatible", \
-		"This subject does not have a life energy", "This subject is empty", \
-		"I am not satisified", "I can not feed from this subject", \
-		"I do not feel nourished", "This subject is not food")]!</span>"
-		Feedstop()
+		Feedstop(0, 0)
 		return
 
 	add_nutrition(rand(7,15))
@@ -222,11 +253,12 @@
 		if(prob(75))
 			adjustBruteLoss(rand(0,5))
 
-	else if (nutrition >= get_grow_nutrition() && amount_grown < 10)
+	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		nutrition -= 20
 		amount_grown++
+		update_action_buttons_icon()
 
-	if(amount_grown >= 10 && !buckled && !Target && !ckey)
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD && !buckled && !Target && !ckey)
 		if(is_adult)
 			Reproduce()
 		else
@@ -253,7 +285,8 @@
 	else
 		canmove = 1
 
-	if(attacked > 50) attacked = 50
+	if(attacked > 50)
+		attacked = 50
 
 	if(attacked > 0)
 		attacked--
@@ -261,15 +294,18 @@
 	if(Discipline > 0)
 
 		if(Discipline >= 5 && rabid)
-			if(prob(60)) rabid = 0
+			if(prob(60))
+				rabid = 0
 
 		if(prob(10))
 			Discipline--
 
 	if(!client)
-		if(!canmove) return
+		if(!canmove)
+			return
 
-		if(buckled) return // if it's eating someone already, continue eating!
+		if(buckled)
+			return // if it's eating someone already, continue eating!
 
 		if(Target)
 			--target_patience
@@ -277,7 +313,8 @@
 				target_patience = 0
 				Target = null
 
-		if(AIproc && SStun) return
+		if(AIproc && SStun)
+			return
 
 		var/hungry = 0 // determines if the slime is hungry
 
@@ -311,7 +348,7 @@
 						if(src.type in H.dna.species.ignored_by)
 							continue
 
-					if(isslime(L.buckled_mob)) // Only one slime can latch on at a time.
+					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
 						continue
 
 					targets += L // Possible target found!
@@ -476,11 +513,14 @@
 			if (L in Friends)
 				t += 20
 				friends_near += L
-		if (nutrition < get_hunger_nutrition()) t += 10
-		if (nutrition < get_starve_nutrition()) t += 10
+		if (nutrition < get_hunger_nutrition())
+			t += 10
+		if (nutrition < get_starve_nutrition())
+			t += 10
 		if (prob(2) && prob(t))
 			var/phrases = list()
-			if (Target) phrases += "[Target]... looks tasty..."
+			if (Target)
+				phrases += "[Target]... looks tasty..."
 			if (nutrition < get_starve_nutrition())
 				phrases += "So... hungry..."
 				phrases += "Very... hungry..."
@@ -512,13 +552,20 @@
 			if (buckled)
 				phrases += "Nom..."
 				phrases += "Tasty..."
-			if (powerlevel > 3) phrases += "Bzzz..."
-			if (powerlevel > 5) phrases += "Zap..."
-			if (powerlevel > 8) phrases += "Zap... Bzz..."
-			if (mood == "sad") phrases += "Bored..."
-			if (slimes_near) phrases += "Brother..."
-			if (slimes_near > 1) phrases += "Brothers..."
-			if (dead_slimes) phrases += "What happened?"
+			if (powerlevel > 3)
+				phrases += "Bzzz..."
+			if (powerlevel > 5)
+				phrases += "Zap..."
+			if (powerlevel > 8)
+				phrases += "Zap... Bzz..."
+			if (mood == "sad")
+				phrases += "Bored..."
+			if (slimes_near)
+				phrases += "Brother..."
+			if (slimes_near > 1)
+				phrases += "Brothers..."
+			if (dead_slimes)
+				phrases += "What happened?"
 			if (!slimes_near)
 				phrases += "Lonely..."
 			for (var/M in friends_near)
@@ -528,24 +575,36 @@
 			say (pick(phrases))
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
-	if (is_adult) return 1200
-	else return 1000
+	if (is_adult)
+		return 1200
+	else
+		return 1000
 
 /mob/living/simple_animal/slime/proc/get_grow_nutrition() // Above it we grow, below it we can eat
-	if (is_adult) return 1000
-	else return 800
+	if (is_adult)
+		return 1000
+	else
+		return 800
 
 /mob/living/simple_animal/slime/proc/get_hunger_nutrition() // Below it we will always eat
-	if (is_adult) return 600
-	else return 500
+	if (is_adult)
+		return 600
+	else
+		return 500
 
 /mob/living/simple_animal/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
-	if(is_adult) return 300
-	else return 200
+	if(is_adult)
+		return 300
+	else
+		return 200
 
 /mob/living/simple_animal/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
-	if (docile)	return 0
-	if (hunger == 2 || rabid || attacked) return 1
-	if (Leader) return 0
-	if (holding_still) return 0
+	if (docile)
+		return 0
+	if (hunger == 2 || rabid || attacked)
+		return 1
+	if (Leader)
+		return 0
+	if (holding_still)
+		return 0
 	return 1

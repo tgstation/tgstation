@@ -3,8 +3,10 @@
 	desc = "Dissolves restraints or other objects preventing free movement."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
 	chemical_cost = 30 //High cost to prevent spam
-	dna_cost = 1
+	dna_cost = 2
 	req_human = 1
+	genetic_damage = 10
+	max_genetic_damage = 0
 
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
@@ -27,19 +29,19 @@
 				O.loc = get_turf(user)
 				qdel(O)
 
-	if(istype(user.wear_suit, /obj/item/clothing/suit/straight_jacket) && !used)
+	if(user.wear_suit && user.wear_suit.breakouttime && !used)
 		used = 1
-		var/obj/item/clothing/suit/straight_jacket/SJ = user.get_item_by_slot(slot_wear_suit)
-		if(!SJ || !istype(SJ))
+		var/obj/item/clothing/suit/S = user.get_item_by_slot(slot_wear_suit)
+		if(!S || !istype(S))
 			return 0
-		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of \his [SJ]!</span>", \
+		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of \his [S]!</span>", \
 							 "<span class='warning'>We vomit acidic ooze onto our straight jacket!</span>")
 		spawn(30)
-			if(SJ && user.wear_suit == SJ)
-				user.unEquip(SJ)
-				SJ.visible_message("<span class='warning'>[SJ] dissolves into a puddle of sizzling goop.</span>")
-				SJ.loc = get_turf(user)
-				qdel(SJ)
+			if(S && user.wear_suit == S)
+				user.unEquip(S)
+				S.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
+				S.loc = get_turf(user)
+				qdel(S)
 
 	if(istype(user.loc, /obj/structure/closet) && !used)
 		used = 1

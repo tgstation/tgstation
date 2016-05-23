@@ -32,13 +32,14 @@
 		if(T && (M == user || do_after(user, 50)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				if(imp.implant(M, user))
-					user << "<span class='notice'>You implant the implant into [M].</span>"
-					M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you with the implant.</span>")
+					if (M == user)
+						user << "<span class='notice'>You implant yourself.</span>"
+					else
+						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_hand() != W)
@@ -49,6 +50,8 @@
 			name = "implanter ([t])"
 		else
 			name = "implanter"
+	else
+		return ..()
 
 /obj/item/weapon/implanter/New()
 	..()

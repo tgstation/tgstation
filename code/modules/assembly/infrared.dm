@@ -24,7 +24,8 @@
 	return "The infrared trigger is [on?"on":"off"]."
 
 /obj/item/device/assembly/infra/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	on = !on
 	update_icon()
 	return 1
@@ -89,7 +90,8 @@
 	return
 
 /obj/item/device/assembly/infra/holder_movement()
-	if(!holder)	return 0
+	if(!holder)
+		return 0
 //	dir = holder.dir
 	qdel(first)
 	return 1
@@ -146,7 +148,7 @@
 
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
@@ -191,7 +193,7 @@
 		left--
 	if(left < 1)
 		if(!(visible))
-			invisibility = 101
+			invisibility = INVISIBILITY_ABSTRACT
 		else
 			invisibility = 0
 	else

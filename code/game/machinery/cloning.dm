@@ -25,16 +25,8 @@
 
 /obj/machinery/clonepod/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonepod(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
+	B.apply_default_parts(src)
 
 /obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
@@ -47,16 +39,38 @@
 	if(heal_level > 100)
 		heal_level = 100
 
+/obj/item/weapon/circuitboard/machine/clonepod
+	name = "circuit board (Clone Pod)"
+	build_path = /obj/machinery/clonepod
+	origin_tech = "programming=3;biotech=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "cloning data disk"
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	item_state = "card-id"
-	w_class = 1
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
+
+//Disk stuff.
+/obj/item/weapon/disk/data/New()
+	..()
+	icon_state = "datadisk[rand(0,6)]"
+	overlays += "datadisk_gene"
+
+
+/obj/item/weapon/disk/data/attack_self(mob/user)
+	read_only = !read_only
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
+
+/obj/item/weapon/disk/data/examine(mob/user)
+	..()
+	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 
 //Find a dead mob with a brain and client.
@@ -70,26 +84,13 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/internal/brain))
+		if (ishuman(M) && !M.getorgan(/obj/item/organ/brain))
 			continue
 
 		if (M.ckey == find_key)
 			selected = M
 			break
 	return selected
-
-//Disk stuff.
-/obj/item/weapon/disk/data/New()
-	..()
-	icon_state = "datadisk[pick(0,1,2)]"
-
-/obj/item/weapon/disk/data/attack_self(mob/user)
-	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
-
-/obj/item/weapon/disk/data/examine(mob/user)
-	..()
-	user << "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 //Health Tracker Implant
 
@@ -178,19 +179,17 @@
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
-	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	H.updatehealth()
-
 	clonemind.transfer_to(H)
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
-	H.faction |= factions
+	if(H)
+		H.faction |= factions
 
-	H.set_cloned_appearance()
+		H.set_cloned_appearance()
 
-	H.suiciding = 0
+		H.suiciding = 0
 	src.attempting = 0
 	return 1
 
@@ -204,7 +203,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
-		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key || src.occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
 			src.connected_message("Clone Rejected: Deceased.")
@@ -252,22 +251,23 @@
 	if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
+	if (W.GetID())
+		if (!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-		if ((!src.locked) || (isnull(src.occupant)))
+		if (!locked || !occupant)
 			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "<span class='danger'>Access Refused.</span>"
+		if (occupant.health < -20 && occupant.stat != DEAD)
+			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
 			return
 		else
-			src.locked = 0
+			locked = 0
 			user << "System unlocked."
 	else
-		..()
+		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(src.occupant))
@@ -308,25 +308,13 @@
 		mess = 0
 		gibs(loc)
 		icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
 		return
 
 	if (!occupant)
 		return
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
 
-	if (occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	if(occupant.loc == src)
-		occupant.loc = loc
+	var/turf/T = get_turf(src)
+	occupant.forceMove(T)
 	icon_state = "pod_0"
 	eject_wait = 0 //If it's still set somehow.
 	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
@@ -355,7 +343,7 @@
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		go_out()
 
 /*
@@ -368,13 +356,8 @@
 
 /obj/item/weapon/storage/box/disks/New()
 	..()
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.

@@ -17,7 +17,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/halitem
 	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator, 5 - perfect health
 	var/handling_hal = 0
-	var/hal_crit = 0
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
@@ -128,7 +127,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(!U.welded)
 			src.loc = U.loc
 			break
-	image_state = pick("plasma","sleeping_agent")
+	image_state = pick("plasma","nitrous_oxide")
 	flood_images += image(image_icon,src,image_state,MOB_LAYER)
 	flood_turfs += get_turf(src.loc)
 	if(target.client) target.client.images |= flood_images
@@ -235,13 +234,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/singularity/proc/Eat(atom/OldLoc, Dir)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
-		target.sleeping = 20
-		target.hal_crit = 1
 		target.hal_screwyhud = 1
+		target.SetSleeping(20)
 		spawn(rand(50,100))
-			target.sleeping = 0
-			target.hal_crit = 0
 			target.hal_screwyhud = 0
+			target.SetSleeping(0)
 
 /obj/effect/hallucination/battle
 
@@ -281,29 +278,33 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion
 	var/list/image/delusions = list()
 
-/obj/effect/hallucination/delusion/New(loc,var/mob/living/carbon/T)
+/obj/effect/hallucination/delusion/New(loc,mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	target = T
 	var/image/A = null
-	var/kind = rand(1,3)
+	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon")
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H == target)
 			continue
-		if(H in view(target))
+		if(skip_nearby && (H in view(target)))
 			continue
 		switch(kind)
-			if(1)//Clown
+			if("clown")//Clown
 				A = image('icons/mob/animal.dmi',H,"clown")
-			if(2)//Carp
+			if("carp")//Carp
 				A = image('icons/mob/animal.dmi',H,"carp")
-			if(3)//Corgi
+			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
-			if(4)//Skeletons
+			if("skeleton")//Skeletons
 				A = image('icons/mob/human.dmi',H,"skeleton_s")
+			if("demon")//Demon
+				A = image('icons/mob/mob.dmi',H,"daemon")
+			if("custom")
+				A = image(custom_icon_file, H, custom_icon)
 		A.override = 1
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(300)
+	sleep(duration)
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
@@ -432,7 +433,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
-						my_target.eye_blurry += 3
+						my_target.blur_eyes(3)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
@@ -464,11 +465,11 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/sneakers/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
-	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
-	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
+	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
+	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
+	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
-	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/c4,\
+	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/grenade/plastic/c4,\
 	/obj/item/device/powersink, /obj/item/weapon/storage/box/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
 	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\
@@ -641,7 +642,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halitem.icon_state = "revolver"
 							halitem.name = "Revolver"
 						if(2) //c4
-							halitem.icon = 'icons/obj/assemblies.dmi'
+							halitem.icon = 'icons/obj/grenade.dmi'
 							halitem.icon_state = "plastic-explosive0"
 							halitem.name = "Mysterious Package"
 							if(prob(25))
@@ -670,10 +671,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			//src << "Danger Flash"
 			if(!halimage)
 				var/list/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
+				for(var/turf/open/floor/F in view(src,world.view))
 					possible_points += F
 				if(possible_points.len)
-					var/turf/simulated/floor/target = pick(possible_points)
+					var/turf/open/floor/target = pick(possible_points)
 
 					switch(rand(1,3))
 						if(1)
@@ -684,7 +685,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
 						if(3)
 							//src << "C4"
-							halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+							halimage = image('icons/obj/grenade.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 					if(client) client.images += halimage
@@ -693,20 +694,18 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 						halimage = null
 		if("death")
 			//Fake death
-			src.sleeping = 20
-			hal_crit = 1
 			hal_screwyhud = 1
+			SetSleeping(20)
 			spawn(rand(50,100))
-				src.sleeping = 0
-				hal_crit = 0
 				hal_screwyhud = 0
+				SetSleeping(0)
 		if("husks")
 			if(!halbody)
 				var/list/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
+				for(var/turf/open/floor/F in view(src,world.view))
 					possible_points += F
 				if(possible_points.len)
-					var/turf/simulated/floor/target = pick(possible_points)
+					var/turf/open/floor/target = pick(possible_points)
 					switch(rand(1,4))
 						if(1)
 							var/image/body = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)

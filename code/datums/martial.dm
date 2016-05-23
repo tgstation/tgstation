@@ -6,6 +6,7 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
+	var/help_verb = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -28,7 +29,7 @@
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
 	A.do_attack_animation(D)
-	var/damage = rand(0,9) + A.dna.species.punchmod
+	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
 
 	var/atk_verb = A.dna.species.attack_verb
 	if(D.lying)
@@ -40,7 +41,7 @@
 		add_logs(A, D, "attempted to [atk_verb]")
 		return 0
 
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -51,7 +52,7 @@
 
 	add_logs(A, D, "punched")
 
-	if((D.stat != DEAD) && damage >= 9)
+	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
 		D.apply_effect(4, WEAKEN, armor_block)
@@ -61,6 +62,8 @@
 	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
+	if(help_verb)
+		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
 	if(H.martial_art && H.martial_art.temporary)
@@ -75,6 +78,8 @@
 	if(H.martial_art != src)
 		return
 	H.martial_art = base
+	if(help_verb)
+		H.verbs -= help_verb
 
 /datum/martial_art/boxing
 	name = "Boxing"
@@ -93,7 +98,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(5,8) + A.dna.species.punchmod
+	var/damage = rand(5, 8) + A.dna.species.punchdamagelow
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
@@ -101,7 +106,7 @@
 		return 0
 
 
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
+	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -123,57 +128,15 @@
 			D.forcesay(hit_appends)
 	return 1
 
-/datum/martial_art/wrestling
-	name = "Wrestling"
+/mob/living/carbon/human/proc/wrestling_help()
+	set name = "Recall Teachings"
+	set desc = "Remember how to wrestle."
+	set category = "Wrestling"
 
-/datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	D.grabbedby(A,1)
-	var/obj/item/weapon/grab/G = A.get_active_hand()
-	if(G && prob(50))
-		G.state = GRAB_AGGRESSIVE
-		D.visible_message("<span class='danger'>[A] has [D] in a clinch!</span>", \
-								"<span class='userdanger'>[A] has [D] in a clinch!</span>")
-	else
-		D.visible_message("<span class='danger'>[A] fails to get [D] in a clinch!</span>", \
-								"<span class='userdanger'>[A] fails to get [D] in a clinch!</span>")
-	return 1
-
-
-/datum/martial_art/wrestling/proc/Suplex(mob/living/carbon/human/A, mob/living/carbon/human/D)
-
-	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
-								"<span class='userdanger'>[A] suplexes [D]!</span>")
-	D.forceMove(A.loc)
-	var/armor_block = D.run_armor_check(null, "melee")
-	D.apply_damage(30, BRUTE, null, armor_block)
-	D.apply_effect(6, WEAKEN, armor_block)
-	add_logs(A, D, "suplexed")
-
-	A.SpinAnimation(10,1)
-
-	D.SpinAnimation(10,1)
-	spawn(3)
-		armor_block = A.run_armor_check(null, "melee")
-		A.apply_effect(4, WEAKEN, armor_block)
-	return
-
-/datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(istype(A.get_inactive_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = A.get_inactive_hand()
-		if(G.affecting == D)
-			Suplex(A,D)
-			return 1
-	harm_act(A,D)
-	return 1
-
-/datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	D.grabbedby(A,1)
-	D.visible_message("<span class='danger'>[A] holds [D] down!</span>", \
-								"<span class='userdanger'>[A] holds [D] down!</span>")
-	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
-	var/armor_block = D.run_armor_check(affecting, "melee")
-	D.apply_damage(10, STAMINA, affecting, armor_block)
-	return 1
+	usr << "<b><i>You flex your muscles and have a revelation...</i></b>"
+	usr << "<span class='notice'>Clinch</span>: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful."
+	usr << "<span class='notice'>Suplex</span>: Disarm someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor."
+	usr << "<span class='notice'>Advanced grab</span>: Grab. Passively causes stamina damage when grabbing someone."
 
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
@@ -181,6 +144,8 @@
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
+	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
+
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
@@ -226,35 +191,39 @@
 	A.say("PLASMA FIST!")
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
-	var/obj/item/organ/internal/brain/B = D.getorgan(/obj/item/organ/internal/brain)
-	if(B)
-		B.loc = get_turf(D)
-		B.transfer_identity(D)
-		D.internal_organs -= B
 	D.gib()
 	return
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("H")
+	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("D")
+	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("G")
+	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
+/mob/living/carbon/human/proc/plasma_fist_help()
+	set name = "Recall Teachings"
+	set desc = "Remember the martial techniques of the Plasma Fist."
+	set category = "Plasma Fist"
+
+	usr << "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
+	usr << "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses target and everyone back."
+	usr << "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them."
+	usr << "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body."
 
 //Used by the gang of the same name. Uses combos. Basic attacks bypass armor and never miss
 #define WRIST_WRENCH_COMBO "DD"
@@ -265,6 +234,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
@@ -291,6 +261,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.stunned && !D.weakened)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -303,6 +274,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.dir == D.dir && !D.stat && !D.weakened)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
 		step_to(D,get_step(D,D.dir),1)
@@ -313,6 +285,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
@@ -324,6 +297,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
 		D.apply_damage(20, BRUTE, "head")
@@ -335,6 +309,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(D.weakened || D.resting || D.stat)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
 		if(D.stat)
@@ -345,18 +320,19 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("G")
+	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
-	..()
+	D.grabbedby(A,1)
 	var/obj/item/weapon/grab/G = A.get_active_hand()
 	if(G)
 		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("H")
+	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
+	A.do_attack_animation(D)
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
@@ -369,7 +345,7 @@
 
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("D")
+	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return 1
 	return ..()
@@ -380,6 +356,7 @@
 	set category = "Sleeping Carp"
 
 	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
+
 	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
 	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
 	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
@@ -456,12 +433,8 @@
 /obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
-	if(!is_in_gang(user, "Sleeping Carp")) //Only the Sleeping Carp can use the scroll
-		user << "<span class='warning'>You can't comprehend the runes and symbols drawn on [src].</span>"
-		return 0
 	user << "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-	user.verbs += /mob/living/carbon/human/proc/sleeping_carp_help
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
 	user.drop_item()
@@ -482,6 +455,7 @@
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
+	block_chance = 50
 
 /obj/item/weapon/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
@@ -506,41 +480,37 @@
 	if(C.stat)
 		user << "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>"
 		return
-	switch(user.a_intent)
-		if("disarm")
-			if(!wielded)
-				return ..()
-			if(!ishuman(target))
-				return ..()
-			var/mob/living/carbon/human/H = target
-			var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
-										  "[user] smacks [H] with the butt of [src]!", \
-										  "[user] broadsides [H] with [src]!", \
-										  "[user] smashes [H]'s head with [src]!", \
-										  "[user] beats [H] with front of [src]!", \
-										  "[user] twirls and slams [H] with [src]!")
-			H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
-								   "<span class='userdanger'>[pick(fluffmessages)]</span>")
-			playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			H.adjustStaminaLoss(rand(13,20))
-			if(prob(10))
-				H.visible_message("<span class='warning'>[H] collapses!</span>", \
-									   "<span class='userdanger'>Your legs give out!</span>")
-				H.Weaken(4)
-			if(H.staminaloss && !H.sleeping)
-				var/total_health = (H.health - H.staminaloss)
-				if(total_health <= config.health_threshold_crit && !H.stat)
-					H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
-										   "<span class='userdanger'>[user] knocks you unconscious!</span>")
-					H.sleeping += 30
-					H.adjustBrainLoss(25)
-			return
-		else
+	if(user.a_intent == "disarm")
+		if(!wielded)
 			return ..()
-	return ..()
-
-/obj/item/weapon/twohanded/bostaff/IsShield()
-	if(wielded)
-		return 1
+		if(!ishuman(target))
+			return ..()
+		var/mob/living/carbon/human/H = target
+		var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
+									  "[user] smacks [H] with the butt of [src]!", \
+									  "[user] broadsides [H] with [src]!", \
+									  "[user] smashes [H]'s head with [src]!", \
+									  "[user] beats [H] with front of [src]!", \
+									  "[user] twirls and slams [H] with [src]!")
+		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
+							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+		H.adjustStaminaLoss(rand(13,20))
+		if(prob(10))
+			H.visible_message("<span class='warning'>[H] collapses!</span>", \
+								   "<span class='userdanger'>Your legs give out!</span>")
+			H.Weaken(4)
+		if(H.staminaloss && !H.sleeping)
+			var/total_health = (H.health - H.staminaloss)
+			if(total_health <= config.health_threshold_crit && !H.stat)
+				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
+									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
+				H.SetSleeping(30)
+				H.adjustBrainLoss(25)
 	else
-		return 0
+		return ..()
+
+/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(wielded)
+		return ..()
+	return 0

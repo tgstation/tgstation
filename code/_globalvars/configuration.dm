@@ -26,6 +26,9 @@ var/Debug2 = 0
 var/global/comms_key = "default_pwd"
 var/global/comms_allowed = 0 //By default, the server does not allow messages to be sent to it, unless the key is strong enough (this is to prevent misconfigured servers from becoming vulnerable)
 
+//Cross server communications
+var/global/cross_address = "byond://" //This needs to be global as the message sent contains the comms key.
+var/global/cross_allowed = 0 //Don't bother attempting to send if the address wasn't set.
 
 //This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
 var/MAX_EX_DEVESTATION_RANGE = 3
@@ -34,21 +37,3 @@ var/MAX_EX_LIGHT_RANGE = 14
 var/MAX_EX_FLASH_RANGE = 14
 var/MAX_EX_FLAME_RANGE = 14
 
-var/list/be_special_flags = list(
-	"Traitor" = BE_TRAITOR,
-	"Operative" = BE_OPERATIVE,
-	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
-	"Revolutionary" = BE_REV,
-	"Alien Lifeform" = BE_ALIEN,
-	"pAI" = BE_PAI,
-	"Cultist" = BE_CULTIST,
-	"Blob" = BE_BLOB,
-	"Ninja" = BE_NINJA,
-	"Monkey" = BE_MONKEY,
-	"Gang" = BE_GANG,
-	"Abductor" = BE_ABDUCTOR,
-	"Revenant" = BE_REVENANT,
-	"Shadowling" = BE_SHADOWLING
-	)

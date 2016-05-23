@@ -18,6 +18,17 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+
+/atom/Destroy()
+	if(alternate_appearances)
+		for(var/aakey in alternate_appearances)
+			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
+			qdel(AA)
+		alternate_appearances = null
+
+	return ..()
+
+
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -27,9 +38,9 @@
 		return 0
 
 	//check for centcomm shuttles
-	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
-		if(T in M.areaInstance)
+	for(var/A in SSshuttle.mobile)
+		var/obj/docking_port/mobile/M = A
+		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
 			return 1
 
 	//finally check for centcom itself
@@ -55,8 +66,19 @@
 		hulk.do_attack_animation(src)
 	return
 
-/atom/proc/CheckParts()
-	return
+/atom/proc/CheckParts(list/parts_list)
+	for(var/A in parts_list)
+		if(istype(A, /datum/reagent))
+			if(!reagents)
+				reagents = new()
+			reagents.reagent_list.Add(A)
+			reagents.conditional_update()
+		else if(istype(A, /atom/movable))
+			var/atom/movable/M = A
+			if(istype(M.loc, /mob/living))
+				var/mob/living/L = M.loc
+				L.unEquip(M)
+			M.loc = src
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -72,8 +94,6 @@
 		return null
 
 /atom/proc/check_eye(mob/user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
-		return 1
 	return
 
 /atom/proc/on_reagent_change()
@@ -90,11 +110,11 @@
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
-	proc/can_subract_container()
-		return flags & EXTRACT_CONTAINER
+/atom/proc/can_subract_container()
+	return flags & EXTRACT_CONTAINER
 
-	proc/can_add_container()
-		return flags & INSERT_CONTAINER
+/atom/proc/can_add_container()
+	return flags & INSERT_CONTAINER
 */
 
 
@@ -147,76 +167,6 @@
 	return found
 
 
-
-
-/*
-Beam code by Gunbuddy
-
-Beam() proc will only allow one beam to come from a source at a time.  Attempting to call it more than
-once at a time per source will cause graphical errors.
-Also, the icon used for the beam will have to be vertical and 32x32.
-The math involved assumes that the icon is vertical to begin with so unless you want to adjust the math,
-its easier to just keep the beam vertical.
-*/
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10)
-	//BeamTarget represents the target for the beam, basically just means the other end.
-	//Time is the duration to draw the beam
-	//Icon is obviously which icon to use for the beam, default is beam.dmi
-	//Icon_state is what icon state is used. Default is b_beam which is a blue beam.
-	//Maxdistance is the longest range the beam will persist before it gives up.
-	var/EndTime=world.time+time
-	while(BeamTarget&&world.time<EndTime&&get_dist(src,BeamTarget)<maxdistance&&z==BeamTarget.z)
-	//If the BeamTarget gets deleted, the time expires, or the BeamTarget gets out
-	//of range or to another z-level, then the beam will stop.  Otherwise it will
-	//continue to draw.
-
-		dir=get_dir(src,BeamTarget)	//Causes the source of the beam to rotate to continuosly face the BeamTarget.
-
-		for(var/obj/effect/overlay/beam/O in ultra_range(10,src,1))	//This section erases the previously drawn beam because I found it was easier to
-			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				qdel(O)							//pieces to a new orientation.
-		var/Angle=round(Get_Angle(src,BeamTarget))
-		var/icon/I=new(icon,icon_state)
-		I.Turn(Angle)
-		var/DX=(32*BeamTarget.x+BeamTarget.pixel_x)-(32*x+pixel_x)
-		var/DY=(32*BeamTarget.y+BeamTarget.pixel_y)-(32*y+pixel_y)
-		var/N=0
-		var/length=round(sqrt((DX)**2+(DY)**2))
-		for(N,N<length,N+=32)
-			var/obj/effect/overlay/beam/X=new(loc)
-			X.BeamSource=src
-			if(N+32>length)
-				var/icon/II=new(icon,icon_state)
-				II.DrawBox(null,1,(length-N),32,32)
-				II.Turn(Angle)
-				X.icon=II
-			else X.icon=I
-			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
-			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
-			if(DX==0) Pixel_x=0
-			if(DY==0) Pixel_y=0
-			if(Pixel_x>32)
-				for(var/a=0, a<=Pixel_x,a+=32)
-					X.x++
-					Pixel_x-=32
-			if(Pixel_x<-32)
-				for(var/a=0, a>=Pixel_x,a-=32)
-					X.x--
-					Pixel_x+=32
-			if(Pixel_y>32)
-				for(var/a=0, a<=Pixel_y,a+=32)
-					X.y++
-					Pixel_y-=32
-			if(Pixel_y<-32)
-				for(var/a=0, a>=Pixel_y,a-=32)
-					X.y--
-					Pixel_y+=32
-			X.pixel_x=Pixel_x
-			X.pixel_y=Pixel_y
-		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
-					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in ultra_range(10,src,1)) if(O.BeamSource==src) qdel(O)
-
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
@@ -237,8 +187,14 @@ its easier to just keep the beam vertical.
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "[R.volume] units of [R.name]"
+			if(user.can_see_reagents()) //Show each individual reagent
+				for(var/datum/reagent/R in reagents.reagent_list)
+					user << "[R.volume] units of [R.name]"
+			else //Otherwise, just show the total volume
+				var/total_volume = 0
+				for(var/datum/reagent/R in reagents.reagent_list)
+					total_volume += R.volume
+				user << "[total_volume] units of various reagents"
 		else
 			user << "Nothing."
 
@@ -248,20 +204,22 @@ its easier to just keep the beam vertical.
 /atom/proc/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
+		CHECK_TICK
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/atom/proc/blob_act()
+/atom/proc/blob_act(obj/effect/blob/B)
 	return
 
 /atom/proc/fire_act()
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
-		spawn(2)
-			step(AM,  turn(AM.dir, 180))
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
+		spawn(2) //very short wait, so we can actually see the impact.
+			if(AM && isturf(AM.loc))
+				step(AM, turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -318,7 +276,7 @@ var/list/blood_splatter_icons = list()
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/add_blood(mob/living/carbon/human/M)
 	if(!..())
 		return 0
 
@@ -341,23 +299,9 @@ var/list/blood_splatter_icons = list()
 /atom/proc/rejects_blood()
 	return 0
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-		if(M.reagents)
-			M.reagents.trans_to(this, M.reagents.total_volume / 10)
-		// Make toxins vomit look different
-		if(toxvomit)
-			this.icon_state = "vomittox_[pick(1,4)]"
-
-		/*for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = D.Copy(1)
-			this.viruses += newDisease
-			newDisease.holder = this*/
-
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(src, /turf/simulated))
+	if(istype(src, /turf))
 		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)
@@ -366,17 +310,21 @@ var/list/blood_splatter_icons = list()
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
-			if(!B)	B = new(src)
+			if(!B)
+				B = new(src)
 			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
 		else if(istype(M, /mob/living/silicon/robot))
 			var/obj/effect/decal/cleanable/oil/B = locate() in contents
-			if(!B)	B = new(src)
+			if(!B)
+				B = new(src)
 
 /atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))
 		blood_DNA = null
 		return 1
 
+/atom/proc/wash_cream()
+	return 1
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
@@ -395,7 +343,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
+	if(istype(get_turf(src), /turf/open/space))
 		return 1
 	else
 		return 0
@@ -433,3 +381,38 @@ var/list/blood_splatter_icons = list()
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
+
+//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
+//effects at world start up without causing runtimes
+/atom/proc/spawn_atom_to_world()
+
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return
+
+//the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
+/atom/proc/get_remote_view_fullscreens(mob/user)
+	return
+
+//the sight changes to give to the mob whose perspective is set to that atom (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
+/atom/proc/update_remote_sight(mob/living/user)
+	return
+
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+	if(istype(src,/turf) )
+		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		// Make toxins vomit look different
+		if(toxvomit)
+			V.icon_state = "vomittox_[pick(1,4)]"
+		if(M.reagents)
+			clear_reagents_to_vomit_pool(M,V)
+
+/atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(istype(R, /datum/reagent/consumable))
+			var/datum/reagent/consumable/nutri_check = R
+			if(nutri_check.nutriment_factor >0)
+				M.reagents.remove_reagent(R.id,R.volume)
+

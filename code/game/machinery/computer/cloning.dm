@@ -4,7 +4,7 @@
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/weapon/circuitboard/cloning
+	circuit = /obj/item/weapon/circuitboard/computer/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
@@ -74,18 +74,17 @@
 	return null
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
-				return ..()
+				return
 			W.loc = src
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
 			return
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/cloning/attack_hand(mob/user)
 	if(..())
@@ -297,7 +296,8 @@
 					src.updateUsrDialog()
 					return
 
-				src.active_record.fields = diskette.fields.Copy()
+				for(var/key in diskette.fields)
+					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
 
 			if("eject")
@@ -353,10 +353,10 @@
 	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
-	if (!subject.getorgan(/obj/item/organ/internal/brain))
+	if (!subject.getorgan(/obj/item/organ/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return
-	if (subject.suiciding == 1)
+	if (subject.suiciding == 1 || subject.hellbound)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
 	if ((subject.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
@@ -373,7 +373,8 @@
 	if(subject.dna.species)
 		R.fields["mrace"] = subject.dna.species.type
 	else
-		R.fields["mrace"] = /datum/species/human
+		var/datum/species/rando_race = pick(config.roundstart_races)
+		R.fields["mrace"] = rando_race.type
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)

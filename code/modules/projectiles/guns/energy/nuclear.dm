@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic hybrid energy gun with two settings: Disable and kill."
+	desc = "A basic hybrid energy gun with two settings: disable and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
@@ -11,9 +11,25 @@
 	flight_x_offset = 15
 	flight_y_offset = 10
 
-/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
-	select_fire(user)
-	update_icon()
+/obj/item/weapon/gun/energy/gun/mini
+	name = "miniature energy gun"
+	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
+	icon_state = "mini"
+	item_state = "gun"
+	w_class = 2
+	cell_type = /obj/item/weapon/stock_parts/cell{charge = 600; maxcharge = 600}
+	ammo_x_offset = 2
+	charge_sections = 3
+	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
+
+/obj/item/weapon/gun/energy/gun/mini/New()
+	F = new /obj/item/device/flashlight/seclite(src)
+	..()
+
+/obj/item/weapon/gun/energy/gun/mini/update_icon()
+	..()
+	if(F && F.on)
+		overlays += "mini-light"
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
@@ -27,10 +43,26 @@
 	name = "\improper DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
-	origin_tech = "combat=3;magnets=3;materials=4; bluespace=4"
+	origin_tech = "combat=3;magnets=3;materials=4;bluespace=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
+
+/obj/item/weapon/gun/energy/gun/dragnet/snare
+	name = "Energy Snare Launcher"
+	desc = "Fires an energy snare that slows the target down"
+	ammo_type = list(/obj/item/ammo_casing/energy/trap)
+
+/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg
+	can_charge = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/trap/cyborg)
+
+/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/newshot()
+	..()
+	robocharge()
+
+/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/emp_act()
+	return
 
 /obj/item/weapon/gun/energy/gun/turret
 	name = "hybrid turret gun"
@@ -40,9 +72,9 @@
 	slot_flags = null
 	w_class = 5
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-	heavy_weapon = 1
+	weapon_weight = WEAPON_MEDIUM
 	can_flashlight = 0
-	trigger_guard = 0
+	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
 
 /obj/item/weapon/gun/energy/gun/nuclear
@@ -52,32 +84,17 @@
 	item_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/fail_tick = 0
-	var/charge_tick = 0
-	var/charge_delay = 5
+	charge_delay = 5
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
-
-/obj/item/weapon/gun/energy/gun/nuclear/New()
-	..()
-	SSobj.processing |= src
-
-/obj/item/weapon/gun/energy/gun/nuclear/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
+	selfcharge = 1
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()
 	if(fail_tick > 0)
 		fail_tick--
-	charge_tick++
-	if(charge_tick < charge_delay)
-		return
-	charge_tick = 0
-	if(!power_supply)
-		return
-	power_supply.give(100)
-	update_icon()
+	..()
 
 /obj/item/weapon/gun/energy/gun/nuclear/shoot_live_shot()
 	failcheck()

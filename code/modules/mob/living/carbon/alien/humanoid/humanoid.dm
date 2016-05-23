@@ -12,6 +12,7 @@
 	var/pounce_cooldown_time = 30
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
+	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
@@ -21,7 +22,7 @@
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
+	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
@@ -31,7 +32,7 @@
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
-		adjustBruteLoss(14 + rand(1,9))
+		adjustBruteLoss(15)
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
 			Paralyse(1)
@@ -148,6 +149,15 @@
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
 
+/mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
+	drop_l_hand()
+	drop_r_hand()
+	for(var/atom/movable/A in stomach_contents)
+		stomach_contents.Remove(A)
+		new_xeno.stomach_contents.Add(A)
+		A.loc = new_xeno
+	..()
+
 //For alien evolution/promotion procs. Checks for
 proc/alien_type_present(var/alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
@@ -157,3 +167,9 @@ proc/alien_type_present(var/alienpath)
 			continue
 		return 1
 	return 0
+
+
+/mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
+	if(breath && breath.total_moles() > 0 && !sneaking)
+		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
+	..()

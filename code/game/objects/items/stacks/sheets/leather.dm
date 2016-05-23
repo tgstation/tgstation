@@ -5,6 +5,21 @@
 	icon_state = "sheet-hide"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/human_recipes = list( \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/human/New(var/loc, var/amount=null)
+	recipes = human_recipes
+	return ..()
+
+/obj/item/stack/sheet/animalhide/generic
+	name = "generic skin"
+	desc = "A piece of generic skin."
+	singular_name = "generic skin piece"
+	icon_state = "sheet-hide"
+	origin_tech = null
+
 /obj/item/stack/sheet/animalhide/corgi
 	name = "corgi hide"
 	desc = "The by-product of corgi farming."
@@ -112,6 +127,45 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 
+/obj/item/stack/sheet/sinew
+	name = "watcher sinew"
+	icon = 'icons/obj/mining.dmi'
+	desc = "Long stringy filaments which presumably came from a watcher's wings."
+	singular_name = "watcher sinew"
+	icon_state = "sinew"
+	origin_tech = "biotech=4"
+
+
+var/global/list/datum/stack_recipe/sinew_recipes = list ( \
+	new/datum/stack_recipe("sinew restraints", /obj/item/weapon/restraints/handcuffs/sinew, 1, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/sinew/New(var/loc, var/amount=null)
+	recipes = sinew_recipes
+	return ..()
+		/*
+ * Plates
+ 		*/
+
+/obj/item/stack/sheet/animalhide/goliath_hide
+	name = "goliath hide plates"
+	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_hide"
+	singular_name = "hide plate"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
+
+/obj/item/stack/sheet/animalhide/ashdrake
+	name = "ash drake hide"
+	desc = "The strong, scaled hide of an ash drake."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "dragon_hide"
+	singular_name = "drake plate"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
 
 
 //Step one - dehairing.
@@ -133,7 +187,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 			HS.amount = 1
 			use(1)
 	else
-		..()
+		return ..()
 
 
 //Step two - washing..... it's actually in washing machine code.

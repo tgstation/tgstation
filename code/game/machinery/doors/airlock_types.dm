@@ -108,6 +108,12 @@
 	doortype = /obj/structure/door_assembly/door_assembly_viro/glass
 	glass = 1
 
+/obj/machinery/door/airlock/glass_maintenance
+	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+	opacity = 0
+	doortype = /obj/structure/door_assembly/door_assembly_mai/glass
+	glass = 1
+
 //////////////////////////////////
 /*
 	Station Airlocks Mineral
@@ -165,7 +171,7 @@
 		PlasmaBurn(exposed_temperature)
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 500)
+	atmos_spawn_air("plasma=500;TEMP=1000")
 	new/obj/structure/door_assembly/door_assembly_0( src.loc )
 	qdel(src)
 
@@ -177,6 +183,7 @@
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	var/mineral = "bananium"
+	doorOpen = 'sound/items/bikehorn.ogg'
 	doortype = /obj/structure/door_assembly/door_assembly_clown
 
 /obj/machinery/door/airlock/sandstone
@@ -215,6 +222,14 @@
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_ext
+
+/obj/machinery/door/airlock/glass_external
+	name = "external airlock"
+	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_ext/glass
+	opacity = 0
+	glass = 1
 
 //////////////////////////////////
 /*
@@ -282,6 +297,85 @@
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_shuttle
 
+/obj/machinery/door/airlock/abductor
+	name = "alien airlock"
+	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give a screwdriver a try?"
+	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_abductor
+	opacity = 1
+	explosion_block = 3
+	hackProof = 1
+	aiControlDisabled = 1
+
+//////////////////////////////////
+/*
+	Cult Airlocks
+*/
+
+/obj/machinery/door/airlock/cult
+	name = "cult airlock"
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_cult
+	hackProof = 1
+	aiControlDisabled = 1
+	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
+	var/friendly = FALSE
+
+/obj/machinery/door/airlock/cult/allowed(mob/M)
+	if(!density)
+		return 1
+	if(friendly || \
+			iscultist(M) || \
+			istype(M, /mob/living/simple_animal/shade) || \
+			istype(M, /mob/living/simple_animal/hostile/construct))
+		PoolOrNew(openingoverlaytype, src.loc)
+		return 1
+	else
+		PoolOrNew(/obj/effect/overlay/temp/cult/sac, src.loc)
+		var/atom/throwtarget
+		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
+		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		if(M.client)
+			var/old_color = M.client.color
+			M.client.color = "#960000"
+			spawn(0)//animate is a delay, avoid delay, etc
+				animate(M.client,color = old_color, time = 20)
+		M.Weaken(2)
+		M.throw_at_fast(throwtarget, 5, 1,src)
+		return 0
+
+/obj/machinery/door/airlock/cult/narsie_act()
+	return
+
+/obj/machinery/door/airlock/cult/friendly
+	friendly = TRUE
+
+/obj/machinery/door/airlock/cult/glass
+	doortype = /obj/structure/door_assembly/door_assembly_cult/glass
+	glass = 1
+	opacity = 0
+
+/obj/machinery/door/airlock/cult/glass/friendly
+	friendly = TRUE
+
+/obj/machinery/door/airlock/cult/unruned
+	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
+	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned
+	openingoverlaytype = /obj/effect/overlay/temp/cult/door/unruned
+
+/obj/machinery/door/airlock/cult/unruned/friendly
+	friendly = TRUE
+
+/obj/machinery/door/airlock/cult/unruned/glass
+	doortype = /obj/structure/door_assembly/door_assembly_cult/unruned/glass
+	glass = 1
+	opacity = 0
+
+/obj/machinery/door/airlock/cult/unruned/glass/friendly
+	friendly = TRUE
 
 //////////////////////////////////
 /*
@@ -296,3 +390,6 @@
 	doortype = null
 	glass = 1
 	bound_width = 64 // 2x1
+
+/obj/machinery/door/airlock/glass_large/narsie_act()
+	return

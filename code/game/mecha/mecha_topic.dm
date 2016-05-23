@@ -4,7 +4,7 @@
 ////////////////////////////////////
 
 /obj/mecha/proc/get_stats_html()
-	var/output = {"<html>
+	. = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
@@ -46,35 +46,36 @@
 						</body>
 						</html>
 					 "}
-	return output
+
 
 
 /obj/mecha/proc/report_internal_damage()
-	var/output = null
+	. = ""
 	var/list/dam_reports = list(
-										"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
-										"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
-										"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
-										"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a>",
-										"[MECHA_INT_SHORT_CIRCUIT]" = "<span class='userdanger'>SHORT CIRCUIT</span>"
-										)
+		"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
+		"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
+		"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
+		"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a>",
+		"[MECHA_INT_SHORT_CIRCUIT]" = "<span class='userdanger'>SHORT CIRCUIT</span>"
+								)
 	for(var/tflag in dam_reports)
 		var/intdamflag = text2num(tflag)
 		if(internal_damage & intdamflag)
-			output += dam_reports[tflag]
-			output += "<br />"
+			. += dam_reports[tflag]
+			. += "<br />"
 	if(return_pressure() > WARNING_HIGH_PRESSURE)
-		output += "<span class='userdanger'>DANGEROUSLY HIGH CABIN PRESSURE</span><br />"
-	return output
+		. += "<span class='userdanger'>DANGEROUSLY HIGH CABIN PRESSURE</span><br />"
+
 
 
 /obj/mecha/proc/get_stats_part()
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
-	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
+	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
+	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
+	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
-	var/output = {"[report_internal_damage()]
+	. = {"[report_internal_damage()]
 						[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
 						<b>Integrity: </b> [integrity]%<br>
 						<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
@@ -83,12 +84,19 @@
 						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
 						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa<br>
 						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
-						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
+						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":""]<br>
+						[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]
+						[defense_action.owner ? "<b>Defence Mode: </b> [defence_mode ? "Enabled" : "Disabled"]<br>" : ""]
+						[overload_action.owner ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]
+						[smoke_action.owner ? "<b>Smoke: </b> [smoke]<br>" : ""]
+						[zoom_action.owner ? "<b>Zoom: </b> [zoom_mode ? "Enabled" : "Disabled"]<br>" : ""]
+						[switch_damtype_action.owner ? "<b>Damtype: </b> [damtype]<br>" : ""]
+						[phasing_action.owner ? "<b>Phase Modulator: </b> [phasing ? "Enabled" : "Disabled"]<br>" : ""]
 					"}
-	return output
+
 
 /obj/mecha/proc/get_commands()
-	var/output = {"<div class='wr'>
+	. = {"<div class='wr'>
 						<div class='header'>Electronics</div>
 						<div class='links'>
 						<b>Radio settings:</b><br>
@@ -114,43 +122,44 @@
 						</div>
 						<div id='equipment_menu'>[get_equipment_menu()]</div>
 						"}
-	return output
+
 
 /obj/mecha/proc/get_equipment_menu() //outputs mecha html equipment menu
-	var/output
+	. = ""
 	if(equipment.len)
-		output += {"<div class='wr'>
+		. += {"<div class='wr'>
 						<div class='header'>Equipment</div>
 						<div class='links'>"}
-		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
-			output += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
-		output += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
-		output += "</div></div>"
-	return output
+		for(var/X in equipment)
+			var/obj/item/mecha_parts/mecha_equipment/W = X
+			. += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
+		. += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
+		. += "</div></div>"
+
 
 /obj/mecha/proc/get_equipment_list() //outputs mecha equipment list in html
 	if(!equipment.len)
 		return
-	var/output = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
+	. = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
-	output += "</div>"
-	return output
+		. += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
+	. += "</div>"
+
 
 
 /obj/mecha/proc/get_log_html()
-	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
+	. = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
-		output += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
+		. += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
 						"}
-	output += "</body></html>"
-	return output
+	. += "</body></html>"
+
 
 
 /obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
 	if(!id_card || !user) return
-	var/output = {"<html>
+	. = {"<html>
 						<head><style>
 						h1 {font-size:15px;margin-bottom:4px;}
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
@@ -160,22 +169,23 @@
 						<body>
 						<h1>Following keycodes are present in this system:</h1>"}
 	for(var/a in operation_req_access)
-		output += "[get_access_desc(a)] - <a href='?src=\ref[src];del_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Delete</a><br>"
-	output += "<hr><h1>Following keycodes were detected on portable device:</h1>"
+		. += "[get_access_desc(a)] - <a href='?src=\ref[src];del_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Delete</a><br>"
+	. += "<hr><h1>Following keycodes were detected on portable device:</h1>"
 	for(var/a in id_card.access)
 		if(a in operation_req_access) continue
 		var/a_name = get_access_desc(a)
 		if(!a_name) continue //there's some strange access without a name
-		output += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
-	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
-	output += "</body></html>"
-	user << browse(output, "window=exosuit_add_access")
+		. += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
+	. += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> "
+	. += "<span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
+	. += "</body></html>"
+	user << browse(., "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
-	return
+
 
 /obj/mecha/proc/output_maintenance_dialog(obj/item/weapon/card/id/id_card,mob/user)
 	if(!id_card || !user) return
-	var/output = {"<html>
+	. = {"<html>
 						<head>
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
@@ -188,9 +198,9 @@
 						[(state>0) ?"<a href='?src=\ref[src];set_internal_tank_valve=1;user=\ref[user]'>Set Cabin Air Pressure</a>":null]
 						</body>
 						</html>"}
-	user << browse(output, "window=exosuit_maint_console")
+	user << browse(., "window=exosuit_maint_console")
 	onclose(user, "exosuit_maint_console")
-	return
+
 
 
 
@@ -253,7 +263,7 @@
 
 	if(href_list["select_equip"])
 		var/obj/item/mecha_parts/mecha_equipment/equip = filter.getObj("select_equip")
-		if(equip)
+		if(equip && equip.selectable)
 			src.selected = equip
 			src.occupant_message("You switch to [equip]")
 			src.visible_message("[src] raises [equip]")

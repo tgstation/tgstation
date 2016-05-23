@@ -14,7 +14,8 @@
 
 
 /obj/item/device/assembly/health/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	toggle_scan()
 	return 0
 
@@ -62,7 +63,8 @@
 	return
 
 /obj/item/device/assembly/health/proc/toggle_scan()
-	if(!secured)	return 0
+	if(!secured)
+		return 0
 	scanning = !scanning
 	if(scanning)
 		SSobj.processing |= src
@@ -74,7 +76,7 @@
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
 		return 0
-	var/dat = text("<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>")
+	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"
 	user << browse(dat, "window=hscan")

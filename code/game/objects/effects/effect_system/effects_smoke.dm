@@ -25,7 +25,7 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
-		sleep(world.tick_lag)
+		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
 	..()
@@ -154,8 +154,8 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
+	if(istype(A,/turf/open))
+		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
@@ -163,9 +163,12 @@
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-				if(G.toxins)
-					G.nitrogen += (G.toxins)
-					G.toxins = 0
+				var/list/G_gases = G.gases
+				if(G_gases["plasma"])
+					G.assert_gas("n2")
+					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
+					G_gases["plasma"][MOLES] = 0
+					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 				U.welded = 1
@@ -183,7 +186,7 @@
 
 /datum/effect_system/smoke_spread/freezing/start()
 	if(blast)
-		for(var/turf/T in trange(2, location))
+		for(var/turf/T in RANGE_TURFS(2, location))
 			Chilled(T)
 	..()
 
@@ -200,7 +203,7 @@
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
-		M.sleeping = max(M.sleeping,10)
+		M.Sleeping(max(M.sleeping,10))
 		M.emote("cough")
 		return 1
 

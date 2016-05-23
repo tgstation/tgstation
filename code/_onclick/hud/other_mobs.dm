@@ -1,37 +1,41 @@
 
-/datum/hud/proc/unplayer_hud()
-	return
-
-/datum/hud/proc/ghost_hud()
-	return
-
-/datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen_midnight.dmi')
-	mymob.blind = new /obj/screen()
-	mymob.blind.icon = 'icons/mob/screen_full.dmi'
-	mymob.blind.icon_state = "blackimageoverlay"
-	mymob.blind.name = " "
-	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
-	mymob.blind.layer = 0
-	mymob.blind.mouse_opacity = 0
-
+/datum/hud/brain/show_hud(version = 0)
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
 	mymob.client.screen = list()
-	mymob.client.screen += list(mymob.blind)
 	mymob.client.screen += mymob.client.void
 
-/datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen_midnight.dmi')
+/mob/living/carbon/brain/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/brain(src)
 
-	blobpwrdisplay = new /obj/screen()
-	blobpwrdisplay.name = "blob power"
-	blobpwrdisplay.icon_state = "block"
-	blobpwrdisplay.screen_loc = ui_health
-	blobpwrdisplay.layer = 20
+/datum/hud/hog_god/New(mob/owner)
+	..()
+	healths = new /obj/screen/healths/deity()
+	infodisplay += healths
 
-	blobhealthdisplay = new /obj/screen()
-	blobhealthdisplay.name = "blob health"
-	blobhealthdisplay.icon_state = "block"
-	blobhealthdisplay.screen_loc = ui_internal
-	blobhealthdisplay.layer = 20
+	deity_power_display = new /obj/screen/deity_power_display()
+	infodisplay += deity_power_display
 
-	mymob.client.screen = list()
-	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
-	mymob.client.screen += mymob.client.void
+	deity_follower_display = new /obj/screen/deity_follower_display()
+	infodisplay += deity_follower_display
+
+
+/mob/camera/god/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/hog_god(src)
+
+/obj/screen/deity_power_display
+	name = "Faith"
+	icon_state = "deity_power"
+	screen_loc = ui_deitypower
+	layer = 20
+
+/obj/screen/deity_follower_display
+	name = "Followers"
+	icon_state = "deity_followers"
+	screen_loc = ui_deityfollowers
+	layer = 20
+

@@ -8,8 +8,7 @@
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor was penetrated!</span>"
-
-	if(armor >= 100)
+	else if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
@@ -79,6 +78,7 @@
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
+		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
 		switch(M.damtype)
@@ -102,14 +102,15 @@
 		add_logs(M.occupant, src, "pushed", M)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
 
-		return
-
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
+		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+						"<span class='userdanger'>You're set on fire!</span>")
 		src.AddLuminosity(3)
+		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -117,13 +118,14 @@
 		on_fire = 0
 		fire_stacks = 0
 		src.AddLuminosity(-3)
+		clear_alert("fire")
 		update_fire()
 
 /mob/living/proc/update_fire()
 	return
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -138,7 +140,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
+	if(!G.gases["o2"] || G.gases["o2"][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
@@ -180,27 +182,29 @@
 
 	add_logs(user, src, "grabbed", addition="passively")
 
-	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(anchored || !Adjacent(user))
+		return 0
 	if(buckled)
 		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
-	if(!G)	//the grab will delete itself in New if src is anchored
 		return 0
-	user.put_in_active_hand(G)
+	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
+	if(!user.put_in_active_hand(G)) //if we can't put the grab in our hand for some reason, we delete it.
+		qdel(G)
 	G.synch()
 	LAssailant = user
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	if(!supress_message)
-		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+		visible_message("<span class='danger'>[user] has grabbed [src] passively!</span>")
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 
 	if(M.buckled)
-		if(M == buckled_mob)
+		if(M in buckled_mobs)
 			M.Feedstop()
 		return // can't attack while eating!
 
@@ -226,7 +230,7 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 
@@ -271,7 +275,7 @@
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 

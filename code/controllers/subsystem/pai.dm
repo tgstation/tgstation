@@ -2,10 +2,10 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	wait = 20
+	priority = 20
 
 	var/askDelay = 600
-
+	var/const/NEVER_FOR_THIS_ROUND = -1
 	var/list/candidates = list()
 	var/list/asked = list()
 
@@ -181,32 +181,33 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai/proc/requestRecruits()
 	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "pAI"))
+		if(jobban_isbanned(O, ROLE_PAI))
 			continue
-		if(asked.Find(O.key))
-			if(world.time < asked[O.key] + askDelay)
+		if(asked[O.ckey])
+			if(world.time < asked[O.ckey] + askDelay || asked[O.ckey] == NEVER_FOR_THIS_ROUND)
 				continue
 			else
-				asked.Remove(O.key)
+				asked.Remove(O.ckey)
 		if(O.client)
 			var/hasSubmitted = 0
 			for(var/datum/paiCandidate/c in SSpai.candidates)
 				if(c.key == O.key)
 					hasSubmitted = 1
-			if(!hasSubmitted && (O.client.prefs.be_special & BE_PAI))
+			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_special))
 				question(O.client)
 
 /datum/subsystem/pai/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		asked.Add(C.key)
-		asked[C.key] = world.time
-		var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
-		if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
-		if(response == "Yes")
-			recruitWindow(C.mob)
-		else if (response == "Never for this round")
-			asked[C.key] = INFINITY
+	set waitfor = 0
+	if(!C)
+		return
+	asked[C.ckey] = world.time
+	var/response = tgalert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round", StealFocus=0, Timeout=askDelay)
+	if(!C)
+		return		//handle logouts that happen whilst the alert is waiting for a response.
+	if(response == "Yes")
+		recruitWindow(C.mob)
+	else if (response == "Never for this round")
+		asked[C.ckey] = NEVER_FOR_THIS_ROUND
 
 /datum/paiCandidate
 	var/name

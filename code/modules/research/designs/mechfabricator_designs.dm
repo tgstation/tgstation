@@ -531,48 +531,12 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_sleeper
-	name = "Exosuit Medical Equipment (Mounted Sleeper)"
-	id = "mech_sleeper"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/sleeper
-	materials = list(MAT_METAL=5000,MAT_GLASS=10000)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
-/datum/design/mech_syringe_gun
-	name = "Exosuit Medical Equipment (Syringe Gun)"
-	id = "mech_syringe_gun"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/syringe_gun
-	materials = list(MAT_METAL=3000,MAT_GLASS=2000)
-	construction_time = 200
-	category = list("Exosuit Equipment")
-
 /datum/design/mech_generator
 	name = "Exosuit Equipment (Plasma Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
 	materials = list(MAT_METAL=10000,MAT_GLASS=1000,MAT_SILVER=500)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
-/datum/design/mech_taser
-	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
-	id = "mech_taser"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
-	materials = list(MAT_METAL=10000)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
-/datum/design/mech_lmg
-	name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
-	id = "mech_lmg"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
-	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -644,6 +608,16 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_thrusters
+	name = "Cyborg Upgrade (Ion Thrusters)"
+	id = "borg_upgrade_thrusters"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/thrusters
+	req_tech = list("engineering" = 4, "powerstorage" = 4)
+	materials = list(MAT_METAL=10000, MAT_PLASMA=5000, MAT_URANIUM = 6000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_disablercooler
 	name = "Cyborg Upgrade (Rapid Disabler Cooling Module)"
 	id = "borg_upgrade_disablercooler"
@@ -651,16 +625,6 @@
 	build_path = /obj/item/borg/upgrade/disablercooler
 	req_tech = list("combat" = 5, "powerstorage" = 4)
 	materials = list(MAT_METAL=80000 , MAT_GLASS=6000 , MAT_GOLD= 2000, MAT_DIAMOND = 500)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade (Mining Jetpack)"
-	id = "borg_upgrade_jetpack"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/jetpack
-	req_tech = list("engineering" = 4, "powerstorage" = 4)
-	materials = list(MAT_METAL=10000, MAT_PLASMA=5000, MAT_URANIUM = 6000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -685,8 +649,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_syndicate_module
-	name = "Cyborg Illegal Upgrades Module"
-	desc = "Allows for the construction of restricted upgrades for cyborgs"
+	name = "Cyborg Upgrade (Illegal Modules)"
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)
@@ -720,7 +683,7 @@
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
 	id = "drone_shell"
 	req_tech = list("programming" = 2, "biotech" = 4)
-	build_type = MECHFAB
+	build_type = MECHFAB | PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
 	construction_time=150
 	build_path = /obj/item/drone_shell

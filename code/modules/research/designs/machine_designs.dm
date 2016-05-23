@@ -9,7 +9,7 @@
 	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/smes
+	build_path = /obj/item/weapon/circuitboard/machine/smes
 	category = list ("Engineering Machinery")
 
 /datum/design/announcement_system
@@ -19,7 +19,7 @@
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/announcement_system
+	build_path = /obj/item/weapon/circuitboard/machine/announcement_system
 	category = list("Subspace Telecomms")
 
 /datum/design/turbine_computer
@@ -29,7 +29,7 @@
 	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/turbine_computer
+	build_path = /obj/item/weapon/circuitboard/computer/turbine_computer
 	category = list ("Engineering Machinery")
 
 /datum/design/emitter
@@ -39,7 +39,7 @@
 	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/emitter
+	build_path = /obj/item/weapon/circuitboard/machine/emitter
 	category = list ("Engineering Machinery")
 
 /datum/design/power_compressor
@@ -49,7 +49,7 @@
 	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/power_compressor
+	build_path = /obj/item/weapon/circuitboard/machine/power_compressor
 	category = list ("Engineering Machinery")
 
 /datum/design/power_turbine
@@ -59,7 +59,7 @@
 	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/power_turbine
+	build_path = /obj/item/weapon/circuitboard/machine/power_turbine
 	category = list ("Engineering Machinery")
 
 /datum/design/thermomachine
@@ -69,7 +69,17 @@
 	req_tech = list("programming" = 3, "plasmatech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/thermomachine
+	build_path = /obj/item/weapon/circuitboard/machine/thermomachine
+	category = list ("Engineering Machinery")
+
+/datum/design/space_heater
+	name = "Machine Design (Space Heater Board)"
+	desc = "The circuit board for a space heater."
+	id = "space_heater"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/machine/space_heater
 	category = list ("Engineering Machinery")
 
 /datum/design/teleport_station
@@ -79,7 +89,7 @@
 	req_tech = list("programming" = 4, "bluespace" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/teleporter_station
+	build_path = /obj/item/weapon/circuitboard/machine/teleporter_station
 	category = list ("Teleportation Machinery")
 
 /datum/design/teleport_hub
@@ -89,7 +99,7 @@
 	req_tech = list("programming" = 3, "bluespace" = 5, "materials" = 4, "engineering" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/teleporter_hub
+	build_path = /obj/item/weapon/circuitboard/machine/teleporter_hub
 	category = list ("Teleportation Machinery")
 
 /datum/design/telepad
@@ -99,7 +109,7 @@
 	req_tech = list("programming" = 4, "bluespace" = 4, "materials" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telesci_pad
+	build_path = /obj/item/weapon/circuitboard/machine/telesci_pad
 	category = list ("Teleportation Machinery")
 
 /datum/design/teleconsole
@@ -109,7 +119,7 @@
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/teleporter
+	build_path = /obj/item/weapon/circuitboard/computer/teleporter
 	category = list("Teleportation Machinery")
 
 /datum/design/telesci_console
@@ -119,7 +129,7 @@
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/telesci_console
+	build_path = /obj/item/weapon/circuitboard/computer/telesci_console
 	category = list("Teleportation Machinery")
 
 /datum/design/sleeper
@@ -129,7 +139,7 @@
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/sleeper
+	build_path = /obj/item/weapon/circuitboard/machine/sleeper
 	category = list ("Medical Machinery")
 
 /datum/design/cryotube
@@ -139,7 +149,7 @@
 	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/cryo_tube
+	build_path = /obj/item/weapon/circuitboard/machine/cryo_tube
 	category = list ("Medical Machinery")
 
 /datum/design/chem_dispenser
@@ -149,7 +159,7 @@
 	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4, "materials" = 4, "plasmatech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/chem_dispenser
+	build_path = /obj/item/weapon/circuitboard/machine/chem_dispenser
 	category = list ("Medical Machinery")
 
 /datum/design/chem_master
@@ -159,7 +169,7 @@
 	req_tech = list("biotech" = 1, "materials" = 2, "programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/chem_master
+	build_path = /obj/item/weapon/circuitboard/machine/chem_master
 	category = list ("Medical Machinery")
 
 /datum/design/chem_heater
@@ -169,7 +179,7 @@
 	req_tech = list("engineering" = 2, "materials" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/chem_heater
+	build_path = /obj/item/weapon/circuitboard/machine/chem_heater
 	category = list ("Medical Machinery")
 
 /datum/design/clonecontrol
@@ -179,7 +189,7 @@
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/cloning
+	build_path = /obj/item/weapon/circuitboard/computer/cloning
 	category = list("Medical Machinery")
 
 /datum/design/clonepod
@@ -189,7 +199,7 @@
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/clonepod
+	build_path = /obj/item/weapon/circuitboard/machine/clonepod
 	category = list("Medical Machinery")
 
 /datum/design/clonescanner
@@ -199,7 +209,7 @@
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/clonescanner
+	build_path = /obj/item/weapon/circuitboard/machine/clonescanner
 	category = list("Medical Machinery")
 
 /datum/design/biogenerator
@@ -209,7 +219,7 @@
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/biogenerator
+	build_path = /obj/item/weapon/circuitboard/machine/biogenerator
 	category = list ("Hydroponics Machinery")
 
 /datum/design/hydroponics
@@ -219,7 +229,7 @@
 	req_tech = list("programming" = 1, "biotech" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/hydroponics
+	build_path = /obj/item/weapon/circuitboard/machine/hydroponics
 	category = list ("Hydroponics Machinery")
 
 /datum/design/destructive_analyzer
@@ -229,7 +239,7 @@
 	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/destructive_analyzer
+	build_path = /obj/item/weapon/circuitboard/machine/destructive_analyzer
 	category = list("Research Machinery")
 
 /datum/design/experimentor
@@ -239,7 +249,7 @@
 	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2, "bluespace" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/experimentor
+	build_path = /obj/item/weapon/circuitboard/machine/experimentor
 	category = list("Research Machinery")
 
 /datum/design/protolathe
@@ -249,7 +259,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/protolathe
+	build_path = /obj/item/weapon/circuitboard/machine/protolathe
 	category = list("Research Machinery")
 
 /datum/design/circuit_imprinter
@@ -259,7 +269,7 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
+	build_path = /obj/item/weapon/circuitboard/machine/circuit_imprinter
 	category = list("Research Machinery")
 
 /datum/design/rdservercontrol
@@ -269,7 +279,7 @@
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/rdservercontrol
+	build_path = /obj/item/weapon/circuitboard/computer/rdservercontrol
 	category = list("Research Machinery")
 
 /datum/design/rdserver
@@ -279,7 +289,7 @@
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/rdserver
+	build_path = /obj/item/weapon/circuitboard/machine/rdserver
 	category = list("Research Machinery")
 
 /datum/design/mechfab
@@ -289,7 +299,7 @@
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/mechfab
+	build_path = /obj/item/weapon/circuitboard/machine/mechfab
 	category = list("Research Machinery")
 
 /datum/design/cyborgrecharger
@@ -299,7 +309,7 @@
 	req_tech = list("powerstorage" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/cyborgrecharger
+	build_path = /obj/item/weapon/circuitboard/machine/cyborgrecharger
 	category = list("Research Machinery")
 
 /datum/design/mech_recharger
@@ -309,7 +319,7 @@
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/mech_recharger
+	build_path = /obj/item/weapon/circuitboard/machine/mech_recharger
 	category = list("Research Machinery")
 
 /datum/design/microwave
@@ -319,7 +329,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/microwave
+	build_path = /obj/item/weapon/circuitboard/machine/microwave
 	category = list ("Misc. Machinery")
 
 /datum/design/gibber
@@ -329,7 +339,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/gibber
+	build_path = /obj/item/weapon/circuitboard/machine/gibber
 	category = list ("Misc. Machinery")
 
 /datum/design/smartfridge
@@ -339,7 +349,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/smartfridge
+	build_path = /obj/item/weapon/circuitboard/machine/smartfridge
 	category = list ("Misc. Machinery")
 
 /datum/design/monkey_recycler
@@ -349,7 +359,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/monkey_recycler
+	build_path = /obj/item/weapon/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")
 
 /datum/design/seed_extractor
@@ -359,7 +369,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/seed_extractor
+	build_path = /obj/item/weapon/circuitboard/machine/seed_extractor
 	category = list ("Misc. Machinery")
 
 /datum/design/processor
@@ -369,7 +379,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/processor
+	build_path = /obj/item/weapon/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
 
 /datum/design/recycler
@@ -379,7 +389,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/recycler
+	build_path = /obj/item/weapon/circuitboard/machine/recycler
 	category = list ("Misc. Machinery")
 
 /datum/design/holopad
@@ -389,7 +399,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/holopad
+	build_path = /obj/item/weapon/circuitboard/machine/holopad
 	category = list ("Misc. Machinery")
 
 /datum/design/autolathe
@@ -399,8 +409,18 @@
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/autolathe
+	build_path = /obj/item/weapon/circuitboard/machine/autolathe
 	category = list ("Misc. Machinery")
+
+/datum/design/recharger
+	name = "Machine Design (Weapon Recharger Board)"
+	desc = "The circuit board for a Weapon Recharger."
+	id = "recharger"
+	req_tech = list("powerstorage" = 3, "engineering" = 3, "materials" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
+	build_path = /obj/item/weapon/circuitboard/machine/recharger
+	category = list("Misc. Machinery")
 
 /datum/design/vendor
 	name = "Machine Design (Vendor Board)"
@@ -409,7 +429,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/vendor
+	build_path = /obj/item/weapon/circuitboard/machine/vendor
 	category = list ("Misc. Machinery")
 
 /datum/design/ore_redemption
@@ -419,7 +439,7 @@
 	req_tech = list("programming" = 1, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/ore_redemption
+	build_path = /obj/item/weapon/circuitboard/machine/ore_redemption
 	category = list ("Misc. Machinery")
 
 
@@ -430,5 +450,35 @@
 	req_tech = list("programming" = 1, "engineering" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/mining_equipment_vendor
+	build_path = /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
+	category = list ("Misc. Machinery")
+
+/datum/design/tesla_coil
+	name = "Machine Design (Tesla Coil Board)"
+	desc = "The circuit board for a tesla coil."
+	id = "tesla_coil"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/machine/tesla_coil
+	category = list ("Misc. Machinery")
+
+/datum/design/grounding_rod
+	name = "Machine Design (Grounding Rod Board)"
+	desc = "The circuit board for a grounding rod."
+	id = "grounding_rod"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/machine/grounding_rod
+	category = list ("Misc. Machinery")
+
+/datum/design/plantgenes
+	name = "Machine Design (Plant DNA Manipulator Board)"
+	desc = "The circuit board for a plant DNA manipulator."
+	id = "plantgenes"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/machine/plantgenes
 	category = list ("Misc. Machinery")

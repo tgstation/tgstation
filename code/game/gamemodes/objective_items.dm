@@ -8,7 +8,7 @@
 	var/list/altitems = list()				//Items which can serve as an alternative to the objective (darn you blueprints)
 	var/list/special_equipment = list()
 
-/datum/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
+/datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
 	return 1
 
 /datum/objective_item/steal/caplaser
@@ -30,10 +30,10 @@
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/jetpack
-	name = "a jetpack"
-	targetitem = /obj/item/weapon/tank/jetpack
-	difficulty = 3
-	excludefromjob = list("Chief Engineer")
+	name = "the Captain's jetpack"
+	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
+	difficulty = 5
+	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -59,8 +59,8 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/ablative
-	name = "an ablative armor vest"
+/datum/objective_item/steal/reflector
+	name = "a reflector vest"
 	targetitem = /obj/item/clothing/suit/armor/laserproof
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
@@ -82,7 +82,7 @@
 	difficulty = 15
 
 /datum/objective_item/steal/nuke_core/New()
-	special_equipment += new /obj/item/weapon/storage/box/syndie_kit/nuke()
+	special_equipment += /obj/item/weapon/storage/box/syndie_kit/nuke
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
@@ -91,10 +91,10 @@
 	difficulty = 3
 	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
 
-/datum/objective_item/plasma/check_special_completion(obj/item/weapon/tank/T)
+/datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
-	found_amount += T.air_contents.toxins
+	found_amount += T.air_contents.gases["plasma"] ? T.air_contents.gases["plasma"][MOLES] : 0
 	return found_amount>=target_amount
 
 
@@ -103,7 +103,7 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/functionalai/check_special_completion(obj/item/device/aicard/C)
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
 			return 1
@@ -116,7 +116,7 @@
 	excludefromjob = list("Chief Engineer")
 	altitems = list(/obj/item/weapon/photo)
 
-/datum/objective_item/blueprints/check_special_completion(obj/item/I)
+/datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
 		return 1
 	if(istype(I, /obj/item/weapon/photo))
@@ -131,7 +131,7 @@
 	difficulty = 3
 	excludefromjob = list("Research Director","Scientist")
 
-/datum/objective_item/slime/check_special_completion(obj/item/slime_extract/E)
+/datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
 		return 1
 	return 0

@@ -13,17 +13,17 @@
 	name = "security jumpsuit"
 	desc = "A tactical security jumpsuit for officers complete with nanotrasen belt buckle."
 	icon_state = "security"
-	item_state = "r_suit"
+	item_state = "gy_suit"
 	item_color = "security"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/warden
-	name = "warden's jumpsuit"
-	desc = "A tactical security jumpsuit for the warden with silver desginations and '/Warden/' stiched into the shoulders."
+	name = "security suit"
+	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
 	icon_state = "warden"
-	item_state = "r_suit"
+	item_state = "gy_suit"
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
@@ -57,7 +57,7 @@
 	name = "head of security's jumpsuit"
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "hos"
-	item_state = "r_suit"
+	item_state = "gy_suit"
 	item_color = "hos"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60

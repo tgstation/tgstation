@@ -14,7 +14,7 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
-	var/spawn_type = /obj/singularity/narsie/wizard
+	var/spawn_type = /obj/singularity/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
@@ -62,7 +62,8 @@
 		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
 		qdel(src)
 		return
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/veilrender/vealrender
 	name = "veal render"
@@ -81,6 +82,26 @@
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
 
+////TEAR IN REALITY
+
+/obj/singularity/wizard
+	name = "tear in the fabric of reality"
+	desc = "This isn't right."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "singularity_s1"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "reality"
+	pixel_x = -96
+	pixel_y = -96
+	grav_pull = 6
+	consume_range = 3
+	current_size = STAGE_FOUR
+	allowed_size = STAGE_FOUR
+
+/obj/singularity/wizard/process()
+	move()
+	eat()
+	return
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/weapon/scrying
@@ -138,7 +159,7 @@
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
-	M.revive()
+	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
 	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
@@ -243,7 +264,7 @@ var/global/list/multiverse = list()
 					usr.mind.special_role = "[usr.real_name] Prime"
 					evil = FALSE
 		else
-			var/list/candidates = get_candidates(BE_WIZARD)
+			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
 				var/client/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
@@ -270,14 +291,14 @@ var/global/list/multiverse = list()
 	M.faction = list("[usr.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
 			if(!S.dangerous_existence)
 				all_species += speciestype
 		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()
 	M.update_hair()
-	M.update_mutcolor()
+	M.update_body_parts()
 	M.dna.update_dna_identity()
 	equip_copy(M)
 
@@ -334,21 +355,9 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 		if("cyborg")
-			var/obj/item/organ/limb/chest/C = locate(/obj/item/organ/limb/chest) in M.organs
-			qdel(C)
-			M.organs += new /obj/item/organ/limb/robot/chest
-			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in M.organs
-			qdel(R)
-			M.organs += new /obj/item/organ/limb/robot/r_arm
-			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in M.organs
-			qdel(L)
-			M.organs += new /obj/item/organ/limb/robot/l_arm
-			var/obj/item/organ/limb/l_leg/LL = locate(/obj/item/organ/limb/l_leg) in M.organs
-			qdel(LL)
-			M.organs += new /obj/item/organ/limb/robot/l_leg
-			var/obj/item/organ/limb/r_leg/RL = locate(/obj/item/organ/limb/r_leg) in M.organs
-			qdel(RL)
-			M.organs += new /obj/item/organ/limb/robot/r_leg
+			for(var/X in M.bodyparts)
+				var/obj/item/bodypart/affecting = X
+				affecting.change_bodypart_status(ORGAN_ROBOTIC)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
@@ -452,7 +461,7 @@ var/global/list/multiverse = list()
 			return
 
 	M.update_icons()
-	M.update_augments()
+	M.update_body_parts()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
@@ -475,7 +484,7 @@ var/global/list/multiverse = list()
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	burntime = 0
-	burn_state = 0
+	burn_state = FLAMMABLE
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
@@ -484,7 +493,7 @@ var/global/list/multiverse = list()
 			target.bodytemperature += 50
 			GiveHint(target)
 		else if(is_pointed(I))
-			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
 			target.Weaken(2)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
@@ -502,17 +511,18 @@ var/global/list/multiverse = list()
 			link = I
 			user << "You attach [I] to the doll."
 			update_targets()
-	..()
 
 /obj/item/voodoo/check_eye(mob/user)
-	return src.loc == user
+	if(loc != user)
+		user.reset_perspective(null)
+		user.unset_machine()
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
-	if(user.zone_sel.selecting == "chest")
+	if(user.zone_selected == "chest")
 		if(link)
 			target = null
 			link.loc = get_turf(src)
@@ -522,18 +532,16 @@ var/global/list/multiverse = list()
 			return
 
 	if(target && cooldown < world.time)
-		switch(user.zone_sel.selecting)
+		switch(user.zone_selected)
 			if("mouth")
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
 			if("eyes")
 				user.set_machine(src)
-				if(user.client)
-					user.client.eye = target
-					user.client.perspective = EYE_PERSPECTIVE
+				user.reset_perspective(target)
 				spawn(100)
-					user.reset_view()
+					user.reset_perspective(null)
 					user.unset_machine()
 			if("r_leg","l_leg")
 				user << "<span class='notice'>You move the doll's legs around.</span>"
@@ -579,3 +587,12 @@ var/global/list/multiverse = list()
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
+
+
+//Provides a decent heal, need to pump every 6 seconds
+/obj/item/organ/heart/cursed/wizard
+	pump_delay = 60
+	heal_brute = 25
+	heal_burn = 25
+	heal_oxy = 25
+

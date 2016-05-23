@@ -48,23 +48,30 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 
 #if !defined(MAP_FILE)
 
-        #include "map_files\MiniStation\MiniStation.dmm"
-        #include "map_files\generic\z2.dmm"
-        #include "map_files\generic\z3.dmm"
-        #include "map_files\generic\z4.dmm"
-        #include "map_files\MiniStation\z5.dmm"
-        #include "map_files\generic\z6.dmm"
-        #include "map_files\generic\z7.dmm"
+		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
-        #define MAP_FILE "MiniStation.dmm"
-        #define MAP_NAME "MiniStation"
+		#define MINETYPE "mining"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+		#include "map_files\MiniStation\MiniStation.dmm"
+		#include "map_files\generic\z2.dmm"
+		#include "map_files\generic\z3.dmm"
+		#include "map_files\generic\z4.dmm"
+		#include "map_files\MiniStation\z5.dmm"
+		#include "map_files\generic\z6.dmm"
+		#include "map_files\generic\z7.dmm"
+		#include "map_files\generic\z8.dmm"
+		#include "map_files\generic\z9.dmm"
+
+		#define MAP_PATH "map_files/MiniStation"
+		#define MAP_FILE "MiniStation.dmm"
+		#define MAP_NAME "MiniStation"
+
+		#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\MiniStation\misc.dm"
-		        #include "map_files\MiniStation\supplypacks.dm"
+		        #include "map_files\MiniStation\cargopacks.dm"
 		        #include "map_files\MiniStation\telecomms.dm"
 		        #include "map_files\MiniStation\uplink_item.dm"
 		        #include "map_files\MiniStation\job\jobs.dm"

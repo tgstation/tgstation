@@ -199,7 +199,7 @@ var/list/advance_cures = 	list(
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2 to 3)
+			if(2)
 				visibility_flags = HIDDEN_SCANNER
 			if(3 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
@@ -294,7 +294,7 @@ var/list/advance_cures = 	list(
 		for(var/datum/symptom/S in symptoms)
 			L += S.id
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-		var/result = list2text(L, ":")
+		var/result = jointext(L, ":")
 		id = result
 	return id
 
@@ -423,5 +423,34 @@ var/list/advance_cures = 	list(
 	for(var/datum/disease/D in SSdisease.processing)
 		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
 */
+
+
+/datum/disease/advance/proc/totalStageSpeed()
+	var/total_stage_speed = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_stage_speed += S.stage_speed
+	return total_stage_speed
+
+/datum/disease/advance/proc/totalStealth()
+	var/total_stealth = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_stealth += S.stealth
+	return total_stealth
+
+/datum/disease/advance/proc/totalResistance()
+	var/total_resistance = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_resistance += S.resistance
+	return total_resistance
+
+/datum/disease/advance/proc/totalTransmittable()
+	var/total_transmittable = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_transmittable += S.transmittable
+	return total_transmittable
 
 #undef RANDOM_STARTING_LEVEL

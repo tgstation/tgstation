@@ -6,7 +6,10 @@
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset/headset_cent/alt
 
-/datum/outfit/ert/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
@@ -34,8 +37,12 @@
 		/obj/item/weapon/gun/energy/gun=1)
 	l_pocket = /obj/item/weapon/switchblade
 
-/datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
 	R.recalculateChannels()
@@ -64,8 +71,12 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/weapon/gun/energy/gun/advtaser=1)
 
-/datum/outfit/ert/security/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ert/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/hos
 	R.recalculateChannels()
@@ -93,10 +104,15 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/weapon/gun/energy/gun=1,\
-		/obj/item/weapon/reagent_containers/hypospray/combat=1)
+		/obj/item/weapon/reagent_containers/hypospray/combat=1,\
+		/obj/item/weapon/gun/medbeam=1)
 
-/datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/cmo
 	R.recalculateChannels()
@@ -126,8 +142,12 @@
 		/obj/item/weapon/gun/energy/gun=1,\
 		/obj/item/weapon/rcd/loaded=1)
 
-/datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	if(visualsOnly)
+		return
+
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/ce
 	R.recalculateChannels()
@@ -157,7 +177,10 @@
 	l_hand = /obj/item/weapon/clipboard
 	id = /obj/item/weapon/card/id
 
-/datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H)
+/datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
 	var/obj/item/device/pda/heads/pda = H.r_store
 	pda.owner = H.real_name
 	pda.ownjob = "Centcom Official"

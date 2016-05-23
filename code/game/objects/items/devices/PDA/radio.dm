@@ -26,12 +26,12 @@
 
 /obj/item/radio/integrated/signal/New()
 	..()
-	if(radio_controller)
+	if(SSradio)
 		initialize()
 
 /obj/item/radio/integrated/signal/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
+	if(SSradio)
+		SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/item/radio/integrated/signal/initialize()
@@ -41,9 +41,9 @@
 	set_frequency(frequency)
 
 /obj/item/radio/integrated/signal/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency)
+	radio_connection = SSradio.add_object(src, frequency)
 
 /obj/item/radio/integrated/signal/proc/send_signal(message="ACTIVATE")
 

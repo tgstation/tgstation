@@ -1,5 +1,6 @@
 /mob/living/simple_animal/slime/emote(act)
-
+	if(stat)
+		return
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)

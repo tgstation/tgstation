@@ -21,9 +21,9 @@
 			user << "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!"
 			current = null
 			return
-		M.install(current, user)
+		M.install(current.laws, user)
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD || S.syndicate)
@@ -33,7 +33,7 @@
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
-	circuit = /obj/item/weapon/circuitboard/aiupload
+	circuit = /obj/item/weapon/circuitboard/computer/aiupload
 
 /obj/machinery/computer/upload/ai/attack_hand(mob/user)
 	if(..())
@@ -57,7 +57,7 @@
 /obj/machinery/computer/upload/borg
 	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
-	circuit = /obj/item/weapon/circuitboard/borgupload
+	circuit = /obj/item/weapon/circuitboard/computer/borgupload
 
 /obj/machinery/computer/upload/borg/attack_hand(mob/user)
 	if(..())

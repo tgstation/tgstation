@@ -23,12 +23,15 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/blob_act()
+/obj/structure/reagent_dispensers/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		qdel(src)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
-	return
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		return 0 //so we can refill them via their afterattack.
+	else
+		return ..()
 
 /obj/structure/reagent_dispensers/New()
 	create_reagents(1000)
@@ -40,8 +43,8 @@
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
-	name = "watertank"
-	desc = "A watertank"
+	name = "water tank"
+	desc = "A water tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 
@@ -67,14 +70,14 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/watertank/blob_act()
+/obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank
-	name = "fueltank"
-	desc = "A fueltank"
+	name = "fuel tank"
+	desc = "A fuel tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 
@@ -85,28 +88,29 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(Proj.nodamage)
-				return
-			message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
-			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
-			explosion(src.loc,-1,0,2, flame_range = 2)
+	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
+		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
+		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
+		boom()
 
-
-/obj/structure/reagent_dispensers/fueltank/blob_act()
+/obj/structure/reagent_dispensers/fueltank/proc/boom()
 	explosion(src.loc,0,1,5,7,10, flame_range = 5)
-
-
-/obj/structure/reagent_dispensers/fueltank/ex_act()
-	explosion(src.loc,-1,0,2, flame_range = 2)
 	if(src)
 		qdel(src)
 
+/obj/structure/reagent_dispensers/fueltank/blob_act(obj/effect/blob/B)
+	boom()
+
+
+/obj/structure/reagent_dispensers/fueltank/ex_act()
+	boom()
 
 /obj/structure/reagent_dispensers/fueltank/fire_act()
-	blob_act() //saving a few lines of copypasta
+	boom()
 
+/obj/structure/reagent_dispensers/fueltank/tesla_act()
+	..() //extend the zap
+	boom()
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
@@ -122,8 +126,8 @@
 
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "Water-Cooler"
-	desc = "A machine that dispenses water to drink"
+	name = "water cooler"
+	desc = "A machine that dispenses water to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
@@ -152,12 +156,12 @@
 			return
 		qdel(I)
 		cups++
-		return
 	else
-		..()
+		return ..()
+
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
-	desc = "A beer keg"
+	desc = "A beer keg."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 
@@ -165,7 +169,7 @@
 	..()
 	reagents.add_reagent("beer",1000)
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act()
+/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/effect/blob/B)
 	explosion(src.loc,0,3,5,7,10)
 
 

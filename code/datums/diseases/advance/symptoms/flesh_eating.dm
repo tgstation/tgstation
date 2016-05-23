@@ -34,5 +34,10 @@ Bonus
 				M << "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>"
 			if(4,5)
 				M << "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>"
-				M.adjustBruteLoss(5)
+				Flesheat(M, A)
 	return
+
+/datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
+	var/get_damage = ((sqrt(16-A.totalStealth()))*5)
+	M.adjustBruteLoss(get_damage)
+	return 1

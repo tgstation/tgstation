@@ -8,7 +8,7 @@
 /obj/effect/landmark/New()
 	..()
 	tag = text("landmark*[]", name)
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	landmarks_list += src
 
 	switch(name)			//some of these are probably obsolete
@@ -77,7 +77,7 @@
 /obj/effect/landmark/start/New()
 	..()
 	tag = "start*[name]"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	start_landmarks_list += src
 	return 1
 
@@ -225,7 +225,7 @@
 
 /obj/effect/landmark/costume/sexyclown/New()
 	new /obj/item/clothing/mask/gas/sexyclown(src.loc)
-	new /obj/item/clothing/under/sexyclown(src.loc)
+	new /obj/item/clothing/under/rank/clown/sexy(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/sexymime/New()
@@ -260,3 +260,16 @@
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
+
+//generic event spawns
+/obj/effect/landmark/event_spawn
+	name = "generic event spawn"
+	icon_state = "x4"
+
+/obj/effect/landmark/event_spawn/New()
+	..()
+	generic_event_spawns += src
+
+/obj/effect/landmark/event_spawn/Destroy()
+	generic_event_spawns -= src
+	return ..()
