@@ -13,6 +13,7 @@
 	name = "Spear"
 	result = /obj/item/weapon/twohanded/spear
 	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/weapon/shard = 1,
 				/obj/item/stack/rods = 1)
 	time = 40
 	category = CAT_WEAPON
