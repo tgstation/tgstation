@@ -36,9 +36,10 @@ field_generator power level display
 	var/power = 20  // Current amount of power
 	var/state = FG_UNSECURED
 	var/warming_up = 0
-	var/list/obj/machinery/field/containment/fields
+	var/list/fields = list()
 	var/list/obj/machinery/field/generator/connected_gens
 	var/clean_up = 0
+	speed_process = 1
 
 /obj/machinery/field/generator/update_icon()
 	overlays.Cut()
@@ -59,6 +60,9 @@ field_generator power level display
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
 		calc_power()
+		if(!fields.len)
+			start_fields()
+
 
 /obj/machinery/field/generator/attack_hand(mob/user)
 	if(state == FG_WELDED)
@@ -239,7 +243,8 @@ field_generator power level display
 	spawn(4)
 		setup_field(8)
 	spawn(5)
-		active = FG_ONLINE
+		if(active != FG_ONLINE)
+			active = FG_ONLINE
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -274,8 +279,11 @@ field_generator power level display
 
 	if(!G)
 		return 0
+	else if(connected_gens.Find(G) || G.connected_gens.Find(src))
+		return 0
 
 	T = loc
+	/*
 	for(var/dist in 0 to steps) // creates each field tile
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
@@ -288,7 +296,11 @@ field_generator power level display
 			G.fields += CF
 			for(var/mob/living/L in T)
 				CF.Crossed(L)
-
+	*/
+	var/datum/beam/CF = Beam(BeamTarget = G, icon_state="Contain_F",icon='icons/obj/singularity.dmi',time=72000, maxdistance=10,beam_type=/obj/effect/ebeam/containment)
+	if(CF)
+		fields += CF
+		G.fields += CF
 	connected_gens |= G
 	G.connected_gens |= src
 	update_icon()
@@ -296,7 +308,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/cleanup()
 	clean_up = 1
-	for (var/F in fields)
+	for(var/F in fields)
 		qdel(F)
 
 	for(var/CG in connected_gens)
@@ -317,11 +329,11 @@ field_generator power level display
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					message_admins("A singulo/tesla exists and a containment field has failed.",1)
+					investigate_log("has <font color='red'>failed</font> whilst a singulo/tesla exists.","singulo")
 			O.last_warning = world.time
 
-/obj/machinery/field/generator/shock(mob/living/user)
+/obj/machinery/field/generator/throwback_shock(mob/living/user)
 	if(fields.len)
 		..()
 
