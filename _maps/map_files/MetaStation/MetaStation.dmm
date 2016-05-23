@@ -99081,9 +99081,8 @@
 	},
 /area/shuttle/abandoned)
 "dcy" = (
-/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
+	icon_state = "swall7";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99133,9 +99132,8 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcE" = (
-/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
+	icon_state = "swall8";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99242,17 +99240,15 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcJ" = (
-/obj/machinery/status_display{
-	pixel_y = 32
+/turf/closed/wall/shuttle{
+	icon_state = "swall4";
+	dir = 2
 	},
-/obj/machinery/hologram/holopad,
-/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcK" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/bluecross_2,
 /turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
+	icon_state = "swall2"
 	},
 /area/shuttle/escape)
 "dcL" = (
@@ -99436,12 +99432,14 @@
 /area/chapel/main)
 "ddb" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
+	icon_state = "swall_s6";
 	dir = 2
 	},
 /area/shuttle/escape)
 "ddc" = (
-/turf/closed/wall/shuttle,
+/turf/closed/wall/shuttle{
+	icon_state = "swall1"
+	},
 /area/shuttle/escape)
 "ddd" = (
 /obj/structure/sign/nosmoking_2,
@@ -99452,7 +99450,7 @@
 /area/shuttle/escape)
 "dde" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
+	icon_state = "swall_s10";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99522,7 +99520,10 @@
 /area/shuttle/escape)
 "ddo" = (
 /obj/structure/sign/bluecross_2,
-/turf/closed/wall/shuttle,
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
 /area/shuttle/escape)
 "ddp" = (
 /obj/structure/table,
@@ -99988,13 +99989,13 @@
 /area/shuttle/escape)
 "dev" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
+	icon_state = "swall_s5";
 	dir = 2
 	},
 /area/shuttle/escape)
 "dew" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
+	icon_state = "swall_s9";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -100610,6 +100611,18 @@
 	icon_state = "warning"
 	},
 /area/hydroponics)
+"dfK" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall2"
+	},
+/area/shuttle/escape)
+"dfJ" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -123163,7 +123176,7 @@ cOU
 cTH
 cOU
 aaa
-deu
+dfJ
 ddi
 ddi
 ddi
@@ -123427,7 +123440,7 @@ dcF
 dcF
 dcF
 dcF
-ddc
+dcy
 dcF
 dcF
 dcF
@@ -124198,9 +124211,9 @@ dcI
 dcI
 ded
 ddx
-ddc
+dcE
 deb
-ddc
+dcJ
 dcP
 dcP
 deb
@@ -124704,12 +124717,12 @@ cSY
 cTp
 cTJ
 cUh
-ddc
+dcC
 dcF
 ddk
 ddc
 ddN
-ddc
+dfK
 ddk
 dcF
 ddO
@@ -124969,7 +124982,7 @@ dcI
 dcI
 dcI
 ddH
-ddc
+dcE
 ddA
 ddA
 ddA
@@ -125740,7 +125753,7 @@ dcV
 ddf
 dcI
 ddl
-ddc
+dcA
 ddC
 ddV
 ddV
@@ -125997,7 +126010,7 @@ dcz
 ddf
 dcI
 ddh
-ddc
+dcC
 dcF
 ddY
 ddk
@@ -126254,7 +126267,7 @@ dcU
 ddf
 dcI
 ddl
-ddc
+dcA
 ddu
 ddt
 ddw
@@ -127283,10 +127296,10 @@ ddf
 dcI
 ddl
 ddo
-ddc
+dcF
 dcz
 ddm
-ddo
+dcK
 deq
 aaa
 aaa
@@ -127539,7 +127552,7 @@ dcz
 ddf
 dcI
 ddl
-ddc
+dcA
 ddL
 ddZ
 dee
