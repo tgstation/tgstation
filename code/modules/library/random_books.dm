@@ -24,7 +24,7 @@
 			P.info = "There once was a book from Nantucket<br>But the database failed us, so f*$! it.<br>I tried to be good to you<br>Now this is an I.O.U<br>If you're feeling entitled, well, stuff it!<br><br><font color='gray'>~</font>"
 		update_icon()
 		return
-	if(category && prob(25)) category = null
+	if(category && prob(25)) category = "Adult"
 	book_count += pick(-1,-1,0,1,1)
 	if(book_count <= 0)
 		update_icon()
@@ -45,24 +45,17 @@
 	update_icon()
 
 /obj/structure/bookcase/random/fiction
-	name = "bookcase (Fiction)"
-	category = "Fiction"
+	name = "bookcase (Adult)"
+	category = "Adult"
 /obj/structure/bookcase/random/nonfiction
-	name = "bookcase (Non-Fiction)"
-	category = "Non-fiction"
+	name = "bookcase (Adult)"
+	category = "Adult"
 /obj/structure/bookcase/random/religion
-	name = "bookcase (Religion)"
-	category = "Religion"
+	name = "bookcase (Adult)"
+	category = "Adult"
 /obj/structure/bookcase/random/adult
 	name = "bookcase (Adult)"
 	category = "Adult"
-
 /obj/structure/bookcase/random/reference
-	name = "bookcase (Reference)"
-	category = "Reference"
-	var/ref_book_prob = 20
-/obj/structure/bookcase/random/reference/initialize()
-	while(book_count > 0 && prob(ref_book_prob))
-		book_count--
-		new /obj/item/weapon/book/manual/random(src)
-	..()
+	name = "bookcase (Adult)"
+	category = "Adult"
