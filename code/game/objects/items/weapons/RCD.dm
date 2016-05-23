@@ -312,6 +312,15 @@ RCD
 					return 1
 				return 0
 
+			if(istype(A, /turf/open/floor/plating/lava))
+				var/turf/open/floor/plating/lava/L = A
+				if(useResource(deconwallcost, user))
+					user << "<span class='notice'>You start building floor...</span>"
+					activate()
+					L.ChangeTurf(/turf/open/floor/plating)
+					return 1
+				return 0
+
 			if(istype(A, /turf/open/floor))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
