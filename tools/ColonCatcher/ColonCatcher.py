@@ -43,10 +43,10 @@ def colon_scan_dir(scan_dir):
 
 #Scan one file, returning a string as a "report" or if there are no colons, False
 def scan_dm_file(_file):
-    
+
     if not _file.endswith(".dm"):
         return False
-    
+
     with open(_file, "r") as dm_file:
         characters = dm_file.read()
 
@@ -56,7 +56,7 @@ def scan_dm_file(_file):
 
         in_embed_statement = 0        # [ ... ]  num due to embeds in embeds
         in_multiline_comment = 0      #/* ... */ num due to /* /* */ */
-        in_singleline_comment = False #// ... \n 
+        in_singleline_comment = False #// ... \n
         in_string = False             # " ... "
         ternary_on_line = False       #If there's a ? anywhere on the line, used to report "false"-positives
 
@@ -124,7 +124,7 @@ def scan_dm_file(_file):
                                 data += "?"
                             if not data in lines_with_colons:
                                 lines_with_colons.append(data)
-        
+
             #In a comment
             else:
                 if char == "/":
@@ -134,7 +134,7 @@ def scan_dm_file(_file):
 
                 if char == "\n" or char == "\r":
                     in_singleline_comment = False
-    
+
 
             if char != "": #Spaces aren't useful to us
                 last_char = char
@@ -144,7 +144,7 @@ def scan_dm_file(_file):
             file_report = ".."+scan_dir+str(_file).split(scan_dir)[1]+" " #crop it down to ..\code\DIR\FILE.dm, everything else is developer specific
 
             first = True
-            for line in lines_with_colons:            
+            for line in lines_with_colons:
                 if first:
                     first = False
                     file_report += "Lines: "+line
@@ -157,6 +157,6 @@ def scan_dm_file(_file):
             return False
 
 
-        
+
 colon_scan_dir(real_dir)
 print "Done!"

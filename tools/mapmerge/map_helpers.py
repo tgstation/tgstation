@@ -18,7 +18,7 @@ def merge_map(newfile, backupfile, tgm):
     shitmap = parse_map(newfile)
     shitDict = shitmap["dictionary"] #key to tile data dictionary
     shitGrid = shitmap["grid"] #x,y coords to tiles (keys) dictionary (the map's layout)
-        
+
     originalmap = parse_map(backupfile)
     originalDict = originalmap["dictionary"]
     originalGrid = originalmap["grid"]
@@ -62,7 +62,7 @@ def merge_map(newfile, backupfile, tgm):
                     except ValueError: #caused by a duplicate entry
                         print("WARNING: Correcting duplicate dictionary entry. ({})".format(shitKey))
                     mergeGrid[x,y] = newKey
-                    known_keys[shitKey] = newKey    
+                    known_keys[shitKey] = newKey
                 #if data at original x,y no longer exists we reuse the key immediately
                 elif search_key(shitDict, originalData) == None:
                     mergeGrid[x,y] = originalKey
@@ -139,7 +139,7 @@ def merge_map(newfile, backupfile, tgm):
     return 1
 
 #write dictionary in tgm format
-def write_dictionary_tgm(filename, dictionary): 
+def write_dictionary_tgm(filename, dictionary):
     with open(filename, "w") as output:
         output.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
         for key, list_ in dictionary.items():
@@ -150,7 +150,7 @@ def write_dictionary_tgm(filename, dictionary):
                 in_quote_block = False
                 in_varedit_block = False
                 for char in thing:
-                    
+
                     if in_quote_block:
                         if char == "\"":
                             in_quote_block = False
@@ -176,11 +176,11 @@ def write_dictionary_tgm(filename, dictionary):
                             continue
 
                     buffer = buffer + char
-                
+
                 if list_.index(thing) != len(list_) - 1:
                     buffer = buffer + ",\n"
                 output.write(buffer)
-                        
+
             output.write(")\n")
 
 #thanks to YotaXP for finding out about this one
@@ -265,7 +265,7 @@ def parse_map(map_file):
         grid = dict()
 
         for char in characters:
-    
+
             if not in_map_block:
 
                 if char == "\n" or char == "\t":
@@ -285,7 +285,7 @@ def parse_map(map_file):
                                 curr_datum = curr_datum + char
                                 escaping = False
                                 continue
-                            
+
                             if char == "\"":
                                 curr_datum = curr_datum + char
                                 in_quote_block = False
@@ -298,7 +298,7 @@ def parse_map(map_file):
                             skip_whitespace = False
                             continue
                         skip_whitespace = False
-                            
+
                         if char == "\"":
                             curr_datum = curr_datum + char
                             in_quote_block = True
@@ -339,14 +339,14 @@ def parse_map(map_file):
 
                     curr_datum = curr_datum + char
                     continue
-                                
+
                 if in_key_block:
                     if char == "\"":
                         in_key_block = False
                         key_length = len(curr_key)
                     else:
                         curr_key = curr_key + char
-                    continue    
+                    continue
                 #else we're looking for a key block, a data block or the map block
 
                 if char == "\"":
@@ -365,7 +365,7 @@ def parse_map(map_file):
                         in_data_block = True
                         after_data_block = False
                         continue
-                
+
             else:
 
                 if in_coord_block:
@@ -417,7 +417,7 @@ def parse_map(map_file):
                         iter_x = 0
                         continue
 
-                    
+
                     curr_key = curr_key + char
                     if len(curr_key) == key_length:
                         iter_x += 1
@@ -427,7 +427,7 @@ def parse_map(map_file):
                         grid[curr_x, curr_y] = curr_key
                         curr_key = ""
                     continue
-                
+
 
                 #else look for coordinate block or a map string
 

@@ -8,7 +8,7 @@
  * 1) Copy and paste your list of runtimes from Dream Daemon into input.exe
  * 2) Run RuntimeCondenser.exe
  * 3) Open output.txt for a condensed report of the runtimes
- * 
+ *
  * How to compile:
  * Requires visual c++ compiler 2012 or any linux compiler with c++11 support.
  * Windows:
@@ -78,7 +78,7 @@ inline void forward_progress(ifstream &inputFile) {
 	if (nextLine.length() >= 10)
 		if (nextLine[0] == '[' && nextLine[3] == ':' && nextLine[6] == ':' && nextLine[9] == ']')
 			nextLine = nextLine.substr(10);
-}	
+}
 bool readFromFile() {
 	//Open file to read
 	ifstream inputFile("Input.txt");
@@ -97,18 +97,18 @@ bool readFromFile() {
 				if (safe_substr(nextLine, 2, 4) == "usr:") {
 					//Skip ahead
 					forward_progress(inputFile);
-					
+
 					//Store more info
 					currentRuntime->source = lastLine;
 					currentRuntime->usr = currentLine;
 					currentRuntime->src = nextLine;
-					
+
 					//Skip ahead again
 					forward_progress(inputFile);
 
 					if (safe_substr(nextLine, 2, 8) == "src.loc:")
 						currentRuntime->loc = nextLine;
-					
+
 				}
 				currentRuntime = NULL;
 			}
@@ -129,7 +129,7 @@ bool readFromFile() {
 				} else { //existed already
 					R->count++;
 				}
-				
+
 			}
 			//Found a runtime!
 			else if (safe_substr(currentLine, 0, 14) == "runtime error:") {
@@ -153,17 +153,17 @@ bool readFromFile() {
 					R->count++;
 				}
 			}
-			
+
 			//Found a hard del!
 			else if (safe_substr(currentLine, 0, 7) == "Path : ") {
 				string deltype = safe_substr(currentLine, 7);
 				if (deltype.substr(deltype.size()-1,1) == " ") //some times they have a single trailing space.
 					deltype = deltype.substr(0, deltype.size()-1);
-				
+
 				unsigned int failures = strtoul(safe_substr(nextLine, 11).c_str(), NULL, 10);
 				if (failures <= 0)
 					continue;
-				
+
 				totalHardDels += failures;
 				harddel * D = storedHardDel[deltype];
 				if (!D || D->type != deltype) {
@@ -198,7 +198,7 @@ bool writeToFile() {
 		if(totalUniqueInfiniteLoops > 0)
 			outputFile << "Total unique infinite loops: " << totalUniqueInfiniteLoops << endl;
 
-		if(totalInfiniteLoops > 0) 
+		if(totalInfiniteLoops > 0)
 			outputFile << "Total infinite loops: " << totalInfiniteLoops << endl << endl;
 
 		outputFile << "Total unique runtimes: " << totalUniqueRuntimes << endl;
@@ -220,17 +220,17 @@ bool writeToFile() {
 			outputFile << "** Infinite loops **";
 			for (int i=0; i < infiniteLoops.size(); i++) {
 				runtime* R = infiniteLoops[i];
-				outputFile << endl << endl << "The following infinite loop has occurred " << R->count << " time(s).\n"; 
+				outputFile << endl << endl << "The following infinite loop has occurred " << R->count << " time(s).\n";
 				outputFile << R->text << endl;
-				if(R->proc.length()) 
+				if(R->proc.length())
 					outputFile << R->proc << endl;
-				if(R->source.length()) 
+				if(R->source.length())
 					outputFile << R->source << endl;
-				if(R->usr.length()) 
+				if(R->usr.length())
 					outputFile << R->usr << endl;
-				if(R->src.length()) 
+				if(R->src.length())
 					outputFile << R->src << endl;
-				if(R->loc.length()) 
+				if(R->loc.length())
 					outputFile << R->loc << endl;
 			}
 			outputFile << endl << endl; //For spacing
@@ -246,21 +246,21 @@ bool writeToFile() {
 		sort(runtimes.begin(), runtimes.end(), runtimeComp);
 		for (int i=0; i < runtimes.size(); i++) {
 			runtime* R = runtimes[i];
-			outputFile << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n"; 
+			outputFile << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n";
 			outputFile << R->text << endl;
-			if(R->proc.length()) 
+			if(R->proc.length())
 				outputFile << R->proc << endl;
-			if(R->source.length()) 
+			if(R->source.length())
 				outputFile << R->source << endl;
-			if(R->usr.length()) 
+			if(R->usr.length())
 				outputFile << R->usr << endl;
-			if(R->src.length()) 
+			if(R->src.length())
 				outputFile << R->src << endl;
-			if(R->loc.length()) 
+			if(R->loc.length())
 				outputFile << R->loc << endl;
 		}
 		outputFile << endl << endl; //For spacing
-		
+
 		//and finally, hard deletes
 		if(totalHardDels > 0) {
 			outputFile << endl << "** Hard deletions **";

@@ -544,7 +544,7 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-							
+
 	return message
 
 #undef ION_RANDOM

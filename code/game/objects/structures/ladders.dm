@@ -66,7 +66,7 @@
 		go_up(user,is_ghost)
 	else if(down)
 		go_down(user,is_ghost)
-		
+
 	if(!is_ghost)
 		add_fingerprint(user)
 

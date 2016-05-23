@@ -92,7 +92,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 
 /obj/singularity/energy_ball/proc/handle_energy()
-	
+
 	if(energy >= energy_to_raise)
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
@@ -110,7 +110,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 
 			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
-			
+
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.25

@@ -4444,17 +4444,17 @@ Welcome BYOND! (5.0 Beta Version 508.1294)
 Running /tg/ revision:
 2015-10-06
 e2ed83b6a595fe0d6078fa75bfde85b3fa6c392b
-Path : /obj/machinery/mech_bay_recharge_port 
-Failures : 1 
-Path : /obj/effect/landmark/start 
-Failures : 2 
+Path : /obj/machinery/mech_bay_recharge_port
+Failures : 1
+Path : /obj/effect/landmark/start
+Failures : 2
 
 Rebooted server.
 Running /tg/ revision:
 2015-10-06
 e2ed83b6a595fe0d6078fa75bfde85b3fa6c392b
-Path : /obj/effect/landmark/start 
-Failures : 2 
+Path : /obj/effect/landmark/start
+Failures : 2
 
 Rebooted server.
 Running /tg/ revision:

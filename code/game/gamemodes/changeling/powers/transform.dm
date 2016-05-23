@@ -62,7 +62,7 @@
 	var/chosen_name = input(prompt, title, null) as null|anything in names
 	if(!chosen_name)
 		return
-	
+
 	if(chosen_name == "Drop Flesh Disguise")
 		for(var/slot in slots)
 			if(istype(user.vars[slot], slot2type[slot]))

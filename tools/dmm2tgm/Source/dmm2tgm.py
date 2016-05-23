@@ -7,12 +7,13 @@ import sys
 # that git can better handle conflicts-wise, it's also fairly human readable!
 # Processes Boxstation (tgstation.2.1.3) almost instantly
 
+HEADER = "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
 
 def convert_map(map_file):
         #CHECK FOR PREVIOUS CONVERSION
         with open(map_file, "r") as conversion_candidate:
                 header = conversion_candidate.readline()
-                if header.find("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE") != -1:
+                if header.find(HEADER) != -1:
                         sys.exit()
                         return
 
@@ -20,7 +21,7 @@ def convert_map(map_file):
         #ACTUAL CONVERSION
         with open(map_file, "r+") as unconverted_map:
                 characters = unconverted_map.read()
-                converted_map = "" 
+                converted_map = ""
                 in_object_block = False #()
                 in_variable_block = False #{}
                 in_quote_block = False #''
@@ -36,7 +37,7 @@ def convert_map(map_file):
                                                         in_object_block = False
                                                 if char == ",":
                                                         char = char + "\n"
-                                                
+
                                         if char == "{":
                                                 in_variable_block = True
                                                 if in_object_block:
@@ -53,7 +54,7 @@ def convert_map(map_file):
                                         if in_double_quote_block:
                                                 in_double_quote_block = False
                                         else:
-                                                in_double_quote_block = True  
+                                                in_double_quote_block = True
 
                         if char == "'":
                                 if not in_double_quote_block:
@@ -66,7 +67,7 @@ def convert_map(map_file):
 
         #OVERWRITE MAP FILE WITH CONVERTED MAP STRING
         with open(map_file, "r+") as final_converted_map:
-                final_converted_map.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
+                final_converted_map.write(HEADER + "\n")
                 final_converted_map.write(converted_map)
 
         sys.exit()
@@ -74,4 +75,4 @@ def convert_map(map_file):
 
 if sys.argv[1]: #Run like dmm2tgm.py "folder/folder/a_map.dmm"
         convert_map(sys.argv[1])
-        
+

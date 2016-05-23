@@ -57,7 +57,7 @@
 /obj/structure/closet/wardrobe/green/New()
 	..()
 	contents = list()
-	for(var/i in 1 to 3)		
+	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/green(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)

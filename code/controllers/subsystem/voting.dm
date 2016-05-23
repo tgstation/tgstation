@@ -150,12 +150,12 @@ var/datum/subsystem/vote/SSvote
 			if(mode)
 				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
 				return 0
-	
+
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
 			if((admin_datums[ckey]) || (ckey in deadmins))
 				admin = TRUE
-			
+
 			if(next_allowed_time > world.time && !admin)
 				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
 				return 0

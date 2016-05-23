@@ -1,5 +1,5 @@
 @echo off
-set tab=	
+set "tab=	"
 echo. >> ../../.git/config
 echo [merge "merge-dmi"] >> ../../.git/config
 echo %tab%name = iconfile merge driver >> ../../.git/config

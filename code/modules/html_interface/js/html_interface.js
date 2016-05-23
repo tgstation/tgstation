@@ -10,7 +10,7 @@ function onload()
 		$("body").html("");
 
 		window.location.href				= "byond://?src=" + hSrc + "&html_interface_action=onload";
-		
+
 		// The request may fail which would prevent the player from refreshing the screen again. Try to detect this retry.
 		setTimeout(function()
 		{
