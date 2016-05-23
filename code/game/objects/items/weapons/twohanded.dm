@@ -339,7 +339,8 @@
 		if(input)
 			src.war_cry = input
 
-/obj/item/weapon/twohanded/spear/CheckParts()
+/obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
+	..()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)
 		explosive = null
@@ -508,3 +509,6 @@
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return 1
 	return 0
+
+/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+	icon_state = "hfrequency[wielded]"

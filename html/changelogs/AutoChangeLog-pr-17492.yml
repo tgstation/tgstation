@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - tweak: "Added action button to chameleon stamp"
+  - rscadd: "Added APPROVED and DENIED stamps to Bureaucracy Crate"
