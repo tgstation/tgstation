@@ -85,9 +85,10 @@
 				. = TRUE
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
+		var/alert = (authorized.len > old_len)
 		if(authorized.len)
 			minor_announce("[auth_need - authorized.len] authorizations \
-				needed until shuttle is launched early")
+				needed until shuttle is launched early", null, alert)
 		else
 			minor_announce("All authorizations to launch the shuttle \
 				early have been revoked.")
