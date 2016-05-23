@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "stechkin pistol"
+	name = "FK-69 pistol"
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = 2
