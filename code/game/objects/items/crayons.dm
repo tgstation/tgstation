@@ -132,9 +132,7 @@
 			qdel(src)
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", \
-	datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null,
-	datum/ui_state/state = hands_state)
+/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
 	// god bless tgui and all of its arguments
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -593,7 +591,6 @@
 		. = use_charges(10)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
-		reagents.trans_to(C, ., volume_multiplier)
 
 		return
 
