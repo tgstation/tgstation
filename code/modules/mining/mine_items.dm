@@ -242,11 +242,15 @@
 	var/list/walltypes = list(/turf/closed/wall/shuttle/survival/pod)
 	var/floor_type = /turf/open/floor/pod
 	var/room
+	var/onshuttle = 0
 
 	//Center the room/spawn it
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
-	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		onshuttle = 1
+	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter", onshuttle)
 
 	start_turf = get_turf(src.loc)
 
@@ -322,12 +326,13 @@
 	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
 
 	var/list/turfs = room["floors"]
-	for(var/turf/open/floor/A in turfs)
-		A.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-		A.overlays.Cut()
-		var/area/Z = get_area(A)
+	for(var/turf/open/floor/F in turfs)
+		F.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
+		F.overlays.Cut()
+		var/area/Z = get_area(F)
 		if(!is_type_in_list(Z, blacklist))
-			L.contents += A
+			L.contents += F
+
 
 //Pod turfs and objects
 

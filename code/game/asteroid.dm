@@ -2,20 +2,19 @@ var/global/list/possiblethemes = list("organharvest","cult","wizden","cavein","x
 
 var/global/max_secret_rooms = 6
 
-/proc/spawn_room(atom/start_loc, x_size, y_size, list/walltypes, floor, name)
+/proc/spawn_room(atom/start_loc, x_size, y_size, list/walltypes, floor, name, oldarea)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
+
+	var/area/asteroid/artifactroom/A = new
+	if(name)
+		A.name = name
+	else
+		A.name = "Artifact Room #[start_loc.x]-[start_loc.y]-[start_loc.z]"
 
 	for(var/x = 0, x < x_size, x++)		//sets the size of the room on the x axis
 		for(var/y = 0, y < y_size, y++) //sets it on y axis.
 			var/turf/T
 			var/cur_loc = locate(start_loc.x + x, start_loc.y + y, start_loc.z)
-
-
-			var/area/asteroid/artifactroom/A = new
-			if(name)
-				A.name = name
-			else
-				A.name = "Artifact Room #[start_loc.x]-[start_loc.y]-[start_loc.z]"
 
 
 			if(x == 0 || x == x_size-1 || y == 0 || y == y_size-1)
@@ -30,7 +29,8 @@ var/global/max_secret_rooms = 6
 				T.ChangeTurf(floor)
 				room_turfs["floors"] += T
 
-			A.contents += T
+			if(!oldarea)
+				A.contents += T
 
 	return room_turfs
 
