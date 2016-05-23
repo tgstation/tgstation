@@ -1755,6 +1755,7 @@
 #include "code\modules\tgui\states\default.dm"
 #include "code\modules\tgui\states\hands.dm"
 #include "code\modules\tgui\states\inventory.dm"
+#include "code\modules\tgui\states\not_incapacitated.dm"
 #include "code\modules\tgui\states\notcontained.dm"
 #include "code\modules\tgui\states\physical.dm"
 #include "code\modules\tgui\states\self.dm"

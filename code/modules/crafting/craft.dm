@@ -3,7 +3,7 @@
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
 	var/datum/action/innate/crafting/button
-
+	var/display_craftable_only = FALSE
 
 
 
@@ -235,69 +235,66 @@
 		Deletion.Cut(Deletion.len)
 		qdel(DL)
 
-/datum/personal_crafting/proc/craft(mob/user)
-	if(user.incapacitated() || user.lying || istype(user.loc, /obj/mecha))
-		return
+
+/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_turf_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 600, 800, master_ui, state)
+		ui.open()
+
+
+/datum/personal_crafting/ui_data(mob/user)
+	var/list/data = list()
+	data["busy"] = busy
+	data["prev_cat"] = categories[prev_cat()]
+	data["category"] = categories[viewing_category]
+	data["next_cat"] = categories[next_cat()]
+	data["display_craftable_only"] = display_craftable_only
+
 	var/list/surroundings = get_surroundings(user)
-	var/dat = "<h3>Crafting menu</h3>"
-	if(busy)
-		dat += "<div class='statusDisplay'>"
-		dat += "Crafting in progress...</div>"
-	else
-		dat += "<A href='?src=\ref[src];backwardCat=1'><--</A>"
-		dat += " [categories[prev_cat()]] |"
-		dat += " <B>[categories[viewing_category]]</B> "
-		dat += "| [categories[next_cat()]] "
-		dat += "<A href='?src=\ref[src];forwardCat=1'>--></A><BR><BR>"
-
-		dat += "<div class='statusDisplay'>"
-
-		//Filter the recipes we can craft to the top
-		var/list/can_craft = list()
-		var/list/cant_craft = list()
-		for(var/datum/crafting_recipe/R in crafting_recipes)
-			if(R.category != categories[viewing_category])
-				continue
-			if(check_contents(R, surroundings))
-				can_craft += R
-			else
-				cant_craft += R
-
-		for(var/datum/crafting_recipe/R in can_craft)
-			dat += build_recipe_text(R, surroundings)
-		for(var/datum/crafting_recipe/R in cant_craft)
-			dat += build_recipe_text(R, surroundings)
-
-
-		dat += "</div>"
-
-	var/datum/browser/popup = new(user, "crafting", "Crafting", 500, 500)
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/datum/personal_crafting/Topic(href, href_list)
-	if(usr.stat || usr.lying)
-		return
-	if(href_list["make"])
-		var/datum/crafting_recipe/TR = locate(href_list["make"])
-		busy = 1
-		craft(usr)
-		var/fail_msg = construct_item(usr, TR)
-		if(!fail_msg)
-			usr << "<span class='notice'>[TR.name] constructed.</span>"
+	var/list/can_craft = list()
+	var/list/cant_craft = list()
+	for(var/rec in crafting_recipes)
+		var/datum/crafting_recipe/R = rec
+		if(R.category != categories[viewing_category])
+			continue
+		if(check_contents(R, surroundings))
+			can_craft += list(build_recipe_data(R))
 		else
-			usr << "<span class ='warning'>Construction failed[fail_msg]</span>"
-		busy = 0
-		craft(usr)
-	if(href_list["forwardCat"])
-		viewing_category = next_cat()
-		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
-		craft(usr)
-	if(href_list["backwardCat"])
-		viewing_category = prev_cat()
-		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
-		craft(usr)
+			cant_craft += list(build_recipe_data(R))
+	data["can_craft"] = can_craft
+	data["cant_craft"] = cant_craft
+	return data
+
+
+/datum/personal_crafting/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("make")
+			var/datum/crafting_recipe/TR = locate(params["recipe"])
+			busy = 1
+			ui_interact(usr) //explicit call to show the busy display
+			var/fail_msg = construct_item(usr, TR)
+			if(!fail_msg)
+				usr << "<span class='notice'>[TR.name] constructed.</span>"
+			else
+				usr << "<span class='warning'>Construction failed[fail_msg]</span>"
+			busy = 0
+			ui_interact(usr)
+		if("forwardCat") //Meow
+			viewing_category = next_cat()
+			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			. = TRUE
+		if("backwardCat")
+			viewing_category = prev_cat()
+			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			. = TRUE
+		if("toggle_recipes")
+			display_craftable_only = !display_craftable_only
+			usr << "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>"
+			. = TRUE
+
 
 //Next works nicely with modular arithmetic
 /datum/personal_crafting/proc/next_cat()
@@ -312,39 +309,37 @@
 	if(. <= 0)
 		. = categories.len
 
-/datum/personal_crafting/proc/build_recipe_text(datum/crafting_recipe/R, list/contents)
-	. = ""
-	var/name_text = ""
+
+/datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
+	var/list/data = list()
+	data["name"] = R.name
+	data["ref"] = "\ref[R]"
 	var/req_text = ""
 	var/tool_text = ""
-	var/catalist_text = ""
-	if(check_contents(R, contents))
-		name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
+	var/catalyst_text = ""
 
-	else
-		name_text = "<span class='linkOff'>[R.name]</span>"
+	for(var/A in R.reqs)
+		if(ispath(A, /obj))
+			var/obj/O = A
+			req_text += " [R.reqs[A]] [initial(O.name)],"
+		else if(ispath(A, /datum/reagent))
+			var/datum/reagent/RE = A
+			req_text += " [R.reqs[A]] [initial(RE.name)],"
+	req_text = replacetext(req_text,",","",-1)
+	data["req_text"] = req_text
 
-	if(name_text)
-		for(var/A in R.reqs)
-			if(ispath(A, /obj))
-				var/obj/O = A
-				req_text += " [R.reqs[A]] [initial(O.name)]"
-			else if(ispath(A, /datum/reagent))
-				var/datum/reagent/RE = A
-				req_text += " [R.reqs[A]] [initial(RE.name)]"
+	for(var/C in R.chem_catalysts)
+		if(ispath(C, /datum/reagent))
+			var/datum/reagent/RE = C
+			catalyst_text += " [R.chem_catalysts[C]] [initial(RE.name)],"
+	catalyst_text = replacetext(catalyst_text,",","",-1)
+	data["catalyst_text"] = catalyst_text
 
-		if(R.chem_catalysts.len)
-			catalist_text += ", Catalysts:"
-			for(var/C in R.chem_catalysts)
-				if(ispath(C, /datum/reagent))
-					var/datum/reagent/RE = C
-					catalist_text += " [R.chem_catalysts[C]] [initial(RE.name)]"
+	for(var/O in R.tools)
+		if(ispath(O, /obj))
+			var/obj/T = O
+			tool_text += " [R.tools[O]] [initial(T.name)],"
+	tool_text = replacetext(tool_text,",","",-1)
+	data["tool_text"] = tool_text
 
-		if(R.tools.len)
-			tool_text += ", Tools:"
-			for(var/O in R.tools)
-				if(ispath(O, /obj))
-					var/obj/T = O
-					tool_text += " [R.tools[O]] [initial(T.name)]"
-
-		. = "[name_text][req_text][tool_text][catalist_text]<BR>"
+	return data
