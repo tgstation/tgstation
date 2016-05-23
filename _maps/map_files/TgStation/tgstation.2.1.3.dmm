@@ -2953,6 +2953,7 @@
 "afF" = (
 /obj/structure/table,
 /obj/item/device/assembly/signaler,
+/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel{
 	icon_state = "red"
 	},
@@ -4654,6 +4655,7 @@
 /obj/machinery/iv_drip{
 	density = 0
 	},
+/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel{
 	icon_state = "whitered"
 	},
