@@ -150,8 +150,9 @@
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_TKSTRANGLE 10
 #define CLICK_CD_RESIST 20
+#define CLICK_CD_GRABBING 10
+
 //click cooldowns, in tenths of a second
 
 
@@ -423,3 +424,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 // Shuttle return values
 #define SHUTTLE_ALREADY_DOCKED 7
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2

@@ -409,7 +409,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
 	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota

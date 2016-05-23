@@ -57,18 +57,6 @@
 
 	if(stat) //NOPOWER etc
 		return
-	if(istype(O, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
-		if(!user.Adjacent(G.affecting))
-			return
-		var/grabbed = G.affecting
-		if(ismonkey(grabbed))
-			var/mob/living/carbon/monkey/target = grabbed
-			stuff_monkey_in(target, user)
-			user.drop_item()
-			return
-		else
-			user << "<span class='danger'>The machine only accepts monkeys!</span>"
 	else
 		return ..()
 

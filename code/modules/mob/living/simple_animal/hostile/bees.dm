@@ -32,7 +32,7 @@
 	environment_smash = 0
 	mouse_opacity = 2
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	mob_size = MOB_SIZE_TINY
 	flying = 1
 	gold_core_spawnable = 1
 	search_objects = 1 //have to find those plant trays!

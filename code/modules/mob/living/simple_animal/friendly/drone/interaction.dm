@@ -81,10 +81,9 @@
 		drop_r_hand()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
-		DH.contents += src
 		DH.drone = src
 		user.put_in_hands(DH)
-		src.loc = DH
+		forceMove(DH)
 		return
 
 	..()

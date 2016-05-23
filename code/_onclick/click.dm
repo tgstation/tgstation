@@ -77,7 +77,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened || sleeping)
+	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)

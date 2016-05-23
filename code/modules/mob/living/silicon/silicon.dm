@@ -467,7 +467,7 @@
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
 
-/mob/living/silicon/grabbedby(mob/living/user)
+/mob/living/silicon/grippedby(mob/living/user)
 	return
 
 /mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
