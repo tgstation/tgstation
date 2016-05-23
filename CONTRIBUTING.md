@@ -135,11 +135,6 @@ Copying code from one place to another maybe suitable for small short time proje
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
-###Startup/Runtime tradeoffs with lists
-First, read lummox's comment here:http://www.byond.com/forum/?post=2086980&page=2#comment19776775
-
-So, where you would normally define a list of items on the type, instead leave it null and write a proc that returns the appropriate list and check at runtime if the list is null and then define it. This offsets list creation overhead to the point where it's actually required (which for many objects, may be never at all). Remember, this tradeoff makes sense in most cases but not all, you should think carefully about your implementation before deciding.
-
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
 	
