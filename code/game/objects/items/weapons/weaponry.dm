@@ -78,46 +78,6 @@
 	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/wirerod
-	name = "wired rod"
-	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
-	icon_state = "wiredrod"
-	item_state = "rods"
-	flags = CONDUCT
-	force = 9
-	throwforce = 10
-	w_class = 3
-	materials = list(MAT_METAL=1150, MAT_GLASS=75)
-	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
-
-/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/shard))
-		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
-
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.unEquip(I)
-
-		user.put_in_hands(S)
-		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
-		qdel(I)
-		qdel(src)
-
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
-		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
-
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.unEquip(I)
-
-		user.put_in_hands(P)
-		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
-		qdel(I)
-		qdel(src)
-	else
-		return ..()
-
-
 /obj/item/weapon/throwing_star
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
