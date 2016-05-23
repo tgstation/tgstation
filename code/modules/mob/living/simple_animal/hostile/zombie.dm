@@ -153,6 +153,7 @@ mob/living/simple_animal/hostile/zombie/gymboss
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("zombie")
+	deathmessage = "collapses, stopping the flow of zombies!"
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/spawner/zombie/lesser
@@ -162,11 +163,6 @@ mob/living/simple_animal/hostile/zombie/gymboss
 	spawn_time = 150
 	health = 200
 	maxHealth = 200
-
-/mob/living/simple_animal/hostile/spawner/zombie/New()
-	..()
-	deathmessage = "[src] collapes, stopping the flow of zombies!"
-
 
 /obj/item/weapon/shovel/cursed
 	name = "cursed shovel"

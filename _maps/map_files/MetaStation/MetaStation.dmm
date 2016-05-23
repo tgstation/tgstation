@@ -398,8 +398,11 @@
 /turf/open/floor/plating/airless,
 /area/solar/auxstarboard)
 "aaQ" = (
-/turf/open/space,
-/area/security/prison)
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
+/area/atmos)
 "aaR" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/weapon/cultivator,
@@ -5423,8 +5426,11 @@
 	},
 /area/security/range)
 "aiT" = (
-/turf/open/floor/plating,
-/area/maintenance/fore)
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
+/area/atmos)
 "aiU" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -50565,9 +50571,11 @@
 /turf/open/floor/wood,
 /area/library)
 "bDx" = (
-/obj/machinery/vending/coffee,
-/turf/open/floor/wood,
-/area/library)
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
+/area/atmos)
 "bDy" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/newscaster{
@@ -57065,15 +57073,17 @@
 	name = "Telecoms Storage"
 	})
 "bOj" = (
-/obj/structure/closet/wardrobe/grey,
-/turf/open/floor/plating,
+/obj/structure/closet,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/starboard)
 "bOk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bOl" = (
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/structure/closet/cardboard,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bOm" = (
@@ -78138,6 +78148,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	dir = 5;
 	icon_state = "warning"
@@ -80573,6 +80584,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -96260,10 +96272,9 @@
 /turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "cXn" = (
-/obj/structure/closet/cardboard,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/item/weapon/storage/box/lights/mixed,
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "cXo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -96570,8 +96581,7 @@
 	},
 /area/shuttle/syndicate)
 "cXV" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
+/obj/machinery/sleeper/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle{
@@ -140626,9 +140636,9 @@ bFT
 bHN
 bJw
 bKQ
-bzf
+aaQ
+atw
 bOj
-atn
 bRw
 bTc
 bUq
@@ -140883,9 +140893,9 @@ bEn
 bHO
 bJx
 bKR
-bzf
+aiT
+atw
 bOk
-apk
 bRx
 apk
 aqy
@@ -141140,9 +141150,9 @@ bFU
 bHP
 bJy
 bKS
-bzf
-cXn
-apk
+bDx
+atw
+bOl
 bRy
 apk
 bUr
@@ -141397,9 +141407,9 @@ bEn
 bHQ
 bJz
 bKT
-bzf
-bOl
-bQa
+bDx
+atw
+cXn
 bRz
 bTd
 apk

@@ -224,7 +224,11 @@
 	for(var/mob/living/player in player_list)
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				if(istype(player, /mob/living/silicon)) //Borgs are technically dead anyways
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
 					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
@@ -247,7 +251,11 @@
 	for(var/mob/living/player in player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				if(istype(player, /mob/living/silicon))
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
 					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
@@ -256,7 +264,11 @@
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				if(istype(player, /mob/living/silicon))
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
 					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))

@@ -30,6 +30,7 @@ Contents:
 		H.wear_suit:randomize_param()
 		spawn(0)
 			H.wear_suit:ninitialize(10,H)
+	ticker.mode.update_ninja_icons_added(H)
 
 
 //ADMIN CREATE NINJA (From Ghost)

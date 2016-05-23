@@ -155,7 +155,7 @@ Contents:
 		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
-	ticker.mode.update_ninja_icons_added(Mind)
+	ticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
 	message_admins("[key] has been made into a ninja by an event.")
 	log_game("[key] was spawned as a ninja by an event.")

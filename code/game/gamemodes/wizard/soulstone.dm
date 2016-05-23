@@ -69,7 +69,7 @@
 /obj/structure/constructshell
 	name = "empty shell"
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
+	icon_state = "construct-cult"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/examine(mob/user)

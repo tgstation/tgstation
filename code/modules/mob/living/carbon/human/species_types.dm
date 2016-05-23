@@ -79,6 +79,14 @@
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
+
+/*
+ Lizard subspecies: ASHWALKERS
+*/
+/datum/species/lizard/ashwalker
+	name = "Ash Walker"
+	id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 /*
  PODPEOPLE
 */

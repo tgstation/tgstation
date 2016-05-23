@@ -309,7 +309,7 @@
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
 
 //Dual Feed Shotgun

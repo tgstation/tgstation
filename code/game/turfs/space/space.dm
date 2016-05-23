@@ -28,6 +28,8 @@
 /turf/open/space/ChangeTurf(path)
 	. = ..()
 
+/turf/open/space/TakeTemperature(temp)
+
 /turf/open/space/AfterChange()
 	..()
 	atmos_overlay_types.Cut()
