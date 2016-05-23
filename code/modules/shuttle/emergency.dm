@@ -11,9 +11,12 @@
 	var/auth_need = 3
 	var/list/authorized = list()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, \
-	ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-	datum/tgui/master_ui = null, datum/ui_state/state = human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
+	if(istype(I, /obj/item/weapon/card/id))
+		say("Please equip your ID card into your ID slot to authenticate.")
+	. = ..()
+
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = human_adjacent_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
