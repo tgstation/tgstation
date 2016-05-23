@@ -133,8 +133,8 @@
  * Wirecutters
  */
 /obj/item/weapon/wirecutters
-	name = "wirecutters"
-	desc = "This cuts wires."
+	name = "wire strippers"
+	desc = "This strips wires."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = null
 	flags = CONDUCT
@@ -158,7 +158,7 @@
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
-		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
+		user.visible_message("<span class='notice'>[user] strips [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		C.handcuffed = null
 		if(C.buckled && C.buckled.buckle_requires_restraints)
@@ -169,7 +169,7 @@
 		..()
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is stripping \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
