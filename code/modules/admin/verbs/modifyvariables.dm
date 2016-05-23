@@ -64,10 +64,10 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = input("Select reference:","Reference") as null|mob in world
 
 		if("file")
-			var_value = input("Pick file:","File") as null|file
+			var_value = fcopy_rsc(input("Pick file:","File") as null|file)
 
 		if("icon")
-			var_value = input("Pick icon:","Icon") as null|icon
+			var_value = fcopy_rsc(input("Pick icon:","Icon") as null|icon)
 
 		if("marked datum")
 			var_value = holder.marked_datum
@@ -129,10 +129,10 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = input("Select reference:","Reference") as mob in world
 
 		if("file")
-			var_value = input("Pick file:","File") as file
+			var_value = fcopy_rsc(input("Pick file:","File") as file)
 
 		if("icon")
-			var_value = input("Pick icon:","Icon") as icon
+			var_value = fcopy_rsc(input("Pick icon:","Icon") as icon)
 
 		if("marked datum")
 			var_value = holder.marked_datum
@@ -370,16 +370,16 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("file")
 			new_var = input("Pick file:","File") as file
 			if(assoc)
-				L[assoc_key] = new_var
+				L[assoc_key] = fcopy_rsc(new_var)
 			else
-				L[L.Find(variable)] = new_var
+				L[L.Find(variable)] = fcopy_rsc(new_var)
 
 		if("icon")
 			new_var = input("Pick icon:","Icon") as icon
 			if(assoc)
-				L[assoc_key] = new_var
+				L[assoc_key] = fcopy_rsc(new_var)
 			else
-				L[L.Find(variable)] = new_var
+				L[L.Find(variable)] = fcopy_rsc(new_var)
 
 		if("marked datum")
 			new_var = holder.marked_datum
@@ -660,12 +660,12 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("file")
 			var/var_new = input("Pick file:","File",O.vars[variable]) as null|file
 			if(var_new==null) return
-			O.vars[variable] = var_new
+			O.vars[variable] = fcopy_rsc(var_new)
 
 		if("icon")
 			var/var_new = input("Pick icon:","Icon",O.vars[variable]) as null|icon
 			if(var_new==null) return
-			O.vars[variable] = var_new
+			O.vars[variable] = fcopy_rsc(var_new)
 
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum
