@@ -53,7 +53,8 @@
 				M.amount += amt
 				total_amount += amt
 		else
-			for(var/datum/material/M in materials)
+			for(var/i in materials)
+				var/datum/material/M = materials[i]
 				M.amount += amt
 				total_amount += amt
 		return (total_amount - total_amount_saved)
@@ -135,7 +136,7 @@
 			return TRUE
 	else if(istype(mats))
 		for(var/M in mats)
-			if(materials[M] && mats[M] <= materials[M])
+			if(materials[M] && (mats[M] <= materials[M]))
 				continue
 			else
 				return FALSE

@@ -204,7 +204,7 @@
 	for (var/i=1 to meat_produced)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
-		newmeat.name = sourcename + newmeat.name
+		newmeat.name = "[sourcename] [newmeat.name]"
 		newmeat.subjectname = sourcename
 		if(sourcejob)
 			newmeat.subjectjob = sourcejob

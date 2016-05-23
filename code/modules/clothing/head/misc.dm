@@ -261,36 +261,3 @@
 	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
 	icon_state = "papersack_smile"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-
-/*
--!WARNING!-
--POTENTIAL TRIGGER-INDUCING ITEMS AHEAD-
--TREAD WITH CAUTION-
-*/
-
-/obj/item/clothing/head/helmet/stahlhelm
-	name = "stahlhelm"
-	desc = "A hard military helmet, seems dusty."
-	icon_state = "stalhelm"
-	item_state = "stalhelm"
-	armor = list(melee = 15, bullet = 10, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 30
-
-/obj/item/clothing/head/helmet/panzer
-	name = "Panzer Cap"
-	desc = "A fancy-looking military cap."
-	icon_state = "panzercap"
-	item_state = "panzercap"
-
-/obj/item/clothing/head/helmet/naziofficer
-	name = "Officer Cap"
-	desc = "A cap fit for a commanding officer."
-	icon_state = "officercap"
-	item_state = "officercap"
-	armor = list(melee = 20, bullet = 15, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 60
-
-/*
--YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-
--PLEASE RESUME NORMAL, POLITICALLY CORRECT ACTIVITY-
-*/

@@ -19,6 +19,7 @@
 	minbodytemp = 0
 	maxbodytemp = 350
 	layer = MOB_LAYER-0.1
+	sentience_type = SENTIENCE_BOSS
 
 
 /mob/living/simple_animal/hostile/spawner/Destroy()

@@ -90,7 +90,7 @@
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1
 	del_on_death = 1
-	deathmessage = "The blob spore explodes into a cloud of gas!"
+	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/list/human_overlays = list()
 	var/is_zombie = 0

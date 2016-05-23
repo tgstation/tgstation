@@ -134,7 +134,7 @@
 			return 0
 		if(!G.confirm())
 			return 0
-		G.affecting.loc = src.loc
+		G.affecting.forceMove(src.loc)
 		if(istype(src, /obj/structure/table/optable))
 			var/obj/structure/table/optable/OT = src
 			G.affecting.resting = 1
@@ -263,28 +263,53 @@
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
 	health = 50
+	var/list/debris = list()
+
+/obj/structure/table/glass/New()
+	. = ..()
+	debris += new frame
+	debris += new /obj/item/weapon/shard
+
+/obj/structure/table/glass/Destroy()
+	for(var/i in debris)
+		qdel(i)
+	. = ..()
 
 /obj/structure/table/glass/Crossed(atom/movable/AM)
 	. = ..()
 	if(flags & NODECONSTRUCT)
 		return
+	if(!isliving(AM))
+		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		return
+		spawn(5)
+			// Check again in a bit though
+			if(AM.loc == get_turf(src))
+				check_break(AM)
+	else
+		check_break(AM)
 
-	if(istype(AM, /mob/living))
-		var/mob/living/M = AM
-		if(has_gravity(M) && M.mob_size > MOB_SIZE_SMALL)
-			table_shatter(M)
+/obj/structure/table/glass/proc/check_break(mob/living/M)
+	if(has_gravity(M) && M.mob_size > MOB_SIZE_SMALL)
+		table_shatter(M)
 
 /obj/structure/table/glass/proc/table_shatter(mob/M)
-	visible_message("<span class='warning'>[src] breaks!</span>")
+	visible_message("<span class='warning'>[src] breaks!</span>",
+		"<span class='danger'>You hear breaking glass.</span>")
 	playsound(src.loc, "shatter", 50, 1)
-	new frame(src.loc)
-	var/obj/item/weapon/shard/S = new(src.loc)
-	S.throw_impact(M)
+	for(var/i in debris)
+		var/atom/movable/AM = i
+		AM.loc = get_turf(src)
+		if(istype(AM, /obj/item/weapon/shard))
+			AM.throw_impact(M)
 	M.Weaken(5)
 	qdel(src)
+
+/obj/structure/table/glass/narsie_act()
+	color = NARSIE_WINDOW_COLOUR
+	for(var/obj/item/weapon/shard/S in debris)
+		S.color = NARSIE_WINDOW_COLOUR
 
 /*
  * Wooden tables

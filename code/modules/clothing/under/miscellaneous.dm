@@ -573,33 +573,3 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
-
-/*
--!WARNING!-
--POTENTIAL TRIGGER-INDUCING ITEMS AHEAD-
--TREAD WITH CAUTION-
-*/
-
-/obj/item/clothing/under/wwii
-	name = "dusty uniform"
-	desc = "A dusty old uniform, a relic from a time before."
-	icon_state = "soldieruniform"
-	item_state = "soldieruniform"
-	item_color = "soldieruniform"
-	armor = list(melee = 10, bullet = 5, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 50
-
-
-/obj/item/clothing/under/wwii/officer
-	name = "dusty uniform"
-	desc = "A dusty old uniform, a relic from a time before. This one looks more official."
-	icon_state = "officeruniform"
-	item_state = "officeruniform"
-	item_color = "officeruniform"
-	armor = list(melee = 15, bullet = 10, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 60
-
-/*
--YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-
--PLEASE RESUME NORMAL, POLITICALLY CORRECT ACTIVITY-
-*/

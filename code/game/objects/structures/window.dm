@@ -69,10 +69,9 @@
 	shatter()
 
 /obj/structure/window/narsie_act()
-	var/evil_color = "#7D1919"
-	color = evil_color
+	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/shard in debris)
-		shard.color = evil_color
+		shard.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
