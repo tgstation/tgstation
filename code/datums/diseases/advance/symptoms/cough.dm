@@ -11,6 +11,7 @@ Coughing
 
 BONUS
 	Will force the affected mob to drop small items!
+	Mutes you when coughing.
 
 //////////////////////////////////////
 */
