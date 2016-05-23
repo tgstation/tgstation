@@ -1,0 +1,6 @@
+author: kevinz000
+delete-after: True
+changes: 
+  - rscadd: "Peacekeeper borgs: Security borgs but without any stuns or restraints! Modules: Harm Alarm, Cookie Dispenser, Energy Bola Launcher, Peace Injector that confuses living things, and a weak holobarrier projector! It also comes with the ability to hug."
+  - rscadd: "Cookie Synthesizer: Self recharging RCD that prints out cookies!"
+  - tweak: "Nanotrasen scientists have added a hugging module to medical and peacekeeper cyborgs to boost emotions during human-cyborg interaction."
