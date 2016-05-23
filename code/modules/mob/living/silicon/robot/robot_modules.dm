@@ -131,6 +131,7 @@
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/toy/crayon/spraycan/borg(src)
+	modules += new /obj/item/borg/cyborghug(src)
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
 
@@ -155,6 +156,7 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/borg/cyborghug(src)
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
@@ -211,6 +213,32 @@
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/gun/advtaser/cyborg) in get_usable_modules()
+	if(T)
+		if(T.power_supply.charge < T.power_supply.maxcharge)
+			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
+			T.power_supply.give(S.e_cost * coeff)
+			T.update_icon()
+		else
+			T.charge_tick = 0
+
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+
+/obj/item/weapon/robot_module/peacekeeper/New()
+	..()
+	modules += new /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg(src)
+	modules += new /obj/item/weapon/cookiesynth(src)
+	modules += new /obj/item/device/harmalarm(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/holosign_creator/cyborg(src)
+	modules += new /obj/item/borg/cyborghug(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+
+	emag = new /obj/item/weapon/reagent_containers/borghypo/peace/hacked(src)
+
+/obj/item/weapon/robot_module/peacekeeper/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/T = locate(/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg) in get_usable_modules()
 	if(T)
 		if(T.power_supply.charge < T.power_supply.maxcharge)
 			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
