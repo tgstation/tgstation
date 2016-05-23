@@ -3307,16 +3307,13 @@
 	},
 /area/security/warden)
 "ags" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/chair{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
+	icon_state = "dark"
 	},
-/area/security/warden)
+/area/security/prison)
 "agt" = (
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
@@ -3519,15 +3516,6 @@
 /area/security/brig)
 "agN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -3535,6 +3523,7 @@
 	pixel_x = 0;
 	pixel_y = 26
 	},
+/obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "whitered"
@@ -3776,6 +3765,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen,
 /turf/open/floor/plasteel{
 	dir = 5;
 	icon_state = "whitered"
@@ -90114,8 +90109,8 @@ aeO
 afI
 agl
 agH
-agK
-agK
+ags
+ags
 aho
 acd
 ajv
