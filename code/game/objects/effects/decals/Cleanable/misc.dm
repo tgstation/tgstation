@@ -112,7 +112,7 @@
 
 /obj/effect/decal/cleanable/vomit/active/Destroy()
 	..()
-	
+
 	processing_objects.Remove(src)
 
 /obj/effect/decal/cleanable/vomit/active/process()
@@ -231,3 +231,9 @@
 /obj/effect/decal/cleanable/cockroach_remains/New()
 	..()
 	icon_state = "cockroach_remains[rand(1,2)]"
+
+/obj/effect/decal/cleanable/wizrune
+	name = "rune"
+	desc = "Looks unfinished."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "wizrune"

@@ -169,3 +169,11 @@
 
 /turf/space/lighting_build_overlays()
 	return
+
+/turf/space/void
+	name = "the void"
+	icon_state = "void"
+	desc = "The final final frontier."
+
+/turf/space/void/New()
+	return

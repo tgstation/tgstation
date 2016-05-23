@@ -91,6 +91,11 @@
 
 	wizard_garb = 1
 
+/obj/item/clothing/shoes/sandal/slippers
+	name = "magic slippers"
+	icon_state = "slippers"
+	desc = "For the wizard that puts comfort first. Who's going to laugh?"
+
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
