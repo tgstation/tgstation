@@ -390,3 +390,33 @@
 		user << "<span class='info'>You snuff out the flame on \the [src].</span>"
 		overlays -= fire_overlay
 		active = 0
+
+////////////////////////// POTIONS ///////////////////////
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion
+	name = "elixir flask"
+	desc = "My potions are too strong for you, traveler."
+	icon_state = "potionflask"
+	item_state = "carton"
+	volume = 15
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/health
+	list_reagents = list("healingpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/poison
+	list_reagents = list("poisonpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/combustion
+	list_reagents = list("combustionpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/speed
+	list_reagents = list("speedpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/kinetic
+	list_reagents = list("kineticpotion" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/potion/random/New()
+	..()
+	reagents.add_reagent(pick("healingpotion" , "poisonpotion", "combustionpotion", "speedpotion" , "kineticpotion"), 15)
+
+
