@@ -8,7 +8,7 @@
 	icon_state = "blank"
 	w_class = 6
 	flags = CONDUCT
-	origin_tech = "programming=2;materials=2"
+	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/chassis
 	name="Mecha Chassis"
@@ -41,25 +41,61 @@
 	name = "\improper Ripley left arm"
 	desc = "A Ripley APLU left arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_l_arm"
-	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/part/ripley_right_arm
 	name = "\improper Ripley right arm"
 	desc = "A Ripley APLU right arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_r_arm"
-	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/part/ripley_left_leg
 	name = "\improper Ripley left leg"
 	desc = "A Ripley APLU left leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_l_leg"
-	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/part/ripley_right_leg
 	name = "\improper Ripley right leg"
 	desc = "A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
-	origin_tech = "programming=2;materials=2;engineering=2"
+
+///////// Odysseus
+
+/obj/item/mecha_parts/chassis/odysseus
+	name = "\improper Odysseus chassis"
+
+/obj/item/mecha_parts/chassis/odysseus/New()
+	..()
+	construct = new /datum/construction/mecha/odysseus_chassis(src)
+
+/obj/item/mecha_parts/part/odysseus_head
+	name = "\improper Odysseus head"
+	desc = "An Odysseus head. Contains an integrated medical HUD scanner."
+	icon_state = "odysseus_head"
+
+/obj/item/mecha_parts/part/odysseus_torso
+	name = "\improper Odysseus torso"
+	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems along with an attachment port for a mounted sleeper."
+	icon_state = "odysseus_torso"
+	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
+
+/obj/item/mecha_parts/part/odysseus_left_arm
+	name = "\improper Odysseus left arm"
+	desc = "An Odysseus left arm. Data and power sockets are compatible with specialized medical equipment."
+	icon_state = "odysseus_l_arm"
+
+/obj/item/mecha_parts/part/odysseus_right_arm
+	name = "\improper Odysseus right arm"
+	desc = "An Odysseus right arm. Data and power sockets are compatible with specialized medical equipment."
+	icon_state = "odysseus_r_arm"
+
+/obj/item/mecha_parts/part/odysseus_left_leg
+	name = "\improper Odysseus left leg"
+	desc = "An Odysseus left leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
+	icon_state = "odysseus_l_leg"
+
+/obj/item/mecha_parts/part/odysseus_right_leg
+	name = "\improper Odysseus right leg"
+	desc = "A Odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
+	icon_state = "odysseus_r_leg"
 
 ///////// Gygax
 
@@ -220,7 +256,6 @@
 
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
-	origin_tech = "materials=6"
 
 /obj/item/mecha_parts/chassis/phazon/New()
 	..()
@@ -236,7 +271,7 @@
 	name="\improper Phazon head"
 	desc="A Phazon head. Its sensors are carefully calibrated to provide vision and data even when the exosuit is phasing."
 	icon_state = "phazon_head"
-	origin_tech = "programming=3;materials=3;magnets=4"
+	origin_tech = "programming=3;materials=3;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="\improper Phazon left arm"
@@ -267,51 +302,6 @@
 	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
 	origin_tech = "materials=4;bluespace=4;plasmatech=5"
-///////// Odysseus
-
-
-/obj/item/mecha_parts/chassis/odysseus
-	name = "\improper Odysseus chassis"
-
-/obj/item/mecha_parts/chassis/odysseus/New()
-	..()
-	construct = new /datum/construction/mecha/odysseus_chassis(src)
-
-/obj/item/mecha_parts/part/odysseus_head
-	name = "\improper Odysseus head"
-	desc = "An Odysseus head. Contains an integrated medical HUD scanner."
-	icon_state = "odysseus_head"
-	origin_tech = "programming=2;materials=2"
-
-/obj/item/mecha_parts/part/odysseus_torso
-	name = "\improper Odysseus torso"
-	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems along with an attachment port for a mounted sleeper."
-	icon_state = "odysseus_torso"
-	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
-
-/obj/item/mecha_parts/part/odysseus_left_arm
-	name = "\improper Odysseus left arm"
-	desc = "An Odysseus left arm. Data and power sockets are compatible with specialized medical equipment."
-	icon_state = "odysseus_l_arm"
-	origin_tech = "programming=2;materials=2;engineering=2"
-
-/obj/item/mecha_parts/part/odysseus_right_arm
-	name = "\improper Odysseus right arm"
-	desc = "An Odysseus right arm. Data and power sockets are compatible with specialized medical equipment."
-	icon_state = "odysseus_r_arm"
-	origin_tech = "programming=2;materials=2;engineering=2"
-
-/obj/item/mecha_parts/part/odysseus_left_leg
-	name = "\improper Odysseus left leg"
-	desc = "An Odysseus left leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
-	icon_state = "odysseus_l_leg"
-	origin_tech = "programming=2;materials=2;engineering=2"
-
-/obj/item/mecha_parts/part/odysseus_right_leg
-	name = "\improper Odysseus right leg"
-	desc = "A Odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
-	icon_state = "odysseus_r_leg"
-	origin_tech = "programming=2;materials=2;engineering=2"
 
 
 ///////// Circuitboards
@@ -329,7 +319,7 @@
 	throw_range = 7
 
 /obj/item/weapon/circuitboard/mecha/ripley
-	origin_tech = "programming=3"
+	origin_tech = "programming=2"
 
 /obj/item/weapon/circuitboard/mecha/ripley/peripherals
 	name = "circuit board (Ripley Peripherals Control module)"
@@ -340,7 +330,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/gygax
-	origin_tech = "programming=4"
+	origin_tech = "programming=4;combat=3;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/gygax/peripherals
 	name = "circuit board (Gygax Peripherals Control module)"
@@ -356,7 +346,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/durand
-	origin_tech = "programming=4"
+	origin_tech = "programming=4;combat=3;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/durand/peripherals
 	name = "circuit board (Durand Peripherals Control module)"
@@ -365,14 +355,14 @@
 /obj/item/weapon/circuitboard/mecha/durand/targeting
 	name = "circuit board (Durand Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
-	origin_tech = "programming=4;combat=4"
+	origin_tech = "programming=4;combat=4;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/durand/main
 	name = "circuit board (Durand Central Control module)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/honker
-	origin_tech = "programming=3"
+	origin_tech = "programming=3;engineering=3"
 
 /obj/item/weapon/circuitboard/mecha/honker/peripherals
 	name = "circuit board (H.O.N.K Peripherals Control module)"
@@ -387,7 +377,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/odysseus
-	origin_tech = "programming=3"
+	origin_tech = "programming=3;biotech=3"
 
 /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
 	name = "circuit board (Odysseus Peripherals Control module)"
@@ -398,7 +388,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/phazon
-	origin_tech = "programming=4"
+	origin_tech = "programming=5;plasmatech=4"
 
 /obj/item/weapon/circuitboard/mecha/phazon/peripherals
 	name = "circuit board (Phazon Peripherals Control module)"

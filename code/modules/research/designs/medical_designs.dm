@@ -45,17 +45,6 @@
 	build_path = /obj/item/device/mmi/posibrain
 	category = list("Misc", "Medical Designs")
 
-/datum/design/synthetic_flash
-	name = "Flash"
-	desc = "When a problem arises, SCIENCE is the solution."
-	id = "sflash"
-	req_tech = list("magnets" = 3, "combat" = 2)
-	build_type = MECHFAB
-	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
-	construction_time = 100
-	build_path = /obj/item/device/assembly/flash/handheld
-	category = list("Misc")
-
 /datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."

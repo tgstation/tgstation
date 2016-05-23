@@ -197,4 +197,3 @@
 	item_state = "nullrod"
 
 /obj/item/device/assembly/flash/handheld //this is now the regular pocket flashes
-	origin_tech = "magnets=2;combat=2"
