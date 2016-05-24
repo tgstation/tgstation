@@ -120,20 +120,25 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_master", name, 470, 500, master_ui, state)
+		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["mode"] = mode
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
+
+	data["isPillBottleLoaded"] = bottle ? 1 : 0
+	if(bottle)
+		data["pillBotContent"] = bottle.contents.len
+		data["pillBotMaxContent"] = bottle.storage_slots
+
 
 	var beakerContents[0]
 	if(beaker)

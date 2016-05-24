@@ -133,13 +133,13 @@
 		Tempstun = 0
 
 	if(stat != DEAD)
-		var/co2_percentage =0
-		if("co2" in environment.gases)
-			co2_percentage = environment.gases["co2"][MOLES] / environment.total_moles()
-		var/stasis = (co2_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
+		var/bz_percentage =0
+		if("bz" in environment.gases)
+			bz_percentage = environment.gases["bz"][MOLES] / environment.total_moles()
+		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
-			src << "<span class='danger'>High levels of CO2 put you in stasis!</span>"
+			src << "<span class='danger'>Nerve gas in the air has put you in stasis!</span>"
 			stat = UNCONSCIOUS
 			powerlevel = 0
 			rabid = 0

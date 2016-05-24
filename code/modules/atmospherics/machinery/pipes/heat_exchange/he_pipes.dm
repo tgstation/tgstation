@@ -36,8 +36,8 @@
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
-			var/datum/gas_mixture/environment = T.return_air()
-			environment_temperature = environment.temperature
+			var/turf/open/OT = T
+			environment_temperature = OT.GetTemperature()
 	else
 		environment_temperature = T.temperature
 

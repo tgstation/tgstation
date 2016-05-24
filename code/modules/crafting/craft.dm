@@ -50,12 +50,17 @@
 	for(var/A in L)
 		var/turf/T = A
 		if(T.Adjacent(user))
-			. += T.contents
-
+			for(var/B in T)
+				var/atom/movable/AM = B
+				if(AM.flags & HOLOGRAM)
+					continue
+				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	for(var/obj/item/I in get_environment(user))
+		if(I.flags & HOLOGRAM)
+			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			.[I.type] += S.amount

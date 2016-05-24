@@ -5,6 +5,9 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
+	var/safety_warning = "For safety reasons the automated supply shuttle \
+		cannot transport live organisms, classified nuclear weaponry or \
+		homing beacons."
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -94,7 +97,7 @@
 	switch(action)
 		if("send")
 			if(SSshuttle.supply.canMove())
-				say("For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.")
+				say(safety_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
 				SSshuttle.supply.emagged = emagged
@@ -109,6 +112,9 @@
 			. = TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
+				return
+			if(SSshuttle.supply.canMove())
+				say(safety_warning)
 				return
 			else if(SSshuttle.supply.mode == SHUTTLE_IDLE)
 				SSshuttle.shuttle_loan.loan_shuttle()

@@ -61,3 +61,5 @@
 	var/list/butcher_results = null
 	var/hellbound = 0 //People who've signed infernal contracts are unrevivable.
 
+	var/list/weather_immunities = list()
+
