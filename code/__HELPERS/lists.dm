@@ -238,7 +238,7 @@
 	return r
 
 // Returns the key based on the index
-#define KEYBYINDEX(L, index) ((index <= L:len) && (index > 0) ? L[index] : null)
+#define KEYBYINDEX(L, index) (((index <= L:len) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
 	var/i = 0
