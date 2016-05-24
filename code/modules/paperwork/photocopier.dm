@@ -67,7 +67,7 @@
 					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/weapon/paper/contract/employment))
 						var/obj/item/weapon/paper/contract/employment/E = copy
-						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target)
+						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
 						if(C)
 							copy_as_paper = 0
 					if(copy_as_paper)

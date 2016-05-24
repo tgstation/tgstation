@@ -167,6 +167,7 @@
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/nullrod/hammmer
 	icon_state = "hammeron"

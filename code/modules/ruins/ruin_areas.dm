@@ -17,16 +17,17 @@
 
 
 
+
 //Areas
 
 /area/ruin/unpowered/no_grav/way_home
 	name = "\improper Salvation"
 	icon_state = "away"
 
-
-
 /area/ruin/powered/snow_biodome
 
+/area/ruin/powered/golem_ship
+	name = "Free Golem Ship"
 
 // Ruins of "onehalf" ship
 /area/ruin/onehalf/hallway

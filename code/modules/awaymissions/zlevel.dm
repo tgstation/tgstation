@@ -121,6 +121,10 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	if(!template)
 		world << "<span class='boldannounce'>No ruins found.</span>"
 		return
+	for(var/i in template.get_affected_turfs(get_turf(src), 1))
+		var/turf/T = i
+		for(var/mob/living/simple_animal/monster in T)
+			qdel(monster)
 	template.load(get_turf(src),centered = TRUE)
 	template.loaded++
 	world << "<span class='boldannounce'>Ruins loaded.</span>"

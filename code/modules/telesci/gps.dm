@@ -105,3 +105,8 @@ var/list/GPS_list = list()
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
+
+/obj/item/device/gps/mining/internal
+	icon_state = "gps-m"
+	gpstag = "MINER"
+	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."

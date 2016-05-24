@@ -126,17 +126,27 @@
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
+		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
+			"<span class='notice'>You tip over [src].</span>")
+		src << "<span class='userdanger'>You are tipped over by [M]!</span>"
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
 				icon_state = icon_living
-				var/list/responses = list(	"[src] looks at you imploringly.",
-											"[src] looks at you pleadingly",
-											"[src] looks at you with a resigned expression.",
-											"[src] seems resigned to its fate.")
-				M << pick(responses)
+				var/external
+				var/internal
+				switch(pick(1,2,3,4))
+					if(1,2,3)
+						var/text = pick("imploringly.", "pleadingly.",
+							"with a resigned expression.")
+						external = "[src] looks at [M] [text]"
+						internal = "You look at [M] [text]"
+					if(4)
+						external = "[src] seems resigned to its fate."
+						internal = "You resign yourself to your fate."
+				visible_message("<span class='notice'>[external]</span>",
+					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
 

@@ -83,6 +83,20 @@
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
+/obj/item/smallDelivery/attack_self_tk(mob/user)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.unEquip(src)
+		for(var/X in contents)
+			var/atom/movable/AM = X
+			M.put_in_hands(AM)
+	else
+		for(var/X in contents)
+			var/atom/movable/AM = X
+			AM.forceMove(src.loc)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	qdel(src)
+
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W

@@ -26,6 +26,7 @@
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/weapon/ectoplasm)
 	del_on_death = 1
+	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 
@@ -34,10 +35,6 @@
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
-
-/mob/living/simple_animal/hostile/construct/death()
-	deathmessage = "<span class='danger'>[src] collapses in a shattered heap.</span>"
-	..()
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"

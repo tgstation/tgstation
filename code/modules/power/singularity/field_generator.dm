@@ -238,7 +238,8 @@ field_generator power level display
 		setup_field(4)
 	spawn(4)
 		setup_field(8)
-	active = FG_ONLINE
+	spawn(5)
+		active = FG_ONLINE
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)

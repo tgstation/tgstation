@@ -207,3 +207,13 @@ Borg Shaker
 	recharge_time = 3
 
 	reagent_ids = list("beer2")
+
+/obj/item/weapon/reagent_containers/borghypo/peace
+	name = "Peace Hypospray"
+
+	reagent_ids = list("dizzysolution","tiresolution")
+
+/obj/item/weapon/reagent_containers/borghypo/peace/hacked
+	desc = "Everything's peaceful in death!"
+	icon_state = "borghypo_s"
+	reagent_ids = list("dizzysolution","tiresolution","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")

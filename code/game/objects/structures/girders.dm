@@ -376,7 +376,7 @@
 		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
 		R.use(1)
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall/cult)
+		T.ChangeTurf(/turf/closed/wall/mineral/cult)
 		qdel(src)
 
 	else

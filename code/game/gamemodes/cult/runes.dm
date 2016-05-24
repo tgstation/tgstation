@@ -24,7 +24,6 @@ To draw a rune, use an arcane tome.
 	unacidable = 1
 	layer = TURF_LAYER + 0.08
 	color = rgb(255,0,0)
-	mouse_opacity = 2
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
@@ -203,7 +202,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Talisman Creation rune failed - already in use")
 		return
 	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
-	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply)
+	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak)
 		var/obj/item/weapon/paper/talisman/J = I
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
@@ -300,7 +299,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 
 
-//Rite of Enlightenment: Converts a normal crewmember to the cult. Faster for every cultist nearby.
+//Rite of Enlightenment: Converts a normal crewmember to the cult.
 /obj/effect/rune/convert
 	cultist_name = "Convert"
 	cultist_desc = "converts a normal crewmember on top of it to the cult. Does not work on loyalty-implanted crew."
@@ -312,21 +311,22 @@ var/list/teleport_runes = list()
 /obj/effect/rune/convert/invoke(var/list/invokers)
 	var/list/convertees = list()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/M in T.contents)
-		if(!iscultist(M) && !isloyal(M))
-			convertees.Add(M)
+	for(var/mob/living/M in T)
+		if(M.stat != DEAD && !iscultist(M) && is_convertable_to_cult(M.mind))
+			convertees |= M
+		else if(is_sacrifice_target(M.mind))
+			for(var/C in invokers)
+				C << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 	if(!convertees.len)
 		fail_invoke()
 		log_game("Convert rune failed - no eligible convertees")
 		return
 	var/mob/living/new_cultist = pick(convertees)
-	if(!is_convertable_to_cult(new_cultist.mind) || new_cultist.null_rod_check())
+	if(new_cultist.null_rod_check())
 		for(var/M in invokers)
 			M << "<span class='warning'>Something is shielding [new_cultist]'s mind!</span>"
-			if(is_sacrifice_target(new_cultist.mind))
-				M << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 		fail_invoke()
-		log_game("Convert rune failed - convertee could not be converted")
+		log_game("Convert rune failed - convertee had null rod")
 		return
 	..()
 	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
@@ -448,7 +448,6 @@ var/list/teleport_runes = list()
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	mouse_opacity = 1 //we're huge and easy to click
 	scribe_delay = 450 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	var/used
@@ -459,28 +458,8 @@ var/list/teleport_runes = list()
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
 		return
-	var/mob/living/user = invokers[1]
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult_mode = ticker.mode
-		if(!("eldergod" in cult_mode.cult_objectives))
-			message_admins("[user.real_name]([user.ckey]) tried to summon Nar-Sie when the objective was wrong")
-			for(var/M in invokers)
-				var/mob/living/L = M
-				L << "<span class='cultlarge'><i>\"YOUR SOUL BURNS WITH YOUR ARROGANCE!!!\"</i></span>"
-				if(L.reagents)
-					L.reagents.add_reagent("hell_water", 10)
-				L.Weaken(7)
-				L.Stun(7)
-			fail_invoke()
-			log_game("Summon Nar-Sie rune failed - improper objective")
-			return
-		else
-			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
-				for(var/M in invokers)
-					M << "<span class='warning'>The sacrifice is not complete. The portal lacks the power to open!</span>"
-				fail_invoke()
-				log_game("Summon Nar-Sie rune failed - sacrifice not complete")
-				return
 		if(!cult_mode.eldergod)
 			for(var/M in invokers)
 				M << "<span class='warning'>Nar-Sie is already on this plane!</span>"
@@ -535,7 +514,7 @@ var/list/teleport_runes = list()
 	if(rune_in_use)
 		return
 	for(var/mob/living/M in orange(1,T))
-		if(M.stat == DEAD)
+		if(M.stat == DEAD && !iscultist(M))
 			potential_sacrifice_mobs |= M
 	if(!potential_sacrifice_mobs.len)
 		user << "<span class='cultitalic'>There are no eligible sacrifices nearby!</span>"
@@ -760,7 +739,7 @@ var/list/teleport_runes = list()
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
 	for(var/datum/mind/M in ticker.mode.cult)
-		if(!(M.current in invokers))
+		if(!(M.current in invokers) && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
@@ -770,10 +749,15 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
 		return
+	if(cultist_to_summon.stat == DEAD)
+		user << "<span class='cultitalic'>[cultist_to_summon] has died!</span>"
+		fail_invoke()
+		log_game("Summon Cultist rune failed - target died")
+		return
 	if(!iscultist(cultist_to_summon))
 		user << "<span class='cultitalic'>[cultist_to_summon] is not a follower of the Geometer!</span>"
 		fail_invoke()
-		log_game("Summon Cultist rune failed - no target")
+		log_game("Summon Cultist rune failed - target was deconverted")
 		return
 	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
 		user << "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>"
@@ -800,8 +784,9 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/blood_boil/invoke(var/list/invokers)
 	..()
+	var/turf/T = get_turf(src)
 	visible_message("<span class='warning'>[src] briefly bubbles before exploding!</span>")
-	for(var/mob/living/carbon/C in viewers(src))
+	for(var/mob/living/carbon/C in viewers(T))
 		if(!iscultist(C))
 			var/obj/item/weapon/nullrod/N = C.null_rod_check()
 			if(N)
@@ -814,8 +799,8 @@ var/list/teleport_runes = list()
 		var/mob/living/L = M
 		L.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
 		L << "<span class='cultitalic'>[src] saps your strength!</span>"
-	explosion(get_turf(src), -1, 0, 1, 5)
 	qdel(src)
+	explosion(T, -1, 0, 1, 5)
 
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
