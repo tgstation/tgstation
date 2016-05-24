@@ -24,7 +24,8 @@
 
 	if(!S) return
 
-	chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
+	chambered.BB = new S.projectile_type (src)
+
 	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
 	chambered.BB.name = S.name
 	syringes.Remove(S)
