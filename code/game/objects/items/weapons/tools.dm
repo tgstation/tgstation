@@ -133,7 +133,7 @@
  * Wirecutters
  */
 /obj/item/weapon/wirecutters
-	name = "wire strippers"
+	name = "wire stripper"
 	desc = "This strips wires."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = null
