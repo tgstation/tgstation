@@ -1965,7 +1965,7 @@
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\_map.dm"
-#include "maps\defficiency.dm"
+#include "maps\tgstation.dm"
 #include "maps\defficiency\areas.dm"
 #include "maps\defficiency\pipes.dm"
 #include "maps\randomvaults\dance_revolution.dm"
