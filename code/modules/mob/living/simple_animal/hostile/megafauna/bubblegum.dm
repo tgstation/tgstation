@@ -35,26 +35,31 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = round((health/maxHealth) * 10)
+/*	if(!charging)
+		blood_warp()*/
+	move_to_delay = Clamp(round((health/maxHealth) * 10), 3, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	if(prob(20))
+	if(!charging)
+		blood_warp()
+
+	if(prob(25))
 		blood_spray()
 
-	else if(prob(20+anger_modifier) && !client && !charging)
-		if(health > maxHealth/2)
+	else if(prob(5+anger_modifier/2))
+		slaughterlings()
+	else if(prob(5+anger_modifier/2))
+
+		if(health > maxHealth/2 && !client && !charging)
 			charge()
 		else
 			charge()
 			sleep(10)
 			charge()
 			sleep(10)
-			charge()
-	else
-		blood_warp()
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -75,16 +80,15 @@
 	if(charging)
 		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
 		for(var/turf/T in range(src, 1))
-			if(prob(50))
-				T.singularity_pull(src, 7)
-			else
-				T.ex_act(3)
+			T.singularity_pull(src, 5)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
 	charging = 1
-	throw_at(T, 5, 1, src, 0)
+	new/obj/effect/overlay/temp/dragon_swoop(T)
+	sleep(5)
+	throw_at(T, 7, 1, src, 0)
 	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
@@ -95,12 +99,13 @@
 		if(isliving(A))
 			var/mob/living/L = A
 			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
-			L.apply_damage(25, BRUTE)
+			L.apply_damage(40, BRUTE)
 			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)
 			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			L.throw_at_fast(throwtarget)
+
 
 	charging = 0
 
@@ -133,3 +138,15 @@
 			new /obj/effect/decal/cleanable/blood(J)
 			range--
 			sleep(1)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
+	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
+	for(var/obj/effect/decal/cleanable/blood/H in range(src, 10))
+		if(prob(25))
+			new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(H.loc)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter
+	name = "slaughterling"
+	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
+	faction = list("mining")
+	weather_immunities = list("lava","ash")
