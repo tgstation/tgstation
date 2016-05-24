@@ -788,7 +788,7 @@ SYNDICATE BLACK OPS
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
 	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
 
