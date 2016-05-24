@@ -50,6 +50,9 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	//If there's a bug with changing your ghost settings, it's probably related to this.
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	// Used for displaying in ghost chat, without changing the actual name
+	// of the mob
+	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
@@ -592,11 +595,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/verb/restore_ghost_apperance()
 	set name = "Restore Ghost Character"
-	set desc = "Sets your ghost name and apperance to the name of your \
+	set desc = "Sets your deadchat name and ghost appearance to your \
 		roundstart character."
 	set category = "Ghost"
 
 	set_ghost_appearance()
+	if(client && client.prefs)
+		deadchat_name = client.prefs.real_name
 
 /mob/dead/observer/proc/set_ghost_appearance()
 	if((!client) || (!client.prefs))
@@ -613,12 +618,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(FACEHAIR in client.prefs.pref_species.specflags)
 		facial_hair_style = client.prefs.facial_hair_style
 		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
-
-	real_name = client.prefs.real_name
-	name = real_name
-
-	if(mind)
-		mind.name = name
 
 	update_icon()
 
