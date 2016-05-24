@@ -137,6 +137,10 @@
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 
+/mob/living/simple_animal/drone/snowflake/bardrone/New()
+	. = ..()
+	access_card.access |= access_cent_bar
+
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
 	name = "Barmaid"
@@ -146,6 +150,18 @@
 	languages = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
+
+/mob/living/simple_animal/hostile/alien/maid/barmaid/New()
+	. = ..()
+	access_card = new /obj/item/weapon/card/id(src)
+	var/datum/job/captain/C = new /datum/job/captain
+	access_card.access = C.get_access()
+	access_card.access |= access_cent_bar
+	access_card.flags |= NODROP
+
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
+	qdel(access_card)
+	. = ..()
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
@@ -168,15 +184,13 @@
 	else
 		. = ..()
 
-/obj/structure/table/wood/bar/proc/is_barstaff(mob/user)
+/obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
-	if(istype(user, /mob/living/simple_animal/drone/snowflake/bardrone))
-		. = TRUE
-	else if(istype(user, /mob/living/simple_animal/hostile/alien/maid/barmaid))
-		. = TRUE
-	else if(ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.mind && H.mind.assigned_role == "Bartender")
-			. = TRUE
+			return TRUE
 
-
+	var/obj/item/weapon/card/id/ID = user.get_idcard()
+	if(ID && (access_cent_bar in ID.access))
+		return TRUE
