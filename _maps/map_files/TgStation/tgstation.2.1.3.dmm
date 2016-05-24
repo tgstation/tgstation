@@ -373,11 +373,8 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "aba" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/lattice,
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "abb" = (
@@ -6381,9 +6378,12 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "alX" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/atmos)
 "alY" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Labor Shuttle Airlock";
@@ -6673,8 +6673,11 @@
 /turf/open/floor/plating,
 /area/maintenance/auxsolarport)
 "amB" = (
-/turf/open/floor/plating,
-/area/security/prison)
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
 "amC" = (
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
@@ -7075,8 +7078,10 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/labor)
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/escape)
 "anr" = (
 /obj/structure/chair{
 	dir = 8
@@ -12499,10 +12504,7 @@
 	name = "\improper Garden"
 	})
 "azr" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "azs" = (
@@ -14035,10 +14037,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aCA" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -40710,14 +40709,11 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bFn" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bFo" = (
@@ -40921,6 +40917,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -41663,6 +41660,7 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -42071,10 +42069,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bHV" = (
@@ -45165,6 +45160,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
@@ -46199,10 +46195,7 @@
 /area/maintenance/aft)
 "bPY" = (
 /obj/structure/girder,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bPZ" = (
@@ -47235,10 +47228,7 @@
 /turf/open/floor/wood,
 /area/maintenance/aft)
 "bSp" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bSq" = (
@@ -54011,10 +54001,7 @@
 /area/maintenance/asmaint)
 "cgf" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -57189,8 +57176,7 @@
 	},
 /area/engine/engineering)
 "cmM" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
+/obj/machinery/sleeper/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/shuttle{
@@ -62822,11 +62808,11 @@
 	},
 /area/shuttle/escape)
 "cxr" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/chair{
 	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
@@ -95089,7 +95075,7 @@ bJs
 bKy
 bLM
 bLM
-bNQ
+alX
 bOV
 bQk
 bRt
@@ -115871,11 +115857,11 @@ cxd
 cxe
 cwU
 cwL
-cxk
-cxk
-cxk
-cxk
-cxk
+anq
+anq
+anq
+anq
+anq
 cwL
 cwU
 cxQ
@@ -117153,7 +117139,7 @@ cwL
 cwX
 cwL
 cwL
-cxk
+anq
 cxj
 cwL
 cxq
@@ -117405,8 +117391,8 @@ aaa
 aaa
 crx
 cwG
-cwM
-cwM
+amB
+amB
 cwW
 cxa
 cwL

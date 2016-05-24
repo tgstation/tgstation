@@ -534,7 +534,9 @@
 			for(var/obj/machinery/capture_the_flag/CTF in machines)
 				ctf_enabled = !CTF.ctf_enabled
 				CTF.ctf_enabled = !CTF.ctf_enabled
+				CTF.TellGhost()
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
 
 	if(E)
 		E.processing = 0

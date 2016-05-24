@@ -197,9 +197,12 @@ EVENTS_MIN_PLAYERS_MUL 1
 ALLOW_AI
 
 ### Secborg ###
-## Uncomment to prevent the secborg module from being chosen
+## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
+### Peacekeeper Borg ###
+## Uncomment to prevent the peacekeeper cyborg module from being chosen
+#DISABLE_PEACEBORG
 
 ### AWAY MISSIONS ###
 

@@ -110,6 +110,16 @@
 
 /obj/item/weapon/kitchen/knife/combat/survival
 	name = "survival knife"
+	icon_state = "survivalknife"
+	desc = "A hunting grade survival knife."
+	force = 15
+	throwforce = 15
+
+/obj/item/weapon/kitchen/knife/combat/bone
+	name = "bone dagger"
+	item_state = "bone_dagger"
+	icon_state = "bone_dagger"
+	desc = "A sharpened bone. The bare mimimum in survival."
 	force = 15
 	throwforce = 15
 

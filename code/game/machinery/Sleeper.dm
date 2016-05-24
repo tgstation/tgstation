@@ -73,6 +73,8 @@
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
+		if(occupant && occupant.stat != DEAD)
+			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash)
@@ -94,7 +96,7 @@
 		qdel(src)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target))
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 

@@ -74,6 +74,45 @@
 	creation_time = 30
 	max_signs = 6
 
+/obj/item/weapon/holosign_creator/cyborg
+	name = "Energy Barrier Projector"
+	desc = "A holographic projector that creates fragile energy fields"
+	creation_time = 5
+	max_signs = 9
+	holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
+	var/shock = 0
+
+/obj/item/weapon/holosign_creator/cyborg/attack_self(mob/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+
+		if(shock)
+			user <<"<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>"
+			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
+			creation_time = 5
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+			shock = 0
+			return
+		else if(R.emagged&&!shock)
+			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
+			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg/hacked
+			creation_time = 30
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+			shock = 1
+			return
+		else
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+				user << "<span class='notice'>You clear all active holograms.</span>"
+	if(signs.len)
+		for(var/H in signs)
+			qdel(H)
+		user << "<span class='notice'>You clear all active holograms.</span>"
 
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'
@@ -185,3 +224,36 @@
 
 /obj/effect/overlay/holograph/barrier/engineering
 	icon_state = "holosign_engi"
+
+/obj/effect/overlay/holograph/barrier/cyborg
+	name = "Energy Field"
+	desc = "A fragile energy field that blocks movement"
+	density = 1
+	holo_integrity = 1
+
+/obj/effect/overlay/holograph/barrier/CanPass()
+	return 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked
+	name = "Charged Energy Field"
+	desc = "A powerful energy field that blocks movement. Energy arcs off it"
+	holo_integrity = 3
+	var/shockcd = 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/attack_hand(mob/living/user)
+	if(!shockcd)
+		if(ismob(user))
+			var/mob/living/M = user
+			M.electrocute_act(15,"Energy Barrier", safety=1)
+			shockcd = 1
+			spawn(10)
+			shockcd = 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/Bumped(atom/user)
+	if(!shockcd)
+		if(ismob(user))
+			var/mob/living/M = user
+			M.electrocute_act(15,"Energy Barrier", safety=1)
+			shockcd = 1
+			spawn(10)
+			shockcd = 0

@@ -381,10 +381,10 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
-	if(opened || !secure || !in_range(src, user))
+	if(opened || !secure)
 		return
 	else
 		togglelock(user)
@@ -395,7 +395,7 @@
 			add_fingerprint(user)
 			locked = !locked
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
-							"<span class='notice'>You [locked ? null : "un"]locks [src].</span>")
+							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
 		else
 			user << "<span class='notice'>Access Denied</span>"

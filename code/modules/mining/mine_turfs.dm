@@ -4,6 +4,7 @@
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
+	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -14,7 +15,7 @@
 	layer = MOB_LAYER + 0.05
 	temperature = TCMB
 	var/environment_type = "asteroid"
-	var/turf/open/floor/plating/asteroid/turf_type = /turf/open/floor/plating/asteroid/airless
+	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
@@ -26,7 +27,7 @@
 /turf/closed/mineral/New()
 	pixel_y = -4
 	pixel_x = -4
-	icon = 'icons/turf/smoothrocks.dmi'
+	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -707,3 +708,52 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
+
+
+//BECAUSE ONE PLANET WASNT ENOUGH
+
+/turf/closed/mineral/ash_rock //wall piece
+	name = "rock"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	icon_state = "rock"
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
+	baseturf = /turf/open/floor/plating/ash
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	environment_type = "waste"
+	turf_type = /turf/open/floor/plating/ash
+	defer_change = 1
+
+/turf/open/floor/plating/ash
+	icon = 'icons/turf/mining.dmi'
+	name = "ash"
+	icon_state = "ash"
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/open/floor/plating/ash, /turf/closed)
+	var/smooth_icon = 'icons/turf/floors/ash.dmi'
+	desc = "The ground is covered in volcanic ash."
+	baseturf = /turf/open/floor/plating/ash //I assume this will be a chasm eventually, once this becomes an actual surface
+	slowdown = 1
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/floor/plating/ash/New()
+	pixel_y = -4
+	pixel_x = -4
+	icon = smooth_icon
+	..()
+
+/turf/open/floor/plating/ash/break_tile()
+	return
+
+/turf/open/floor/plating/ash/burn_tile()
+	return
+
+/turf/open/floor/plating/ash/rocky
+	name = "rocky ground"
+	icon_state = "rockyash"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
+	slowdown = 0
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/open/floor/plating/ash/rocky, /turf/closed)

@@ -158,6 +158,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
+/datum/design/modkit
+	name = "Modification Kit"
+	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
+	id = "modkit"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/modkit
+	category = list("Mining Designs")
+
 /datum/design/superaccelerator
 	name = "Super-Kinetic Accelerator"
 	desc = "An upgraded version of the proto-kinetic accelerator, with superior damage, speed and range."

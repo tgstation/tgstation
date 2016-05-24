@@ -62,6 +62,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
+	layer = 2.95
 	origin_tech = "materials=2"
 
 var/global/list/datum/stack_recipe/sandbag_recipes = list ( \

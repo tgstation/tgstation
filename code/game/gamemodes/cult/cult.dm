@@ -21,8 +21,14 @@
 		return 0
 	if(isloyal(mind.current))
 		return 0
-	if (ticker.mode.name == "cult")		//redundant?
-		if(is_sacrifice_target(mind))	return 0
+	if(issilicon(mind.current) || isbot(mind.current) || isdrone(mind.current))
+		return 0 //can't convert machines, that's ratvar's thing
+	if(isguardian(mind.current))
+		var/mob/living/simple_animal/hostile/guardian/G = mind.current
+		if(!iscultist(G.summoner))
+			return 0 //can't convert it unless the owner is converted
+	if(is_sacrifice_target(mind))
+		return 0
 	return 1
 
 /datum/game_mode/cult
@@ -62,7 +68,7 @@
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
-	recommended_enemies = 3 + round(num_players()/20)
+	recommended_enemies = 3 + round(num_players()/15)
 
 
 	for(var/cultists_number = 1 to recommended_enemies)

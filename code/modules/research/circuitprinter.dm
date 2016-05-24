@@ -93,6 +93,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		G.amount = round(diamond_amount / MINERAL_MATERIAL_AMOUNT)
 	..()
 
+/obj/machinery/r_n_d/circuit_imprinter/disconnect_console()
+	linked_console.linked_imprinter = null
+	..()
+
 /obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/stack/sheet/glass) || istype(O, /obj/item/stack/sheet/mineral/gold) || istype(O, /obj/item/stack/sheet/mineral/diamond))

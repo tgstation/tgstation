@@ -290,14 +290,9 @@
 				remove_fuel(1)
 			update_icon()
 
+
 	//This is to start fires. process() is only called if the welder is on.
-	var/turf/location = loc
-	if(ismob(location))
-		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
-			location = get_turf(M)
-	if(isturf(location))
-		location.hotspot_expose(700, 5)
+	open_flame()
 
 
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)

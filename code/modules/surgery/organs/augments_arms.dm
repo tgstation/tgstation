@@ -54,7 +54,7 @@
 	return 0
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
-	if(prob(15/severity))
+	if(prob(15/severity) && owner)
 		owner << "<span class='warning'>[src] is hit by EMP!</span>"
 		// give the owner an idea about why his implant is glitching
 		Retract()
@@ -168,7 +168,7 @@
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all neccessary tools."
-	origin_tech = "materials=5;engineering=5;biotech=4;powerstorage=3"
+	origin_tech = "materials=4;engineering=4;biotech=3;powerstorage=4"
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
 

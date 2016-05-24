@@ -226,7 +226,7 @@
 #define MIN_RANGE_FIND 16
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
+#define CHANCE_TALK 1
 
 #define SNPC_BRUTE 1
 #define SNPC_STEALTH 2
@@ -284,6 +284,9 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
+
+//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
+#define MAXIMUM_WET_TIME 300
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -423,3 +426,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 // Shuttle return values
 #define SHUTTLE_ALREADY_DOCKED 7
+
+
+#define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
+
+// Evil narsie colour
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+

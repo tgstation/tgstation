@@ -167,6 +167,8 @@
 		return
 
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_peaceborg)
+		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
@@ -234,6 +236,16 @@
 			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
+
+		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			hands.icon_state = "standard"
+			icon_state = "peaceborg"
+			animation_length = 54
+			modtype = "Peace"
+			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+			status_flags &= ~CANPUSH
+			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -555,7 +567,10 @@
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
-		MOD.install(src, user) //Proc includes a success mesage so we don't need another one
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
