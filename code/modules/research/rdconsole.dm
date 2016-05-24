@@ -266,6 +266,9 @@ proc/CallMaterialName(ID)
 						return
 
 					for(var/T in temp_tech)
+						var/datum/tech/KT = files.known_tech[T] //For stat logging of high levels
+						if(files.IsTechHigher(T, temp_tech[T]) && KT.level >= 5) //For stat logging of high levels
+							feedback_add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
 						files.UpdateTech(T, temp_tech[T])
 
 					if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
