@@ -9,6 +9,14 @@
 	var/chem_catalysts[] = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 
+/datum/crafting_recipe/spear
+	name = "Spear"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/weapon/shard = 1,
+				/obj/item/stack/rods = 1)
+	time = 40
+	category = CAT_WEAPON
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
