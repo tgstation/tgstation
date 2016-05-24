@@ -464,17 +464,6 @@
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
 
-/obj/effect/mob_spawn/human/wwii
-	name = "World War II Reenactor"
-	uniform = /obj/item/clothing/under/wwii
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/stahlhelm
-	back = /obj/item/weapon/storage/backpack/security
-	has_id = 0
-
-
 /////////////////Spooky Undead//////////////////////
 
 /obj/effect/mob_spawn/human/skeleton
