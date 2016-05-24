@@ -1666,6 +1666,7 @@
 #include "code\modules\shuttle\ferry.dm"
 #include "code\modules\shuttle\manipulator.dm"
 #include "code\modules\shuttle\shuttle.dm"
+#include "code\modules\shuttle\special.dm"
 #include "code\modules\shuttle\supply.dm"
 #include "code\modules\shuttle\syndicate.dm"
 #include "code\modules\shuttle\white_ship.dm"

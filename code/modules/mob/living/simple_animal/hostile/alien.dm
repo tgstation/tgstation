@@ -170,13 +170,3 @@
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = 0
-	name = "Barmaid"
-	desc = "A barmaid, a maiden found in a bar."
-	pass_flags = PASSTABLE
-	status_flags = GODMODE
-	languages = ALL
-	unique_name = FALSE
-	AIStatus = AI_OFF
