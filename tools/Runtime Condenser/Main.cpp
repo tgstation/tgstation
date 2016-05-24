@@ -66,7 +66,7 @@ unsigned int totalRuntimes = 0;
 unsigned int totalInfiniteLoops = 0;
 unsigned int totalHardDels = 0;
 
-string lastkey; //stores the identifer of the last runtime for a quick out for when the same runtime repeats.
+
 bool endofbuffer = false;
 //like substr, but returns an empty string if the string is smaller then start, rather then an exception.
 inline string safe_substr(string * S, size_t start = 0, size_t end = string::npos) {
@@ -96,7 +96,7 @@ inline string * readline(FILE * f) {
 			pos = 0;
 			c = buf[i];
 		}
-		if (c == '\n' || c == '\r') {
+		if (c == '\n') {
 			//trim off any newlines from the start
 			while (i > pos && (buf[pos] == '\r' || buf[pos] == '\n'))
 				pos++;
@@ -194,12 +194,6 @@ bool readFromFile() {
 				procfound = true;
 			}
 			
-			if (key == lastkey) {//same as last runtime, skip
-				if (procfound)
-					forward_progress(inputFile);
-				continue;
-			}
-			lastkey = key;
 			//(get the address of a runtime from (a pointer to a container of runtimes)) to then store in a pointer to a runtime.
 			//(and who said pointers were hard.)
 			runtime* R = &((*storage_container)[key]);
