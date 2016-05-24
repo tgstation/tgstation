@@ -39,7 +39,6 @@ field_generator power level display
 	var/list/fields = list()
 	var/list/obj/machinery/field/generator/connected_gens
 	var/clean_up = 0
-	speed_process = 1
 
 /obj/machinery/field/generator/update_icon()
 	overlays.Cut()
