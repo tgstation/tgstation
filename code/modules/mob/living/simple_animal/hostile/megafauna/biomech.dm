@@ -1,5 +1,5 @@
-/mob/living/simple_animal/hostile/megafauna/eva
-	name = "eva"
+/mob/living/simple_animal/hostile/megafauna/colossus
+	name = "colossus"
 	desc = "get in the fucking robot."
 	health = 2500
 	maxHealth = 2500
@@ -28,12 +28,14 @@
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 
-	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
+	deathmessage = "crashes to the ground."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 
 /obj/effect/at_shield
+	name = "anti-toolbox field"
+	desc = "A shimmering forcefield protecting the colossus."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = 6.1
@@ -48,7 +50,7 @@
 				loc = get_turf(target)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/megafauna/eva/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
 		var/obj/effect/at_shield/AT = new(src.loc)
 		AT.target = src

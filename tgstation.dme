@@ -1446,6 +1446,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\wizard.dm"
 #include "code\modules\mob\living\simple_animal\hostile\zombie.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\biomech.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\legion.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\megafauna.dm"

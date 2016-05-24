@@ -40,6 +40,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
+	var/projectile_speed = 1 //1 is the minimum, and the fastest. The higher the number, the slower the projectile
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -133,7 +134,7 @@
 					if(!(original in permutated))
 						Bump(original, 1)
 			Range()
-		sleep(1)
+		sleep(projectile_speed)
 
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
