@@ -124,7 +124,7 @@
 	damage = 10
 	weaken = 4
 	stun = 4
-	
+
 /obj/item/projectile/bullet/honker
 	damage = 0
 	weaken = 5
@@ -135,7 +135,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
-	
+
 /obj/item/projectile/bullet/honker/New()
 	..()
 	SpinAnimation()
@@ -166,6 +166,7 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
+	var/piercing = 0
 
 /obj/item/projectile/bullet/dart/New()
 	..()
@@ -176,7 +177,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(null,0,hit_zone,piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
@@ -202,6 +203,10 @@
 	name = "syringe"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
+
+//Piercing Syringe
+/obj/item/projectile/bullet/dart/syringe/piercing
+	piercing = 1
 
 /obj/item/projectile/bullet/neurotoxin
 	name = "neurotoxin spit"

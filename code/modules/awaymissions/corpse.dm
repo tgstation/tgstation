@@ -79,11 +79,12 @@
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
+		var/datum/mind/MM = M.mind
 		if(objectives)
-			var/datum/mind/MM = M.mind
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
+		MM.name = M.real_name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
@@ -457,17 +458,6 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
-
-/obj/effect/mob_spawn/human/wwii
-	name = "World War II Reenactor"
-	uniform = /obj/item/clothing/under/wwii
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/stahlhelm
-	back = /obj/item/weapon/storage/backpack/security
-	has_id = 0
-
 
 /////////////////Spooky Undead//////////////////////
 

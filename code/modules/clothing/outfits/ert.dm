@@ -124,7 +124,8 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1)
+		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1,\
+		/obj/item/weapon/gun/medbeam=1)
 
 /datum/outfit/ert/engineer
 	name = "ERT Engineer"
