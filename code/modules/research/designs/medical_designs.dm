@@ -53,7 +53,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
-	category = list("Medical Designs", "Bluespace Designs")
+	category = list("Medical Designs")
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -69,21 +69,19 @@
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
 	id = "bluespacesyringe"
-	req_tech = list("bluespace" = 3, "materials" = 4, "combat" = 2)
+	req_tech = list("bluespace" = 5, "materials" = 4, "biotech" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 4000, MAT_PLASMA = 2000, MAT_DIAMOND = 2000)
-	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/syringe/bluespace
-	category = list("Medical Designs", "Bluespace Designs")
+	category = list("Medical Designs")
 
 /datum/design/noreactsyringe
 	name = "Cryo Syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	id = "noreactsyringe"
-	req_tech = list("materials" = 2, "combat" = 2)
+	req_tech = list("materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 4000, MAT_GOLD = 1000)
-	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
 	category = list("Medical Designs")
 
@@ -91,10 +89,9 @@
 	name = "Piercing Syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
-	req_tech = list("materials" = 3, "combat" = 3)
+	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
-	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
 	category = list("Medical Designs")
 
@@ -102,7 +99,7 @@
 	name = "Bluespace body bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"
-	req_tech = list("bluespace" = 5, "materials" = 4, "plasmatech" = 4miscellaneousmiscellaneous)
+	req_tech = list("bluespace" = 5, "materials" = 4, "plasmatech" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500)
 	build_path = /obj/item/bodybag/bluespace
@@ -148,7 +145,7 @@
 	name = "Toolset Arm implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
-	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4, "powerstorage" = 4)
+	req_tech = list("materials" = 3, "engineering" = 4, "biotech" = 4, "powerstorage" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
 	construction_time = 200

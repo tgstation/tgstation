@@ -168,7 +168,7 @@
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all neccessary tools."
-	origin_tech = "materials=4;engineering=4;biotech=3;powerstorage=4"
+	origin_tech = "materials=3;engineering=4;biotech=3;powerstorage=4"
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
 
