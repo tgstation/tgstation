@@ -8,6 +8,8 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	pill_icon_state = "pill19" //The Standard Pill for all medicine that have not their own set
+	bottle_icon_state = "bottle3" // same as above but for bottles
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
 	current_cycle++

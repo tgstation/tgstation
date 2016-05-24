@@ -6,6 +6,8 @@
 	id = "toxin"
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
+	pill_icon_state = "pill5" //The Standard Pill for all toxins that have not their own set
+	bottle_icon_state = "bottle3" // same as above but for bottles
 	var/toxpwr = 1.5
 
 /datum/reagent/toxin/on_mob_life(mob/living/M)
