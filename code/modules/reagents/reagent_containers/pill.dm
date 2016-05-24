@@ -2,7 +2,7 @@
 	name = "pill"
 	desc = "A tablet or capsule."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "pill"
+	//icon_state = "pill"
 	item_state = "pill"
 	possible_transfer_amounts = list()
 	volume = 50

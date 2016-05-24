@@ -224,6 +224,8 @@
 					P.name = trim("[name] pill")
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
+					var/datum/reagent/R = chemical_reagents_list[reagents.get_master_reagent_id()]
+					P.icon_state = R.pill_icon_state
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
