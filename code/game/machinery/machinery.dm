@@ -389,7 +389,7 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
-	if(!istype(W)
+	if(!istype(W))
 		return
 	if(flags & NODECONSTRUCT && !W.works_from_distance)
 		return
