@@ -79,11 +79,12 @@
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
+		var/datum/mind/MM = M.mind
 		if(objectives)
-			var/datum/mind/MM = M.mind
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
+		MM.name = M.real_name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
