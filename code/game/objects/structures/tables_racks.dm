@@ -301,7 +301,7 @@
 	playsound(T, "shatter", 50, 1)
 	for(var/I in debris)
 		var/atom/movable/AM = I
-		AM.forceMove()T
+		AM.forceMove(T)
 		debris -= I
 		if(istype(AM, /obj/item/weapon/shard))
 			AM.throw_impact(M)
