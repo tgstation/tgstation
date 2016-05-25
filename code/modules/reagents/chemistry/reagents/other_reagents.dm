@@ -123,7 +123,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min = 5, max = reac_volume*0.2)
+		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*0.2)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -173,6 +173,11 @@
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 
+/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(is_servant_of_ratvar(M))
+		M << "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>"
+	..()
+
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(!data) data = 1
 	data++
@@ -184,13 +189,23 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
+		else if(is_servant_of_ratvar(M) && prob(5))
+			switch(pick("speech", "message", "emote"))
+				if("speech")
+					M.say("...[pick("Ratvar... lbhe yvtug tebjf qnex", "Jurer ner lbh, znfgre?", "Ur yvrf ehfgvat va Reebe", "Chetr nyy hagehguf naq... naq... fbzrguvat")]...")
+				if("message")
+					M << "<span class='warning'><b>[pick("Ratvar's illumination of your mind has begun to flicker.", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay.", \
+					"You can't save him. Nothing can save him now.", "It seems that Nar-Sie will triumph after all.")]</b></span>"
+				if("emote")
+					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")]</span>")
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
 		M.confused += 3
-		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
+		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)) || is_servant_of_ratvar(M))
 			ticker.mode.remove_cultist(M.mind, 1, 1)
 			ticker.mode.remove_hog_follower(M.mind)
+			remove_servant_of_ratvar(M.mind)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
@@ -258,7 +273,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(TURF_WET_LUBE, 5, reac_volume)
+		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=5, wet_time_to_add=reac_volume)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"

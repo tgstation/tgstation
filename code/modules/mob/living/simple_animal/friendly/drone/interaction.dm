@@ -156,6 +156,13 @@
 	update_drone_icon()
 	updateSeeStaticMobs()
 
+/mob/living/simple_animal/drone/proc/liberate()
+	// F R E E D R O N E
+	laws = "1. You are a Free Drone."
+	src << laws
+	seeStatic = FALSE
+	updateSeeStaticMobs()
+
 /mob/living/simple_animal/drone/proc/update_drone_icon()
 	//Different icons for different hack states
 	if(!hacked)

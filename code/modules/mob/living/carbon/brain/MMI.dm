@@ -9,11 +9,12 @@
 	origin_tech = "biotech=3"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
-	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
+	var/hacked = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
+	var/clockwork = FALSE //If this is a soul vessel
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
@@ -67,6 +68,8 @@
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
+		if(clockwork)
+			add_servant_of_ratvar(brainmob, TRUE)
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
@@ -187,7 +190,7 @@
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
-	syndiemmi = 1
+	hacked = 1
 
 /obj/item/device/mmi/syndie/New()
 	..()

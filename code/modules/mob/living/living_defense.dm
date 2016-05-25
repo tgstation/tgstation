@@ -170,6 +170,40 @@
 
 //Mobs on Fire end
 
+/mob/living/proc/dominate_mind(mob/living/target, duration = 100, silent) //Allows one mob to assume control of another while imprisoning the old consciousness for a time
+	if(!target)
+		return 0
+	if(target.mental_dominator)
+		src << "<span class='warning'>[target] is already being controlled by someone else!</span>"
+		return 0
+	if(!target.mind)
+		src << "<span class='warning'>[target] is mindless and would make you permanently catatonic!</span>"
+		return 0
+	if(!silent)
+		src << "<span class='userdanger'>You pounce upon [target]'s mind and seize control of their body!</span>"
+		target << "<span class='userdanger'>Your control over your body is wrenched away from you!</span>"
+	target.mind_control_holder = new/mob/living/mind_control_holder(target)
+	target.mind_control_holder.real_name = "imprisoned mind of [target.real_name]"
+	target.mind.transfer_to(target.mind_control_holder)
+	mind.transfer_to(target)
+	target.mental_dominator = src
+	spawn(duration)
+		if(!src)
+			if(!silent)
+				target << "<span class='userdanger'>You try to return to your own body, but sense nothing! You're being forced out!</span>"
+			target.ghostize(1)
+			target.mind_control_holder.mind.transfer_to(target)
+			if(!silent)
+				target << "<span class='userdanger'>You take control of your own body again!</span>"
+			return 0
+		if(!silent)
+			target << "<span class='userdanger'>You're forced out! You return to your own body.</span>"
+		target.mind.transfer_to(src)
+		target.mind_control_holder.mind.transfer_to(target)
+		qdel(mind_control_holder)
+		if(!silent)
+			target << "<span class='userdanger'>You take control of your own body again!</span>"
+		return 1
 
 /mob/living/acid_act(acidpwr, toxpwr, acid_volume)
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
@@ -300,3 +334,17 @@
 		return 1
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
+
+/mob/living/Stun(amount)
+	if(stun_absorption && !stat)
+		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
+		stun_absorption_count += amount
+		return 0
+	..()
+
+/mob/living/Weaken(amount)
+	if(stun_absorption && !stat)
+		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
+		stun_absorption_count += amount
+		return 0
+	..()
