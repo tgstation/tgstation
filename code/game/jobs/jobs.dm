@@ -73,6 +73,7 @@ var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
 	"Geneticist",
+	"Virologist",
 //	"Psychiatrist",
 	"Paramedic",
 	"Chemist"
