@@ -1334,14 +1334,14 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
-		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
+		if(alert(usr, "Send [key_name(M)] to the Cuck Sheds??", "Message", "Yes", "No") != "Yes")
 			return
 
 		M.loc = pick(prisonwarp)
-		M << "<span class='adminnotice'>You have been sent to Prison!</span>"
+		M << "<span class='adminnotice'>You have been sent to the Cuck Sheds!</span>"
 
-		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
+		log_admin("[key_name(usr)] has sent [key_name(M)] to the Cuck Sheds!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] the Cuck Sheds!")
 
 	else if(href_list["sendbacktolobby"])
 		if(!check_rights(R_ADMIN))
