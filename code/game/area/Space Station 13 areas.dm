@@ -190,7 +190,7 @@ var/list/teleportlocs = list()
 	name = "Centcom Transport Shuttle Dock"
 
 /area/centcom/prison
-	name = "Admin Prison"
+	name = "Cuck Sheds"
 
 /area/centcom/holding
 	name = "Holding Facility"

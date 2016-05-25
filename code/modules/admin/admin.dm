@@ -66,7 +66,7 @@ var/global/BSACooldown = 0
 		else
 			body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
 
-		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Send to Cuck Sheds</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
