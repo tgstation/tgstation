@@ -353,15 +353,12 @@ proc/CallMaterialName(ID)
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
-		var/coeff
-
 		if(linked_lathe)
-			coeff = linked_lathe.efficiency_coeff
-		else
-			coeff = 1
-
-		var/g2g = 1
-		if(linked_lathe)
+			if(linked_lathe.busy)
+				usr << "<span class='danger'>Protolathe is busy at the moment.</span>"
+				return
+			var/coeff = linked_lathe.efficiency_coeff
+			var/g2g = 1
 			var/datum/design/being_built = files.known_designs[href_list["build"]]
 			if(being_built)
 				var/power = 2000
@@ -372,14 +369,10 @@ proc/CallMaterialName(ID)
 					power += round(being_built.materials[M] * amount / 5)
 				power = max(2000, power)
 				screen = 0.3
-				if(linked_lathe.busy)
-					g2g = 0
 				var/key = usr.key	//so we don't lose the info during the spawn delay
 				if (!(being_built.build_type & PROTOLATHE))
 					g2g = 0
 					message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
-
-
 
 				if (g2g) //If input is incorrect, nothing happens
 					var/enough_materials = 1
@@ -423,16 +416,19 @@ proc/CallMaterialName(ID)
 										feedback_add_details("item_printed","[new_item.type]|[amount]")
 										already_logged = 1
 							screen = old_screen
+							linked_lathe.busy = 0
 						else
 							src.visible_message("<span class='notice'>The [src.name] beeps, \"Something went wrong, production halted!\"</span>")
 							screen = 1.0
-						linked_lathe.busy = 0
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
+			if(linked_lathe.busy)
+				usr << "<span class='danger'>Circuit Imprinter is busy at the moment.</span>"
+				return
 			var/datum/design/being_built = files.known_designs[href_list["imprint"]]
 			if(being_built)
 				var/power = 2000
@@ -441,8 +437,6 @@ proc/CallMaterialName(ID)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				screen = 0.4
-				if (linked_imprinter.busy)
-					g2g = 0
 				if (!(being_built.build_type & IMPRINTER))
 					g2g = 0
 					message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
@@ -475,10 +469,10 @@ proc/CallMaterialName(ID)
 								new_item.loc = linked_imprinter.loc
 								feedback_add_details("circuit_printed","[new_item.type]")
 							screen = old_screen
+							linked_imprinter.busy = 0
 						else
 							src.visible_message("<span class='notice'>The [src.name] beeps, \"Something went wrong, production halted!\"</span>")
 							screen = 1.0
-						linked_imprinter.busy = 0
 						updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)

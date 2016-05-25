@@ -303,7 +303,7 @@ datum/design/diagnostic_hud
 	id = "dianostic_hud"
 	req_tech = list("magnets" = 3, "engineering" = 2)
 	build_type = PROTOLATHE
-	materials = list("metal" = 500, "glass" = 500)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list("Equipment")
 
@@ -313,7 +313,7 @@ datum/design/diagnostic_hud_night
 	id = "dianostic_hud_night"
 	req_tech = list("magnets" = 5, "plasmatech" = 4, "engineering" = 6, "powerstorage" = 4)
 	build_type = PROTOLATHE
-	materials = list("metal" = 600, "glass" = 600, "uranium" = 1000, "plasma" = 300)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_PLASMA = 300)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 
