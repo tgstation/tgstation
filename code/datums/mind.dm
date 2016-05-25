@@ -245,6 +245,7 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
+		"clockcult"
 	)
 	var/text = ""
 
@@ -351,6 +352,26 @@
 			text += "|Disabled in Prefs"
 
 		sections["cult"] = text
+
+		/** CLOCKWORK CULT **/
+		text = "clockwork cult"
+		if(ticker.mode.config_tag == "clockwork cult")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in ticker.mode.servants_of_ratvar)
+			text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
+			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
+		else if(isloyal(current))
+			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+		else
+			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+
+		if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
+		sections["clockcult"] = text
 
 		/** WIZARD ***/
 		text = "wizard"
@@ -1017,6 +1038,22 @@
 				if (!ticker.mode.equip_cultist(current))
 					usr << "<span class='danger'>Spawning amulet failed!</span>"
 
+	else if(href_list["clockcult"])
+		switch(href_list["clockcult"])
+			if("clear")
+				remove_servant_of_ratvar(current)
+				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
+				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
+			if("servant")
+				if(!(src in ticker.mode.servants_of_ratvar))
+					add_servant_of_ratvar(current)
+					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
+					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
+			if("slab")
+				if(!ticker.mode.equip_servant(current))
+					usr << "<span class='warning'>Failed to outfit [current] with a slab!</span>"
+				else
+					usr << "<span class='notice'>Successfully gave [current] a clockwork slab!</span>"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])

@@ -120,7 +120,6 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
 
-
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
  * Please call update_icon(icon_state) from now on when you want to update the icon_state of the ghost,
@@ -234,6 +233,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	if(mental_dominator)
+		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
+		if(mind_control_holder)
+			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
+		return 0
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
