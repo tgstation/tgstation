@@ -182,7 +182,7 @@
 	else
 		if(istype(loc, /turf/open))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(min = 5, max = 1)
+			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
