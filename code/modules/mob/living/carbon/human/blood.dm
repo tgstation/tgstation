@@ -227,7 +227,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if (!injected || !our || !dna)
 		return
 
-	if (!(injected.data["blood_type"] in get_safe_blood(dna.blood_type)) || injected.data["species"] != dna.species.id)
+	if (!(injected.data["blood_type"] in get_safe_blood(dna.blood_type)) || (injected.data["species"] && injected.data["species"] != dna.species.id))
 		reagents.add_reagent("toxin",amount * 0.5)
 		our.on_merge(injected.data) //still transfer viruses and such, even if incompatibles bloods
 		reagents.update_total()
@@ -255,7 +255,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if("A-")
 			return list("A-", "O-")
 		if("A+")
-			return list("A", "A+", "O-", "O+")
+			return list("A-", "A+", "O-", "O+")
 		if("B-")
 			return list("B-", "O-")
 		if("B+")

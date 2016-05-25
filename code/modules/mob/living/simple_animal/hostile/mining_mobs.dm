@@ -2,6 +2,7 @@
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	environment_smash = 2
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -126,6 +127,7 @@
 	a_intent = "help"
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
+	deathmessage = "spits up the contents of its stomach before dying!"
 	status_flags = CANPUSH
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
@@ -136,7 +138,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/New()
 	..()
-	deathmessage = "[src] spits up the contents of its stomach before dying!"
 	var/i = rand(1,3)
 	while(i)
 		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
@@ -881,6 +882,7 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
+	weather_immunities = list("lava","ash")
 	faction = list("mining", "ashwalker")
 	density = 0
 	speak_chance = 1
@@ -903,6 +905,7 @@
 	search_objects = TRUE
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+	deathmessage = "is pulped into bugmash."
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
@@ -910,10 +913,8 @@
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
 
-
 /mob/living/simple_animal/hostile/asteroid/gutlunch/New()
 	udder = new()
-	deathmessage = "[src] is pulped into bugmash."
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()
@@ -994,6 +995,7 @@
 	icon_living = "tendril"
 	icon_dead = "tendril"
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	health = 250
 	maxHealth = 250
 	max_mobs = 3

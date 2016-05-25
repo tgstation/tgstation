@@ -95,10 +95,8 @@
 					C.spin(1,1)
 		return 1
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min = 0, max = 0) // 1 = Water, 2 = Lube, 3 = Ice
-	wet_time += max
-	if(wet_time < min)
-		wet_time = min
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice
+	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
@@ -129,6 +127,10 @@
 				overlays -= wet_overlay
 
 /turf/open/proc/HandleWet()
+	if(!wet)
+		//It's possible for this handler to get called after all the wetness is
+		//cleared, so bail out if that is the case
+		return
 	if(!wet_time && wet < TURF_WET_ICE)
 		MakeDry(TURF_WET_ICE)
 	if(wet_time > MAXIMUM_WET_TIME)
@@ -159,5 +161,5 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(src, "HandleWet", 15, 1)
+		addtimer(src, "HandleWet", 15)
 

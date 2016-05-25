@@ -458,28 +458,8 @@ var/list/teleport_runes = list()
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
 		return
-	var/mob/living/user = invokers[1]
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult_mode = ticker.mode
-		if(!("eldergod" in cult_mode.cult_objectives))
-			message_admins("[user.real_name]([user.ckey]) tried to summon Nar-Sie when the objective was wrong")
-			for(var/M in invokers)
-				var/mob/living/L = M
-				L << "<span class='cultlarge'><i>\"YOUR SOUL BURNS WITH YOUR ARROGANCE!!!\"</i></span>"
-				if(L.reagents)
-					L.reagents.add_reagent("hell_water", 10)
-				L.Weaken(7)
-				L.Stun(7)
-			fail_invoke()
-			log_game("Summon Nar-Sie rune failed - improper objective")
-			return
-		else
-			if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
-				for(var/M in invokers)
-					M << "<span class='warning'>The sacrifice is not complete. The portal lacks the power to open!</span>"
-				fail_invoke()
-				log_game("Summon Nar-Sie rune failed - sacrifice not complete")
-				return
 		if(!cult_mode.eldergod)
 			for(var/M in invokers)
 				M << "<span class='warning'>Nar-Sie is already on this plane!</span>"

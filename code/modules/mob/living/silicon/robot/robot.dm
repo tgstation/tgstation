@@ -167,6 +167,8 @@
 		return
 
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_peaceborg)
+		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
@@ -234,6 +236,16 @@
 			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
+
+		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			hands.icon_state = "standard"
+			icon_state = "peaceborg"
+			animation_length = 54
+			modtype = "Peace"
+			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+			status_flags &= ~CANPUSH
+			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -802,21 +814,21 @@
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard"
+				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("toiletbot")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg"
+				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("engiborg")
-				overlays += "eyes-engiborg"
+				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
-				overlays += "eyes-janiborg"
+				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("minerborg")
-				overlays += "eyes-minerborg"
+				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
 			else

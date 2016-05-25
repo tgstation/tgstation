@@ -1024,3 +1024,18 @@ Sorry Giacom. Please don't be mad :(
 		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
 			return 1
 	return 0
+
+// Called when we are hit by a bolt of polymorph and changed
+// Generally the mob we are currently in, is about to be deleted
+/mob/living/proc/wabbajack_act(mob/living/new_mob)
+	if(mind)
+		mind.transfer_to(new_mob)
+	else
+		new_mob.key = key
+
+	for(var/para in hasparasites())
+		var/mob/living/simple_animal/hostile/guardian/G = para
+		G.summoner = new_mob
+		G.Recall()
+		G << "<span class='holoparasite'>Your summoner has changed \
+			form to [new_mob]!</span>"

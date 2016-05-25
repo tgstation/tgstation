@@ -43,11 +43,10 @@
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
-	deathmessage = "<span class='danger'>The generic slaughter demon screams in anger because this is the default death message!</span>"
+	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
 /mob/living/simple_animal/slaughter/New()
 	..()
-	deathmessage = "<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>"
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -129,7 +128,7 @@
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"
-
+	deathmessage = "fades out, as all of its friends are released from its prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
 	// Keep the people we hug!
@@ -138,29 +137,24 @@
 	// HOT. PINK.
 	//color = "#FF69B4"
 
-
-/mob/living/simple_animal/slaughter/laughter/New()
-	..()
-
-	deathmessage = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
-
 /mob/living/simple_animal/slaughter/laughter/death()
+	release_friends()
+	. = ..()
+
+/mob/living/simple_animal/slaughter/laughter/wabbajack_act()
+	release_friends()
+	. = ..()
+
+/mob/living/simple_animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)
-		return ..()
+		return
 
 	for(var/mob/living/M in consumed_mobs)
 		M.loc = get_turf(src)
 		if(M.revive(full_heal = 1))
-			// Feel there should be a better way of FORCING a mob's ghost
-			// back into the body
-			if(!M.ckey)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(M.real_name == ghost.real_name)
-						ghost.reenter_corpse()
-						break
-			M << "<span class='clown'>You leave the [src]'s warm embrace, and feel ready to take on the world.</span>"
-
-	return ..()
+			M.grab_ghost(force = FALSE)
+			M << "<span class='clown'>You leave the [src]'s warm embrace, \
+				and feel ready to take on the world.</span>"
 
 /mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
 	if(consumed_mobs)

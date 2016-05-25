@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "Fixes a bug where swarmers teleporting humans would incorrectly
+display a visible message about restraints breaking."

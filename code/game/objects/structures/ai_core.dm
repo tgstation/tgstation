@@ -141,7 +141,7 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
-				if(M.syndiemmi)
+				if(M.hacked)
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 

@@ -468,6 +468,16 @@
 					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
 			dat += "</table>"
 
+		if(ticker.mode.servants_of_ratvar.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Servants of Ratvar</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.servants_of_ratvar)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
+			dat += "</table>"
+
 		if(ticker.mode.red_deities.len || ticker.mode.red_deity_prophets.len || ticker.mode.blue_deity_prophets.len || ticker.mode.red_deity_followers.len || ticker.mode.blue_deity_followers.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Red Deity</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.red_deities)
