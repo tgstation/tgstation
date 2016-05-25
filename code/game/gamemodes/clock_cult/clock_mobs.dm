@@ -160,8 +160,7 @@
 	for(var/mob/living/L in range(1, src))
 		if(L.null_rod_check()) //Null rods allow direct damage
 			src << "<span class='userdanger'>The power of a holy artifact bypasses your armor and wounds you directly!</span>"
-			..()
-			return 0
+			return ..()
 	return adjust_fatigue(amount)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/AttackingTarget()
@@ -172,7 +171,9 @@
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
 	if(!ratvar_awakens)
 		fatigue = max(0, min(fatigue + amount, fatigue_recall_threshold))
-	Life() //Immediately runs a life tick to check for recalling
+		Life() //Immediately runs a life tick to check for recalling
+	else
+		amount = 0
 	return amount
 
 /mob/living/simple_animal/hostile/clockwork_marauder/verb/linked_minds() //Discreet communications between a marauder and its host
