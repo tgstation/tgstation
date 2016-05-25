@@ -50,6 +50,9 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	//If there's a bug with changing your ghost settings, it's probably related to this.
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	// Used for displaying in ghost chat, without changing the actual name
+	// of the mob
+	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
@@ -116,7 +119,6 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
-
 
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
@@ -231,6 +233,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	if(mental_dominator)
+		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
+		if(mind_control_holder)
+			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
+		return 0
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -589,6 +596,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		src << "<span class='notice'>Data HUDs enabled.</span>"
 		data_huds_on = 1
+
+/mob/dead/observer/verb/restore_ghost_apperance()
+	set name = "Restore Ghost Character"
+	set desc = "Sets your deadchat name and ghost appearance to your \
+		roundstart character."
+	set category = "Ghost"
+
+	set_ghost_appearance()
+	if(client && client.prefs)
+		deadchat_name = client.prefs.real_name
+
+/mob/dead/observer/proc/set_ghost_appearance()
+	if((!client) || (!client.prefs))
+		return
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_unique_name(gender)
+	if(client.prefs.be_random_body)
+		client.prefs.random_character(gender)
+
+	if(HAIR in client.prefs.pref_species.specflags)
+		hair_style = client.prefs.hair_style
+		hair_color = brighten_color(client.prefs.hair_color)
+	if(FACEHAIR in client.prefs.pref_species.specflags)
+		facial_hair_style = client.prefs.facial_hair_style
+		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
+
+	update_icon()
 
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))

@@ -1,0 +1,16 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "Fixes bug where bolt of change to the host would kill an attached
+guardian."
+  - bugfix: "Fixes bug where bolt of change to laughter demon would not release
+its friends."
+  - bugfix: "Fixes bug where bolt of change to morphling would not release its
+contents."
+  - bugfix: "Fixes bug where bolt of change transforming someone into a drone
+would not give them hacked laws and vision."
+  - bugfix: "Blobbernauts created by a staff of change are now \"independent\" and
+will not decay if seperated from a blob or missing a factory."
+  - rscadd: "Independent blobbernauts added to gold slime core spawn pool."
+  - rscadd: "Medical scanners now inform the user if the dead subject is
+within the (currently) 120 second defib window."
