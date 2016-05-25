@@ -93876,18 +93876,12 @@
 	},
 /area/chapel/main)
 "cTE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
 	},
-/mob/living/simple_animal/hostile/retaliate/bat{
-	name = "Orlocke";
-	real_name = "Orlocke";
-	turns_per_move = 6
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/chapel/main)
+/area/shuttle/escape)
 "cTF" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -99131,7 +99125,7 @@
 	dwidth = 10;
 	height = 14;
 	id = "emergency_home";
-	name = "emergency evac bay";
+	name = "MetaStation emergency evac bay";
 	width = 29
 	},
 /turf/open/floor/plasteel/shuttle,
@@ -123183,7 +123177,7 @@ cTH
 cRh
 cOU
 aaa
-dfJ
+cTE
 ddi
 ddi
 ddi
