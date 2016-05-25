@@ -1,8 +1,8 @@
 /mob/living/simple_animal/hostile/megafauna/bubblegum
 	name = "bubblegum"
 	desc = "In what passes for a heirarchy among slaughter demons, this one is king."
-	health = 2000
-	maxHealth = 2000
+	health = 2500
+	maxHealth = 2500
 	attacktext = "rends"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "bubblegum"
@@ -16,7 +16,7 @@
 	armour_penetration = 40
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	speed = 0
+	speed = 1
 	move_to_delay = 10
 	ranged = 1
 	flying = 1
@@ -26,18 +26,21 @@
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
-	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	var/charging = 0
+	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
+	death_sound = 'sound/magic/enter_blood.ogg'
 
-	deathmessage = "crashes to the ground."
-	death_sound = 'sound/magic/demon_dies.ogg'
-
+/obj/item/device/gps/internal/bubblegum
+	icon_state = null
+	gpstag = "Bloody Signal"
+	desc = "You're not quite sure how a signal can be bloody."
+	invisibility = 100
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
 /*	if(!charging)
 		blood_warp()*/
-	move_to_delay = Clamp(round((health/maxHealth) * 10), 3, 10)
+	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -51,8 +54,7 @@
 
 	else if(prob(5+anger_modifier/2))
 		slaughterlings()
-	else if(prob(5+anger_modifier/2))
-
+	else
 		if(health > maxHealth/2 && !client && !charging)
 			charge()
 		else
@@ -60,6 +62,7 @@
 			sleep(10)
 			charge()
 			sleep(10)
+			charge()
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -80,7 +83,7 @@
 	if(charging)
 		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
 		for(var/turf/T in range(src, 1))
-			T.singularity_pull(src, 5)
+			T.singularity_pull(src, 7)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
@@ -90,6 +93,13 @@
 	sleep(5)
 	throw_at(T, 7, 1, src, 0)
 	charging = 0
+
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
+	if(charging)
+		if(istype(A, /turf) || istype(A, /obj) && A.density)
+			A.ex_act(2)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
 	if(!charging)
@@ -105,7 +115,6 @@
 			shake_camera(src, 2, 3)
 			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			L.throw_at_fast(throwtarget)
-
 
 	charging = 0
 
