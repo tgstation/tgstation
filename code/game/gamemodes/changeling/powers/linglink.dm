@@ -13,11 +13,13 @@
 	if(changeling.islinking)
 		user << "<span class='warning'>We have already formed a link with the victim!</span>"
 		return
-	if(!user.pulling || !iscarbon(user.pulling))
-		user << "<span class='warning'>We must be grabbing a creature to absorb them!</span>"
+	if(!user.pulling)
+		user << "<span class='warning'>We must be tightly grabbing a creature to link with them!</span>"
+		return
+	if(!iscarbon(user.pulling))
+		user << "<span class='warning'>We cannot link with this creature!</span>"
 		return
 	var/mob/living/carbon/target = user.pulling
-
 	if(!target.mind)
 		user << "<span class='warning'>The victim has no mind to link to!</span>"
 		return
