@@ -1362,12 +1362,6 @@
 			if(src)
 				qdel(src)
 
-/obj/effect/clockwork/spatial_gateway/Destroy()
-	visible_message("<span class='warning'>[src] flickers and closes!</span>")
-	animate(src, transform = matrix() - matrix(), time = 10)
-	spawn(10)
-		..()
-
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))

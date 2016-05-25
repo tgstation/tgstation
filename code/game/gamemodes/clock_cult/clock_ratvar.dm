@@ -157,8 +157,7 @@
 		else
 			if(prob(75))
 				dir_to_step_in = get_dir(src, prey)
-	for(var/i in 1 to 2)
-		loc = get_step(src, dir_to_step_in)
+	forceMove(get_step(src, dir_to_step_in))
 
 /obj/structure/clockwork/massive/ratvar/narsie_act()
 	if(clashing)
