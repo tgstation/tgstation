@@ -35,7 +35,7 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		repairs += M.rating - 1
 	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
-		recharge_speed *= C.maxcharge / 10000
+		recharge_speed *= C.maxcharge / 1000
 
 
 /obj/machinery/recharge_station/process()
