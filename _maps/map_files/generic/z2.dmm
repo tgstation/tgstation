@@ -1625,10 +1625,12 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eP" = (
-/obj/structure/flora/kirbyplants{
-	name = "potted plant that no one wants"
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Backup Docks";
+	opacity = 1;
+	req_access_txt = "101"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eQ" = (
 /obj/structure/chair/office/dark,
@@ -2359,11 +2361,11 @@
 "hh" = (
 /obj/docking_port/stationary{
 	dir = 4;
-	dwidth = 9;
-	height = 11;
+	dwidth = 25;
+	height = 50;
 	id = "emergency_away";
-	name = "Centcom";
-	width = 22
+	name = "Centcom Emergency Shuttle Dock";
+	width = 50
 	},
 /turf/open/space,
 /area/space)
@@ -5876,12 +5878,12 @@
 /area/shuttle/escape)
 "rN" = (
 /obj/machinery/status_display{
-	layer = 4;
-	pixel_x = 0;
-	pixel_y = 32
+	density = 0;
+	pixel_y = 32;
+	supply_display = 1
 	},
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
+/turf/open/floor/plasteel/black,
+/area/centcom/ferry)
 "rO" = (
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
@@ -5925,22 +5927,38 @@
 /turf/open/space/transit,
 /area/space)
 "rU" = (
+/obj/structure/flora/kirbyplants,
 /obj/machinery/status_display{
-	density = 0;
-	pixel_y = -30;
-	supply_display = 1
+	pixel_y = 32
 	},
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
+/turf/open/floor/plasteel/black,
+/area/centcom/ferry)
 "rV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/book/manual/random,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "rW" = (
-/obj/structure/flora/kirbyplants,
-/turf/open/floor/plasteel/black,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"rZ" = (
+/obj/machinery/door/airlock/external{
+	name = "Backup Emergency Escape Shuttle"
+	},
+/turf/open/floor/plasteel/delivery,
 /area/centcom/ferry)
+"rY" = (
+/turf/open/floor/plasteel/darkwarning{
+	tag = "icon-warndark (EAST)";
+	icon_state = "warndark";
+	dir = 4
+	},
+/area/centcom/ferry)
+"rX" = (
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -36890,7 +36908,7 @@ ab
 ab
 ab
 ab
-ab
+rL
 ab
 ab
 ab
@@ -38458,7 +38476,7 @@ ab
 ab
 ab
 eJ
-eO
+rN
 eO
 eS
 eO
@@ -38711,11 +38729,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
 eJ
-eO
+eJ
+eJ
+eJ
+rU
 eO
 eO
 eO
@@ -38968,11 +38986,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
 eJ
-rW
+eO
+eO
+eP
+eO
 eO
 eO
 eW
@@ -39225,9 +39243,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+eJ
+rY
+eJ
 eJ
 eJ
 eJ
@@ -39482,9 +39500,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+eJ
+fQ
+eJ
 ab
 ab
 ab
@@ -39739,9 +39757,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+eJ
+rZ
+eJ
 ab
 ab
 ab
@@ -39995,14 +40013,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rM
+rQ
+rM
+rM
+rM
+rM
+rM
 ab
 ab
 eJ
@@ -40252,14 +40270,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rX
+rO
+rO
+rO
+rO
+rO
+rO
+rX
 ab
 ab
 eJ
@@ -40509,14 +40527,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rO
+rO
+rO
+rO
+rO
+rO
+rM
 ab
 ab
 fh
@@ -40766,14 +40784,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rP
+rP
+rP
+rP
+rO
+rP
+rM
 ab
 ab
 fh
@@ -41023,14 +41041,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rP
+rP
+rP
+rP
+rO
+rP
+rM
 ab
 ab
 fh
@@ -41280,14 +41298,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rO
+rR
+rO
+rO
+rO
+rO
+rM
 ab
 ab
 fh
@@ -41537,14 +41555,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rX
+rO
+rS
+rV
+rO
+rO
+rO
+rX
 ab
 ab
 fh
@@ -41794,14 +41812,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rM
+rM
+rM
+rM
+rM
+rM
+rM
 ab
 ab
 fh
@@ -57019,7 +57037,7 @@ ab
 ab
 ab
 ab
-rL
+ab
 ab
 ab
 ab
@@ -64830,16 +64848,16 @@ df
 dg
 cT
 ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65087,16 +65105,16 @@ cT
 cT
 cT
 ab
-ad
-rM
-rM
-rQ
-rM
-rM
-rM
-rM
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65344,16 +65362,16 @@ cU
 ad
 ab
 ab
-ad
-rM
-rN
-rO
-rO
-rO
-rO
-rU
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65601,16 +65619,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rO
-rO
-rO
-rO
-rO
-rO
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65858,16 +65876,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rP
-rP
-rP
-rP
-rO
-rP
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66115,16 +66133,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rP
-rP
-rP
-rP
-rO
-rP
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66372,16 +66390,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rO
-rR
-rO
-rO
-rO
-rO
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66629,16 +66647,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rN
-rS
-rV
-rO
-rO
-rU
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66886,16 +66904,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rM
-rM
-rM
-rM
-rM
-rM
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -67143,16 +67161,16 @@ cV
 ad
 ab
 ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -71474,6 +71492,6 @@ ab
 ab
 ab
 ab
-ab
-ab
+rW
+rW
 "}

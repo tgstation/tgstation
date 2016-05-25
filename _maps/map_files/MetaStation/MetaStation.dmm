@@ -93927,8 +93927,13 @@
 	},
 /area/chapel/main)
 "cTH" = (
-/obj/structure/bookcase{
-	name = "Holy Bookcase"
+/obj/machinery/camera{
+	c_tag = "Chapel - Port";
+	dir = 4;
+	network = list("SS13")
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 8;
@@ -99123,11 +99128,11 @@
 /obj/docking_port/stationary{
 	dheight = 0;
 	dir = 2;
-	dwidth = 5;
+	dwidth = 10;
 	height = 14;
 	id = "emergency_home";
 	name = "emergency evac bay";
-	width = 25
+	width = 29
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
@@ -100611,16 +100616,18 @@
 	icon_state = "warning"
 	},
 /area/hydroponics)
+"dfJ" = (
+/obj/structure/bookcase{
+	name = "Holy Bookcase"
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/chapel/main)
 "dfK" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall2"
-	},
-/area/shuttle/escape)
-"dfJ" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon_state = "wall3";
-	dir = 9
 	},
 /area/shuttle/escape)
 
@@ -121632,7 +121639,7 @@ cSr
 cSR
 cSQ
 cSr
-cUd
+cUe
 cRQ
 aaa
 aaf
@@ -121886,10 +121893,10 @@ cQW
 cNm
 cRV
 cSr
-cSQ
-cSQ
-cTE
-cUe
+cTJ
+cTn
+cSr
+cTK
 cRQ
 aaa
 aaf
@@ -122144,10 +122151,10 @@ cRz
 cRW
 cSs
 cSS
-cTn
-cSr
-cTK
-cRQ
+cOU
+cTF
+cUf
+cOU
 aaa
 aaf
 aaa
@@ -122402,9 +122409,9 @@ cRX
 cSt
 cST
 cOU
-cTF
-cUf
-cOU
+cTG
+cUg
+cUt
 aaa
 aaf
 aaa
@@ -122659,9 +122666,9 @@ cRY
 cSu
 cXo
 cOU
-cTG
-cUg
-cUt
+cOU
+cOU
+cOU
 aaf
 aaf
 aaa
@@ -122916,9 +122923,9 @@ cOU
 cSv
 cXc
 cOU
+dfJ
 cOU
-cOU
-cOU
+aaa
 aaa
 ddg
 ddg
@@ -123172,8 +123179,8 @@ cNm
 cRZ
 cSw
 cXp
-cOU
 cTH
+cRh
 cOU
 aaa
 dfJ
@@ -123429,7 +123436,7 @@ cRB
 cSa
 cSx
 cSX
-cTo
+cSB
 cTI
 cOU
 ddb
@@ -130127,7 +130134,7 @@ aaa
 aaa
 aaa
 aaf
-cTC
+aaa
 cTC
 cTC
 cTC
@@ -130385,7 +130392,7 @@ cTC
 cTC
 cTC
 cTC
-cVt
+cTC
 dfw
 cVB
 cTC
@@ -130642,7 +130649,7 @@ cVt
 dfs
 cVN
 cVo
-cVs
+cVt
 cVC
 cVB
 cTC
@@ -131138,7 +131145,7 @@ cTy
 cTy
 cTy
 cTy
-cTy
+aaa
 aaf
 aaf
 aaa
@@ -131393,9 +131400,9 @@ cTz
 cTA
 dcN
 dcN
-dcN
 dcQ
 cTy
+aaa
 aaa
 aaf
 aaa
@@ -131650,9 +131657,9 @@ cTy
 cTy
 cTy
 cTy
-cTy
 dcW
 cTy
+aaa
 cTO
 cTC
 cTC
@@ -131906,9 +131913,9 @@ bVE
 aaa
 aaf
 aaa
-aaa
 cTy
 dcW
+cTy
 cTy
 cTC
 cTR
@@ -132163,9 +132170,9 @@ bVE
 aaa
 aaf
 aaa
-aaa
 cTy
 dcY
+dcN
 cTB
 cTP
 cTT
@@ -132420,7 +132427,7 @@ bVE
 aaf
 aaf
 aaf
-aaa
+cTy
 cTy
 cTy
 cTy
