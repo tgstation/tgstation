@@ -210,15 +210,10 @@
 			if(!user.unEquip(W))
 				return
 
-			if(M.hacked || M.clockwork)
+			if(M.syndiemmi)
 				aisync = 0
 				lawsync = 0
-				if(M.clockwork)
-					O.laws = new/datum/ai_laws/ratvar
-					spawn(1)
-						add_servant_of_ratvar(O)
-				else
-					O.laws = new/datum/ai_laws/syndicate_override
+				O.laws = new /datum/ai_laws/syndicate_override
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
@@ -231,7 +226,7 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync && !M.hacked)
+			if(!lawsync && !M.syndiemmi)
 				O.lawupdate = 0
 				O.make_laws()
 
