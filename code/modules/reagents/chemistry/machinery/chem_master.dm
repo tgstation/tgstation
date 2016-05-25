@@ -275,6 +275,8 @@
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
 			P.name = trim("[name] bottle")
+			var/datum/reagent/R = chemical_reagents_list[reagents.get_master_reagent_id()]
+			P.icon_state = R.bottle_icon_state
 			reagents.trans_to(P, P.volume)
 			. = TRUE
 
