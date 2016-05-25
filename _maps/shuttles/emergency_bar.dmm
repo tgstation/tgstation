@@ -64,28 +64,45 @@
 "bl" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2;pixel_y = 3},/obj/item/weapon/crowbar,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
 "bm" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
 "bn" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"bE" = (/turf/closed/wall/shuttle{tag = "icon-gwall_space (EAST)";icon_state = "gwall_space";dir = 4},/area/shuttle/escape)
+"bD" = (/turf/closed/wall/shuttle{tag = "icon-wall3";icon_state = "wall3";dir = 2},/area/shuttle/escape)
+"bC" = (/turf/closed/wall/shuttle{tag = "icon-gwall_space";icon_state = "gwall_space";dir = 2},/area/shuttle/escape)
+"bB" = (/turf/closed/wall/shuttle{icon_state = "swall11";dir = 2},/area/shuttle/escape)
+"bA" = (/turf/closed/wall/shuttle{icon_state = "swallc2";dir = 2},/area/shuttle/escape)
+"bz" = (/turf/closed/wall/shuttle{icon_state = "swall1";dir = 2},/area/shuttle/escape)
+"by" = (/turf/closed/wall/shuttle{icon_state = "swall7";dir = 2},/area/shuttle/escape)
+"bx" = (/turf/closed/wall/shuttle{icon_state = "swall4";dir = 2},/area/shuttle/escape)
+"bw" = (/turf/closed/wall/shuttle{icon_state = "swall8";dir = 2},/area/shuttle/escape)
+"bv" = (/turf/closed/wall/shuttle{icon_state = "swall14";dir = 2},/area/shuttle/escape)
+"bu" = (/turf/closed/wall/shuttle{icon_state = "swall12";dir = 2},/area/shuttle/escape)
+"bt" = (/turf/closed/wall/shuttle{tag = "icon-swall13";icon_state = "swall13";dir = 2},/area/shuttle/escape)
+"bs" = (/turf/closed/wall/shuttle{icon_state = "swall3";dir = 2},/area/shuttle/escape)
+"br" = (/turf/closed/wall/shuttle{tag = "icon-swallc3";icon_state = "swallc3";dir = 2},/area/shuttle/escape)
+"bq" = (/turf/closed/wall/shuttle{icon_state = "swallc4";dir = 2},/area/shuttle/escape)
+"bp" = (/turf/closed/wall/shuttle{icon_state = "swall_s10";dir = 2},/area/shuttle/escape)
+"bo" = (/turf/closed/wall/shuttle{icon_state = "swall_s6";dir = 2},/area/shuttle/escape)
 
 (1,1,1) = {"
-aaaaabacacacacacabaaaa
-aaababadaeafaeagababaa
-aaabahaiajajajakalabaa
-aaabamanaoapajakaqabaa
-ababababababarasababab
-abatatatacauavavawaxac
-abayazazaAavavavavavab
+aaaaboacacacacacbpaaaa
+aabobqadaeafaeagbrbpaa
+aabsahaiajajajakalbsaa
+aabsamanaoapajakaqbsaa
+bobtbububvbwarasbxbtbp
+bsatatatacauavavawaxac
+bsayazazaAavavavavavbs
 aBaCaDaDacavaEaFaGaGac
-abababababavaEaHavaIab
-aJavavavavavaEaHaKaLab
-abaMaMaMavavaEaHaNaOab
+bybubububqavaEaHavaIbs
+aJavavavavavaEaHaKaLbs
+bsaMaMaMavavaEaHaNaObs
 acaPaQaPavavaEaHavaRac
 acaSaSaSavavaEaHavavac
 acavavavavavaEaTaUaUac
-abavavavavavavavavavab
-aVavaWaXaWaYavavavaZab
-ababababababababbaabab
+bzavavavavavavavavavbs
+aVavaWaXaWaYavavavaZbs
+bAbububububububwbabxbB
 bbbcbcbcbcbcbdbcbcbeac
-abbfabbgabbhabbibcbeab
-abbjabbjabbkabblbcbeac
-ababbmbmbmbmbmbmbmabab
-aaabbnbnbnbnbnbnbnabaa
+bsbfabbgabbhabbibcbebs
+bzbjbzbjbzbkbzblbcbeac
+bCbDbmbmbmbmbmbmbmbDbE
+aabDbnbnbnbnbnbnbnbDaa
 "}
