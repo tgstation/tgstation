@@ -1726,7 +1726,11 @@
 				return G
 			break
 
-
+/datum/mind/proc/grab_ghost(force)
+	var/mob/dead/observer/G = get_ghost(even_if_they_cant_reenter = force)
+	. = G
+	if(G)
+		G.reenter_corpse()
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
