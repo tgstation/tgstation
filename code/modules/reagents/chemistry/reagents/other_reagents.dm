@@ -1238,3 +1238,20 @@ datum/reagent/shadowling_blindness_smoke
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
+
+datum/reagent/romerol
+	name = "romerol"
+	// the REAL zombie powder
+	id = "romerol"
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	metabolization_rate = INFINITY
+
+/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+	// Silently add the zombie infection organ to be activated upon death
+	new /obj/item/organ/body_egg/zombie_infection(H)
+	..()
