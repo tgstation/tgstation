@@ -127,7 +127,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
-	config_tag = "clockwork cult"
+	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	required_players = 30
 	required_enemies = 2
