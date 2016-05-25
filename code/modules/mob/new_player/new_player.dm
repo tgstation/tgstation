@@ -130,9 +130,9 @@
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
-			if(client && client.prefs)
-				observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
+			if(observer.client && observer.client.prefs)
+				observer.real_name = observer.client.prefs.real_name
+				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stopLobbySound()
 			qdel(mind)
