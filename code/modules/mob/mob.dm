@@ -747,6 +747,10 @@ var/next_mob_id = 0
 	if(mind)
 		return mind.get_ghost(even_if_they_cant_reenter)
 
+/mob/proc/grab_ghost(force)
+	if(mind)
+		return mind.grab_ghost(force = force)
+
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
@@ -916,3 +920,6 @@ var/next_mob_id = 0
 		if("resize")
 			update_transform()
 	..()
+
+/mob/proc/is_literate()
+	return 0

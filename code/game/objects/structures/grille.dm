@@ -258,3 +258,13 @@
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/structure/grille/broken // Pre-broken grilles for map placement
+	icon_state = "brokengrille"
+	density = 0
+	health = 0
+	destroyed = 1
+
+/obj/structure/grille/broken/New()
+	..()
+	stored.amount = 1

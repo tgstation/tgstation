@@ -53,7 +53,8 @@
 				M.amount += amt
 				total_amount += amt
 		else
-			for(var/datum/material/M in materials)
+			for(var/i in materials)
+				var/datum/material/M = materials[i]
 				M.amount += amt
 				total_amount += amt
 		return (total_amount - total_amount_saved)
@@ -120,14 +121,27 @@
 
 
 /datum/material_container/proc/use_amount_type(amt, material_type)
-	var/datum/material/M
-	M = materials[material_type]
+	var/datum/material/M = materials[material_type]
 	if(M)
 		if(M.amount >= amt)
 			M.amount -= amt
 			total_amount -= amt
 			return amt
 	return 0
+
+/datum/material_container/proc/can_use_amount(amt, material_type, list/mats)
+	if(amt && material_type)
+		var/datum/material/M = materials[material_type]
+		if(M && M.amount >= amt)
+			return TRUE
+	else if(istype(mats))
+		for(var/M in mats)
+			if(materials[M] && (mats[M] <= materials[M]))
+				continue
+			else
+				return FALSE
+		return TRUE
+	return FALSE
 
 //For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
@@ -205,62 +219,47 @@
 
 
 /datum/material
+	var/name
 	var/amount = 0
 	var/material_type = null
 	var/sheet_type = null
 
 /datum/material/metal
-
-/datum/material/metal/New()
-	..()
+	name = "Metal"
 	material_type = MAT_METAL
 	sheet_type = /obj/item/stack/sheet/metal
 
 /datum/material/glass
-
-/datum/material/glass/New()
-	..()
+	name = "Glass"
 	material_type = MAT_GLASS
 	sheet_type = /obj/item/stack/sheet/glass
 
 /datum/material/silver
-
-/datum/material/silver/New()
-	..()
+	name = "Silver"
 	material_type = MAT_SILVER
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 
 /datum/material/gold
-
-/datum/material/gold/New()
-	..()
+	name = "Gold"
 	material_type = MAT_GOLD
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 
 /datum/material/diamond
-
-/datum/material/diamond/New()
-	..()
+	name = "Diamond"
 	material_type = MAT_DIAMOND
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 
 /datum/material/uranium
-
-/datum/material/uranium/New()
-	..()
+	name = "Uranium"
 	material_type = MAT_URANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 
 /datum/material/plasma
-
-/datum/material/plasma/New()
-	..()
+	name = "Solid Plasma"
 	material_type = MAT_PLASMA
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 
 /datum/material/bananium
-
-/datum/material/bananium/New()
-	..()
+	name = "Bananium"
 	material_type = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium

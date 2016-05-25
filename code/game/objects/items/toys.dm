@@ -567,15 +567,6 @@
 	attack_verb = list("boned", "dunked on", "worked down to the bone")
 	chattering = TRUE
 
-	var/list/papyrus_messages = list(
-		"That's the disposal bin. Feel free to visit it at any time.",
-		"I can't just let anyone ERP with me, I'm a skeleton with standards!",
-		"Sorry. Can't talk. I'm busy being popular on a video game.",
-		"You can't spell 'robust' without several letters from my name!!!")
-	var/list/sans_messages = list(
-		"You feel your redtext crawling on your back.",
-		"On days like these, references like this should be BURNING IN HELL.",
-		"I've gotten a ton of work done today. A skele-ton.")
 	var/list/regular_messages = list(
 		"Why was the skeleton such a bad liar? \
 			Because you can see right through him!",
@@ -628,25 +619,17 @@
 		var/mob/living/carbon/human/H = user
 		H.set_species(/datum/species/skeleton)
 
-	phomeme = "sans"
-	toy_talk(user, "You feel like you're going to have a bad time.")
+	toy_talk(user, "RATTLE ME BONES")
 
 	user.Stun(5)
 	sleep(20)
 	return OXYLOSS
 
 /obj/item/toy/talking/skeleton/generate_messages()
-	return list(pick(papyrus_messages + sans_messages + regular_messages))
+	return list(pick(regular_messages))
 
 /obj/item/toy/talking/skeleton/toy_talk(user, message)
-	// change spans dynamically depending on the message
-	// If message isn't in the defined lists, just use whatever was set last
-	if(sans_messages.Find(message))
-		phomeme = "sans"
-	if(papyrus_messages.Find(message))
-		phomeme = "papyrus"
-	if(regular_messages.Find(message))
-		phomeme = pick("sans", "papyrus")
+	phomeme = pick("sans", "papyrus")
 
 	span = "danger [phomeme]"
 	..()

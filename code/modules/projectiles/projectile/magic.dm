@@ -61,12 +61,9 @@
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
-			if(!target.ckey)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(target.real_name == ghost.real_name)
-						ghost.reenter_corpse()
-						break
-			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
+			target.grab_ghost(force = TRUE) // even suicides
+			target << "<span class='notice'>You rise with a start, \
+				you're alive!!!</span>"
 		else if(target.stat != DEAD)
 			target << "<span class='notice'>You feel great!</span>"
 
@@ -175,7 +172,7 @@
 						if("drone")
 							new_mob = new /mob/living/simple_animal/drone(M.loc)
 							var/mob/living/simple_animal/drone/D = new_mob
-							D.update_drone_hack()
+							D.liberate() // F R E E D R O N E
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0
@@ -186,9 +183,10 @@
 						new_mob.languages |= HUMAN
 				if("slime")
 					new_mob = new /mob/living/simple_animal/slime(M.loc)
+					var/mob/living/simple_animal/slime/slimey = new_mob
 					if(prob(50))
-						var/mob/living/simple_animal/slime/Slime = new_mob
-						Slime.is_adult = 1
+						slimey.is_adult = 1
+					slimey.random_colour()
 					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))
@@ -220,7 +218,7 @@
 							if("spiderhunter")
 								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
 							if("blobbernaut")
-								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
+								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(M.loc)
 							if("magicarp")
 								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")
@@ -279,10 +277,8 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
-			if(M.mind)
-				M.mind.transfer_to(new_mob)
-			else
-				new_mob.key = M.key
+
+			M.wabbajack_act(new_mob)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 

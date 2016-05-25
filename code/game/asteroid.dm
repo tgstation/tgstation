@@ -71,7 +71,7 @@ var/global/max_secret_rooms = 6
 
 		if("cult")
 			theme = "cult"
-			walltypes = list(/turf/closed/wall/cult=3,/turf/closed/mineral/random/high_chance=1)
+			walltypes = list(/turf/closed/wall/mineral/cult=3,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/plasteel/cult)
 			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/hardsuit/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)

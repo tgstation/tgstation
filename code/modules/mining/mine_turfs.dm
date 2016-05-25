@@ -713,8 +713,6 @@
 //BECAUSE ONE PLANET WASNT ENOUGH
 
 /turf/closed/mineral/ash_rock //wall piece
-	pixel_y = -4
-	pixel_x = -4
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
@@ -728,8 +726,6 @@
 	defer_change = 1
 
 /turf/open/floor/plating/ash
-	pixel_y = -4
-	pixel_x = -4
 	icon = 'icons/turf/mining.dmi'
 	name = "ash"
 	icon_state = "ash"

@@ -5,7 +5,7 @@
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	var/mob/living/carbon/human/H = owner
-	if(!istype(H) || !H.dna.species.has_dismemberment) // species don't allow dismemberment
+	if(!istype(H) || (NODISMEMBER in H.dna.species.specflags)) // species don't allow dismemberment
 		return 0
 
 	var/obj/item/bodypart/affecting = H.get_bodypart("chest")
@@ -35,7 +35,7 @@
 
 /obj/item/bodypart/chest/dismember()
 	var/mob/living/carbon/human/H = owner
-	if(!istype(H) || !H.dna.species.has_dismemberment) //human's species don't allow dismemberment
+	if(!istype(H) || (NODISMEMBER in H.dna.species.specflags)) //human's species don't allow dismemberment
 		return 0
 
 	var/organ_spilled = 0

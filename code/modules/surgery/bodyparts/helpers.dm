@@ -70,7 +70,7 @@
 			.++
 
 /mob/living/proc/get_missing_limbs()
-	return
+	return list()
 
 /mob/living/carbon/human/get_missing_limbs()
 	var/list/full = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")

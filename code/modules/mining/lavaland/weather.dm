@@ -25,6 +25,7 @@
 	var/overlay_layer = 10 //This is the default area layer, and above everything else. 2 is floors/below walls and mobs.
 	var/purely_aesthetic = FALSE //If we just want gentle rain that doesn't hurt people
 	var/list/impacted_areas = list()
+	var/immunity_type = "storm"
 
 /datum/weather/proc/weather_start_up()
 	for(var/area/N in get_areas(area_type))
@@ -73,9 +74,8 @@
 
 
 /datum/weather/proc/storm_act(mob/living/L)
-	if(prob(30)) //Dont want it spammed very tick
-		L << "You're buffeted by the storm!"
-		L.adjustBruteLoss(1)
+	if(immunity_type in L.weather_immunities)
+		return
 
 /datum/weather/proc/update_areas()
 	for(var/area/N in impacted_areas)
