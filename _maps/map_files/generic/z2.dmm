@@ -5900,7 +5900,9 @@
 	name = "Backup Shuttle Dock";
 	width = 8
 	},
-/obj/docking_port/mobile/emergency/backup,
+/obj/docking_port/mobile/emergency/backup{
+	dwidth = 3
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "rR" = (
@@ -5942,12 +5944,10 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space)
-"rZ" = (
-/obj/machinery/door/airlock/external{
-	name = "Backup Emergency Escape Shuttle"
-	},
-/turf/open/floor/plasteel/delivery,
-/area/centcom/ferry)
+"rX" = (
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/escape)
 "rY" = (
 /turf/open/floor/plasteel/darkwarning{
 	tag = "icon-warndark (EAST)";
@@ -5955,10 +5955,12 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"rX" = (
-/obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/escape)
+"rZ" = (
+/obj/machinery/door/airlock/external{
+	name = "Backup Emergency Escape Shuttle"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/centcom/ferry)
 
 (1,1,1) = {"
 aa

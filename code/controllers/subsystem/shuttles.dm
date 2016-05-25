@@ -218,11 +218,5 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
-		for(var/obj/docking_port/stationary/S in stationary)
-			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
-				S.width = M.width
-				S.height = M.height
-				S.dwidth = M.dwidth
-				S.dheight = M.dheight
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
 		CHECK_TICK

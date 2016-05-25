@@ -99123,7 +99123,7 @@
 	dheight = 0;
 	dir = 2;
 	dwidth = 10;
-	height = 14;
+	height = 25;
 	id = "emergency_home";
 	name = "MetaStation emergency evac bay";
 	width = 29
@@ -130129,10 +130129,10 @@ aaa
 aaa
 aaf
 aaa
-cTC
-cTC
-cTC
-cTC
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaf
@@ -130387,8 +130387,8 @@ cTC
 cTC
 cTC
 cTC
-dfw
-cVB
+cTC
+cTC
 cTC
 cTC
 cTC
@@ -130644,7 +130644,7 @@ dfs
 cVN
 cVo
 cVt
-cVC
+dfw
 cVB
 cTC
 cXd
@@ -130901,7 +130901,7 @@ cVC
 cVB
 cVo
 cVs
-cVB
+cVC
 cVB
 cTC
 cXb
