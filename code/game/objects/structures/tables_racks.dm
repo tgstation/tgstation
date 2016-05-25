@@ -302,7 +302,7 @@
 	for(var/I in debris)
 		var/atom/movable/AM = I
 		AM.forceMove(T)
-		debris -= I
+		debris -= AM
 		if(istype(AM, /obj/item/weapon/shard))
 			AM.throw_impact(M)
 	M.Weaken(5)
