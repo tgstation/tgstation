@@ -11,7 +11,6 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
-	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
@@ -47,8 +46,6 @@
 
 /obj/singularity/narsie/process()
 	eat()
-	if(clashing)
-		return 0
 	if(!target || prob(5))
 		pickcultist()
 	move()
