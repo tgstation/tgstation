@@ -137,7 +137,7 @@
 		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.loc = src.loc
+	pushed_mob.forceMove(src.loc)
 	pushed_mob.Weaken(2)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
@@ -365,7 +365,7 @@
 			break
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.loc = src.loc
+	pushed_mob.forceMove(src.loc)
 	pushed_mob.resting = 1
 	pushed_mob.update_canmove()
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
