@@ -93756,12 +93756,6 @@
 	dir = 1;
 	on = 1
 	},
-/obj/item/device/radio/intercom{
-	freerange = 0;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = 29
-	},
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "chapel"
@@ -99087,9 +99081,8 @@
 	},
 /area/shuttle/abandoned)
 "dcy" = (
-/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
+	icon_state = "swall7";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99118,17 +99111,29 @@
 /area/shuttle/escape)
 "dcD" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Cargo Bay Airlock"
+	name = "Emergency Shuttle Airlock"
 	},
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "delivery"
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	dwidth = 5;
+	height = 14;
+	name = "MetaStation emergency shuttle";
+	width = 25
 	},
+/obj/docking_port/stationary{
+	dheight = 0;
+	dir = 2;
+	dwidth = 5;
+	height = 14;
+	id = "emergency_home";
+	name = "emergency evac bay";
+	width = 25
+	},
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcE" = (
-/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
+	icon_state = "swall8";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99235,17 +99240,15 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcJ" = (
-/obj/machinery/status_display{
-	pixel_y = 32
+/turf/closed/wall/shuttle{
+	icon_state = "swall4";
+	dir = 2
 	},
-/obj/machinery/hologram/holopad,
-/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcK" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/bluecross_2,
 /turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
+	icon_state = "swall2"
 	},
 /area/shuttle/escape)
 "dcL" = (
@@ -99258,17 +99261,25 @@
 	},
 /area/shuttle/escape)
 "dcM" = (
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "delivery"
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = 27
 	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "dcN" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plating{
-	icon_state = "bot"
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/shuttle/escape)
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/toxins/xenobiology)
 "dcO" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
@@ -99285,16 +99296,16 @@
 	},
 /area/shuttle/escape)
 "dcQ" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 31
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4";
+	tag = "90Curve"
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating{
-	icon_state = "bot"
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/area/shuttle/escape)
+/area/toxins/xenobiology)
 "dcR" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -99335,31 +99346,35 @@
 	},
 /area/shuttle/escape)
 "dcU" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
 /area/shuttle/escape)
 "dcV" = (
-/obj/structure/chair{
-	dir = 8
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = 0;
+	pixel_y = 0;
+	req_access_txt = "0";
+	use_power = 0
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
 /area/shuttle/escape)
 "dcW" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
-	pixel_y = 0
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/open/floor/plating{
-	icon_state = "bot"
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/area/shuttle/escape)
+/area/toxins/xenobiology)
 "dcX" = (
 /obj/structure/closet/crate{
 	name = "emergency supplies crate"
@@ -99382,155 +99397,112 @@
 	},
 /area/shuttle/escape)
 "dcY" = (
-/obj/docking_port/stationary{
-	dheight = 0;
-	dir = 4;
-	dwidth = 5;
-	height = 14;
-	id = "emergency_home";
-	name = "emergency evac bay";
-	width = 25
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
 	},
-/obj/docking_port/mobile/emergency{
-	dheight = 0;
-	dir = 4;
-	dwidth = 5;
-	height = 14;
-	width = 25
+/obj/machinery/light/small{
+	dir = 4
 	},
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock"
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
+/area/toxins/xenobiology)
 "dcZ" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
-	req_access_txt = "0";
-	use_power = 0
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = 29
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
+/turf/open/floor/plasteel{
+	icon_state = "chapel"
 	},
-/area/shuttle/escape)
+/area/chapel/main)
 "dda" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating{
-	icon_state = "bot"
+/obj/structure/chair/comfy/black{
+	dir = 8
 	},
-/area/shuttle/escape)
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/chapel/main)
 "ddb" = (
-/obj/machinery/space_heater,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
-	},
-/turf/open/floor/plating{
-	icon_state = "bot"
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
 	},
 /area/shuttle/escape)
 "ddc" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -31
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
+/turf/closed/wall/shuttle{
+	icon_state = "swall1"
 	},
 /area/shuttle/escape)
 "ddd" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 0;
-	pixel_y = -1
-	},
-/obj/item/weapon/storage/toolbox/emergency{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "warning"
+/obj/structure/sign/nosmoking_2,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
 /area/shuttle/escape)
 "dde" = (
-/obj/structure/rack,
-/obj/item/weapon/crowbar,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/wirecutters,
-/obj/item/stack/cable_coil,
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "warning"
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
 	},
 /area/shuttle/escape)
 "ddf" = (
-/obj/structure/rack{
-	dir = 1
-	},
-/obj/item/weapon/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/hardhat/red,
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "warning"
-	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "ddg" = (
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "warning"
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
 	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "ddh" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -31
 	},
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "ddi" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
-/area/shuttle/escape)
-"ddj" = (
-/obj/structure/chair{
+/obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/sign/bluecross_2{
-	pixel_x = 32
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"ddj" = (
+/obj/structure/chair/office/dark{
+	dir = 1
 	},
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddk" = (
+/obj/machinery/status_display,
 /turf/closed/wall/shuttle{
-	icon_state = "swall8";
+	icon_state = "swall3";
 	dir = 2
 	},
 /area/shuttle/escape)
 "ddl" = (
-/obj/structure/sign/bluecross_2,
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
+/obj/structure/chair{
+	dir = 1
 	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "ddm" = (
 /obj/machinery/door/airlock/glass_medical{
@@ -99547,11 +99519,10 @@
 	},
 /area/shuttle/escape)
 "ddo" = (
-/obj/machinery/sleeper{
+/obj/structure/sign/bluecross_2,
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
 	dir = 2
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
 	},
 /area/shuttle/escape)
 "ddp" = (
@@ -99577,21 +99548,16 @@
 	},
 /area/shuttle/escape)
 "ddr" = (
-/obj/machinery/shower{
-	dir = 4;
-	icon_state = "shower";
-	name = "emergency shower"
+/obj/machinery/status_display{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
 	},
+/obj/machinery/hologram/holopad,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dds" = (
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "ddt" = (
 /obj/structure/table,
@@ -99639,27 +99605,17 @@
 /area/shuttle/escape)
 "ddv" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel{
-	pixel_y = 12
+/obj/item/weapon/paper_bin{
+	pixel_x = -2;
+	pixel_y = 8
 	},
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor{
-	pixel_x = 4
-	},
-/obj/item/weapon/hemostat{
-	pixel_x = -4
-	},
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
 /obj/item/device/radio/intercom{
-	dir = 4;
+	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -27
+	pixel_y = -31
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddw" = (
 /obj/structure/table/optable,
@@ -99669,32 +99625,31 @@
 	},
 /area/shuttle/escape)
 "ddx" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
+/obj/structure/table,
+/obj/item/weapon/folder/blue,
+/obj/structure/extinguisher_cabinet{
 	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 31
+	pixel_x = 0;
+	pixel_y = -27
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddy" = (
-/obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
+/obj/machinery/space_heater,
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = -27
+	},
+/turf/open/floor/plating{
+	icon_state = "bot"
 	},
 /area/shuttle/escape)
 "ddz" = (
-/obj/structure/chair,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 0;
-	pixel_y = 29
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Cargo Bay Airlock"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "ddA" = (
 /obj/structure/chair{
@@ -99747,60 +99702,37 @@
 	},
 /area/shuttle/escape)
 "ddI" = (
-/obj/machinery/flasher{
-	id = "emshuttlebridgeflash";
-	pixel_y = -24
+/obj/structure/chair{
+	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/plating{
+	icon_state = "floorgrime"
+	},
 /area/shuttle/escape)
 "ddJ" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/flasher{
-	id = "emshuttleflash";
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel/shuttle/red,
+/obj/machinery/shower,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddK" = (
-/obj/structure/chair{
-	dir = 1
+/obj/machinery/sleeper{
+	dir = 8
 	},
-/obj/machinery/button/flasher{
-	id = "emshuttleflash";
-	name = "brig flasher button";
-	pixel_y = -23;
-	req_access_txt = "0";
-	req_one_access_txt = "1;63;19"
-	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "ddL" = (
-/obj/structure/table,
-/obj/item/weapon/folder/red{
-	pixel_x = 3
+/obj/structure/rack,
+/obj/item/weapon/crowbar,
+/obj/item/weapon/wrench,
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/wirecutters,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plasteel/warning{
+	dir = 4
 	},
-/obj/item/weapon/folder/white{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 31
-	},
-/obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "ddM" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "ddN" = (
 /obj/machinery/door/airlock/glass_command{
@@ -99828,14 +99760,8 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddR" = (
-/obj/machinery/button/flasher{
-	id = "emshuttlebridgeflash";
-	name = "cockpit flasher button";
-	pixel_y = 24;
-	req_access_txt = "0";
-	req_one_access_txt = "1;63;19"
-	},
-/turf/open/floor/plasteel/shuttle,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "ddS" = (
 /obj/machinery/door/airlock/command{
@@ -99846,30 +99772,17 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddT" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "ddU" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 27
-	},
-/turf/open/floor/plating{
-	icon_state = "floorgrime"
-	},
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "ddV" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/status_display{
-	pixel_y = 31
+/obj/structure/chair{
+	dir = 8
 	},
-/turf/open/floor/plating{
-	icon_state = "floorgrime"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "ddW" = (
 /obj/structure/chair/office/dark{
@@ -99882,24 +99795,34 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddY" = (
-/obj/structure/chair/office/dark{
-	dir = 4
+/obj/structure/reagent_dispensers/peppertank,
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
 	},
-/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ddZ" = (
-/obj/structure/table,
-/obj/item/weapon/folder/blue,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/obj/item/weapon/storage/toolbox/emergency{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
 /area/shuttle/escape)
 "dea" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plating{
+	icon_state = "floorgrime"
 	},
 /area/shuttle/escape)
 "deb" = (
@@ -99919,17 +99842,9 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dee" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
+/turf/open/floor/plasteel/warning{
+	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 31
-	},
-/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "def" = (
 /obj/structure/table,
@@ -99978,24 +99893,30 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dem" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plating{
-	icon_state = "floorgrime"
+/turf/closed/wall/shuttle{
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "den" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
-	pixel_y = 0
+/obj/structure/table,
+/obj/item/weapon/folder/red{
+	pixel_x = 3
 	},
-/obj/structure/chair{
-	dir = 1
+/obj/item/weapon/folder/white{
+	pixel_x = -4;
+	pixel_y = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "floorgrime"
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -31
 	},
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "deo" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -100004,13 +99925,27 @@
 	},
 /area/shuttle/escape)
 "dep" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "diagonalWall3"
+/obj/structure/table,
+/obj/item/weapon/scalpel{
+	pixel_y = 12
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
+/obj/item/weapon/circular_saw,
+/obj/item/weapon/retractor{
+	pixel_x = 4
+	},
+/obj/item/weapon/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = -27;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
 	},
 /area/shuttle/escape)
 "deq" = (
@@ -100020,23 +99955,31 @@
 	},
 /area/shuttle/escape)
 "der" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/obj/structure/sink,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "des" = (
-/obj/structure/window/reinforced{
+/obj/structure/rack{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
+/obj/item/weapon/tank/internals/oxygen/red,
+/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/hardhat/red,
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
 /area/shuttle/escape)
 "det" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "diagonalWall3"
+/obj/item/device/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -31
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating{
+	icon_state = "bot"
 	},
 /area/shuttle/escape)
 "deu" = (
@@ -100045,15 +99988,16 @@
 	},
 /area/shuttle/escape)
 "dev" = (
-/turf/open/space,
 /turf/closed/wall/shuttle{
-	dir = 4;
-	icon_state = "diagonalWall3"
+	icon_state = "swall_s5";
+	dir = 2
 	},
 /area/shuttle/escape)
 "dew" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s9";
+	dir = 2
+	},
 /area/shuttle/escape)
 "dex" = (
 /obj/structure/grille,
@@ -100667,6 +100611,18 @@
 	icon_state = "warning"
 	},
 /area/hydroponics)
+"dfK" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall2"
+	},
+/area/shuttle/escape)
+"dfJ" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -122719,7 +122675,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aac
 aaa
 aaa
 aaa
@@ -122963,17 +122919,17 @@ cOU
 cOU
 cOU
 cOU
-aaf
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ddg
+ddg
+ddg
+deu
+ddg
+ddg
+deu
+ddg
+ddg
+ddg
 aaa
 aaa
 aaa
@@ -123220,18 +123176,18 @@ cOU
 cTH
 cOU
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dfJ
+ddi
+ddi
+ddi
+deu
+ddi
+ddi
+deu
+ddi
+ddi
+ddi
+dem
 aaa
 aaa
 aaa
@@ -123476,20 +123432,20 @@ cSX
 cTo
 cTI
 cOU
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ddb
+dcF
+dcF
+dcF
+dcF
+dcF
+dcF
+dcF
+dcy
+dcF
+dcF
+dcF
+dcF
+dev
 aaa
 aaa
 aaa
@@ -123733,20 +123689,20 @@ cSY
 cTp
 cTJ
 cUh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aac
+dcz
+deg
+def
+deh
+dei
+dek
+dej
+del
+dcU
+ddI
+ddI
+ddI
+deo
+dcz
 aaa
 aaa
 aaa
@@ -123990,20 +123946,20 @@ cSY
 cRe
 cTJ
 cUh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dcz
+dec
+dcI
+ded
+ddW
+ddj
+dcI
+ddv
+dcA
+dcP
+dcP
+dcP
+dcP
+deb
 aaa
 aaa
 aaa
@@ -124247,20 +124203,20 @@ cSZ
 cTq
 cTK
 cUh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dcz
+ddX
+ddj
+dcI
+dcI
+dcI
+ded
+ddx
+dcE
+deb
+dcJ
+dcP
+dcP
+deb
 aaa
 aaa
 aaa
@@ -124504,20 +124460,20 @@ cSY
 cRe
 cTJ
 cUh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dcz
+ddQ
+ddP
+dcI
+dcI
+dcI
+dcI
+dcI
+ddS
+ddD
+dcA
+dea
+dea
+dcz
 aaa
 aaa
 aaa
@@ -124761,20 +124717,20 @@ cSY
 cTp
 cTJ
 cUh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dcC
+dcF
+ddk
+ddc
+ddN
+dfK
+ddk
+dcF
+ddO
+dcF
+ddn
+ddk
+dcF
+deq
 aaa
 aaa
 aaa
@@ -125018,29 +124974,29 @@ cTa
 cTr
 cTL
 cOU
-dcy
-dcF
-dcF
-dcB
-dcz
-dcY
-dcF
-dcz
-dcz
-dcz
-dcK
-dcB
-dcz
-dcB
-dcF
-dcz
-dcF
-ddi
-dcz
-dcz
-dcz
-dcz
-dep
+dcA
+ddH
+dcI
+dcI
+dcI
+dcI
+dcI
+ddH
+dcE
+ddA
+ddA
+ddA
+den
+dcA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125272,33 +125228,33 @@ cOU
 cSd
 cSB
 cTb
+dcZ
+dda
 cOU
-cOU
-cOU
-dcA
-dcH
+dcz
 dcI
 dcI
-dcU
 dcI
-ddc
-dcU
-dcU
-dcU
-dcU
 dcI
-dcU
 dcI
-dcU
 dcI
-ddH
-dcA
-ddQ
-ddX
-dec
-deg
-dcA
-det
+dcI
+ddF
+ddD
+ddD
+ddD
+ddG
+dcz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125530,33 +125486,33 @@ cOU
 cOU
 cOU
 cOU
-aaa
-aaf
-dcz
-dcG
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-ddy
-ddP
-ddW
-dcI
-def
+cOU
+cOU
 dcA
-des
-dew
+ddf
+dcI
+ddl
+dcz
+ddf
+dcI
+ddl
+dcz
+ddC
+ddD
+ddD
+ddE
+dcz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -125786,34 +125742,34 @@ cPh
 cSe
 cSC
 cTc
-cRK
-cRK
-cRK
+cTs
+cTM
+cTs
+dcB
+dcI
+dcI
+ddl
+dcV
+ddf
+dcI
+ddl
 dcA
-dcH
-dcI
-dcI
-dcV
-dcV
-dcV
-dcV
-dcV
-dcI
-dcV
-dcV
-dcV
-dcV
-dcV
-dcI
-dcI
+ddC
+ddV
+ddV
+ddB
 dcA
-dcI
-dcI
-ddY
-dei
-dcA
-des
-dew
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126043,34 +125999,34 @@ cNy
 cNy
 cSD
 cTd
-cTs
-cTM
-cTs
-dcB
-dcI
-dcI
-dcI
+cRK
+cRK
+cRK
 dcz
-dcZ
+ddf
+dcI
+ddl
 dcz
+ddf
+dcI
 ddh
-dcz
-dcI
-dcz
-ddh
-dcz
-dcZ
-dcz
-dcI
-dcI
-ddN
-dcI
-dcI
-ded
-deh
-dcA
-des
-dew
+dcC
+dcF
+ddY
+ddk
+dcF
+deq
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126300,34 +126256,34 @@ cNy
 cSf
 cSE
 cTe
-cRK
-cRK
-cRK
+cTs
+cTd
+cTs
+dcB
+dcI
+dcI
+ddl
+dcU
+ddf
+dcI
+ddl
 dcA
-dcJ
-dcI
-dcI
-dcU
-dcU
-dcU
-dcU
-dcU
-dcI
-dcU
-dcU
-dcU
-dcU
-dcU
-dcI
-ddI
+ddu
+ddt
+ddw
+dep
 dcA
-ddR
-dcI
-ddW
-dek
-dcA
-deu
-deu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126557,34 +126513,34 @@ cNy
 cSg
 cSD
 cTd
-cTs
-cTd
-cTs
-dcB
+cRK
+cRK
+cRK
+ddd
+ddf
+dcI
+ddl
+dcz
+ddf
+dcI
+ddl
+dcz
+ddJ
 dcI
 dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-dcI
-ddy
-dcI
-ddY
-dcI
-dej
-dcA
-des
-dew
+der
+dcz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -126815,33 +126771,33 @@ cSh
 cSD
 cTd
 cRK
-cRK
-cRK
-dcA
-dcL
+aaa
+aaf
+dcz
+ddf
 dcI
 dcI
-dcV
-dcV
-dcV
-ddj
-dcV
 dcI
-dcV
-dcV
-ddx
-dcV
-dcV
 dcI
-ddH
-dcA
 dcI
-ddZ
-dee
-del
-dcA
-des
-dew
+dcI
+ddm
+dcI
+dcI
+dcI
+ddq
+dcz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127074,31 +127030,31 @@ cTf
 cRK
 aaa
 aaf
-dcC
-dcK
-dcD
-dcD
-dcF
 dcz
-dcF
-ddi
+ddf
+dcI
+ddl
 dcz
-ddm
+ddf
+dcI
+ddl
 dcz
-dcF
-ddi
-dcF
-dcz
-ddF
-dcF
-ddO
-ddS
-ddi
-dcF
-dcF
-deq
-deu
-deu
+ddK
+ddK
+dcI
+ddp
+dcA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127329,33 +127285,33 @@ cSj
 cSD
 cTd
 cRK
-cRK
-cRK
-dcA
-dcN
-dcM
-dcM
-dcW
-dda
-dde
-ddk
-ddo
+aaa
+aaf
+dcz
+ddf
 dcI
-ddr
-ddu
-dcA
-ddA
-ddA
-ddD
-ddK
-dcA
-ddT
-deb
-dcP
-den
-dcA
-des
-dew
+ddl
+dcU
+ddf
+dcI
+ddl
+ddo
+dcF
+dcz
+ddm
+dcK
+deq
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127585,34 +127541,34 @@ cNy
 cSg
 cSD
 cTd
-cTs
-cTd
-cTs
-dcD
+cRK
+cRK
+cRK
+dcA
 dcM
-dcP
-dcP
-dcP
-dcT
-ddd
+dcI
+ddl
 dcz
-ddo
+ddf
 dcI
-dcI
-ddt
+ddl
 dcA
-ddz
-ddD
-ddD
-ddJ
-dcC
-dcF
-dea
-dcP
-dem
-dcA
+ddL
+ddZ
+dee
 des
-dew
+dcA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -127843,33 +127799,33 @@ cSk
 cSF
 cTg
 cTs
-cTN
+cTd
 cTs
 dcD
-dcM
-dcP
-dcT
-dcP
-dcP
-ddg
-ddm
 dcI
 dcI
+ddl
+dcV
+ddf
 dcI
-ddw
-ddy
-ddC
-ddD
-ddD
+ddl
+dcz
 ddM
+dcT
+dds
+ddy
 dcA
-ddV
-dcP
-dcP
-dem
-dcA
-des
-dew
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -128102,30 +128058,30 @@ cTh
 cRK
 cRK
 cRK
-dcA
-dcO
-dcQ
-dcS
-dcX
-ddb
+dcz
 ddf
+dcI
 ddl
-ddp
-ddq
+dcz
+ddf
+dcI
+ddl
+dcU
+ddR
 dds
-ddv
-dcA
-ddB
-ddE
-ddG
-ddL
-dcA
-ddU
-dcP
-dcP
-deo
-dcA
-dev
+dds
+dcX
+dcz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -128356,32 +128312,32 @@ cRJ
 cSl
 cSG
 cTi
-cRK
+cTs
+cTN
+cTs
+dcB
+dcI
+dcI
+dcI
+dcI
+dcI
+dcI
+dcI
+ddz
+ddT
+dds
+dcT
+dcS
+dcz
 aaa
-aaf
-dcE
-dcF
-dcF
-dcz
-dcz
-dcF
-dcF
-ddn
-dcF
-dcz
-dcz
-dcF
-ddn
-dcF
-dcz
-dcz
-dcF
-ddn
-dcz
-deb
-deb
-dcz
-der
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -128613,23 +128569,23 @@ cRK
 cRq
 cRK
 cRq
-cRq
-aaa
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cRK
+cRK
+cRK
+dcA
+dcI
+dcI
+dcI
+dcI
+dcI
+dcI
+dcI
+ddz
+ddT
+dds
+dds
+det
+dcA
 aaa
 aaa
 aaa
@@ -128873,20 +128829,20 @@ aaf
 aaa
 aaa
 aaf
-aaa
-aaa
-aaa
-aaf
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+dcA
+dcH
+dcG
+dcH
+dcI
+ddr
+dcI
+dcL
+ddd
+ddU
+ddT
+ddT
+dcO
+dcA
 aaf
 aaf
 aaf
@@ -129130,20 +129086,20 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
+dde
+dcF
+dcz
+dcF
+dcz
+dcF
+dcz
+dcF
+ddn
+dcF
+dcz
+dcz
+dcF
+dew
 aaa
 aaa
 aaf
@@ -129381,11 +129337,6 @@ cQd
 cQM
 cRs
 aaa
-aaf
-aaa
-aaa
-aaf
-aaa
 aaa
 aaa
 aaa
@@ -129395,24 +129346,29 @@ aaa
 aaa
 aaa
 aaa
-aaf
-cTC
-cTC
-cTC
-cTC
-cTC
 aaa
 aaa
-aaf
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaf
-aaf
 aaa
-aaf
-aaf
-aai
-aag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -129638,39 +129594,39 @@ cQe
 cQN
 cRq
 aaa
-aaf
 aaa
-cTC
-cTC
-cTy
-cTy
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cVt
-dfw
-cVB
-cTC
-cTC
-cTC
-aaf
+aaa
 aaa
 aaa
 aaf
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaf
 aaa
-aag
-aag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -129894,40 +129850,40 @@ bVE
 bVE
 bVE
 bVE
-aaf
-aaf
-aaf
-cTC
-cUl
-cUz
-cUS
-cVc
-cVo
-cVt
-cVD
-cVN
-cVo
-cVt
-dfs
-cVN
-cVo
-cVs
-cVC
-cVB
-cTC
-cXd
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
 aaf
 aaa
-aai
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -130152,42 +130108,42 @@ cQf
 cPq
 acn
 acn
+aaa
+aaa
+aaa
+aaa
 aaf
 aaa
-cTC
-cUk
-cUy
-cUR
-cVb
-cVo
-cVs
-cVC
-cVB
-cVo
-cVs
-cVC
-cVB
-cVo
-cVs
-cVB
-cVB
-cTC
-cXb
-cXv
-cXv
-cXv
-cXv
-cXv
-cXv
-deO
-cTC
+aaa
+aaf
 aaa
 aaa
 aaa
+aaa
+aaa
+aaf
+aaa
+aaa
+aaa
+aaa
+aaf
+cTC
+cTC
+cTC
+cTC
+cTC
+aaa
+aaa
+aaf
+aaf
+aaa
+aaf
+aaf
+aaa
+aaf
+aaf
+aai
 aag
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -130408,44 +130364,44 @@ bVE
 bVE
 bVE
 aaf
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
 aaf
 aaa
 cTC
-cUn
-cUC
-cUV
-cVe
-cVo
-cVs
+cTC
+cTy
+cTy
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cVt
+dfw
 cVB
-cVB
-cVo
-cVs
-cVB
-cVB
-cVo
-cWw
-cWE
-cWL
-cTC
-cXf
 cTC
 cTC
-cTC
-cTC
-cTC
-cTC
-deP
 cTC
 aaf
 aaa
+aaa
+aaf
+aaa
+aaa
+aaa
+aaf
 aaa
 aag
 aag
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -130664,45 +130620,45 @@ cOx
 bVE
 aaf
 aaf
-aaa
-aaa
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
+cTC
+cUl
+cUz
+cUS
+cVc
+cVo
+cVt
+cVD
+cVN
+cVo
+cVt
+dfs
+cVN
+cVo
+cVs
+cVC
+cVB
+cTC
+cXd
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+aaf
 aaf
 aaa
-cTC
-cUm
-cUA
-cUU
-cVd
-cVo
-cVu
-cVE
-cVO
-cVo
-cWe
-cWj
-cWo
-cVo
-cVw
-cWD
-cWK
-cWV
-cXe
-cXw
-cTC
-cVB
-deF
-deJ
-cTC
-deP
-cTC
-cTC
-cTC
-cTC
-aaa
 aai
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -130922,44 +130878,44 @@ bVE
 aaa
 aaf
 aaa
-cTO
-cTC
-cTC
-cTC
-cTC
-cUA
-cUU
-cVg
-cTu
-cVw
-cVG
-cVS
-cWb
-cVw
-cWk
-cWp
-cWb
-cWy
-cVH
-cWN
-cWX
-cXh
-dex
-deC
-cVB
-cVB
-cVB
-cTC
-deP
-cTC
-dfz
-dfA
-cTC
+aaa
+aaa
+aaa
+aaa
+aaa
 aaf
+aaa
+cTC
+cUk
+cUy
+cUR
+cVb
+cVo
+cVs
+cVC
+cVB
+cVo
+cVs
+cVC
+cVB
+cVo
+cVs
+cVB
+cVB
+cTC
+cXb
+cXv
+cXv
+cXv
+cXv
+cXv
+cXv
+deO
+cTC
+aaa
+aaa
+aaa
 aag
-aaf
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -131179,45 +131135,45 @@ cTu
 cTy
 cTy
 cTy
+cTy
+cTy
+cTy
+cTy
+aaf
+aaf
+aaa
 cTC
-cTR
-cTU
-cTY
-cUo
-cUD
-cUW
-cVf
-cVp
-cVv
-cVF
-cVR
-cVZ
-cWf
-cVF
-cVR
-cWu
-cWx
-cYU
-deT
-cWW
-cXg
-cXx
-deB
-deB
-deG
+cUn
+cUC
+cUV
+cVe
+cVo
+cVs
 cVB
+cVB
+cVo
+cVs
+cVB
+cVB
+cVo
+cWw
+cWE
+cWL
 cTC
-deQ
-cTy
-deV
-deV
-cTy
+cXf
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+deP
+cTC
+aaf
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aag
+aag
 aaa
 aaa
 aaa
@@ -131435,46 +131391,46 @@ cTt
 cTw
 cTz
 cTA
-cTB
-cTP
-cTT
-cTW
-cUj
-cUp
-cUF
-cUY
-cVi
-cVr
-cVy
-cVI
-cVV
-cWd
-cWd
-cYG
-cYH
-cWd
-cWd
-cWd
-cWP
-cWY
-cXj
-dez
-cVB
-cVB
-cVC
-deL
+dcN
+dcN
+dcN
+dcQ
+cTy
+aaa
+aaf
+aaa
 cTC
-deR
-deS
-deW
-deW
-deX
-cXl
+cUm
+cUA
+cUU
+cVd
+cVo
+cVu
+cVE
+cVO
+cVo
+cWe
+cWj
+cWo
+cVo
+cVw
+cWD
+cWK
+cWV
+cXe
+cXw
+cTC
+cVB
+deF
+deJ
+cTC
+deP
+cTC
+cTC
+cTC
+cTC
 aaa
-aaa
-aaa
-aaa
-aaa
+aai
 aaa
 aaa
 aaa
@@ -131693,45 +131649,45 @@ cTv
 cTy
 cTy
 cTy
+cTy
+cTy
+dcW
+cTy
+cTO
 cTC
-cTS
-cTV
-cUi
 cTC
-cUE
-cUX
-cVh
-cVq
-cVx
+cTC
+cTC
+cUA
+cUU
+cVg
+cTu
+cVw
+cVG
+cVS
+cWb
+cVw
+cWk
+cWp
+cWb
+cWy
 cVH
-cVU
-cWc
-cWg
-cVH
-cWq
-cWv
-cWg
-cYU
-deU
-cVh
-cXi
-dey
-deD
+cWN
+cWX
+cXh
+dex
+deC
 cVB
-deH
-deK
+cVB
+cVB
 cTC
-cXs
-cTy
-deV
-deV
-cTy
-aaa
+deP
+cTC
+dfz
+dfA
+cTC
 aaf
-aaa
-aaa
-aaa
-aaa
+aag
 aaa
 aaa
 aaa
@@ -131950,43 +131906,43 @@ bVE
 aaa
 aaf
 aaa
-cTQ
+aaa
+cTy
+dcW
+cTy
 cTC
-cTX
-cTC
-cTC
-cUG
-cUX
-cVk
-cTu
-cVA
-cVL
-cVX
-cWb
-cWi
-cWn
-cVX
-cWb
-cVx
-cVH
-cWR
-cXa
-cXr
-deA
-deC
+cTR
+cTU
+cTY
+cUo
+cUD
+cUW
+cVf
+cVp
+cVv
+cVF
+cVR
+cVZ
+cWf
+cVF
+cVR
+cWu
+cWx
+cYU
+deT
+cWW
+cXg
+cXx
+deB
+deB
+deG
 cVB
-cVB
-deN
 cTC
-cXs
-cTC
-dfz
+deQ
+cTy
 deV
-cTC
-aaa
-aag
-aaa
-aaa
+deV
+cTy
 aaa
 aaa
 aaa
@@ -132208,43 +132164,43 @@ aaa
 aaf
 aaa
 aaa
-aaf
-crZ
+cTy
+dcY
+cTB
+cTP
+cTT
+cTW
+cUj
+cUp
+cUF
+cUY
+cVi
+cVr
+cVy
+cVI
+cVV
+cWd
+cWd
+cYG
+cYH
+cWd
+cWd
+cWd
+cWP
+cWY
+cXj
+dez
+cVB
+cVB
+cVC
+deL
 cTC
-cUq
-cUG
-cUX
-cVj
-cVo
-cVz
-cVK
-cVW
-cVo
-cWh
-cWm
-cWt
-cVo
-cWz
-cWG
-cWQ
-cWZ
-cXq
-cXw
-cTC
-deE
-deI
-deM
-cTC
-cXs
-cTC
-cTC
-cTC
-cTC
-aaf
-aag
-aaa
-aaa
-aaa
+deR
+deS
+deW
+deW
+deX
+cXl
 aaa
 aaa
 aaa
@@ -132464,45 +132420,45 @@ bVE
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
+aaa
+cTy
+cTy
+cTy
 cTC
-cUw
-cUP
+cTS
+cTV
+cUi
+cTC
+cUE
 cUX
-cVm
-cVo
+cVh
+cVq
+cVx
+cVH
+cVU
+cWc
+cWg
+cVH
+cWq
+cWv
+cWg
+cYU
+deU
+cVh
+cXi
+dey
+deD
 cVB
-cVB
-cVs
-cVo
-cVB
-cVB
-cVs
-cVo
-cWC
-cWJ
-cWU
-cTC
-cXt
-cTC
-cTC
-cTC
-cTC
-cTC
+deH
+deK
 cTC
 cXs
-cTC
+cTy
+deV
+deV
+cTy
+aaa
 aaf
-aaa
-aaa
-aag
-aag
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -132723,43 +132679,43 @@ aaa
 aaf
 aaa
 aaa
-aaf
+aaa
+aaa
+cTQ
 cTC
-cUv
-cUH
-cUZ
-cVl
-cVo
+cTX
+cTC
+cTC
+cUG
+cUX
+cVk
+cTu
+cVA
+cVL
+cVX
+cWb
+cWi
+cWn
+cVX
+cWb
+cVx
+cVH
+cWR
+cXa
+cXr
+deA
+deC
 cVB
-cVC
-cVs
-cVo
 cVB
-cVC
-cVs
-cVo
-cWB
-cWH
-cWT
+deN
 cTC
 cXs
-cXs
-cXs
-cXs
-cXs
-cXs
-cXs
-cXs
 cTC
-aaf
-aaf
+dfz
+deV
+cTC
 aaa
-aai
-aaa
-aaa
-aaa
-aaa
-aaa
+aag
 aaa
 aaa
 aaa
@@ -132980,43 +132936,43 @@ bVE
 bVE
 bVE
 aaa
-aaf
-cTC
-cUx
-cUQ
-cVa
-cVn
-cVo
-cVB
-cVM
-cVY
-cVo
-cVN
-dft
-cVY
-cVo
-cVB
-cVC
-cVs
-cTC
-cXu
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-aaf
 aaa
 aaa
+aaa
+aaf
+crZ
+cTC
+cUq
+cUG
+cUX
+cVj
+cVo
+cVz
+cVK
+cVW
+cVo
+cWh
+cWm
+cWt
+cVo
+cWz
+cWG
+cWQ
+cWZ
+cXq
+cXw
+cTC
+deE
+deI
+deM
+cTC
+cXs
+cTC
+cTC
+cTC
+cTC
+aaf
 aag
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -133236,44 +133192,44 @@ ciE
 cQP
 cRu
 bVE
+aaa
+aaa
+aaa
 aaf
 aaf
+aaf
 cTC
-cTC
-cTy
-cTy
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
-cTC
+cUw
+cUP
+cUX
+cVm
+cVo
 cVB
-dfx
-cVY
+cVB
+cVs
+cVo
+cVB
+cVB
+cVs
+cVo
+cWC
+cWJ
+cWU
+cTC
+cXt
 cTC
 cTC
 cTC
+cTC
+cTC
+cTC
+cXs
+cTC
+aaf
 aaa
-aaf
-aaf
-aaf
-aaf
-aaf
 aaa
-aaf
-aaf
 aag
 aag
-aaf
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -133494,42 +133450,42 @@ bZQ
 cRv
 bVE
 aaa
-aaf
-aaa
-aaf
-aaa
-aaa
-aaa
-aaf
 aaa
 aaa
 aaa
 aaa
 aaf
-aaa
-aaa
 cTC
+cUv
+cUH
+cUZ
+cVl
+cVo
+cVB
+cVC
+cVs
+cVo
+cVB
+cVC
+cVs
+cVo
+cWB
+cWH
+cWT
 cTC
+cXs
+cXs
+cXs
+cXs
+cXs
+cXs
+cXs
+cXs
 cTC
-cTC
-cTC
-aaa
 aaf
-aaa
-aaa
-aaa
 aaf
-aaa
-aaa
-aaa
-aaa
 aaa
 aai
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -133753,40 +133709,40 @@ bVE
 aaa
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
 aaa
 aaa
 aaf
+cTC
+cUx
+cUQ
+cVa
+cVn
+cVo
+cVB
+cVM
+cVY
+cVo
+cVN
+dft
+cVY
+cVo
+cVB
+cVC
+cVs
+cTC
+cXu
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+aaf
 aaa
 aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aai
 aag
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -134010,41 +133966,41 @@ bVE
 aaa
 aaf
 aaa
-aaf
-aaa
-aaa
-aaa
-aaf
-aaa
-aaa
-aaf
-aaa
 aaa
 aaf
 aaf
+cTC
+cTC
+cTy
+cTy
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cTC
+cVB
+dfx
+cVY
+cTC
+cTC
+cTC
+aaa
+aaf
 aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
 aaa
 aaf
-aaa
-aaa
-aaa
-aaa
 aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aag
+aag
+aaf
 aaa
 aaa
 aaa
@@ -134267,15 +134223,11 @@ bVE
 aaa
 aaf
 aaa
-aaf
-aaf
 aaa
 aaa
 aaf
 aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -134284,22 +134236,26 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaa
+aaa
+cTC
+cTC
+cTC
+cTC
+cTC
+aaa
+aaf
+aaa
+aaa
+aaa
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aai
 aaa
 aaa
 aaa

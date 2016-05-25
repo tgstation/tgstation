@@ -494,6 +494,7 @@
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
 	use_overlays = TRUE
+	paint_color = null
 
 	item_state = "spraycan"
 	desc = "A metallic container containing tasty paint."
@@ -540,7 +541,7 @@
 /obj/item/toy/crayon/spraycan/New()
 	..()
 	// If default crayon red colour, pick a more fun spraycan colour
-	if(paint_color == "#FF0000")
+	if(!paint_color)
 		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
 		"#DA00FF")
 	refill()

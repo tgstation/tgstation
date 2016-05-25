@@ -226,7 +226,7 @@
 #define MIN_RANGE_FIND 16
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
+#define CHANCE_TALK 1
 
 #define SNPC_BRUTE 1
 #define SNPC_STEALTH 2
