@@ -1410,7 +1410,7 @@
 "aBf" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/white,/area/maintenance/asmaint2)
 "aBg" = (/obj/item/clothing/gloves/color/latex/nitrile,/turf/open/floor/plasteel/white,/area/maintenance/asmaint2)
 "aBh" = (/turf/open/floor/plasteel/white,/area/maintenance/asmaint2)
-"aBi" = (/obj/structure/table,/obj/item/weapon/wirerod,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/restraints/handcuffs,/obj/item/clothing/tie/stethoscope,/turf/open/floor/plasteel/white,/area/space)
+"aBi" = (/obj/structure/table,/obj/item/weapon/melee/baton/cattleprod,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/restraints/handcuffs,/obj/item/clothing/tie/stethoscope,/turf/open/floor/plasteel/white,/area/space)
 "aBj" = (/obj/machinery/light,/turf/open/floor/plasteel,/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aBk" = (/obj/structure/cable/cyan{icon_state = "1-2"},/turf/open/floor/plating,/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aBl" = (/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plating,/area/quartermaster/miningdock{name = "\improper Mining Office"})
