@@ -135,6 +135,17 @@ Copying code from one place to another maybe suitable for small short time proje
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
+###Startup/Runtime tradeoffs with lists and the "hidden" init proc
+First, read the comments in this byond thread, starting here:http://www.byond.com/forum/?post=2086980&page=2#comment19776775
+
+There are two key points here:
+
+1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New() and avoid the overhead of a second call (init() and then new())
+
+2)Offsets list creation overhead to the point where the list is actually required (which for many objects, may be never at all). 
+
+Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
+
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
 	
