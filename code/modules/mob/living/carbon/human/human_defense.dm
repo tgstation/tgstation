@@ -264,11 +264,6 @@
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
 
-/mob/living/carbon/human/grabbedby(mob/living/user)
-	if(w_uniform)
-		w_uniform.add_fingerprint(user)
-	..()
-
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -369,3 +364,14 @@
 					skipcatch = 1 //can't catch the now embedded item
 
 	return ..()
+
+/mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
+		devour_mob(pulling)
+	else
+		..()
+
+/mob/living/carbon/human/grippedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()

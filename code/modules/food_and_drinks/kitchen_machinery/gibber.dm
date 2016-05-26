@@ -95,16 +95,13 @@
 	if(operating)
 		user << "<span class='danger'>It's locked and running.</span>"
 		return
-	else
-		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = P
-		if(!iscarbon(G.affecting))
+	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		var/mob/living/L = user.pulling
+		if(!iscarbon(L))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
-		var/mob/living/carbon/C = G.affecting
+		var/mob/living/carbon/C = L
 		if(C.buckled ||C.buckled_mobs.len)
 			user << "<span class='warning'>[C] is attached to something!</span>"
 			return
@@ -112,17 +109,19 @@
 			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
 			return
 
-		user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
+		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
 		src.add_fingerprint(user)
-		if(do_after(user, gibtime, target = src) && G && G.affecting && G.affecting == C && !C.buckled && !C.buckled_mobs.len && !occupant)
-			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
-			C.reset_perspective(src)
-			C.loc = src
-			occupant = C
-			qdel(G)
-			update_icon()
+		if(do_after(user, gibtime, target = src))
+			if(C && user.pulling == C && !C.buckled && !C.buckled_mobs.len && !occupant)
+				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
+				C.forceMove(src)
+				occupant = C
+				update_icon()
+	else
+		startgibbing(user)
 
-	else if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
+/obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
 	else if(exchange_parts(user, P))

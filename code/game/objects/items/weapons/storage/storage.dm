@@ -301,6 +301,8 @@
 			return 0
 	if(silent)
 		prevent_warning = 1
+	if(W.pulledby)
+		W.pulledby.stop_pulling()
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
