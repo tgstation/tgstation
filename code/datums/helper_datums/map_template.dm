@@ -120,5 +120,5 @@
 
 		var/datum/map_template/shuttle/S = new shuttle_type()
 
-		shuttle_templates[S.name] = S
-		map_templates[S.name] = S
+		shuttle_templates[S.shuttle_id] = S
+		map_templates[S.shuttle_id] = S

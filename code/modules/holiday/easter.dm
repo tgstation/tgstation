@@ -81,7 +81,7 @@
 	countEggs()
 
 /obj/item/weapon/storage/bag/easterbasket/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	..()
+	. = ..()
 	countEggs()
 
 //Bunny Suit

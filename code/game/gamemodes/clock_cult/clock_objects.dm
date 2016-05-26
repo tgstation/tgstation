@@ -1374,6 +1374,14 @@
 		user << "This gateway can only [sender ? "send" : "receive"] objects."
 
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
+	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		var/mob/living/L = user.pulling
+		if(L.buckled || L.anchored || L.buckled_mobs.len)
+			return 0
+		user.visible_message("<span class='warning'>[user] shoves [L] into [src]!</span>", "<span class='danger'>You shove [L] into [src]!</span>")
+		user.stop_pulling()
+		pass_through_gateway(L)
+		return 1
 	if(!user.canUseTopic(src))
 		return 0
 	user.visible_message("<span class='warning'>[user] climbs through [src]!</span>", "<span class='danger'>You brace yourself and step through [src]...</span>")
@@ -1385,14 +1393,6 @@
 		user.visible_message("<span class='warning'>[user] dispels [src] with [I]!</span>", "<span class='danger'>You close [src] with [I]!</span>")
 		qdel(linked_gateway)
 		qdel(src)
-		return 1
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(!G.affecting)
-			return 0
-		user.visible_message("<span class='warning'>[user] shoves [G.affecting] into [src]!</span>", "<span class='danger'>You shove [G.affecting] into [src]!</span>")
-		pass_through_gateway(G.affecting)
-		qdel(G)
 		return 1
 	if(user.drop_item())
 		pass_through_gateway(I)

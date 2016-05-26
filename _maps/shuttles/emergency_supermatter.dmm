@@ -1,69 +1,82 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
-"c" = (/obj/structure/sign/radiation,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
-"d" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
-"e" = (/obj/structure/closet/radiation{anchored = 1},/obj/item/clothing/glasses/meson/engine,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"f" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"g" = (/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"h" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"i" = (/obj/machinery/shower{dir = 8},/turf/open/floor/noslip,/area/shuttle/escape)
-"j" = (/obj/structure/reflector/single{anchored = 1},/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/shuttle/escape)
-"k" = (/obj/structure/reflector/box{anchored = 1},/turf/open/floor/plating,/area/shuttle/escape)
-"l" = (/obj/structure/reflector/single{tag = "icon-reflector (WEST)"; icon_state = "reflector"; dir = 8; anchored = 1},/turf/open/floor/plating{icon_state = "warnplate"; dir = 4},/area/shuttle/escape)
-"m" = (/obj/machinery/shower{dir = 4},/turf/open/floor/noslip,/area/shuttle/escape)
-"n" = (/obj/machinery/status_display,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
-"o" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"p" = (/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/shuttle/escape)
-"q" = (/turf/open/floor/plating,/area/shuttle/escape)
-"r" = (/turf/open/floor/plating{icon_state = "warnplate"; dir = 4},/area/shuttle/escape)
-"s" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"t" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
-"u" = (/obj/machinery/power/supermatter_shard/hugbox{anchored = 1; base_icon_state = "darkmatter"; explosion_power = 20; gasefficency = 0.15; icon_state = "darkmatter"; name = "anchored supermatter crystal"},/turf/open/floor/plating,/area/shuttle/escape)
-"v" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/toxin,/obj/item/weapon/crowbar/red,/obj/item/weapon/storage/box/snappops{pixel_x = 4; pixel_y = -4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"w" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"x" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Hyperfractal Gigashuttle"},/turf/open/floor/plating,/area/shuttle/escape)
-"y" = (/obj/machinery/door/airlock/external{name = "Emergency Launch Catwalk"; req_access = null; req_access_txt = "10;13"},/turf/open/floor/plating,/area/shuttle/escape)
-"z" = (/turf/open/floor/plating/airless,/area/shuttle/escape)
-"A" = (/obj/structure/reflector/single{anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"B" = (/obj/structure/reflector/double{anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"C" = (/obj/structure/reflector/double{tag = "icon-reflector_double (NORTH)"; icon_state = "reflector_double"; dir = 1; anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"D" = (/obj/structure/reflector/single{tag = "icon-reflector (WEST)"; icon_state = "reflector"; dir = 8; anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"E" = (/turf/open/floor/plating/airless{dir = 9; icon_state = "warnplate"},/area/shuttle/escape)
-"F" = (/turf/open/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/shuttle/escape)
-"G" = (/turf/open/floor/plating/airless{dir = 5; icon_state = "warnplate"},/area/shuttle/escape)
-"H" = (/turf/open/floor/plating/airless{dir = 8; icon_state = "warnplate"},/area/shuttle/escape)
-"I" = (/obj/machinery/power/supermatter_shard/hugbox{anchored = 1; name = "anchored supermatter shard"},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"J" = (/turf/open/floor/plating/airless{dir = 4; icon_state = "warnplate"},/area/shuttle/escape)
-"K" = (/turf/open/floor/plating/airless{dir = 10; icon_state = "warnplate"},/area/shuttle/escape)
-"L" = (/turf/open/floor/plating/airless{dir = 2; icon_state = "warnplate"},/area/shuttle/escape)
-"M" = (/turf/open/floor/plating/airless{dir = 6; icon_state = "warnplate"},/area/shuttle/escape)
-"N" = (/obj/machinery/power/emitter/energycannon{dir = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
-"O" = (/obj/structure/chair,/turf/open/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/shuttle/escape)
-"P" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"Q" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"R" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aa" = (/turf/open/space,/area/space)
+"ab" = (/turf/closed/wall/shuttle{icon_state = "swall_s6"; dir = 2},/area/shuttle/escape)
+"ac" = (/obj/structure/sign/radiation,/turf/closed/wall/shuttle{tag = "icon-swall12"; icon_state = "swall12"},/area/shuttle/escape)
+"ad" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
+"ae" = (/turf/closed/wall/shuttle{icon_state = "swall_s10"; dir = 2},/area/shuttle/escape)
+"af" = (/turf/closed/wall/shuttle{tag = "icon-swall3"; icon_state = "swall3"},/area/shuttle/escape)
+"ag" = (/obj/structure/closet/radiation{anchored = 1},/obj/item/clothing/glasses/meson/engine,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"ah" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"ai" = (/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aj" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"ak" = (/obj/structure/sign/radiation,/turf/closed/wall/shuttle{tag = "icon-swall3"; icon_state = "swall3"},/area/shuttle/escape)
+"al" = (/obj/machinery/shower{dir = 8},/turf/open/floor/noslip,/area/shuttle/escape)
+"am" = (/obj/structure/reflector/single{anchored = 1},/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/shuttle/escape)
+"an" = (/obj/structure/reflector/box{anchored = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"ao" = (/obj/structure/reflector/single{tag = "icon-reflector (WEST)"; icon_state = "reflector"; dir = 8; anchored = 1},/turf/open/floor/plating{icon_state = "warnplate"; dir = 4},/area/shuttle/escape)
+"ap" = (/obj/machinery/shower{dir = 4},/turf/open/floor/noslip,/area/shuttle/escape)
+"aq" = (/obj/machinery/status_display,/turf/closed/wall/shuttle{tag = "icon-swall3"; icon_state = "swall3"},/area/shuttle/escape)
+"ar" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"as" = (/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/shuttle/escape)
+"at" = (/turf/open/floor/plating,/area/shuttle/escape)
+"au" = (/turf/open/floor/plating{icon_state = "warnplate"; dir = 4},/area/shuttle/escape)
+"av" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aw" = (/turf/closed/wall/shuttle{icon_state = "swallc2"; dir = 2},/area/shuttle/escape)
+"ax" = (/turf/closed/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape)
+"ay" = (/turf/closed/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape)
+"az" = (/turf/closed/wall/shuttle{icon_state = "swallc1"},/area/shuttle/escape)
+"aA" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
+"aB" = (/obj/machinery/power/supermatter_shard/hugbox{anchored = 1; base_icon_state = "darkmatter"; explosion_power = 20; gasefficency = 0.15; icon_state = "darkmatter"; name = "anchored supermatter crystal"},/turf/open/floor/plating,/area/shuttle/escape)
+"aC" = (/obj/structure/sign/radiation,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"aD" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/toxin,/obj/item/weapon/crowbar/red,/obj/item/weapon/storage/box/snappops{pixel_x = 4; pixel_y = -4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aE" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aF" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Hyperfractal Gigashuttle"; timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"aG" = (/turf/closed/wall/shuttle{icon_state = "swallc3"},/area/shuttle/escape)
+"aH" = (/obj/machinery/status_display,/turf/closed/wall/shuttle{icon_state = "swall12"},/area/shuttle/escape)
+"aI" = (/obj/structure/sign/radiation,/turf/closed/wall/shuttle{icon_state = "swallc1"},/area/shuttle/escape)
+"aJ" = (/obj/structure/sign/radiation,/turf/closed/wall/shuttle{icon_state = "swallc2"; dir = 2},/area/shuttle/escape)
+"aK" = (/turf/closed/wall/shuttle{icon_state = "swallc4"; dir = 2},/area/shuttle/escape)
+"aL" = (/obj/machinery/door/airlock/external{name = "Emergency Launch Catwalk"; req_access = null; req_access_txt = "10;13"},/turf/open/floor/plating,/area/shuttle/escape)
+"aM" = (/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aN" = (/obj/structure/reflector/single{anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aO" = (/obj/structure/reflector/double{anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aP" = (/obj/structure/reflector/double{tag = "icon-reflector_double (NORTH)"; icon_state = "reflector_double"; dir = 1; anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aQ" = (/obj/structure/reflector/single{tag = "icon-reflector (WEST)"; icon_state = "reflector"; dir = 8; anchored = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aR" = (/turf/open/floor/plating/airless{dir = 9; icon_state = "warnplate"},/area/shuttle/escape)
+"aS" = (/turf/open/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/shuttle/escape)
+"aT" = (/turf/open/floor/plating/airless{dir = 5; icon_state = "warnplate"},/area/shuttle/escape)
+"aU" = (/turf/open/floor/plating/airless{dir = 8; icon_state = "warnplate"},/area/shuttle/escape)
+"aV" = (/obj/machinery/power/supermatter_shard/hugbox{anchored = 1; name = "anchored supermatter shard"},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"aW" = (/turf/open/floor/plating/airless{dir = 4; icon_state = "warnplate"},/area/shuttle/escape)
+"aX" = (/turf/open/floor/plating/airless{dir = 10; icon_state = "warnplate"},/area/shuttle/escape)
+"aY" = (/turf/open/floor/plating/airless{dir = 2; icon_state = "warnplate"},/area/shuttle/escape)
+"aZ" = (/turf/open/floor/plating/airless{dir = 6; icon_state = "warnplate"},/area/shuttle/escape)
+"ba" = (/obj/machinery/power/emitter/energycannon{dir = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"bb" = (/obj/structure/chair,/turf/open/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/shuttle/escape)
+"bc" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"bd" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"be" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
 
 (1,1,1) = {"
-abcdddddcba
-abefeeefeba
-adeghhhgeda
-aceijklmeca
-aneopqrsena
-adeopqrseda
-bbeopqrsebb
-tggopursggt
-cvgopqrsgwc
-xggopqrsggt
-bndcpqrcdnb
-aaabdydbaaa
-aaaaqzqaaaa
-aAqqBzCqqDa
-azaaazaaaza
-aEFGazaEFGa
-aHIJzzzHIJa
-aKLMazaKLMa
-aqqaazaaqqa
-aNNzEOGzNNa
-aPPaHQJaPPa
-aRRaKLMaRRa
+aaabacadadadadadacaeaa
+aaafagahagagagahagafaa
+aaadagaiajajajaiagadaa
+aaakagalamanaoapagakaa
+aaaqagarasatauavagaqaa
+aaadagarasatauavagadaa
+awaxagarasatauavagayaz
+aAaiaiarasaBauavaiaiaA
+aCaDaiarasatauavaiaEaC
+aFaiaiarasatauavaiaiaA
+aGaHadaIasatauaJadaHaK
+aaaaaaaGadaLadaKaaaaaa
+aaaaaaaaataMataaaaaaaa
+aaaNatataOaMaPatataQaa
+aaaMaaaaaaaMaaaaaaaMaa
+aaaRaSaTaaaMaaaRaSaTaa
+aaaUaVaWaMaMaMaUaVaWaa
+aaaXaYaZaaaMaaaXaYaZaa
+aaatataaaaaMaaaaatataa
+aababaaMaRbbaTaMbabaaa
+aabcbcaaaUbdaWaabcbcaa
+aabebeaaaXaYaZaabebeaa
 "}

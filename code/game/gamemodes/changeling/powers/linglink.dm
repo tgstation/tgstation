@@ -10,11 +10,16 @@
 	if(!..())
 		return
 	var/datum/changeling/changeling = user.mind.changeling
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	var/mob/living/carbon/target = G.affecting
 	if(changeling.islinking)
 		user << "<span class='warning'>We have already formed a link with the victim!</span>"
 		return
+	if(!user.pulling)
+		user << "<span class='warning'>We must be tightly grabbing a creature to link with them!</span>"
+		return
+	if(!iscarbon(user.pulling))
+		user << "<span class='warning'>We cannot link with this creature!</span>"
+		return
+	var/mob/living/carbon/target = user.pulling
 	if(!target.mind)
 		user << "<span class='warning'>The victim has no mind to link to!</span>"
 		return
@@ -23,19 +28,15 @@
 		return
 	if(target.mind.changeling)
 		user << "<span class='warning'>The victim is already a part of the hivemind!</span>"
-		return	
-	if(!istype(G))
-		user << "<span class='warning'>We must be tightly grabbing a creature in our active hand to link with them!</span>"
 		return
-	if(G.state <= GRAB_NECK)
+	if(user.grab_state <= GRAB_NECK)
 		user << "<span class='warning'>We must have a tighter grip to link with this creature!</span>"
 		return
 	return changeling.can_absorb_dna(user,target)
 
 /obj/effect/proc_holder/changeling/linglink/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	var/mob/living/carbon/human/target = G.affecting
+	var/mob/living/carbon/human/target = user.pulling
 	changeling.islinking = 1
 	for(var/i in 1 to 3)
 		switch(i)

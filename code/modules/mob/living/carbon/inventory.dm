@@ -29,6 +29,9 @@
 	else if(I == r_hand)
 		r_hand = null
 
+	if(I.pulledby)
+		I.pulledby.stop_pulling()
+
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
 	I.equipped(src, slot)
