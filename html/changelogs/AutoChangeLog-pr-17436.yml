@@ -1,5 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscdel: "Emagging the emergency shuttle computer with less than ten seconds until launch no longer gives additional time."
-  - rscadd: "The emergency shuttle computer now reads the ID in your ID slot, rather than your hand."
