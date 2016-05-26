@@ -14,7 +14,7 @@
 "n" = (/obj/effect/decal/cleanable/dirt,/obj/structure/chair,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "o" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/shuttle/transport)
 "p" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
-"q" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dir = 8;dwidth = 2;height = 12;id = "ferry";name = "ferry shuttle";roundstart_move = "ferry_away";travelDir = 180;width = 5},/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
+"q" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dir = 8;dwidth = 2;height = 12;id = "ferry";name = "ferry shuttle";roundstart_move = "ferry_away";travelDir = 180;width = 5;timid = 1},/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "r" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 4},/turf/closed/wall/shuttle{icon_state = "swall_s5";dir = 2},/area/shuttle/transport)
 "s" = (/turf/open/floor/plasteel/freezer,/turf/closed/wall/shuttle/interior{icon_state = "swall_f10"},/area/shuttle/transport)
 "t" = (/obj/structure/closet/chefcloset,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)

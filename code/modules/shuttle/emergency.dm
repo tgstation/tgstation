@@ -1,3 +1,8 @@
+#define TIME_LEFT (SSshuttle.emergency.timeLeft())
+#define ENGINES_START_TIME 10
+#define ENGINES_STARTED (TIME_LEFT <= ENGINES_START_TIME)
+#define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED)
+
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
 	desc = "For shuttle control."
@@ -6,61 +11,165 @@
 	var/auth_need = 3
 	var/list/authorized = list()
 
+/obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
+	if(istype(I, /obj/item/weapon/card/id))
+		say("Please equip your ID card into your ID slot to authenticate.")
+	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user, params)
-	var/obj/item/weapon/card/id/ID = I.GetID()
-	if(ID)
-		if(stat & (BROKEN|NOPOWER))
-			return
-		if(SSshuttle.emergency.mode != SHUTTLE_DOCKED)
-			return
-		if(SSshuttle.emergency.timeLeft() < 11)
-			return
-		if(!(access_heads in ID.access)) //doesn't have this access
-			user << "The access level of [ID.registered_name]\'s card is not high enough. "
-			return
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = human_adjacent_state)
 
-		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
-		if(SSshuttle.emergency.mode != SHUTTLE_DOCKED || user.get_active_hand() != ID)
-			return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "emergency_shuttle_console", name,
+			400, 400, master_ui, state)
+		ui.open()
 
-		var/seconds = SSshuttle.emergency.timeLeft()
-		if(seconds <= 10)
-			return
+/obj/machinery/computer/emergency_shuttle/ui_data()
+	var/list/data = list()
 
-		switch(choice)
-			if("Authorize")
-				if(!authorized.Find(ID.registered_name))
-					authorized += ID.registered_name
-					if(auth_need - authorized.len > 0)
-						message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has authorized early shuttle launch ",0,1)
-						log_game("[key_name(user)] has authorized early shuttle launch in ([x],[y],[z])")
-						minor_announce("[auth_need - authorized.len] more authorization(s) needed until shuttle is launched early",null,1)
-					else
-						message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has launched the emergency shuttle [seconds] seconds before launch.",0,1)
-						log_game("[key_name(user)] has launched the emergency shuttle in ([x],[y],[z]) [seconds] seconds before launch.")
-						minor_announce("The emergency shuttle will launch in 10 seconds",null,1)
-						SSshuttle.emergency.setTimer(100)
+	data["timer_str"] = SSshuttle.emergency.getTimerStr()
+	data["engines_started"] = ENGINES_STARTED
+	data["authorizations_remaining"] = max((auth_need - authorized.len), 0)
+	var/list/A = list()
+	for(var/i in authorized)
+		var/obj/item/weapon/card/id/ID = i
+		var/name = ID.registered_name
+		var/job = ID.assignment
 
-			if("Repeal")
-				if(authorized.Remove(ID.registered_name))
-					minor_announce("[auth_need - authorized.len] authorizations needed until shuttle is launched early")
+		if(emagged)
+			name = Gibberish(name, 0)
+			job = Gibberish(job, 0)
+		A += list(list("name" = name, "job" = job))
+	data["authorizations"] = A
 
-			if("Abort")
-				if(authorized.len)
-					minor_announce("All authorizations to launch the shuttle early have been revoked.")
-					authorized.Cut()
-	else
-		return ..()
+	data["enabled"] = (IS_DOCKED && !ENGINES_STARTED)
+	data["emagged"] = emagged
+	return data
+
+/obj/machinery/computer/emergency_shuttle/ui_act(action, params, datum/tgui/ui)
+	if(..())
+		return
+	if(ENGINES_STARTED) // past the point of no return
+		return
+	if(!IS_DOCKED) // shuttle computer only has uses when onstation
+		return
+
+	var/mob/user = usr
+	. = FALSE
+
+	var/obj/item/weapon/card/id/ID = user.get_idcard()
+
+	if(!ID)
+		user << "<span class='warning'>You don't have an ID.</span>"
+		return
+
+	if(!(access_heads in ID.access))
+		user << "<span class='warning'>The access level of \
+			your card is not high enough.</span>"
+		return
+
+	var/old_len = authorized.len
+
+	switch(action)
+		if("authorize")
+			. = authorize(user)
+
+		if("repeal")
+			authorized -= ID
+
+		if("abort")
+			if(authorized.len)
+				// Abort. The action for when heads are fighting over whether
+				// to launch early.
+				authorized.Cut()
+				. = TRUE
+
+	if((old_len != authorized.len) && !ENGINES_STARTED)
+		var/alert = (authorized.len > old_len)
+		if(authorized.len)
+			minor_announce("[auth_need - authorized.len] authorizations \
+				needed until shuttle is launched early", null, alert)
+		else
+			minor_announce("All authorizations to launch the shuttle \
+				early have been revoked.")
+
+/obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
+	var/obj/item/weapon/card/id/ID = user.get_idcard()
+
+	if(ID in authorized)
+		return FALSE
+	for(var/i in authorized)
+		var/obj/item/weapon/card/id/other = i
+		if(other.registered_name == ID.registered_name)
+			return FALSE // No using IDs with the same name
+
+	authorized += ID
+
+	message_admins("[key_name_admin(user.client)] \
+		(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
+		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
+		has authorized early shuttle launch", 0, 1)
+	log_game("[key_name(user)] has authorized early shuttle launch in \
+		([x],[y],[z])")
+	// Now check if we're on our way
+	. = TRUE
+	process()
+
+/obj/machinery/computer/emergency_shuttle/process()
+	// Launch check is in process in case auth_need changes for some reason
+	// probably external.
+	. = FALSE
+	if(ENGINES_STARTED || (!IS_DOCKED))
+		return .
+
+	// Check to see if we've reached criteria for early launch
+	if((authorized.len >= auth_need) || emagged)
+		// shuttle timers use 1/10th seconds internally
+		SSshuttle.emergency.setTimer(ENGINES_START_TIME * 10)
+		var/system_error = emagged ? "SYSTEM ERROR:" : null
+		minor_announce("The emergency shuttle will launch in \
+			[ENGINES_START_TIME] seconds", system_error, alert=TRUE)
+		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
-	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
-		var/time = SSshuttle.emergency.timeLeft()
-		message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has emagged the emergency shuttle  [time] seconds before launch.",0,1)
-		log_game("[key_name(user)] has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
-		minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
-		SSshuttle.emergency.setTimer(100)
-		emagged = 1
+	// How did you even get on the shuttle before it go to the station?
+	if(!IS_DOCKED)
+		return
+
+	var/time = TIME_LEFT
+	message_admins("[key_name_admin(user.client)] \
+	(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
+	(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
+	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
+	log_game("[key_name(user)] has emagged the emergency shuttle in \
+		([x],[y],[z]) [time] seconds before launch.")
+	emagged = TRUE
+	var/datum/species/S = new
+	for(var/i in 1 to 10)
+		// the shuttle system doesn't know who these people are, but they
+		// must be important, surely
+		var/obj/item/weapon/card/id/ID = new(src)
+		var/datum/job/J = pick(SSjob.occupations)
+		ID.registered_name = S.random_name(pick(MALE, FEMALE))
+		ID.assignment = J.title
+
+		authorized += ID
+
+	if(ENGINES_STARTED)
+		// Give them a message anyway
+		user << "<span class='warning'>The shuttle is already \
+			about to launch!</span>"
+	else
+		process()
+
+/obj/machinery/computer/emergency_shuttle/Destroy()
+	// Our fake IDs that the emag generated are just there for colour
+	// They're not supposed to be accessible
+
+	for(var/obj/item/weapon/card/id/ID in src)
+		qdel(ID)
+
+	. = ..()
 
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
@@ -74,16 +183,16 @@
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
-/obj/docking_port/mobile/emergency/New()
-	..()
-	// The last created emergency shuttle will always be the one
-	// that we use.
+/obj/docking_port/mobile/emergency/register()
+	. = ..()
 	SSshuttle.emergency = src
 
-/obj/docking_port/mobile/emergency/Destroy()
-	if(src.i_know_what_im_doing)
+/obj/docking_port/mobile/emergency/Destroy(force)
+	if(force)
 		// This'll make the shuttle subsystem use the backup shuttle.
-		SSshuttle.emergencyDeregister()
+		if(src == SSshuttle.emergency)
+			// If we're the selected emergency shuttle
+			SSshuttle.emergencyDeregister()
 
 	. = ..()
 
@@ -342,12 +451,16 @@
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.
+	// backup shuttle ignores `timid` because THERE SHOULD BE NO TOUCHING IT
 	var/current_emergency = SSshuttle.emergency
 	..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
-
 #undef UNLAUNCHED
 #undef LAUNCHED
 #undef EARLY_LAUNCHED
+#undef TIMELEFT
+#undef ENGINES_START_TIME
+#undef ENGINES_STARTED
+#undef IS_DOCKED
