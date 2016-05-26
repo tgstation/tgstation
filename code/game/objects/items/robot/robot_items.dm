@@ -27,11 +27,12 @@
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
 	var/ccooldown = 0
 	var/scooldown = 0
+	var/shockallowed = 0//Can it be a stunarm when emagged. Only PK borgs get this by default.
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(isrobot(user))
 		var/mob/living/silicon/robot/P = user
-		if(P.emagged)
+		if(P.emagged&&shockallowed == 1)
 			if(mode < 3)
 				mode++
 			else
@@ -87,7 +88,7 @@
 		if(2)
 			if(!scooldown)
 				if(M.health >= 0)
-					if(ishuman(M))
+					if(ishuman(M)||ismonkey(M))
 						M.electrocute_act(5, "[user]", safety = 1)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with their touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
@@ -120,6 +121,9 @@
 					ccooldown = 1
 					spawn(10)
 					ccooldown = 0
+
+/obj/item/borg/cyborghug/peacekeeper
+	shockallowed = 1
 
 /obj/item/borg/charger
 	name = "power connector"
@@ -296,20 +300,30 @@
 		return
 
 	if(safety == 0)
-		user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-			"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-			"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
-				if(istype(M, /mob/living/carbon/human))
+				if(istype(M, /mob/living/carbon/human)||istype(M, /mob/living/carbon/monkey)) //Earmuffs completely counter, bowmans and other weaker protection protects against the stun
 					var/mob/living/carbon/human/H = M
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
- 				M.confused += 15
-				M.Weaken(2)
-				M.stuttering += 30
-				M.adjustEarDamage(0, 20)
-				M.Jitter(25)
+					var/ear_safety = M.check_ear_prot()
+					if(!earsafety||istype(M, /mob/living/carbon/monkey))
+						M.Weaken(2)
+ 						M.confused += 20
+						M.stuttering += 30
+						M.adjustEarDamage(0, 20)
+						M.Jitter(25)
+						user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+							"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
+							"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
+					else
+						M.confused += 10
+						M.stuttering += 15
+						M.adjustEarDamage(0, 5)
+						M.Jitter(10)
+						user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+							"<span class='userdanger'>You hear a sharp screech, before your thoughts are interrupted and you find yourself extremely disorientated.</span>", \
+							"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
 			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
