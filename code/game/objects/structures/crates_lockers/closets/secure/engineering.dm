@@ -15,6 +15,7 @@
 	new /obj/item/device/radio/headset/heads/ce(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/clothing/suit/hazardvest(src)
+	new /obj/item/device/megaphone/command(src)
 	new /obj/item/weapon/storage/box/permits(src)
 	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/weapon/airlock_painter(src)
