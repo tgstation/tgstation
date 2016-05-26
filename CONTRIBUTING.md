@@ -41,7 +41,7 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
 
-###Object Oriented code 
+###Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
 ###All Byond paths must contain the full path.
@@ -63,7 +63,7 @@ datum
 				code
 			proc2()
 				code
-		
+
 		datum2
 			varname1 = 0
 			proc
@@ -137,7 +137,7 @@ Instead you can use object orientation, or simply placing repeated code in a fun
 
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
-	
+
 ###Control statements:
 (if,while,for,etc)
 
