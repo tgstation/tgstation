@@ -150,6 +150,7 @@
 	languages = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
+	stop_automated_movement = TRUE
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/New()
 	. = ..()
