@@ -167,14 +167,6 @@
 	suffix = "lavaland_fountain_hall.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/zombie_gym
-	name = "Zombie Gym"
-	id = "zombie-gym"
-	description = "The patrons at this gym are serious about health, and \
-		making sure people work on their cardio."
-	suffix = "lavaland_gym.dmm"
-	cost = 10
-
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
 	id = "survivalcapsule"
