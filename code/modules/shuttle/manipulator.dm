@@ -43,6 +43,24 @@
 			master_ui, state)
 		ui.open()
 
+/proc/shuttlemode2str(mode)
+	switch(mode)
+		if(SHUTTLE_IDLE)
+			. = "idle"
+		if(SHUTTLE_RECALL)
+			. = "recalled"
+		if(SHUTTLE_CALL)
+			. = "called"
+		if(SHUTTLE_DOCKED)
+			. = "docked"
+		if(SHUTTLE_STRANDED)
+			. = "stranded"
+		if(SHUTTLE_ENDGAME)
+			. = "endgame"
+	if(!.)
+		throw EXCEPTION("shuttlemode2str(): invalid mode [mode]")
+
+
 /obj/machinery/shuttle_manipulator/ui_data(mob/user)
 	var/list/data = list()
 	data["tabs"] = list("Status", "Templates", "Modification")
@@ -87,7 +105,7 @@
 		L["id"] = M.id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
-		L["mode"] = capitalize(M.mode)
+		L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getStatusText()
 		if(M == existing_shuttle)
 			data["existing_shuttle"] = L
