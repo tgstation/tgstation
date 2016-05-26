@@ -267,8 +267,11 @@
 	name = "cryo syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	volume = 20
-	flags = NOREACT
 	origin_tech = "materials=3;engineering=3"
+
+/obj/item/weapon/reagent_containers/syringe/noreact/New()
+	. = ..()
+	reagents.set_reacting(FALSE)
 
 /obj/item/weapon/reagent_containers/syringe/piercing
 	name = "piercing syringe"

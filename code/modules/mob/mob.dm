@@ -940,3 +940,6 @@ var/next_mob_id = 0
 
 /mob/proc/is_literate()
 	return 0
+
+/mob/proc/get_idcard()
+	return

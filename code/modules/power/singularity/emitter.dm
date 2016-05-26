@@ -5,6 +5,7 @@
 	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
+	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine_equip)
@@ -94,9 +95,9 @@
 
 /obj/machinery/power/emitter/update_icon()
 	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter_+a"
+		icon_state = icon_state_on
 	else
-		icon_state = "emitter"
+		icon_state = initial(icon_state)
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user)

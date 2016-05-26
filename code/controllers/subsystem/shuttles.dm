@@ -79,9 +79,16 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		WARNING("requestEvac(): There is no emergency shuttle, but the shuttle was called. Using the backup shuttle instead.")
+		WARNING("requestEvac(): There is no emergency shuttle, but the \
+			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, or backup shuttle! The game will be unresolvable. This is likely due to a mapping error")
+			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			or backup shuttle! The game will be unresolvable. This is \
+			possibly a mapping error, more likely a bug with the shuttle \
+			manipulation system, or badminry. It is possible to manually \
+			resolve this problem by loading an emergency shuttle template \
+			manually, and then calling register() on the mobile docking port. \
+			Good luck.")
 			return
 		emergency = backup_shuttle
 
@@ -211,11 +218,5 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
-		for(var/obj/docking_port/stationary/S in stationary)
-			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
-				S.width = M.width
-				S.height = M.height
-				S.dwidth = M.dwidth
-				S.dheight = M.dheight
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
 		CHECK_TICK
