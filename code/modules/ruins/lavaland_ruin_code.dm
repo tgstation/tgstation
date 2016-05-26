@@ -30,8 +30,11 @@
 /obj/structure/lavaland_door/singularity_pull()
 	return 0
 
-/obj/structure/lavaland_door/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/structure/lavaland_door/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/machinery/lavaland_controller
 	name = "weather control machine"
@@ -50,8 +53,11 @@
 	LAVA.weather_start_up()
 	ongoing_weather = null
 
-/obj/machinery/lavaland_controller/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/machinery/lavaland_controller/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
