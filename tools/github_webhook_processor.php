@@ -20,7 +20,7 @@
  
 //Github lets you have it sign the message with a secret that you can validate. This prevents people from faking events.
 //This var should match the secret you configured for this webhook on github.
-//set to NULL (no quotes) to disable validation.
+//This is required as otherwise somebody could trick the script into leaking the api key.
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 //Api key for pushing changelogs.
@@ -49,21 +49,22 @@ set_exception_handler(function($e) {
 	die();
 });
 $rawPost = NULL;
-if ($hookSecret !== NULL) {
-	if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
-		throw new \Exception("HTTP header 'X-Hub-Signature' is missing.");
-	} elseif (!extension_loaded('hash')) {
-		throw new \Exception("Missing 'hash' extension to check the secret code validity.");
-	}
-	list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2) + array('', '');
-	if (!in_array($algo, hash_algos(), TRUE)) {
-		throw new \Exception("Hash algorithm '$algo' is not supported.");
-	}
-	$rawPost = file_get_contents('php://input');
-	if ($hash !== hash_hmac($algo, $rawPost, $hookSecret)) {
-		throw new \Exception('Hook secret does not match.');
-	}
+if (!$hookSecret || $hookSecret == '08ajh0qj93209qj90jfq932j32r')
+	throw new \Exception("Hook secret is required and can not be default");
+if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
+	throw new \Exception("HTTP header 'X-Hub-Signature' is missing.");
+} elseif (!extension_loaded('hash')) {
+	throw new \Exception("Missing 'hash' extension to check the secret code validity.");
 }
+list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2) + array('', '');
+if (!in_array($algo, hash_algos(), TRUE)) {
+	throw new \Exception("Hash algorithm '$algo' is not supported.");
+}
+$rawPost = file_get_contents('php://input');
+if ($hash !== hash_hmac($algo, $rawPost, $hookSecret)) {
+	throw new \Exception('Hook secret does not match.');
+}
+
 $contenttype = null;
 //apache and nginx/fastcgi/phpfpm call this two different things.
 if (!isset($_SERVER['HTTP_CONTENT_TYPE'])) {
