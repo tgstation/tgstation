@@ -1,11 +1,11 @@
 //shuttle mode defines
-#define SHUTTLE_IDLE		"idle"
-#define SHUTTLE_RECALL		"recalled"
-#define SHUTTLE_CALL		"called"
-#define SHUTTLE_DOCKED		"docked"
-#define SHUTTLE_STRANDED	"stranded"
-#define SHUTTLE_ESCAPE		"escape"
-#define SHUTTLE_ENDGAME		"endgame"
+#define SHUTTLE_IDLE		0
+#define SHUTTLE_RECALL		1
+#define SHUTTLE_CALL		2
+#define SHUTTLE_DOCKED		3
+#define SHUTTLE_STRANDED	4
+#define SHUTTLE_ESCAPE		5
+#define SHUTTLE_ENDGAME		6
 
 // Shuttle return values
 #define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
