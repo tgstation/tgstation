@@ -396,12 +396,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
-//Launching Shuttles to Centcomm
-#define NOLAUNCH -1
-#define UNLAUNCHED 0
-#define ENDGAME_LAUNCHED 1
-#define EARLY_LAUNCHED 2
-
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
@@ -423,16 +417,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXX 4
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
-
-// Shuttle return values
-#define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
-#define SHUTTLE_DWIDTH_TOO_LARGE "docking_width_too_large"
-#define SHUTTLE_WIDTH_TOO_LARGE "width_too_large"
-#define SHUTTLE_DHEIGHT_TOO_LARGE "docking_height_too_large"
-#define SHUTTLE_HEIGHT_TOO_LARGE "height_too_large"
-#define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
-#define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
-
 
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
 

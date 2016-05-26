@@ -14,7 +14,7 @@
 		<modification></modification>
 		{{/if}}
 		{{#if !data.selected}}
-		No shuttle selected.
+		<span class='bad'>No shuttle selected.</span>
 		{{/if}}
 	</tab>
 </ui-tabs>

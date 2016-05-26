@@ -30,8 +30,7 @@
 	data["timer_str"] = SSshuttle.emergency.getTimerStr()
 	data["engines_started"] = ENGINES_STARTED
 	data["authorizations_remaining"] = max((auth_need - authorized.len), 0)
-	var/A = list()
-	data["authorizations"] = A
+	var/list/A = list()
 	for(var/i in authorized)
 		var/obj/item/weapon/card/id/ID = i
 		var/name = ID.registered_name
@@ -41,6 +40,7 @@
 			name = Gibberish(name, 0)
 			job = Gibberish(job, 0)
 		A += list(list("name" = name, "job" = job))
+	data["authorizations"] = A
 
 	data["enabled"] = (IS_DOCKED && !ENGINES_STARTED)
 	data["emagged"] = emagged
@@ -144,12 +144,13 @@
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
 		([x],[y],[z]) [time] seconds before launch.")
 	emagged = TRUE
+	var/datum/species/S = new
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/weapon/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.occupations)
-		ID.registered_name = random_name()
+		ID.registered_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
 
 		authorized += ID
