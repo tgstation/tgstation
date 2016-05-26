@@ -4,14 +4,14 @@
 
 <ui-tabs tabs='{{data.tabs}}'>
 	<tab name='Status'>
-		<status></status>
+		<status/>
 	</tab>
 	<tab name='Templates'>
-		<templates></templates>
+		<templates/>
 	</tab>
 	<tab name='Modification'>
 		{{#if data.selected}}
-		<modification></modification>
+		<modification/>
 		{{/if}}
 		{{#if !data.selected}}
 		<span class='bad'>No shuttle selected.</span>
