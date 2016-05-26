@@ -56,7 +56,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.stat == DEAD)
-				usr.visible_message(
+				src.visible_message(
 					"<span class='danger'>[src] devours [L]!</span>",
 					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 				adjustBruteLoss(-L.maxHealth)

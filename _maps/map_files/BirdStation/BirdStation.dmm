@@ -1807,7 +1807,7 @@
 "aIM" = (/obj/machinery/camera/autoname,/turf/open/floor/engine,/area/toxins/xenobiology)
 "aIN" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
 "aIO" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti{name = "pasghetti"; pixel_x = 4; pixel_y = 7},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
-"aIP" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dheight = 0; dir = 8; dwidth = 6; height = 18; travelDir = 90; width = 14},/obj/docking_port/stationary{dheight = 0; dir = 8; dwidth = 6; height = 18; id = "emergency_home"; name = "emergency evac bay"; width = 14},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aIP" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dheight = 0; dir = 8; dwidth = 6; height = 18; travelDir = 90; width = 14; name = "Birdboat emergency shuttle"},/obj/docking_port/stationary{dheight = 0; dir = 8; dwidth = 6; height = 18; id = "emergency_home"; name = "emergency evac bay"; width = 14},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "aIQ" = (/obj/machinery/atmospherics/pipe/simple/cyan/hidden,/turf/open/floor/plasteel,/area/hallway/secondary/exit)
 "aIR" = (/obj/machinery/hologram/holopad,/turf/open/floor/plasteel,/area/engine/engineering)
 "aIS" = (/obj/structure/cable/cyan{icon_state = "1-4"},/obj/structure/cable/cyan{icon_state = "1-8"},/turf/open/floor/plasteel,/area/hallway/secondary/exit)

@@ -59664,6 +59664,7 @@
 /area/shuttle/escape)
 "cgb" = (
 /obj/docking_port/mobile/emergency{
+	name = "Box emergency shuttle";
 	dir = 2
 	},
 /obj/docking_port/stationary{
