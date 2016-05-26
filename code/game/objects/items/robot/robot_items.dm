@@ -102,9 +102,9 @@
 							user.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
-					user.cell.charge -= 400
+					user.cell.charge -= 500
 					scooldown = 1
-					spawn(10)
+					spawn(20)
 					scooldown = 0
 		if(3)
 			if(!ccooldown)
@@ -302,28 +302,25 @@
 	if(safety == 0)
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
-				if(istype(M, /mob/living/carbon/human)||istype(M, /mob/living/carbon/monkey)) //Earmuffs completely counter, bowmans and other weaker protection protects against the stun
-					var/mob/living/carbon/human/H = M
-					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-						continue
-					var/ear_safety = M.check_ear_prot()
-					if(!earsafety||istype(M, /mob/living/carbon/monkey))
-						M.Weaken(2)
- 						M.confused += 20
-						M.stuttering += 30
-						M.adjustEarDamage(0, 20)
-						M.Jitter(25)
-						user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-							"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-							"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
-					else
-						M.confused += 10
-						M.stuttering += 15
-						M.adjustEarDamage(0, 5)
-						M.Jitter(10)
-						user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-							"<span class='userdanger'>You hear a sharp screech, before your thoughts are interrupted and you find yourself extremely disorientated.</span>", \
-							"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
+				if(istype(M.ears, /obj/item/clothing/ears/earmuffs)||istype(M, /mob/living/carbon/alien))
+					continue
+				if(M.check_ear_prot())
+					M.confused += 10
+					M.stuttering += 15
+					M.adjustEarDamage(0, 5)
+					M.Jitter(10)
+					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+						"<span class='userdanger'>You hear a sharp screech, before your thoughts are interrupted and you find yourself extremely disorientated.</span>", \
+						"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
+				else
+					M.Weaken(2)
+					M.confused += 20
+					M.stuttering += 30
+					M.adjustEarDamage(0, 20)
+					M.Jitter(25)
+					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+						"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
+						"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
 			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
