@@ -150,9 +150,22 @@ proc/CallMaterialName(ID)
 		D.loc = src
 		user << "<span class='notice'>You add the disk to the machine!</span>"
 	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
-		..()
-	src.updateUsrDialog()
-	return
+		. = ..()
+	updateUsrDialog()
+
+
+/obj/machinery/computer/rdconsole/deconstruction()
+	if(linked_destroy)
+		linked_destroy.linked_console = null
+		linked_destroy = null
+	if(linked_lathe)
+		linked_lathe.linked_console = null
+		linked_lathe = null
+	if(linked_imprinter)
+		linked_imprinter.linked_console = null
+		linked_imprinter = null
+	..()
+
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!emagged)

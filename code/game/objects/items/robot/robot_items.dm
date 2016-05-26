@@ -20,7 +20,106 @@
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
+/obj/item/borg/cyborghug
+	name = "Hugging Module"
+	icon_state = "hugmodule"
+	desc = "For when a someone really needs a hug."
+	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
+	var/ccooldown = 0
+	var/scooldown = 0
 
+/obj/item/borg/cyborghug/attack_self(mob/living/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/P = user
+		if(P.emagged)
+			if(mode < 3)
+				mode++
+			else
+				mode = 0
+		else if(mode < 1)
+			mode++
+		else
+			mode = 0
+	switch(mode)
+		if(0)
+			user << "Power reset. Hugs!"
+		if(1)
+			user << "Power increased!"
+		if(2)
+			user << "BZZT. Electrifying arms..."
+		if(3)
+			user << "ERROR: ARM ACTUATORS OVERLOADED."
+
+/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
+	switch(mode)
+		if(0)
+			if(M.health >= 0)
+				if(ishuman(M))
+					if(M.lying)
+						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+					else
+						user.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
+								"<span class='notice'>You hug [M] to make \him feel better!</span>")
+					if(M.resting)
+						M.resting = 0
+						M.update_canmove()
+				else
+					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+							"<span class='notice'>You pet [M]!</span>")
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		if(1)
+			if(M.health >= 0)
+				if(ishuman(M))
+					if(M.lying)
+						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
+										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+					else
+						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
+								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
+					if(M.resting)
+						M.resting = 0
+						M.update_canmove()
+				else
+					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
+							"<span class='warning'>You bop [M] on the head!</span>")
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+		if(2)
+			if(!scooldown)
+				if(M.health >= 0)
+					if(ishuman(M))
+						M.electrocute_act(5, "[user]", safety = 1)
+						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with their touch!</span>", \
+							"<span class='danger'>You electrocute [M] with your touch!</span>")
+						M.update_canmove()
+					else
+						if(!isrobot(M))
+							M.adjustFireLoss(10)
+							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
+								"<span class='danger'>You shock [M]!</span>")
+						else
+							user.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
+								"<span class='danger'>You shock [M] to no effect.</span>")
+					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
+					user.cell.charge -= 400
+					scooldown = 1
+					spawn(10)
+					scooldown = 0
+		if(3)
+			if(!ccooldown)
+				if(M.health >= 0)
+					if(ishuman(M))
+						user.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
+							"<span class='danger'>You crush [M] in your grip!</span>")
+					else
+						user.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
+								"<span class='danger'>You crush [M]!</span>")
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
+					M.adjustBruteLoss(10)
+					user.cell.charge -= 300
+					ccooldown = 1
+					spawn(10)
+					ccooldown = 0
 
 /obj/item/borg/charger
 	name = "power connector"
@@ -146,8 +245,75 @@
 
 		user << "<span class='notice'>You stop charging [target].</span>"
 
+/obj/item/device/harmalarm
+	name = "Sonic Harm Prevention Tool"
+	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
+	icon_state = "megaphone"
+	var/cooldown = 0
+	var/emagged = 0
 
+/obj/item/device/harmalarm/emag_act(mob/user)
+	emagged = !emagged
+	if(emagged)
+		user << "<font color='red'>You short out the safeties on the [src]!</font>"
+	else
+		user << "<font color='red'>You reset the safeties on the [src]!</font>"
 
+/obj/item/device/harmalarm/attack_self(mob/user)
+	var/safety = !emagged
+	if(cooldown > world.time)
+		user << "<font color='red'>The device is still recharging!</font>"
+		return
+
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.cell.charge < 1200)
+			user << "<font color='red'>You don't have enough charge to do this!</font>"
+			return
+		R.cell.charge -= 1000
+		if(R.emagged)
+			safety = 0
+
+	if(safety == 1)
+		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
+			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
+			"<span class='danger'>The siren pierces your hearing!</span>")
+		for(var/mob/living/M in get_hearers_in_view(9, user))
+			if(iscarbon(M))
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+						continue
+				M.confused += 6
+			M << "<font color='red' size='7'>HUMAN HARM</font>"
+		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
+		cooldown = world.time + 200
+		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		if(isrobot(user))
+			var/mob/living/silicon/robot/R = user
+			R.connected_ai << "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>"
+
+		return
+
+	if(safety == 0)
+		user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+			"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
+			"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
+		for(var/mob/living/M in get_hearers_in_view(9, user))
+			if(iscarbon(M))
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+						continue
+ 				M.confused += 15
+				M.Weaken(2)
+				M.stuttering += 30
+				M.adjustEarDamage(0, 20)
+				M.Jitter(25)
+			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
+		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
+		cooldown = world.time + 600
+		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
 /**********************************************************************
 						HUD/SIGHT things

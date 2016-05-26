@@ -39,21 +39,21 @@ var/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right hand",	"#ê" = "right hand",	".ê" = "right hand",
-	  ":ä" = "left hand",	"#ä" = "left hand",		".ä" = "left hand",
-	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
-	  ":ð" = "department",	"#ð" = "department",	".ð" = "department",
-	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
-	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
-	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
-	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
-	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
-	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
-	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
-	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
-	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
+	  ":Ãª" = "right hand",	"#Ãª" = "right hand",	".Ãª" = "right hand",
+	  ":Ã¤" = "left hand",	"#Ã¤" = "left hand",		".Ã¤" = "left hand",
+	  ":Ã¸" = "intercom",	"#Ã¸" = "intercom",		".Ã¸" = "intercom",
+	  ":Ã°" = "department",	"#Ã°" = "department",	".Ã°" = "department",
+	  ":Ã±" = "Command",		"#Ã±" = "Command",		".Ã±" = "Command",
+	  ":Ã²" = "Science",		"#Ã²" = "Science",		".Ã²" = "Science",
+	  ":Ã¼" = "Medical",		"#Ã¼" = "Medical",		".Ã¼" = "Medical",
+	  ":Ã³" = "Engineering",	"#Ã³" = "Engineering",	".Ã³" = "Engineering",
+	  ":Ã»" = "Security",	"#Ã»" = "Security",		".Ã»" = "Security",
+	  ":Ã¶" = "whisper",		"#Ã¶" = "whisper",		".Ã¶" = "whisper",
+	  ":Ã¨" = "binary",		"#Ã¨" = "binary",		".Ã¨" = "binary",
+	  ":Ã´" = "alientalk",	"#Ã´" = "alientalk",		".Ã´" = "alientalk",
+	  ":Ã¥" = "Syndicate",	"#Ã¥" = "Syndicate",		".Ã¥" = "Syndicate",
+	  ":Ã©" = "Supply",		"#Ã©" = "Supply",		".Ã©" = "Supply",
+	  ":Ã¯" = "changeling",	"#Ã¯" = "changeling",	".Ã¯" = "changeling"
 )
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
@@ -205,6 +205,21 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
+			if(3)
+				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
+				for(var/mob/M in mob_list)
+					if(M in dead_mob_list)
+						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
+					else
+						switch(M.lingcheck())
+							if(3)
+								M << msg
+							if(2)
+								M << msg
+							if(1)
+								if(prob(40))
+									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
+				return 1 
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
@@ -213,6 +228,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
 					else
 						switch(M.lingcheck())
+							if(3)
+								M << msg 
 							if(2)
 								M << msg
 							if(1)
@@ -272,11 +289,13 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			return NOPASS
 	return 0
 
-/mob/living/lingcheck() //Returns 1 if they are a changeling. Returns 2 if they are a changeling that can communicate through the hivemind
+/mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind. 
 	if(mind && mind.changeling)
 		if(mind.changeling.changeling_speak)
 			return 2
 		return 1
+	if(mind && mind.linglink)
+		return 3
 	return 0
 
 /mob/living/say_quote(input, list/spans)

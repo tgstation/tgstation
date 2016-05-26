@@ -173,6 +173,10 @@ MASS SPECTROMETER
 	// Time of death
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
+		var/tdelta = world.time - M.timeofdeath
+		if(tdelta < (DEFIB_TIME_LIMIT * 10))
+			user << "<span class='danger'>Subject died [tdelta / 10] seconds \
+				ago, defibrillation may be possible!</span>"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
@@ -299,6 +303,7 @@ MASS SPECTROMETER
 			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+
 
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)

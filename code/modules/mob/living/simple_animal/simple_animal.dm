@@ -398,9 +398,9 @@
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
-			visible_message("<span class='danger'>[deathmessage]</span>")
+			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
 		else if(!del_on_death)
-			visible_message("<span class='danger'>\the [src] stops moving...</span>")
+			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -558,3 +558,6 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+
+/mob/living/simple_animal/get_idcard()
+	return access_card

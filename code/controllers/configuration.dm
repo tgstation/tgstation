@@ -93,6 +93,7 @@
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
+	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -560,6 +561,8 @@
 					config.allow_ai					= 1
 				if("disable_secborg")
 					config.forbid_secborg			= 1
+				if("disable_peaceborg")
+					config.forbid_peaceborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
 				if("silent_borg")

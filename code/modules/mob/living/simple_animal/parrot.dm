@@ -923,12 +923,13 @@
 	S["longestsurvival"]	>> longest_survival
 	S["longestdeathstreak"] >> longest_deathstreak
 
-	if(isnull(speech_buffer))
+	if(!islist(speech_buffer))
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 			<< speech_buffer
+	if(islist(speech_buffer))
+		S["phrases"] 			<< speech_buffer
 	S["roundssurvived"]		<< rounds_survived
 	S["longestsurvival"]	<< longest_survival
 	S["longestdeathstreak"] << longest_deathstreak

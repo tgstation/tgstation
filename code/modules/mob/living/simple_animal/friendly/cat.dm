@@ -114,13 +114,14 @@
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
-	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-		if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
-			continue
-		if(C.type in family)
-			family[C.type] += 1
-		else
-			family[C.type] = 1
+	if(!dead)
+		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
+				continue
+			if(C.type in family)
+				family[C.type] += 1
+			else
+				family[C.type] = 1
 	S["family"]				<< family
 	memory_saved = 1
 

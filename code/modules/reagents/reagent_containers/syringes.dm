@@ -12,6 +12,7 @@
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
+	var/projectile_type = /obj/item/projectile/bullet/dart/syringe
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/reagent_containers/syringe/New()
@@ -181,7 +182,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = Clamp(round(reagents.total_volume,5), 0, 15)
+	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -254,3 +255,24 @@
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list("gluttonytoxin" = 1)
+
+/obj/item/weapon/reagent_containers/syringe/bluespace
+	name = "bluespace syringe"
+	desc = "An advanced syringe that can hold 60 units of chemicals"
+	amount_per_transfer_from_this = 20
+	volume = 60
+
+/obj/item/weapon/reagent_containers/syringe/noreact
+	name = "cryo syringe"
+	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
+	volume = 20
+
+/obj/item/weapon/reagent_containers/syringe/noreact/New()
+	. = ..()
+	reagents.set_reacting(FALSE)
+
+/obj/item/weapon/reagent_containers/syringe/piercing
+	name = "piercing syringe"
+	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	volume = 10
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/piercing

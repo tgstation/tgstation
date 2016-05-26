@@ -79,11 +79,12 @@
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
+		var/datum/mind/MM = M.mind
 		if(objectives)
-			var/datum/mind/MM = M.mind
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
+		MM.name = M.real_name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
@@ -359,6 +360,11 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
 
+/obj/effect/mob_spawn/human/miner/explorer
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	gloves = /obj/item/clothing/gloves/color/black
+	back = /obj/item/weapon/storage/backpack/security
+	shoes = /obj/item/clothing/shoes/jackboots
 
 /obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman

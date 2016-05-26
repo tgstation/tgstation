@@ -29,15 +29,6 @@
 				/obj/item/weapon/grown/nettle/death = list("facid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 
-				//Crayons (for overriding colours)
-				/obj/item/toy/crayon/red = list("redcrayonpowder" = 10),
-				/obj/item/toy/crayon/orange = list("orangecrayonpowder" = 10),
-				/obj/item/toy/crayon/yellow = list("yellowcrayonpowder" = 10),
-				/obj/item/toy/crayon/green = list("greencrayonpowder" = 10),
-				/obj/item/toy/crayon/blue = list("bluecrayonpowder" = 10),
-				/obj/item/toy/crayon/purple = list("purplecrayonpowder" = 10),
-				/obj/item/toy/crayon/mime = list("invisiblecrayonpowder" = 50),
-
 				//Blender Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
@@ -413,21 +404,6 @@
 						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
 				remove_object(O)
-
-
-		//Crayons
-		//With some input from aranclanos, now 30% less shoddily copypasta
-		for (var/obj/item/toy/crayon/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-				var/allowed = get_allowed_by_id(O)
-				for (var/r_id in allowed)
-						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-						var/amount = allowed[r_id]
-						beaker.reagents.add_reagent(r_id,min(amount, space))
-						if (space < amount)
-								break
-						remove_object(O)
 
 		//Everything else - Transfers reagents from it into beaker
 		for (var/obj/item/weapon/reagent_containers/O in holdingitems)

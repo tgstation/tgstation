@@ -111,6 +111,32 @@
 	new/obj/item/weapon/restraints/legcuffs/beartrap/energy(loc)
 	..()
 
+/obj/item/projectile/energy/trap/cyborg
+	name = "Energy Bola"
+	icon_state = "e_snare"
+	nodamage = 1
+	weaken = 0
+	hitsound = 'sound/weapons/taserhit.ogg'
+	range = 10
+
+/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
+	if(!ismob(target) || blocked >= 100)
+		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+		sparks.set_up(1, 1, src)
+		sparks.start()
+		qdel(src)
+	if(iscarbon(target))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
+		B.Crossed(target)
+	spawn(10)
+		qdel(src)
+	..()
+
+/obj/item/projectile/energy/trap/cyborg/on_range()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	qdel(src)
 
 /obj/item/projectile/energy/declone
 	name = "radiation beam"

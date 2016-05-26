@@ -71,7 +71,7 @@
 	materials = list(MAT_METAL = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
-	category = list("Misc","Medical Designs")
+	category = list("Medical Designs", "Bluespace Designs")
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -82,6 +82,39 @@
 	materials = list(MAT_METAL = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
+	category = list("Medical Designs")
+
+/datum/design/bluespacesyringe
+	name = "Bluespace Syringe"
+	desc = "An advanced syringe that can hold 60 units of chemicals"
+	id = "bluespacesyringe"
+	req_tech = list("bluespace" = 3, "materials" = 4, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 4000, MAT_PLASMA = 2000, MAT_DIAMOND = 2000)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/syringe/bluespace
+	category = list("Medical Designs", "Bluespace Designs")
+
+/datum/design/noreactsyringe
+	name = "Cryo Syringe"
+	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
+	id = "noreactsyringe"
+	req_tech = list("materials" = 2, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 4000, MAT_GOLD = 1000)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
+	category = list("Medical Designs")
+
+/datum/design/piercesyringe
+	name = "Piercing Syringe"
+	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	id = "piercesyringe"
+	req_tech = list("materials" = 3, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
 	category = list("Medical Designs")
 
 /datum/design/bluespacebodybag
@@ -130,6 +163,17 @@
 	construction_time = 35
 	materials = list(MAT_METAL = 200, MAT_GLASS = 250)
 	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
+	category = list("Misc", "Medical Designs")
+
+/datum/design/cyberimp_toolset
+	name = "Toolset Arm implant"
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
+	id = "ci-toolset"
+	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4, "powerstorage" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/toolset
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_medical_hud

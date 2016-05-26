@@ -104,8 +104,8 @@
 				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))
 					M.inertia_dir = 0
 			if(TURF_WET_LUBE)
-				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
-				M.confused += 8
+				if(M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))) 
+					M.confused = max(M.confused, 8)
 			if(TURF_WET_ICE)
 				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
 			if(TURF_WET_ICE || TURF_WET_PERMAFROST)
@@ -299,3 +299,22 @@
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 		add_blueprints(AM)
+
+/turf/proc/empty(turf_type=/turf/open/space)
+	// Remove all atoms except observers, landmarks, docking ports
+	var/turf/T0 = src
+	for(var/A in T0.GetAllContents())
+		if(istype(A, /mob/dead))
+			continue
+		if(istype(A, /obj/effect/landmark))
+			continue
+		if(istype(A, /obj/docking_port))
+			continue
+		qdel(A, force=TRUE)
+
+	T0.ChangeTurf(turf_type)
+
+	T0.redraw_lighting()
+	SSair.remove_from_active(T0)
+	T0.CalculateAdjacentTurfs()
+	SSair.add_to_active(T0,1)

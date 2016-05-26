@@ -63,6 +63,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	icon_state = "sandbags"
 	singular_name = "sandbag"
 	force = 5
+	layer = 2.95
 	throwforce = 5
 	w_class = 3
 	throw_speed = 1
