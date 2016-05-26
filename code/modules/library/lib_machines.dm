@@ -532,10 +532,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	busy = 1
 	sleep(rand(200,400))
 	busy = 0
-	if(P && !stat)
-		visible_message("[src] whirs as it prints and binds a new book.")
-		var/obj/item/weapon/book/B = new(src.loc)
-		B.dat = P.info
-		B.name = "Print Job #" + "[rand(100, 999)]"
-		B.icon_state = "book[rand(1,7)]"
-		qdel(P)
+	if(P)
+		if(!stat)
+			visible_message("[src] whirs as it prints and binds a new book.")
+			var/obj/item/weapon/book/B = new(src.loc)
+			B.dat = P.info
+			B.name = "Print Job #" + "[rand(100, 999)]"
+			B.icon_state = "book[rand(1,7)]"
+			qdel(P)
+		else
+			P.loc = loc
