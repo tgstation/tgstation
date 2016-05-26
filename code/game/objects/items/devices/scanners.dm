@@ -325,7 +325,7 @@ MASS SPECTROMETER
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=150, MAT_GLASS=100)
-	origin_tech = "magnets=2;biotech=2;plasmatech=2"
+	origin_tech = "magnets=2;biotech=1;plasmatech=2"
 	var/details = 0
 
 /obj/item/device/mass_spectrometer/New()

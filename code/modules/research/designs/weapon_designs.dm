@@ -177,21 +177,11 @@
 	build_path = /obj/item/weapon/gun/energy/ionrifle/carbine
 	category = list("Weapons")
 
-/datum/design/gatling
-	name = "Laser Gatling Gun"
-	desc = "A massive weapon with a backpack mounted power source."
-	id = "gatlinggun"
-	req_tech = list("combat" = 7, "powerstorage" = 6, "magnets" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 40000, MAT_SILVER = 6000, MAT_DIAMOND = 8000, MAT_URANIUM = 15000)
-	build_path = /obj/item/weapon/minigunpack
-	category = list("Weapons")
-
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
 	id = "wormholeprojector"
-	req_tech = list("combat" = 5, "engineering" = 5, "bluespace" = 7, "plasmatech" = 5)
+	req_tech = list("combat" = 5, "engineering" = 5, "bluespace" = 7, "plasmatech" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 3000)
 	build_path = /obj/item/weapon/gun/energy/wormhole_projector

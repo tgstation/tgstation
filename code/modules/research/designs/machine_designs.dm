@@ -156,7 +156,7 @@
 	name = "Machine Design (Portable Chem Dispenser Board)"
 	desc = "The circuit board for a portable chem dispenser."
 	id = "chem_dispenser"
-	req_tech = list("programming" = 5, "biotech" = 3, "engineering" = 4, "plasmatech" = 4)
+	req_tech = list("programming" = 5, "biotech" = 3, "materials" = 4, "plasmatech" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/machine/chem_dispenser

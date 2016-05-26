@@ -290,7 +290,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/chem_dispenser
 	name = "circuit board (Portable Chem Dispenser)"
 	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "engineering=3;programming=4;plasmatech=4;biotech=3"
+	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,

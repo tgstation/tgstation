@@ -7,7 +7,7 @@
 	name = "Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood."
 	id = "mass_spectrometer"
-	req_tech = list("biotech" = 2, "magnets" = 2, "plasmatech" = 2)
+	req_tech = list("magnets" = 2, "plasmatech" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
 	build_path = /obj/item/device/mass_spectrometer
@@ -89,7 +89,7 @@
 	name = "Piercing Syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
-	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 6)
+	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 7)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
@@ -123,7 +123,7 @@
 	name = "Welding Shield implant"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	id = "ci-welding"
-	req_tech = list("materials" = 4, "biotech" = 3, "engineering" = 3)
+	req_tech = list("materials" = 4, "biotech" = 4, "engineering" = 5, "plasmatech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
 	materials = list(MAT_METAL = 600, MAT_GLASS = 400)
@@ -178,7 +178,7 @@
 	name = "X-Ray implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
-	req_tech = list("materials" = 5, "programming" = 5, "biotech" = 7, "magnets" = 5)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 7, "magnets" = 5,"plasmatech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
@@ -189,7 +189,7 @@
 	name = "Thermals implant"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5,"plasmatech" = 4)
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 7, "magnets" = 5,"plasmatech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
@@ -255,7 +255,7 @@
 	name = "Thrusters set implant"
 	desc = "This implant will allow you to use gas from environment or your internals for propulsion in zero-gravity areas."
 	id = "ci-thrusters"
-	req_tech = list("materials" = 5, "biotech" = 5, "magnets" = 4, "engineering" = 6)
+	req_tech = list("materials" = 5, "biotech" = 5, "magnets" = 4, "engineering" = 7)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 80
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)

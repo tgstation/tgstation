@@ -112,7 +112,7 @@
 	name = "welding shield implant"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	slot = "eye_shield"
-	origin_tech = "materials=3;biotech=3;engineering=3"
+	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
 	implant_color = "#101010"
 	flash_protect = 2
 	aug_message = null

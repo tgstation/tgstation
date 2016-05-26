@@ -248,7 +248,7 @@ AI MODULES
 	name = "\improper 'Reset' AI module"
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
-	origin_tech = "programming=4;materials=4"
+	origin_tech = "programming=3;materials=2"
 	bypass_law_amt_check = 1
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
