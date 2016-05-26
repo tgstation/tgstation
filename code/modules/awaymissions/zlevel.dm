@@ -94,7 +94,12 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
-			R.Load(ruins,ruin)
+
+			world << "<span class='boldannounce'>Loading ruins...</span>"
+			if(R.Load(ruins,ruin))
+				world << "<span class='boldannounce'>Ruins loaded.</span>"
+			else
+				world << "<span class='boldannounce'>No ruins found.</span>"
 			budget -= ruin.cost
 			if(!ruin.allow_duplicates)
 				ruins -= ruin.name
@@ -115,17 +120,15 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/datum/map_template/T = potentialRuins[A]
 		if(!T.loaded)
 			possible_ruins += T
-	world << "<span class='boldannounce'>Loading ruins...</span>"
 	if(!template && possible_ruins.len)
 		template = safepick(possible_ruins)
 	if(!template)
-		world << "<span class='boldannounce'>No ruins found.</span>"
-		return
+		return 0
 	for(var/i in template.get_affected_turfs(get_turf(src), 1))
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
 			qdel(monster)
 	template.load(get_turf(src),centered = TRUE)
 	template.loaded++
-	world << "<span class='boldannounce'>Ruins loaded.</span>"
 	qdel(src)
+	return 1
