@@ -30,7 +30,6 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3)
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
-	layer = MOB_LAYER - 0.1
 	var/removingairlock = 0
 
 /mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN

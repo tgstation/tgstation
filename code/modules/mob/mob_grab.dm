@@ -12,7 +12,7 @@
 	var/allow_upgrade = 1
 	var/last_upgrade = 0
 
-	layer = 21
+	layer = ABOVE_HUD_LAYER
 	item_state = "nothing"
 	w_class = 5
 

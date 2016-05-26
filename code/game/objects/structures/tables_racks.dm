@@ -19,7 +19,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1
-	layer = 2.8
+	layer = TABLE_LAYER
 	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame

@@ -6,7 +6,7 @@
 	anchored = 1
 	opacity = 1
 	density = 1
-	layer = 2.7
+	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
@@ -19,7 +19,7 @@
 	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
-	var/closingLayer = 3.1
+	var/closingLayer = CLOSED_DOOR_LAYER
 	var/autoclose = 0 //does it automatically close after some time
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
@@ -29,9 +29,9 @@
 /obj/machinery/door/New()
 	..()
 	if(density)
-		layer = 3.1 //Above most items if closed
+		layer = CLOSED_DOOR_LAYER //Above most items if closed
 	else
-		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
+		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
@@ -245,7 +245,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	sleep(5)
 	density = 0
 	sleep(5)
-	layer = 2.7
+	layer = OPEN_DOOR_LAYER
 	update_icon()
 	SetOpacity(0)
 	operating = 0

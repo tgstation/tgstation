@@ -124,7 +124,7 @@
 	icon_state = "orb"
 	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
-	layer = FLY_LAYER - 0.3
+	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/device/warp_cube
 	name = "blue cube"

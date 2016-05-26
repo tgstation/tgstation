@@ -129,7 +129,7 @@
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 			step_towards(src, current)
-			if(original && (original.layer>=2.75) || ismob(original))
+			if(original && (original.layer>=PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original, 1)

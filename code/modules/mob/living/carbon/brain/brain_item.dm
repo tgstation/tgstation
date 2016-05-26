@@ -4,7 +4,7 @@
 	icon_state = "brain"
 	throw_speed = 3
 	throw_range = 5
-	layer = 4.1
+	layer = ABOVE_MOB_LAYER
 	zone = "head"
 	slot = "brain"
 	vital = 1

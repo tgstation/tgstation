@@ -14,7 +14,7 @@
 	..()
 	if(!atvcover)
 		atvcover = image("icons/obj/vehicles.dmi", "atvcover")
-		atvcover.layer = MOB_LAYER + 0.1
+		atvcover.layer = ABOVE_MOB_LAYER
 
 
 obj/vehicle/atv/post_buckle_mob(mob/living/M)
@@ -26,7 +26,7 @@ obj/vehicle/atv/post_buckle_mob(mob/living/M)
 
 /obj/vehicle/atv/handle_vehicle_layer()
 	if(dir == SOUTH)
-		layer = MOB_LAYER+0.1
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
@@ -51,13 +51,13 @@ obj/vehicle/atv/post_buckle_mob(mob/living/M)
 
 /obj/vehicle/atv/turret/handle_vehicle_layer()
 	if(dir == SOUTH)
-		layer = MOB_LAYER+0.1
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
 	if(turret)
 		if(dir == NORTH)
-			turret.layer = MOB_LAYER+0.1
+			turret.layer = ABOVE_MOB_LAYER
 		else
 			turret.layer = OBJ_LAYER
 

@@ -1,6 +1,6 @@
 /mob
 	density = 1
-	layer = 4
+	layer = MOB_LAYER
 	animate_movement = 2
 	flags = HEAR
 	hud_possible = list(ANTAG_HUD)

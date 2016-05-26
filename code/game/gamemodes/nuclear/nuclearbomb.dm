@@ -48,7 +48,7 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = 1 //stops it being moved
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/machinery/nuclearbomb/syndicate
 

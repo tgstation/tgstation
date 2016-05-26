@@ -3,7 +3,7 @@
 	desc = "Graffiti. Damn kids."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	layer = 2.1
+	layer = ABOVE_NORMAL_TURF_LAYER
 	var/do_icon_rotate = TRUE
 
 /obj/effect/decal/cleanable/crayon/examine()
