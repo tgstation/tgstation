@@ -302,7 +302,10 @@
 	if(safety == 0)
 		for(var/mob/living/M in get_hearers_in_view(9, user))
 			if(iscarbon(M))
-				if(istype(M.ears, /obj/item/clothing/ears/earmuffs)||istype(M, /mob/living/carbon/alien))
+				var/mob/living/carbon/human/H = null
+				if(ishuman(M))
+					H = M
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs)||istype(M, /mob/living/carbon/alien))
 					continue
 				if(M.check_ear_prot())
 					M.confused += 10
